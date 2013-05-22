@@ -30,6 +30,6 @@
   <mvc:default-servlet-handler />
 
   <context:annotation-config />
-  <context:component-scan base-package="se.inera.certificate.fk7263.controller.api" />
+  <context:component-scan base-package="se.inera.certificate.modules.rli.controller.api" />
 
 </beans>

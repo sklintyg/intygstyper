@@ -117,7 +117,7 @@
   </dependencies>
 
   <build>
-    <finalName>fk7263</finalName>
+    <finalName>rli</finalName>
     <plugins>
       <plugin>
         <groupId>org.eclipse.jetty</groupId>
