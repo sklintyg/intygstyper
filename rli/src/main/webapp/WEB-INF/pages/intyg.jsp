@@ -37,9 +37,18 @@
 <link rel="stylesheet" href="<c:url value="/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
-<script>
-<!-- Global JS variable for this app's context path, to be used by scripts -->
- var RLI_CONTEXT_PATH = '<c:out value="${pageContext.request.contextPath}"/>';
+
+<script type="text/javascript">
+    /**
+     Global JS config/constants for this app, to be used by scripts
+     Maybe this should be refactored into something that is injected into angular 
+     as a sort of config object, maybe in the rootscope?
+     **/
+    var MODULE_CONFIG = {
+        MI_COMMON_API_CONTEXT_PATH : '/moduleapi/certificate/',
+        MODULE_CONTEXT_PATH : '<c:out value="${pageContext.request.contextPath}"/>',
+        CERT_ID_PARAMETER : '<c:out value="${id}"/>'
+    }
 </script>
 </head>
 
@@ -61,7 +70,6 @@
       <div class="content">
         <div class="row-fluid">
           <div id="content-body" class="span12">
-           RLI:  skall vi visa intyg:<c:out value="${id}"></c:out>
             <div ng-view></div>
           </div>
         </div>
@@ -69,10 +77,10 @@
     </div>
   </div>
 
-  <script type="text/javascript" src="<c:url value="/js/vendor/jquery-1.9.1.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/vendor/bootstrap.js"/>"></script>
+
   <script type="text/javascript" src="<c:url value="/js/vendor/angular/angular.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/vendor/angular/i18n/angular-locale_sv-se.js"/>"></script>
+  <script type="text/javascript" src='<c:url value="/js/vendor/ui-bootstrap/ui-bootstrap-tpls-0.3.0.js"/>'></script>
 
   <script type="text/javascript" src="<c:url value="/js/view/rli-app.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/view/filters.js"/>"></script>
