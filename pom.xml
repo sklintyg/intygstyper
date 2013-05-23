@@ -19,10 +19,10 @@
   <packaging>pom</packaging>
   <name>Inera Certificate Modules</name>
 
-	<modules>
-		<module>fk7263</module>
-		<module>rli</module>
-	</modules>
+  <modules>
+    <module>fk7263</module>
+    <module>rli</module>
+  </modules>
 
   <properties>
     <system.mode>dev</system.mode>
@@ -34,9 +34,9 @@
     <slf4j.version>1.6.4</slf4j.version>
     <logback.version>1.0.0</logback.version>
     <mvkintegration.version>1.2-SNAPSHOT</mvkintegration.version>
-    <inera.certificate.schemas.version>1.0-SNAPSHOT</inera.certificate.schemas.version>
+    <inera.certificate.version>1.0-SNAPSHOT</inera.certificate.version>
     <checkstyle.basedir>${project.basedir}</checkstyle.basedir>
-     <aspectj.version>1.7.1</aspectj.version>
+    <aspectj.version>1.7.1</aspectj.version>
   </properties>
 
   <dependencies>
@@ -130,7 +130,12 @@
       <dependency>
         <groupId>se.inera.certificate</groupId>
         <artifactId>schemas</artifactId>
-        <version>${inera.certificate.schemas.version}</version>
+        <version>${inera.certificate.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>se.inera.certificate</groupId>
+        <artifactId>module-api</artifactId>
+        <version>${inera.certificate.version}</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
@@ -258,7 +263,7 @@
         <artifactId>spring-aop</artifactId>
         <version>${spring.version}</version>
       </dependency>
-     <dependency>
+      <dependency>
         <groupId>org.aspectj</groupId>
         <artifactId>aspectjrt</artifactId>
         <version>${aspectj.version}</version>
@@ -267,7 +272,7 @@
         <groupId>org.aspectj</groupId>
         <artifactId>aspectjweaver</artifactId>
         <version>${aspectj.version}</version>
-      </dependency>            
+      </dependency>
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
