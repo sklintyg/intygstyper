@@ -77,7 +77,7 @@
               </div>
               <div class="span5 issue">
                 <span><message key="view.label.issued" /></span>
-                <span class="cert-titlebar-value">{{cert.signeringsdatum.year}}-{{cert.signeringsdatum.monthOfYear}}-{{cert.signeringsdatum.dayOfMonth}}</span>
+                <span class="cert-titlebar-value">{{cert.signeringsdatum | date:'longDate'}}</span>
               </div>
               <div class="span1 archive">
                 <a href="#archiveModal" role="button" data-toggle="modal" onclick="return false"><img alt="Arkivera intyg" src="/img/archive-icon.gif" /></a>
