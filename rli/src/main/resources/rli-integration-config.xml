@@ -13,9 +13,6 @@
     <jaxrs:serviceBeans>
       <bean class="se.inera.certificate.modules.rli.rest.RliModuleApi"/>
     </jaxrs:serviceBeans>
-    <jaxrs:providers>
-      <bean class="se.inera.certificate.integration.json.CustomJacksonJaxbJsonProvider"/>
-    </jaxrs:providers>
     <jaxrs:extensionMappings>
       <entry key="json" value="application/json"/>
     </jaxrs:extensionMappings>
