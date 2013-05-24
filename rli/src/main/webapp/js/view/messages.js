@@ -26,7 +26,7 @@ var messages = {
             },
         },
         "button" : {
-            "sendtofk" : "Skicka till försäkringskassan",
+            "sendtofk" : "Skicka",
             "downloadprint" : "Ladda ner / Skriv ut",
             "send" : "Skicka",
             "cancel" : "Avbryt",
