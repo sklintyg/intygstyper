@@ -37,6 +37,7 @@
     <inera.certificate.version>1.0-SNAPSHOT</inera.certificate.version>
     <checkstyle.basedir>${project.basedir}</checkstyle.basedir>
     <aspectj.version>1.7.1</aspectj.version>
+    <jackson.version>2.1.1</jackson.version>
   </properties>
 
   <dependencies>
@@ -217,6 +218,26 @@
         <groupId>se.inera.certificate</groupId>
         <artifactId>module-api</artifactId>
         <version>${inera.certificate.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>se.inera.certificate</groupId>
+        <artifactId>model</artifactId>
+        <version>${inera.certificate.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-transports-http</artifactId>
+        <version>${cxf.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+        <version>${cxf.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.jaxrs</groupId>
+        <artifactId>jackson-jaxrs-json-provider</artifactId>
+        <version>${jackson.version}</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>

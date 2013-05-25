@@ -47,7 +47,7 @@
       <form id="view-as-pdf" action="/api/certificate/dfb6d8a7-47f1-4a76-9bf2-7bc712298dc5.pdf" method="get" target="_blank">
         <p class="btn-row">
           <button type="button" ng-click="open()" class="btn btn-success">
-            <message key="button.sendtofk" />
+            <message key="button.send" />
           </button>
           <button id="downloadprint" type="submit" class="btn btn-inverse">
             <message key="button.downloadprint" />
@@ -57,11 +57,11 @@
     </div>
     <div class="span5 eventbox">
       <h2>Senaste händelsen</h2>
-      <p>2013-04-04</p>
-      <ul>
+      <p>Inga händelser</p>
+      <!--  <ul>
         <li>Skickat till Försäkringskassan</li>
       </ul>
-      <a href="#allEventsModal" role="button" data-toggle="modal" onclick="return false">Visa alla händelser</a>
+      <a href="#allEventsModal" role="button" data-toggle="modal" onclick="return false">Visa alla händelser</a> -->
     </div>
   </div>
   <section id="certificate" class="certificate">
@@ -72,12 +72,12 @@
             <div class="row-fluid">
               <div class="span6">
                 <h2>
-                  <span><message key="certificatetypes.{{cert.type}}.commonname" /></span>
-                  <span class="cert-titlebar-type"><message key="certificatetypes.{{cert.type}}.typename" /></span>
+                  <span><message key="certificatetypes.{{cert.typ}}.commonname" /></span> <span class="cert-titlebar-type"><message key="certificatetypes.{{cert.typ}}.typename" /></span>
                 </h2>
               </div>
               <div class="span5 issue">
-               <message key="view.label.issued" /> <span class="cert-titlebar-value">{{cert.issued}}</span>
+                <span><message key="view.label.issued" /></span>
+                <span class="cert-titlebar-value">{{cert.signeringsdatum | date:'longDate'}}</span>
               </div>
               <div class="span1 archive">
                 <a href="#archiveModal" role="button" data-toggle="modal" onclick="return false"><img alt="Arkivera intyg" src="/img/archive-icon.gif" /></a>
@@ -87,84 +87,35 @@
           <div class="cert-header">
             <div class="row-fluid">
               <div class="span6">
-                <span class="tag"><message key="view.label.patientname" /></span> <span id="patient-name">{{cert.patientname}}</span>
+                <span class="tag"><message key="view.label.patientname" /></span> <span id="patient-name">{{cert.patient.fornamn}} {{cert.patient.efternamn}}</span>
               </div>
               <div class="span6">
-                <span class="tag"><message key="view.label.unit" />Enhet</span> <span id="careunit">{{cert.careunitName}}</span>
-              </div>
-            </div>
-            <div class="row-fluid">
-              <div class="span6">
-                <span class="tag"><message key="view.label.civicnumber" /></span> <span id="patient-crn">19520403-4948</span>
-              </div>
-              <div class="span6">
-                <span class="tag"><message key="view.label.issuer" /></span> <span id="caregiver">Sune Andersson</span>
+                <span class="tag"><message key="view.label.unit" /></span> <span id="careunit">{{cert.vardenhet.namn}}</span>
               </div>
             </div>
             <div class="row-fluid">
               <div class="span6">
-                <span class="tag"><message key="view.label.period" /></span> <span id="certificate-period">{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}}  </span>
+                <span class="tag"><message key="view.label.civicnumber" /></span> <span id="patient-crn">{{cert.patient.id}}</span>
+              </div>
+              <div class="span6">
+                <span class="tag"><message key="view.label.issuer" /></span> <span id="caregiver">{{cert.vardenhet.vardgivare.namn}}</span>
+              </div>
+            </div>
+            <div class="row-fluid">
+              <div class="span6">
+                <span class="tag"><message key="view.label.period" /></span> <span id="certificate-period">{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}} </span>
               </div>
               <div class="span6"></div>
             </div>
           </div>
           <div class="cert-body">
             <div class="body-row">
-              <span class="title unfilled">Sjukdomsförlopp</span>
+              <span class="title">Sjukdomsförlopp</span> <span id="problem-description" class="text">{{cert.sjukdomsfarlopp}}</span>
+            </div>
+            <div class="body-row">
+              <span class="title">Resmål</span> <span id="travel-destination" class="text">{{cert.ovrigt.resmal}}</span>
             </div>
 
-            <div class="body-row">
-              <span class="title">Diagnos/diagnoser för sjukdom som orsakar nedsatt arbetsförmåga</span> <span id="diagnose" class="text">Pälsallergi från renar.</span>
-            </div>
-
-            <div class="body-row">
-              <span class="title">Funktionsnedsättning</span> <span id="functional-disability" class="text"> Allergisk rinit och kraftigt tårflöde vid vistelse nära renar. </span>
-            </div>
-
-            <div class="body-row">
-              <span class="title">Arbetsförmågenedsättning</span> <span id="diagnose" class="text">
-                <ul>
-                  <li>Helt nedsatt från och med 2012-10-21 till och med 2012-12-25</li>
-                </ul>
-              </span>
-            </div>
-            <div class="body-row">
-              <span class="title">Arbetsförmågan är bedömd i förhållande till</span> <span class="text">Nuvarande arbete</span>
-            </div>
-
-            <div class="body-row">
-              <span class="title">Kommentar</span> <span class="text">Patienten är säsongsarbetare och delar ut presenter med renar som främsta transportmedel och kan inte framföra sin släde på
-                ett säkert sätt</span>
-            </div>
-
-            <div class="body-row">
-              <span class="title unfilled">Prognos</span>
-            </div>
-
-            <div class="body-row">
-              <span class="title unfilled">Behandling</span>
-            </div>
-
-            <div class="body-row">
-              <span class="title unfilled">Rehabilitering</span>
-            </div>
-
-            <div class="body-row">
-              <span class="title unfilled">Rekommendationer</span>
-            </div>
-
-            <div class="body-row">
-              <span class="title unfilled">Övrigt</span>
-            </div>
-
-            <div class="body-row">
-              <span class="title">Intyget är baserat på</span>
-              <div id="basedOn" class="text">
-                <ul>
-                  <li>Undersökning av patienten den 2012-10-21</li>
-                </ul>
-              </div>
-            </div>
           </div>
         </div>
       </div>
