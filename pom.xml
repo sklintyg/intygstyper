@@ -22,6 +22,7 @@
   <modules>
     <module>fk7263</module>
     <module>rli</module>
+    <module>specifications</module>
   </modules>
 
   <properties>
