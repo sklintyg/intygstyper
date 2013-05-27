@@ -19,7 +19,7 @@ public class Fk7263ModuleApi {
     @Consumes( MediaType.APPLICATION_XML )
     @Produces(MediaType.APPLICATION_JSON)
     public Object extract(Lakarutlatande lakarutlatande) {
-        return new Object();
+        return "{}";
     }
 
     @POST

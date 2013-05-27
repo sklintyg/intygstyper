@@ -1,0 +1,5 @@
+!1 Extrahering av tillägsinformation för ett FK7263 intyg.
+
+|Extrahera intygstillagg|
+|typ|tillag?|kommentar|
+|fk7263|{}|Inga fel|
