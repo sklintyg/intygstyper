@@ -20,10 +20,10 @@ var messages = {
             }
         },
         "certificatetypes" : {
-            "rli" : {
-                "commonname" : "Reseläkarintyg",
-                "typename" : "RLI"
-            },
+            "fk7263" : {
+                "commonname" : "Läkarintyg",
+                "typename" : "FK7263"
+            }
         },
         "button" : {
             "sendtofk" : "Skicka",
