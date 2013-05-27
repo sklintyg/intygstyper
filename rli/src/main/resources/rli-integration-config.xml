@@ -22,9 +22,6 @@
     <jaxrs:providers>
       <ref bean="jacksonJsonProvider"/>
     </jaxrs:providers>
-    <jaxrs:extensionMappings>
-      <entry key="json" value="application/json"/>
-    </jaxrs:extensionMappings>
   </jaxrs:server>
 
 </beans>
