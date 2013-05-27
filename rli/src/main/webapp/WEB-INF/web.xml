@@ -46,7 +46,7 @@
 
   <servlet-mapping>
     <servlet-name>web</servlet-name>
-    <url-pattern>/web/*</url-pattern>
+    <url-pattern>/intyg/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

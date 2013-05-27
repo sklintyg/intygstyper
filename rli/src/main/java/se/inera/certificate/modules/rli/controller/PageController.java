@@ -32,7 +32,7 @@ public class PageController {
 
     private static final Logger LOG = LoggerFactory.getLogger(PageController.class);
 
-    @RequestMapping(value = "/visa-intyg/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ModelAndView displayStart(@PathVariable(value = "id") String id) {
         LOG.debug("visa-intyg " + id);
         return new ModelAndView("intyg","id",id);
