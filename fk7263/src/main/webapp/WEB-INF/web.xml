@@ -21,11 +21,11 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
   version="3.0">
 
-  <display-name>Inera Certificate Web</display-name>
+  <display-name>Inera Certificate RLI - Module</display-name>
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:/fk7263-config.xml, classpath:/eintyg.inera.se-cxf-config.xml, /WEB-INF/web-security.xml</param-value>
+    <param-value>classpath:/fk7263-config.xml, classpath:/fk7263-integration-config.xml, /WEB-INF/web-security.xml</param-value>
   </context-param>
 
   <!-- Start spring context -->
@@ -39,18 +39,18 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet>
-    <servlet-name>api</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
+     <servlet-name>cxf</servlet-name>
+     <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+     <load-on-startup>1</load-on-startup>
+   </servlet>
 
   <servlet-mapping>
     <servlet-name>web</servlet-name>
-    <url-pattern>/web/*</url-pattern>
+    <url-pattern>/intyg/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
-    <servlet-name>api</servlet-name>
+    <servlet-name>cxf</servlet-name>
     <url-pattern>/api/*</url-pattern>
   </servlet-mapping>
 

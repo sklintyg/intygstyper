@@ -21,6 +21,7 @@ package se.inera.certificate.modules.fk7263.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,10 +32,10 @@ public class PageController {
 
     private static final Logger LOG = LoggerFactory.getLogger(PageController.class);
 
-    @RequestMapping(value = "/start", method = RequestMethod.GET)
-    public ModelAndView displayStart() {
-        LOG.debug("displayStart");
-        return new ModelAndView("intyg");
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ModelAndView displayStart(@PathVariable(value = "id") String id) {
+        LOG.debug("visa-intyg " + id);
+        return new ModelAndView("intyg","id",id);
     }
 
 }

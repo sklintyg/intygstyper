@@ -38,9 +38,21 @@
 <link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
 
+<script type="text/javascript">
+    /**
+     Global JS config/constants for this app, to be used by scripts
+     Maybe this should be refactored into something that is injected into angular 
+     as a sort of config object, maybe in the rootscope?
+     **/
+    var MODULE_CONFIG = {
+        MI_COMMON_API_CONTEXT_PATH : '/moduleapi/certificate/',
+        MODULE_CONTEXT_PATH : '<c:out value="${pageContext.request.contextPath}"/>',
+        CERT_ID_PARAMETER : '<c:out value="${id}"/>'
+    }
+</script>
 </head>
 
-<body ng-app="ListCertApp">
+<body ng-app="RLIViewCertApp">
   <div class="container">
     <div id="page-header-container">
       <div id="page-header">
@@ -49,10 +61,7 @@
         <a href="<c:url value="/web/start" />"><img id="logo" src="<c:url value="/img/logo_mina_intyg.png" />" /></a>
         <div id="status">
           <div class="status-row">
-            <a href="<c:url value="/web/settings" />"><spring:message code="label.settings" /></a> | <a href="<c:url value="/web/logout" />"><spring:message code="label.logout" /></a>
-          </div>
-          <div class="status-row">
-            <span class="logged-in"><spring:message code="header.loggedInAs" /></span>&nbsp;<strong><sec:authentication property="principal.username" /></strong>
+            <span class="logged-in"><strong><sec:authentication property="principal.username" /></strong>
           </div>
         </div>
       </div>
@@ -61,14 +70,6 @@
       <div class="content">
         <div class="row-fluid">
           <div id="content-body" class="span12">
-            <noscript>
-              <h1>
-                <span><spring:message code="error.noscript.title" /></span>
-              </h1>
-              <div class="alert alert-error">
-                <spring:message code="error.noscript.text" />
-              </div>
-            </noscript>
             <div ng-view></div>
           </div>
         </div>
@@ -76,18 +77,18 @@
     </div>
   </div>
 
-  <script type="text/javascript" src="<c:url value="/js/vendor/jquery-1.9.1.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/vendor/bootstrap.js"/>"></script>
+
   <script type="text/javascript" src="<c:url value="/js/vendor/angular/angular.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/vendor/angular/i18n/angular-locale_sv-se.js"/>"></script>
+  <script type="text/javascript" src='<c:url value="/js/vendor/ui-bootstrap/ui-bootstrap-tpls-0.3.0.js"/>'></script>
 
-  <script type="text/javascript" src="<c:url value="/js/list/app.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/list/filters.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/list/controllers.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/list/directives.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/view/rli-app.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/view/filters.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/view/controllers.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/view/directives.js"/>"></script>
 
-  <script type="text/javascript" src="<c:url value="/js/list/services.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/list/messages.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/view/services.js"/>"></script>
+  <script type="text/javascript" src="<c:url value="/js/view/messages.js"/>"></script>
 
 
 </body>
