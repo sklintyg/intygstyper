@@ -21,7 +21,7 @@ public class RliModuleApi {
     @Path( "/extension" )
     @Consumes( MediaType.APPLICATION_XML )
     @Produces(MediaType.APPLICATION_JSON)
-    public Object extract(Lakarutlatande intyg) {
+    public Resa extract(Lakarutlatande intyg) {
         return new Resa(intyg.getResmal(), intyg.getResenar());
     }
 
