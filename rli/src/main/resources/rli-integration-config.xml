@@ -1,7 +1,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:jaxrs="http://cxf.apache.org/jaxrs" xmlns:cxf="http://cxf.apache.org/core"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
+       http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
   <cxf:bus>
     <cxf:features>
@@ -15,12 +16,25 @@
     <property name="mapper" ref="objectMapper"/>
   </bean>
 
+  <bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
+    <property name="schemaHandler" ref="schemaHolder"/>
+  </bean>
+  <bean id="schemaHolder" class="org.apache.cxf.jaxrs.utils.schemas.SchemaHandler">
+    <property name="schemaLocations">
+      <util:list id="theSchemas">
+        <value>classpath:/Reselakarintyg.xsd</value>
+      </util:list>
+    </property>
+  </bean>
+
+
   <jaxrs:server address="/">
     <jaxrs:serviceBeans>
       <bean class="se.inera.certificate.modules.rli.rest.RliModuleApi"/>
     </jaxrs:serviceBeans>
     <jaxrs:providers>
       <ref bean="jacksonJsonProvider"/>
+      <!--<ref bean="jaxbProvider"/>-->
     </jaxrs:providers>
   </jaxrs:server>
 

@@ -1,0 +1,7 @@
+!contents -R2 -g -p -f -h
+
+!1 Validering av ett FK7263 intyg.
+
+|Validera intyg|
+|typ|intyg|personnr|resenar|resmal|fel?|kommentar|
+|fk7263|intyg-1|19490715-3253|Carl Bildt|Washington|[]|Inga fel|

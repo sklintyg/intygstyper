@@ -33,11 +33,11 @@ public class RliModuleApi {
         List<String> errors = new ArrayList<>();
 
         if (intyg.getResenar() == null) {
-            errors.add("Resenär is empty");
+            errors.add("Resenär saknas");
         }
 
         if (intyg.getResmal() == null) {
-            errors.add("Resmal is empty");
+            errors.add("Resmål saknas");
         }
 
         return new Valideringsresultat(errors);

@@ -27,6 +27,6 @@ public class Fk7263ModuleApi {
     @Consumes( MediaType.APPLICATION_XML )
     @Produces(MediaType.APPLICATION_JSON)
     public Valideringsresultat validate(Lakarutlatande lakarutlatande) {
-        return new Valideringsresultat(null);
+        return new Valideringsresultat();
     }
 }

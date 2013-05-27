@@ -1,7 +1,7 @@
 !1 Validering av ett reseläkarintyg.
 
-När Försäkringskassan frågar efter vilka intyg som finns, förväntar de sig följande svar:
-
 |Validera intyg|
 |typ|intyg|personnr|resenar|resmal|fel?|kommentar|
 |rli|intyg-1|19490715-3253|Carl Bildt|Washington|[]|Inga fel|
+|rli|intyg-1|19490715-3253||Washington|[Resenär saknas]|Resenär är obligatorisk|
+|rli|intyg-1|19490715-3253|Carl Bildt||[Resmål saknas]|Resmål är obligatoriskt|

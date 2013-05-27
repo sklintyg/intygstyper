@@ -1,8 +1,11 @@
 package se.inera.certificate.modules.spec
+
 import groovy.xml.MarkupBuilder
 import groovyx.net.http.RESTClient
 
+import static groovyx.net.http.ContentType.JSON
 import static groovyx.net.http.ContentType.XML
+
 /**
  *
  * @author andreaskaltenbach
@@ -20,11 +23,13 @@ class ValideraIntyg {
     public String fel() {
 
         def restClient = new RESTClient(System.getProperty("modules.baseUrl"))
-        restClient.post(
+        def response = restClient.post(
                 path: typ + '/api/valid',
                 body: xmlPayload(),
+                contentType: JSON,
                 requestContentType: XML
         )
+        return response.data.fel
     }
 
     private xmlPayload() {
@@ -51,9 +56,16 @@ class ValideraIntyg {
                     namn { mkp.yield 'Landstinget Norrland' }
                 }
             }
+
+            if (resmal) {
+                resmal { mkp.yield resmal }
+            }
+            if (resenar) {
+                resenar { mkp.yield resenar }
+            }
         }
 
-        println writer.toString()
+        writer.toString()
     }
 
 
