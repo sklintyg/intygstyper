@@ -153,6 +153,32 @@
           </systemProperties>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-xjc-plugin</artifactId>
+        <version>2.6.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>xsdtojava</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <xsdOptions>
+                <xsdOption>
+                  <xsd>src/main/resources/Reselakarintyg.xsd</xsd>
+                  <extension>true</extension>
+                  <bindingFile>${basedir}/src/main/resources/binding.xjb</bindingFile>
+                  <packagename>se.inera.certificate.integration.v1</packagename>
+                </xsdOption>
+              </xsdOptions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+
     </plugins>
   </build>
 </project>
