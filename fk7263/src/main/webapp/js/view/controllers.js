@@ -1,7 +1,8 @@
 'use strict';
 
 /* Controllers */
-FK7263App.controller('ViewCertCtrl', [ '$scope', '$filter', '$location', 'certService', function ViewCertCtrl($scope, $filter, $location, certService) {
+angular.module('controllers.fk7263.ViewCertCtrl', []);
+angular.module('controllers.fk7263.ViewCertCtrl').controller('ViewCertCtrl', [ '$scope', '$filter', '$location', 'certService', function ViewCertCtrl($scope, $filter, $location, certService) {
     $scope.cert = {};
     $scope.doneLoading = false;
     $scope.shouldBeOpen = false;
