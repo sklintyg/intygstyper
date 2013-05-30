@@ -3,6 +3,7 @@ var messages = {
     "sv" : {
         "view" : {
             "label" : {
+                "loggedinas" : "Inloggad som:",
                 "pagetitle" : "Granska och skicka",
                 "pagedescription" : "Här kan du titta på ditt intyg och skicka det till Försäkringskassan. Om du upptäcker några felaktigheter så hör av dig enheten som utfärdade ditt intyg. Du kan även öppna intyget som en PDF och skriva ut och spara.",
                 "inbox" : "INKORGEN",

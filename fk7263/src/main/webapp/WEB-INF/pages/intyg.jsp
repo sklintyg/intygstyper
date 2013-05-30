@@ -47,7 +47,9 @@
     var MODULE_CONFIG = {
         MI_COMMON_API_CONTEXT_PATH : '/moduleapi/certificate/',
         MODULE_CONTEXT_PATH : '<c:out value="${pageContext.request.contextPath}"/>',
-        CERT_ID_PARAMETER : '<c:out value="${id}"/>'
+        CERT_ID_PARAMETER : '<c:out value="${id}"/>',
+        PRINCIPAL_NAME : '<sec:authentication property="principal.username" />', // How do we get the username? cookie? 
+        PROXY_PREFIX : '/fk7263' //maybe from serverside config?
     }
 </script>
 </head>
@@ -55,16 +57,7 @@
 <body ng-app="FK7263ViewCertApp">
   <div class="container">
     <div id="page-header-container">
-      <div id="page-header">
-        <div id="page-header-left"></div>
-        <div id="page-header-right"></div>
-        <a href="<c:url value="/web/start" />"><img id="logo" src="<c:url value="/img/logo_mina_intyg.png" />" /></a>
-        <div id="status">
-          <div class="status-row">
-            <span class="logged-in"><strong><sec:authentication property="principal.username" /></strong></span>
-          </div>
-        </div>
-      </div>
+      <mi-header proxy-prefix="{{MODULE_CONFIG.PROXY_PREFIX}}" user-name="{{MODULE_CONFIG.PRINCIPAL_NAME}}"/>
     </div>
     <div id="content-container">
       <div class="content">
@@ -88,6 +81,7 @@
   
   <!-- Dependencies to common components (loaded from MI web app running at "/" context-->
   <script type="text/javascript" src="/js/modules/message-directive.js"></script>
+  <script type="text/javascript" src="/js/modules/mi-header-directive.js"></script>
   <script type="text/javascript" src="/js/modules/cert-service.js"></script>
 
 </body>
