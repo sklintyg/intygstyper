@@ -61,7 +61,7 @@
         <a href="<c:url value="/web/start" />"><img id="logo" src="<c:url value="/img/logo_mina_intyg.png" />" /></a>
         <div id="status">
           <div class="status-row">
-            <span class="logged-in"><strong><sec:authentication property="principal.username" /></strong>
+            <span class="logged-in"><strong><sec:authentication property="principal.username" /></strong></span>
           </div>
         </div>
       </div>
@@ -83,12 +83,12 @@
   <script type="text/javascript" src='<c:url value="/js/vendor/ui-bootstrap/ui-bootstrap-tpls-0.3.0.js"/>'></script>
 
   <script type="text/javascript" src="<c:url value="/js/view/rli-app.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/view/filters.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/view/controllers.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/view/directives.js"/>"></script>
-
-  <script type="text/javascript" src="<c:url value="/js/view/services.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/view/messages.js"/>"></script>
+
+ <!-- Dependencies to common components (loaded from MI web app running at "/" context-->
+  <script type="text/javascript" src="/js/modules/message-directive.js"></script>
+  <script type="text/javascript" src="/js/modules/cert-service.js"></script>
 
 
 </body>

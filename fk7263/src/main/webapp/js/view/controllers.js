@@ -1,7 +1,7 @@
 'use strict';
 
 /* Controllers */
-RLIApp.controller('ViewCertCtrl', [ '$scope', '$filter', '$location', 'certService', function ViewCertCtrl($scope, $filter, $location, certService) {
+FK7263App.controller('ViewCertCtrl', [ '$scope', '$filter', '$location', 'certService', function ViewCertCtrl($scope, $filter, $location, certService) {
     $scope.cert = {};
     $scope.doneLoading = false;
     $scope.shouldBeOpen = false;
