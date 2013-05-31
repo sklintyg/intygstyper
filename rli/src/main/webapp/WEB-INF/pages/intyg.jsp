@@ -34,9 +34,10 @@
 
 <link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 
-<link rel="stylesheet" href="<c:url value="/css/bootstrap.css"/>">
-<link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
-<link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
+<%-- Dependencies to common static resources components loaded from Mina Intyg "module host" web app running at "/" context --%>
+<link rel="stylesheet" href="/css/bootstrap.css" />
+<link rel="stylesheet" href="/css/inera.css" />
+<link rel="stylesheet" href="/css/inera-certificate.css" />
 
 <script type="text/javascript">
     /**
@@ -57,7 +58,7 @@
 <body ng-app="RLIViewCertApp">
   <div class="container">
     <div id="page-header-container">
-      <mi-header proxy-prefix="{{MODULE_CONFIG.PROXY_PREFIX}}" user-name="{{MODULE_CONFIG.PRINCIPAL_NAME}}"/>
+      <mi-header user-name="{{MODULE_CONFIG.PRINCIPAL_NAME}}" />
     </div>
     <div id="content-container">
       <div class="content">
@@ -70,19 +71,21 @@
     </div>
   </div>
 
+  <%-- Dependencies to common (3rd party) components loaded from MI web app running at "/" context--%>
+  <script type="text/javascript" src="/js/vendor/angular/angular.js"></script>
+  <script type="text/javascript" src="/js/vendor/angular/i18n/angular-locale_sv-se.js"></script>
+  <script type="text/javascript" src="/js/vendor/ui-bootstrap/ui-bootstrap-tpls-0.3.0.js"></script>
 
-  <script type="text/javascript" src="<c:url value="/js/vendor/angular/angular.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/vendor/angular/i18n/angular-locale_sv-se.js"/>"></script>
-  <script type="text/javascript" src='<c:url value="/js/vendor/ui-bootstrap/ui-bootstrap-tpls-0.3.0.js"/>'></script>
+  <%-- Dependencies to common components loaded from MI web app running at "/" context--%>
+  <script type="text/javascript" src="/js/modules/message-directive.js"></script>
+  <script type="text/javascript" src="/js/modules/mi-header-directive.js"></script>
+  <script type="text/javascript" src="/js/modules/cert-service.js"></script>
 
+  <%-- Dependencies to module specific components loaded from this modules web app running at "?" context--%>
   <script type="text/javascript" src="<c:url value="/js/view/rli-app.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/view/controllers.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/view/messages.js"/>"></script>
 
- <!-- Dependencies to common components (loaded from MI web app running at "/" context-->
-  <script type="text/javascript" src="/js/modules/message-directive.js"></script>
-  <script type="text/javascript" src="/js/modules/mi-header-directive.js"></script>  
-  <script type="text/javascript" src="/js/modules/cert-service.js"></script>
 
 
 </body>
