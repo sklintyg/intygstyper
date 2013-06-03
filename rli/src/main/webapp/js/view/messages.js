@@ -1,47 +1,29 @@
 'use strict';
-var messages = {
-    "sv" : {
-        "view" : {
-            "label" : {
-                "loggedinas" : "Inloggad som:",
-                "pagetitle" : "Granska och skicka",
-                "pagedescription" : "Här kan du titta på ditt intyg och skicka det. Om du upptäcker några felaktigheter så hör av dig enheten som utfärdade ditt intyg. Du kan även öppna intyget som en PDF och skriva ut och spara.",
-                "inbox" : "INKORGEN",
-                "archived" : "Arkiverade",
-                "patientname" : "Patientens namn:",
-                "issued" : "Utfärdat:",
-                "civicnumber" : "Personnr:",
-                "issuer" : "Utfärdare",
-                "period" : "Period:",
-                "unit" : "Enhet:",
-                "errorpagetitle" : "Ett problem har uppstått"
-            },
-            "message" : {
-                "certificateloading" : "Hämtar intyg..."
-            }
-        },
-        "certificatetypes" : {
-            "rli" : {
-                "commonname" : "Reseläkarintyg",
-                "typename" : "RLI"
-            },
-        },
-        "button" : {
-            "sendtofk" : "Skicka",
-            "downloadprint" : "Ladda ner / Skriv ut",
-            "send" : "Skicka",
-            "cancel" : "Avbryt",
-            "goback" : "Tillbaka"
-        },
-        "error" : {
-            "generic" : "Kunde inte visa intyget",
-        }
+var rliMessages = {
+    "sv": {
+        "view.label.loggedinas": "Inloggad som:",
+        "view.label.pagetitle": "Granska och skicka",
+        "view.label.pagedescription": "Här kan du titta på ditt intyg och skicka det. Om du upptäcker några felaktigheter så hör av dig enheten som utfärdade ditt intyg. Du kan även öppna intyget som en PDF och skriva ut och spara.",
+        "view.label.inbox": "INKORGEN",
+        "view.label.archived": "Arkiverade",
+        "view.label.patientname": "Patientens namn:",
+        "view.label.issued": "Utfärdat:",
+        "view.label.civicnumber": "Personnr:",
+        "view.label.issuer": "Utfärdare",
+        "view.label.period": "Period:",
+        "view.label.unit": "Enhet:",
+        "view.label.errorpagetitle": "Ett problem har uppstått",
+        "view.message.certificateloading": "Hämtar intyg...",
+        "certificatetypes.rli.commonname": "Reseläkarintyg",
+        "certificatetypes.rli.typename": "RLI",
+        "button.sendtofk": "Skicka",
+        "button.downloadprint": "Ladda ner / Skriv ut",
+        "button.send": "Skicka",
+        "button.cancel": "Avbryt",
+        "button.goback": "Tillbaka",
+        "error.generic": "Kunde inte visa intyget"
     },
-    "en" : {
-        "view" : {
-            "label" : {
-                "pagetitle" : "Show Certificate"
-            }
-        }
+    "en": {
+        "view.label.pagetitle": "Show Certificate"
     }
 };

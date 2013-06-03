@@ -84,9 +84,10 @@
   <script type="text/javascript" src="/js/vendor/ui-bootstrap/ui-bootstrap-tpls-0.3.0.js"></script>
 
   <%-- Dependencies to common components loaded from MI web app running at "/" context--%>
-  <script type="text/javascript" src="/js/modules/message-directive.js"></script>
+  <script type="text/javascript" src="/js/modules/message-module.js"></script>
   <script type="text/javascript" src="/js/modules/mi-header-directive.js"></script>
   <script type="text/javascript" src="/js/modules/cert-service.js"></script>
+  <script type="text/javascript" src="/js/list/messages.js"/>"></script>
 
   <%-- Dependencies to module specific components loaded from this modules web app running at "?" context--%>
   <script type="text/javascript" src="<c:url value="/js/view/rli-app.js"/>"></script>
