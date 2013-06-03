@@ -5,7 +5,7 @@
  * Cant seem to inject rootscope in .config, so for routing parameters, we use
  * the global JS config object for now
  */
-var FK7263App = angular.module('FK7263ViewCertApp', [ 'ui.bootstrap', 'services.certService', 'controllers.fk7263.ViewCertCtrl', 'directives.mi.header', 'directives.message' ]).config(
+var FK7263App = angular.module('FK7263ViewCertApp', [ 'ui.bootstrap', 'services.certService', 'controllers.fk7263.ViewCertCtrl', 'directives.mi', 'directives.message' ]).config(
         [ '$routeProvider', function($routeProvider) {
             $routeProvider.when('/view', {
                 templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/views/view-cert.html',

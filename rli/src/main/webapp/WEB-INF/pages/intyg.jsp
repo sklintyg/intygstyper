@@ -38,6 +38,7 @@
 <link rel="stylesheet" href="/css/bootstrap.css" />
 <link rel="stylesheet" href="/css/inera.css" />
 <link rel="stylesheet" href="/css/inera-certificate.css" />
+<link rel="stylesheet" href="/mvk-topbar/css/styles.css" />
 
 <script type="text/javascript">
     /**
@@ -56,15 +57,18 @@
 </head>
 
 <body ng-app="RLIViewCertApp">
+  <mvk-top-bar></mvk-top-bar>
+
   <div class="container">
-    <div id="page-header-container">
-      <mi-header user-name="{{MODULE_CONFIG.PRINCIPAL_NAME}}" />
-    </div>
-    <div id="navigation-container">
-      <mi-main-navigation></mi-main-navigation>
-    </div>
+
     <div id="content-container">
       <div class="content">
+        <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
+
+        <div id="navigation-container">
+          <mi-main-navigation></mi-main-navigation>
+        </div>
+
         <div class="row-fluid">
           <div id="content-body" class="span12">
             <div ng-view></div>
