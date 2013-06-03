@@ -60,6 +60,9 @@
     <div id="page-header-container">
       <mi-header user-name="{{MODULE_CONFIG.PRINCIPAL_NAME}}" />
     </div>
+    <div id="navigation-container">
+      <mi-main-navigation></mi-main-navigation>
+    </div>
     <div id="content-container">
       <div class="content">
         <div class="row-fluid">
