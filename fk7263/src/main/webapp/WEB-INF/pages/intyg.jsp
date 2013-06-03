@@ -32,11 +32,13 @@
 
 <title><spring:message code="application.name" /></title>
 
-<link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
+<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
 
-<link rel="stylesheet" href="<c:url value="/css/bootstrap.css"/>">
-<link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
-<link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
+<%-- Dependencies to common static resources components loaded from Mina Intyg "module host" web app running at "/" context --%>
+<link rel="stylesheet" href="/css/bootstrap.css" />
+<link rel="stylesheet" href="/css/inera.css" />
+<link rel="stylesheet" href="/css/inera-certificate.css" />
+<link rel="stylesheet" href="/mvk-topbar/css/styles.css" />
 
 <script type="text/javascript">
     /**
@@ -47,27 +49,26 @@
     var MODULE_CONFIG = {
         MI_COMMON_API_CONTEXT_PATH : '/moduleapi/certificate/',
         MODULE_CONTEXT_PATH : '<c:out value="${pageContext.request.contextPath}"/>',
-        CERT_ID_PARAMETER : '<c:out value="${id}"/>'
+        CERT_ID_PARAMETER : '<c:out value="${id}"/>',
+        PRINCIPAL_NAME : '<sec:authentication property="principal.username" />', // How do we get the username? cookie? 
+        PROXY_PREFIX : '/intyg/fk7263' //maybe from serverside config?
     }
 </script>
 </head>
 
-<body ng-app="RLIViewCertApp">
+<body ng-app="FK7263ViewCertApp">
+  <mvk-top-bar></mvk-top-bar>
+
   <div class="container">
-    <div id="page-header-container">
-      <div id="page-header">
-        <div id="page-header-left"></div>
-        <div id="page-header-right"></div>
-        <a href="<c:url value="/web/start" />"><img id="logo" src="<c:url value="/img/logo_mina_intyg.png" />" /></a>
-        <div id="status">
-          <div class="status-row">
-            <span class="logged-in"><strong><sec:authentication property="principal.username" /></strong>
-          </div>
-        </div>
-      </div>
-    </div>
+
     <div id="content-container">
       <div class="content">
+        <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
+
+        <div id="navigation-container">
+          <mi-main-navigation></mi-main-navigation>
+        </div>
+
         <div class="row-fluid">
           <div id="content-body" class="span12">
             <div ng-view></div>
@@ -78,17 +79,23 @@
   </div>
 
 
-  <script type="text/javascript" src="<c:url value="/js/vendor/angular/angular.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/vendor/angular/i18n/angular-locale_sv-se.js"/>"></script>
-  <script type="text/javascript" src='<c:url value="/js/vendor/ui-bootstrap/ui-bootstrap-tpls-0.3.0.js"/>'></script>
+  <%-- Dependencies to common (3rd party) components loaded from MI web app running at "/" context--%>
+  <script type="text/javascript" src="/js/vendor/angular/angular.js"></script>
+  <script type="text/javascript" src="/js/vendor/angular/i18n/angular-locale_sv-se.js"></script>
+  <script type="text/javascript" src="/js/vendor/ui-bootstrap/ui-bootstrap-tpls-0.3.0.js"></script>
 
-  <script type="text/javascript" src="<c:url value="/js/view/rli-app.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/view/filters.js"/>"></script>
+  <%-- Dependencies to common components loaded from MI web app running at "/" context--%>
+  <script type="text/javascript" src="/js/modules/message-module.js"></script>
+  <script type="text/javascript" src="/js/modules/mi-header-directive.js"></script>
+  <script type="text/javascript" src="/js/modules/cert-service.js"></script>
+  <script type="text/javascript" src="/js/list/messages.js"/>"></script>
+
+  <%-- Dependencies to module specific components loaded from this modules web app running at "?" context--%>
+  <script type="text/javascript" src="<c:url value="/js/view/fk7263-app.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/view/controllers.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/view/directives.js"/>"></script>
-
-  <script type="text/javascript" src="<c:url value="/js/view/services.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/view/messages.js"/>"></script>
+
+
 
 
 </body>

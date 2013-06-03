@@ -1,7 +1,8 @@
 'use strict';
 
 /* Controllers */
-RLIApp.controller('ViewCertCtrl', [ '$scope', '$filter', '$location', 'certService', function ViewCertCtrl($scope, $filter, $location, certService) {
+angular.module('controllers.rli.ViewCertCtrl', []);
+angular.module('controllers.rli.ViewCertCtrl').controller('ViewCertCtrl', [ '$scope', '$filter', '$location', 'certService', function ViewCertCtrl($scope, $filter, $location, certService) {
     $scope.cert = {};
     $scope.doneLoading = false;
     $scope.shouldBeOpen = false;

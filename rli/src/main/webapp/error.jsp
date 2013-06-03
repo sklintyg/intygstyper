@@ -34,9 +34,10 @@
 
 <link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 
-<link rel="stylesheet" href="<c:url value="/css/bootstrap.css"/>">
-<link rel="stylesheet" href="<c:url value="/css/inera.css"/>">
-<link rel="stylesheet" href="<c:url value="/css/inera-certificate.css"/>">
+<%-- Dependencies to common static resources components loaded from Mina Intyg "module host" web app running at "/" context --%>
+<link rel="stylesheet" href="/css/bootstrap.css" />
+<link rel="stylesheet" href="/css/inera.css" />
+<link rel="stylesheet" href="/css/inera-certificate.css" />
 </head>
 
 
@@ -46,7 +47,7 @@
       <div id="page-header">
         <div id="page-header-left"></div>
         <div id="page-header-right"></div>
-        <img id="logo" src="<c:url value="/img/logo_mina_intyg.png" />" />
+        <img id="logo" src="/img/logo_mina_intyg.png"/>
       </div>
     </div>
     <div id="content-container">
@@ -54,13 +55,13 @@
         <div class="row-fluid">
           <div id="content-body" class="span12">
 
-                <h1>
-                  <spring:message code="error.generictechproblem.title" />
-                </h1>
-                <div id="noAuth" class="alert alert-error">
-                  <spring:message code="error.generictechproblem.text" />
-                </div>
-  
+            <h1>
+              <spring:message code="error.generictechproblem.title" />
+            </h1>
+            <div id="noAuth" class="alert alert-error">
+              <spring:message code="error.generictechproblem.text" />
+            </div>
+
           </div>
         </div>
       </div>
