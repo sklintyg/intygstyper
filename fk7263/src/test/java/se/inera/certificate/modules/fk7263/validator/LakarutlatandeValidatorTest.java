@@ -41,22 +41,6 @@ public class LakarutlatandeValidatorTest {
     }
 
     @Test
-    public void testMissingPatientFirstName() throws Exception {
-        Lakarutlatande lakarutlatande = lakarutlatande();
-        lakarutlatande.getPatient().setFornamn(null);
-
-        assertEquals(1, new LakarutlatandeValidator(lakarutlatande).validate().size());
-    }
-
-    @Test
-    public void testMissingPatientLastName() throws Exception {
-        Lakarutlatande lakarutlatande = lakarutlatande();
-        lakarutlatande.getPatient().setEfternamn(null);
-
-        assertEquals(1, new LakarutlatandeValidator(lakarutlatande).validate().size());
-    }
-
-    @Test
     public void testMissingComment() throws Exception {
         Lakarutlatande lakarutlatande = lakarutlatande();
         lakarutlatande.setKommentar(null);

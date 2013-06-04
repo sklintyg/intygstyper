@@ -31,10 +31,7 @@
   <xs:complexType name="patientType">
     <xs:sequence>
       <xs:element name="id" type="nonEmptyString"/>
-      <xs:element name="fornamn" type="nonEmptyString"/>
-      <xs:element name="mellannamn" type="xs:string" minOccurs="0"/>
-      <xs:element name="efternamn" type="nonEmptyString"/>
-      <xs:element name="tilltalsnamn" type="xs:string" minOccurs="0"/>
+      <xs:element name="fullstandigtNamn" type="nonEmptyString"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="hosPersonalType">
@@ -45,9 +42,9 @@
   </xs:complexType>
   <xs:complexType name="vardenhetType">
     <xs:sequence>
-      <xs:element name="arbetsplatskod" type="xs:string" minOccurs="0"/>
       <xs:element name="id" type="nonEmptyString"/>
       <xs:element name="namn" type="nonEmptyString"/>
+      <xs:element name="arbetsplatskod" type="xs:string" minOccurs="0"/>
       <xs:element name="postadress" type="nonEmptyString"/>
       <xs:element name="postnummer" type="nonEmptyString"/>
       <xs:element name="postort" type="nonEmptyString"/>
@@ -67,7 +64,7 @@
   <xs:complexType name="aktivitetType">
     <xs:sequence>
       <xs:element name="aktivitetskod" type="aktivitetskod"/>
-      <xs:element name="beskrivning" type="nonEmptyString"/>
+      <xs:element name="beskrivning" type="nonEmptyString" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -149,8 +146,8 @@
 
   <xs:complexType name="bedomtTillstandType">
     <xs:sequence>
-      <xs:element name="beskrivning" type="nonEmptyString"/>
       <xs:element name="tillstandskod" type="nonEmptyString"/>
+      <xs:element name="beskrivning" type="nonEmptyString"/>
     </xs:sequence>
   </xs:complexType>
 

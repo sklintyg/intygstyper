@@ -14,15 +14,12 @@ import se.inera.certificate.integration.v1.Aktivitetskod;
 import se.inera.certificate.integration.v1.ArbetsformagaNedsattningType;
 import se.inera.certificate.integration.v1.ArbetsformagaType;
 import se.inera.certificate.integration.v1.FunktionsnedsattningType;
-import se.inera.certificate.integration.v1.HosPersonalType;
 import se.inera.certificate.integration.v1.Lakarutlatande;
 import se.inera.certificate.integration.v1.Nedsattningsgrad;
 import se.inera.certificate.integration.v1.PatientType;
 import se.inera.certificate.integration.v1.Prognosangivelse;
 import se.inera.certificate.integration.v1.ReferensType;
 import se.inera.certificate.integration.v1.Referenstyp;
-import se.inera.certificate.integration.v1.VardenhetType;
-import se.inera.certificate.integration.v1.VardgivareType;
 import se.inera.certificate.integration.v1.VardkontaktType;
 import se.inera.certificate.integration.v1.Vardkontakttyp;
 
@@ -48,8 +45,6 @@ public class LakarutlatandeValidator {
     public List<String> validate() {
 
         validatePatient(lakarutlatande.getPatient());
-        validateSkapadAvHosPersonal(lakarutlatande.getSkapadAv());
-        validateVardenhet(lakarutlatande.getVardenhet());
         validateNonSmittskydd();
 
         validateRessatt();
@@ -59,61 +54,13 @@ public class LakarutlatandeValidator {
     }
 
     private void validatePatient(PatientType patient) {
-
         // Check format of patient id (has to be a valid personnummer)
         String personNumber = patient.getId();
         if (personNumber == null || !Pattern.matches(PERSON_NUMBER_REGEX, personNumber)) {
             validationErrors.add("Wrong format for person-id! Valid format is YYYYMMDD-XXXX or YYYYMMDD+XXXX.");
         }
-
-        // Get namn for patient - mandatory
-        if (isNullOrEmpty(patient.getFornamn())) {
-            validationErrors.add("No Patient fornamn found or set!");
-        }
-        if (isNullOrEmpty(patient.getEfternamn())) {
-            validationErrors.add("No Patient efternamn found or set!");
-        }
     }
 
-    private void validateSkapadAvHosPersonal(HosPersonalType hosPersonal) {
-
-        // Check lakarnamn - mandatory
-        if (isNullOrEmpty(hosPersonal.getNamn())) {
-            validationErrors.add("No skapadAv fullstandigtNamn found.");
-        }
-    }
-
-    private void validateVardenhet(VardenhetType enhet) {
-
-        // Check enhetsnamn - mandatory
-        if (isNullOrEmpty(enhet.getNamn())) {
-            validationErrors.add("No enhetsnamn found!");
-        }
-
-        // Check enhetsadress - mandatory
-        if (isNullOrEmpty(enhet.getPostadress())) {
-            validationErrors.add("No postadress found for enhet!");
-        }
-        if (isNullOrEmpty(enhet.getPostnummer())) {
-            validationErrors.add("No postnummer found for enhet!");
-        }
-        if (isNullOrEmpty(enhet.getPostort())) {
-            validationErrors.add("No postort found for enhet!");
-        }
-        if (isNullOrEmpty(enhet.getTelefonnummer())) {
-            validationErrors.add("No telefonnummer found for enhet!");
-        }
-
-        validateVardgivare(enhet.getVardgivare());
-    }
-
-    private void validateVardgivare(VardgivareType vardgivare) {
-
-        // Check vardgivarename - mandatory
-        if (isNullOrEmpty(vardgivare.getNamn())) {
-            validationErrors.add("No vardgivarenamn found!");
-        }
-    }
 
     private AktivitetType findAktivitetWithCode(final Aktivitetskod aktivitetskod) {
         return find(lakarutlatande.getAktivitets(), new Predicate<AktivitetType>() {
