@@ -66,7 +66,7 @@
         <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
 
         <div id="navigation-container">
-          <mi-main-navigation></mi-main-navigation>
+          <mi-main-navigation link-prefix="/web/start"></mi-main-navigation>
         </div>
 
         <div class="row-fluid">
