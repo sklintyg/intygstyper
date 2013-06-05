@@ -43,8 +43,6 @@
 <script type="text/javascript">
     /**
      Global JS config/constants for this app, to be used by scripts
-     Maybe this should be refactored into something that is injected into angular 
-     as a sort of config object, maybe in the rootscope?
      **/
     var MODULE_CONFIG = {
         MI_COMMON_API_CONTEXT_PATH : '/moduleapi/certificate/',
@@ -66,7 +64,7 @@
         <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
 
         <div id="navigation-container">
-          <mi-main-navigation></mi-main-navigation>
+          <mi-main-navigation link-prefix="/web/start"></mi-main-navigation>
         </div>
 
         <div class="row-fluid">
@@ -87,9 +85,9 @@
   <script type="text/javascript" src="/js/modules/message-module.js"></script>
   <script type="text/javascript" src="/js/modules/mi-header-directive.js"></script>
   <script type="text/javascript" src="/js/modules/cert-service.js"></script>
-  <script type="text/javascript" src="/js/list/messages.js"/>"></script>
+  <script type="text/javascript" src="/js/modules/common-message-resources.js"></script>
 
-  <%-- Dependencies to module specific components loaded from this modules web app running at "?" context--%>
+  <%-- Dependencies to module specific components loaded from this modules web app running at some context--%>
   <script type="text/javascript" src="<c:url value="/js/view/rli-app.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/view/controllers.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/view/messages.js"/>"></script>

@@ -22,5 +22,6 @@ FK7263App.run([ '$rootScope', 'messageService', function($rootScope, messageServ
     $rootScope.lang = 'sv';
     $rootScope.DEFAULT_LANG = 'sv';
     $rootScope.MODULE_CONFIG = MODULE_CONFIG;
+    messageService.addResources(commonMessageResources);
     messageService.addResources(fk7263Messages);
 } ]);
