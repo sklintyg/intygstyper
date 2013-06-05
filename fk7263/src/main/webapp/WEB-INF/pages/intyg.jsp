@@ -43,15 +43,13 @@
 <script type="text/javascript">
     /**
      Global JS config/constants for this app, to be used by scripts
-     Maybe this should be refactored into something that is injected into angular 
-     as a sort of config object, maybe in the rootscope?
      **/
     var MODULE_CONFIG = {
         MI_COMMON_API_CONTEXT_PATH : '/moduleapi/certificate/',
         MODULE_CONTEXT_PATH : '<c:out value="${pageContext.request.contextPath}"/>',
         CERT_ID_PARAMETER : '<c:out value="${id}"/>',
         PRINCIPAL_NAME : '<sec:authentication property="principal.username" />', // How do we get the username? cookie? 
-        PROXY_PREFIX : '/intyg/fk7263' //maybe from serverside config?
+        PROXY_PREFIX : '/m/fk7263' //maybe from serverside config?
     }
 </script>
 </head>
@@ -88,7 +86,7 @@
   <script type="text/javascript" src="/js/modules/message-module.js"></script>
   <script type="text/javascript" src="/js/modules/mi-header-directive.js"></script>
   <script type="text/javascript" src="/js/modules/cert-service.js"></script>
-  <script type="text/javascript" src="/js/list/messages.js"/>"></script>
+  <script type="text/javascript" src="/js/modules/common-message-resources.js"></script>
 
   <%-- Dependencies to module specific components loaded from this modules web app running at "?" context--%>
   <script type="text/javascript" src="<c:url value="/js/view/fk7263-app.js"/>"></script>

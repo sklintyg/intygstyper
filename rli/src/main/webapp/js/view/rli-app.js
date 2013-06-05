@@ -21,6 +21,7 @@ RLIApp.run([ '$rootScope', 'messageService', function($rootScope, messageService
     $rootScope.lang = 'sv';
     $rootScope.DEFAULT_LANG = 'sv';
     $rootScope.MODULE_CONFIG = MODULE_CONFIG;
+    messageService.addResources(commonMessageResources);
     messageService.addResources(rliMessages);
 
 } ]);
