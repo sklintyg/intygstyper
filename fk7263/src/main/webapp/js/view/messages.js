@@ -14,6 +14,7 @@ var fk7263Messages = {
         "view.label.unit": "Enhet:",
         "view.label.errorpagetitle": "Ett problem har uppstått",
         "view.message.certificateloading": "Hämtar intyg...",
+	    "recipients.label.pagetitle": "Skicka intyg - välj mottagare",
         "certificatetypes.fk7263.commonname": "Läkarintyg",
         "certificatetypes.fk7263.typename": "FK7263",
         "button.sendtofk": "Skicka",
