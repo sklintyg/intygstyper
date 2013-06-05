@@ -10,8 +10,17 @@ var FK7263App = angular.module('FK7263ViewCertApp', [ 'ui.bootstrap', 'services.
             $routeProvider.when('/view', {
                 templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/views/view-cert.html',
                 controller : 'ViewCertCtrl'
+            }).when('/recipients', {
+               templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/views/recipients.html',
+               controller : 'RecipientCertCtrl'
+            }).when('/summary', {
+               templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/views/send-summary.html',
+               controller : 'SummaryCertCtrl'
+            }).when('/sent', {
+               templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/views/sent-cert.html',
+               controller : 'SentCertCtrl'
             }).when('/fel', {
-                templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/views/error.html'
+               templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/views/error.html'
             // no Controller needed?
             }).otherwise({
                 redirectTo : '/view'

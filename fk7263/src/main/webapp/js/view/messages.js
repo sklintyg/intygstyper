@@ -10,6 +10,7 @@ var fk7263Messages = {
         "view.label.period": "Period:",
         "view.label.unit": "Enhet:",
         "view.message.certificateloading": "Hämtar intyg...",
+	    "recipients.label.pagetitle": "Skicka intyg - välj mottagare",
         "button.sendtofk": "Skicka",
         "button.downloadprint": "Ladda ner / Skriv ut",
         "button.send": "Skicka",

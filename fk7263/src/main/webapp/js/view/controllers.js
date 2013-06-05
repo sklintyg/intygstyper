@@ -8,7 +8,9 @@ angular.module('controllers.fk7263.ViewCertCtrl').controller('ViewCertCtrl', [ '
     $scope.shouldBeOpen = false;
 
     $scope.open = function() {
-        $scope.shouldBeOpen = true;
+        //$scope.shouldBeOpen = true;
+
+	    $location.path("/recipients");
     };
 
     $scope.close = function() {
@@ -31,4 +33,8 @@ angular.module('controllers.fk7263.ViewCertCtrl').controller('ViewCertCtrl', [ '
             $location.path("/fel");
         }
     });
+} ]);
+
+angular.module('controllers.fk7263.RecipientCertCtrl').controller('RecipientCertCtrl', [ '$scope', '$filter', '$location', 'certService', function RecipientCertCtrl($scope, $filter, $location, certService) {
+
 } ]);
