@@ -89,9 +89,9 @@
   <script type="text/javascript" src="/js/modules/common-message-resources.js"></script>
 
   <%-- Dependencies to module specific components loaded from this modules web app running at "?" context--%>
-  <script type="text/javascript" src="<c:url value="/js/view/fk7263-app.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/view/controllers.js"/>"></script>
-  <script type="text/javascript" src="<c:url value="/js/view/messages.js"/>"></script>
+  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/js/view/fk7263-app.js"/>"></script>
+  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/js/view/controllers.js"/>"></script>
+  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/js/view/messages.js"/>"></script>
 
 
 
