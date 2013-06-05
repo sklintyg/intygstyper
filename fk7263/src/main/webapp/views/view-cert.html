@@ -100,6 +100,7 @@
 
                 <div class="span6">
                   <span class="tag"><message key="view.label.nedsattning"></message></span>
+
                   <div ng-repeat="aktivitetsbegransning in cert.aktivitetsbegransningar">
                     <div ng-repeat="nedsattning in aktivitetsbegransning.arbetsformaga.arbetsformagaNedsattningar">
 
@@ -112,9 +113,9 @@
               </div>
               <div class="row-fluid">
                 <div class="span6">
-                                  <span class="tag"><message key="view.label.unit"/></span> <span
-                                        id="careunit">{{cert.vardenhet.namn}}</span>
-                                </div>
+                  <span class="tag"><message key="view.label.unit"/></span> <span
+                        id="careunit">{{cert.vardenhet.namn}}</span>
+                </div>
                 <div class="span6">
                   <span class="tag"><message key="view.label.issuer"/></span> <span id="caregiver">{{cert.vardenhet.vardgivare.namn}}</span>
                 </div>
@@ -126,13 +127,26 @@
                 <div class="span6"></div>
               </div>
             </div>
+
             <div class="cert-body">
 
               <div class="body-row">
-                <span class="title">Sjukdomsförlopp</span> <span id="problem-description" class="text">{{cert.sjukdomsfarlopp}}</span>
+                <span class="title"><message key="view.label.smittskydd"/></span>
+                <span class="text"><message key="view.label.{{cert.aktiviteter | smittskydd}}"/></span>
               </div>
 
             </div>
+
+            <div class="cert-body">
+
+              <div class="body-row">
+                <span class="title">Sjukdomsförlopp</span>
+                <span class="text">{{cert.sjukdomsfarlopp}}</span>
+              </div>
+
+            </div>
+
+
           </div>
         </div>
       </div>
