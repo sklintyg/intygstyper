@@ -15,6 +15,11 @@ var fk7263Messages = {
         "button.send": "Skicka",
         "button.cancel": "Avbryt",
         "button.goback": "Tillbaka",
+        "view.label.nedsattning" : "Läkare bedömer att arbetsförmåga är (fält 8b):",
+        "nedsattningsgrad.helt_nedsatt" : "Helt nedsatt",
+        "nedsattningsgrad.nedsatt_med_3_4" : "Nedsatt med 3/4",
+        "nedsattningsgrad.nedsatt_med_1_2" : "Nedsatt med hälften",
+        "nedsattningsgrad.nedsatt_med_1_4" : "Nedsatt med 1/4",
         "error.generic": "Kunde inte visa intyget"
     },
     "en": {
