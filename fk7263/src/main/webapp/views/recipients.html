@@ -8,10 +8,23 @@
   <div class="row-fluid">
     <div class="span7">
       <h1>
-        <message key="recipients.label.pagetitle" />
+        <message key="recipient.label.pagetitle"></message>
       </h1>
       <p>
-        <message key="view.label.pagedescription" />
+      <h2>
+        <message key="recipient.label.recipientlisttitle"></message>
+      </h2>
+      <ul>
+        <li ng-repeat="r in recipientList"><input type="radio" value="{{r.id}}" ng-model="$parent.selectedRecipient" name="recipientSelection" /> {{r.recipientName}}</li>
+      </ul>
+      </p>
+      <h3>
+        <message key="recipient.label.recipientlisttitle.others"></message>
+      </h3>
+      <a ng-href="{{downloadAsPdfLink}}"><message key="recipient.label.downloadlink" target="_blank"></message></a>
+      <p>
+        <input id="confirmRecipientSelectionBtn" type="button" ng-click="confirmRecipientSelection()" value="Nästa" class="btn btn-success" /> <input id="cancelRecipientSelectionBtn" type="button"
+          ng-click="cancel()" value="Avbryt" class="btn btn-link" />
       </p>
     </div>
   </div>

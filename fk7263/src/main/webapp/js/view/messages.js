@@ -1,6 +1,16 @@
 'use strict';
 var fk7263Messages = {
     "sv": {
+        "recipient.label.pagetitle": "Skicka Intyget - välj mottagare",
+        "recipient.label.recipientlisttitle": "Myndigheter och försäkringsbolag",
+        "recipient.label.recipientlisttitle.others" : "Myndigheter och försäkringsbolag",
+        "recipient.label.downloadlink" : "Ladda ner / Skriv ut och skicka per post istället",
+        
+        "confirm.label.pagetitle" : "Skicka Intyget - Kontrollera och bekräfta",
+        "confirm.label.certrowtitle" : "Intyg",
+        "confirm.label.recipienttitle" : "Mottagare",
+        "confirm.label.verifytext" : "Verifiera att uppgifterna ovan stämmer och tryck \"Skicka\"",
+        
         "view.label.pagetitle": "Granska och skicka",
         "view.label.pagedescription": "Här kan du titta på ditt intyg och skicka det till Försäkringskassan. Om du upptäcker några felaktigheter så hör av dig enheten som utfärdade ditt intyg. Du kan även öppna intyget som en PDF och skriva ut och spara.",
         "view.label.patientname": "Patientens namn:",
