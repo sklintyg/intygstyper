@@ -129,22 +129,80 @@
             </div>
 
             <div class="cert-body">
-
               <div class="body-row">
                 <span class="title"><message key="view.label.smittskydd"/></span>
-                <span class="text"><message key="view.label.{{cert.aktiviteter | smittskydd}}"/></span>
+                <span class="text"><message key="view.label.{{smittskydd()}}"/></span>
               </div>
-
             </div>
 
             <div class="cert-body">
-
               <div class="body-row">
-                <span class="title">Sjukdomsförlopp</span>
-                <span class="text">{{cert.sjukdomsfarlopp}}</span>
-              </div>
+                <span class="title"><message key="view.label.diagnosis"/></span>
 
+                <div class="row-fluid">
+                  <div class="span2">
+                    <span class="tag"><message key="view.label.diagnosisCode"/></span>
+                    <span class="text">{{cert.bedomtTillstand.tillstandskod}}</span>
+                  </div>
+                  <div class="span10">
+                    <span class="text">{{cert.bedomtTillstand.beskrivning}}</span>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            <div class="cert-body">
+              <div class="body-row">
+                <span class="title"><message key="view.label.progressofdesease"/></span>
+                <span class="text">{{cert.sjukdomsforlopp}}</span>
+              </div>
+            </div>
+
+            <div class="cert-body">
+              <div class="body-row">
+                <span class="title"><message key="view.label.disabilities"/></span>
+                <span ng-repeat="funktionsnedsattning in cert.funktionsnedsattningar" class="text">
+                  {{funktionsnedsattning.beskrivning}}
+                </span>
+              </div>
+            </div>
+
+            <div class="cert-body">
+              <div class="body-row">
+                <span class="title"><message key="view.label.basedon"/></span>
+
+                <ul>
+                  <li ng-repeat="vardkontakt in cert.vardkontakter">
+                    <span class="text">
+                        <message key="vardkontakt.{{vardkontakt.vardkontakttyp}}"></message>{{vardkontakt.vardkontaktstid | date:'longDate'}}
+                      </span>
+                  </li>
+
+                  <li ng-repeat="referens in cert.referenser">
+                    <span class="text">
+
+                      <message key="referens.{{referens.referenstyp}}" args=""></message>{{referens.datum| date:'longDate'}}
+                    </span>
+
+                    <div ng-show="referens.referenstyp == 'ANNAT'">
+                      <span class="tag"><message key="view.label.comment"></message></span>
+                      <span class="text">{{cert.kommentar}}</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="cert-body">
+               <div class="body-row">
+                 <span class="title"><message key="view.label.limitation"/></span>
+                 <span ng-repeat="aktivitetsbegransning in cert.aktivitetsbegransningar" class="text">
+                     {{aktivitetsbegransning.beskrivning}}
+                   </span>
+               </div>
+             </div>
+
+
 
 
           </div>
