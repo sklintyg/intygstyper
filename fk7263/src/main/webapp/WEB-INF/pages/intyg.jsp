@@ -48,7 +48,7 @@
         MI_COMMON_API_CONTEXT_PATH : '/moduleapi/certificate/',
         MODULE_CONTEXT_PATH : '<c:out value="${pageContext.request.contextPath}"/>',
         CERT_ID_PARAMETER : '<c:out value="${id}"/>',
-        PRINCIPAL_NAME : '<sec:authentication property="principal.username" />', // How do we get the username? cookie? 
+        PRINCIPAL_NAME : '<%=request.getHeader("X-Username")%>', // How do we get the username? cookie?
         PROXY_PREFIX : '/m/fk7263' //maybe from serverside config?
     }
 </script>
@@ -61,7 +61,7 @@
 
     <div id="content-container">
       <div class="content">
-        <mi-header user-name="<sec:authentication property="principal.username" />"></mi-header>
+        <mi-header user-name="<%=request.getHeader("X-Username")%>"></mi-header>
 
         <div id="navigation-container">
           <mi-main-navigation link-prefix="/web/start"></mi-main-navigation>
