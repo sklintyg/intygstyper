@@ -35,10 +35,10 @@
 <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
 
 <%-- Dependencies to common static resources components loaded from Mina Intyg "module host" web app running at "/" context --%>
+<link rel="stylesheet" href="/mvk-topbar/css/styles.css" />
 <link rel="stylesheet" href="/css/bootstrap.css" />
 <link rel="stylesheet" href="/css/inera.css" />
 <link rel="stylesheet" href="/css/inera-certificate.css" />
-<link rel="stylesheet" href="/mvk-topbar/css/styles.css" />
 
 <script type="text/javascript">
     /**
