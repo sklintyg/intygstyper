@@ -84,9 +84,8 @@
 
                   <div ng-repeat="aktivitetsbegransning in cert.aktivitetsbegransningar">
                     <div ng-repeat="nedsattning in aktivitetsbegransning.arbetsformaga.arbetsformagaNedsattningar">
-
                       <message key="nedsattningsgrad.{{nedsattning.nedsattningsgrad}}"></message>
-                      ({{nedsattning.varaktighetFrom | date:'longDate'}} - {{nedsattning.varaktighetTom | date:'longDate'}})
+                      ({{nedsattning.varaktighetFrom | date:'longDate'}}&ndash;{{nedsattning.varaktighetTom | date:'longDate'}})
                     </div>
                   </div>
                 </div>
