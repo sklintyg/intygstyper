@@ -1,17 +1,35 @@
 <div class="row-fluid">
 
   <div id="backnav" class="row-fluid">
-    <a class="backlink" href="/web/start"><message key="button.goback" /></a>
+    <a class="backlink" href ng-click="backToViewCertificate()"><message key="button.goback" /></a>
   </div>
 
   <!-- Content -->
   <div class="row-fluid">
     <div class="span7">
       <h1>
-        <message key="recipients.label.pagetitle" />
+        <message key="recipient.label.pagetitle"></message>
       </h1>
       <p>
-        <message key="view.label.pagedescription" />
+      <h2>
+        <message key="recipient.label.recipientlisttitle"></message>
+      </h2>
+
+      <span ng-repeat="r in recipientList">
+      <label class="radio control-label" for="recipient-{{r.id}}">
+        <input type="radio" value="{{r.id}}" ng-model="$parent.selectedRecipientId" name="recipientSelection" id="recipient-{{r.id}}" />{{r.recipientName}}</label> 
+      </span>
+      
+
+      <h2>
+        <message key="recipient.label.recipientlisttitle.others"></message>
+      </h2>
+      <p>
+      <a ng-href="{{downloadAsPdfLink}}"><message key="recipient.label.downloadlink" target="_blank"></message></a>
+      </p>
+      <p>
+        <input id="confirmRecipientSelectionBtn" type="button" ng-click="confirmRecipientSelection()" value="Nästa" class="btn btn-success" /> <input id="cancelRecipientSelectionBtn" type="button"
+          ng-click="backToViewCertificate()" value="Avbryt" class="btn btn-link" />
       </p>
     </div>
   </div>
