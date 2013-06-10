@@ -11,6 +11,9 @@ var fk7263Messages = {
         "confirm.label.recipienttitle" : "Mottagare",
         "confirm.label.verifytext" : "Verifiera att uppgifterna ovan stämmer och tryck \"Skicka\"",
         
+        "sent.label.pagetitle" : "Intyget skickades",
+        "sent.label.result" : "Intyget har skickats till ",
+                
         "view.label.pagetitle": "Granska och skicka",
         "view.label.pagedescription": "Här kan du titta på ditt intyg och skicka det till Försäkringskassan. Om du upptäcker några felaktigheter så hör av dig enheten som utfärdade ditt intyg. Du kan även öppna intyget som en PDF och skriva ut och spara.",
         "view.label.patientname": "Patientens namn:",

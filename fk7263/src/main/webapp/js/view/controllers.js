@@ -47,44 +47,62 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
 
 angular.module('controllers.fk7263').controller('SentCertWizardCtrl',
         [ '$scope', '$filter', '$location', '$rootScope', 'certService', function SentCertWizardCtrl($scope, $filter, $location, $rootScope, certService) {
+            $scope.doneLoading = true;
             // Get active certificate from rootscope (passed from previous
             // controller)
             $scope.cert = $rootScope.cert;
+            if (!angular.isObject($scope.cert)) {
+                console.log("No certificate in rootScope");
+                $location.path("/fel");
+                return;
+            }
             // expose calculated static link for pdf download
             $scope.downloadAsPdfLink = $scope.MODULE_CONFIG.MI_COMMON_API_CONTEXT_PATH + $scope.MODULE_CONFIG.CERT_ID_PARAMETER + "/pdf";
 
             // Initialize recipient handling
-            // TODO: get recipientlist from serverside config?
-            $scope.selectedRecipient = "fk";
+            $scope.selectedRecipientId = $rootScope.selectedRecipientId || "FK";
+           
             $scope.recipientList = [ {
-                id : "fk",
-                recipientName : "Försäkringskassan"
+                "id" : "FK",
+                "recipientName" : "Försäkringskassan"
             }, {
-                id : "other",
-                recipientName : "Annan mottagare"
+                "id" : "other",
+                "recipientName" : "Annan mottagare"
             } ];
 
-            $scope.getSelectedRecipient = function (id) {
-                angular.forEach($scope.recipientList, function(recipient) {
+            $scope.getRecipientName = function (id) {
+                for(var i=0;i<$scope.recipientList.length;i++) {
+                    var recipient = $scope.recipientList[i];
                     if (recipient.id == id) {
-                        return recipient;
+                        return recipient.recipientName;
                     }
-                });
+                };
             }
 
             $scope.confirmRecipientSelection = function() {
-                // now we have a recipient selected
-                $rootScope.selectedRecipient = $scope.getSelectedRecipient($scope.selectedRecipient);
+                // now we have a recipient selected, set the selection in rootscope
+                $rootScope.selectedRecipientId = $scope.selectedRecipientId;
                 $location.path("/summary");
             }
 
             $scope.confirmAndSend = function() {
-                // now we have a recipient selected
-                $rootScope.selectedRecipient = {
-                    id : $scope.selectedRecipient,
-                    recipientName : getRecipientName($scope.selectedRecipient)
-                }
-                $location.path("/sent");
+                $scope.doneLoading = false;
+                console.log("Loading certificate " + $scope.MODULE_CONFIG.CERT_ID_PARAMETER);
+                certService.sendCertificate($scope.MODULE_CONFIG.CERT_ID_PARAMETER, $scope.selectedRecipientId, function(result) {
+                    $scope.doneLoading = true;
+                    if (result != null) {
+                        console.log("sent ok");
+                        $location.path("/sent");
+                    } else {
+                        // show error view
+                        $location.path("/fel");
+                    }
+                });
+                
+            }
+            
+            $scope.backToViewCertificate = function() {
+                $location.path("/view");
             }
 
         } ]);

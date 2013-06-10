@@ -1,12 +1,12 @@
 <div class="row-fluid">
 
   <div id="backnav" class="row-fluid">
-    <a class="backlink" href="/web/start"><message key="button.goback" /></a>
+    <a class="backlink" href ng-click="backToViewCertificate()"><message key="button.goback" /></a>
   </div>
 
   <!-- Content -->
   <div class="row-fluid">
-    <div class="span7">
+    <div class="span7" ng-show="doneLoading">
       <h1>
         <message key="confirm.label.pagetitle"></message>
       </h1>
@@ -23,13 +23,21 @@
       <h2>
         <message key="confirm.label.recipienttitle"></message>
       </h2>
-      <span class="span12 well">{{selectedRecipient.recipientName}}</span>
+      <span class="span12 well">{{getRecipientName(selectedRecipientId)}}</span>
 
-      <message key="confirm.label.verifytext" target="_blank"></message>
+      <message key="confirm.label.verifytext"></message>
       <p>
-        <input id="confirmAndSendBtn" type="button" ng-click="confirmAndSend" value="Skicka" class="btn btn-success" /> <input id="cancelSendBtn" ng-click="cancel()" value="Avbryt"
+        <input id="confirmAndSendBtn" type="button" ng-click="confirmAndSend()" value="Skicka" class="btn btn-success" /> <input id="cancelSendBtn" ng-click="backToViewCertificate()" value="Avbryt"
           class="btn btn-link" />
       </p>
     </div>
+  </div>
+  <div ng-hide="doneLoading" style="text-align: center; padding: 20px;">
+    <img src="/img/ajax-loader.gif" style="text-align: center;" />
+
+    <p style="text-align: center; color: #64ABC0; margin-top: 20px;">
+      <strong> <message key="common.module.message.sendingcertificate" />
+      </strong>
+    </p>
   </div>
 </div>
