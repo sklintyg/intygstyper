@@ -1,21 +1,20 @@
 package se.inera.certificate.modules.fk7263.rest;
 
-import com.google.common.base.Joiner;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfStamper;
-import se.inera.certificate.integration.v1.Lakarutlatande;
-import se.inera.certificate.modules.fk7263.validator.LakarutlatandeValidator;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
+
+import com.google.common.base.Joiner;
+import com.itextpdf.text.DocumentException;
+import se.inera.certificate.integration.v1.Lakarutlatande;
+import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
+import se.inera.certificate.modules.fk7263.validator.LakarutlatandeValidator;
 
 /**
  * @author andreaskaltenbach
@@ -50,15 +49,7 @@ public class Fk7263ModuleApi {
     @Path( "/pdf" )
     @Consumes( MediaType.APPLICATION_JSON )
     @Produces( "application/pdf" )
-    public byte[] pdf(se.inera.certificate.model.Lakarutlatande intyg) throws IOException, DocumentException {
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-        PdfReader template = new PdfReader("pdf/RFV7263_008_J_003_statisk.pdf");
-        PdfStamper pdfStamper = new PdfStamper(template, out);
-
-        pdfStamper.close();
-
-        return out.toByteArray();
+    public byte[] pdf(Fk7263Intyg intyg) throws IOException, DocumentException {
+        return new PdfGenerator(intyg).getBytes();
     }
 }

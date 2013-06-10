@@ -44,7 +44,7 @@
         <p>
           <message key="view.label.pagedescription"/>
         </p>
-        <form id="view-as-pdf" action="/api/certificate/dfb6d8a7-47f1-4a76-9bf2-7bc712298dc5.pdf" method="get"
+        <form id="view-as-pdf" action="/moduleapi/certificate/{{cert.id}}/pdf" method="get"
               target="_blank">
           <p class="btn-row">
             <button type="button" ng-click="open()" class="btn btn-success">
