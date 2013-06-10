@@ -64,7 +64,7 @@
         <mi-header user-name="<%=request.getHeader("X-Username")%>"></mi-header>
 
         <div id="navigation-container">
-          <mi-main-navigation link-prefix="/web/start"></mi-main-navigation>
+          <mi-main-navigation link-prefix="/web/start" default-active="lista"></mi-main-navigation>
         </div>
 
         <div class="row-fluid">

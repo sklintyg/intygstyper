@@ -14,9 +14,8 @@
       <h2>
         <message key="confirm.label.certrowtitle"></message>
       </h2>
-      <span class="span12 well"> {{cert.skickatSatum}} <message key="certificatetypes.{{cert.typ}}.commonname"></message> <message key="certificatetypes.{{cert.typ}}.typename"></message>
-        {{cert.aktivitetsbegransningar[0].arbetsformaga.arbetsformagaNedsattningar[0].varaktighetFrom | date:'longDate'}} &ndash;
-        {{cert.aktivitetsbegransningar[0].arbetsformaga.arbetsformagaNedsattningar[0].varaktighetTom | date:'longDate'}} 
+      <span class="span12 well"> {{cert.skickatDatum | date:'shortDate'}} <message key="certificatetypes.{{cert.typ}}.commonname"></message> <message key="certificatetypes.{{cert.typ}}.typename"></message>
+        {{cert.aktivitetsbegransningar[0].arbetsformaga.arbetsformagaNedsattningar[0].varaktighetFrom | date:'longDate'}}&ndash;{{cert.aktivitetsbegransningar[0].arbetsformaga.arbetsformagaNedsattningar[0].varaktighetTom | date:'longDate'}} 
         {{cert.vardenhet.namn}}
       </span>
       </p>
