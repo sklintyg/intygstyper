@@ -35,7 +35,6 @@
 <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
 
 <%-- Dependencies to common static resources components loaded from Mina Intyg "module host" web app running at "/" context --%>
-<link rel="stylesheet" href="/mvk-topbar/css/styles.css" />
 <link rel="stylesheet" href="/css/bootstrap.css" />
 <link rel="stylesheet" href="/css/inera.css" />
 <link rel="stylesheet" href="/css/inera-certificate.css" />
@@ -54,7 +53,7 @@
 </script>
 </head>
 
-<body ng-app="FK7263ViewCertApp">
+<body ng-app="FK7263EditCertApp">
   <mvk-top-bar></mvk-top-bar>
 
   <div class="container">
@@ -84,14 +83,14 @@
 
   <%-- Dependencies to common components loaded from MI web app running at "/" context--%>
   <script type="text/javascript" src="/js/modules/message-module.js"></script>
-  <script type="text/javascript" src="/js/modules/mi-header-directive.js"></script>
-  <script type="text/javascript" src="/js/modules/cert-service.js"></script>
+  <!--<script type="text/javascript" src="/js/modules/cert-service.js"></script>
+      -->
   <script type="text/javascript" src="/js/modules/common-message-resources.js"></script>
 
   <%-- Dependencies to module specific components loaded from this modules web app running at "?" context--%>
-  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/js/view/fk7263-app.js"/>"></script>
-  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/js/view/controllers.js"/>"></script>
-  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/js/view/messages.js"/>"></script>
+  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/fk7263-app.js"/>"></script>
+  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/controllers.js"/>"></script>
+  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/messages.js"/>"></script>
 
 
 
