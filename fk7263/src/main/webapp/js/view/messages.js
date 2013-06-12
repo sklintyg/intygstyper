@@ -44,6 +44,9 @@ var fk7263Messages = {
 	    "view.label.clarifications": "13. Övriga upplysningar och förtydliganden",
 	    "view.label.workcodes": "17. Förskrivarkod och arbetsplatskod",
 
+        "view.label.recommendations.contact.jobcenter": "Kontakt med Arbetsförmedlingen",
+        "view.label.recommendations.contact.healthdepartment": "Kontakt med företagshälsovården",
+
         "view.message.certificateloading": "Hämtar intyg...",
 	    "recipients.label.pagetitle": "Skicka intyg - välj mottagare",
         "button.sendtofk": "Skicka",

@@ -140,6 +140,22 @@
               </div>
               <div class="body-row">
 		            <span class="title"><message key="view.label.recommendations" /></span>
+                <span class="text">
+                  <ul>
+                    <li ng-repeat="aktivitet in cert.aktiviteter | filter:{aktivitetskod:'PATIENTEN_BEHOVER_FA_KONTAKT_MED_ARBETSFORMEDLINGEN'}">
+                      <message key="view.label.recommendations.contact.jobcenter"/>
+                    </li>
+                    <li ng-repeat="aktivitet in cert.aktiviteter | filter:{aktivitetskod:'PATIENTEN_BEHOVER_FA_KONTAKT_MED_FORETAGSHALSOVARDEN'}">
+                      <message key="view.label.recommendations.contact.healthdepartment"/>
+                    </li>
+                    <li ng-repeat="aktivitet in cert.aktiviteter | filter:{aktivitetskod:'OVRIGT'}">
+                      {{aktivitet.beskrivning}}
+                    </li>
+
+                  </ul>
+                </span>
+
+
 			          <span class="text"></span>
 		          </div>
         			<div class="body-row">
