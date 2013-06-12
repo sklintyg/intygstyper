@@ -12,7 +12,8 @@ var fk7263Messages = {
         "confirm.label.verifytext" : "Kontrollera att uppgifterna ovan stämmer och tryck \"Skicka\"",
         
         "sent.label.pagetitle" : "Intyget skickades",
-        "sent.label.result" : "Intyget har skickats till ",
+        "sent.label.result" : "Intyget har skickats till:",
+        "sent.button.backtocertificate" : "Tillbaka till Intyget",
                 
         "view.label.pagetitle": "Granska och skicka",
         "view.label.pagedescription": "Här kan du titta på ditt intyg och skicka det till Försäkringskassan. Om du upptäcker några felaktigheter så hör av dig enheten som utfärdade ditt intyg. Du kan även öppna intyget som en PDF och skriva ut och spara.",
@@ -50,6 +51,7 @@ var fk7263Messages = {
         "button.send": "Skicka",
         "button.cancel": "Avbryt",
         "button.goback": "Tillbaka",
+        
         "nedsattningsgrad.helt_nedsatt" : "Helt nedsatt",
         "nedsattningsgrad.nedsatt_med_3_4" : "Nedsatt med 3/4",
         "nedsattningsgrad.nedsatt_med_1_2" : "Nedsatt med hälften",

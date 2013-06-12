@@ -11,7 +11,7 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
             $scope.send = function() {
                 // $scope.shouldBeOpen = true;
 
-                $location.path("/recipients");
+                $location.path("/summary");
             };
 
             $scope.smittskydd = function() {
@@ -59,9 +59,10 @@ angular.module('controllers.fk7263').controller('SentCertWizardCtrl',
             // expose calculated static link for pdf download
             $scope.downloadAsPdfLink = $scope.MODULE_CONFIG.MI_COMMON_API_CONTEXT_PATH + $scope.MODULE_CONFIG.CERT_ID_PARAMETER + "/pdf";
 
-            // Initialize recipient handling
+            // Initialize recipient handling, default to FK
             $scope.selectedRecipientId = $rootScope.selectedRecipientId || "FK";
-           
+            //set selected recipeintID in rootscope to preserve state between controller instance invocations
+            $rootScope.selectedRecipientId = $scope.selectedRecipientId;
             $scope.recipientList = [ {
                 "id" : "FK",
                 "recipientName" : "Försäkringskassan"
@@ -87,7 +88,7 @@ angular.module('controllers.fk7263').controller('SentCertWizardCtrl',
 
             $scope.confirmAndSend = function() {
                 $scope.doneLoading = false;
-                console.log("Loading certificate " + $scope.MODULE_CONFIG.CERT_ID_PARAMETER);
+                console.log("Sending certificate " + $scope.MODULE_CONFIG.CERT_ID_PARAMETER);
                 certService.sendCertificate($scope.MODULE_CONFIG.CERT_ID_PARAMETER, $scope.selectedRecipientId, function(result) {
                     $scope.doneLoading = true;
                     if (result != null) {
