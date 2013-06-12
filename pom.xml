@@ -169,6 +169,12 @@
                   <version>1.0-SNAPSHOT</version>
                   <type>war</type>
                 </artifactItem>
+                <artifactItem>
+                  <groupId>se.inera.webcert</groupId>
+                  <artifactId>webcert</artifactId>
+                  <version>1.0-SNAPSHOT</version>
+                  <type>war</type>
+                </artifactItem>
               </artifactItems>
               <outputDirectory>${project.build.directory}</outputDirectory>
               <stripVersion>true</stripVersion>
@@ -450,6 +456,35 @@
                 <systemProperty>
                   <name>jetty.port</name>
                   <value>8080</value>
+                </systemProperty>
+              </systemProperties>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>wc</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-maven-plugin</artifactId>
+            <configuration>
+              <contextHandlers>
+                <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
+                  <war>${project.build.directory}/se.inera.webcert.webcert.war</war>
+                  <contextPath>/</contextPath>
+                </contextHandler>
+              </contextHandlers>
+              <systemProperties>
+                <systemProperty>
+                  <name>spring.profiles.active</name>
+                  <value>${system.mode}</value>
+                </systemProperty>
+                <systemProperty>
+                  <name>jetty.port</name>
+                  <value>9088</value>
                 </systemProperty>
               </systemProperties>
             </configuration>

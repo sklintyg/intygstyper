@@ -6,28 +6,38 @@
 
   <!-- Content -->
   <div class="row-fluid">
-    <div class="span7" ng-show="doneLoading">
+    <div class="span12" ng-show="doneLoading">
       <h1>
         <message key="confirm.label.pagetitle"></message>
       </h1>
-      <p>
+
       <h2>
         <message key="confirm.label.certrowtitle"></message>
       </h2>
-      <span class="span12 well"> {{cert.skickatDatum | date:'shortDate'}} <message key="certificatetypes.{{cert.typ}}.commonname"></message> <message key="certificatetypes.{{cert.typ}}.typename"></message>
-        {{cert.aktivitetsbegransningar[0].arbetsformaga.arbetsformagaNedsattningar[0].varaktighetFrom | date:'longDate'}}&ndash;{{cert.aktivitetsbegransningar[0].arbetsformaga.arbetsformagaNedsattningar[0].varaktighetTom | date:'longDate'}} 
-        {{cert.vardenhet.namn}}
-      </span>
-      </p>
+      <div class="well cert-summary">
+        <span>{{cert.skickatDatum | date:'shortDate'}}</span> <span><message key="certificatetypes.{{cert.typ}}.commonname"></message></span> <span><message
+            key="certificatetypes.{{cert.typ}}.typename"></message> </span> <span>{{cert.aktivitetsbegransningar[0].arbetsformaga.arbetsformagaNedsattningar[0].varaktighetFrom |
+          date:'longDate'}}&ndash;{{cert.aktivitetsbegransningar[0].arbetsformaga.arbetsformagaNedsattningar[0].varaktighetTom | date:'longDate'}}</span> <span>{{cert.vardenhet.namn}}</span>
+
+      </div>
+
+
       <h2>
         <message key="confirm.label.recipienttitle"></message>
       </h2>
-      <span class="span12 well">{{getRecipientName(selectedRecipientId)}}</span>
-
-      <message key="confirm.label.verifytext"></message>
-      <p>
-        <input id="confirmAndSendBtn" type="button" ng-click="confirmAndSend()" value="Skicka" class="btn btn-success" /> <input id="cancelSendBtn" ng-click="backToViewCertificate()" value="Avbryt"
-          class="btn btn-link" />
+      <div class="well cert-summary">
+        <span>{{getRecipientName(selectedRecipientId)}}</span>
+      </div>
+      <p class="btn-row-desc">
+        <message key="confirm.label.verifytext"></message>
+      </p>
+      <p class="btn-row">
+        <button id="confirmAndSendBtn" type="button" ng-click="confirmAndSend()" class="btn btn-success">
+          <message key="button.send" />
+        </button>
+        <button id="cancelSendBtn" ng-click="backToViewCertificate()" class="btn btn-link">
+          <message key="common.cancel" />
+        </button>
       </p>
     </div>
   </div>

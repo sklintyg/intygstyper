@@ -54,20 +54,13 @@
 </head>
 
 <body ng-app="FK7263EditCertApp">
-  <mvk-top-bar></mvk-top-bar>
 
   <div class="container">
 
     <div id="content-container">
-      <div class="content">
-        <mi-header user-name="<%=request.getHeader("X-Username")%>"></mi-header>
-
-        <div id="navigation-container">
-          <mi-main-navigation link-prefix="/web/start" default-active="lista"></mi-main-navigation>
-        </div>
-
+      <div class="content" style="padding-top: 0px;">
         <div class="row-fluid">
-          <div id="content-body" class="span12">
+          <div id="content-body" class="span12" style="padding-top: 25px;">
             <div ng-view></div>
           </div>
         </div>
@@ -83,9 +76,11 @@
 
   <%-- Dependencies to common components loaded from MI web app running at "/" context--%>
   <script type="text/javascript" src="/js/modules/message-module.js"></script>
-  <!--<script type="text/javascript" src="/js/modules/cert-service.js"></script>
-      -->
+  <script type="text/javascript" src="/js/modules/mi-header-directive.js"></script>
+  <!--<script type="text/javascript" src="/js/modules/cert-service.js"></script> -->
   <script type="text/javascript" src="/js/modules/common-message-resources.js"></script>
+
+
 
   <%-- Dependencies to module specific components loaded from this modules web app running at "?" context--%>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/fk7263-app.js"/>"></script>

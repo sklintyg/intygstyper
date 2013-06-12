@@ -1,6 +1,4 @@
 <div class="row-fluid">
-
-
   <!-- Content -->
   <div class="row-fluid">
     <div class="span12">
@@ -8,11 +6,13 @@
         <message key="sent.label.pagetitle"></message>
       </h1>
       <p>
-        <message key="sent.label.result"></message>
+        <message key="sent.label.result"></message><br>
         <b>{{getRecipientName(selectedRecipientId)}}</b>
       </p>
-      <p>
-        <input id="backToViewCertificateBtn" type="button" ng-click="backToViewCertificate()" value="Tillbaka till Intyget" class="btn btn-success" />
+      <p class="btn-row">
+        <button id="backToViewCertificateBtn" type="button" ng-click="backToViewCertificate()" class="btn btn-success">
+          <message key="sent.button.backtocertificate" />
+        </button>
       </p>
     </div>
   </div>

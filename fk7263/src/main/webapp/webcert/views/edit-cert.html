@@ -1,20 +1,8 @@
 <div class="row-fluid">
-
-  <!-- Loading spinner: visibility defined by $scope.doneLoading  -->
-  <!-- TODO: Make a directive of this for reuse in all places where we show a spinner? -->
-  <div ng-hide="doneLoading" style="text-align: center; padding: 20px;">
-    <img src="/img/ajax-loader.gif" style="text-align: center;" />
-
-    <p style="text-align: center; color: #64ABC0; margin-top: 20px;">
-      <strong> <message key="view.message.certificateloading" />
-      </strong>
-    </p>
-  </div>
-
-  <div ng-show="doneLoading">
-
+  <div>
     <div id="backnav" class="row-fluid">
-      <a class="backlink" href="/web/start"> <message key="button.goback" />
+      <a class="backlink" href="/web/start">
+        <message key="common.goback"/>
       </a>
     </div>
 
@@ -24,30 +12,11 @@
     <div class="row-fluid">
       <div class="span7">
         <h1>
-          <message key="view.label.pagetitle" />
+          <message key="view.label.pagetitle"/>
         </h1>
         <p>
-          <message key="view.label.pagedescription" />
+          <message key="view.label.pagedescription"/>
         </p>
-        <form id="view-as-pdf" action="{{downloadAsPdfLink}}" method="get" target="_blank">
-          <p class="btn-row">
-            <button type="button" ng-click="send()" class="btn btn-success">
-              <message key="button.send" />
-            </button>
-            <button id="downloadprint" type="submit" class="btn btn-inverse">
-              <message key="button.downloadprint" />
-            </button>
-          </p>
-        </form>
-      </div>
-      <div class="span5 eventbox">
-        <h2>Senaste händelsen</h2>
-
-        <p>Inga händelser</p>
-        <!--  <ul>
-        <li>Skickat till Försäkringskassan</li>
-      </ul>
-      <a href="#allEventsModal" role="button" data-toggle="modal" onclick="return false">Visa alla händelser</a> -->
       </div>
     </div>
     <section id="certificate" class="certificate">
@@ -56,119 +25,15 @@
       <div class="row-fluid">
         <div class="span12">
           <div class="cert">
-            <div class="cert-titlebar">
-              <div class="row-fluid">
-                <div class="span6">
-                  <h2>
-                    <span><message key="certificatetypes.{{cert.typ}}.commonname" /></span> <span class="cert-titlebar-type"><message key="certificatetypes.{{cert.typ}}.typename" /></span>
-                  </h2>
-                </div>
-                <div class="span5 issue">
-                  <span><message key="view.label.issued" /></span> <span class="cert-titlebar-value">{{cert.signeringsDatum | date:'longDate'}}</span>
-                </div>
-                <div class="span1 archive">
-                  <a href="#archiveModal" role="button" data-toggle="modal" onclick="return false"><img alt="Arkivera intyg" src="/img/archive-icon.gif" /></a>
-                </div>
-              </div>
-            </div>
-            <div class="cert-header">
-              <div class="row-fluid">
-                <div class="span6">
-                  <span class="tag"><message key="view.label.patientname" /></span> <span id="patient-name">{{cert.patient.fullstandigtNamn}}</span> <span class="tag"><message
-                      key="view.label.civicnumber" /></span> <span id="patient-crn">{{cert.patient.id}}</span>
-                </div>
-
-
-                <div class="span6">
-                  <span class="tag"><message key="view.label.nedsattning"></message></span>
-
-                  <div ng-repeat="aktivitetsbegransning in cert.aktivitetsbegransningar">
-                    <div ng-repeat="nedsattning in aktivitetsbegransning.arbetsformaga.arbetsformagaNedsattningar">
-                      <message key="nedsattningsgrad.{{nedsattning.nedsattningsgrad}}"></message>
-                      ({{nedsattning.varaktighetFrom | date:'longDate'}}&ndash;{{nedsattning.varaktighetTom | date:'longDate'}})
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row-fluid">
-                <div class="span6">
-                  <span class="tag"><message key="view.label.unit" /></span> <span id="careunit">{{cert.vardenhet.namn}}</span>
-                </div>
-                <div class="span6">
-                  <span class="tag"><message key="view.label.issuer" /></span> <span id="caregiver">{{cert.vardenhet.vardgivare.namn}}</span>
-                </div>
-              </div>
-              <div class="row-fluid">
-                <div class="span6">
-                  <span class="tag"><message key="view.label.period" /></span> <span id="certificate-period">{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}} </span>
-                </div>
-                <div class="span6"></div>
-              </div>
-            </div>
-
             <div class="cert-body">
               <div class="body-row">
-                <span class="title"><message key="view.label.smittskydd" /></span> <span class="text"><message key="view.label.{{smittskydd()}}" /></span>
+                <span class="title"><message key="view.label.header1"/></span> <span class="text" style="padding-bottom: 10px;"><message key="view.label.field1"/></span>
+                <div style="padding-left: 40px;"><input type="text" name="field1"/></div>
+                <span class="text" style="padding-bottom: 10px;"><message key="view.label.field2"/></span>
+                <div style="padding-left: 40px;"><input type="text" name="field1"/></div>
+                <span class="text">&nbsp;</span>
               </div>
             </div>
-
-            <div class="cert-body">
-              <div class="body-row">
-                <span class="title"><message key="view.label.diagnosis" /></span>
-
-                <div class="row-fluid">
-                  <div class="span2">
-                    <span class="tag"><message key="view.label.diagnosisCode" /></span> <span class="text">{{cert.bedomtTillstand.tillstandskod}}</span>
-                  </div>
-                  <div class="span10">
-                    <span class="text">{{cert.bedomtTillstand.beskrivning}}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="cert-body">
-              <div class="body-row">
-                <span class="title"><message key="view.label.progressofdesease" /></span> <span class="text">{{cert.sjukdomsforlopp}}</span>
-              </div>
-            </div>
-
-            <div class="cert-body">
-              <div class="body-row">
-                <span class="title"><message key="view.label.disabilities" /></span> <span ng-repeat="funktionsnedsattning in cert.funktionsnedsattningar" class="text">
-                  {{funktionsnedsattning.beskrivning}} </span>
-              </div>
-            </div>
-
-            <div class="cert-body">
-              <div class="body-row">
-                <span class="title"><message key="view.label.basedon" /></span>
-
-                <ul>
-                  <li ng-repeat="vardkontakt in cert.vardkontakter"><span class="text"> <message key="vardkontakt.{{vardkontakt.vardkontakttyp}}"></message>{{vardkontakt.vardkontaktstid |
-                      date:'longDate'}}
-                  </span></li>
-
-                  <li ng-repeat="referens in cert.referenser"><span class="text"> <message key="referens.{{referens.referenstyp}}" args=""></message>{{referens.datum| date:'longDate'}}
-                  </span>
-
-                    <div ng-show="referens.referenstyp == 'ANNAT'">
-                      <span class="tag"><message key="view.label.comment"></message></span> <span class="text">{{cert.kommentar}}</span>
-                    </div></li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="cert-body">
-              <div class="body-row">
-                <span class="title"><message key="view.label.limitation" /></span> <span ng-repeat="aktivitetsbegransning in cert.aktivitetsbegransningar" class="text">
-                  {{aktivitetsbegransning.beskrivning}} </span>
-              </div>
-            </div>
-
-
-
-
           </div>
         </div>
       </div>
