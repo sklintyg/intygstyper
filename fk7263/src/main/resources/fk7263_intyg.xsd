@@ -38,7 +38,7 @@
     <xs:sequence>
       <xs:element name="id" type="nonEmptyString"/>
       <xs:element name="namn" type="nonEmptyString"/>
-      <xs:element name="forskrivarkod" type="xs:string"/>
+      <xs:element name="forskrivarkod" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="vardenhetType">
