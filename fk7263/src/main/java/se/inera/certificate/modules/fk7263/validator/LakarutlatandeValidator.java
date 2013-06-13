@@ -1,5 +1,9 @@
 package se.inera.certificate.modules.fk7263.validator;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Iterables.find;
 import static se.inera.certificate.integration.v1.Referenstyp.ANNAT;
@@ -11,21 +15,15 @@ import static se.inera.certificate.integration.v1.Vardkontakttyp.MIN_UNDERSOKNIN
 import com.google.common.base.Predicate;
 import se.inera.certificate.integration.v1.AktivitetType;
 import se.inera.certificate.integration.v1.Aktivitetskod;
-import se.inera.certificate.integration.v1.ArbetsformagaNedsattningType;
 import se.inera.certificate.integration.v1.ArbetsformagaType;
 import se.inera.certificate.integration.v1.FunktionsnedsattningType;
 import se.inera.certificate.integration.v1.Lakarutlatande;
-import se.inera.certificate.integration.v1.Nedsattningsgrad;
 import se.inera.certificate.integration.v1.PatientType;
 import se.inera.certificate.integration.v1.Prognosangivelse;
 import se.inera.certificate.integration.v1.ReferensType;
 import se.inera.certificate.integration.v1.Referenstyp;
 import se.inera.certificate.integration.v1.VardkontaktType;
 import se.inera.certificate.integration.v1.Vardkontakttyp;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * @author andreaskaltenbach
@@ -159,17 +157,6 @@ public class LakarutlatandeValidator {
             return;
         }
     }
-
-    private ArbetsformagaNedsattningType findArbetsformaga(List<ArbetsformagaNedsattningType> arbetsformagaNedsattning, final Nedsattningsgrad nedsattningsgrad) {
-
-        return find(arbetsformagaNedsattning, new Predicate<ArbetsformagaNedsattningType>() {
-            @Override
-            public boolean apply(ArbetsformagaNedsattningType nedsattning) {
-                return nedsattning.getNedsattningsgrad() == nedsattningsgrad;
-            }
-        }, null);
-    }
-
 
     private void validateRessatt() {
         // Fält 11 - optional
