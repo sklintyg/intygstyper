@@ -9,14 +9,11 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
             $scope.doneLoading = false;
 
             $scope.send = function() {
-                // $scope.shouldBeOpen = true;
-
                 $location.path("/summary");
             };
 
             $scope.smittskydd = function() {
                 if (angular.isObject($scope.cert.aktiviteter)) {
-
                     // collect all smittskydd actitivies
                     var smittskyddActivities = $scope.cert.aktiviteter.filter(function(aktivitet) {
                         return aktivitet.aktivitetskod == "AVSTANGNING_ENLIGT_SM_L_PGA_SMITTA";
@@ -40,20 +37,20 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
                     $rootScope.cert = result;
                 } else {
                     // show error view
-                    $location.path("/fel");
+                    $location.path("/fel/certnotfound");
                 }
             });
         } ]);
 
 angular.module('controllers.fk7263').controller('SentCertWizardCtrl',
-        [ '$scope', '$filter', '$location', '$rootScope', 'certService', function SentCertWizardCtrl($scope, $filter, $location, $rootScope, certService) {
+        [ '$scope', '$filter', '$location', '$rootScope', '$routeParams', 'certService', function SentCertWizardCtrl($scope, $filter, $location, $rootScope, $routeParams, certService) {
             $scope.doneLoading = true;
             // Get active certificate from rootscope (passed from previous
             // controller)
             $scope.cert = $rootScope.cert;
             if (!angular.isObject($scope.cert)) {
                 console.log("No certificate in rootScope");
-                $location.path("/fel");
+                $location.path("/fel/certnotfound");
                 return;
             }
             // expose calculated static link for pdf download
@@ -66,10 +63,7 @@ angular.module('controllers.fk7263').controller('SentCertWizardCtrl',
             $scope.recipientList = [ {
                 "id" : "FK",
                 "recipientName" : "Försäkringskassan"
-            }, {
-                "id" : "other",
-                "recipientName" : "Annan mottagare"
-            } ];
+            }];
 
             $scope.getRecipientName = function (id) {
                 for(var i=0;i<$scope.recipientList.length;i++) {
@@ -91,12 +85,12 @@ angular.module('controllers.fk7263').controller('SentCertWizardCtrl',
                 console.log("Sending certificate " + $scope.MODULE_CONFIG.CERT_ID_PARAMETER);
                 certService.sendCertificate($scope.MODULE_CONFIG.CERT_ID_PARAMETER, $scope.selectedRecipientId, function(result) {
                     $scope.doneLoading = true;
-                    if (result != null) {
-                        console.log("sent ok");
+                    if (result != null && result.resultCode == "sent") {
+                        console.log("sent successfully");
                         $location.path("/sent");
                     } else {
                         // show error view
-                        $location.path("/fel");
+                        $location.path("/fel/couldnotsend");
                     }
                 });
                 
@@ -105,5 +99,14 @@ angular.module('controllers.fk7263').controller('SentCertWizardCtrl',
             $scope.backToViewCertificate = function() {
                 $location.path("/view");
             }
+
+        } ]);
+
+angular.module('controllers.fk7263').controller('ErrorCtrl',
+        [ '$scope', '$routeParams', function SentCertWizardCtrl($scope, $routeParams) {
+
+            //default if no errorCode is given in routeparams
+            $scope.errorCode = $routeParams.errorCode || "generic";
+            
 
         } ]);
