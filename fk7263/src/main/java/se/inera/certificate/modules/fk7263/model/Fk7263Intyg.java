@@ -164,7 +164,6 @@ public class Fk7263Intyg extends Lakarutlatande {
         return null;
     }
 
-
     public String getArbetsformagaHeltNedsattFrom() {
         return getArbetsformagaNedsattFrom(HELT_NEDSATT);
     }
@@ -205,17 +204,5 @@ public class Fk7263Intyg extends Lakarutlatande {
     private String getArbetsformagaNedsattTom(final Nedsattningsgrad nedsattningsgrad) {
         ArbetsformagaNedsattning arbetsformaga = getArbetsformaga(nedsattningsgrad);
         return arbetsformaga != null ? arbetsformaga.getVaraktighetTom().toString(DATE_PATTERN) : null;
-    }
-
-    public String getForskrivarkodOchArbetsplatskod() {
-        return nullToEmpty(getSkapadAv().getForskrivarkod(), "-") + getVardenhet().getArbetsplatskod();
-    }
-
-    private String nullToEmpty(String value, String separator) {
-        if (value == null) {
-            return "";
-        } else {
-            return value + separator;
-        }
     }
 }
