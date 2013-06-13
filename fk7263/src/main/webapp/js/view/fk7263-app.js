@@ -21,7 +21,7 @@ var FK7263App = angular.module('FK7263ViewCertApp', [ 'ui.bootstrap', 'services.
                controller : 'SentCertWizardCtrl'
             }).when('/fel/:errorCode', {
                templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/views/error.html',
-               controller : 'SentCertWizardCtrl'
+               controller : 'ErrorCtrl'
             }).otherwise({
                 redirectTo : '/view'
             });

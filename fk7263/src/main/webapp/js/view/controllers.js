@@ -105,7 +105,7 @@ angular.module('controllers.fk7263').controller('SentCertWizardCtrl',
 angular.module('controllers.fk7263').controller('ErrorCtrl',
         [ '$scope', '$routeParams', function SentCertWizardCtrl($scope, $routeParams) {
 
-            //default if no errorCode is given in routeparams
+            //set a default if no errorCode is given in routeparams
             $scope.errorCode = $routeParams.errorCode || "generic";
             
 
