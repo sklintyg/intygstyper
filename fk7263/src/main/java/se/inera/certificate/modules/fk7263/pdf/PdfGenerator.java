@@ -190,7 +190,7 @@ public class PdfGenerator {
 
         fillTravel();
 
-        setField(CONTACT_WITH_FK, intyg.isKontaktMedForsakringskassanAktuell());
+        setField(CONTACT_WITH_FK, intyg.getKontaktMedForsakringskassanAktuell() != null);
 
         fillPrognose();
 
@@ -208,10 +208,10 @@ public class PdfGenerator {
     }
 
     private void fillTravel() {
-        if (intyg.isForandratRessattAktuellt()) {
+        if (intyg.getForandratRessattAktuellt() != null) {
             checkField(RECOMMENDATION_TRAVEL_YES);
         }
-        if (intyg.isForandratRessattEjAktuellt()) {
+        if (intyg.getForandratRessattEjAktuellt() != null) {
             checkField(RECOMMENDATION_TRAVEL_NO);
         }
     }
@@ -264,15 +264,15 @@ public class PdfGenerator {
     }
 
     private void fillRehabilitation() {
-        setField(RECOMMENDATION_REHAB_YES, intyg.isArbetsinriktadRehabiliteringAktuell());
-        setField(RECOMMENDATION_REHAB_NO, intyg.isArbetsinriktadRehabiliteringEjAktuell());
-        setField(RECOMMENDATION_REHAB_UNKNOWN, intyg.isArbetsinriktadRehabiliteringEjBedombar());
+        setField(RECOMMENDATION_REHAB_YES, intyg.getArbetsinriktadRehabiliteringAktuell() != null);
+        setField(RECOMMENDATION_REHAB_NO, intyg.getArbetsinriktadRehabiliteringEjAktuell() != null);
+        setField(RECOMMENDATION_REHAB_UNKNOWN, intyg.getArbetsinriktadRehabiliteringEjBedombar() != null);
     }
 
     private void fillRecommendations() {
-        setField(RECOMMENDATIONS_CONTACT_AF, intyg.isRekommenderarKontaktMedArbetsformedlingen());
-        setField(RECOMMENDATIONS_CONTACT_COMPANY_CARE, intyg.isRekommenderarKontaktMedForetagshalsovarden());
-        if (intyg.isRekommenderarOvrigt()) {
+        setField(RECOMMENDATIONS_CONTACT_AF, intyg.getRekommenderarKontaktMedArbetsformedlingen() != null);
+        setField(RECOMMENDATIONS_CONTACT_COMPANY_CARE, intyg.getRekommenderarKontaktMedForetagshalsovarden() != null);
+        if (intyg.getRekommenderarOvrigt() != null) {
             checkField(RECOMMENDATIONS_OTHER);
             fillText(RECOMMENDATIONS_OTHER_TEXT, intyg.getRekommenderarOvrigtText());
         }
@@ -337,7 +337,7 @@ public class PdfGenerator {
     }
 
     private void fillIsSuspenseDueToInfection() {
-        setField(SUSPENSION_DUE_TO_INFECTION, intyg.isAvstangningEnligtSmittskyddslagen());
+        setField(SUSPENSION_DUE_TO_INFECTION, intyg.getAvstangningEnligtSmittskyddslagen() != null);
     }
 
     private void fillSignerCodes() {

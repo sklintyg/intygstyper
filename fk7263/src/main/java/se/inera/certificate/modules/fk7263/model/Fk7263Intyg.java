@@ -1,16 +1,7 @@
 package se.inera.certificate.modules.fk7263.model;
 
 import static com.google.common.collect.Iterables.find;
-import static se.inera.certificate.model.Aktivitetskod.ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL;
-import static se.inera.certificate.model.Aktivitetskod.ARBETSLIVSINRIKTAD_REHABILITERING_AR_EJ_AKTUELL;
-import static se.inera.certificate.model.Aktivitetskod.AVSTANGNING_ENLIGT_SM_L_PGA_SMITTA;
-import static se.inera.certificate.model.Aktivitetskod.FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT;
-import static se.inera.certificate.model.Aktivitetskod.FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT;
-import static se.inera.certificate.model.Aktivitetskod.GAR_EJ_ATT_BEDOMMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL;
-import static se.inera.certificate.model.Aktivitetskod.KONTAKT_MED_FORSAKRINGSKASSAN_AR_AKTUELL;
 import static se.inera.certificate.model.Aktivitetskod.OVRIGT;
-import static se.inera.certificate.model.Aktivitetskod.PATIENTEN_BEHOVER_FA_KONTAKT_MED_ARBETSFORMEDLINGEN;
-import static se.inera.certificate.model.Aktivitetskod.PATIENTEN_BEHOVER_FA_KONTAKT_MED_FORETAGSHALSOVARDEN;
 import static se.inera.certificate.model.Nedsattningsgrad.HELT_NEDSATT;
 import static se.inera.certificate.model.Nedsattningsgrad.NEDSATT_MED_1_2;
 import static se.inera.certificate.model.Nedsattningsgrad.NEDSATT_MED_1_4;
@@ -53,46 +44,6 @@ public class Fk7263Intyg extends Lakarutlatande {
 
     public String getSigneringsDatumAsString() {
         return getSigneringsDatum().toString(DATE_PATTERN);
-    }
-
-    public boolean isForandratRessattAktuellt() {
-        return getAktivitet(FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT) != null;
-    }
-
-    public boolean isForandratRessattEjAktuellt() {
-        return getAktivitet(FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT) != null;
-    }
-
-    public boolean isKontaktMedForsakringskassanAktuell() {
-        return getAktivitet(KONTAKT_MED_FORSAKRINGSKASSAN_AR_AKTUELL) != null;
-    }
-
-    public boolean isArbetsinriktadRehabiliteringAktuell() {
-        return getAktivitet(ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL) != null;
-    }
-
-    public boolean isArbetsinriktadRehabiliteringEjAktuell() {
-        return getAktivitet(ARBETSLIVSINRIKTAD_REHABILITERING_AR_EJ_AKTUELL) != null;
-    }
-
-    public boolean isArbetsinriktadRehabiliteringEjBedombar() {
-        return getAktivitet(GAR_EJ_ATT_BEDOMMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL) != null;
-    }
-
-    public boolean isAvstangningEnligtSmittskyddslagen() {
-        return getAktivitet(AVSTANGNING_ENLIGT_SM_L_PGA_SMITTA) != null;
-    }
-
-    public boolean isRekommenderarKontaktMedArbetsformedlingen() {
-        return getAktivitet(PATIENTEN_BEHOVER_FA_KONTAKT_MED_ARBETSFORMEDLINGEN) != null;
-    }
-
-    public boolean isRekommenderarKontaktMedForetagshalsovarden() {
-        return getAktivitet(PATIENTEN_BEHOVER_FA_KONTAKT_MED_FORETAGSHALSOVARDEN) != null;
-    }
-
-    public boolean isRekommenderarOvrigt() {
-        return getAktivitet(OVRIGT) != null;
     }
 
     public String getRekommenderarOvrigtText() {
@@ -245,7 +196,6 @@ public class Fk7263Intyg extends Lakarutlatande {
     public String getArbetsformagaNedsattMed_3_4Tom() {
         return getArbetsformagaNedsattTom(NEDSATT_MED_3_4);
     }
-
 
     private String getArbetsformagaNedsattFrom(final Nedsattningsgrad nedsattningsgrad) {
         ArbetsformagaNedsattning arbetsformaga = getArbetsformaga(nedsattningsgrad);
