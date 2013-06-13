@@ -27,6 +27,7 @@ var fk7263Messages = {
         "view.label.smittskydd": "1. Avstängning enligt smittskyddslagen på grund av smitta",
         "view.label.yes": "Ja",
         "view.label.no": "Nej",
+        "view.label.partialyes": "Ja, delvis",
         "view.label.diagnosis": "2. Diagnos/dianoser för sjukdom som orsakar nedsatt arbetsförmåga",
         "view.label.diagnosiscode": "Diagnoskod",
         "view.label.progressofdesease": "3. Aktuellt sjukdomförlopp",
@@ -38,21 +39,23 @@ var fk7263Messages = {
         "view.label.plannedtreatment": "6b. Planerad eller pågående behandling eller åtgärd",
         "view.label.plannedtreatment.healthcare": "Inom sjukvården:",
         "view.label.plannedtreatment.other": "Annan åtgärd:",
-
         "view.label.workrehab": "Är arbetslivsinriktad rehabilitering aktuell?",
         "view.label.unjudgeable": "Går inte att bedöma",
-        "view.label.patientworkcapacity": "9. Patientens arbetsförmåga bedöms nedsatt längre tid än den som det Försäkringsmedicinska beslutssötdet anger, därför att:",
+        "view.label.patientworkcapacity": "Patientens arbetsförmåga bedöms i förhållande till",
+        "view.label.patientworkcapacity.currentwork": "Nuvarande arbete: ",
+        "view.label.patientworkcapacity.unemployed": "Arbetslöshet - att utföra arbete på den reguljära arbetsmarknaden",
+        "view.label.patientworkcapacity.parentalleave": "föräldraledighet med föräldrapenning - att vårda sitt barn",
+        "view.label.patientworkcapacityjudgement": "9. Patientens arbetsförmåga bedöms nedsatt längre tid än den som det Försäkringsmedicinska beslutssötdet anger, därför att:",
         "view.label.prognosis": "10. Prognos - kommer patienten att få tillbaka sin arbetsförmåga i nuvarande arbete? (Gäller inte arbetslösa)",
         "view.label.othertransport": "11. Kan resor till och från arbetet med annat färdsätt än normalt göra det möjligt för patienten att återgå i arbete?",
         "view.label.fkcontact": "12. Kontakt önskas med Försäkringskassan",
-        "view.label.clarifications": "13. Övriga upplysningar och förtydliganden",
         "view.label.workcodes": "17. Förskrivarkod och arbetsplatskod",
-
         "view.label.recommendations.contact.jobcenter": "Kontakt med Arbetsförmedlingen",
         "view.label.recommendations.contact.healthdepartment": "Kontakt med företagshälsovården",
 
-
-
+        "view.label.confirmedby": "Ovanstående uppgifter och bedömningar har bekräftats av:",
+        "view.label.date": "Datum:",
+        "view.label.contactinfo": "Namnförtydligande, mottagningens adress och telefon:",
 
         "view.message.certificateloading": "Hämtar intyg...",
         "recipients.label.pagetitle": "Skicka intyg - välj mottagare",
