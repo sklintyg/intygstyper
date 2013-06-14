@@ -115,14 +115,13 @@
 
 <div class="cert-body">
   <div class="body-row">
-    <span class="title"><message key="view.label.smittskydd"/></span> <span class="text"><message
-    key="view.label.{{smittskydd()}}"/></span>
+    <span class="title"><message key="view.label.smittskydd"/></span>
+    <span class="text"><message key="view.label.{{smittskydd()}}"/></span>
   </div>
 
   <div class="body-row">
     <span class="title"><message key="view.label.diagnosis"/></span>
-            <span class="text">{{cert.bedomtTillstand.beskrivning}} (<span class="tag"><message
-              key="view.label.diagnosisCode"/></span> {{cert.bedomtTillstand.tillstandskod}})</span>
+    <span class="text">{{cert.bedomtTillstand.beskrivning}} (<span class="tag"><message key="view.label.diagnosisCode"/></span> {{cert.bedomtTillstand.tillstandskod}})</span>
   </div>
 
   <div class="body-row">
@@ -211,18 +210,19 @@
 
   <div class="body-row">
     <span class="title"><message key="view.label.patientworkcapacity"/></span>
-    <span class="text"
-          ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.sysselsattningar.indexOf('NUVARANDE_ARBETE') != -1">
-      <message key="view.label.patientworkcapacity.currentwork"></message>
-        {{cert.aktivitetsbegransningar[0].arbetsformaga.arbetsuppgift}}
-    </span>
-    <span class="text"
-          ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.sysselsattningar.indexOf('ARBETSLOSHET') != -1">
-      <message key="view.label.patientworkcapacity.unemployed"/>
-    </span>
-    <span class="text"
-          ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.sysselsattningar.indexOf('FORALDRALEDIGHET') != -1">
-      <message key="view.label.patientworkcapacity.parentalleave"/>
+    <span class="text">
+      <ul>
+        <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.sysselsattningar.indexOf('NUVARANDE_ARBETE') != -1">
+          <message key="view.label.patientworkcapacity.currentwork"></message>
+          {{cert.aktivitetsbegransningar[0].arbetsformaga.arbetsuppgift}}
+        </li>
+        <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.sysselsattningar.indexOf('ARBETSLOSHET') != -1">
+          <message key="view.label.patientworkcapacity.unemployed"/>
+        </li>
+        <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.sysselsattningar.indexOf('FORALDRALEDIGHET') != -1">
+          <message key="view.label.patientworkcapacity.parentalleave"/>
+        </li>
+      </ul>
     </span>
   </div>
 
@@ -233,23 +233,22 @@
 
   <div class="body-row">
     <span class="title"><message key="view.label.prognosis"/></span>
-
-    <span class="text"
-          ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.prognosangivelse.indexOf('ATERSTALLAS_HELT') != -1">
-      <message key="view.label.yes"/>
-    </span>
-    <span class="text"
-          ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.prognosangivelse.indexOf('ATERSTALLAS_DELVIS') != -1">
-      <message key="view.label.partialyes"/>
-    </span>
-    <span class="text"
-          ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.prognosangivelse.indexOf('INTE_ATERSTALLAS') != -1">
-      <message key="view.label.no"/>
-    </span>
-    <span class="text"
-          ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.prognosangivelse.indexOf('DET_GAR_INTE_ATT_BEDOMMA') != -1">
-      <message key="view.label.unjudgeable"></message>
-      <span class="tag"><message key="view.label.comment"></message></span>{{cert.kommentar}}
+    <span class="text">
+      <ul>
+          <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.prognosangivelse.indexOf('ATERSTALLAS_HELT') != -1">
+            <message key="view.label.yes"/>
+          </li>
+          <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.prognosangivelse.indexOf('ATERSTALLAS_DELVIS') != -1">
+            <message key="view.label.partialyes"/>
+          </li>
+          <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.prognosangivelse.indexOf('INTE_ATERSTALLAS') != -1">
+            <message key="view.label.no"/>
+          </li>
+          <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.prognosangivelse.indexOf('DET_GAR_INTE_ATT_BEDOMMA') != -1">
+            <message key="view.label.unjudgeable"></message>
+            <span class="tag"><message key="view.label.comment"></message></span>{{cert.kommentar}}
+          </li>
+      </ul>
     </span>
   </div>
 
@@ -271,23 +270,28 @@
   </div>
 
   <div class="body-row">
-    <span class="title"><message key="view.label.workcodes"/></span>
-    <span class="text">{{cert.forskrivarkodOchArbetsplatskod}}</span>
+    <span class="title "><message key="view.label.workcodes"/></span>
+    <span class="text" ng-show="cert.forskrivarkodOchArbetsplatskod != null">{{cert.forskrivarkodOchArbetsplatskod}}</span>
   </div>
 
-  <div>
-    <span class="title"><message key="view.label.confirmedby"/></span><br>
-    <br>
-    <span class="text"><message key="view.label.date"/></span> {{cert.signeringsDatum | date:'longDate'}}<br>
-
-    <span class="text"><message key="view.label.contactinfo"/></span><br>
-    <span class="text">{{cert.skapadAv.namn}}</span><br>
-    <br>
-    <span class="text">{{cert.vardenhet.namn}}</span><br>
-    <span class="text">{{cert.vardenhet.postadress}}</span><br>
-    <span class="text">{{cert.vardenhet.postnummer}} {{cert.vardenhet.postort}}</span><br>
-    <br>
-    <span class="text">{{cert.vardenhet.telefonnummer}}</span><br>
+  <div class="row-fluid">
+    <div class="span7">
+      <div class="infobox">
+        <h3><message key="view.label.confirmedby"/></h3>
+        <h4><message key="view.label.date"/></h4>
+        <p>
+          {{cert.signeringsDatum | date:'longDate'}}
+        </p>
+        <h4><message key="view.label.contactinfo"/></h4>
+        <p>
+          <span class="text">{{cert.skapadAv.namn}}</span><br>
+          <span class="text">{{cert.vardenhet.namn}}</span><br>
+          <span class="text">{{cert.vardenhet.postadress}}</span><br>
+          <span class="text">{{cert.vardenhet.postnummer}} {{cert.vardenhet.postort}}</span><br>
+          <span class="text">{{cert.vardenhet.telefonnummer}}</span><br>
+        </p>
+      </div>
+    </div>
   </div>
 
 </div>
