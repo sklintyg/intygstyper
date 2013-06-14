@@ -5,6 +5,10 @@ import java.io.IOException;
 
 import static se.inera.certificate.model.Aktivitetskod.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD;
 import static se.inera.certificate.model.Aktivitetskod.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN;
+import static se.inera.certificate.model.Nedsattningsgrad.HELT_NEDSATT;
+import static se.inera.certificate.model.Nedsattningsgrad.NEDSATT_MED_1_2;
+import static se.inera.certificate.model.Nedsattningsgrad.NEDSATT_MED_1_4;
+import static se.inera.certificate.model.Nedsattningsgrad.NEDSATT_MED_3_4;
 import static se.inera.certificate.model.Referenstyp.ANNAT;
 import static se.inera.certificate.model.Referenstyp.JOURNALUPPGIFTER;
 import static se.inera.certificate.model.Vardkontakttyp.MIN_TELEFONKONTAKT_MED_PATIENTEN;
@@ -16,6 +20,7 @@ import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import se.inera.certificate.model.Aktivitet;
+import se.inera.certificate.model.ArbetsformagaNedsattning;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
@@ -227,31 +232,20 @@ public class PdfGenerator {
         }
     }
 
+    private void fillNedsattning(ArbetsformagaNedsattning nedsattning, String checkboxFieldName,
+                                 String fromDateFieldName, String toDateFieldName) {
+        if (nedsattning != null) {
+            checkField(checkboxFieldName);
+            fillText(fromDateFieldName, nedsattning.getVaraktighetFrom().toString(DATE_PATTERN));
+            fillText(toDateFieldName, nedsattning.getVaraktighetTom().toString(DATE_PATTERN));
+        }
+    }
 
     private void fillCapacity() {
-        if (intyg.isArbetsformagaHeltNedsatt()) {
-            checkField(REDUCED_WORK_CAPACITY_FULL);
-            fillText(REDUCED_WORK_CAPACITY_FULL_FROM, intyg.getArbetsformagaHeltNedsattFrom());
-            fillText(REDUCED_WORK_CAPACITY_FULL_TOM, intyg.getArbetsformagaHeltNedsattTom());
-        }
-
-        if (intyg.isArbetsformagaNedsattMed_3_4()) {
-            checkField(REDUCED_WORK_CAPACITY_75);
-            fillText(REDUCED_WORK_CAPACITY_75_FROM, intyg.getArbetsformagaNedsattMed_3_4From());
-            fillText(REDUCED_WORK_CAPACITY_75_TOM, intyg.getArbetsformagaNedsattMed_3_4Tom());
-        }
-
-        if (intyg.isArbetsformagaNedsattMed_1_2()) {
-            checkField(REDUCED_WORK_CAPACITY_50);
-            fillText(REDUCED_WORK_CAPACITY_50_FROM, intyg.getArbetsformagaNedsattMed_1_2From());
-            fillText(REDUCED_WORK_CAPACITY_50_TOM, intyg.getArbetsformagaNedsattMed_1_2Tom());
-        }
-
-        if (intyg.isArbetsformagaNedsattMed_1_4()) {
-            checkField(REDUCED_WORK_CAPACITY_25);
-            fillText(REDUCED_WORK_CAPACITY_25_FROM, intyg.getArbetsformagaNedsattMed_1_4From());
-            fillText(REDUCED_WORK_CAPACITY_25_TOM, intyg.getArbetsformagaNedsattMed_1_4Tom());
-        }
+        fillNedsattning(intyg.getNedsattning(HELT_NEDSATT), REDUCED_WORK_CAPACITY_FULL, REDUCED_WORK_CAPACITY_FULL_FROM, REDUCED_WORK_CAPACITY_FULL_TOM);
+        fillNedsattning(intyg.getNedsattning(NEDSATT_MED_3_4), REDUCED_WORK_CAPACITY_75, REDUCED_WORK_CAPACITY_75_FROM, REDUCED_WORK_CAPACITY_75_TOM);
+        fillNedsattning(intyg.getNedsattning(NEDSATT_MED_1_2), REDUCED_WORK_CAPACITY_50, REDUCED_WORK_CAPACITY_50_FROM, REDUCED_WORK_CAPACITY_50_TOM);
+        fillNedsattning(intyg.getNedsattning(NEDSATT_MED_1_4), REDUCED_WORK_CAPACITY_25, REDUCED_WORK_CAPACITY_25_FROM, REDUCED_WORK_CAPACITY_25_TOM);
     }
 
     private void fillCapacityRelativeTo() {

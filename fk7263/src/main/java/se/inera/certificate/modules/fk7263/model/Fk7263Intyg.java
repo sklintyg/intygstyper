@@ -2,10 +2,6 @@ package se.inera.certificate.modules.fk7263.model;
 
 import static com.google.common.collect.Iterables.find;
 import static se.inera.certificate.model.Aktivitetskod.OVRIGT;
-import static se.inera.certificate.model.Nedsattningsgrad.HELT_NEDSATT;
-import static se.inera.certificate.model.Nedsattningsgrad.NEDSATT_MED_1_2;
-import static se.inera.certificate.model.Nedsattningsgrad.NEDSATT_MED_1_4;
-import static se.inera.certificate.model.Nedsattningsgrad.NEDSATT_MED_3_4;
 import static se.inera.certificate.model.Prognosangivelse.ATERSTALLAS_DELVIS;
 import static se.inera.certificate.model.Prognosangivelse.ATERSTALLAS_HELT;
 import static se.inera.certificate.model.Prognosangivelse.DET_GAR_INTE_ATT_BEDOMMA;
@@ -107,23 +103,7 @@ public class Fk7263Intyg extends Lakarutlatande {
         }
     }
 
-    public boolean isArbetsformagaHeltNedsatt() {
-        return getArbetsformaga(HELT_NEDSATT) != null;
-    }
-
-    public boolean isArbetsformagaNedsattMed_1_2() {
-        return getArbetsformaga(NEDSATT_MED_1_2) != null;
-    }
-
-    public boolean isArbetsformagaNedsattMed_1_4() {
-        return getArbetsformaga(NEDSATT_MED_1_4) != null;
-    }
-
-    public boolean isArbetsformagaNedsattMed_3_4() {
-        return getArbetsformaga(NEDSATT_MED_3_4) != null;
-    }
-
-    private ArbetsformagaNedsattning getArbetsformaga(final Nedsattningsgrad nedsattningsgrad) {
+    public ArbetsformagaNedsattning getNedsattning(final Nedsattningsgrad nedsattningsgrad) {
         if (!getAktivitetsbegransningar().isEmpty()) {
             return find(getAktivitetsbegransningar().get(0).getArbetsformaga().getArbetsformagaNedsattningar(), new Predicate<ArbetsformagaNedsattning>() {
                 @Override
@@ -164,45 +144,13 @@ public class Fk7263Intyg extends Lakarutlatande {
         return null;
     }
 
-    public String getArbetsformagaHeltNedsattFrom() {
-        return getArbetsformagaNedsattFrom(HELT_NEDSATT);
-    }
-
-    public String getArbetsformagaHeltNedsattTom() {
-        return getArbetsformagaNedsattTom(HELT_NEDSATT);
-    }
-
-    public String getArbetsformagaNedsattMed_1_2From() {
-        return getArbetsformagaNedsattFrom(NEDSATT_MED_1_2);
-    }
-
-    public String getArbetsformagaNedsattMed_1_2Tom() {
-        return getArbetsformagaNedsattTom(NEDSATT_MED_1_2);
-    }
-
-    public String getArbetsformagaNedsattMed_1_4From() {
-        return getArbetsformagaNedsattFrom(NEDSATT_MED_1_4);
-    }
-
-    public String getArbetsformagaNedsattMed_1_4Tom() {
-        return getArbetsformagaNedsattTom(NEDSATT_MED_1_4);
-    }
-
-    public String getArbetsformagaNedsattMed_3_4From() {
-        return getArbetsformagaNedsattFrom(NEDSATT_MED_3_4);
-    }
-
-    public String getArbetsformagaNedsattMed_3_4Tom() {
-        return getArbetsformagaNedsattTom(NEDSATT_MED_3_4);
-    }
-
     private String getArbetsformagaNedsattFrom(final Nedsattningsgrad nedsattningsgrad) {
-        ArbetsformagaNedsattning arbetsformaga = getArbetsformaga(nedsattningsgrad);
+        ArbetsformagaNedsattning arbetsformaga = getNedsattning(nedsattningsgrad);
         return arbetsformaga != null ? arbetsformaga.getVaraktighetFrom().toString(DATE_PATTERN) : null;
     }
 
     private String getArbetsformagaNedsattTom(final Nedsattningsgrad nedsattningsgrad) {
-        ArbetsformagaNedsattning arbetsformaga = getArbetsformaga(nedsattningsgrad);
+        ArbetsformagaNedsattning arbetsformaga = getNedsattning(nedsattningsgrad);
         return arbetsformaga != null ? arbetsformaga.getVaraktighetTom().toString(DATE_PATTERN) : null;
     }
 }
