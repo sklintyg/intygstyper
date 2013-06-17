@@ -32,7 +32,7 @@
     <form id="view-as-pdf" action="/moduleapi/certificate/{{cert.id}}/pdf" method="get"
           target="_blank">
       <p class="btn-row">
-        <button type="button" ng-click="send()" class="btn btn-success">
+        <button id="sendCertificateBtn" type="button" ng-click="send()" class="btn btn-success">
           <message key="button.send"/>
         </button>
         <button id="downloadprint" type="submit" class="btn btn-inverse">
