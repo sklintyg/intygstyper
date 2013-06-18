@@ -48,7 +48,7 @@
         </p>
         
         <!-- Show first status in list if any viable status exist-->
-        <p ng-show="(cert.status | filter: userVisibleStatusFilter).length>0">
+        <p id="lastest-certificate-event" ng-show="(cert.status | filter: userVisibleStatusFilter).length>0">
           {{cert.status[0].timestamp | date:'shortDate'}}
           <message key="fk7263.status.{{cert.status[0].type}}"></message>
           <message key="fk7263.target.{{cert.status[0].target}}"></message>
