@@ -14,6 +14,12 @@ var fk7263Messages = {
         "sent.label.pagetitle" : "Intyget skickades",
         "sent.label.result" : "Intyget har skickats till:",
         "sent.button.backtocertificate" : "Tillbaka till Intyget",
+        "view.label.latestevent" : "Intygets senaste händelse:",
+        "view.label.latestevent.noevents" : "Inga händelser",
+        "view.label.latestevent.showall" : "Visa alla händelser",
+        "history.label.pagetitle" : "Intygets alla händelser",
+        "fk7263.status.sent" : "Skickat till",
+        "fk7263.target.fk" : "Försäkringskassan",
 
         "view.label.pagetitle" : "Granska och skicka",
         "view.label.pagedescription" : "Här kan du titta på ditt intyg och skicka det till Försäkringskassan. Om du upptäcker några felaktigheter så hör av dig enheten som utfärdade ditt intyg. Du kan även öppna intyget som en PDF och skriva ut och spara.",

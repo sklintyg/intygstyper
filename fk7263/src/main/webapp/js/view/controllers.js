@@ -11,7 +11,20 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
             $scope.send = function() {
                 $location.path("/summary");
             };
+            
+            $scope.visibleStatuses = ['SENT','CANCELLED'];
+            
+            $scope.userVisibleStatusFilter = function(status) {
+                return ($scope.visibleStatuses.indexOf(status.type) !== -1);
+            };
 
+            $scope.showStatusHistory = function() {
+                $location.path("/statushistory");
+            }
+            
+            $scope.backToViewCertificate = function() {
+                $location.path("/view");
+            }
             $scope.smittskydd = function() {
                 if (angular.isObject($scope.cert.aktiviteter)) {
                     // collect all smittskydd actitivies
