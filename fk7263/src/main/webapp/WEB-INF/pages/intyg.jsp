@@ -25,7 +25,7 @@
 
 
 <!DOCTYPE html>
-<html lang="sv">
+<html lang="sv" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="FK7263ViewCertApp">
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -76,7 +76,14 @@
       </div>
     </div>
   </div>
-
+  
+  <!--[if lte IE 8]>
+    <script>
+    window.myCustomTags = [ 'miHeader', 'mvkTopBar', 'message' ]; // optional
+    </script>
+    
+    <script type="text/javascript" src="/js/ie/ie-angular-shiv.js"></script>
+ <![endif]-->
 
   <%-- Dependencies to common (3rd party) components loaded from MI web app running at "/" context--%>
   <script type="text/javascript" src="/js/vendor/angular/angular.js"></script>
