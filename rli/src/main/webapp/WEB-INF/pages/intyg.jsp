@@ -35,7 +35,7 @@
 <link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 
 <%-- Dependencies to common static resources components loaded from Mina Intyg "module host" web app running at "/" context --%>
-<link rel="stylesheet" href="/css/bootstrap.css" />
+<link rel="stylesheet" href="/css/bootstrap/2.3.2/bootstrap.css" />
 <link rel="stylesheet" href="/css/inera.css" />
 <link rel="stylesheet" href="/css/inera-certificate.css" />
 <link rel="stylesheet" href="/mvk-topbar/css/styles.css" />
@@ -77,9 +77,9 @@
   </div>
 
   <%-- Dependencies to common (3rd party) components loaded from MI web app running at "/" context--%>
-  <script type="text/javascript" src="/js/vendor/angular/angular.js"></script>
-  <script type="text/javascript" src="/js/vendor/angular/i18n/angular-locale_sv-se.js"></script>
-  <script type="text/javascript" src="/js/vendor/ui-bootstrap/ui-bootstrap-tpls-0.3.0.js"></script>
+  <script type="text/javascript" src="/js/vendor/angular/1.1.5/angular.js"></script>
+  <script type="text/javascript" src="/js/vendor/angular/1.1.5/i18n/angular-locale_sv-se.js"></script>
+  <script type="text/javascript" src="/js/vendor/ui-bootstrap/0.3.0/ui-bootstrap-tpls-0.3.0.js"></script>
 
   <%-- Dependencies to common components loaded from MI web app running at "/" context--%>
   <script type="text/javascript" src="/js/modules/message-module.js"></script>

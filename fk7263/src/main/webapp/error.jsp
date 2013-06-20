@@ -36,7 +36,7 @@
 <link rel="icon" href="<c:url value="/favicon.ico" />" type="image/vnd.microsoft.icon" />
 
 <%-- Dependencies to common static resources components loaded from Mina Intyg "module host" web app running at "/" context --%>
-<link rel="stylesheet" href="/css/bootstrap.css" />
+<link rel="stylesheet" href="/css/bootstrap/2.3.2/bootstrap.css" />
 <link rel="stylesheet" href="/css/inera.css" />
 <link rel="stylesheet" href="/css/inera-certificate.css" />
 </head>
