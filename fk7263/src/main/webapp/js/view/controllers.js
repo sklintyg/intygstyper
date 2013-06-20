@@ -41,8 +41,6 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
             }
             // expose calculated static link for pdf download
             $scope.downloadAsPdfLink = $scope.MODULE_CONFIG.MI_COMMON_API_CONTEXT_PATH + $scope.MODULE_CONFIG.CERT_ID_PARAMETER + "/pdf";
-
-            console.log("Loading certificate " + $scope.MODULE_CONFIG.CERT_ID_PARAMETER);
             certService.getCertificate($scope.MODULE_CONFIG.CERT_ID_PARAMETER, function(result) {
                 $scope.doneLoading = true;
                 if (result != null) {
@@ -62,7 +60,6 @@ angular.module('controllers.fk7263').controller('SentCertWizardCtrl',
             // controller)
             $scope.cert = $rootScope.cert;
             if (!angular.isObject($scope.cert)) {
-                console.log("No certificate in rootScope");
                 $location.path("/fel/certnotfound");
                 return;
             }
@@ -99,7 +96,6 @@ angular.module('controllers.fk7263').controller('SentCertWizardCtrl',
                 certService.sendCertificate($scope.MODULE_CONFIG.CERT_ID_PARAMETER, $scope.selectedRecipientId, function(result) {
                     $scope.doneLoading = true;
                     if (result != null && result.resultCode == "sent") {
-                        console.log("sent successfully");
                         $location.path("/sent");
                     } else {
                         // show error view
