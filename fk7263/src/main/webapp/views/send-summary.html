@@ -15,7 +15,7 @@
         <message key="confirm.label.certrowtitle"></message>
       </h2>
       <div class="well cert-summary">
-        <span>{{cert.skickatDatum | date:'shortDate'}}</span> <span><message key="certificatetypes.{{cert.typ}}.commonname"></message></span> <span><message
+        <span>{{cert.skickatDatum | date:'longDate'}}</span> <span><message key="certificatetypes.{{cert.typ}}.commonname"></message></span> <span><message
             key="certificatetypes.{{cert.typ}}.typename"></message> </span> <span>{{cert.aktivitetsbegransningar[0].arbetsformaga.arbetsformagaNedsattningar[0].varaktighetFrom |
           date:'longDate'}}&ndash;{{cert.aktivitetsbegransningar[0].arbetsformaga.arbetsformagaNedsattningar[0].varaktighetTom | date:'longDate'}}</span> <span>{{cert.vardenhet.namn}}</span>
 
