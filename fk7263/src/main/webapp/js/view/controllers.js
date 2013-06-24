@@ -92,7 +92,6 @@ angular.module('controllers.fk7263').controller('SentCertWizardCtrl',
 
             $scope.confirmAndSend = function() {
                 $scope.doneLoading = false;
-                console.log("Sending certificate " + $scope.MODULE_CONFIG.CERT_ID_PARAMETER);
                 certService.sendCertificate($scope.MODULE_CONFIG.CERT_ID_PARAMETER, $scope.selectedRecipientId, function(result) {
                     $scope.doneLoading = true;
                     if (result != null && result.resultCode == "sent") {
