@@ -56,6 +56,8 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
                     $location.path("/fel/certnotfound");
                 }
             });
+
+	        $scope.pagefocus = true;
         } ]);
 
 angular.module('controllers.fk7263').controller('SentCertWizardCtrl',
@@ -113,6 +115,7 @@ angular.module('controllers.fk7263').controller('SentCertWizardCtrl',
                 $location.path("/view");
             }
 
+	        $scope.pagefocus = true;
         } ]);
 
 angular.module('controllers.fk7263').controller('ErrorCtrl',
@@ -121,5 +124,5 @@ angular.module('controllers.fk7263').controller('ErrorCtrl',
             //set a default if no errorCode is given in routeparams
             $scope.errorCode = $routeParams.errorCode || "generic";
             
-
+	        $scope.pagefocus = true;
         } ]);
