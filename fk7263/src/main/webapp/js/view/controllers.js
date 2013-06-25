@@ -15,8 +15,14 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
             $scope.visibleStatuses = ['SENT','CANCELLED'];
             
             $scope.userVisibleStatusFilter = function(status) {
-                return ($scope.visibleStatuses.indexOf(status.type) !== -1);
-            };
+                //IE8 doesn't support Array.indexOf..
+                for(var i=0; i<$scope.visibleStatuses.length;i++) {
+                    if (status.type == $scope.visibleStatuses[i]) {
+                        return true;
+                    }
+                }
+                return false;
+            }
 
             $scope.showStatusHistory = function() {
                 $location.path("/statushistory");
