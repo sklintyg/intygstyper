@@ -15,7 +15,6 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
             $scope.visibleStatuses = ['SENT','CANCELLED'];
             
             $scope.userVisibleStatusFilter = function(status) {
-                //IE8 doesn't support Array.indexOf..
                 for(var i=0; i<$scope.visibleStatuses.length;i++) {
                     if (status.type == $scope.visibleStatuses[i]) {
                         return true;
@@ -31,19 +30,19 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
             $scope.backToViewCertificate = function() {
                 $location.path("/view");
             }
+            
+            //Convenience methods to simplify template markup 
             $scope.smittskydd = function() {
                 if (angular.isObject($scope.cert.aktiviteter)) {
-                    // collect all smittskydd actitivies
-                    var smittskyddActivities = $scope.cert.aktiviteter.filter(function(aktivitet) {
-                        return aktivitet.aktivitetskod == "AVSTANGNING_ENLIGT_SM_L_PGA_SMITTA";
-                    }).length;
-
-                    if (smittskyddActivities > 0) {
-                        return "yes";
-                    } else {
-                        return "no";
+                    // check if some activity has the trigger aktivitetskod
+                    for(var i=0; i<$scope.cert.aktiviteter.length;i++) {
+                        if ($scope.cert.aktiviteter[i].aktivitetskod == "AVSTANGNING_ENLIGT_SM_L_PGA_SMITTA") {
+                            return "yes";
+                        }
                     }
                 }
+                //in all other cases
+                return "no";
             }
             // expose calculated static link for pdf download
             $scope.downloadAsPdfLink = $scope.MODULE_CONFIG.MI_COMMON_API_CONTEXT_PATH + $scope.MODULE_CONFIG.CERT_ID_PARAMETER + "/pdf";
