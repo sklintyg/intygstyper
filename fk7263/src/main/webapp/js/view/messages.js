@@ -10,6 +10,7 @@ var fk7263Messages = {
         "confirm.label.certrowtitle" : "Intyg",
         "confirm.label.recipienttitle" : "Mottagare",
         "confirm.label.verifytext" : "Kontrollera att uppgifterna ovan stämmer och tryck \"Skicka\"",
+        "confirm.message.alreadysent" : "<strong>Observera!</strong> Du har redan skickat detta intyg till denna mottagare.",
 
         "sent.label.pagetitle" : "Intyget skickades",
         "sent.label.result" : "Intyget har skickats till:",

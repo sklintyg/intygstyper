@@ -31,7 +31,10 @@
       <p class="btn-row-desc no-padding">
         <span message key="confirm.label.verifytext"></span>
       </p>
-      <p>
+      <p ng-show="alreadySentToRecipient()">
+        <span id="already-sent-to-recipient-message" class="alert warning" message key="confirm.message.alreadysent"></span>
+      </p>
+      <p class="btn-row">
         <button id="confirmAndSendBtn" type="button" ng-click="confirmAndSend()" class="btn btn-success">
           <span message key="button.send"></span>
         </button>
@@ -45,7 +48,8 @@
     <img src="/img/ajax-loader.gif" style="text-align: center;" />
 
     <p style="text-align: center; color: #64ABC0; margin-top: 20px;">
-      <strong> <span message key="common.module.message.sendingcertificate"></span>      </strong>
+      <strong> <span message key="common.module.message.sendingcertificate"></span>
+      </strong>
     </p>
   </div>
 </div>

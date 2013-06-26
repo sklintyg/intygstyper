@@ -123,6 +123,15 @@ angular.module('controllers.fk7263').controller('SentCertWizardCtrl',
 
             }
 
+            $scope.alreadySentToRecipient = function() {
+                // check if selected recipient exists with SENT status in cert history
+                for(var i=0;i<$scope.cert.status.length;i++) {
+                    if (($scope.cert.status[i].type === "SENT") && ($scope.cert.status[i].target === $scope.selectedRecipientId)) {
+                        return true;
+                    }
+                }
+                return false;
+            }            
             $scope.backToViewCertificate = function() {
                 $location.path("/view");
             }
