@@ -11,9 +11,19 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
             $scope.send = function() {
                 $location.path("/summary");
             };
-            
-            $scope.visibleStatuses = ['SENT','CANCELLED'];
-            
+
+            $scope.visibleStatuses = ['SENT'];
+
+            $scope.filterStatuses = function(statuses) {
+                var result = [];
+                for(var i=0; i<statuses.length; i++) {
+                    if($scope.userVisibleStatusFilter(statuses[i])) {
+                    result.push(statuses[i]);
+                    }
+                }
+                return result;
+            }
+
             $scope.userVisibleStatusFilter = function(status) {
                 for(var i=0; i<$scope.visibleStatuses.length;i++) {
                     if (status.type == $scope.visibleStatuses[i]) {
@@ -26,12 +36,12 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
             $scope.showStatusHistory = function() {
                 $location.path("/statushistory");
             }
-            
+
             $scope.backToViewCertificate = function() {
                 $location.path("/view");
             }
-            
-            //Convenience methods to simplify template markup 
+
+            //Convenience methods to simplify template markup
             $scope.smittskydd = function() {
                 if (angular.isObject($scope.cert.aktiviteter)) {
                     // check if some activity has the trigger aktivitetskod
@@ -46,9 +56,11 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
             }
             // expose calculated static link for pdf download
             $scope.downloadAsPdfLink = $scope.MODULE_CONFIG.MI_COMMON_API_CONTEXT_PATH + $scope.MODULE_CONFIG.CERT_ID_PARAMETER + "/pdf";
+
             certService.getCertificate($scope.MODULE_CONFIG.CERT_ID_PARAMETER, function(result) {
                 $scope.doneLoading = true;
                 if (result != null) {
+                    result.filteredStatuses = $scope.filterStatuses(result.status);
                     $scope.cert = result;
                     $rootScope.cert = result;
                 } else {
@@ -108,9 +120,9 @@ angular.module('controllers.fk7263').controller('SentCertWizardCtrl',
                         $location.path("/fel/couldnotsend");
                     }
                 });
-                
+
             }
-            
+
             $scope.backToViewCertificate = function() {
                 $location.path("/view");
             }
@@ -123,6 +135,5 @@ angular.module('controllers.fk7263').controller('ErrorCtrl',
 
             //set a default if no errorCode is given in routeparams
             $scope.errorCode = $routeParams.errorCode || "generic";
-            
-	        $scope.pagefocus = true;
+            $scope.pagefocus = true;
         } ]);
