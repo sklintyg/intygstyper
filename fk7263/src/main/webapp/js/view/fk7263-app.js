@@ -36,6 +36,7 @@ var FK7263App = angular.module('FK7263ViewCertApp', [ 'ui.bootstrap', 'services.
             });
 
             $httpProvider.interceptors.push('httpRequestInterceptorCacheBuster');
+            $httpProvider.responseInterceptors.push('http403ResponseInterceptor');
         } ]);
 
 FK7263App.run([ '$rootScope', '$route','messageService', function($rootScope, $route, messageService) {
