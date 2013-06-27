@@ -55,7 +55,7 @@
         </p>
         <!-- Show if more than 1 viable status exists -->
         <p ng-show="cert.filteredStatuses.length>1">
-              <a class="statusHistoryLink" href ng-click="showStatusHistory()"><span message key="view.label.latestevent.showall"></span></a>
+          <a class="statusHistoryLink" href ng-click="showStatusHistory()"><span message key="view.label.latestevent.showall"></span></a>
         </p>
       </div>
     </div>
@@ -70,8 +70,8 @@
 
               <div class="row-fluid">
                 <div class="span6">
-                  <h2>
-                    <span><span message key="certificatetypes.{{cert.typ}}.commonname"></span></span> <span class="cert-titlebar-type"><span message key="certificatetypes.{{cert.typ}}.typename"></span></span>
+                  <h2 class="cert-title">
+                    <span message key="certificatetypes.{{cert.typ}}.commonname"></span> <span class="cert-titlebar-type"><span message key="certificatetypes.{{cert.typ}}.typename"></span></span>
                   </h2>
                 </div>
                 <div class="span5 issue">
