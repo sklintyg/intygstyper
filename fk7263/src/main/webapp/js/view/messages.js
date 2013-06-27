@@ -35,7 +35,7 @@ var fk7263Messages = {
         "view.label.yes" : "Ja",
         "view.label.no" : "Nej",
         "view.label.partialyes" : "Ja, delvis",
-        "view.label.diagnosis" : "Diagnos/dianoser för sjukdom som orsakar nedsatt arbetsförmåga (fält 2)",
+        "view.label.diagnosis" : "Diagnos/diagnoser för sjukdom som orsakar nedsatt arbetsförmåga (fält 2)",
         "view.label.diagnosiscode" : "Diagnoskod",
         "view.label.progressofdesease" : "Aktuellt sjukdomförlopp (fält 3)",
         "view.label.disabilities" : "Funktionsnedsättning - observationer, undersökningsfynd och utredningsresultat (fält 4)",
