@@ -34,7 +34,10 @@ var FK7263App = angular.module('FK7263ViewCertApp', [ 'ui.bootstrap', 'services.
             }).otherwise({
                 redirectTo : '/view'
             });
-
+            
+            //Configure interceptor provider
+            http403ResponseInterceptorProvider.setRedirectUrl("/web/start");
+            
             $httpProvider.interceptors.push('httpRequestInterceptorCacheBuster');
             $httpProvider.responseInterceptors.push('http403ResponseInterceptor');
         } ]);
