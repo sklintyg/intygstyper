@@ -74,11 +74,8 @@
                     <span message key="certificatetypes.{{cert.typ}}.commonname"></span> <span class="cert-titlebar-type"><span message key="certificatetypes.{{cert.typ}}.typename"></span></span>
                   </h2>
                 </div>
-                <div class="span5 issue">
+                <div class="span6 issue">
                   <span><span message key="view.label.issued"></span></span> <span class="cert-titlebar-value">{{cert.signeringsDatum | date:'longDate'}}</span>
-                </div>
-                <div class="span1 archive">
-                  <a href="#archiveModal" role="button" data-toggle="modal" onclick="return false"><img alt="Arkivera intyg" src="/img/archive-icon.gif"/></a>
                 </div>
               </div>
             </div>
