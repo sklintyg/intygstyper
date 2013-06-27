@@ -6,7 +6,7 @@
  * the global JS config object for now
  */
 var FK7263App = angular.module('FK7263ViewCertApp', [ 'ui.bootstrap', 'services.certService', 'controllers.fk7263', 'directives.mi', 'modules.messages', 'services.util' ]).config(
-        [ '$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+        [ '$routeProvider', '$httpProvider', 'http403ResponseInterceptorProvider', function($routeProvider, $httpProvider, http403ResponseInterceptorProvider) {
             $routeProvider.when('/view', {
                 templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/views/view-cert.html',
                 controller : 'ViewCertCtrl',
