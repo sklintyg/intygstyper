@@ -22,8 +22,9 @@ public class RliModuleApi {
     @Path("/extension")
     @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_JSON)
-    public Resa extract(Lakarutlatande intyg) {
-        return new Resa(intyg.getResmal(), intyg.getResenar());
+    public Object extract(Lakarutlatande intyg) {
+        //return new Resa(intyg.getResmal(), intyg.getResenar());
+    	return  "{}";
     }
 
     @POST
@@ -33,7 +34,7 @@ public class RliModuleApi {
     public Response validate(Lakarutlatande intyg) {
 
         List<String> errors = new ArrayList<>();
-
+/*
         if (intyg.getResenar() == null) {
             errors.add("Resenär saknas");
         }
@@ -41,7 +42,7 @@ public class RliModuleApi {
         if (intyg.getResmal() == null) {
             errors.add("Resmål saknas");
         }
-
+*/
         if (errors.isEmpty()) {
             return Response.ok().build();
         } else {

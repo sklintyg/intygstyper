@@ -4,43 +4,60 @@
            targetNamespace="urn:intyg:1"
            elementFormDefault="qualified"
            attributeFormDefault="unqualified"
-           version="1.0">
+           version="1.0" xmlns:Q1="urn:intyg:1">
 
   <xs:element name="lakarutlatande" type="reselakarintygType"/>
 
   <xs:complexType name="reselakarintygType">
     <xs:sequence>
-      <xs:element name="id" type="xs:string"/>
-      <xs:element name="typ" type="xs:string"/>
-      <xs:element name="kommentar" type="xs:string" minOccurs="0"/>
-      <xs:element name="signeringsdatum" type="xs:dateTime"/>
-      <xs:element name="patient" type="patientType"/>
-      <xs:element name="skapadAv" type="hosPersonalType"/>
-      <xs:element name="vardenhet" type="vardenhetType"/>
-      <xs:element name="resmal" xmlns="urn:rli:1" type="xs:string"/>
-      <xs:element name="resenar" xmlns="urn:rli:1" type="xs:string"/>
+    	<xs:element name="id" type="xs:string" />
+    	<xs:element name="typ" type="xs:string" />
+    	<xs:element name="kommentar" type="xs:string" minOccurs="0" />
+    	<xs:element name="signeringsdatum" type="xs:dateTime" />
+    	<xs:element name="patient" type="patientType" />
+    	<xs:element name="skapadAv" type="hosPersonalType" />
+    	<xs:element name="observation" type="observationType"
+    		minOccurs="0" maxOccurs="unbounded">
+    	</xs:element>
+    	<xs:element name="bedomning" type="bedomningType" minOccurs="0"
+    		maxOccurs="unbounded">
+    	</xs:element>
+    	<xs:element name="arrangemang" xmlns="urn:rli:1"
+    		type="Q1:arrangemangType" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="patientType">
     <xs:sequence>
-      <xs:element name="id" type="xs:string"/>
-      <xs:element name="fornamn" type="xs:string"/>
-      <xs:element name="mellannamn" type="xs:string" minOccurs="0"/>
-      <xs:element name="efternamn" type="xs:string"/>
-      <xs:element name="tilltalsnamn" type="xs:string" minOccurs="0"/>
+    	<xs:element name="id" type="xs:string" />
+    	<xs:element name="fornamn" type="xs:string" />
+    	<xs:element name="mellannamn" type="xs:string" minOccurs="0" />
+    	<xs:element name="efternamn" type="xs:string" />
+    	<xs:element name="tilltalsnamn" type="xs:string" minOccurs="0" />
+    	<xs:element name="postadress" type="xs:string"></xs:element>
+    	<xs:element name="postnummer" type="xs:string"></xs:element>
+    	<xs:element name="postort" type="xs:string"></xs:element>
+    	<xs:element name="relation" type="patientRelationType" minOccurs="0" maxOccurs="1"></xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="hosPersonalType">
     <xs:sequence>
-      <xs:element name="id" type="xs:string"/>
-      <xs:element name="namn" type="xs:string"/>
+    	<xs:element name="id" type="xs:string" />
+    	<xs:element name="namn" type="xs:string" />
+    	<xs:element name="befattning" type="xs:string"></xs:element>
+    	<xs:element name="personalkategori" type="xs:string"></xs:element>
+    	<xs:element name="vardenhet" type="vardenhetType"></xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="vardenhetType">
     <xs:sequence>
-      <xs:element name="id" type="xs:string"/>
-      <xs:element name="namn" type="xs:string"/>
-      <xs:element name="vardgivare" type="vardgivareType"/>
+    	<xs:element name="id" type="xs:string" />
+    	<xs:element name="namn" type="xs:string" />
+    	<xs:element name="postadress" type="xs:string"></xs:element>
+    	<xs:element name="postnummer" type="xs:string"></xs:element>
+    	<xs:element name="postort" type="xs:string"></xs:element>
+    	<xs:element name="telefonnummer" type="xs:string"></xs:element>
+    	<xs:element name="epost" type="xs:string"></xs:element>
+    	<xs:element name="vardgivare" type="vardgivareType" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="vardgivareType">
@@ -49,4 +66,69 @@
       <xs:element name="namn" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
+
+  <xs:complexType name="arrangemangType">
+  	<xs:sequence>
+  		<xs:element name="bokningsreferens" type="xs:string"></xs:element>
+  		<xs:element name="bokningsdatum" type="xs:date"></xs:element>
+  		<xs:element name="arrangemangstid" type="xs:date"></xs:element>
+  		<xs:element name="avbestallningsdatum" type="xs:date"></xs:element>
+  		<xs:element name="arrangemangstyp" type="xs:string"></xs:element>
+  		<xs:element name="destination" type="xs:string"></xs:element>
+  	</xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="bedomningType">
+  	<xs:sequence>
+  		<xs:element name="bedomningskod" type="bedomningskodType"></xs:element>
+  		<xs:element name="beskrivning" type="xs:string"></xs:element>
+  		<xs:element name="sjukdomskannedom" type="xs:string"></xs:element>
+  	</xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="observationType">
+  	<xs:sequence>
+  		<xs:element name="observationskod" type="observationskodType"></xs:element>
+  		<xs:element name="observationstid" type="xs:date"></xs:element>
+  		<xs:element name="beskrivning" type="xs:string"></xs:element>
+  		<xs:element name="observationsperiod" type="xs:string"></xs:element>
+  		<xs:element name="varde" type="xs:string"></xs:element>
+  		<xs:element name="patientinstammer" type="xs:string"></xs:element>
+  	</xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="patientRelationType">
+  	<xs:sequence>
+  		<xs:element name="relationskategori" type="xs:string"></xs:element>
+  		<xs:element name="relationstyp" type="xs:string"></xs:element>
+  		<xs:element name="id" type="xs:string" />
+    	<xs:element name="fornamn" type="xs:string" />
+    	<xs:element name="mellannamn" type="xs:string" minOccurs="0" />
+    	<xs:element name="efternamn" type="xs:string" />
+    	<xs:element name="tilltalsnamn" type="xs:string" minOccurs="0" />
+    	<xs:element name="postadress" type="xs:string"></xs:element>
+    	<xs:element name="postnummer" type="xs:string"></xs:element>
+    	<xs:element name="postort" type="xs:string"></xs:element>
+  	</xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="bedomningskodType">
+  	<xs:restriction base="xs:string">
+  		<xs:enumeration value="resenar_sjuk_kan_resa"/>
+  		<xs:enumeration value="resenar_sjuk_kan_ej_resa"/>
+  		<xs:enumeration value="resenar_gravid_kan_resa"/>
+  		<xs:enumeration value="resenar_gravid_kan_ej_resa"/>
+  		<xs:enumeration value="komplikation_okand"/>
+  		<xs:enumeration value="komplikation_kronisk"/>
+  		<xs:enumeration value="komplikation_annan"/>
+  		<xs:enumeration value="komplikation_tillstand_forvarrats_forutsagbart"/>
+  		<xs:enumeration value="komplikation_tillstand_forvarrats_ej_forutsagbart"/>
+  	</xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="observationskodType">
+  	<xs:restriction base="xs:string">
+  		<xs:enumeration value="beraknad_forlossning_datum"></xs:enumeration>
+  	</xs:restriction>
+  </xs:simpleType>
 </xs:schema>
