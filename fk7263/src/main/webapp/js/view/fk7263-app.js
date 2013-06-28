@@ -52,6 +52,10 @@ FK7263App.run([ '$rootScope', '$route','messageService', function($rootScope, $r
 	// Update page title
 	$rootScope.page_title = 'Titel';
     $rootScope.$on('$routeChangeSuccess', function() {
-      $rootScope.page_title = $route.current.$$route.title + ' | Mina intyg';
+        //Seems like this is also called when redirecting with a 
+        //partially populated $route.current without the $$route part 
+        if ($route.current.$$route){
+            $rootScope.page_title = $route.current.$$route.title + ' | Mina intyg';
+        }
     });
 } ]);
