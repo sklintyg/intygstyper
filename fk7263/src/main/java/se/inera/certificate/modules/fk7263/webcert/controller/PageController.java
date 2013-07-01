@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.fk7263.controller.minaintyg;
+package se.inera.certificate.modules.fk7263.webcert.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,7 @@ public class PageController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ModelAndView displayStart(@PathVariable(value = "id") String id) {
         LOG.debug("visa-intyg " + id);
-        return new ModelAndView("intyg","id",id);
+        return new ModelAndView("edit-intyg","id",id);
     }
 
 }

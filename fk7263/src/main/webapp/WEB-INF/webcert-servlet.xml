@@ -21,7 +21,7 @@
   <mvc:default-servlet-handler />
 
   <context:annotation-config />
-  <context:component-scan base-package="se.inera.certificate.modules.fk7263.controller.webcert" />
+  <context:component-scan base-package="se.inera.certificate.modules.fk7263.webcert.controller" />
 
   <beans>
     <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
