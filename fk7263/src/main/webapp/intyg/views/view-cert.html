@@ -116,7 +116,8 @@
             <div class="cert-body">
 
               <div class="body-row">
-                <h3 class="title"><span message key="view.label.smittskydd"></span></h3> <span class="text"><span message key="view.label.{{smittskydd()}}"></span></span>
+                <h3 class="title"><span message key="view.label.smittskydd"></span></h3>
+                <span class="text"><span message key="view.label.{{smittskydd()}}"></span></span>
               </div>
 
               <mi-field title="view.label.diagnosis" filled="cert.filledFields.diagnosis">
@@ -140,7 +141,7 @@
                   <li ng-repeat="vardkontakt in cert.vardkontakter"><span message key="vardkontakt.{{vardkontakt.vardkontakttyp}}"></span> {{vardkontakt.vardkontaktstid | date:'longDate'}}</li>
                   <li ng-repeat="referens in cert.referenser"><span message key="referens.{{referens.referenstyp}}" args=""></span> {{referens.datum| date:'longDate'}}
                     <div ng-show="referens.referenstyp == 'ANNAT'">
-                      <span class="tag"><span message key="view.label.comment"></span></span>{{cert.kommentar}}
+                      <span class="tag"><span message key="view.label.comment"></span></span> {{cert.kommentar}}
                     </div>
                   </li>
                 </ul>

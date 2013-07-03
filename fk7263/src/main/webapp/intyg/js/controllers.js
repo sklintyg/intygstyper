@@ -68,7 +68,7 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
                     result.typ_image = "/img/" + result.typ + ".png";
 
 	                // setup which fields contain values. those which do not will get an unfilled style to make them less visually significant
-	                // TODO: Implement cases for when fields are filled or not. empty strings? a certain value?
+	                // TODO: Implement cases for when fields are filled or not. change true to an expression checking for the condition. empty strings? a certain value?
 	                result.filledFields = {};
 	                result.filledFields.diagnosis = true; //example: result.bedomtTillstand.beskrivning != '' || result.bedomtTillstand.tillstandskod != '';
 	                result.filledFields.progressofdesease = true;
