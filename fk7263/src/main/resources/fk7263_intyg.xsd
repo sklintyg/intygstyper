@@ -21,7 +21,7 @@
       <xs:element name="sjukdomsforlopp" type="xs:string" minOccurs="0"/>
       <xs:element name="aktivitet" type="aktivitetType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="funktionsnedsattning" type="funktionsnedsattningType" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="aktivitetsbegransning" type="aktivitetsbegransningType"/>
+      <xs:element name="aktivitetsbegransning" type="aktivitetsbegransningType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="bedomtTillstand" type="bedomtTillstandType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="vardkontakt" type="vardkontaktType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="referens" type="referensType" minOccurs="0" maxOccurs="unbounded"/>
@@ -94,19 +94,19 @@
 
   <xs:complexType name="aktivitetsbegransningType">
     <xs:sequence>
-      <xs:element name="beskrivning" type="nonEmptyString"/>
+      <xs:element name="beskrivning" type="nonEmptyString" minOccurs="0"/>
       <xs:element name="arbetsformaga" type="arbetsformagaType"/>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="arbetsformagaType">
     <xs:sequence>
-      <xs:element name="motivering" type="nonEmptyString"/>
-      <xs:element name="prognosangivelse" type="prognosangivelse"/>
-      <xs:element name="arbetsuppgift" type="nonEmptyString"/>
+      <xs:element name="motivering" type="nonEmptyString" minOccurs="0"/>
+      <xs:element name="prognosangivelse" type="prognosangivelse" minOccurs="0"/>
+      <xs:element name="arbetsuppgift" type="nonEmptyString" minOccurs="0"/>
       <xs:element name="arbetsformagaNedsattning" type="arbetsformagaNedsattningType" minOccurs="1"
                   maxOccurs="unbounded"/>
-      <xs:element name="sysselsattning" type="sysselsattning" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:element name="sysselsattning" type="sysselsattning" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -148,7 +148,7 @@
   <xs:complexType name="bedomtTillstandType">
     <xs:sequence>
       <xs:element name="tillstandskod" type="nonEmptyString"/>
-      <xs:element name="beskrivning" type="nonEmptyString"/>
+      <xs:element name="beskrivning" type="nonEmptyString" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
