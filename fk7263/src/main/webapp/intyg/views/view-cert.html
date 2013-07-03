@@ -114,106 +114,97 @@
             </div>
 
             <div class="cert-body">
+
               <div class="body-row">
                 <h3 class="title"><span message key="view.label.smittskydd"></span></h3> <span class="text"><span message key="view.label.{{smittskydd()}}"></span></span>
               </div>
 
-              <div class="body-row">
-                <h3 class="title"><span message key="view.label.diagnosis"></span></h3> <span class="text">{{cert.bedomtTillstand.beskrivning}} (<span class="tag"><span message
-                      key="view.label.diagnosisCode"></span></span> {{cert.bedomtTillstand.tillstandskod}})
-                </span>
-              </div>
+              <mi-field title="view.label.diagnosis" filled="cert.filledFields.diagnosis">
+                {{cert.bedomtTillstand.beskrivning}} (<span class="tag"><span message key="view.label.diagnosisCode"></span></span> {{cert.bedomtTillstand.tillstandskod}})
+              </mi-field>
 
-              <div class="body-row">
-                <h3 class="title"><span message key="view.label.progressofdesease"></span></h3> <span class="text">{{cert.sjukdomsforlopp}}</span>
-              </div>
+              <mi-field title="view.label.progressofdesease" filled="cert.filledFields.progressofdesease">
+                {{cert.sjukdomsforlopp}}
+              </mi-field>
 
-              <div class="body-row">
-                <h3 class="title"><span message key="view.label.disabilities"></span></h3> <span ng-repeat="funktionsnedsattning in cert.funktionsnedsattningar" class="text">
-                  {{funktionsnedsattning.beskrivning}} </span>
-              </div>
+              <mi-field title="view.label.disabilities" filled="cert.filledFields.disabilities">
+                <ul>
+                  <li ng-repeat="funktionsnedsattning in cert.funktionsnedsattningar">
+                    {{funktionsnedsattning.beskrivning}}
+                  </li>
+                </ul>
+              </mi-field>
 
-              <div class="body-row">
-                <h3 class="title"><span message key="view.label.basedon"></span></h3> <span class="text">
-                  <ul>
-                    <li ng-repeat="vardkontakt in cert.vardkontakter"><span message key="vardkontakt.{{vardkontakt.vardkontakttyp}}"></span> {{vardkontakt.vardkontaktstid | date:'longDate'}}</li>
-                    <li ng-repeat="referens in cert.referenser"><span message key="referens.{{referens.referenstyp}}" args=""></span> {{referens.datum| date:'longDate'}}
+              <mi-field title="view.label.basedon" filled="cert.filledFields.basedon">
+                <ul>
+                  <li ng-repeat="vardkontakt in cert.vardkontakter"><span message key="vardkontakt.{{vardkontakt.vardkontakttyp}}"></span> {{vardkontakt.vardkontaktstid | date:'longDate'}}</li>
+                  <li ng-repeat="referens in cert.referenser"><span message key="referens.{{referens.referenstyp}}" args=""></span> {{referens.datum| date:'longDate'}}
+                    <div ng-show="referens.referenstyp == 'ANNAT'">
+                      <span class="tag"><span message key="view.label.comment"></span></span>{{cert.kommentar}}
+                    </div>
+                  </li>
+                </ul>
+              </mi-field>
 
-                      <div ng-show="referens.referenstyp == 'ANNAT'">
-                        <span class="tag"><span message key="view.label.comment"></span></span>{{cert.kommentar}}
-                      </div></li>
-                  </ul>
-                </span>
-              </div>
+              <mi-field title="view.label.limitation" filled="cert.filledFields.limitation">
+                <ul>
+                  <li ng-repeat="aktivitetsbegransning in cert.aktivitetsbegransningar">{{aktivitetsbegransning.beskrivning}}</li>
+                </ul>
+              </mi-field>
 
-              <div class="body-row">
-                <h3 class="title"><span message key="view.label.limitation"></span></h3> <span ng-repeat="aktivitetsbegransning in cert.aktivitetsbegransningar" class="text">
-                  {{aktivitetsbegransning.beskrivning}} </span>
-              </div>
+              <mi-field title="view.label.recommendations" filled="cert.filledFields.recommendations">
+                <ul>
+                  <li ng-show="cert.rekommenderarKontaktMedArbetsformedlingen != null"><span message key="view.label.recommendations.contact.jobcenter"></span></li>
+                  <li ng-show="cert.rekommenderarKontaktMedForetagshalsovarden != null"><span message key="view.label.recommendations.contact.healthdepartment"></span></li>
+                  <li ng-show="cert.rekommenderarOvrigt != null">{{cert.rekommenderarOvrigt.beskrivning}}</li>
+                </ul>
+              </mi-field>
 
-              <div class="body-row">
-                <h3 class="title"><span message key="view.label.recommendations"></span></h3> <span class="text">
-                  <ul>
-                    <li ng-show="cert.rekommenderarKontaktMedArbetsformedlingen != null"><span message key="view.label.recommendations.contact.jobcenter"></span></li>
-                    <li ng-show="cert.rekommenderarKontaktMedForetagshalsovarden != null"><span message key="view.label.recommendations.contact.healthdepartment"></span></li>
-                    <li ng-show="cert.rekommenderarOvrigt != null">{{cert.rekommenderarOvrigt.beskrivning}}</li>
-                  </ul>
-                </span>
-              </div>
+              <mi-field title="view.label.plannedtreatment" filled="cert.filledFields.plannedtreatment">
+                <ul>
+                  <li ng-show="cert.atgardInomSjukvarden != null"><span message key="view.label.plannedtreatment.healthcare"></span> {{cert.atgardInomSjukvarden.beskrivning}}</li>
+                  <li ng-show="cert.annanAtgard != null"><span message key="view.label.plannedtreatment.other"></span> {{cert.annanAtgard.beskrivning}}</li>
+                </ul>
+              </mi-field>
 
-              <div class="body-row">
-                <h3 class="title"><span message key="view.label.plannedtreatment"></span></h3> <span class="text">
-                  <ul>
-                    <li ng-show="cert.atgardInomSjukvarden != null"><span message key="view.label.plannedtreatment.healthcare"></span> {{cert.atgardInomSjukvarden.beskrivning}}</li>
-                    <li ng-show="cert.annanAtgard != null"><span message key="view.label.plannedtreatment.other"></span> {{cert.annanAtgard.beskrivning}}</li>
-                  </ul>
-                </span>
-              </div>
+              <mi-field title="view.label.workrehab" filled="cert.filledFields.workrehab">
+                <span ng-show="cert.arbetsinriktadRehabiliteringAktuell != null"> <span message key="view.label.yes"></span></span>
+                <span ng-show="cert.arbetsinriktadRehabiliteringEjAktuell != null"> <span message key="view.label.no"></span></span>
+                <span ng-show="cert.arbetsinriktadRehabiliteringEjBedombar != null"> <span message key="view.label.unjudgeable"></span></span>
+              </mi-field>
 
-              <div class="body-row">
-                <h3 class="title"><span message key="view.label.workrehab"></span></h3> <span class="text" ng-show="cert.arbetsinriktadRehabiliteringAktuell != null"> <span message key="view.label.yes"></span>
-                </span> <span class="text" ng-show="cert.arbetsinriktadRehabiliteringEjAktuell != null"> <span message key="view.label.no"></span>
-                </span> <span class="text" ng-show="cert.arbetsinriktadRehabiliteringEjBedombar != null"> <span message key="view.label.unjudgeable"></span>
-                </span>
-              </div>
+              <mi-field title="view.label.patientworkcapacity" filled="cert.filledFields.patientworkcapacity">
+                <ul>
+                  <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.sysselsattningar.indexOf('NUVARANDE_ARBETE') != -1"><span message key="view.label.patientworkcapacity.currentwork"></span> {{cert.aktivitetsbegransningar[0].arbetsformaga.arbetsuppgift}}</li>
+                  <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.sysselsattningar.indexOf('ARBETSLOSHET') != -1"><span message key="view.label.patientworkcapacity.unemployed"></span></li>
+                  <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.sysselsattningar.indexOf('FORALDRALEDIGHET') != -1"><span message key="view.label.patientworkcapacity.parentalleave"></span></li>
+                </ul>
+              </mi-field>
 
-              <div class="body-row">
-                <h3 class="title"><span message key="view.label.patientworkcapacity"></span></h3> <span class="text">
-                  <ul>
-                    <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.sysselsattningar.indexOf('NUVARANDE_ARBETE') != -1"><span message key="view.label.patientworkcapacity.currentwork"></span>
-                      {{cert.aktivitetsbegransningar[0].arbetsformaga.arbetsuppgift}}</li>
-                    <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.sysselsattningar.indexOf('ARBETSLOSHET') != -1"><span message key="view.label.patientworkcapacity.unemployed"></span></li>
-                    <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.sysselsattningar.indexOf('FORALDRALEDIGHET') != -1"><span message key="view.label.patientworkcapacity.parentalleave"></span></li>
-                  </ul>
-                </span>
-              </div>
+              <mi-field title="view.label.patientworkcapacityjudgement" filled="cert.filledFields.patientworkcapacityjudgement">
+                {{cert.aktivitetsbegransningar[0].arbetsformaga.motivering}}
+              </mi-field>
 
-              <div class="body-row">
-                <h3 class="title"><span message key="view.label.patientworkcapacityjudgement"></span></h3> <span class="text">{{cert.aktivitetsbegransningar[0].arbetsformaga.motivering}}</span>
-              </div>
+              <mi-field title="view.label.prognosis" filled="cert.filledFields.prognosis">
+                <ul>
+                  <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.prognosangivelse.indexOf('ATERSTALLAS_HELT') != -1"><span message key="view.label.yes"></span></li>
+                  <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.prognosangivelse.indexOf('ATERSTALLAS_DELVIS') != -1"><span message key="view.label.partialyes"></span></li>
+                  <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.prognosangivelse.indexOf('INTE_ATERSTALLAS') != -1"><span message key="view.label.no"></span></li>
+                  <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.prognosangivelse.indexOf('DET_GAR_INTE_ATT_BEDOMMA') != -1">
+                    <span message key="view.label.unjudgeable"></span> <span class="tag"><span message key="view.label.comment"></span></span> {{cert.kommentar}}
+                  </li>
+                </ul>
+              </mi-field>
 
-              <div class="body-row">
-                <h3 class="title"><span message key="view.label.prognosis"></span></h3> <span class="text">
-                  <ul>
-                    <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.prognosangivelse.indexOf('ATERSTALLAS_HELT') != -1"><span message key="view.label.yes"></span></li>
-                    <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.prognosangivelse.indexOf('ATERSTALLAS_DELVIS') != -1"><span message key="view.label.partialyes"></span></li>
-                    <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.prognosangivelse.indexOf('INTE_ATERSTALLAS') != -1"><span message key="view.label.no"></span></li>
-                    <li ng-show="cert.aktivitetsbegransningar[0].arbetsformaga.prognosangivelse.indexOf('DET_GAR_INTE_ATT_BEDOMMA') != -1"><span message key="view.label.unjudgeable"></span> <span
-                      class="tag"><span message key="view.label.comment"></span></span>{{cert.kommentar}}</li>
-                  </ul>
-                </span>
-              </div>
+              <mi-field title="view.label.othertransport" filled="cert.filledFields.othertransport">
+                <span ng-show="cert.forandratRessattAktuellt != null"> <span message key="view.label.yes"></span></span>
+                <span ng-show="cert.forandratRessattEjAktuellt != null"> <span message key="view.label.no"></span></span>
+              </mi-field>
 
-              <div class="body-row">
-                <h3 class="title"><span message key="view.label.othertransport"></span></h3> <span class="text" ng-show="cert.forandratRessattAktuellt != null"> <span message key="view.label.yes"></span>
-                </span> <span class="text" ng-show="cert.forandratRessattEjAktuellt != null"> <span message key="view.label.no"></span>
-                </span>
-              </div>
-
-              <div class="body-row">
-                <h3 class="title"><span message key="view.label.fkcontact"></span></h3> <span class="text" ng-show="cert.kontaktMedForsakringskassanAktuell != null"> <span message key="view.label.yes"></span>
-                </span>
-              </div>
+              <mi-field title="view.label.fkcontact" filled="cert.filledFields.fkcontact">
+                <span ng-show="cert.kontaktMedForsakringskassanAktuell != null"> <span message key="view.label.yes"></span></span>
+                <span ng-show="cert.kontaktMedForsakringskassanAktuell == null"> <span message key="view.label.no"></span></span>
+              </mi-field>
 
               <div class="body-row">
                 <h3 class="title"><span message key="view.label.workcodes"></span></h3> <span class="text" ng-show="cert.forskrivarkodOchArbetsplatskod != null">{{cert.forskrivarkodOchArbetsplatskod}}</span>

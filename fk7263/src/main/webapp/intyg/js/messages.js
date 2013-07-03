@@ -22,6 +22,8 @@ var fk7263Messages = {
         "fk7263.status.sent" : "Skickat till",
         "fk7263.target.fk" : "Försäkringskassan",
 
+	    "view.label.blank" : "- ej ifyllt",
+
         "view.label.pagetitle" : "Granska och skicka",
         "view.label.pagedescription" : "Här kan du titta på ditt intyg och skicka det till Försäkringskassan. Om du upptäcker några felaktigheter så hör av dig enheten som utfärdade ditt intyg. Du kan även öppna intyget som en PDF och skriva ut och spara.",
         "view.label.nedsattning" : "Läkare bedömer att arbetsförmåga är (fält 8b)",
