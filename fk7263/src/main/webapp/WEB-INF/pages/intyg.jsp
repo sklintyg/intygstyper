@@ -79,7 +79,7 @@
   
   <!--[if lte IE 8]>
     <script>
-    window.myCustomTags = [ 'miHeader', 'mvkTopBar', 'message' ]; // optional
+    window.myCustomTags = [ 'miHeader', 'mvkTopBar', 'message','miField' ]; // optional
     </script>
     
     <script type="text/javascript" src="/js/ie/ie-angular-shiv.js"></script>
@@ -93,6 +93,7 @@
   <%-- Dependencies to common components loaded from MI web app running at "/" context--%>
   <script type="text/javascript" src="/js/modules/message-module.js"></script>
   <script type="text/javascript" src="/js/modules/mi-header-directive.js"></script>
+  <script type="text/javascript" src="/js/modules/mi-certificate-directive.js"></script>
   <script type="text/javascript" src="/js/modules/cert-service.js"></script>
   <script type="text/javascript" src="/js/modules/util-services.js"></script>
   <script type="text/javascript" src="/js/modules/common-message-resources.js"></script>
