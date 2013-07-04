@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static com.google.common.base.Strings.isNullOrEmpty;
-import static com.google.common.collect.Iterables.find;
+import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
+import static se.inera.certificate.model.util.Iterables.find;
 import static se.inera.certificate.integration.v1.Referenstyp.ANNAT;
 import static se.inera.certificate.integration.v1.Referenstyp.JOURNALUPPGIFTER;
 import static se.inera.certificate.integration.v1.Sysselsattning.NUVARANDE_ARBETE;
 import static se.inera.certificate.integration.v1.Vardkontakttyp.MIN_TELEFONKONTAKT_MED_PATIENTEN;
 import static se.inera.certificate.integration.v1.Vardkontakttyp.MIN_UNDERSOKNING_AV_PATIENTEN;
 
-import com.google.common.base.Predicate;
 import se.inera.certificate.integration.v1.AktivitetType;
 import se.inera.certificate.integration.v1.Aktivitetskod;
 import se.inera.certificate.integration.v1.ArbetsformagaType;
@@ -24,6 +23,7 @@ import se.inera.certificate.integration.v1.ReferensType;
 import se.inera.certificate.integration.v1.Referenstyp;
 import se.inera.certificate.integration.v1.VardkontaktType;
 import se.inera.certificate.integration.v1.Vardkontakttyp;
+import se.inera.certificate.model.util.Predicate;
 
 /**
  * @author andreaskaltenbach

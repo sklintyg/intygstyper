@@ -1,6 +1,5 @@
 package se.inera.certificate.modules.fk7263.model;
 
-import static com.google.common.collect.Iterables.find;
 import static se.inera.certificate.model.Aktivitetskod.OVRIGT;
 import static se.inera.certificate.model.Prognosangivelse.ATERSTALLAS_DELVIS;
 import static se.inera.certificate.model.Prognosangivelse.ATERSTALLAS_HELT;
@@ -9,8 +8,8 @@ import static se.inera.certificate.model.Prognosangivelse.INTE_ATERSTALLAS;
 import static se.inera.certificate.model.Sysselsattning.ARBETSLOSHET;
 import static se.inera.certificate.model.Sysselsattning.FORALDRALEDIGHET;
 import static se.inera.certificate.model.Sysselsattning.NUVARANDE_ARBETE;
+import static se.inera.certificate.model.util.Iterables.find;
 
-import com.google.common.base.Predicate;
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Aktivitetskod;
 import se.inera.certificate.model.Arbetsformaga;
@@ -19,6 +18,7 @@ import se.inera.certificate.model.Lakarutlatande;
 import se.inera.certificate.model.Nedsattningsgrad;
 import se.inera.certificate.model.Prognosangivelse;
 import se.inera.certificate.model.Vardenhet;
+import se.inera.certificate.model.util.Predicate;
 
 /**
  * @author andreaskaltenbach
@@ -144,13 +144,4 @@ public class Fk7263Intyg extends Lakarutlatande {
         return null;
     }
 
-    private String getArbetsformagaNedsattFrom(final Nedsattningsgrad nedsattningsgrad) {
-        ArbetsformagaNedsattning arbetsformaga = getNedsattning(nedsattningsgrad);
-        return arbetsformaga != null ? arbetsformaga.getVaraktighetFrom().toString(DATE_PATTERN) : null;
-    }
-
-    private String getArbetsformagaNedsattTom(final Nedsattningsgrad nedsattningsgrad) {
-        ArbetsformagaNedsattning arbetsformaga = getNedsattning(nedsattningsgrad);
-        return arbetsformaga != null ? arbetsformaga.getVaraktighetTom().toString(DATE_PATTERN) : null;
-    }
 }

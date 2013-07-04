@@ -1,6 +1,7 @@
 package se.inera.certificate.modules.rli.rest;
 
-import com.google.common.base.Joiner;
+import static se.inera.certificate.model.util.Strings.join;
+
 import se.inera.certificate.integration.v1.Lakarutlatande;
 import se.inera.certificate.modules.rli.model.Resa;
 
@@ -46,7 +47,7 @@ public class RliModuleApi {
         if (errors.isEmpty()) {
             return Response.ok().build();
         } else {
-            String response = Joiner.on(",").join(errors);
+            String response = join(",", errors);
             return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
         }
     }

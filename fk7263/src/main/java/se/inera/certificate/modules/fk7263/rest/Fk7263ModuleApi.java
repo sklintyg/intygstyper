@@ -6,14 +6,17 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import java.io.IOException;
 import java.util.List;
 
-import com.google.common.base.Joiner;
 import com.itextpdf.text.DocumentException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import se.inera.certificate.integration.v1.Lakarutlatande;
+import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
 import se.inera.certificate.modules.fk7263.validator.LakarutlatandeValidator;
@@ -44,7 +47,7 @@ public class Fk7263ModuleApi {
         if (validationErrors.isEmpty()) {
             return Response.ok().build();
         } else {
-            String response = Joiner.on(",").join(validationErrors);
+            String response = Strings.join(",", validationErrors);
             return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
         }
     }
