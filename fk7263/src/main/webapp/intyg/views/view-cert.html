@@ -138,8 +138,11 @@
 
               <mi-field title="view.label.basedon" filled="cert.filledFields.basedon">
                 <ul>
-                  <li ng-repeat="vardkontakt in cert.vardkontakter"><span message key="vardkontakt.{{vardkontakt.vardkontakttyp}}"></span> {{vardkontakt.vardkontaktstid | date:'longDate'}}</li>
-                  <li ng-repeat="referens in cert.referenser"><span message key="referens.{{referens.referenstyp}}" args=""></span> {{referens.datum| date:'longDate'}}
+                  <li ng-repeat="vardkontakt in cert.vardkontakter">
+                    <span message key="vardkontakt.{{vardkontakt.vardkontakttyp}}"
+                          param="vardkontakt.vardkontaktstid | date:'longDate'"></span></li>
+                  <li ng-repeat="referens in cert.referenser">
+                    <span message key="referens.{{referens.referenstyp}}" param="referens.datum| date:'longDate'"></span>
                     <div ng-show="referens.referenstyp == 'ANNAT'">
                       <span class="tag"><span message key="view.label.comment"></span></span> {{cert.kommentar}}
                     </div>
