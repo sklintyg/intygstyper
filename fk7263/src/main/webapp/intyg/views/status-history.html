@@ -10,7 +10,7 @@
       </h1>
       <div id="view-certificate-status-history-list" class="well">
       <div ng-repeat="status in cert.status | filter: userVisibleStatusFilter">
-        {{status.timestamp | date:'shortDate'}}
+        {{status.timestamp | date:'short'}}
         <span message key="fk7263.status.{{status.type}}"></span>
         <span message key="fk7263.target.{{status.target}}"></span>
       </div>
