@@ -2,8 +2,8 @@ package se.inera.certificate.modules.rli.rest;
 
 import static se.inera.certificate.model.util.Strings.join;
 
-import se.inera.certificate.integration.v1.Lakarutlatande;
-import se.inera.certificate.modules.rli.model.Resa;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -11,8 +11,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.List;
+
+import se.inera.certificate.common.v1.Utlatande;
 
 /**
  * @author andreaskaltenbach
@@ -23,16 +23,15 @@ public class RliModuleApi {
     @Path("/extension")
     @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_JSON)
-    public Object extract(Lakarutlatande intyg) {
-        //return new Resa(intyg.getResmal(), intyg.getResenar());
-    	return  "{}";
+    public Object extract(Utlatande intyg) {
+    	return intyg;
     }
 
     @POST
     @Path( "/valid" )
     @Consumes( MediaType.APPLICATION_XML )
     @Produces( MediaType.TEXT_PLAIN )
-    public Response validate(Lakarutlatande intyg) {
+    public Response validate(Utlatande intyg) {
 
         List<String> errors = new ArrayList<>();
 /*

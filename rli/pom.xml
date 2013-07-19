@@ -173,10 +173,9 @@
             <configuration>
               <xsdOptions>
                 <xsdOption>
-                  <xsd>src/main/resources/Reselakarintyg.xsd</xsd>
+                  <xsd>src/main/resources/rli_model.xsd</xsd>
                   <extension>true</extension>
                   <bindingFile>${basedir}/src/main/resources/binding.xjb</bindingFile>
-                  <packagename>se.inera.certificate.integration.v1</packagename>
                 </xsdOption>
               </xsdOptions>
             </configuration>

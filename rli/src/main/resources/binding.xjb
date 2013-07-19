@@ -1,15 +1,31 @@
 <?xml version="1.0"?>
-<jxb:bindings version="1.0" xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc">
+<jxb:bindings version="1.0" 
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb" 
+    xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <jxb:bindings schemaLocation="iso-21090-dt-namespace.xsd" node="/xs:schema">
+    <jxb:schemaBindings>
+      <jxb:package name="iso.v21090.dt.v1"/>
+    </jxb:schemaBindings>
+  </jxb:bindings>
+
+  <jxb:bindings schemaLocation="rli_model.xsd" node="/xs:schema">
+    <jxb:schemaBindings>
+      <jxb:package name="se.inera.certificate.common.v1"/>
+    </jxb:schemaBindings>
+  </jxb:bindings>
+
+  <jxb:bindings schemaLocation="rli_model_extension.xsd" node="/xs:schema">
+    <jxb:schemaBindings>
+      <jxb:package name="se.inera.certificate.rli.v1"/>
+    </jxb:schemaBindings>
+  </jxb:bindings>
+
   <jxb:bindings>
     <jxb:globalBindings>
       <xjc:simple/>
-      <jxb:javaType name="org.joda.time.LocalDate" xmlType="xs:date"
-                     parseMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.parseDate"
-                     printMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.printDate"/>
-
-      <jxb:javaType name="org.joda.time.LocalDateTime" xmlType="xs:dateTime"
-                     parseMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.parseDateTime"
-                     printMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.printDateTime"/>
     </jxb:globalBindings>
   </jxb:bindings>
+
 </jxb:bindings>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:intyg:rli:model:1"
+	xmlns:iso="urn:iso:21090:dt:1" targetNamespace="urn:intyg:rli:model:1"
+	elementFormDefault="qualified" attributeFormDefault="unqualified"
+	version="0.1">
+
+	<xs:import namespace="urn:iso:21090:dt:1" schemaLocation="iso-21090-dt-namespace.xsd" />
+
+	<xs:element name="arrangemang" type="arrangemangType" />
+
+	<xs:complexType name="arrangemangType">
+		<xs:sequence>
+			<xs:element name="bokningsreferens" type="iso:CD"
+				minOccurs="0" />
+			<xs:element name="bokningsdatum" type="iso:TS" />
+			<xs:element name="arrangemangstid" type="iso:IVL_TS" />
+			<xs:element name="avbestallningsdatum" type="iso:TS"
+				minOccurs="0" />
+			<xs:element name="arrangemangstyp" type="iso:CD"
+				minOccurs="0" />
+			<xs:element name="plats" type="xs:string" />
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>
