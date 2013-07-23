@@ -159,7 +159,7 @@
               <artifactItems>
                 <artifactItem>
                   <groupId>se.inera.certificate-web</groupId>
-                  <artifactId>citizen-web</artifactId>
+                  <artifactId>web</artifactId>
                   <version>1.0-SNAPSHOT</version>
                   <type>war</type>
                 </artifactItem>
