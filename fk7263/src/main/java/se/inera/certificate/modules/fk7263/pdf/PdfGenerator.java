@@ -2,18 +2,17 @@ package se.inera.certificate.modules.fk7263.pdf;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 
-import static se.inera.certificate.model.Aktivitetskod.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD;
-import static se.inera.certificate.model.Aktivitetskod.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN;
-import static se.inera.certificate.model.Nedsattningsgrad.HELT_NEDSATT;
-import static se.inera.certificate.model.Nedsattningsgrad.NEDSATT_MED_1_2;
-import static se.inera.certificate.model.Nedsattningsgrad.NEDSATT_MED_1_4;
-import static se.inera.certificate.model.Nedsattningsgrad.NEDSATT_MED_3_4;
-import static se.inera.certificate.model.Referenstyp.ANNAT;
-import static se.inera.certificate.model.Referenstyp.JOURNALUPPGIFTER;
-import static se.inera.certificate.model.Vardkontakttyp.MIN_TELEFONKONTAKT_MED_PATIENTEN;
-import static se.inera.certificate.model.Vardkontakttyp.MIN_UNDERSOKNING_AV_PATIENTEN;
 import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.DATE_PATTERN;
+import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.Nedsattningsgrad_Helt_nedsatt;
+import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.Nedsattningsgrad_Nedsatt_med_1_2;
+import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.Nedsattningsgrad_Nedsatt_med_1_4;
+import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.Nedsattningsgrad_Nedsatt_med_3_4;
+import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.Referens_Annat;
+import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.Referens_Journaluppgifter;
+import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.Vardkontakt_Min_telefonkontakt_med_patienten;
+import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.Vardkontakt_Min_undersokning_av_patienten;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
@@ -21,8 +20,10 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.ArbetsformagaNedsattning;
+import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Vardkontakt;
+import se.inera.certificate.model.codes.ObservationsKoder;
 import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
 
 
@@ -204,7 +205,7 @@ public class PdfGenerator {
 
     private void fillPatientDetails() {
         fillText(PATIENT_NAME, intyg.getPatient().getFullstandigtNamn());
-        fillText(PATIENT_SSN, intyg.getPatient().getId());
+        fillText(PATIENT_SSN, intyg.getPatient().getId().getExtension());
     }
 
     private void fillSignerNameAndAddress() {
@@ -242,10 +243,10 @@ public class PdfGenerator {
     }
 
     private void fillCapacity() {
-        fillNedsattning(intyg.getNedsattning(HELT_NEDSATT), REDUCED_WORK_CAPACITY_FULL, REDUCED_WORK_CAPACITY_FULL_FROM, REDUCED_WORK_CAPACITY_FULL_TOM);
-        fillNedsattning(intyg.getNedsattning(NEDSATT_MED_3_4), REDUCED_WORK_CAPACITY_75, REDUCED_WORK_CAPACITY_75_FROM, REDUCED_WORK_CAPACITY_75_TOM);
-        fillNedsattning(intyg.getNedsattning(NEDSATT_MED_1_2), REDUCED_WORK_CAPACITY_50, REDUCED_WORK_CAPACITY_50_FROM, REDUCED_WORK_CAPACITY_50_TOM);
-        fillNedsattning(intyg.getNedsattning(NEDSATT_MED_1_4), REDUCED_WORK_CAPACITY_25, REDUCED_WORK_CAPACITY_25_FROM, REDUCED_WORK_CAPACITY_25_TOM);
+        fillNedsattning(intyg.getNedsattning(Nedsattningsgrad_Helt_nedsatt), REDUCED_WORK_CAPACITY_FULL, REDUCED_WORK_CAPACITY_FULL_FROM, REDUCED_WORK_CAPACITY_FULL_TOM);
+        fillNedsattning(intyg.getNedsattning(Nedsattningsgrad_Nedsatt_med_3_4), REDUCED_WORK_CAPACITY_75, REDUCED_WORK_CAPACITY_75_FROM, REDUCED_WORK_CAPACITY_75_TOM);
+        fillNedsattning(intyg.getNedsattning(Nedsattningsgrad_Nedsatt_med_1_2), REDUCED_WORK_CAPACITY_50, REDUCED_WORK_CAPACITY_50_FROM, REDUCED_WORK_CAPACITY_50_TOM);
+        fillNedsattning(intyg.getNedsattning(Nedsattningsgrad_Nedsatt_med_1_4), REDUCED_WORK_CAPACITY_25, REDUCED_WORK_CAPACITY_25_FROM, REDUCED_WORK_CAPACITY_25_TOM);
     }
 
     private void fillCapacityRelativeTo() {
@@ -281,30 +282,32 @@ public class PdfGenerator {
     }
 
     private void fillOther() {
-        fillText(OTHER_INFORMATION, intyg.getKommentar());
+        if (intyg.getKommentars() != null && !intyg.getKommentars().isEmpty()) {
+            fillText(OTHER_INFORMATION, intyg.getKommentars().get(0));
+        }
     }
 
     private void fillBasedOn() {
 
-        Vardkontakt minUndersokning = intyg.getVardkontakt(MIN_UNDERSOKNING_AV_PATIENTEN);
+        Vardkontakt minUndersokning = intyg.getVardkontakt(Vardkontakt_Min_undersokning_av_patienten);
         if (minUndersokning != null) {
             checkField(BASED_ON_EXAMINATION);
-            fillText(BASED_ON_EXAMINATION_TIME, minUndersokning.getVardkontaktstid().toString(DATE_PATTERN));
+            fillText(BASED_ON_EXAMINATION_TIME, minUndersokning.getVardkontaktstid().getStart().toString(DATE_PATTERN));
         }
 
-        Vardkontakt minTelefonkontakt = intyg.getVardkontakt(MIN_TELEFONKONTAKT_MED_PATIENTEN);
+        Vardkontakt minTelefonkontakt = intyg.getVardkontakt(Vardkontakt_Min_telefonkontakt_med_patienten);
         if (minTelefonkontakt != null) {
             checkField(BASED_ON_PHONE_CONTACT);
-            fillText(BASED_ON_PHONE_CONTACT_TIME, minTelefonkontakt.getVardkontaktstid().toString(DATE_PATTERN));
+            fillText(BASED_ON_PHONE_CONTACT_TIME, minTelefonkontakt.getVardkontaktstid().getStart().toString(DATE_PATTERN));
         }
 
-        Referens journalReferens = intyg.getReferens(JOURNALUPPGIFTER);
+        Referens journalReferens = intyg.getReferens(Referens_Journaluppgifter);
         if (journalReferens != null) {
             checkField(BASED_ON_JOURNAL);
             fillText(BASED_ON_JOURNAL_TIME, journalReferens.getDatum().toString(DATE_PATTERN));
         }
 
-        Referens annanReferens = intyg.getReferens(ANNAT);
+        Referens annanReferens = intyg.getReferens(Referens_Annat);
         if (annanReferens != null) {
             checkField(BASED_ON_OTHER);
             fillText(BASED_ON_OTHER_DATE, annanReferens.getDatum().toString(DATE_PATTERN));
@@ -313,13 +316,13 @@ public class PdfGenerator {
 
     private void fillMeasures() {
 
-        Aktivitet planeradBehandlingInomSjukvarden = intyg.getAktivitet(PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN);
+        Aktivitet planeradBehandlingInomSjukvarden = intyg.getAtgardInomSjukvarden();
         if (planeradBehandlingInomSjukvarden != null) {
             checkField(MEASURES_CURRENT);
             fillText(MEASURES_CURRENT_TEXT, planeradBehandlingInomSjukvarden.getBeskrivning());
         }
 
-        Aktivitet planeradAnnanAtgard = intyg.getAktivitet(PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD);
+        Aktivitet planeradAnnanAtgard = intyg.getAnnanAtgard();
         if (planeradAnnanAtgard != null) {
             checkField(MEASURES_OTHER);
             fillText(MEASURES_OTHER_TEXT, planeradAnnanAtgard.getBeskrivning());
@@ -327,7 +330,10 @@ public class PdfGenerator {
     }
 
     private void fillDiseaseCause() {
-        fillText(DISEASE_CAUSE, intyg.getSjukdomsforlopp());
+        List<Observation> sjukdomsforlopp = intyg.getObservationsByKategori(ObservationsKoder.SJUKDOMSFORLOPP);
+        if (sjukdomsforlopp != null && !sjukdomsforlopp.isEmpty()) {
+            fillText(DISEASE_CAUSE, sjukdomsforlopp.get(0).getBeskrivning());
+        }
     }
 
     private void fillIsSuspenseDueToInfection() {
@@ -339,9 +345,13 @@ public class PdfGenerator {
     }
 
     private void fillDiagnose() {
-        if (intyg.getBedomtTillstand() != null) {
-            fillText(DIAGNOS_CODE, intyg.getBedomtTillstand().getTillstandskod());
-            fillText(DIAGNOS, intyg.getBedomtTillstand().getBeskrivning());
+        List<Observation> diagnosList = intyg.getObservationsByKategori(ObservationsKoder.DIAGNOS);
+        if (diagnosList != null && !diagnosList.isEmpty()) {
+            Observation diagnos = diagnosList.get(0);
+            if (diagnos.getObservatonsKod() != null) {
+                fillText(DIAGNOS_CODE, diagnos.getObservatonsKod().getCode());
+            }
+            fillText(DIAGNOS, diagnos.getBeskrivning());
         }
     }
 

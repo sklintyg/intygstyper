@@ -1,34 +1,58 @@
 package se.inera.certificate.modules.fk7263.model;
 
-import static se.inera.certificate.model.Aktivitetskod.OVRIGT;
-import static se.inera.certificate.model.Prognosangivelse.ATERSTALLAS_DELVIS;
-import static se.inera.certificate.model.Prognosangivelse.ATERSTALLAS_HELT;
-import static se.inera.certificate.model.Prognosangivelse.DET_GAR_INTE_ATT_BEDOMMA;
-import static se.inera.certificate.model.Prognosangivelse.INTE_ATERSTALLAS;
-import static se.inera.certificate.model.Sysselsattning.ARBETSLOSHET;
-import static se.inera.certificate.model.Sysselsattning.FORALDRALEDIGHET;
-import static se.inera.certificate.model.Sysselsattning.NUVARANDE_ARBETE;
-import static se.inera.certificate.model.util.Iterables.find;
-
 import se.inera.certificate.model.Aktivitet;
-import se.inera.certificate.model.Aktivitetskod;
-import se.inera.certificate.model.Arbetsformaga;
 import se.inera.certificate.model.ArbetsformagaNedsattning;
-import se.inera.certificate.model.Lakarutlatande;
-import se.inera.certificate.model.Nedsattningsgrad;
-import se.inera.certificate.model.Prognosangivelse;
+import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.Observation;
+import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.Vardenhet;
-import se.inera.certificate.model.util.Predicate;
 
 /**
  * @author andreaskaltenbach
  */
-public class Fk7263Intyg extends Lakarutlatande {
+public class Fk7263Intyg extends Utlatande {
+
+    private static final Kod Aktivitet_Arbetslivsinriktad_rehabilitering_ar_aktuell = new Kod("Arbetslivsinriktad_rehabilitering_ar_aktuell");
+    private static final Kod Aktivitet_Arbetslivsinriktad_rehabilitering_ar_ej_aktuell = new Kod("Arbetslivsinriktad_rehabilitering_ar_ej_aktuell");
+    private static final Kod Aktivitet_Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell = new Kod("Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell");
+    private static final Kod Aktivitet_Forandrat_ressatt_till_arbetsplatsen_ar_aktuellt = new Kod("Forandrat_ressatt_till_arbetsplatsen_ar_aktuellt");
+    private static final Kod Aktivitet_Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt = new Kod("Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt");
+    private static final Kod Aktivitet_Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden = new Kod("Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden");
+    private static final Kod Aktivitet_Planerad_eller_pagaende_annan_atgard = new Kod("Planerad_eller_pagaende_annan_atgard");
+    private static final Kod Aktivitet_Kontakt_med_Forsakringskassan_ar_aktuell = new Kod("Kontakt_med_Forsakringskassan_ar_aktuell");
+    private static final Kod Aktivitet_Patienten_behover_fa_kontakt_med_foretagshalsovarden = new Kod("Patienten_behover_fa_kontakt_med_foretagshalsovarden");
+    private static final Kod Aktivitet_Avstangning_enligt_SmL_pga_smitta = new Kod("Avstangning_enligt_SmL_pga_smitta");
+    private static final Kod Aktivitet_Ovrigt = new Kod("Ovrigt");
+    private static final Kod Aktivitet_Patienten_behover_fa_kontakt_med_Arbetsformedlingen = new Kod("Patienten_behover_fa_kontakt_med_Arbetsformedlingen");
+
+    private static final Kod Prognos_Aterstallas_helt = new Kod("Aterstallas_helt");
+    private static final Kod Prognos_Aterstallas_delvis = new Kod("Aterstallas_delvis");
+    private static final Kod Prognos_Inte_aterstallas = new Kod("Inte_aterstallas");
+    private static final Kod Prognos_Det_gar_inte_att_bedomma = new Kod("Det_gar_inte_att_bedomma");
+
+    private static final Kod Sysselsattning_Nuvarande_arbete = new Kod("Nuvarande_arbete");
+    private static final Kod Sysselsattning_Arbetsloshet = new Kod("Arbetsloshet");
+    private static final Kod Sysselsattning_Foraldraledighet = new Kod("Foraldraledighet");
+
+    public static final Kod Nedsattningsgrad_Helt_nedsatt = new Kod("Helt_nedsatt");
+    public static final Kod Nedsattningsgrad_Nedsatt_med_3_4 = new Kod("Nedsatt_med_3/4");
+    public static final Kod Nedsattningsgrad_Nedsatt_med_1_2 = new Kod("Nedsatt_med_1/2");
+    public static final Kod Nedsattningsgrad_Nedsatt_med_1_4 = new Kod("Nedsatt_med_1/4");
+
+    public static final Kod Referens_Journaluppgifter = new Kod("Journaluppgifter");
+    public static final Kod Referens_Annat = new Kod("Annat");
+
+    public static final Kod Vardkontakt_Min_undersokning_av_patienten = new Kod("Min_undersokning_av_patienten");
+    public static final Kod Vardkontakt_Min_telefonkontakt_med_patienten = new Kod("Min_telefonkontakt_med_patienten");
 
     public static final String DATE_PATTERN = "yyyy-MM-dd";
 
     public String getNamnfortydligandeOchAdress() {
-        Vardenhet enhet = getVardenhet();
+        if (getSkapadAv() == null || getSkapadAv().getVardenhet() == null) {
+            return "";
+        }
+
+        Vardenhet enhet = getSkapadAv().getVardenhet();
         String nameAndAddress = getSkapadAv().getNamn() + "\n"
                 + enhet.getNamn()
                 + "\n" + enhet.getPostadress()
@@ -43,10 +67,10 @@ public class Fk7263Intyg extends Lakarutlatande {
     }
 
     public String getRekommenderarOvrigtText() {
-        return getAktivitetsText(OVRIGT);
+        return getAktivitetsText(Aktivitet_Ovrigt);
     }
 
-    private String getAktivitetsText(Aktivitetskod aktivitetskod) {
+    private String getAktivitetsText(Kod aktivitetskod) {
         Aktivitet activity = getAktivitet(aktivitetskod);
         if (activity != null) {
             return activity.getBeskrivning();
@@ -56,54 +80,54 @@ public class Fk7263Intyg extends Lakarutlatande {
     }
 
     public String getAktivitetsnedsattningBeskrivning() {
-        if (!getAktivitetsbegransningar().isEmpty()) {
-            return getAktivitetsbegransningar().get(0).getBeskrivning();
-        } else {
-            return null;
-        }
+        Observation aktivitetsbegransning = getAktivitetsbegransning();
+        return (aktivitetsbegransning != null) ? aktivitetsbegransning.getBeskrivning() : null;
     }
 
     public String getFunktionsnedsattningBeskrivning() {
-        if (!getFunktionsnedsattningar().isEmpty()) {
-            return getFunktionsnedsattningar().get(0).getBeskrivning();
-        } else {
-            return null;
-        }
+        Observation funktionsnedsattning = getFunktionsnedsattning();
+        return (funktionsnedsattning != null) ? funktionsnedsattning.getBeskrivning() : null;
     }
 
     public boolean isPrognosDelvisAterstallning() {
-        return ATERSTALLAS_DELVIS == getPrognos();
+        return Prognos_Aterstallas_delvis.equals(getPrognosKod());
     }
 
     public boolean isPrognosEjAterstallning() {
-        return INTE_ATERSTALLAS == getPrognos();
+        return Prognos_Inte_aterstallas.equals(getPrognosKod());
     }
 
     public boolean isPrognosFullAterstallning() {
-        return ATERSTALLAS_HELT == getPrognos();
+        return Prognos_Aterstallas_helt.equals(getPrognosKod());
     }
 
     public boolean isPrognosAterstallningGarEjBedomma() {
-        return DET_GAR_INTE_ATT_BEDOMMA == getPrognos();
+        return Prognos_Det_gar_inte_att_bedomma.equals(getPrognosKod());
     }
 
     public String getPrognosText() {
-        if (!getAktivitetsbegransningar().isEmpty()) {
+        return null;
+        // TODO - return correct arbetsformaga motivering as soon as it is available in new information model
+        /*if (!getAktivitetsbegransningar().isEmpty()) {
             return getAktivitetsbegransningar().get(0).getArbetsformaga().getMotivering();
         } else {
             return null;
-        }
+        } */
     }
 
-    private Prognosangivelse getPrognos() {
-        if (!getAktivitetsbegransningar().isEmpty()) {
-            return getAktivitetsbegransningar().get(0).getArbetsformaga().getPrognosangivelse();
-        } else {
+    private Kod getPrognosKod() {
+        Observation aktivitetsbegransning = getAktivitetsbegransning();
+        if (aktivitetsbegransning == null || aktivitetsbegransning.getPrognos() == null) {
             return null;
         }
+
+        return aktivitetsbegransning.getPrognos().getPrognosKod();
     }
 
-    public ArbetsformagaNedsattning getNedsattning(final Nedsattningsgrad nedsattningsgrad) {
+    // TODO - return correct nedsattning as soon as it is available in new information model
+    public ArbetsformagaNedsattning getNedsattning(final Kod nedsattningsgrad) {
+        return null;
+        /*
         if (!getAktivitetsbegransningar().isEmpty()) {
             return find(getAktivitetsbegransningar().get(0).getArbetsformaga().getArbetsformagaNedsattningar(), new Predicate<ArbetsformagaNedsattning>() {
                 @Override
@@ -113,35 +137,86 @@ public class Fk7263Intyg extends Lakarutlatande {
             }, null);
         } else {
             return null;
-        }
-    }
-
-    public Arbetsformaga getArbetsformaga() {
-        if (!getAktivitetsbegransningar().isEmpty()) {
-            return getAktivitetsbegransningar().get(0).getArbetsformaga();
-        } else {
-            return null;
-        }
+        } */
     }
 
     public boolean isArbetsformagaIForhallandeTillArbetsloshet() {
-        return getArbetsformaga() != null && getArbetsformaga().getSysselsattningar().contains(ARBETSLOSHET);
+        return containsSysselsattningKod(Sysselsattning_Arbetsloshet);
     }
 
     public boolean isArbetsformagaIForhallandeTillForaldraledighet() {
-        return getArbetsformaga() != null && getArbetsformaga().getSysselsattningar().contains(FORALDRALEDIGHET);
+        return containsSysselsattningKod(Sysselsattning_Foraldraledighet);
     }
 
     public boolean isArbetsformagaIForhallandeTillNuvarandeArbete() {
-        return getArbetsformaga() != null && getArbetsformaga().getSysselsattningar().contains(NUVARANDE_ARBETE);
+        return containsSysselsattningKod(Sysselsattning_Nuvarande_arbete);
     }
 
+    private boolean containsSysselsattningKod(Kod sysselsattningKod) {
+        for (se.inera.certificate.model.Sysselsattning sysselsattning : getSysselsattnings()) {
+            if (sysselsattningKod.equals(sysselsattning.getSysselsattningsTyp())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // TODO - return correct arbetsformoga text as soon as it is available in new information model
     public String getArbetsformagaText() {
+        return null;
+        /*
         Arbetsformaga arbetsformaga = getArbetsformaga();
         if (arbetsformaga != null) {
             return arbetsformaga.getArbetsuppgift();
         }
-        return null;
+        return null;*/
     }
 
+    public Aktivitet getForandratRessattAktuellt() {
+        return getAktivitet(Aktivitet_Forandrat_ressatt_till_arbetsplatsen_ar_aktuellt);
+    }
+
+    public Aktivitet getForandratRessattEjAktuellt() {
+        return getAktivitet(Aktivitet_Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt);
+    }
+
+    public Aktivitet getKontaktMedForsakringskassanAktuell() {
+        return getAktivitet(Aktivitet_Kontakt_med_Forsakringskassan_ar_aktuell);
+    }
+
+    public Aktivitet getArbetsinriktadRehabiliteringAktuell() {
+        return getAktivitet(Aktivitet_Arbetslivsinriktad_rehabilitering_ar_aktuell);
+    }
+
+    public Aktivitet getArbetsinriktadRehabiliteringEjAktuell() {
+        return getAktivitet(Aktivitet_Arbetslivsinriktad_rehabilitering_ar_ej_aktuell);
+    }
+
+    public Aktivitet getArbetsinriktadRehabiliteringEjBedombar() {
+        return getAktivitet(Aktivitet_Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell);
+    }
+
+    public Aktivitet getAvstangningEnligtSmittskyddslagen() {
+        return getAktivitet(Aktivitet_Avstangning_enligt_SmL_pga_smitta);
+    }
+
+    public Aktivitet getRekommenderarKontaktMedArbetsformedlingen() {
+        return getAktivitet(Aktivitet_Patienten_behover_fa_kontakt_med_Arbetsformedlingen);
+    }
+
+    public Aktivitet getRekommenderarKontaktMedForetagshalsovarden() {
+        return getAktivitet(Aktivitet_Patienten_behover_fa_kontakt_med_foretagshalsovarden);
+    }
+
+    public Aktivitet getRekommenderarOvrigt() {
+        return getAktivitet(Aktivitet_Ovrigt);
+    }
+
+    public Aktivitet getAtgardInomSjukvarden() {
+        return getAktivitet(Aktivitet_Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden);
+    }
+
+    public Aktivitet getAnnanAtgard() {
+        return getAktivitet(Aktivitet_Planerad_eller_pagaende_annan_atgard);
+    }
 }
