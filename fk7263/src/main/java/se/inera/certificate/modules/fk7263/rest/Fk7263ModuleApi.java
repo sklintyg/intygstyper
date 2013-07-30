@@ -6,20 +6,16 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import java.io.IOException;
 import java.util.List;
 
 import com.itextpdf.text.DocumentException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import se.inera.certificate.integration.v1.Lakarutlatande;
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
-import se.inera.certificate.modules.fk7263.validator.LakarutlatandeValidator;
+import se.inera.certificate.modules.fk7263.validator.UtlatandeValidator;
 
 /**
  * @author andreaskaltenbach
@@ -29,20 +25,12 @@ public class Fk7263ModuleApi {
     private static final Logger LOG = LoggerFactory.getLogger(Fk7263ModuleApi.class);
 
     @POST
-    @Path("/extension")
-    @Consumes(MediaType.APPLICATION_XML)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Object extract(Lakarutlatande lakarutlatande) {
-        return "{}";
-    }
-
-    @POST
     @Path("/valid")
-    @Consumes(MediaType.APPLICATION_XML)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public Response validate(Lakarutlatande lakarutlatande) {
+    public Response validate(Fk7263Intyg utlatande) {
 
-        List<String> validationErrors = new LakarutlatandeValidator(lakarutlatande).validate();
+        List<String> validationErrors = new UtlatandeValidator(utlatande).validate();
 
         if (validationErrors.isEmpty()) {
             return Response.ok().build();

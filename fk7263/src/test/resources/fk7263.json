@@ -1,6 +1,6 @@
 {  "id" : {
-        "extension" : "80832895-5a9c-450a-bd74-08af43750788"
-    },
+    "extension" : "80832895-5a9c-450a-bd74-08af43750788"
+},
     "typ" : {
         "code" : "fk7263"
     },
@@ -16,7 +16,7 @@
         },
         "fornamns" : [""],
         "efternamns" : ["Test Testorsson"],
-        "fullstandigtNamn":"Test Testorsson",
+        "fullstandigtNamn" : "Test Testorsson",
         "sysselsattnings" : [
             {
                 "sysselsattningsTyp" : {
@@ -32,6 +32,11 @@
                 "sysselsattningsTyp" : {
                     "code" : "Foraldraledighet"
                 }
+            }
+        ],
+        "arbetsuppgifts" : [
+            {
+                "typAvArbetsuppgift" : "Dirigent. Dirigerar en större orkester på deltid"
             }
         ]
     },
@@ -113,7 +118,7 @@
     "observations" : [
         {
             "observationsKategori" : {
-                "code" : "Diagnos"
+                "code" : "MedicinsktTillstånd"
             },
             "observatonsKod" : {
                 "codeSystemName" : "ICD-10",
@@ -123,7 +128,7 @@
         },
         {
             "observationsKategori" : {
-                "code" : "BedömtTillstånd/Sjukdomsförlopp"
+                "code" : "BedömtTillstånd"
             },
             "beskrivning" : "Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid."
         },
@@ -137,11 +142,64 @@
             "observationsKategori" : {
                 "code" : "Aktivitet"
             },
-            "beskrivning" : "Patienten bör/kan inte använda armen förrän skadan läkt. Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning.",
-            "prognos" : {
-                "prognosKod" : {
-                    "code" : "Det_gar_inte_att_bedomma"
-                }
+            "beskrivning" : "Patienten bör/kan inte använda armen förrän skadan läkt. Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning."
+        },
+        {
+            "observationsKategori" : {
+                "code" : "Arbetsförmåga"
+            },
+            "observatonsKod" : {
+                "code" : "Det_gar_inte_att_bedomma"
+            },
+            "beskrivning" : "Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
+        },
+
+        {
+            "observationsKategori" : {
+                "code" : "Nedsättning"
+            },
+            "observatonsKod" : {
+                "code" : "Nedsatt_med_1/4"
+            },
+            "observationsPeriod" : {
+                "from" : "2011-04-01",
+                "tom" : "2011-05-31"
+            }
+        },
+        {
+            "observationsKategori" : {
+                "code" : "Nedsättning"
+            },
+            "observatonsKod" : {
+                "code" : "Nedsatt_med_1/2"
+            },
+            "observationsPeriod" : {
+                "from" : "2011-03-07",
+                "tom" : "2011-03-31"
+            }
+        },
+        {
+            "observationsKategori" : {
+                "code" : "Nedsättning"
+            },
+            "observatonsKod" : {
+                "code" : "Nedsatt_med_3/4"
+            },
+            "observationsPeriod" : {
+                "from" : "2011-02-14",
+                "tom" : "2011-03-06"
+            }
+        },
+        {
+            "observationsKategori" : {
+                "code" : "Nedsättning"
+            },
+            "observatonsKod" : {
+                "code" : "Helt_nedsatt"
+            },
+            "observationsPeriod" : {
+                "from" : "2011-01-26",
+                "tom" : "2011-02-13"
             }
         }
     ],
@@ -181,44 +239,3 @@
     ],
     "forskrivarkodOchArbetsplatskod" : "123456789011"
 }
-
-/*
- TODO - introduce missing fields for arbetsformaga once they are part of the common model:
-
- "aktivitetsbegransningar" : [
- {
- "arbetsformaga" : {
- "motivering" : "Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.",
- "arbetsuppgift" : "Dirigent. Dirigerar en större orkester på deltid",
- "arbetsformagaNedsattningar" : [
- {
- "varaktighetTom" : "2011-05-31",
- "varaktighetFrom" : "2011-04-01",
- "nedsattningsgrad" : "NEDSATT_MED_1_4"
- },
- {
- "varaktighetTom" : "2011-03-31",
- "varaktighetFrom" : "2011-03-07",
- "nedsattningsgrad" : "NEDSATT_MED_1_2"
- },
- {
- "varaktighetTom" : "2011-03-06",
- "varaktighetFrom" : "2011-02-14",
- "nedsattningsgrad" : "NEDSATT_MED_3_4"
- },
- {
- "varaktighetTom" : "2011-02-13",
- "varaktighetFrom" : "2011-01-26",
- "nedsattningsgrad" : "HELT_NEDSATT"
- }
- ],
-
- }
- }
- ],
- */
-/*
- TODO - add valid from and to dates again once the nedsattningsgrader made it into the common model
- "validFromDate" : "2011-01-26",
- "validToDate" : "2011-05-31",
- */

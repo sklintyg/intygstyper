@@ -6,6 +6,7 @@ import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.Vardenhet;
+import se.inera.certificate.model.codes.ObservationsKoder;
 
 /**
  * @author andreaskaltenbach
@@ -15,8 +16,8 @@ public class Fk7263Intyg extends Utlatande {
     private static final Kod Aktivitet_Arbetslivsinriktad_rehabilitering_ar_aktuell = new Kod("Arbetslivsinriktad_rehabilitering_ar_aktuell");
     private static final Kod Aktivitet_Arbetslivsinriktad_rehabilitering_ar_ej_aktuell = new Kod("Arbetslivsinriktad_rehabilitering_ar_ej_aktuell");
     private static final Kod Aktivitet_Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell = new Kod("Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell");
-    private static final Kod Aktivitet_Forandrat_ressatt_till_arbetsplatsen_ar_aktuellt = new Kod("Forandrat_ressatt_till_arbetsplatsen_ar_aktuellt");
-    private static final Kod Aktivitet_Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt = new Kod("Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt");
+    public static final Kod Aktivitet_Forandrat_ressatt_till_arbetsplatsen_ar_aktuellt = new Kod("Forandrat_ressatt_till_arbetsplatsen_ar_aktuellt");
+    public static final Kod Aktivitet_Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt = new Kod("Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt");
     private static final Kod Aktivitet_Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden = new Kod("Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden");
     private static final Kod Aktivitet_Planerad_eller_pagaende_annan_atgard = new Kod("Planerad_eller_pagaende_annan_atgard");
     private static final Kod Aktivitet_Kontakt_med_Forsakringskassan_ar_aktuell = new Kod("Kontakt_med_Forsakringskassan_ar_aktuell");
@@ -28,9 +29,9 @@ public class Fk7263Intyg extends Utlatande {
     private static final Kod Prognos_Aterstallas_helt = new Kod("Aterstallas_helt");
     private static final Kod Prognos_Aterstallas_delvis = new Kod("Aterstallas_delvis");
     private static final Kod Prognos_Inte_aterstallas = new Kod("Inte_aterstallas");
-    private static final Kod Prognos_Det_gar_inte_att_bedomma = new Kod("Det_gar_inte_att_bedomma");
+    public static final Kod Prognos_Det_gar_inte_att_bedomma = new Kod("Det_gar_inte_att_bedomma");
 
-    private static final Kod Sysselsattning_Nuvarande_arbete = new Kod("Nuvarande_arbete");
+    public static final Kod Sysselsattning_Nuvarande_arbete = new Kod("Nuvarande_arbete");
     private static final Kod Sysselsattning_Arbetsloshet = new Kod("Arbetsloshet");
     private static final Kod Sysselsattning_Foraldraledighet = new Kod("Foraldraledighet");
 
@@ -87,6 +88,22 @@ public class Fk7263Intyg extends Utlatande {
     public String getFunktionsnedsattningBeskrivning() {
         Observation funktionsnedsattning = getFunktionsnedsattning();
         return (funktionsnedsattning != null) ? funktionsnedsattning.getBeskrivning() : null;
+    }
+
+    public Observation getFunktionsnedsattning() {
+        return getObservationByKategori(ObservationsKoder.KROPPSFUNKTION);
+    }
+
+    public Observation getMedicinsktTillstand() {
+        return getObservationByKategori(ObservationsKoder.MEDICINSKT_TILLSTAND);
+    }
+
+    public Observation getAktivitetsbegransning() {
+        return getObservationByKategori(ObservationsKoder.AKTIVITET);
+    }
+
+    public Observation getArbetsformagaAktivitetsbegransning() {
+        return getObservationByKategori(ObservationsKoder.ARBETSFORMAGA);
     }
 
     public boolean isPrognosDelvisAterstallning() {
@@ -153,7 +170,7 @@ public class Fk7263Intyg extends Utlatande {
     }
 
     private boolean containsSysselsattningKod(Kod sysselsattningKod) {
-        for (se.inera.certificate.model.Sysselsattning sysselsattning : getSysselsattnings()) {
+        for (se.inera.certificate.model.Sysselsattning sysselsattning : getPatient().getSysselsattnings()) {
             if (sysselsattningKod.equals(sysselsattning.getSysselsattningsTyp())) {
                 return true;
             }
@@ -161,15 +178,13 @@ public class Fk7263Intyg extends Utlatande {
         return false;
     }
 
-    // TODO - return correct arbetsformoga text as soon as it is available in new information model
+    public Observation getArbetsformaga() {
+        return getObservationByKategori(ObservationsKoder.ARBETSFORMAGA);
+    }
+
     public String getArbetsformagaText() {
-        return null;
-        /*
-        Arbetsformaga arbetsformaga = getArbetsformaga();
-        if (arbetsformaga != null) {
-            return arbetsformaga.getArbetsuppgift();
-        }
-        return null;*/
+        Observation arbetsformaga = getArbetsformaga();
+        return (arbetsformaga != null) ? arbetsformaga.getBeskrivning() : null;
     }
 
     public Aktivitet getForandratRessattAktuellt() {
