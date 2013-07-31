@@ -2,6 +2,7 @@ package se.inera.certificate.modules.fk7263.pdf;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.DATE_PATTERN;
@@ -19,11 +20,12 @@ import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import se.inera.certificate.model.Aktivitet;
-import se.inera.certificate.model.ArbetsformagaNedsattning;
+import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.model.codes.ObservationsKoder;
+import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
 
 
@@ -233,12 +235,14 @@ public class PdfGenerator {
         }
     }
 
-    private void fillNedsattning(ArbetsformagaNedsattning nedsattning, String checkboxFieldName,
+    private void fillNedsattning(Observation nedsattning, String checkboxFieldName,
                                  String fromDateFieldName, String toDateFieldName) {
         if (nedsattning != null) {
             checkField(checkboxFieldName);
-            fillText(fromDateFieldName, nedsattning.getVaraktighetFrom().toString(DATE_PATTERN));
-            fillText(toDateFieldName, nedsattning.getVaraktighetTom().toString(DATE_PATTERN));
+            if (nedsattning.getObservationsPeriod() != null) {
+                fillText(fromDateFieldName, nedsattning.getObservationsPeriod().getFrom().toString(DATE_PATTERN));
+                fillText(toDateFieldName, nedsattning.getObservationsPeriod().getTom().toString(DATE_PATTERN));
+            }
         }
     }
 
@@ -252,7 +256,15 @@ public class PdfGenerator {
     private void fillCapacityRelativeTo() {
         if (intyg.isArbetsformagaIForhallandeTillNuvarandeArbete()) {
             checkField(CURRENT_WORK);
-            fillText(CURRENT_WORK_TEXT_1, intyg.getArbetsformagaText());
+            if (intyg.getPatient().getArbetsuppgifts() != null && !intyg.getPatient().getArbetsuppgifts().isEmpty()) {
+
+                List<String> arbetsuppgifter = new ArrayList<>();
+                for (Arbetsuppgift arbetsuppgift : intyg.getPatient().getArbetsuppgifts()) {
+                    arbetsuppgifter.add(arbetsuppgift.getTypAvArbetsuppgift());
+                }
+                String arbetsuppgift = Strings.join(", ", arbetsuppgifter);
+                fillText(CURRENT_WORK_TEXT_1, arbetsuppgift);
+            }
         }
         setField(UNEMPLOYMENT, intyg.isArbetsformagaIForhallandeTillArbetsloshet());
         setField(PARENTAL_LEAVE, intyg.isArbetsformagaIForhallandeTillForaldraledighet());
@@ -330,7 +342,7 @@ public class PdfGenerator {
     }
 
     private void fillDiseaseCause() {
-        List<Observation> sjukdomsforlopp = intyg.getObservationsByKategori(ObservationsKoder.SJUKDOMSFORLOPP);
+        List<Observation> sjukdomsforlopp = intyg.getObservationsByKategori(ObservationsKoder.BEDOMT_TILLSTAND);
         if (sjukdomsforlopp != null && !sjukdomsforlopp.isEmpty()) {
             fillText(DISEASE_CAUSE, sjukdomsforlopp.get(0).getBeskrivning());
         }
@@ -345,7 +357,7 @@ public class PdfGenerator {
     }
 
     private void fillDiagnose() {
-        List<Observation> diagnosList = intyg.getObservationsByKategori(ObservationsKoder.DIAGNOS);
+        List<Observation> diagnosList = intyg.getObservationsByKategori(ObservationsKoder.MEDICINSKT_TILLSTAND);
         if (diagnosList != null && !diagnosList.isEmpty()) {
             Observation diagnos = diagnosList.get(0);
             if (diagnos.getObservatonsKod() != null) {

@@ -1,12 +1,14 @@
 package se.inera.certificate.modules.fk7263.model;
 
+import static se.inera.certificate.model.util.Iterables.find;
+
 import se.inera.certificate.model.Aktivitet;
-import se.inera.certificate.model.ArbetsformagaNedsattning;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.codes.ObservationsKoder;
+import se.inera.certificate.model.util.Predicate;
 
 /**
  * @author andreaskaltenbach
@@ -123,38 +125,30 @@ public class Fk7263Intyg extends Utlatande {
     }
 
     public String getPrognosText() {
+        Observation arbetsformaga = getArbetsformaga();
+        if (arbetsformaga != null) {
+            return arbetsformaga.getBeskrivning();
+        }
         return null;
-        // TODO - return correct arbetsformaga motivering as soon as it is available in new information model
-        /*if (!getAktivitetsbegransningar().isEmpty()) {
-            return getAktivitetsbegransningar().get(0).getArbetsformaga().getMotivering();
-        } else {
-            return null;
-        } */
     }
 
     private Kod getPrognosKod() {
-        Observation aktivitetsbegransning = getAktivitetsbegransning();
-        if (aktivitetsbegransning == null || aktivitetsbegransning.getPrognos() == null) {
-            return null;
-        }
 
-        return aktivitetsbegransning.getPrognos().getPrognosKod();
+        Observation arbetsformaga = getArbetsformaga();
+        if (arbetsformaga != null) {
+            return arbetsformaga.getObservatonsKod();
+        }
+        return null;
     }
 
-    // TODO - return correct nedsattning as soon as it is available in new information model
-    public ArbetsformagaNedsattning getNedsattning(final Kod nedsattningsgrad) {
-        return null;
-        /*
-        if (!getAktivitetsbegransningar().isEmpty()) {
-            return find(getAktivitetsbegransningar().get(0).getArbetsformaga().getArbetsformagaNedsattningar(), new Predicate<ArbetsformagaNedsattning>() {
-                @Override
-                public boolean apply(ArbetsformagaNedsattning arbetsformagaNedsattning) {
-                    return arbetsformagaNedsattning.getNedsattningsgrad() == nedsattningsgrad;
-                }
-            }, null);
-        } else {
-            return null;
-        } */
+    public Observation getNedsattning(final Kod nedsattningsgrad) {
+
+        return find(getObservationsByKategori(ObservationsKoder.NEDSATTNING), new Predicate<Observation>() {
+            @Override
+            public boolean apply(Observation nedsattning) {
+                return nedsattningsgrad.equals(nedsattning.getObservatonsKod());
+            }
+        }, null);
     }
 
     public boolean isArbetsformagaIForhallandeTillArbetsloshet() {
@@ -180,11 +174,6 @@ public class Fk7263Intyg extends Utlatande {
 
     public Observation getArbetsformaga() {
         return getObservationByKategori(ObservationsKoder.ARBETSFORMAGA);
-    }
-
-    public String getArbetsformagaText() {
-        Observation arbetsformaga = getArbetsformaga();
-        return (arbetsformaga != null) ? arbetsformaga.getBeskrivning() : null;
     }
 
     public Aktivitet getForandratRessattAktuellt() {
