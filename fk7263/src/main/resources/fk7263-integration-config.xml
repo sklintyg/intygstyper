@@ -19,9 +19,6 @@
     <jaxrs:serviceBeans>
       <bean class="se.inera.certificate.modules.fk7263.rest.Fk7263ModuleApi"/>
     </jaxrs:serviceBeans>
-    <jaxrs:schemaLocations>
-      <jaxrs:schemaLocation>classpath:/schemas/fk7263_intyg.xsd</jaxrs:schemaLocation>
-    </jaxrs:schemaLocations>
     <jaxrs:providers>
       <ref bean="jacksonJsonProvider"/>
     </jaxrs:providers>

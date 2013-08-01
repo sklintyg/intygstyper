@@ -136,17 +136,16 @@ public class Fk7263Intyg extends Utlatande {
 
         Observation arbetsformaga = getArbetsformaga();
         if (arbetsformaga != null) {
-            return arbetsformaga.getObservatonsKod();
+            return arbetsformaga.getObservationsKod();
         }
         return null;
     }
 
-    public Observation getNedsattning(final Kod nedsattningsgrad) {
-
+    public Observation getNedsattning(final Double nedsattningsgrad) {
         return find(getObservationsByKategori(ObservationsKoder.NEDSATTNING), new Predicate<Observation>() {
             @Override
             public boolean apply(Observation nedsattning) {
-                return nedsattningsgrad.equals(nedsattning.getObservatonsKod());
+                return nedsattning.getVarde() != null && !nedsattning.getVarde().isEmpty() && nedsattningsgrad.equals(nedsattning.getVarde().get(0).getQuantity());
             }
         }, null);
     }

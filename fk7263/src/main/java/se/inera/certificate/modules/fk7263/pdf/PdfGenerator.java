@@ -6,10 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.DATE_PATTERN;
-import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.Nedsattningsgrad_Helt_nedsatt;
-import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.Nedsattningsgrad_Nedsatt_med_1_2;
-import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.Nedsattningsgrad_Nedsatt_med_1_4;
-import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.Nedsattningsgrad_Nedsatt_med_3_4;
 import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.Referens_Annat;
 import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.Referens_Journaluppgifter;
 import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.Vardkontakt_Min_telefonkontakt_med_patienten;
@@ -247,10 +243,10 @@ public class PdfGenerator {
     }
 
     private void fillCapacity() {
-        fillNedsattning(intyg.getNedsattning(Nedsattningsgrad_Helt_nedsatt), REDUCED_WORK_CAPACITY_FULL, REDUCED_WORK_CAPACITY_FULL_FROM, REDUCED_WORK_CAPACITY_FULL_TOM);
-        fillNedsattning(intyg.getNedsattning(Nedsattningsgrad_Nedsatt_med_3_4), REDUCED_WORK_CAPACITY_75, REDUCED_WORK_CAPACITY_75_FROM, REDUCED_WORK_CAPACITY_75_TOM);
-        fillNedsattning(intyg.getNedsattning(Nedsattningsgrad_Nedsatt_med_1_2), REDUCED_WORK_CAPACITY_50, REDUCED_WORK_CAPACITY_50_FROM, REDUCED_WORK_CAPACITY_50_TOM);
-        fillNedsattning(intyg.getNedsattning(Nedsattningsgrad_Nedsatt_med_1_4), REDUCED_WORK_CAPACITY_25, REDUCED_WORK_CAPACITY_25_FROM, REDUCED_WORK_CAPACITY_25_TOM);
+        fillNedsattning(intyg.getNedsattning(100.0), REDUCED_WORK_CAPACITY_FULL, REDUCED_WORK_CAPACITY_FULL_FROM, REDUCED_WORK_CAPACITY_FULL_TOM);
+        fillNedsattning(intyg.getNedsattning(75.0), REDUCED_WORK_CAPACITY_75, REDUCED_WORK_CAPACITY_75_FROM, REDUCED_WORK_CAPACITY_75_TOM);
+        fillNedsattning(intyg.getNedsattning(50.0), REDUCED_WORK_CAPACITY_50, REDUCED_WORK_CAPACITY_50_FROM, REDUCED_WORK_CAPACITY_50_TOM);
+        fillNedsattning(intyg.getNedsattning(25.0), REDUCED_WORK_CAPACITY_25, REDUCED_WORK_CAPACITY_25_FROM, REDUCED_WORK_CAPACITY_25_TOM);
     }
 
     private void fillCapacityRelativeTo() {
@@ -360,8 +356,8 @@ public class PdfGenerator {
         List<Observation> diagnosList = intyg.getObservationsByKategori(ObservationsKoder.MEDICINSKT_TILLSTAND);
         if (diagnosList != null && !diagnosList.isEmpty()) {
             Observation diagnos = diagnosList.get(0);
-            if (diagnos.getObservatonsKod() != null) {
-                fillText(DIAGNOS_CODE, diagnos.getObservatonsKod().getCode());
+            if (diagnos.getObservationsKod() != null) {
+                fillText(DIAGNOS_CODE, diagnos.getObservationsKod().getCode());
             }
             fillText(DIAGNOS, diagnos.getBeskrivning());
         }

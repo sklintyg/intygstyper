@@ -64,7 +64,7 @@ public class UtlatandeValidator {
         }
 
         // Fält 2 - Medicinskt tillstånd kod - mandatory
-        if (utlatande.getMedicinsktTillstand().getObservatonsKod() == null  || isNullOrEmpty(utlatande.getMedicinsktTillstand().getObservatonsKod().getCode())) {
+        if (utlatande.getMedicinsktTillstand().getObservationsKod() == null  || isNullOrEmpty(utlatande.getMedicinsktTillstand().getObservationsKod().getCode())) {
             validationErrors.add("No tillstandskod in medicinsktTillstand found!");
         }
 
@@ -135,7 +135,7 @@ public class UtlatandeValidator {
         boolean hasKommentar = utlatande.getKommentars() != null && !utlatande.getKommentars().isEmpty();
 
         Referens annat = utlatande.getReferens(Fk7263Intyg.Referens_Annat);
-        boolean garEjAttBedomma = utlatande.getArbetsformaga() != null && utlatande.getArbetsformaga().getObservatonsKod() != null && Fk7263Intyg.Prognos_Det_gar_inte_att_bedomma.equals(utlatande.getArbetsformaga().getObservatonsKod());
+        boolean garEjAttBedomma = utlatande.getArbetsformaga() != null && utlatande.getArbetsformaga().getObservationsKod() != null && Fk7263Intyg.Prognos_Det_gar_inte_att_bedomma.equals(utlatande.getArbetsformaga().getObservationsKod());
 
         if ((annat != null || garEjAttBedomma) && !hasKommentar) {
             validationErrors.add("Upplysningar should contain data as field 4 or fields 10 is checked.");

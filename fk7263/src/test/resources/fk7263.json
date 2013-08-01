@@ -120,7 +120,7 @@
             "observationsKategori" : {
                 "code" : "MedicinsktTillstånd"
             },
-            "observatonsKod" : {
+            "observationsKod" : {
                 "codeSystemName" : "ICD-10",
                 "code" : "S47"
             },
@@ -148,7 +148,7 @@
             "observationsKategori" : {
                 "code" : "Arbetsförmåga"
             },
-            "observatonsKod" : {
+            "observationsKod" : {
                 "code" : "Det_gar_inte_att_bedomma"
             },
             "beskrivning" : "Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
@@ -158,49 +158,61 @@
             "observationsKategori" : {
                 "code" : "Nedsättning"
             },
-            "observatonsKod" : {
-                "code" : "Nedsatt_med_1/4"
-            },
             "observationsPeriod" : {
                 "from" : "2011-04-01",
                 "tom" : "2011-05-31"
-            }
+            },
+            "varde" : [
+                {
+                    "quantity" : "25.0",
+                    "unit" : "percent"
+                }
+            ]
         },
         {
             "observationsKategori" : {
                 "code" : "Nedsättning"
-            },
-            "observatonsKod" : {
-                "code" : "Nedsatt_med_1/2"
             },
             "observationsPeriod" : {
                 "from" : "2011-03-07",
                 "tom" : "2011-03-31"
-            }
+            },
+            "varde" : [
+                {
+                    "quantity" : "50.0",
+                    "unit" : "percent"
+                }
+            ]
         },
         {
             "observationsKategori" : {
                 "code" : "Nedsättning"
-            },
-            "observatonsKod" : {
-                "code" : "Nedsatt_med_3/4"
             },
             "observationsPeriod" : {
                 "from" : "2011-02-14",
                 "tom" : "2011-03-06"
-            }
+            },
+            "varde" : [
+                {
+                    "quantity" : "75.0",
+                    "unit" : "percent"
+                }
+            ]
         },
         {
             "observationsKategori" : {
                 "code" : "Nedsättning"
             },
-            "observatonsKod" : {
-                "code" : "Helt_nedsatt"
-            },
             "observationsPeriod" : {
                 "from" : "2011-01-26",
                 "tom" : "2011-02-13"
-            }
+            },
+            "varde" : [
+                {
+                    "quantity" : "100.0",
+                    "unit" : "percent"
+                }
+            ]
         }
     ],
     "vardkontakter" : [
