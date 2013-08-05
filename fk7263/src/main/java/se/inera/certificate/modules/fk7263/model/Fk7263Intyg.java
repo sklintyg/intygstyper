@@ -1,7 +1,6 @@
 package se.inera.certificate.modules.fk7263.model;
 
 import static se.inera.certificate.model.util.Iterables.find;
-
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
@@ -100,6 +99,10 @@ public class Fk7263Intyg extends Utlatande {
         return getObservationByKategori(ObservationsKoder.MEDICINSKT_TILLSTAND);
     }
 
+    public Observation getBedomtTillstand() {
+        return getObservationByKategori(ObservationsKoder.BEDOMT_TILLSTAND);
+    }
+
     public Observation getAktivitetsbegransning() {
         return getObservationByKategori(ObservationsKoder.AKTIVITET);
     }
@@ -148,6 +151,23 @@ public class Fk7263Intyg extends Utlatande {
                 return nedsattning.getVarde() != null && !nedsattning.getVarde().isEmpty() && nedsattningsgrad.equals(nedsattning.getVarde().get(0).getQuantity());
             }
         }, null);
+    }
+    
+    //Helper properties for netsattningsgrader to be included in JSON
+    public Observation getNedsattning25percent() {
+        return getNedsattning(25.0);
+    }
+
+    public Observation getNedsattning50percent() {
+        return getNedsattning(50.0);
+    }
+
+    public Observation getNedsattning75percent() {
+        return getNedsattning(75.0);
+    }
+    
+    public Observation getNedsattning100percent() {
+        return getNedsattning(100.0);
     }
 
     public boolean isArbetsformagaIForhallandeTillArbetsloshet() {

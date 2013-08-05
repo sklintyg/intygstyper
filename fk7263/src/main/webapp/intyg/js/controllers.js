@@ -16,6 +16,9 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
 
             $scope.filterStatuses = function(statuses) {
                 var result = [];
+                if (!angular.isObject(statuses)) {
+                    return result;
+                }
                 for ( var i = 0; i < statuses.length; i++) {
                     if ($scope.userVisibleStatusFilter(statuses[i])) {
                         result.push(statuses[i]);
@@ -42,18 +45,18 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
             }
 
             // Convenience methods to simplify template markup
-            $scope.smittskydd = function() {
-                if (angular.isObject($scope.cert.aktiviteter)) {
-                    // check if some activity has the trigger aktivitetskod
-                    for ( var i = 0; i < $scope.cert.aktiviteter.length; i++) {
-                        if ($scope.cert.aktiviteter[i].aktivitetskod == "AVSTANGNING_ENLIGT_SM_L_PGA_SMITTA") {
-                            return "yes";
-                        }
-                    }
-                }
-                // in all other cases
-                return "no";
-            }
+//            $scope.smittskydd = function() {
+//                if (angular.isObject($scope.cert.aktiviteter)) {
+//                    // check if some activity has the trigger aktivitetskod
+//                    for ( var i = 0; i < $scope.cert.aktiviteter.length; i++) {
+//                        if ($scope.cert.aktiviteter[i].aktivitetskod == "AVSTANGNING_ENLIGT_SM_L_PGA_SMITTA") {
+//                            return "yes";
+//                        }
+//                    }
+//                }
+//                // in all other cases
+//                return "no";
+//            }
 
             // expose calculated static link for pdf download
             $scope.downloadAsPdfLink = $scope.MODULE_CONFIG.MI_COMMON_API_CONTEXT_PATH + $scope.MODULE_CONFIG.CERT_ID_PARAMETER + "/pdf";
@@ -65,11 +68,12 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
                     // added calculated img src for certificate, beacuse for
                     // some reason ng-src with "/img/{{cert.typ }}.png" would
                     // evaluate first to "img/.png" before correct value = 404
-                    result.typ_image = "/img/" + result.typ + ".png";
+                    result.typ_image = "/img/" + result.typ.code + ".png";
 
 	                // setup which fields contain values. those which do not will get an unfilled style to make them less visually significant
 	                // TODO: Implement cases for when fields are filled or not. change true to an expression checking for the condition. empty strings? a certain value?
 	                result.filledFields = {};
+	                result.filledFields.smittskydd = true;
 	                result.filledFields.diagnosis = true; //example: result.bedomtTillstand.beskrivning != '' || result.bedomtTillstand.tillstandskod != '';
 	                result.filledFields.progressofdesease = true;
 	                result.filledFields.disabilities = true;
