@@ -16,8 +16,8 @@
       </h2>
       <div class="well cert-summary">
         <span>{{cert.skickatDatum | date:'longDate'}}</span> 
-        <span message key="certificatetypes.{{cert.typ}}.commonname"></span>
-        <span message key="certificatetypes.{{cert.typ}}.typename"></span>
+        <span message key="certificatetypes.{{cert.typ.code}}.commonname"></span>
+        <span message key="certificatetypes.{{cert.typ.code}}.typename"></span>
         <span>{{cert.validFromDate |
           date:'longDate'}}&ndash;{{cert.validToDate | date:'longDate'}}</span> 
           <span>{{cert.vardenhet.namn}}</span>
