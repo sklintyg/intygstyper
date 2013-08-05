@@ -22,7 +22,7 @@
   <bean id="schemaHolder" class="org.apache.cxf.jaxrs.utils.schemas.SchemaHandler">
     <property name="schemaLocations">
       <util:list id="theSchemas">
-        <value>classpath:/Reselakarintyg.xsd</value>
+        <value>classpath:/rli_model.xsd</value>
       </util:list>
     </property>
   </bean>
@@ -31,6 +31,7 @@
   <jaxrs:server address="/">
     <jaxrs:serviceBeans>
       <bean class="se.inera.certificate.modules.rli.rest.RliModuleApi"/>
+      <bean class="se.inera.certificate.modules.rli.rest.RliViewServices"/>
     </jaxrs:serviceBeans>
     <jaxrs:providers>
       <ref bean="jacksonJsonProvider"/>

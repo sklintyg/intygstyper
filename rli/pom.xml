@@ -145,6 +145,11 @@
       <artifactId>aspectjweaver</artifactId>
     </dependency>
     <dependency>
+	  <groupId>org.apache.commons</groupId>
+	  <artifactId>commons-lang3</artifactId>
+	  <version>3.1</version>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
@@ -176,6 +181,11 @@
                   <xsd>src/main/resources/rli_model.xsd</xsd>
                   <extension>true</extension>
                   <bindingFile>${basedir}/src/main/resources/binding.xjb</bindingFile>
+                </xsdOption>
+                <xsdOption>
+                  <xsd>src/main/resources/rli_view_model.xsd</xsd>
+                  <extension>true</extension>
+                  <bindingFile>${basedir}/src/main/resources/rli_view_model_bindings.xjb</bindingFile>
                 </xsdOption>
               </xsdOptions>
             </configuration>

@@ -1,12 +1,13 @@
 'use strict';
 var rliMessages = {
     "sv": {
+    	"view.label.certtitle": "Läkarintyg vid avbeställd resa",
         "view.label.pagetitle": "Granska och skicka",
         "view.label.pagedescription": "Här kan du titta på ditt intyg och skicka det. Om du upptäcker några felaktigheter så hör av dig enheten som utfärdade ditt intyg. Du kan även öppna intyget som en PDF och skriva ut och spara.",
         "view.label.patientname": "Patientens namn:",
         "view.label.issued": "Utfärdat:",
         "view.label.civicnumber": "Personnr:",
-        "view.label.issuer": "Utfärdare",
+        "view.label.issuer": "Utfärdare:",
         "view.label.period": "Period:",
         "view.label.unit": "Enhet:",
         "view.label.errorpagetitle": "Ett problem har uppstått",

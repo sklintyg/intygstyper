@@ -68,7 +68,7 @@
               <div class="row-fluid">
                 <div class="span6">
                   <h2>
-                    <span><message key="certificatetypes.{{cert.typ}}.commonname" /></span> <span class="cert-titlebar-type"><message key="certificatetypes.{{cert.typ}}.typename" /></span>
+                    <span><message key="view.label.certtitle" /></span>
                   </h2>
                 </div>
                 <div class="span5 issue">
@@ -85,31 +85,67 @@
                   <span class="tag"><message key="view.label.patientname" /></span> <span id="patient-name">{{cert.patient.fullstandigtNamn}}</span>
                 </div>
                 <div class="span6">
-                  <span class="tag"><message key="view.label.unit" /></span> <span id="careunit">{{cert.vardenhet.namn}}</span>
+                  <span class="tag"><message key="view.label.unit" /></span> <span id="careunit">{{cert.utfardare.vardenhet.enhetNamn}}</span>
                 </div>
               </div>
               <div class="row-fluid">
                 <div class="span6">
-                  <span class="tag"><message key="view.label.civicnumber" /></span> <span id="patient-crn">{{cert.patient.id}}</span>
+                  <span class="tag"><message key="view.label.civicnumber" /></span> <span id="patient-crn">{{cert.patient.personId}}</span>
                 </div>
                 <div class="span6">
-                  <span class="tag"><message key="view.label.issuer" /></span> <span id="caregiver">{{cert.vardenhet.vardgivare.namn}}</span>
+                  <span class="tag"><message key="view.label.issuer" /></span> <span id="caregiver">{{cert.utfardare.vardenhet.vardgivare.vardgivareNamn}}</span>
                 </div>
               </div>
               <div class="row-fluid">
                 <div class="span6">
-                  <span class="tag"><message key="view.label.period" /></span> <span id="certificate-period">{{cert.fromDate | date:'longDate'}}&ndash;{{cert.tomDate| date:'longDate'}} </span>
+                  <span class="tag"><message key="view.label.period" /></span> <span id="certificate-period">{{cert.giltighetsperiod.startDatum | date:'longDate'}}&ndash;{{cert.giltighetsperiod.slutDatum | date:'longDate'}} </span>
                 </div>
                 <div class="span6"></div>
               </div>
             </div>
             <div class="cert-body">
-              <div class="body-row">
-                <span class="title">Sjukdomsförlopp</span> <span id="problem-description" class="text">{{cert.sjukdomsfarlopp}}</span>
-              </div>
-              <div class="body-row">
-                <span class="title">Resmål</span> <span id="travel-destination" class="text">{{cert.ovrigt.resmal}}</span>
-              </div>
+              
+				  <div class="body-row">
+	              	<h3>Information om den avbeställda resan</h3>
+	                <span class="title">Bokningsnummer</span> <span id="travel-booking-ref" class="text">{{cert.arrangemang.bokningsreferens}}</span><br/>
+	                <span class="title">Resmål</span> <span id="travel-destination" class="text">{{cert.arrangemang.plats}}</span><br/>
+	                <span class="title">Datum då resan bokades</span> <span id="travel-booking-date" class="text">{{cert.arrangemang.bokningsdatum | date:'longDate'}}</span><br/>
+	                <span class="title">Datum för avresa</span> <span id="travel-departure-date" class="text">{{cert.arrangemang.arrangemangstid.startDatum | date:'longDate'}}</span><br/>
+	                <span class="title">Datum då resan avbeställdes</span> <span id="travel-cancel-date" class="text">{{cert.arrangemang.avbestallningsdatum | date:'longDate'}}</span>
+	              </div>
+	              <div class="body-row" ng-switch on="cert.tillstand.orsakAvbokning">
+	              	<h3>Rekommendation</h3>
+	              	<span ng-switch-when="RESENAR_SJUK_RESBAR">Jag avråder ej från resa. Patientens = resenärens tillstånd utgör inget hinder för resa.</span>
+	                <span ng-switch-when="RESENAR_SJUK_EJ_RESBAR">Jag avråder uttryckligen från resa, då patientens = resenärens tillstånd innebär, att sådan ej kan genomföras utan men.</span>
+	                <span ng-switch-when="RESENAR_GRAVID_RESBAR">Jag avråder ej från resa. Graviditeten utgör inget medicinskt hinder för resa.</span>
+	                <span ng-switch-when="RESENAR_GRAVID_EJ_RESBAR">Jag avråder uttryckligen från resa. Komplikationer i graviditeten har uppkommit efter bokning av resa, vilka innebär hinder för resa.</span>
+	                
+	              </div>
+	              <div class="body-row" ng-show="cert.tillstand.orsakAvbokning == 'RESENAR_GRAVID_RESBAR'">
+	              	<span>Barnet beräknas födas {{cert.tillstand.resenarGravid.beraknadForlossning}}</span>
+	              </div>
+	              <div class="body-row">
+	              	<h3>Om den akutella sjukdomen/komplikationen</h3>
+	                <span class="title">Datum för första undersökning</span> <span id="examination-first-date" class="text">{{cert.undersokning.forstaundersokningDatum | date:'longDate'}}</span><br/>
+	                <span class="title">Plats för första undersökning</span> <span id="examination-first-place" class="text">{{cert.undersokning.forstaundersokningPlats}}</span><br/>             
+	                <span class="title">Datum för undersökning</span> <span id="examination-date" class="text">{{cert.undersokning.undersokningDatum | date:'longDate'}}</span><br/>
+	                <span class="title">Plats för undersökning</span> <span id="examination-place" class="text">{{cert.undersokning.undersokningPlats}}</span>
+	              </div>
+	              <div class="body-row" ng-show="cert.undersokning.komplikationStatus != 'KOMPLIKATION_BESKRIVES'" ng-switch on="cert.undersokning.komplikationStatus">
+	                <span ng-switch-when="KOMPLIKATION_OKAND">Sjukdomen/komplikationen var okänd vid bokningstillfället.</span>
+	                <span ng-switch-when="KOMPLIKATION_KAND_FORVARRATS_EJ_FORUTSAGBART">Patientens sjukdom/komplikation är kronisk, var känd vid inbokningstillfället och utgjorde då inget hinder för resan. Tillståndet har nu förvärrats på ett sätt som vid bokningstillfället ej var möjligt att förutse</span>
+	                <span ng-switch-when="KOMPLIKATION_KAND_FORVARRATS_FORUTSAGBART">Patientens sjukdom/komplikation är kronisk, var känd vid inbokningstillfället och utgjorde då inget hinder för resan. Tillståndet har nu förvärrats på ett sätt som vid bokningstillfället var möjligt att förutse</span>
+	              </div>
+	              <div class="body-row" ng-show="cert.undersokning.komplikationStatus == 'KOMPLIKATION_BESKRIVES'">
+	              	<span>{{cert.undersokning.komplikationBeskrivning}}</span>
+	              </div>
+	              <div class="body-row">
+	              	<h3>Utfärdare</h3>
+	              	<span class="title">Läkare</span> <span id="physician-name-id" class="text">{{cert.utfardare.hosPersonal.fullstandigtNamn}} ({{cert.utfardare.hosPersonal.personId}})</span><br/>
+	              	<span class="title">Vårdgivare</span> <span id="caregiver-name-id" class="text">{{cert.utfardare.vardenhet.vardgivare.vardgivareNamn}} ({{cert.utfardare.vardenhet.vardgivare.vardgivareId}})</span><br/>
+	                <span class="title">Vårdenhetens namn och id</span> <span id="careunit-name-id" class="text">{{cert.utfardare.vardenhet.enhetNamn}} ({{cert.utfardare.vardenhet.enhetId}})</span><br/>
+	                <span class="title">Postadress</span> <span id="careunit-postal_address" class="text">{{cert.utfardare.vardenhet.postadress}}, {{cert.utfardare.vardenhet.postnummer}} {{cert.utfardare.vardenhet.postort}}</span>
+	              </div>
 
             </div>
           </div>
