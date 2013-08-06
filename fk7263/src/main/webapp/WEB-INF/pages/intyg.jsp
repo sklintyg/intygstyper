@@ -79,7 +79,7 @@
   
   <!--[if lte IE 8]>
     <script>
-    window.myCustomTags = [ 'miHeader', 'mvkTopBar', 'message','miField' ]; // optional
+    window.myCustomTags = [ 'miHeader', 'mvkTopBar', 'message' ]; // optional
     </script>
     
     <script type="text/javascript" src="/js/ie/ie-angular-shiv.js"></script>
