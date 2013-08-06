@@ -178,12 +178,12 @@
             <configuration>
               <xsdOptions>
                 <xsdOption>
-                  <xsd>src/main/resources/rli_model.xsd</xsd>
+                  <xsd>src/main/resources/schemas/rli_model.xsd</xsd>
                   <extension>true</extension>
                   <bindingFile>${basedir}/src/main/resources/binding.xjb</bindingFile>
                 </xsdOption>
                 <xsdOption>
-                  <xsd>src/main/resources/rli_view_model.xsd</xsd>
+                  <xsd>src/main/resources/schemas/rli_view_model.xsd</xsd>
                   <extension>true</extension>
                   <bindingFile>${basedir}/src/main/resources/rli_view_model_bindings.xjb</bindingFile>
                 </xsdOption>
