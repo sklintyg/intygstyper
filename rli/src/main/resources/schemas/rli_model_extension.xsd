@@ -13,7 +13,7 @@
 
 	<xs:complexType name="arrangemangType">
 		<xs:sequence>
-			<xs:element name="bokningsreferens" type="iso:CD"
+			<xs:element name="bokningsreferens" type="xs:string"
 				minOccurs="0" />
 			<xs:element name="bokningsdatum" type="c:partialDate" />
 			<xs:element name="arrangemangstid" type="c:partialDateInterval" />
