@@ -7,7 +7,7 @@ import se.inera.certificate.model.Kod;
 
 public class Arrangemang {
 
-	private Kod bokningsreferens;
+	private String bokningsreferens;
 
 	private Partial bokningsdatum;
 
@@ -19,11 +19,11 @@ public class Arrangemang {
 
 	private String plats;
 
-	public Kod getBokningsreferens() {
+	public String getBokningsreferens() {
 		return bokningsreferens;
 	}
 
-	public void setBokningsreferens(Kod bokningsreferens) {
+	public void setBokningsreferens(String bokningsreferens) {
 		this.bokningsreferens = bokningsreferens;
 	}
 
