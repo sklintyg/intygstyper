@@ -13,7 +13,7 @@ import org.joda.time.Partial;
 
 import org.junit.Test;
 import org.junit.Before;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import riv.insuranceprocess.healthreporting._2.HosPersonalType;
 import se.inera.certificate.common.v1.PartialDateInterval;
@@ -214,7 +214,7 @@ public class TransportToExternalConverterTest {
 		//Convert from transport to extarnal model
 		utlatande = converter.transportToExternal(transportModel);
 	}
-	
+		
 	@Test
 	public void testConvertId(){		
 		assertEquals("ID in converted model (checked against transport) was: " 

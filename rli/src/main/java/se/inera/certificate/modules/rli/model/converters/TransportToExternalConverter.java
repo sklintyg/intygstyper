@@ -60,9 +60,10 @@ public class TransportToExternalConverter {
 
 		externalModel.setAktiviteter(convertAktiviteter(source.getAktivitets()));
 
+		// TODO Finish imlementing converter for observations once related changes have been made in model
 		externalModel.setObservations(convertObservations(source.getObservations()));
 		
-		externalModel.setArrangemang(convert(source.getArrangemang()));
+		externalModel.setArrangemang(convert(source.getArrangemang()));	
 				
 		return externalModel;
 	}
