@@ -1,5 +1,7 @@
 package se.inera.certificate.modules.rli.model.codes;
 
+import org.apache.commons.lang3.StringUtils;
+
 public enum RekommendationsKod implements ICodeSystem {
 	
 	REK1("REK1","Jag avråder uttryckligen från resa, då patientens = resenärens tillstånd innebär, att sådan ej kan genomföras utan men."),
@@ -51,6 +53,10 @@ public enum RekommendationsKod implements ICodeSystem {
 	}
 
 	public static RekommendationsKod getFromCode(String code) {
+		
+		if (StringUtils.isBlank(code)) {
+			return null;
+		}
 		
 		for (RekommendationsKod rekKod : values()) {
 			if (rekKod.getCode().equals(code)) {

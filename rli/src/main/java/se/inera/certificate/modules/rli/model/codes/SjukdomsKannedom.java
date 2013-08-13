@@ -1,5 +1,7 @@
 package se.inera.certificate.modules.rli.model.codes;
 
+import org.apache.commons.lang3.StringUtils;
+
 public enum SjukdomsKannedom implements ICodeSystem {
 	
 	SJUK1("SJK1","Sjukdomen/komplikationen var okänd vid bokningstillfälllet."),
@@ -9,9 +11,9 @@ public enum SjukdomsKannedom implements ICodeSystem {
 
 	private static String codeSystemName = "kv_sjukdomskännedom_intyg";
 	
-	private static String codeSystem = "";
+	private static String codeSystem = null;
 	
-	private static String codeSystemVersion = "";
+	private static String codeSystemVersion = null;
 	
 	private String code;
 	
@@ -48,6 +50,10 @@ public enum SjukdomsKannedom implements ICodeSystem {
 	}
 
 	public static SjukdomsKannedom getFromCode(String code) {
+		
+		if (StringUtils.isBlank(code)) {
+			return null;
+		}
 		
 		for (SjukdomsKannedom sjkKod : values()) {
 			if (sjkKod.getCode().equals(code)) {

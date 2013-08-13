@@ -5,48 +5,40 @@ import static org.junit.Assert.*;
 import java.util.Arrays;
 import java.util.UUID;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
+import se.inera.certificate.modules.rli.model.external.Arrangemang;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
 
 public class ExternalToInternalConverterTest {
+	
+	private ExternalToInternalConverterImpl converter;
+	
+	@Before
+	public void setUp() {
+		converter = new ExternalToInternalConverterImpl();
+	}
+	
 
 	@Test
-	public void testFromViewModel() {
+	public void testConvertToIntPatient() {
+				
+		Patient extPatient = buildPatient();
 		
-		ExternalToInternalConverter converter = new ExternalToInternalConverter();
-		
-		Utlatande extUtlatande = buildExtUtlatande();
-		
-		se.inera.certificate.modules.rli.model.internal.Utlatande res = converter.fromExternalToInternal(extUtlatande);
-		
+		se.inera.certificate.modules.rli.model.internal.Patient res = converter.convertToIntPatient(extPatient);
+				
 		assertNotNull(res);
-		assertNotNull(res.getUtlatandeId());
-		assertNotNull(res.getTypAvUtlatande());
 		
-		assertNotNull(res.getPatient());
+		assertEquals("19121212-1212", res.getPersonId());
+		assertEquals("Abel Baker", res.getForNamn());
+		assertEquals("Smith Doe", res.getEfterNamn());
+		assertEquals("Abel Baker Smith Doe", res.getFullstandigtNamn());
 		
-		se.inera.certificate.modules.rli.model.internal.Patient pat = res.getPatient();
-		assertEquals("19121212-1212", pat.getPersonId());
-		assertEquals("Abel Baker", pat.getForNamn());
-		assertEquals("Smith Doe", pat.getEfterNamn());
-		assertEquals("Abel Baker Smith Doe", pat.getFullstandigtNamn());
-		
-	}
-
-	private Utlatande buildExtUtlatande() {
-		
-		Utlatande utl = new Utlatande();
-		utl.setId(new Id("uuid", UUID.randomUUID().toString()));
-		utl.setTyp(new Kod("RLI"));
-		
-		Patient pat = buildPatient();
-		utl.setPatient(pat);
-		
-		return utl;
 	}
 
 	private Patient buildPatient() {
@@ -59,5 +51,29 @@ public class ExternalToInternalConverterTest {
 				
 		return pat;
 	}
+
+
+	@Test
+	public void testConvertToIntArrangemang() {
+		
+		Arrangemang extArr = buildArrangemang();
+		se.inera.certificate.modules.rli.model.internal.Arrangemang res = converter.convertToIntArrangemang(extArr);
+		
+		assertNotNull(res);
+		assertNotNull(res.getArrangemangsTyp());
+		assertNotNull(res.getBokningsReferens());
+		
+	}
+	
+	private Arrangemang buildArrangemang() {
+		
+		Arrangemang arr = new Arrangemang();
+		arr.setArrangemangstyp(new Kod("420008001"));
+		arr.setBokningsreferens("1234567-890");
+		arr.setPlats("Långtbortistan");
+		
+		return arr;
+	}
+	
 	
 }

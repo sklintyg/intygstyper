@@ -2,6 +2,8 @@ package se.inera.certificate.modules.rli.model.internal;
 
 import org.joda.time.LocalDate;
 
+import se.inera.certificate.modules.rli.model.codes.ArrangemangsTyp;
+
 public class Arrangemang {
 
 	private String bokningsReferens;
@@ -14,7 +16,7 @@ public class Arrangemang {
 	
 	private LocalDate arrangemangSlutDatum;
 	
-	private String arrangemangsTyp;
+	private ArrangemangsTyp arrangemangsTyp;
 	
 	private LocalDate avbestallningsDatum;
 		
@@ -62,11 +64,11 @@ public class Arrangemang {
 		this.arrangemangSlutDatum = arrangemangSlutDatum;
 	}
 
-	public String getArrangemangsTyp() {
+	public ArrangemangsTyp getArrangemangsTyp() {
 		return arrangemangsTyp;
 	}
 
-	public void setArrangemangsTyp(String arrangemangsTyp) {
+	public void setArrangemangsTyp(ArrangemangsTyp arrangemangsTyp) {
 		this.arrangemangsTyp = arrangemangsTyp;
 	}
 

@@ -1,5 +1,7 @@
 package se.inera.certificate.modules.rli.model.codes;
 
+import org.apache.commons.lang3.StringUtils;
+
 public enum ArrangemangsTyp implements ICodeSystem {
 	
 	RESA("420008001","Resa");
@@ -45,6 +47,10 @@ public enum ArrangemangsTyp implements ICodeSystem {
 	}
 
 	public static ArrangemangsTyp getFromCode(String code) {
+		
+		if (StringUtils.isBlank(code)) {
+			return null;
+		}
 		
 		for (ArrangemangsTyp arrKod : values()) {
 			if (arrKod.getCode().equals(code)) {
