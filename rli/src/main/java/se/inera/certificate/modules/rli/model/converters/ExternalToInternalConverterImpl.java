@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.common.v1.PartialDateInterval;
-import se.inera.certificate.model.HosPersonal;
-import se.inera.certificate.model.Id;
-import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.rli.model.codes.ArrangemangsTyp;
+import se.inera.certificate.modules.rli.model.external.common.Enhet;
+import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
+import se.inera.certificate.modules.rli.model.external.common.Id;
+import se.inera.certificate.modules.rli.model.external.common.Kod;
 import se.inera.certificate.modules.rli.model.internal.Arrangemang;
 import se.inera.certificate.modules.rli.model.internal.HoSPersonal;
 import se.inera.certificate.modules.rli.model.internal.Patient;
@@ -53,14 +52,14 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 		intUtlatande.setUtlatandeId(getValueFromId(extUtlatande.getId()));
 		intUtlatande.setTypAvUtlatande(getValueFromKod(extUtlatande.getTyp()));
 
-		intUtlatande.setSigneringsDatum(extUtlatande.getSigneringsDatum());
-		intUtlatande.setSkickatDatum(extUtlatande.getSkickatDatum());
+		intUtlatande.setSigneringsDatum(extUtlatande.getSigneringsdatum());
+		intUtlatande.setSkickatDatum(extUtlatande.getSkickatdatum());
 
 		// TODO: Finns inte i extern model
 		// intUtlatande.setGiltighetsPeriodStart(null);
 		// intUtlatande.setGiltighetsPeriodSlut(null);
 
-		intUtlatande.setKommentarer(extUtlatande.getKommentars());
+		intUtlatande.setKommentarer(extUtlatande.getKommentarer());
 		
 		Utfardare intUtfardare = convertToIntUtfardare(extUtlatande.getSkapadAv());
 		intUtlatande.setUtfardare(intUtfardare );
@@ -98,13 +97,13 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 		HoSPersonal intHoSPersonal = convertToIntHoSPersonal(extHoSPersonal);
 		intUtfardare.setHosPersonal(intHoSPersonal); 
 				
-		Vardenhet intVardenhet = convertToIntVardenhet(extHoSPersonal.getVardenhet());
+		Vardenhet intVardenhet = convertToIntVardenhet(extHoSPersonal.getEnhet());
 		intUtfardare.setVardenhet(intVardenhet);
 		
 		return intUtfardare;
 	}
 
-	Vardenhet convertToIntVardenhet(se.inera.certificate.model.Vardenhet extVardenhet) {
+	Vardenhet convertToIntVardenhet(Enhet extVardenhet) {
 		
 		LOG.debug("Converting vardenhet");
 		
@@ -115,8 +114,8 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 		
 		Vardenhet intVardenhet = new Vardenhet();
 		
-		intVardenhet.setEnhetsId(getValueFromId(extVardenhet.getId()));
-		intVardenhet.setEnhetsNamn(extVardenhet.getNamn());
+		intVardenhet.setEnhetsId(getValueFromId(extVardenhet.getEnhetsId()));
+		intVardenhet.setEnhetsNamn(extVardenhet.getEnhetsnamn());
 		intVardenhet.setPostAddress(extVardenhet.getPostadress());
 		intVardenhet.setPostNummer(extVardenhet.getPostnummer());
 		intVardenhet.setPostOrt(extVardenhet.getPostort());
@@ -129,7 +128,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 		return intVardenhet;
 	}
 
-	Vardgivare convertToIntVardgivare(se.inera.certificate.model.Vardgivare extVardgivare) {
+	Vardgivare convertToIntVardgivare(se.inera.certificate.modules.rli.model.external.common.Vardgivare extVardgivare) {
 
 		LOG.debug("Converting vardgivare");
 		
@@ -140,8 +139,8 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 		
 		Vardgivare intVardgivare = new Vardgivare();
 		
-		intVardgivare.setVardgivarId(getValueFromId(extVardgivare.getId()));
-		intVardgivare.setVardgivarNamn(extVardgivare.getNamn());
+		intVardgivare.setVardgivarId(getValueFromId(extVardgivare.getVardgivareId()));
+		intVardgivare.setVardgivarNamn(extVardgivare.getVardgivarnamn());
 		
 		return intVardgivare;
 	}
@@ -157,15 +156,15 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 		
 		HoSPersonal intHoSPersonal = new HoSPersonal();
 		
-		intHoSPersonal.setPersonId(getValueFromId(extHoSPersonal.getId()));
-		intHoSPersonal.setFullstandigtNamn(extHoSPersonal.getNamn());
+		intHoSPersonal.setPersonId(getValueFromId(extHoSPersonal.getPersonalId()));
+		intHoSPersonal.setFullstandigtNamn(extHoSPersonal.getFullstandigtNamn());
 		//intHoSPersonal.setBefattning(befattning);
 		
 		return intHoSPersonal;
 	}
 
 	List<Status> convertToIntStatuses(
-			List<se.inera.certificate.model.Status> extStatuses) {
+			List<se.inera.certificate.modules.rli.model.external.common.Status> extStatuses) {
 		
 		LOG.debug("Converting statuses");
 		
@@ -178,7 +177,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 		
 		Status intStatus;
 		
-		for (se.inera.certificate.model.Status extStatus : extStatuses) {
+		for (se.inera.certificate.modules.rli.model.external.common.Status extStatus : extStatuses) {
 			intStatus = new Status();
 			intStatus.setType(extStatus.getType().name());
 			intStatus.setTimestamp(extStatus.getTimestamp());
@@ -201,7 +200,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 	}
 
 	Patient convertToIntPatient(
-			se.inera.certificate.model.Patient extPatient) {
+			se.inera.certificate.modules.rli.model.external.common.Patient extPatient) {
 		
 		LOG.debug("Converting patient");
 		
@@ -212,7 +211,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 		
 		Patient intPatient = new Patient();
 		
-		intPatient.setPersonId(getValueFromId(extPatient.getId()));
+		intPatient.setPersonId(getValueFromId(extPatient.getPersonId()));
 		
 		String efterNamn = StringUtils.join(extPatient.getEfternamns(), " ");
 		intPatient.setEfterNamn(efterNamn);

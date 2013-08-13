@@ -55,11 +55,7 @@ public class Fk7263Intyg extends Utlatande {
         }
 
         Vardenhet enhet = getSkapadAv().getVardenhet();
-        String nameAndAddress = getSkapadAv().getNamn() + "\n"
-                + enhet.getNamn()
-                + "\n" + enhet.getPostadress()
-                + "\n" + enhet.getPostnummer()
-                + " " + enhet.getPostort() + "\n"
+        String nameAndAddress = getSkapadAv().getNamn() + "\n" + enhet.getNamn() + "\n" + enhet.getPostadress() + "\n" + enhet.getPostnummer() + " " + enhet.getPostort() + "\n"
                 + enhet.getTelefonnummer();
         return nameAndAddress;
     }
@@ -152,8 +148,8 @@ public class Fk7263Intyg extends Utlatande {
             }
         }, null);
     }
-    
-    //Helper properties for netsattningsgrader to be included in JSON
+
+    // Helper properties for netsattningsgrader to be included in JSON
     public Observation getNedsattning25percent() {
         return getNedsattning(25.0);
     }
@@ -165,7 +161,7 @@ public class Fk7263Intyg extends Utlatande {
     public Observation getNedsattning75percent() {
         return getNedsattning(75.0);
     }
-    
+
     public Observation getNedsattning100percent() {
         return getNedsattning(100.0);
     }
@@ -183,9 +179,11 @@ public class Fk7263Intyg extends Utlatande {
     }
 
     private boolean containsSysselsattningKod(Kod sysselsattningKod) {
-        for (se.inera.certificate.model.Sysselsattning sysselsattning : getPatient().getSysselsattnings()) {
-            if (sysselsattningKod.equals(sysselsattning.getSysselsattningsTyp())) {
-                return true;
+        if (getPatient() != null && getPatient().getSysselsattnings() != null) {
+            for (se.inera.certificate.model.Sysselsattning sysselsattning : getPatient().getSysselsattnings()) {
+                if (sysselsattningKod.equals(sysselsattning.getSysselsattningsTyp())) {
+                    return true;
+                }
             }
         }
         return false;

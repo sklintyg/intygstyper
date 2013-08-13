@@ -2,8 +2,8 @@ package se.inera.certificate.modules.rli.model.converters;
 
 import iso.v21090.dt.v1.CD;
 import iso.v21090.dt.v1.II;
-import se.inera.certificate.model.Id;
-import se.inera.certificate.model.Kod;
+import se.inera.certificate.modules.rli.model.external.common.Id;
+import se.inera.certificate.modules.rli.model.external.common.Kod;
 
 /**
  * @author andreaskaltenbach
