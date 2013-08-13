@@ -242,4 +242,64 @@ public class Fk7263Intyg extends Utlatande {
     public Aktivitet getAnnanAtgard() {
         return getAktivitet(Aktivitet_Planerad_eller_pagaende_annan_atgard);
     }
+
+    public boolean isFilledDiagnosis() {
+
+        return getMedicinsktTillstand() != null;
+    }
+
+    public boolean isFilledProgress() {
+        Observation bedomtTillstand = getBedomtTillstand();
+        return bedomtTillstand == null || (bedomtTillstand != null && !bedomtTillstand.getBeskrivning().trim().equals("");
+    }
+
+    public boolean isFilledDisabilities() {
+        String value = getFunktionsnedsattningBeskrivning();
+        return value != null && !value.trim().equals("");
+    }
+
+    public boolean isFilledBasedOn() {
+        return true;
+    }
+
+    public boolean isFilledLimitation() {
+        String value = getAktivitetsnedsattningBeskrivning();
+        return value != null && !value.trim().equals("");
+    }
+
+    public boolean isFilledRecommendations() {
+        Aktivitet ovrigt = getRekommenderarOvrigt();
+        return getRekommenderarKontaktMedArbetsformedlingen() != null || getRekommenderarKontaktMedForetagshalsovarden() != null || (ovrigt != null && !ovrigt.getBeskrivning().trim().equals(""));
+    }
+
+    public boolean isFilledPlannedTreatment() {
+        Aktivitet annan = getAnnanAtgard();
+        return getAtgardInomSjukvarden() != null || (annan != null && !annan.getBeskrivning().trim().equals(""));
+    }
+
+    public boolean isFilledWorkRehab() {
+        return getArbetsinriktadRehabiliteringAktuell() != null || getArbetsinriktadRehabiliteringEjAktuell() != null || getArbetsinriktadRehabiliteringEjBedombar() != null;
+    }
+
+    public boolean isFilledPatientWorkCapacity() {
+        return isArbetsformagaIForhallandeTillNuvarandeArbete() || isArbetsformagaIForhallandeTillArbetsloshet() || isArbetsformagaIForhallandeTillForaldraledighet();
+    }
+
+    public boolean isFilledPatientWorkCapacityJudgement() {
+        Observation value = getArbetsformagaAktivitetsbegransning();
+        return value != null && !value.getBeskrivning().trim().equals("");
+    }
+
+    public boolean isFilledPatientPrognosis() {
+        return isPrognosFullAterstallning() || isPrognosDelvisAterstallning() || isPrognosEjAterstallning() || isPrognosAterstallningGarEjBedomma();
+    }
+
+    public boolean isFilledPatientOtherTransport() {
+        return getForandratRessattAktuellt() != null || getForandratRessattEjAktuellt() != null;
+    }
+
+    public boolean isFilledFKContact() {
+        return getKontaktMedForsakringskassanAktuell() != null;
+    }
+
 }
