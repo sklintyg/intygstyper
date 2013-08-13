@@ -14,6 +14,15 @@ import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.Vardkontakt;
 
+/**
+ * The utlåtande used by RLI. This class is a copy of the common external model (defined in se.inera.certificate.model),
+ * extending with:
+ * <ul>
+ * <li> {@link Arrangemang}
+ * </ul>
+ * 
+ * @author Gustav Norbäcker, R2M
+ */
 public class Utlatande {
 
 	private Id id;
