@@ -2,7 +2,7 @@ package se.inera.certificate.modules.rli.model.codes;
 
 import org.apache.commons.lang3.StringUtils;
 
-import se.inera.certificate.model.Kod;
+import se.inera.certificate.modules.rli.model.external.common.Kod;
 
 /**
  * Util for converting an enum implementing ICodeSystem to a Kod object.

@@ -3,7 +3,6 @@ package se.inera.certificate.modules.rli.model.codes;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.junit.experimental.theories.suppliers.TestedOn;
 
 public class CodeEnumsTest {
 

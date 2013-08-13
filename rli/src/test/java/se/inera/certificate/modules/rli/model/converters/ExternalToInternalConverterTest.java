@@ -1,19 +1,17 @@
 package se.inera.certificate.modules.rli.model.converters;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
-import java.util.UUID;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import se.inera.certificate.model.Id;
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Patient;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
-import se.inera.certificate.modules.rli.model.external.Utlatande;
+import se.inera.certificate.modules.rli.model.external.common.Id;
+import se.inera.certificate.modules.rli.model.external.common.Kod;
+import se.inera.certificate.modules.rli.model.external.common.Patient;
 
 public class ExternalToInternalConverterTest {
 	
@@ -45,7 +43,7 @@ public class ExternalToInternalConverterTest {
 		
 		Patient pat = new Patient();
 		
-		pat.setId(new Id("PersonId", "19121212-1212"));
+		pat.setPersonId(new Id("PersonId", "19121212-1212"));
 		pat.setFornamns(Arrays.asList("Abel", "Baker"));
 		pat.setEfternamns(Arrays.asList("Smith", "Doe"));
 				

@@ -1,40 +1,31 @@
 package se.inera.certificate.modules.rli.model.converters;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import static org.junit.Assert.assertEquals;
 import iso.v21090.dt.v1.CD;
 import iso.v21090.dt.v1.II;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.joda.time.Chronology;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDateTime;
 import org.joda.time.Partial;
-
-import org.junit.Test;
 import org.junit.Before;
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 import riv.insuranceprocess.healthreporting._2.HosPersonalType;
+import se.inera.certificate.common.v1.ObservationType;
 import se.inera.certificate.common.v1.PartialDateInterval;
 import se.inera.certificate.common.v1.PatientType;
-import se.inera.certificate.common.v1.ObservationType;
 import se.inera.certificate.common.v1.UtforarrollType;
-
-/*import se.inera.certificate.model.Aktivitet;
-import se.inera.certificate.model.Referens;
-import se.inera.certificate.model.Vardkontakt;
-*/
-import se.inera.certificate.model.Observation;
-import se.inera.certificate.model.Id;
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.HosPersonal;
-import se.inera.certificate.model.PartialInterval;
-import se.inera.certificate.model.Patient;
-
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
-import se.inera.certificate.modules.rli.model.converters.TransportToExternalConverter;
+import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
+import se.inera.certificate.modules.rli.model.external.common.Id;
+import se.inera.certificate.modules.rli.model.external.common.Kod;
+import se.inera.certificate.modules.rli.model.external.common.Observation;
+import se.inera.certificate.modules.rli.model.external.common.Patient;
 
 /**
  * Test class for TransportToExternal,
@@ -146,17 +137,17 @@ public class TransportToExternalConverterTest {
 		tmpUtl.setTyp(new Kod("testCode"));
 	
 		
-		tmpUtl.setSkickatDatum(new LocalDateTime(2001, 12, 1, 12, 1) );
+		tmpUtl.setSkickatdatum(new LocalDateTime(2001, 12, 1, 12, 1) );
 		
 		HosPersonal hsp = new HosPersonal();
-		hsp.setNamn("Skapad af Skapadson");
+		hsp.setFullstandigtNamn("Skapad af Skapadson");
 		
 		tmpUtl.setSkapadAv(hsp);
 		
-		tmpUtl.setSigneringsDatum(new LocalDateTime (2002, 12, 1, 12, 1) );
+		tmpUtl.setSigneringsdatum(new LocalDateTime (2002, 12, 1, 12, 1) );
 		
 		Patient pt = new Patient();
-		pt.setId(new Id("patientID"));
+		pt.setPersonId(new Id("patientID"));
 		
 		
 		tmpUtl.setPatient(pt);
@@ -191,12 +182,12 @@ public class TransportToExternalConverterTest {
 		tmpUtl.setArrangemang(arr);
 		
 		Observation observation = new Observation();
-		observation.setObservationsKod(new Kod("testCode"));
-		observation.setObservationsPeriod(new PartialInterval( pdi.getFrom(), pdi.getTom() ));
+		observation.setObservationskod(new Kod("testCode"));
+		observation.setObservationsperiod(new se.inera.certificate.modules.rli.model.external.common.PartialDateInterval( pdi.getFrom(), pdi.getTom() ));
 		List<Observation> obsList = new ArrayList<Observation>();
 		obsList.add(observation);
 		
-		tmpUtl.setObservations(obsList);
+		tmpUtl.setObservationer(obsList);
 		
 		return tmpUtl;
 	}
@@ -240,43 +231,43 @@ public class TransportToExternalConverterTest {
 	@Test
 	public void testConvertSigneringsDatum(){
 		assertEquals("Sign date in converted model (checked against transport) was: "
-				+ utlatande.getSigneringsDatum() + "\n",
-				transportModel.getSigneringsdatum(), utlatande.getSigneringsDatum());
+				+ utlatande.getSigneringsdatum() + "\n",
+				transportModel.getSigneringsdatum(), utlatande.getSigneringsdatum());
 		
 		assertEquals("Sign date in converted model (checked against correctExternal) was: "
-				+ utlatande.getSigneringsDatum() + "\n",
-				correctExternalModel.getSigneringsDatum(), utlatande.getSigneringsDatum());
+				+ utlatande.getSigneringsdatum() + "\n",
+				correctExternalModel.getSigneringsdatum(), utlatande.getSigneringsdatum());
 	}
 	
 	@Test
 	public void testConvertSkickatDatum(){		
 		assertEquals("SkickatDatum in converted model (checked against transportModel) was: "
-				+ utlatande.getSkickatDatum() + "\n",
-				transportModel.getSkickatdatum(), utlatande.getSkickatDatum());
+				+ utlatande.getSkickatdatum() + "\n",
+				transportModel.getSkickatdatum(), utlatande.getSkickatdatum());
 		
 		assertEquals("SkickatDatum in converted model (checked against correctExternal) was: " 
-				+ utlatande.getSkickatDatum() + "\n",
-				correctExternalModel.getSkickatDatum(), utlatande.getSkickatDatum());
+				+ utlatande.getSkickatdatum() + "\n",
+				correctExternalModel.getSkickatdatum(), utlatande.getSkickatdatum());
 	}		
 	@Test
 	public void testConvertPatient(){
 		assertEquals("Patient in converted model (checked against transportModel) was: " 
-				+ utlatande.getPatient().getId().getExtension() + "\n",
-				transportModel.getPatient().getPersonId().getExtension(), utlatande.getPatient().getId().getExtension());
+				+ utlatande.getPatient().getPersonId().getExtension() + "\n",
+				transportModel.getPatient().getPersonId().getExtension(), utlatande.getPatient().getPersonId().getExtension());
 		
 		assertEquals("Patient in converted model (checked against correctExternal) was: " 
-				+ utlatande.getPatient().getId().getExtension() + "\n",
-				correctExternalModel.getPatient().getId().getExtension(), utlatande.getPatient().getId().getExtension());
+				+ utlatande.getPatient().getPersonId().getExtension() + "\n",
+				correctExternalModel.getPatient().getPersonId().getExtension(), utlatande.getPatient().getPersonId().getExtension());
 	}
 	@Test 
 	public void testConvertSkapadAv(){
 		assertEquals("Skapad av in converted model (checked against transportModel) was: " 
-				+ utlatande.getSkapadAv().getNamn() + "\n",
-				transportModel.getSkapadAv().getFullstandigtNamn(), utlatande.getSkapadAv().getNamn());
+				+ utlatande.getSkapadAv().getFullstandigtNamn() + "\n",
+				transportModel.getSkapadAv().getFullstandigtNamn(), utlatande.getSkapadAv().getFullstandigtNamn());
 		
 		assertEquals("Skapad av in converted model (as checked against correctExternal) was: "
-				+ utlatande.getSkapadAv().getNamn() + "\n",
-				correctExternalModel.getSkapadAv().getNamn(), utlatande.getSkapadAv().getNamn());
+				+ utlatande.getSkapadAv().getFullstandigtNamn() + "\n",
+				correctExternalModel.getSkapadAv().getFullstandigtNamn(), utlatande.getSkapadAv().getFullstandigtNamn());
 	}
 	@Test
 	public void testConvertArrangemang(){
@@ -296,14 +287,14 @@ public class TransportToExternalConverterTest {
 	public void testConvertObservation(){
 		//Observation -> observationkod used to assert
 		assertEquals("Observationskod in converted model (checked against transportModel) was: "
-				+ utlatande.getObservations().get(0) + "\n", 
+				+ utlatande.getObservationer().get(0) + "\n", 
 				transportModel.getObservations().get(0).getObservationskod().getCode(),
-				utlatande.getObservations().get(0).getObservationsKod().getCode());
+				utlatande.getObservationer().get(0).getObservationskod().getCode());
 		
 		assertEquals("Observationskod in converted model (checked against correctExternalModel) was: "
-				+ utlatande.getObservations().get(0) + "\n", 
-				correctExternalModel.getObservations().get(0).getObservationsKod().getCode(),
-				utlatande.getObservations().get(0).getObservationsKod().getCode());
+				+ utlatande.getObservationer().get(0) + "\n", 
+				correctExternalModel.getObservationer().get(0).getObservationskod().getCode(),
+				utlatande.getObservationer().get(0).getObservationskod().getCode());
 		
 	}
 

@@ -3,28 +3,22 @@ package se.inera.certificate.modules.rli.model.converters;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.inera.certificate.common.v1.AktivitetType;
-import se.inera.certificate.common.v1.ObservationType;
-import se.inera.certificate.common.v1.PatientType;
-
-import se.inera.certificate.model.Aktivitet;
-import se.inera.certificate.model.HosPersonal;
-import se.inera.certificate.model.Observation;
-import se.inera.certificate.model.PartialInterval;
-import se.inera.certificate.model.Patient;
-import se.inera.certificate.model.Vardenhet;
-import se.inera.certificate.model.Vardgivare;
-
-import se.inera.certificate.modules.rli.model.external.Utlatande;
-import se.inera.certificate.modules.rli.model.external.Arrangemang;
-
-//We might want to move IsoTypeConverter or think of some other way to access it, should not live here maybe.
-import se.inera.certificate.modules.rli.model.converters.IsoTypeConverter;
-
 import riv.insuranceprocess.healthreporting._2.EnhetType;
 import riv.insuranceprocess.healthreporting._2.HosPersonalType;
 import riv.insuranceprocess.healthreporting._2.VardgivareType;
-
+import se.inera.certificate.common.v1.AktivitetType;
+import se.inera.certificate.common.v1.ObservationType;
+import se.inera.certificate.common.v1.PatientType;
+import se.inera.certificate.modules.rli.model.external.Arrangemang;
+import se.inera.certificate.modules.rli.model.external.Utlatande;
+import se.inera.certificate.modules.rli.model.external.common.Aktivitet;
+import se.inera.certificate.modules.rli.model.external.common.Enhet;
+import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
+import se.inera.certificate.modules.rli.model.external.common.Observation;
+import se.inera.certificate.modules.rli.model.external.common.PartialDateInterval;
+import se.inera.certificate.modules.rli.model.external.common.Patient;
+import se.inera.certificate.modules.rli.model.external.common.Vardgivare;
+//We might want to move IsoTypeConverter or think of some other way to access it, should not live here maybe.
 
 /**
  * Converter between transport and external model 
@@ -48,11 +42,11 @@ public class TransportToExternalConverter {
 		
 		externalModel.setTyp(IsoTypeConverter.toKod(source.getTypAvUtlatande()));
 
-		externalModel.setKommentars(source.getKommentars());
+		externalModel.setKommentarer(source.getKommentars());
 		
-		externalModel.setSigneringsDatum(source.getSigneringsdatum());
+		externalModel.setSigneringsdatum(source.getSigneringsdatum());
 		
-		externalModel.setSkickatDatum(source.getSkickatdatum());
+		externalModel.setSkickatdatum(source.getSkickatdatum());
 
 		externalModel.setPatient(convert(source.getPatient()));
 
@@ -61,7 +55,7 @@ public class TransportToExternalConverter {
 		externalModel.setAktiviteter(convertAktiviteter(source.getAktivitets()));
 
 		// TODO Finish imlementing converter for observations once related changes have been made in model
-		externalModel.setObservations(convertObservations(source.getObservations()));
+		externalModel.setObservationer(convertObservations(source.getObservations()));
 		
 		externalModel.setArrangemang(convert(source.getArrangemang()));	
 				
@@ -97,10 +91,10 @@ public class TransportToExternalConverter {
 		Observation observation = new Observation();
 		
 		if (source.getObservationsperiod() != null){
-			observation.setObservationsPeriod( new PartialInterval(source.getObservationsperiod().getFrom(), 
+			observation.setObservationsperiod( new PartialDateInterval(source.getObservationsperiod().getFrom(), 
 					source.getObservationsperiod().getTom()));
 		}
-		observation.setObservationsKod( IsoTypeConverter.toKod( source.getObservationskod() ));
+		observation.setObservationskod( IsoTypeConverter.toKod( source.getObservationskod() ));
 		observation.setBeskrivning("placeholder");
 		
 		
@@ -173,10 +167,10 @@ public class TransportToExternalConverter {
         if (source == null) return null;
 
         HosPersonal hosPersonal = new HosPersonal();
-        hosPersonal.setId(IsoTypeConverter.toId(source.getPersonalId()));
-        hosPersonal.setNamn(source.getFullstandigtNamn());
+        hosPersonal.setPersonalId(IsoTypeConverter.toId(source.getPersonalId()));
+        hosPersonal.setFullstandigtNamn(source.getFullstandigtNamn());
         hosPersonal.setForskrivarkod(source.getForskrivarkod());
-        hosPersonal.setVardenhet(convert(source.getEnhet()));
+        hosPersonal.setEnhet(convert(source.getEnhet()));
         
         return hosPersonal;
     }
@@ -191,7 +185,7 @@ public class TransportToExternalConverter {
         if (source == null) return null;
 
         Patient patient = new Patient();
-        patient.setId(IsoTypeConverter.toId(source.getPersonId()));
+        patient.setPersonId(IsoTypeConverter.toId(source.getPersonId()));
 
         if (!source.getFornamns().isEmpty()) {
             patient.setFornamns(source.getFornamns());
@@ -212,13 +206,13 @@ public class TransportToExternalConverter {
      * @param source EnhetType to be converted
      * @return Vardenhet, or null if source is null
      */
-	private static Vardenhet convert(EnhetType source) {
+	private static Enhet convert(EnhetType source) {
 		if (source == null)
 			return null;
 
-		Vardenhet vardenhet = new Vardenhet();
-		vardenhet.setId(IsoTypeConverter.toId(source.getEnhetsId()));
-		vardenhet.setNamn(source.getEnhetsnamn());
+		Enhet vardenhet = new Enhet();
+		vardenhet.setEnhetsId(IsoTypeConverter.toId(source.getEnhetsId()));
+		vardenhet.setEnhetsnamn(source.getEnhetsnamn());
 		vardenhet.setArbetsplatskod(IsoTypeConverter.toId(source.getArbetsplatskod()));
 		vardenhet.setPostadress(source.getPostadress());
 		vardenhet.setPostnummer(source.getPostnummer());
@@ -241,8 +235,8 @@ public class TransportToExternalConverter {
 			return null;
 
 		Vardgivare vardgivare = new Vardgivare();
-		vardgivare.setId(IsoTypeConverter.toId(source.getVardgivareId()));
-		vardgivare.setNamn(source.getVardgivarnamn());
+		vardgivare.setVardgivareId(IsoTypeConverter.toId(source.getVardgivareId()));
+		vardgivare.setVardgivarnamn(source.getVardgivarnamn());
 		
 		return vardgivare;
 	}

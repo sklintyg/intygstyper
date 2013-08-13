@@ -4,15 +4,19 @@ import java.util.List;
 
 import org.joda.time.LocalDateTime;
 
-import se.inera.certificate.model.Aktivitet;
-import se.inera.certificate.model.HosPersonal;
-import se.inera.certificate.model.Id;
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Observation;
-import se.inera.certificate.model.Patient;
-import se.inera.certificate.model.Referens;
-import se.inera.certificate.model.Status;
-import se.inera.certificate.model.Vardkontakt;
+import se.inera.certificate.modules.rli.model.external.common.Aktivitet;
+import se.inera.certificate.modules.rli.model.external.common.Bestallare;
+import se.inera.certificate.modules.rli.model.external.common.Betalningsmottagare;
+import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
+import se.inera.certificate.modules.rli.model.external.common.Id;
+import se.inera.certificate.modules.rli.model.external.common.Kod;
+import se.inera.certificate.modules.rli.model.external.common.Observation;
+import se.inera.certificate.modules.rli.model.external.common.Patient;
+import se.inera.certificate.modules.rli.model.external.common.Referens;
+import se.inera.certificate.modules.rli.model.external.common.Rekommendation;
+import se.inera.certificate.modules.rli.model.external.common.Status;
+import se.inera.certificate.modules.rli.model.external.common.Substansintag;
+import se.inera.certificate.modules.rli.model.external.common.Vardkontakt;
 
 /**
  * The utlåtande used by RLI. This class is a copy of the common external model (defined in se.inera.certificate.model),
@@ -29,27 +33,37 @@ public class Utlatande {
 
 	private Kod typ;
 
-	private List<String> kommentars;
+	private List<String> kommentarer;
 
-	private LocalDateTime signeringsDatum;
+	private LocalDateTime signeringsdatum;
 
-	private LocalDateTime skickatDatum;
+	private LocalDateTime skickatdatum;
 
 	private Patient patient;
 
 	private HosPersonal skapadAv;
 
-	private List<Aktivitet> aktiviteter;
-
-	private List<Observation> observations;
+	private List<HosPersonal> harDeltagandeHosPersonal;
 
 	private List<Vardkontakt> vardkontakter;
 
 	private List<Referens> referenser;
 
-	private Arrangemang arrangemang;
+	private List<Aktivitet> aktiviteter;
+
+	private Bestallare bestallare;
+
+	private List<Substansintag> substansintag;
+
+	private Betalningsmottagare betalningsmottagare;
+
+	private List<Rekommendation> rekommendationer;
+
+	private List<Observation> observationer;
 
 	private List<Status> status;
+
+	private Arrangemang arrangemang;
 
 	public Id getId() {
 		return id;
@@ -67,28 +81,28 @@ public class Utlatande {
 		this.typ = typ;
 	}
 
-	public List<String> getKommentars() {
-		return kommentars;
+	public List<String> getKommentarer() {
+		return kommentarer;
 	}
 
-	public void setKommentars(List<String> kommentars) {
-		this.kommentars = kommentars;
+	public void setKommentarer(List<String> kommentarer) {
+		this.kommentarer = kommentarer;
 	}
 
-	public LocalDateTime getSigneringsDatum() {
-		return signeringsDatum;
+	public LocalDateTime getSigneringsdatum() {
+		return signeringsdatum;
 	}
 
-	public void setSigneringsDatum(LocalDateTime signeringsDatum) {
-		this.signeringsDatum = signeringsDatum;
+	public void setSigneringsdatum(LocalDateTime signeringsdatum) {
+		this.signeringsdatum = signeringsdatum;
 	}
 
-	public LocalDateTime getSkickatDatum() {
-		return skickatDatum;
+	public LocalDateTime getSkickatdatum() {
+		return skickatdatum;
 	}
 
-	public void setSkickatDatum(LocalDateTime skickatDatum) {
-		this.skickatDatum = skickatDatum;
+	public void setSkickatdatum(LocalDateTime skickatdatum) {
+		this.skickatdatum = skickatdatum;
 	}
 
 	public Patient getPatient() {
@@ -107,20 +121,12 @@ public class Utlatande {
 		this.skapadAv = skapadAv;
 	}
 
-	public List<Aktivitet> getAktiviteter() {
-		return aktiviteter;
+	public List<HosPersonal> getHarDeltagandeHosPersonal() {
+		return harDeltagandeHosPersonal;
 	}
 
-	public void setAktiviteter(List<Aktivitet> aktiviteter) {
-		this.aktiviteter = aktiviteter;
-	}
-
-	public List<Observation> getObservations() {
-		return observations;
-	}
-
-	public void setObservations(List<Observation> observations) {
-		this.observations = observations;
+	public void setHarDeltagandeHosPersonal(List<HosPersonal> harDeltagandeHosPersonal) {
+		this.harDeltagandeHosPersonal = harDeltagandeHosPersonal;
 	}
 
 	public List<Vardkontakt> getVardkontakter() {
@@ -139,12 +145,52 @@ public class Utlatande {
 		this.referenser = referenser;
 	}
 
-	public Arrangemang getArrangemang() {
-		return arrangemang;
+	public List<Aktivitet> getAktiviteter() {
+		return aktiviteter;
 	}
 
-	public void setArrangemang(Arrangemang arrangemang) {
-		this.arrangemang = arrangemang;
+	public void setAktiviteter(List<Aktivitet> aktiviteter) {
+		this.aktiviteter = aktiviteter;
+	}
+
+	public Bestallare getBestallare() {
+		return bestallare;
+	}
+
+	public void setBestallare(Bestallare bestallare) {
+		this.bestallare = bestallare;
+	}
+
+	public List<Substansintag> getSubstansintag() {
+		return substansintag;
+	}
+
+	public void setSubstansintag(List<Substansintag> substansintag) {
+		this.substansintag = substansintag;
+	}
+
+	public Betalningsmottagare getBetalningsmottagare() {
+		return betalningsmottagare;
+	}
+
+	public void setBetalningsmottagare(Betalningsmottagare betalningsmottagare) {
+		this.betalningsmottagare = betalningsmottagare;
+	}
+
+	public List<Rekommendation> getRekommendationer() {
+		return rekommendationer;
+	}
+
+	public void setRekommendationer(List<Rekommendation> rekommendationer) {
+		this.rekommendationer = rekommendationer;
+	}
+
+	public List<Observation> getObservationer() {
+		return observationer;
+	}
+
+	public void setObservationer(List<Observation> observationer) {
+		this.observationer = observationer;
 	}
 
 	public List<Status> getStatus() {
@@ -153,5 +199,13 @@ public class Utlatande {
 
 	public void setStatus(List<Status> status) {
 		this.status = status;
+	}
+
+	public Arrangemang getArrangemang() {
+		return arrangemang;
+	}
+
+	public void setArrangemang(Arrangemang arrangemang) {
+		this.arrangemang = arrangemang;
 	}
 }

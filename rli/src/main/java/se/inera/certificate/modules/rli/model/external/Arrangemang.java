@@ -3,7 +3,7 @@ package se.inera.certificate.modules.rli.model.external;
 import org.joda.time.Partial;
 
 import se.inera.certificate.common.v1.PartialDateInterval;
-import se.inera.certificate.model.Kod;
+import se.inera.certificate.modules.rli.model.external.common.Kod;
 
 public class Arrangemang {
 
