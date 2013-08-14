@@ -3,6 +3,9 @@ package se.inera.certificate.modules.rli.model.converters;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import riv.insuranceprocess.healthreporting._2.EnhetType;
 import riv.insuranceprocess.healthreporting._2.HosPersonalType;
 import riv.insuranceprocess.healthreporting._2.VardgivareType;
@@ -31,6 +34,8 @@ import se.inera.certificate.modules.rli.model.external.common.Vardgivare;
  *
  */
 public class TransportToExternalConverterImpl implements TransportToExternalConverter{
+	
+	private static final Logger LOG = LoggerFactory.getLogger(TransportToExternalConverterImpl.class);
 
 	public TransportToExternalConverterImpl(){
 		
@@ -45,6 +50,8 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 	@Override
 	public Utlatande transportToExternal(se.inera.certificate.common.v1.Utlatande source) {
 		
+		LOG.debug("Starting conversion");
+		
 		Utlatande externalModel = new Utlatande();
 
 		externalModel.setId(IsoTypeConverter.toId(source.getUtlatandeId()));
@@ -56,16 +63,18 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 		externalModel.setSigneringsdatum(source.getSigneringsdatum());
 		
 		externalModel.setSkickatdatum(source.getSkickatdatum());
+		
+		//Convertions from here on
 
-		externalModel.setPatient(convert(source.getPatient()));
+		externalModel.setPatient(convertPatient(source.getPatient()));
 
-		externalModel.setSkapadAv(convert(source.getSkapadAv()));
+		externalModel.setSkapadAv(convertHosPersonal(source.getSkapadAv()));
 
 		externalModel.setAktiviteter(convertAktiviteter(source.getAktivitets()));
 
 		externalModel.setObservationer(convertObservations(source.getObservations()));
 		
-		externalModel.setArrangemang(convert(source.getArrangemang()));	
+		externalModel.setArrangemang(convertArrangemang(source.getArrangemang()));	
 		
 		externalModel.setRekommendationer(convertRekommendationer(source.getRekommendations()));
 		
@@ -76,10 +85,12 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 	 * @param source List of RekommendationType to be converted
 	 * @return List of Rekommendation
 	 */
-	private List<Rekommendation> convertRekommendationer(List<RekommendationType> source) {
+	List<Rekommendation> convertRekommendationer(List<RekommendationType> source) {
+		LOG.debug("Converting rekommendationer");
+		
 		List<Rekommendation> rekommendationer = new ArrayList<Rekommendation>();
 		for (RekommendationType toConvert : source){
-			Rekommendation rekommendation = convert(toConvert);
+			Rekommendation rekommendation = convertRekommendation(toConvert);
 			if (rekommendation != null){
 				rekommendationer.add(rekommendation);
 			}
@@ -92,7 +103,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 	 * @param source RekommendationType 
 	 * @return Rekommendation, or null if source is null
 	 */
-	private Rekommendation convert(RekommendationType source) {
+	private Rekommendation convertRekommendation(RekommendationType source) {
 		if (source == null){
 			return null;
 		}
@@ -111,11 +122,14 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 	 * @param source List of objects of type ObservationType to be converted
 	 * @return List of objects of type Observation
 	 */
-	private List<Observation> convertObservations(List<ObservationType> source) {
+	List<Observation> convertObservations(List<ObservationType> source) {
+		
+		LOG.debug("Converting observationer");
+		
 		List<Observation> observations = new ArrayList<Observation>();
 
 		for (ObservationType ot : source){
-			Observation observation = convert(ot);
+			Observation observation = convertObservation(ot);
 			if (observation != null){
 				observations.add(observation);
 			}
@@ -130,7 +144,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 	 * @param source ObservationType to be converted
 	 * @return object of type Observation
 	 */
-	private Observation convert (ObservationType source){
+	private Observation convertObservation(ObservationType source){
 		Observation observation = new Observation();
 		
 		if (source.getObservationsperiod() != null){
@@ -138,7 +152,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 					source.getObservationsperiod().getTom()));
 		}
 		observation.setObservationskod(IsoTypeConverter.toKod(source.getObservationskod()));
-		observation.setUtforsAv(convert(source.getUtforsAv()));
+		observation.setUtforsAv(convertUtforarroll(source.getUtforsAv()));
 		return observation;
 	}
 	
@@ -147,11 +161,13 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 	 * @param source List of UtforarrollType 
 	 * @return List of Utforarroll
 	 */
-	private static List<Utforarroll> convertUtforarroller(List<UtforarrollType> source){
+	List<Utforarroll> convertUtforarroller(List<UtforarrollType> source){
+		LOG.debug("Converting utforarroller");
+		
 		List<Utforarroll> utforsAvs = new ArrayList<>();
         for (UtforarrollType toConvert: source){
         	if (toConvert != null){
-        		utforsAvs.add(convert(toConvert));
+        		utforsAvs.add(convertUtforarroll(toConvert));
         	}
         }
         return utforsAvs;
@@ -162,18 +178,19 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 	 * @param source UtforarrollType
 	 * @return Utforarroll, or null if source is null
 	 */
-	private static Utforarroll convert (UtforarrollType source){
+	private Utforarroll convertUtforarroll(UtforarrollType source){
 		if (source == null){
 			return null;
 		}
 		Utforarroll utforarroll = new Utforarroll();
-		utforarroll.setAntasAv(convert(source.getAntasAv()));
+		utforarroll.setAntasAv(convertHosPersonal(source.getAntasAv()));
 		utforarroll.setUtforartyp(IsoTypeConverter.toKod(source.getUtforartyp()));
 		return utforarroll;
 	}
 	
-
-	private static Arrangemang convert (se.inera.certificate.rli.v1.Arrangemang source){
+	Arrangemang convertArrangemang(se.inera.certificate.rli.v1.Arrangemang source){	
+		LOG.debug("Converting arrangemang");
+		
 		if( source == null){
 			return null;
 		}
@@ -195,11 +212,14 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 	 * @param source the list of AktivitetType's to be converted
 	 * @return a List containing Aktiviteter
 	 */
-    private static List<Aktivitet> convertAktiviteter(List<AktivitetType> source) {
+    List<Aktivitet> convertAktiviteter(List<AktivitetType> source) {
+    	
+    	LOG.debug("Converting aktiviteter");
+    	
         List<Aktivitet> aktiviteter = new ArrayList<>();
         for (AktivitetType aktivitet : source) {
         	if (source != null){
-        		aktiviteter.add(convert(aktivitet));
+        		aktiviteter.add(convertAktivitet(aktivitet));
         	}
         }
         return aktiviteter;
@@ -211,7 +231,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @param source the object of AktivitetType to be converted
      * @return Aktivitet
      */
-    private static Aktivitet convert(AktivitetType source) {
+    private Aktivitet convertAktivitet(AktivitetType source) {
     	if (source == null){
     		return null;
     	}
@@ -223,7 +243,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
         			source.getAktivitetstid().getTom()));
         }
         aktivitet.setBeskrivning(source.getBeskrivning());
-        aktivitet.setUtforsVidEnhet(convert(source.getUtforsVidEnhet()));
+        aktivitet.setUtforsVidEnhet(convertEnhet(source.getUtforsVidEnhet()));
         aktivitet.setUtforsAvs(convertUtforarroller(source.getUtforsAvs()));
         
         return aktivitet;
@@ -235,7 +255,9 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @param source HosPersonalType to be converted
      * @return HosPersonal, or null if source is null
      */
-    private static HosPersonal convert(HosPersonalType source) {
+    HosPersonal convertHosPersonal(HosPersonalType source) {
+    	
+    	LOG.debug("Converting HosPersonal");
         if (source == null){
         	return null;
         }
@@ -244,7 +266,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
         hosPersonal.setPersonalId(IsoTypeConverter.toId(source.getPersonalId()));
         hosPersonal.setFullstandigtNamn(source.getFullstandigtNamn());
         hosPersonal.setForskrivarkod(source.getForskrivarkod());
-        hosPersonal.setEnhet(convert(source.getEnhet()));
+        hosPersonal.setEnhet(convertEnhet(source.getEnhet()));
         
         return hosPersonal;
     }
@@ -255,7 +277,9 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @param source PatientType to be converted
      * @return Patient, or null if source is null
      */
-    private static Patient convert(PatientType source) {
+    Patient convertPatient(PatientType source) {
+    	LOG.debug("Converting patient");
+    	
         if (source == null){
         	return null;
         }
@@ -278,12 +302,13 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
         return patient;
     }
     
-    private static List<PatientRelation> convertPatientRelations(List<PatientRelationType> source) {
+    private List<PatientRelation> convertPatientRelations(List<PatientRelationType> source) {
 		// TODO Maybe implement
 		return null;
 	}
     
-    private PatientRelation convert(PatientRelationType source){
+    @SuppressWarnings("unused")
+	private PatientRelation convertPatientRelation(PatientRelationType source){
     	// TODO Implement if implementing convertPatientRelations 
     	return null;
     }
@@ -294,7 +319,8 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @return Enhet, or null if source is null
      */
 
-	private static Enhet convert(EnhetType source) {
+	Enhet convertEnhet(EnhetType source) {
+		LOG.debug("Converting enhet");
 		if (source == null){
 			return null;
 		}
@@ -307,7 +333,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 		vardenhet.setPostort(source.getPostort());
 		vardenhet.setEpost(source.getEpost());
 		vardenhet.setTelefonnummer(source.getTelefonnummer());
-		vardenhet.setVardgivare(convert(source.getVardgivare()));
+		vardenhet.setVardgivare(convertVardgivare(source.getVardgivare()));
 		
 		return vardenhet;
 	}
@@ -318,7 +344,9 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 	 * @param source VardgivareType to be converted
 	 * @return Vardgivare, or null if source is null
 	 */
-	private static Vardgivare convert(VardgivareType source) {
+	Vardgivare convertVardgivare(VardgivareType source) {
+		
+		LOG.debug("Converting vardgivare");
 		if (source == null){
 			return null;
 		}

@@ -36,43 +36,25 @@ public class XmlToExternalTest {
 	}
 	
 	@Test
-	public void testUtlatandeTyp(){
+	public void testXmlToExternal(){
 		assertEquals("RLI", extUtlatande.getTyp().getCode());
-	}
-	
-	@Test
-	public void testUtlatandeId(){
+
 		assertEquals("39f80245-9730-4d76-aaff-b04a2f3cfbe7", extUtlatande.getId().getExtension());
-	}	
-	
-	@Test
-	public void testUtlatandeKommentarer(){
+
 		assertEquals("Övriga upplysningar", extUtlatande.getKommentarer().get(0));
-	}
-	
-	@Test
-	public void testSigneringsDatum(){
+
 		LocalDateTime signeratDate = new LocalDateTime("2013-08-12T11:25:00");
 		assertEquals(signeratDate, extUtlatande.getSigneringsdatum());
-	}
-	
-	@Test 
-	public void testSkickatDatum(){
+
 		LocalDateTime skickatDate = new LocalDateTime("2013-08-12T11:25:30");	
 		assertEquals(skickatDate, extUtlatande.getSkickatdatum());
-	}
 	
-	@Test
-	public void testPatient(){
 		assertEquals("1.2.752.129.2.1.3.1", extUtlatande.getPatient().getPersonId().getRoot());
 		assertEquals("191212121212", extUtlatande.getPatient().getPersonId().getExtension());
 		assertEquals("Test", extUtlatande.getPatient().getFornamns().get(0));
 		assertEquals("Testsson", extUtlatande.getPatient().getEfternamns().get(0));
 		assertEquals("Teststigen 1, 123 45 Stockholm", extUtlatande.getPatient().getAdress());
-	}
 	
-	@Test 
-	public void testSkapadAv(){
 		assertEquals("1.2.752.129.2.1.4.1", extUtlatande.getSkapadAv().getPersonalId().getRoot());
 		assertEquals("191010101010", extUtlatande.getSkapadAv().getPersonalId().getExtension());
 		assertEquals("Doktor Alban", extUtlatande.getSkapadAv().getFullstandigtNamn());
@@ -87,10 +69,7 @@ public class XmlToExternalTest {
 		assertEquals("1.2.752.129.2.1.4.1", extUtlatande.getSkapadAv().getEnhet().getVardgivare().getVardgivareId().getRoot());
 		assertEquals("vardgivare_test", extUtlatande.getSkapadAv().getEnhet().getVardgivare().getVardgivareId().getExtension());
 		assertEquals("Testvårdgivaren", extUtlatande.getSkapadAv().getEnhet().getVardgivare().getVardgivarnamn());
-	}
 	
-	@Test
-	public void testAktivitet(){
 		List<Aktivitet> aktiviteter = extUtlatande.getAktiviteter();
 		for (Aktivitet a : aktiviteter){ 
 			assertEquals("AV020", a.getAktivitetskod().getCode());
@@ -105,10 +84,7 @@ public class XmlToExternalTest {
 			assertEquals("vardgivare_test", a.getUtforsVidEnhet().getVardgivare().getVardgivareId().getExtension());
 			assertEquals("Testvårdgivaren", a.getUtforsVidEnhet().getVardgivare().getVardgivarnamn());			
 		}
-	}
-	
-	@Test
-	public void testRekommendation(){
+
 		List<Rekommendation> rekommendationer = extUtlatande.getRekommendationer();
 		for (Rekommendation rekommendation : rekommendationer){
 			assertEquals("REK1", rekommendation.getRekommendationskod().getCode());
@@ -118,20 +94,14 @@ public class XmlToExternalTest {
 			assertEquals("???", rekommendation.getSjukdomskannedom().getCodeSystem());
 			assertEquals("kv_sjukdomskännedom_intyg", rekommendation.getSjukdomskannedom().getCodeSystemName());
 		}
-	}
 	
-	@Test
-	public void testObservation(){
 		List<Observation> observationer = extUtlatande.getObservationer();
 		for (Observation observation : observationer){
 			assertEquals("39104002", observation.getObservationskod().getCode());
 			assertEquals("1.2.752.116.2.1.1.1", observation.getObservationskod().getCodeSystem());
 			assertEquals("SNOMED-CT", observation.getObservationskod().getCodeSystemName());
 		}
-	}
-	
-	@Test
-	public void testArrangemang(){
+
 		assertEquals("12345678-90",extUtlatande.getArrangemang().getBokningsreferens());
 		assertEquals("2013-01-01",extUtlatande.getArrangemang().getBokningsdatum().toString());
 		assertEquals("2013-07-22",extUtlatande.getArrangemang().getArrangemangstid().getFrom().toString());
@@ -141,6 +111,7 @@ public class XmlToExternalTest {
 		assertEquals("1.2.752.116.2.1.1.1", extUtlatande.getArrangemang().getArrangemangstyp().getCodeSystem());
 		assertEquals("SNOMED-CT", extUtlatande.getArrangemang().getArrangemangstyp().getCodeSystemName());
 		assertEquals("New York", extUtlatande.getArrangemang().getPlats());
+
 	}
 	
 	private se.inera.certificate.common.v1.Utlatande unMarshallXml(){
