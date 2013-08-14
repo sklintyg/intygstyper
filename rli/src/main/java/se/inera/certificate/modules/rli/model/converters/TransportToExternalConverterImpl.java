@@ -32,6 +32,9 @@ import se.inera.certificate.modules.rli.model.external.common.Vardgivare;
  */
 public class TransportToExternalConverterImpl implements TransportToExternalConverter{
 
+	public TransportToExternalConverterImpl(){
+		
+	}
 	/**
 	 * Converts from the transport format (se.inera.certificate.common.v1.Utlatande) to
 	 * the external format (se.inera.certificate.modules.rli.model.external.Utlatande)
@@ -140,11 +143,26 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 	}
 	
 	/**
+	 * Converts a list of UtforarrollType to Utforarroll
+	 * @param source List of UtforarrollType 
+	 * @return List of Utforarroll
+	 */
+	private static List<Utforarroll> convertUtforarroller(List<UtforarrollType> source){
+		List<Utforarroll> utforsAvs = new ArrayList<>();
+        for (UtforarrollType toConvert: source){
+        	if (toConvert != null){
+        		utforsAvs.add(convert(toConvert));
+        	}
+        }
+        return utforsAvs;
+	}
+	
+	/**
 	 * Convert UtforarrollType to Utforarroll
 	 * @param source UtforarrollType
 	 * @return Utforarroll, or null if source is null
 	 */
-	private Utforarroll convert (UtforarrollType source){
+	private static Utforarroll convert (UtforarrollType source){
 		if (source == null){
 			return null;
 		}
@@ -154,13 +172,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 		return utforarroll;
 	}
 	
-	/**
-	 * Internal converter for converting Arrangemang from the transportmodel for use in the external model
-	 * (mainly converts from isoType CD and II to Kod and Id)
-	 * 
-	 * @param source Arrangemang in transport format (se.inera.certificate.rli.v1.Arrangemang) to be converted to external format
-	 * @return se.inera.certificate.modules.rli.model.external.Arrangemang, or null if source is null
-	 */
+
 	private static Arrangemang convert (se.inera.certificate.rli.v1.Arrangemang source){
 		if( source == null){
 			return null;
@@ -206,6 +218,14 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
         Aktivitet aktivitet = new Aktivitet();
         aktivitet.setBeskrivning(source.getBeskrivning());
         aktivitet.setAktivitetskod(IsoTypeConverter.toKod(source.getAktivitetskod()));
+        if (source.getAktivitetstid() != null){
+        	aktivitet.setAktivitetstid(new PartialDateInterval(source.getAktivitetstid().getFrom(),
+        			source.getAktivitetstid().getTom()));
+        }
+        aktivitet.setBeskrivning(source.getBeskrivning());
+        aktivitet.setUtforsVidEnhet(convert(source.getUtforsVidEnhet()));
+        aktivitet.setUtforsAvs(convertUtforarroller(source.getUtforsAvs()));
+        
         return aktivitet;
     }
 
