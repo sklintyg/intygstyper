@@ -12,11 +12,12 @@ import org.slf4j.LoggerFactory;
 
 import ch.qos.logback.core.spi.PreSerializationTransformer;
 
-import se.inera.certificate.model.Aktivitet;
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Observation;
+
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
 import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
+import se.inera.certificate.modules.rli.model.external.common.Aktivitet;
+import se.inera.certificate.modules.rli.model.external.common.Kod;
+import se.inera.certificate.modules.rli.model.external.common.Observation;
 import se.inera.certificate.modules.rli.model.internal.OrsakAvbokning;
 import se.inera.certificate.modules.rli.model.internal.Undersokning;
 import se.inera.certificate.modules.rli.model.internal.Utlatande;
@@ -35,7 +36,7 @@ public class UndersokingRekommendationConverter {
 			se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande,
 			Utlatande intUtlatande) {
 		
-		List<Observation> observations = extUtlatande.getObservations();
+		List<Observation> observations = extUtlatande.getObservationer();
 		
 		Observation obs = null;
 		
@@ -166,7 +167,7 @@ public class UndersokingRekommendationConverter {
 			}
 			
 			Observation obs = (Observation) obj;
-			Kod obsKod = obs.getObservationsKod();
+			Kod obsKod = obs.getObservationskod();
 						
 			return (obsKod.getCode().equals(obsKodEnum.getCode()));
 		}

@@ -7,10 +7,10 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Observation;
 import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
+import se.inera.certificate.modules.rli.model.external.common.Kod;
+import se.inera.certificate.modules.rli.model.external.common.Observation;
 import se.inera.certificate.modules.rli.model.internal.OrsakAvbokning;
 
 public class UndersokingRekommendationConverterTest {
@@ -54,9 +54,9 @@ public class UndersokingRekommendationConverterTest {
 		Utlatande utlatande = new Utlatande();
 		
 		Observation obs = new Observation();
-		obs.setObservationsKod(new Kod(observationsKod.getCode()));
+		obs.setObservationskod(new Kod(observationsKod.getCode()));
 		
-		utlatande.setObservations(Arrays.asList(obs));
+		utlatande.setObservationer(Arrays.asList(obs));
 		
 		return utlatande;
 	}
