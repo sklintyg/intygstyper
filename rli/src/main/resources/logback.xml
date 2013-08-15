@@ -27,7 +27,7 @@
   <logger name="org.springframework.web" level="WARN" />
   <logger name="org.springframework.http" level="WARN" />
 
-  <logger name="se.inera.certificate.web" level="DEBUG" />
+  <logger name="se.inera.certificate.modules.rli" level="DEBUG" />
 
   <root level="DEBUG">
     <appender-ref ref="STDOUT" />

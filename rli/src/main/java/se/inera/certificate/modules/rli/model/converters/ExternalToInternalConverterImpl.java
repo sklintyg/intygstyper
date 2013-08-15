@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.common.v1.PartialDateInterval;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
@@ -35,6 +33,8 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 	
 	private static final Logger LOG = LoggerFactory.getLogger(ExternalToInternalConverterImpl.class);
 
+	private UndersokingRekommendationConverter undersokingRekommendationConverter;
+	
 	public ExternalToInternalConverterImpl() {
 
 	}
@@ -59,29 +59,31 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 		// TODO: Finns inte i extern model
 		// intUtlatande.setGiltighetsPeriodStart(null);
 		// intUtlatande.setGiltighetsPeriodSlut(null);
-
+		
 		intUtlatande.setKommentarer(extUtlatande.getKommentars());
+		
+		List<Status> intStatuses = convertToIntStatuses(extUtlatande.getStatus());
+		intUtlatande.setStatus(intStatuses);
 		
 		Utfardare intUtfardare = convertToIntUtfardare(extUtlatande.getSkapadAv());
 		intUtlatande.setUtfardare(intUtfardare );
-				
+
+		Patient intPatient = convertToIntPatient(extUtlatande.getPatient());
+		intUtlatande.setPatient(intPatient);
+		
 		Arrangemang intArrangemang = convertToIntArrangemang(extUtlatande
 				.getArrangemang());
 		intUtlatande.setArrangemang(intArrangemang);
 
-		Patient intPatient = convertToIntPatient(extUtlatande.getPatient());
-		intUtlatande.setPatient(intPatient);
-
-		Tillstand extTillstand = convertToIntTillstand(extUtlatande);
-		intUtlatande.setTillstand(extTillstand);
-
-		Undersokning intUndersokning = convertToIntUndersokning(extUtlatande);
-		intUtlatande.setUndersokning(intUndersokning);
-		
-		List<Status> intStatuses = convertToIntStatuses(extUtlatande.getStatus());
-		intUtlatande.setStatus(intStatuses);
+		populateUndersokingRekommendation(extUtlatande, intUtlatande);
 
 		return intUtlatande;
+	}
+
+	private void populateUndersokingRekommendation(
+			se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande,
+			Utlatande intUtlatande) {
+		undersokingRekommendationConverter.populateUndersokningRekommendation(extUtlatande, intUtlatande);
 	}
 
 	Utfardare convertToIntUtfardare(HosPersonal extHoSPersonal) {
@@ -189,12 +191,6 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 	}
 
 	Undersokning convertToIntUndersokning(
-			se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	Tillstand convertToIntTillstand(
 			se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande) {
 		// TODO Auto-generated method stub
 		return null;

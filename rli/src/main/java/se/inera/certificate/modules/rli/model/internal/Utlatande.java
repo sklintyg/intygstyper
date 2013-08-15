@@ -21,14 +21,14 @@ public class Utlatande {
 	
 	private LocalDate giltighetsPeriodSlut;
 	
+	private OrsakAvbokning orsakForAvbokning;
+	
 	private Utfardare utfardare;
 	
 	private Patient patient;
-	
+		
 	private Arrangemang arrangemang;
-	
-	private Tillstand tillstand;
-	
+		
 	private Undersokning undersokning;
 	
 	private List<Status> status;
@@ -93,6 +93,14 @@ public class Utlatande {
 		this.giltighetsPeriodSlut = giltighetsPeriodSlut;
 	}
 
+	public OrsakAvbokning getOrsakForAvbokning() {
+		return orsakForAvbokning;
+	}
+
+	public void setOrsakForAvbokning(OrsakAvbokning orsakForAvbokning) {
+		this.orsakForAvbokning = orsakForAvbokning;
+	}
+
 	public Utfardare getUtfardare() {
 		return utfardare;
 	}
@@ -115,14 +123,6 @@ public class Utlatande {
 
 	public void setArrangemang(Arrangemang arrangemang) {
 		this.arrangemang = arrangemang;
-	}
-
-	public Tillstand getTillstand() {
-		return tillstand;
-	}
-
-	public void setTillstand(Tillstand tillstand) {
-		this.tillstand = tillstand;
 	}
 
 	public Undersokning getUndersokning() {

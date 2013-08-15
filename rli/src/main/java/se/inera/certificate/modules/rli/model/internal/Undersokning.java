@@ -1,5 +1,6 @@
 package se.inera.certificate.modules.rli.model.internal;
 
+
 public class Undersokning {
 
 	private String forstaUndersokningDatum;
@@ -10,7 +11,9 @@ public class Undersokning {
 	
 	private String undersokningPlats;
 	
-	private String komplikationStatus;
+	private KomplikationStyrkt komplikationStyrkt;
+		
+	private Graviditet graviditet;
 	
 	private String komplikationBeskrivning;
 	
@@ -50,12 +53,20 @@ public class Undersokning {
 		this.undersokningPlats = undersokningPlats;
 	}
 
-	public String getKomplikationStatus() {
-		return komplikationStatus;
+	public KomplikationStyrkt getKomplikationStyrkt() {
+		return komplikationStyrkt;
 	}
 
-	public void setKomplikationStatus(String komplikationStatus) {
-		this.komplikationStatus = komplikationStatus;
+	public void setKomplikationStyrkt(KomplikationStyrkt komplikationStyrkt) {
+		this.komplikationStyrkt = komplikationStyrkt;
+	}
+
+	public Graviditet getGraviditet() {
+		return graviditet;
+	}
+
+	public void setGraviditet(Graviditet graviditet) {
+		this.graviditet = graviditet;
 	}
 
 	public String getKomplikationBeskrivning() {
