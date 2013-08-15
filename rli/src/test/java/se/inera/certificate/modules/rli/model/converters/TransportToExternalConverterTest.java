@@ -119,7 +119,7 @@ public class TransportToExternalConverterTest {
 
 	
 	@Before
-	public void init(){
+	public void setUp(){
 		//Initiate converter
 		converter = new TransportToExternalConverterImpl();
 		

@@ -188,6 +188,11 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 		return utforarroll;
 	}
 	
+	/**
+	 * Convert transport model Arrangemang to external model arrangemang
+	 * @param source se.inera.certificate.rli.v1.Arrangemang
+	 * @return import se.inera.certificate.modules.rli.model.external.Arrangemang
+	 */
 	Arrangemang convertArrangemang(se.inera.certificate.rli.v1.Arrangemang source){	
 		LOG.debug("Converting arrangemang");
 		

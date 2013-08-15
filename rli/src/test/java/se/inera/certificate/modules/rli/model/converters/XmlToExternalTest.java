@@ -29,7 +29,7 @@ public class XmlToExternalTest {
 	private TransportToExternalConverterImpl converter;
 
 	@Before
-	public void init(){
+	public void setUp(){
 		se.inera.certificate.common.v1.Utlatande source = unMarshallXml();
 		converter = new TransportToExternalConverterImpl();
 		extUtlatande = converter.transportToExternal(source);
