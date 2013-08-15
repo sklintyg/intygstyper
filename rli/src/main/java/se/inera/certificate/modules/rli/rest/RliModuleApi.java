@@ -8,6 +8,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import se.inera.certificate.modules.rli.model.converters.TransportToExternalConverter;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
 
 /**
@@ -16,6 +19,9 @@ import se.inera.certificate.modules.rli.model.external.Utlatande;
  * @author Gustav Norbäcker, R2M
  */
 public class RliModuleApi {
+
+	@Autowired
+	private TransportToExternalConverter transportToExternalConverter;
 
 	/**
 	 * Handles conversion from the transport model (XML) to the external JSON model.
@@ -30,8 +36,7 @@ public class RliModuleApi {
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Utlatande unmarshall(se.inera.certificate.common.v1.Utlatande transportModel) {
-		// TODO: Implement when conversion from the transport model i required.
-		return null;
+		return transportToExternalConverter.transportToExternal(transportModel);
 	}
 
 	/**
