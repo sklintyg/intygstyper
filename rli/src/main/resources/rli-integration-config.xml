@@ -27,6 +27,7 @@
     </property>
   </bean>
 
+  <bean id ="transportToExternalConverter" class="se.inera.certificate.modules.rli.model.converters.TransportToExternalConverterImpl" />
 
   <jaxrs:server address="/">
     <jaxrs:serviceBeans>
