@@ -56,33 +56,7 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
                     // some reason ng-src with "/img/{{cert.typ }}.png" would
                     // evaluate first to "img/.png" before correct value = 404
                     result.typ_image = "/img/" + result.typ.code + ".png";
-
-                    // setup which fields contain values. those which do not
-                    // will get an unfilled style to make them less visually
-                    // significant
-                    // TODO: Implement cases for when fields are filled or not.
-                    // change true to an expression checking for the condition.
-                    // empty strings? a certain value?
-                    result.filledFields = {};
-                    result.filledFields.smittskydd = true;
-                    result.filledFields.diagnosis = true; // example:
-                    // result.bedomtTillstand.beskrivning
-                    // != '' ||
-                    // result.bedomtTillstand.tillstandskod
-                    // != '';
-                    result.filledFields.progressofdesease = true;
-                    result.filledFields.disabilities = true;
-                    result.filledFields.basedon = true;
-                    result.filledFields.limitation = true;
-                    result.filledFields.recommendations = true;
-                    result.filledFields.plannedtreatment = true;
-                    result.filledFields.workrehab = true;
-                    result.filledFields.patientworkcapacity = true;
-                    result.filledFields.patientworkcapacityjudgement = true;
-                    result.filledFields.prognosis = true;
-                    result.filledFields.othertransport = true;
-                    result.filledFields.fkcontact = true;
-
+	                
                     $scope.cert = result;
                     $rootScope.cert = result;
                 } else {

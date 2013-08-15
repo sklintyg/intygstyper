@@ -1,11 +1,16 @@
 package se.inera.certificate.modules.fk7263.model;
 
 import static se.inera.certificate.model.util.Iterables.find;
+
+import java.util.List;
+
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
+import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.Vardenhet;
+import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.model.codes.ObservationsKoder;
 import se.inera.certificate.model.util.Predicate;
 
@@ -241,6 +246,11 @@ public class Fk7263Intyg extends Utlatande {
         return getAktivitet(Aktivitet_Planerad_eller_pagaende_annan_atgard);
     }
 
+    public boolean isFilledAlways() {
+
+        return true;
+    }
+    
     public boolean isFilledDiagnosis() {
 
         return getMedicinsktTillstand() != null;
@@ -248,7 +258,7 @@ public class Fk7263Intyg extends Utlatande {
 
     public boolean isFilledProgress() {
         Observation bedomtTillstand = getBedomtTillstand();
-        return bedomtTillstand == null || (bedomtTillstand != null && !bedomtTillstand.getBeskrivning().trim().equals("");
+        return (bedomtTillstand != null && !bedomtTillstand.getBeskrivning().trim().equals(""));
     }
 
     public boolean isFilledDisabilities() {
@@ -257,7 +267,11 @@ public class Fk7263Intyg extends Utlatande {
     }
 
     public boolean isFilledBasedOn() {
-        return true;
+    	List<String> kommentars = getKommentars();
+    	List<Vardkontakt> vardKontakter = getVardkontakter();
+    	List<Referens> referens = getReferenser();
+    	
+        return (kommentars != null && kommentars.size() > 0) || (vardKontakter != null && vardKontakter.size() > 0) || (referens != null && referens.size() > 0);
     }
 
     public boolean isFilledLimitation() {
@@ -285,10 +299,10 @@ public class Fk7263Intyg extends Utlatande {
 
     public boolean isFilledPatientWorkCapacityJudgement() {
         Observation value = getArbetsformagaAktivitetsbegransning();
-        return value != null && !value.getBeskrivning().trim().equals("");
+        return value != null && value.getBeskrivning() != null && !value.getBeskrivning().trim().equals("");
     }
 
-    public boolean isFilledPatientPrognosis() {
+    public boolean isFilledPrognosis() {
         return isPrognosFullAterstallning() || isPrognosDelvisAterstallning() || isPrognosEjAterstallning() || isPrognosAterstallningGarEjBedomma();
     }
 
@@ -297,7 +311,7 @@ public class Fk7263Intyg extends Utlatande {
     }
 
     public boolean isFilledFKContact() {
-        return getKontaktMedForsakringskassanAktuell() != null;
+        return true;
     }
 
 }
