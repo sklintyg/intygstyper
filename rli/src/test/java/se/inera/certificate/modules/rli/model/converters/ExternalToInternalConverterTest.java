@@ -8,15 +8,15 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
-import se.inera.certificate.model.HosPersonal;
-import se.inera.certificate.model.Id;
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Patient;
-import se.inera.certificate.model.Vardenhet;
-import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
 import se.inera.certificate.modules.rli.model.internal.HoSPersonal;
 import se.inera.certificate.modules.rli.model.internal.Utfardare;
+import se.inera.certificate.modules.rli.model.external.common.Enhet;
+import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
+import se.inera.certificate.modules.rli.model.external.common.Id;
+import se.inera.certificate.modules.rli.model.external.common.Kod;
+import se.inera.certificate.modules.rli.model.external.common.Patient;
+import se.inera.certificate.modules.rli.model.external.common.Vardgivare;
 
 public class ExternalToInternalConverterTest {
 
@@ -48,7 +48,7 @@ public class ExternalToInternalConverterTest {
 
 		Patient pat = new Patient();
 
-		pat.setId(new Id("PersonId", "19121212-1212"));
+		pat.setPersonId(new Id("PersonId", "19121212-1212"));
 		pat.setFornamns(Arrays.asList("Abel", "Baker"));
 		pat.setEfternamns(Arrays.asList("Smith", "Doe"));
 
@@ -103,7 +103,7 @@ public class ExternalToInternalConverterTest {
 	@Test
 	public void testConvertToIntVardenhet() {
 		
-		Vardenhet extVardenhet = buildVardenhet();
+		Enhet extVardenhet = buildVardenhet();
 		se.inera.certificate.modules.rli.model.internal.Vardenhet res = converter.convertToIntVardenhet(extVardenhet);
 		
 		assertNotNull(res);
@@ -122,23 +122,23 @@ public class ExternalToInternalConverterTest {
 
 		HosPersonal hosPers = new HosPersonal();
 
-		hosPers.setId(new Id("19101010-1010"));
-		hosPers.setNamn("Börje Dengroth");
+		hosPers.setPersonalId(new Id("19101010-1010"));
+		hosPers.setFullstandigtNamn("Börje Dengroth");
 		hosPers.setForskrivarkod("12345-67");
 
-		Vardenhet vardenhet = buildVardenhet();
-		hosPers.setVardenhet(vardenhet);
+		Enhet vardenhet = buildVardenhet();
+		hosPers.setEnhet(vardenhet);
 
 		return hosPers;
 	}
 
-	private Vardenhet buildVardenhet() {
+	private Enhet buildVardenhet() {
 
-		Vardenhet vardenhet = new Vardenhet();
+		Enhet vardenhet = new Enhet();
 
-		vardenhet.setId(new Id("123-456"));
+		vardenhet.setEnhetsId(new Id("123-456"));
 		vardenhet.setArbetsplatskod(new Id("1234-56"));
-		vardenhet.setNamn("Tolvberga Vårdcentral");
+		vardenhet.setEnhetsnamn("Tolvberga Vårdcentral");
 		vardenhet.setPostadress("Nollstigen 12");
 		vardenhet.setPostnummer("12345");
 		vardenhet.setPostort("Tolvberga");
@@ -155,8 +155,8 @@ public class ExternalToInternalConverterTest {
 
 		Vardgivare vardgivare = new Vardgivare();
 
-		vardgivare.setId(new Id("1234567"));
-		vardgivare.setNamn("Landstinget");
+		vardgivare.setVardgivareId(new Id("1234567"));
+		vardgivare.setVardgivarnamn("Landstinget");
 
 		return vardgivare;
 
