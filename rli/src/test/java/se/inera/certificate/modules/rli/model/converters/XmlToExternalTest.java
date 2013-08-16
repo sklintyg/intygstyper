@@ -89,8 +89,7 @@ public class XmlToExternalTest {
 		for (Rekommendation rekommendation : rekommendationer){
 			assertEquals("REK1", rekommendation.getRekommendationskod().getCode());
 			assertEquals("kv_rekommendation_intyg", rekommendation.getRekommendationskod().getCodeSystemName());
-			assertEquals("SJK1", rekommendation.getSjukdomskannedom().getCode());
-			assertEquals("SJK1", rekommendation.getSjukdomskannedom().getCode());
+			assertEquals("SJK2", rekommendation.getSjukdomskannedom().getCode());
 			assertEquals("???", rekommendation.getSjukdomskannedom().getCodeSystem());
 			assertEquals("kv_sjukdomskännedom_intyg", rekommendation.getSjukdomskannedom().getCodeSystemName());
 		}
