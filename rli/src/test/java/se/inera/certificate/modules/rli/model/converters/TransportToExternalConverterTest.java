@@ -7,7 +7,6 @@ import iso.v21090.dt.v1.II;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.Chronology;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.junit.Before;
@@ -34,22 +33,20 @@ import se.inera.certificate.modules.rli.model.external.common.Patient;
 
 public class TransportToExternalConverterTest {
 	
-	private Chronology chrono;
 	private TransportToExternalConverterImpl converter;
 
-	
-	ObservationType buildObservationType(){
+	private ObservationType buildObservationType(){
 		CD cd = new CD();
 		cd.setCode("testCode");
 		
 		PartialDateInterval pdi = new PartialDateInterval();
 		
-		pdi.setFrom(new Partial(chrono)
+		pdi.setFrom(new Partial()
 	     .with(DateTimeFieldType.dayOfWeek(), 5)
 	     .with(DateTimeFieldType.hourOfDay(), 12)
 	     .with(DateTimeFieldType.minuteOfHour(), 20));
 		
-		pdi.setTom(new Partial(chrono)
+		pdi.setTom(new Partial()
 	     .with(DateTimeFieldType.dayOfWeek(), 6)
 	     .with(DateTimeFieldType.hourOfDay(), 12)
 	     .with(DateTimeFieldType.minuteOfHour(), 20));
@@ -68,8 +65,7 @@ public class TransportToExternalConverterTest {
 		return observation;
 	}
 	
-	
-	PatientType buildPatientType(){
+	private PatientType buildPatientType(){
 		PatientType pt = new PatientType();
 		II patientID = new II();
 		patientID.setIdentifierName("patientID");
@@ -79,18 +75,18 @@ public class TransportToExternalConverterTest {
 		return pt;
 	}
 	
-	se.inera.certificate.rli.v1.Arrangemang buildArrangemang(){
+	private se.inera.certificate.rli.v1.Arrangemang buildArrangemang(){
 	
 		se.inera.certificate.rli.v1.Arrangemang arr = new se.inera.certificate.rli.v1.Arrangemang();
 
 		PartialDateInterval pdi = new PartialDateInterval();
 		
-		pdi.setFrom(new Partial(chrono)
+		pdi.setFrom(new Partial()
 	     .with(DateTimeFieldType.dayOfWeek(), 5)
 	     .with(DateTimeFieldType.hourOfDay(), 12)
 	     .with(DateTimeFieldType.minuteOfHour(), 20));
 		
-		pdi.setTom(new Partial(chrono)
+		pdi.setTom(new Partial()
 	     .with(DateTimeFieldType.dayOfWeek(), 6)
 	     .with(DateTimeFieldType.hourOfDay(), 12)
 	     .with(DateTimeFieldType.minuteOfHour(), 20));
@@ -104,12 +100,12 @@ public class TransportToExternalConverterTest {
 		arr.setPlats("arrangemangsPlats");
 	
 		
-		arr.setAvbestallningsdatum(new Partial(chrono)
+		arr.setAvbestallningsdatum(new Partial()
 			.with(DateTimeFieldType.dayOfMonth(),2)
 			.with(DateTimeFieldType.year(), 2002)
 			.with(DateTimeFieldType.monthOfYear(), 11));
 		
-		arr.setBokningsdatum( new Partial(chrono)
+		arr.setBokningsdatum( new Partial()
 			.with(DateTimeFieldType.dayOfMonth(), 1)
 			.with(DateTimeFieldType.year(), 2002)
 			.with(DateTimeFieldType.monthOfYear(), 12));

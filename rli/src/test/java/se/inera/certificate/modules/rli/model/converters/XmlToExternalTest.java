@@ -1,42 +1,34 @@
 package se.inera.certificate.modules.rli.model.converters;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+import static org.junit.Assert.assertEquals;
+
+import java.io.InputStream;
 import java.util.List;
 
-import org.junit.Test;
+import javax.xml.bind.JAXB;
+
+import org.joda.time.LocalDateTime;
 import org.junit.Before;
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 import se.inera.certificate.modules.rli.model.external.Utlatande;
 import se.inera.certificate.modules.rli.model.external.common.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.common.Observation;
 import se.inera.certificate.modules.rli.model.external.common.Rekommendation;
-import se.inera.certificate.modules.rli.model.converters.TransportToExternalConverterImpl;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-
-import org.joda.time.LocalDateTime;
 
 public class XmlToExternalTest {
 	
-	private Utlatande extUtlatande;
-	private TransportToExternalConverterImpl converter;
+	private TransportToExternalConverter converter;
 
 	@Before
 	public void setUp(){
-		se.inera.certificate.common.v1.Utlatande source = unMarshallXml();
 		converter = new TransportToExternalConverterImpl();
-		extUtlatande = converter.transportToExternal(source);
 	}
 	
 	@Test
 	public void testXmlToExternal(){
+		Utlatande extUtlatande = converter.transportToExternal(unmarshallXml("rli-example-1.xml"));
+		
 		assertEquals("RLI", extUtlatande.getTyp().getCode());
 
 		assertEquals("39f80245-9730-4d76-aaff-b04a2f3cfbe7", extUtlatande.getId().getExtension());
@@ -113,29 +105,8 @@ public class XmlToExternalTest {
 
 	}
 	
-	private se.inera.certificate.common.v1.Utlatande unMarshallXml(){
-		try{
-			JAXBContext context = 
-					JAXBContext.newInstance("se.inera.certificate.common.v1");
-			se.inera.certificate.common.v1.Utlatande utlatande;
-			Unmarshaller unmarshaller = context.createUnmarshaller();
-			
-			Source src = new StreamSource(new FileInputStream("src/test/resources/rli-example-1.xml"));
-			
-			JAXBElement<se.inera.certificate.common.v1.Utlatande> jaxbElement = 
-					(JAXBElement<se.inera.certificate.common.v1.Utlatande>)
-						unmarshaller.unmarshal(src, se.inera.certificate.common.v1.Utlatande.class);
-			
-			utlatande = jaxbElement.getValue();
-			return utlatande;
-
-		} catch (JAXBException je){
-			je.printStackTrace();
-			return null;
-		} catch (IOException ie){
-			ie.printStackTrace();
-			return null;
-		} 
+	private se.inera.certificate.common.v1.Utlatande unmarshallXml(String resource){
+		InputStream stream = this.getClass().getClassLoader().getResourceAsStream(resource);
+		return JAXB.unmarshal(stream, se.inera.certificate.common.v1.Utlatande.class);
 	}
-
 }
