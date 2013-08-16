@@ -1,0 +1,6 @@
+!1 Konvertera Xml Via Rest
+
+|Konvertera Xml Via REST|
+|typ|filnamn|utlatande_id_extension|matchandeJson?|
+|rli|rli-example-1.xml|39f80245-9730-4d76-aaff-b04a2f3cfbe7|ja|
+|rli|rli-example-1.xml|39f80245-9730-4d76-aaff-b04a2f3cfbe|nej|
