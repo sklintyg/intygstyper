@@ -18,6 +18,7 @@
  */
 package se.inera.certificate.modules.rli.model.external.common;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PatientRelation {
@@ -39,11 +40,10 @@ public class PatientRelation {
 	}
 
 	public List<Kod> getRelationTyps() {
-		return relationTyps;
-	}
-
-	public void setRelationTyps(List<Kod> relationTyps) {
-		this.relationTyps = relationTyps;
+		if (relationTyps == null){
+			relationTyps = new ArrayList<Kod>();
+		}
+		return this.relationTyps;
 	}
 
 	public Id getPersonId() {
@@ -55,34 +55,30 @@ public class PatientRelation {
 	}
 
 	public List<String> getFornamns() {
-		return fornamns;
-	}
-
-	public void setFornamns(List<String> fornamns) {
-		this.fornamns = fornamns;
+		if (fornamns == null){
+			fornamns = new ArrayList<String>();
+		}
+		return this.fornamns;
 	}
 
 	public List<String> getEfternamns() {
-		return efternamns;
-	}
-
-	public void setEfternamns(List<String> efternamns) {
-		this.efternamns = efternamns;
+		if (efternamns == null){
+			efternamns = new ArrayList<String>();
+		}
+		return this.efternamns;
 	}
 
 	public List<String> getMellannamns() {
-		return mellannamns;
-	}
-
-	public void setMellannamns(List<String> mellannamns) {
-		this.mellannamns = mellannamns;
+		if (mellannamns == null){
+			mellannamns = new ArrayList<String>();
+		}
+		return this.mellannamns;
 	}
 
 	public List<String> getAdresses() {
-		return adresses;
-	}
-
-	public void setAdresses(List<String> adresses) {
-		this.adresses = adresses;
+		if (adresses == null){
+			adresses = new ArrayList<String>();
+		}
+		return this.adresses;
 	}
 }

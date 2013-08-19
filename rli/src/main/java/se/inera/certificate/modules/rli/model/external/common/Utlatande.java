@@ -18,6 +18,7 @@
  */
 package se.inera.certificate.modules.rli.model.external.common;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.LocalDateTime;
@@ -58,11 +59,10 @@ public class Utlatande {
 	}
 
 	public List<String> getKommentars() {
-		return kommentars;
-	}
-
-	public void setKommentars(List<String> kommentars) {
-		this.kommentars = kommentars;
+		if (kommentars == null){
+			kommentars = new ArrayList<String>();
+		}
+		return this.kommentars;
 	}
 
 	public LocalDateTime getSigneringsdatum() {
@@ -98,11 +98,10 @@ public class Utlatande {
 	}
 
 	public List<HosPersonal> getHarDeltagandeHosPersonals() {
-		return harDeltagandeHosPersonals;
-	}
-
-	public void setHarDeltagandeHosPersonals(List<HosPersonal> harDeltagandeHosPersonals) {
-		this.harDeltagandeHosPersonals = harDeltagandeHosPersonals;
+		if(harDeltagandeHosPersonals == null){
+			harDeltagandeHosPersonals = new ArrayList<HosPersonal>();
+		}
+		return this.harDeltagandeHosPersonals;
 	}
 
 	public List<Vardkontakt> getVardkontakts() {
@@ -114,19 +113,17 @@ public class Utlatande {
 	}
 
 	public List<Referens> getReferens() {
-		return referens;
-	}
-
-	public void setReferens(List<Referens> referens) {
-		this.referens = referens;
+		if (referens == null){
+			referens = new ArrayList<Referens>();
+		}
+		return this.referens;
 	}
 
 	public List<Aktivitet> getAktivitets() {
-		return aktivitets;
-	}
-
-	public void setAktivitets(List<Aktivitet> aktivitets) {
-		this.aktivitets = aktivitets;
+		if (aktivitets == null){
+			aktivitets = new ArrayList<Aktivitet>();
+		}
+		return this.aktivitets;
 	}
 
 	public Bestallare getBestallare() {
@@ -138,11 +135,10 @@ public class Utlatande {
 	}
 
 	public List<Substansintag> getSubstansintags() {
-		return substansintags;
-	}
-
-	public void setSubstansintags(List<Substansintag> substansintags) {
-		this.substansintags = substansintags;
+		if (substansintags == null){
+			substansintags = new ArrayList<Substansintag>();
+		}
+		return this.substansintags;
 	}
 
 	public Betalningsmottagare getBetalningsmottagare() {
@@ -154,26 +150,24 @@ public class Utlatande {
 	}
 
 	public List<Rekommendation> getRekommendations() {
-		return rekommendations;
-	}
-
-	public void setRekommendations(List<Rekommendation> rekommendations) {
-		this.rekommendations = rekommendations;
+		if (rekommendations == null){
+			rekommendations = new ArrayList<Rekommendation>();
+		}
+		return this.rekommendations;
 	}
 
 	public List<Observation> getObservations() {
-		return observations;
-	}
-
-	public void setObservations(List<Observation> observations) {
-		this.observations = observations;
+		if (observations == null){
+			observations = new ArrayList<Observation>();
+		}
+		return this.observations;
 	}
 
 	public List<Status> getStatus() {
-		return status;
+		if (status == null){
+			status = new ArrayList<Status>();
+		}
+		return this.status;
 	}
 
-	public void setStatus(List<Status> status) {
-		this.status = status;
-	}
 }

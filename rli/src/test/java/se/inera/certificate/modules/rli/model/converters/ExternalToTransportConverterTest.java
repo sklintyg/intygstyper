@@ -116,7 +116,7 @@ public class ExternalToTransportConverterTest {
 		Arbetsuppgift a = new Arbetsuppgift();
 		a.setTypAvArbetsuppgift("Testare");
 		arbetsuppgifts.add(a);
-		patient.setArbetsuppgifts(arbetsuppgifts);
+		patient.getArbetsuppgifts().addAll(arbetsuppgifts);
 		List<String> eN = new ArrayList<String>();
 		eN.add("Testsson");		
 		List<String> fN = new ArrayList<String>();
@@ -124,9 +124,9 @@ public class ExternalToTransportConverterTest {
 		List<String> mN = new ArrayList<String>();
 		mN.add("von");
 
-		patient.setEfternamns(eN);
-		patient.setFornamns(fN);
-		patient.setMellannamns(mN);
+		patient.getEfternamns().addAll(eN);
+		patient.getFornamns().addAll(fN);
+		patient.getMellannamns().addAll(mN);
 		
 		List<PatientRelation> pR = new ArrayList<PatientRelation>();
 		
@@ -147,18 +147,18 @@ public class ExternalToTransportConverterTest {
 		List<Kod> relationsTyps = new ArrayList<Kod>();
 		relationsTyps.add(new Kod("RelationsTypsKod"));
 		
-		patientRelation.setEfternamns(relationEfterNamn);
-		patientRelation.setFornamns(relationForNamn);
-		patientRelation.setAdresses(relationAdr);
+		patientRelation.getEfternamns().addAll(relationEfterNamn);
+		patientRelation.getFornamns().addAll(relationForNamn);
+		patientRelation.getAdresses().addAll(relationAdr);
 		patientRelation.setPersonId(relationId);
 		patientRelation.setRelationskategori(new Kod("relationsKategori"));
-		patientRelation.setRelationTyps(relationsTyps);
+		patientRelation.getRelationTyps().addAll(relationsTyps);
 		patientRelation.setRelationskategori(new Kod("Gifta"));
 		
 		pR.add(patientRelation);
 		
 		
-		patient.setPatientRelations(pR);
+		patient.getPatientRelations().addAll(pR);
 		
 		return patient;
 	}

@@ -67,8 +67,8 @@ public class ExternalToInternalConverterTest {
 		Patient pat = new Patient();
 
 		pat.setPersonId(new Id("PersonId", "19121212-1212"));
-		pat.setFornamns(Arrays.asList("Abel", "Baker"));
-		pat.setEfternamns(Arrays.asList("Smith", "Doe"));
+		pat.getFornamns().addAll(Arrays.asList("Abel", "Baker"));
+		pat.getEfternamns().addAll(Arrays.asList("Smith", "Doe"));
 
 		return pat;
 	}

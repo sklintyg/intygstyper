@@ -18,6 +18,7 @@
  */
 package se.inera.certificate.modules.rli.model.external.common;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.Partial;
@@ -76,11 +77,10 @@ public class Observation {
 	}
 
 	public List<PhysicalQuantity> getVardes() {
-		return vardes;
-	}
-
-	public void setVardes(List<PhysicalQuantity> vardes) {
-		this.vardes = vardes;
+		if (vardes == null){
+			vardes = new ArrayList<PhysicalQuantity>();
+		}
+		return this.vardes;
 	}
 
 	public Boolean getForekomst() {
@@ -108,10 +108,10 @@ public class Observation {
 	}
 
 	public List<Prognos> getPrognos() {
-		return prognos;
+		if (prognos == null){
+			prognos = new ArrayList<Prognos>();
+		}
+		return this.prognos;
 	}
-
-	public void setPrognos(List<Prognos> prognos) {
-		this.prognos = prognos;
-	}
+	
 }

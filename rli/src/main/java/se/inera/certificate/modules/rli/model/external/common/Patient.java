@@ -18,6 +18,7 @@
  */
 package se.inera.certificate.modules.rli.model.external.common;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Patient {
@@ -40,27 +41,24 @@ public class Patient {
 	}
 
 	public List<String> getFornamns() {
-		return fornamns;
-	}
-
-	public void setFornamns(List<String> fornamns) {
-		this.fornamns = fornamns;
+		if (fornamns == null){
+			fornamns = new ArrayList<String>();
+		}
+		return this.fornamns;
 	}
 
 	public List<String> getEfternamns() {
-		return efternamns;
-	}
-
-	public void setEfternamns(List<String> efternamns) {
-		this.efternamns = efternamns;
+		if (efternamns == null){
+			efternamns = new ArrayList<String>();
+		}
+		return this.efternamns;
 	}
 
 	public List<String> getMellannamns() {
-		return mellannamns;
-	}
-
-	public void setMellannamns(List<String> mellannamns) {
-		this.mellannamns = mellannamns;
+		if (mellannamns == null){
+			mellannamns = new ArrayList<String>();
+		}
+		return this.mellannamns;
 	}
 
 	public String getAdress() {
@@ -72,26 +70,23 @@ public class Patient {
 	}
 
 	public List<PatientRelation> getPatientRelations() {
-		return patientRelations;
-	}
-
-	public void setPatientRelations(List<PatientRelation> patientRelations) {
-		this.patientRelations = patientRelations;
+		if (patientRelations == null){
+			patientRelations = new ArrayList<PatientRelation>();
+		}
+		return this.patientRelations;
 	}
 
 	public List<Arbetsuppgift> getArbetsuppgifts() {
-		return arbetsuppgifts;
-	}
-
-	public void setArbetsuppgifts(List<Arbetsuppgift> arbetsuppgifts) {
-		this.arbetsuppgifts = arbetsuppgifts;
+		if (arbetsuppgifts == null){
+			arbetsuppgifts = new ArrayList<Arbetsuppgift>();
+		}
+		return this.arbetsuppgifts;
 	}
 
 	public List<Sysselsattning> getSysselsattnings() {
-		return sysselsattnings;
-	}
-
-	public void setSysselsattnings(List<Sysselsattning> sysselsattnings) {
-		this.sysselsattnings = sysselsattnings;
+		if (sysselsattnings == null){
+			sysselsattnings = new ArrayList<Sysselsattning>();
+		}
+		return this.sysselsattnings;
 	}
 }

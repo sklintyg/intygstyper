@@ -18,6 +18,7 @@
  */
 package se.inera.certificate.modules.rli.model.external.common;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Aktivitet {
@@ -89,11 +90,10 @@ public class Aktivitet {
 	}
 
 	public List<Utforarroll> getUtforsAvs() {
-		return utforsAvs;
-	}
-
-	public void setUtforsAvs(List<Utforarroll> utforsAvs) {
-		this.utforsAvs = utforsAvs;
+		if (utforsAvs == null){
+			utforsAvs = new ArrayList<Utforarroll>();
+		}
+		return this.utforsAvs;
 	}
 
 	public Omfattning getOmfattning() {
