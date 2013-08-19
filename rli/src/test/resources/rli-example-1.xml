@@ -28,8 +28,8 @@
 		av en läkare i London 2010. -->
 
 	<utlatande-id root="???" extension="39f80245-9730-4d76-aaff-b04a2f3cfbe7" />
-	<typAvUtlatande code="RLI" codeSystem="???"
-		codeSystemVersion="???" />
+	<!-- displayName="Läkarintyg vid avbeställd resa" -->
+	<typAvUtlatande code="RLI" codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b" />
 	<kommentar>Övriga upplysningar</kommentar>
 	<signeringsdatum>2013-08-12T11:25:00</signeringsdatum>
 	<skickatdatum>2013-08-12T11:25:30</skickatdatum>
@@ -82,13 +82,13 @@
 	<rekommendation>
 		<!-- displayName="Jag avråder uttryckligen från resa, då patientens = resenärens 
 			tillstånd innebär, att sådan ej kan genomföras utan men." -->
-		<rekommendationskod code="REK1" codeSystem="???"
+		<rekommendationskod code="REK1" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
 			codeSystemName="kv_rekommendation_intyg" />
 		<!-- displayName="Patientens sjukdom/komplikation är kronisk, var känd 
 			vid bokningstillfället och utgjorde då inget hinder för resan. Tillståndet 
 			för nu förvärrats på ett sätt som vid bokningstillfället ej var möjligt att 
 			förutse." -->
-		<sjukdomskannedom code="SJK2" codeSystem="???"
+		<sjukdomskannedom code="SJK2" codeSystem="f3a556c4-d54b-4f67-8496-d5259df70493"
 			codeSystemName="kv_sjukdomskännedom_intyg" />
 	</rekommendation>
 

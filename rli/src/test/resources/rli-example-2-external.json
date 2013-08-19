@@ -4,8 +4,7 @@
       "extension":"d53c377e-4103-47f5-9f90-5e1bbd874466"
    },
    "typ":{
-      "codeSystem":"???",
-      "codeSystemVersion":"???",
+      "codeSystem":"f6fb361a-e31d-48b8-8657-99b63912dd9b",
       "code":"RLI"
    },
    "kommentarer":[
@@ -74,12 +73,12 @@
    "rekommendationer":[
       {
          "rekommendationskod":{
-            "codeSystem":"???",
+            "codeSystem":"5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
             "codeSystemName":"kv_rekommendation_intyg",
             "code":"REK3"
          },
          "sjukdomskannedom":{
-            "codeSystem":"???",
+            "codeSystem":"f3a556c4-d54b-4f67-8496-d5259df70493",
             "codeSystemName":"kv_sjukdomskännedom_intyg",
             "code":"SJK2"
          }
