@@ -29,7 +29,7 @@ import se.inera.certificate.modules.rli.model.external.common.Utforarroll;
 import se.inera.certificate.modules.rli.model.external.common.Vardgivare;
 
 /**
- * Converter between transport and external model 
+ * Converter between transport and external model. 
  * @author erik
  *
  */
@@ -42,7 +42,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 	}
 	/**
 	 * Converts from the transport format (se.inera.certificate.common.v1.Utlatande) to
-	 * the external format (se.inera.certificate.modules.rli.model.external.Utlatande)
+	 * the external format (se.inera.certificate.modules.rli.model.external.Utlatande).
 	 * 
 	 * @param source Utlatande in the transport format to be converted to external format
 	 * @return se.inera.certificate.modules.rli.model.external.Utlatande
@@ -81,7 +81,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 		return externalModel;
 	}
 	/**
-	 * Convert List of RekommendationType to List of Rekommendation
+	 * Convert List of RekommendationType to List of Rekommendation.
 	 * @param source List of RekommendationType to be converted
 	 * @return List of Rekommendation
 	 */
@@ -99,7 +99,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 	}
 	
 	/**
-	 * Convert RekommendationType to Rekommendation
+	 * Convert RekommendationType to Rekommendation.
 	 * @param source RekommendationType 
 	 * @return Rekommendation, or null if source is null
 	 */
@@ -117,7 +117,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 
 	/**
 	 * Iterates over a list of objects of the type ObservationType and converts them to
-	 * type Observation
+	 * type Observation.
 	 * 
 	 * @param source List of objects of type ObservationType to be converted
 	 * @return List of objects of type Observation
@@ -157,7 +157,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 	}
 	
 	/**
-	 * Converts a list of UtforarrollType to Utforarroll
+	 * Converts a list of UtforarrollType to Utforarroll.
 	 * @param source List of UtforarrollType 
 	 * @return List of Utforarroll
 	 */
@@ -174,7 +174,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 	}
 	
 	/**
-	 * Convert UtforarrollType to Utforarroll
+	 * Convert UtforarrollType to Utforarroll.
 	 * @param source UtforarrollType
 	 * @return Utforarroll, or null if source is null
 	 */
@@ -189,7 +189,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 	}
 	
 	/**
-	 * Convert transport model Arrangemang to external model arrangemang
+	 * Convert transport model Arrangemang to external model arrangemang.
 	 * @param source se.inera.certificate.rli.v1.Arrangemang
 	 * @return import se.inera.certificate.modules.rli.model.external.Arrangemang
 	 */
@@ -231,7 +231,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
     }
 
     /**
-     * Converts an object of AktivitetType to Aktivitet
+     * Converts an object of AktivitetType to Aktivitet.
      * 
      * @param source the object of AktivitetType to be converted
      * @return Aktivitet
@@ -255,7 +255,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
     }
 
     /**
-     * Converts HosPersonalType to HosPersonal, changing isoType II to Id
+     * Converts HosPersonalType to HosPersonal, changing isoType II to Id.
      * 
      * @param source HosPersonalType to be converted
      * @return HosPersonal, or null if source is null
@@ -277,7 +277,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
     }
     
     /**
-     * Converts PatientType to Patient
+     * Converts PatientType to Patient.
      * 
      * @param source PatientType to be converted
      * @return Patient, or null if source is null
@@ -318,7 +318,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
     	return null;
     }
 	/**
-     * Converts EnhetType to Enhet 
+     * Converts EnhetType to Enhet .
      * 
      * @param source EnhetType to be converted
      * @return Enhet, or null if source is null
@@ -344,7 +344,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 	}
 	
 	/**
-	 * Converts VardgivareType to Vardgivare
+	 * Converts VardgivareType to Vardgivare.
 	 * 
 	 * @param source VardgivareType to be converted
 	 * @return Vardgivare, or null if source is null

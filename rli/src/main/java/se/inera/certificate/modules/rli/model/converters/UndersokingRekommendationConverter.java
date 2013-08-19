@@ -10,9 +10,6 @@ import org.apache.commons.collections.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ch.qos.logback.core.spi.PreSerializationTransformer;
-
-
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
 import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
 import se.inera.certificate.modules.rli.model.external.common.Aktivitet;
@@ -70,7 +67,7 @@ public class UndersokingRekommendationConverter {
 		}
 		
 		if (aktiviteter.size() == 1) {
-			Aktivitet aktivitet = filteredAktiviteter.get(0);
+//			Aktivitet aktivitet = filteredAktiviteter.get(0);
 			
 			
 		}

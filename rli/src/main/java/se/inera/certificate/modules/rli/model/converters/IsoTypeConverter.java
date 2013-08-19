@@ -8,18 +8,22 @@ import se.inera.certificate.modules.rli.model.external.common.Kod;
 /**
  * @author andreaskaltenbach
  */
-public class IsoTypeConverter {
+public final class IsoTypeConverter {
 
     private IsoTypeConverter() {
     }
 
     public static Id toId(II ii) {
-        if (ii == null) return null;
+        if (ii == null) {
+            return null;
+        }
         return new Id(ii.getRoot(), ii.getExtension());
     }
 
     public static II toII(Id id) {
-        if (id == null) return null;
+        if (id == null) {
+            return null;
+        }
 
         II ii = new II();
         ii.setRoot(id.getRoot());
@@ -28,12 +32,16 @@ public class IsoTypeConverter {
     }
 
     public static Kod toKod(CD cd) {
-        if (cd == null) return null;
+        if (cd == null) {
+            return null;
+        }
         return new Kod(cd.getCodeSystem(), cd.getCodeSystemName(), cd.getCodeSystemVersion(), cd.getCode());
     }
 
     public static CD toCD(Kod kod) {
-        if (kod == null) return null;
+        if (kod == null) {
+            return null;
+        }
         CD cd = new CD();
         cd.setCode(kod.getCode());
         cd.setCodeSystem(kod.getCodeSystem());

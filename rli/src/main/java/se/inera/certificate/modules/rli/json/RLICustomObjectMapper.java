@@ -15,13 +15,17 @@ import com.fasterxml.jackson.datatype.joda.ser.LocalDateTimeSerializer;
 
 public class RLICustomObjectMapper extends ObjectMapper {
 
+	private static final long serialVersionUID = -3291211792669869270L;
+
 	public RLICustomObjectMapper() {
 		configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 		registerModule(new RLIModule());
 	}
 	
 	private static final class RLIModule extends SimpleModule {
-		
+
+		private static final long serialVersionUID = -5095620428675230583L;
+
 		public RLIModule() {
 			addSerializer(String.class, new TrimmingStringSerializer());
 

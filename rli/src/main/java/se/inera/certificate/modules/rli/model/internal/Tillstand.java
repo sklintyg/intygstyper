@@ -1,7 +1,5 @@
 package se.inera.certificate.modules.rli.model.internal;
 
-import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
-
 public class Tillstand {
 
 	private OrsakAvbokning orsakForAvbokning;
@@ -18,6 +16,14 @@ public class Tillstand {
 
 	public void setGraviditet(Graviditet graviditet) {
 		this.graviditet = graviditet;
+	}
+
+	public OrsakAvbokning getOrsakForAvbokning() {
+		return orsakForAvbokning;
+	}
+
+	public void setOrsakForAvbokning(OrsakAvbokning orsakForAvbokning) {
+		this.orsakForAvbokning = orsakForAvbokning;
 	}
 	
 }

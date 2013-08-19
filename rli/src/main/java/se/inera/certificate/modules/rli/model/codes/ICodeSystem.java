@@ -2,14 +2,14 @@ package se.inera.certificate.modules.rli.model.codes;
 
 public interface ICodeSystem {
 	
-	public String getCode();
+	String getCode();
 	
-	public String getDescription();
+	String getDescription();
 	
-	public String getCodeSystem();
+	String getCodeSystem();
 	
-	public String getCodeSystemName();
+	String getCodeSystemName();
 	
-	public String getCodeSystemVersion();
+	String getCodeSystemVersion();
 	
 }
