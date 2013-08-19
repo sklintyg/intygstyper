@@ -1,5 +1,6 @@
 package se.inera.certificate.modules.rli.model.external;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.LocalDateTime;
@@ -82,11 +83,10 @@ public class Utlatande {
 	}
 
 	public List<String> getKommentarer() {
-		return kommentarer;
-	}
-
-	public void setKommentarer(List<String> kommentarer) {
-		this.kommentarer = kommentarer;
+		if (kommentarer == null){
+			kommentarer = new ArrayList<String>();
+		}
+		return this.kommentarer;
 	}
 
 	public LocalDateTime getSigneringsdatum() {
@@ -122,35 +122,31 @@ public class Utlatande {
 	}
 
 	public List<HosPersonal> getHarDeltagandeHosPersonal() {
-		return harDeltagandeHosPersonal;
-	}
-
-	public void setHarDeltagandeHosPersonal(List<HosPersonal> harDeltagandeHosPersonal) {
-		this.harDeltagandeHosPersonal = harDeltagandeHosPersonal;
+		if (harDeltagandeHosPersonal == null){
+			harDeltagandeHosPersonal = new ArrayList<HosPersonal>();
+		}
+		return this.harDeltagandeHosPersonal;
 	}
 
 	public List<Vardkontakt> getVardkontakter() {
-		return vardkontakter;
-	}
-
-	public void setVardkontakter(List<Vardkontakt> vardkontakter) {
-		this.vardkontakter = vardkontakter;
+		if (vardkontakter == null){
+			vardkontakter = new ArrayList<Vardkontakt>();
+		}
+		return this.vardkontakter;
 	}
 
 	public List<Referens> getReferenser() {
-		return referenser;
-	}
-
-	public void setReferenser(List<Referens> referenser) {
-		this.referenser = referenser;
+		if (referenser == null){
+			referenser = new ArrayList<Referens>();
+		}
+		return this.referenser;
 	}
 
 	public List<Aktivitet> getAktiviteter() {
-		return aktiviteter;
-	}
-
-	public void setAktiviteter(List<Aktivitet> aktiviteter) {
-		this.aktiviteter = aktiviteter;
+		if (aktiviteter == null){
+			aktiviteter = new ArrayList<Aktivitet>();
+		}
+		return this.aktiviteter;
 	}
 
 	public Bestallare getBestallare() {
@@ -162,11 +158,10 @@ public class Utlatande {
 	}
 
 	public List<Substansintag> getSubstansintag() {
-		return substansintag;
-	}
-
-	public void setSubstansintag(List<Substansintag> substansintag) {
-		this.substansintag = substansintag;
+		if (substansintag == null){
+			substansintag = new ArrayList<Substansintag>();
+		}
+		return this.substansintag;
 	}
 
 	public Betalningsmottagare getBetalningsmottagare() {
@@ -178,27 +173,24 @@ public class Utlatande {
 	}
 
 	public List<Rekommendation> getRekommendationer() {
-		return rekommendationer;
-	}
-
-	public void setRekommendationer(List<Rekommendation> rekommendationer) {
-		this.rekommendationer = rekommendationer;
+		if (rekommendationer == null){
+			rekommendationer = new ArrayList<Rekommendation>();
+		}
+		return this.rekommendationer;
 	}
 
 	public List<Observation> getObservationer() {
-		return observationer;
+		if (observationer == null){
+			observationer = new ArrayList<Observation>();
+		}
+		return this.observationer;
 	}
-
-	public void setObservationer(List<Observation> observationer) {
-		this.observationer = observationer;
-	}
-
+	
 	public List<Status> getStatus() {
-		return status;
-	}
-
-	public void setStatus(List<Status> status) {
-		this.status = status;
+		if (status == null){
+			status = new ArrayList<Status>();
+		}
+		return this.status;
 	}
 
 	public Arrangemang getArrangemang() {

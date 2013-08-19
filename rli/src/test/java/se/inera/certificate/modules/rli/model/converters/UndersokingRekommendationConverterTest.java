@@ -56,7 +56,7 @@ public class UndersokingRekommendationConverterTest {
 		Observation obs = new Observation();
 		obs.setObservationskod(new Kod(observationsKod.getCode()));
 		
-		utlatande.setObservationer(Arrays.asList(obs));
+		utlatande.getObservationer().addAll(Arrays.asList(obs));
 		
 		return utlatande;
 	}

@@ -1,6 +1,7 @@
 package se.inera.certificate.modules.rli.model.converters;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
 import iso.v21090.dt.v1.CD;
 import iso.v21090.dt.v1.II;
 
@@ -12,12 +13,16 @@ import org.joda.time.Partial;
 import org.junit.Before;
 import org.junit.Test;
 
+import riv.insuranceprocess.healthreporting._2.EnhetType;
 import riv.insuranceprocess.healthreporting._2.HosPersonalType;
+import riv.insuranceprocess.healthreporting._2.VardgivareType;
 import se.inera.certificate.common.v1.ObservationType;
 import se.inera.certificate.common.v1.PartialDateInterval;
 import se.inera.certificate.common.v1.PatientType;
 import se.inera.certificate.common.v1.UtforarrollType;
+
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
+import se.inera.certificate.modules.rli.model.external.Utlatande;
 import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
 import se.inera.certificate.modules.rli.model.external.common.Observation;
 import se.inera.certificate.modules.rli.model.external.common.Patient;
@@ -112,13 +117,80 @@ public class TransportToExternalConverterTest {
 		
 		return arr;
 	}
+	
+	private HosPersonalType buildHosPersonalType(){
+		HosPersonalType hsp = new HosPersonalType();
+		hsp.setEnhet(buildEnhetType());
+		hsp.setForskrivarkod("Förskrivarkod");
+		hsp.setFullstandigtNamn("Fullständigt namn");
+		
+		II persID = new II();
+		persID.setExtension("HosPersonalID");
+		
+		hsp.setPersonalId(persID);
+		
+		return hsp;
+	}
 
+	
+	private EnhetType buildEnhetType() {
+		EnhetType enhet = new EnhetType();
+		
+		II ap = new II();
+		ap.setExtension("AP-kod");
+		II enhetID = new II();
+		enhetID.setExtension("EnhetID");
+		
+		enhet.setArbetsplatskod(ap);
+		enhet.setEnhetsId(enhetID);
+		enhet.setEnhetsnamn("Enhetsnamn");
+		enhet.setVardgivare(buildVardgivareType());
+		
+		return enhet;
+	}
+
+	private VardgivareType buildVardgivareType() {
+		VardgivareType vardgivare = new VardgivareType();
+		II id = new II();
+		id.setExtension("VardgivarID");
+		vardgivare.setVardgivareId(id);
+		vardgivare.setVardgivarnamn("Vardgivarnamn");
+		
+		return vardgivare;
+	}
+
+	private se.inera.certificate.common.v1.Utlatande buildUtlatandeWithoutObservation(){
+		se.inera.certificate.common.v1.Utlatande utlatande = 
+				new se.inera.certificate.common.v1.Utlatande();
+		
+		utlatande.setArrangemang(buildArrangemang());
+		utlatande.setPatient(buildPatientType());
+		utlatande.setSkapadAv(buildHosPersonalType());
+		
+		CD typ = new CD();
+		typ.setCode("SNOMED-CT");
+		II id = new II();
+		id.setExtension("UtlåtandeID");
+		
+		utlatande.setTypAvUtlatande(typ);
+		utlatande.setUtlatandeId(id);
+		return utlatande;		
+	}
 	
 	@Before
 	public void setUp(){
 		//Initiate converter
 		converter = new TransportToExternalConverterImpl();
 		
+	}
+	
+	@Test
+	public void testConvertUtlatandeWithoutObservation(){
+		se.inera.certificate.common.v1.Utlatande source = 
+				buildUtlatandeWithoutObservation();
+		Utlatande utlatande = converter.transportToExternal(source);
+	
+		assertEquals(new ArrayList<String>(),utlatande.getObservationer());
 	}
 	
 	@Test
