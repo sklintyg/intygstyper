@@ -1,56 +1,27 @@
 package se.inera.certificate.modules.fk7263.model;
 
-import static se.inera.certificate.model.util.Iterables.find;
-
-import java.util.List;
-
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
+import se.inera.certificate.model.Prognos;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardkontakt;
+import se.inera.certificate.model.codes.Aktivitetskoder;
 import se.inera.certificate.model.codes.ObservationsKoder;
+import se.inera.certificate.model.codes.Prognoskoder;
+import se.inera.certificate.model.codes.Sysselsattningskoder;
 import se.inera.certificate.model.util.Predicate;
+
+import java.util.List;
+
+import static se.inera.certificate.model.util.Iterables.find;
 
 /**
  * @author andreaskaltenbach
  */
 public class Fk7263Intyg extends Utlatande {
-
-    private static final Kod Aktivitet_Arbetslivsinriktad_rehabilitering_ar_aktuell = new Kod("Arbetslivsinriktad_rehabilitering_ar_aktuell");
-    private static final Kod Aktivitet_Arbetslivsinriktad_rehabilitering_ar_ej_aktuell = new Kod("Arbetslivsinriktad_rehabilitering_ar_ej_aktuell");
-    private static final Kod Aktivitet_Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell = new Kod("Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell");
-    public static final Kod Aktivitet_Forandrat_ressatt_till_arbetsplatsen_ar_aktuellt = new Kod("Forandrat_ressatt_till_arbetsplatsen_ar_aktuellt");
-    public static final Kod Aktivitet_Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt = new Kod("Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt");
-    private static final Kod Aktivitet_Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden = new Kod("Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden");
-    private static final Kod Aktivitet_Planerad_eller_pagaende_annan_atgard = new Kod("Planerad_eller_pagaende_annan_atgard");
-    private static final Kod Aktivitet_Kontakt_med_Forsakringskassan_ar_aktuell = new Kod("Kontakt_med_Forsakringskassan_ar_aktuell");
-    private static final Kod Aktivitet_Patienten_behover_fa_kontakt_med_foretagshalsovarden = new Kod("Patienten_behover_fa_kontakt_med_foretagshalsovarden");
-    private static final Kod Aktivitet_Avstangning_enligt_SmL_pga_smitta = new Kod("Avstangning_enligt_SmL_pga_smitta");
-    private static final Kod Aktivitet_Ovrigt = new Kod("Ovrigt");
-    private static final Kod Aktivitet_Patienten_behover_fa_kontakt_med_Arbetsformedlingen = new Kod("Patienten_behover_fa_kontakt_med_Arbetsformedlingen");
-
-    private static final Kod Prognos_Aterstallas_helt = new Kod("Aterstallas_helt");
-    private static final Kod Prognos_Aterstallas_delvis = new Kod("Aterstallas_delvis");
-    private static final Kod Prognos_Inte_aterstallas = new Kod("Inte_aterstallas");
-    public static final Kod Prognos_Det_gar_inte_att_bedomma = new Kod("Det_gar_inte_att_bedomma");
-
-    public static final Kod Sysselsattning_Nuvarande_arbete = new Kod("Nuvarande_arbete");
-    private static final Kod Sysselsattning_Arbetsloshet = new Kod("Arbetsloshet");
-    private static final Kod Sysselsattning_Foraldraledighet = new Kod("Foraldraledighet");
-
-    public static final Kod Nedsattningsgrad_Helt_nedsatt = new Kod("Helt_nedsatt");
-    public static final Kod Nedsattningsgrad_Nedsatt_med_3_4 = new Kod("Nedsatt_med_3/4");
-    public static final Kod Nedsattningsgrad_Nedsatt_med_1_2 = new Kod("Nedsatt_med_1/2");
-    public static final Kod Nedsattningsgrad_Nedsatt_med_1_4 = new Kod("Nedsatt_med_1/4");
-
-    public static final Kod Referens_Journaluppgifter = new Kod("Journaluppgifter");
-    public static final Kod Referens_Annat = new Kod("Annat");
-
-    public static final Kod Vardkontakt_Min_undersokning_av_patienten = new Kod("Min_undersokning_av_patienten");
-    public static final Kod Vardkontakt_Min_telefonkontakt_med_patienten = new Kod("Min_telefonkontakt_med_patienten");
 
     public static final String DATE_PATTERN = "yyyy-MM-dd";
 
@@ -70,7 +41,7 @@ public class Fk7263Intyg extends Utlatande {
     }
 
     public String getRekommenderarOvrigtText() {
-        return getAktivitetsText(Aktivitet_Ovrigt);
+        return getAktivitetsText(Aktivitetskoder.OVRIGT);
     }
 
     private String getAktivitetsText(Kod aktivitetskod) {
@@ -93,60 +64,65 @@ public class Fk7263Intyg extends Utlatande {
     }
 
     public Observation getFunktionsnedsattning() {
-        return getObservationByKategori(ObservationsKoder.KROPPSFUNKTION);
+        return findObservationByKategori(ObservationsKoder.KROPPSFUNKTIONER);
     }
 
     public Observation getMedicinsktTillstand() {
-        return getObservationByKategori(ObservationsKoder.MEDICINSKT_TILLSTAND);
+        return findObservationByKategori(ObservationsKoder.DIAGNOS);
     }
 
     public Observation getBedomtTillstand() {
-        return getObservationByKategori(ObservationsKoder.BEDOMT_TILLSTAND);
+        return findObservationByKod(ObservationsKoder.FORLOPP);
     }
 
     public Observation getAktivitetsbegransning() {
-        return getObservationByKategori(ObservationsKoder.AKTIVITET);
+        return findObservationByKategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
     }
 
     public Observation getArbetsformagaAktivitetsbegransning() {
-        return getObservationByKategori(ObservationsKoder.ARBETSFORMAGA);
+        return findObservationByKod(ObservationsKoder.ARBETSFORMAGA);
     }
 
     public boolean isPrognosDelvisAterstallning() {
-        return Prognos_Aterstallas_delvis.equals(getPrognosKod());
+        return Prognoskoder.ATERSTALLAS_DELVIS.equals(getPrognosKod());
     }
 
     public boolean isPrognosEjAterstallning() {
-        return Prognos_Inte_aterstallas.equals(getPrognosKod());
+        return Prognoskoder.INTE_ATERSTALLAS.equals(getPrognosKod());
     }
 
     public boolean isPrognosFullAterstallning() {
-        return Prognos_Aterstallas_helt.equals(getPrognosKod());
+        return Prognoskoder.ATERSTALLAS_HELT.equals(getPrognosKod());
     }
 
     public boolean isPrognosAterstallningGarEjBedomma() {
-        return Prognos_Det_gar_inte_att_bedomma.equals(getPrognosKod());
+        return Prognoskoder.DET_GAR_INTE_ATT_BEDOMA.equals(getPrognosKod());
     }
 
     public String getPrognosText() {
         Observation arbetsformaga = getArbetsformaga();
         if (arbetsformaga != null) {
-            return arbetsformaga.getBeskrivning();
+            Prognos prognos = arbetsformaga.getPrognos();
+            if (prognos != null) {
+                return prognos.getBeskrivning();
+            }
         }
         return null;
     }
 
     private Kod getPrognosKod() {
-
         Observation arbetsformaga = getArbetsformaga();
         if (arbetsformaga != null) {
-            return arbetsformaga.getObservationsKod();
+            Prognos prognos = arbetsformaga.getPrognos();
+            if (prognos != null) {
+                return prognos.getPrognosKod();
+            }
         }
         return null;
     }
 
     public Observation getNedsattning(final Double nedsattningsgrad) {
-        return find(getObservationsByKategori(ObservationsKoder.NEDSATTNING), new Predicate<Observation>() {
+        return find(getObservationsByKod(ObservationsKoder.ARBETSFORMAGA), new Predicate<Observation>() {
             @Override
             public boolean apply(Observation nedsattning) {
                 return nedsattning.getVarde() != null && !nedsattning.getVarde().isEmpty() && nedsattningsgrad.equals(nedsattning.getVarde().get(0).getQuantity());
@@ -172,15 +148,16 @@ public class Fk7263Intyg extends Utlatande {
     }
 
     public boolean isArbetsformagaIForhallandeTillArbetsloshet() {
-        return containsSysselsattningKod(Sysselsattning_Arbetsloshet);
+        return containsSysselsattningKod(Sysselsattningskoder.ARBETSLOSHET);
     }
 
     public boolean isArbetsformagaIForhallandeTillForaldraledighet() {
-        return containsSysselsattningKod(Sysselsattning_Foraldraledighet);
+        return containsSysselsattningKod(Sysselsattningskoder.MAMMALEDIG) ||
+               containsSysselsattningKod(Sysselsattningskoder.PAPPALEDIG) ;
     }
 
     public boolean isArbetsformagaIForhallandeTillNuvarandeArbete() {
-        return containsSysselsattningKod(Sysselsattning_Nuvarande_arbete);
+        return containsSysselsattningKod(Sysselsattningskoder.NUVARANDE_ARBETE);
     }
 
     private boolean containsSysselsattningKod(Kod sysselsattningKod) {
@@ -195,55 +172,55 @@ public class Fk7263Intyg extends Utlatande {
     }
 
     public Observation getArbetsformaga() {
-        return getObservationByKategori(ObservationsKoder.ARBETSFORMAGA);
+        return findObservationByKod(ObservationsKoder.ARBETSFORMAGA);
     }
 
     public Aktivitet getForandratRessattAktuellt() {
-        return getAktivitet(Aktivitet_Forandrat_ressatt_till_arbetsplatsen_ar_aktuellt);
+        return getAktivitet(Aktivitetskoder.FORANDRA_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT);
     }
 
     public Aktivitet getForandratRessattEjAktuellt() {
-        return getAktivitet(Aktivitet_Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt);
+        return getAktivitet(Aktivitetskoder.FORANDRA_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT);
     }
 
     public Aktivitet getKontaktMedForsakringskassanAktuell() {
-        return getAktivitet(Aktivitet_Kontakt_med_Forsakringskassan_ar_aktuell);
+        return getAktivitet(Aktivitetskoder.KONTAKT_MED_FK_AR_AKTUELL);
     }
 
     public Aktivitet getArbetsinriktadRehabiliteringAktuell() {
-        return getAktivitet(Aktivitet_Arbetslivsinriktad_rehabilitering_ar_aktuell);
+        return getAktivitet(Aktivitetskoder.ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL);
     }
 
     public Aktivitet getArbetsinriktadRehabiliteringEjAktuell() {
-        return getAktivitet(Aktivitet_Arbetslivsinriktad_rehabilitering_ar_ej_aktuell);
+        return getAktivitet(Aktivitetskoder.ARBETSLIVSINRIKTAD_REHABILITERING_AR_INTE_AKTUELL);
     }
 
     public Aktivitet getArbetsinriktadRehabiliteringEjBedombar() {
-        return getAktivitet(Aktivitet_Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell);
+        return getAktivitet(Aktivitetskoder.GAR_EJ_ATT_BEDOMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL);
     }
 
     public Aktivitet getAvstangningEnligtSmittskyddslagen() {
-        return getAktivitet(Aktivitet_Avstangning_enligt_SmL_pga_smitta);
+        return getAktivitet(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
     }
 
     public Aktivitet getRekommenderarKontaktMedArbetsformedlingen() {
-        return getAktivitet(Aktivitet_Patienten_behover_fa_kontakt_med_Arbetsformedlingen);
+        return getAktivitet(Aktivitetskoder.PATIENTEN_BOR_FA_KONTAKT_MED_ARBETSFORMEDLINGEN);
     }
 
     public Aktivitet getRekommenderarKontaktMedForetagshalsovarden() {
-        return getAktivitet(Aktivitet_Patienten_behover_fa_kontakt_med_foretagshalsovarden);
+        return getAktivitet(Aktivitetskoder.PATIENTEN_BOR_FA_KONTAKT_MED_FORETAGSHALSOVARDEN);
     }
 
     public Aktivitet getRekommenderarOvrigt() {
-        return getAktivitet(Aktivitet_Ovrigt);
+        return getAktivitet(Aktivitetskoder.OVRIGT);
     }
 
     public Aktivitet getAtgardInomSjukvarden() {
-        return getAktivitet(Aktivitet_Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden);
+        return getAktivitet(Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN);
     }
 
     public Aktivitet getAnnanAtgard() {
-        return getAktivitet(Aktivitet_Planerad_eller_pagaende_annan_atgard);
+        return getAktivitet(Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD);
     }
 
     public boolean isFilledAlways() {
@@ -299,7 +276,11 @@ public class Fk7263Intyg extends Utlatande {
 
     public boolean isFilledPatientWorkCapacityJudgement() {
         Observation value = getArbetsformagaAktivitetsbegransning();
-        return value != null && value.getBeskrivning() != null && !value.getBeskrivning().trim().equals("");
+        if(value != null) {
+            Prognos prognos = value.getPrognos();
+            return prognos != null && prognos.getBeskrivning() != null && !prognos.getBeskrivning().trim().equals("");
+        }
+        return false;
     }
 
     public boolean isFilledPrognosis() {

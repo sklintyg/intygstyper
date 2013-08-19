@@ -160,7 +160,7 @@
               <ul>
                 <li ng-repeat="vardkontakt in cert.vardkontakter"><span message key="vardkontakt.{{vardkontakt.vardkontakttyp.code}}" param="vardkontakt.vardkontaktstid.start | date:'longDate'"></span></li>
                 <li ng-repeat="referens in cert.referenser"><span message key="referens.{{referens.referenstyp.code}}" param="referens.datum| date:'longDate'"></span>
-                  <div ng-show="referens.referenstyp.code == 'Annat'">
+                  <div ng-show="referens.referenstyp.code == '74964007'"> <!-- Annat -->
                     <span class="tag"><span message key="view.label.comment"></span></span> <span ng-repeat="kommentar in cert.kommentars">{{kommentar}}</span>
                   </div></li>
               </ul>
@@ -196,7 +196,7 @@
               </ul>
               </div>
 
-              <div mi-field title="view.label.patientworkcapacityjudgement" filled="cert.filledPatientWorkCapacityJudgement"> {{cert.arbetsformagaAktivitetsbegransning.beskrivning}} </div>
+              <div mi-field title="view.label.patientworkcapacityjudgement" filled="cert.filledPatientWorkCapacityJudgement"> {{cert.arbetsformagaAktivitetsbegransning.prognos.beskrivning}} </div>
 
               <div mi-field title="view.label.prognosis" filled="cert.filledPrognosis">
               <ul>

@@ -1,14 +1,16 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import java.io.IOException;
-
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.Sysselsattning;
+import se.inera.certificate.model.codes.Aktivitetskoder;
+import se.inera.certificate.model.codes.Sysselsattningskoder;
 import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
+
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author andreaskaltenbach
@@ -58,7 +60,7 @@ public class UtlatandeValidatorTest {
         Fk7263Intyg utlatande= utlatande();
 
         Sysselsattning sysselsattning = new Sysselsattning();
-        sysselsattning.setSysselsattningsTyp(Fk7263Intyg.Sysselsattning_Nuvarande_arbete);
+        sysselsattning.setSysselsattningsTyp(Sysselsattningskoder.NUVARANDE_ARBETE);
         utlatande.getPatient().getSysselsattnings().add(sysselsattning);
 
         utlatande.getPatient().getArbetsuppgifts().clear();
@@ -71,8 +73,8 @@ public class UtlatandeValidatorTest {
         Fk7263Intyg utlatande= utlatande();
 
         // set two activities with conflicting activity code
-        utlatande.getAktiviteter().get(0).setAktivitetskod(Fk7263Intyg.Aktivitet_Forandrat_ressatt_till_arbetsplatsen_ar_aktuellt);
-        utlatande.getAktiviteter().get(1).setAktivitetskod(Fk7263Intyg.Aktivitet_Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt);
+        utlatande.getAktiviteter().get(0).setAktivitetskod(Aktivitetskoder.FORANDRA_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT);
+        utlatande.getAktiviteter().get(1).setAktivitetskod(Aktivitetskoder.FORANDRA_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT);
 
         assertEquals(1, new UtlatandeValidator(utlatande).validate().size());
     }

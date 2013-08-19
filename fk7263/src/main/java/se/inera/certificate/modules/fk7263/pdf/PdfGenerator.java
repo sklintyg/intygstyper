@@ -1,16 +1,5 @@
 package se.inera.certificate.modules.fk7263.pdf;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.DATE_PATTERN;
-import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.Referens_Annat;
-import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.Referens_Journaluppgifter;
-import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.Vardkontakt_Min_telefonkontakt_med_patienten;
-import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.Vardkontakt_Min_undersokning_av_patienten;
-
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
@@ -21,8 +10,17 @@ import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.model.codes.ObservationsKoder;
+import se.inera.certificate.model.codes.Referenstypkoder;
+import se.inera.certificate.model.codes.Vardkontakttypkoder;
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.DATE_PATTERN;
 
 
 /**
@@ -297,25 +295,25 @@ public class PdfGenerator {
 
     private void fillBasedOn() {
 
-        Vardkontakt minUndersokning = intyg.getVardkontakt(Vardkontakt_Min_undersokning_av_patienten);
+        Vardkontakt minUndersokning = intyg.getVardkontakt(Vardkontakttypkoder.MIN_UNDERSOKNING_AV_PATIENTEN);
         if (minUndersokning != null) {
             checkField(BASED_ON_EXAMINATION);
             fillText(BASED_ON_EXAMINATION_TIME, minUndersokning.getVardkontaktstid().getStart().toString(DATE_PATTERN));
         }
 
-        Vardkontakt minTelefonkontakt = intyg.getVardkontakt(Vardkontakt_Min_telefonkontakt_med_patienten);
+        Vardkontakt minTelefonkontakt = intyg.getVardkontakt(Vardkontakttypkoder.MIN_TELEFONKONTAKT_MED_PATIENTEN);
         if (minTelefonkontakt != null) {
             checkField(BASED_ON_PHONE_CONTACT);
             fillText(BASED_ON_PHONE_CONTACT_TIME, minTelefonkontakt.getVardkontaktstid().getStart().toString(DATE_PATTERN));
         }
 
-        Referens journalReferens = intyg.getReferens(Referens_Journaluppgifter);
+        Referens journalReferens = intyg.getReferens(Referenstypkoder.JOURNALUPPGIFT);
         if (journalReferens != null) {
             checkField(BASED_ON_JOURNAL);
             fillText(BASED_ON_JOURNAL_TIME, journalReferens.getDatum().toString(DATE_PATTERN));
         }
 
-        Referens annanReferens = intyg.getReferens(Referens_Annat);
+        Referens annanReferens = intyg.getReferens(Referenstypkoder.ANNAT);
         if (annanReferens != null) {
             checkField(BASED_ON_OTHER);
             fillText(BASED_ON_OTHER_DATE, annanReferens.getDatum().toString(DATE_PATTERN));
@@ -338,7 +336,7 @@ public class PdfGenerator {
     }
 
     private void fillDiseaseCause() {
-        List<Observation> sjukdomsforlopp = intyg.getObservationsByKategori(ObservationsKoder.BEDOMT_TILLSTAND);
+        List<Observation> sjukdomsforlopp = intyg.getObservationsByKod(ObservationsKoder.FORLOPP);
         if (sjukdomsforlopp != null && !sjukdomsforlopp.isEmpty()) {
             fillText(DISEASE_CAUSE, sjukdomsforlopp.get(0).getBeskrivning());
         }
@@ -353,7 +351,7 @@ public class PdfGenerator {
     }
 
     private void fillDiagnose() {
-        List<Observation> diagnosList = intyg.getObservationsByKategori(ObservationsKoder.MEDICINSKT_TILLSTAND);
+        List<Observation> diagnosList = intyg.getObservationsByKategori(ObservationsKoder.DIAGNOS);
         if (diagnosList != null && !diagnosList.isEmpty()) {
             Observation diagnos = diagnosList.get(0);
             if (diagnos.getObservationsKod() != null) {

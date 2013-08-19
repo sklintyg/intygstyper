@@ -1,18 +1,21 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
-
-import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
-
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Vardkontakt;
+import se.inera.certificate.model.codes.Prognoskoder;
+import se.inera.certificate.model.codes.Referenstypkoder;
+import se.inera.certificate.model.codes.Vardkontakttypkoder;
 import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+
+import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 
 /**
  * @author andreaskaltenbach
@@ -82,16 +85,16 @@ public class UtlatandeValidator {
         }
 
         // Fält 4 - höger översta kryssrutan
-        Vardkontakt inUndersokning = utlatande.getVardkontakt(Fk7263Intyg.Vardkontakt_Min_undersokning_av_patienten);
+        Vardkontakt inUndersokning = utlatande.getVardkontakt(Vardkontakttypkoder.MIN_UNDERSOKNING_AV_PATIENTEN);
 
         // Fält 4 - höger näst översta kryssrutan
-        Vardkontakt telefonkontakt = utlatande.getVardkontakt(Fk7263Intyg.Vardkontakt_Min_telefonkontakt_med_patienten);
+        Vardkontakt telefonkontakt = utlatande.getVardkontakt(Vardkontakttypkoder.MIN_TELEFONKONTAKT_MED_PATIENTEN);
 
         // Fält 4 - höger näst nedersta kryssrutan
-        Referens journal = utlatande.getReferens(Fk7263Intyg.Referens_Journaluppgifter);
+        Referens journal = utlatande.getReferens(Referenstypkoder.JOURNALUPPGIFT);
 
         // Fält 4 - höger nedersta kryssrutan
-        Referens inAnnat = utlatande.getReferens(Fk7263Intyg.Referens_Annat);
+        Referens inAnnat = utlatande.getReferens(Referenstypkoder.ANNAT);
 
         // Fält 4 - höger Check that we at least got one field set
         if (inUndersokning == null && telefonkontakt == null && journal == null && inAnnat == null) {
@@ -134,8 +137,9 @@ public class UtlatandeValidator {
         // field 13 should contain data.
         boolean hasKommentar = utlatande.getKommentars() != null && !utlatande.getKommentars().isEmpty();
 
-        Referens annat = utlatande.getReferens(Fk7263Intyg.Referens_Annat);
-        boolean garEjAttBedomma = utlatande.getArbetsformaga() != null && utlatande.getArbetsformaga().getObservationsKod() != null && Fk7263Intyg.Prognos_Det_gar_inte_att_bedomma.equals(utlatande.getArbetsformaga().getObservationsKod());
+        Referens annat = utlatande.getReferens(Referenstypkoder.ANNAT);
+        boolean garEjAttBedomma = utlatande.getArbetsformaga() != null && utlatande.getArbetsformaga().getPrognos() != null &&
+                Prognoskoder.DET_GAR_INTE_ATT_BEDOMA.equals(utlatande.getArbetsformaga().getPrognos().getPrognosKod());
 
         if ((annat != null || garEjAttBedomma) && !hasKommentar) {
             validationErrors.add("Upplysningar should contain data as field 4 or fields 10 is checked.");
