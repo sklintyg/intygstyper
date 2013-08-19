@@ -104,13 +104,13 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 	 * @return List of Rekommendation
 	 */
 	List<Rekommendation> convertRekommendationer(List<RekommendationType> source) {
-		LOG.debug("Converting rekommendationer");
+		LOG.debug("Converting rekommendationer");		
 		
 		List<Rekommendation> rekommendationer = new ArrayList<Rekommendation>();
+		
+		if (source != null){
 		for (RekommendationType toConvert : source){
-			Rekommendation rekommendation = convertRekommendation(toConvert);
-			if (rekommendation != null){
-				rekommendationer.add(rekommendation);
+				rekommendationer.add(convertRekommendation(toConvert));
 			}
 		}
 		return rekommendationer;
@@ -145,11 +145,9 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 		LOG.debug("Converting observationer");
 		
 		List<Observation> observations = new ArrayList<Observation>();
-
-		for (ObservationType ot : source){
-			Observation observation = convertObservation(ot);
-			if (observation != null){
-				observations.add(observation);
+		if (source != null){
+			for (ObservationType ot : source){
+				observations.add(convertObservation(ot));			
 			}
 		}
 		return observations;
@@ -183,10 +181,10 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 		LOG.debug("Converting utforarroller");
 		
 		List<Utforarroll> utforsAvs = new ArrayList<>();
-        for (UtforarrollType toConvert: source){
-        	if (toConvert != null){
-        		utforsAvs.add(convertUtforarroll(toConvert));
-        	}
+		if (source != null){
+	        for (UtforarrollType toConvert: source){	        	
+	        	utforsAvs.add(convertUtforarroll(toConvert));
+	        }
         }
         return utforsAvs;
 	}
@@ -240,8 +238,8 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
     	LOG.debug("Converting aktiviteter");
     	
         List<Aktivitet> aktiviteter = new ArrayList<>();
+    	if (source != null){            
         for (AktivitetType aktivitet : source) {
-        	if (source != null){
         		aktiviteter.add(convertAktivitet(aktivitet));
         	}
         }
@@ -311,25 +309,39 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
         patient.setPersonId(IsoTypeConverter.toId(source.getPersonId()));
         patient.setAdress(source.getAdress());
         patient.getPatientRelations().addAll(convertPatientRelations(source.getPatientRelations()));
-
         patient.getFornamns().addAll(source.getFornamns());
-        
         patient.getEfternamns().addAll(source.getEfternamns());
-        
         patient.getMellannamns().addAll(source.getMellannamns());
           
         return patient;
     }
     
     private List<PatientRelation> convertPatientRelations(List<PatientRelationType> source) {
-		// TODO Maybe implement
-		return null;
+    	List<PatientRelation> patientRelation = new ArrayList<PatientRelation>();
+    	if (source != null){
+			for (PatientRelationType prt : source){
+				patientRelation.add(convertPatientRelation(prt));
+			}
+		}
+    	return patientRelation;
+		
 	}
-    
-    @SuppressWarnings("unused")
+
 	private PatientRelation convertPatientRelation(PatientRelationType source){
-    	// TODO Implement if implementing convertPatientRelations 
-    	return null;
+    	PatientRelation patientRelation = new PatientRelation();
+    	
+    	patientRelation.setPersonId(IsoTypeConverter.toId(source.getPersonId()));
+    	patientRelation.setRelationskategori(IsoTypeConverter.toKod(source.getRelationskategori()));
+    	patientRelation.getAdresses().add(source.getAdress());
+    	patientRelation.getFornamns().addAll(source.getFornamns());
+    	patientRelation.getEfternamns().addAll(source.getEfternamns());
+    	patientRelation.getMellannamns().addAll(source.getMellannamns());
+    	
+    	for (iso.v21090.dt.v1.CD cd : source.getRelationTyps()){
+    		patientRelation.getRelationTyps().add(IsoTypeConverter.toKod(cd));
+    	}
+    	return patientRelation;
+    	
     }
 	/**
      * Converts EnhetType to Enhet .
