@@ -17,6 +17,8 @@ class KonverteraXmlViaREST{
     String typ
     String filnamn
 	String utlatande_id_extension
+	String typ_av_utlatande
+	String patient_id
     
     public String matchandeJson() {
 
@@ -32,6 +34,9 @@ class KonverteraXmlViaREST{
 		
 		try {
 			assert certificate.id.extension == utlatande_id_extension
+			assert certificate.typ.code == typ_av_utlatande
+			assert certificate.patient.personId.extension == patient_id
+			
 		} catch (AssertionError e) {
 			return "nej"
 		}
