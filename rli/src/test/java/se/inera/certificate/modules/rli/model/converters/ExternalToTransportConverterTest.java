@@ -8,13 +8,23 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import se.inera.certificate.common.v1.AktivitetType;
+import se.inera.certificate.common.v1.ObservationType;
 import se.inera.certificate.common.v1.PatientType;
+import se.inera.certificate.common.v1.RekommendationType;
+import se.inera.certificate.common.v1.Utlatande;
 
+import se.inera.certificate.modules.rli.model.external.common.Vardgivare;
+//import se.inera.certificate.modules.rli.model.external.Arrangemang;
+import se.inera.certificate.modules.rli.model.external.common.Aktivitet;
+import se.inera.certificate.modules.rli.model.external.common.Enhet;
 import se.inera.certificate.modules.rli.model.external.common.Kod;
 import se.inera.certificate.modules.rli.model.external.common.Arbetsuppgift;
 import se.inera.certificate.modules.rli.model.external.common.Id;
+import se.inera.certificate.modules.rli.model.external.common.Observation;
 import se.inera.certificate.modules.rli.model.external.common.Patient;
 import se.inera.certificate.modules.rli.model.external.common.PatientRelation;
+import se.inera.certificate.modules.rli.model.external.common.Rekommendation;
 
 public class ExternalToTransportConverterTest {
 
@@ -29,11 +39,58 @@ public class ExternalToTransportConverterTest {
 		Patient source = buildPatient();
 		PatientType patient = converter.convertPatient(source);
 		
-		assertEquals("Testvägen 23", patient.getAdress());
-		
-		
+		assertEquals("Testvägen 23", patient.getAdress());	
 	}
 	
+	@Test
+	public void convertObservationExternalToTransportTest(){
+		Observation source = buildObservation();
+		ObservationType obs = converter.convertObservation(source);
+		
+		assertEquals("SNOMED-CT", obs.getObservationskod().getCode());
+	}
+	
+	@Test
+	public void convertAktivitetExternalToTransportTest(){
+		Aktivitet source = buildAktivitet();
+		AktivitetType akt = converter.convertAktivitet(source);
+		assertEquals("AktivitetKod",akt.getAktivitetskod().getCode());
+		assertEquals("Enhetsnamn", akt.getUtforsVidEnhet().getEnhetsnamn());
+		assertEquals("Vårdenhet", akt.getUtforsVidEnhet().getArbetsplatskod().getExtension());
+	}
+	@Test
+	public void convertRekommendationExternalToTransportTest(){
+		Rekommendation source = buildRekommendation();
+		RekommendationType rType = converter.convertRekommendation(source);
+		assertEquals("Rek-kod", rType.getRekommendationskod().getCode());
+		assertEquals("Sjuk-kännedom", rType.getSjukdomskannedom().getCode());
+		assertEquals("Rek-beskrivning", rType.getBeskrivning());			
+	}
+	
+	@Test
+	public void convertKommentarer(){
+		se.inera.certificate.modules.rli.model.external.Utlatande source = 
+				new se.inera.certificate.modules.rli.model.external.Utlatande();
+		List<String> l = new ArrayList<String>();
+		l.add("KOMMENTARER");
+		source.setKommentarer(l);
+		
+		Utlatande utl = converter.externalToTransport(source);
+		
+		List<String> komList = utl.getKommentars();
+		
+		assertEquals("KOMMENTARER", komList.get(0));
+		
+	}
+		
+	private Rekommendation buildRekommendation() {
+		Rekommendation rek = new Rekommendation();
+		rek.setRekommendationskod(new Kod("Rek-kod"));
+		rek.setSjukdomskannedom(new Kod("Sjuk-kännedom"));
+		rek.setBeskrivning("Rek-beskrivning");
+		return rek;
+	}
+
 	private Patient buildPatient(){
 		Patient patient = new Patient();
 		patient.setAdress("Testvägen 23");
@@ -86,6 +143,42 @@ public class ExternalToTransportConverterTest {
 		patient.setPatientRelations(pR);
 		
 		return patient;
+	}
+	
+	private Observation buildObservation(){
+		Observation observation = new Observation();
+		observation.setBeskrivning("Observationsbeskrivning");
+		observation.setForekomst(true);
+		observation.setObservationskod(new Kod("SNOMED-CT"));
+		return observation;
+	}
+	
+	/*private Arrangemang buildArrangemang(){
+		Arrangemang arr = new Arrangemang();
+		arr.setArrangemangstyp(new Kod("resa"));
+		arr.setBokningsreferens("bokningsreferens");
+		arr.setPlats("New York");
+		return arr;
+	}*/
+	
+	private Enhet buildEnhet(){
+		Enhet enhet = new Enhet();
+		enhet.setArbetsplatskod(new Id("Vårdenhet"));
+		enhet.setEnhetsId(new Id("enhetsId"));
+		enhet.setEnhetsnamn("Enhetsnamn");
+		
+		Vardgivare vardgivare = new Vardgivare();
+		vardgivare.setVardgivareId(new Id("vårdgivarID"));
+		vardgivare.setVardgivarnamn("Vårdgivarnamn");
+		
+		enhet.setVardgivare(vardgivare);
+		return enhet;
+	}
+	private Aktivitet buildAktivitet(){
+		Aktivitet aktivitet = new Aktivitet();
+		aktivitet.setAktivitetskod(new Kod("AktivitetKod"));
+		aktivitet.setUtforsVidEnhet(buildEnhet());
+		return aktivitet;
 	}
 
 }

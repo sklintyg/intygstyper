@@ -51,7 +51,9 @@ public class ExternalToTransportConverterImpl implements
 		
 		transportModel.setTypAvUtlatande(IsoTypeConverter.toCD(source.getTyp()));
 
-		transportModel.getKommentars().addAll((source.getKommentarer()));
+		if (source.getKommentarer() != null){
+			transportModel.getKommentars().addAll(source.getKommentarer());
+		}
 		
 		transportModel.setSigneringsdatum(source.getSigneringsdatum());
 		
@@ -65,12 +67,15 @@ public class ExternalToTransportConverterImpl implements
 
 		transportModel.setArrangemang(convertArrangemang(source.getArrangemang()));	
 		
-		transportModel.getAktivitets().addAll(convertAktiviteter(source.getAktiviteter()));
-
-		transportModel.getObservations().addAll(convertObservationer(source.getObservationer()));
-
-		transportModel.getRekommendations().addAll(convertRekommendationer(source.getRekommendationer()));
-		
+		if(source.getAktiviteter() != null){
+			transportModel.getAktivitets().addAll(convertAktiviteter(source.getAktiviteter()));
+		}
+		if (source.getObservationer() != null){
+			transportModel.getObservations().addAll(convertObservationer(source.getObservationer()));
+		}
+		if (source.getRekommendationer() != null){
+			transportModel.getRekommendations().addAll(convertRekommendationer(source.getRekommendationer()));
+		}
 		return transportModel;
 	}
 	
@@ -88,7 +93,7 @@ public class ExternalToTransportConverterImpl implements
 		return rekommendationTypes;
 	}
 
-	private RekommendationType convertRekommendation(Rekommendation source) {
+	RekommendationType convertRekommendation(Rekommendation source) {
 		if (source == null){
 			LOG.debug("Rekommendation was null, could not convert");
 			return null;
@@ -103,6 +108,10 @@ public class ExternalToTransportConverterImpl implements
 
 	List<ObservationType> convertObservationer(List<Observation> source) {
 		LOG.debug("Starting convertObservationer");
+		if (source == null){
+			LOG.debug("List<Observation> was null, could not convert");
+			return null;
+		}
 		List<ObservationType> observationTypes = new ArrayList<ObservationType>();
 		for (Observation o : source){
 			if (o != null){
@@ -112,7 +121,7 @@ public class ExternalToTransportConverterImpl implements
 		return observationTypes;
 	}
 
-	private ObservationType convertObservation(Observation source) {
+	ObservationType convertObservation(Observation source) {
 		if (source == null){
 			LOG.debug("Observation was null, could not convert");
 			return null;
@@ -126,7 +135,7 @@ public class ExternalToTransportConverterImpl implements
 		return observationType;
 	}
 
-	private UtforarrollType convertUtforarroll(Utforarroll source) {
+	UtforarrollType convertUtforarroll(Utforarroll source) {
 		if (source == null){
 			LOG.debug("Utforarroll was null, could not convert");
 			return null;
@@ -138,7 +147,7 @@ public class ExternalToTransportConverterImpl implements
 		return utforsAv;
 	}
 	
-	private HosPersonalType convertHosPersonal(HosPersonal source) {
+	HosPersonalType convertHosPersonal(HosPersonal source) {
 		if (source == null){
 			LOG.debug("HosPersonal was null, could not convert");
 			return null;
@@ -166,7 +175,10 @@ public class ExternalToTransportConverterImpl implements
 
 	List<AktivitetType> convertAktiviteter(List<Aktivitet> source) {
 		LOG.debug("Starting convertAktiviteter");
-		
+		if (source == null){
+			LOG.debug("Aktivitet list was null, could not convert");
+			return null;
+		}
 		List<AktivitetType> converted = new ArrayList<AktivitetType>();
 		for (Aktivitet a : source){
 			if (a != null){
@@ -176,7 +188,7 @@ public class ExternalToTransportConverterImpl implements
 		return converted;
 	}
 
-	private AktivitetType convertAktivitet(Aktivitet source) {
+	AktivitetType convertAktivitet(Aktivitet source) {
 		if (source == null){
 			LOG.debug("Aktivitet was null, could not convert");
 			return null;
@@ -193,10 +205,13 @@ public class ExternalToTransportConverterImpl implements
 	private EnhetType convertEnhet(Enhet source) {
 		if (source == null){
 			LOG.debug("Enhet was null, could not convert");
+			return null;
 		}
 		EnhetType enhetType = new EnhetType();
 		
-		enhetType.setArbetsplatskod(IsoTypeConverter.toII(source.getArbetsplatskod()));
+		if (source.getArbetsplatskod() != null){
+			enhetType.setArbetsplatskod(IsoTypeConverter.toII(source.getArbetsplatskod()));
+		}
 		enhetType.setEnhetsId(IsoTypeConverter.toII(source.getEnhetsId()));
 		enhetType.setEnhetsnamn(source.getEnhetsnamn());
 		enhetType.setEpost(source.getEpost());
@@ -250,12 +265,23 @@ public class ExternalToTransportConverterImpl implements
 		PatientType patientType = new PatientType();
 		patientType.setAdress(source.getAdress());
 		patientType.setPersonId(IsoTypeConverter.toII(source.getPersonId()));
-		patientType.getFornamns().addAll(source.getFornamns());
-		patientType.getEfternamns().addAll(source.getEfternamns());
-		patientType.getMellannamns().addAll(source.getMellannamns());
-		List<PatientRelationType> patientRelationsTypes = 
+		
+		if (source.getFornamns() != null){
+			patientType.getFornamns().addAll(source.getFornamns());
+		}
+		if (source.getEfternamns() != null){
+			patientType.getEfternamns().addAll(source.getEfternamns());		
+		}
+		if (source.getMellannamns() != null){
+			patientType.getMellannamns().addAll(source.getMellannamns());
+		}
+		
+		if (source.getPatientRelations() != null){
+			List<PatientRelationType> patientRelationsTypes = 
 				convertPatientRelations(source.getPatientRelations());
-		patientType.getPatientRelations().addAll(patientRelationsTypes );
+			patientType.getPatientRelations().addAll(patientRelationsTypes );
+			
+		}
 		
 		
 		return patientType;
@@ -264,6 +290,10 @@ public class ExternalToTransportConverterImpl implements
 	List<PatientRelationType> convertPatientRelations(
 			List<PatientRelation> source) {
 		LOG.debug("Starting convert in convertPatientRelations");
+		if (source == null){
+			LOG.debug("PatientRelation was null, could not convert");
+			return null;
+		}
 		List<PatientRelationType> patientRelationTypes = new ArrayList<PatientRelationType>();
 		
 		for (PatientRelation p : source){

@@ -28,7 +28,7 @@
   </bean>
 
   <bean id ="transportToExternalConverter" class="se.inera.certificate.modules.rli.model.converters.TransportToExternalConverterImpl" />
-
+  <bean id ="externalToTransportConverter" class="se.inera.certificate.modules.rli.model.converters.ExternalToTransportConverterImpl" />
   <jaxrs:server address="/">
     <jaxrs:serviceBeans>
       <bean class="se.inera.certificate.modules.rli.rest.RliModuleApi"/>
