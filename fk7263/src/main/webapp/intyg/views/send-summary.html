@@ -3,10 +3,10 @@
   <div id="backnav" class="row-fluid">
     <a class="backlink" href ng-click="backToViewCertificate()"><span message key="button.goback"></span></a>
   </div>
-
+<div mi-spinner label="common.module.message.sendingcertificate" show-spinner="sendingInProgress" show-content="!sendingInProgress">
   <!-- Content -->
   <div class="row-fluid">
-    <div class="span12" ng-show="doneLoading">
+    <div class="span12">
       <h1 ng-focus="pagefocus" tabindex="-1">
         <span message key="confirm.label.pagetitle"></span>
       </h1>
@@ -47,12 +47,5 @@
       </p>
     </div>
   </div>
-  <div ng-hide="doneLoading" style="text-align: center; padding: 20px;">
-    <img src="/img/ajax-loader.gif" style="text-align: center;" />
 
-    <p style="text-align: center; color: #64ABC0; margin-top: 20px;">
-      <strong> <span message key="common.module.message.sendingcertificate"></span>
-      </strong>
-    </p>
-  </div>
-</div>
+</div> <!-- eof spinner -->

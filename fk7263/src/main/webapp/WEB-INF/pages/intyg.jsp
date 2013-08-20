@@ -94,6 +94,7 @@
   <script type="text/javascript" src="/js/modules/message-module.js"></script>
   <script type="text/javascript" src="/js/modules/mi-header-directive.js"></script>
   <script type="text/javascript" src="/js/modules/mi-certificate-directive.js"></script>
+  <script type="text/javascript" src="/js/modules/mi-common-directive.js"></script>
   <script type="text/javascript" src="/js/modules/cert-service.js"></script>
   <script type="text/javascript" src="/js/modules/util-services.js"></script>
   <script type="text/javascript" src="/js/modules/common-message-resources.js"></script>

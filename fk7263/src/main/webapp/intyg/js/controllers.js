@@ -70,7 +70,7 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
 
 angular.module('controllers.fk7263').controller('SentCertWizardCtrl',
         [ '$scope', '$filter', '$location', '$rootScope', '$routeParams', 'certService', function SentCertWizardCtrl($scope, $filter, $location, $rootScope, $routeParams, certService) {
-            $scope.doneLoading = true;
+            $scope.sendingInProgress = false;
             // Get active certificate from rootscope (passed from previous
             // controller)
             $scope.cert = $rootScope.cert;
@@ -109,9 +109,9 @@ angular.module('controllers.fk7263').controller('SentCertWizardCtrl',
             }
 
             $scope.confirmAndSend = function() {
-                $scope.doneLoading = false;
+                $scope.sendingInProgress = true;
                 certService.sendCertificate($scope.MODULE_CONFIG.CERT_ID_PARAMETER, $scope.selectedRecipientId, function(result) {
-                    $scope.doneLoading = true;
+                    $scope.sendingInProgress = false;
                     if (result != null && result.resultCode == "sent") {
                         $location.path("/sent");
                     } else {
