@@ -140,10 +140,9 @@
                 </div>
               </div>
             </div>
+            <div class="table-bottom" ng-show="(certificates | inboxfilter).length>0"></div>
 
             <div class="cert-body">
-
-
 
               <div mi-field title="view.label.smittskydd" filled="cert.filledAlways"> <span ng-show="cert.avstangningEnligtSmittskyddslagen != null"> <span message
                 key="view.label.yes"></span></span> <span ng-show="cert.avstangningEnligtSmittskyddslagen == null"> <span message key="view.label.no"></span></div>
