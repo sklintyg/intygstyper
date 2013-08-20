@@ -121,30 +121,30 @@ public class Fk7263Intyg extends Utlatande {
         return null;
     }
 
-    public Observation getNedsattning(final Double nedsattningsgrad) {
+    public Observation getArbetsformaga(final Double nedsattningsgrad) {
         return find(getObservationsByKod(ObservationsKoder.ARBETSFORMAGA), new Predicate<Observation>() {
             @Override
-            public boolean apply(Observation nedsattning) {
-                return nedsattning.getVarde() != null && !nedsattning.getVarde().isEmpty() && nedsattningsgrad.equals(nedsattning.getVarde().get(0).getQuantity());
+            public boolean apply(Observation arbetsformaga) {
+                return arbetsformaga.getVarde() != null && !arbetsformaga.getVarde().isEmpty() && nedsattningsgrad.equals(arbetsformaga.getVarde().get(0).getQuantity());
             }
         }, null);
     }
 
     // Helper properties for netsattningsgrader to be included in JSON
     public Observation getNedsattning25percent() {
-        return getNedsattning(25.0);
+        return getArbetsformaga(75.0);
     }
 
     public Observation getNedsattning50percent() {
-        return getNedsattning(50.0);
+        return getArbetsformaga(50.0);
     }
 
     public Observation getNedsattning75percent() {
-        return getNedsattning(75.0);
+        return getArbetsformaga(25.0);
     }
 
     public Observation getNedsattning100percent() {
-        return getNedsattning(100.0);
+        return getArbetsformaga(0.0);
     }
 
     public boolean isArbetsformagaIForhallandeTillArbetsloshet() {
