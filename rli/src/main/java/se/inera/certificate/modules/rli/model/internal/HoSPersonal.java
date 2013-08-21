@@ -25,6 +25,8 @@ public class HoSPersonal {
 	private String fullstandigtNamn;
 	
 	private String befattning;
+	
+	private Vardenhet vardenhet;
 
 	public HoSPersonal() {
 	
@@ -53,5 +55,13 @@ public class HoSPersonal {
 	public void setBefattning(String befattning) {
 		this.befattning = befattning;
 	}
+
+    public Vardenhet getVardenhet() {
+        return vardenhet;
+    }
+
+    public void setVardenhet(Vardenhet vardenhet) {
+        this.vardenhet = vardenhet;
+    }
 
 }

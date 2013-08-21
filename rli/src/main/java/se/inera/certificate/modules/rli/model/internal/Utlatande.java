@@ -35,11 +35,7 @@ public class Utlatande {
 	
 	private LocalDateTime skickatDatum;
 	
-	private LocalDate giltighetsPeriodStart;
-	
-	private LocalDate giltighetsPeriodSlut;
-	
-	private Utfardare utfardare;
+	private HoSPersonal skapatAv;
 	
 	private Patient patient;
 		
@@ -95,29 +91,13 @@ public class Utlatande {
 		this.skickatDatum = skickatDatum;
 	}
 
-	public LocalDate getGiltighetsPeriodStart() {
-		return giltighetsPeriodStart;
-	}
+	public HoSPersonal getSkapatAv() {
+        return skapatAv;
+    }
 
-	public void setGiltighetsPeriodStart(LocalDate giltighetsPeriodStart) {
-		this.giltighetsPeriodStart = giltighetsPeriodStart;
-	}
-
-	public LocalDate getGiltighetsPeriodSlut() {
-		return giltighetsPeriodSlut;
-	}
-
-	public void setGiltighetsPeriodSlut(LocalDate giltighetsPeriodSlut) {
-		this.giltighetsPeriodSlut = giltighetsPeriodSlut;
-	}
-
-	public Utfardare getUtfardare() {
-		return utfardare;
-	}
-
-	public void setUtfardare(Utfardare utfardare) {
-		this.utfardare = utfardare;
-	}
+    public void setSkapatAv(HoSPersonal skapatAv) {
+        this.skapatAv = skapatAv;
+    }
 
 	public Patient getPatient() {
 		return patient;
