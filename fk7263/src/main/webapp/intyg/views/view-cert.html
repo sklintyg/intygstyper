@@ -134,21 +134,21 @@
 
             <div class="cert-body">
 
-              <div mi-field title="view.label.smittskydd" filled="cert.filledAlways">
+              <div mi-field field-label="view.label.smittskydd" filled="cert.filledAlways">
                 <span ng-show="cert.avstangningEnligtSmittskyddslagen != null"> <span message key="view.label.yes"></span></span> <span ng-show="cert.avstangningEnligtSmittskyddslagen == null">
                   <span message key="view.label.no"></span>
               </div>
 
 
-              <div mi-field title="view.label.diagnosis" filled="cert.filledDiagnosis">
+              <div mi-field field-label="view.label.diagnosis" filled="cert.filledDiagnosis">
                 {{cert.medicinsktTillstand.beskrivning}} (<span class="tag"><span message key="view.label.diagnosisCode"></span></span> {{cert.medicinsktTillstand.observationsKod.code}})
               </div>
 
-              <div mi-field title="view.label.progressofdesease" filled="cert.filledProgress">{{cert.bedomtTillstand.beskrivning}}</div>
+              <div mi-field field-label="view.label.progressofdesease" filled="cert.filledProgress">{{cert.bedomtTillstand.beskrivning}}</div>
 
-              <div mi-field title="view.label.disabilities" filled="cert.filledDisabilities">{{cert.funktionsnedsattning.beskrivning}}</div>
+              <div mi-field field-label="view.label.disabilities" filled="cert.filledDisabilities">{{cert.funktionsnedsattning.beskrivning}}</div>
 
-              <div mi-field title="view.label.basedon" filled="cert.filledBasedOn">
+              <div mi-field field-label="view.label.basedon" filled="cert.filledBasedOn">
                 <ul>
                   <li ng-repeat="vardkontakt in cert.vardkontakter"><span message key="vardkontakt.{{vardkontakt.vardkontakttyp.code}}" param="vardkontakt.vardkontaktstid.start | date:'longDate'"></span></li>
                   <li ng-repeat="referens in cert.referenser"><span message key="referens.{{referens.referenstyp.code}}" param="referens.datum| date:'longDate'"></span>
@@ -159,9 +159,9 @@
                 </ul>
               </div>
 
-              <div mi-field title="view.label.limitation" filled="cert.filledLimitation">{{cert.aktivitetsbegransning.beskrivning}}</div>
+              <div mi-field field-label="view.label.limitation" filled="cert.filledLimitation">{{cert.aktivitetsbegransning.beskrivning}}</div>
 
-              <div mi-field title="view.label.recommendations" filled="cert.filledRecommendations">
+              <div mi-field field-label="view.label.recommendations" filled="cert.filledRecommendations">
                 <ul>
                   <li ng-show="cert.rekommenderarKontaktMedArbetsformedlingen != null"><span message key="view.label.recommendations.contact.jobcenter"></span></li>
                   <li ng-show="cert.rekommenderarKontaktMedForetagshalsovarden != null"><span message key="view.label.recommendations.contact.healthdepartment"></span></li>
@@ -169,20 +169,20 @@
                 </ul>
               </div>
 
-              <div mi-field title="view.label.plannedtreatment" filled="cert.filledPlannedTreatment">
+              <div mi-field field-label="view.label.plannedtreatment" filled="cert.filledPlannedTreatment">
                 <ul>
                   <li ng-show="cert.atgardInomSjukvarden != null"><span message key="view.label.plannedtreatment.healthcare"></span> {{cert.atgardInomSjukvarden.beskrivning}}</li>
                   <li ng-show="cert.annanAtgard != null"><span message key="view.label.plannedtreatment.other"></span> {{cert.annanAtgard.beskrivning}}</li>
                 </ul>
               </div>
 
-              <div mi-field title="view.label.workrehab" filled="cert.filledWorkRehab">
+              <div mi-field field-label="view.label.workrehab" filled="cert.filledWorkRehab">
                 <span ng-show="cert.arbetsinriktadRehabiliteringAktuell != null"> <span message key="view.label.yes"></span></span> <span ng-show="cert.arbetsinriktadRehabiliteringEjAktuell != null">
                   <span message key="view.label.no"></span>
                 </span> <span ng-show="cert.arbetsinriktadRehabiliteringEjBedombar != null"> <span message key="view.label.unjudgeable"></span></span>
               </div>
 
-              <div mi-field title="view.label.patientworkcapacity" filled="cert.filledPatientWorkCapacity">
+              <div mi-field field-label="view.label.patientworkcapacity" filled="cert.filledPatientWorkCapacity">
                 <ul>
                   <li ng-show="cert.arbetsformagaIForhallandeTillNuvarandeArbete"><span message key="view.label.patientworkcapacity.currentwork"></span> <span
                     ng-repeat="uppgift in cert.patient.arbetsuppgifts"> {{uppgift.typAvArbetsuppgift}} </span></li>
@@ -191,9 +191,9 @@
                 </ul>
               </div>
 
-              <div mi-field title="view.label.patientworkcapacityjudgement" filled="cert.filledPatientWorkCapacityJudgement">{{cert.arbetsformagaAktivitetsbegransning.prognos.beskrivning}}</div>
+              <div mi-field field-label="view.label.patientworkcapacityjudgement" filled="cert.filledPatientWorkCapacityJudgement">{{cert.arbetsformagaAktivitetsbegransning.prognos.beskrivning}}</div>
 
-              <div mi-field title="view.label.prognosis" filled="cert.filledPrognosis">
+              <div mi-field field-label="view.label.prognosis" filled="cert.filledPrognosis">
                 <ul>
                   <li ng-show="cert.prognosFullAterstallning"><span message key="view.label.yes"></span></li>
                   <li ng-show="cert.prognosDelvisAterstallning"><span message key="view.label.partialyes"></span></li>
@@ -203,12 +203,12 @@
                 </ul>
               </div>
 
-              <div mi-field title="view.label.othertransport" filled="cert.filledPatientOtherTransport">
+              <div mi-field field-label="view.label.othertransport" filled="cert.filledPatientOtherTransport">
                 <span ng-show="cert.forandratRessattAktuellt != null"> <span message key="view.label.yes"></span></span> <span ng-show="cert.forandratRessattEjAktuellt != null"> <span message
                   key="view.label.no"></span></span>
               </div>
 
-              <div mi-field title="view.label.fkcontact" filled="cert.filledFKContact">
+              <div mi-field field-label="view.label.fkcontact" filled="cert.filledFKContact">
                 <span ng-show="cert.kontaktMedForsakringskassanAktuell != null"> <span message key="view.label.yes"></span></span> <span ng-show="cert.kontaktMedForsakringskassanAktuell == null">
                   <span message key="view.label.no"></span>
                 </span>
