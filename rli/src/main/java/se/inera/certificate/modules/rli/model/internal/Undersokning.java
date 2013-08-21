@@ -20,6 +20,8 @@ package se.inera.certificate.modules.rli.model.internal;
 
 
 public class Undersokning {
+	
+	private OrsakAvbokning orsakForAvbokning;
 
 	private String forstaUndersokningDatum;
 	
@@ -37,6 +39,14 @@ public class Undersokning {
 	
 	public Undersokning() {
 	
+	}
+
+	public OrsakAvbokning getOrsakForAvbokning() {
+		return orsakForAvbokning;
+	}
+
+	public void setOrsakForAvbokning(OrsakAvbokning orsakForAvbokning) {
+		this.orsakForAvbokning = orsakForAvbokning;
 	}
 
 	public String getForstaUndersokningDatum() {

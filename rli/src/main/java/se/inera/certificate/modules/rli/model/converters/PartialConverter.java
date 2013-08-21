@@ -34,113 +34,119 @@ import org.joda.time.format.DateTimeFormatter;
  * Utility for converting a joda-time Partial to String and vice versa.
  * 
  * @author Niklas Pettersson, R2M
- *
+ * 
  */
 public final class PartialConverter {
 
-	private static final String DATE_STR_REGEX = "([0-9]{4})(?:\\-([0-9]{2})(?:\\-([0-9]{2}))?)?";
+    private static final String DATE_STR_REGEX = "([0-9]{4})(?:\\-([0-9]{2})(?:\\-([0-9]{2}))?)?";
 
-	private PartialConverter() {
+    private PartialConverter() {
 
-	}
+    }
 
-	/**
-	 * Converts a Partial to a string on the form yyyy(-MM(-dd)).
-	 * 
-	 * @param partial A partial with at least the year field set.
-	 * @return A String
-	 */
-	public static String partialToString(Partial partial) {
+    /**
+     * Converts a Partial to a string on the form yyyy(-MM(-dd)).
+     * 
+     * @param partial
+     *            A partial with at least the year field set.
+     * @return A String
+     */
+    public static String partialToString(Partial partial) {
 
-		StringBuilder datePattern = new StringBuilder();
+        if (partial == null) {
+            return null;
+        }
 
-		// Year
-		if (partial.isSupported(DateTimeFieldType.year())) {
-			datePattern.append("yyyy");
-		}
+        StringBuilder datePattern = new StringBuilder();
 
-		// Month
-		if (partial.isSupported(DateTimeFieldType.monthOfYear())) {
-			datePattern.append("-MM");
-		}
+        // Year
+        if (partial.isSupported(DateTimeFieldType.year())) {
+            datePattern.append("yyyy");
+        }
 
-		// Day
-		if (partial.isSupported(DateTimeFieldType.dayOfMonth())) {
-			datePattern.append("-dd");
-		}
+        // Month
+        if (partial.isSupported(DateTimeFieldType.monthOfYear())) {
+            datePattern.append("-MM");
+        }
 
-		DateTimeFormatter dfmt = DateTimeFormat.forPattern(datePattern
-				.toString());
+        // Day
+        if (partial.isSupported(DateTimeFieldType.dayOfMonth())) {
+            datePattern.append("-dd");
+        }
 
-		return partial.toString(dfmt);
-	}
+        DateTimeFormatter dfmt = DateTimeFormat.forPattern(datePattern
+                .toString());
 
-	/**
-	 * Converts a date String to a Partial. 
-	 * 
-	 * @param dateStr A date expressed as yyyy(-MM(-dd)).
-	 * @return A Partial or null if the supplied string is empty.
-	 */
-	public static Partial stringToPartial(String dateStr) {
+        return partial.toString(dfmt);
+    }
 
-		String trimmedDateStr = StringUtils.trimToNull(dateStr);
+    /**
+     * Converts a date String to a Partial.
+     * 
+     * @param dateStr
+     *            A date expressed as yyyy(-MM(-dd)).
+     * @return A Partial or null if the supplied string is empty.
+     */
+    public static Partial stringToPartial(String dateStr) {
 
-		if (trimmedDateStr == null) {
-			return null;
-		}
+        String trimmedDateStr = StringUtils.trimToNull(dateStr);
 
-		int[] dateValues = extractDateValuesFromDateStr(trimmedDateStr);
+        if (trimmedDateStr == null) {
+            return null;
+        }
 
-		if (dateValues == null) {
-			return null;
-		}
-		
-		DateTimeFieldType[] dateFields;
+        int[] dateValues = extractDateValuesFromDateStr(trimmedDateStr);
 
-		if (dateValues.length == 1) {
-			dateFields = new DateTimeFieldType[] { DateTimeFieldType.year() };
-			return new Partial(dateFields, dateValues);
-		} else if (dateValues.length == 2) {
-			dateFields = new DateTimeFieldType[] { DateTimeFieldType.year(),
-					DateTimeFieldType.monthOfYear() };
-			return new Partial(dateFields, dateValues);
-		} else if (dateValues.length == 3) {
-			dateFields = new DateTimeFieldType[] { DateTimeFieldType.year(),
-					DateTimeFieldType.monthOfYear(),
-					DateTimeFieldType.dayOfMonth() };
-			return new Partial(dateFields, dateValues);
-		}
+        if (dateValues == null) {
+            return null;
+        }
 
-		return null;
-	}
+        DateTimeFieldType[] dateFields;
 
-	private static int[] extractDateValuesFromDateStr(String dateStrs) {
-		
-		List<Integer> dateValueList = new ArrayList<Integer>();
-		
-		Pattern regEx = Pattern.compile(DATE_STR_REGEX);
-		Matcher matcher = regEx.matcher(dateStrs);
-		
-		String dateValueStr;
-		
-		if (!matcher.matches()) {
-			throw new IllegalArgumentException("Date input can not be parsed");
-		}
-		
-		for(int i=1; i < matcher.groupCount() + 1; i++) {
-			dateValueStr = matcher.group(i);
-			if (dateValueStr == null) {
-				break;
-			}
-			dateValueList.add(NumberUtils.createInteger(dateValueStr));
-		}
-				
-		int[] dateValueArr = new int[dateValueList.size()];
-				
-		for (int i = 0; i < dateValueArr.length; i++) {
-			dateValueArr[i] = dateValueList.get(i);
-		}
-		
-		return dateValueArr;
-	}
+        if (dateValues.length == 1) {
+            dateFields = new DateTimeFieldType[] { DateTimeFieldType.year() };
+            return new Partial(dateFields, dateValues);
+        } else if (dateValues.length == 2) {
+            dateFields = new DateTimeFieldType[] { DateTimeFieldType.year(),
+                    DateTimeFieldType.monthOfYear() };
+            return new Partial(dateFields, dateValues);
+        } else if (dateValues.length == 3) {
+            dateFields = new DateTimeFieldType[] { DateTimeFieldType.year(),
+                    DateTimeFieldType.monthOfYear(),
+                    DateTimeFieldType.dayOfMonth() };
+            return new Partial(dateFields, dateValues);
+        }
+
+        return null;
+    }
+
+    private static int[] extractDateValuesFromDateStr(String dateStrs) {
+
+        List<Integer> dateValueList = new ArrayList<Integer>();
+
+        Pattern regEx = Pattern.compile(DATE_STR_REGEX);
+        Matcher matcher = regEx.matcher(dateStrs);
+
+        String dateValueStr;
+
+        if (!matcher.matches()) {
+            throw new IllegalArgumentException("Date input can not be parsed");
+        }
+
+        for (int i = 1; i < matcher.groupCount() + 1; i++) {
+            dateValueStr = matcher.group(i);
+            if (dateValueStr == null) {
+                break;
+            }
+            dateValueList.add(NumberUtils.createInteger(dateValueStr));
+        }
+
+        int[] dateValueArr = new int[dateValueList.size()];
+
+        for (int i = 0; i < dateValueArr.length; i++) {
+            dateValueArr[i] = dateValueList.get(i);
+        }
+
+        return dateValueArr;
+    }
 }

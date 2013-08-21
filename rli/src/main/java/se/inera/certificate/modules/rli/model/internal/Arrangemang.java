@@ -26,17 +26,17 @@ public class Arrangemang {
 
 	private String bokningsReferens;
 	
-	private LocalDate bokningsDatum;
+	private String bokningsDatum;
 	
 	private String plats;
 	
-	private LocalDate arrangemangStartDatum;
+	private String arrangemangStartDatum;
 	
-	private LocalDate arrangemangSlutDatum;
+	private String arrangemangSlutDatum;
 	
 	private ArrangemangsTyp arrangemangsTyp;
 	
-	private LocalDate avbestallningsDatum;
+	private String avbestallningsDatum;
 		
 	public Arrangemang() {
 	
@@ -50,11 +50,11 @@ public class Arrangemang {
 		this.bokningsReferens = bokningsReferens;
 	}
 
-	public LocalDate getBokningsDatum() {
+	public String getBokningsDatum() {
 		return bokningsDatum;
 	}
 
-	public void setBokningsDatum(LocalDate bokningsDatum) {
+	public void setBokningsDatum(String bokningsDatum) {
 		this.bokningsDatum = bokningsDatum;
 	}
 
@@ -66,19 +66,19 @@ public class Arrangemang {
 		this.plats = plats;
 	}
 
-	public LocalDate getArrangemangStartDatum() {
+	public String getArrangemangStartDatum() {
 		return arrangemangStartDatum;
 	}
 
-	public void setArrangemangStartDatum(LocalDate arrangemangStartDatum) {
+	public void setArrangemangStartDatum(String arrangemangStartDatum) {
 		this.arrangemangStartDatum = arrangemangStartDatum;
 	}
 
-	public LocalDate getArrangemangSlutDatum() {
+	public String getArrangemangSlutDatum() {
 		return arrangemangSlutDatum;
 	}
 
-	public void setArrangemangSlutDatum(LocalDate arrangemangSlutDatum) {
+	public void setArrangemangSlutDatum(String arrangemangSlutDatum) {
 		this.arrangemangSlutDatum = arrangemangSlutDatum;
 	}
 
@@ -90,11 +90,11 @@ public class Arrangemang {
 		this.arrangemangsTyp = arrangemangsTyp;
 	}
 
-	public LocalDate getAvbestallningsDatum() {
+	public String getAvbestallningsDatum() {
 		return avbestallningsDatum;
 	}
 
-	public void setAvbestallningsDatum(LocalDate avbestallningsDatum) {
+	public void setAvbestallningsDatum(String avbestallningsDatum) {
 		this.avbestallningsDatum = avbestallningsDatum;
 	}
 
