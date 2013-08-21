@@ -47,8 +47,12 @@
     </property>
   </bean>
 
-  <bean id ="transportToExternalConverter" class="se.inera.certificate.modules.rli.model.converters.TransportToExternalConverterImpl" />
-  <bean id ="externalToTransportConverter" class="se.inera.certificate.modules.rli.model.converters.ExternalToTransportConverterImpl" />
+  <bean id="transportToExternalConverter" class="se.inera.certificate.modules.rli.model.converters.TransportToExternalConverterImpl"/>
+  
+  <bean id="externalToTransportConverter" class="se.inera.certificate.modules.rli.model.converters.ExternalToTransportConverterImpl"/>
+  
+  <bean id="externalValidator" class="se.inera.certificate.modules.rli.validator.ExternalValidatorImpl"/>
+  
   <jaxrs:server address="/">
     <jaxrs:serviceBeans>
       <bean class="se.inera.certificate.modules.rli.rest.RliModuleApi"/>

@@ -1,7 +1,6 @@
 !1 Validering av ett reseläkarintyg.
 
-|Validera intyg|
-|typ|intyg|personnr|resenar|resmal|fel?|kommentar|
-|rli|intyg-1|19490715-3253|Carl Bildt|Washington|[]|Inga fel|
-|rli|intyg-1|19490715-3253||Washington|[Resenär saknas]|Resenär är obligatorisk|
-|rli|intyg-1|19490715-3253|Carl Bildt||[Resmål saknas]|Resmål är obligatoriskt|
+|Validera Rese intyg|
+|typ|intyg|fel?|kommentar|
+|rli|rli-example-1-external.json|200|Inga fel|
+|rli|external-missing-fields.json|400|Saknar obligatoriska fält|

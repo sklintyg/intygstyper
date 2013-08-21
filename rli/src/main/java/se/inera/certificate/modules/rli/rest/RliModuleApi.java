@@ -18,6 +18,8 @@
  */
 package se.inera.certificate.modules.rli.rest;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -28,9 +30,11 @@ import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.rli.model.converters.ExternalToTransportConverter;
 import se.inera.certificate.modules.rli.model.converters.TransportToExternalConverter;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
+import se.inera.certificate.modules.rli.validator.ExternalValidator;
 
 /**
  * The contract between the certificate module and the generic components (Intygstjänsten and Mina-Intyg).
@@ -44,6 +48,9 @@ public class RliModuleApi {
 	
 	@Autowired
 	private ExternalToTransportConverter externalToTransportConverter;
+	
+	@Autowired
+	private ExternalValidator externalValidator;
 	/**
 	 * Handles conversion from the transport model (XML) to the external JSON model.
 	 * 
@@ -86,11 +93,18 @@ public class RliModuleApi {
 	 */
 	@POST
 	@Path("/valid")
-	@Consumes(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response validate(Utlatande externalModel) {
-		// TODO: Implement when validation is required.
-		return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
+		
+		List<String> validationErrors = externalValidator.validate(externalModel);
+		
+		if (validationErrors.isEmpty()) {
+            return Response.ok().build();
+        } else {
+            String response = Strings.join(",", validationErrors);
+            return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
+        }
 	}
 
 	/**

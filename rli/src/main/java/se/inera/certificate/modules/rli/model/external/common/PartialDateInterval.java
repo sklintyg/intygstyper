@@ -25,6 +25,9 @@ public class PartialDateInterval {
 	private Partial from;
 	private Partial tom;
 
+	public PartialDateInterval() {
+		
+	}
 	public PartialDateInterval(Partial from, Partial tom) {
 		this.from = from;
 		this.tom = tom;

@@ -82,7 +82,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 		
 		externalModel.setSkickatdatum(source.getSkickatdatum());
 		
-		//Convertions from here on
+		//Conversions from here on
 
 		externalModel.setPatient(convertPatient(source.getPatient()));
 
