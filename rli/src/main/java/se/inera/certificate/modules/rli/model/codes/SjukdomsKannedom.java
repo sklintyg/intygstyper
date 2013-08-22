@@ -29,7 +29,7 @@ public enum SjukdomsKannedom implements ICodeSystem {
 
 	private static String codeSystemName = "kv_sjukdomskännedom_intyg";
 	
-	private static String codeSystem = null;
+	private static String codeSystem = "f3a556c4-d54b-4f67-8496-d5259df70493";
 	
 	private static String codeSystemVersion = null;
 	

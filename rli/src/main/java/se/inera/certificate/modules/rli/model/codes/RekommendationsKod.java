@@ -32,7 +32,7 @@ public enum RekommendationsKod implements ICodeSystem {
 
 	private static String codeSystemName = "kv_rekommendation_intyg";
 	
-	private static String codeSystem = null;
+	private static String codeSystem = "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459";
 	
 	private static String codeSystemVersion = null;
 	
