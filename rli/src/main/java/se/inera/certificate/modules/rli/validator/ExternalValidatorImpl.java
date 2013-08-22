@@ -5,7 +5,6 @@ package se.inera.certificate.modules.rli.validator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
@@ -14,12 +13,21 @@ import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
 import se.inera.certificate.modules.rli.model.external.common.Observation;
 import se.inera.certificate.modules.rli.model.external.common.Patient;
 import se.inera.certificate.modules.rli.model.external.common.Rekommendation;
+import se.inera.certificate.validate.IdValidator;
+import se.inera.certificate.validate.SimpleIdValidatorBuilder;
 
 /**
  * @author erik
  * 
  */
 public class ExternalValidatorImpl implements ExternalValidator {
+
+	private IdValidator idValidator;
+
+	public ExternalValidatorImpl() {
+		idValidator = new SimpleIdValidatorBuilder().withPersonnummerValidator(true)
+				.withSamordningsnummerValidator(true).build();
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -149,21 +157,13 @@ public class ExternalValidatorImpl implements ExternalValidator {
 	}
 
 	private void validatePatient(Utlatande utlatande, List<String> validationErrors) {
-		
-		String PERSON_NUMBER_REGEX = "[0-9]{8}[-+][0-9]{4}";
-		
 		Patient patient = utlatande.getPatient();
+
 		if (patient == null) {
 			validationErrors.add("Patient was null");
 		}
 		else {
-			String personNumber = patient.getPersonId().getExtension();
-			if (personNumber == null || !Pattern.matches(PERSON_NUMBER_REGEX, personNumber)) {
-				validationErrors.add("Wrong format for person-id! Valid format is YYYYMMDD-XXXX or YYYYMMDD+XXXX.");
-			}
-			
+			validationErrors.addAll(idValidator.validate(patient.getPersonId()));
 		}
-
 	}
-
 }
