@@ -26,7 +26,6 @@ import org.joda.time.LocalDateTime;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Status;
-import se.inera.certificate.modules.rli.model.external.common.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.common.Bestallare;
 import se.inera.certificate.modules.rli.model.external.common.Betalningsmottagare;
 import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
@@ -42,6 +41,7 @@ import se.inera.certificate.modules.rli.model.external.common.Vardkontakt;
  * extending with:
  * <ul>
  * <li> {@link Arrangemang}
+ * <li> {@link Aktivitet}
  * </ul>
  * 
  * @author Gustav Norbäcker, R2M

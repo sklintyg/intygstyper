@@ -30,7 +30,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import se.inera.certificate.modules.rli.model.external.Utlatande;
-import se.inera.certificate.modules.rli.model.external.common.Aktivitet;
+import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.common.Observation;
 import se.inera.certificate.modules.rli.model.external.common.Rekommendation;
 

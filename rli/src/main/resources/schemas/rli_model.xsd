@@ -101,6 +101,8 @@
 			<xs:element name="utforsAv" type="utforarrollType"
 				minOccurs="0" maxOccurs="unbounded" />
 
+			<xs:element name="plats" type="xs:string" minOccurs="0" />
+
 			<xs:any namespace="##other" processContents="lax" minOccurs="0"
 				maxOccurs="unbounded" />
 		</xs:sequence>

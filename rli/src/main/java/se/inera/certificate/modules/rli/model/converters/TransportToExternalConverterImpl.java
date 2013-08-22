@@ -35,7 +35,7 @@ import se.inera.certificate.common.v1.RekommendationType;
 import se.inera.certificate.common.v1.UtforarrollType;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
-import se.inera.certificate.modules.rli.model.external.common.Aktivitet;
+import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.common.Enhet;
 import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
 import se.inera.certificate.modules.rli.model.external.common.Observation;

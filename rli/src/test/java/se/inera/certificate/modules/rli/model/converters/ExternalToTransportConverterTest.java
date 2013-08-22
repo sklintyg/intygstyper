@@ -33,7 +33,7 @@ import se.inera.certificate.common.v1.RekommendationType;
 import se.inera.certificate.common.v1.Utlatande;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.modules.rli.model.external.common.Aktivitet;
+import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.common.Arbetsuppgift;
 import se.inera.certificate.modules.rli.model.external.common.Enhet;
 import se.inera.certificate.modules.rli.model.external.common.Observation;
