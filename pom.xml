@@ -257,6 +257,11 @@
       </dependency>
       <dependency>
         <groupId>se.inera.certificate</groupId>
+        <artifactId>integration-util</artifactId>
+        <version>${inera.certificate.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>se.inera.certificate</groupId>
         <artifactId>model</artifactId>
         <version>${inera.certificate.version}</version>
       </dependency>

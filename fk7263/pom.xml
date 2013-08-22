@@ -32,6 +32,10 @@
     </dependency>
     <dependency>
       <groupId>se.inera.certificate</groupId>
+      <artifactId>integration-util</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>se.inera.certificate</groupId>
       <artifactId>model</artifactId>
       <exclusions>
         <exclusion>
