@@ -241,10 +241,10 @@ public class PdfGenerator {
     }
 
     private void fillCapacity() {
-        fillNedsattning(intyg.getArbetsformaga(100.0), REDUCED_WORK_CAPACITY_FULL, REDUCED_WORK_CAPACITY_FULL_FROM, REDUCED_WORK_CAPACITY_FULL_TOM);
-        fillNedsattning(intyg.getArbetsformaga(75.0), REDUCED_WORK_CAPACITY_75, REDUCED_WORK_CAPACITY_75_FROM, REDUCED_WORK_CAPACITY_75_TOM);
+        fillNedsattning(intyg.getArbetsformaga(0.0), REDUCED_WORK_CAPACITY_FULL, REDUCED_WORK_CAPACITY_FULL_FROM, REDUCED_WORK_CAPACITY_FULL_TOM);
+        fillNedsattning(intyg.getArbetsformaga(25.0), REDUCED_WORK_CAPACITY_75, REDUCED_WORK_CAPACITY_75_FROM, REDUCED_WORK_CAPACITY_75_TOM);
         fillNedsattning(intyg.getArbetsformaga(50.0), REDUCED_WORK_CAPACITY_50, REDUCED_WORK_CAPACITY_50_FROM, REDUCED_WORK_CAPACITY_50_TOM);
-        fillNedsattning(intyg.getArbetsformaga(25.0), REDUCED_WORK_CAPACITY_25, REDUCED_WORK_CAPACITY_25_FROM, REDUCED_WORK_CAPACITY_25_TOM);
+        fillNedsattning(intyg.getArbetsformaga(75.0), REDUCED_WORK_CAPACITY_25, REDUCED_WORK_CAPACITY_25_FROM, REDUCED_WORK_CAPACITY_25_TOM);
     }
 
     private void fillCapacityRelativeTo() {
