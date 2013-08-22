@@ -20,6 +20,8 @@ package se.inera.certificate.modules.rli.model.external.common;
 
 import org.joda.time.LocalDate;
 
+import se.inera.certificate.model.Kod;
+
 public class Sysselsattning {
 
 	private Kod typAvSysselsattning;

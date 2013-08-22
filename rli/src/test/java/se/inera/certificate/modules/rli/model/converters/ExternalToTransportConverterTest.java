@@ -18,7 +18,7 @@
  */
 package se.inera.certificate.modules.rli.model.converters;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,18 +31,16 @@ import se.inera.certificate.common.v1.ObservationType;
 import se.inera.certificate.common.v1.PatientType;
 import se.inera.certificate.common.v1.RekommendationType;
 import se.inera.certificate.common.v1.Utlatande;
-
-import se.inera.certificate.modules.rli.model.external.common.Vardgivare;
-//import se.inera.certificate.modules.rli.model.external.Arrangemang;
+import se.inera.certificate.model.Id;
+import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.rli.model.external.common.Aktivitet;
-import se.inera.certificate.modules.rli.model.external.common.Enhet;
-import se.inera.certificate.modules.rli.model.external.common.Kod;
 import se.inera.certificate.modules.rli.model.external.common.Arbetsuppgift;
-import se.inera.certificate.modules.rli.model.external.common.Id;
+import se.inera.certificate.modules.rli.model.external.common.Enhet;
 import se.inera.certificate.modules.rli.model.external.common.Observation;
 import se.inera.certificate.modules.rli.model.external.common.Patient;
 import se.inera.certificate.modules.rli.model.external.common.PatientRelation;
 import se.inera.certificate.modules.rli.model.external.common.Rekommendation;
+import se.inera.certificate.modules.rli.model.external.common.Vardgivare;
 
 public class ExternalToTransportConverterTest {
 

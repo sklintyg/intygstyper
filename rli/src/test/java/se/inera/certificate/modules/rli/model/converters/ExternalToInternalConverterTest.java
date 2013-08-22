@@ -26,15 +26,15 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
+import se.inera.certificate.model.Id;
+import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
-import se.inera.certificate.modules.rli.model.internal.HoSPersonal;
-import se.inera.certificate.modules.rli.model.internal.Utfardare;
 import se.inera.certificate.modules.rli.model.external.common.Enhet;
 import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
-import se.inera.certificate.modules.rli.model.external.common.Id;
-import se.inera.certificate.modules.rli.model.external.common.Kod;
 import se.inera.certificate.modules.rli.model.external.common.Patient;
 import se.inera.certificate.modules.rli.model.external.common.Vardgivare;
+import se.inera.certificate.modules.rli.model.internal.HoSPersonal;
+import se.inera.certificate.modules.rli.model.internal.Utfardare;
 
 public class ExternalToInternalConverterTest {
 

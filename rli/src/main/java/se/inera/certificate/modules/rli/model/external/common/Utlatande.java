@@ -23,6 +23,10 @@ import java.util.List;
 
 import org.joda.time.LocalDateTime;
 
+import se.inera.certificate.model.Id;
+import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.Status;
+
 public class Utlatande {
 	private Id utlatandeId;
 	private Kod typAvUtlatande;

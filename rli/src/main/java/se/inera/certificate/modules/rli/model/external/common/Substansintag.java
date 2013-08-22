@@ -18,6 +18,8 @@
  */
 package se.inera.certificate.modules.rli.model.external.common;
 
+import se.inera.certificate.model.Kod;
+
 public class Substansintag {
 
 	private Kod typAvSubstans;

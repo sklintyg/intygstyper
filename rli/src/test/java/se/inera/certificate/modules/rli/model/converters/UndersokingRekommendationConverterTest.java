@@ -18,16 +18,17 @@
  */
 package se.inera.certificate.modules.rli.model.converters;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
-import se.inera.certificate.modules.rli.model.external.common.Kod;
 import se.inera.certificate.modules.rli.model.external.common.Observation;
 import se.inera.certificate.modules.rli.model.internal.OrsakAvbokning;
 

@@ -23,6 +23,9 @@ import java.util.List;
 
 import org.joda.time.Partial;
 
+import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.PhysicalQuantity;
+
 public class Observation {
 
 	private Kod observationskategori;

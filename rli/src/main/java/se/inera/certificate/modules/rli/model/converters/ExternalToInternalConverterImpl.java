@@ -25,11 +25,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import se.inera.certificate.model.Id;
+import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.rli.model.codes.ArrangemangsTyp;
 import se.inera.certificate.modules.rli.model.external.common.Enhet;
 import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
-import se.inera.certificate.modules.rli.model.external.common.Id;
-import se.inera.certificate.modules.rli.model.external.common.Kod;
 import se.inera.certificate.modules.rli.model.internal.Arrangemang;
 import se.inera.certificate.modules.rli.model.internal.HoSPersonal;
 import se.inera.certificate.modules.rli.model.internal.Patient;
@@ -185,7 +185,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 	}
 
 	List<Status> convertToIntStatuses(
-			List<se.inera.certificate.modules.rli.model.external.common.Status> extStatuses) {
+			List<se.inera.certificate.model.Status> extStatuses) {
 		
 		LOG.debug("Converting statuses");
 		
@@ -198,7 +198,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 		
 		Status intStatus;
 		
-		for (se.inera.certificate.modules.rli.model.external.common.Status extStatus : extStatuses) {
+		for (se.inera.certificate.model.Status extStatus : extStatuses) {
 			intStatus = new Status();
 			intStatus.setType(extStatus.getType().name());
 			intStatus.setTimestamp(extStatus.getTimestamp());

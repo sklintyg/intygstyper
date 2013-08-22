@@ -23,17 +23,17 @@ import java.util.List;
 
 import org.joda.time.LocalDateTime;
 
+import se.inera.certificate.model.Id;
+import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.Status;
 import se.inera.certificate.modules.rli.model.external.common.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.common.Bestallare;
 import se.inera.certificate.modules.rli.model.external.common.Betalningsmottagare;
 import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
-import se.inera.certificate.modules.rli.model.external.common.Id;
-import se.inera.certificate.modules.rli.model.external.common.Kod;
 import se.inera.certificate.modules.rli.model.external.common.Observation;
 import se.inera.certificate.modules.rli.model.external.common.Patient;
 import se.inera.certificate.modules.rli.model.external.common.Referens;
 import se.inera.certificate.modules.rli.model.external.common.Rekommendation;
-import se.inera.certificate.modules.rli.model.external.common.Status;
 import se.inera.certificate.modules.rli.model.external.common.Substansintag;
 import se.inera.certificate.modules.rli.model.external.common.Vardkontakt;
 

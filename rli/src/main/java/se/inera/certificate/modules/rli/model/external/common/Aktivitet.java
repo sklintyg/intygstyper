@@ -21,6 +21,8 @@ package se.inera.certificate.modules.rli.model.external.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.inera.certificate.model.Kod;
+
 public class Aktivitet {
 
 	private Kod aktivitetskod;
