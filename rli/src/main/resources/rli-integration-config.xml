@@ -53,6 +53,8 @@
   
   <bean id="externalValidator" class="se.inera.certificate.modules.rli.validator.ExternalValidatorImpl"/>
   
+  <bean id="externalToInternalConverter" class="se.inera.certificate.modules.rli.model.converters.ExternalToInternalConverterImpl"/>
+  
   <jaxrs:server address="/">
     <jaxrs:serviceBeans>
       <bean class="se.inera.certificate.modules.rli.rest.RliModuleApi"/>

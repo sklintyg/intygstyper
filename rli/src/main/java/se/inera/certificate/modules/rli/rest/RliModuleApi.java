@@ -31,6 +31,7 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.model.util.Strings;
+import se.inera.certificate.modules.rli.model.converters.ExternalToInternalConverter;
 import se.inera.certificate.modules.rli.model.converters.ExternalToTransportConverter;
 import se.inera.certificate.modules.rli.model.converters.TransportToExternalConverter;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
@@ -51,6 +52,9 @@ public class RliModuleApi {
 	
 	@Autowired
 	private ExternalValidator externalValidator;
+	
+	@Autowired
+	private ExternalToInternalConverter externalToInternalConverter;
 	/**
 	 * Handles conversion from the transport model (XML) to the external JSON model.
 	 * 
@@ -136,10 +140,8 @@ public class RliModuleApi {
 	@Path("/internal")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response convertExternalToInternal(Utlatande externalModel) {
-		// TODO: Change the return type of this method to the internal model POJO.
-		// TODO: Implement when conversion from the external model i required.
-		return null;
+	public se.inera.certificate.modules.rli.model.internal.Utlatande convertExternalToInternal(Utlatande externalModel) {
+		return externalToInternalConverter.fromExternalToInternal(externalModel);
 	}
 
 	/**
