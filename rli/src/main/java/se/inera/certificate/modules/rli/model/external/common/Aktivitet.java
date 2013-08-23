@@ -21,10 +21,12 @@ package se.inera.certificate.modules.rli.model.external.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 
 public class Aktivitet {
 
+    private Id aktivitetsId;
     private Kod aktivitetskod;
     private PartialDateInterval aktivitetstid;
     private String beskrivning;
@@ -34,6 +36,14 @@ public class Aktivitet {
     private Enhet utforsVidEnhet;
     private List<Utforarroll> utforsAvs;
     private Omfattning omfattning;
+
+    public Id getAktivitetsId() {
+        return aktivitetsId;
+    }
+
+    public void setAktivitetsId(Id aktivitetsId) {
+        this.aktivitetsId = aktivitetsId;
+    }
 
     public Kod getAktivitetskod() {
         return aktivitetskod;

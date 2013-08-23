@@ -61,11 +61,13 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
     }
 
     /**
-     * Converts from the transport format (se.inera.certificate.common.v1.Utlatande) to the external format
+     * Converts from the transport format
+     * (se.inera.certificate.common.v1.Utlatande) to the external format
      * (se.inera.certificate.modules.rli.model.external.Utlatande).
      * 
      * @param source
-     *            Utlatande in the transport format to be converted to external format
+     *            Utlatande in the transport format to be converted to external
+     *            format
      * @return se.inera.certificate.modules.rli.model.external.Utlatande
      */
     @Override
@@ -142,7 +144,8 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
     }
 
     /**
-     * Iterates over a list of objects of the type ObservationType and converts them to type Observation.
+     * Iterates over a list of objects of the type ObservationType and converts
+     * them to type Observation.
      * 
      * @param source
      *            List of objects of type ObservationType to be converted
@@ -162,7 +165,8 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
     }
 
     /**
-     * Converts an object from ObservationType to Observation, this needs more work.
+     * Converts an object from ObservationType to Observation, this needs more
+     * work.
      * 
      * @param source
      *            ObservationType to be converted
@@ -170,6 +174,8 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      */
     private Observation convertObservation(ObservationType source) {
         Observation observation = new Observation();
+
+        observation.setObservationsId(IsoTypeConverter.toId(source.getObservationsId()));
 
         if (source.getObservationsperiod() != null) {
             observation.setObservationsperiod(new PartialDateInterval(source.getObservationsperiod().getFrom(), source
@@ -221,7 +227,8 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * 
      * @param source
      *            se.inera.certificate.rli.v1.Arrangemang
-     * @return import se.inera.certificate.modules.rli.model.external.Arrangemang
+     * @return import
+     *         se.inera.certificate.modules.rli.model.external.Arrangemang
      */
     Arrangemang convertArrangemang(se.inera.certificate.rli.v1.Arrangemang source) {
         LOG.debug("Converting arrangemang");
@@ -241,8 +248,9 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
     }
 
     /**
-     * Iterates through a list of AktivitetType and converts each subsequent item from AktivitetType to the Aktivitet
-     * that the external model understands.
+     * Iterates through a list of AktivitetType and converts each subsequent
+     * item from AktivitetType to the Aktivitet that the external model
+     * understands.
      * 
      * @param source
      *            the list of AktivitetType's to be converted
@@ -269,10 +277,14 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @return Aktivitet
      */
     private Aktivitet convertAktivitet(AktivitetType source) {
+
         if (source == null) {
             return null;
         }
+
         Aktivitet aktivitet = new Aktivitet();
+
+        aktivitet.setAktivitetsId(IsoTypeConverter.toId(source.getAktivitetsId()));
         aktivitet.setBeskrivning(source.getBeskrivning());
         aktivitet.setAktivitetskod(IsoTypeConverter.toKod(source.getAktivitetskod()));
         if (source.getAktivitetstid() != null) {
@@ -325,7 +337,11 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 
         Patient patient = new Patient();
         patient.setPersonId(IsoTypeConverter.toId(source.getPersonId()));
-        patient.setAdress(source.getAdress());
+
+        patient.setPostadress(source.getPostadress());
+        patient.setPostnummer(source.getPostnummer());
+        patient.setPostort(source.getPostort());
+
         patient.getPatientRelations().addAll(convertPatientRelations(source.getPatientRelations()));
         patient.getFornamns().addAll(source.getFornamns());
         patient.getEfternamns().addAll(source.getEfternamns());
@@ -350,9 +366,11 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 
         patientRelation.setPersonId(IsoTypeConverter.toId(source.getPersonId()));
         patientRelation.setRelationskategori(IsoTypeConverter.toKod(source.getRelationskategori()));
-        patientRelation.getAdresses().add(source.getAdress());
+        patientRelation.setPostadress(source.getPostadress());
+        patientRelation.setPostnummer(source.getPostnummer());
+        patientRelation.setPostort(source.getPostort());
         patientRelation.getFornamns().addAll(source.getFornamns());
-        patientRelation.getEfternamns().addAll(source.getEfternamns());
+        patientRelation.setEfternamn(source.getEfternamn());
         patientRelation.getMellannamns().addAll(source.getMellannamns());
 
         for (iso.v21090.dt.v1.CD cd : source.getRelationTyps()) {

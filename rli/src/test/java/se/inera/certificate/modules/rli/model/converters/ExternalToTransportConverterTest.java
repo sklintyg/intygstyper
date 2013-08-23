@@ -56,7 +56,7 @@ public class ExternalToTransportConverterTest {
         Patient source = buildPatient();
         PatientType patient = converter.convertPatient(source);
 
-        assertEquals("Testvägen 23", patient.getAdress());
+        assertEquals("Testvägen 23", patient.getPostadress());
     }
 
     @Test
@@ -110,7 +110,9 @@ public class ExternalToTransportConverterTest {
 
     private Patient buildPatient() {
         Patient patient = new Patient();
-        patient.setAdress("Testvägen 23");
+        patient.setPostadress("Testvägen 23");
+        patient.setPostnummer("12345");
+        patient.setPostort("Teststaden"); 
         List<Arbetsuppgift> arbetsuppgifts = new ArrayList<Arbetsuppgift>();
         Arbetsuppgift a = new Arbetsuppgift();
         a.setTypAvArbetsuppgift("Testare");
@@ -140,15 +142,11 @@ public class ExternalToTransportConverterTest {
         List<String> relationForNamn = new ArrayList<String>();
         relationForNamn.add("RelationNamn");
 
-        List<String> relationEfterNamn = new ArrayList<String>();
-        relationEfterNamn.add("RelationEfterNamn");
-
         List<Kod> relationsTyps = new ArrayList<Kod>();
         relationsTyps.add(new Kod("RelationsTypsKod"));
 
-        patientRelation.getEfternamns().addAll(relationEfterNamn);
-        patientRelation.getFornamns().addAll(relationForNamn);
-        patientRelation.getAdresses().addAll(relationAdr);
+        patientRelation.setEfternamn("RelationEfterNamn");
+        patientRelation.getFornamns().addAll(relationForNamn);        
         patientRelation.setPersonId(relationId);
         patientRelation.setRelationskategori(new Kod("relationsKategori"));
         patientRelation.getRelationTyps().addAll(relationsTyps);

@@ -87,7 +87,9 @@ public class TransportToExternalConverterTest {
         patientID.setIdentifierName("patientID");
         patientID.setExtension("patientID");
         pt.setPersonId(patientID);
-        pt.setAdress("Testgatan 23");
+        pt.setPostadress("Testgatan 23");
+        pt.setPostnummer("12345");
+        pt.setPostort("Teststaden");
         return pt;
     }
 
@@ -200,7 +202,7 @@ public class TransportToExternalConverterTest {
 
         assertEquals(transportPatient.getPersonId().getExtension(), externalPatient.getPersonId().getExtension());
 
-        assertEquals(transportPatient.getAdress(), externalPatient.getAdress());
+        assertEquals(transportPatient.getPostadress(), externalPatient.getPostadress());
 
     }
 

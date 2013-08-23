@@ -274,7 +274,11 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
             return null;
         }
         PatientType patientType = new PatientType();
-        patientType.setAdress(source.getAdress());
+        
+        patientType.setPostadress(source.getPostadress());
+        patientType.setPostnummer(source.getPostnummer());
+        patientType.setPostort(source.getPostort());
+        
         patientType.setPersonId(IsoTypeConverter.toII(source.getPersonId()));
 
         if (source.getFornamns() != null) {
@@ -318,15 +322,18 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
             return null;
         }
         PatientRelationType patientRelationType = new PatientRelationType();
-
-        patientRelationType.setAdress(source.getAdresses().toString());
+        
+        patientRelationType.setPostadress(source.getPostadress());
+        patientRelationType.setPostnummer(source.getPostnummer());
+        patientRelationType.setPostort(source.getPostort());
+        
         patientRelationType.setPersonId(IsoTypeConverter.toII(source.getPersonId()));
         patientRelationType.setRelationskategori(IsoTypeConverter.toCD(source.getRelationskategori()));
         patientRelationType.getFornamns().addAll(source.getFornamns());
         if (source.getMellannamns() != null) {
             patientRelationType.getMellannamns().addAll(source.getMellannamns());
         }
-        patientRelationType.getEfternamns().addAll(source.getEfternamns());
+        patientRelationType.setEfternamn(source.getEfternamn());
         patientRelationType.getRelationTyps().addAll(convertRelationTyps(source.getRelationTyps()));
 
         return patientRelationType;

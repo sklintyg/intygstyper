@@ -87,7 +87,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         intUtlatande.setStatus(intStatuses);
 
         HoSPersonal intHoSPersonal = convertToIntHoSPersonal(extUtlatande.getSkapadAv());
-        intUtlatande.setSkapatAv(intHoSPersonal);
+        intUtlatande.setSkapadAv(intHoSPersonal);
 
         Patient intPatient = convertToIntPatient(extUtlatande.getPatient());
         intUtlatande.setPatient(intPatient);
@@ -122,11 +122,11 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         Vardenhet intVardenhet = new Vardenhet();
 
         intVardenhet.setEnhetsId(InternalModelConverterUtils.getValueFromId(extVardenhet.getEnhetsId()));
-        intVardenhet.setEnhetsNamn(extVardenhet.getEnhetsnamn());
-        intVardenhet.setPostAddress(extVardenhet.getPostadress());
-        intVardenhet.setPostNummer(extVardenhet.getPostnummer());
-        intVardenhet.setPostOrt(extVardenhet.getPostort());
-        intVardenhet.setTelefonNummer(extVardenhet.getTelefonnummer());
+        intVardenhet.setEnhetsnamn(extVardenhet.getEnhetsnamn());
+        intVardenhet.setPostadress(extVardenhet.getPostadress());
+        intVardenhet.setPostnummer(extVardenhet.getPostnummer());
+        intVardenhet.setPostort(extVardenhet.getPostort());
+        intVardenhet.setTelefonnummer(extVardenhet.getTelefonnummer());
         intVardenhet.setePost(extVardenhet.getEpost());
 
         Vardgivare intVardgivare = convertToIntVardgivare(extVardenhet.getVardgivare());
@@ -147,7 +147,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         Vardgivare intVardgivare = new Vardgivare();
 
         intVardgivare.setVardgivarId(InternalModelConverterUtils.getValueFromId(extVardgivare.getVardgivareId()));
-        intVardgivare.setVardgivarNamn(extVardgivare.getVardgivarnamn());
+        intVardgivare.setVardgivarnamn(extVardgivare.getVardgivarnamn());
 
         return intVardgivare;
     }
@@ -210,15 +210,17 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         intPatient.setPersonId(InternalModelConverterUtils.getValueFromId(extPatient.getPersonId()));
 
         String efterNamn = StringUtils.join(extPatient.getEfternamns(), " ");
-        intPatient.setEfterNamn(efterNamn);
+        intPatient.setEfternamn(efterNamn);
 
         String forNamn = StringUtils.join(extPatient.getFornamns(), " ");
-        intPatient.setForNamn(forNamn);
+        intPatient.setFornamn(forNamn);
 
         String fullstandigtNamn = forNamn.concat(" ").concat(efterNamn);
-        intPatient.setFullstandigtNamn(fullstandigtNamn);
+        intPatient.setFullstandigtnamn(fullstandigtNamn);
 
-        intPatient.setPostAdress(extPatient.getAdress());
+        intPatient.setPostadress(extPatient.getPostadress());
+        intPatient.setPostnummer(extPatient.getPostnummer());
+        intPatient.setPostort(extPatient.getPostort());
 
         return intPatient;
     }

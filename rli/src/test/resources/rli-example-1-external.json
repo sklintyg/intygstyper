@@ -20,10 +20,10 @@
       "fornamns":[
          "Test"
       ],
-      "efternamns":[
-         "Testsson"
-      ],
-      "adress":"Teststigen 1, 123 45 Stockholm"
+      "efternamn":"Testsson",
+      "postadress":"Teststigen 1",
+      "postnummer":"123 45",
+      "postort":"Stockholm"
    },
    "skapadAv":{
       "personalId":{

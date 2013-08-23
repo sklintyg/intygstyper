@@ -20,10 +20,10 @@
       "fornamns":[
          "Fröken"
       ],
-      "efternamns":[
-         "Fräken"
-      ],
-      "adress":"Genvägen 1, 150 21 Mölnbo"
+      "efternamn":"Fräken",
+      "postadress":"Genvägen 1",
+      "postnummer":"150 21",
+      "postort":"Mölnbo"
    },
    "skapadAv":{
       "personalId":{

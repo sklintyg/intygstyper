@@ -23,11 +23,13 @@ import java.util.List;
 
 import org.joda.time.Partial;
 
+import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.PhysicalQuantity;
 
 public class Observation {
 
+    private Id observationsId;
     private Kod observationskategori;
     private Kod observationskod;
     private Partial observationstid;
@@ -38,6 +40,14 @@ public class Observation {
     private Boolean patientenInstammer;
     private Utforarroll utforsAv;
     private List<Prognos> prognos;
+
+    public Id getObservationsId() {
+        return observationsId;
+    }
+
+    public void setObservationsId(Id observationsId) {
+        this.observationsId = observationsId;
+    }
 
     public Kod getObservationskategori() {
         return observationskategori;

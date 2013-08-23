@@ -30,9 +30,11 @@ public class PatientRelation {
     private List<Kod> relationTyps;
     private Id personId;
     private List<String> fornamns;
-    private List<String> efternamns;
+    private String efternamn;
     private List<String> mellannamns;
-    private List<String> adresses;
+    private String postadress;
+    private String postnummer;
+    private String postort;
 
     public Kod getRelationskategori() {
         return relationskategori;
@@ -64,11 +66,12 @@ public class PatientRelation {
         return this.fornamns;
     }
 
-    public List<String> getEfternamns() {
-        if (efternamns == null) {
-            efternamns = new ArrayList<String>();
-        }
-        return this.efternamns;
+    public String getEfternamn() {
+        return efternamn;
+    }
+
+    public void setEfternamn(String efternamn) {
+        this.efternamn = efternamn;
     }
 
     public List<String> getMellannamns() {
@@ -78,10 +81,28 @@ public class PatientRelation {
         return this.mellannamns;
     }
 
-    public List<String> getAdresses() {
-        if (adresses == null) {
-            adresses = new ArrayList<String>();
-        }
-        return this.adresses;
+    public String getPostadress() {
+        return postadress;
     }
+
+    public void setPostadress(String postadress) {
+        this.postadress = postadress;
+    }
+
+    public String getPostnummer() {
+        return postnummer;
+    }
+
+    public void setPostnummer(String postnummer) {
+        this.postnummer = postnummer;
+    }
+
+    public String getPostort() {
+        return postort;
+    }
+
+    public void setPostort(String postort) {
+        this.postort = postort;
+    }
+
 }

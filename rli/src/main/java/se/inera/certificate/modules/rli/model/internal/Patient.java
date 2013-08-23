@@ -22,15 +22,19 @@ public class Patient {
 
     private String personId;
 
-    private String fullstandigtNamn;
+    private String fullstandigtnamn;
 
-    private String forNamn;
+    private String fornamn;
 
-    private String efterNamn;
+    private String efternamn;
 
-    private String mellanNamn;
+    private String mellannamn;
 
-    private String postAdress;
+    private String postadress;
+    
+    private String postnummer;
+    
+    private String postort;
 
     public Patient() {
 
@@ -44,44 +48,60 @@ public class Patient {
         this.personId = personId;
     }
 
-    public String getFullstandigtNamn() {
-        return fullstandigtNamn;
+    public String getFullstandigtnamn() {
+        return fullstandigtnamn;
     }
 
-    public void setFullstandigtNamn(String fullstandigtNamn) {
-        this.fullstandigtNamn = fullstandigtNamn;
+    public void setFullstandigtnamn(String fullstandigtNamn) {
+        this.fullstandigtnamn = fullstandigtNamn;
     }
 
-    public String getForNamn() {
-        return forNamn;
+    public String getFornamn() {
+        return fornamn;
     }
 
-    public void setForNamn(String forNamn) {
-        this.forNamn = forNamn;
+    public void setFornamn(String forNamn) {
+        this.fornamn = forNamn;
     }
 
-    public String getEfterNamn() {
-        return efterNamn;
+    public String getEfternamn() {
+        return efternamn;
     }
 
-    public void setEfterNamn(String efterNamn) {
-        this.efterNamn = efterNamn;
+    public void setEfternamn(String efterNamn) {
+        this.efternamn = efterNamn;
     }
 
-    public String getMellanNamn() {
-        return mellanNamn;
+    public String getMellannamn() {
+        return mellannamn;
     }
 
-    public void setMellanNamn(String mellanNamn) {
-        this.mellanNamn = mellanNamn;
+    public void setMellannamn(String mellanNamn) {
+        this.mellannamn = mellanNamn;
     }
 
-    public String getPostAdress() {
-        return postAdress;
+    public String getPostadress() {
+        return postadress;
     }
 
-    public void setPostAdress(String postAdress) {
-        this.postAdress = postAdress;
+    public void setPostadress(String postAdress) {
+        this.postadress = postAdress;
+    }
+
+    public String getPostnummer() {
+        return postnummer;
+    }
+
+    public void setPostnummer(String postnummer) {
+        this.postnummer = postnummer;
+    }
+
+    public String getPostort() {
+        return postort;
+    }
+
+    public void setPostort(String postort) {
+        this.postort = postort;
     }
 
 }

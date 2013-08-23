@@ -22,7 +22,7 @@ public class Vardgivare {
 
     private String vardgivarId;
 
-    private String vardgivarNamn;
+    private String vardgivarnamn;
 
     public Vardgivare() {
 
@@ -36,12 +36,12 @@ public class Vardgivare {
         this.vardgivarId = vardgivarId;
     }
 
-    public String getVardgivarNamn() {
-        return vardgivarNamn;
+    public String getVardgivarnamn() {
+        return vardgivarnamn;
     }
 
-    public void setVardgivarNamn(String vardgivarNamn) {
-        this.vardgivarNamn = vardgivarNamn;
+    public void setVardgivarnamn(String vardgivarNamn) {
+        this.vardgivarnamn = vardgivarNamn;
     }
 
 }

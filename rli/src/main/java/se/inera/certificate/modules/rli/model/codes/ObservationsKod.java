@@ -22,7 +22,9 @@ import org.apache.commons.lang3.StringUtils;
 
 public enum ObservationsKod implements ICodeSystem {
 
-    SJUKDOM("39104002", "Sjukdom"), GRAVIDITET("289908002", "Gravid");
+    SJUKDOM("39104002", "Sjukdom"), 
+    GRAVIDITET("289908002", "Gravid"),
+    KOMPLIKATION_VID_GRAVIDITET("90821003", "Komplikation vid graviditet");
 
     private static String codeSystemName = "SNOMED-CT";
 

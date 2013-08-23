@@ -34,7 +34,7 @@ public class Utlatande {
 
     private LocalDateTime skickatDatum;
 
-    private HoSPersonal skapatAv;
+    private HoSPersonal skapadAv;
 
     private Patient patient;
 
@@ -90,12 +90,12 @@ public class Utlatande {
         this.skickatDatum = skickatDatum;
     }
 
-    public HoSPersonal getSkapatAv() {
-        return skapatAv;
+    public HoSPersonal getSkapadAv() {
+        return skapadAv;
     }
 
-    public void setSkapatAv(HoSPersonal skapatAv) {
-        this.skapatAv = skapatAv;
+    public void setSkapadAv(HoSPersonal skapadAv) {
+        this.skapadAv = skapadAv;
     }
 
     public Patient getPatient() {

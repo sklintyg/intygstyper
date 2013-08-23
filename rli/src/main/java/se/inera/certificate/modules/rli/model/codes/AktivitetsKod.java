@@ -20,8 +20,9 @@ package se.inera.certificate.modules.rli.model.codes;
 
 public enum AktivitetsKod implements ICodeSystem {
 
-    KLINISK_UNDERSOKNING("AV020", "klinisk undersökning UNS", "KVÅ"), OMVARDNADSATGARD("9632001", "Omvårdnadsåtgärd",
-            "SNOMED-CT");
+    KLINISK_UNDERSOKNING("AV020", "klinisk undersökning UNS", "KVÅ"),
+    FORSTA_UNDERSOKNING("AKT13", "Första undersökning", "kv_aktiviteter_intyg"),
+    OMVARDNADSATGARD("9632001", "Omvårdnadsåtgärd", "SNOMED-CT");
 
     private String code;
     private String description;

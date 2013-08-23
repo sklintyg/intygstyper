@@ -22,15 +22,15 @@ public class Vardenhet {
 
     private String enhetsId;
 
-    private String enhetsNamn;
+    private String enhetsnamn;
 
-    private String postAddress;
+    private String postadress;
 
-    private String postNummer;
+    private String postnummer;
 
-    private String postOrt;
+    private String postort;
 
-    private String telefonNummer;
+    private String telefonnummer;
 
     private String ePost;
 
@@ -48,44 +48,44 @@ public class Vardenhet {
         this.enhetsId = enhetsId;
     }
 
-    public String getEnhetsNamn() {
-        return enhetsNamn;
+    public String getEnhetsnamn() {
+        return enhetsnamn;
     }
 
-    public void setEnhetsNamn(String enhetsNamn) {
-        this.enhetsNamn = enhetsNamn;
+    public void setEnhetsnamn(String enhetsNamn) {
+        this.enhetsnamn = enhetsNamn;
     }
 
-    public String getPostAddress() {
-        return postAddress;
+    public String getPostadress() {
+        return postadress;
     }
 
-    public void setPostAddress(String postAddress) {
-        this.postAddress = postAddress;
+    public void setPostadress(String postadress) {
+        this.postadress = postadress;
     }
 
-    public String getPostNummer() {
-        return postNummer;
+    public String getPostnummer() {
+        return postnummer;
     }
 
-    public void setPostNummer(String postNummer) {
-        this.postNummer = postNummer;
+    public void setPostnummer(String postNummer) {
+        this.postnummer = postNummer;
     }
 
-    public String getPostOrt() {
-        return postOrt;
+    public String getPostort() {
+        return postort;
     }
 
-    public void setPostOrt(String postOrt) {
-        this.postOrt = postOrt;
+    public void setPostort(String postOrt) {
+        this.postort = postOrt;
     }
 
-    public String getTelefonNummer() {
-        return telefonNummer;
+    public String getTelefonnummer() {
+        return telefonnummer;
     }
 
-    public void setTelefonNummer(String telefonNummer) {
-        this.telefonNummer = telefonNummer;
+    public void setTelefonnummer(String telefonNummer) {
+        this.telefonnummer = telefonNummer;
     }
 
     public String getePost() {
