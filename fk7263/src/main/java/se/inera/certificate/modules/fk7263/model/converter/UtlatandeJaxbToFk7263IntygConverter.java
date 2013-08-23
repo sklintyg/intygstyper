@@ -1,16 +1,22 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
 import iso.v21090.dt.v1.PQ;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import se.inera.certificate.common.v1.AktivitetType;
-import se.inera.certificate.common.v1.ArbetsuppgiftType;
-import se.inera.certificate.common.v1.ObservationType;
-import se.inera.certificate.common.v1.PatientType;
-import se.inera.certificate.common.v1.PrognosType;
-import se.inera.certificate.common.v1.ReferensType;
-import se.inera.certificate.common.v1.SysselsattningType;
-import se.inera.certificate.common.v1.VardkontaktType;
+
+import se.inera.certificate.fk7263.model.extension.v1.Arbetsgivare;
+import se.inera.certificate.fk7263.model.v1.AktivitetType;
+import se.inera.certificate.fk7263.model.v1.ArbetsuppgiftType;
+import se.inera.certificate.fk7263.model.v1.ObservationType;
+import se.inera.certificate.fk7263.model.v1.PatientType;
+import se.inera.certificate.fk7263.model.v1.PrognosType;
+import se.inera.certificate.fk7263.model.v1.ReferensType;
+import se.inera.certificate.fk7263.model.v1.SysselsattningType;
+import se.inera.certificate.fk7263.model.v1.VardkontaktType;
 import se.inera.certificate.integration.converter.util.IsoTypeConverter;
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Arbetsuppgift;
@@ -18,7 +24,6 @@ import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.PartialInterval;
-import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Prognos;
 import se.inera.certificate.model.Referens;
@@ -27,29 +32,26 @@ import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Arbetsgivare;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 /**
  * @author marced
- *
  */
 public final class UtlatandeJaxbToFk7263IntygConverter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UtlatandeJaxbToFk7263IntygConverter.class);
 
-      private UtlatandeJaxbToFk7263IntygConverter() {
+    private UtlatandeJaxbToFk7263IntygConverter() {
     }
 
     /**
-     * Converts a JAXB {@link se.inera.certificate.common.v1.Utlatande} to a {@link se.inera.certificate.modules.fk7263.model.Fk7263Intyg}.
+     * 
      */
-    public static Fk7263Intyg convert(se.inera.certificate.common.v1.Utlatande source) {
+    public static Fk7263Intyg convert(se.inera.certificate.fk7263.model.v1.Utlatande source) {
         Fk7263Intyg fk7263Intyg = new Fk7263Intyg();
 
         fk7263Intyg.setId(IsoTypeConverter.toId(source.getUtlatandeId()));
@@ -71,10 +73,25 @@ public final class UtlatandeJaxbToFk7263IntygConverter {
         return fk7263Intyg;
     }
 
+    private static List<Sysselsattning> convert(List<SysselsattningType> source) {
+        List<Sysselsattning> sysselsattnings = new ArrayList<>();
+        for (SysselsattningType sysselsattning : source) {
+            sysselsattnings.add(convert(sysselsattning));
+        }
+        return sysselsattnings;
+    }
+
+    private static Sysselsattning convert(SysselsattningType source) {
+        Sysselsattning sysselsattning = new Sysselsattning();
+        sysselsattning.setSysselsattningsTyp(IsoTypeConverter.toKod(source.getTypAvSysselsattning()));
+        sysselsattning.setDatum(source.getDatum());
+        return sysselsattning;
+    }
 
     private static List<Observation> convertObservations(List<ObservationType> source) {
-        if (source == null) return null;
-        
+        if (source == null)
+            return null;
+
         List<Observation> observations = new ArrayList<>();
         for (ObservationType observationType : source) {
             Observation observation = convert(observationType);
@@ -86,7 +103,7 @@ public final class UtlatandeJaxbToFk7263IntygConverter {
     }
 
     private static Observation convert(ObservationType source) {
-        
+
         Observation observation = new Observation();
 
         observation.setObservationsKategori(IsoTypeConverter.toKod(source.getObservationskategori()));
@@ -97,7 +114,6 @@ public final class UtlatandeJaxbToFk7263IntygConverter {
             observation.setObservationsPeriod(observationsPeriod);
         }
 
-
         observation.setVarde(convertVarde(source.getVardes()));
 
         observation.setPrognos(convert(source.getPrognos()));
@@ -107,7 +123,7 @@ public final class UtlatandeJaxbToFk7263IntygConverter {
     }
 
     private static List<PhysicalQuantity> convertVarde(List<PQ> source) {
-        
+
         List<PhysicalQuantity> vardes = new ArrayList<>();
         for (PQ varde : source) {
             vardes.add(new PhysicalQuantity(varde.getValue(), varde.getUnit()));
@@ -116,7 +132,8 @@ public final class UtlatandeJaxbToFk7263IntygConverter {
     }
 
     private static Prognos convert(PrognosType source) {
-        if(source == null) return null;
+        if (source == null)
+            return null;
 
         Prognos prognos = new Prognos();
         prognos.setPrognosKod(IsoTypeConverter.toKod(source.getPrognoskod()));
@@ -125,8 +142,9 @@ public final class UtlatandeJaxbToFk7263IntygConverter {
     }
 
     private static List<Vardkontakt> convertVardkontakter(List<VardkontaktType> source) {
-        if (source == null) return null;
-        
+        if (source == null)
+            return null;
+
         List<Vardkontakt> vardkontakter = new ArrayList<>();
         for (VardkontaktType vardkontakt : source) {
             vardkontakter.add(convert(vardkontakt));
@@ -135,7 +153,7 @@ public final class UtlatandeJaxbToFk7263IntygConverter {
     }
 
     private static Vardkontakt convert(VardkontaktType source) {
-        
+
         Vardkontakt vardkontakt = new Vardkontakt();
         vardkontakt.setVardkontakttyp(IsoTypeConverter.toKod(source.getVardkontakttyp()));
 
@@ -146,8 +164,9 @@ public final class UtlatandeJaxbToFk7263IntygConverter {
     }
 
     private static List<Referens> convertReferenser(List<ReferensType> source) {
-        if (source == null) return null;
-        
+        if (source == null)
+            return null;
+
         List<Referens> referenser = new ArrayList<>();
         for (ReferensType referens : source) {
             referenser.add(convert(referens));
@@ -163,8 +182,9 @@ public final class UtlatandeJaxbToFk7263IntygConverter {
     }
 
     private static List<Aktivitet> convertAktiviteter(List<AktivitetType> source) {
-        if (source == null) return null;
-        
+        if (source == null)
+            return null;
+
         List<Aktivitet> aktiviteter = new ArrayList<>();
         for (AktivitetType aktivitet : source) {
             aktiviteter.add(convert(aktivitet));
@@ -191,9 +211,9 @@ public final class UtlatandeJaxbToFk7263IntygConverter {
         return hosPersonal;
     }
 
-    private static Patient convert(PatientType source) {
+    private static Fk7263Patient convert(PatientType source) {
 
-        Patient patient = new Patient();
+        Fk7263Patient patient = new Fk7263Patient();
         patient.setId(IsoTypeConverter.toId(source.getPersonId()));
 
         if (!source.getFornamns().isEmpty()) {
@@ -218,24 +238,18 @@ public final class UtlatandeJaxbToFk7263IntygConverter {
             patient.setArbetsuppgifts(arbetsuppgifts);
         }
 
+        patient.setArbetsgivare(convert(source.getArbetsgivare()));
         return patient;
     }
 
-    private static List<Sysselsattning> convert(List<SysselsattningType> source) {
-        if (source == null) return null;
-        
-        List<Sysselsattning> sysselsattnings = new ArrayList<>();
-        for (SysselsattningType sysselsattning : source) {
-            sysselsattnings.add(convert(sysselsattning));
+    private static Fk7263Arbetsgivare convert(Arbetsgivare source) {
+        if (source == null) {
+            return null;
         }
-        return sysselsattnings;
-    }
-
-    private static Sysselsattning convert(SysselsattningType source) {
-        Sysselsattning sysselsattning = new Sysselsattning();
-        sysselsattning.setSysselsattningsTyp(IsoTypeConverter.toKod(source.getTypAvSysselsattning()));
-        sysselsattning.setDatum(source.getDatum());
-        return sysselsattning;
+        Fk7263Arbetsgivare arbetsgivare = new Fk7263Arbetsgivare();
+        arbetsgivare.setArbetsgivare(source.getArbetsgivarnamn());
+        arbetsgivare.setBranch(source.getBranch());
+        return arbetsgivare;
     }
 
     private static Vardenhet convert(EnhetType source) {

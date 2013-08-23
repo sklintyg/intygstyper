@@ -1,0 +1,7 @@
+The schemas in 
+ -insuranceprocess_healthreporting_2.0.xsd
+ -iso_dt_subset_1.0.xsd 
+Should be identical to these schemas held in incera-certificate/schemas
+
+../fk7263_model.xsd should be valid acording to 
+incera-certificate/schemas/src/main/resources/schemas/v1/RegistreraIntygInteraction/intyg_common_model.xsd

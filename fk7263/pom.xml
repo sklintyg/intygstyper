@@ -169,6 +169,29 @@
 
   <build>
     <finalName>fk7263</finalName>
-
+    <plugins>
+      <plugin>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-xjc-plugin</artifactId>
+        <version>2.6.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>xsdtojava</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <xsdOptions>
+                <xsdOption>
+                  <xsd>src/main/resources/schemas/fk7263_model.xsd</xsd>
+                  <extension>true</extension>
+                  <bindingFile>${basedir}/src/main/resources/schemas/binding.xjb</bindingFile>
+                </xsdOption>
+              </xsdOptions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
   </build>
 </project>

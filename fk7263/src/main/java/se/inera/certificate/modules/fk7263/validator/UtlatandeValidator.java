@@ -1,21 +1,21 @@
 package se.inera.certificate.modules.fk7263.validator;
 
+import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.Observation;
-import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.model.codes.Prognoskoder;
 import se.inera.certificate.model.codes.Referenstypkoder;
 import se.inera.certificate.model.codes.Vardkontakttypkoder;
 import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
-
-import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 
 /**
  * @author andreaskaltenbach
@@ -43,9 +43,9 @@ public class UtlatandeValidator {
         return validationErrors;
     }
 
-    private void validatePatient(Patient patient) {
+    private void validatePatient(Fk7263Patient fk7263Patient) {
         // Check format of patient id (has to be a valid personnummer)
-        String personNumber = patient.getId().getExtension();
+        String personNumber = fk7263Patient.getId().getExtension();
         if (personNumber == null || !Pattern.matches(PERSON_NUMBER_REGEX, personNumber)) {
             validationErrors.add("Wrong format for person-id! Valid format is YYYYMMDD-XXXX or YYYYMMDD+XXXX.");
         }

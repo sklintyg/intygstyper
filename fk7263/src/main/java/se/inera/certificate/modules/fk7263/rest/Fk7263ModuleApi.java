@@ -36,17 +36,23 @@ public class Fk7263ModuleApi {
     @Path( "/unmarshall" )
     @Consumes( MediaType.APPLICATION_XML )
     @Produces( MediaType.APPLICATION_JSON )
-    public Response unmarshall(se.inera.certificate.common.v1.Utlatande utlatande) {
+    public Response unmarshall(se.inera.certificate.fk7263.model.v1.Utlatande fk7263Utlatande) {
         //TODO: Schema validation according to fk7263_intyg.xsd
 
-        //Convert from jaxb-> Fk7263Intyg
+       
         //TODO: use the "clean" Fk7263ExternalModel - Fk7263Intyg is today decorated with internal (MI-specific) properties
         //Perhaps have several internal formats, one for MI, one for webcert
-        Fk7263Intyg fk7263Intyg = UtlatandeJaxbToFk7263IntygConverter.convert(utlatande);
+        Fk7263Intyg fk7263Intyg = UtlatandeJaxbToFk7263IntygConverter.convert(fk7263Utlatande);
 
-        //validate (Fk7263Intyg) : if error return error list json with error status code
-       
-        return Response.ok(fk7263Intyg).build();
+
+        List<String> validationErrors = new UtlatandeValidator(fk7263Intyg).validate();
+
+        if (validationErrors.isEmpty()) {
+            return Response.ok(fk7263Intyg).build();
+        } else {
+            String response = Strings.join(",", validationErrors);
+            return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
+        }
     }
     
     @POST

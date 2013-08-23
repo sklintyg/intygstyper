@@ -1,11 +1,14 @@
 package se.inera.certificate.modules.fk7263.model;
 
+import static se.inera.certificate.model.util.Iterables.find;
+
+import java.util.List;
+
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Prognos;
 import se.inera.certificate.model.Referens;
-import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.model.codes.Aktivitetskoder;
@@ -13,15 +16,12 @@ import se.inera.certificate.model.codes.ObservationsKoder;
 import se.inera.certificate.model.codes.Prognoskoder;
 import se.inera.certificate.model.codes.Sysselsattningskoder;
 import se.inera.certificate.model.util.Predicate;
-
-import java.util.List;
-
-import static se.inera.certificate.model.util.Iterables.find;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
 /**
  * @author andreaskaltenbach
  */
-public class Fk7263Intyg extends Utlatande {
+public class Fk7263Intyg extends Fk7263Utlatande {
 
     public static final String DATE_PATTERN = "yyyy-MM-dd";
 
