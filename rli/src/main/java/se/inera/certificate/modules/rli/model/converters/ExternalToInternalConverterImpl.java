@@ -22,17 +22,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.certificate.model.Id;
-import se.inera.certificate.model.Kod;
+import se.inera.certificate.common.v1.PartialDateInterval;
 import se.inera.certificate.modules.rli.model.codes.ArrangemangsTyp;
 import se.inera.certificate.modules.rli.model.external.common.Enhet;
 import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
 import se.inera.certificate.modules.rli.model.internal.Arrangemang;
 import se.inera.certificate.modules.rli.model.internal.HoSPersonal;
 import se.inera.certificate.modules.rli.model.internal.Patient;
+import se.inera.certificate.modules.rli.model.internal.Rekommendation;
 import se.inera.certificate.modules.rli.model.internal.Status;
 import se.inera.certificate.modules.rli.model.internal.Undersokning;
 import se.inera.certificate.modules.rli.model.internal.Utfardare;
@@ -45,236 +47,245 @@ import se.inera.certificate.modules.rli.model.internal.Vardgivare;
  * 
  * 
  * @author Niklas Pettersson, R2M
- *
+ * 
  */
-public class ExternalToInternalConverterImpl implements ExternalToInternalConverter {
-	
-	private static final Logger LOG = LoggerFactory.getLogger(ExternalToInternalConverterImpl.class);
+public class ExternalToInternalConverterImpl implements
+        ExternalToInternalConverter {
 
-	private UndersokingRekommendationConverter undersokingRekommendationConverter;
-	
-	public ExternalToInternalConverterImpl() {
+    private static final Logger LOG = LoggerFactory
+            .getLogger(ExternalToInternalConverterImpl.class);
 
-	}
+    @Autowired
+    private UndersokningPopulator undersokingPopulator;
 
-	/* (non-Javadoc)
-	 * @see se.inera.certificate.modules.rli.model.converters.ExternalToInternalConverter#fromExternalToInternal(se.inera.certificate.modules.rli.model.external.Utlatande)
-	 */
-	@Override
-	public Utlatande fromExternalToInternal(
-			se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande) {
+    @Autowired
+    private RekommendationPopulator rekommendationPopulator;
 
-		LOG.debug("Starting conversion");
-		
-		Utlatande intUtlatande = new Utlatande();
+    public ExternalToInternalConverterImpl() {
 
-		intUtlatande.setUtlatandeId(getValueFromId(extUtlatande.getId()));
-		intUtlatande.setTypAvUtlatande(getValueFromKod(extUtlatande.getTyp()));
+    }
 
-		intUtlatande.setSigneringsDatum(extUtlatande.getSigneringsdatum());
-		intUtlatande.setSkickatDatum(extUtlatande.getSkickatdatum());
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * se.inera.certificate.modules.rli.model.converters.ExternalToInternalConverter
+     * #fromExternalToInternal(se.inera.certificate.modules.rli.model.external.
+     * Utlatande)
+     */
+    @Override
+    public Utlatande fromExternalToInternal(
+            se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande) {
 
-		// TODO: Finns inte i extern model
-		// intUtlatande.setGiltighetsPeriodStart(null);
-		// intUtlatande.setGiltighetsPeriodSlut(null);
-		
-		intUtlatande.setKommentarer(extUtlatande.getKommentarer());
-		
-		List<Status> intStatuses = convertToIntStatuses(extUtlatande.getStatus());
-		intUtlatande.setStatus(intStatuses);
-		
-		Utfardare intUtfardare = convertToIntUtfardare(extUtlatande.getSkapadAv());
-		intUtlatande.setUtfardare(intUtfardare );
+        LOG.debug("Starting conversion");
 
-		Patient intPatient = convertToIntPatient(extUtlatande.getPatient());
-		intUtlatande.setPatient(intPatient);
-		
-		Arrangemang intArrangemang = convertToIntArrangemang(extUtlatande
-				.getArrangemang());
-		intUtlatande.setArrangemang(intArrangemang);
+        Utlatande intUtlatande = new Utlatande();
 
-		populateUndersokingRekommendation(extUtlatande, intUtlatande);
+        intUtlatande.setUtlatandeId(InternalModelConverterUtils
+                .getValueFromId(extUtlatande.getId()));
+        intUtlatande.setTypAvUtlatande(InternalModelConverterUtils
+                .getValueFromKod(extUtlatande.getTyp()));
 
-		return intUtlatande;
-	}
+        intUtlatande.setSigneringsDatum(extUtlatande.getSigneringsdatum());
+        intUtlatande.setSkickatDatum(extUtlatande.getSkickatdatum());
 
-	private void populateUndersokingRekommendation(
-			se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande,
-			Utlatande intUtlatande) {
-		undersokingRekommendationConverter.populateUndersokningRekommendation(extUtlatande, intUtlatande);
-	}
+        intUtlatande.setKommentarer(extUtlatande.getKommentarer());
 
-	Utfardare convertToIntUtfardare(HosPersonal extHoSPersonal) {
-		
-		LOG.debug("Converting utfardare");
-		
-		if (extHoSPersonal == null) {
-			LOG.debug("External HoSPersonal is null, can not convert");
-			return null;
-		}
-		
-		Utfardare intUtfardare = new Utfardare();
-		
-		HoSPersonal intHoSPersonal = convertToIntHoSPersonal(extHoSPersonal);
-		intUtfardare.setHosPersonal(intHoSPersonal); 
-				
-		Vardenhet intVardenhet = convertToIntVardenhet(extHoSPersonal.getEnhet());
-		intUtfardare.setVardenhet(intVardenhet);
-		
-		return intUtfardare;
-	}
+        List<Status> intStatuses = convertToIntStatuses(extUtlatande
+                .getStatus());
+        intUtlatande.setStatus(intStatuses);
+        
+        HoSPersonal intHoSPersonal = convertToIntHoSPersonal(extUtlatande.getSkapadAv());
+        intUtlatande.setSkapatAv(intHoSPersonal);
+                
+        Patient intPatient = convertToIntPatient(extUtlatande.getPatient());
+        intUtlatande.setPatient(intPatient);
 
-	Vardenhet convertToIntVardenhet(Enhet extVardenhet) {
-		
-		LOG.debug("Converting vardenhet");
-		
-		if (extVardenhet == null) {
-			LOG.debug("External Vardenhet is null, can not convert");
-			return null;
-		}
-		
-		Vardenhet intVardenhet = new Vardenhet();
-		
-		intVardenhet.setEnhetsId(getValueFromId(extVardenhet.getEnhetsId()));
-		intVardenhet.setEnhetsNamn(extVardenhet.getEnhetsnamn());
-		intVardenhet.setPostAddress(extVardenhet.getPostadress());
-		intVardenhet.setPostNummer(extVardenhet.getPostnummer());
-		intVardenhet.setPostOrt(extVardenhet.getPostort());
-		intVardenhet.setTelefonNummer(extVardenhet.getTelefonnummer());
-		intVardenhet.setePost(extVardenhet.getEpost());
-		
-		Vardgivare intVardgivare = convertToIntVardgivare(extVardenhet.getVardgivare());
-		intVardenhet.setVardgivare(intVardgivare );
-				
-		return intVardenhet;
-	}
+        Arrangemang intArrangemang = convertToIntArrangemang(extUtlatande
+                .getArrangemang());
+        intUtlatande.setArrangemang(intArrangemang);
 
-	Vardgivare convertToIntVardgivare(se.inera.certificate.modules.rli.model.external.common.Vardgivare extVardgivare) {
+        populateUndersokingRekommendation(extUtlatande, intUtlatande);
 
-		LOG.debug("Converting vardgivare");
-		
-		if (extVardgivare == null) {
-			LOG.debug("External vardgivare is null, can not convert");
-			return null;
-		}
-		
-		Vardgivare intVardgivare = new Vardgivare();
-		
-		intVardgivare.setVardgivarId(getValueFromId(extVardgivare.getVardgivareId()));
-		intVardgivare.setVardgivarNamn(extVardgivare.getVardgivarnamn());
-		
-		return intVardgivare;
-	}
+        return intUtlatande;
+    }
 
-	HoSPersonal convertToIntHoSPersonal(HosPersonal extHoSPersonal) {
-		
-		LOG.debug("Converting HoSPersonal");
-		
-		if (extHoSPersonal == null) {
-			LOG.debug("External HoSPersonal is null, can not convert");
-			return null;
-		}
-		
-		HoSPersonal intHoSPersonal = new HoSPersonal();
-		
-		intHoSPersonal.setPersonId(getValueFromId(extHoSPersonal.getPersonalId()));
-		intHoSPersonal.setFullstandigtNamn(extHoSPersonal.getFullstandigtNamn());
-		//intHoSPersonal.setBefattning(befattning);
-		
-		return intHoSPersonal;
-	}
+    private void populateUndersokingRekommendation(
+            se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande,
+            Utlatande intUtlatande) {
 
-	List<Status> convertToIntStatuses(
-			List<se.inera.certificate.model.Status> extStatuses) {
-		
-		LOG.debug("Converting statuses");
-		
-		List<Status> intStatuses = new ArrayList<Status>();
-		
-		if (extStatuses == null || extStatuses.isEmpty()) {
-			LOG.debug("No statuses found to convert");
-			return intStatuses;
-		}
-		
-		Status intStatus;
-		
-		for (se.inera.certificate.model.Status extStatus : extStatuses) {
-			intStatus = new Status();
-			intStatus.setType(extStatus.getType().name());
-			intStatus.setTimestamp(extStatus.getTimestamp());
-			intStatus.setTarget(extStatus.getTarget());
-		}
-				
-		return intStatuses;
-	}
+        Undersokning intUndersokning = undersokingPopulator
+                .createAndPopulateUndersokning(extUtlatande);
+        intUtlatande.setUndersokning(intUndersokning);
 
-	Undersokning convertToIntUndersokning(
-			se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        Rekommendation intRekommendation = rekommendationPopulator
+                .createAndPopulateRekommendation(extUtlatande);
+        intUtlatande.setRekommendation(intRekommendation);
+    }
 
-	Patient convertToIntPatient(
-			se.inera.certificate.modules.rli.model.external.common.Patient extPatient) {
-		
-		LOG.debug("Converting patient");
-		
-		if (extPatient == null) {
-			LOG.debug("No Patient found to convert");
-			return null;
-		}
-		
-		Patient intPatient = new Patient();
-		
-		intPatient.setPersonId(getValueFromId(extPatient.getPersonId()));
-		
-		String efterNamn = StringUtils.join(extPatient.getEfternamns(), " ");
-		intPatient.setEfterNamn(efterNamn);
-		
-		String forNamn = StringUtils.join(extPatient.getFornamns(), " ");
-		intPatient.setForNamn(forNamn);
-				
-		String fullstandigtNamn = forNamn.concat(" ").concat(efterNamn);
-		intPatient.setFullstandigtNamn(fullstandigtNamn);
-		
-		
-		return intPatient;
-	}
+    Vardenhet convertToIntVardenhet(Enhet extVardenhet) {
 
-	Arrangemang convertToIntArrangemang(
-			se.inera.certificate.modules.rli.model.external.Arrangemang extArr) {
-		
-		LOG.debug("Converting arrangemang");
-		
-		if (extArr == null) {
-			LOG.debug("No arrangemang found to convert");
-			return null;
-		}
-		
-		Arrangemang intArr = new Arrangemang();
-		
-		intArr.setPlats(extArr.getPlats());
-		
-		String arrTypCode = getValueFromKod(extArr.getArrangemangstyp());
-		ArrangemangsTyp arrTyp = ArrangemangsTyp.getFromCode(arrTypCode);
-		intArr.setArrangemangsTyp(arrTyp);
-		
-		intArr.setBokningsReferens(extArr.getBokningsreferens());
-		
-//		Partial extBokningsDatum = extArr.getBokningsdatum();
-//		Partial extAvbestDatum = extArr.getAvbestallningsdatum();
-//		PartialDateInterval extArrangemangsTid = extArr.getArrangemangstid();
-			
-		
-		return intArr;
-	}
+        LOG.debug("Converting vardenhet");
 
-	private static String getValueFromKod(Kod kod) {
-		return (kod != null) ? kod.getCode() : null;
-	}
+        if (extVardenhet == null) {
+            LOG.debug("External Vardenhet is null, can not convert");
+            return null;
+        }
 
-	private static String getValueFromId(Id id) {
-		return (id != null) ? id.getExtension() : null;
-	}
-		
+        Vardenhet intVardenhet = new Vardenhet();
+
+        intVardenhet.setEnhetsId(InternalModelConverterUtils
+                .getValueFromId(extVardenhet.getEnhetsId()));
+        intVardenhet.setEnhetsNamn(extVardenhet.getEnhetsnamn());
+        intVardenhet.setPostAddress(extVardenhet.getPostadress());
+        intVardenhet.setPostNummer(extVardenhet.getPostnummer());
+        intVardenhet.setPostOrt(extVardenhet.getPostort());
+        intVardenhet.setTelefonNummer(extVardenhet.getTelefonnummer());
+        intVardenhet.setePost(extVardenhet.getEpost());
+
+        Vardgivare intVardgivare = convertToIntVardgivare(extVardenhet
+                .getVardgivare());
+        intVardenhet.setVardgivare(intVardgivare);
+
+        return intVardenhet;
+    }
+
+    Vardgivare convertToIntVardgivare(
+            se.inera.certificate.modules.rli.model.external.common.Vardgivare extVardgivare) {
+
+        LOG.debug("Converting vardgivare");
+
+        if (extVardgivare == null) {
+            LOG.debug("External vardgivare is null, can not convert");
+            return null;
+        }
+
+        Vardgivare intVardgivare = new Vardgivare();
+
+        intVardgivare.setVardgivarId(InternalModelConverterUtils
+                .getValueFromId(extVardgivare.getVardgivareId()));
+        intVardgivare.setVardgivarNamn(extVardgivare.getVardgivarnamn());
+
+        return intVardgivare;
+    }
+
+    HoSPersonal convertToIntHoSPersonal(HosPersonal extHoSPersonal) {
+
+        LOG.debug("Converting HoSPersonal");
+
+        if (extHoSPersonal == null) {
+            LOG.debug("External HoSPersonal is null, can not convert");
+            return null;
+        }
+
+        HoSPersonal intHoSPersonal = new HoSPersonal();
+
+        intHoSPersonal.setPersonId(InternalModelConverterUtils
+                .getValueFromId(extHoSPersonal.getPersonalId()));
+        intHoSPersonal
+                .setFullstandigtNamn(extHoSPersonal.getFullstandigtNamn());
+        // intHoSPersonal.setBefattning(befattning);
+        
+        Vardenhet intVardenhet = convertToIntVardenhet(extHoSPersonal
+                .getEnhet());
+        intHoSPersonal.setVardenhet(intVardenhet);
+        
+        return intHoSPersonal;
+    }
+
+    List<Status> convertToIntStatuses(
+            List<se.inera.certificate.model.Status> extStatuses) {
+
+        LOG.debug("Converting statuses");
+
+        List<Status> intStatuses = new ArrayList<Status>();
+
+        if (extStatuses == null || extStatuses.isEmpty()) {
+            LOG.debug("No statuses found to convert");
+            return intStatuses;
+        }
+
+        Status intStatus;
+
+        for (se.inera.certificate.model.Status extStatus : extStatuses) {
+            intStatus = new Status();
+            intStatus.setType(extStatus.getType().name());
+            intStatus.setTimestamp(extStatus.getTimestamp());
+            intStatus.setTarget(extStatus.getTarget());
+        }
+
+        return intStatuses;
+    }
+
+    Patient convertToIntPatient(
+            se.inera.certificate.modules.rli.model.external.common.Patient extPatient) {
+
+        LOG.debug("Converting patient");
+
+        if (extPatient == null) {
+            LOG.debug("No Patient found to convert");
+            return null;
+        }
+
+        Patient intPatient = new Patient();
+
+        intPatient.setPersonId(InternalModelConverterUtils
+                .getValueFromId(extPatient.getPersonId()));
+
+        String efterNamn = StringUtils.join(extPatient.getEfternamns(), " ");
+        intPatient.setEfterNamn(efterNamn);
+
+        String forNamn = StringUtils.join(extPatient.getFornamns(), " ");
+        intPatient.setForNamn(forNamn);
+
+        String fullstandigtNamn = forNamn.concat(" ").concat(efterNamn);
+        intPatient.setFullstandigtNamn(fullstandigtNamn);
+        
+        intPatient.setPostAdress(extPatient.getAdress());
+
+        return intPatient;
+    }
+
+    Arrangemang convertToIntArrangemang(
+            se.inera.certificate.modules.rli.model.external.Arrangemang extArr) {
+
+        LOG.debug("Converting arrangemang");
+
+        if (extArr == null) {
+            LOG.debug("No arrangemang found to convert");
+            return null;
+        }
+
+        Arrangemang intArr = new Arrangemang();
+
+        intArr.setPlats(extArr.getPlats());
+
+        String arrTypCode = InternalModelConverterUtils.getValueFromKod(extArr
+                .getArrangemangstyp());
+        ArrangemangsTyp arrTyp = ArrangemangsTyp.getFromCode(arrTypCode);
+        intArr.setArrangemangsTyp(arrTyp);
+
+        intArr.setBokningsReferens(extArr.getBokningsreferens());
+
+        Partial extBokningsDatum = extArr.getBokningsdatum();
+        intArr.setBokningsDatum(PartialConverter
+                .partialToString(extBokningsDatum));
+
+        Partial extAvbestDatum = extArr.getAvbestallningsdatum();
+        intArr.setAvbestallningsDatum(PartialConverter
+                .partialToString(extAvbestDatum));
+
+        PartialDateInterval arrangemangsTid = extArr.getArrangemangstid();
+
+        if (arrangemangsTid != null) {
+            intArr.setArrangemangStartDatum(PartialConverter
+                    .partialToString(arrangemangsTid.getFrom()));
+
+            intArr.setArrangemangStartDatum(PartialConverter
+                    .partialToString(arrangemangsTid.getTom()));
+        }
+
+        return intArr;
+    }
+
 }

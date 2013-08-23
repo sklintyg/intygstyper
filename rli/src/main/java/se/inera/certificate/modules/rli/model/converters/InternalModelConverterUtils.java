@@ -1,7 +1,7 @@
 package se.inera.certificate.modules.rli.model.converters;
 
-import se.inera.certificate.modules.rli.model.external.common.Id;
-import se.inera.certificate.modules.rli.model.external.common.Kod;
+import se.inera.certificate.model.Id;
+import se.inera.certificate.model.Kod;
 
 public final class InternalModelConverterUtils {
 

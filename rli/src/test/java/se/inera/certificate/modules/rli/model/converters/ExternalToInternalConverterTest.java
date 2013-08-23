@@ -1,183 +1,220 @@
-/**
- * Copyright (C) 2013 Inera AB (http://www.inera.se)
- *
- * This file is part of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules).
- *
- * Inera Certificate Modules is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * Inera Certificate Modules is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package se.inera.certificate.modules.rli.model.converters;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import se.inera.certificate.common.v1.PartialDateInterval;
+import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
+import se.inera.certificate.modules.rli.model.external.Utlatande;
 import se.inera.certificate.modules.rli.model.external.common.Enhet;
 import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
 import se.inera.certificate.modules.rli.model.external.common.Patient;
 import se.inera.certificate.modules.rli.model.external.common.Vardgivare;
 import se.inera.certificate.modules.rli.model.internal.HoSPersonal;
-import se.inera.certificate.modules.rli.model.internal.Utfardare;
 
+/**
+ * Unit test for the ExternalToInteralConverter. This test is Spring configured.
+ * 
+ * @author Niklas Pettersson, R2M
+ * 
+ */
 public class ExternalToInternalConverterTest {
 
-	private ExternalToInternalConverterImpl converter;
+    private ApplicationContext ctx;
 
-	@Before
-	public void setUp() {
-		converter = new ExternalToInternalConverterImpl();
-	}
+    private ExternalToInternalConverterImpl converter;
 
-	@Test
-	public void testConvertToIntPatient() {
+    public ExternalToInternalConverterTest() {
+        this.ctx = new AnnotationConfigApplicationContext(SpringTestConfig.class);
+    }
 
-		Patient extPatient = buildPatient();
+    @Before
+    public void setUp() {
+        this.converter = this.ctx.getBean("externalToInternalConverter", ExternalToInternalConverterImpl.class);
+    }
 
-		se.inera.certificate.modules.rli.model.internal.Patient res = converter
-				.convertToIntPatient(extPatient);
+    @Test
+    public void testConvertUtlatande() {
 
-		assertNotNull(res);
+        Utlatande extUtlatande = readUtlatandeFromJsonFile("/rli-example-1-external.json");
 
-		assertEquals("19121212-1212", res.getPersonId());
-		assertEquals("Abel Baker", res.getForNamn());
-		assertEquals("Smith Doe", res.getEfterNamn());
-		assertEquals("Abel Baker Smith Doe", res.getFullstandigtNamn());
+        se.inera.certificate.modules.rli.model.internal.Utlatande res = converter.fromExternalToInternal(extUtlatande);
 
-	}
+        assertNotNull(res);
+        
+        assertNotNull(res.getUtlatandeId());
+        assertNotNull(res.getSigneringsDatum());
+        assertNotNull(res.getSkickatDatum());
+        assertNotNull(res.getTypAvUtlatande());
+        
+        assertNotNull(res.getArrangemang());
+        assertNotNull(res.getPatient());
+        assertNotNull(res.getSkapatAv());
+        assertNotNull(res.getUndersokning());
+        assertNotNull(res.getRekommendation());
+    }
 
-	private Patient buildPatient() {
+    private Utlatande readUtlatandeFromJsonFile(String fileName) {
 
-		Patient pat = new Patient();
+        Utlatande extUtlatande = null;
 
-		pat.setPersonId(new Id("PersonId", "19121212-1212"));
-		pat.getFornamns().addAll(Arrays.asList("Abel", "Baker"));
-		pat.getEfternamns().addAll(Arrays.asList("Smith", "Doe"));
+        InputStream src = this.getClass().getResourceAsStream(fileName);
 
-		return pat;
-	}
+        try {
+            CustomObjectMapper mapper = new CustomObjectMapper();
+            extUtlatande = mapper.readValue(src, Utlatande.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-	@Test
-	public void testConvertToIntArrangemang() {
+        return extUtlatande;
+    }   
+    
+    @Test
+    public void testConvertToIntPatient() {
 
-		Arrangemang extArr = buildArrangemang();
-		se.inera.certificate.modules.rli.model.internal.Arrangemang res = converter
-				.convertToIntArrangemang(extArr);
+        Patient extPatient = buildPatient();
 
-		assertNotNull(res);
-		assertNotNull(res.getArrangemangsTyp());
-		assertNotNull(res.getBokningsReferens());
+        se.inera.certificate.modules.rli.model.internal.Patient res = converter.convertToIntPatient(extPatient);
 
-	}
+        assertNotNull(res);
 
-	private Arrangemang buildArrangemang() {
+        assertEquals("19121212-1212", res.getPersonId());
+        assertEquals("Abel Baker", res.getForNamn());
+        assertEquals("Smith Doe", res.getEfterNamn());
+        assertEquals("Abel Baker Smith Doe", res.getFullstandigtNamn());
+        assertNotNull(res.getPostAdress());
 
-		Arrangemang arr = new Arrangemang();
-		arr.setArrangemangstyp(new Kod("420008001"));
-		arr.setBokningsreferens("1234567-890");
-		arr.setPlats("Långtbortistan");
+    }
 
-		return arr;
-	}
+    private Patient buildPatient() {
 
-	@Test
-	public void testConvertToIntHoSPersonal() {
+        Patient pat = new Patient();
 
-		HosPersonal extHoSPersonal = buildHoSPersonal();
-		HoSPersonal res = converter.convertToIntHoSPersonal(extHoSPersonal);
+        pat.setPersonId(new Id("PersonId", "19121212-1212"));
+        pat.getFornamns().addAll(Arrays.asList("Abel", "Baker"));
+        pat.getEfternamns().addAll(Arrays.asList("Smith", "Doe"));
+        pat.setAdress("Testgatan 123, 123 45 Teststaden");
 
-		assertNotNull(res);
+        return pat;
+    }
 
-	}
+    @Test
+    public void testConvertToIntArrangemang() {
 
-	@Test
-	public void testConvertToIntUtfardare() {
+        Arrangemang extArr = buildArrangemang();
+        se.inera.certificate.modules.rli.model.internal.Arrangemang res = converter.convertToIntArrangemang(extArr);
 
-		HosPersonal extHoSPersonal = buildHoSPersonal();
-		Utfardare res = converter.convertToIntUtfardare(extHoSPersonal);
+        assertNotNull(res);
+        assertNotNull(res.getArrangemangsTyp());
+        assertNotNull(res.getBokningsReferens());
+        assertNotNull(res.getBokningsDatum());
+        assertNotNull(res.getAvbestallningsDatum());
+        assertNotNull(res.getArrangemangStartDatum());
+    }
 
-		assertNotNull(res);
+    private Arrangemang buildArrangemang() {
 
-		assertNotNull(res.getHosPersonal());
-		assertNotNull(res.getVardenhet());
-	}
+        Arrangemang arr = new Arrangemang();
+        arr.setArrangemangstyp(new Kod("420008001"));
+        arr.setBokningsreferens("1234567-890");
+        arr.setPlats("Långtbortistan");
+        arr.setBokningsdatum(TestUtils.constructPartial(2013, 8, 6));
+        arr.setAvbestallningsdatum(TestUtils.constructPartial(2013, 8, 22));
 
-	@Test
-	public void testConvertToIntVardenhet() {
-		
-		Enhet extVardenhet = buildVardenhet();
-		se.inera.certificate.modules.rli.model.internal.Vardenhet res = converter.convertToIntVardenhet(extVardenhet);
-		
-		assertNotNull(res);
-		
-		assertNotNull(res.getEnhetsId());
-		assertNotNull(res.getEnhetsNamn());
-		assertNotNull(res.getPostAddress());
-		assertNotNull(res.getPostNummer());
-		assertNotNull(res.getPostOrt());
-		assertNotNull(res.getePost());
-		assertNotNull(res.getTelefonNummer());
-		assertNotNull(res.getVardgivare());
-	}
-	
-	private HosPersonal buildHoSPersonal() {
+        PartialDateInterval arrTid = new PartialDateInterval();
+        arrTid.setFrom(TestUtils.constructPartial(2013, 9, 1));
+        arrTid.setTom(TestUtils.constructPartial(2013, 9, 16));
 
-		HosPersonal hosPers = new HosPersonal();
+        arr.setArrangemangstid(arrTid);
 
-		hosPers.setPersonalId(new Id("19101010-1010"));
-		hosPers.setFullstandigtNamn("Börje Dengroth");
-		hosPers.setForskrivarkod("12345-67");
+        return arr;
+    }
 
-		Enhet vardenhet = buildVardenhet();
-		hosPers.setEnhet(vardenhet);
+    @Test
+    public void testConvertToIntHoSPersonal() {
 
-		return hosPers;
-	}
+        HosPersonal extHoSPersonal = buildHoSPersonal();
+        HoSPersonal res = converter.convertToIntHoSPersonal(extHoSPersonal);
 
-	private Enhet buildVardenhet() {
+        assertNotNull(res);
+        assertNotNull(res.getFullstandigtNamn());
+        assertNotNull(res.getPersonId());
 
-		Enhet vardenhet = new Enhet();
+    }
 
-		vardenhet.setEnhetsId(new Id("123-456"));
-		vardenhet.setArbetsplatskod(new Id("1234-56"));
-		vardenhet.setEnhetsnamn("Tolvberga Vårdcentral");
-		vardenhet.setPostadress("Nollstigen 12");
-		vardenhet.setPostnummer("12345");
-		vardenhet.setPostort("Tolvberga");
-		vardenhet.setTelefonnummer("012-345678");
-		vardenhet.setEpost("ingen@alls.nu");
+    private HosPersonal buildHoSPersonal() {
 
-		Vardgivare vardgivare = buildVardgivare();
-		vardenhet.setVardgivare(vardgivare);
+        HosPersonal hosPers = new HosPersonal();
 
-		return vardenhet;
-	}
+        hosPers.setPersonalId(new Id("19101010-1010"));
+        hosPers.setFullstandigtNamn("Börje Dengroth");
+        hosPers.setForskrivarkod("12345-67");
 
-	private Vardgivare buildVardgivare() {
+        Enhet vardenhet = buildVardenhet();
+        hosPers.setEnhet(vardenhet);
 
-		Vardgivare vardgivare = new Vardgivare();
+        return hosPers;
+    }
 
-		vardgivare.setVardgivareId(new Id("1234567"));
-		vardgivare.setVardgivarnamn("Landstinget");
+    @Test
+    public void testConvertToIntVardenhet() {
 
-		return vardgivare;
+        Enhet extVardenhet = buildVardenhet();
+        se.inera.certificate.modules.rli.model.internal.Vardenhet res = converter.convertToIntVardenhet(extVardenhet);
 
-	}
+        assertNotNull(res);
+
+        assertNotNull(res.getEnhetsId());
+        assertNotNull(res.getEnhetsNamn());
+        assertNotNull(res.getPostAddress());
+        assertNotNull(res.getPostNummer());
+        assertNotNull(res.getPostOrt());
+        assertNotNull(res.getePost());
+        assertNotNull(res.getTelefonNummer());
+        assertNotNull(res.getVardgivare());
+    }
+
+    private Enhet buildVardenhet() {
+
+        Enhet vardenhet = new Enhet();
+
+        vardenhet.setEnhetsId(new Id("123-456"));
+        vardenhet.setArbetsplatskod(new Id("1234-56"));
+        vardenhet.setEnhetsnamn("Tolvberga Vårdcentral");
+        vardenhet.setPostadress("Nollstigen 12");
+        vardenhet.setPostnummer("12345");
+        vardenhet.setPostort("Tolvberga");
+        vardenhet.setTelefonnummer("012-345678");
+        vardenhet.setEpost("ingen@alls.nu");
+
+        Vardgivare vardgivare = buildVardgivare();
+        vardenhet.setVardgivare(vardgivare);
+
+        return vardenhet;
+    }
+
+    private Vardgivare buildVardgivare() {
+
+        Vardgivare vardgivare = new Vardgivare();
+
+        vardgivare.setVardgivareId(new Id("1234567"));
+        vardgivare.setVardgivarnamn("Landstinget");
+
+        return vardgivare;
+
+    }
 
 }

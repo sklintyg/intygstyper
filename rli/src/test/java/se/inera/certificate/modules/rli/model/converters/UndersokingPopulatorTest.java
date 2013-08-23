@@ -2,21 +2,21 @@ package se.inera.certificate.modules.rli.model.converters;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.junit.Before;
 import org.junit.Test;
 
+import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
 import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
-import se.inera.certificate.modules.rli.model.external.common.Aktivitet;
+import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.common.Enhet;
-import se.inera.certificate.modules.rli.model.external.common.Kod;
 import se.inera.certificate.modules.rli.model.external.common.Observation;
 import se.inera.certificate.modules.rli.model.external.common.PartialDateInterval;
 import se.inera.certificate.modules.rli.model.internal.KomplikationStyrkt;
@@ -112,16 +112,26 @@ public class UndersokingPopulatorTest {
 
         Undersokning intUndersokning = new Undersokning();
         converter.populateUndersokningFromAktiviteter(aktiviteter, intUndersokning);
-
+        
+        Undersokning refUndersokning = buildUndersokning();
+        
         assertNotNull(intUndersokning);
-        assertEquals(intUndersokning.getForstaUndersokningDatum(), "2012-05-23");
-        assertEquals(intUndersokning.getForstaUndersokningPlats(), "Sjukhus A");
-        assertEquals(intUndersokning.getKomplikationStyrkt(), KomplikationStyrkt.AV_HOS_PERSONAL);
-
-        assertEquals(intUndersokning.getUndersokningDatum(), "2013-06-12");
-        assertEquals(intUndersokning.getUndersokningPlats(), "Sjukhus X");
+        
+        assertLenientEquals(refUndersokning, intUndersokning);
     }
 
+    private Undersokning buildUndersokning() {
+        
+        Undersokning und = new Undersokning();
+        und.setForstaUndersokningDatum("2012-05-23");
+        und.setForstaUndersokningPlats("Sjukhus A");
+        und.setKomplikationStyrkt(KomplikationStyrkt.AV_HOS_PERSONAL);
+        und.setUndersokningDatum("2013-06-12");
+        und.setUndersokningPlats("Sjukhus X");
+        
+        return und;
+    }
+    
     private Observation constructObservation(ObservationsKod obsKod, int year, int month, int day) {
 
         Observation obs = new Observation();

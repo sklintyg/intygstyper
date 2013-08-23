@@ -8,9 +8,9 @@ import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
-import se.inera.certificate.modules.rli.model.external.common.Aktivitet;
-import se.inera.certificate.modules.rli.model.external.common.Kod;
+import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.common.Observation;
 import se.inera.certificate.modules.rli.model.external.common.PartialDateInterval;
 import se.inera.certificate.modules.rli.model.internal.Graviditet;

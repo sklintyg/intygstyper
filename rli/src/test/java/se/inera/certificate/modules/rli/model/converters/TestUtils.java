@@ -9,6 +9,14 @@ public final class TestUtils {
 
     }
 
+    public static Partial constructPartial(int year) {
+        return constructPartial(year, 0, 0);
+    }
+
+    public static Partial constructPartial(int year, int month) {
+        return constructPartial(year, month, 0);
+    }
+
     public static Partial constructPartial(int year, int month, int day) {
 
         Partial p = new Partial();
