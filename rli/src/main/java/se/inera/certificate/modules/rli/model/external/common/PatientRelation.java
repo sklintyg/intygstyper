@@ -26,62 +26,62 @@ import se.inera.certificate.model.Kod;
 
 public class PatientRelation {
 
-	private Kod relationskategori;
-	private List<Kod> relationTyps;
-	private Id personId;
-	private List<String> fornamns;
-	private List<String> efternamns;
-	private List<String> mellannamns;
-	private List<String> adresses;
+    private Kod relationskategori;
+    private List<Kod> relationTyps;
+    private Id personId;
+    private List<String> fornamns;
+    private List<String> efternamns;
+    private List<String> mellannamns;
+    private List<String> adresses;
 
-	public Kod getRelationskategori() {
-		return relationskategori;
-	}
+    public Kod getRelationskategori() {
+        return relationskategori;
+    }
 
-	public void setRelationskategori(Kod relationskategori) {
-		this.relationskategori = relationskategori;
-	}
+    public void setRelationskategori(Kod relationskategori) {
+        this.relationskategori = relationskategori;
+    }
 
-	public List<Kod> getRelationTyps() {
-		if (relationTyps == null){
-			relationTyps = new ArrayList<Kod>();
-		}
-		return this.relationTyps;
-	}
+    public List<Kod> getRelationTyps() {
+        if (relationTyps == null) {
+            relationTyps = new ArrayList<Kod>();
+        }
+        return this.relationTyps;
+    }
 
-	public Id getPersonId() {
-		return personId;
-	}
+    public Id getPersonId() {
+        return personId;
+    }
 
-	public void setPersonId(Id personId) {
-		this.personId = personId;
-	}
+    public void setPersonId(Id personId) {
+        this.personId = personId;
+    }
 
-	public List<String> getFornamns() {
-		if (fornamns == null){
-			fornamns = new ArrayList<String>();
-		}
-		return this.fornamns;
-	}
+    public List<String> getFornamns() {
+        if (fornamns == null) {
+            fornamns = new ArrayList<String>();
+        }
+        return this.fornamns;
+    }
 
-	public List<String> getEfternamns() {
-		if (efternamns == null){
-			efternamns = new ArrayList<String>();
-		}
-		return this.efternamns;
-	}
+    public List<String> getEfternamns() {
+        if (efternamns == null) {
+            efternamns = new ArrayList<String>();
+        }
+        return this.efternamns;
+    }
 
-	public List<String> getMellannamns() {
-		if (mellannamns == null){
-			mellannamns = new ArrayList<String>();
-		}
-		return this.mellannamns;
-	}
+    public List<String> getMellannamns() {
+        if (mellannamns == null) {
+            mellannamns = new ArrayList<String>();
+        }
+        return this.mellannamns;
+    }
 
-	public List<String> getAdresses() {
-		if (adresses == null){
-			adresses = new ArrayList<String>();
-		}
-		return this.adresses;
-	}
+    public List<String> getAdresses() {
+        if (adresses == null) {
+            adresses = new ArrayList<String>();
+        }
+        return this.adresses;
+    }
 }

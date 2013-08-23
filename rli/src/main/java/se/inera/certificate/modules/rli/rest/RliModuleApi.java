@@ -44,121 +44,122 @@ import se.inera.certificate.modules.rli.validator.ExternalValidator;
  */
 public class RliModuleApi {
 
-	@Autowired
-	private TransportToExternalConverter transportToExternalConverter;
-	
-	@Autowired
-	private ExternalToTransportConverter externalToTransportConverter;
-	
-	@Autowired
-	private ExternalValidator externalValidator;
-	
-	@Autowired
-	private ExternalToInternalConverter externalToInternalConverter;
-	/**
-	 * Handles conversion from the transport model (XML) to the external JSON model.
-	 * 
-	 * @param transportModel
-	 *            The transport model to convert.
-	 * 
-	 * @return An instance of the external model, generated from the transport model.
-	 */
-	@PUT
-	@Path("/unmarshall")
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Utlatande unmarshall(se.inera.certificate.common.v1.Utlatande transportModel) {
-		return transportToExternalConverter.transportToExternal(transportModel);
-	}
+    @Autowired
+    private TransportToExternalConverter transportToExternalConverter;
 
-	/**
-	 * Handles conversion from the external JSON model to the transport model (XML).
-	 * 
-	 * @param externalModel
-	 *            The external model to convert.
-	 * 
-	 * @return An instance of the transport model, generated from the external model.
-	 */
-	@PUT
-	@Path("/marshall")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_XML)
-	public se.inera.certificate.common.v1.Utlatande marshall(Utlatande externalModel) {
-		return externalToTransportConverter.externalToTransport(externalModel);
-	}
+    @Autowired
+    private ExternalToTransportConverter externalToTransportConverter;
 
-	/**
-	 * Validates the external model. If the validation succeeds, a empty result will be returned. If the validation
-	 * fails, a list of validation messages will be returned as a HTTP 400.
-	 * 
-	 * @param externalModel
-	 *            The external model to validate.
-	 * @return
-	 */
-	@POST
-	@Path("/valid")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
-	public Response validate(Utlatande externalModel) {
-		
-		List<String> validationErrors = externalValidator.validate(externalModel);
-		
-		if (validationErrors.isEmpty()) {
+    @Autowired
+    private ExternalValidator externalValidator;
+
+    @Autowired
+    private ExternalToInternalConverter externalToInternalConverter;
+
+    /**
+     * Handles conversion from the transport model (XML) to the external JSON model.
+     * 
+     * @param transportModel
+     *            The transport model to convert.
+     * 
+     * @return An instance of the external model, generated from the transport model.
+     */
+    @PUT
+    @Path("/unmarshall")
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Utlatande unmarshall(se.inera.certificate.common.v1.Utlatande transportModel) {
+        return transportToExternalConverter.transportToExternal(transportModel);
+    }
+
+    /**
+     * Handles conversion from the external JSON model to the transport model (XML).
+     * 
+     * @param externalModel
+     *            The external model to convert.
+     * 
+     * @return An instance of the transport model, generated from the external model.
+     */
+    @PUT
+    @Path("/marshall")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_XML)
+    public se.inera.certificate.common.v1.Utlatande marshall(Utlatande externalModel) {
+        return externalToTransportConverter.externalToTransport(externalModel);
+    }
+
+    /**
+     * Validates the external model. If the validation succeeds, a empty result will be returned. If the validation
+     * fails, a list of validation messages will be returned as a HTTP 400.
+     * 
+     * @param externalModel
+     *            The external model to validate.
+     * @return
+     */
+    @POST
+    @Path("/valid")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response validate(Utlatande externalModel) {
+
+        List<String> validationErrors = externalValidator.validate(externalModel);
+
+        if (validationErrors.isEmpty()) {
             return Response.ok().build();
         } else {
             String response = Strings.join(",", validationErrors);
             return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
         }
-	}
+    }
 
-	/**
-	 * Generates a PDF from the external model.
-	 * 
-	 * @param externalModel
-	 *            The external model to generate a PDF from.
-	 * 
-	 * @return A binary stream containing a PDF template populated with the information of the external model.
-	 */
-	@POST
-	@Path("/pdf")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces("application/pdf")
-	public Response pdf(Utlatande externalModel) {
-		// TODO: Implement when PDF generation is required.
-		return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
-	}
+    /**
+     * Generates a PDF from the external model.
+     * 
+     * @param externalModel
+     *            The external model to generate a PDF from.
+     * 
+     * @return A binary stream containing a PDF template populated with the information of the external model.
+     */
+    @POST
+    @Path("/pdf")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces("application/pdf")
+    public Response pdf(Utlatande externalModel) {
+        // TODO: Implement when PDF generation is required.
+        return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
+    }
 
-	/**
-	 * Handles conversion from the external model to the internal model.
-	 * 
-	 * @param externalModel
-	 *            The external model to convert.
-	 * 
-	 * @return An instance of the internal model, generated from the external model.
-	 */
-	@PUT
-	@Path("/internal")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public se.inera.certificate.modules.rli.model.internal.Utlatande convertExternalToInternal(Utlatande externalModel) {
-		return externalToInternalConverter.fromExternalToInternal(externalModel);
-	}
+    /**
+     * Handles conversion from the external model to the internal model.
+     * 
+     * @param externalModel
+     *            The external model to convert.
+     * 
+     * @return An instance of the internal model, generated from the external model.
+     */
+    @PUT
+    @Path("/internal")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public se.inera.certificate.modules.rli.model.internal.Utlatande convertExternalToInternal(Utlatande externalModel) {
+        return externalToInternalConverter.fromExternalToInternal(externalModel);
+    }
 
-	/**
-	 * Handles conversion from the internal model to the external model.
-	 * 
-	 * @param internalModel
-	 *            The internal model to convert.
-	 * 
-	 * @return An instance of the external model, generated from the internal model.
-	 */
-	@PUT
-	@Path("/external")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Utlatande convertInternalToExternal(Object internalModel) {
-		// TODO: Change the return type of this method to the internal model POJO.
-		// TODO: Implement when conversion from an internal model i required.
-		return null;
-	}
+    /**
+     * Handles conversion from the internal model to the external model.
+     * 
+     * @param internalModel
+     *            The internal model to convert.
+     * 
+     * @return An instance of the external model, generated from the internal model.
+     */
+    @PUT
+    @Path("/external")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Utlatande convertInternalToExternal(Object internalModel) {
+        // TODO: Change the return type of this method to the internal model POJO.
+        // TODO: Implement when conversion from an internal model i required.
+        return null;
+    }
 }

@@ -29,11 +29,11 @@ import se.inera.certificate.modules.rli.model.internal.Utlatande;
 @Path("/view")
 public class RliViewServices {
 
-	@GET
-	@Path("/utlatande/{utlatande-id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Utlatande getUtlatande(@PathParam("utlatande-id") String utlatandeId) {
+    @GET
+    @Path("/utlatande/{utlatande-id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Utlatande getUtlatande(@PathParam("utlatande-id") String utlatandeId) {
 
-		return null;
-	}
+        return null;
+    }
 }

@@ -18,84 +18,82 @@
  */
 package se.inera.certificate.modules.rli.model.internal;
 
-import org.joda.time.LocalDate;
-
 import se.inera.certificate.modules.rli.model.codes.ArrangemangsTyp;
 
 public class Arrangemang {
 
-	private String bokningsReferens;
-	
-	private String bokningsDatum;
-	
-	private String plats;
-	
-	private String arrangemangStartDatum;
-	
-	private String arrangemangSlutDatum;
-	
-	private ArrangemangsTyp arrangemangsTyp;
-	
-	private String avbestallningsDatum;
-		
-	public Arrangemang() {
-	
-	}
+    private String bokningsReferens;
 
-	public String getBokningsReferens() {
-		return bokningsReferens;
-	}
+    private String bokningsDatum;
 
-	public void setBokningsReferens(String bokningsReferens) {
-		this.bokningsReferens = bokningsReferens;
-	}
+    private String plats;
 
-	public String getBokningsDatum() {
-		return bokningsDatum;
-	}
+    private String arrangemangStartDatum;
 
-	public void setBokningsDatum(String bokningsDatum) {
-		this.bokningsDatum = bokningsDatum;
-	}
+    private String arrangemangSlutDatum;
 
-	public String getPlats() {
-		return plats;
-	}
+    private ArrangemangsTyp arrangemangsTyp;
 
-	public void setPlats(String plats) {
-		this.plats = plats;
-	}
+    private String avbestallningsDatum;
 
-	public String getArrangemangStartDatum() {
-		return arrangemangStartDatum;
-	}
+    public Arrangemang() {
 
-	public void setArrangemangStartDatum(String arrangemangStartDatum) {
-		this.arrangemangStartDatum = arrangemangStartDatum;
-	}
+    }
 
-	public String getArrangemangSlutDatum() {
-		return arrangemangSlutDatum;
-	}
+    public String getBokningsReferens() {
+        return bokningsReferens;
+    }
 
-	public void setArrangemangSlutDatum(String arrangemangSlutDatum) {
-		this.arrangemangSlutDatum = arrangemangSlutDatum;
-	}
+    public void setBokningsReferens(String bokningsReferens) {
+        this.bokningsReferens = bokningsReferens;
+    }
 
-	public ArrangemangsTyp getArrangemangsTyp() {
-		return arrangemangsTyp;
-	}
+    public String getBokningsDatum() {
+        return bokningsDatum;
+    }
 
-	public void setArrangemangsTyp(ArrangemangsTyp arrangemangsTyp) {
-		this.arrangemangsTyp = arrangemangsTyp;
-	}
+    public void setBokningsDatum(String bokningsDatum) {
+        this.bokningsDatum = bokningsDatum;
+    }
 
-	public String getAvbestallningsDatum() {
-		return avbestallningsDatum;
-	}
+    public String getPlats() {
+        return plats;
+    }
 
-	public void setAvbestallningsDatum(String avbestallningsDatum) {
-		this.avbestallningsDatum = avbestallningsDatum;
-	}
+    public void setPlats(String plats) {
+        this.plats = plats;
+    }
+
+    public String getArrangemangStartDatum() {
+        return arrangemangStartDatum;
+    }
+
+    public void setArrangemangStartDatum(String arrangemangStartDatum) {
+        this.arrangemangStartDatum = arrangemangStartDatum;
+    }
+
+    public String getArrangemangSlutDatum() {
+        return arrangemangSlutDatum;
+    }
+
+    public void setArrangemangSlutDatum(String arrangemangSlutDatum) {
+        this.arrangemangSlutDatum = arrangemangSlutDatum;
+    }
+
+    public ArrangemangsTyp getArrangemangsTyp() {
+        return arrangemangsTyp;
+    }
+
+    public void setArrangemangsTyp(ArrangemangsTyp arrangemangsTyp) {
+        this.arrangemangsTyp = arrangemangsTyp;
+    }
+
+    public String getAvbestallningsDatum() {
+        return avbestallningsDatum;
+    }
+
+    public void setAvbestallningsDatum(String avbestallningsDatum) {
+        this.avbestallningsDatum = avbestallningsDatum;
+    }
 
 }

@@ -22,31 +22,31 @@ import se.inera.certificate.model.Kod;
 
 public class Rekommendation {
 
-	private Kod rekommendationskod;
-	private String beskrivning;
-	private Kod sjukdomskannedom;
+    private Kod rekommendationskod;
+    private String beskrivning;
+    private Kod sjukdomskannedom;
 
-	public Kod getRekommendationskod() {
-		return rekommendationskod;
-	}
+    public Kod getRekommendationskod() {
+        return rekommendationskod;
+    }
 
-	public void setRekommendationskod(Kod rekommendationskod) {
-		this.rekommendationskod = rekommendationskod;
-	}
+    public void setRekommendationskod(Kod rekommendationskod) {
+        this.rekommendationskod = rekommendationskod;
+    }
 
-	public String getBeskrivning() {
-		return beskrivning;
-	}
+    public String getBeskrivning() {
+        return beskrivning;
+    }
 
-	public void setBeskrivning(String beskrivning) {
-		this.beskrivning = beskrivning;
-	}
+    public void setBeskrivning(String beskrivning) {
+        this.beskrivning = beskrivning;
+    }
 
-	public Kod getSjukdomskannedom() {
-		return sjukdomskannedom;
-	}
+    public Kod getSjukdomskannedom() {
+        return sjukdomskannedom;
+    }
 
-	public void setSjukdomskannedom(Kod sjukdomskannedom) {
-		this.sjukdomskannedom = sjukdomskannedom;
-	}
+    public void setSjukdomskannedom(Kod sjukdomskannedom) {
+        this.sjukdomskannedom = sjukdomskannedom;
+    }
 }

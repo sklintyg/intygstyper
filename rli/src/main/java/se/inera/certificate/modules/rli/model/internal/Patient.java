@@ -20,68 +20,68 @@ package se.inera.certificate.modules.rli.model.internal;
 
 public class Patient {
 
-	private String personId;
-	
-	private String fullstandigtNamn;
-	
-	private String forNamn;
-	
-	private String efterNamn;
-	
-	private String mellanNamn;
-	
-	private String postAdress;
-	
-	public Patient() {
-	
-	}
+    private String personId;
 
-	public String getPersonId() {
-		return personId;
-	}
+    private String fullstandigtNamn;
 
-	public void setPersonId(String personId) {
-		this.personId = personId;
-	}
+    private String forNamn;
 
-	public String getFullstandigtNamn() {
-		return fullstandigtNamn;
-	}
+    private String efterNamn;
 
-	public void setFullstandigtNamn(String fullstandigtNamn) {
-		this.fullstandigtNamn = fullstandigtNamn;
-	}
+    private String mellanNamn;
 
-	public String getForNamn() {
-		return forNamn;
-	}
+    private String postAdress;
 
-	public void setForNamn(String forNamn) {
-		this.forNamn = forNamn;
-	}
+    public Patient() {
 
-	public String getEfterNamn() {
-		return efterNamn;
-	}
+    }
 
-	public void setEfterNamn(String efterNamn) {
-		this.efterNamn = efterNamn;
-	}
+    public String getPersonId() {
+        return personId;
+    }
 
-	public String getMellanNamn() {
-		return mellanNamn;
-	}
+    public void setPersonId(String personId) {
+        this.personId = personId;
+    }
 
-	public void setMellanNamn(String mellanNamn) {
-		this.mellanNamn = mellanNamn;
-	}
+    public String getFullstandigtNamn() {
+        return fullstandigtNamn;
+    }
 
-	public String getPostAdress() {
-		return postAdress;
-	}
+    public void setFullstandigtNamn(String fullstandigtNamn) {
+        this.fullstandigtNamn = fullstandigtNamn;
+    }
 
-	public void setPostAdress(String postAdress) {
-		this.postAdress = postAdress;
-	}
-	
+    public String getForNamn() {
+        return forNamn;
+    }
+
+    public void setForNamn(String forNamn) {
+        this.forNamn = forNamn;
+    }
+
+    public String getEfterNamn() {
+        return efterNamn;
+    }
+
+    public void setEfterNamn(String efterNamn) {
+        this.efterNamn = efterNamn;
+    }
+
+    public String getMellanNamn() {
+        return mellanNamn;
+    }
+
+    public void setMellanNamn(String mellanNamn) {
+        this.mellanNamn = mellanNamn;
+    }
+
+    public String getPostAdress() {
+        return postAdress;
+    }
+
+    public void setPostAdress(String postAdress) {
+        this.postAdress = postAdress;
+    }
+
 }

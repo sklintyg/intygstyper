@@ -20,88 +20,88 @@ package se.inera.certificate.modules.rli.model.internal;
 
 public class Vardenhet {
 
-	private String enhetsId;
-	
-	private String enhetsNamn;
-	
-	private String postAddress;
-	
-	private String postNummer;
-	
-	private String postOrt;
-	
-	private String telefonNummer;
-	
-	private String ePost;
-	
-	private Vardgivare vardgivare;
-	
-	public Vardenhet() {
-	
-	}
+    private String enhetsId;
 
-	public String getEnhetsId() {
-		return enhetsId;
-	}
+    private String enhetsNamn;
 
-	public void setEnhetsId(String enhetsId) {
-		this.enhetsId = enhetsId;
-	}
+    private String postAddress;
 
-	public String getEnhetsNamn() {
-		return enhetsNamn;
-	}
+    private String postNummer;
 
-	public void setEnhetsNamn(String enhetsNamn) {
-		this.enhetsNamn = enhetsNamn;
-	}
+    private String postOrt;
 
-	public String getPostAddress() {
-		return postAddress;
-	}
+    private String telefonNummer;
 
-	public void setPostAddress(String postAddress) {
-		this.postAddress = postAddress;
-	}
+    private String ePost;
 
-	public String getPostNummer() {
-		return postNummer;
-	}
+    private Vardgivare vardgivare;
 
-	public void setPostNummer(String postNummer) {
-		this.postNummer = postNummer;
-	}
+    public Vardenhet() {
 
-	public String getPostOrt() {
-		return postOrt;
-	}
+    }
 
-	public void setPostOrt(String postOrt) {
-		this.postOrt = postOrt;
-	}
+    public String getEnhetsId() {
+        return enhetsId;
+    }
 
-	public String getTelefonNummer() {
-		return telefonNummer;
-	}
+    public void setEnhetsId(String enhetsId) {
+        this.enhetsId = enhetsId;
+    }
 
-	public void setTelefonNummer(String telefonNummer) {
-		this.telefonNummer = telefonNummer;
-	}
+    public String getEnhetsNamn() {
+        return enhetsNamn;
+    }
 
-	public String getePost() {
-		return ePost;
-	}
+    public void setEnhetsNamn(String enhetsNamn) {
+        this.enhetsNamn = enhetsNamn;
+    }
 
-	public void setePost(String ePost) {
-		this.ePost = ePost;
-	}
+    public String getPostAddress() {
+        return postAddress;
+    }
 
-	public Vardgivare getVardgivare() {
-		return vardgivare;
-	}
+    public void setPostAddress(String postAddress) {
+        this.postAddress = postAddress;
+    }
 
-	public void setVardgivare(Vardgivare vardgivare) {
-		this.vardgivare = vardgivare;
-	}
-	
+    public String getPostNummer() {
+        return postNummer;
+    }
+
+    public void setPostNummer(String postNummer) {
+        this.postNummer = postNummer;
+    }
+
+    public String getPostOrt() {
+        return postOrt;
+    }
+
+    public void setPostOrt(String postOrt) {
+        this.postOrt = postOrt;
+    }
+
+    public String getTelefonNummer() {
+        return telefonNummer;
+    }
+
+    public void setTelefonNummer(String telefonNummer) {
+        this.telefonNummer = telefonNummer;
+    }
+
+    public String getePost() {
+        return ePost;
+    }
+
+    public void setePost(String ePost) {
+        this.ePost = ePost;
+    }
+
+    public Vardgivare getVardgivare() {
+        return vardgivare;
+    }
+
+    public void setVardgivare(Vardgivare vardgivare) {
+        this.vardgivare = vardgivare;
+    }
+
 }

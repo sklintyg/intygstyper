@@ -20,15 +20,12 @@ import se.inera.certificate.modules.rli.model.internal.Undersokning;
 
 public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
-    private static Logger LOG = LoggerFactory
-            .getLogger(UndersokingPopulatorImpl.class);
+    private static Logger LOG = LoggerFactory.getLogger(UndersokingPopulatorImpl.class);
 
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * se.inera.certificate.modules.rli.model.converters.UndersokningPopulator
-     * #createAndPopulateUndersokning
+     * @see se.inera.certificate.modules.rli.model.converters.UndersokningPopulator #createAndPopulateUndersokning
      * (se.inera.certificate.modules.rli.model.external.Utlatande)
      */
     @Override
@@ -39,17 +36,14 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
         Undersokning intUndersokning = new Undersokning();
 
-        populateUndersokningFromObservationer(extUtlatande.getObservationer(),
-                intUndersokning);
+        populateUndersokningFromObservationer(extUtlatande.getObservationer(), intUndersokning);
 
-        populateUndersokningFromAktiviteter(extUtlatande.getAktiviteter(),
-                intUndersokning);
+        populateUndersokningFromAktiviteter(extUtlatande.getAktiviteter(), intUndersokning);
 
         return intUndersokning;
     }
 
-    void populateUndersokningFromObservationer(List<Observation> observations,
-            Undersokning intUndersokning) {
+    void populateUndersokningFromObservationer(List<Observation> observations, Undersokning intUndersokning) {
 
         LOG.debug("Populating Undersokning from Observationer");
 
@@ -60,16 +54,15 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
         Observation obs = null;
 
-        obs = (Observation) CollectionUtils.find(observations,
-                new ObservationsKodPredicate(ObservationsKod.SJUKDOM));
+        obs = (Observation) CollectionUtils.find(observations, new ObservationsKodPredicate(ObservationsKod.SJUKDOM));
 
         if (obs != null) {
             intUndersokning.setOrsakForAvbokning(OrsakAvbokning.RESENAR_SJUK);
             return;
         }
 
-        obs = (Observation) CollectionUtils.find(observations,
-                new ObservationsKodPredicate(ObservationsKod.GRAVIDITET));
+        obs = (Observation) CollectionUtils
+                .find(observations, new ObservationsKodPredicate(ObservationsKod.GRAVIDITET));
 
         if (obs != null) {
             intUndersokning.setOrsakForAvbokning(OrsakAvbokning.RESENAR_GRAVID);
@@ -79,8 +72,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
     }
 
-    void populateUndersokningFromAktiviteter(List<Aktivitet> aktiviteter,
-            Undersokning intUndersokning) {
+    void populateUndersokningFromAktiviteter(List<Aktivitet> aktiviteter, Undersokning intUndersokning) {
 
         LOG.debug("Populating Undersokning from Aktiviteter");
 
@@ -140,11 +132,9 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
         return null;
     }
 
-    private void populateFirstExam(Undersokning intUndersokning,
-            Aktivitet firstExam) {
+    private void populateFirstExam(Undersokning intUndersokning, Aktivitet firstExam) {
         Partial firstExamDate = getExamDateFromAktivitet(firstExam);
-        String forstaUndersokningDatum = PartialConverter
-                .partialToString(firstExamDate);
+        String forstaUndersokningDatum = PartialConverter.partialToString(firstExamDate);
         intUndersokning.setForstaUndersokningDatum(forstaUndersokningDatum);
 
         KomplikationStyrkt komplikationStyrkt;
@@ -152,8 +142,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
         if (firstExam.getUtforsVidEnhet() != null) {
             komplikationStyrkt = KomplikationStyrkt.AV_HOS_PERSONAL;
-            forstaUndersokningPlats = firstExam.getUtforsVidEnhet()
-                    .getEnhetsnamn();
+            forstaUndersokningPlats = firstExam.getUtforsVidEnhet().getEnhetsnamn();
         } else {
             komplikationStyrkt = KomplikationStyrkt.AV_PATIENT;
             forstaUndersokningPlats = firstExam.getBeskrivning();
@@ -163,15 +152,13 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
         intUndersokning.setKomplikationStyrkt(komplikationStyrkt);
     }
 
-    private void populateCurrentExam(Undersokning intUndersokning,
-            Aktivitet currentExam) {
+    private void populateCurrentExam(Undersokning intUndersokning, Aktivitet currentExam) {
 
         Partial partial = getExamDateFromAktivitet(currentExam);
         String undersokningDatum = PartialConverter.partialToString(partial);
         intUndersokning.setUndersokningDatum(undersokningDatum);
 
-        String undersokningPlats = currentExam.getUtforsVidEnhet()
-                .getEnhetsnamn();
+        String undersokningPlats = currentExam.getUtforsVidEnhet().getEnhetsnamn();
         intUndersokning.setUndersokningPlats(undersokningPlats);
     }
 
@@ -182,8 +169,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
         PartialDateInterval observationsperiod = obs.getObservationsperiod();
         Partial obsPeriodSlut = observationsperiod.getTom();
 
-        String estimatedDeliveryDate = PartialConverter
-                .partialToString(obsPeriodSlut);
+        String estimatedDeliveryDate = PartialConverter.partialToString(obsPeriodSlut);
 
         Graviditet pregnancyInfo = new Graviditet();
         pregnancyInfo.setBeraknadForlossningDatum(estimatedDeliveryDate);

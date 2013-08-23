@@ -74,8 +74,7 @@ public final class PartialConverter {
             datePattern.append("-dd");
         }
 
-        DateTimeFormatter dfmt = DateTimeFormat.forPattern(datePattern
-                .toString());
+        DateTimeFormatter dfmt = DateTimeFormat.forPattern(datePattern.toString());
 
         return partial.toString(dfmt);
     }
@@ -107,12 +106,10 @@ public final class PartialConverter {
             dateFields = new DateTimeFieldType[] { DateTimeFieldType.year() };
             return new Partial(dateFields, dateValues);
         } else if (dateValues.length == 2) {
-            dateFields = new DateTimeFieldType[] { DateTimeFieldType.year(),
-                    DateTimeFieldType.monthOfYear() };
+            dateFields = new DateTimeFieldType[] { DateTimeFieldType.year(), DateTimeFieldType.monthOfYear() };
             return new Partial(dateFields, dateValues);
         } else if (dateValues.length == 3) {
-            dateFields = new DateTimeFieldType[] { DateTimeFieldType.year(),
-                    DateTimeFieldType.monthOfYear(),
+            dateFields = new DateTimeFieldType[] { DateTimeFieldType.year(), DateTimeFieldType.monthOfYear(),
                     DateTimeFieldType.dayOfMonth() };
             return new Partial(dateFields, dateValues);
         }

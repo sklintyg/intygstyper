@@ -48,174 +48,174 @@ import se.inera.certificate.modules.rli.model.external.common.Vardkontakt;
  */
 public class Utlatande {
 
-	private Id id;
+    private Id id;
 
-	private Kod typ;
+    private Kod typ;
 
-	private List<String> kommentarer;
+    private List<String> kommentarer;
 
-	private LocalDateTime signeringsdatum;
+    private LocalDateTime signeringsdatum;
 
-	private LocalDateTime skickatdatum;
+    private LocalDateTime skickatdatum;
 
-	private Patient patient;
+    private Patient patient;
 
-	private HosPersonal skapadAv;
+    private HosPersonal skapadAv;
 
-	private List<HosPersonal> harDeltagandeHosPersonal;
+    private List<HosPersonal> harDeltagandeHosPersonal;
 
-	private List<Vardkontakt> vardkontakter;
+    private List<Vardkontakt> vardkontakter;
 
-	private List<Referens> referenser;
+    private List<Referens> referenser;
 
-	private List<Aktivitet> aktiviteter;
+    private List<Aktivitet> aktiviteter;
 
-	private Bestallare bestallare;
+    private Bestallare bestallare;
 
-	private List<Substansintag> substansintag;
+    private List<Substansintag> substansintag;
 
-	private Betalningsmottagare betalningsmottagare;
+    private Betalningsmottagare betalningsmottagare;
 
-	private List<Rekommendation> rekommendationer;
+    private List<Rekommendation> rekommendationer;
 
-	private List<Observation> observationer;
+    private List<Observation> observationer;
 
-	private List<Status> status;
+    private List<Status> status;
 
-	private Arrangemang arrangemang;
+    private Arrangemang arrangemang;
 
-	public Id getId() {
-		return id;
-	}
+    public Id getId() {
+        return id;
+    }
 
-	public void setId(Id id) {
-		this.id = id;
-	}
+    public void setId(Id id) {
+        this.id = id;
+    }
 
-	public Kod getTyp() {
-		return typ;
-	}
+    public Kod getTyp() {
+        return typ;
+    }
 
-	public void setTyp(Kod typ) {
-		this.typ = typ;
-	}
+    public void setTyp(Kod typ) {
+        this.typ = typ;
+    }
 
-	public List<String> getKommentarer() {
-		if (kommentarer == null){
-			kommentarer = new ArrayList<String>();
-		}
-		return this.kommentarer;
-	}
+    public List<String> getKommentarer() {
+        if (kommentarer == null) {
+            kommentarer = new ArrayList<String>();
+        }
+        return this.kommentarer;
+    }
 
-	public LocalDateTime getSigneringsdatum() {
-		return signeringsdatum;
-	}
+    public LocalDateTime getSigneringsdatum() {
+        return signeringsdatum;
+    }
 
-	public void setSigneringsdatum(LocalDateTime signeringsdatum) {
-		this.signeringsdatum = signeringsdatum;
-	}
+    public void setSigneringsdatum(LocalDateTime signeringsdatum) {
+        this.signeringsdatum = signeringsdatum;
+    }
 
-	public LocalDateTime getSkickatdatum() {
-		return skickatdatum;
-	}
+    public LocalDateTime getSkickatdatum() {
+        return skickatdatum;
+    }
 
-	public void setSkickatdatum(LocalDateTime skickatdatum) {
-		this.skickatdatum = skickatdatum;
-	}
+    public void setSkickatdatum(LocalDateTime skickatdatum) {
+        this.skickatdatum = skickatdatum;
+    }
 
-	public Patient getPatient() {
-		return patient;
-	}
+    public Patient getPatient() {
+        return patient;
+    }
 
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
 
-	public HosPersonal getSkapadAv() {
-		return skapadAv;
-	}
+    public HosPersonal getSkapadAv() {
+        return skapadAv;
+    }
 
-	public void setSkapadAv(HosPersonal skapadAv) {
-		this.skapadAv = skapadAv;
-	}
+    public void setSkapadAv(HosPersonal skapadAv) {
+        this.skapadAv = skapadAv;
+    }
 
-	public List<HosPersonal> getHarDeltagandeHosPersonal() {
-		if (harDeltagandeHosPersonal == null){
-			harDeltagandeHosPersonal = new ArrayList<HosPersonal>();
-		}
-		return this.harDeltagandeHosPersonal;
-	}
+    public List<HosPersonal> getHarDeltagandeHosPersonal() {
+        if (harDeltagandeHosPersonal == null) {
+            harDeltagandeHosPersonal = new ArrayList<HosPersonal>();
+        }
+        return this.harDeltagandeHosPersonal;
+    }
 
-	public List<Vardkontakt> getVardkontakter() {
-		if (vardkontakter == null){
-			vardkontakter = new ArrayList<Vardkontakt>();
-		}
-		return this.vardkontakter;
-	}
+    public List<Vardkontakt> getVardkontakter() {
+        if (vardkontakter == null) {
+            vardkontakter = new ArrayList<Vardkontakt>();
+        }
+        return this.vardkontakter;
+    }
 
-	public List<Referens> getReferenser() {
-		if (referenser == null){
-			referenser = new ArrayList<Referens>();
-		}
-		return this.referenser;
-	}
+    public List<Referens> getReferenser() {
+        if (referenser == null) {
+            referenser = new ArrayList<Referens>();
+        }
+        return this.referenser;
+    }
 
-	public List<Aktivitet> getAktiviteter() {
-		if (aktiviteter == null){
-			aktiviteter = new ArrayList<Aktivitet>();
-		}
-		return this.aktiviteter;
-	}
+    public List<Aktivitet> getAktiviteter() {
+        if (aktiviteter == null) {
+            aktiviteter = new ArrayList<Aktivitet>();
+        }
+        return this.aktiviteter;
+    }
 
-	public Bestallare getBestallare() {
-		return bestallare;
-	}
+    public Bestallare getBestallare() {
+        return bestallare;
+    }
 
-	public void setBestallare(Bestallare bestallare) {
-		this.bestallare = bestallare;
-	}
+    public void setBestallare(Bestallare bestallare) {
+        this.bestallare = bestallare;
+    }
 
-	public List<Substansintag> getSubstansintag() {
-		if (substansintag == null){
-			substansintag = new ArrayList<Substansintag>();
-		}
-		return this.substansintag;
-	}
+    public List<Substansintag> getSubstansintag() {
+        if (substansintag == null) {
+            substansintag = new ArrayList<Substansintag>();
+        }
+        return this.substansintag;
+    }
 
-	public Betalningsmottagare getBetalningsmottagare() {
-		return betalningsmottagare;
-	}
+    public Betalningsmottagare getBetalningsmottagare() {
+        return betalningsmottagare;
+    }
 
-	public void setBetalningsmottagare(Betalningsmottagare betalningsmottagare) {
-		this.betalningsmottagare = betalningsmottagare;
-	}
+    public void setBetalningsmottagare(Betalningsmottagare betalningsmottagare) {
+        this.betalningsmottagare = betalningsmottagare;
+    }
 
-	public List<Rekommendation> getRekommendationer() {
-		if (rekommendationer == null){
-			rekommendationer = new ArrayList<Rekommendation>();
-		}
-		return this.rekommendationer;
-	}
+    public List<Rekommendation> getRekommendationer() {
+        if (rekommendationer == null) {
+            rekommendationer = new ArrayList<Rekommendation>();
+        }
+        return this.rekommendationer;
+    }
 
-	public List<Observation> getObservationer() {
-		if (observationer == null){
-			observationer = new ArrayList<Observation>();
-		}
-		return this.observationer;
-	}
-	
-	public List<Status> getStatus() {
-		if (status == null){
-			status = new ArrayList<Status>();
-		}
-		return this.status;
-	}
+    public List<Observation> getObservationer() {
+        if (observationer == null) {
+            observationer = new ArrayList<Observation>();
+        }
+        return this.observationer;
+    }
 
-	public Arrangemang getArrangemang() {
-		return arrangemang;
-	}
+    public List<Status> getStatus() {
+        if (status == null) {
+            status = new ArrayList<Status>();
+        }
+        return this.status;
+    }
 
-	public void setArrangemang(Arrangemang arrangemang) {
-		this.arrangemang = arrangemang;
-	}
+    public Arrangemang getArrangemang() {
+        return arrangemang;
+    }
+
+    public void setArrangemang(Arrangemang arrangemang) {
+        this.arrangemang = arrangemang;
+    }
 }

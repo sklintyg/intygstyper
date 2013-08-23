@@ -22,31 +22,31 @@ import se.inera.certificate.model.Kod;
 
 public class Prognos {
 
-	private Kod prognoskod;
-	private String beskrivning;
-	private PartialDateInterval period;
+    private Kod prognoskod;
+    private String beskrivning;
+    private PartialDateInterval period;
 
-	public Kod getPrognoskod() {
-		return prognoskod;
-	}
+    public Kod getPrognoskod() {
+        return prognoskod;
+    }
 
-	public void setPrognoskod(Kod prognoskod) {
-		this.prognoskod = prognoskod;
-	}
+    public void setPrognoskod(Kod prognoskod) {
+        this.prognoskod = prognoskod;
+    }
 
-	public String getBeskrivning() {
-		return beskrivning;
-	}
+    public String getBeskrivning() {
+        return beskrivning;
+    }
 
-	public void setBeskrivning(String beskrivning) {
-		this.beskrivning = beskrivning;
-	}
+    public void setBeskrivning(String beskrivning) {
+        this.beskrivning = beskrivning;
+    }
 
-	public PartialDateInterval getPeriod() {
-		return period;
-	}
+    public PartialDateInterval getPeriod() {
+        return period;
+    }
 
-	public void setPeriod(PartialDateInterval period) {
-		this.period = period;
-	}
+    public void setPeriod(PartialDateInterval period) {
+        this.period = period;
+    }
 }

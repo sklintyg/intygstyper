@@ -22,13 +22,13 @@ import se.inera.certificate.model.Kod;
 
 public class Bestallare {
 
-	private Kod typAvBestallare;
+    private Kod typAvBestallare;
 
-	public Kod getTypAvBestallare() {
-		return typAvBestallare;
-	}
+    public Kod getTypAvBestallare() {
+        return typAvBestallare;
+    }
 
-	public void setTypAvBestallare(Kod typAvBestallare) {
-		this.typAvBestallare = typAvBestallare;
-	}
+    public void setTypAvBestallare(Kod typAvBestallare) {
+        this.typAvBestallare = typAvBestallare;
+    }
 }

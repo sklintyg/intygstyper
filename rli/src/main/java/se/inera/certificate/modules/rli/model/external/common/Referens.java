@@ -24,31 +24,31 @@ import se.inera.certificate.model.Kod;
 
 public class Referens {
 
-	private Kod referenstyp;
-	private LocalDate referensdatum;
-	private String beskrivning;
+    private Kod referenstyp;
+    private LocalDate referensdatum;
+    private String beskrivning;
 
-	public Kod getReferenstyp() {
-		return referenstyp;
-	}
+    public Kod getReferenstyp() {
+        return referenstyp;
+    }
 
-	public void setReferenstyp(Kod referenstyp) {
-		this.referenstyp = referenstyp;
-	}
+    public void setReferenstyp(Kod referenstyp) {
+        this.referenstyp = referenstyp;
+    }
 
-	public LocalDate getReferensdatum() {
-		return referensdatum;
-	}
+    public LocalDate getReferensdatum() {
+        return referensdatum;
+    }
 
-	public void setReferensdatum(LocalDate referensdatum) {
-		this.referensdatum = referensdatum;
-	}
+    public void setReferensdatum(LocalDate referensdatum) {
+        this.referensdatum = referensdatum;
+    }
 
-	public String getBeskrivning() {
-		return beskrivning;
-	}
+    public String getBeskrivning() {
+        return beskrivning;
+    }
 
-	public void setBeskrivning(String beskrivning) {
-		this.beskrivning = beskrivning;
-	}
+    public void setBeskrivning(String beskrivning) {
+        this.beskrivning = beskrivning;
+    }
 }

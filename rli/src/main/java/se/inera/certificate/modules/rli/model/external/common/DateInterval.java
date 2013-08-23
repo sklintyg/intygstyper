@@ -22,22 +22,22 @@ import org.joda.time.LocalDate;
 
 public class DateInterval {
 
-	private LocalDate from;
-	private LocalDate tom;
+    private LocalDate from;
+    private LocalDate tom;
 
-	public LocalDate getFrom() {
-		return from;
-	}
+    public LocalDate getFrom() {
+        return from;
+    }
 
-	public void setFrom(LocalDate from) {
-		this.from = from;
-	}
+    public void setFrom(LocalDate from) {
+        this.from = from;
+    }
 
-	public LocalDate getTom() {
-		return tom;
-	}
+    public LocalDate getTom() {
+        return tom;
+    }
 
-	public void setTom(LocalDate tom) {
-		this.tom = tom;
-	}
+    public void setTom(LocalDate tom) {
+        this.tom = tom;
+    }
 }

@@ -22,85 +22,85 @@ import se.inera.certificate.model.Id;
 
 public class Enhet {
 
-	private Id enhetsId;
-	private Id arbetsplatskod;
-	private String enhetsnamn;
-	private String postadress;
-	private String postnummer;
-	private String postort;
-	private String telefonnummer;
-	private String epost;
-	private Vardgivare vardgivare;
+    private Id enhetsId;
+    private Id arbetsplatskod;
+    private String enhetsnamn;
+    private String postadress;
+    private String postnummer;
+    private String postort;
+    private String telefonnummer;
+    private String epost;
+    private Vardgivare vardgivare;
 
-	public Id getEnhetsId() {
-		return enhetsId;
-	}
+    public Id getEnhetsId() {
+        return enhetsId;
+    }
 
-	public void setEnhetsId(Id enhetsId) {
-		this.enhetsId = enhetsId;
-	}
+    public void setEnhetsId(Id enhetsId) {
+        this.enhetsId = enhetsId;
+    }
 
-	public Id getArbetsplatskod() {
-		return arbetsplatskod;
-	}
+    public Id getArbetsplatskod() {
+        return arbetsplatskod;
+    }
 
-	public void setArbetsplatskod(Id arbetsplatskod) {
-		this.arbetsplatskod = arbetsplatskod;
-	}
+    public void setArbetsplatskod(Id arbetsplatskod) {
+        this.arbetsplatskod = arbetsplatskod;
+    }
 
-	public String getEnhetsnamn() {
-		return enhetsnamn;
-	}
+    public String getEnhetsnamn() {
+        return enhetsnamn;
+    }
 
-	public void setEnhetsnamn(String enhetsnamn) {
-		this.enhetsnamn = enhetsnamn;
-	}
+    public void setEnhetsnamn(String enhetsnamn) {
+        this.enhetsnamn = enhetsnamn;
+    }
 
-	public String getPostadress() {
-		return postadress;
-	}
+    public String getPostadress() {
+        return postadress;
+    }
 
-	public void setPostadress(String postadress) {
-		this.postadress = postadress;
-	}
+    public void setPostadress(String postadress) {
+        this.postadress = postadress;
+    }
 
-	public String getPostnummer() {
-		return postnummer;
-	}
+    public String getPostnummer() {
+        return postnummer;
+    }
 
-	public void setPostnummer(String postnummer) {
-		this.postnummer = postnummer;
-	}
+    public void setPostnummer(String postnummer) {
+        this.postnummer = postnummer;
+    }
 
-	public String getPostort() {
-		return postort;
-	}
+    public String getPostort() {
+        return postort;
+    }
 
-	public void setPostort(String postort) {
-		this.postort = postort;
-	}
+    public void setPostort(String postort) {
+        this.postort = postort;
+    }
 
-	public String getTelefonnummer() {
-		return telefonnummer;
-	}
+    public String getTelefonnummer() {
+        return telefonnummer;
+    }
 
-	public void setTelefonnummer(String telefonnummer) {
-		this.telefonnummer = telefonnummer;
-	}
+    public void setTelefonnummer(String telefonnummer) {
+        this.telefonnummer = telefonnummer;
+    }
 
-	public String getEpost() {
-		return epost;
-	}
+    public String getEpost() {
+        return epost;
+    }
 
-	public void setEpost(String epost) {
-		this.epost = epost;
-	}
+    public void setEpost(String epost) {
+        this.epost = epost;
+    }
 
-	public Vardgivare getVardgivare() {
-		return vardgivare;
-	}
+    public Vardgivare getVardgivare() {
+        return vardgivare;
+    }
 
-	public void setVardgivare(Vardgivare vardgivare) {
-		this.vardgivare = vardgivare;
-	}
+    public void setVardgivare(Vardgivare vardgivare) {
+        this.vardgivare = vardgivare;
+    }
 }

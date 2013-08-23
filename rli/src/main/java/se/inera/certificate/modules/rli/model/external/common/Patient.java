@@ -25,70 +25,70 @@ import se.inera.certificate.model.Id;
 
 public class Patient {
 
-	private Id personId;
-	private List<String> fornamns;
-	private List<String> efternamns;
-	private List<String> mellannamns;
-	private String adress;
-	private List<PatientRelation> patientRelations;
-	private List<Arbetsuppgift> arbetsuppgifts;
-	private List<Sysselsattning> sysselsattnings;
+    private Id personId;
+    private List<String> fornamns;
+    private List<String> efternamns;
+    private List<String> mellannamns;
+    private String adress;
+    private List<PatientRelation> patientRelations;
+    private List<Arbetsuppgift> arbetsuppgifts;
+    private List<Sysselsattning> sysselsattnings;
 
-	public Id getPersonId() {
-		return personId;
-	}
+    public Id getPersonId() {
+        return personId;
+    }
 
-	public void setPersonId(Id personId) {
-		this.personId = personId;
-	}
+    public void setPersonId(Id personId) {
+        this.personId = personId;
+    }
 
-	public List<String> getFornamns() {
-		if (fornamns == null){
-			fornamns = new ArrayList<String>();
-		}
-		return this.fornamns;
-	}
+    public List<String> getFornamns() {
+        if (fornamns == null) {
+            fornamns = new ArrayList<String>();
+        }
+        return this.fornamns;
+    }
 
-	public List<String> getEfternamns() {
-		if (efternamns == null){
-			efternamns = new ArrayList<String>();
-		}
-		return this.efternamns;
-	}
+    public List<String> getEfternamns() {
+        if (efternamns == null) {
+            efternamns = new ArrayList<String>();
+        }
+        return this.efternamns;
+    }
 
-	public List<String> getMellannamns() {
-		if (mellannamns == null){
-			mellannamns = new ArrayList<String>();
-		}
-		return this.mellannamns;
-	}
+    public List<String> getMellannamns() {
+        if (mellannamns == null) {
+            mellannamns = new ArrayList<String>();
+        }
+        return this.mellannamns;
+    }
 
-	public String getAdress() {
-		return adress;
-	}
+    public String getAdress() {
+        return adress;
+    }
 
-	public void setAdress(String adress) {
-		this.adress = adress;
-	}
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
 
-	public List<PatientRelation> getPatientRelations() {
-		if (patientRelations == null){
-			patientRelations = new ArrayList<PatientRelation>();
-		}
-		return this.patientRelations;
-	}
+    public List<PatientRelation> getPatientRelations() {
+        if (patientRelations == null) {
+            patientRelations = new ArrayList<PatientRelation>();
+        }
+        return this.patientRelations;
+    }
 
-	public List<Arbetsuppgift> getArbetsuppgifts() {
-		if (arbetsuppgifts == null){
-			arbetsuppgifts = new ArrayList<Arbetsuppgift>();
-		}
-		return this.arbetsuppgifts;
-	}
+    public List<Arbetsuppgift> getArbetsuppgifts() {
+        if (arbetsuppgifts == null) {
+            arbetsuppgifts = new ArrayList<Arbetsuppgift>();
+        }
+        return this.arbetsuppgifts;
+    }
 
-	public List<Sysselsattning> getSysselsattnings() {
-		if (sysselsattnings == null){
-			sysselsattnings = new ArrayList<Sysselsattning>();
-		}
-		return this.sysselsattnings;
-	}
+    public List<Sysselsattning> getSysselsattnings() {
+        if (sysselsattnings == null) {
+            sysselsattnings = new ArrayList<Sysselsattning>();
+        }
+        return this.sysselsattnings;
+    }
 }

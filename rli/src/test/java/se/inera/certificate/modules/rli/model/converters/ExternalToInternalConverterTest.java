@@ -53,12 +53,12 @@ public class ExternalToInternalConverterTest {
         se.inera.certificate.modules.rli.model.internal.Utlatande res = converter.fromExternalToInternal(extUtlatande);
 
         assertNotNull(res);
-        
+
         assertNotNull(res.getUtlatandeId());
         assertNotNull(res.getSigneringsDatum());
         assertNotNull(res.getSkickatDatum());
         assertNotNull(res.getTypAvUtlatande());
-        
+
         assertNotNull(res.getArrangemang());
         assertNotNull(res.getPatient());
         assertNotNull(res.getSkapatAv());
@@ -80,8 +80,8 @@ public class ExternalToInternalConverterTest {
         }
 
         return extUtlatande;
-    }   
-    
+    }
+
     @Test
     public void testConvertToIntPatient() {
 

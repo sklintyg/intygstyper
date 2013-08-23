@@ -37,7 +37,6 @@ import se.inera.certificate.modules.rli.model.internal.Patient;
 import se.inera.certificate.modules.rli.model.internal.Rekommendation;
 import se.inera.certificate.modules.rli.model.internal.Status;
 import se.inera.certificate.modules.rli.model.internal.Undersokning;
-import se.inera.certificate.modules.rli.model.internal.Utfardare;
 import se.inera.certificate.modules.rli.model.internal.Utlatande;
 import se.inera.certificate.modules.rli.model.internal.Vardenhet;
 import se.inera.certificate.modules.rli.model.internal.Vardgivare;
@@ -49,11 +48,9 @@ import se.inera.certificate.modules.rli.model.internal.Vardgivare;
  * @author Niklas Pettersson, R2M
  * 
  */
-public class ExternalToInternalConverterImpl implements
-        ExternalToInternalConverter {
+public class ExternalToInternalConverterImpl implements ExternalToInternalConverter {
 
-    private static final Logger LOG = LoggerFactory
-            .getLogger(ExternalToInternalConverterImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ExternalToInternalConverterImpl.class);
 
     @Autowired
     private UndersokningPopulator undersokingPopulator;
@@ -68,41 +65,34 @@ public class ExternalToInternalConverterImpl implements
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * se.inera.certificate.modules.rli.model.converters.ExternalToInternalConverter
-     * #fromExternalToInternal(se.inera.certificate.modules.rli.model.external.
-     * Utlatande)
+     * @see se.inera.certificate.modules.rli.model.converters.ExternalToInternalConverter
+     * #fromExternalToInternal(se.inera.certificate.modules.rli.model.external. Utlatande)
      */
     @Override
-    public Utlatande fromExternalToInternal(
-            se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande) {
+    public Utlatande fromExternalToInternal(se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande) {
 
         LOG.debug("Starting conversion");
 
         Utlatande intUtlatande = new Utlatande();
 
-        intUtlatande.setUtlatandeId(InternalModelConverterUtils
-                .getValueFromId(extUtlatande.getId()));
-        intUtlatande.setTypAvUtlatande(InternalModelConverterUtils
-                .getValueFromKod(extUtlatande.getTyp()));
+        intUtlatande.setUtlatandeId(InternalModelConverterUtils.getValueFromId(extUtlatande.getId()));
+        intUtlatande.setTypAvUtlatande(InternalModelConverterUtils.getValueFromKod(extUtlatande.getTyp()));
 
         intUtlatande.setSigneringsDatum(extUtlatande.getSigneringsdatum());
         intUtlatande.setSkickatDatum(extUtlatande.getSkickatdatum());
 
         intUtlatande.setKommentarer(extUtlatande.getKommentarer());
 
-        List<Status> intStatuses = convertToIntStatuses(extUtlatande
-                .getStatus());
+        List<Status> intStatuses = convertToIntStatuses(extUtlatande.getStatus());
         intUtlatande.setStatus(intStatuses);
-        
+
         HoSPersonal intHoSPersonal = convertToIntHoSPersonal(extUtlatande.getSkapadAv());
         intUtlatande.setSkapatAv(intHoSPersonal);
-                
+
         Patient intPatient = convertToIntPatient(extUtlatande.getPatient());
         intUtlatande.setPatient(intPatient);
 
-        Arrangemang intArrangemang = convertToIntArrangemang(extUtlatande
-                .getArrangemang());
+        Arrangemang intArrangemang = convertToIntArrangemang(extUtlatande.getArrangemang());
         intUtlatande.setArrangemang(intArrangemang);
 
         populateUndersokingRekommendation(extUtlatande, intUtlatande);
@@ -111,15 +101,12 @@ public class ExternalToInternalConverterImpl implements
     }
 
     private void populateUndersokingRekommendation(
-            se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande,
-            Utlatande intUtlatande) {
+            se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande, Utlatande intUtlatande) {
 
-        Undersokning intUndersokning = undersokingPopulator
-                .createAndPopulateUndersokning(extUtlatande);
+        Undersokning intUndersokning = undersokingPopulator.createAndPopulateUndersokning(extUtlatande);
         intUtlatande.setUndersokning(intUndersokning);
 
-        Rekommendation intRekommendation = rekommendationPopulator
-                .createAndPopulateRekommendation(extUtlatande);
+        Rekommendation intRekommendation = rekommendationPopulator.createAndPopulateRekommendation(extUtlatande);
         intUtlatande.setRekommendation(intRekommendation);
     }
 
@@ -134,8 +121,7 @@ public class ExternalToInternalConverterImpl implements
 
         Vardenhet intVardenhet = new Vardenhet();
 
-        intVardenhet.setEnhetsId(InternalModelConverterUtils
-                .getValueFromId(extVardenhet.getEnhetsId()));
+        intVardenhet.setEnhetsId(InternalModelConverterUtils.getValueFromId(extVardenhet.getEnhetsId()));
         intVardenhet.setEnhetsNamn(extVardenhet.getEnhetsnamn());
         intVardenhet.setPostAddress(extVardenhet.getPostadress());
         intVardenhet.setPostNummer(extVardenhet.getPostnummer());
@@ -143,15 +129,13 @@ public class ExternalToInternalConverterImpl implements
         intVardenhet.setTelefonNummer(extVardenhet.getTelefonnummer());
         intVardenhet.setePost(extVardenhet.getEpost());
 
-        Vardgivare intVardgivare = convertToIntVardgivare(extVardenhet
-                .getVardgivare());
+        Vardgivare intVardgivare = convertToIntVardgivare(extVardenhet.getVardgivare());
         intVardenhet.setVardgivare(intVardgivare);
 
         return intVardenhet;
     }
 
-    Vardgivare convertToIntVardgivare(
-            se.inera.certificate.modules.rli.model.external.common.Vardgivare extVardgivare) {
+    Vardgivare convertToIntVardgivare(se.inera.certificate.modules.rli.model.external.common.Vardgivare extVardgivare) {
 
         LOG.debug("Converting vardgivare");
 
@@ -162,8 +146,7 @@ public class ExternalToInternalConverterImpl implements
 
         Vardgivare intVardgivare = new Vardgivare();
 
-        intVardgivare.setVardgivarId(InternalModelConverterUtils
-                .getValueFromId(extVardgivare.getVardgivareId()));
+        intVardgivare.setVardgivarId(InternalModelConverterUtils.getValueFromId(extVardgivare.getVardgivareId()));
         intVardgivare.setVardgivarNamn(extVardgivare.getVardgivarnamn());
 
         return intVardgivare;
@@ -180,21 +163,17 @@ public class ExternalToInternalConverterImpl implements
 
         HoSPersonal intHoSPersonal = new HoSPersonal();
 
-        intHoSPersonal.setPersonId(InternalModelConverterUtils
-                .getValueFromId(extHoSPersonal.getPersonalId()));
-        intHoSPersonal
-                .setFullstandigtNamn(extHoSPersonal.getFullstandigtNamn());
+        intHoSPersonal.setPersonId(InternalModelConverterUtils.getValueFromId(extHoSPersonal.getPersonalId()));
+        intHoSPersonal.setFullstandigtNamn(extHoSPersonal.getFullstandigtNamn());
         // intHoSPersonal.setBefattning(befattning);
-        
-        Vardenhet intVardenhet = convertToIntVardenhet(extHoSPersonal
-                .getEnhet());
+
+        Vardenhet intVardenhet = convertToIntVardenhet(extHoSPersonal.getEnhet());
         intHoSPersonal.setVardenhet(intVardenhet);
-        
+
         return intHoSPersonal;
     }
 
-    List<Status> convertToIntStatuses(
-            List<se.inera.certificate.model.Status> extStatuses) {
+    List<Status> convertToIntStatuses(List<se.inera.certificate.model.Status> extStatuses) {
 
         LOG.debug("Converting statuses");
 
@@ -217,8 +196,7 @@ public class ExternalToInternalConverterImpl implements
         return intStatuses;
     }
 
-    Patient convertToIntPatient(
-            se.inera.certificate.modules.rli.model.external.common.Patient extPatient) {
+    Patient convertToIntPatient(se.inera.certificate.modules.rli.model.external.common.Patient extPatient) {
 
         LOG.debug("Converting patient");
 
@@ -229,8 +207,7 @@ public class ExternalToInternalConverterImpl implements
 
         Patient intPatient = new Patient();
 
-        intPatient.setPersonId(InternalModelConverterUtils
-                .getValueFromId(extPatient.getPersonId()));
+        intPatient.setPersonId(InternalModelConverterUtils.getValueFromId(extPatient.getPersonId()));
 
         String efterNamn = StringUtils.join(extPatient.getEfternamns(), " ");
         intPatient.setEfterNamn(efterNamn);
@@ -240,14 +217,13 @@ public class ExternalToInternalConverterImpl implements
 
         String fullstandigtNamn = forNamn.concat(" ").concat(efterNamn);
         intPatient.setFullstandigtNamn(fullstandigtNamn);
-        
+
         intPatient.setPostAdress(extPatient.getAdress());
 
         return intPatient;
     }
 
-    Arrangemang convertToIntArrangemang(
-            se.inera.certificate.modules.rli.model.external.Arrangemang extArr) {
+    Arrangemang convertToIntArrangemang(se.inera.certificate.modules.rli.model.external.Arrangemang extArr) {
 
         LOG.debug("Converting arrangemang");
 
@@ -260,29 +236,24 @@ public class ExternalToInternalConverterImpl implements
 
         intArr.setPlats(extArr.getPlats());
 
-        String arrTypCode = InternalModelConverterUtils.getValueFromKod(extArr
-                .getArrangemangstyp());
+        String arrTypCode = InternalModelConverterUtils.getValueFromKod(extArr.getArrangemangstyp());
         ArrangemangsTyp arrTyp = ArrangemangsTyp.getFromCode(arrTypCode);
         intArr.setArrangemangsTyp(arrTyp);
 
         intArr.setBokningsReferens(extArr.getBokningsreferens());
 
         Partial extBokningsDatum = extArr.getBokningsdatum();
-        intArr.setBokningsDatum(PartialConverter
-                .partialToString(extBokningsDatum));
+        intArr.setBokningsDatum(PartialConverter.partialToString(extBokningsDatum));
 
         Partial extAvbestDatum = extArr.getAvbestallningsdatum();
-        intArr.setAvbestallningsDatum(PartialConverter
-                .partialToString(extAvbestDatum));
+        intArr.setAvbestallningsDatum(PartialConverter.partialToString(extAvbestDatum));
 
         PartialDateInterval arrangemangsTid = extArr.getArrangemangstid();
 
         if (arrangemangsTid != null) {
-            intArr.setArrangemangStartDatum(PartialConverter
-                    .partialToString(arrangemangsTid.getFrom()));
+            intArr.setArrangemangStartDatum(PartialConverter.partialToString(arrangemangsTid.getFrom()));
 
-            intArr.setArrangemangStartDatum(PartialConverter
-                    .partialToString(arrangemangsTid.getTom()));
+            intArr.setArrangemangStartDatum(PartialConverter.partialToString(arrangemangsTid.getTom()));
         }
 
         return intArr;

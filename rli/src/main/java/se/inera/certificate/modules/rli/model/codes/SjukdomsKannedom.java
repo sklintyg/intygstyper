@@ -21,65 +21,67 @@ package se.inera.certificate.modules.rli.model.codes;
 import org.apache.commons.lang3.StringUtils;
 
 public enum SjukdomsKannedom implements ICodeSystem {
-	
-	SJUK1("SJK1","Sjukdomen/komplikationen var okänd vid bokningstillfälllet."),
-	SJUK2("SJK2","Patientens sjukdom/komplikation är kronisk, var känd vid bokningstillfället och utgjorde då inget hinder för resan. Tillståndet för nu förvärrats på ett sätt som vid bokningstillfället ej var möjligt att förutse."),
-	SJUK3("SJK3","Patientens sjukdom/komplikation är kronisk, var känd vid bokningstillfället och utgjorde då inget hinder för resan. Tillståndet för nu förvärrats på ett sätt som vid bokningstillfället var möjligt att förutse."),
-	SJUK4("SJK4","Inget av ovanstående är tillämpligt.");
 
-	private static String codeSystemName = "kv_sjukdomskännedom_intyg";
-	
-	private static String codeSystem = "f3a556c4-d54b-4f67-8496-d5259df70493";
-	
-	private static String codeSystemVersion = null;
-	
-	private String code;
-	
-	private String description;
-	
-	private SjukdomsKannedom(String code, String desc) {
-		this.code = code;
-		this.description = desc;
-	}
-	
-	@Override
-	public String getCode() {
-		return this.code;
-	}
+    SJUK1("SJK1", "Sjukdomen/komplikationen var okänd vid bokningstillfälllet."), SJUK2(
+            "SJK2",
+            "Patientens sjukdom/komplikation är kronisk, var känd vid bokningstillfället och utgjorde då inget hinder för resan. Tillståndet för nu förvärrats på ett sätt som vid bokningstillfället ej var möjligt att förutse."), SJUK3(
+            "SJK3",
+            "Patientens sjukdom/komplikation är kronisk, var känd vid bokningstillfället och utgjorde då inget hinder för resan. Tillståndet för nu förvärrats på ett sätt som vid bokningstillfället var möjligt att förutse."), SJUK4(
+            "SJK4", "Inget av ovanstående är tillämpligt.");
 
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
+    private static String codeSystemName = "kv_sjukdomskännedom_intyg";
 
-	@Override
-	public String getCodeSystem() {
-		return codeSystem;
-	}
+    private static String codeSystem = "f3a556c4-d54b-4f67-8496-d5259df70493";
 
-	@Override
-	public String getCodeSystemName() {
-		return codeSystemName;
-	}
+    private static String codeSystemVersion = null;
 
-	@Override
-	public String getCodeSystemVersion() {
-		return codeSystemVersion;
-	}
+    private String code;
 
-	public static SjukdomsKannedom getFromCode(String code) {
-		
-		if (StringUtils.isBlank(code)) {
-			return null;
-		}
-		
-		for (SjukdomsKannedom sjkKod : values()) {
-			if (sjkKod.getCode().equals(code)) {
-				return sjkKod;
-			}
-		}
-		
-		return null;
-	}
-	
+    private String description;
+
+    private SjukdomsKannedom(String code, String desc) {
+        this.code = code;
+        this.description = desc;
+    }
+
+    @Override
+    public String getCode() {
+        return this.code;
+    }
+
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
+
+    @Override
+    public String getCodeSystem() {
+        return codeSystem;
+    }
+
+    @Override
+    public String getCodeSystemName() {
+        return codeSystemName;
+    }
+
+    @Override
+    public String getCodeSystemVersion() {
+        return codeSystemVersion;
+    }
+
+    public static SjukdomsKannedom getFromCode(String code) {
+
+        if (StringUtils.isBlank(code)) {
+            return null;
+        }
+
+        for (SjukdomsKannedom sjkKod : values()) {
+            if (sjkKod.getCode().equals(code)) {
+                return sjkKod;
+            }
+        }
+
+        return null;
+    }
+
 }

@@ -4,7 +4,7 @@ import se.inera.certificate.modules.rli.model.internal.Undersokning;
 
 public interface UndersokningPopulator {
 
-	public abstract Undersokning createAndPopulateUndersokning(
-			se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande);
+    public abstract Undersokning createAndPopulateUndersokning(
+            se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande);
 
 }

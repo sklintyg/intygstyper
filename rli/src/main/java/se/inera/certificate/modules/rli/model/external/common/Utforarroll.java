@@ -22,22 +22,22 @@ import se.inera.certificate.model.Kod;
 
 public class Utforarroll {
 
-	private Kod utforartyp;
-	private HosPersonal antasAv;
+    private Kod utforartyp;
+    private HosPersonal antasAv;
 
-	public Kod getUtforartyp() {
-		return utforartyp;
-	}
+    public Kod getUtforartyp() {
+        return utforartyp;
+    }
 
-	public void setUtforartyp(Kod utforartyp) {
-		this.utforartyp = utforartyp;
-	}
+    public void setUtforartyp(Kod utforartyp) {
+        this.utforartyp = utforartyp;
+    }
 
-	public HosPersonal getAntasAv() {
-		return antasAv;
-	}
+    public HosPersonal getAntasAv() {
+        return antasAv;
+    }
 
-	public void setAntasAv(HosPersonal antasAv) {
-		this.antasAv = antasAv;
-	}
+    public void setAntasAv(HosPersonal antasAv) {
+        this.antasAv = antasAv;
+    }
 }

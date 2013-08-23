@@ -20,78 +20,77 @@ package se.inera.certificate.modules.rli.model.internal;
 
 import java.util.List;
 
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 public class Utlatande {
 
-	private String utlatandeId;
-	
-	private String typAvUtlatande;
-	
-	private List<String> kommentarer;
-	
-	private LocalDateTime signeringsDatum;
-	
-	private LocalDateTime skickatDatum;
-	
-	private HoSPersonal skapatAv;
-	
-	private Patient patient;
-		
-	private Arrangemang arrangemang;
-		
-	private Undersokning undersokning;
-	
-	private Rekommendation rekommendation;
-	
-	private List<Status> status;
-	
-	public Utlatande() {
-		
-	}
+    private String utlatandeId;
 
-	public String getUtlatandeId() {
-		return utlatandeId;
-	}
+    private String typAvUtlatande;
 
-	public void setUtlatandeId(String utlatandeId) {
-		this.utlatandeId = utlatandeId;
-	}
+    private List<String> kommentarer;
 
-	public String getTypAvUtlatande() {
-		return typAvUtlatande;
-	}
+    private LocalDateTime signeringsDatum;
 
-	public void setTypAvUtlatande(String typAvUtlatande) {
-		this.typAvUtlatande = typAvUtlatande;
-	}
+    private LocalDateTime skickatDatum;
 
-	public List<String> getKommentarer() {
-		return kommentarer;
-	}
+    private HoSPersonal skapatAv;
 
-	public void setKommentarer(List<String> kommentarer) {
-		this.kommentarer = kommentarer;
-	}
+    private Patient patient;
 
-	public LocalDateTime getSigneringsDatum() {
-		return signeringsDatum;
-	}
+    private Arrangemang arrangemang;
 
-	public void setSigneringsDatum(LocalDateTime signeringsDatum) {
-		this.signeringsDatum = signeringsDatum;
-	}
+    private Undersokning undersokning;
 
-	public LocalDateTime getSkickatDatum() {
-		return skickatDatum;
-	}
+    private Rekommendation rekommendation;
 
-	public void setSkickatDatum(LocalDateTime skickatDatum) {
-		this.skickatDatum = skickatDatum;
-	}
+    private List<Status> status;
 
-	public HoSPersonal getSkapatAv() {
+    public Utlatande() {
+
+    }
+
+    public String getUtlatandeId() {
+        return utlatandeId;
+    }
+
+    public void setUtlatandeId(String utlatandeId) {
+        this.utlatandeId = utlatandeId;
+    }
+
+    public String getTypAvUtlatande() {
+        return typAvUtlatande;
+    }
+
+    public void setTypAvUtlatande(String typAvUtlatande) {
+        this.typAvUtlatande = typAvUtlatande;
+    }
+
+    public List<String> getKommentarer() {
+        return kommentarer;
+    }
+
+    public void setKommentarer(List<String> kommentarer) {
+        this.kommentarer = kommentarer;
+    }
+
+    public LocalDateTime getSigneringsDatum() {
+        return signeringsDatum;
+    }
+
+    public void setSigneringsDatum(LocalDateTime signeringsDatum) {
+        this.signeringsDatum = signeringsDatum;
+    }
+
+    public LocalDateTime getSkickatDatum() {
+        return skickatDatum;
+    }
+
+    public void setSkickatDatum(LocalDateTime skickatDatum) {
+        this.skickatDatum = skickatDatum;
+    }
+
+    public HoSPersonal getSkapatAv() {
         return skapatAv;
     }
 
@@ -99,44 +98,44 @@ public class Utlatande {
         this.skapatAv = skapatAv;
     }
 
-	public Patient getPatient() {
-		return patient;
-	}
+    public Patient getPatient() {
+        return patient;
+    }
 
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
 
-	public Arrangemang getArrangemang() {
-		return arrangemang;
-	}
+    public Arrangemang getArrangemang() {
+        return arrangemang;
+    }
 
-	public void setArrangemang(Arrangemang arrangemang) {
-		this.arrangemang = arrangemang;
-	}
+    public void setArrangemang(Arrangemang arrangemang) {
+        this.arrangemang = arrangemang;
+    }
 
-	public Undersokning getUndersokning() {
-		return undersokning;
-	}
+    public Undersokning getUndersokning() {
+        return undersokning;
+    }
 
-	public void setUndersokning(Undersokning undersokning) {
-		this.undersokning = undersokning;
-	}
+    public void setUndersokning(Undersokning undersokning) {
+        this.undersokning = undersokning;
+    }
 
-	public Rekommendation getRekommendation() {
-		return rekommendation;
-	}
+    public Rekommendation getRekommendation() {
+        return rekommendation;
+    }
 
-	public void setRekommendation(Rekommendation rekommendation) {
-		this.rekommendation = rekommendation;
-	}
+    public void setRekommendation(Rekommendation rekommendation) {
+        this.rekommendation = rekommendation;
+    }
 
-	public List<Status> getStatus() {
-		return status;
-	}
+    public List<Status> getStatus() {
+        return status;
+    }
 
-	public void setStatus(List<Status> status) {
-		this.status = status;
-	}
-	
+    public void setStatus(List<Status> status) {
+        this.status = status;
+    }
+
 }

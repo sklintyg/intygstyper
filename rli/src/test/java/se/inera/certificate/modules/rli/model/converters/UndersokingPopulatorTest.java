@@ -27,7 +27,7 @@ import se.inera.certificate.modules.rli.model.internal.Undersokning;
  * Unit test for the UndersokningPopulatorImpl class.
  * 
  * @author nikpet
- *
+ * 
  */
 public class UndersokingPopulatorTest {
 
@@ -112,26 +112,26 @@ public class UndersokingPopulatorTest {
 
         Undersokning intUndersokning = new Undersokning();
         converter.populateUndersokningFromAktiviteter(aktiviteter, intUndersokning);
-        
+
         Undersokning refUndersokning = buildUndersokning();
-        
+
         assertNotNull(intUndersokning);
-        
+
         assertLenientEquals(refUndersokning, intUndersokning);
     }
 
     private Undersokning buildUndersokning() {
-        
+
         Undersokning und = new Undersokning();
         und.setForstaUndersokningDatum("2012-05-23");
         und.setForstaUndersokningPlats("Sjukhus A");
         und.setKomplikationStyrkt(KomplikationStyrkt.AV_HOS_PERSONAL);
         und.setUndersokningDatum("2013-06-12");
         und.setUndersokningPlats("Sjukhus X");
-        
+
         return und;
     }
-    
+
     private Observation constructObservation(ObservationsKod obsKod, int year, int month, int day) {
 
         Observation obs = new Observation();

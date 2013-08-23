@@ -23,38 +23,38 @@ import se.inera.certificate.modules.rli.model.codes.SjukdomsKannedom;
 
 public class Rekommendation {
 
-	private RekommendationsKod rekommendationsKod;
-	
-	private SjukdomsKannedom sjukdomsKannedom;
-	
-	private String beskrivning;
-	
-	public Rekommendation() {
-	
-	}
+    private RekommendationsKod rekommendationsKod;
 
-	public RekommendationsKod getRekommendationsKod() {
-		return rekommendationsKod;
-	}
+    private SjukdomsKannedom sjukdomsKannedom;
 
-	public void setRekommendationsKod(RekommendationsKod rekommendationsKod) {
-		this.rekommendationsKod = rekommendationsKod;
-	}
+    private String beskrivning;
 
-	public SjukdomsKannedom getSjukdomsKannedom() {
-		return sjukdomsKannedom;
-	}
+    public Rekommendation() {
 
-	public void setSjukdomsKannedom(SjukdomsKannedom sjukdomsKannedom) {
-		this.sjukdomsKannedom = sjukdomsKannedom;
-	}
+    }
 
-	public String getBeskrivning() {
-		return beskrivning;
-	}
+    public RekommendationsKod getRekommendationsKod() {
+        return rekommendationsKod;
+    }
 
-	public void setBeskrivning(String beskrivning) {
-		this.beskrivning = beskrivning;
-	}
-	
+    public void setRekommendationsKod(RekommendationsKod rekommendationsKod) {
+        this.rekommendationsKod = rekommendationsKod;
+    }
+
+    public SjukdomsKannedom getSjukdomsKannedom() {
+        return sjukdomsKannedom;
+    }
+
+    public void setSjukdomsKannedom(SjukdomsKannedom sjukdomsKannedom) {
+        this.sjukdomsKannedom = sjukdomsKannedom;
+    }
+
+    public String getBeskrivning() {
+        return beskrivning;
+    }
+
+    public void setBeskrivning(String beskrivning) {
+        this.beskrivning = beskrivning;
+    }
+
 }
