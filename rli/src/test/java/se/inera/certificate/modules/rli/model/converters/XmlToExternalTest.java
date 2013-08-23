@@ -60,13 +60,13 @@ public class XmlToExternalTest {
         assertEquals(skickatDate, extUtlatande.getSkickatdatum());
 
         assertEquals("1.2.752.129.2.1.3.1", extUtlatande.getPatient().getPersonId().getRoot());
-        assertEquals("191212121212", extUtlatande.getPatient().getPersonId().getExtension());
+        assertEquals("19121212+1212", extUtlatande.getPatient().getPersonId().getExtension());
         assertEquals("Test", extUtlatande.getPatient().getFornamns().get(0));
         assertEquals("Testsson", extUtlatande.getPatient().getEfternamns().get(0));
         assertEquals("Teststigen 1, 123 45 Stockholm", extUtlatande.getPatient().getAdress());
 
         assertEquals("1.2.752.129.2.1.4.1", extUtlatande.getSkapadAv().getPersonalId().getRoot());
-        assertEquals("191010101010", extUtlatande.getSkapadAv().getPersonalId().getExtension());
+        assertEquals("19101010+1010", extUtlatande.getSkapadAv().getPersonalId().getExtension());
         assertEquals("Doktor Alban", extUtlatande.getSkapadAv().getFullstandigtNamn());
         assertEquals("ABC123", extUtlatande.getSkapadAv().getForskrivarkod());
 
@@ -83,19 +83,20 @@ public class XmlToExternalTest {
         assertEquals("Testvårdgivaren", extUtlatande.getSkapadAv().getEnhet().getVardgivare().getVardgivarnamn());
 
         List<Aktivitet> aktiviteter = extUtlatande.getAktiviteter();
-        for (Aktivitet a : aktiviteter) {
-            assertEquals("AV020", a.getAktivitetskod().getCode());
-            assertEquals("1.2.752.116.1.3.2.1.4", a.getAktivitetskod().getCodeSystem());
-            assertEquals("KVÅ", a.getAktivitetskod().getCodeSystemName());
 
-            assertEquals("1.2.752.129.2.1.4.1", a.getUtforsVidEnhet().getEnhetsId().getRoot());
-            assertEquals("vardenhet_test", a.getUtforsVidEnhet().getEnhetsId().getExtension());
-            assertEquals("Testenheten", a.getUtforsVidEnhet().getEnhetsnamn());
+        Aktivitet a = aktiviteter.get(0);
 
-            assertEquals("1.2.752.129.2.1.4.1", a.getUtforsVidEnhet().getVardgivare().getVardgivareId().getRoot());
-            assertEquals("vardgivare_test", a.getUtforsVidEnhet().getVardgivare().getVardgivareId().getExtension());
-            assertEquals("Testvårdgivaren", a.getUtforsVidEnhet().getVardgivare().getVardgivarnamn());
-        }
+        assertEquals("AV020", a.getAktivitetskod().getCode());
+        assertEquals("1.2.752.116.1.3.2.1.4", a.getAktivitetskod().getCodeSystem());
+        assertEquals("KVÅ", a.getAktivitetskod().getCodeSystemName());
+
+        assertEquals("1.2.752.129.2.1.4.1", a.getUtforsVidEnhet().getEnhetsId().getRoot());
+        assertEquals("vardenhet_test", a.getUtforsVidEnhet().getEnhetsId().getExtension());
+        assertEquals("Testenheten", a.getUtforsVidEnhet().getEnhetsnamn());
+
+        assertEquals("1.2.752.129.2.1.4.1", a.getUtforsVidEnhet().getVardgivare().getVardgivareId().getRoot());
+        assertEquals("vardgivare_test", a.getUtforsVidEnhet().getVardgivare().getVardgivareId().getExtension());
+        assertEquals("Testvårdgivaren", a.getUtforsVidEnhet().getVardgivare().getVardgivarnamn());
 
         List<Rekommendation> rekommendationer = extUtlatande.getRekommendationer();
         for (Rekommendation rekommendation : rekommendationer) {
