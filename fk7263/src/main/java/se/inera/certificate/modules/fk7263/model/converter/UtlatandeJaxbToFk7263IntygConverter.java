@@ -1,13 +1,8 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
 import iso.v21090.dt.v1.PQ;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import se.inera.certificate.common.v1.AktivitetType;
 import se.inera.certificate.common.v1.ArbetsuppgiftType;
 import se.inera.certificate.common.v1.ObservationType;
@@ -35,6 +30,9 @@ import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -118,6 +116,7 @@ public final class UtlatandeJaxbToFk7263IntygConverter {
     }
 
     private static Prognos convert(PrognosType source) {
+        if(source == null) return null;
 
         Prognos prognos = new Prognos();
         prognos.setPrognosKod(IsoTypeConverter.toKod(source.getPrognoskod()));
