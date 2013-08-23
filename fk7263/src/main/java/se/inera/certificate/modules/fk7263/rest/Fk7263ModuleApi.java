@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.model.converter.UtlatandeJaxbToFk7263IntygConverter;
 import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
 import se.inera.certificate.modules.fk7263.validator.UtlatandeValidator;
 
@@ -27,7 +28,27 @@ import com.itextpdf.text.DocumentException;
 public class Fk7263ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(Fk7263ModuleApi.class);
+    /**
+     * @param utlatande
+     * @return
+     */
+    @POST
+    @Path( "/unmarshall" )
+    @Consumes( MediaType.APPLICATION_XML )
+    @Produces( MediaType.APPLICATION_JSON )
+    public Response unmarshall(se.inera.certificate.common.v1.Utlatande utlatande) {
+        //TODO: Schema validation according to fk7263_intyg.xsd
 
+        //Convert from jaxb-> Fk7263Intyg
+        //TODO: use the "clean" Fk7263ExternalModel - Fk7263Intyg is today decorated with internal (MI-specific) properties
+        //Perhaps have several internal formats, one for MI, one for webcert
+        Fk7263Intyg fk7263Intyg = UtlatandeJaxbToFk7263IntygConverter.convert(utlatande);
+
+        //validate (Fk7263Intyg) : if error return error list json with error status code
+       
+        return Response.ok(fk7263Intyg).build();
+    }
+    
     @POST
     @Path( "/valid" )
     @Consumes( MediaType.APPLICATION_JSON )
