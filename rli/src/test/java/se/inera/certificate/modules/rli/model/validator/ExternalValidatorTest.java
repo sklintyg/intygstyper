@@ -40,10 +40,8 @@ public class ExternalValidatorTest {
 	public void testValidate() {
 		Utlatande utlatande  = buildTestUtlatande("rli-example-1-external.json");
 		List<String> validationErrors = validator.validate(utlatande);
-		
-		assertEquals("Kunde inte tolka personummer '191212121212' på formatet 'yyyyMMdd-nnnn'", validationErrors.get(0));
-		
-		
-	}
 
+		assertEquals("Could not parse the SSN '191212121212' (format should be 'yyyyMMdd-nnnn')",
+				validationErrors.get(0));
+	}
 }
