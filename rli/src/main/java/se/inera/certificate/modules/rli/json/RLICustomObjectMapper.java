@@ -56,3 +56,4 @@ public class RLICustomObjectMapper extends ObjectMapper {
 
     }
 }
+

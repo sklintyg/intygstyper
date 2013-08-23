@@ -20,7 +20,7 @@ import se.inera.certificate.modules.rli.model.internal.Undersokning;
 
 public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
-    private static Logger LOG = LoggerFactory.getLogger(UndersokingPopulatorImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UndersokingPopulatorImpl.class);
 
     /*
      * (non-Javadoc)
@@ -179,7 +179,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
     public class ObservationsKodPredicate implements Predicate {
 
-        private ObservationsKod obsKodEnum;
+        private final ObservationsKod obsKodEnum;
 
         public ObservationsKodPredicate(ObservationsKod obsKodEnum) {
             this.obsKodEnum = obsKodEnum;

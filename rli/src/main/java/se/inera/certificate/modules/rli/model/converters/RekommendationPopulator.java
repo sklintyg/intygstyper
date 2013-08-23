@@ -4,7 +4,7 @@ import se.inera.certificate.modules.rli.model.internal.Rekommendation;
 
 public interface RekommendationPopulator {
 
-    public abstract Rekommendation createAndPopulateRekommendation(
+    Rekommendation createAndPopulateRekommendation(
             se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande);
 
 }

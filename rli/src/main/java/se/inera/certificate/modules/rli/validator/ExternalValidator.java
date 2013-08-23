@@ -11,12 +11,11 @@ import se.inera.certificate.modules.rli.model.external.Utlatande;
  */
 public interface ExternalValidator {
     /**
-     * Validates an external Utlatande
+     * Validates an external Utlatande.
      * 
      * @param utlatande
      *            se.inera.certificate.modules.rli.model.external.Utlatande
      * @return List of validation errors, or an empty string if validated correctly
      */
-    public abstract List<String> validate(Utlatande utlatande);
-
+    List<String> validate(Utlatande utlatande);
 }

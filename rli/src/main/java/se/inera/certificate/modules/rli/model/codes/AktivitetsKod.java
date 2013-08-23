@@ -60,3 +60,4 @@ public enum AktivitetsKod implements ICodeSystem {
     }
 
 }
+

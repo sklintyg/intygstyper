@@ -11,7 +11,7 @@ import se.inera.certificate.modules.rli.model.internal.Rekommendation;
 
 public class RekommendationPopulatorImpl implements RekommendationPopulator {
 
-    private static Logger LOG = LoggerFactory.getLogger(RekommendationPopulatorImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RekommendationPopulatorImpl.class);
 
     /*
      * (non-Javadoc)
