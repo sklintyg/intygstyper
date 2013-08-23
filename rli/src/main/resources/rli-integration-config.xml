@@ -55,6 +55,10 @@
   
   <bean id="externalToInternalConverter" class="se.inera.certificate.modules.rli.model.converters.ExternalToInternalConverterImpl"/>
   
+  <bean id="rekommendationPopulator" class="se.inera.certificate.modules.rli.model.converters.RekommendationPopulatorImpl"/>
+  
+  <bean id="undersokningPopulator" class="se.inera.certificate.modules.rli.model.converters.UndersokingPopulatorImpl"/>
+  
   <jaxrs:server address="/">
     <jaxrs:serviceBeans>
       <bean class="se.inera.certificate.modules.rli.rest.RliModuleApi"/>
