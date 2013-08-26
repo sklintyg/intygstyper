@@ -93,8 +93,8 @@ public class ExternalToInternalConverterTest {
 
         assertEquals("19121212-1212", res.getPersonId());
         assertEquals("Abel Baker", res.getFornamn());
-        assertEquals("Smith Doe", res.getEfternamn());
-        assertEquals("Abel Baker Smith Doe", res.getFullstandigtnamn());
+        assertEquals("Smith", res.getEfternamn());
+        assertEquals("Abel Baker Smith", res.getFullstandigtnamn());
         assertNotNull(res.getPostadress());
         assertNotNull(res.getPostnummer());
         assertNotNull(res.getPostort());
@@ -107,7 +107,7 @@ public class ExternalToInternalConverterTest {
 
         pat.setPersonId(new Id("PersonId", "19121212-1212"));
         pat.getFornamns().addAll(Arrays.asList("Abel", "Baker"));
-        pat.getEfternamns().addAll(Arrays.asList("Smith", "Doe"));
+        pat.setEfternamn("Smith");
         pat.setPostadress("Testgatan 123");
         pat.setPostnummer("123 45");
         pat.setPostort("Teststaden");

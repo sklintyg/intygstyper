@@ -61,12 +61,12 @@
 		<xs:sequence>
 			<xs:element name="person-id" type="iso:II" />
 			<xs:element name="fornamn" type="xs:string" maxOccurs="unbounded" />
-			<xs:element name="efternamn" type="xs:string" maxOccurs="unbounded" />
+			<xs:element name="efternamn" type="xs:string" />
 			<xs:element name="mellannamn" type="xs:string" minOccurs="0"
 				maxOccurs="unbounded" />
-			<xs:element name="postadress" type="xs:string" minOccurs="0"/>
-			<xs:element name="postnummer" type="xs:string" minOccurs="0"/>
-			<xs:element name="postort" type="xs:string" minOccurs="0"/>
+			<xs:element name="postadress" type="xs:string"/>
+			<xs:element name="postnummer" type="xs:string"/>
+			<xs:element name="postort" type="xs:string"/>
 
 			<xs:element name="patientRelation" type="patientRelationType"
 				minOccurs="0" maxOccurs="unbounded" />
@@ -102,13 +102,12 @@
 				minOccurs="0" />
 			<xs:element name="beskrivning" type="xs:string" minOccurs="0" />
 
+			<xs:element name="plats" type="xs:string" minOccurs="0" />
+
 			<xs:element name="utforsVidEnhet" type="hr:enhetType"
 				minOccurs="0"/>
-				
-			<xs:element name="utforsAv" type="utforarrollType"
+			<xs:element name="beskrivsAv" type="utforarrollType"
 				minOccurs="0" maxOccurs="unbounded" />
-
-			<xs:element name="plats" type="xs:string" minOccurs="0" />
 
 			<xs:any namespace="##other" processContents="lax" minOccurs="0"
 				maxOccurs="unbounded" />
@@ -142,7 +141,7 @@
 			<xs:element name="observations-id" type="iso:II" />
 			<xs:element name="observationskod" type="iso:CD" />
 			<xs:element name="observationsperiod"
-				type="partialDateInterval" minOccurs="0" />
+				type="partialDateInterval" />
 
 			<xs:element name="utforsAv" type="utforarrollType"
 				minOccurs="0" />

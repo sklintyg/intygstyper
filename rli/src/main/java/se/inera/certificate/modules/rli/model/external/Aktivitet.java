@@ -48,7 +48,7 @@ public class Aktivitet {
     private String syfte;
     private String plats;
     private Enhet utforsVidEnhet;
-    private List<Utforarroll> utforsAvs;
+    private List<Utforarroll> beskrivsAvs;
     private Omfattning omfattning;
 
     public Id getAktivitetsId() {
@@ -123,11 +123,11 @@ public class Aktivitet {
         this.utforsVidEnhet = utforsVidEnhet;
     }
 
-    public List<Utforarroll> getUtforsAvs() {
-        if (utforsAvs == null) {
-            utforsAvs = new ArrayList<Utforarroll>();
+    public List<Utforarroll> getBeskrivsAvs() {
+        if (beskrivsAvs == null) {
+            beskrivsAvs = new ArrayList<Utforarroll>();
         }
-        return this.utforsAvs;
+        return this.beskrivsAvs;
     }
 
     public Omfattning getOmfattning() {

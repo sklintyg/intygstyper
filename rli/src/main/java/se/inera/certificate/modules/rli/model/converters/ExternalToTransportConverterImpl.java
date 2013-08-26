@@ -284,8 +284,8 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
         if (source.getFornamns() != null) {
             patientType.getFornamns().addAll(source.getFornamns());
         }
-        if (source.getEfternamns() != null) {
-            patientType.getEfternamns().addAll(source.getEfternamns());
+        if (source.getEfternamn() != null) {
+            patientType.setEfternamn(source.getEfternamn());
         }
         if (source.getMellannamns() != null) {
             patientType.getMellannamns().addAll(source.getMellannamns());

@@ -118,14 +118,12 @@ public class ExternalToTransportConverterTest {
         a.setTypAvArbetsuppgift("Testare");
         arbetsuppgifts.add(a);
         patient.getArbetsuppgifts().addAll(arbetsuppgifts);
-        List<String> eN = new ArrayList<String>();
-        eN.add("Testsson");
         List<String> fN = new ArrayList<String>();
         fN.add("Test");
         List<String> mN = new ArrayList<String>();
         mN.add("von");
 
-        patient.getEfternamns().addAll(eN);
+        patient.setEfternamn("Testsson");
         patient.getFornamns().addAll(fN);
         patient.getMellannamns().addAll(mN);
 

@@ -246,8 +246,8 @@ public class ExternalValidatorImpl implements ExternalValidator {
             if (patient.getFornamns().isEmpty()) {
                 validationErrors.add("At least one Fornamn must be provided for Patient");
             }
-            if (patient.getEfternamns().isEmpty()) {
-                validationErrors.add("At least one Efternamn must be provided for Patient");
+            if (patient.getEfternamn() == null) {
+                validationErrors.add("A Efternamn must be provided for Patient");
             }
         }
     }
