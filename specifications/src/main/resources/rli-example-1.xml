@@ -38,7 +38,9 @@
 		<person-id root="1.2.752.129.2.1.3.1" extension="19121212+1212" />
 		<fornamn>Test</fornamn>
 		<efternamn>Testsson</efternamn>
-		<adress>Teststigen 1, 123 45 Stockholm</adress>
+		<postadress>Teststigen 1</postadress>
+		<postnummer>123 45</postnummer>
+		<postort>Stockholm</postort>
 	</patient>
 
 	<skapadAv>
@@ -88,11 +90,11 @@
 	</aktivitet>
 	
 	<aktivitet>
-		<!-- displayName="klinisk undersökning UNS" -->
-		<aktivitetskod code="AV020" codeSystem="1.2.752.116.1.3.2.1.4"
+		<!-- displayName="Första klinisk undersökning UNS" -->
+		<aktivitetskod code="AKT13" codeSystem="1.2.752.116.1.3.2.1.4"
 			codeSystemName="KVÅ" />
 		<aktivitetstid>
-			<from>2013-08-14</from>
+			<from>2013-08-01</from>
 			<tom></tom>
 		</aktivitetstid>
 	</aktivitet>

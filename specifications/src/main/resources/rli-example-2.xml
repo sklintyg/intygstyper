@@ -36,11 +36,13 @@
 		<person-id root="1.2.752.129.2.1.3.1" extension="19331122-4400" />
 		<fornamn>Fröken</fornamn>
 		<efternamn>Fräken</efternamn>
-		<adress>Genvägen 1, 150 21 Mölnbo</adress>
+		<postadress>Genvägen 1</postadress>
+		<postnummer>150 21</postnummer>
+		<postort>Mölnbo</postort>
 	</patient>
 
 	<skapadAv>
-		<hr:personal-id root="1.2.752.129.2.1.4.1" extension="19101010-1010" />
+		<hr:personal-id root="1.2.752.129.2.1.4.1" extension="19101010+1010" />
 		<hr:fullstandigtNamn>Doktor Alban</hr:fullstandigtNamn>
 		<hr:forskrivarkod>ABC123</hr:forskrivarkod>
 
