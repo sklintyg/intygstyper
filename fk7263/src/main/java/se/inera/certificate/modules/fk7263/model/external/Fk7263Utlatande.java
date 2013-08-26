@@ -1,8 +1,6 @@
 package se.inera.certificate.modules.fk7263.model.external;
 
 import static se.inera.certificate.model.util.Iterables.find;
-import static se.inera.certificate.model.util.Strings.emptyToNull;
-import static se.inera.certificate.model.util.Strings.join;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -243,18 +241,6 @@ public class Fk7263Utlatande {
                 return referensTyp.equals(referens.getReferenstyp());
             }
         }, null);
-    }
-
-    public String getForskrivarkodOchArbetsplatskod() {
-        List<String> parts = new ArrayList<>();
-        if (skapadAv != null) {
-            parts.add(skapadAv.getForskrivarkod());
-
-            if (skapadAv.getVardenhet() != null) {
-                parts.add(skapadAv.getVardenhet().getArbetsplatskod().getExtension());
-            }
-        }
-        return emptyToNull(join(" - ", parts));
     }
 
     public List<Status> getStatus() {

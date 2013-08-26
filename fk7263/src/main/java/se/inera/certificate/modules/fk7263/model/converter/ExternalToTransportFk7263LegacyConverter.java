@@ -53,11 +53,11 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 
-public final class UtlatandeToRegisterMedicalCertificateConverter {
+public final class ExternalToTransportFk7263LegacyConverter {
 
     private static final String FK7263 = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
 
-    private UtlatandeToRegisterMedicalCertificateConverter() {
+    private ExternalToTransportFk7263LegacyConverter() {
     }
 
     public static RegisterMedicalCertificate getJaxbObject(Fk7263Utlatande utlatande) {

@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
-import se.inera.certificate.modules.fk7263.model.converter.UtlatandeJaxbToFk7263IntygConverter;
-import se.inera.certificate.modules.fk7263.model.converter.UtlatandeToRegisterMedicalCertificateConverter;
+import se.inera.certificate.modules.fk7263.model.converter.ExternalToTransportFk7263LegacyConverter;
+import se.inera.certificate.modules.fk7263.model.converter.TransportToExternalConverter;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
 import se.inera.certificate.modules.fk7263.validator.UtlatandeValidator;
@@ -40,19 +40,17 @@ public class Fk7263ModuleApi {
     @Path( "/unmarshall" )
     @Consumes( MediaType.APPLICATION_XML )
     @Produces( MediaType.APPLICATION_JSON )
-    public Response unmarshall(se.inera.certificate.fk7263.model.v1.Utlatande fk7263Utlatande) {
+    public Response unmarshall(se.inera.certificate.fk7263.model.v1.Utlatande fk7263UtlatandeJaxb) {
         //TODO: Schema validation according to fk7263_intyg.xsd
 
-       
-        //TODO: use the "clean" Fk7263ExternalModel - Fk7263Intyg is today decorated with internal (MI-specific) properties
-        //Perhaps have several internal formats, one for MI, one for webcert
-        Fk7263Intyg fk7263Intyg = UtlatandeJaxbToFk7263IntygConverter.convert(fk7263Utlatande);
+        Fk7263Utlatande externalModel = TransportToExternalConverter.convert(fk7263UtlatandeJaxb);
 
-
-        List<String> validationErrors = new UtlatandeValidator(fk7263Intyg).validate();
-
+        Fk7263Intyg internalModel = new Fk7263Intyg(externalModel);
+        
+        List<String> validationErrors = new UtlatandeValidator(internalModel).validate();
+        
         if (validationErrors.isEmpty()) {
-            return Response.ok(fk7263Intyg).build();
+            return Response.ok(externalModel).build();
         } else {
             String response = Strings.join(",", validationErrors);
             return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
@@ -64,7 +62,7 @@ public class Fk7263ModuleApi {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_XML)
     public Response marshall(@HeaderParam("X-Schema-Version") String version, Fk7263Utlatande externalModel) {
-        RegisterMedicalCertificate registerMedicalCertificateJaxb = UtlatandeToRegisterMedicalCertificateConverter.getJaxbObject(externalModel);
+        RegisterMedicalCertificate registerMedicalCertificateJaxb = ExternalToTransportFk7263LegacyConverter.getJaxbObject(externalModel);
         return Response.ok(registerMedicalCertificateJaxb).build();
     }
     

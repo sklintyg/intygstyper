@@ -30,10 +30,10 @@ import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
-import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Arbetsgivare;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
@@ -41,36 +41,36 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 /**
  * @author marced
  */
-public final class UtlatandeJaxbToFk7263IntygConverter {
+public final class TransportToExternalConverter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UtlatandeJaxbToFk7263IntygConverter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransportToExternalConverter.class);
 
-    private UtlatandeJaxbToFk7263IntygConverter() {
+    private TransportToExternalConverter() {
     }
 
     /**
      * 
      */
-    public static Fk7263Intyg convert(se.inera.certificate.fk7263.model.v1.Utlatande source) {
-        Fk7263Intyg fk7263Intyg = new Fk7263Intyg();
+    public static Fk7263Utlatande convert(se.inera.certificate.fk7263.model.v1.Utlatande source) {
+        Fk7263Utlatande fk7263utlatande = new Fk7263Utlatande();
 
-        fk7263Intyg.setId(IsoTypeConverter.toId(source.getUtlatandeId()));
-        fk7263Intyg.setTyp(IsoTypeConverter.toKod(source.getTypAvUtlatande()));
-        fk7263Intyg.setKommentars(source.getKommentars());
-        fk7263Intyg.setSigneringsDatum(source.getSigneringsdatum());
-        fk7263Intyg.setSkickatDatum(source.getSkickatdatum());
+        fk7263utlatande.setId(IsoTypeConverter.toId(source.getUtlatandeId()));
+        fk7263utlatande.setTyp(IsoTypeConverter.toKod(source.getTypAvUtlatande()));
+        fk7263utlatande.setKommentars(source.getKommentars());
+        fk7263utlatande.setSigneringsDatum(source.getSigneringsdatum());
+        fk7263utlatande.setSkickatDatum(source.getSkickatdatum());
 
-        fk7263Intyg.setPatient(convert(source.getPatient()));
+        fk7263utlatande.setPatient(convert(source.getPatient()));
 
-        fk7263Intyg.setSkapadAv(convert(source.getSkapadAv()));
+        fk7263utlatande.setSkapadAv(convert(source.getSkapadAv()));
 
-        fk7263Intyg.setObservations(convertObservations(source.getObservations()));
+        fk7263utlatande.setObservations(convertObservations(source.getObservations()));
 
-        fk7263Intyg.setAktiviteter(convertAktiviteter(source.getAktivitets()));
-        fk7263Intyg.setReferenser(convertReferenser(source.getReferens()));
-        fk7263Intyg.setVardkontakter(convertVardkontakter(source.getVardkontakts()));
+        fk7263utlatande.setAktiviteter(convertAktiviteter(source.getAktivitets()));
+        fk7263utlatande.setReferenser(convertReferenser(source.getReferens()));
+        fk7263utlatande.setVardkontakter(convertVardkontakter(source.getVardkontakts()));
 
-        return fk7263Intyg;
+        return fk7263utlatande;
     }
 
     private static List<Sysselsattning> convert(List<SysselsattningType> source) {

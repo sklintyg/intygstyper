@@ -1,7 +1,10 @@
 package se.inera.certificate.modules.fk7263.model;
 
 import static se.inera.certificate.model.util.Iterables.find;
+import static se.inera.certificate.model.util.Strings.emptyToNull;
+import static se.inera.certificate.model.util.Strings.join;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import se.inera.certificate.model.Aktivitet;
@@ -24,6 +27,38 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 public class Fk7263Intyg extends Fk7263Utlatande {
 
     public static final String DATE_PATTERN = "yyyy-MM-dd";
+
+    public Fk7263Intyg() {
+
+    }
+
+    public Fk7263Intyg(Fk7263Utlatande external) {
+        this.setId(external.getId());
+        this.setTyp(external.getTyp());
+        this.setAktiviteter(external.getAktiviteter());
+        this.setKommentars(external.getKommentars());
+        this.setObservations(external.getObservations());
+        // this.setOvrigt(ovrigt) TODO: ovrigt to be removed?
+        this.setPatient(external.getPatient());
+        this.setReferenser(external.getReferenser());
+        this.setSigneringsDatum(external.getSigneringsDatum());
+        this.setSkapadAv(external.getSkapadAv());
+        this.setSkickatDatum(external.getSkickatDatum());
+        this.setStatus(external.getStatus()); // TODO: status to be removed?
+        this.setVardkontakter(external.getVardkontakter());
+    }
+
+    public String getForskrivarkodOchArbetsplatskod() {
+        List<String> parts = new ArrayList<>();
+        if (getSkapadAv() != null) {
+            parts.add(getSkapadAv().getForskrivarkod());
+
+            if (getSkapadAv().getVardenhet() != null) {
+                parts.add(getSkapadAv().getVardenhet().getArbetsplatskod().getExtension());
+            }
+        }
+        return emptyToNull(join(" - ", parts));
+    }
 
     public String getNamnfortydligandeOchAdress() {
         if (getSkapadAv() == null || getSkapadAv().getVardenhet() == null) {
@@ -152,8 +187,7 @@ public class Fk7263Intyg extends Fk7263Utlatande {
     }
 
     public boolean isArbetsformagaIForhallandeTillForaldraledighet() {
-        return containsSysselsattningKod(Sysselsattningskoder.MAMMALEDIG) ||
-               containsSysselsattningKod(Sysselsattningskoder.PAPPALEDIG) ;
+        return containsSysselsattningKod(Sysselsattningskoder.MAMMALEDIG) || containsSysselsattningKod(Sysselsattningskoder.PAPPALEDIG);
     }
 
     public boolean isArbetsformagaIForhallandeTillNuvarandeArbete() {
@@ -227,7 +261,7 @@ public class Fk7263Intyg extends Fk7263Utlatande {
 
         return true;
     }
-    
+
     public boolean isFilledDiagnosis() {
 
         return getMedicinsktTillstand() != null;
@@ -244,10 +278,10 @@ public class Fk7263Intyg extends Fk7263Utlatande {
     }
 
     public boolean isFilledBasedOn() {
-    	List<String> kommentars = getKommentars();
-    	List<Vardkontakt> vardKontakter = getVardkontakter();
-    	List<Referens> referens = getReferenser();
-    	
+        List<String> kommentars = getKommentars();
+        List<Vardkontakt> vardKontakter = getVardkontakter();
+        List<Referens> referens = getReferenser();
+
         return (kommentars != null && kommentars.size() > 0) || (vardKontakter != null && vardKontakter.size() > 0) || (referens != null && referens.size() > 0);
     }
 
@@ -276,7 +310,7 @@ public class Fk7263Intyg extends Fk7263Utlatande {
 
     public boolean isFilledPatientWorkCapacityJudgement() {
         Observation value = getArbetsformagaAktivitetsbegransning();
-        if(value != null) {
+        if (value != null) {
             Prognos prognos = value.getPrognos();
             return prognos != null && prognos.getBeskrivning() != null && !prognos.getBeskrivning().trim().equals("");
         }
