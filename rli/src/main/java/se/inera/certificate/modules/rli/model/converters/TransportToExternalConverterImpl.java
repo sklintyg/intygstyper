@@ -294,7 +294,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
         }
         aktivitet.setBeskrivning(source.getBeskrivning());
         aktivitet.setUtforsVidEnhet(convertEnhet(source.getUtforsVidEnhet()));
-        aktivitet.getUtforsAvs().addAll(convertUtforarroller(source.getUtforsAvs()));
+        //aktivitet.getUtforsAvs().addAll(convertUtforarroller(source.getUtforsAvs()));
 
         return aktivitet;
     }
@@ -346,7 +346,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
         patient.getPatientRelations().addAll(convertPatientRelations(source.getPatientRelations()));
         patient.getFornamns().addAll(source.getFornamns());
         patient.getMellannamns().addAll(source.getMellannamns());
-        patient.setEfternamn(StringUtils.join(source.getEfternamns(), " "));
+        patient.setEfternamn(source.getEfternamn());
 
         return patient;
     }
