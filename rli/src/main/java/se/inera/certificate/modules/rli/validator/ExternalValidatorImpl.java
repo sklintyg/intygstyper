@@ -1,5 +1,20 @@
 /**
- * 
+ * Copyright (C) 2013 Inera AB (http://www.inera.se)
+ *
+ * This file is part of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules).
+ *
+ * Inera Certificate Modules is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Inera Certificate Modules is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package se.inera.certificate.modules.rli.validator;
 
@@ -32,7 +47,7 @@ import se.inera.certificate.validate.SimpleIdValidatorBuilder;
 public class ExternalValidatorImpl implements ExternalValidator {
 
     private IdValidator idValidator;
-    
+
     public ExternalValidatorImpl() {
         idValidator = new SimpleIdValidatorBuilder().withPersonnummerValidator(true)
                 .withSamordningsnummerValidator(true).build();
@@ -60,8 +75,7 @@ public class ExternalValidatorImpl implements ExternalValidator {
         return validationErrors;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * Validates that required attributes connected with the actual class Utlatande are present
      */
@@ -81,8 +95,7 @@ public class ExternalValidatorImpl implements ExternalValidator {
 
     }
 
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * Validates Arrangemang in Utlatande First makes sure Arrangemang is not null, if so, the required attributes are
      * validated in turn and any errors are added to validation error list
@@ -98,7 +111,7 @@ public class ExternalValidatorImpl implements ExternalValidator {
                 || !arrangemang.getArrangemangstyp().getCode().equals(ArrangemangsTyp.RESA.getCode())) {
             validationErrors.add("Code in arrangemang must be SNOMED-CT code: " + ArrangemangsTyp.RESA.getCode());
         }
-        
+
         checkBokningsdatum(arrangemang, validationErrors);
 
         if (arrangemang.getArrangemangstid() == null) {
@@ -110,11 +123,11 @@ public class ExternalValidatorImpl implements ExternalValidator {
         }
 
     }
-    
-    private void checkBokningsdatum(Arrangemang arrangemang, List<String> validationErrors){
+
+    private void checkBokningsdatum(Arrangemang arrangemang, List<String> validationErrors) {
         if (arrangemang.getBokningsdatum() == null) {
             validationErrors.add("Bokningsdatum was null");
-        }     
+        }
     }
 
     private void validateSkapasAv(Utlatande utlatande, List<String> validationErrors) {
@@ -129,7 +142,7 @@ public class ExternalValidatorImpl implements ExternalValidator {
             /**
              * Make sure the id specified has the correct root (HSA-IDs have 1.2.752.129.2.1.4.1)
              */
-            
+
             if (!skapatAv.getPersonalId().getRoot().equals(HSpersonalTyp.HSA_ID.getCode())) {
                 validationErrors.add("PersonalId should be an HSA-ID with root: " + HSpersonalTyp.HSA_ID.getCode());
             }
@@ -142,8 +155,7 @@ public class ExternalValidatorImpl implements ExternalValidator {
 
     }
 
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * Make sure Utlatande contains 1..* Observation
      */
@@ -176,8 +188,7 @@ public class ExternalValidatorImpl implements ExternalValidator {
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
      * 
      * Validate Aktiviteter,
      */
@@ -188,14 +199,14 @@ public class ExternalValidatorImpl implements ExternalValidator {
             validationErrors.add("No aktiviteter found");
             return;
         }
-        /*
+        /**
          * Make sure Utlatande contains 1..2 Aktiviteter and nothing else
          */
         if (aktiviteter.size() < 1 && aktiviteter.size() > 2) {
             validationErrors.add("Utlatande does not contain 1 or 2 Aktiviteter");
             return;
         }
-        /*
+        /**
          * Make sure one instance of aktivitet is of type KLINISK UNDERSOKNING
          */
         Aktivitet akt = (Aktivitet) CollectionUtils.find(aktiviteter, new AktivitetsKodPredicate(
@@ -207,6 +218,9 @@ public class ExternalValidatorImpl implements ExternalValidator {
                         .add("Aktivitetstid must be specified for Aktivitet of type Klinisk Undersokning (AV020 / UNS)");
             }
         } else {
+            /**
+             * Akt was null
+             */
             validationErrors.add("No aktivitet of type KLINISK UNDERSOKNING found");
         }
     }
@@ -236,9 +250,7 @@ public class ExternalValidatorImpl implements ExternalValidator {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
+    /**
      * Make sure Utlatande contains 1 Patient
      */
     private void validatePatient(Utlatande utlatande, List<String> validationErrors) {
@@ -252,7 +264,7 @@ public class ExternalValidatorImpl implements ExternalValidator {
 
         validationErrors.addAll(idValidator.validate(patient.getPersonId()));
 
-        /*
+        /**
          * Make sure Fornamn and Efternamn contains at least one item
          */
         if (patient.getFornamns().isEmpty()) {
@@ -265,6 +277,12 @@ public class ExternalValidatorImpl implements ExternalValidator {
 
     }
 
+    /**
+     * Predicate for AktivitetsKod
+     * 
+     * @author erik
+     * 
+     */
     private class AktivitetsKodPredicate implements Predicate {
 
         private final AktivitetsKod aktKodEnum;
