@@ -27,8 +27,8 @@ public class Patient {
 
     private Id personId;
     private List<String> fornamns;
-    private String efternamn;
     private List<String> mellannamns;
+    private String efternamn;
     private String postadress;
     private String postnummer;
     private String postort;
@@ -51,19 +51,19 @@ public class Patient {
         return this.fornamns;
     }
 
+    public List<String> getMellannamns() {
+        if (mellannamns == null) {
+            mellannamns = new ArrayList<String>();
+        }
+        return this.mellannamns;
+    }
+
     public String getEfternamn() {
         return efternamn;
     }
 
     public void setEfternamn(String efternamn) {
         this.efternamn = efternamn;
-    }
-
-    public List<String> getMellannamns() {
-        if (mellannamns == null) {
-            mellannamns = new ArrayList<String>();
-        }
-        return this.mellannamns;
     }
 
     public String getPostadress() {

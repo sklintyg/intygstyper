@@ -2,6 +2,7 @@ package se.inera.certificate.modules.rli.model.converters;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
 
 import java.util.ArrayList;
@@ -76,10 +77,10 @@ public class UndersokingPopulatorTest {
     @Test
     public void testpopulateFromAktiviteter1() {
 
-        Aktivitet firstExam = constructAktivitet(2012, 5, 0);
-        firstExam.setBeskrivning("Sjukhus A");
+        Aktivitet firstExam = constructAktivitet(AktivitetsKod.FORSTA_UNDERSOKNING, 2012, 5, 0);
+        firstExam.setPlats("Sjukhus A");
 
-        Aktivitet currentExam = constructAktivitet(2013, 6, 12);
+        Aktivitet currentExam = constructAktivitet(AktivitetsKod.KLINISK_UNDERSOKNING, 2013, 6, 12);
         Enhet enhet = constructEnhet("Sjukhus B");
         currentExam.setUtforsVidEnhet(enhet);
 
@@ -89,47 +90,32 @@ public class UndersokingPopulatorTest {
         converter.populateUndersokningFromAktiviteter(aktiviteter, intUndersokning);
 
         assertNotNull(intUndersokning);
-        assertEquals(intUndersokning.getForstaUndersokningDatum(), "2012-05");
-        assertEquals(intUndersokning.getForstaUndersokningPlats(), "Sjukhus A");
-        assertEquals(intUndersokning.getKomplikationStyrkt(), KomplikationStyrkt.AV_PATIENT);
+        assertEquals("2012-05", intUndersokning.getForstaUndersokningDatum());
+        assertEquals("Sjukhus A", intUndersokning.getForstaUndersokningPlats());
+        assertEquals(KomplikationStyrkt.AV_PATIENT, intUndersokning.getKomplikationStyrkt());
 
-        assertEquals(intUndersokning.getUndersokningDatum(), "2013-06-12");
-        assertEquals(intUndersokning.getUndersokningPlats(), "Sjukhus B");
+        assertEquals("2013-06-12", intUndersokning.getUndersokningDatum());
+        assertEquals("Sjukhus B", intUndersokning.getUndersokningPlats());
     }
 
     @Test
     public void testpopulateFromAktiviteter2() {
 
-        Aktivitet firstExam = constructAktivitet(2012, 5, 23);
-        Enhet sjukhusEnhetA = constructEnhet("Sjukhus A");
-        firstExam.setUtforsVidEnhet(sjukhusEnhetA);
-
-        Aktivitet currentExam = constructAktivitet(2013, 6, 12);
+        Aktivitet currentExam = constructAktivitet(AktivitetsKod.KLINISK_UNDERSOKNING, 2013, 6, 12);
         Enhet sjukhusEnhetX = constructEnhet("Sjukhus X");
         currentExam.setUtforsVidEnhet(sjukhusEnhetX);
 
-        List<Aktivitet> aktiviteter = Arrays.asList(firstExam, currentExam);
+        List<Aktivitet> aktiviteter = Arrays.asList(currentExam);
 
         Undersokning intUndersokning = new Undersokning();
         converter.populateUndersokningFromAktiviteter(aktiviteter, intUndersokning);
 
-        Undersokning refUndersokning = buildUndersokning();
-
         assertNotNull(intUndersokning);
-
-        assertLenientEquals(refUndersokning, intUndersokning);
-    }
-
-    private Undersokning buildUndersokning() {
-
-        Undersokning und = new Undersokning();
-        und.setForstaUndersokningDatum("2012-05-23");
-        und.setForstaUndersokningPlats("Sjukhus A");
-        und.setKomplikationStyrkt(KomplikationStyrkt.AV_HOS_PERSONAL);
-        und.setUndersokningDatum("2013-06-12");
-        und.setUndersokningPlats("Sjukhus X");
-
-        return und;
+        assertEquals("2013-06-12", intUndersokning.getUndersokningDatum());
+        assertEquals("Sjukhus X", intUndersokning.getUndersokningPlats());
+        //assertEquals(KomplikationStyrkt.AV_HOS_PERSONAL, intUndersokning.getKomplikationStyrkt());
+        assertNull(intUndersokning.getForstaUndersokningDatum());
+        assertNull(intUndersokning.getForstaUndersokningPlats());
     }
 
     private Observation constructObservation(ObservationsKod obsKod, int year, int month, int day) {
@@ -151,13 +137,13 @@ public class UndersokingPopulatorTest {
         return enhet;
     }
 
-    private Aktivitet constructAktivitet(int year, int month, int day) {
+    private Aktivitet constructAktivitet(AktivitetsKod aktivitetsKod, int year, int month, int day) {
 
         Partial from = TestUtils.constructPartial(year, month, day);
         PartialDateInterval atid = new PartialDateInterval(from, null);
 
         Aktivitet a = new Aktivitet();
-        a.setAktivitetskod(new Kod(AktivitetsKod.KLINISK_UNDERSOKNING.getCode()));
+        a.setAktivitetskod(new Kod(aktivitetsKod.getCode()));
         a.setAktivitetstid(atid);
 
         return a;

@@ -208,7 +208,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         Patient intPatient = new Patient();
 
         intPatient.setPersonId(InternalModelConverterUtils.getValueFromId(extPatient.getPersonId()));
-
+        
         String efterNamn = extPatient.getEfternamn();
         intPatient.setEfternamn(efterNamn);
 
@@ -230,7 +230,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         LOG.debug("Converting arrangemang");
 
         if (extArr == null) {
-            LOG.debug("No arrangemang found to convert");
+            LOG.debug("- No arrangemang found to convert");
             return null;
         }
 
@@ -253,9 +253,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         PartialDateInterval arrangemangsTid = extArr.getArrangemangstid();
 
         if (arrangemangsTid != null) {
-            intArr.setArrangemangStartDatum(PartialConverter.partialToString(arrangemangsTid.getFrom()));
-
-            intArr.setArrangemangStartDatum(PartialConverter.partialToString(arrangemangsTid.getTom()));
+            intArr.setArrangemangDatum(PartialConverter.partialToString(arrangemangsTid.getFrom()));
         }
 
         return intArr;

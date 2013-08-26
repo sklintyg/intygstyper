@@ -1,31 +1,13 @@
 /**
- * Copyright (C) 2013 Inera AB (http://www.inera.se)
- *
- * This file is part of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules).
- *
- * Inera Certificate Modules is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * Inera Certificate Modules is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
  */
 package se.inera.certificate.modules.rli.validator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang3.StringUtils;
 
-import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
@@ -46,8 +28,8 @@ public class ExternalValidatorImpl implements ExternalValidator {
     private IdValidator idValidator;
 
     public ExternalValidatorImpl() {
-        idValidator = new SimpleIdValidatorBuilder().withPersonnummerValidator(false)
-                .withSamordningsnummerValidator(false).build();
+        idValidator = new SimpleIdValidatorBuilder().withPersonnummerValidator(true)
+                .withSamordningsnummerValidator(true).build();
     }
 
     /*
@@ -104,11 +86,6 @@ public class ExternalValidatorImpl implements ExternalValidator {
         if (arrangemang == null) {
             validationErrors.add("Arrangemang was null");
         } else {
-
-            // Make sure the correct SNOMED-CT code for Resa is present
-            if (!arrangemang.getArrangemangstyp().getCode().equals("420008001")) {
-                validationErrors.add("Code in arrangemang must be SNOMED-CT code: 420008001 (resa)");
-            }
 
             if (arrangemang.getBokningsdatum() == null) {
                 validationErrors.add("No bokningsdatum found in arrangemang");
@@ -183,15 +160,18 @@ public class ExternalValidatorImpl implements ExternalValidator {
             /*
              * Make sure Utlatande contains 1..2 Aktiviteter and nothing else
              */
-            if (aktiviteter.size() < 1 || aktiviteter.size() > 2) {
+            if (aktiviteter.size() < 1 && aktiviteter.size() > 2) {
                 validationErrors.add("Utlatande does not contain 1 or 2 Aktiviteter");
             } else {
                 /*
-                 * Make sure at lest one Aktivitet contains the Aktivitetskod representing Klinisk Undersokning
+                 * Make sure all Aktiviteter contains the required attribute Aktivitetskod
                  */
-                if (CollectionUtils.countMatches(aktiviteter, new AktivitetsKodPredicate(
-                        AktivitetsKod.KLINISK_UNDERSOKNING)) < 1) {
-                    validationErrors.add("At least one Aktivitet of type Klinisk Undersokning must be present");
+                for (Aktivitet akt : aktiviteter) {
+                    if (akt.getAktivitetskod() == null
+                            || akt.getAktivitetskod().getCodeSystem().equals(AktivitetsKod.KLINISK_UNDERSOKNING)
+                            || akt.getAktivitetskod().getCodeSystem().equals(AktivitetsKod.OMVARDNADSATGARD)) {
+                        validationErrors.add("No valid aktivitetskod found in: " + akt + "\n");
+                    }
                 }
             }
         }
@@ -202,26 +182,18 @@ public class ExternalValidatorImpl implements ExternalValidator {
      */
     private void validateRekommendationer(Utlatande utlatande, List<String> validationErrors) {
         List<Rekommendation> rekommendationer = utlatande.getRekommendationer();
-        String rekCodeRegex = "REK[1-7]{1}";
-        String sjukCodeRegex = "SJK[1-4]{1}";
-
         if (rekommendationer.isEmpty()) {
             validationErrors.add("No Rekommendation found");
         } else {
             for (Rekommendation rek : rekommendationer) {
                 if (rek.getRekommendationskod() == null) {
-                    validationErrors.add("Missing rekommendationskod");
-                }
-                if (!Pattern.matches(rekCodeRegex, rek.getRekommendationskod().getCode())) {
-                    validationErrors.add("Invalid rekommendationskod (valid codes are REK1 - REK7)");
+                    validationErrors.add("No rekommendationskod found in: " + rek.getRekommendationskod().getCode()
+                            + "\n");
                 }
                 if (rek.getSjukdomskannedom() == null) {
-                    validationErrors.add("Missing sjukdomskannedom");
+                    validationErrors.add("No sjukdomskannedom found in: " + rek.getRekommendationskod().getCode()
+                            + "\n");
                 }
-                if (!Pattern.matches(sjukCodeRegex, rek.getSjukdomskannedom().getCode())) {
-                    validationErrors.add("Invalid sjukdomskannedom (valid codes are SJK1 - SJK4)");
-                }
-
             }
         }
     }
@@ -246,38 +218,10 @@ public class ExternalValidatorImpl implements ExternalValidator {
             if (patient.getFornamns().isEmpty()) {
                 validationErrors.add("At least one Fornamn must be provided for Patient");
             }
-            if (patient.getEfternamn() == null) {
-                validationErrors.add("A Efternamn must be provided for Patient");
+            
+            if (StringUtils.isBlank(patient.getEfternamn())) {
+                validationErrors.add("An Efternamn must be provided for Patient");
             }
         }
-    }
-
-    /**
-     * Predicate class used in validateAktiviteter
-     * 
-     * @author erik
-     * 
-     */
-    public class AktivitetsKodPredicate implements Predicate {
-
-        private AktivitetsKod aktKodEnum;
-
-        public AktivitetsKodPredicate(AktivitetsKod aktKodEnum) {
-            this.aktKodEnum = aktKodEnum;
-        }
-
-        @Override
-        public boolean evaluate(Object obj) {
-
-            if (!(obj instanceof Aktivitet)) {
-                return false;
-            }
-
-            Aktivitet akt = (Aktivitet) obj;
-            Kod aktKod = akt.getAktivitetskod();
-
-            return (aktKod.getCode().equals(aktKodEnum.getCode()));
-        }
-
     }
 }

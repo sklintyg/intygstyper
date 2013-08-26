@@ -21,6 +21,7 @@ package se.inera.certificate.modules.rli.model.converters;
 import iso.v21090.dt.v1.CD;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -285,7 +286,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
             patientType.getFornamns().addAll(source.getFornamns());
         }
         if (source.getEfternamn() != null) {
-            patientType.setEfternamn(source.getEfternamn());
+            patientType.getEfternamns().addAll(Arrays.asList(source.getEfternamn()));
         }
         if (source.getMellannamns() != null) {
             patientType.getMellannamns().addAll(source.getMellannamns());

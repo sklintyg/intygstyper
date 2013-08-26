@@ -17,7 +17,8 @@ public class RekommendationPopulatorImpl implements RekommendationPopulator {
      * (non-Javadoc)
      * 
      * @see
-     * se.inera.certificate.modules.rli.model.converters.RekommendationPopulator#createAndPopulateRekommendation(se.
+     * se.inera.certificate.modules.rli.model.converters.RekommendationPopulator
+     * #createAndPopulateRekommendation(se.
      * inera.certificate.modules.rli.model.external.Utlatande)
      */
     @Override
@@ -32,19 +33,25 @@ public class RekommendationPopulatorImpl implements RekommendationPopulator {
                 .getRekommendationer();
 
         if (extRekommendationer.isEmpty() || extRekommendationer.size() != 1) {
-            LOG.error("Rekommendationer should contain only 1 Rekommendation!");
+            LOG.error("- Rekommendationer should contain only 1 Rekommendation. Current nbr is {}",
+                    extRekommendationer.size());
             return null;
         }
 
         se.inera.certificate.modules.rli.model.external.common.Rekommendation extRekommendation = extRekommendationer
                 .get(0);
 
-        String extRekommendationsKod = InternalModelConverterUtils.getValueFromKod(extRekommendation
-                .getRekommendationskod());
-        intRekommendation.setRekommendationsKod(RekommendationsKod.getFromCode(extRekommendationsKod));
+        String extRekommendationsKod = InternalModelConverterUtils.getValueFromKod(extRekommendation.getRekommendationskod());
+        RekommendationsKod rekommendationsKod = RekommendationsKod.getFromCode(extRekommendationsKod);
+        intRekommendation.setRekommendationsKod(rekommendationsKod);
 
-        String extSjukKod = InternalModelConverterUtils.getValueFromKod(extRekommendation.getSjukdomskannedom());
-        intRekommendation.setSjukdomsKannedom(SjukdomsKannedom.getFromCode(extSjukKod));
+        LOG.debug("- RekommedationsKod code was {}, translated to enum {}", extRekommendationsKod, rekommendationsKod);
+
+        String extSjukdomsKannedom = InternalModelConverterUtils.getValueFromKod(extRekommendation.getSjukdomskannedom());
+        SjukdomsKannedom sjukdomsKannedom = SjukdomsKannedom.getFromCode(extSjukdomsKannedom);
+        intRekommendation.setSjukdomsKannedom(sjukdomsKannedom);
+
+        LOG.debug("- SjukdomsKannedom code was {}, translated to enum {}", extSjukdomsKannedom, sjukdomsKannedom);
 
         intRekommendation.setBeskrivning(extRekommendation.getBeskrivning());
 

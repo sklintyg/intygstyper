@@ -28,9 +28,7 @@ public class Arrangemang {
 
     private String plats;
 
-    private String arrangemangStartDatum;
-
-    private String arrangemangSlutDatum;
+    private String arrangemangDatum;
 
     private ArrangemangsTyp arrangemangsTyp;
 
@@ -64,20 +62,12 @@ public class Arrangemang {
         this.plats = plats;
     }
 
-    public String getArrangemangStartDatum() {
-        return arrangemangStartDatum;
+    public String getArrangemangDatum() {
+        return arrangemangDatum;
     }
 
-    public void setArrangemangStartDatum(String arrangemangStartDatum) {
-        this.arrangemangStartDatum = arrangemangStartDatum;
-    }
-
-    public String getArrangemangSlutDatum() {
-        return arrangemangSlutDatum;
-    }
-
-    public void setArrangemangSlutDatum(String arrangemangSlutDatum) {
-        this.arrangemangSlutDatum = arrangemangSlutDatum;
+    public void setArrangemangDatum(String arrangemangDatum) {
+        this.arrangemangDatum = arrangemangDatum;
     }
 
     public ArrangemangsTyp getArrangemangsTyp() {

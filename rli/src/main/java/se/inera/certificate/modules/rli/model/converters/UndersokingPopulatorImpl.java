@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
 import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.common.Observation;
@@ -25,7 +26,9 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
     /*
      * (non-Javadoc)
      * 
-     * @see se.inera.certificate.modules.rli.model.converters.UndersokningPopulator #createAndPopulateUndersokning
+     * @see
+     * se.inera.certificate.modules.rli.model.converters.UndersokningPopulator
+     * #createAndPopulateUndersokning
      * (se.inera.certificate.modules.rli.model.external.Utlatande)
      */
     @Override
@@ -80,35 +83,21 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
         Aktivitet firstExam = null;
 
         if (aktiviteter == null || aktiviteter.isEmpty()) {
-            LOG.debug("No aktiviteter found");
+            LOG.debug("No aktiviteter found, can not continue with population");
             return;
         }
 
-        if (aktiviteter.size() != 2) {
-            LOG.debug("There must be 2 aktiviteter");
-            return;
-        }
+        LOG.debug("{} aktiviteter supplied", aktiviteter.size());
 
-        Aktivitet ak1 = aktiviteter.get(0);
-        Aktivitet ak2 = aktiviteter.get(1);
-
-        Partial ak1Date = getExamDateFromAktivitet(ak1);
-        Partial ak2Date = getExamDateFromAktivitet(ak2);
-
-        if (ak1Date.size() == ak2Date.size()) {
-            if (ak1Date.isAfter(ak2Date)) {
-                currentExam = ak1;
-                firstExam = ak2;
-            } else {
-                currentExam = ak2;
-                firstExam = ak1;
+        for (Aktivitet akt : aktiviteter) {
+            Kod aktivitetskod = akt.getAktivitetskod();
+            if (checkAktivitetsKod(aktivitetskod, AktivitetsKod.FORSTA_UNDERSOKNING)) {
+                LOG.debug("Found firstExam");
+                firstExam = akt;
+            } else if (checkAktivitetsKod(aktivitetskod, AktivitetsKod.KLINISK_UNDERSOKNING)) {
+                LOG.debug("Found currentExam");
+                currentExam = akt;
             }
-        } else if (ak1Date.size() > ak2Date.size()) {
-            currentExam = ak1;
-            firstExam = ak2;
-        } else {
-            currentExam = ak2;
-            firstExam = ak1;
         }
 
         populateCurrentExam(intUndersokning, currentExam);
@@ -117,7 +106,12 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
     }
 
-    private Partial getExamDateFromAktivitet(Aktivitet aktivitet) {
+    private boolean checkAktivitetsKod(Kod kod, AktivitetsKod aktivitetsKod) {
+        String kodValue = InternalModelConverterUtils.getValueFromKod(kod);
+        return aktivitetsKod.getCode().equals(kodValue);
+    }
+
+    private String getExamDateFromAktivitet(Aktivitet aktivitet) {
 
         PartialDateInterval aktivitetstid = aktivitet.getAktivitetstid();
 
@@ -126,40 +120,60 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
         }
 
         if (aktivitetstid.getFrom() != null) {
-            return aktivitetstid.getFrom();
+            return PartialConverter.partialToString(aktivitetstid.getFrom());
         }
 
         return null;
     }
 
     private void populateFirstExam(Undersokning intUndersokning, Aktivitet firstExam) {
-        Partial firstExamDate = getExamDateFromAktivitet(firstExam);
-        String forstaUndersokningDatum = PartialConverter.partialToString(firstExamDate);
+
+        LOG.debug("Populating first exam info");
+
+        if (firstExam == null) {
+            LOG.debug("- firstExam is null, can not populate first exam info");
+            return;
+        }
+
+        LOG.debug("- Extracting exam date from the first exam");
+        String forstaUndersokningDatum = getExamDateFromAktivitet(firstExam);
         intUndersokning.setForstaUndersokningDatum(forstaUndersokningDatum);
 
         KomplikationStyrkt komplikationStyrkt;
         String forstaUndersokningPlats;
+
+        LOG.debug("- Extracting place and complication attestation from the first exam");
 
         if (firstExam.getUtforsVidEnhet() != null) {
             komplikationStyrkt = KomplikationStyrkt.AV_HOS_PERSONAL;
             forstaUndersokningPlats = firstExam.getUtforsVidEnhet().getEnhetsnamn();
         } else {
             komplikationStyrkt = KomplikationStyrkt.AV_PATIENT;
-            forstaUndersokningPlats = firstExam.getBeskrivning();
+            forstaUndersokningPlats = firstExam.getPlats();
         }
 
+        LOG.debug("- Place is {} for the first exam", forstaUndersokningPlats);
         intUndersokning.setForstaUndersokningPlats(forstaUndersokningPlats);
+
+        LOG.debug("- Complication attestation is {}", komplikationStyrkt);
         intUndersokning.setKomplikationStyrkt(komplikationStyrkt);
     }
 
     private void populateCurrentExam(Undersokning intUndersokning, Aktivitet currentExam) {
 
-        Partial partial = getExamDateFromAktivitet(currentExam);
-        String undersokningDatum = PartialConverter.partialToString(partial);
+        LOG.debug("Populating current exam info");
+
+        LOG.debug("- Extracting date for the current exam");
+        String undersokningDatum = getExamDateFromAktivitet(currentExam);
         intUndersokning.setUndersokningDatum(undersokningDatum);
 
-        String undersokningPlats = currentExam.getUtforsVidEnhet().getEnhetsnamn();
-        intUndersokning.setUndersokningPlats(undersokningPlats);
+        if (currentExam.getUtforsVidEnhet() != null) {
+            LOG.debug("- Extracting place for the current exam");
+            String undersokningPlats = currentExam.getUtforsVidEnhet().getEnhetsnamn();
+            intUndersokning.setUndersokningPlats(undersokningPlats);
+        } else {
+            LOG.debug("- Place for current exam could not be determined");
+        }
     }
 
     private void handleGraviditet(Observation obs, Undersokning undersokning) {
