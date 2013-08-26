@@ -18,7 +18,7 @@
  */
 package se.inera.certificate.modules.rli.model.validator;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -60,14 +60,43 @@ public class ExternalValidatorTest {
     public void testValidate() {
         Utlatande utlatande = buildTestUtlatande("rli-example-1.json");
         List<String> validationErrors = validator.validate(utlatande);
+        
+        assertTrue(validationErrors.isEmpty());
 
-        for (String s : validationErrors) {
-            System.out.println(s + "\n");
-        }
-        if (validationErrors.size() > 0) {
-            assertEquals("Could not parse the SSN '191212121212' (format should be 'yyyyMMdd-nnnn')",
-                    validationErrors.get(0));
-        }
+    }
 
+    @Test
+    public void testValidateWithErrors() {
+        Utlatande utlatande = buildTestUtlatande("rli-example-1-with-errors.json");
+        List<String> validationErrors = validator.validate(utlatande);
+
+        //General utlatande stuff:
+        assertTrue(validationErrors.contains("No Utlatande ID found"));
+
+        //Skapas av related:
+        assertTrue(validationErrors.contains("PersonalId should be an HSA-ID with root: 1.2.752.129.2.1.4.1"));
+
+        //Patient related:
+        assertTrue(validationErrors
+                .contains("Could not parse the SSN '191212121212' (format should be 'yyyyMMdd-nnnn')"));
+        
+        assertTrue(validationErrors.contains("An Efternamn must be provided for Patient"));
+        
+        //Observation related:
+        assertTrue(validationErrors.contains("No observationsperiod found in: 39104002"));
+
+        //Arrangemang related:
+        assertTrue(validationErrors.contains("Code in arrangemang must be SNOMED-CT code: 420008001"));
+        
+        //Aktivitets related:
+        assertTrue(validationErrors
+                .contains("Aktivitetstid must be specified for Aktivitet of type Klinisk Undersokning (AV020 / UNS)"));
+        
+        //Rekommendation related:
+        assertTrue(validationErrors.contains("No valid rekommendationskod found"));
+        
+        assertTrue(validationErrors.contains("No valid sjukdomskannedomskod found"));
+        
+        
     }
 }

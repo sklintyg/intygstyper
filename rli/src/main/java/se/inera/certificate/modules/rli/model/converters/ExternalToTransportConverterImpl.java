@@ -21,7 +21,6 @@ package se.inera.certificate.modules.rli.model.converters;
 import iso.v21090.dt.v1.CD;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;

@@ -5,10 +5,16 @@ package se.inera.certificate.modules.rli.validator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang3.StringUtils;
 
+import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
+import se.inera.certificate.modules.rli.model.codes.ArrangemangsTyp;
+import se.inera.certificate.modules.rli.model.codes.HSpersonalTyp;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
@@ -26,10 +32,11 @@ import se.inera.certificate.validate.SimpleIdValidatorBuilder;
 public class ExternalValidatorImpl implements ExternalValidator {
 
     private IdValidator idValidator;
-
+    
     public ExternalValidatorImpl() {
         idValidator = new SimpleIdValidatorBuilder().withPersonnummerValidator(true)
                 .withSamordningsnummerValidator(true).build();
+
     }
 
     /*
@@ -85,43 +92,54 @@ public class ExternalValidatorImpl implements ExternalValidator {
 
         if (arrangemang == null) {
             validationErrors.add("Arrangemang was null");
-        } else {
-
-            if (arrangemang.getBokningsdatum() == null) {
-                validationErrors.add("No bokningsdatum found in arrangemang");
-            }
-
-            if (arrangemang.getArrangemangstid() == null) {
-                validationErrors.add("No arrangemangstid found in arrangemang");
-            }
-
-            if (arrangemang.getPlats() == null) {
-                validationErrors.add("No plats found in arrangemang");
-            }
+            return;
         }
+        if (arrangemang.getArrangemangstyp().getCode() == null
+                || !arrangemang.getArrangemangstyp().getCode().equals(ArrangemangsTyp.RESA.getCode())) {
+            validationErrors.add("Code in arrangemang must be SNOMED-CT code: " + ArrangemangsTyp.RESA.getCode());
+        }
+        
+        checkBokningsdatum(arrangemang, validationErrors);
+
+        if (arrangemang.getArrangemangstid() == null) {
+            validationErrors.add("No arrangemangstid found in arrangemang");
+        }
+
+        if (arrangemang.getPlats() == null) {
+            validationErrors.add("No plats found in arrangemang");
+        }
+
+    }
+    
+    private void checkBokningsdatum(Arrangemang arrangemang, List<String> validationErrors){
+        if (arrangemang.getBokningsdatum() == null) {
+            validationErrors.add("Bokningsdatum was null");
+        }     
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * Validates Arrangemang in Utlatande First makes sure Arrangemang is not null, if so, the required attributes are
-     * validated in turn and any errors are added to validation error list
-     */
     private void validateSkapasAv(Utlatande utlatande, List<String> validationErrors) {
         HosPersonal skapatAv = utlatande.getSkapadAv();
 
         if (skapatAv == null) {
             validationErrors.add("Skapat av was null");
-        } else {
-
-            if (skapatAv.getPersonalId() == null) {
-                validationErrors.add("No personalId found in Skapas av");
-            }
-
-            if (skapatAv.getFullstandigtNamn() == null) {
-                validationErrors.add("No fullstandigt namn found in Skapas av");
-            }
+            return;
         }
+
+        if (skapatAv.getPersonalId() != null) {
+            /**
+             * Make sure the id specified has the correct root (HSA-IDs have 1.2.752.129.2.1.4.1)
+             */
+            
+            if (!skapatAv.getPersonalId().getRoot().equals(HSpersonalTyp.HSA_ID.getCode())) {
+                validationErrors.add("PersonalId should be an HSA-ID with root: " + HSpersonalTyp.HSA_ID.getCode());
+            }
+        } else {
+            validationErrors.add("No personal ID found");
+        }
+        if (skapatAv.getFullstandigtNamn() == null) {
+            validationErrors.add("No fullstandigt namn found in Skapas av");
+        }
+
     }
 
     /*
@@ -134,16 +152,28 @@ public class ExternalValidatorImpl implements ExternalValidator {
 
         if (observationer.isEmpty()) {
             validationErrors.add("No observations found");
-        } else {
-            for (Observation obs : observationer) {
-                if (obs.getObservationsperiod() == null) {
-                    validationErrors
-                            .add("No observationsperiod found in: " + obs.getObservationskod().getCode() + "\n");
-                }
-            }
-
+            return;
         }
 
+        for (Observation obs : observationer) {
+            checkObservation(obs, validationErrors);
+        }
+
+    }
+
+    private void checkObservation(Observation source, List<String> validationErrors) {
+        if (source.getObservationsperiod() == null) {
+            validationErrors.add("No observationsperiod found in: " + source.getObservationskod().getCode());
+        }
+
+        if (source.getUtforsAv().getAntasAv().getPersonalId() == null) {
+            validationErrors.add("No Personal Id found in Utfors av -> Antas av");
+            return;
+        }
+
+        if (!source.getUtforsAv().getAntasAv().getPersonalId().getRoot().equals(HSpersonalTyp.HSA_ID.getCode())) {
+            validationErrors.add("PersonalId should be an HSA-ID with extension: " + HSpersonalTyp.HSA_ID.getCode());
+        }
     }
 
     /*
@@ -156,46 +186,54 @@ public class ExternalValidatorImpl implements ExternalValidator {
 
         if (aktiviteter.isEmpty()) {
             validationErrors.add("No aktiviteter found");
-        } else {
-            /*
-             * Make sure Utlatande contains 1..2 Aktiviteter and nothing else
-             */
-            if (aktiviteter.size() < 1 && aktiviteter.size() > 2) {
-                validationErrors.add("Utlatande does not contain 1 or 2 Aktiviteter");
-            } else {
-                /*
-                 * Make sure all Aktiviteter contains the required attribute Aktivitetskod
-                 */
-                for (Aktivitet akt : aktiviteter) {
-                    if (akt.getAktivitetskod() == null
-                            || akt.getAktivitetskod().getCodeSystem().equals(AktivitetsKod.KLINISK_UNDERSOKNING)
-                            || akt.getAktivitetskod().getCodeSystem().equals(AktivitetsKod.OMVARDNADSATGARD)) {
-                        validationErrors.add("No valid aktivitetskod found in: " + akt + "\n");
-                    }
-                }
+            return;
+        }
+        /*
+         * Make sure Utlatande contains 1..2 Aktiviteter and nothing else
+         */
+        if (aktiviteter.size() < 1 && aktiviteter.size() > 2) {
+            validationErrors.add("Utlatande does not contain 1 or 2 Aktiviteter");
+            return;
+        }
+        /*
+         * Make sure one instance of aktivitet is of type KLINISK UNDERSOKNING
+         */
+        Aktivitet akt = (Aktivitet) CollectionUtils.find(aktiviteter, new AktivitetsKodPredicate(
+                AktivitetsKod.KLINISK_UNDERSOKNING));
+
+        if (akt != null) {
+            if (akt.getAktivitetstid() == null) {
+                validationErrors
+                        .add("Aktivitetstid must be specified for Aktivitet of type Klinisk Undersokning (AV020 / UNS)");
             }
+        } else {
+            validationErrors.add("No aktivitet of type KLINISK UNDERSOKNING found");
         }
     }
 
-    /*
-     * (non-Javadoc) Make sure Utlatande contains 1..* Rekommendation
+    /**
+     * Make sure Utlatande contains 1..* Rekommendationer and that a correct code is used.
      */
     private void validateRekommendationer(Utlatande utlatande, List<String> validationErrors) {
+        final String REK_CODE = "REK[1-7]{1}";
+        final String SJK_CODE = "SJK[1-4]{1}";
+
         List<Rekommendation> rekommendationer = utlatande.getRekommendationer();
         if (rekommendationer.isEmpty()) {
             validationErrors.add("No Rekommendation found");
-        } else {
-            for (Rekommendation rek : rekommendationer) {
-                if (rek.getRekommendationskod() == null) {
-                    validationErrors.add("No rekommendationskod found in: " + rek.getRekommendationskod().getCode()
-                            + "\n");
-                }
-                if (rek.getSjukdomskannedom() == null) {
-                    validationErrors.add("No sjukdomskannedom found in: " + rek.getRekommendationskod().getCode()
-                            + "\n");
-                }
+            return;
+        }
+
+        for (Rekommendation rek : rekommendationer) {
+            if (rek.getRekommendationskod() == null
+                    || !Pattern.matches(REK_CODE, rek.getRekommendationskod().getCode())) {
+                validationErrors.add("No valid rekommendationskod found");
+            }
+            if (rek.getSjukdomskannedom() == null || !Pattern.matches(SJK_CODE, rek.getSjukdomskannedom().getCode())) {
+                validationErrors.add("No valid sjukdomskannedomskod found");
             }
         }
+
     }
 
     /*
@@ -209,19 +247,45 @@ public class ExternalValidatorImpl implements ExternalValidator {
 
         if (patient == null) {
             validationErrors.add("Patient was null");
-        } else {
-            validationErrors.addAll(idValidator.validate(patient.getPersonId()));
-
-            /*
-             * Make sure Fornamn and Efternamn contains at least one item
-             */
-            if (patient.getFornamns().isEmpty()) {
-                validationErrors.add("At least one Fornamn must be provided for Patient");
-            }
-            
-            if (StringUtils.isBlank(patient.getEfternamn())) {
-                validationErrors.add("An Efternamn must be provided for Patient");
-            }
+            return;
         }
+
+        validationErrors.addAll(idValidator.validate(patient.getPersonId()));
+
+        /*
+         * Make sure Fornamn and Efternamn contains at least one item
+         */
+        if (patient.getFornamns().isEmpty()) {
+            validationErrors.add("At least one Fornamn must be provided for Patient");
+        }
+
+        if (StringUtils.isBlank(patient.getEfternamn())) {
+            validationErrors.add("An Efternamn must be provided for Patient");
+        }
+
     }
+
+    private class AktivitetsKodPredicate implements Predicate {
+
+        private final AktivitetsKod aktKodEnum;
+
+        public AktivitetsKodPredicate(AktivitetsKod aktKodEnum) {
+            this.aktKodEnum = aktKodEnum;
+        }
+
+        @Override
+        public boolean evaluate(Object obj) {
+
+            if (!(obj instanceof Aktivitet)) {
+                return false;
+            }
+
+            Aktivitet akt = (Aktivitet) obj;
+            Kod aktKod = akt.getAktivitetskod();
+
+            return (aktKod.getCode().equals(aktKodEnum.getCode()));
+        }
+
+    }
+
 }
