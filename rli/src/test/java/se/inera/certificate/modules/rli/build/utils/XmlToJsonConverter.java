@@ -1,11 +1,12 @@
 package se.inera.certificate.modules.rli.build.utils;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.xml.bind.JAXB;
 
-import org.springframework.core.io.ClassPathResource;
+import org.apache.commons.io.FilenameUtils;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.rli.model.converters.TransportToExternalConverter;
@@ -13,8 +14,7 @@ import se.inera.certificate.modules.rli.model.converters.TransportToExternalConv
 import se.inera.certificate.modules.rli.model.external.Utlatande;
 
 /**
- * Utility "script" that creates external JSON from XML using
- * se.inera.certificate
+ * Utility "script" that creates external JSON from XML using se.inera.certificate
  * .modules.rli.model.converters.TransportToExternalConverter
  * 
  * @author erik
@@ -26,21 +26,16 @@ public final class XmlToJsonConverter {
 
     private CustomObjectMapper objectMapper;
 
-    private String outputDir = null;
-
-    private XmlToJsonConverter(String outputDir) {
-        this.outputDir = outputDir;
+    private XmlToJsonConverter() {
         this.transportConverter = new TransportToExternalConverterImpl();
         this.objectMapper = new CustomObjectMapper();
     }
 
     public void buildJSONFromXML(String[] xmlFileNames) {
-
         for (String xmlFileName : xmlFileNames) {
             System.out.println("Generating JSON from " + xmlFileName);
             buildExternalFromFile(xmlFileName);
         }
-
     }
 
     /**
@@ -50,7 +45,6 @@ public final class XmlToJsonConverter {
      *            The name of the XML to be converted
      */
     private void buildExternalFromFile(String xmlFileName) {
-
         if (xmlFileName.indexOf(".xml") == 0) {
             System.err.println("Incorrect filetype submitted");
             return;
@@ -58,47 +52,36 @@ public final class XmlToJsonConverter {
 
         se.inera.certificate.common.v1.Utlatande utlatande = null;
         try {
-            utlatande = JAXB.unmarshal(new ClassPathResource(xmlFileName).getInputStream(),
-                    se.inera.certificate.common.v1.Utlatande.class);
+            utlatande = JAXB
+                    .unmarshal(new FileInputStream(xmlFileName), se.inera.certificate.common.v1.Utlatande.class);
         } catch (IOException ie) {
             ie.printStackTrace();
         }
-        writeExternalToFile(transportConverter.transportToExternal(utlatande), xmlFileName);
+        writeExternalToFile(transportConverter.transportToExternal(utlatande), generateJsonFilename(xmlFileName));
     }
 
-    private void writeExternalToFile(Utlatande utlatande, String filename) {
+    private void writeExternalToFile(Utlatande utlatande, File filename) {
         try {
-
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(makeFilePath(filename)), utlatande);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(filename, utlatande);
 
         } catch (IOException ie) {
             ie.printStackTrace();
         }
     }
 
-    private String makeFilePath(String xmlFileName) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(outputDir).append("/");
-        sb.append(xmlFileName.substring(0, xmlFileName.lastIndexOf('.')));
-        sb.append(".json");
-        return sb.toString();
+    private File generateJsonFilename(String xmlFileName) {
+        String path = FilenameUtils.getFullPath(xmlFileName);
+        String filenameBase = FilenameUtils.getBaseName(xmlFileName);
+        return new File(path, filenameBase + ".json");
     }
 
     public static void main(String[] args) {
-
         if (args == null || args.length == 0) {
             System.err.println("No file names supplied");
             return;
         }
 
-        String outputDir = System.getProperty("outputDir");
-
-        if (outputDir == null) {
-            System.err.println("No outputdir supplied");
-            return;
-        }
-
-        XmlToJsonConverter exec = new XmlToJsonConverter(outputDir);
+        XmlToJsonConverter exec = new XmlToJsonConverter();
         exec.buildJSONFromXML(args);
     }
 }
