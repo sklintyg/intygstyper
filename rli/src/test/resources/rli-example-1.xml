@@ -90,11 +90,11 @@
 	</aktivitet>
 	
 	<aktivitet>
-		<!-- displayName="klinisk undersökning UNS" -->
-		<aktivitetskod code="AV020" codeSystem="1.2.752.116.1.3.2.1.4"
+		<!-- displayName="Första klinisk undersökning UNS" -->
+		<aktivitetskod code="AKT13" codeSystem="1.2.752.116.1.3.2.1.4"
 			codeSystemName="KVÅ" />
 		<aktivitetstid>
-			<from>2013-08-14</from>
+			<from>2013-08-01</from>
 			<tom></tom>
 		</aktivitetstid>
 	</aktivitet>

@@ -42,7 +42,7 @@
 	</patient>
 
 	<skapadAv>
-		<hr:personal-id root="1.2.752.129.2.1.4.1" extension="19101010-1010" />
+		<hr:personal-id root="1.2.752.129.2.1.4.1" extension="19101010+1010" />
 		<hr:fullstandigtNamn>Doktor Alban</hr:fullstandigtNamn>
 		<hr:forskrivarkod>ABC123</hr:forskrivarkod>
 
