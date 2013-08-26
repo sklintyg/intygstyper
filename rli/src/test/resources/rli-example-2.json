@@ -16,7 +16,7 @@
       "extension" : "19331122-4400"
     },
     "fornamns" : [ "Fröken" ],
-    "efternamns" : [ "Fräken" ],
+    "efternamn" : "Fräken",
     "postadress" : "Genvägen 1",
     "postnummer" : "150 21",
     "postort" : "Mölnbo"
