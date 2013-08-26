@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -17,8 +18,11 @@ import org.slf4j.LoggerFactory;
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.converter.UtlatandeJaxbToFk7263IntygConverter;
+import se.inera.certificate.modules.fk7263.model.converter.UtlatandeToRegisterMedicalCertificateConverter;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
 import se.inera.certificate.modules.fk7263.validator.UtlatandeValidator;
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
 
 import com.itextpdf.text.DocumentException;
 
@@ -54,6 +58,16 @@ public class Fk7263ModuleApi {
             return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
         }
     }
+    
+    @POST
+    @Path("/marshall")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_XML)
+    public Response marshall(@HeaderParam("X-Schema-Version") String version, Fk7263Utlatande externalModel) {
+        RegisterMedicalCertificate registerMedicalCertificateJaxb = UtlatandeToRegisterMedicalCertificateConverter.getJaxbObject(externalModel);
+        return Response.ok(registerMedicalCertificateJaxb).build();
+    }
+    
     
     @POST
     @Path( "/valid" )

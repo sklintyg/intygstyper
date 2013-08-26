@@ -28,7 +28,7 @@
       <jxb:package name="se.inera.certificate.fk7263.model.extension.v1"/>
     </jxb:schemaBindings>
   </jxb:bindings>
-
+  
   <jxb:bindings>
     <jxb:globalBindings>
       <xjc:simple/>

@@ -26,10 +26,7 @@
   <packaging>war</packaging>
 
   <dependencies>
-    <dependency>
-      <groupId>se.inera.certificate</groupId>
-      <artifactId>module-api</artifactId>
-    </dependency>
+
     <dependency>
       <groupId>se.inera.certificate</groupId>
       <artifactId>integration-util</artifactId>
@@ -186,6 +183,11 @@
                   <xsd>src/main/resources/schemas/fk7263_model.xsd</xsd>
                   <extension>true</extension>
                   <bindingFile>${basedir}/src/main/resources/schemas/binding.xjb</bindingFile>
+                </xsdOption>
+                <xsdOption>
+                  <xsd>src/main/resources/schemas/v3/RegisterMedicalCertificateInteraction/RegisterMedicalCertificate_3.0.xsd</xsd>
+                  <extension>true</extension>
+                  <bindingFile>${basedir}/src/main/resources/schemas/v3/RegisterMedicalCertificateInteraction/binding.xjb</bindingFile>
                 </xsdOption>
               </xsdOptions>
             </configuration>
