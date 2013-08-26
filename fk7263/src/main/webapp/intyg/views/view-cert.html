@@ -83,23 +83,31 @@
                   </h3>
 
                   <div ng-show="cert.nedsattning25percent != null">
-                    <span message key="nedsattningsgrad.nedsatt_med_1_4"></span> ({{cert.nedsattning25percent.observationsPeriod.from |
-                    date:'longDate'}}&ndash;{{cert.nedsattning25percent.observationsPeriod.tom | date:'longDate'}})
+                    <span message key="nedsattningsgrad.nedsatt_med_1_4"></span>
+                    <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattning25percent.observationsPeriod.from |
+                    date:'longDate'}}&ndash; längst till och med {{cert.nedsattning25percent.observationsPeriod.tom | date:'longDate'}}
+                    </span>
                   </div>
 
                   <div ng-show="cert.nedsattning50percent != null">
-                    <span message key="nedsattningsgrad.nedsatt_med_1_2"></span> ({{cert.nedsattning50percent.observationsPeriod.from |
-                    date:'longDate'}}&ndash;{{cert.nedsattning50percent.observationsPeriod.tom | date:'longDate'}})
+                    <span message key="nedsattningsgrad.nedsatt_med_1_2"></span><br>
+                    <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattning50percent.observationsPeriod.from |
+                    date:'longDate'}}&ndash; längst till och med {{cert.nedsattning50percent.observationsPeriod.tom | date:'longDate'}}
+                    </span>
                   </div>
 
                   <div ng-show="cert.nedsattning75percent != null">
-                    <span message key="nedsattningsgrad.nedsatt_med_3_4"></span> ({{cert.nedsattning75percent.observationsPeriod.from |
-                    date:'longDate'}}&ndash;{{cert.nedsattning75percent.observationsPeriod.tom | date:'longDate'}})
+                    <span message key="nedsattningsgrad.nedsatt_med_3_4"></span>
+                    <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattning75percent.observationsPeriod.from |
+                    date:'longDate'}}&ndash; längst till och med {{cert.nedsattning75percent.observationsPeriod.tom | date:'longDate'}}
+                    </span>
                   </div>
 
                   <div ng-show="cert.nedsattning100percent != null">
-                    <span message key="nedsattningsgrad.helt_nedsatt"></span> ({{cert.nedsattning100percent.observationsPeriod.from |
-                    date:'longDate'}}&ndash;{{cert.nedsattning100percent.observationsPeriod.tom | date:'longDate'}})
+                    <span message key="nedsattningsgrad.helt_nedsatt"></span><br>
+                    <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattning100percent.observationsPeriod.from |
+                    date:'longDate'}}&ndash; längst till och med {{cert.nedsattning100percent.observationsPeriod.tom | date:'longDate'}}
+                    </span>
                   </div>
 
 
@@ -165,7 +173,7 @@
                 <ul>
                   <li ng-show="cert.rekommenderarKontaktMedArbetsformedlingen != null"><span message key="view.label.recommendations.contact.jobcenter"></span></li>
                   <li ng-show="cert.rekommenderarKontaktMedForetagshalsovarden != null"><span message key="view.label.recommendations.contact.healthdepartment"></span></li>
-                  <li ng-show="cert.rekommenderarOvrigt != null">{{cert.rekommenderarOvrigt.beskrivning}}</li>
+                  <li ng-show="cert.rekommenderarOvrigt != null"><span message key="view.label.recommendations.contact.other"></span> {{cert.rekommenderarOvrigt.beskrivning}}</li>
                 </ul>
               </div>
 
@@ -194,13 +202,13 @@
               <div mi-field field-label="view.label.patientworkcapacityjudgement" filled="cert.filledPatientWorkCapacityJudgement">{{cert.arbetsformagaAktivitetsbegransning.prognos.beskrivning}}</div>
 
               <div mi-field field-label="view.label.prognosis" filled="cert.filledPrognosis">
-                <ul>
-                  <li ng-show="cert.prognosFullAterstallning"><span message key="view.label.yes"></span></li>
-                  <li ng-show="cert.prognosDelvisAterstallning"><span message key="view.label.partialyes"></span></li>
-                  <li ng-show="cert.prognosEjAterstallning"><span message key="view.label.no"></span></li>
-                  <li ng-show="cert.prognosAterstallningGarEjBedomma"><span message key="view.label.unjudgeable"></span><br> <span class="tag"><span message key="view.label.comment"></span></span>
-                    <span ng-repeat="kommentar in cert.kommentars">{{kommentar}}</span></li>
-                </ul>
+                
+                  <span ng-show="cert.prognosFullAterstallning"><span message key="view.label.yes"></span></span>
+                  <span ng-show="cert.prognosDelvisAterstallning"><span message key="view.label.partialyes"></span></span>
+                  <span ng-show="cert.prognosEjAterstallning"><span message key="view.label.no"></span></span>
+                  <span ng-show="cert.prognosAterstallningGarEjBedomma"><span message key="view.label.unjudgeable"></span><br> <span class="tag"><span message key="view.label.comment"></span></span>
+                    <span ng-repeat="kommentar in cert.kommentars">{{kommentar}}</span>
+                  </span>
               </div>
 
               <div mi-field field-label="view.label.othertransport" filled="cert.filledPatientOtherTransport">
