@@ -17,7 +17,7 @@ var fk7263Messages = {
         "sent.label.pagetitle" : "Intyget har skickats",
         "sent.label.result" : "Mottagare ",
         "sent.button.backtocertificate" : "Tillbaka till intyget",
-        "view.label.latestevent" : "Senaste händelse",
+        "view.label.latestevent" : "Senaste händelsen",
         "view.label.latestevent.noevents" : "Inga händelser",
         "view.label.latestevent.showall" : "Visa alla händelser",
         "history.label.pagetitle" : "Intygets alla händelser",
