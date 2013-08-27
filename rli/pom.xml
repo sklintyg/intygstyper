@@ -174,6 +174,13 @@
   <build>
     <finalName>rli</finalName>
     <plugins>
+    	<plugin>
+    		<groupId>org.apache.maven.plugins</groupId>
+          	<artifactId>maven-compiler-plugin</artifactId>
+          	<configuration>
+          		
+          	</configuration>
+    	</plugin>
       <plugin>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-xjc-plugin</artifactId>
@@ -196,6 +203,35 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+      	<groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.2.1</version>
+        <executions>
+          <execution>
+          	<id>generateJSONfromXML</id>
+            <goals>
+              <goal>java</goal>
+            </goals>
+            <phase>process-test-classes</phase>
+            <configuration>
+            	<mainClass>se.inera.certificate.modules.rli.build.utils.XmlToJsonConverter</mainClass>
+            	<classpathScope>test</classpathScope>
+            	<arguments>
+            		<argument>rli-example-1.xml</argument>
+            		<argument>rli-example-2.xml</argument>
+            	</arguments>
+            	<systemProperties>
+            		<systemProperty>
+              			<key>outputDir</key>
+              			<value>${project.build.testOutputDirectory}</value>
+            		</systemProperty>
+            	</systemProperties>	
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      
     </plugins>
   </build>
 </project>

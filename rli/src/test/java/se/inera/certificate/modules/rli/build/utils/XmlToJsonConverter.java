@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.rli.model.script;
+package se.inera.certificate.modules.rli.build.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +20,7 @@ import se.inera.certificate.modules.rli.model.external.Utlatande;
  * @author erik
  * 
  */
-public final class UtilScripts {
+public final class XmlToJsonConverter {
 
     private TransportToExternalConverter transportConverter;
 
@@ -28,7 +28,7 @@ public final class UtilScripts {
 
     private String outputDir = null;
 
-    private UtilScripts(String outputDir) {
+    private XmlToJsonConverter(String outputDir) {
         this.outputDir = outputDir;
         this.transportConverter = new TransportToExternalConverterImpl();
         this.objectMapper = new CustomObjectMapper();
@@ -98,7 +98,7 @@ public final class UtilScripts {
             return;
         }
 
-        UtilScripts exec = new UtilScripts(outputDir);
+        XmlToJsonConverter exec = new XmlToJsonConverter(outputDir);
         exec.buildJSONFromXML(args);
     }
 }
