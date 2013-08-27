@@ -21,6 +21,7 @@ package se.inera.certificate.modules.rli.model.validator;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
@@ -45,11 +46,11 @@ public class ExternalValidatorTest {
 
     private Utlatande buildTestUtlatande(String filename) {
         ObjectMapper mapper = new CustomObjectMapper();
-        Utlatande utlatande = new Utlatande();
+        Utlatande utlatande = null;
 
         try {
-            utlatande = mapper.readValue(new InputStreamReader(new ClassPathResource(filename).getInputStream()),
-                    Utlatande.class);
+            InputStream is = this.getClass().getResourceAsStream(filename);
+            utlatande = mapper.readValue(is, Utlatande.class);
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -58,7 +59,7 @@ public class ExternalValidatorTest {
 
     @Test
     public void testValidate() {
-        Utlatande utlatande = buildTestUtlatande("rli-example-1.json");
+        Utlatande utlatande = buildTestUtlatande("/rli-example-1.json");
         List<String> validationErrors = validator.validate(utlatande);
         
         assertTrue(validationErrors.isEmpty());
@@ -67,7 +68,7 @@ public class ExternalValidatorTest {
 
     @Test
     public void testValidateWithErrors() {
-        Utlatande utlatande = buildTestUtlatande("rli-example-1-with-errors.json");
+        Utlatande utlatande = buildTestUtlatande("/rli-example-1-with-errors.json");
         List<String> validationErrors = validator.validate(utlatande);
 
         //General utlatande stuff:
