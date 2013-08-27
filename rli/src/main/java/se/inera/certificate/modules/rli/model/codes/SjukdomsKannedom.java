@@ -22,12 +22,10 @@ import org.apache.commons.lang3.StringUtils;
 
 public enum SjukdomsKannedom implements ICodeSystem {
 
-    SJUK1("SJK1", "Sjukdomen/komplikationen var okänd vid bokningstillfälllet."), SJUK2(
-            "SJK2",
-            "Patientens sjukdom/komplikation är kronisk, var känd vid bokningstillfället och utgjorde då inget hinder för resan. Tillståndet för nu förvärrats på ett sätt som vid bokningstillfället ej var möjligt att förutse."), SJUK3(
-            "SJK3",
-            "Patientens sjukdom/komplikation är kronisk, var känd vid bokningstillfället och utgjorde då inget hinder för resan. Tillståndet för nu förvärrats på ett sätt som vid bokningstillfället var möjligt att förutse."), SJUK4(
-            "SJK4", "Inget av ovanstående är tillämpligt.");
+    SJK1("SJK1", "Sjukdomen/komplikationen var okänd vid bokningstillfälllet."), 
+    SJK2("SJK2","Patientens sjukdom/komplikation är kronisk, var känd vid bokningstillfället och utgjorde då inget hinder för resan. Tillståndet för nu förvärrats på ett sätt som vid bokningstillfället ej var möjligt att förutse."),
+    SJK3("SJK3","Patientens sjukdom/komplikation är kronisk, var känd vid bokningstillfället och utgjorde då inget hinder för resan. Tillståndet för nu förvärrats på ett sätt som vid bokningstillfället var möjligt att förutse."), 
+    SJK4("SJK4", "Inget av ovanstående är tillämpligt.");
 
     private static String codeSystemName = "kv_sjukdomskännedom_intyg";
 

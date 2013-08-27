@@ -26,11 +26,11 @@ public class Graviditet {
 
     }
 
-    public String getBeraknadForlossningDatum() {
+    public String getBeraknadforlossningsdatum() {
         return beraknadForlossningDatum;
     }
 
-    public void setBeraknadForlossningDatum(String beraknadForlossningDatum) {
+    public void setBeraknadforlossningsdatum(String beraknadForlossningDatum) {
         this.beraknadForlossningDatum = beraknadForlossningDatum;
     }
 

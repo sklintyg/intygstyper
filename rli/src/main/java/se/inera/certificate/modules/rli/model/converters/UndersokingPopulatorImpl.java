@@ -60,7 +60,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
         obs = (Observation) CollectionUtils.find(observations, new ObservationsKodPredicate(ObservationsKod.SJUKDOM));
 
         if (obs != null) {
-            intUndersokning.setOrsakForAvbokning(OrsakAvbokning.RESENAR_SJUK);
+            intUndersokning.setOrsakforavbokning(OrsakAvbokning.RESENAR_SJUK);
             return;
         }
 
@@ -68,7 +68,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
                 .find(observations, new ObservationsKodPredicate(ObservationsKod.GRAVIDITET));
 
         if (obs != null) {
-            intUndersokning.setOrsakForAvbokning(OrsakAvbokning.RESENAR_GRAVID);
+            intUndersokning.setOrsakforavbokning(OrsakAvbokning.RESENAR_GRAVID);
             handleGraviditet(obs, intUndersokning);
             return;
         }
@@ -137,7 +137,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
         LOG.debug("- Extracting exam date from the first exam");
         String forstaUndersokningDatum = getExamDateFromAktivitet(firstExam);
-        intUndersokning.setForstaUndersokningDatum(forstaUndersokningDatum);
+        intUndersokning.setForstaundersokningsdatum(forstaUndersokningDatum);
 
         KomplikationStyrkt komplikationStyrkt;
         String forstaUndersokningPlats;
@@ -153,10 +153,10 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
         }
 
         LOG.debug("- Place is {} for the first exam", forstaUndersokningPlats);
-        intUndersokning.setForstaUndersokningPlats(forstaUndersokningPlats);
+        intUndersokning.setForstaundersokningsplats(forstaUndersokningPlats);
 
         LOG.debug("- Complication attestation is {}", komplikationStyrkt);
-        intUndersokning.setKomplikationStyrkt(komplikationStyrkt);
+        intUndersokning.setKomplikationstyrkt(komplikationStyrkt);
     }
 
     private void populateCurrentExam(Undersokning intUndersokning, Aktivitet currentExam) {
@@ -165,12 +165,12 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
         LOG.debug("- Extracting date for the current exam");
         String undersokningDatum = getExamDateFromAktivitet(currentExam);
-        intUndersokning.setUndersokningDatum(undersokningDatum);
+        intUndersokning.setUndersokningsdatum(undersokningDatum);
 
         if (currentExam.getUtforsVidEnhet() != null) {
             LOG.debug("- Extracting place for the current exam");
             String undersokningPlats = currentExam.getUtforsVidEnhet().getEnhetsnamn();
-            intUndersokning.setUndersokningPlats(undersokningPlats);
+            intUndersokning.setUndersokningsplats(undersokningPlats);
         } else {
             LOG.debug("- Place for current exam could not be determined");
         }
@@ -186,7 +186,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
         String estimatedDeliveryDate = PartialConverter.partialToString(obsPeriodSlut);
 
         Graviditet pregnancyInfo = new Graviditet();
-        pregnancyInfo.setBeraknadForlossningDatum(estimatedDeliveryDate);
+        pregnancyInfo.setBeraknadforlossningsdatum(estimatedDeliveryDate);
 
         undersokning.setGraviditet(pregnancyInfo);
     }

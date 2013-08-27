@@ -38,19 +38,19 @@ public class Arrangemang {
 
     }
 
-    public String getBokningsReferens() {
+    public String getBokningsreferens() {
         return bokningsReferens;
     }
 
-    public void setBokningsReferens(String bokningsReferens) {
+    public void setBokningsreferens(String bokningsReferens) {
         this.bokningsReferens = bokningsReferens;
     }
 
-    public String getBokningsDatum() {
+    public String getBokningsdatum() {
         return bokningsDatum;
     }
 
-    public void setBokningsDatum(String bokningsDatum) {
+    public void setBokningsdatum(String bokningsDatum) {
         this.bokningsDatum = bokningsDatum;
     }
 
@@ -62,27 +62,27 @@ public class Arrangemang {
         this.plats = plats;
     }
 
-    public String getArrangemangDatum() {
+    public String getArrangemangdatum() {
         return arrangemangDatum;
     }
 
-    public void setArrangemangDatum(String arrangemangDatum) {
+    public void setArrangemangdatum(String arrangemangDatum) {
         this.arrangemangDatum = arrangemangDatum;
     }
 
-    public ArrangemangsTyp getArrangemangsTyp() {
+    public ArrangemangsTyp getArrangemangstyp() {
         return arrangemangsTyp;
     }
 
-    public void setArrangemangsTyp(ArrangemangsTyp arrangemangsTyp) {
+    public void setArrangemangstyp(ArrangemangsTyp arrangemangsTyp) {
         this.arrangemangsTyp = arrangemangsTyp;
     }
 
-    public String getAvbestallningsDatum() {
+    public String getAvbestallningsdatum() {
         return avbestallningsDatum;
     }
 
-    public void setAvbestallningsDatum(String avbestallningsDatum) {
+    public void setAvbestallningsdatum(String avbestallningsDatum) {
         this.avbestallningsDatum = avbestallningsDatum;
     }
 

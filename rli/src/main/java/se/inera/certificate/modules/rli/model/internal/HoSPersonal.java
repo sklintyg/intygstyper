@@ -40,11 +40,11 @@ public class HoSPersonal {
         this.personId = personId;
     }
 
-    public String getFullstandigtNamn() {
+    public String getFullstandigtnamn() {
         return fullstandigtNamn;
     }
 
-    public void setFullstandigtNamn(String fullstandigtNamn) {
+    public void setFullstandigtnamn(String fullstandigtNamn) {
         this.fullstandigtNamn = fullstandigtNamn;
     }
 

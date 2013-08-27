@@ -43,13 +43,13 @@ public class RekommendationPopulatorImpl implements RekommendationPopulator {
 
         String extRekommendationsKod = InternalModelConverterUtils.getValueFromKod(extRekommendation.getRekommendationskod());
         RekommendationsKod rekommendationsKod = RekommendationsKod.getFromCode(extRekommendationsKod);
-        intRekommendation.setRekommendationsKod(rekommendationsKod);
+        intRekommendation.setRekommendationskod(rekommendationsKod);
 
         LOG.debug("- RekommedationsKod code was {}, translated to enum {}", extRekommendationsKod, rekommendationsKod);
 
         String extSjukdomsKannedom = InternalModelConverterUtils.getValueFromKod(extRekommendation.getSjukdomskannedom());
         SjukdomsKannedom sjukdomsKannedom = SjukdomsKannedom.getFromCode(extSjukdomsKannedom);
-        intRekommendation.setSjukdomsKannedom(sjukdomsKannedom);
+        intRekommendation.setSjukdomskannedom(sjukdomsKannedom);
 
         LOG.debug("- SjukdomsKannedom code was {}, translated to enum {}", extSjukdomsKannedom, sjukdomsKannedom);
 

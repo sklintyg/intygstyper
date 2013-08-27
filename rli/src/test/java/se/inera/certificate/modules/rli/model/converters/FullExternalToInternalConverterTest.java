@@ -86,12 +86,12 @@ public class FullExternalToInternalConverterTest {
         utlatande.setKommentarer(Arrays.asList("Övriga upplysningar"));
 
         Arrangemang arr = new Arrangemang();
-        arr.setArrangemangDatum("2013-08-22");
-        arr.setArrangemangsTyp(ArrangemangsTyp.RESA);
-        arr.setAvbestallningsDatum("2013-08");
+        arr.setArrangemangdatum("2013-08-22");
+        arr.setArrangemangstyp(ArrangemangsTyp.RESA);
+        arr.setAvbestallningsdatum("2013-08");
         arr.setPlats("New York");
-        arr.setBokningsReferens("12345678-90");
-        arr.setBokningsDatum("2013-01-01");
+        arr.setBokningsreferens("12345678-90");
+        arr.setBokningsdatum("2013-01-01");
         utlatande.setArrangemang(arr);
 
         Patient pat = new Patient();
@@ -119,23 +119,23 @@ public class FullExternalToInternalConverterTest {
         vardenhet.setePost("ingen@alls.se");
 
         HoSPersonal hosPers = new HoSPersonal();
-        hosPers.setFullstandigtNamn("Doktor Alban");
+        hosPers.setFullstandigtnamn("Doktor Alban");
         hosPers.setPersonId("19101010-1010");
         hosPers.setVardenhet(vardenhet);
         utlatande.setSkapadAv(hosPers);
 
         Rekommendation rekommendation = new Rekommendation();
-        rekommendation.setRekommendationsKod(RekommendationsKod.REK1);
-        rekommendation.setSjukdomsKannedom(SjukdomsKannedom.SJUK2);
+        rekommendation.setRekommendationskod(RekommendationsKod.REK1);
+        rekommendation.setSjukdomskannedom(SjukdomsKannedom.SJK2);
         utlatande.setRekommendation(rekommendation);
 
         Undersokning undersokning = new Undersokning();
-        undersokning.setOrsakForAvbokning(OrsakAvbokning.RESENAR_SJUK);
-        undersokning.setUndersokningDatum("2013-08-12");
-        undersokning.setUndersokningPlats("Tolvberga vårdcentral");
-        undersokning.setKomplikationStyrkt(KomplikationStyrkt.AV_PATIENT);
-        undersokning.setForstaUndersokningDatum("2010-01");
-        undersokning.setForstaUndersokningPlats("Trestadens lasarett");
+        undersokning.setOrsakforavbokning(OrsakAvbokning.RESENAR_SJUK);
+        undersokning.setUndersokningsdatum("2013-08-12");
+        undersokning.setUndersokningsplats("Tolvberga vårdcentral");
+        undersokning.setKomplikationstyrkt(KomplikationStyrkt.AV_PATIENT);
+        undersokning.setForstaundersokningsdatum("2010-01");
+        undersokning.setForstaundersokningsplats("Trestadens lasarett");
         utlatande.setUndersokning(undersokning);
 
         return utlatande;

@@ -164,7 +164,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         HoSPersonal intHoSPersonal = new HoSPersonal();
 
         intHoSPersonal.setPersonId(InternalModelConverterUtils.getValueFromId(extHoSPersonal.getPersonalId()));
-        intHoSPersonal.setFullstandigtNamn(extHoSPersonal.getFullstandigtNamn());
+        intHoSPersonal.setFullstandigtnamn(extHoSPersonal.getFullstandigtNamn());
         // intHoSPersonal.setBefattning(befattning);
 
         Vardenhet intVardenhet = convertToIntVardenhet(extHoSPersonal.getEnhet());
@@ -240,20 +240,20 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 
         String arrTypCode = InternalModelConverterUtils.getValueFromKod(extArr.getArrangemangstyp());
         ArrangemangsTyp arrTyp = ArrangemangsTyp.getFromCode(arrTypCode);
-        intArr.setArrangemangsTyp(arrTyp);
+        intArr.setArrangemangstyp(arrTyp);
 
-        intArr.setBokningsReferens(extArr.getBokningsreferens());
+        intArr.setBokningsreferens(extArr.getBokningsreferens());
 
         Partial extBokningsDatum = extArr.getBokningsdatum();
-        intArr.setBokningsDatum(PartialConverter.partialToString(extBokningsDatum));
+        intArr.setBokningsdatum(PartialConverter.partialToString(extBokningsDatum));
 
         Partial extAvbestDatum = extArr.getAvbestallningsdatum();
-        intArr.setAvbestallningsDatum(PartialConverter.partialToString(extAvbestDatum));
+        intArr.setAvbestallningsdatum(PartialConverter.partialToString(extAvbestDatum));
 
         PartialDateInterval arrangemangsTid = extArr.getArrangemangstid();
 
         if (arrangemangsTid != null) {
-            intArr.setArrangemangDatum(PartialConverter.partialToString(arrangemangsTid.getFrom()));
+            intArr.setArrangemangdatum(PartialConverter.partialToString(arrangemangsTid.getFrom()));
         }
 
         return intArr;

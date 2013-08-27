@@ -33,19 +33,19 @@ public class Rekommendation {
 
     }
 
-    public RekommendationsKod getRekommendationsKod() {
+    public RekommendationsKod getRekommendationskod() {
         return rekommendationsKod;
     }
 
-    public void setRekommendationsKod(RekommendationsKod rekommendationsKod) {
+    public void setRekommendationskod(RekommendationsKod rekommendationsKod) {
         this.rekommendationsKod = rekommendationsKod;
     }
 
-    public SjukdomsKannedom getSjukdomsKannedom() {
+    public SjukdomsKannedom getSjukdomskannedom() {
         return sjukdomsKannedom;
     }
 
-    public void setSjukdomsKannedom(SjukdomsKannedom sjukdomsKannedom) {
+    public void setSjukdomskannedom(SjukdomsKannedom sjukdomsKannedom) {
         this.sjukdomsKannedom = sjukdomsKannedom;
     }
 

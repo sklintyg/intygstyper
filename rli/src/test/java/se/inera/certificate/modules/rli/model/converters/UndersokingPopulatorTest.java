@@ -51,7 +51,7 @@ public class UndersokingPopulatorTest {
         converter.populateUndersokningFromObservationer(observationer, undersokning);
 
         assertNotNull(undersokning);
-        assertEquals(OrsakAvbokning.RESENAR_SJUK, undersokning.getOrsakForAvbokning());
+        assertEquals(OrsakAvbokning.RESENAR_SJUK, undersokning.getOrsakforavbokning());
     }
 
     @Test
@@ -69,9 +69,9 @@ public class UndersokingPopulatorTest {
         converter.populateUndersokningFromObservationer(observationer, undersokning);
 
         assertNotNull(undersokning);
-        assertEquals(OrsakAvbokning.RESENAR_GRAVID, undersokning.getOrsakForAvbokning());
+        assertEquals(OrsakAvbokning.RESENAR_GRAVID, undersokning.getOrsakforavbokning());
         assertNotNull(undersokning.getGraviditet());
-        assertEquals("2013-12-24", undersokning.getGraviditet().getBeraknadForlossningDatum());
+        assertEquals("2013-12-24", undersokning.getGraviditet().getBeraknadforlossningsdatum());
     }
 
     @Test
@@ -90,12 +90,12 @@ public class UndersokingPopulatorTest {
         converter.populateUndersokningFromAktiviteter(aktiviteter, intUndersokning);
 
         assertNotNull(intUndersokning);
-        assertEquals("2012-05", intUndersokning.getForstaUndersokningDatum());
-        assertEquals("Sjukhus A", intUndersokning.getForstaUndersokningPlats());
-        assertEquals(KomplikationStyrkt.AV_PATIENT, intUndersokning.getKomplikationStyrkt());
+        assertEquals("2012-05", intUndersokning.getForstaundersokningsdatum());
+        assertEquals("Sjukhus A", intUndersokning.getForstaundersokningsplats());
+        assertEquals(KomplikationStyrkt.AV_PATIENT, intUndersokning.getKomplikationstyrkt());
 
-        assertEquals("2013-06-12", intUndersokning.getUndersokningDatum());
-        assertEquals("Sjukhus B", intUndersokning.getUndersokningPlats());
+        assertEquals("2013-06-12", intUndersokning.getUndersokningsdatum());
+        assertEquals("Sjukhus B", intUndersokning.getUndersokningsplats());
     }
 
     @Test
@@ -111,11 +111,11 @@ public class UndersokingPopulatorTest {
         converter.populateUndersokningFromAktiviteter(aktiviteter, intUndersokning);
 
         assertNotNull(intUndersokning);
-        assertEquals("2013-06-12", intUndersokning.getUndersokningDatum());
-        assertEquals("Sjukhus X", intUndersokning.getUndersokningPlats());
+        assertEquals("2013-06-12", intUndersokning.getUndersokningsdatum());
+        assertEquals("Sjukhus X", intUndersokning.getUndersokningsplats());
         //assertEquals(KomplikationStyrkt.AV_HOS_PERSONAL, intUndersokning.getKomplikationStyrkt());
-        assertNull(intUndersokning.getForstaUndersokningDatum());
-        assertNull(intUndersokning.getForstaUndersokningPlats());
+        assertNull(intUndersokning.getForstaundersokningsdatum());
+        assertNull(intUndersokning.getForstaundersokningsplats());
     }
 
     private Observation constructObservation(ObservationsKod obsKod, int year, int month, int day) {

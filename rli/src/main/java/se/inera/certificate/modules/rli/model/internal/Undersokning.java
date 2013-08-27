@@ -40,51 +40,51 @@ public class Undersokning {
 
     }
 
-    public OrsakAvbokning getOrsakForAvbokning() {
+    public OrsakAvbokning getOrsakforavbokning() {
         return orsakForAvbokning;
     }
 
-    public void setOrsakForAvbokning(OrsakAvbokning orsakForAvbokning) {
+    public void setOrsakforavbokning(OrsakAvbokning orsakForAvbokning) {
         this.orsakForAvbokning = orsakForAvbokning;
     }
 
-    public String getForstaUndersokningDatum() {
+    public String getForstaundersokningsdatum() {
         return forstaUndersokningDatum;
     }
 
-    public void setForstaUndersokningDatum(String forstaUndersokningDatum) {
+    public void setForstaundersokningsdatum(String forstaUndersokningDatum) {
         this.forstaUndersokningDatum = forstaUndersokningDatum;
     }
 
-    public String getForstaUndersokningPlats() {
+    public String getForstaundersokningsplats() {
         return forstaUndersokningPlats;
     }
 
-    public void setForstaUndersokningPlats(String forstaUndersokningPlats) {
+    public void setForstaundersokningsplats(String forstaUndersokningPlats) {
         this.forstaUndersokningPlats = forstaUndersokningPlats;
     }
 
-    public String getUndersokningDatum() {
+    public String getUndersokningsdatum() {
         return undersokningDatum;
     }
 
-    public void setUndersokningDatum(String undersokningDatum) {
+    public void setUndersokningsdatum(String undersokningDatum) {
         this.undersokningDatum = undersokningDatum;
     }
 
-    public String getUndersokningPlats() {
+    public String getUndersokningsplats() {
         return undersokningPlats;
     }
 
-    public void setUndersokningPlats(String undersokningPlats) {
+    public void setUndersokningsplats(String undersokningPlats) {
         this.undersokningPlats = undersokningPlats;
     }
 
-    public KomplikationStyrkt getKomplikationStyrkt() {
+    public KomplikationStyrkt getKomplikationstyrkt() {
         return komplikationStyrkt;
     }
 
-    public void setKomplikationStyrkt(KomplikationStyrkt komplikationStyrkt) {
+    public void setKomplikationstyrkt(KomplikationStyrkt komplikationStyrkt) {
         this.komplikationStyrkt = komplikationStyrkt;
     }
 
@@ -96,11 +96,11 @@ public class Undersokning {
         this.graviditet = graviditet;
     }
 
-    public String getKomplikationBeskrivning() {
+    public String getKomplikationsbeskrivning() {
         return komplikationBeskrivning;
     }
 
-    public void setKomplikationBeskrivning(String komplikationBeskrivning) {
+    public void setKomplikationsbeskrivning(String komplikationBeskrivning) {
         this.komplikationBeskrivning = komplikationBeskrivning;
     }
 

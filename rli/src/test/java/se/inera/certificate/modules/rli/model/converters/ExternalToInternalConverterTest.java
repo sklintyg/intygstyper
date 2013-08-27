@@ -122,11 +122,11 @@ public class ExternalToInternalConverterTest {
         se.inera.certificate.modules.rli.model.internal.Arrangemang res = converter.convertToIntArrangemang(extArr);
 
         assertNotNull(res);
-        assertNotNull(res.getArrangemangsTyp());
-        assertNotNull(res.getBokningsReferens());
-        assertNotNull(res.getBokningsDatum());
-        assertNotNull(res.getAvbestallningsDatum());
-        assertNotNull(res.getArrangemangDatum());
+        assertNotNull(res.getArrangemangstyp());
+        assertNotNull(res.getBokningsreferens());
+        assertNotNull(res.getBokningsdatum());
+        assertNotNull(res.getAvbestallningsdatum());
+        assertNotNull(res.getArrangemangdatum());
     }
 
     private Arrangemang buildArrangemang() {
@@ -154,7 +154,7 @@ public class ExternalToInternalConverterTest {
         HoSPersonal res = converter.convertToIntHoSPersonal(extHoSPersonal);
 
         assertNotNull(res);
-        assertNotNull(res.getFullstandigtNamn());
+        assertNotNull(res.getFullstandigtnamn());
         assertNotNull(res.getPersonId());
 
     }
