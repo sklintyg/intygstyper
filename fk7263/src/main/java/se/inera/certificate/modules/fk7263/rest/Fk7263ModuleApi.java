@@ -140,6 +140,12 @@ public class Fk7263ModuleApi {
         }
     }
 
+    /**
+     * The signature of this method must be compatible with the specified "interface" in {@link se.inera.certificate.integration.rest.ModuleRestApi}
+     * Jackson will try to satisfy the signature of this method once it's been resolved, so the real contract is actually the json structure.
+     * @param contentHolder
+     * @return
+     */
     @POST
     @Path("/pdf")
     @Consumes(MediaType.APPLICATION_JSON)
