@@ -6,8 +6,9 @@ import groovy.json.JsonSlurper
 import groovyx.net.http.RESTClient
 
 import org.springframework.core.io.ClassPathResource
-
 import se.inera.certificate.spec.util.RestClientFixture
+
+
 
 public class RLIntyg extends RestClientFixture {
     
@@ -41,28 +42,19 @@ public class RLIntyg extends RestClientFixture {
 	
     public void execute() {
         
-        println(baseUrl)
-        
         def restClient = new RESTClient(baseUrl)
 		
         giltigtFrån = utfärdat
-        println(utfärdat)
         
         giltigtTill = new Date().parse("yyyy-MM-dd", utfärdat).plus(90).format("yyyy-MM-dd")
-        println(giltigtTill)
         
-        id = "${mall}-${personnr}"
-        println(id)
-        
-        msgBody = makeCertificateJsonFromTemplate()
-        println(msgBody)
+        id = "${mall}-${personnr}" + System.currentTimeMillis()
         
         def res = restClient.post(
                     path: 'certificate',
-                    body: msgBody,
+                    body: makeCertificateJsonFromTemplate(),
                     requestContentType: JSON
                     )
-        println(res.status)
     }
 
     private makeCertificateJsonFromTemplate() {
