@@ -64,6 +64,8 @@ var fk7263Messages = {
         "view.label.recommendations.contact.jobcenter" : "Kontakt med Arbetsförmedlingen",
         "view.label.recommendations.contact.healthdepartment" : "Kontakt med företagshälsovården",
         "view.label.recommendations.contact.other" : "Övrigt: ",
+        "view.label.reference.to.field13" : "Se under Övriga upplysningar och förtydliganden (fält 13)",
+        "view.label.otherinformation" : "Övriga upplysningar och förtydliganden (fält 13)",
 
         "view.label.confirmedby" : "Ovanstående uppgifter och bedömningar har bekräftas",
         "view.label.date" : "Datum (fält 14)",
