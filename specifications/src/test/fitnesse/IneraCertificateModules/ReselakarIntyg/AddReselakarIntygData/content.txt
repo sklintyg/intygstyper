@@ -1,0 +1,5 @@
+!1 Add Data
+
+|RLIntyg|
+|personnr|utfärdat|utfärdare|enhet|mall|
+|19121212-1212|2013-08-28|Borje Dengroth|Rigshosptialet|rli-sjuk-1|

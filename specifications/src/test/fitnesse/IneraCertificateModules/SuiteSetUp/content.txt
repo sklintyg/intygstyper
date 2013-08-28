@@ -6,3 +6,4 @@
 !|Config|
 |property|value|
 |modules.baseUrl|${modules.baseUrl}|
+|certificate.baseUrl|${certificate.baseUrl}|

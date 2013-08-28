@@ -22,6 +22,7 @@
     <skipTests>true</skipTests>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
     <modules.baseUrl>http://localhost:8080/</modules.baseUrl>
+    <certificate.baseUrl>http://localhost:8080/inera-certificate/</certificate.baseUrl>
   </properties>
 
   <dependencies>
