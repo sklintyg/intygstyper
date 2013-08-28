@@ -4,7 +4,7 @@
     <a class="backlink" href="/web/start"> <span message key="button.goback"></span>
     </a>
   </div>
-  
+
   <div mi-spinner label="view.message.certificateloading" show-spinner="!doneLoading" show-content="doneLoading">
 
 
@@ -162,7 +162,7 @@
                   <li ng-repeat="referens in cert.referenser"><span message key="referens.{{referens.referenstyp.code}}" param="referens.datum| date:'longDate'"></span>
                     <div ng-show="referens.referenstyp.code == '74964007'">
                       <!-- Annat -->
-                      <span class="tag"><span message key="view.label.comment"></span></span> <span ng-repeat="kommentar in cert.kommentars">{{kommentar}}</span>
+                      <span class="tag" message key="view.label.reference.to.field13"></span>
                     </div></li>
                 </ul>
               </div>
@@ -207,7 +207,7 @@
                   <span ng-show="cert.prognosDelvisAterstallning"><span message key="view.label.partialyes"></span></span>
                   <span ng-show="cert.prognosEjAterstallning"><span message key="view.label.no"></span></span>
                   <span ng-show="cert.prognosAterstallningGarEjBedomma"><span message key="view.label.unjudgeable"></span><br> <span class="tag"><span message key="view.label.comment"></span></span>
-                    <span ng-repeat="kommentar in cert.kommentars">{{kommentar}}</span>
+                    <span class="tag" message key="view.label.reference.to.field13"></span>
                   </span>
               </div>
 
@@ -220,6 +220,10 @@
                 <span ng-show="cert.kontaktMedForsakringskassanAktuell != null"> <span message key="view.label.yes"></span></span> <span ng-show="cert.kontaktMedForsakringskassanAktuell == null">
                   <span message key="view.label.no"></span>
                 </span>
+              </div>
+
+              <div mi-field field-label="view.label.otherinformation" filled="cert.kommentars.length>0">
+                <span class="tag"><span ng-repeat="kommentar in cert.kommentars">{{kommentar}}</span></span>
               </div>
 
               <div class="body-row">
