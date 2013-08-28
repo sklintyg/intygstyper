@@ -13,9 +13,7 @@ import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
-import se.inera.certificate.model.Ovrigt;
 import se.inera.certificate.model.Referens;
-import se.inera.certificate.model.Status;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.model.codes.ObservationsKoder;
 import se.inera.certificate.model.util.Predicate;
@@ -46,10 +44,6 @@ public class Fk7263Utlatande {
     private List<Vardkontakt> vardkontakter;
 
     private List<Referens> referenser;
-
-    private Ovrigt ovrigt;
-
-    private List<Status> status;
 
     public Id getId() {
         return id;
@@ -97,14 +91,6 @@ public class Fk7263Utlatande {
 
     public void setSkapadAv(HosPersonal skapadAv) {
         this.skapadAv = skapadAv;
-    }
-
-    public Ovrigt getOvrigt() {
-        return ovrigt;
-    }
-
-    public void setOvrigt(Ovrigt ovrigt) {
-        this.ovrigt = ovrigt;
     }
 
     public List<Aktivitet> getAktiviteter() {
@@ -243,11 +229,4 @@ public class Fk7263Utlatande {
         }, null);
     }
 
-    public List<Status> getStatus() {
-        return status;
-    }
-
-    public void setStatus(List<Status> status) {
-        this.status = status;
-    }
 }

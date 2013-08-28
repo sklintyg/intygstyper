@@ -19,6 +19,7 @@ import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.converter.ExternalToTransportFk7263LegacyConverter;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToExternalConverter;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263CertificateContentHolder;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
 import se.inera.certificate.modules.fk7263.validator.UtlatandeValidator;
@@ -32,23 +33,24 @@ import com.itextpdf.text.DocumentException;
 public class Fk7263ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(Fk7263ModuleApi.class);
+
     /**
      * @param utlatande
      * @return
      */
     @POST
-    @Path( "/unmarshall" )
-    @Consumes( MediaType.APPLICATION_XML )
-    @Produces( MediaType.APPLICATION_JSON )
+    @Path("/unmarshall")
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response unmarshall(se.inera.certificate.fk7263.model.v1.Utlatande fk7263UtlatandeJaxb) {
-        //TODO: Schema validation according to fk7263_intyg.xsd
+        // TODO: Schema validation according to fk7263_intyg.xsd
 
         Fk7263Utlatande externalModel = TransportToExternalConverter.convert(fk7263UtlatandeJaxb);
 
         Fk7263Intyg internalModel = new Fk7263Intyg(externalModel);
-        
+
         List<String> validationErrors = new UtlatandeValidator(internalModel).validate();
-        
+
         if (validationErrors.isEmpty()) {
             return Response.ok(externalModel).build();
         } else {
@@ -56,7 +58,7 @@ public class Fk7263ModuleApi {
             return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
         }
     }
-    
+
     @POST
     @Path("/marshall")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -65,12 +67,11 @@ public class Fk7263ModuleApi {
         RegisterMedicalCertificate registerMedicalCertificateJaxb = ExternalToTransportFk7263LegacyConverter.getJaxbObject(externalModel);
         return Response.ok(registerMedicalCertificateJaxb).build();
     }
-    
-    
+
     @POST
-    @Path( "/valid" )
-    @Consumes( MediaType.APPLICATION_JSON )
-    @Produces( MediaType.TEXT_PLAIN )
+    @Path("/valid")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     public Response validate(Fk7263Intyg utlatande) {
 
         List<String> validationErrors = new UtlatandeValidator(utlatande).validate();
@@ -84,9 +85,9 @@ public class Fk7263ModuleApi {
     }
 
     @POST
-    @Path( "/pdf" )
-    @Consumes( MediaType.APPLICATION_JSON )
-    @Produces( "application/pdf" )
+    @Path("/pdf")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces("application/pdf")
     public Response pdf(Fk7263Intyg intyg) {
 
         try {
@@ -102,17 +103,21 @@ public class Fk7263ModuleApi {
     }
 
     @PUT
-    @Path( "/internal" )
-    @Consumes( MediaType.APPLICATION_JSON )
-    @Produces( MediaType.APPLICATION_JSON )
-    public Response convertExternalToInternal(Fk7263Intyg utlatande) {
-        return Response.ok(utlatande).build();
+    @Path("/internal")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response convertExternalToInternal(Fk7263CertificateContentHolder contentHolder) {
+
+        Fk7263Intyg Fk7263Intyg = new Fk7263Intyg(contentHolder.getCertificateContent());
+        Fk7263Intyg.setStatus(contentHolder.getCertificateContentMeta().getStatuses());
+
+        return Response.ok(Fk7263Intyg).build();
     }
 
     @PUT
-    @Path( "/external" )
-    @Consumes( MediaType.APPLICATION_JSON )
-    @Produces( MediaType.APPLICATION_JSON )
+    @Path("/external")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response convertInternalToExternal(Object utlatande) {
         return Response.ok(utlatande).build();
     }

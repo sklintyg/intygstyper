@@ -20,6 +20,7 @@ import se.inera.certificate.model.codes.Prognoskoder;
 import se.inera.certificate.model.codes.Sysselsattningskoder;
 import se.inera.certificate.model.util.Predicate;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
+import se.inera.certificate.modules.fk7263.model.external.StatusMeta;
 
 /**
  * @author andreaskaltenbach
@@ -27,6 +28,8 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 public class Fk7263Intyg extends Fk7263Utlatande {
 
     public static final String DATE_PATTERN = "yyyy-MM-dd";
+
+    private List<StatusMeta> status;
 
     public Fk7263Intyg() {
 
@@ -38,14 +41,13 @@ public class Fk7263Intyg extends Fk7263Utlatande {
         this.setAktiviteter(external.getAktiviteter());
         this.setKommentars(external.getKommentars());
         this.setObservations(external.getObservations());
-        // this.setOvrigt(ovrigt) TODO: ovrigt to be removed?
         this.setPatient(external.getPatient());
         this.setReferenser(external.getReferenser());
         this.setSigneringsDatum(external.getSigneringsDatum());
         this.setSkapadAv(external.getSkapadAv());
         this.setSkickatDatum(external.getSkickatDatum());
-        this.setStatus(external.getStatus()); // TODO: status to be removed?
         this.setVardkontakter(external.getVardkontakter());
+
     }
 
     public String getForskrivarkodOchArbetsplatskod() {
@@ -327,6 +329,14 @@ public class Fk7263Intyg extends Fk7263Utlatande {
 
     public boolean isFilledFKContact() {
         return true;
+    }
+
+    public List<StatusMeta> getStatus() {
+        return status;
+    }
+
+    public void setStatus(List<StatusMeta> status) {
+        this.status = status;
     }
 
 }
