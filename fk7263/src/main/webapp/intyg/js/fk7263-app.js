@@ -8,7 +8,7 @@
 var FK7263App = angular.module('FK7263ViewCertApp', [ 'ui.bootstrap', 'services.certService', 'controllers.fk7263', 'directives.mi', 'modules.messages', 'services.util' ]).config(
         [ '$routeProvider', '$httpProvider', 'http403ResponseInterceptorProvider', function($routeProvider, $httpProvider, http403ResponseInterceptorProvider) {
             $routeProvider.when('/view', {
-                templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/intyg/views/view-cert.html',
+                templateUrl : MODULE_CONFIG.PROXY_PREFIX + '/intyg/views/view-cert.html',
                 controller : 'ViewCertCtrl',
 	            title : 'Läkarintyg FK7263'
             // }).when('/recipients', {
@@ -16,19 +16,19 @@ var FK7263App = angular.module('FK7263ViewCertApp', [ 'ui.bootstrap', 'services.
             // '/views/recipients.html',
             // controller : 'SentCertWizardCtrl'
             }).when('/statushistory', {
-                templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/intyg/views/status-history.html',
+                templateUrl : MODULE_CONFIG.PROXY_PREFIX + '/intyg/views/status-history.html',
                 controller : 'ViewCertCtrl',
 			    title : 'Alla intygets händelser'
             }).when('/summary', {
-                templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/intyg/views/send-summary.html',
+                templateUrl : MODULE_CONFIG.PROXY_PREFIX + '/intyg/views/send-summary.html',
                 controller : 'SentCertWizardCtrl',
 			    title : 'Kontrollera och skicka intyget'
             }).when('/sent', {
-                templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/intyg/views/sent-cert.html',
+                templateUrl : MODULE_CONFIG.PROXY_PREFIX + '/intyg/views/sent-cert.html',
                 controller : 'SentCertWizardCtrl',
 	            title : 'Intyget har skickats'
             }).when('/fel/:errorCode', {
-                templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/intyg/views/error.html',
+                templateUrl : MODULE_CONFIG.PROXY_PREFIX + '/intyg/views/error.html',
                 controller : 'ErrorCtrl',
 	            title : 'Fel'
             }).otherwise({
