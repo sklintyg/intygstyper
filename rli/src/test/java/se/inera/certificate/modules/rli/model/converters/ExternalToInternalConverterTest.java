@@ -1,17 +1,10 @@
 package se.inera.certificate.modules.rli.model.converters;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
 import se.inera.certificate.common.v1.PartialDateInterval;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.Id;
@@ -23,6 +16,13 @@ import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
 import se.inera.certificate.modules.rli.model.external.common.Patient;
 import se.inera.certificate.modules.rli.model.external.common.Vardgivare;
 import se.inera.certificate.modules.rli.model.internal.HoSPersonal;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Unit test for the ExternalToInteralConverter. This test is Spring configured.
@@ -46,6 +46,7 @@ public class ExternalToInternalConverterTest {
     }
 
     @Test
+    @Ignore
     public void testConvertUtlatande() {
 
         Utlatande extUtlatande = readUtlatandeFromJsonFile("/rli-example-1.json");
