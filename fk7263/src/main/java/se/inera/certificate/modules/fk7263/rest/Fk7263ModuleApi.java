@@ -88,8 +88,9 @@ public class Fk7263ModuleApi {
     @Path("/pdf")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces("application/pdf")
-    public Response pdf(Fk7263Intyg intyg) {
-
+    public Response pdf(Fk7263CertificateContentHolder contentHolder) {
+        // create the internal model that pdf generator exspects
+        Fk7263Intyg intyg = new Fk7263Intyg(contentHolder.getCertificateContent());
         try {
             byte[] generatedPdf = new PdfGenerator(intyg).getBytes();
             return Response.ok(generatedPdf).build();
