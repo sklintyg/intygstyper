@@ -24,8 +24,8 @@ public class PdfGeneratorTest {
 
     @BeforeClass
     public static void readFiles() throws IOException {
-        fk7263_pdf = new ClassPathResource("fk7263.pdf").getFile();
-        fk7263_json = new ClassPathResource("fk7263.json").getFile();
+        fk7263_pdf = new ClassPathResource("PdfGeneratorTest/utlatande.pdf").getFile();
+        fk7263_json = new ClassPathResource("PdfGeneratorTest/utlatande.json").getFile();
     }
 
     @Test

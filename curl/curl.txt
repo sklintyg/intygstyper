@@ -2,4 +2,4 @@
 curl -X POST -d @fk7263.xml -H "Content-Type: application/xml" http://localhost:8080/fk7263/api/valid -v
 
 # Return an FK7263 certificate as PDF
-curl -X POST -d @fk7263.json -H "Content-Type: application/json" http://localhost:8080/fk7263/api/pdf -v
+curl -X POST -d @utlatande.json -H "Content-Type: application/json" http://localhost:8080/fk7263/api/pdf -v

@@ -20,9 +20,7 @@
 <xs:schema  
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:mu7263="urn:riv:insuranceprocess:healthreporting:mu7263:3"
-	xmlns:core="urn:riv:insuranceprocess:healthreporting:2"
-	xmlns:certificate="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificate:3"
-	xmlns:tns="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3" 
+	xmlns:tns="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3"
 	targetNamespace="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3" 
 	elementFormDefault="qualified" 
 	attributeFormDefault="unqualified" 
@@ -39,8 +37,4 @@
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-
-	
-
-	
 </xs:schema>

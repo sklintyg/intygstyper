@@ -1,9 +1,5 @@
 package se.inera.certificate.modules.fk7263.rest;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -12,13 +8,24 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.List;
 
+import com.itextpdf.text.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.core.io.ClassPathResource;
+import org.xml.sax.SAXException;
 import se.inera.certificate.fk7263.model.v1.Utlatande;
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
@@ -29,9 +36,8 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263CertificateConte
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
 import se.inera.certificate.modules.fk7263.validator.UtlatandeValidator;
+import se.inera.certificate.validate.ValidationException;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
-
-import com.itextpdf.text.DocumentException;
 
 /**
  * @author andreaskaltenbach, marced
@@ -52,20 +58,73 @@ public class Fk7263ModuleApi {
         }
     }
 
+    private static final Validator registerMedicalCertificateSchemaValidator;
+    private static final Validator utlatandeSchemaValidator;
+
+    // create schema validators
+    static {
+        try {
+            Source registerMedicalCertificateSchemaFile = new StreamSource(new ClassPathResource("/schemas/v3/RegisterMedicalCertificateInteraction/RegisterMedicalCertificate_3.0.xsd").getFile());
+
+            Source utlatandeSchemaFile = new StreamSource(new ClassPathResource("/schemas/fk7263_model.xsd").getFile());
+
+            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+
+            Schema registerMedicalCertificateSchema = schemaFactory.newSchema(new Source[]{registerMedicalCertificateSchemaFile});
+
+            Schema utlatandeSchema = schemaFactory.newSchema(utlatandeSchemaFile);
+
+            registerMedicalCertificateSchemaValidator = registerMedicalCertificateSchema.newValidator();
+            utlatandeSchemaValidator = utlatandeSchema.newValidator();
+
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read schema file", e);
+        } catch (SAXException e) {
+            throw new RuntimeException("Failed to create schema from XSD file", e);
+        }
+    }
+
     /**
      * @param transportXml
      * @return
      */
     @POST
-    @Path("/unmarshall")
-    @Consumes(MediaType.APPLICATION_XML)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Path( "/unmarshall" )
+    @Consumes( MediaType.APPLICATION_XML )
+    @Produces( MediaType.APPLICATION_JSON )
     public Response unmarshall(String transportXml) {
 
         Object jaxbObject = unmarshallTransportXML(transportXml);
 
-        Fk7263Utlatande externalModel = convertTransportJaxbToModel(jaxbObject);
+        RegisterMedicalCertificate registerMedicalCertificate = null;
+        Utlatande utlatande = null;
 
+        if (jaxbObject instanceof RegisterMedicalCertificate) {
+            registerMedicalCertificate = (RegisterMedicalCertificate) jaxbObject;
+        }
+        if (jaxbObject instanceof Utlatande) {
+            utlatande = (Utlatande) jaxbObject;
+        }
+
+        if (registerMedicalCertificate == null && utlatande == null) {
+            LOG.warn("Unsupported XML message: " + transportXml);
+            throw new RuntimeException("Unsupported XML message: " + transportXml);
+        }
+
+        // perform schema validation
+        try {
+            if (registerMedicalCertificate != null) {
+                validateSchema(registerMedicalCertificateSchemaValidator, transportXml);
+            }
+            if (utlatande != null) {
+                validateSchema(utlatandeSchemaValidator, transportXml);
+            }
+        } catch (ValidationException ex) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+        }
+
+
+        Fk7263Utlatande externalModel = convertTransportJaxbToModel(jaxbObject);
         Fk7263Intyg internalModel = new Fk7263Intyg(externalModel);
 
         // validate
@@ -79,8 +138,22 @@ public class Fk7263ModuleApi {
         }
     }
 
+
+    private void validateSchema(Validator validator, String xml) {
+
+        try {
+            validator.validate(new StreamSource(new StringReader(xml)));
+        } catch (SAXException e) {
+            throw new ValidationException(e.getMessage());
+        } catch (IOException e) {
+            LOG.error("Failed to validate message against schema", e);
+            throw new RuntimeException("Failed to validate message against schema", e);
+        }
+    }
+
     /**
      * Converts different types of transportJaxb object to the external module model format.
+     *
      * @param jaxbObject
      * @return Fk7263Utlatande
      */
@@ -91,7 +164,7 @@ public class Fk7263ModuleApi {
             LOG.debug("Converting legacy transport -> generic transport format");
             RegisterMedicalCertificate legacyJaxb = (RegisterMedicalCertificate) jaxbObject;
             Utlatande genericUtlatande = LegacyTransportJaxbToGenericTransportJaxbConverter.convert(legacyJaxb.getLakarutlatande());
-            return convertToModel((Utlatande) genericUtlatande);
+            return convertToModel(genericUtlatande);
         }
         return null;
     }
@@ -103,6 +176,7 @@ public class Fk7263ModuleApi {
 
     /**
      * Unmarshal xml string into jaxb
+     *
      * @param transportXml
      * @return jaxbObject if unmarshalling was successful
      */
@@ -116,18 +190,18 @@ public class Fk7263ModuleApi {
     }
 
     @POST
-    @Path("/marshall")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_XML)
-    public Response marshall(@HeaderParam("X-Schema-Version") String version, Fk7263Utlatande externalModel) {
+    @Path( "/marshall" )
+    @Consumes( MediaType.APPLICATION_JSON )
+    @Produces( MediaType.APPLICATION_XML )
+    public Response marshall(@HeaderParam( "X-Schema-Version" ) String version, Fk7263Utlatande externalModel) {
         RegisterMedicalCertificate registerMedicalCertificateJaxb = ExternalToTransportFk7263LegacyConverter.getJaxbObject(externalModel);
         return Response.ok(registerMedicalCertificateJaxb).build();
     }
 
     @POST
-    @Path("/valid")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
+    @Path( "/valid" )
+    @Consumes( MediaType.APPLICATION_JSON )
+    @Produces( MediaType.TEXT_PLAIN )
     public Response validate(Fk7263Intyg utlatande) {
 
         List<String> validationErrors = new UtlatandeValidator(utlatande).validate();
@@ -143,13 +217,14 @@ public class Fk7263ModuleApi {
     /**
      * The signature of this method must be compatible with the specified "interface" in {@link se.inera.certificate.integration.rest.ModuleRestApi}
      * Jackson will try to satisfy the signature of this method once it's been resolved, so the real contract is actually the json structure.
+     *
      * @param contentHolder
      * @return
      */
     @POST
-    @Path("/pdf")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces("application/pdf")
+    @Path( "/pdf" )
+    @Consumes( MediaType.APPLICATION_JSON )
+    @Produces( "application/pdf" )
     public Response pdf(Fk7263CertificateContentHolder contentHolder) {
         // create the internal model that pdf generator expects
         Fk7263Intyg intyg = new Fk7263Intyg(contentHolder.getCertificateContent());
@@ -166,9 +241,9 @@ public class Fk7263ModuleApi {
     }
 
     @PUT
-    @Path("/internal")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Path( "/internal" )
+    @Consumes( MediaType.APPLICATION_JSON )
+    @Produces( MediaType.APPLICATION_JSON )
     public Response convertExternalToInternal(Fk7263CertificateContentHolder contentHolder) {
 
         Fk7263Intyg Fk7263Intyg = new Fk7263Intyg(contentHolder.getCertificateContent());
@@ -178,9 +253,9 @@ public class Fk7263ModuleApi {
     }
 
     @PUT
-    @Path("/external")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Path( "/external" )
+    @Consumes( MediaType.APPLICATION_JSON )
+    @Produces( MediaType.APPLICATION_JSON )
     public Response convertInternalToExternal(Object utlatande) {
         return Response.ok(utlatande).build();
     }

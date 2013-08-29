@@ -1,5 +1,9 @@
 package se.inera.certificate.modules.fk7263.validator;
 
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import se.inera.certificate.integration.json.CustomObjectMapper;
@@ -8,10 +12,6 @@ import se.inera.certificate.model.codes.Aktivitetskoder;
 import se.inera.certificate.model.codes.Sysselsattningskoder;
 import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
 
-import java.io.IOException;
-
-import static org.junit.Assert.assertEquals;
-
 /**
  * @author andreaskaltenbach
  */
@@ -19,7 +19,7 @@ public class UtlatandeValidatorTest {
 
     private Fk7263Intyg utlatande() throws IOException {
         // read request from file
-        return new CustomObjectMapper().readValue(new ClassPathResource("fk7263.json").getFile(), Fk7263Intyg.class);
+        return new CustomObjectMapper().readValue(new ClassPathResource("UtlatandeValidatorTest/utlatande.json").getFile(), Fk7263Intyg.class);
     }
 
     @Test
