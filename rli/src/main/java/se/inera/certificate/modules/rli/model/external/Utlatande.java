@@ -26,15 +26,15 @@ import org.joda.time.LocalDateTime;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Status;
-import se.inera.certificate.modules.rli.model.external.common.Bestallare;
-import se.inera.certificate.modules.rli.model.external.common.Betalningsmottagare;
-import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
-import se.inera.certificate.modules.rli.model.external.common.Observation;
-import se.inera.certificate.modules.rli.model.external.common.Patient;
-import se.inera.certificate.modules.rli.model.external.common.Referens;
-import se.inera.certificate.modules.rli.model.external.common.Rekommendation;
-import se.inera.certificate.modules.rli.model.external.common.Substansintag;
-import se.inera.certificate.modules.rli.model.external.common.Vardkontakt;
+import se.inera.certificate.model.Bestallare;
+import se.inera.certificate.model.Betalningsmottagare;
+import se.inera.certificate.model.HosPersonal;
+import se.inera.certificate.model.Observation;
+import se.inera.certificate.model.Patient;
+import se.inera.certificate.model.Referens;
+import se.inera.certificate.model.Rekommendation;
+import se.inera.certificate.model.Substansintag;
+import se.inera.certificate.model.Vardkontakt;
 
 /**
  * The utlåtande used by RLI. This class is a copy of the common external model (defined in se.inera.certificate.model),
@@ -57,7 +57,7 @@ public class Utlatande {
     private LocalDateTime signeringsdatum;
 
     private LocalDateTime skickatdatum;
-
+    
     private Patient patient;
 
     private HosPersonal skapadAv;

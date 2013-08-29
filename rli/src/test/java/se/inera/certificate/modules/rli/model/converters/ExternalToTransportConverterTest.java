@@ -21,6 +21,7 @@ package se.inera.certificate.modules.rli.model.converters;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -31,16 +32,16 @@ import se.inera.certificate.common.v1.ObservationType;
 import se.inera.certificate.common.v1.PatientType;
 import se.inera.certificate.common.v1.RekommendationType;
 import se.inera.certificate.common.v1.Utlatande;
+import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.Observation;
+import se.inera.certificate.model.Patient;
+import se.inera.certificate.model.PatientRelation;
+import se.inera.certificate.model.Rekommendation;
+import se.inera.certificate.model.Vardenhet;
+import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
-import se.inera.certificate.modules.rli.model.external.common.Arbetsuppgift;
-import se.inera.certificate.modules.rli.model.external.common.Enhet;
-import se.inera.certificate.modules.rli.model.external.common.Observation;
-import se.inera.certificate.modules.rli.model.external.common.Patient;
-import se.inera.certificate.modules.rli.model.external.common.PatientRelation;
-import se.inera.certificate.modules.rli.model.external.common.Rekommendation;
-import se.inera.certificate.modules.rli.model.external.common.Vardgivare;
 
 public class ExternalToTransportConverterTest {
 
@@ -117,16 +118,16 @@ public class ExternalToTransportConverterTest {
         Arbetsuppgift a = new Arbetsuppgift();
         a.setTypAvArbetsuppgift("Testare");
         arbetsuppgifts.add(a);
-        patient.getArbetsuppgifts().addAll(arbetsuppgifts);
+        patient.setArbetsuppgifts(arbetsuppgifts);
         
         List<String> fN = new ArrayList<String>();
         fN.add("Test");
         List<String> mN = new ArrayList<String>();
         mN.add("von");
         
-        patient.getFornamns().addAll(fN);
-        patient.getMellannamns().addAll(mN);
-        patient.setEfternamn("Testsson");
+        patient.setFornamns(fN);
+        patient.setMellannamns(mN);
+        patient.setEfternamns(Arrays.asList("Testsson"));
         
         List<PatientRelation> pR = new ArrayList<PatientRelation>();
 
@@ -153,7 +154,7 @@ public class ExternalToTransportConverterTest {
 
         pR.add(patientRelation);
 
-        patient.getPatientRelations().addAll(pR);
+        patient.setPatientrelations(pR);
 
         return patient;
     }
@@ -162,7 +163,7 @@ public class ExternalToTransportConverterTest {
         Observation observation = new Observation();
         observation.setBeskrivning("Observationsbeskrivning");
         observation.setForekomst(true);
-        observation.setObservationskod(new Kod("SNOMED-CT"));
+        observation.setObservationsKod(new Kod("SNOMED-CT"));
         return observation;
     }
 
@@ -171,15 +172,15 @@ public class ExternalToTransportConverterTest {
      * Kod("resa")); arr.setBokningsreferens("bokningsreferens"); arr.setPlats("New York"); return arr; }
      */
 
-    private Enhet buildEnhet() {
-        Enhet enhet = new Enhet();
+    private Vardenhet buildEnhet() {
+        Vardenhet enhet = new Vardenhet();
         enhet.setArbetsplatskod(new Id("Vårdenhet"));
-        enhet.setEnhetsId(new Id("enhetsId"));
-        enhet.setEnhetsnamn("Enhetsnamn");
+        enhet.setId(new Id("enhetsId"));
+        enhet.setNamn("Enhetsnamn");
 
         Vardgivare vardgivare = new Vardgivare();
-        vardgivare.setVardgivareId(new Id("vårdgivarID"));
-        vardgivare.setVardgivarnamn("Vårdgivarnamn");
+        vardgivare.setId(new Id("vårdgivarID"));
+        vardgivare.setNamn("Vårdgivarnamn");
 
         enhet.setVardgivare(vardgivare);
         return enhet;
@@ -188,7 +189,7 @@ public class ExternalToTransportConverterTest {
     private Aktivitet buildAktivitet() {
         Aktivitet aktivitet = new Aktivitet();
         aktivitet.setAktivitetskod(new Kod("AktivitetKod"));
-        aktivitet.setUtforsVidEnhet(buildEnhet());
+        aktivitet.setUtforsVid(buildEnhet());
         return aktivitet;
     }
 

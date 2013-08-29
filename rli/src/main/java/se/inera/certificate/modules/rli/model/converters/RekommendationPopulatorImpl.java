@@ -29,7 +29,7 @@ public class RekommendationPopulatorImpl implements RekommendationPopulator {
 
         Rekommendation intRekommendation = new Rekommendation();
 
-        List<se.inera.certificate.modules.rli.model.external.common.Rekommendation> extRekommendationer = extUtlatande
+        List<se.inera.certificate.model.Rekommendation> extRekommendationer = extUtlatande
                 .getRekommendationer();
 
         if (extRekommendationer.isEmpty() || extRekommendationer.size() != 1) {
@@ -38,7 +38,7 @@ public class RekommendationPopulatorImpl implements RekommendationPopulator {
             return null;
         }
 
-        se.inera.certificate.modules.rli.model.external.common.Rekommendation extRekommendation = extRekommendationer
+        se.inera.certificate.model.Rekommendation extRekommendation = extRekommendationer
                 .get(0);
 
         String extRekommendationsKod = InternalModelConverterUtils.getValueFromKod(extRekommendation.getRekommendationskod());

@@ -37,11 +37,12 @@ import se.inera.certificate.common.v1.ObservationType;
 import se.inera.certificate.common.v1.PartialDateInterval;
 import se.inera.certificate.common.v1.PatientType;
 import se.inera.certificate.common.v1.UtforarrollType;
+
+import se.inera.certificate.model.HosPersonal;
+import se.inera.certificate.model.Observation;
+import se.inera.certificate.model.Patient;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
-import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
-import se.inera.certificate.modules.rli.model.external.common.Observation;
-import se.inera.certificate.modules.rli.model.external.common.Patient;
 
 /**
  * Test class for TransportToExternal, contains methods for setting up Utlatande using both the transport model and the
@@ -200,7 +201,7 @@ public class TransportToExternalConverterTest {
 
         Patient externalPatient = converter.convertPatient(transportPatient);
 
-        assertEquals(transportPatient.getPersonId().getExtension(), externalPatient.getPersonId().getExtension());
+        assertEquals(transportPatient.getPersonId().getExtension(), externalPatient.getId().getExtension());
 
         assertEquals(transportPatient.getPostadress(), externalPatient.getPostadress());
 
@@ -214,9 +215,9 @@ public class TransportToExternalConverterTest {
 
         HosPersonal externalSkapadAv = converter.convertHosPersonal(transportSkapadAv);
 
-        assertEquals(transportSkapadAv.getFullstandigtNamn(), externalSkapadAv.getFullstandigtNamn());
+        assertEquals(transportSkapadAv.getFullstandigtNamn(), externalSkapadAv.getNamn());
 
-        assertEquals(transportSkapadAv.getEnhet(), externalSkapadAv.getEnhet());
+        assertEquals(transportSkapadAv.getEnhet(), externalSkapadAv.getVardenhet());
 
         assertEquals(transportSkapadAv.getForskrivarkod(), externalSkapadAv.getForskrivarkod());
 
@@ -253,12 +254,12 @@ public class TransportToExternalConverterTest {
         externalList = converter.convertObservations(transportList);
         Observation externalObs = externalList.get(0);
 
-        assertEquals(transportObs.getObservationsperiod().getFrom(), externalObs.getObservationsperiod().getFrom());
+        assertEquals(transportObs.getObservationsperiod().getFrom(), externalObs.getObservationsPeriod().getFrom());
 
-        assertEquals(transportObs.getObservationsperiod().getTom(), externalObs.getObservationsperiod().getTom());
+        assertEquals(transportObs.getObservationsperiod().getTom(), externalObs.getObservationsPeriod().getTom());
 
         assertEquals(transportObs.getUtforsAv().getAntasAv().getFullstandigtNamn(), externalObs.getUtforsAv()
-                .getAntasAv().getFullstandigtNamn());
+                .getAntasAv().getNamn());
     }
 
 }

@@ -9,11 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.Observation;
+import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
 import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
-import se.inera.certificate.modules.rli.model.external.common.Observation;
-import se.inera.certificate.modules.rli.model.external.common.PartialDateInterval;
+
 import se.inera.certificate.modules.rli.model.internal.Graviditet;
 import se.inera.certificate.modules.rli.model.internal.KomplikationStyrkt;
 import se.inera.certificate.modules.rli.model.internal.OrsakAvbokning;
@@ -113,7 +114,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
     private String getExamDateFromAktivitet(Aktivitet aktivitet) {
 
-        PartialDateInterval aktivitetstid = aktivitet.getAktivitetstid();
+        PartialInterval aktivitetstid = aktivitet.getAktivitetstid();
 
         if (aktivitetstid == null) {
             return null;
@@ -144,9 +145,9 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
         LOG.debug("- Extracting place and complication attestation from the first exam");
 
-        if (firstExam.getUtforsVidEnhet() != null) {
+        if (firstExam.getUtforsVid() != null) {
             komplikationStyrkt = KomplikationStyrkt.AV_HOS_PERSONAL;
-            forstaUndersokningPlats = firstExam.getUtforsVidEnhet().getEnhetsnamn();
+            forstaUndersokningPlats = firstExam.getUtforsVid().getNamn();
         } else {
             komplikationStyrkt = KomplikationStyrkt.AV_PATIENT;
             forstaUndersokningPlats = firstExam.getPlats();
@@ -167,9 +168,9 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
         String undersokningDatum = getExamDateFromAktivitet(currentExam);
         intUndersokning.setUndersokningsdatum(undersokningDatum);
 
-        if (currentExam.getUtforsVidEnhet() != null) {
+        if (currentExam.getUtforsVid() != null) {
             LOG.debug("- Extracting place for the current exam");
-            String undersokningPlats = currentExam.getUtforsVidEnhet().getEnhetsnamn();
+            String undersokningPlats = currentExam.getUtforsVid().getNamn();
             intUndersokning.setUndersokningsplats(undersokningPlats);
         } else {
             LOG.debug("- Place for current exam could not be determined");
@@ -180,7 +181,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
         LOG.debug("Handling pregnancy observations");
 
-        PartialDateInterval observationsperiod = obs.getObservationsperiod();
+        PartialInterval observationsperiod = obs.getObservationsPeriod();
         Partial obsPeriodSlut = observationsperiod.getTom();
 
         String estimatedDeliveryDate = PartialConverter.partialToString(obsPeriodSlut);
@@ -207,7 +208,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
             }
 
             Observation obs = (Observation) obj;
-            Kod obsKod = obs.getObservationskod();
+            Kod obsKod = obs.getObservationsKod();
 
             return (obsKod.getCode().equals(obsKodEnum.getCode()));
         }

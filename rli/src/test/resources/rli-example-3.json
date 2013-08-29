@@ -16,7 +16,7 @@
       "extension" : "19121212-1212"
     },
     "fornamns" : [ "Test" ],
-    "efternamn" : "Testsson",
+    "efternamn" :[ "Testsson" ],
     "postadress" : "Teststigen 1",
     "postnummer": "123 45",
     "postort" : "Teststaden"

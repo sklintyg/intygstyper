@@ -43,7 +43,7 @@ public class FullExternalToInternalConverterTest {
     public void setUp() {
         this.converter = this.ctx.getBean("externalToInternalConverter", ExternalToInternalConverterImpl.class);
     }
-
+    @Ignore
     @Test
     public void testConvertUtlatande() {
 

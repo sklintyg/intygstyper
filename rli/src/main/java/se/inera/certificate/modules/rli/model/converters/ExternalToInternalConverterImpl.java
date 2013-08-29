@@ -27,12 +27,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.certificate.common.v1.PartialDateInterval;
 import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
 import se.inera.certificate.integration.rest.dto.CertificateStatus;
+import se.inera.certificate.model.HosPersonal;
+import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.modules.rli.model.codes.ArrangemangsTyp;
-import se.inera.certificate.modules.rli.model.external.common.Enhet;
-import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
 import se.inera.certificate.modules.rli.model.internal.Arrangemang;
 import se.inera.certificate.modules.rli.model.internal.HoSPersonal;
 import se.inera.certificate.modules.rli.model.internal.Patient;
@@ -127,7 +126,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         intUtlatande.setRekommendation(intRekommendation);
     }
 
-    Vardenhet convertToIntVardenhet(Enhet extVardenhet) {
+    Vardenhet convertToIntVardenhet(se.inera.certificate.model.Vardenhet extVardenhet) {
 
         LOG.debug("Converting vardenhet");
 
@@ -138,8 +137,8 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 
         Vardenhet intVardenhet = new Vardenhet();
 
-        intVardenhet.setEnhetsId(InternalModelConverterUtils.getValueFromId(extVardenhet.getEnhetsId()));
-        intVardenhet.setEnhetsnamn(extVardenhet.getEnhetsnamn());
+        intVardenhet.setEnhetsId(InternalModelConverterUtils.getValueFromId(extVardenhet.getId()));
+        intVardenhet.setEnhetsnamn(extVardenhet.getNamn());
         intVardenhet.setPostadress(extVardenhet.getPostadress());
         intVardenhet.setPostnummer(extVardenhet.getPostnummer());
         intVardenhet.setPostort(extVardenhet.getPostort());
@@ -152,7 +151,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         return intVardenhet;
     }
 
-    Vardgivare convertToIntVardgivare(se.inera.certificate.modules.rli.model.external.common.Vardgivare extVardgivare) {
+    Vardgivare convertToIntVardgivare(se.inera.certificate.model.Vardgivare extVardgivare) {
 
         LOG.debug("Converting vardgivare");
 
@@ -163,8 +162,8 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 
         Vardgivare intVardgivare = new Vardgivare();
 
-        intVardgivare.setVardgivarId(InternalModelConverterUtils.getValueFromId(extVardgivare.getVardgivareId()));
-        intVardgivare.setVardgivarnamn(extVardgivare.getVardgivarnamn());
+        intVardgivare.setVardgivarId(InternalModelConverterUtils.getValueFromId(extVardgivare.getId()));
+        intVardgivare.setVardgivarnamn(extVardgivare.getNamn());
 
         return intVardgivare;
     }
@@ -180,11 +179,11 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 
         HoSPersonal intHoSPersonal = new HoSPersonal();
 
-        intHoSPersonal.setPersonId(InternalModelConverterUtils.getValueFromId(extHoSPersonal.getPersonalId()));
-        intHoSPersonal.setFullstandigtnamn(extHoSPersonal.getFullstandigtNamn());
+        intHoSPersonal.setPersonId(InternalModelConverterUtils.getValueFromId(extHoSPersonal.getId()));
+        intHoSPersonal.setFullstandigtnamn(extHoSPersonal.getNamn());
         // intHoSPersonal.setBefattning(befattning);
 
-        Vardenhet intVardenhet = convertToIntVardenhet(extHoSPersonal.getEnhet());
+        Vardenhet intVardenhet = convertToIntVardenhet(extHoSPersonal.getVardenhet());
         intHoSPersonal.setVardenhet(intVardenhet);
 
         return intHoSPersonal;
@@ -214,7 +213,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         return intStatuses;
     }
 
-    Patient convertToIntPatient(se.inera.certificate.modules.rli.model.external.common.Patient extPatient) {
+    Patient convertToIntPatient(se.inera.certificate.model.Patient extPatient) {
 
         LOG.debug("Converting patient");
 
@@ -225,17 +224,17 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 
         Patient intPatient = new Patient();
 
-        intPatient.setPersonId(InternalModelConverterUtils.getValueFromId(extPatient.getPersonId()));
+        intPatient.setPersonId(InternalModelConverterUtils.getValueFromId(extPatient.getId()));
 
-        String efterNamn = extPatient.getEfternamn();
+        String efterNamn = StringUtils.join(extPatient.getEfternamns(), " ");
         intPatient.setEfternamn(efterNamn);
 
         String forNamn = StringUtils.join(extPatient.getFornamns(), " ");
         intPatient.setFornamn(forNamn);
 
-        String fullstandigtNamn = forNamn.concat(" ").concat(efterNamn);
+        String fullstandigtNamn = "test";//forNamn.concat(" ").concat(efterNamn);
         intPatient.setFullstandigtnamn(fullstandigtNamn);
-
+        
         intPatient.setPostadress(extPatient.getPostadress());
         intPatient.setPostnummer(extPatient.getPostnummer());
         intPatient.setPostort(extPatient.getPostort());
@@ -268,7 +267,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         Partial extAvbestDatum = extArr.getAvbestallningsdatum();
         intArr.setAvbestallningsdatum(PartialConverter.partialToString(extAvbestDatum));
 
-        PartialDateInterval arrangemangsTid = extArr.getArrangemangstid();
+        PartialInterval arrangemangsTid = extArr.getArrangemangstid();
 
         if (arrangemangsTid != null) {
             intArr.setArrangemangdatum(PartialConverter.partialToString(arrangemangsTid.getFrom()));

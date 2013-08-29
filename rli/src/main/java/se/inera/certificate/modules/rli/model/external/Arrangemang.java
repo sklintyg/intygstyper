@@ -20,7 +20,7 @@ package se.inera.certificate.modules.rli.model.external;
 
 import org.joda.time.Partial;
 
-import se.inera.certificate.common.v1.PartialDateInterval;
+import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.Kod;
 
 public class Arrangemang {
@@ -29,7 +29,7 @@ public class Arrangemang {
 
     private Partial bokningsdatum;
 
-    private PartialDateInterval arrangemangstid;
+    private PartialInterval arrangemangstid;
 
     private Partial avbestallningsdatum;
 
@@ -53,11 +53,11 @@ public class Arrangemang {
         this.bokningsdatum = bokningsdatum;
     }
 
-    public PartialDateInterval getArrangemangstid() {
+    public PartialInterval getArrangemangstid() {
         return arrangemangstid;
     }
 
-    public void setArrangemangstid(PartialDateInterval arrangemangstid) {
+    public void setArrangemangstid(PartialInterval arrangemangstid) {
         this.arrangemangstid = arrangemangstid;
     }
 

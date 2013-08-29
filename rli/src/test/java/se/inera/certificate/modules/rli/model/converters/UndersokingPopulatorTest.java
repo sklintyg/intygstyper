@@ -3,23 +3,23 @@ package se.inera.certificate.modules.rli.model.converters;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.joda.time.LocalDateTime;
 import org.joda.time.Partial;
 import org.junit.Before;
 import org.junit.Test;
 
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.Observation;
+import se.inera.certificate.model.PartialInterval;
+import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
 import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
-import se.inera.certificate.modules.rli.model.external.common.Enhet;
-import se.inera.certificate.modules.rli.model.external.common.Observation;
-import se.inera.certificate.modules.rli.model.external.common.PartialDateInterval;
 import se.inera.certificate.modules.rli.model.internal.KomplikationStyrkt;
 import se.inera.certificate.modules.rli.model.internal.OrsakAvbokning;
 import se.inera.certificate.modules.rli.model.internal.Undersokning;
@@ -59,7 +59,7 @@ public class UndersokingPopulatorTest {
 
         Observation sjukObs = constructObservation(ObservationsKod.GRAVIDITET, 2013, 2, 2);
 
-        sjukObs.getObservationsperiod().setTom(TestUtils.constructPartial(2013, 12, 24));
+        sjukObs.getObservationsPeriod().setTom(TestUtils.constructPartial(2013, 12, 24));
 
         List<Observation> observationer = new ArrayList<Observation>();
         observationer.add(sjukObs);
@@ -81,8 +81,8 @@ public class UndersokingPopulatorTest {
         firstExam.setPlats("Sjukhus A");
 
         Aktivitet currentExam = constructAktivitet(AktivitetsKod.KLINISK_UNDERSOKNING, 2013, 6, 12);
-        Enhet enhet = constructEnhet("Sjukhus B");
-        currentExam.setUtforsVidEnhet(enhet);
+        Vardenhet enhet = constructEnhet("Sjukhus B");
+        currentExam.setUtforsVid(enhet);
 
         List<Aktivitet> aktiviteter = Arrays.asList(currentExam, firstExam);
 
@@ -102,8 +102,8 @@ public class UndersokingPopulatorTest {
     public void testpopulateFromAktiviteter2() {
 
         Aktivitet currentExam = constructAktivitet(AktivitetsKod.KLINISK_UNDERSOKNING, 2013, 6, 12);
-        Enhet sjukhusEnhetX = constructEnhet("Sjukhus X");
-        currentExam.setUtforsVidEnhet(sjukhusEnhetX);
+        Vardenhet sjukhusEnhetX = constructEnhet("Sjukhus X");
+        currentExam.setUtforsVid(sjukhusEnhetX);
 
         List<Aktivitet> aktiviteter = Arrays.asList(currentExam);
 
@@ -122,25 +122,25 @@ public class UndersokingPopulatorTest {
 
         Observation obs = new Observation();
 
-        PartialDateInterval obsPeriod = new PartialDateInterval(null, null);
-        obs.setObservationsperiod(obsPeriod);
+        PartialInterval obsPeriod = new PartialInterval(null, null);
+        obs.setObservationsPeriod(obsPeriod);
 
-        obs.setObservationskod(new Kod(obsKod.getCode()));
-        obs.setObservationstid(TestUtils.constructPartial(year, month, day));
+        obs.setObservationsKod(new Kod(obsKod.getCode()));
+        obs.setObservationsTid(LocalDateTime.now());
 
         return obs;
     }
 
-    private Enhet constructEnhet(String enhetsNamn) {
-        Enhet enhet = new Enhet();
-        enhet.setEnhetsnamn(enhetsNamn);
+    private Vardenhet constructEnhet(String enhetsNamn) {
+        Vardenhet enhet = new Vardenhet();
+        enhet.setNamn(enhetsNamn);
         return enhet;
     }
 
     private Aktivitet constructAktivitet(AktivitetsKod aktivitetsKod, int year, int month, int day) {
 
         Partial from = TestUtils.constructPartial(year, month, day);
-        PartialDateInterval atid = new PartialDateInterval(from, null);
+        PartialInterval atid = new PartialInterval(from, null);
 
         Aktivitet a = new Aktivitet();
         a.setAktivitetskod(new Kod(aktivitetsKod.getCode()));

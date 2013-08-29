@@ -23,6 +23,7 @@ import iso.v21090.dt.v1.CD;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,16 +38,17 @@ import se.inera.certificate.common.v1.PatientType;
 import se.inera.certificate.common.v1.RekommendationType;
 import se.inera.certificate.common.v1.UtforarrollType;
 import se.inera.certificate.common.v1.Utlatande;
+import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.Observation;
+import se.inera.certificate.model.Patient;
+import se.inera.certificate.model.PatientRelation;
+import se.inera.certificate.model.Rekommendation;
+import se.inera.certificate.model.Utforarroll;
+import se.inera.certificate.model.Vardenhet;
+import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
-import se.inera.certificate.modules.rli.model.external.common.Enhet;
-import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
-import se.inera.certificate.modules.rli.model.external.common.Observation;
-import se.inera.certificate.modules.rli.model.external.common.Patient;
-import se.inera.certificate.modules.rli.model.external.common.PatientRelation;
-import se.inera.certificate.modules.rli.model.external.common.Rekommendation;
-import se.inera.certificate.modules.rli.model.external.common.Utforarroll;
-import se.inera.certificate.modules.rli.model.external.common.Vardgivare;
+
 import se.inera.certificate.rli.v1.Arrangemang;
 
 public class ExternalToTransportConverterImpl implements ExternalToTransportConverter {
@@ -142,8 +144,8 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
         }
         ObservationType observationType = new ObservationType();
 
-        observationType.setObservationskod(IsoTypeConverter.toCD(source.getObservationskod()));
-        observationType.setObservationsperiod(convertPartialDateInterval(source.getObservationsperiod()));
+        observationType.setObservationskod(IsoTypeConverter.toCD(source.getObservationsKod()));
+        observationType.setObservationsperiod(convertPartialDateInterval(source.getObservationsPeriod()));
         observationType.setUtforsAv(convertUtforarroll(source.getUtforsAv()));
 
         return observationType;
@@ -167,16 +169,16 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
             return null;
         }
         HosPersonalType hosPersonalType = new HosPersonalType();
-        hosPersonalType.setEnhet(convertEnhet(source.getEnhet()));
+        hosPersonalType.setEnhet(convertEnhet(source.getVardenhet()));
         hosPersonalType.setForskrivarkod(source.getForskrivarkod());
-        hosPersonalType.setFullstandigtNamn(source.getFullstandigtNamn());
-        hosPersonalType.setPersonalId(IsoTypeConverter.toII(source.getPersonalId()));
+        hosPersonalType.setFullstandigtNamn(source.getNamn());
+        hosPersonalType.setPersonalId(IsoTypeConverter.toII(source.getId()));
 
         return hosPersonalType;
     }
 
     private PartialDateInterval convertPartialDateInterval(
-            se.inera.certificate.modules.rli.model.external.common.PartialDateInterval source) {
+            se.inera.certificate.model.PartialInterval source) {
         if (source == null) {
             LOG.debug("Source PartialDateInterval was null, could not convert");
             return null;
@@ -211,12 +213,12 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
 
         aktivitet.setAktivitetskod(IsoTypeConverter.toCD(source.getAktivitetskod()));
         aktivitet.setAktivitetstid(convertPartialDateInterval(source.getAktivitetstid()));
-        aktivitet.setUtforsVidEnhet(convertEnhet(source.getUtforsVidEnhet()));
+        aktivitet.setUtforsVidEnhet(convertEnhet(source.getUtforsVid()));
 
         return aktivitet;
     }
 
-    private EnhetType convertEnhet(Enhet source) {
+    private EnhetType convertEnhet(Vardenhet source) {
         if (source == null) {
             LOG.debug("Enhet was null, could not convert");
             return null;
@@ -226,8 +228,8 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
         if (source.getArbetsplatskod() != null) {
             enhetType.setArbetsplatskod(IsoTypeConverter.toII(source.getArbetsplatskod()));
         }
-        enhetType.setEnhetsId(IsoTypeConverter.toII(source.getEnhetsId()));
-        enhetType.setEnhetsnamn(source.getEnhetsnamn());
+        enhetType.setEnhetsId(IsoTypeConverter.toII(source.getId()));
+        enhetType.setEnhetsnamn(source.getNamn());
         enhetType.setEpost(source.getEpost());
         enhetType.setPostadress(source.getPostadress());
         enhetType.setPostnummer(source.getPostnummer());
@@ -245,8 +247,8 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
         }
         VardgivareType vardgivareType = new VardgivareType();
 
-        vardgivareType.setVardgivareId(IsoTypeConverter.toII(source.getVardgivareId()));
-        vardgivareType.setVardgivarnamn(source.getVardgivarnamn());
+        vardgivareType.setVardgivareId(IsoTypeConverter.toII(source.getId()));
+        vardgivareType.setVardgivarnamn(source.getNamn());
         return vardgivareType;
     }
 
@@ -258,7 +260,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
 
         Arrangemang arrangemang = new Arrangemang();
 
-        arrangemang.setArrangemangstid(source.getArrangemangstid());
+        arrangemang.setArrangemangstid(convertPartialDateInterval(source.getArrangemangstid()));
         arrangemang.setArrangemangstyp(IsoTypeConverter.toCD(source.getArrangemangstyp()));
         arrangemang.setAvbestallningsdatum(source.getAvbestallningsdatum());
         arrangemang.setBokningsdatum(source.getBokningsdatum());
@@ -279,7 +281,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
         patientType.setPostnummer(source.getPostnummer());
         patientType.setPostort(source.getPostort());
 
-        patientType.setPersonId(IsoTypeConverter.toII(source.getPersonId()));
+        patientType.setPersonId(IsoTypeConverter.toII(source.getId()));
 
         if (source.getFornamns() != null) {
             patientType.getFornamns().addAll(source.getFornamns());
@@ -289,10 +291,10 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
             patientType.getMellannamns().addAll(source.getMellannamns());
         }
 
-        patientType.setEfternamn(source.getEfternamn());
+        patientType.setEfternamn(StringUtils.join(source.getEfternamns(), " "));
 
-        if (source.getPatientRelations() != null) {
-            List<PatientRelationType> patientRelationsTypes = convertPatientRelations(source.getPatientRelations());
+        if (source.getPatientrelations() != null) {
+            List<PatientRelationType> patientRelationsTypes = convertPatientRelations(source.getPatientrelations());
             patientType.getPatientRelations().addAll(patientRelationsTypes);
 
         }

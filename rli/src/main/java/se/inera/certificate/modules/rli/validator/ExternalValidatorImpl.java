@@ -24,19 +24,18 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.lang3.StringUtils;
 
+import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.Observation;
+import se.inera.certificate.model.Patient;
+import se.inera.certificate.model.Rekommendation;
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
 import se.inera.certificate.modules.rli.model.codes.ArrangemangsTyp;
 import se.inera.certificate.modules.rli.model.codes.HSpersonalTyp;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
-import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
-import se.inera.certificate.modules.rli.model.external.common.Observation;
-import se.inera.certificate.modules.rli.model.external.common.Patient;
-import se.inera.certificate.modules.rli.model.external.common.Rekommendation;
 import se.inera.certificate.validate.IdValidator;
 import se.inera.certificate.validate.SimpleIdValidatorBuilder;
 
@@ -138,18 +137,18 @@ public class ExternalValidatorImpl implements ExternalValidator {
             return;
         }
 
-        if (skapatAv.getPersonalId() != null) {
+        if (skapatAv.getId() != null) {
             /**
              * Make sure the id specified has the correct root (HSA-IDs have 1.2.752.129.2.1.4.1)
              */
 
-            if (!skapatAv.getPersonalId().getRoot().equals(HSpersonalTyp.HSA_ID.getCode())) {
+            if (!skapatAv.getId().getRoot().equals(HSpersonalTyp.HSA_ID.getCode())) {
                 validationErrors.add("PersonalId should be an HSA-ID with root: " + HSpersonalTyp.HSA_ID.getCode());
             }
         } else {
             validationErrors.add("No personal ID found");
         }
-        if (skapatAv.getFullstandigtNamn() == null) {
+        if (skapatAv.getNamn() == null) {
             validationErrors.add("No fullstandigt namn found in Skapas av");
         }
 
@@ -174,16 +173,16 @@ public class ExternalValidatorImpl implements ExternalValidator {
     }
 
     private void checkObservation(Observation source, List<String> validationErrors) {
-        if (source.getObservationsperiod() == null) {
-            validationErrors.add("No observationsperiod found in: " + source.getObservationskod().getCode());
+        if (source.getObservationsPeriod() == null) {
+            validationErrors.add("No observationsperiod found in: " + source.getObservationsKod().getCode());
         }
 
-        if (source.getUtforsAv().getAntasAv().getPersonalId() == null) {
+        if (source.getUtforsAv().getAntasAv().getId() == null) {
             validationErrors.add("No Personal Id found in Utfors av -> Antas av");
             return;
         }
 
-        if (!source.getUtforsAv().getAntasAv().getPersonalId().getRoot().equals(HSpersonalTyp.HSA_ID.getCode())) {
+        if (!source.getUtforsAv().getAntasAv().getId().getRoot().equals(HSpersonalTyp.HSA_ID.getCode())) {
             validationErrors.add("PersonalId should be an HSA-ID with extension: " + HSpersonalTyp.HSA_ID.getCode());
         }
     }
@@ -262,7 +261,7 @@ public class ExternalValidatorImpl implements ExternalValidator {
             return;
         }
 
-        validationErrors.addAll(idValidator.validate(patient.getPersonId()));
+        validationErrors.addAll(idValidator.validate(patient.getId()));
 
         /**
          * Make sure Fornamn and Efternamn contains at least one item
@@ -271,7 +270,7 @@ public class ExternalValidatorImpl implements ExternalValidator {
             validationErrors.add("At least one Fornamn must be provided for Patient");
         }
 
-        if (StringUtils.isBlank(patient.getEfternamn())) {
+        if (patient.getEfternamns().isEmpty()) {
             validationErrors.add("An Efternamn must be provided for Patient");
         }
 
