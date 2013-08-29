@@ -19,8 +19,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<utlatande xmlns="urn:intyg:common-model:1" xmlns:hr="urn:riv:insuranceprocess:healthreporting:2"
-	xmlns:rli="urn:intyg:rli:model:1" xmlns:iso="urn:iso:21090:dt:1">
+<utlatande xmlns="urn:intyg:common-model:1" xmlns:rli="urn:intyg:rli:model:1" xmlns:iso="urn:iso:21090:dt:1">
 
 	<!-- Reseläkarintyg. Definierar en patient Fröken Fräken (19331122-4400) 
 		som på grund av graviditet avråds att resa. -->
@@ -42,24 +41,24 @@
 	</patient>
 
 	<skapadAv>
-		<hr:personal-id root="1.2.752.129.2.1.4.1" extension="19101010+1010" />
-		<hr:fullstandigtNamn>Doktor Alban</hr:fullstandigtNamn>
-		<hr:forskrivarkod>ABC123</hr:forskrivarkod>
+		<personal-id root="1.2.752.129.2.1.4.1" extension="19101010+1010" />
+		<fullstandigtNamn>Doktor Alban</fullstandigtNamn>
+		<forskrivarkod>ABC123</forskrivarkod>
 
-		<hr:enhet>
-			<hr:enhets-id root="1.2.752.129.2.1.4.1" extension="vardenhet_test" />
-			<hr:enhetsnamn>Testenheten</hr:enhetsnamn>
-			<hr:postadress>Teststigen 12</hr:postadress>
-			<hr:postnummer>12345</hr:postnummer>
-			<hr:postort>Tolvberga</hr:postort>
-			<hr:telefonnummer>012-345678</hr:telefonnummer>
-			<hr:epost>ingen@alls.se</hr:epost>
-			<hr:vardgivare>
-				<hr:vardgivare-id root="1.2.752.129.2.1.4.1"
+		<enhet>
+			<enhets-id root="1.2.752.129.2.1.4.1" extension="vardenhet_test" />
+			<enhetsnamn>Testenheten</enhetsnamn>
+			<postadress>Teststigen 12</postadress>
+			<postnummer>12345</postnummer>
+			<postort>Tolvberga</postort>
+			<telefonnummer>012-345678</telefonnummer>
+			<epost>ingen@alls.se</epost>
+			<vardgivare>
+				<vardgivare-id root="1.2.752.129.2.1.4.1"
 					extension="vardgivare_test" />
-				<hr:vardgivarnamn>Testvårdgivaren</hr:vardgivarnamn>
-			</hr:vardgivare>
-		</hr:enhet>
+				<vardgivarnamn>Testvårdgivaren</vardgivarnamn>
+			</vardgivare>
+		</enhet>
 	</skapadAv>
 
 	<aktivitet>
@@ -68,18 +67,18 @@
 			codeSystemName="KVÅ" />
 
 		<utforsVidEnhet>
-			<hr:enhets-id root="1.2.752.129.2.1.4.1" extension="vardenhet_test" />
-			<hr:enhetsnamn>Testenheten</hr:enhetsnamn>
-			<hr:postadress>Teststigen 12</hr:postadress>
-			<hr:postnummer>12345</hr:postnummer>
-			<hr:postort>Tolvberga</hr:postort>
-			<hr:telefonnummer>012-345678</hr:telefonnummer>
-			<hr:epost>ingen@alls.se</hr:epost>
-			<hr:vardgivare>
-				<hr:vardgivare-id root="1.2.752.129.2.1.4.1"
+			<enhets-id root="1.2.752.129.2.1.4.1" extension="vardenhet_test" />
+			<enhetsnamn>Testenheten</enhetsnamn>
+			<postadress>Teststigen 12</postadress>
+			<postnummer>12345</postnummer>
+			<postort>Tolvberga</postort>
+			<telefonnummer>012-345678</telefonnummer>
+			<epost>ingen@alls.se</epost>
+			<vardgivare>
+				<vardgivare-id root="1.2.752.129.2.1.4.1"
 					extension="vardgivare_test" />
-				<hr:vardgivarnamn>Testvårdgivaren</hr:vardgivarnamn>
-			</hr:vardgivare>
+				<vardgivarnamn>Testvårdgivaren</vardgivarnamn>
+			</vardgivare>
 		</utforsVidEnhet>
 	</aktivitet>
 

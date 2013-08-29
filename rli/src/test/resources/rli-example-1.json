@@ -1,4 +1,8 @@
 {
+  "id" : {
+    "root" : "???",
+    "extension" : "39f80245-9730-4d76-aaff-b04a2f3cfbe7"
+  },
   "typ" : {
     "codeSystem" : "f6fb361a-e31d-48b8-8657-99b63912dd9b",
     "code" : "RLI"
@@ -9,23 +13,24 @@
   "patient" : {
     "id" : {
       "root" : "1.2.752.129.2.1.3.1",
-      "extension" : "191212121212"
+      "extension" : "19121212+1212"
     },
     "fornamns" : [ "Test" ],
-    "efternamns" : [],
+    "efternamns" : [ "Testsson" ],
     "postadress" : "Teststigen 1",
     "postnummer" : "123 45",
-    "postort" : "Stockholm"
+    "postort" : "Stockholm",
+    "fullstandigtNamn" : "Test Testsson"
   },
   "skapadAv" : {
     "id" : {
-      "root" : "1.2.752.129.2.1.3.1",
+      "root" : "1.2.752.129.2.1.4.1",
       "extension" : "19101010+1010"
     },
     "namn" : "Doktor Alban",
     "forskrivarkod" : "ABC123",
-    "enhet" : {
-      "enhetsId" : {
+    "vardenhet" : {
+      "id" : {
         "root" : "1.2.752.129.2.1.4.1",
         "extension" : "vardenhet_test"
       },
@@ -50,7 +55,11 @@
       "codeSystemName" : "KVÅ",
       "code" : "AV020"
     },
-    "utforsVidEnhet" : {
+    "aktivitetstid" : {
+      "from" : "2013-08-12",
+      "tom" : "2013-08-12"
+    },
+    "utforsVid" : {
       "id" : {
         "root" : "1.2.752.129.2.1.4.1",
         "extension" : "vardenhet_test"
@@ -83,12 +92,12 @@
     "rekommendationskod" : {
       "codeSystem" : "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
       "codeSystemName" : "kv_rekommendation_intyg",
-      "code" : "SEK7"
+      "code" : "REK1"
     },
     "sjukdomskannedom" : {
       "codeSystem" : "f3a556c4-d54b-4f67-8496-d5259df70493",
       "codeSystemName" : "kv_sjukdomskännedom_intyg",
-      "code" : "SIK2"
+      "code" : "SJK2"
     }
   } ],
   "observationer" : [ {
@@ -97,7 +106,10 @@
       "codeSystemName" : "SNOMED-CT",
       "code" : "39104002"
     },
-   
+    "observationsPeriod" : {
+      "from" : "2010-01-01",
+      "tom" : "2010-01-01"
+    },
     "utforsAv" : {
       "utforartyp" : {
         "codeSystem" : "1.2.752.116.2.1.1.1",
@@ -105,13 +117,13 @@
         "code" : "223366009"
       },
       "antasAv" : {
-        "personalId" : {
+        "id" : {
           "root" : "1.2.752.129.2.1.4.1",
           "extension" : "190101010101"
         },
-        "fullstandigtNamn" : "Dr Jekyll",
+        "namn" : "Dr Jekyll",
         "forskrivarkod" : "DRJEK",
-        "enhet" : {
+        "vardenhet" : {
           "id" : {
             "root" : "1.2.752.129.2.1.4.1",
             "extension" : "vardenhet_test2"
@@ -139,7 +151,7 @@
     "arrangemangstyp" : {
       "codeSystem" : "1.2.752.116.2.1.1.1",
       "codeSystemName" : "SNOMED-CT",
-      "code" : "WRONG_CODE"
+      "code" : "420008001"
     },
     "plats" : "New York"
   }

@@ -47,7 +47,6 @@ public class ExternalToInternalConverterTest {
     }
 
     @Test
-    @Ignore
     public void testConvertUtlatande() {
 
         Utlatande extUtlatande = readUtlatandeFromJsonFile("/rli-example-1.json");
@@ -84,7 +83,6 @@ public class ExternalToInternalConverterTest {
         return extUtlatande;
     }
     
-    @Ignore
     @Test
     public void testConvertToIntPatient() {
 

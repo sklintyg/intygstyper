@@ -30,9 +30,9 @@ import org.joda.time.Partial;
 import org.junit.Before;
 import org.junit.Test;
 
-import riv.insuranceprocess.healthreporting._2.EnhetType;
-import riv.insuranceprocess.healthreporting._2.HosPersonalType;
-import riv.insuranceprocess.healthreporting._2.VardgivareType;
+import se.inera.certificate.common.v1.EnhetType;
+import se.inera.certificate.common.v1.HosPersonalType;
+import se.inera.certificate.common.v1.VardgivareType;
 import se.inera.certificate.common.v1.ObservationType;
 import se.inera.certificate.common.v1.PartialDateInterval;
 import se.inera.certificate.common.v1.PatientType;

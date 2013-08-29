@@ -232,7 +232,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         String forNamn = StringUtils.join(extPatient.getFornamns(), " ");
         intPatient.setFornamn(forNamn);
 
-        String fullstandigtNamn = "test";//forNamn.concat(" ").concat(efterNamn);
+        String fullstandigtNamn = forNamn.concat(" ").concat(efterNamn);
         intPatient.setFullstandigtnamn(fullstandigtNamn);
         
         intPatient.setPostadress(extPatient.getPostadress());

@@ -25,9 +25,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import riv.insuranceprocess.healthreporting._2.EnhetType;
-import riv.insuranceprocess.healthreporting._2.HosPersonalType;
-import riv.insuranceprocess.healthreporting._2.VardgivareType;
+import se.inera.certificate.common.v1.EnhetType;
+import se.inera.certificate.common.v1.HosPersonalType;
+import se.inera.certificate.common.v1.VardgivareType;
 import se.inera.certificate.common.v1.AktivitetType;
 import se.inera.certificate.common.v1.ObservationType;
 import se.inera.certificate.common.v1.PatientRelationType;

@@ -55,7 +55,6 @@ public class ExternalValidatorTest {
     }
 
     @Test
-    @Ignore
     public void testValidate() {
         Utlatande utlatande = buildTestUtlatande("/rli-example-1.json");
         List<String> validationErrors = validator.validate(utlatande);
@@ -64,7 +63,6 @@ public class ExternalValidatorTest {
 
     }
     
-    @Ignore
     @Test
     public void testValidateWithErrors() {
         Utlatande utlatande = buildTestUtlatande("/rli-example-1-with-errors.json");
