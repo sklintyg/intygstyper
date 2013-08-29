@@ -49,7 +49,7 @@ public class FullExternalToInternalConverterTest {
 
         se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande = readUtlatandeFromJsonFile("/rli-example-3.json");
 
-        Utlatande res = converter.fromExternalToInternal(extUtlatande);
+        Utlatande res = converter.convertUtlatandeFromExternalToInternal(extUtlatande);
 
         Utlatande ref = buildInternalUtlatande();
         
