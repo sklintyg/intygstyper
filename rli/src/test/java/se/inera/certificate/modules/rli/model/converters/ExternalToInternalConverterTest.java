@@ -51,7 +51,7 @@ public class ExternalToInternalConverterTest {
 
         Utlatande extUtlatande = readUtlatandeFromJsonFile("/rli-example-1.json");
 
-        se.inera.certificate.modules.rli.model.internal.Utlatande res = converter.fromExternalToInternal(extUtlatande);
+        se.inera.certificate.modules.rli.model.internal.Utlatande res = converter.convertUtlatandeFromExternalToInternal(extUtlatande);
 
         assertNotNull(res);
 

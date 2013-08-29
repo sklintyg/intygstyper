@@ -28,6 +28,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.common.v1.PartialDateInterval;
+import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
+import se.inera.certificate.integration.rest.dto.CertificateStatus;
 import se.inera.certificate.modules.rli.model.codes.ArrangemangsTyp;
 import se.inera.certificate.modules.rli.model.external.common.Enhet;
 import se.inera.certificate.modules.rli.model.external.common.HosPersonal;
@@ -40,6 +42,7 @@ import se.inera.certificate.modules.rli.model.internal.Undersokning;
 import se.inera.certificate.modules.rli.model.internal.Utlatande;
 import se.inera.certificate.modules.rli.model.internal.Vardenhet;
 import se.inera.certificate.modules.rli.model.internal.Vardgivare;
+import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
 
 /**
  * Converter for converting the external format to the internal view format.
@@ -62,16 +65,31 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see se.inera.certificate.modules.rli.model.converters.ExternalToInternalConverter
-     * #fromExternalToInternal(se.inera.certificate.modules.rli.model.external. Utlatande)
-     */
     @Override
-    public Utlatande fromExternalToInternal(se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande) {
+    public Utlatande fromExternalToInternal(CertificateContentHolder certificateContentHolder) {
 
-        LOG.debug("Starting conversion");
+        se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande = certificateContentHolder
+                .getCertificateContent();
+
+        Utlatande intUtlatande = convertUtlatandeFromExternalToInternal(extUtlatande);
+
+        decorateWithStatusInfo(intUtlatande, certificateContentHolder.getCertificateContentMeta());
+
+        return intUtlatande;
+    }
+
+    private void decorateWithStatusInfo(Utlatande intUtlatande, CertificateContentMeta certificateContentMeta) {
+        List<CertificateStatus> certStatuses = certificateContentMeta.getStatuses();
+
+        List<Status> intStatuses = convertToIntStatuses(certStatuses);
+        intUtlatande.setStatus(intStatuses);
+
+    }
+
+    Utlatande convertUtlatandeFromExternalToInternal(
+            se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande) {
+
+        LOG.debug("Starting conversion of Utlatande from external to internal");
 
         Utlatande intUtlatande = new Utlatande();
 
@@ -82,9 +100,6 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         intUtlatande.setSkickatDatum(extUtlatande.getSkickatdatum());
 
         intUtlatande.setKommentarer(extUtlatande.getKommentarer());
-
-        List<Status> intStatuses = convertToIntStatuses(extUtlatande.getStatus());
-        intUtlatande.setStatus(intStatuses);
 
         HoSPersonal intHoSPersonal = convertToIntHoSPersonal(extUtlatande.getSkapadAv());
         intUtlatande.setSkapadAv(intHoSPersonal);
@@ -103,6 +118,8 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
     private void populateUndersokingRekommendation(
             se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande, Utlatande intUtlatande) {
 
+        LOG.debug("Populating Utlatande with Undersokning and Rekommendation");
+        
         Undersokning intUndersokning = undersokingPopulator.createAndPopulateUndersokning(extUtlatande);
         intUtlatande.setUndersokning(intUndersokning);
 
@@ -173,24 +190,25 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         return intHoSPersonal;
     }
 
-    List<Status> convertToIntStatuses(List<se.inera.certificate.model.Status> extStatuses) {
-
-        LOG.debug("Converting statuses");
+    List<Status> convertToIntStatuses(List<CertificateStatus> certStatuses) {
 
         List<Status> intStatuses = new ArrayList<Status>();
 
-        if (extStatuses == null || extStatuses.isEmpty()) {
+        if (certStatuses == null || certStatuses.isEmpty()) {
             LOG.debug("No statuses found to convert");
             return intStatuses;
         }
 
+        LOG.debug("Converting {} statuses to internal", certStatuses.size());
+
         Status intStatus;
 
-        for (se.inera.certificate.model.Status extStatus : extStatuses) {
+        for (CertificateStatus extStatus : certStatuses) {
             intStatus = new Status();
-            intStatus.setType(extStatus.getType().name());
+            intStatus.setType(extStatus.getType());
             intStatus.setTimestamp(extStatus.getTimestamp());
             intStatus.setTarget(extStatus.getTarget());
+            intStatuses.add(intStatus);
         }
 
         return intStatuses;
@@ -208,7 +226,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         Patient intPatient = new Patient();
 
         intPatient.setPersonId(InternalModelConverterUtils.getValueFromId(extPatient.getPersonId()));
-        
+
         String efterNamn = extPatient.getEfternamn();
         intPatient.setEfternamn(efterNamn);
 
