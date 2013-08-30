@@ -136,7 +136,7 @@ public class PdfGenerator {
     private static final String SIGN_NAME = "form1[0].subform[1].flt_NamnfortydligandeMottagningsadrTel_flt15[0]";
 
     private static final String DOCTORCODE_AND_WORKPLACE = "form1[0].subform[1].flt_ForskrivarkodOchArbetsplatskod_flt17[0]";
-    public static final String PDF_TEMPLATE = "pdf/RFV7263_008_J_003_statisk.pdf";
+    public static final String PDF_TEMPLATE = "pdf/RFV7263_009_J_003_statisk.pdf";
 
     private Fk7263Intyg intyg;
     private ByteArrayOutputStream outputStream;
