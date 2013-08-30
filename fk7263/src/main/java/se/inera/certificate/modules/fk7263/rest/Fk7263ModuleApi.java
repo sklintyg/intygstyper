@@ -30,6 +30,7 @@ import org.xml.sax.SAXException;
 import se.inera.certificate.fk7263.model.v1.Utlatande;
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.model.converter.ExternalToTransportConverter;
 import se.inera.certificate.modules.fk7263.model.converter.ExternalToTransportFk7263LegacyConverter;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToExternalConverter;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToExternalFk7263LegacyConverter;
@@ -65,16 +66,21 @@ public class Fk7263ModuleApi {
     private static final Validator registerMedicalCertificateSchemaValidator;
     private static final Validator utlatandeSchemaValidator;
 
+    private static final String REGISTER_MEDICAL_CERTIFICATE_VERSION = "1.0";
+    private static final String UTLATANDE_VERSION = "2.0";
+
     // create schema validators
     static {
         try {
-            Source registerMedicalCertificateSchemaFile = new StreamSource(new ClassPathResource("/schemas/v3/RegisterMedicalCertificateInteraction/RegisterMedicalCertificate_3.0.xsd").getFile());
+            Source registerMedicalCertificateSchemaFile = new StreamSource(new ClassPathResource(
+                    "/schemas/v3/RegisterMedicalCertificateInteraction/RegisterMedicalCertificate_3.0.xsd").getFile());
 
             Source utlatandeSchemaFile = new StreamSource(new ClassPathResource("/schemas/fk7263_model.xsd").getFile());
 
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
-            Schema registerMedicalCertificateSchema = schemaFactory.newSchema(new Source[] { registerMedicalCertificateSchemaFile });
+            Schema registerMedicalCertificateSchema = schemaFactory
+                    .newSchema(new Source[] { registerMedicalCertificateSchemaFile });
 
             Schema utlatandeSchema = schemaFactory.newSchema(utlatandeSchemaFile);
 
@@ -155,6 +161,7 @@ public class Fk7263ModuleApi {
 
     /**
      * Converts different types of transportJaxb object to the external module model format.
+     * 
      * @param jaxbObject
      * @return Fk7263Utlatande
      */
@@ -180,6 +187,7 @@ public class Fk7263ModuleApi {
 
     /**
      * Unmarshal xml string into jaxb
+     * 
      * @param transportXml
      * @return jaxbObject if unmarshalling was successful
      */
@@ -197,8 +205,20 @@ public class Fk7263ModuleApi {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_XML)
     public Response marshall(@HeaderParam("X-Schema-Version") String version, Fk7263Utlatande externalModel) {
-        RegisterMedicalCertificate registerMedicalCertificateJaxb = ExternalToTransportFk7263LegacyConverter.getJaxbObject(externalModel);
-        return Response.ok(registerMedicalCertificateJaxb).build();
+
+        if (REGISTER_MEDICAL_CERTIFICATE_VERSION.equals(version)) {
+            RegisterMedicalCertificate registerMedicalCertificateJaxb = ExternalToTransportFk7263LegacyConverter
+                    .getJaxbObject(externalModel);
+            return Response.ok(registerMedicalCertificateJaxb).build();
+        }
+
+        if (UTLATANDE_VERSION.equals(version)) {
+            Utlatande utlatande = new ExternalToTransportConverter(externalModel).convert();
+            return Response.ok(utlatande).build();
+        }
+
+        return Response.status(Response.Status.NOT_IMPLEMENTED)
+                .entity("FK7263 module does not support version " + version).build();
     }
 
     @POST
@@ -218,8 +238,10 @@ public class Fk7263ModuleApi {
     }
 
     /**
-     * The signature of this method must be compatible with the specified "interface" in {@link se.inera.certificate.integration.rest.ModuleRestApi} Jackson will try to satisfy the signature of this
+     * The signature of this method must be compatible with the specified "interface" in
+     * {@link se.inera.certificate.integration.rest.ModuleRestApi} Jackson will try to satisfy the signature of this
      * method once it's been resolved, so the real contract is actually the json structure.
+     * 
      * @param contentHolder
      * @return
      */
