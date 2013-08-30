@@ -88,9 +88,9 @@ var fk7263Messages = {
         "referens.419891008" : "Journaluppgifter, den %0",
         "referens.74964007" : "Annat, den %0",
 
-        "error.generic" : "Kunde inte visa intyget",
-        "error.couldnotsend" : "Kunde inte skicka intyget till Försäkringskassan. Vänligen försök igen senare.",
-        "error.certnotfound" : "Intyget kunde inte laddas."
+        "error.generic" : "Intyget kunde inte visas. Om felet kvarstår kan du kontakta <a href='/web/start#/hjalp'>support</a>. Om du inte kan komma åt intyget på Mina intyg just nu så kan du kontakta din läkare för att få en kopia.<br><br><a href='/web/start'>Gå till Inkorgen och försök igen</a>",
+        "error.couldnotsend" : "Intyget kunde inte skickas till Försäkringskassan. Om felet kvarstår kan du kontakta <a href='/web/start#/hjalp'>support</a>.<br><br><a href='/web/start'>Gå till Inkorgen och försök igen</a>",
+        "error.certnotfound" : "Intygen i Inkorgen kunde inte visas. Om felet kvarstår kan du kontakta <a href='/web/start#/hjalp'>support</a>. Om du inte kan komma åt intyget på Mina intyg just nu så kan du kontakta din läkare för att få en kopia.<br><br><a href='/web/start'>Gå till Inkorgen och försök igen</a>"
     },
     "en" : {
         "view.label.pagetitle" : "Show Certificate"
