@@ -54,7 +54,7 @@ var fk7263Messages = {
         "view.label.unjudgeable" : "Går inte att bedöma",
         "view.label.patientworkcapacity" : "Patientens arbetsförmåga bedöms i förhållande till (fält 8a)",
         "view.label.patientworkcapacity.currentwork" : "Nuvarande arbete: ",
-        "view.label.patientworkcapacity.unemployed" : "Arbetslöshet - att utföra arbete på den reguljära arbetsmarknaden",
+        "view.label.patientworkcapacity.unemployed" : "Arbetslöshet - att utföra sådant arbete som är normalt förekommande på arbetsmarknaden",
         "view.label.patientworkcapacity.parentalleave" : "Föräldraledighet med föräldrapenning - att vårda sitt barn",
         "view.label.patientworkcapacityjudgement" : "Patientens arbetsförmåga bedöms nedsatt längre tid än den som det försäkringsmedicinska beslutsstödet anger, därför att:  (fält 9)",
         "view.label.prognosis" : "Prognos - kommer patienten att få tillbaka sin arbetsförmåga i nuvarande arbete? (Gäller inte arbetslösa) (fält 10)",
