@@ -4,10 +4,13 @@ import javax.ws.rs.core.Response;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
+import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
 /**
  * @author andreaskaltenbach
@@ -23,14 +26,24 @@ public class Fk7263ModuleApiTest {
         Response response = fk7263ModuleApi.unmarshall(registerMedicalCertificate);
 
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
-        assertEquals("cvc-complex-type.2.4.b: Innehållet i elementet 'lakarutlatande' är inte fullständigt. Något av '{\"urn:riv:insuranceprocess:healthreporting:mu7263:3\":lakarutlatande-id}' förväntas.", response.getEntity());
+        assertTrue(response.getEntity().toString().startsWith("cvc-complex-type.2.4.b:"));
 
 
         String utlatande = FileUtils.readFileToString(new ClassPathResource("Fk7263ModuleApiTest/utlatande_invalid.xml").getFile());
         response = fk7263ModuleApi.unmarshall(utlatande);
 
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
-        assertEquals("cvc-complex-type.2.4.b: Innehållet i elementet 'utlatande' är inte fullständigt. Något av '{\"urn:intyg:common-model:1\":utlatande-id}' förväntas.", response.getEntity());
+        assertTrue(response.getEntity().toString().startsWith("cvc-complex-type.2.4.b:"));
+    }
+
+    @Test
+    public void testMarshallWithVersion_1_0() throws IOException {
+        Fk7263Utlatande utlatande = new CustomObjectMapper().readValue(new ClassPathResource("Fk7263ModuleApiTest/utlatande.json").getFile(), Fk7263Utlatande.class);
+
+        Response response = fk7263ModuleApi.marshall("1.0", utlatande);
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+
     }
 
 }
