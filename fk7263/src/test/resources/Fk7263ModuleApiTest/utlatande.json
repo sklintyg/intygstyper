@@ -1,0 +1,62 @@
+{
+    "id" : {
+        "extension" : "1"
+    },
+    "typ" : {
+        "code" : "fk7263"
+    },
+    "signeringsDatum" : "2013-05-31T09:51:38.570",
+    "patient" : {
+        "id" : {
+            "extension" : "19001122-3344"
+        }
+    },
+    "skapadAv" : {
+        "id" : "HOSID",
+        "namn" : "Hans Rosling",
+        "vardenhet" : {
+            "id" : "vardenhets-id",
+            "namn" : "Vårdcentrum i väst",
+            "vardgivare" : {
+                "id" : "vardgivar-id",
+                "namn" : "Vård i Väst"
+            }
+        }
+    },
+    "observations" : [
+        {
+            "observationsKod" : {
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "302119000"
+            },
+            "observationsPeriod" : {
+                "from" : "2013-06-05",
+                "tom" : "2013-06-12"
+            },
+            "varde" : [
+                {
+                    "quantity" : 50,
+                    "unit" : "percent"
+                }
+            ]
+        },
+        {
+            "observationsKod" : {
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "302119000"
+             },
+            "observationsPeriod" : {
+                "from" : "2013-06-01",
+                "tom" : "2013-06-04"
+            },
+            "varde" : [
+                {
+                    "quantity" : 0,
+                    "unit" : "percent"
+                }
+            ]
+        }
+    ]
+}
