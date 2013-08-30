@@ -14,12 +14,14 @@ import se.inera.certificate.model.util.Strings;
 public class Fk7263Patient {
 
     private Id id;
-    private List<String> fornamns;
-    private List<String> mellannamns;
-    private List<String> efternamns;
+    private List<String> fornamns = new ArrayList<>();
+    private List<String> mellannamns = new ArrayList<>();
+    private List<String> efternamns = new ArrayList<>();
 
-    private List<Sysselsattning> sysselsattnings;
-    private List<Arbetsuppgift> arbetsuppgifts;
+    private List<Sysselsattning> sysselsattnings = new ArrayList<>();
+    private List<Arbetsuppgift> arbetsuppgifts = new ArrayList<>();
+    
+    //Test property to be removed
     private Fk7263Arbetsgivare arbetsgivare;
 
     public Id getId() {

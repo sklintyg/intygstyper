@@ -27,7 +27,7 @@ public class Fk7263Utlatande {
 
     private Kod typ;
 
-    private List<String> kommentars;
+    private List<String> kommentars = new ArrayList<>();
 
     private LocalDateTime signeringsDatum;
 
@@ -37,13 +37,13 @@ public class Fk7263Utlatande {
 
     private HosPersonal skapadAv;
 
-    private List<Aktivitet> aktiviteter;
+    private List<Aktivitet> aktiviteter = new ArrayList<>();
 
-    private List<Observation> observations;
+    private List<Observation> observations = new ArrayList<>();
 
-    private List<Vardkontakt> vardkontakter;
+    private List<Vardkontakt> vardkontakter = new ArrayList<>();
 
-    private List<Referens> referenser;
+    private List<Referens> referenser = new ArrayList<>();
 
     public Id getId() {
         return id;
