@@ -33,14 +33,14 @@ public class TransportToExternalFk7263LegacyConverterTest {
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         
         JAXBElement<Lakarutlatande> utlatandeElement = unmarshaller.unmarshal(new StreamSource(new ClassPathResource(
-                "transportToExternalFk7263LegacyConverter/legacy-maximalt-fk7263-transport.xml").getInputStream()), Lakarutlatande.class);
+                "TransportToExternalFk7263LegacyConverterTest/legacy-maximalt-fk7263-transport.xml").getInputStream()), Lakarutlatande.class);
 
         Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter.convert(utlatandeElement.getValue());
 
         // serialize utlatande to JSON and compare with expected JSON
         ObjectMapper objectMapper = new CustomObjectMapper();
         JsonNode tree = objectMapper.valueToTree(externalModel);
-        JsonNode expectedTree = objectMapper.readTree(new ClassPathResource("transportToExternalFk7263LegacyConverter/legacy-maximalt-fk7263-external.json").getInputStream());
+        JsonNode expectedTree = objectMapper.readTree(new ClassPathResource("TransportToExternalFk7263LegacyConverterTest/legacy-maximalt-fk7263-external.json").getInputStream());
 
         assertEquals("JSON does not match expectation. Resulting JSON is \n" + tree.toString() + "\n", expectedTree, tree);
     }

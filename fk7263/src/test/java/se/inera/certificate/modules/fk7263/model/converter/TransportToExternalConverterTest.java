@@ -31,14 +31,14 @@ public class TransportToExternalConverterTest {
         // read fk7263 xml from file
         JAXBContext jaxbContext = JAXBContext.newInstance(se.inera.certificate.fk7263.model.v1.Utlatande.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        JAXBElement<Utlatande> utlatandeElement = unmarshaller.unmarshal(new StreamSource(new ClassPathResource("transportToExternalConverter/maximalt-fk7263.xml").getInputStream()), Utlatande.class);
+        JAXBElement<Utlatande> utlatandeElement = unmarshaller.unmarshal(new StreamSource(new ClassPathResource("TransportToExternalConverterTest/maximalt-fk7263.xml").getInputStream()), Utlatande.class);
 
         Fk7263Utlatande externalFormat = TransportToExternalConverter.convert(utlatandeElement.getValue());
 
         // serialize utlatande to JSON and compare with expected JSON
         ObjectMapper objectMapper = new CustomObjectMapper();
         JsonNode tree = objectMapper.valueToTree(externalFormat);
-        JsonNode expectedTree = objectMapper.readTree(new ClassPathResource("transportToExternalConverter/maximalt-fk7263.json").getInputStream());
+        JsonNode expectedTree = objectMapper.readTree(new ClassPathResource("TransportToExternalConverterTest/maximalt-fk7263.json").getInputStream());
 
         assertEquals("JSON does not match expectation. Resulting JSON is \n" + tree.toString() + "\n", expectedTree, tree);
     }
