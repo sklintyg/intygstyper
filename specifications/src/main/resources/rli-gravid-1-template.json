@@ -1,15 +1,15 @@
 {
   "id" : {
     "root" : "???",
-    "extension" : "39f80245-9730-4d76-aaff-b04a2f3cfbe7"
+    "extension" : "d53c377e-4103-47f5-9f90-5e1bbd874466"
   },
   "typ" : {
     "codeSystem" : "f6fb361a-e31d-48b8-8657-99b63912dd9b",
     "code" : "RLI"
   },
   "kommentars" : [ "Övriga upplysningar" ],
-  "signeringsDatum" : "2013-08-12T11:25:00.000",
-  "skickatDatum" : "2013-08-12T11:25:30.000",
+  "signeringsDatum" : "2013-08-12T15:57:00.000",
+  "skickatDatum" : "2013-08-12T16:01:30.000",
   "patient" : {
     "id" : {
       "root" : "1.2.752.129.2.1.3.1",
@@ -55,10 +55,6 @@
       "codeSystemName" : "KVÅ",
       "code" : "AV020"
     },
-    "aktivitetstid" : {
-      "from" : "2013-08-12",
-      "tom" : "2013-08-12"
-    },
     "utforsVid" : {
       "id" : {
         "root" : "1.2.752.129.2.1.4.1",
@@ -78,22 +74,12 @@
         "namn" : "Testvårdgivaren"
       }
     }
-  }, {
-    "plats" : "Säffle",
-    "aktivitetskod" : {
-      "codeSystem" : "1.2.752.116.1.3.2.1.4",
-      "codeSystemName" : "KVÅ",
-      "code" : "AKT13"
-    },
-    "aktivitetstid" : {
-      "from" : "2013-08-01"
-    }
   } ],
   "rekommendationer" : [ {
     "rekommendationskod" : {
       "codeSystem" : "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
       "codeSystemName" : "kv_rekommendation_intyg",
-      "code" : "REK1"
+      "code" : "REK3"
     },
     "sjukdomskannedom" : {
       "codeSystem" : "f3a556c4-d54b-4f67-8496-d5259df70493",
@@ -105,39 +91,17 @@
     "observationsKod" : {
       "codeSystem" : "1.2.752.116.2.1.1.1",
       "codeSystemName" : "SNOMED-CT",
-      "code" : "39104002"
+      "code" : "289908002"
     },
     "observationsPeriod" : {
-      "from" : "2010-01-01",
-      "tom" : "2010-01-01"
+      "from" : "2013-07-20",
+      "tom" : "2013-07-20"
     },
     "utforsAv" : {
       "utforartyp" : {
         "codeSystem" : "1.2.752.116.2.1.1.1",
         "codeSystemName" : "SNOMED-CT",
-        "code" : "223366009"
-      },
-      "antasAv" : {
-        "id" : {
-          "root" : "1.2.752.129.2.1.4.1",
-          "extension" : "190101010101"
-        },
-        "namn" : "Dr Jekyll",
-        "forskrivarkod" : "DRJEK",
-        "vardenhet" : {
-          "id" : {
-            "root" : "1.2.752.129.2.1.4.1",
-            "extension" : "vardenhet_test2"
-          },
-          "namn" : "Elixirkliniken, London",
-          "vardgivare" : {
-            "id" : {
-              "root" : "1.2.752.129.2.1.4.1",
-              "extension" : "vardgivare_test2"
-            },
-            "namn" : "Testvårdgivaren"
-          }
-        }
+        "code" : "116154003"
       }
     }
   } ],
@@ -154,6 +118,6 @@
       "codeSystemName" : "SNOMED-CT",
       "code" : "420008001"
     },
-    "plats" : "New York"
+    "plats" : "Säffle"
   }
 }

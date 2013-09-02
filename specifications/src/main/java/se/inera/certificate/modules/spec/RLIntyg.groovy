@@ -13,24 +13,23 @@ import se.inera.certificate.spec.util.RestClientFixture
 public class RLIntyg extends RestClientFixture {
     
     // set by fitNesse
+    int rad
     String personnr
     String utfärdat
 	String utfärdare
 	String enhet
     String orsak
     String mall
+    String resmål
     
     String typ = "RLI"
     
     String giltigtFrån
-    String giltigtTill
-    
-    int from
-    int to
+    String giltigtTill   
 	
-	private String template
-    private String id
-    private String msgBody
+	String template
+    String certId
+    String msgBody
     
 	
 	public void reset() {
@@ -48,7 +47,7 @@ public class RLIntyg extends RestClientFixture {
         
         giltigtTill = new Date().parse("yyyy-MM-dd", utfärdat).plus(90).format("yyyy-MM-dd")
         
-        id = "${mall}-${personnr}" + System.currentTimeMillis()
+        certId = "${mall}-${personnr}-${rad}"
         
         def res = restClient.post(
                     path: 'certificate',
@@ -58,7 +57,7 @@ public class RLIntyg extends RestClientFixture {
     }
 
     private makeCertificateJsonFromTemplate() {
-        [id:id,
+        [id:certId,
             type:typ,
             civicRegistrationNumber:personnr,
             signedDate:utfärdat,
@@ -82,18 +81,20 @@ public class RLIntyg extends RestClientFixture {
         def certificate = new JsonSlurper().parse(new InputStreamReader(new ClassPathResource("${mall}-template.json").getInputStream()))
                 
         // setting the certificate ID
-        //certificate.'id'.extension = id
+        certificate.id.extension = certId
 
         // setting personnr in certificate XML
-        //certificate.patient.'id'.extension = personnr
+        certificate.patient.id.extension = personnr
 
-		//certificate.skapadAv.namn = utfärdare
-		//certificate.skapadAv.vardenhet.'id'.extension = enhet
-		//certificate.skapadAv.vardenhet.namn = enhet
+		certificate.skapadAv.namn = utfärdare
+		certificate.skapadAv.vardenhet.id.extension = enhet
+		certificate.skapadAv.vardenhet.namn = enhet
 		
         // setting the signing date, from date and to date
-        //certificate.signeringsDatum = utfärdat
-        //certificate.skickatDatum = utfärdat
+        certificate.signeringsDatum = utfärdat
+        certificate.skickatDatum = utfärdat
+        
+        certificate.arrangemang.plats = resmål
 
         JsonOutput.toJson(certificate)
     }
