@@ -95,10 +95,10 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         intUtlatande.setUtlatandeId(InternalModelConverterUtils.getValueFromId(extUtlatande.getId()));
         intUtlatande.setTypAvUtlatande(InternalModelConverterUtils.getValueFromKod(extUtlatande.getTyp()));
 
-        intUtlatande.setSigneringsDatum(extUtlatande.getSigneringsdatum());
-        intUtlatande.setSkickatDatum(extUtlatande.getSkickatdatum());
+        intUtlatande.setSigneringsDatum(extUtlatande.getSigneringsDatum());
+        intUtlatande.setSkickatDatum(extUtlatande.getSkickatDatum());
 
-        intUtlatande.setKommentarer(extUtlatande.getKommentarer());
+        intUtlatande.setKommentarer(extUtlatande.getKommentars());
 
         HoSPersonal intHoSPersonal = convertToIntHoSPersonal(extUtlatande.getSkapadAv());
         intUtlatande.setSkapadAv(intHoSPersonal);

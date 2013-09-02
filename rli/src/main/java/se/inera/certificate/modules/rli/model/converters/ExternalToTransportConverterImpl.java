@@ -69,13 +69,13 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
 
         transportModel.setTypAvUtlatande(IsoTypeConverter.toCD(source.getTyp()));
 
-        if (source.getKommentarer() != null) {
-            transportModel.getKommentars().addAll(source.getKommentarer());
+        if (source.getKommentars() != null) {
+            transportModel.getKommentars().addAll(source.getKommentars());
         }
 
-        transportModel.setSigneringsdatum(source.getSigneringsdatum());
+        transportModel.setSigneringsdatum(source.getSigneringsDatum());
 
-        transportModel.setSkickatdatum(source.getSkickatdatum());
+        transportModel.setSkickatdatum(source.getSkickatDatum());
 
         // Convertions from here on
 
@@ -88,8 +88,8 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
         if (source.getAktiviteter() != null) {
             transportModel.getAktivitets().addAll(convertAktiviteter(source.getAktiviteter()));
         }
-        if (source.getObservationer() != null) {
-            transportModel.getObservations().addAll(convertObservationer(source.getObservationer()));
+        if (source.getObservations() != null) {
+            transportModel.getObservations().addAll(convertObservationer(source.getObservations()));
         }
         if (source.getRekommendationer() != null) {
             transportModel.getRekommendations().addAll(convertRekommendationer(source.getRekommendationer()));

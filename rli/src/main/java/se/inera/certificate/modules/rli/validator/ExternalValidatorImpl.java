@@ -88,7 +88,7 @@ public class ExternalValidatorImpl implements ExternalValidator {
             validationErrors.add("No Utlatandetyp found");
         }
 
-        if (utlatande.getSigneringsdatum() == null) {
+        if (utlatande.getSigneringsDatum() == null) {
             validationErrors.add("No signeringsdatum found");
         }
 
@@ -159,7 +159,7 @@ public class ExternalValidatorImpl implements ExternalValidator {
      * Make sure Utlatande contains 1..* Observation
      */
     private void validateObservationer(Utlatande utlatande, List<String> validationErrors) {
-        List<Observation> observationer = utlatande.getObservationer();
+        List<Observation> observationer = utlatande.getObservations();
 
         if (observationer.isEmpty()) {
             validationErrors.add("No observations found");

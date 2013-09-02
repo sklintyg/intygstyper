@@ -52,11 +52,11 @@ public class Utlatande {
 
     private Kod typ;
 
-    private List<String> kommentarer;
+    private List<String> kommentars;
 
-    private LocalDateTime signeringsdatum;
+    private LocalDateTime signeringsDatum;
 
-    private LocalDateTime skickatdatum;
+    private LocalDateTime skickatDatum;
     
     private Patient patient;
 
@@ -78,7 +78,7 @@ public class Utlatande {
 
     private List<Rekommendation> rekommendationer;
 
-    private List<Observation> observationer;
+    private List<Observation> observations;
 
     private List<Status> status;
 
@@ -100,27 +100,27 @@ public class Utlatande {
         this.typ = typ;
     }
 
-    public List<String> getKommentarer() {
-        if (kommentarer == null) {
-            kommentarer = new ArrayList<String>();
+    public List<String> getKommentars() {
+        if (kommentars == null) {
+            kommentars = new ArrayList<String>();
         }
-        return this.kommentarer;
+        return this.kommentars;
     }
 
-    public LocalDateTime getSigneringsdatum() {
-        return signeringsdatum;
+    public LocalDateTime getSigneringsDatum() {
+        return signeringsDatum;
     }
 
-    public void setSigneringsdatum(LocalDateTime signeringsdatum) {
-        this.signeringsdatum = signeringsdatum;
+    public void setSigneringsDatum(LocalDateTime signeringsdatum) {
+        this.signeringsDatum = signeringsdatum;
     }
 
-    public LocalDateTime getSkickatdatum() {
-        return skickatdatum;
+    public LocalDateTime getSkickatDatum() {
+        return skickatDatum;
     }
 
-    public void setSkickatdatum(LocalDateTime skickatdatum) {
-        this.skickatdatum = skickatdatum;
+    public void setSkickatDatum(LocalDateTime skickatdatum) {
+        this.skickatDatum = skickatdatum;
     }
 
     public Patient getPatient() {
@@ -197,11 +197,11 @@ public class Utlatande {
         return this.rekommendationer;
     }
 
-    public List<Observation> getObservationer() {
-        if (observationer == null) {
-            observationer = new ArrayList<Observation>();
+    public List<Observation> getObservations() {
+        if (observations == null) {
+            observations = new ArrayList<Observation>();
         }
-        return this.observationer;
+        return this.observations;
     }
 
     public List<Status> getStatus() {

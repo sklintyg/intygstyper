@@ -91,7 +91,7 @@ public class ExternalToTransportConverterTest {
         se.inera.certificate.modules.rli.model.external.Utlatande source = new se.inera.certificate.modules.rli.model.external.Utlatande();
         List<String> l = new ArrayList<String>();
         l.add("KOMMENTARER");
-        source.getKommentarer().addAll(l);
+        source.getKommentars().addAll(l);
 
         Utlatande utl = converter.externalToTransport(source);
 

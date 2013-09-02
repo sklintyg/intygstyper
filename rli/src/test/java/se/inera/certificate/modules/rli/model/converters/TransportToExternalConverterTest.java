@@ -192,7 +192,7 @@ public class TransportToExternalConverterTest {
         se.inera.certificate.common.v1.Utlatande source = buildUtlatandeWithoutObservation();
         Utlatande utlatande = converter.transportToExternal(source);
 
-        assertEquals(new ArrayList<String>(), utlatande.getObservationer());
+        assertEquals(new ArrayList<String>(), utlatande.getObservations());
     }
 
     @Test

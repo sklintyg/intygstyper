@@ -86,11 +86,11 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 
         externalModel.setTyp(IsoTypeConverter.toKod(source.getTypAvUtlatande()));
 
-        externalModel.getKommentarer().addAll(source.getKommentars());
+        externalModel.getKommentars().addAll(source.getKommentars());
 
-        externalModel.setSigneringsdatum(source.getSigneringsdatum());
+        externalModel.setSigneringsDatum(source.getSigneringsdatum());
 
-        externalModel.setSkickatdatum(source.getSkickatdatum());
+        externalModel.setSkickatDatum(source.getSkickatdatum());
 
         // Conversions from here on
 
@@ -100,7 +100,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 
         externalModel.getAktiviteter().addAll(convertAktiviteter(source.getAktivitets()));
 
-        externalModel.getObservationer().addAll(convertObservations(source.getObservations()));
+        externalModel.getObservations().addAll(convertObservations(source.getObservations()));
 
         externalModel.setArrangemang(convertArrangemang(source.getArrangemang()));
 

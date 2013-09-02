@@ -40,7 +40,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
         Undersokning intUndersokning = new Undersokning();
 
-        populateUndersokningFromObservationer(extUtlatande.getObservationer(), intUndersokning);
+        populateUndersokningFromObservationer(extUtlatande.getObservations(), intUndersokning);
 
         populateUndersokningFromAktiviteter(extUtlatande.getAktiviteter(), intUndersokning);
 
