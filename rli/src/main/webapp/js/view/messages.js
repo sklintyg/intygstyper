@@ -35,7 +35,14 @@ var rliMessages = {
         "button.send": "Skicka",
         "button.cancel": "Avbryt",
         "button.goback": "Tillbaka",
-        "error.generic": "Kunde inte visa intyget"
+        "error.generic": "Kunde inte visa intyget",
+        "view.label.latestevent" : "Senaste händelsen",
+        "view.label.latestevent.noevents" : "Inga händelser",
+        "view.label.latestevent.showall" : "Visa alla händelser",
+        "history.label.pagetitle" : "Intygets alla händelser",
+        "rli.status.sent" : "Skickat till",
+        "rli.target.mi" : "Försäkringsbolaget"
+        	
     },
     "en": {
         "view.label.pagetitle": "Show Certificate"
