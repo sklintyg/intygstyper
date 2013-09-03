@@ -59,6 +59,8 @@
   
   <bean id="undersokningPopulator" class="se.inera.certificate.modules.rli.model.converters.UndersokingPopulatorImpl"/>
   
+  <bean id="pdfGenerator" class="se.inera.certificate.modules.rli.pdf.PdfGeneratorImpl"/>
+  
   <jaxrs:server address="/">
     <jaxrs:serviceBeans>
       <bean class="se.inera.certificate.modules.rli.rest.RliModuleApi"/>

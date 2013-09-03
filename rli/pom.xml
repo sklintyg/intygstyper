@@ -147,6 +147,10 @@
       <artifactId>aspectjweaver</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.itextpdf</groupId>
+      <artifactId>itextpdf</artifactId>
+    </dependency>
+    <dependency>
 	  <groupId>org.apache.commons</groupId>
 	  <artifactId>commons-lang3</artifactId>
 	  <version>3.1</version>
