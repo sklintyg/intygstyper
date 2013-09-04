@@ -19,7 +19,19 @@
 package se.inera.certificate.modules.rli.model.converters;
 
 import se.inera.certificate.modules.rli.model.external.Utlatande;
-
+/**
+ * 
+ * @author erik
+ *
+ */
 public interface TransportToExternalConverter {
+    /**
+     * Converts from the transport format (se.inera.certificate.common.v1.Utlatande) to the external format
+     * (se.inera.certificate.modules.rli.model.external.Utlatande).
+     * 
+     * @param source
+     *            Utlatande in the transport format to be converted to external format
+     * @return se.inera.certificate.modules.rli.model.external.Utlatande
+     */
     Utlatande transportToExternal(se.inera.certificate.common.v1.Utlatande source);
 }

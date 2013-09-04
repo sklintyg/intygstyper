@@ -65,15 +65,11 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 
     }
 
-    /**
-     * Converts from the transport format
-     * (se.inera.certificate.common.v1.Utlatande) to the external format
-     * (se.inera.certificate.modules.rli.model.external.Utlatande).
+    /*
+     * (non-Javadoc)
      * 
-     * @param source
-     *            Utlatande in the transport format to be converted to external
-     *            format
-     * @return se.inera.certificate.modules.rli.model.external.Utlatande
+     * @see se.inera.certificate.modules.rli.model.converters.TransportToExternalConverter#transportToExternal(se.inera.
+     * certificate.common.v1.Utlatande)
      */
     @Override
     public Utlatande transportToExternal(se.inera.certificate.common.v1.Utlatande source) {
@@ -149,8 +145,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
     }
 
     /**
-     * Iterates over a list of objects of the type ObservationType and converts
-     * them to type Observation.
+     * Iterates over a list of objects of the type ObservationType and converts them to type Observation.
      * 
      * @param source
      *            List of objects of type ObservationType to be converted
@@ -170,8 +165,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
     }
 
     /**
-     * Converts an object from ObservationType to Observation, this needs more
-     * work.
+     * Converts an object from ObservationType to Observation, this needs more work.
      * 
      * @param source
      *            ObservationType to be converted
@@ -232,8 +226,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * 
      * @param source
      *            se.inera.certificate.rli.v1.Arrangemang
-     * @return import
-     *         se.inera.certificate.modules.rli.model.external.Arrangemang
+     * @return import se.inera.certificate.modules.rli.model.external.Arrangemang
      */
     Arrangemang convertArrangemang(se.inera.certificate.rli.v1.Arrangemang source) {
         LOG.debug("Converting arrangemang");
@@ -254,9 +247,8 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
     }
 
     /**
-     * Iterates through a list of AktivitetType and converts each subsequent
-     * item from AktivitetType to the Aktivitet that the external model
-     * understands.
+     * Iterates through a list of AktivitetType and converts each subsequent item from AktivitetType to the Aktivitet
+     * that the external model understands.
      * 
      * @param source
      *            the list of AktivitetType's to be converted
@@ -299,7 +291,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
         }
         aktivitet.setBeskrivning(source.getBeskrivning());
         aktivitet.setUtforsVid(convertEnhet(source.getUtforsVidEnhet()));
-        //aktivitet.getUtforsAvs().addAll(convertUtforarroller(source.getUtforsAvs()));
+        // aktivitet.getUtforsAvs().addAll(convertUtforarroller(source.getUtforsAvs()));
 
         return aktivitet;
     }
