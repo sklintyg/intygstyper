@@ -27,7 +27,7 @@ var fk7263Messages = {
     	"view.button.sendtofk" : "Skicka till Försäkringskassan",
         "view.label.blank" : "- ej ifyllt",
         "view.label.pagetitle" : "Granska och skicka intyg",
-        "view.label.pagedescription" : "Här kan du läsa ditt intyg och skicka det till Försäkringskassan. Om du väljer <i>Ladda ner/Skriv ut</i> kan du även se intyget som en PDF-fil och skriva ut det eller spara det till din dator.<br><br>Om någon uppgift är fel i intyget så ska du kontakta den vårdenhet som utfärdat ditt intyg.<br><br>Vill du ansöka om sjukpenning? Det gör du enklast på <a href='http://www.forsakringskassan.se/sjuk' target='_blank'>www.forsakringskassan.se/sjuk</a>. Där kan du läsa mer om sjukpenning och hur du ansöker.",
+        "view.label.pagedescription" : "Här kan du läsa ditt intyg och skicka det till Försäkringskassan. Om du väljer <i>Ladda ner/Skriv ut</i> kan du även se intyget som en PDF-fil och skriva ut det eller spara det på din dator.<br><br>Om någon uppgift är fel i intyget så ska du kontakta den som utfärdat ditt intyg.<br><h3>Vill du ansöka om sjukpenning?</h3>Det gör du enklast på <a href='http://www.forsakringskassan.se/sjuk'>www.forsakringskassan.se/sjuk</a>. Där kan du läsa mer om sjukpenning och hur du ansöker.",
         "view.label.nedsattning" : "Jag bedömer att arbetsförmåga är (fält 8b)",
         "view.label.patientname" : "Patientens namn",
         "view.label.issued" : "Utfärdat",
