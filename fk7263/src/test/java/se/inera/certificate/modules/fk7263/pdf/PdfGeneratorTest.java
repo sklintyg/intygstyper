@@ -1,21 +1,23 @@
 package se.inera.certificate.modules.fk7263.pdf;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.AcroFields;
-import com.itextpdf.text.pdf.PdfReader;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
+
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
+
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.AcroFields;
+import com.itextpdf.text.pdf.PdfReader;
 
 /**
  * @author andreaskaltenbach
@@ -37,7 +39,7 @@ public class PdfGeneratorTest {
         Fk7263Intyg intyg = new CustomObjectMapper().readValue(fk7263_json, Fk7263Intyg.class);
 
         // generate PDF
-        byte[] generatorResult = new PdfGenerator(intyg).getBytes();
+        byte[] generatorResult = new PdfGenerator(intyg, false).getBytes();
         AcroFields expectedFields = readExpectedFields();
 
         // read expected PDF fields
@@ -51,6 +53,17 @@ public class PdfGeneratorTest {
         }
     }
 
+    @Test
+    public void pdfGenerationRemovesFormFields() throws IOException, DocumentException {
+        Fk7263Intyg intyg = new CustomObjectMapper().readValue(fk7263_json, Fk7263Intyg.class);
+        byte[] generatorResult = new PdfGenerator(intyg).getBytes();
+
+        PdfReader reader = new PdfReader(generatorResult);
+        AcroFields generatedFields = reader.getAcroFields();
+
+        assertEquals(0, generatedFields.getFields().size());
+    }
+    
     /**
      * This test creates a new document to compare against. The new document ends up in the project root.
      *
@@ -64,7 +77,7 @@ public class PdfGeneratorTest {
         Fk7263Intyg intyg = new CustomObjectMapper().readValue(fk7263_json, Fk7263Intyg.class);
 
         // generate PDF
-        byte[] generatorResult = new PdfGenerator(intyg).getBytes();
+        byte[] generatorResult = new PdfGenerator(intyg, false).getBytes();
 
         File newTestPdf = new File("utlatande.pdf");
         boolean created = newTestPdf.createNewFile();
