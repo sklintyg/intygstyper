@@ -155,6 +155,8 @@ public class PdfGenerator {
 
         generatePdf();
 
+        pdfStamper.setFormFlattening(true);
+
         pdfStamper.close();
     }
 
