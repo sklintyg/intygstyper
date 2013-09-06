@@ -224,9 +224,8 @@ public class PdfGenerator {
         setField(WORK_CAPACITY_FORECAST_NO, intyg.isPrognosEjAterstallning());
         if (intyg.isPrognosAterstallningGarEjBedomma()) {
             checkField(WORK_CAPACITY_FORECAST_UNKNOWN);
-            // TODO Motivering only for this option?
-            fillText(WORK_CAPACITY_TEXT, intyg.getPrognosText());
         }
+        fillText(WORK_CAPACITY_TEXT, intyg.getPrognosText());
     }
 
     private void fillNedsattning(Observation nedsattning, String checkboxFieldName,
