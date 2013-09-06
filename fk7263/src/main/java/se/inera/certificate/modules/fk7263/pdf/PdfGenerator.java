@@ -145,6 +145,10 @@ public class PdfGenerator {
     private AcroFields fields;
 
     public PdfGenerator(Fk7263Intyg intyg) throws IOException, DocumentException {
+        this(intyg, true);
+    }
+
+    public PdfGenerator(Fk7263Intyg intyg, boolean flatten) throws IOException, DocumentException {
         this.intyg = intyg;
 
         outputStream = new ByteArrayOutputStream();
@@ -155,7 +159,7 @@ public class PdfGenerator {
 
         generatePdf();
 
-        pdfStamper.setFormFlattening(true);
+        pdfStamper.setFormFlattening(flatten);
 
         pdfStamper.close();
     }
