@@ -63,7 +63,7 @@ public class PdfGeneratorTest {
 
         assertEquals(0, generatedFields.getFields().size());
     }
-    
+
     /**
      * This test creates a new document to compare against. The new document ends up in the project root.
      *
@@ -88,7 +88,6 @@ public class PdfGeneratorTest {
         } else {
             fail();
         }
-
     }
 
     private AcroFields readExpectedFields() throws IOException {
