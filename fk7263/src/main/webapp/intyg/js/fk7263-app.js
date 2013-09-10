@@ -31,6 +31,11 @@ var FK7263App = angular.module('FK7263ViewCertApp', [ 'ui.bootstrap', 'services.
                 templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/intyg/views/error.html',
                 controller : 'ErrorCtrl',
 	            title : 'Fel'
+            }).when('/visafel/:errorCode', {
+                templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/intyg/views/error.html',
+                controller : 'ErrorCtrl',
+                title : 'Fel',
+                backLink: '/web/start'
             }).otherwise({
                 redirectTo : '/view'
             });
