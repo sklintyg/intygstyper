@@ -88,7 +88,7 @@ public class ExternalValidatorImpl implements ExternalValidator {
             validationErrors.add("No Utlatandetyp found");
         }
 
-        if (utlatande.getSigneringsDatum() == null) {
+        if (utlatande.getSigneringsdatum() == null) {
             validationErrors.add("No signeringsdatum found");
         }
 

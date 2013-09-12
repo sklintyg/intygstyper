@@ -92,11 +92,13 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 
         Utlatande intUtlatande = new Utlatande();
 
-        intUtlatande.setUtlatandeId(InternalModelConverterUtils.getValueFromId(extUtlatande.getId()));
+        intUtlatande.setUtlatandeid(InternalModelConverterUtils.getExtensionFromId(extUtlatande.getId()));
+        intUtlatande.setUtlatandeidroot(InternalModelConverterUtils.getRootFromId(extUtlatande.getId()));
+
         intUtlatande.setTypAvUtlatande(InternalModelConverterUtils.getValueFromKod(extUtlatande.getTyp()));
 
-        intUtlatande.setSigneringsDatum(extUtlatande.getSigneringsDatum());
-        intUtlatande.setSkickatDatum(extUtlatande.getSkickatDatum());
+        intUtlatande.setSigneringsdatum(extUtlatande.getSigneringsdatum());
+        intUtlatande.setSkickatdatum(extUtlatande.getSkickatdatum());
 
         intUtlatande.setKommentarer(extUtlatande.getKommentars());
 
@@ -118,7 +120,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
             se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande, Utlatande intUtlatande) {
 
         LOG.debug("Populating Utlatande with Undersokning and Rekommendation");
-        
+
         Undersokning intUndersokning = undersokingPopulator.createAndPopulateUndersokning(extUtlatande);
         intUtlatande.setUndersokning(intUndersokning);
 
@@ -137,13 +139,13 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 
         Vardenhet intVardenhet = new Vardenhet();
 
-        intVardenhet.setEnhetsId(InternalModelConverterUtils.getValueFromId(extVardenhet.getId()));
+        intVardenhet.setEnhetsid(InternalModelConverterUtils.getExtensionFromId(extVardenhet.getId()));
         intVardenhet.setEnhetsnamn(extVardenhet.getNamn());
         intVardenhet.setPostadress(extVardenhet.getPostadress());
         intVardenhet.setPostnummer(extVardenhet.getPostnummer());
         intVardenhet.setPostort(extVardenhet.getPostort());
         intVardenhet.setTelefonnummer(extVardenhet.getTelefonnummer());
-        intVardenhet.setePost(extVardenhet.getEpost());
+        intVardenhet.setEpost(extVardenhet.getEpost());
 
         Vardgivare intVardgivare = convertToIntVardgivare(extVardenhet.getVardgivare());
         intVardenhet.setVardgivare(intVardgivare);
@@ -162,7 +164,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 
         Vardgivare intVardgivare = new Vardgivare();
 
-        intVardgivare.setVardgivarId(InternalModelConverterUtils.getValueFromId(extVardgivare.getId()));
+        intVardgivare.setVardgivarid(InternalModelConverterUtils.getExtensionFromId(extVardgivare.getId()));
         intVardgivare.setVardgivarnamn(extVardgivare.getNamn());
 
         return intVardgivare;
@@ -179,8 +181,8 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 
         HoSPersonal intHoSPersonal = new HoSPersonal();
 
-        intHoSPersonal.setPersonId(InternalModelConverterUtils.getValueFromId(extHoSPersonal.getId()));
-        intHoSPersonal.setFullstandigtnamn(extHoSPersonal.getNamn());
+        intHoSPersonal.setPersonid(InternalModelConverterUtils.getExtensionFromId(extHoSPersonal.getId()));
+        intHoSPersonal.setFullstandigtNamn(extHoSPersonal.getNamn());
         // intHoSPersonal.setBefattning(befattning);
 
         Vardenhet intVardenhet = convertToIntVardenhet(extHoSPersonal.getVardenhet());
@@ -224,7 +226,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 
         Patient intPatient = new Patient();
 
-        intPatient.setPersonId(InternalModelConverterUtils.getValueFromId(extPatient.getId()));
+        intPatient.setPersonid(InternalModelConverterUtils.getExtensionFromId(extPatient.getId()));
 
         String efterNamn = StringUtils.join(extPatient.getEfternamns(), " ");
         intPatient.setEfternamn(efterNamn);
@@ -233,8 +235,8 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         intPatient.setFornamn(forNamn);
 
         String fullstandigtNamn = forNamn.concat(" ").concat(efterNamn);
-        intPatient.setFullstandigtnamn(fullstandigtNamn);
-        
+        intPatient.setFullstandigtNamn(fullstandigtNamn);
+
         intPatient.setPostadress(extPatient.getPostadress());
         intPatient.setPostnummer(extPatient.getPostnummer());
         intPatient.setPostort(extPatient.getPostort());
@@ -270,7 +272,11 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         PartialInterval arrangemangsTid = extArr.getArrangemangstid();
 
         if (arrangemangsTid != null) {
-            intArr.setArrangemangdatum(PartialConverter.partialToString(arrangemangsTid.getFrom()));
+            intArr.setArrangemangsdatum(PartialConverter.partialToString(arrangemangsTid.getFrom()));
+            String tom = (arrangemangsTid.getTom() != null) ? PartialConverter
+                    .partialToString(arrangemangsTid.getTom()) : PartialConverter.partialToString(arrangemangsTid
+                    .getFrom());
+            intArr.setArrangemangslutdatum(tom);
         }
 
         return intArr;

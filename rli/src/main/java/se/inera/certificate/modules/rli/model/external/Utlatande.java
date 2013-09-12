@@ -54,9 +54,9 @@ public class Utlatande {
 
     private List<String> kommentars;
 
-    private LocalDateTime signeringsDatum;
+    private LocalDateTime signeringsdatum;
 
-    private LocalDateTime skickatDatum;
+    private LocalDateTime skickatdatum;
     
     private Patient patient;
 
@@ -107,20 +107,20 @@ public class Utlatande {
         return this.kommentars;
     }
 
-    public LocalDateTime getSigneringsDatum() {
-        return signeringsDatum;
+    public LocalDateTime getSigneringsdatum() {
+        return signeringsdatum;
     }
 
-    public void setSigneringsDatum(LocalDateTime signeringsdatum) {
-        this.signeringsDatum = signeringsdatum;
+    public void setSigneringsdatum(LocalDateTime signeringsdatum) {
+        this.signeringsdatum = signeringsdatum;
     }
 
-    public LocalDateTime getSkickatDatum() {
-        return skickatDatum;
+    public LocalDateTime getSkickatdatum() {
+        return skickatdatum;
     }
 
-    public void setSkickatDatum(LocalDateTime skickatdatum) {
-        this.skickatDatum = skickatdatum;
+    public void setSkickatdatum(LocalDateTime skickatdatum) {
+        this.skickatdatum = skickatdatum;
     }
 
     public Patient getPatient() {

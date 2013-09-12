@@ -13,10 +13,12 @@ import org.joda.time.Partial;
 import org.junit.Before;
 import org.junit.Test;
 
+import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.Vardenhet;
+import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
 import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
@@ -71,7 +73,7 @@ public class UndersokingPopulatorTest {
         assertNotNull(undersokning);
         assertEquals(OrsakAvbokning.RESENAR_GRAVID, undersokning.getOrsakforavbokning());
         assertNotNull(undersokning.getGraviditet());
-        assertEquals("2013-12-24", undersokning.getGraviditet().getBeraknadforlossningsdatum());
+        assertEquals("2013-12-24", undersokning.getGraviditet().getBeraknatForlossningsdatum());
     }
 
     @Test
@@ -90,12 +92,12 @@ public class UndersokingPopulatorTest {
         converter.populateUndersokningFromAktiviteter(aktiviteter, intUndersokning);
 
         assertNotNull(intUndersokning);
-        assertEquals("2012-05", intUndersokning.getForstaundersokningsdatum());
-        assertEquals("Sjukhus A", intUndersokning.getForstaundersokningsplats());
+        assertEquals("2012-05", intUndersokning.getForstaUndersokningsdatum());
+        assertEquals("Sjukhus A", intUndersokning.getForstaUndersokningsplats());
         assertEquals(KomplikationStyrkt.AV_PATIENT, intUndersokning.getKomplikationstyrkt());
 
         assertEquals("2013-06-12", intUndersokning.getUndersokningsdatum());
-        assertEquals("Sjukhus B", intUndersokning.getUndersokningsplats());
+        assertEquals("Sjukhus B", intUndersokning.getUtforsVid().getEnhetsnamn());
     }
 
     @Test
@@ -112,10 +114,10 @@ public class UndersokingPopulatorTest {
 
         assertNotNull(intUndersokning);
         assertEquals("2013-06-12", intUndersokning.getUndersokningsdatum());
-        assertEquals("Sjukhus X", intUndersokning.getUndersokningsplats());
+        assertEquals("Sjukhus X", intUndersokning.getUtforsVid().getEnhetsnamn());
         //assertEquals(KomplikationStyrkt.AV_HOS_PERSONAL, intUndersokning.getKomplikationStyrkt());
-        assertNull(intUndersokning.getForstaundersokningsdatum());
-        assertNull(intUndersokning.getForstaundersokningsplats());
+        assertNull(intUndersokning.getForstaUndersokningsdatum());
+        assertNull(intUndersokning.getForstaUndersokningsplats());
     }
 
     private Observation constructObservation(ObservationsKod obsKod, int year, int month, int day) {
@@ -133,8 +135,23 @@ public class UndersokingPopulatorTest {
 
     private Vardenhet constructEnhet(String enhetsNamn) {
         Vardenhet enhet = new Vardenhet();
+        enhet.setEpost("enhet@epost.se");
+        enhet.setId(new Id("root", "enhetsid"));
         enhet.setNamn(enhetsNamn);
+        enhet.setPostadress("enhetsadress");
+        enhet.setPostnummer("1337");
+        enhet.setPostort("Duvbo");
+        enhet.setTelefonnummer("555 555");
+        enhet.setVardgivare(constructVardgivare());
         return enhet;
+    }
+
+    private Vardgivare constructVardgivare() {
+        Vardgivare v = new Vardgivare();
+        v.setId(new Id("root", "vardgivarid"));
+        /** Why not test some scandinavian chars.. */
+        v.setNamn("Vårdgivarnamn");
+        return v;
     }
 
     private Aktivitet constructAktivitet(AktivitetsKod aktivitetsKod, int year, int month, int day) {

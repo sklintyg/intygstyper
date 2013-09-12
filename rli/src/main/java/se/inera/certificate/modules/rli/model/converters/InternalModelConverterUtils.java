@@ -13,7 +13,11 @@ public final class InternalModelConverterUtils {
         return (kod != null) ? kod.getCode() : null;
     }
 
-    public static String getValueFromId(Id id) {
+    public static String getExtensionFromId(Id id) {
         return (id != null) ? id.getExtension() : null;
+    }
+    
+    public static String getRootFromId(Id id) {
+        return (id != null) ? id.getRoot() : null;
     }
 }

@@ -22,36 +22,38 @@ import se.inera.certificate.modules.rli.model.codes.ArrangemangsTyp;
 
 public class Arrangemang {
 
-    private String bokningsReferens;
+    private String bokningsreferens;
 
-    private String bokningsDatum;
+    private String bokningsdatum;
 
     private String plats;
 
-    private String arrangemangDatum;
+    private String arrangemangsdatum;
+    
+    private String arrangemangslutdatum;
 
-    private ArrangemangsTyp arrangemangsTyp;
+    private ArrangemangsTyp arrangemangstyp;
 
-    private String avbestallningsDatum;
+    private String avbestallningsdatum;
 
     public Arrangemang() {
 
     }
 
     public String getBokningsreferens() {
-        return bokningsReferens;
+        return bokningsreferens;
     }
 
-    public void setBokningsreferens(String bokningsReferens) {
-        this.bokningsReferens = bokningsReferens;
+    public void setBokningsreferens(String bokningsreferens) {
+        this.bokningsreferens = bokningsreferens;
     }
 
     public String getBokningsdatum() {
-        return bokningsDatum;
+        return bokningsdatum;
     }
 
-    public void setBokningsdatum(String bokningsDatum) {
-        this.bokningsDatum = bokningsDatum;
+    public void setBokningsdatum(String bokningsdatum) {
+        this.bokningsdatum = bokningsdatum;
     }
 
     public String getPlats() {
@@ -62,28 +64,36 @@ public class Arrangemang {
         this.plats = plats;
     }
 
-    public String getArrangemangdatum() {
-        return arrangemangDatum;
+    public String getArrangemangsdatum() {
+        return arrangemangsdatum;
     }
 
-    public void setArrangemangdatum(String arrangemangDatum) {
-        this.arrangemangDatum = arrangemangDatum;
+    public void setArrangemangsdatum(String arrangemangsdatum) {
+        this.arrangemangsdatum = arrangemangsdatum;
     }
 
     public ArrangemangsTyp getArrangemangstyp() {
-        return arrangemangsTyp;
+        return arrangemangstyp;
     }
 
-    public void setArrangemangstyp(ArrangemangsTyp arrangemangsTyp) {
-        this.arrangemangsTyp = arrangemangsTyp;
+    public void setArrangemangstyp(ArrangemangsTyp arrangemangstyp) {
+        this.arrangemangstyp = arrangemangstyp;
     }
 
     public String getAvbestallningsdatum() {
-        return avbestallningsDatum;
+        return avbestallningsdatum;
     }
 
-    public void setAvbestallningsdatum(String avbestallningsDatum) {
-        this.avbestallningsDatum = avbestallningsDatum;
+    public void setAvbestallningsdatum(String avbestallningsdatum) {
+        this.avbestallningsdatum = avbestallningsdatum;
+    }
+
+    public String getArrangemangslutdatum() {
+        return arrangemangslutdatum;
+    }
+
+    public void setArrangemangslutdatum(String arrangemangslutdatum) {
+        this.arrangemangslutdatum = arrangemangslutdatum;
     }
 
 }

@@ -141,7 +141,7 @@ public class RliModuleApi {
             byte[] generatedPDF = pdfGenerator.generatePDF(internalUtlatande);
             return Response.ok(generatedPDF).build();
         } catch (PdfGeneratorException p){
-            LOG.error("Failed to generate PDF for certificate #" + internalUtlatande.getUtlatandeId(), p);
+            LOG.error("Failed to generate PDF for certificate #" + internalUtlatande.getUtlatandeid(), p);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
         

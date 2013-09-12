@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.util.Arrays;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -55,9 +54,9 @@ public class ExternalToInternalConverterTest {
 
         assertNotNull(res);
 
-        assertNotNull(res.getUtlatandeId());
-        assertNotNull(res.getSigneringsDatum());
-        assertNotNull(res.getSkickatDatum());
+        assertNotNull(res.getUtlatandeid());
+        assertNotNull(res.getSigneringsdatum());
+        assertNotNull(res.getSkickatdatum());
         assertNotNull(res.getTypAvUtlatande());
 
         assertNotNull(res.getArrangemang());
@@ -92,10 +91,10 @@ public class ExternalToInternalConverterTest {
 
         assertNotNull(res);
 
-        assertEquals("19121212-1212", res.getPersonId());
+        assertEquals("19121212-1212", res.getPersonid());
         assertEquals("Abel Baker", res.getFornamn());
         assertEquals("Smith Doe", res.getEfternamn());
-        assertEquals("Abel Baker Smith Doe", res.getFullstandigtnamn());
+        assertEquals("Abel Baker Smith Doe", res.getFullstandigtNamn());
         assertNotNull(res.getPostadress());
         assertNotNull(res.getPostnummer());
         assertNotNull(res.getPostort());
@@ -127,7 +126,7 @@ public class ExternalToInternalConverterTest {
         assertNotNull(res.getBokningsreferens());
         assertNotNull(res.getBokningsdatum());
         assertNotNull(res.getAvbestallningsdatum());
-        assertNotNull(res.getArrangemangdatum());
+        assertNotNull(res.getArrangemangsdatum());
     }
 
     private Arrangemang buildArrangemang() {
@@ -155,8 +154,8 @@ public class ExternalToInternalConverterTest {
         HoSPersonal res = converter.convertToIntHoSPersonal(extHoSPersonal);
 
         assertNotNull(res);
-        assertNotNull(res.getFullstandigtnamn());
-        assertNotNull(res.getPersonId());
+        assertNotNull(res.getFullstandigtNamn());
+        assertNotNull(res.getPersonid());
 
     }
 
@@ -182,12 +181,12 @@ public class ExternalToInternalConverterTest {
 
         assertNotNull(res);
 
-        assertNotNull(res.getEnhetsId());
+        assertNotNull(res.getEnhetsid());
         assertNotNull(res.getEnhetsnamn());
         assertNotNull(res.getPostadress());
         assertNotNull(res.getPostnummer());
         assertNotNull(res.getPostort());
-        assertNotNull(res.getePost());
+        assertNotNull(res.getEpost());
         assertNotNull(res.getTelefonnummer());
         assertNotNull(res.getVardgivare());
     }

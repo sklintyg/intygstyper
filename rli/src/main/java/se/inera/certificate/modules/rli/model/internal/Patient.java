@@ -20,9 +20,9 @@ package se.inera.certificate.modules.rli.model.internal;
 
 public class Patient {
 
-    private String personId;
+    private String personid;
 
-    private String fullstandigtnamn;
+    private String fullstandigtNamn;
 
     private String fornamn;
 
@@ -40,52 +40,52 @@ public class Patient {
 
     }
 
-    public String getPersonId() {
-        return personId;
+    public String getPersonid() {
+        return personid;
     }
 
-    public void setPersonId(String personId) {
-        this.personId = personId;
+    public void setPersonid(String personid) {
+        this.personid = personid;
     }
 
-    public String getFullstandigtnamn() {
-        return fullstandigtnamn;
+    public String getFullstandigtNamn() {
+        return fullstandigtNamn;
     }
 
-    public void setFullstandigtnamn(String fullstandigtNamn) {
-        this.fullstandigtnamn = fullstandigtNamn;
+    public void setFullstandigtNamn(String fullstandigtNamn) {
+        this.fullstandigtNamn = fullstandigtNamn;
     }
 
     public String getFornamn() {
         return fornamn;
     }
 
-    public void setFornamn(String forNamn) {
-        this.fornamn = forNamn;
+    public void setFornamn(String fornamn) {
+        this.fornamn = fornamn;
     }
 
     public String getEfternamn() {
         return efternamn;
     }
 
-    public void setEfternamn(String efterNamn) {
-        this.efternamn = efterNamn;
+    public void setEfternamn(String efternamn) {
+        this.efternamn = efternamn;
     }
 
     public String getMellannamn() {
         return mellannamn;
     }
 
-    public void setMellannamn(String mellanNamn) {
-        this.mellannamn = mellanNamn;
+    public void setMellannamn(String mellannamn) {
+        this.mellannamn = mellannamn;
     }
 
     public String getPostadress() {
         return postadress;
     }
 
-    public void setPostadress(String postAdress) {
-        this.postadress = postAdress;
+    public void setPostadress(String postadress) {
+        this.postadress = postadress;
     }
 
     public String getPostnummer() {

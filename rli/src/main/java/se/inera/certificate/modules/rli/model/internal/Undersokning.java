@@ -22,19 +22,23 @@ public class Undersokning {
 
     private OrsakAvbokning orsakForAvbokning;
 
-    private String forstaUndersokningDatum;
+    private Utforare utforsAv;
+    
+    private Vardenhet utforsVid;
+    
+    private String forstaUndersokningsdatum;
 
-    private String forstaUndersokningPlats;
+    private String forstaUndersokningsplats;
 
-    private String undersokningDatum;
+    private String undersokningsdatum;
 
-    private String undersokningPlats;
+    private String undersokningsplats;
 
     private KomplikationStyrkt komplikationStyrkt;
 
     private Graviditet graviditet;
 
-    private String komplikationBeskrivning;
+    private String komplikationsbeskrivning;
 
     public Undersokning() {
 
@@ -48,36 +52,36 @@ public class Undersokning {
         this.orsakForAvbokning = orsakForAvbokning;
     }
 
-    public String getForstaundersokningsdatum() {
-        return forstaUndersokningDatum;
+    public String getForstaUndersokningsdatum() {
+        return forstaUndersokningsdatum;
     }
 
-    public void setForstaundersokningsdatum(String forstaUndersokningDatum) {
-        this.forstaUndersokningDatum = forstaUndersokningDatum;
+    public void setForstaUndersokningsdatum(String forstaUndersokningDatum) {
+        this.forstaUndersokningsdatum = forstaUndersokningDatum;
     }
 
-    public String getForstaundersokningsplats() {
-        return forstaUndersokningPlats;
+    public String getForstaUndersokningsplats() {
+        return forstaUndersokningsplats;
     }
 
-    public void setForstaundersokningsplats(String forstaUndersokningPlats) {
-        this.forstaUndersokningPlats = forstaUndersokningPlats;
+    public void setForstaUndersokningsplats(String forstaUndersokningPlats) {
+        this.forstaUndersokningsplats = forstaUndersokningPlats;
     }
 
     public String getUndersokningsdatum() {
-        return undersokningDatum;
+        return undersokningsdatum;
     }
 
     public void setUndersokningsdatum(String undersokningDatum) {
-        this.undersokningDatum = undersokningDatum;
+        this.undersokningsdatum = undersokningDatum;
     }
 
     public String getUndersokningsplats() {
-        return undersokningPlats;
+        return undersokningsplats;
     }
 
     public void setUndersokningsplats(String undersokningPlats) {
-        this.undersokningPlats = undersokningPlats;
+        this.undersokningsplats = undersokningPlats;
     }
 
     public KomplikationStyrkt getKomplikationstyrkt() {
@@ -97,11 +101,27 @@ public class Undersokning {
     }
 
     public String getKomplikationsbeskrivning() {
-        return komplikationBeskrivning;
+        return komplikationsbeskrivning;
     }
 
     public void setKomplikationsbeskrivning(String komplikationBeskrivning) {
-        this.komplikationBeskrivning = komplikationBeskrivning;
+        this.komplikationsbeskrivning = komplikationBeskrivning;
+    }
+
+    public Utforare getUtforsAv() {
+        return utforsAv;
+    }
+
+    public void setUtforsAv(Utforare utforsAv) {
+        this.utforsAv = utforsAv;
+    }
+
+    public Vardenhet getUtforsVid() {
+        return utforsVid;
+    }
+
+    public void setUtforsVid(Vardenhet utforsVid) {
+        this.utforsVid = utforsVid;
     }
 
 }

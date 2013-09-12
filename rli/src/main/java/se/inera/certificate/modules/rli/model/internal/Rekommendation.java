@@ -23,9 +23,9 @@ import se.inera.certificate.modules.rli.model.codes.SjukdomsKannedom;
 
 public class Rekommendation {
 
-    private RekommendationsKod rekommendationsKod;
+    private RekommendationsKod rekommendationskod;
 
-    private SjukdomsKannedom sjukdomsKannedom;
+    private SjukdomsKannedom sjukdomskannedom;
 
     private String beskrivning;
 
@@ -34,19 +34,19 @@ public class Rekommendation {
     }
 
     public RekommendationsKod getRekommendationskod() {
-        return rekommendationsKod;
+        return rekommendationskod;
     }
 
-    public void setRekommendationskod(RekommendationsKod rekommendationsKod) {
-        this.rekommendationsKod = rekommendationsKod;
+    public void setRekommendationskod(RekommendationsKod rekommendationskod) {
+        this.rekommendationskod = rekommendationskod;
     }
 
     public SjukdomsKannedom getSjukdomskannedom() {
-        return sjukdomsKannedom;
+        return sjukdomskannedom;
     }
 
-    public void setSjukdomskannedom(SjukdomsKannedom sjukdomsKannedom) {
-        this.sjukdomsKannedom = sjukdomsKannedom;
+    public void setSjukdomskannedom(SjukdomsKannedom sjukdomskannedom) {
+        this.sjukdomskannedom = sjukdomskannedom;
     }
 
     public String getBeskrivning() {

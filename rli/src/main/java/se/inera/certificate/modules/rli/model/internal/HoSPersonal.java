@@ -20,7 +20,7 @@ package se.inera.certificate.modules.rli.model.internal;
 
 public class HoSPersonal {
 
-    private String personId;
+    private String personid;
 
     private String fullstandigtNamn;
 
@@ -32,19 +32,19 @@ public class HoSPersonal {
 
     }
 
-    public String getPersonId() {
-        return personId;
+    public String getPersonid() {
+        return personid;
     }
 
-    public void setPersonId(String personId) {
-        this.personId = personId;
+    public void setPersonid(String personid) {
+        this.personid = personid;
     }
 
-    public String getFullstandigtnamn() {
+    public String getFullstandigtNamn() {
         return fullstandigtNamn;
     }
 
-    public void setFullstandigtnamn(String fullstandigtNamn) {
+    public void setFullstandigtNamn(String fullstandigtNamn) {
         this.fullstandigtNamn = fullstandigtNamn;
     }
 

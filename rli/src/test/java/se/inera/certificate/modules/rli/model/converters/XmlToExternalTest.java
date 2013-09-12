@@ -55,10 +55,10 @@ public class XmlToExternalTest {
         assertEquals("Övriga upplysningar", extUtlatande.getKommentars().get(0));
 
         LocalDateTime signeratDate = new LocalDateTime("2013-08-12T11:25:00");
-        assertEquals(signeratDate, extUtlatande.getSigneringsDatum());
+        assertEquals(signeratDate, extUtlatande.getSigneringsdatum());
 
         LocalDateTime skickatDate = new LocalDateTime("2013-08-12T11:25:30");
-        assertEquals(skickatDate, extUtlatande.getSkickatDatum());
+        assertEquals(skickatDate, extUtlatande.getSkickatdatum());
 
         assertEquals("1.2.752.129.2.1.3.1", extUtlatande.getPatient().getId().getRoot());
         assertEquals("19121212+1212", extUtlatande.getPatient().getId().getExtension());

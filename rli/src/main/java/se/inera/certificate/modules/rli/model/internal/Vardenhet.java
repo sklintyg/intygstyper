@@ -20,7 +20,7 @@ package se.inera.certificate.modules.rli.model.internal;
 
 public class Vardenhet {
 
-    private String enhetsId;
+    private String enhetsid;
 
     private String enhetsnamn;
 
@@ -32,7 +32,7 @@ public class Vardenhet {
 
     private String telefonnummer;
 
-    private String ePost;
+    private String epost;
 
     private Vardgivare vardgivare;
 
@@ -40,12 +40,12 @@ public class Vardenhet {
 
     }
 
-    public String getEnhetsId() {
-        return enhetsId;
+    public String getEnhetsid() {
+        return enhetsid;
     }
 
-    public void setEnhetsId(String enhetsId) {
-        this.enhetsId = enhetsId;
+    public void setEnhetsid(String enhetsId) {
+        this.enhetsid = enhetsId;
     }
 
     public String getEnhetsnamn() {
@@ -88,12 +88,12 @@ public class Vardenhet {
         this.telefonnummer = telefonNummer;
     }
 
-    public String getePost() {
-        return ePost;
+    public String getEpost() {
+        return epost;
     }
 
-    public void setePost(String ePost) {
-        this.ePost = ePost;
+    public void setEpost(String epost) {
+        this.epost = epost;
     }
 
     public Vardgivare getVardgivare() {

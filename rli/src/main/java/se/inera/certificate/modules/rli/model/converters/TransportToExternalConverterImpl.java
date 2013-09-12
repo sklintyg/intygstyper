@@ -84,9 +84,9 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 
         externalModel.getKommentars().addAll(source.getKommentars());
 
-        externalModel.setSigneringsDatum(source.getSigneringsdatum());
+        externalModel.setSigneringsdatum(source.getSigneringsdatum());
 
-        externalModel.setSkickatDatum(source.getSkickatdatum());
+        externalModel.setSkickatdatum(source.getSkickatdatum());
 
         // Conversions from here on
 

@@ -20,18 +20,18 @@ package se.inera.certificate.modules.rli.model.internal;
 
 public class Graviditet {
 
-    private String beraknadForlossningDatum;
+    private String beraknatForlossningsdatum;
 
     public Graviditet() {
 
     }
 
-    public String getBeraknadforlossningsdatum() {
-        return beraknadForlossningDatum;
+    public String getBeraknatForlossningsdatum() {
+        return beraknatForlossningsdatum;
     }
 
-    public void setBeraknadforlossningsdatum(String beraknadForlossningDatum) {
-        this.beraknadForlossningDatum = beraknadForlossningDatum;
+    public void setBeraknatForlossningsdatum(String beraknatForlossningsdatum) {
+        this.beraknatForlossningsdatum = beraknatForlossningsdatum;
     }
 
 }

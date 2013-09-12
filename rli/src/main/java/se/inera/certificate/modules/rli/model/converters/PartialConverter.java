@@ -120,7 +120,11 @@ public final class PartialConverter {
             if (dateValueStr == null) {
                 break;
             }
-            dateValueList.add(NumberUtils.createInteger(dateValueStr));
+            dateValueList.add(Integer.parseInt(dateValueStr));
+            /**
+             * createInteger thinks this is hex instead of dec...
+             * dateValueList.add(NumberUtils.createInteger(dateValueStr));
+             */
         }
 
         return ArrayUtils.toPrimitive(dateValueList.toArray(new Integer[0]));

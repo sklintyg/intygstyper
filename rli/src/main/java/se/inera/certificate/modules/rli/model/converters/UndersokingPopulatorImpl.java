@@ -8,17 +8,23 @@ import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.PartialInterval;
+import se.inera.certificate.model.Utforarroll;
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
 import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 
 import se.inera.certificate.modules.rli.model.internal.Graviditet;
+import se.inera.certificate.modules.rli.model.internal.HoSPersonal;
 import se.inera.certificate.modules.rli.model.internal.KomplikationStyrkt;
 import se.inera.certificate.modules.rli.model.internal.OrsakAvbokning;
 import se.inera.certificate.modules.rli.model.internal.Undersokning;
+import se.inera.certificate.modules.rli.model.internal.Utforare;
+import se.inera.certificate.modules.rli.model.internal.Vardenhet;
+import se.inera.certificate.modules.rli.model.internal.Vardgivare;
 
 public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
@@ -27,9 +33,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * se.inera.certificate.modules.rli.model.converters.UndersokningPopulator
-     * #createAndPopulateUndersokning
+     * @see se.inera.certificate.modules.rli.model.converters.UndersokningPopulator #createAndPopulateUndersokning
      * (se.inera.certificate.modules.rli.model.external.Utlatande)
      */
     @Override
@@ -62,6 +66,9 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
         if (obs != null) {
             intUndersokning.setOrsakforavbokning(OrsakAvbokning.RESENAR_SJUK);
+            if (obs.getUtforsAv() != null) {
+                intUndersokning.setUtforsAv(convertToIntUtforare(obs.getUtforsAv()));
+            }
             return;
         }
 
@@ -70,10 +77,60 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
         if (obs != null) {
             intUndersokning.setOrsakforavbokning(OrsakAvbokning.RESENAR_GRAVID);
+            if (obs.getUtforsAv() != null) {
+                intUndersokning.setUtforsAv(convertToIntUtforare(obs.getUtforsAv()));
+            }
             handleGraviditet(obs, intUndersokning);
             return;
         }
 
+    }
+
+    private Utforare convertToIntUtforare(Utforarroll source) {
+        LOG.debug("Converting to internal Utforare");
+        Utforare utforsAv = new Utforare();
+        utforsAv.setUtforartyp(source.getUtforartyp().getCode());
+        if (source.getAntasAv() != null){
+            utforsAv.setAntasAv(convertToIntHoSPersonal(source.getAntasAv()));
+        }
+        return utforsAv;
+    }
+
+    private HoSPersonal convertToIntHoSPersonal(HosPersonal extHoSPersonal) {
+        HoSPersonal intHoSPersonal = new HoSPersonal();
+
+        intHoSPersonal.setPersonid(InternalModelConverterUtils.getExtensionFromId(extHoSPersonal.getId()));
+        intHoSPersonal.setFullstandigtNamn(extHoSPersonal.getNamn());
+        // intHoSPersonal.setBefattning(befattning);
+        
+        Vardenhet intVardenhet = convertToIntVardenhet(extHoSPersonal.getVardenhet());
+        intHoSPersonal.setVardenhet(intVardenhet);
+
+        return intHoSPersonal;
+    }
+
+    private Vardenhet convertToIntVardenhet(se.inera.certificate.model.Vardenhet source) {
+        if (source == null){
+            LOG.debug("External vardenhet was null");
+            return null;
+        }
+        Vardenhet vardenhet = new Vardenhet();
+        vardenhet.setEnhetsid(source.getId().getExtension());
+        vardenhet.setEnhetsnamn(source.getNamn());
+        vardenhet.setEpost(source.getEpost());
+        vardenhet.setPostadress(source.getPostadress());
+        vardenhet.setPostnummer(source.getPostnummer());
+        vardenhet.setPostort(source.getPostort());
+        vardenhet.setTelefonnummer(source.getTelefonnummer());
+        vardenhet.setVardgivare(convertToIntVardgivare(source.getVardgivare()));
+        return vardenhet;
+    }
+
+    private Vardgivare convertToIntVardgivare(se.inera.certificate.model.Vardgivare source) {
+        Vardgivare vg = new Vardgivare();
+        vg.setVardgivarid(source.getId().getExtension());
+        vg.setVardgivarnamn(source.getNamn());
+        return vg;
     }
 
     void populateUndersokningFromAktiviteter(List<Aktivitet> aktiviteter, Undersokning intUndersokning) {
@@ -138,7 +195,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
         LOG.debug("- Extracting exam date from the first exam");
         String forstaUndersokningDatum = getExamDateFromAktivitet(firstExam);
-        intUndersokning.setForstaundersokningsdatum(forstaUndersokningDatum);
+        intUndersokning.setForstaUndersokningsdatum(forstaUndersokningDatum);
 
         KomplikationStyrkt komplikationStyrkt;
         String forstaUndersokningPlats;
@@ -147,14 +204,17 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
         if (firstExam.getUtforsVid() != null) {
             komplikationStyrkt = KomplikationStyrkt.AV_HOS_PERSONAL;
-            forstaUndersokningPlats = firstExam.getUtforsVid().getNamn();
+            // forstaUndersokningPlats = firstExam.getUtforsVid().getNamn();
+            forstaUndersokningPlats = null;
+            intUndersokning.setUtforsVid(convertToIntVardenhet(firstExam.getUtforsVid()));
+
         } else {
             komplikationStyrkt = KomplikationStyrkt.AV_PATIENT;
             forstaUndersokningPlats = firstExam.getPlats();
         }
 
         LOG.debug("- Place is {} for the first exam", forstaUndersokningPlats);
-        intUndersokning.setForstaundersokningsplats(forstaUndersokningPlats);
+        intUndersokning.setForstaUndersokningsplats(forstaUndersokningPlats);
 
         LOG.debug("- Complication attestation is {}", komplikationStyrkt);
         intUndersokning.setKomplikationstyrkt(komplikationStyrkt);
@@ -171,7 +231,9 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
         if (currentExam.getUtforsVid() != null) {
             LOG.debug("- Extracting place for the current exam");
             String undersokningPlats = currentExam.getUtforsVid().getNamn();
-            intUndersokning.setUndersokningsplats(undersokningPlats);
+            // intUndersokning.setUndersokningsplats(undersokningPlats);
+            intUndersokning.setUtforsVid(convertToIntVardenhet(currentExam.getUtforsVid()));
+
         } else {
             LOG.debug("- Place for current exam could not be determined");
         }
@@ -187,7 +249,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
         String estimatedDeliveryDate = PartialConverter.partialToString(obsPeriodSlut);
 
         Graviditet pregnancyInfo = new Graviditet();
-        pregnancyInfo.setBeraknadforlossningsdatum(estimatedDeliveryDate);
+        pregnancyInfo.setBeraknatForlossningsdatum(estimatedDeliveryDate);
 
         undersokning.setGraviditet(pregnancyInfo);
     }

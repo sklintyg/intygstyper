@@ -18,48 +18,63 @@
  */
 package se.inera.certificate.modules.rli.model.codes;
 
-public enum AktivitetsKod implements ICodeSystem {
+import org.apache.commons.lang3.StringUtils;
 
-    KLINISK_UNDERSOKNING("AV020", "klinisk undersökning UNS", "KVÅ", "1.2.752.116.1.3.2.1.4"),
-    FORSTA_UNDERSOKNING("AKT13", "Första undersökning", "kv_aktiviteter_intyg", "8040b4d1-67dc-42e1-a938-de5374e9526a"),
-    OMVARDNADSATGARD("9632001", "Omvårdnadsåtgärd", "SNOMED-CT", "1.2.752.116.2.1.1.1");
+public enum UtforarTypKod implements ICodeSystem {
+
+    AV_PATIENT("116154003", "Patient"), 
+    AV_HOS_PERSONAL("223366009", "Hälso- och sjukvårdspersonal");
+
+    private static String codeSystemName = "SNOMED-CT";
+
+    private static String codeSystem = "1.2.752.116.2.1.1.1";
+
+    private static String codeSystemVersion = "";
 
     private String code;
+
     private String description;
-    private String codeSystemName;
-    private String codeSystem;
 
-    private AktivitetsKod(String code, String description, String codeSystemName, String codeSystem) {
+    private UtforarTypKod(String code, String desc) {
         this.code = code;
-        this.description = description;
-        this.codeSystemName = codeSystemName;
-        this.codeSystem = codeSystem;
+        this.description = desc;
     }
 
-    @Override
     public String getCode() {
-        return this.code;
+        return code;
     }
 
-    @Override
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     @Override
     public String getCodeSystem() {
-        return this.codeSystem;
+        return codeSystem;
     }
 
     @Override
     public String getCodeSystemName() {
-        return this.codeSystemName;
+        return codeSystemName;
     }
 
     @Override
     public String getCodeSystemVersion() {
-        return null;
+        return codeSystemVersion;
     }
 
-}
+    public static UtforarTypKod getFromCode(String code) {
 
+        if (StringUtils.isBlank(code)) {
+            return null;
+        }
+
+        for (UtforarTypKod obsKod : values()) {
+            if (obsKod.getCode().equals(code)) {
+                return obsKod;
+            }
+        }
+
+        return null;
+    }
+}

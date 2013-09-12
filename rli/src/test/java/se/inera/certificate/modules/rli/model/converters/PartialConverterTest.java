@@ -122,7 +122,7 @@ public class PartialConverterTest {
     @Test
     public void testStringToPartialWithYearAndMonth() {
 
-        String dateStr = " 2015-05 ";
+        String dateStr = " 2015-08 ";
 
         Partial partial = PartialConverter.stringToPartial(dateStr);
 

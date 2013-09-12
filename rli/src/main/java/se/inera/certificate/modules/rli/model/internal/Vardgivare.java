@@ -20,7 +20,7 @@ package se.inera.certificate.modules.rli.model.internal;
 
 public class Vardgivare {
 
-    private String vardgivarId;
+    private String vardgivarid;
 
     private String vardgivarnamn;
 
@@ -28,12 +28,12 @@ public class Vardgivare {
 
     }
 
-    public String getVardgivarId() {
-        return vardgivarId;
+    public String getVardgivarid() {
+        return vardgivarid;
     }
 
-    public void setVardgivarId(String vardgivarId) {
-        this.vardgivarId = vardgivarId;
+    public void setVardgivarid(String vardgivarid) {
+        this.vardgivarid = vardgivarid;
     }
 
     public String getVardgivarnamn() {

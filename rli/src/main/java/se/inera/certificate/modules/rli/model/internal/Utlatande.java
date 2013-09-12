@@ -24,15 +24,17 @@ import org.joda.time.LocalDateTime;
 
 public class Utlatande {
 
-    private String utlatandeId;
+    private String utlatandeid;
+    
+    private String utlatandeidroot;
 
     private String typAvUtlatande;
 
     private List<String> kommentarer;
 
-    private LocalDateTime signeringsDatum;
+    private LocalDateTime signeringsdatum;
 
-    private LocalDateTime skickatDatum;
+    private LocalDateTime skickatdatum;
 
     private HoSPersonal skapadAv;
 
@@ -50,12 +52,12 @@ public class Utlatande {
 
     }
 
-    public String getUtlatandeId() {
-        return utlatandeId;
+    public String getUtlatandeid() {
+        return utlatandeid;
     }
 
-    public void setUtlatandeId(String utlatandeId) {
-        this.utlatandeId = utlatandeId;
+    public void setUtlatandeid(String utlatandeId) {
+        this.utlatandeid = utlatandeId;
     }
 
     public String getTypAvUtlatande() {
@@ -74,20 +76,20 @@ public class Utlatande {
         this.kommentarer = kommentarer;
     }
 
-    public LocalDateTime getSigneringsDatum() {
-        return signeringsDatum;
+    public LocalDateTime getSigneringsdatum() {
+        return signeringsdatum;
     }
 
-    public void setSigneringsDatum(LocalDateTime signeringsDatum) {
-        this.signeringsDatum = signeringsDatum;
+    public void setSigneringsdatum(LocalDateTime signeringsdatum) {
+        this.signeringsdatum = signeringsdatum;
     }
 
-    public LocalDateTime getSkickatDatum() {
-        return skickatDatum;
+    public LocalDateTime getSkickatdatum() {
+        return skickatdatum;
     }
 
-    public void setSkickatDatum(LocalDateTime skickatDatum) {
-        this.skickatDatum = skickatDatum;
+    public void setSkickatdatum(LocalDateTime skickatdatum) {
+        this.skickatdatum = skickatdatum;
     }
 
     public HoSPersonal getSkapadAv() {
@@ -136,6 +138,14 @@ public class Utlatande {
 
     public void setStatus(List<Status> status) {
         this.status = status;
+    }
+
+    public String getUtlatandeidroot() {
+        return utlatandeidroot;
+    }
+
+    public void setUtlatandeidroot(String utlatandeidroot) {
+        this.utlatandeidroot = utlatandeidroot;
     }
 
 }

@@ -18,19 +18,20 @@
  */
 package se.inera.certificate.modules.rli.model.validator;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.modules.rli.model.external.Utlatande;
-import se.inera.certificate.modules.rli.validator.ExternalValidatorImpl;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
+
+import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.certificate.modules.rli.model.external.Utlatande;
+import se.inera.certificate.modules.rli.validator.ExternalValidatorImpl;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ExternalValidatorTest {
 
@@ -58,7 +59,9 @@ public class ExternalValidatorTest {
     public void testValidate() {
         Utlatande utlatande = buildTestUtlatande("/rli-example-1.json");
         List<String> validationErrors = validator.validate(utlatande);
-        
+        for (String s : validationErrors){
+            System.out.println(s);
+        }
         assertTrue(validationErrors.isEmpty());
 
     }
