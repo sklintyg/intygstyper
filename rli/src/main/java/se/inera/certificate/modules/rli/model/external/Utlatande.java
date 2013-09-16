@@ -26,14 +26,11 @@ import org.joda.time.LocalDateTime;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Status;
-import se.inera.certificate.model.Bestallare;
-import se.inera.certificate.model.Betalningsmottagare;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Rekommendation;
-import se.inera.certificate.model.Substansintag;
 import se.inera.certificate.model.Vardkontakt;
 
 /**
@@ -69,12 +66,6 @@ public class Utlatande {
     private List<Referens> referenser;
 
     private List<Aktivitet> aktiviteter;
-
-    private Bestallare bestallare;
-
-    private List<Substansintag> substansintag;
-
-    private Betalningsmottagare betalningsmottagare;
 
     private List<Rekommendation> rekommendationer;
 
@@ -165,29 +156,6 @@ public class Utlatande {
             aktiviteter = new ArrayList<Aktivitet>();
         }
         return this.aktiviteter;
-    }
-
-    public Bestallare getBestallare() {
-        return bestallare;
-    }
-
-    public void setBestallare(Bestallare bestallare) {
-        this.bestallare = bestallare;
-    }
-
-    public List<Substansintag> getSubstansintag() {
-        if (substansintag == null) {
-            substansintag = new ArrayList<Substansintag>();
-        }
-        return this.substansintag;
-    }
-
-    public Betalningsmottagare getBetalningsmottagare() {
-        return betalningsmottagare;
-    }
-
-    public void setBetalningsmottagare(Betalningsmottagare betalningsmottagare) {
-        this.betalningsmottagare = betalningsmottagare;
     }
 
     public List<Rekommendation> getRekommendationer() {
