@@ -74,7 +74,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
     @Override
     public Utlatande transportToExternal(se.inera.certificate.common.v1.Utlatande source) {
 
-        LOG.debug("Starting conversion");
+        LOG.debug("Converting Utlatande '{}' from transport to external", source.getUtlatandeId());
 
         Utlatande externalModel = new Utlatande();
 
@@ -113,7 +113,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @return List of Rekommendation
      */
     List<Rekommendation> convertRekommendationer(List<RekommendationType> source) {
-        LOG.debug("Converting rekommendationer");
+        LOG.trace("Converting rekommendationer");
 
         List<Rekommendation> rekommendationer = new ArrayList<Rekommendation>();
 
@@ -153,7 +153,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      */
     List<Observation> convertObservations(List<ObservationType> source) {
 
-        LOG.debug("Converting observationer");
+        LOG.trace("Converting observationer");
 
         List<Observation> observations = new ArrayList<Observation>();
         if (source != null) {
@@ -193,7 +193,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @return List of Utforarroll
      */
     List<Utforarroll> convertUtforarroller(List<UtforarrollType> source) {
-        LOG.debug("Converting utforarroller");
+        LOG.trace("Converting utforarroller");
 
         List<Utforarroll> utforsAvs = new ArrayList<>();
         if (source != null) {
@@ -229,7 +229,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @return import se.inera.certificate.modules.rli.model.external.Arrangemang
      */
     Arrangemang convertArrangemang(se.inera.certificate.rli.v1.Arrangemang source) {
-        LOG.debug("Converting arrangemang");
+        LOG.trace("Converting arrangemang");
 
         if (source == null) {
             return null;
@@ -256,7 +256,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      */
     List<Aktivitet> convertAktiviteter(List<AktivitetType> source) {
 
-        LOG.debug("Converting aktiviteter");
+        LOG.trace("Converting aktiviteter");
 
         List<Aktivitet> aktiviteter = new ArrayList<>();
         if (source != null) {
@@ -305,7 +305,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      */
     HosPersonal convertHosPersonal(HosPersonalType source) {
 
-        LOG.debug("Converting HosPersonal");
+        LOG.trace("Converting HosPersonal");
         if (source == null) {
             return null;
         }
@@ -327,7 +327,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @return Patient, or null if source is null
      */
     Patient convertPatient(PatientType source) {
-        LOG.debug("Converting patient");
+        LOG.trace("Converting patient");
 
         if (source == null) {
             return null;
@@ -387,7 +387,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      */
 
     Vardenhet convertEnhet(EnhetType source) {
-        LOG.debug("Converting enhet");
+        LOG.trace("Converting enhet");
         if (source == null) {
             return null;
         }
@@ -414,7 +414,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      */
     Vardgivare convertVardgivare(VardgivareType source) {
 
-        LOG.debug("Converting vardgivare");
+        LOG.trace("Converting vardgivare");
         if (source == null) {
             return null;
         }

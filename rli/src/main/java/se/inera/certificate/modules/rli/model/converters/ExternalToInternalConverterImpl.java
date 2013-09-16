@@ -88,7 +88,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
     Utlatande convertUtlatandeFromExternalToInternal(
             se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande) {
 
-        LOG.debug("Starting conversion of Utlatande from external to internal");
+        LOG.debug("Converting Utlatande '{}' from external to internal", extUtlatande.getId());
 
         Utlatande intUtlatande = new Utlatande();
 
@@ -119,7 +119,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
     private void populateUndersokingRekommendation(
             se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande, Utlatande intUtlatande) {
 
-        LOG.debug("Populating Utlatande with Undersokning and Rekommendation");
+        LOG.trace("Populating Utlatande with Undersokning and Rekommendation");
 
         Undersokning intUndersokning = undersokingPopulator.createAndPopulateUndersokning(extUtlatande);
         intUtlatande.setUndersokning(intUndersokning);
@@ -130,10 +130,10 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 
     Vardenhet convertToIntVardenhet(se.inera.certificate.model.Vardenhet extVardenhet) {
 
-        LOG.debug("Converting vardenhet");
+        LOG.trace("Converting vardenhet");
 
         if (extVardenhet == null) {
-            LOG.debug("External Vardenhet is null, can not convert");
+            LOG.trace("External Vardenhet is null, can not convert");
             return null;
         }
 
@@ -155,10 +155,10 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 
     Vardgivare convertToIntVardgivare(se.inera.certificate.model.Vardgivare extVardgivare) {
 
-        LOG.debug("Converting vardgivare");
+        LOG.trace("Converting vardgivare");
 
         if (extVardgivare == null) {
-            LOG.debug("External vardgivare is null, can not convert");
+            LOG.trace("External vardgivare is null, can not convert");
             return null;
         }
 
@@ -172,10 +172,10 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 
     HoSPersonal convertToIntHoSPersonal(HosPersonal extHoSPersonal) {
 
-        LOG.debug("Converting HoSPersonal");
+        LOG.trace("Converting HoSPersonal");
 
         if (extHoSPersonal == null) {
-            LOG.debug("External HoSPersonal is null, can not convert");
+            LOG.trace("External HoSPersonal is null, can not convert");
             return null;
         }
 
@@ -196,11 +196,11 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         List<Status> intStatuses = new ArrayList<Status>();
 
         if (certStatuses == null || certStatuses.isEmpty()) {
-            LOG.debug("No statuses found to convert");
+            LOG.trace("No statuses found to convert");
             return intStatuses;
         }
 
-        LOG.debug("Converting {} statuses to internal", certStatuses.size());
+        LOG.trace("Converting {} statuses to internal", certStatuses.size());
 
         Status intStatus;
 
@@ -217,10 +217,10 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 
     Patient convertToIntPatient(se.inera.certificate.model.Patient extPatient) {
 
-        LOG.debug("Converting patient");
+        LOG.trace("Converting patient");
 
         if (extPatient == null) {
-            LOG.debug("No Patient found to convert");
+            LOG.trace("No Patient found to convert");
             return null;
         }
 
@@ -246,10 +246,10 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 
     Arrangemang convertToIntArrangemang(se.inera.certificate.modules.rli.model.external.Arrangemang extArr) {
 
-        LOG.debug("Converting arrangemang");
+        LOG.trace("Converting arrangemang");
 
         if (extArr == null) {
-            LOG.debug("- No arrangemang found to convert");
+            LOG.trace("- No arrangemang found to convert");
             return null;
         }
 

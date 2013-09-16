@@ -57,7 +57,7 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
     public Utlatande convertUtlatandeFromInternalToExternal(
             se.inera.certificate.modules.rli.model.internal.Utlatande source) {
 
-        LOG.debug("Starting conversion from Internal to External");
+        LOG.debug("Converting Utlatande '{}' from internal to external", source.getUtlatandeid());
 
         Utlatande utlatande = new Utlatande();
 
@@ -106,7 +106,7 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
     }
 
     List<Observation> convertObservationer(Undersokning source) {
-        LOG.debug("Converting Observationer");
+        LOG.trace("Converting Observationer");
         List<Observation> obs = new ArrayList<Observation>();
 
         if (source.getOrsakforavbokning() == OrsakAvbokning.RESENAR_SJUK) {
@@ -140,7 +140,7 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
 
     private Utforarroll convertUtforsAv(Utforare source) {
         if (source == null) {
-            LOG.debug("No utforare found when converting, hence null");
+            LOG.trace("No utforare found when converting, hence null");
             return null;
         }
         Utforarroll utforsAv = new Utforarroll();
@@ -226,7 +226,7 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
         Aktivitet akt2 = new Aktivitet();
         akt2.setAktivitetskod(buildAktivitetsKod(AktivitetsKod.KLINISK_UNDERSOKNING));
         if (source.getUndersokningsdatum() == null) {
-            LOG.debug("Mandatory date in KLINISK_UNDERSOKNING missing, aborting");
+            LOG.warn("Mandatory date in KLINISK_UNDERSOKNING missing, aborting");
             return;
         }
         PartialInterval period2 = new PartialInterval();
@@ -271,7 +271,7 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
         akt.setAktivitetskod(buildAktivitetsKod(AktivitetsKod.KLINISK_UNDERSOKNING));
 
         if (source.getUndersokningsdatum() == null) {
-            LOG.debug("Mandatory date in KLINISK_UNDERSOKNING missing, aborting");
+            LOG.warn("Mandatory date in KLINISK_UNDERSOKNING missing, aborting");
             return;
         }
 
@@ -315,7 +315,7 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
 
     private Vardenhet buildVardenhet(se.inera.certificate.modules.rli.model.internal.Vardenhet source) {
         if (source == null) {
-            LOG.debug("Internal vardenhet was null");
+            LOG.trace("Internal vardenhet was null");
             return null;
         }
         // TODO Add HSA-ID for Vardenhet to internal model (and other stuff we want to be able to re-create)

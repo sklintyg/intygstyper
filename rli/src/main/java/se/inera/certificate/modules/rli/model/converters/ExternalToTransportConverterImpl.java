@@ -52,6 +52,7 @@ import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.rli.v1.Arrangemang;
 
 public class ExternalToTransportConverterImpl implements ExternalToTransportConverter {
+
     private static final Logger LOG = LoggerFactory.getLogger(ExternalToTransportConverterImpl.class);
 
     public ExternalToTransportConverterImpl() {
@@ -61,7 +62,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
     @Override
     public Utlatande externalToTransport(se.inera.certificate.modules.rli.model.external.Utlatande source) {
 
-        LOG.debug("Starting conversion");
+        LOG.debug("Converting Utlatande '{}' from external to transport", source.getId());
 
         Utlatande transportModel = new Utlatande();
 
@@ -98,7 +99,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
     }
 
     List<RekommendationType> convertRekommendationer(List<Rekommendation> source) {
-        LOG.debug("Starting convertRekommendationer");
+        LOG.trace("Starting convertRekommendationer");
 
         List<RekommendationType> rekommendationTypes = new ArrayList<RekommendationType>();
         for (Rekommendation r : source) {
@@ -111,7 +112,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
 
     RekommendationType convertRekommendation(Rekommendation source) {
         if (source == null) {
-            LOG.debug("Rekommendation was null, could not convert");
+            LOG.trace("Rekommendation was null, could not convert");
             return null;
         }
         RekommendationType rType = new RekommendationType();
@@ -123,9 +124,9 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
     }
 
     List<ObservationType> convertObservationer(List<Observation> source) {
-        LOG.debug("Starting convertObservationer");
+        LOG.trace("Starting convertObservationer");
         if (source == null) {
-            LOG.debug("List<Observation> was null, could not convert");
+            LOG.trace("List<Observation> was null, could not convert");
             return null;
         }
         List<ObservationType> observationTypes = new ArrayList<ObservationType>();
@@ -139,7 +140,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
 
     ObservationType convertObservation(Observation source) {
         if (source == null) {
-            LOG.debug("Observation was null, could not convert");
+            LOG.trace("Observation was null, could not convert");
             return null;
         }
         ObservationType observationType = new ObservationType();
@@ -153,7 +154,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
 
     UtforarrollType convertUtforarroll(Utforarroll source) {
         if (source == null) {
-            LOG.debug("Utforarroll was null, could not convert");
+            LOG.trace("Utforarroll was null, could not convert");
             return null;
         }
         UtforarrollType utforsAv = new UtforarrollType();
@@ -165,7 +166,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
 
     HosPersonalType convertHosPersonal(HosPersonal source) {
         if (source == null) {
-            LOG.debug("HosPersonal was null, could not convert");
+            LOG.trace("HosPersonal was null, could not convert");
             return null;
         }
         HosPersonalType hosPersonalType = new HosPersonalType();
@@ -180,7 +181,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
     private PartialDateInterval convertPartialDateInterval(
             se.inera.certificate.model.PartialInterval source) {
         if (source == null) {
-            LOG.debug("Source PartialDateInterval was null, could not convert");
+            LOG.trace("Source PartialDateInterval was null, could not convert");
             return null;
         }
         PartialDateInterval pdi = new PartialDateInterval();
@@ -190,9 +191,9 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
     }
 
     List<AktivitetType> convertAktiviteter(List<Aktivitet> source) {
-        LOG.debug("Starting convertAktiviteter");
+        LOG.trace("Starting convertAktiviteter");
         if (source == null) {
-            LOG.debug("Aktivitet list was null, could not convert");
+            LOG.trace("Aktivitet list was null, could not convert");
             return null;
         }
         List<AktivitetType> converted = new ArrayList<AktivitetType>();
@@ -206,7 +207,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
 
     AktivitetType convertAktivitet(Aktivitet source) {
         if (source == null) {
-            LOG.debug("Aktivitet was null, could not convert");
+            LOG.trace("Aktivitet was null, could not convert");
             return null;
         }
         AktivitetType aktivitet = new AktivitetType();
@@ -220,7 +221,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
 
     private EnhetType convertEnhet(Vardenhet source) {
         if (source == null) {
-            LOG.debug("Enhet was null, could not convert");
+            LOG.trace("Enhet was null, could not convert");
             return null;
         }
         EnhetType enhetType = new EnhetType();
@@ -242,7 +243,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
 
     private VardgivareType convertVardgivare(Vardgivare source) {
         if (source == null) {
-            LOG.debug("Vardgivare was null, could not convert");
+            LOG.trace("Vardgivare was null, could not convert");
             return null;
         }
         VardgivareType vardgivareType = new VardgivareType();
@@ -254,7 +255,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
 
     private Arrangemang convertArrangemang(se.inera.certificate.modules.rli.model.external.Arrangemang source) {
         if (source == null) {
-            LOG.debug("Arrangemang was null, could not convert");
+            LOG.trace("Arrangemang was null, could not convert");
             return null;
         }
 
@@ -272,7 +273,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
 
     PatientType convertPatient(Patient source) {
         if (source == null) {
-            LOG.debug("Patient was null, could not convert");
+            LOG.trace("Patient was null, could not convert");
             return null;
         }
         PatientType patientType = new PatientType();
@@ -303,9 +304,9 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
     }
 
     List<PatientRelationType> convertPatientRelations(List<PatientRelation> source) {
-        LOG.debug("Starting convert in convertPatientRelations");
+        LOG.trace("Starting convert in convertPatientRelations");
         if (source == null) {
-            LOG.debug("PatientRelation was null, could not convert");
+            LOG.trace("PatientRelation was null, could not convert");
             return null;
         }
         List<PatientRelationType> patientRelationTypes = new ArrayList<PatientRelationType>();
@@ -320,7 +321,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
 
     private PatientRelationType convertPatientRelation(PatientRelation source) {
         if (source == null) {
-            LOG.debug("PatientRelation was null, could not convert");
+            LOG.trace("PatientRelation was null, could not convert");
             return null;
         }
         PatientRelationType patientRelationType = new PatientRelationType();

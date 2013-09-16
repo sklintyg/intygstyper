@@ -25,7 +25,7 @@ public class RekommendationPopulatorImpl implements RekommendationPopulator {
     public Rekommendation createAndPopulateRekommendation(
             se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande) {
 
-        LOG.debug("Creating and poulating Rekommendation");
+        LOG.trace("Creating and poulating Rekommendation");
 
         Rekommendation intRekommendation = new Rekommendation();
 
@@ -45,13 +45,13 @@ public class RekommendationPopulatorImpl implements RekommendationPopulator {
         RekommendationsKod rekommendationsKod = RekommendationsKod.getFromCode(extRekommendationsKod);
         intRekommendation.setRekommendationskod(rekommendationsKod);
 
-        LOG.debug("- RekommedationsKod code was {}, translated to enum {}", extRekommendationsKod, rekommendationsKod);
+        LOG.trace("- RekommedationsKod code was {}, translated to enum {}", extRekommendationsKod, rekommendationsKod);
 
         String extSjukdomsKannedom = InternalModelConverterUtils.getValueFromKod(extRekommendation.getSjukdomskannedom());
         SjukdomsKannedom sjukdomsKannedom = SjukdomsKannedom.getFromCode(extSjukdomsKannedom);
         intRekommendation.setSjukdomskannedom(sjukdomsKannedom);
 
-        LOG.debug("- SjukdomsKannedom code was {}, translated to enum {}", extSjukdomsKannedom, sjukdomsKannedom);
+        LOG.trace("- SjukdomsKannedom code was {}, translated to enum {}", extSjukdomsKannedom, sjukdomsKannedom);
 
         intRekommendation.setBeskrivning(extRekommendation.getBeskrivning());
 

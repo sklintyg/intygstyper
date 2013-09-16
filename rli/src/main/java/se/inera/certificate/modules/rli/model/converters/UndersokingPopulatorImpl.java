@@ -40,7 +40,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
     public Undersokning createAndPopulateUndersokning(
             se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande) {
 
-        LOG.debug("Creating and populating Undersokning");
+        LOG.trace("Creating and populating Undersokning");
 
         Undersokning intUndersokning = new Undersokning();
 
@@ -53,7 +53,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
     void populateUndersokningFromObservationer(List<Observation> observations, Undersokning intUndersokning) {
 
-        LOG.debug("Populating Undersokning from Observationer");
+        LOG.trace("Populating Undersokning from Observationer");
 
         if (observations.isEmpty()) {
             LOG.error("No observations found! Can not populate undersokning!");
@@ -87,7 +87,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
     }
 
     private Utforare convertToIntUtforare(Utforarroll source) {
-        LOG.debug("Converting to internal Utforare");
+        LOG.trace("Converting to internal Utforare");
         Utforare utforsAv = new Utforare();
         utforsAv.setUtforartyp(source.getUtforartyp().getCode());
         if (source.getAntasAv() != null){
@@ -111,7 +111,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
     private Vardenhet convertToIntVardenhet(se.inera.certificate.model.Vardenhet source) {
         if (source == null){
-            LOG.debug("External vardenhet was null");
+            LOG.trace("External vardenhet was null");
             return null;
         }
         Vardenhet vardenhet = new Vardenhet();
@@ -135,25 +135,25 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
     void populateUndersokningFromAktiviteter(List<Aktivitet> aktiviteter, Undersokning intUndersokning) {
 
-        LOG.debug("Populating Undersokning from Aktiviteter");
+        LOG.trace("Populating Undersokning from Aktiviteter");
 
         Aktivitet currentExam = null;
         Aktivitet firstExam = null;
 
         if (aktiviteter == null || aktiviteter.isEmpty()) {
-            LOG.debug("No aktiviteter found, can not continue with population");
+            LOG.warn("No aktiviteter found, can not continue with population");
             return;
         }
 
-        LOG.debug("{} aktiviteter supplied", aktiviteter.size());
+        LOG.trace("{} aktiviteter supplied", aktiviteter.size());
 
         for (Aktivitet akt : aktiviteter) {
             Kod aktivitetskod = akt.getAktivitetskod();
             if (checkAktivitetsKod(aktivitetskod, AktivitetsKod.FORSTA_UNDERSOKNING)) {
-                LOG.debug("Found firstExam");
+                LOG.trace("Found firstExam");
                 firstExam = akt;
             } else if (checkAktivitetsKod(aktivitetskod, AktivitetsKod.KLINISK_UNDERSOKNING)) {
-                LOG.debug("Found currentExam");
+                LOG.trace("Found currentExam");
                 currentExam = akt;
             }
         }
@@ -186,21 +186,21 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
     private void populateFirstExam(Undersokning intUndersokning, Aktivitet firstExam) {
 
-        LOG.debug("Populating first exam info");
+        LOG.trace("Populating first exam info");
 
         if (firstExam == null) {
-            LOG.debug("- firstExam is null, can not populate first exam info");
+            LOG.trace("- firstExam is null, can not populate first exam info");
             return;
         }
 
-        LOG.debug("- Extracting exam date from the first exam");
+        LOG.trace("- Extracting exam date from the first exam");
         String forstaUndersokningDatum = getExamDateFromAktivitet(firstExam);
         intUndersokning.setForstaUndersokningsdatum(forstaUndersokningDatum);
 
         KomplikationStyrkt komplikationStyrkt;
         String forstaUndersokningPlats;
 
-        LOG.debug("- Extracting place and complication attestation from the first exam");
+        LOG.trace("- Extracting place and complication attestation from the first exam");
 
         if (firstExam.getUtforsVid() != null) {
             komplikationStyrkt = KomplikationStyrkt.AV_HOS_PERSONAL;
@@ -212,35 +212,35 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
             forstaUndersokningPlats = firstExam.getPlats();
         }
 
-        LOG.debug("- Place is {} for the first exam", forstaUndersokningPlats);
+        LOG.trace("- Place is {} for the first exam", forstaUndersokningPlats);
         intUndersokning.setForstaUndersokningsplats(forstaUndersokningPlats);
 
-        LOG.debug("- Complication attestation is {}", komplikationStyrkt);
+        LOG.trace("- Complication attestation is {}", komplikationStyrkt);
         intUndersokning.setKomplikationstyrkt(komplikationStyrkt);
     }
 
     private void populateCurrentExam(Undersokning intUndersokning, Aktivitet currentExam) {
 
-        LOG.debug("Populating current exam info");
+        LOG.trace("Populating current exam info");
 
-        LOG.debug("- Extracting date for the current exam");
+        LOG.trace("- Extracting date for the current exam");
         String undersokningDatum = getExamDateFromAktivitet(currentExam);
         intUndersokning.setUndersokningsdatum(undersokningDatum);
 
         if (currentExam.getUtforsVid() != null) {
-            LOG.debug("- Extracting place for the current exam");
+            LOG.trace("- Extracting place for the current exam");
             String undersokningPlats = currentExam.getUtforsVid().getNamn();
             // intUndersokning.setUndersokningsplats(undersokningPlats);
             intUndersokning.setUtforsVid(convertToIntVardenhet(currentExam.getUtforsVid()));
 
         } else {
-            LOG.debug("- Place for current exam could not be determined");
+            LOG.trace("- Place for current exam could not be determined");
         }
     }
 
     private void handleGraviditet(Observation obs, Undersokning undersokning) {
 
-        LOG.debug("Handling pregnancy observations");
+        LOG.trace("Handling pregnancy observations");
 
         PartialInterval observationsperiod = obs.getObservationsPeriod();
         Partial obsPeriodSlut = observationsperiod.getTom();
