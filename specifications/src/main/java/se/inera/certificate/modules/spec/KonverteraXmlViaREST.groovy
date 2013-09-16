@@ -23,7 +23,7 @@ class KonverteraXmlViaREST{
     public String matchandeJson() {
 
         def restClient = new RESTClient(System.getProperty("modules.baseUrl"))
-        def response = restClient.put(
+        def response = restClient.post(
                 path: typ + '/api/unmarshall',
                 body: xmlPayload(),
                 contentType: JSON,
@@ -35,7 +35,7 @@ class KonverteraXmlViaREST{
 		try {
 			assert certificate.id.extension == utlatande_id_extension
 			assert certificate.typ.code == typ_av_utlatande
-			assert certificate.patient.personId.extension == patient_id
+			assert certificate.patient.id.extension == patient_id
 			
 		} catch (AssertionError e) {
 			return "nej"

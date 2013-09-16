@@ -42,10 +42,12 @@ import se.inera.certificate.modules.rli.model.internal.Undersokning;
 import se.inera.certificate.modules.rli.model.internal.Utlatande;
 import se.inera.certificate.modules.rli.model.internal.Vardenhet;
 import se.inera.certificate.modules.rli.model.internal.Vardgivare;
+
 /**
  * Mock class for testing purposes
+ * 
  * @author erik
- *
+ * 
  */
 @Path("/view")
 public class RliViewServices {
@@ -140,8 +142,7 @@ public class RliViewServices {
         undersokning.setUndersokningsplats("Tolvberga vårdcentral");
         undersokning.setKomplikationstyrkt(KomplikationStyrkt.AV_HOS_PERSONAL);
         undersokning.setForstaUndersokningsdatum("2010-01");
-        undersokning.setForstaUndersokningsdatum("Trestadens lasarett");
-
+        undersokning.setForstaUndersokningsplats("Trestadens lasarett");
         Graviditet graviditet = new Graviditet();
         graviditet.setBeraknatForlossningsdatum("2013-08-14");
         undersokning.setGraviditet(graviditet);
@@ -181,7 +182,7 @@ public class RliViewServices {
         undersokning.setUndersokningsplats("Tolvberga vårdcentral");
         undersokning.setKomplikationstyrkt(KomplikationStyrkt.AV_PATIENT);
         undersokning.setForstaUndersokningsdatum("2010-01");
-        undersokning.setForstaUndersokningsdatum("Trestadens lasarett");
+        undersokning.setForstaUndersokningsplats("Trestadens lasarett");
         utlatande.setUndersokning(undersokning);
 
         return utlatande;

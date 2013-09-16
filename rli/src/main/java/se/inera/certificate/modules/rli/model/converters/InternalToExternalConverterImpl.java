@@ -110,20 +110,14 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
         List<Observation> obs = new ArrayList<Observation>();
 
         if (source.getOrsakforavbokning() == OrsakAvbokning.RESENAR_SJUK) {
-            LOG.debug("RESENAR_SJUK, generating one Observation");
             Observation o = new Observation();
 
-            LOG.debug("Setting obs kod to: " + buildObservationsKod(ObservationsKod.SJUKDOM).getCode());
-
             o.setObservationsKod(buildObservationsKod(ObservationsKod.SJUKDOM));
-
-            LOG.debug("Setting utforsAv to: " + source.getUtforsAv().getUtforartyp());
 
             o.setUtforsAv(convertUtforsAv(source.getUtforsAv()));
             obs.add(o);
 
         } else if (source.getOrsakforavbokning() == OrsakAvbokning.RESENAR_GRAVID) {
-            LOG.debug("RESENAR_GRAVID, generating two Observationer");
             Observation o1 = new Observation();
             o1.setObservationsKod(buildObservationsKod(ObservationsKod.KOMPLIKATION_VID_GRAVIDITET));
             o1.setUtforsAv(convertUtforsAv(source.getUtforsAv()));
@@ -145,7 +139,6 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
     }
 
     private Utforarroll convertUtforsAv(Utforare source) {
-        LOG.debug("Converting UtforsAv");
         if (source == null) {
             LOG.debug("No utforare found when converting, hence null");
             return null;
@@ -179,7 +172,6 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
     }
 
     List<Aktivitet> convertAktiviteter(Undersokning source) {
-        LOG.debug("Converting aktiviteter");
         List<Aktivitet> aktiviteter = new ArrayList<Aktivitet>();
 
         if (source.getOrsakforavbokning() == OrsakAvbokning.RESENAR_SJUK) {
@@ -200,7 +192,6 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
      *            se.inera.certificate.modules.rli.model.internal.Undersokning
      */
     private void buildAktiviteterGravid(List<Aktivitet> aktiviteter, Undersokning source) {
-        LOG.debug("OrsakAvbokning: RESENAR_GRAVID, generating two Aktivitet(er)");
         /** Create first Aktivitet */
         Aktivitet akt1 = new Aktivitet();
         akt1.setAktivitetskod(buildAktivitetsKod(AktivitetsKod.FORSTA_UNDERSOKNING));
@@ -276,8 +267,6 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
      *            se.inera.certificate.modules.rli.model.internal.Undersokning
      */
     private void buildAktivitetSjuk(List<Aktivitet> aktiviteter, Undersokning source) {
-        LOG.debug("OrsakAvbokning: RESENAR_SJUK, generating one Aktivitet");
-
         Aktivitet akt = new Aktivitet();
         akt.setAktivitetskod(buildAktivitetsKod(AktivitetsKod.KLINISK_UNDERSOKNING));
 
@@ -292,13 +281,9 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
         akt.setAktivitetstid(period2);
 
         if (source.getKomplikationstyrkt() == KomplikationStyrkt.AV_PATIENT && source.getUndersokningsplats() != null) {
-
-            LOG.debug("Komplikation styrkt: AV_PATIENT, generating Plats");
             akt.setPlats(source.getUndersokningsplats());
 
         } else if (source.getKomplikationstyrkt() == KomplikationStyrkt.AV_HOS_PERSONAL) {
-
-            LOG.debug("Komplikation styrkt: HOS_PERSONAL, generating Vardenhet");
             akt.setUtforsVid(buildVardenhet(source.getUtforsVid()));
             akt.getBeskrivsAv().addAll(buildUtforarrollFromKomplikationStyrkt(KomplikationStyrkt.AV_HOS_PERSONAL));
 
@@ -333,7 +318,6 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
             LOG.debug("Internal vardenhet was null");
             return null;
         }
-        LOG.debug("Generating Vardenhet for use in Aktivitet");
         // TODO Add HSA-ID for Vardenhet to internal model (and other stuff we want to be able to re-create)
         Vardenhet vardenhet = new Vardenhet();
         vardenhet.setNamn(source.getEnhetsnamn());
@@ -353,8 +337,6 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
     }
 
     HosPersonal convertHoSPersonal(HoSPersonal source) {
-        LOG.debug("Converting HosPersonal");
-
         HosPersonal hsp = new HosPersonal();
         hsp.setNamn(source.getFullstandigtNamn());
         hsp.setId(new Id(HSA_ID.getCodeSystem(), source.getPersonid()));
@@ -363,10 +345,7 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
     }
 
     Vardenhet convertVardenhet(se.inera.certificate.modules.rli.model.internal.Vardenhet source) {
-        LOG.debug("Converting Vardenhet");
-
         Vardenhet vardenhet = new Vardenhet();
-
         vardenhet.setEpost(source.getEpost());
         vardenhet.setId(new Id(HSA_ID.getCodeSystem(), source.getEnhetsid()));
         vardenhet.setNamn(source.getEnhetsnamn());
@@ -380,8 +359,6 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
     }
 
     Vardgivare convertVardgivare(se.inera.certificate.modules.rli.model.internal.Vardgivare source) {
-        LOG.debug("Converting Vardgivare");
-
         Vardgivare vardgivare = new Vardgivare();
         vardgivare.setId(new Id(HSA_ID.getCodeSystem(), source.getVardgivarid()));
         vardgivare.setNamn(source.getVardgivarnamn());
@@ -389,8 +366,6 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
     }
 
     Patient convertPatient(se.inera.certificate.modules.rli.model.internal.Patient source) {
-        LOG.debug("Converting Patient");
-
         Patient patient = new Patient();
         patient.setEfternamns(Arrays.asList(source.getEfternamn()));
         patient.setFornamns(Arrays.asList(source.getFornamn()));
@@ -404,8 +379,6 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
     }
 
     Arrangemang convertArrangemang(se.inera.certificate.modules.rli.model.internal.Arrangemang source) {
-        LOG.debug("Converting Arrangemang");
-
         Arrangemang arr = new Arrangemang();
         PartialInterval arrTid = new PartialInterval();
         arrTid.setFrom(PartialConverter.stringToPartial(source.getArrangemangsdatum()));

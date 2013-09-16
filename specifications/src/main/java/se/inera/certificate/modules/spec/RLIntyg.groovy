@@ -91,8 +91,8 @@ public class RLIntyg extends RestClientFixture {
 		certificate.skapadAv.vardenhet.namn = enhet
 		
         // setting the signing date, from date and to date
-        certificate.signeringsDatum = utfärdat
-        certificate.skickatDatum = utfärdat
+        certificate.signeringsdatum = utfärdat
+        certificate.skickatdatum = utfärdat
         
         certificate.arrangemang.plats = resmål
 

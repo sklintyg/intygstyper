@@ -7,12 +7,13 @@ import groovy.xml.MarkupBuilder
 import groovyx.net.http.RESTClient
 
 import org.springframework.core.io.ClassPathResource
+import se.inera.certificate.spec.util.RestClientFixture
 
 /**
  *
  * @author erik
  */
-class ValideraReseIntyg {
+class ValideraReseIntyg extends RestClientFixture{
 
 	String typ
 	String intyg

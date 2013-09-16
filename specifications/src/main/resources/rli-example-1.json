@@ -7,42 +7,45 @@
     "codeSystem" : "f6fb361a-e31d-48b8-8657-99b63912dd9b",
     "code" : "RLI"
   },
-  "kommentarer" : [ "Övriga upplysningar" ],
+  "kommentars" : [ "Övriga upplysningar" ],
   "signeringsdatum" : "2013-08-12T11:25:00.000",
   "skickatdatum" : "2013-08-12T11:25:30.000",
   "patient" : {
-    "personId" : {
+    "id" : {
       "root" : "1.2.752.129.2.1.3.1",
       "extension" : "19121212+1212"
     },
     "fornamns" : [ "Test" ],
     "efternamns" : [ "Testsson" ],
-    "adress" : "Teststigen 1, 123 45 Stockholm"
+    "postadress" : "Teststigen 1",
+    "postnummer" : "123 45",
+    "postort" : "Stockholm",
+    "fullstandigtNamn" : "Test Testsson"
   },
   "skapadAv" : {
-    "personalId" : {
+    "id" : {
       "root" : "1.2.752.129.2.1.4.1",
       "extension" : "19101010+1010"
     },
-    "fullstandigtNamn" : "Doktor Alban",
+    "namn" : "Doktor Alban",
     "forskrivarkod" : "ABC123",
-    "enhet" : {
-      "enhetsId" : {
+    "vardenhet" : {
+      "id" : {
         "root" : "1.2.752.129.2.1.4.1",
         "extension" : "vardenhet_test"
       },
-      "enhetsnamn" : "Testenheten",
+      "namn" : "Testenheten",
       "postadress" : "Teststigen 12",
       "postnummer" : "12345",
       "postort" : "Tolvberga",
       "telefonnummer" : "012-345678",
       "epost" : "ingen@alls.se",
       "vardgivare" : {
-        "vardgivareId" : {
+        "id" : {
           "root" : "1.2.752.129.2.1.4.1",
           "extension" : "vardgivare_test"
         },
-        "vardgivarnamn" : "Testvårdgivaren"
+        "namn" : "Testvårdgivaren"
       }
     }
   },
@@ -56,33 +59,33 @@
       "from" : "2013-08-12",
       "tom" : "2013-08-12"
     },
-    "utforsVidEnhet" : {
-      "enhetsId" : {
+    "utforsVid" : {
+      "id" : {
         "root" : "1.2.752.129.2.1.4.1",
         "extension" : "vardenhet_test"
       },
-      "enhetsnamn" : "Testenheten",
+      "namn" : "Testenheten",
       "postadress" : "Teststigen 12",
       "postnummer" : "12345",
       "postort" : "Tolvberga",
       "telefonnummer" : "012-345678",
       "epost" : "ingen@alls.se",
       "vardgivare" : {
-        "vardgivareId" : {
+        "id" : {
           "root" : "1.2.752.129.2.1.4.1",
           "extension" : "vardgivare_test"
         },
-        "vardgivarnamn" : "Testvårdgivaren"
+        "namn" : "Testvårdgivaren"
       }
     }
   }, {
     "aktivitetskod" : {
       "codeSystem" : "1.2.752.116.1.3.2.1.4",
       "codeSystemName" : "KVÅ",
-      "code" : "AV020"
+      "code" : "AKT13"
     },
     "aktivitetstid" : {
-      "from" : "2013-08-14"
+      "from" : "2013-08-01"
     }
   } ],
   "rekommendationer" : [ {
@@ -97,13 +100,13 @@
       "code" : "SJK2"
     }
   } ],
-  "observationer" : [ {
-    "observationskod" : {
+  "observations" : [ {
+    "observationsKod" : {
       "codeSystem" : "1.2.752.116.2.1.1.1",
       "codeSystemName" : "SNOMED-CT",
       "code" : "39104002"
     },
-    "observationsperiod" : {
+    "observationsPeriod" : {
       "from" : "2010-01-01",
       "tom" : "2010-01-01"
     },
@@ -114,24 +117,24 @@
         "code" : "223366009"
       },
       "antasAv" : {
-        "personalId" : {
+        "id" : {
           "root" : "1.2.752.129.2.1.4.1",
           "extension" : "190101010101"
         },
-        "fullstandigtNamn" : "Dr Jekyll",
+        "namn" : "Dr Jekyll",
         "forskrivarkod" : "DRJEK",
-        "enhet" : {
-          "enhetsId" : {
+        "vardenhet" : {
+          "id" : {
             "root" : "1.2.752.129.2.1.4.1",
             "extension" : "vardenhet_test2"
           },
-          "enhetsnamn" : "Elixirkliniken, London",
+          "namn" : "Elixirkliniken, London",
           "vardgivare" : {
-            "vardgivareId" : {
+            "id" : {
               "root" : "1.2.752.129.2.1.4.1",
               "extension" : "vardgivare_test2"
             },
-            "vardgivarnamn" : "Testvårdgivaren"
+            "namn" : "Testvårdgivaren"
           }
         }
       }

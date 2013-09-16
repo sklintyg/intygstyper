@@ -204,8 +204,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
         if (firstExam.getUtforsVid() != null) {
             komplikationStyrkt = KomplikationStyrkt.AV_HOS_PERSONAL;
-            // forstaUndersokningPlats = firstExam.getUtforsVid().getNamn();
-            forstaUndersokningPlats = null;
+            forstaUndersokningPlats = firstExam.getUtforsVid().getNamn();
             intUndersokning.setUtforsVid(convertToIntVardenhet(firstExam.getUtforsVid()));
 
         } else {

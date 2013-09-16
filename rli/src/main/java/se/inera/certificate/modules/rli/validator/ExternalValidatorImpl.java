@@ -261,8 +261,13 @@ public class ExternalValidatorImpl implements ExternalValidator {
             return;
         }
 
+        if (patient.getId() == null) {
+            validationErrors.add("Patient ID was null");
+            return;
+        }
+        
         validationErrors.addAll(idValidator.validate(patient.getId()));
-
+        
         /**
          * Make sure Fornamn and Efternamn contains at least one item
          */
