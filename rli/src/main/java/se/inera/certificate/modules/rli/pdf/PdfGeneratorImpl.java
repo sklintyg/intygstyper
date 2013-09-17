@@ -29,7 +29,7 @@ public class PdfGeneratorImpl implements PdfGenerator {
     private static final String TRAVEL_CANCEL_DATE = "Avbokningsdatum";
     private static final String TRAVEL_DEPARTURE_DATE = "Avresedatum";
 
-    private static final String SICK_KNOWLEDGE = "Sjukdomskannedom";
+//    private static final String SICK_KNOWLEDGE = "Sjukdomskannedom";
 
     private static final String CERT_SIGN_DATE = "Signeringdatum";
 
@@ -167,23 +167,6 @@ public class PdfGeneratorImpl implements PdfGenerator {
             throw new IllegalArgumentException("Could not fill field '" + fieldId + "' with value '" + text + "'", e);
         } catch (DocumentException e) {
             throw new IllegalArgumentException("Could not fill field '" + fieldId + "'", e);
-        }
-    }
-
-    private void setAsChecked(AcroFields fields, String fieldId) {
-        setField(fields, fieldId, true);
-    }
-
-    private void setField(AcroFields fields, String fieldId, boolean checked) {
-        try {
-            assert fields.getFieldType(fieldId) == AcroFields.FIELD_TYPE_CHECKBOX;
-            if (checked) {
-                fields.setField(fieldId, "1");
-            }
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Could not check field '" + fieldId + "'", e);
-        } catch (DocumentException e) {
-            throw new IllegalArgumentException("Could not check field '" + fieldId + "'", e);
         }
     }
 }
