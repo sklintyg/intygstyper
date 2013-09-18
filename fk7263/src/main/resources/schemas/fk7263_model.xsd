@@ -20,7 +20,7 @@
 
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:intyg:common-model:1" xmlns:iso="urn:iso:21090:dt:1"
-           xmlns:fk7263="urn:intyg:fk7263:model:1" xmlns:hr="urn:riv:insuranceprocess:healthreporting:2"
+           xmlns:hr="urn:riv:insuranceprocess:healthreporting:2"
            targetNamespace="urn:intyg:common-model:1" elementFormDefault="qualified" attributeFormDefault="unqualified"
            version="0.1">
 
@@ -65,7 +65,6 @@
       </xs:element>
       <!-- Skyddad identitet -->
       <xs:element name="forskrivarkod" type="xs:string" minOccurs="0"/>
-      <xs:element name="befattning" type="xs:string" minOccurs="0"/>
       <xs:element name="enhet" type="hr:enhetType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
