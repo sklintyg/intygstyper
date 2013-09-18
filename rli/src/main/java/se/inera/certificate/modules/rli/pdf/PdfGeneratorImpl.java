@@ -34,17 +34,23 @@ public class PdfGeneratorImpl implements PdfGenerator {
     private static final String CERT_SIGN_DATE = "Signeringdatum";
 
     private static final String PHYSICIAN_NAME = "Lakarensnamn";
-    
+
     private static final String COMMENTS = "Kommentarer";
 
     // SJK4Beskrivning 4
 
     public static final String PDF_SJUK_TEMPLATE = "pdf/RLI_template.pdf";
 
-    private static final String dateFormat = "yyyy-MM-dd";
-    
+    private static final String dateFormat = "yyMMdd";
+
     public PdfGeneratorImpl() {
 
+    }
+
+    @Override
+    public String generatePdfFilename(Utlatande utlatande) {
+        return String.format("lakarutlatande_%s_%s-%s.pdf", utlatande.getPatient().getPersonid(), utlatande
+                .getArrangemang().getBokningsdatum(), utlatande.getSigneringsdatum().toString(dateFormat));
     }
 
     /*
@@ -62,7 +68,7 @@ public class PdfGeneratorImpl implements PdfGenerator {
 
             PdfStamper pdfStamper = new PdfStamper(pdfReader, outputStream);
             pdfStamper.setFormFlattening(true);
-            
+
             AcroFields fields = pdfStamper.getAcroFields();
 
             populatePdfFields(utlatande, fields);
@@ -87,11 +93,11 @@ public class PdfGeneratorImpl implements PdfGenerator {
      */
     private void populatePdfFields(Utlatande utlatande, AcroFields fields) {
         fillPatientDetails(utlatande, fields);
-        
+
         fillSignerNameAndAddress(utlatande, fields);
-        
+
         fillTravelInformation(utlatande, fields);
-        
+
         fillMisc(utlatande, fields);
     }
 
@@ -119,10 +125,9 @@ public class PdfGeneratorImpl implements PdfGenerator {
      */
     private void fillSignerNameAndAddress(Utlatande utlatande, AcroFields fields) {
         fillText(fields, PHYSICIAN_NAME, utlatande.getSkapadAv().getFullstandigtNamn());
-      
+
         fillText(fields, CERT_SIGN_DATE, utlatande.getSigneringsdatum().toString(dateFormat));
     }
-    
 
     /**
      * 
@@ -138,7 +143,7 @@ public class PdfGeneratorImpl implements PdfGenerator {
         fillText(fields, TRAVEL_DEPARTURE_DATE, utlatande.getArrangemang().getArrangemangsdatum());
         fillText(fields, TRAVEL_DESTINATION, utlatande.getArrangemang().getPlats());
     }
-    
+
     private void fillMisc(Utlatande utlatande, AcroFields fields) {
         String text = StringUtils.join(utlatande.getKommentarer(), " ");
         fillText(fields, COMMENTS, text.toString());

@@ -1,16 +1,14 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
-import iso.v21090.dt.v1.PQ;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.fk7263.model.extension.v1.Arbetsgivare;
 import se.inera.certificate.fk7263.model.v1.AktivitetType;
 import se.inera.certificate.fk7263.model.v1.ArbetsuppgiftType;
+import se.inera.certificate.fk7263.model.v1.HosPersonalType;
 import se.inera.certificate.fk7263.model.v1.ObservationType;
 import se.inera.certificate.fk7263.model.v1.PatientType;
 import se.inera.certificate.fk7263.model.v1.PrognosType;
@@ -31,12 +29,11 @@ import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter;
-import se.inera.certificate.modules.fk7263.model.external.Fk7263Arbetsgivare;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
+import iso.v21090.dt.v1.PQ;
 
 /**
  * @author marced
@@ -84,7 +81,6 @@ public final class TransportToExternalConverter {
     private static Sysselsattning convert(SysselsattningType source) {
         Sysselsattning sysselsattning = new Sysselsattning();
         sysselsattning.setSysselsattningsTyp(IsoTypeConverter.toKod(source.getTypAvSysselsattning()));
-        sysselsattning.setDatum(source.getDatum());
         return sysselsattning;
     }
 
@@ -110,13 +106,14 @@ public final class TransportToExternalConverter {
         observation.setObservationsKod(IsoTypeConverter.toKod(source.getObservationskod()));
 
         if (source.getObservationsperiod() != null) {
-            PartialInterval observationsPeriod = new PartialInterval(source.getObservationsperiod().getFrom(), source.getObservationsperiod().getTom());
+            PartialInterval observationsPeriod = new PartialInterval(source.getObservationsperiod().getFrom(), source
+                    .getObservationsperiod().getTom());
             observation.setObservationsPeriod(observationsPeriod);
         }
 
         observation.setVarde(convertVarde(source.getVardes()));
 
-        observation.setPrognos(convert(source.getPrognos()));
+        observation.setPrognoser(convertPrognoser(source.getPrognos()));
         observation.setBeskrivning(source.getBeskrivning());
 
         return observation;
@@ -129,6 +126,14 @@ public final class TransportToExternalConverter {
             vardes.add(new PhysicalQuantity(varde.getValue(), varde.getUnit()));
         }
         return vardes;
+    }
+
+    private static List<Prognos> convertPrognoser(List<PrognosType> source) {
+        List<Prognos> prognoser = new ArrayList<>();
+        for (PrognosType prognosType : source) {
+            prognoser.add(convert(prognosType));
+        }
+        return prognoser;
     }
 
     private static Prognos convert(PrognosType source) {
@@ -157,7 +162,8 @@ public final class TransportToExternalConverter {
         Vardkontakt vardkontakt = new Vardkontakt();
         vardkontakt.setVardkontakttyp(IsoTypeConverter.toKod(source.getVardkontakttyp()));
 
-        LocalDateInterval vardkontaktTid = new LocalDateInterval(source.getVardkontakttid().getFrom(), source.getVardkontakttid().getTom());
+        LocalDateInterval vardkontaktTid = new LocalDateInterval(source.getVardkontakttid().getFrom(), source
+                .getVardkontakttid().getTom());
         vardkontakt.setVardkontaktstid(vardkontaktTid);
 
         return vardkontakt;
@@ -217,13 +223,13 @@ public final class TransportToExternalConverter {
         patient.setId(IsoTypeConverter.toId(source.getPersonId()));
 
         if (!source.getFornamns().isEmpty()) {
-            patient.setFornamns(source.getFornamns());
+            patient.setFornamn(source.getFornamns());
         }
-        if (!source.getEfternamns().isEmpty()) {
-            patient.setEfternamns(source.getEfternamns());
-        }
+
+        patient.setEfternamn(source.getEfternamn());
+
         if (!source.getMellannamns().isEmpty()) {
-            patient.setMellannamns(source.getMellannamns());
+            patient.setMellannamn(source.getMellannamns());
         }
 
         patient.setSysselsattnings(convert(source.getSysselsattnings()));
@@ -238,18 +244,7 @@ public final class TransportToExternalConverter {
             patient.setArbetsuppgifts(arbetsuppgifts);
         }
 
-        patient.setArbetsgivare(convert(source.getArbetsgivare()));
         return patient;
-    }
-
-    private static Fk7263Arbetsgivare convert(Arbetsgivare source) {
-        if (source == null) {
-            return null;
-        }
-        Fk7263Arbetsgivare arbetsgivare = new Fk7263Arbetsgivare();
-        arbetsgivare.setArbetsgivare(source.getArbetsgivarnamn());
-        arbetsgivare.setBranch(source.getBranch());
-        return arbetsgivare;
     }
 
     private static Vardenhet convert(EnhetType source) {

@@ -3,11 +3,13 @@ package se.inera.certificate.modules.fk7263.model.converter;
 import static se.inera.certificate.model.util.Iterables.addAll;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import se.inera.certificate.fk7263.model.v1.AktivitetType;
 import se.inera.certificate.fk7263.model.v1.ArbetsuppgiftType;
 import se.inera.certificate.fk7263.model.v1.DateInterval;
+import se.inera.certificate.fk7263.model.v1.HosPersonalType;
 import se.inera.certificate.fk7263.model.v1.ObservationType;
 import se.inera.certificate.fk7263.model.v1.PartialDateInterval;
 import se.inera.certificate.fk7263.model.v1.PatientType;
@@ -31,7 +33,6 @@ import se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 import iso.v21090.dt.v1.PQ;
 
@@ -135,7 +136,7 @@ public final class ExternalToTransportConverter {
         addAll(observation.getVardes(), convertVarden(source.getVarde()));
 
         observation.setBeskrivning(source.getBeskrivning());
-        observation.setPrognos(convert(source.getPrognos()));
+        observation.getPrognos().addAll(convertPrognoser(source.getPrognoser()));
 
         return observation;
     }
@@ -157,6 +158,14 @@ public final class ExternalToTransportConverter {
         pq.setUnit(source.getUnit());
         pq.setValue(source.getQuantity());
         return pq;
+    }
+
+    private Collection<PrognosType> convertPrognoser(Collection<Prognos> source) {
+        List<PrognosType> prognosTypes = new ArrayList<>();
+        for (Prognos prognos : source) {
+            prognosTypes.add(convert(prognos));
+        }
+        return prognosTypes;
     }
 
     private PrognosType convert(Prognos source) {
@@ -234,9 +243,9 @@ public final class ExternalToTransportConverter {
         PatientType patient = new PatientType();
         patient.setPersonId(IsoTypeConverter.toII(source.getId()));
 
-        addAll(patient.getFornamns(), source.getFornamns());
-        addAll(patient.getMellannamns(), source.getMellannamns());
-        addAll(patient.getEfternamns(), source.getEfternamns());
+        addAll(patient.getFornamns(), source.getFornamn());
+        addAll(patient.getMellannamns(), source.getMellannamn());
+        patient.setEfternamn(source.getEfternamn());
         addAll(patient.getSysselsattnings(), convertSysselsattnings(source.getSysselsattnings()));
         addAll(patient.getArbetsuppgifts(), convertArbetsuppgifts(source.getArbetsuppgifts()));
         return patient;
@@ -280,7 +289,6 @@ public final class ExternalToTransportConverter {
 
         SysselsattningType sysselsattning = new SysselsattningType();
         sysselsattning.setTypAvSysselsattning(IsoTypeConverter.toCD(source.getSysselsattningsTyp()));
-        sysselsattning.setDatum(source.getDatum());
         return sysselsattning;
     }
 

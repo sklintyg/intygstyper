@@ -27,9 +27,9 @@
   </patient>
 
   <skapadAv>
-    <hr:personal-id root="1.2.752.129.2.1.4.1" extension="Personal HSA-ID"/>
-    <hr:fullstandigtNamn>En Läkare</hr:fullstandigtNamn>
-    <hr:enhet>
+    <personal-id root="1.2.752.129.2.1.4.1" extension="Personal HSA-ID"/>
+    <fullstandigtNamn>En Läkare</fullstandigtNamn>
+    <enhet>
       <hr:enhets-id root="1.2.752.129.2.1.4.1" extension="VardenhetY"/>
       <hr:arbetsplatskod root="1.2.752.29.4.71" extension="123456789011"/>
       <hr:enhetsnamn>Kir mott</hr:enhetsnamn>
@@ -42,7 +42,7 @@
         <hr:vardgivare-id root="1.2.752.129.2.1.4.1" extension="VardgivarId"/>
         <hr:vardgivarnamn>Landstinget Norrland</hr:vardgivarnamn>
       </hr:vardgivare>
-    </hr:enhet>
+    </enhet>
   </skapadAv>
 
   <vardkontakt>
@@ -76,7 +76,8 @@
     <aktivitetskod code="AKT6" codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a" codeSystemName="kv_aktiviteter_intyg"/>
   </aktivitet>
   <aktivitet>
-    <aktivitetskod code="AKT12" codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a" codeSystemName="kv_aktiviteter_intyg"/>
+    <aktivitetskod code="AKT12" codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a"
+                   codeSystemName="kv_aktiviteter_intyg"/>
     <beskrivning>När skadan förbättrats rekommenderas muskeluppbyggande sjukgymnastik</beskrivning>
   </aktivitet>
   <aktivitet>
@@ -94,7 +95,8 @@
     <aktivitetskod code="AKT9" codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a" codeSystemName="kv_aktiviteter_intyg"/>
   </aktivitet>
   <aktivitet>
-    <aktivitetskod code="AKT10" codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a" codeSystemName="kv_aktiviteter_intyg"/>
+    <aktivitetskod code="AKT10" codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a"
+                   codeSystemName="kv_aktiviteter_intyg"/>
   </aktivitet>
 
   <observation>
@@ -104,8 +106,10 @@
   </observation>
 
   <observation>
-    <observationskod  code="288524001" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
-    <beskrivning>Bedömttillstånd: Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.</beskrivning>
+    <observationskod code="288524001" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
+    <beskrivning>Bedömttillstånd: Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre
+      tid.
+    </beskrivning>
   </observation>
 
   <observation>
@@ -190,9 +194,4 @@
       </beskrivning>
     </prognos>
   </observation>
-  <ovrigt>
-    <arrangmang>
-      <bokningsreferens>ABC-123</bokningsreferens>
-    </arrangmang>
-  </ovrigt>
 </utlatande>

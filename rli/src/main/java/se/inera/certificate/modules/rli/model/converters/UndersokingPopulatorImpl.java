@@ -16,7 +16,6 @@ import se.inera.certificate.model.Utforarroll;
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
 import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
-
 import se.inera.certificate.modules.rli.model.internal.Graviditet;
 import se.inera.certificate.modules.rli.model.internal.HoSPersonal;
 import se.inera.certificate.modules.rli.model.internal.KomplikationStyrkt;
@@ -90,7 +89,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
         LOG.trace("Converting to internal Utforare");
         Utforare utforsAv = new Utforare();
         utforsAv.setUtforartyp(source.getUtforartyp().getCode());
-        if (source.getAntasAv() != null){
+        if (source.getAntasAv() != null) {
             utforsAv.setAntasAv(convertToIntHoSPersonal(source.getAntasAv()));
         }
         return utforsAv;
@@ -102,7 +101,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
         intHoSPersonal.setPersonid(InternalModelConverterUtils.getExtensionFromId(extHoSPersonal.getId()));
         intHoSPersonal.setFullstandigtNamn(extHoSPersonal.getNamn());
         // intHoSPersonal.setBefattning(befattning);
-        
+
         Vardenhet intVardenhet = convertToIntVardenhet(extHoSPersonal.getVardenhet());
         intHoSPersonal.setVardenhet(intVardenhet);
 
@@ -110,12 +109,16 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
     }
 
     private Vardenhet convertToIntVardenhet(se.inera.certificate.model.Vardenhet source) {
-        if (source == null){
+        if (source == null) {
             LOG.trace("External vardenhet was null");
             return null;
         }
         Vardenhet vardenhet = new Vardenhet();
-        vardenhet.setEnhetsid(source.getId().getExtension());
+
+        if (source.getId() != null) {
+            vardenhet.setEnhetsid(source.getId().getExtension());
+        }
+
         vardenhet.setEnhetsnamn(source.getNamn());
         vardenhet.setEpost(source.getEpost());
         vardenhet.setPostadress(source.getPostadress());
@@ -127,6 +130,12 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
     }
 
     private Vardgivare convertToIntVardgivare(se.inera.certificate.model.Vardgivare source) {
+
+        if (source == null) {
+            LOG.trace("External vardgivare was null");
+            return null;
+        }
+
         Vardgivare vg = new Vardgivare();
         vg.setVardgivarid(source.getId().getExtension());
         vg.setVardgivarnamn(source.getNamn());

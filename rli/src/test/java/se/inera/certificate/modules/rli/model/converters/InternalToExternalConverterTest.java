@@ -3,7 +3,6 @@ package se.inera.certificate.modules.rli.model.converters;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
-
 import static se.inera.certificate.modules.rli.model.codes.HSpersonalTyp.HSA_ID;
 
 import java.io.IOException;
@@ -111,9 +110,9 @@ public class InternalToExternalConverterTest {
         se.inera.certificate.model.Patient extP = converter.convertPatient(intP);
 
         assertNotNull(extP);
-        assertEquals("Johan", extP.getFornamns().get(0));
-        assertEquals("Johansson", extP.getEfternamns().get(0));
-        assertEquals("Mutumba", extP.getMellannamns().get(0));
+        assertEquals("Johan", extP.getFornamn().get(0));
+        assertEquals("Johansson", extP.getEfternamn());
+        assertEquals("Mutumba", extP.getMellannamn().get(0));
         assertEquals("Johan Mutumba Johansson", extP.getFullstandigtNamn());
         assertEquals("19121212-1212", extP.getId().getExtension());
         assertEquals("Genvägen", extP.getPostadress());
@@ -182,11 +181,11 @@ public class InternalToExternalConverterTest {
         Aktivitet facit = buildSjukAktivitetFacit();
 
         assertEquals(false, akt.isEmpty());
-        
+
         assertNotNull(facit.getUtforsVid().getNamn());
         assertNotNull(akt.get(0).getUtforsVid().getNamn());
-        
-        //assertEquals(facit.getUtforsVid().getNamn(), akt.get(0).getUtforsVid().getNamn());
+
+        // assertEquals(facit.getUtforsVid().getNamn(), akt.get(0).getUtforsVid().getNamn());
 
     }
 
@@ -207,9 +206,9 @@ public class InternalToExternalConverterTest {
         antasAv.setFullstandigtNamn("Dr Jekyll");
         antasAv.setPersonid("190101010101");
         antasAv.setVardenhet(buildVardenhet());
-        
+
         Utforare utforsAv = new Utforare();
-        utforsAv.setAntasAv(antasAv); 
+        utforsAv.setAntasAv(antasAv);
         utforsAv.setUtforartyp(UtforarTypKod.AV_HOS_PERSONAL.getCode());
         return utforsAv;
     }
@@ -263,7 +262,7 @@ public class InternalToExternalConverterTest {
         tid1.setTom(PartialConverter.stringToPartial("2010-01-01"));
         akt1.setAktivitetstid(tid1);
         akt1.setPlats("Hemma");
-        //akt1.setUtforsVid(buildExternalVardenhet());
+        // akt1.setUtforsVid(buildExternalVardenhet());
         akts.add(akt1);
 
         /** Second Aktivitet */
@@ -304,7 +303,7 @@ public class InternalToExternalConverterTest {
         vardenhet.setPostnummer("11111");
         vardenhet.setPostort("Solna");
         vardenhet.setTelefonnummer("1337");
-        
+
         uGravid.setUtforsVid(vardenhet);
         uGravid.setUndersokningsdatum("2010-12-31");
 
@@ -347,18 +346,18 @@ public class InternalToExternalConverterTest {
     public void testConvertFullInternalToExternal() {
         Utlatande extUtlatande = readUtlatandeFromJsonFile("/rli-sjuk-1-template.json");
         se.inera.certificate.modules.rli.model.internal.Utlatande intUtlatande = buildInternalUtlatande();
-        
+
         Utlatande externalConverted = converter.convertUtlatandeFromInternalToExternal(intUtlatande);
-        
+
         assertLenientEquals(extUtlatande, externalConverted);
     }
 
     private se.inera.certificate.modules.rli.model.internal.Utlatande buildInternalUtlatande() {
         se.inera.certificate.modules.rli.model.internal.Utlatande utlatande = new se.inera.certificate.modules.rli.model.internal.Utlatande();
-        
+
         utlatande.setUtlatandeid("39f80245-9730-4d76-aaff-b04a2f3cfbe7");
         utlatande.setUtlatandeidroot("???");
-        
+
         LocalDateTime signeringsDatum = new LocalDateTime(2013, 8, 12, 11, 25);
         utlatande.setSigneringsdatum(signeringsDatum);
         LocalDateTime skickatDatum = new LocalDateTime(2013, 8, 12, 11, 25, 30);
@@ -375,7 +374,7 @@ public class InternalToExternalConverterTest {
         pat.setPersonid("19121212-1212");
         pat.setFullstandigtNamn("Test Testsson");
         utlatande.setPatient(pat);
-        
+
         Arrangemang arr = new Arrangemang();
         arr.setArrangemangsdatum("2013-07-22");
         arr.setArrangemangslutdatum("2013-08-02");
@@ -385,7 +384,7 @@ public class InternalToExternalConverterTest {
         arr.setBokningsreferens("12345678-90");
         arr.setBokningsdatum("2013-01-01");
         utlatande.setArrangemang(arr);
-        
+
         Vardgivare vardgivare = new Vardgivare();
         vardgivare.setVardgivarid("vardgivare_test");
         vardgivare.setVardgivarnamn("Testvårdgivaren");
@@ -420,27 +419,26 @@ public class InternalToExternalConverterTest {
         undersokning.setForstaUndersokningsplats("Trestadens lasarett");
 
         undersokning.setUtforsVid(vardenhet);
-        
+
         Vardgivare vardgivare2 = new Vardgivare();
         vardgivare2.setVardgivarid("vardgivare_test2");
         vardgivare2.setVardgivarnamn("Testvårdgivaren");
-        
+
         Vardenhet vardenhet2 = new Vardenhet();
         vardenhet2.setVardgivare(vardgivare2);
         vardenhet2.setEnhetsid("vardenhet_test2");
         vardenhet2.setEnhetsnamn("Elixirkliniken, London");
-        
+
         HoSPersonal antasAv = new HoSPersonal();
         antasAv.setFullstandigtNamn("Dr Jekyll");
         antasAv.setPersonid("190101010101");
         antasAv.setVardenhet(vardenhet2);
-        
+
         Utforare utforsAv = new Utforare();
-        utforsAv.setAntasAv(antasAv); 
+        utforsAv.setAntasAv(antasAv);
         utforsAv.setUtforartyp(UtforarTypKod.AV_HOS_PERSONAL.getCode());
         undersokning.setUtforsAv(utforsAv);
         utlatande.setUndersokning(undersokning);
-        
 
         return utlatande;
     }

@@ -1,4 +1,5 @@
 /**
+/**
  * Copyright (C) 2013 Inera AB (http://www.inera.se)
  *
  * This file is part of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules).
@@ -18,15 +19,13 @@
  */
 package se.inera.certificate.modules.rli.model.converters;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
-
 import se.inera.certificate.common.v1.AktivitetType;
 import se.inera.certificate.common.v1.ObservationType;
 import se.inera.certificate.common.v1.PatientType;
@@ -113,22 +112,22 @@ public class ExternalToTransportConverterTest {
         Patient patient = new Patient();
         patient.setPostadress("Testvägen 23");
         patient.setPostnummer("12345");
-        patient.setPostort("Teststaden"); 
+        patient.setPostort("Teststaden");
         List<Arbetsuppgift> arbetsuppgifts = new ArrayList<Arbetsuppgift>();
         Arbetsuppgift a = new Arbetsuppgift();
         a.setTypAvArbetsuppgift("Testare");
         arbetsuppgifts.add(a);
         patient.setArbetsuppgifts(arbetsuppgifts);
-        
+
         List<String> fN = new ArrayList<String>();
         fN.add("Test");
         List<String> mN = new ArrayList<String>();
         mN.add("von");
-        
-        patient.setFornamns(fN);
-        patient.setMellannamns(mN);
-        patient.setEfternamns(Arrays.asList("Testsson"));
-        
+
+        patient.setFornamn(fN);
+        patient.setMellannamn(mN);
+        patient.setEfternamn("Testsson");
+
         List<PatientRelation> pR = new ArrayList<PatientRelation>();
 
         PatientRelation patientRelation = new PatientRelation();
@@ -146,7 +145,7 @@ public class ExternalToTransportConverterTest {
         relationsTyps.add(new Kod("RelationsTypsKod"));
 
         patientRelation.setEfternamn("RelationEfterNamn");
-        patientRelation.getFornamns().addAll(relationForNamn);        
+        patientRelation.getFornamn().addAll(relationForNamn);
         patientRelation.setPersonId(relationId);
         patientRelation.setRelationskategori(new Kod("relationsKategori"));
         patientRelation.getRelationTyps().addAll(relationsTyps);
@@ -162,7 +161,6 @@ public class ExternalToTransportConverterTest {
     private Observation buildObservation() {
         Observation observation = new Observation();
         observation.setBeskrivning("Observationsbeskrivning");
-        observation.setForekomst(true);
         observation.setObservationsKod(new Kod("SNOMED-CT"));
         return observation;
     }

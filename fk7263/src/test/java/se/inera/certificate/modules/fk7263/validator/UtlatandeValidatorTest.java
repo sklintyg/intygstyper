@@ -117,9 +117,9 @@ public class UtlatandeValidatorTest {
         Fk7263Intyg utlatande = getValidUtlatande();
 
         // remove all names
-        utlatande.getPatient().setFornamns(null);
-        utlatande.getPatient().setMellannamns(null);
-        utlatande.getPatient().setEfternamns(null);
+        utlatande.getPatient().setFornamn(null);
+        utlatande.getPatient().setMellannamn(null);
+        utlatande.getPatient().setEfternamn(null);
 
         assertEquals(1, new UtlatandeValidator(utlatande).validate().size());
     }

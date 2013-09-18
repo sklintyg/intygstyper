@@ -228,13 +228,12 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 
         intPatient.setPersonid(InternalModelConverterUtils.getExtensionFromId(extPatient.getId()));
 
-        String efterNamn = StringUtils.join(extPatient.getEfternamns(), " ");
-        intPatient.setEfternamn(efterNamn);
+        intPatient.setEfternamn(extPatient.getEfternamn());
 
-        String forNamn = StringUtils.join(extPatient.getFornamns(), " ");
+        String forNamn = StringUtils.join(extPatient.getFornamn(), " ");
         intPatient.setFornamn(forNamn);
 
-        String fullstandigtNamn = forNamn.concat(" ").concat(efterNamn);
+        String fullstandigtNamn = forNamn.concat(" ").concat(extPatient.getEfternamn());
         intPatient.setFullstandigtNamn(fullstandigtNamn);
 
         intPatient.setPostadress(extPatient.getPostadress());

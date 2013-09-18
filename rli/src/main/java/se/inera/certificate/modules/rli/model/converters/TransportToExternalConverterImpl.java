@@ -19,23 +19,20 @@
 package se.inera.certificate.modules.rli.model.converters;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.common.v1.EnhetType;
-import se.inera.certificate.common.v1.HosPersonalType;
-import se.inera.certificate.common.v1.VardgivareType;
+import riv.insuranceprocess.healthreporting._2.EnhetType;
+import riv.insuranceprocess.healthreporting._2.VardgivareType;
 import se.inera.certificate.common.v1.AktivitetType;
+import se.inera.certificate.common.v1.HosPersonalType;
 import se.inera.certificate.common.v1.ObservationType;
 import se.inera.certificate.common.v1.PatientRelationType;
 import se.inera.certificate.common.v1.PatientType;
 import se.inera.certificate.common.v1.RekommendationType;
 import se.inera.certificate.common.v1.UtforarrollType;
-
-//Common model
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.PartialInterval;
@@ -45,11 +42,12 @@ import se.inera.certificate.model.Rekommendation;
 import se.inera.certificate.model.Utforarroll;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
-
-//Specific for RLI
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
+
+//Common model
+//Specific for RLI
 
 /**
  * Converter between transport and external model.
@@ -174,8 +172,6 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
     private Observation convertObservation(ObservationType source) {
         Observation observation = new Observation();
 
-        observation.setObservationsId(IsoTypeConverter.toId(source.getObservationsId()));
-
         if (source.getObservationsperiod() != null) {
             observation.setObservationsPeriod(new PartialInterval(source.getObservationsperiod().getFrom(), source
                     .getObservationsperiod().getTom()));
@@ -282,7 +278,6 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 
         Aktivitet aktivitet = new Aktivitet();
 
-        aktivitet.setAktivitetsid(IsoTypeConverter.toId(source.getAktivitetsId()));
         aktivitet.setBeskrivning(source.getBeskrivning());
         aktivitet.setAktivitetskod(IsoTypeConverter.toKod(source.getAktivitetskod()));
         if (source.getAktivitetstid() != null) {
@@ -341,9 +336,9 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
         patient.setPostort(source.getPostort());
 
         patient.setPatientrelations(convertPatientRelations(source.getPatientRelations()));
-        patient.setFornamns(source.getFornamns());
-        patient.setMellannamns(source.getMellannamns());
-        patient.setEfternamns(Arrays.asList(source.getEfternamn()));
+        patient.setFornamn(source.getFornamns());
+        patient.setMellannamn(source.getMellannamns());
+        patient.setEfternamn(source.getEfternamn());
 
         return patient;
     }
@@ -367,9 +362,9 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
         patientRelation.setPostadress(source.getPostadress());
         patientRelation.setPostnummer(source.getPostnummer());
         patientRelation.setPostort(source.getPostort());
-        patientRelation.getFornamns().addAll(source.getFornamns());
+        patientRelation.getFornamn().addAll(source.getFornamns());
         patientRelation.setEfternamn(source.getEfternamn());
-        patientRelation.getMellannamns().addAll(source.getMellannamns());
+        patientRelation.getMellannamn().addAll(source.getMellannamns());
 
         for (iso.v21090.dt.v1.CD cd : source.getRelationTyps()) {
             patientRelation.getRelationTyps().add(IsoTypeConverter.toKod(cd));

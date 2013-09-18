@@ -367,9 +367,9 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
 
     Patient convertPatient(se.inera.certificate.modules.rli.model.internal.Patient source) {
         Patient patient = new Patient();
-        patient.setEfternamns(Arrays.asList(source.getEfternamn()));
-        patient.setFornamns(Arrays.asList(source.getFornamn()));
-        patient.setMellannamns(Arrays.asList(source.getMellannamn()));
+        patient.setEfternamn(source.getEfternamn());
+        patient.setFornamn(Arrays.asList(source.getFornamn()));
+        patient.setMellannamn(Arrays.asList(source.getMellannamn()));
         patient.setId(new Id(PERS_ID_ROOT, source.getPersonid()));
         patient.setPostadress(source.getPostadress());
         patient.setPostnummer(source.getPostnummer());

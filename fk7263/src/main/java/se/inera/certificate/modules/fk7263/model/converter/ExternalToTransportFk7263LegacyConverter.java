@@ -10,7 +10,6 @@ import java.util.List;
 import org.joda.time.LocalDate;
 
 import se.inera.certificate.model.Aktivitet;
-import se.inera.certificate.model.ArbetsformagaNedsattning;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
@@ -84,7 +83,7 @@ public final class ExternalToTransportFk7263LegacyConverter {
         if (diagnos != null) {
             register.getLakarutlatande().setMedicinsktTillstand(toMedicinsktTillstand(diagnos));
         }
-        
+
         // Add collections with wrapped nullchecks method
         addAll(register.getLakarutlatande().getAktivitets(), convert(utlatande.getAktiviteter()));
         addAll(register.getLakarutlatande().getReferens(), convertReferenser(utlatande.getReferenser()));
@@ -92,15 +91,17 @@ public final class ExternalToTransportFk7263LegacyConverter {
 
         Observation kroppsfunktion = utlatande.findObservationByKategori(ObservationsKoder.KROPPSFUNKTIONER);
         if (kroppsfunktion != null) {
-            register.getLakarutlatande().getFunktionstillstands().add(toFunktionstillstand(kroppsfunktion, TypAvFunktionstillstand.KROPPSFUNKTION));
+            register.getLakarutlatande().getFunktionstillstands()
+                    .add(toFunktionstillstand(kroppsfunktion, TypAvFunktionstillstand.KROPPSFUNKTION));
         }
 
         Observation aktivitet = utlatande.findObservationByKategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
         if (aktivitet != null) {
 
             // add arbetsformaga to aktivitetsbegransing
-            FunktionstillstandType aktivitetsbegransing = toFunktionstillstand(aktivitet, TypAvFunktionstillstand.AKTIVITET);
-            aktivitetsbegransing.setArbetsformaga(toArbetsformaga(utlatande, aktivitet));
+            FunktionstillstandType aktivitetsbegransing = toFunktionstillstand(aktivitet,
+                    TypAvFunktionstillstand.AKTIVITET);
+            aktivitetsbegransing.setArbetsformaga(toArbetsformaga(utlatande));
 
             register.getLakarutlatande().getFunktionstillstands().add(aktivitetsbegransing);
 
@@ -108,37 +109,30 @@ public final class ExternalToTransportFk7263LegacyConverter {
         return register;
     }
 
-    private static FunktionstillstandType toFunktionstillstand(Observation observation, TypAvFunktionstillstand typAvFunktionstillstand) {
+    private static FunktionstillstandType toFunktionstillstand(Observation observation,
+            TypAvFunktionstillstand typAvFunktionstillstand) {
         FunktionstillstandType funktionstillstandType = new FunktionstillstandType();
         funktionstillstandType.setTypAvFunktionstillstand(typAvFunktionstillstand);
         funktionstillstandType.setBeskrivning(observation.getBeskrivning());
         return funktionstillstandType;
     }
-    public List<Observation> getObservationsByKod(Fk7263Utlatande utlatande, Kod observationsKod) {
-        List<Observation> observations = new ArrayList<>();
-        for (Observation observation : utlatande.getObservations()) {
-            if (observation.getObservationsKod() != null && observation.getObservationsKod().equals(observationsKod)) {
-                observations.add(observation);
-            }
-        }
-        return observations;
-    }
-    private static ArbetsformagaType toArbetsformaga(Fk7263Utlatande utlatande, Observation aktivitetsbegransing) {
+
+    private static ArbetsformagaType toArbetsformaga(Fk7263Utlatande utlatande) {
 
         ArbetsformagaType arbetsformagaType = new ArbetsformagaType();
 
         List<Observation> arbetsformagas = utlatande.getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
 
-        if(arbetsformagas != null && arbetsformagas.size() > 0) {
+        if (arbetsformagas != null && arbetsformagas.size() > 0) {
             Observation firstObservation = arbetsformagas.get(0);
-            if(firstObservation.getPrognos() != null) {
-                Prognos prognos = firstObservation.getPrognos();
+            if (firstObservation.getPrognoser() != null && !firstObservation.getPrognoser().isEmpty()) {
+                Prognos prognos = firstObservation.getPrognoser().get(0);
 
                 String beskrivning = prognos.getBeskrivning();
                 arbetsformagaType.setMotivering(beskrivning);
 
                 Kod prognosKod = prognos.getPrognosKod();
-                if(prognosKod != null) {
+                if (prognosKod != null) {
                     String fk7263String = Prognoskoder.mapToFk7263.get(prognosKod);
                     arbetsformagaType.setPrognosangivelse(Prognosangivelse.fromValue(fk7263String));
                 }
@@ -164,7 +158,8 @@ public final class ExternalToTransportFk7263LegacyConverter {
         for (Observation arbetsformaga : arbetsformagas) {
             ArbetsformagaNedsattningType nedsattningType = new ArbetsformagaNedsattningType();
 
-            if (arbetsformaga.getVarde() != null && arbetsformaga.getVarde() != null && !arbetsformaga.getVarde().isEmpty()) {
+            if (arbetsformaga.getVarde() != null && arbetsformaga.getVarde() != null
+                    && !arbetsformaga.getVarde().isEmpty()) {
                 switch (arbetsformaga.getVarde().get(0).getQuantity().intValue()) {
                 case 75: // 75% Arbetsformaga
                     nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_1_4);
@@ -175,11 +170,12 @@ public final class ExternalToTransportFk7263LegacyConverter {
                 case 25: // 25% Arbetsformaga
                     nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_3_4);
                     break;
-                case 0:  // 0% Arbetsformaga
+                case 0: // 0% Arbetsformaga
                     nedsattningType.setNedsattningsgrad(Nedsattningsgrad.HELT_NEDSATT);
                     break;
                 default:
-                    throw new IllegalStateException("Wrong nedsättningsgrad " + arbetsformaga.getVarde().get(0).getQuantity());
+                    throw new IllegalStateException("Wrong nedsättningsgrad "
+                            + arbetsformaga.getVarde().get(0).getQuantity());
                 }
             }
 
@@ -214,7 +210,7 @@ public final class ExternalToTransportFk7263LegacyConverter {
         try {
             Kod sysselsattning = source.getSysselsattningsTyp();
             String fk7263String = Sysselsattningskoder.mapToFk7263.get(sysselsattning);
-            if(fk7263String != null) {
+            if (fk7263String != null) {
                 sysselsattningTyp = new SysselsattningType();
                 sysselsattningTyp.setTypAvSysselsattning(TypAvSysselsattning.fromValue(fk7263String));
             }
@@ -224,35 +220,6 @@ public final class ExternalToTransportFk7263LegacyConverter {
         }
 
         return sysselsattningTyp;
-    }
-
-    private static ArbetsformagaNedsattningType toJaxb(ArbetsformagaNedsattning source) {
-        ArbetsformagaNedsattningType arbetsformagaNedsattningType = new ArbetsformagaNedsattningType();
-        arbetsformagaNedsattningType.setNedsattningsgrad(toJaxb(source.getNedsattningsgrad()));
-        arbetsformagaNedsattningType.setVaraktighetFrom(source.getVaraktighetFrom());
-        arbetsformagaNedsattningType.setVaraktighetTom(source.getVaraktighetTom());
-        return arbetsformagaNedsattningType;
-    }
-
-    private static Nedsattningsgrad toJaxb(se.inera.certificate.model.Nedsattningsgrad source) {
-        Nedsattningsgrad nedsattningsgrad;
-        switch (source) {
-        case HELT_NEDSATT:
-            nedsattningsgrad = Nedsattningsgrad.HELT_NEDSATT;
-            break;
-        case NEDSATT_MED_1_2:
-            nedsattningsgrad = Nedsattningsgrad.NEDSATT_MED_1_2;
-            break;
-        case NEDSATT_MED_1_4:
-            nedsattningsgrad = Nedsattningsgrad.NEDSATT_MED_1_4;
-            break;
-        case NEDSATT_MED_3_4:
-            nedsattningsgrad = Nedsattningsgrad.NEDSATT_MED_3_4;
-            break;
-        default:
-            throw new IllegalArgumentException("Can not convert 'Nedsattningsgrad' " + source);
-        }
-        return nedsattningsgrad;
     }
 
     private static List<VardkontaktType> convertVardkontakter(List<Vardkontakt> source) {
@@ -280,7 +247,7 @@ public final class ExternalToTransportFk7263LegacyConverter {
         try {
             Kod vardkontakttyp = source.getVardkontakttyp();
             String fk7263String = Vardkontakttypkoder.mapToFk7263.get(vardkontakttyp);
-            if(fk7263String != null) {
+            if (fk7263String != null) {
                 vardkontaktType = new VardkontaktType();
                 vardkontaktType.setVardkontaktstid(source.getVardkontaktstid().getStart());
                 vardkontaktType.setVardkontakttyp(Vardkontakttyp.fromValue(fk7263String));
@@ -318,7 +285,7 @@ public final class ExternalToTransportFk7263LegacyConverter {
         try {
             Kod referenstyp = source.getReferenstyp();
             String fk7363String = Referenstypkoder.mapToFk7263.get(referenstyp);
-            if(fk7363String != null) {
+            if (fk7363String != null) {
                 referensType = new ReferensType();
                 referensType.setDatum(source.getDatum());
                 referensType.setReferenstyp(Referenstyp.fromValue(fk7363String));
@@ -433,17 +400,15 @@ public final class ExternalToTransportFk7263LegacyConverter {
     private static String extractFullstandigtNamn(Fk7263Patient source) {
         List<String> names = new ArrayList<>();
 
-        if (source.getFornamns() != null) {
-            names.addAll(source.getFornamns());
+        if (source.getFornamn() != null) {
+            names.addAll(source.getFornamn());
         }
 
-        if (source.getMellannamns() != null) {
-            names.addAll(source.getMellannamns());
+        if (source.getMellannamn() != null) {
+            names.addAll(source.getMellannamn());
         }
 
-        if (source.getEfternamns() != null) {
-            names.addAll(source.getEfternamns());
-        }
+        names.add(source.getEfternamn());
 
         return Strings.join(" ", names);
     }

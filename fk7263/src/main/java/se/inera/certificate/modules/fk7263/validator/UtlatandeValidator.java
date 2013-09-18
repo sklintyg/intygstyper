@@ -249,7 +249,7 @@ public class UtlatandeValidator {
         boolean valid75 = validArbetsformageNedsattning(utlatande.getNedsattning75percent());
         boolean valid50 = validArbetsformageNedsattning(utlatande.getNedsattning50percent());
         boolean valid25 = validArbetsformageNedsattning(utlatande.getNedsattning25percent());
-        
+
         if (!valid100 && !valid75 && !valid50 && !valid25) {
             validationErrors.add("Field 8b: At least 1 nedsatt arbetsformaga field must be filled");
         }
@@ -263,7 +263,7 @@ public class UtlatandeValidator {
      * @return
      */
     private boolean validArbetsformageNedsattning(Observation nedsattning) {
-        
+
         if (nedsattning == null || !ObservationsKoder.ARBETSFORMAGA.equals(nedsattning.getObservationsKod())) {
             return false;
         }
@@ -272,16 +272,17 @@ public class UtlatandeValidator {
             if (nedsattning.getObservationsPeriod().getFrom().isBefore(nedsattning.getObservationsPeriod().getTom())) {
                 return true;
             } else {
-              //Must be something wrong with the observationPeriod:
-               validationErrors.add("Field 8b: Invalid date interval (from " + nedsattning.getObservationsPeriod().getFrom() + ", tom "  + nedsattning.getObservationsPeriod().getTom());
+                // Must be something wrong with the observationPeriod:
+                validationErrors.add("Field 8b: Invalid date interval (from "
+                        + nedsattning.getObservationsPeriod().getFrom() + ", tom "
+                        + nedsattning.getObservationsPeriod().getTom());
             }
 
         } else {
-            //No period given
+            // No period given
             validationErrors.add("Field 8b: No date interval given");
         }
-        
-        
+
         return false;
     }
 
@@ -305,8 +306,9 @@ public class UtlatandeValidator {
 
         Referens annat = utlatande.getReferens(Referenstypkoder.ANNAT);
         boolean garEjAttBedomma = utlatande.getArbetsformaga() != null
-                && utlatande.getArbetsformaga().getPrognos() != null
-                && Prognoskoder.DET_GAR_INTE_ATT_BEDOMA.equals(utlatande.getArbetsformaga().getPrognos()
+                && utlatande.getArbetsformaga().getPrognoser() != null
+                && !utlatande.getArbetsformaga().getPrognoser().isEmpty()
+                && Prognoskoder.DET_GAR_INTE_ATT_BEDOMA.equals(utlatande.getArbetsformaga().getPrognoser().get(0)
                         .getPrognosKod());
 
         if ((annat != null || garEjAttBedomma) && !hasKommentar) {

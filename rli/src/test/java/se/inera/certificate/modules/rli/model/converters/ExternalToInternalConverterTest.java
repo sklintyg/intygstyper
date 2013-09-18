@@ -50,7 +50,8 @@ public class ExternalToInternalConverterTest {
 
         Utlatande extUtlatande = readUtlatandeFromJsonFile("/rli-example-1.json");
 
-        se.inera.certificate.modules.rli.model.internal.Utlatande res = converter.convertUtlatandeFromExternalToInternal(extUtlatande);
+        se.inera.certificate.modules.rli.model.internal.Utlatande res = converter
+                .convertUtlatandeFromExternalToInternal(extUtlatande);
 
         assertNotNull(res);
 
@@ -81,7 +82,7 @@ public class ExternalToInternalConverterTest {
 
         return extUtlatande;
     }
-    
+
     @Test
     public void testConvertToIntPatient() {
 
@@ -106,8 +107,8 @@ public class ExternalToInternalConverterTest {
         Patient pat = new Patient();
 
         pat.setId(new Id("PersonId", "19121212-1212"));
-        pat.setFornamns(Arrays.asList("Abel", "Baker"));
-        pat.setEfternamns(Arrays.asList("Smith Doe"));
+        pat.setFornamn(Arrays.asList("Abel", "Baker"));
+        pat.setEfternamn("Smith Doe");
         pat.setPostadress("Testgatan 123");
         pat.setPostnummer("123 45");
         pat.setPostort("Teststaden");

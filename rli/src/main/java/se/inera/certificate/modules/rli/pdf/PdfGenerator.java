@@ -34,5 +34,6 @@ public interface PdfGenerator {
      * @throws PdfGeneratorException
      */
     public abstract byte[] generatePDF(Utlatande utlatande) throws PdfGeneratorException;
-
+    
+    public abstract String generatePdfFilename(Utlatande utlatande);
 }
