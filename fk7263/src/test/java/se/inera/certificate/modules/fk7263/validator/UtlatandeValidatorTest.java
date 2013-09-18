@@ -1,16 +1,15 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
-
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.PartialInterval;
@@ -117,9 +116,9 @@ public class UtlatandeValidatorTest {
         Fk7263Intyg utlatande = getValidUtlatande();
 
         // remove all names
-        utlatande.getPatient().setFornamns(null);
-        utlatande.getPatient().setMellannamns(null);
-        utlatande.getPatient().setEfternamns(null);
+        utlatande.getPatient().setFornamn(null);
+        utlatande.getPatient().setMellannamn(null);
+        utlatande.getPatient().setEfternamn(null);
 
         assertEquals(1, new UtlatandeValidator(utlatande).validate().size());
     }

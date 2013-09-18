@@ -1,11 +1,11 @@
 package se.inera.certificate.modules.fk7263.model.internal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static se.inera.certificate.model.util.Iterables.find;
 import static se.inera.certificate.model.util.Strings.emptyToNull;
 import static se.inera.certificate.model.util.Strings.join;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Kod;
@@ -68,8 +68,8 @@ public class Fk7263Intyg extends Fk7263Utlatande {
         }
 
         Vardenhet enhet = getSkapadAv().getVardenhet();
-        String nameAndAddress = getSkapadAv().getNamn() + "\n" + enhet.getNamn() + "\n" + enhet.getPostadress() + "\n" + enhet.getPostnummer() + " " + enhet.getPostort() + "\n"
-                + enhet.getTelefonnummer();
+        String nameAndAddress = getSkapadAv().getNamn() + "\n" + enhet.getNamn() + "\n" + enhet.getPostadress() + "\n"
+                + enhet.getPostnummer() + " " + enhet.getPostort() + "\n" + enhet.getTelefonnummer();
         return nameAndAddress;
     }
 
@@ -137,32 +137,38 @@ public class Fk7263Intyg extends Fk7263Utlatande {
     }
 
     public String getPrognosText() {
+        Prognos prognos = getPrognos();
+
+        if (prognos == null)
+            return null;
+
+        return prognos.getBeskrivning();
+    }
+
+    private Prognos getPrognos() {
         Observation arbetsformaga = getArbetsformaga();
-        if (arbetsformaga != null) {
-            Prognos prognos = arbetsformaga.getPrognos();
-            if (prognos != null) {
-                return prognos.getBeskrivning();
-            }
+        if (arbetsformaga == null || arbetsformaga.getPrognoser() == null || arbetsformaga.getPrognoser().isEmpty()) {
+            return null;
         }
-        return null;
+
+        return arbetsformaga.getPrognoser().get(0);
     }
 
     private Kod getPrognosKod() {
-        Observation arbetsformaga = getArbetsformaga();
-        if (arbetsformaga != null) {
-            Prognos prognos = arbetsformaga.getPrognos();
-            if (prognos != null) {
-                return prognos.getPrognosKod();
-            }
-        }
-        return null;
+        Prognos prognos = getPrognos();
+
+        if (prognos == null)
+            return null;
+
+        return prognos.getPrognosKod();
     }
 
     public Observation getArbetsformaga(final Double nedsattningsgrad) {
         return find(getObservationsByKod(ObservationsKoder.ARBETSFORMAGA), new Predicate<Observation>() {
             @Override
             public boolean apply(Observation arbetsformaga) {
-                return arbetsformaga.getVarde() != null && !arbetsformaga.getVarde().isEmpty() && nedsattningsgrad.equals(arbetsformaga.getVarde().get(0).getQuantity());
+                return arbetsformaga.getVarde() != null && !arbetsformaga.getVarde().isEmpty()
+                        && nedsattningsgrad.equals(arbetsformaga.getVarde().get(0).getQuantity());
             }
         }, null);
     }
@@ -189,7 +195,8 @@ public class Fk7263Intyg extends Fk7263Utlatande {
     }
 
     public boolean isArbetsformagaIForhallandeTillForaldraledighet() {
-        return containsSysselsattningKod(Sysselsattningskoder.MAMMALEDIG) || containsSysselsattningKod(Sysselsattningskoder.PAPPALEDIG);
+        return containsSysselsattningKod(Sysselsattningskoder.MAMMALEDIG)
+                || containsSysselsattningKod(Sysselsattningskoder.PAPPALEDIG);
     }
 
     public boolean isArbetsformagaIForhallandeTillNuvarandeArbete() {
@@ -284,7 +291,8 @@ public class Fk7263Intyg extends Fk7263Utlatande {
         List<Vardkontakt> vardKontakter = getVardkontakter();
         List<Referens> referens = getReferenser();
 
-        return (kommentars != null && kommentars.size() > 0) || (vardKontakter != null && vardKontakter.size() > 0) || (referens != null && referens.size() > 0);
+        return (kommentars != null && kommentars.size() > 0) || (vardKontakter != null && vardKontakter.size() > 0)
+                || (referens != null && referens.size() > 0);
     }
 
     public boolean isFilledLimitation() {
@@ -294,7 +302,9 @@ public class Fk7263Intyg extends Fk7263Utlatande {
 
     public boolean isFilledRecommendations() {
         Aktivitet ovrigt = getRekommenderarOvrigt();
-        return getRekommenderarKontaktMedArbetsformedlingen() != null || getRekommenderarKontaktMedForetagshalsovarden() != null || (ovrigt != null && !ovrigt.getBeskrivning().trim().equals(""));
+        return getRekommenderarKontaktMedArbetsformedlingen() != null
+                || getRekommenderarKontaktMedForetagshalsovarden() != null
+                || (ovrigt != null && !ovrigt.getBeskrivning().trim().equals(""));
     }
 
     public boolean isFilledPlannedTreatment() {
@@ -303,24 +313,28 @@ public class Fk7263Intyg extends Fk7263Utlatande {
     }
 
     public boolean isFilledWorkRehab() {
-        return getArbetsinriktadRehabiliteringAktuell() != null || getArbetsinriktadRehabiliteringEjAktuell() != null || getArbetsinriktadRehabiliteringEjBedombar() != null;
+        return getArbetsinriktadRehabiliteringAktuell() != null || getArbetsinriktadRehabiliteringEjAktuell() != null
+                || getArbetsinriktadRehabiliteringEjBedombar() != null;
     }
 
     public boolean isFilledPatientWorkCapacity() {
-        return isArbetsformagaIForhallandeTillNuvarandeArbete() || isArbetsformagaIForhallandeTillArbetsloshet() || isArbetsformagaIForhallandeTillForaldraledighet();
+        return isArbetsformagaIForhallandeTillNuvarandeArbete() || isArbetsformagaIForhallandeTillArbetsloshet()
+                || isArbetsformagaIForhallandeTillForaldraledighet();
     }
 
     public boolean isFilledPatientWorkCapacityJudgement() {
         Observation value = getArbetsformagaAktivitetsbegransning();
-        if (value != null) {
-            Prognos prognos = value.getPrognos();
-            return prognos != null && prognos.getBeskrivning() != null && !prognos.getBeskrivning().trim().equals("");
-        }
-        return false;
+
+        if (value == null || value.getPrognoser() == null || value.getPrognoser().isEmpty())
+            return false;
+
+        Prognos prognos = value.getPrognoser().get(0);
+        return prognos != null && prognos.getBeskrivning() != null && !prognos.getBeskrivning().trim().equals("");
     }
 
     public boolean isFilledPrognosis() {
-        return isPrognosFullAterstallning() || isPrognosDelvisAterstallning() || isPrognosEjAterstallning() || isPrognosAterstallningGarEjBedomma();
+        return isPrognosFullAterstallning() || isPrognosDelvisAterstallning() || isPrognosEjAterstallning()
+                || isPrognosAterstallningGarEjBedomma();
     }
 
     public boolean isFilledPatientOtherTransport() {

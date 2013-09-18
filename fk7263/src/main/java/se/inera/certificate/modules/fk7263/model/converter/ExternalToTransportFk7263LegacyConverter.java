@@ -1,16 +1,14 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static se.inera.certificate.model.util.Iterables.addAll;
 import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toCD;
 import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toII;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.joda.time.LocalDate;
-
 import se.inera.certificate.model.Aktivitet;
-import se.inera.certificate.model.ArbetsformagaNedsattning;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
@@ -100,7 +98,7 @@ public final class ExternalToTransportFk7263LegacyConverter {
 
             // add arbetsformaga to aktivitetsbegransing
             FunktionstillstandType aktivitetsbegransing = toFunktionstillstand(aktivitet, TypAvFunktionstillstand.AKTIVITET);
-            aktivitetsbegransing.setArbetsformaga(toArbetsformaga(utlatande, aktivitet));
+            aktivitetsbegransing.setArbetsformaga(toArbetsformaga(utlatande));
 
             register.getLakarutlatande().getFunktionstillstands().add(aktivitetsbegransing);
 
@@ -114,16 +112,8 @@ public final class ExternalToTransportFk7263LegacyConverter {
         funktionstillstandType.setBeskrivning(observation.getBeskrivning());
         return funktionstillstandType;
     }
-    public List<Observation> getObservationsByKod(Fk7263Utlatande utlatande, Kod observationsKod) {
-        List<Observation> observations = new ArrayList<>();
-        for (Observation observation : utlatande.getObservations()) {
-            if (observation.getObservationsKod() != null && observation.getObservationsKod().equals(observationsKod)) {
-                observations.add(observation);
-            }
-        }
-        return observations;
-    }
-    private static ArbetsformagaType toArbetsformaga(Fk7263Utlatande utlatande, Observation aktivitetsbegransing) {
+
+    private static ArbetsformagaType toArbetsformaga(Fk7263Utlatande utlatande) {
 
         ArbetsformagaType arbetsformagaType = new ArbetsformagaType();
 
@@ -131,8 +121,8 @@ public final class ExternalToTransportFk7263LegacyConverter {
 
         if(arbetsformagas != null && arbetsformagas.size() > 0) {
             Observation firstObservation = arbetsformagas.get(0);
-            if(firstObservation.getPrognos() != null) {
-                Prognos prognos = firstObservation.getPrognos();
+            if(firstObservation.getPrognoser() != null && !firstObservation.getPrognoser().isEmpty()) {
+                Prognos prognos = firstObservation.getPrognoser().get(0);
 
                 String beskrivning = prognos.getBeskrivning();
                 arbetsformagaType.setMotivering(beskrivning);
@@ -224,35 +214,6 @@ public final class ExternalToTransportFk7263LegacyConverter {
         }
 
         return sysselsattningTyp;
-    }
-
-    private static ArbetsformagaNedsattningType toJaxb(ArbetsformagaNedsattning source) {
-        ArbetsformagaNedsattningType arbetsformagaNedsattningType = new ArbetsformagaNedsattningType();
-        arbetsformagaNedsattningType.setNedsattningsgrad(toJaxb(source.getNedsattningsgrad()));
-        arbetsformagaNedsattningType.setVaraktighetFrom(source.getVaraktighetFrom());
-        arbetsformagaNedsattningType.setVaraktighetTom(source.getVaraktighetTom());
-        return arbetsformagaNedsattningType;
-    }
-
-    private static Nedsattningsgrad toJaxb(se.inera.certificate.model.Nedsattningsgrad source) {
-        Nedsattningsgrad nedsattningsgrad;
-        switch (source) {
-        case HELT_NEDSATT:
-            nedsattningsgrad = Nedsattningsgrad.HELT_NEDSATT;
-            break;
-        case NEDSATT_MED_1_2:
-            nedsattningsgrad = Nedsattningsgrad.NEDSATT_MED_1_2;
-            break;
-        case NEDSATT_MED_1_4:
-            nedsattningsgrad = Nedsattningsgrad.NEDSATT_MED_1_4;
-            break;
-        case NEDSATT_MED_3_4:
-            nedsattningsgrad = Nedsattningsgrad.NEDSATT_MED_3_4;
-            break;
-        default:
-            throw new IllegalArgumentException("Can not convert 'Nedsattningsgrad' " + source);
-        }
-        return nedsattningsgrad;
     }
 
     private static List<VardkontaktType> convertVardkontakter(List<Vardkontakt> source) {
@@ -433,17 +394,15 @@ public final class ExternalToTransportFk7263LegacyConverter {
     private static String extractFullstandigtNamn(Fk7263Patient source) {
         List<String> names = new ArrayList<>();
 
-        if (source.getFornamns() != null) {
-            names.addAll(source.getFornamns());
+        if (source.getFornamn() != null) {
+            names.addAll(source.getFornamn());
         }
 
-        if (source.getMellannamns() != null) {
-            names.addAll(source.getMellannamns());
+        if (source.getMellannamn() != null) {
+            names.addAll(source.getMellannamn());
         }
 
-        if (source.getEfternamns() != null) {
-            names.addAll(source.getEfternamns());
-        }
+        names.add(source.getEfternamn());
 
         return Strings.join(" ", names);
     }

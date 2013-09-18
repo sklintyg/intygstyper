@@ -1,18 +1,16 @@
 package se.inera.certificate.modules.rli.model.converters;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.joda.time.LocalDateTime;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import org.joda.time.Partial;
 import org.junit.Before;
 import org.junit.Test;
-
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
@@ -44,7 +42,7 @@ public class UndersokingPopulatorTest {
     @Test
     public void testPopulateUndersokningRekommendationMedSjukdom() {
 
-        Observation sjukObs = constructObservation(ObservationsKod.SJUKDOM, 2013, 2, 2);
+        Observation sjukObs = constructObservation(ObservationsKod.SJUKDOM);
 
         List<Observation> observationer = Arrays.asList(sjukObs);
 
@@ -59,7 +57,7 @@ public class UndersokingPopulatorTest {
     @Test
     public void testPopulateUndersokningRekommendationMedGravid() {
 
-        Observation sjukObs = constructObservation(ObservationsKod.GRAVIDITET, 2013, 2, 2);
+        Observation sjukObs = constructObservation(ObservationsKod.GRAVIDITET);
 
         sjukObs.getObservationsPeriod().setTom(TestUtils.constructPartial(2013, 12, 24));
 
@@ -120,7 +118,7 @@ public class UndersokingPopulatorTest {
         assertNull(intUndersokning.getForstaUndersokningsplats());
     }
 
-    private Observation constructObservation(ObservationsKod obsKod, int year, int month, int day) {
+    private Observation constructObservation(ObservationsKod obsKod) {
 
         Observation obs = new Observation();
 
@@ -128,7 +126,6 @@ public class UndersokingPopulatorTest {
         obs.setObservationsPeriod(obsPeriod);
 
         obs.setObservationsKod(new Kod(obsKod.getCode()));
-        obs.setObservationsTid(LocalDateTime.now());
 
         return obs;
     }

@@ -1,21 +1,19 @@
 package se.inera.certificate.modules.rli.model.converters;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
-
-import static se.inera.certificate.modules.rli.model.codes.HSpersonalTyp.HSA_ID;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
+import static se.inera.certificate.modules.rli.model.codes.HSpersonalTyp.HSA_ID;
+
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
-
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
@@ -111,9 +109,9 @@ public class InternalToExternalConverterTest {
         se.inera.certificate.model.Patient extP = converter.convertPatient(intP);
 
         assertNotNull(extP);
-        assertEquals("Johan", extP.getFornamns().get(0));
-        assertEquals("Johansson", extP.getEfternamns().get(0));
-        assertEquals("Mutumba", extP.getMellannamns().get(0));
+        assertEquals("Johan", extP.getFornamn().get(0));
+        assertEquals("Johansson", extP.getEfternamn());
+        assertEquals("Mutumba", extP.getMellannamn().get(0));
         assertEquals("Johan Mutumba Johansson", extP.getFullstandigtNamn());
         assertEquals("19121212-1212", extP.getId().getExtension());
         assertEquals("Genvägen", extP.getPostadress());

@@ -1,14 +1,13 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import static java.util.Arrays.asList;
-import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import org.springframework.util.StringUtils;
+import static java.util.Arrays.asList;
+import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 
+import org.springframework.util.StringUtils;
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.HosPersonal;
@@ -305,8 +304,8 @@ public class UtlatandeValidator {
 
         Referens annat = utlatande.getReferens(Referenstypkoder.ANNAT);
         boolean garEjAttBedomma = utlatande.getArbetsformaga() != null
-                && utlatande.getArbetsformaga().getPrognos() != null
-                && Prognoskoder.DET_GAR_INTE_ATT_BEDOMA.equals(utlatande.getArbetsformaga().getPrognos()
+                && utlatande.getArbetsformaga().getPrognoser() != null && !utlatande.getArbetsformaga().getPrognoser().isEmpty()
+                && Prognoskoder.DET_GAR_INTE_ATT_BEDOMA.equals(utlatande.getArbetsformaga().getPrognoser().get(0)
                         .getPrognosKod());
 
         if ((annat != null || garEjAttBedomma) && !hasKommentar) {

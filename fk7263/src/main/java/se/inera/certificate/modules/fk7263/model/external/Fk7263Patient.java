@@ -14,16 +14,13 @@ import se.inera.certificate.model.util.Strings;
 public class Fk7263Patient {
 
     private Id id;
-    private List<String> fornamns = new ArrayList<>();
-    private List<String> mellannamns = new ArrayList<>();
-    private List<String> efternamns = new ArrayList<>();
+    private List<String> fornamn = new ArrayList<>();
+    private List<String> mellannamn = new ArrayList<>();
+    private String efternamn;
 
     private List<Sysselsattning> sysselsattnings = new ArrayList<>();
     private List<Arbetsuppgift> arbetsuppgifts = new ArrayList<>();
     
-    //Test property to be removed
-    private Fk7263Arbetsgivare arbetsgivare;
-
     public Id getId() {
         return id;
     }
@@ -32,42 +29,40 @@ public class Fk7263Patient {
         this.id = id;
     }
 
-    public List<String> getFornamns() {
-        return fornamns;
+    public List<String> getFornamn() {
+        return fornamn;
     }
 
-    public void setFornamns(List<String> fornamns) {
-        this.fornamns = fornamns;
+    public void setFornamn(List<String> fornamn) {
+        this.fornamn = fornamn;
     }
 
-    public List<String> getMellannamns() {
-        return mellannamns;
+    public List<String> getMellannamn() {
+        return mellannamn;
     }
 
-    public void setMellannamns(List<String> mellannamns) {
-        this.mellannamns = mellannamns;
+    public void setMellannamn(List<String> mellannamn) {
+        this.mellannamn = mellannamn;
     }
 
-    public List<String> getEfternamns() {
-        return efternamns;
+    public String getEfternamn() {
+        return efternamn;
     }
 
-    public void setEfternamns(List<String> efternamns) {
-        this.efternamns = efternamns;
+    public void setEfternamn(String efternamn) {
+        this.efternamn = efternamn;
     }
 
     public String getFullstandigtNamn() {
         List<String> names = new ArrayList<>();
 
-        if (fornamns != null) {
-            names.addAll(fornamns);
+        if (fornamn != null) {
+            names.addAll(fornamn);
         }
-        if (mellannamns != null) {
-            names.addAll(mellannamns);
+        if (mellannamn != null) {
+            names.addAll(mellannamn);
         }
-        if (efternamns != null) {
-            names.addAll(efternamns);
-        }
+        names.add(efternamn);
 
         return Strings.join(" ", names);
     }
@@ -86,13 +81,5 @@ public class Fk7263Patient {
 
     public void setArbetsuppgifts(List<Arbetsuppgift> arbetsuppgifts) {
         this.arbetsuppgifts = arbetsuppgifts;
-    }
-
-    public Fk7263Arbetsgivare getArbetsgivare() {
-        return arbetsgivare;
-    }
-
-    public void setArbetsgivare(Fk7263Arbetsgivare arbetsgivare) {
-        this.arbetsgivare = arbetsgivare;
     }
 }

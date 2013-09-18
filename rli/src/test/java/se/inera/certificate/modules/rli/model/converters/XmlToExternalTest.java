@@ -18,17 +18,15 @@
  */
 package se.inera.certificate.modules.rli.model.converters;
 
-import static org.junit.Assert.assertEquals;
-
+import javax.xml.bind.JAXB;
 import java.io.InputStream;
 import java.util.List;
 
-import javax.xml.bind.JAXB;
+import static org.junit.Assert.assertEquals;
 
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
-
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Rekommendation;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
@@ -62,8 +60,8 @@ public class XmlToExternalTest {
 
         assertEquals("1.2.752.129.2.1.3.1", extUtlatande.getPatient().getId().getRoot());
         assertEquals("19121212+1212", extUtlatande.getPatient().getId().getExtension());
-        assertEquals("Test", extUtlatande.getPatient().getFornamns().get(0));
-        assertEquals("Testsson", extUtlatande.getPatient().getEfternamns().get(0));
+        assertEquals("Test", extUtlatande.getPatient().getFornamn().get(0));
+        assertEquals("Testsson", extUtlatande.getPatient().getEfternamn());
         assertEquals("Teststigen 1", extUtlatande.getPatient().getPostadress());
         assertEquals("123 45", extUtlatande.getPatient().getPostnummer());
         assertEquals("Stockholm", extUtlatande.getPatient().getPostort());
