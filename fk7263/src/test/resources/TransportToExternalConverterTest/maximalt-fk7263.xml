@@ -190,9 +190,4 @@
       </beskrivning>
     </prognos>
   </observation>
-  <ovrigt>
-    <arrangmang>
-      <bokningsreferens>ABC-123</bokningsreferens>
-    </arrangmang>
-  </ovrigt>
 </utlatande>

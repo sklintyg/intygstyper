@@ -1,15 +1,14 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
-import static se.inera.certificate.model.codes.ObservationsKoder.DIAGNOS;
-import static se.inera.certificate.model.util.Iterables.addAll;
-import static se.inera.certificate.model.util.Iterables.addExisting;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.joda.time.Partial;
+import static se.inera.certificate.model.codes.ObservationsKoder.DIAGNOS;
+import static se.inera.certificate.model.util.Iterables.addAll;
+import static se.inera.certificate.model.util.Iterables.addExisting;
 
+import org.joda.time.Partial;
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.HosPersonal;
@@ -46,6 +45,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 
 /**
  * Converts se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande Jaxb structure to External model
+ * 
  * @author marced
  */
 public final class TransportToExternalFk7263LegacyConverter {
@@ -84,17 +84,21 @@ public final class TransportToExternalFk7263LegacyConverter {
             if (funktionstillstand.getArbetsformaga() != null) {
 
                 if (funktionstillstand.getArbetsformaga().getArbetsuppgift() != null) {
-                    fk7263utlatande.getPatient().getArbetsuppgifts().add(convert(funktionstillstand.getArbetsformaga().getArbetsuppgift()));
+                    fk7263utlatande.getPatient().getArbetsuppgifts()
+                            .add(convert(funktionstillstand.getArbetsformaga().getArbetsuppgift()));
                 }
                 if (funktionstillstand.getArbetsformaga().getSysselsattnings() != null) {
-                    for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType sysselsattning : funktionstillstand.getArbetsformaga().getSysselsattnings()) {
-                        fk7263utlatande.getPatient().getSysselsattnings().add(convert(sysselsattning, source.getPatient()));
+                    for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType sysselsattning : funktionstillstand
+                            .getArbetsformaga().getSysselsattnings()) {
+                        fk7263utlatande.getPatient().getSysselsattnings()
+                                .add(convert(sysselsattning, source.getPatient()));
                     }
                 }
             }
         }
 
-        for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType aktivitetType : source.getAktivitets()) {
+        for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType aktivitetType : source
+                .getAktivitets()) {
             addExisting(fk7263utlatande.getAktiviteter(), convert(aktivitetType));
         }
 
@@ -102,7 +106,8 @@ public final class TransportToExternalFk7263LegacyConverter {
             addExisting(fk7263utlatande.getReferenser(), convert(referensType));
         }
 
-        for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType vardkontaktType : source.getVardkontakts()) {
+        for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType vardkontaktType : source
+                .getVardkontakts()) {
             addExisting(fk7263utlatande.getVardkontakter(), convert(vardkontaktType));
         }
 
@@ -199,7 +204,9 @@ public final class TransportToExternalFk7263LegacyConverter {
         return aktivitet;
     }
 
-    private static Sysselsattning convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType source, se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType patient) {
+    private static Sysselsattning convert(
+            se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType source,
+            se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType patient) {
 
         Sysselsattning sysselsattning = new Sysselsattning();
         Kod sysselsattningsKod = null;
@@ -231,7 +238,8 @@ public final class TransportToExternalFk7263LegacyConverter {
         return sysselsattning;
     }
 
-    private static Arbetsuppgift convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsuppgiftType source) {
+    private static Arbetsuppgift convert(
+            se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsuppgiftType source) {
 
         Arbetsuppgift arbetsuppgift = new Arbetsuppgift();
         arbetsuppgift.setTypAvArbetsuppgift(source.getTypAvArbetsuppgift());
@@ -290,14 +298,18 @@ public final class TransportToExternalFk7263LegacyConverter {
 
         for (ArbetsformagaNedsattningType nedsattning : source.getArbetsformagaNedsattnings()) {
             Observation arbetsformaga = convert(nedsattning);
-            arbetsformaga.setPrognos(prognos);
+            if (prognos != null) {
+                arbetsformaga.getPrognoser().add(prognos);
+            }
             observations.add(arbetsformaga);
         }
         return observations;
     }
 
     /**
-     * Convert nedsattning to formaga. Note: kind of backwards, but meaning is opposite in transport model vs domain model..
+     * Convert nedsattning to formaga. Note: kind of backwards, but meaning is opposite in transport model vs domain
+     * model..
+     * 
      * @param source
      * @return
      */
@@ -368,6 +380,7 @@ public final class TransportToExternalFk7263LegacyConverter {
 
     /**
      * Creates and converts basic patient info
+     * 
      * @param source
      * @return
      */
@@ -375,7 +388,7 @@ public final class TransportToExternalFk7263LegacyConverter {
         Fk7263Patient patient = new Fk7263Patient();
         patient.setId(IsoTypeConverter.toId(source.getPersonId()));
         // we only have fullstandigt namn available in the legacy jaxb
-        patient.setEfternamns(Arrays.<String> asList(source.getFullstandigtNamn()));
+        patient.setEfternamn(source.getFullstandigtNamn());
         return patient;
     }
 
