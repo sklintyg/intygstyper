@@ -41,7 +41,7 @@ public class PdfGeneratorImpl implements PdfGenerator {
 
     public static final String PDF_SJUK_TEMPLATE = "pdf/RLI_template.pdf";
 
-    private static final String dateFormat = "yyyy-MM-dd";
+    private static final String dateFormat = "yyMMdd";
 
     public PdfGeneratorImpl() {
 
