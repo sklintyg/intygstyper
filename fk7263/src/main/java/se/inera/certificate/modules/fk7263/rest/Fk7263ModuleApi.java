@@ -34,6 +34,7 @@ import se.inera.certificate.modules.fk7263.model.converter.ExternalToTransportCo
 import se.inera.certificate.modules.fk7263.model.converter.ExternalToTransportFk7263LegacyConverter;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToExternalConverter;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToExternalFk7263LegacyConverter;
+import se.inera.certificate.modules.fk7263.model.external.CertificateContentMeta;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263CertificateContentHolder;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
@@ -52,6 +53,9 @@ public class Fk7263ModuleApi {
     private static final Logger LOG = LoggerFactory.getLogger(Fk7263ModuleApi.class);
 
     private static final Unmarshaller unmarshaller;
+
+    private static final String CONTENT_DISPOSITION = "Content-Disposition";
+    private static final String DATE_FORMAT = "yyyyMMdd";
 
     // Create unmarshaller for the transport format(s) this module can handle
     static {
@@ -254,7 +258,7 @@ public class Fk7263ModuleApi {
         Fk7263Intyg intyg = new Fk7263Intyg(contentHolder.getCertificateContent());
         try {
             byte[] generatedPdf = new PdfGenerator(intyg).getBytes();
-            return Response.ok(generatedPdf).build();
+            return Response.ok(generatedPdf).header("Content-Disposition", "filename=" + pdfFileName(intyg)).build();
         } catch (IOException e) {
             LOG.error("Failed to generate PDF for certificate #" + intyg.getId(), e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -282,5 +286,12 @@ public class Fk7263ModuleApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Response convertInternalToExternal(Object utlatande) {
         return Response.ok(utlatande).build();
+    }
+
+    protected String pdfFileName(Fk7263Intyg intyg) {
+        return String.format("lakarutlatande_%s_%s-%s.pdf",
+                intyg.getPatient().getId().getExtension(),
+                intyg.getValidFromDate().toString(DATE_FORMAT),
+                intyg.getValidToDate().toString(DATE_FORMAT));
     }
 }
