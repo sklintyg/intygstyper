@@ -20,7 +20,7 @@ public class Fk7263Patient {
 
     private List<Sysselsattning> sysselsattnings = new ArrayList<>();
     private List<Arbetsuppgift> arbetsuppgifts = new ArrayList<>();
-    
+
     public Id getId() {
         return id;
     }

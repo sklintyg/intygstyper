@@ -35,7 +35,7 @@
                 }
             },
             {
-                "sysselsattningsTyp": {
+                "sysselsattningsTyp" : {
                     "codeSystem" : "1.2.752.116.2.1.1.1",
                     "codeSystemName" : "SNOMED-CT",
                     "code" : "224458009"
@@ -116,7 +116,7 @@
                 "codeSystemName" : "kv_aktiviteter_intyg",
                 "code" : "AKT2"
             },
-            "beskrivning": "Patienten ansvarar för att armen hålls i stillhet"
+            "beskrivning" : "Patienten ansvarar för att armen hålls i stillhet"
         },
         {
             "aktivitetskod" : {
@@ -133,16 +133,16 @@
             }
         },
         {
-            "aktivitetskod": {
+            "aktivitetskod" : {
                 "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
                 "codeSystemName" : "kv_aktiviteter_intyg",
-                "code": "AKT10"
+                "code" : "AKT10"
             }
         }
     ],
     "observations" : [
         {
-            "observationsKategori": {
+            "observationsKategori" : {
                 "codeSystem" : "1.2.752.116.2.1.1.1",
                 "codeSystemName" : "SNOMED-CT",
                 "code" : "439401001"
@@ -187,14 +187,16 @@
                 "from" : "2011-04-01",
                 "tom" : "2011-05-31"
             },
-            "prognoser" : [{
-                "prognosKod" : {
-                    "codeSystem" : "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
-                    "codeSystemName" : "kv_prognos_intyg",
-                    "code" : "PRO4"
-                },
-                "beskrivning" : "Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
-            }],
+            "prognoser" : [
+                {
+                    "prognosKod" : {
+                        "codeSystem" : "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
+                        "codeSystemName" : "kv_prognos_intyg",
+                        "code" : "PRO4"
+                    },
+                    "beskrivning" : "Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
+                }
+            ],
             "varde" : [
                 {
                     "quantity" : 75.0,
@@ -212,14 +214,16 @@
                 "from" : "2011-03-07",
                 "tom" : "2011-03-31"
             },
-            "prognoser" : [{
-                "prognosKod" : {
-                    "codeSystem" : "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
-                    "codeSystemName" : "kv_prognos_intyg",
-                    "code" : "PRO4"
-                },
-                "beskrivning" : "Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
-            }],
+            "prognoser" : [
+                {
+                    "prognosKod" : {
+                        "codeSystem" : "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
+                        "codeSystemName" : "kv_prognos_intyg",
+                        "code" : "PRO4"
+                    },
+                    "beskrivning" : "Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
+                }
+            ],
             "varde" : [
                 {
                     "quantity" : 50.0,
@@ -237,14 +241,16 @@
                 "from" : "2011-02-14",
                 "tom" : "2011-03-06"
             },
-            "prognoser" : [{
-                "prognosKod" : {
-                    "codeSystem" : "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
-                    "codeSystemName" : "kv_prognos_intyg",
-                    "code" : "PRO4"
-                },
-                "beskrivning" : "Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
-            }],
+            "prognoser" : [
+                {
+                    "prognosKod" : {
+                        "codeSystem" : "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
+                        "codeSystemName" : "kv_prognos_intyg",
+                        "code" : "PRO4"
+                    },
+                    "beskrivning" : "Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
+                }
+            ],
             "varde" : [
                 {
                     "quantity" : 25.0,
@@ -262,14 +268,16 @@
                 "from" : "2011-01-26",
                 "tom" : "2011-02-13"
             },
-            "prognoser" : [{
-                "prognosKod" : {
-                    "codeSystem" : "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
-                    "codeSystemName" : "kv_prognos_intyg",
-                    "code" : "PRO4"
-                },
-                "beskrivning" : "Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
-            }],
+            "prognoser" : [
+                {
+                    "prognosKod" : {
+                        "codeSystem" : "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
+                        "codeSystemName" : "kv_prognos_intyg",
+                        "code" : "PRO4"
+                    },
+                    "beskrivning" : "Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
+                }
+            ],
             "varde" : [
                 {
                     "quantity" : 0.0,

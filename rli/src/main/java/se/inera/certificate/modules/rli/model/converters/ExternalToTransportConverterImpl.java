@@ -21,10 +21,10 @@ package se.inera.certificate.modules.rli.model.converters;
 import java.util.ArrayList;
 import java.util.List;
 
-import iso.v21090.dt.v1.CD;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import riv.insuranceprocess.healthreporting._2.EnhetType;
 import riv.insuranceprocess.healthreporting._2.VardgivareType;
 import se.inera.certificate.common.v1.AktivitetType;
@@ -47,6 +47,7 @@ import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.rli.v1.Arrangemang;
+import iso.v21090.dt.v1.CD;
 
 public class ExternalToTransportConverterImpl implements ExternalToTransportConverter {
 
@@ -175,8 +176,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
         return hosPersonalType;
     }
 
-    private PartialDateInterval convertPartialDateInterval(
-            se.inera.certificate.model.PartialInterval source) {
+    private PartialDateInterval convertPartialDateInterval(se.inera.certificate.model.PartialInterval source) {
         if (source == null) {
             LOG.trace("Source PartialDateInterval was null, could not convert");
             return null;

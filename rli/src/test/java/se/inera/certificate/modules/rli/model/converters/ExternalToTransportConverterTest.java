@@ -1,4 +1,5 @@
 /**
+/**
  * Copyright (C) 2013 Inera AB (http://www.inera.se)
  *
  * This file is part of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules).
@@ -111,22 +112,22 @@ public class ExternalToTransportConverterTest {
         Patient patient = new Patient();
         patient.setPostadress("Testvägen 23");
         patient.setPostnummer("12345");
-        patient.setPostort("Teststaden"); 
+        patient.setPostort("Teststaden");
         List<Arbetsuppgift> arbetsuppgifts = new ArrayList<Arbetsuppgift>();
         Arbetsuppgift a = new Arbetsuppgift();
         a.setTypAvArbetsuppgift("Testare");
         arbetsuppgifts.add(a);
         patient.setArbetsuppgifts(arbetsuppgifts);
-        
+
         List<String> fN = new ArrayList<String>();
         fN.add("Test");
         List<String> mN = new ArrayList<String>();
         mN.add("von");
-        
+
         patient.setFornamn(fN);
         patient.setMellannamn(mN);
         patient.setEfternamn("Testsson");
-        
+
         List<PatientRelation> pR = new ArrayList<PatientRelation>();
 
         PatientRelation patientRelation = new PatientRelation();

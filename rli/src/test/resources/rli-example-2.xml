@@ -19,110 +19,112 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<utlatande xmlns="urn:intyg:common-model:1" xmlns:rli="urn:intyg:rli:model:1" xmlns:hr="urn:riv:insuranceprocess:healthreporting:2">
+<utlatande xmlns="urn:intyg:common-model:1" xmlns:rli="urn:intyg:rli:model:1"
+           xmlns:hr="urn:riv:insuranceprocess:healthreporting:2">
 
-	<!-- Reseläkarintyg. Definierar en patient Fröken Fräken (19331122-4400) 
-		som på grund av graviditet avråds att resa. -->
+  <!-- Reseläkarintyg. Definierar en patient Fröken Fräken (19331122-4400)
+    som på grund av graviditet avråds att resa. -->
 
-	<utlatande-id root="???" extension="d53c377e-4103-47f5-9f90-5e1bbd874466" />
-	<!-- displayName="Läkarintyg vid avbeställd resa" -->
-	<typAvUtlatande code="RLI" codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b" />
-	<kommentar>Övriga upplysningar</kommentar>
-	<signeringsdatum>2013-08-12T15:57:00</signeringsdatum>
-	<skickatdatum>2013-08-12T16:01:30</skickatdatum>
+  <utlatande-id root="???" extension="d53c377e-4103-47f5-9f90-5e1bbd874466"/>
+  <!-- displayName="Läkarintyg vid avbeställd resa" -->
+  <typAvUtlatande code="RLI" codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b"/>
+  <kommentar>Övriga upplysningar</kommentar>
+  <signeringsdatum>2013-08-12T15:57:00</signeringsdatum>
+  <skickatdatum>2013-08-12T16:01:30</skickatdatum>
 
-	<patient>
-		<person-id root="1.2.752.129.2.1.3.1" extension="19331122-4400" />
-		<fornamn>Fröken</fornamn>
-		<efternamn>Fräken</efternamn>
-		<postadress>Genvägen 1</postadress>
-		<postnummer>150 21</postnummer>
-		<postort>Mölnbo</postort>
-	</patient>
+  <patient>
+    <person-id root="1.2.752.129.2.1.3.1" extension="19331122-4400"/>
+    <fornamn>Fröken</fornamn>
+    <efternamn>Fräken</efternamn>
+    <postadress>Genvägen 1</postadress>
+    <postnummer>150 21</postnummer>
+    <postort>Mölnbo</postort>
+  </patient>
 
-	<skapadAv>
-		<personal-id root="1.2.752.129.2.1.4.1" extension="19101010+1010" />
-		<fullstandigtNamn>Doktor Alban</fullstandigtNamn>
-		<forskrivarkod>ABC123</forskrivarkod>
+  <skapadAv>
+    <personal-id root="1.2.752.129.2.1.4.1" extension="19101010+1010"/>
+    <fullstandigtNamn>Doktor Alban</fullstandigtNamn>
+    <forskrivarkod>ABC123</forskrivarkod>
 
-		<enhet>
-			<hr:enhets-id root="1.2.752.129.2.1.4.1" extension="vardenhet_test" />
-			<hr:enhetsnamn>Testenheten</hr:enhetsnamn>
-			<hr:postadress>Teststigen 12</hr:postadress>
-			<hr:postnummer>12345</hr:postnummer>
-			<hr:postort>Tolvberga</hr:postort>
-			<hr:telefonnummer>012-345678</hr:telefonnummer>
-			<hr:epost>ingen@alls.se</hr:epost>
-			<hr:vardgivare>
-				<hr:vardgivare-id root="1.2.752.129.2.1.4.1"
-					extension="vardgivare_test" />
-				<hr:vardgivarnamn>Testvårdgivaren</hr:vardgivarnamn>
-			</hr:vardgivare>
-		</enhet>
-	</skapadAv>
+    <enhet>
+      <hr:enhets-id root="1.2.752.129.2.1.4.1" extension="vardenhet_test"/>
+      <hr:enhetsnamn>Testenheten</hr:enhetsnamn>
+      <hr:postadress>Teststigen 12</hr:postadress>
+      <hr:postnummer>12345</hr:postnummer>
+      <hr:postort>Tolvberga</hr:postort>
+      <hr:telefonnummer>012-345678</hr:telefonnummer>
+      <hr:epost>ingen@alls.se</hr:epost>
+      <hr:vardgivare>
+        <hr:vardgivare-id root="1.2.752.129.2.1.4.1"
+                          extension="vardgivare_test"/>
+        <hr:vardgivarnamn>Testvårdgivaren</hr:vardgivarnamn>
+      </hr:vardgivare>
+    </enhet>
+  </skapadAv>
 
-	<aktivitet>
-		<!-- displayName="klinisk undersökning UNS" -->
-		<aktivitetskod code="AV020" codeSystem="1.2.752.116.1.3.2.1.4"
-			codeSystemName="KVÅ" />
+  <aktivitet>
+    <!-- displayName="klinisk undersökning UNS" -->
+    <aktivitetskod code="AV020" codeSystem="1.2.752.116.1.3.2.1.4"
+                   codeSystemName="KVÅ"/>
 
-		<utforsVidEnhet>
-			<hr:enhets-id root="1.2.752.129.2.1.4.1" extension="vardenhet_test" />
-			<hr:enhetsnamn>Testenheten</hr:enhetsnamn>
-			<hr:postadress>Teststigen 12</hr:postadress>
-			<hr:postnummer>12345</hr:postnummer>
-			<hr:postort>Tolvberga</hr:postort>
-			<hr:telefonnummer>012-345678</hr:telefonnummer>
-			<hr:epost>ingen@alls.se</hr:epost>
-			<hr:vardgivare>
-				<hr:vardgivare-id root="1.2.752.129.2.1.4.1"
-					extension="vardgivare_test" />
-				<hr:vardgivarnamn>Testvårdgivaren</hr:vardgivarnamn>
-			</hr:vardgivare>
-		</utforsVidEnhet>
-	</aktivitet>
+    <utforsVidEnhet>
+      <hr:enhets-id root="1.2.752.129.2.1.4.1" extension="vardenhet_test"/>
+      <hr:enhetsnamn>Testenheten</hr:enhetsnamn>
+      <hr:postadress>Teststigen 12</hr:postadress>
+      <hr:postnummer>12345</hr:postnummer>
+      <hr:postort>Tolvberga</hr:postort>
+      <hr:telefonnummer>012-345678</hr:telefonnummer>
+      <hr:epost>ingen@alls.se</hr:epost>
+      <hr:vardgivare>
+        <hr:vardgivare-id root="1.2.752.129.2.1.4.1"
+                          extension="vardgivare_test"/>
+        <hr:vardgivarnamn>Testvårdgivaren</hr:vardgivarnamn>
+      </hr:vardgivare>
+    </utforsVidEnhet>
+  </aktivitet>
 
-	<rekommendation>
-		<!-- displayName="Jag avråder uttryckligen från resa. Komplikationer i 
-			graviditeten har uppkommit efter bokning av resan, vilka innebär hinder för 
-			resa." -->
-		<rekommendationskod code="REK3" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
-			codeSystemName="kv_rekommendation_intyg" />
-		<!-- displayName="Patientens sjukdom/komplikation är kronisk, var känd 
-			vid bokningstillfället och utgjorde då inget hinder för resan. Tillståndet 
-			för nu förvärrats på ett sätt som vid bokningstillfället ej var möjligt att 
-			förutse." -->
-		<sjukdomskannedom code="SJK2" codeSystem="f3a556c4-d54b-4f67-8496-d5259df70493"
-			codeSystemName="kv_sjukdomskännedom_intyg" />
-	</rekommendation>
+  <rekommendation>
+    <!-- displayName="Jag avråder uttryckligen från resa. Komplikationer i
+      graviditeten har uppkommit efter bokning av resan, vilka innebär hinder för
+      resa." -->
+    <rekommendationskod code="REK3" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+                        codeSystemName="kv_rekommendation_intyg"/>
+    <!-- displayName="Patientens sjukdom/komplikation är kronisk, var känd
+      vid bokningstillfället och utgjorde då inget hinder för resan. Tillståndet
+      för nu förvärrats på ett sätt som vid bokningstillfället ej var möjligt att
+      förutse." -->
+    <sjukdomskannedom code="SJK2" codeSystem="f3a556c4-d54b-4f67-8496-d5259df70493"
+                      codeSystemName="kv_sjukdomskännedom_intyg"/>
+  </rekommendation>
 
-	<observation>
-		<!-- displayName="Graviditet" -->
-		<observationskod code="289908002" codeSystem="1.2.752.116.2.1.1.1"
-			codeSystemName="SNOMED-CT" />
-		<observationsperiod>
-			<from>2013-07-20</from> <!-- Detta fält ska inte fyllas i när det är möjligt med öppna intervall -->
-			<tom>2013-07-20</tom> 
-		</observationsperiod>
+  <observation>
+    <!-- displayName="Graviditet" -->
+    <observationskod code="289908002" codeSystem="1.2.752.116.2.1.1.1"
+                     codeSystemName="SNOMED-CT"/>
+    <observationsperiod>
+      <from>2013-07-20</from>
+      <!-- Detta fält ska inte fyllas i när det är möjligt med öppna intervall -->
+      <tom>2013-07-20</tom>
+    </observationsperiod>
 
-		<utforsAv>
-			<!-- displayName="Patient" -->
-			<utforartyp code="116154003" codeSystem="1.2.752.116.2.1.1.1"
-				codeSystemName="SNOMED-CT" />
-		</utforsAv>
-	</observation>
+    <utforsAv>
+      <!-- displayName="Patient" -->
+      <utforartyp code="116154003" codeSystem="1.2.752.116.2.1.1.1"
+                  codeSystemName="SNOMED-CT"/>
+    </utforsAv>
+  </observation>
 
-	<rli:arrangemang>
-		<rli:bokningsreferens>12345678-90</rli:bokningsreferens>
-		<rli:bokningsdatum>2013-01-01</rli:bokningsdatum>
-		<rli:arrangemangstid>
-			<from>2013-07-22</from>
-			<tom>2013-08-02</tom>
-		</rli:arrangemangstid>
-		<rli:avbestallningsdatum>2013-08</rli:avbestallningsdatum>
-		<!-- displayName="Resa" -->
-		<rli:arrangemangstyp code="420008001" codeSystem="1.2.752.116.2.1.1.1"
-			codeSystemName="SNOMED-CT" />
-		<rli:plats>New York</rli:plats>
-	</rli:arrangemang>
+  <rli:arrangemang>
+    <rli:bokningsreferens>12345678-90</rli:bokningsreferens>
+    <rli:bokningsdatum>2013-01-01</rli:bokningsdatum>
+    <rli:arrangemangstid>
+      <from>2013-07-22</from>
+      <tom>2013-08-02</tom>
+    </rli:arrangemangstid>
+    <rli:avbestallningsdatum>2013-08</rli:avbestallningsdatum>
+    <!-- displayName="Resa" -->
+    <rli:arrangemangstyp code="420008001" codeSystem="1.2.752.116.2.1.1.1"
+                         codeSystemName="SNOMED-CT"/>
+    <rli:plats>New York</rli:plats>
+  </rli:arrangemang>
 </utlatande>

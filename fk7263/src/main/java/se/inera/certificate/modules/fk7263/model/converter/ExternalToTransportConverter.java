@@ -1,12 +1,11 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
+import static se.inera.certificate.model.util.Iterables.addAll;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static se.inera.certificate.model.util.Iterables.addAll;
-
-import iso.v21090.dt.v1.PQ;
 import se.inera.certificate.fk7263.model.v1.AktivitetType;
 import se.inera.certificate.fk7263.model.v1.ArbetsuppgiftType;
 import se.inera.certificate.fk7263.model.v1.DateInterval;
@@ -35,6 +34,7 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
+import iso.v21090.dt.v1.PQ;
 
 public final class ExternalToTransportConverter {
 

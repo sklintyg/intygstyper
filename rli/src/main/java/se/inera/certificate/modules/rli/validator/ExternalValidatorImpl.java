@@ -25,6 +25,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.cxf.common.util.StringUtils;
+
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
@@ -265,9 +266,9 @@ public class ExternalValidatorImpl implements ExternalValidator {
             validationErrors.add("Patient ID was null");
             return;
         }
-        
+
         validationErrors.addAll(idValidator.validate(patient.getId()));
-        
+
         /**
          * Make sure Fornamn and Efternamn contains at least one item
          */

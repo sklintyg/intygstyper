@@ -1,13 +1,14 @@
 package se.inera.certificate.modules.rli.model.converters;
 
+import static se.inera.certificate.modules.rli.model.codes.HSpersonalTyp.HSA_ID;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static se.inera.certificate.modules.rli.model.codes.HSpersonalTyp.HSA_ID;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;

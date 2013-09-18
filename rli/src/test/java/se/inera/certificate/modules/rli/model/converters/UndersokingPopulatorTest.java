@@ -1,16 +1,17 @@
 package se.inera.certificate.modules.rli.model.converters;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.joda.time.Partial;
 import org.junit.Before;
 import org.junit.Test;
+
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
@@ -113,7 +114,7 @@ public class UndersokingPopulatorTest {
         assertNotNull(intUndersokning);
         assertEquals("2013-06-12", intUndersokning.getUndersokningsdatum());
         assertEquals("Sjukhus X", intUndersokning.getUtforsVid().getEnhetsnamn());
-        //assertEquals(KomplikationStyrkt.AV_HOS_PERSONAL, intUndersokning.getKomplikationStyrkt());
+        // assertEquals(KomplikationStyrkt.AV_HOS_PERSONAL, intUndersokning.getKomplikationStyrkt());
         assertNull(intUndersokning.getForstaUndersokningsdatum());
         assertNull(intUndersokning.getForstaUndersokningsplats());
     }

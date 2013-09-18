@@ -3,9 +3,9 @@ package se.inera.certificate.modules.fk7263.model.converter;
 import java.util.ArrayList;
 import java.util.List;
 
-import iso.v21090.dt.v1.PQ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import se.inera.certificate.fk7263.model.v1.AktivitetType;
 import se.inera.certificate.fk7263.model.v1.ArbetsuppgiftType;
 import se.inera.certificate.fk7263.model.v1.HosPersonalType;
@@ -33,6 +33,7 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
+import iso.v21090.dt.v1.PQ;
 
 /**
  * @author marced
@@ -105,7 +106,8 @@ public final class TransportToExternalConverter {
         observation.setObservationsKod(IsoTypeConverter.toKod(source.getObservationskod()));
 
         if (source.getObservationsperiod() != null) {
-            PartialInterval observationsPeriod = new PartialInterval(source.getObservationsperiod().getFrom(), source.getObservationsperiod().getTom());
+            PartialInterval observationsPeriod = new PartialInterval(source.getObservationsperiod().getFrom(), source
+                    .getObservationsperiod().getTom());
             observation.setObservationsPeriod(observationsPeriod);
         }
 
@@ -160,7 +162,8 @@ public final class TransportToExternalConverter {
         Vardkontakt vardkontakt = new Vardkontakt();
         vardkontakt.setVardkontakttyp(IsoTypeConverter.toKod(source.getVardkontakttyp()));
 
-        LocalDateInterval vardkontaktTid = new LocalDateInterval(source.getVardkontakttid().getFrom(), source.getVardkontakttid().getTom());
+        LocalDateInterval vardkontaktTid = new LocalDateInterval(source.getVardkontakttid().getFrom(), source
+                .getVardkontakttid().getTom());
         vardkontakt.setVardkontaktstid(vardkontaktTid);
 
         return vardkontakt;

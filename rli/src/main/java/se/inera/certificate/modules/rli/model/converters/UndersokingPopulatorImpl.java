@@ -7,6 +7,7 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;

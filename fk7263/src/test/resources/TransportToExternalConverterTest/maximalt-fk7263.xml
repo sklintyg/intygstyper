@@ -76,7 +76,8 @@
     <aktivitetskod code="AKT6" codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a" codeSystemName="kv_aktiviteter_intyg"/>
   </aktivitet>
   <aktivitet>
-    <aktivitetskod code="AKT12" codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a" codeSystemName="kv_aktiviteter_intyg"/>
+    <aktivitetskod code="AKT12" codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a"
+                   codeSystemName="kv_aktiviteter_intyg"/>
     <beskrivning>När skadan förbättrats rekommenderas muskeluppbyggande sjukgymnastik</beskrivning>
   </aktivitet>
   <aktivitet>
@@ -94,7 +95,8 @@
     <aktivitetskod code="AKT9" codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a" codeSystemName="kv_aktiviteter_intyg"/>
   </aktivitet>
   <aktivitet>
-    <aktivitetskod code="AKT10" codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a" codeSystemName="kv_aktiviteter_intyg"/>
+    <aktivitetskod code="AKT10" codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a"
+                   codeSystemName="kv_aktiviteter_intyg"/>
   </aktivitet>
 
   <observation>
@@ -104,8 +106,10 @@
   </observation>
 
   <observation>
-    <observationskod  code="288524001" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
-    <beskrivning>Bedömttillstånd: Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.</beskrivning>
+    <observationskod code="288524001" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
+    <beskrivning>Bedömttillstånd: Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre
+      tid.
+    </beskrivning>
   </observation>
 
   <observation>

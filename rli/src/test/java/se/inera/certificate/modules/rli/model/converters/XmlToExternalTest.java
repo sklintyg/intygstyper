@@ -18,20 +18,21 @@
  */
 package se.inera.certificate.modules.rli.model.converters;
 
-import javax.xml.bind.JAXB;
+import static org.junit.Assert.assertEquals;
+
 import java.io.InputStream;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import javax.xml.bind.JAXB;
 
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
+
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Rekommendation;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
-
 
 public class XmlToExternalTest {
 
@@ -77,8 +78,7 @@ public class XmlToExternalTest {
         assertEquals("Testenheten", extUtlatande.getSkapadAv().getVardenhet().getNamn());
 
         // skapad av -> enhet -> vardgivare
-        assertEquals("1.2.752.129.2.1.4.1", extUtlatande.getSkapadAv().getVardenhet().getVardgivare().getId()
-                .getRoot());
+        assertEquals("1.2.752.129.2.1.4.1", extUtlatande.getSkapadAv().getVardenhet().getVardgivare().getId().getRoot());
         assertEquals("vardgivare_test", extUtlatande.getSkapadAv().getVardenhet().getVardgivare().getId()
                 .getExtension());
         assertEquals("Testvårdgivaren", extUtlatande.getSkapadAv().getVardenhet().getVardgivare().getNamn());

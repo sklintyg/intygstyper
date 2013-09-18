@@ -1,18 +1,15 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
-import static se.inera.certificate.model.codes.ObservationsKoder.DIAGNOS;
 import static se.inera.certificate.model.util.Iterables.addAll;
 import static se.inera.certificate.model.util.Iterables.addExisting;
+import static se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder.DIAGNOS;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static se.inera.certificate.model.codes.ObservationsKoder.DIAGNOS;
-import static se.inera.certificate.model.util.Iterables.addAll;
-import static se.inera.certificate.model.util.Iterables.addExisting;
-
 import org.joda.time.Partial;
+
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.HosPersonal;

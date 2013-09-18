@@ -1,11 +1,11 @@
 package se.inera.certificate.modules.fk7263.model.internal;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static se.inera.certificate.model.util.Iterables.find;
 import static se.inera.certificate.model.util.Strings.emptyToNull;
 import static se.inera.certificate.model.util.Strings.join;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Kod;
@@ -352,6 +352,5 @@ public class Fk7263Intyg extends Fk7263Utlatande {
     public void setStatus(List<StatusMeta> status) {
         this.status = status;
     }
-    
- 
+
 }
