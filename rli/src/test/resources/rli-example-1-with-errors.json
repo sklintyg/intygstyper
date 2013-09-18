@@ -11,8 +11,7 @@
       "root" : "1.2.752.129.2.1.3.1",
       "extension" : "191212121212"
     },
-    "fornamns" : [ "Test" ],
-    "efternamns" : [],
+    "fornamn" : [ "Test" ],
     "postadress" : "Teststigen 1",
     "postnummer" : "123 45",
     "postort" : "Stockholm"

@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
+import org.apache.cxf.common.util.StringUtils;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
@@ -271,11 +271,11 @@ public class ExternalValidatorImpl implements ExternalValidator {
         /**
          * Make sure Fornamn and Efternamn contains at least one item
          */
-        if (patient.getFornamns().isEmpty()) {
+        if (patient.getFornamn().isEmpty()) {
             validationErrors.add("At least one Fornamn must be provided for Patient");
         }
 
-        if (patient.getEfternamns().isEmpty()) {
+        if (StringUtils.isEmpty(patient.getEfternamn())) {
             validationErrors.add("An Efternamn must be provided for Patient");
         }
 

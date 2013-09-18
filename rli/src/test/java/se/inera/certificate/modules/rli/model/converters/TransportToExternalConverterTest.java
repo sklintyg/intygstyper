@@ -18,26 +18,24 @@
  */
 package se.inera.certificate.modules.rli.model.converters;
 
-import static org.junit.Assert.assertEquals;
-import iso.v21090.dt.v1.CD;
-import iso.v21090.dt.v1.II;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
+import iso.v21090.dt.v1.CD;
+import iso.v21090.dt.v1.II;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.junit.Before;
 import org.junit.Test;
-
-import se.inera.certificate.common.v1.EnhetType;
+import riv.insuranceprocess.healthreporting._2.EnhetType;
+import riv.insuranceprocess.healthreporting._2.VardgivareType;
 import se.inera.certificate.common.v1.HosPersonalType;
-import se.inera.certificate.common.v1.VardgivareType;
 import se.inera.certificate.common.v1.ObservationType;
 import se.inera.certificate.common.v1.PartialDateInterval;
 import se.inera.certificate.common.v1.PatientType;
 import se.inera.certificate.common.v1.UtforarrollType;
-
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Patient;

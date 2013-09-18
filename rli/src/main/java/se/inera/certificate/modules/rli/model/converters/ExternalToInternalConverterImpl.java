@@ -26,7 +26,6 @@ import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
 import se.inera.certificate.integration.rest.dto.CertificateStatus;
 import se.inera.certificate.model.HosPersonal;
@@ -228,13 +227,12 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 
         intPatient.setPersonid(InternalModelConverterUtils.getExtensionFromId(extPatient.getId()));
 
-        String efterNamn = StringUtils.join(extPatient.getEfternamns(), " ");
-        intPatient.setEfternamn(efterNamn);
+        intPatient.setEfternamn(extPatient.getEfternamn());
 
-        String forNamn = StringUtils.join(extPatient.getFornamns(), " ");
+        String forNamn = StringUtils.join(extPatient.getFornamn(), " ");
         intPatient.setFornamn(forNamn);
 
-        String fullstandigtNamn = forNamn.concat(" ").concat(efterNamn);
+        String fullstandigtNamn = forNamn.concat(" ").concat(extPatient.getEfternamn());
         intPatient.setFullstandigtNamn(fullstandigtNamn);
 
         intPatient.setPostadress(extPatient.getPostadress());

@@ -1,17 +1,16 @@
 package se.inera.certificate.modules.rli.model.converters;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
@@ -106,8 +105,8 @@ public class ExternalToInternalConverterTest {
         Patient pat = new Patient();
 
         pat.setId(new Id("PersonId", "19121212-1212"));
-        pat.setFornamns(Arrays.asList("Abel", "Baker"));
-        pat.setEfternamns(Arrays.asList("Smith Doe"));
+        pat.setFornamn(Arrays.asList("Abel", "Baker"));
+        pat.setEfternamn("Smith Doe");
         pat.setPostadress("Testgatan 123");
         pat.setPostnummer("123 45");
         pat.setPostort("Teststaden");
