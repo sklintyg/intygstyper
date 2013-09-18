@@ -280,7 +280,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
             Observation obs = (Observation) obj;
             Kod obsKod = obs.getObservationsKod();
 
-            return (obsKod.getCode().equals(obsKodEnum.getCode()));
+            return (obsKod != null && obsKod.getCode().equals(obsKodEnum.getCode()));
         }
 
     }
