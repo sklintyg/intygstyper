@@ -23,12 +23,6 @@
     </jxb:schemaBindings>
   </jxb:bindings>
 
-  <jxb:bindings schemaLocation="fk7263_model_extension.xsd" node="/xs:schema">
-    <jxb:schemaBindings>
-      <jxb:package name="se.inera.certificate.fk7263.model.extension.v1"/>
-    </jxb:schemaBindings>
-  </jxb:bindings>
-  
   <jxb:bindings>
     <jxb:globalBindings>
       <xjc:simple/>

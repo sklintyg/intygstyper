@@ -27,9 +27,9 @@
   </patient>
 
   <skapadAv>
-    <hr:personal-id root="1.2.752.129.2.1.4.1" extension="Personal HSA-ID"/>
-    <hr:fullstandigtNamn>En Läkare</hr:fullstandigtNamn>
-    <hr:enhet>
+    <personal-id root="1.2.752.129.2.1.4.1" extension="Personal HSA-ID"/>
+    <fullstandigtNamn>En Läkare</fullstandigtNamn>
+    <enhet>
       <hr:enhets-id root="1.2.752.129.2.1.4.1" extension="VardenhetY"/>
       <hr:arbetsplatskod root="1.2.752.29.4.71" extension="123456789011"/>
       <hr:enhetsnamn>Kir mott</hr:enhetsnamn>
@@ -42,7 +42,7 @@
         <hr:vardgivare-id root="1.2.752.129.2.1.4.1" extension="VardgivarId"/>
         <hr:vardgivarnamn>Landstinget Norrland</hr:vardgivarnamn>
       </hr:vardgivare>
-    </hr:enhet>
+    </enhet>
   </skapadAv>
 
   <vardkontakt>
