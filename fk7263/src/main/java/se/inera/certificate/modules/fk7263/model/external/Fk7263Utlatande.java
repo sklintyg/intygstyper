@@ -15,8 +15,8 @@ import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Vardkontakt;
-import se.inera.certificate.model.codes.ObservationsKoder;
 import se.inera.certificate.model.util.Predicate;
+import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
 
 /**
  * @author marced
@@ -146,7 +146,8 @@ public class Fk7263Utlatande {
     public List<Observation> getObservationsByKategori(Kod observationsKategori) {
         List<Observation> observations = new ArrayList<>();
         for (Observation observation : this.observations) {
-            if (observation.getObservationsKategori() != null && observation.getObservationsKategori().equals(observationsKategori)) {
+            if (observation.getObservationsKategori() != null
+                    && observation.getObservationsKategori().equals(observationsKategori)) {
                 observations.add(observation);
             }
         }
@@ -157,7 +158,8 @@ public class Fk7263Utlatande {
         return find(observations, new Predicate<Observation>() {
             @Override
             public boolean apply(Observation observation) {
-                return observation.getObservationsKategori() != null && observation.getObservationsKategori().equals(observationsKategori);
+                return observation.getObservationsKategori() != null
+                        && observation.getObservationsKategori().equals(observationsKategori);
             }
         }, null);
     }
@@ -166,35 +168,10 @@ public class Fk7263Utlatande {
         return find(observations, new Predicate<Observation>() {
             @Override
             public boolean apply(Observation observation) {
-                return observation.getObservationsKod() != null && observation.getObservationsKod().equals(observationsKod);
+                return observation.getObservationsKod() != null
+                        && observation.getObservationsKod().equals(observationsKod);
             }
         }, null);
-    }
-
-    public Partial getValidFromDate() {
-        List<Observation> nedsattningar = getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
-        Partial fromDate = null;
-
-        for (Observation nedsattning : nedsattningar) {
-            Partial aktivitetsbegransningFromDate = nedsattning.getObservationsPeriod().getFrom();
-            if (fromDate == null || fromDate.isAfter(aktivitetsbegransningFromDate)) {
-                fromDate = aktivitetsbegransningFromDate;
-            }
-        }
-        return fromDate;
-    }
-
-    public Partial getValidToDate() {
-        List<Observation> nedsattningar = getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
-        Partial toDate = null;
-
-        for (Observation nedsattning : nedsattningar) {
-            Partial aktivitetsbegransningToDate = nedsattning.getObservationsPeriod().getTom();
-            if (toDate == null || toDate.isBefore(aktivitetsbegransningToDate)) {
-                toDate = aktivitetsbegransningToDate;
-            }
-        }
-        return toDate;
     }
 
     public Aktivitet getAktivitet(final Kod aktivitetsKod) {
@@ -209,7 +186,6 @@ public class Fk7263Utlatande {
             }
         }, null);
     }
-
 
     public Vardkontakt getVardkontakt(final Kod vardkontaktTyp) {
         return find(vardkontakter, new Predicate<Vardkontakt>() {
@@ -228,5 +204,39 @@ public class Fk7263Utlatande {
             }
         }, null);
     }
+    
+    /**
+     * Certificate specific implementation of when a valid from date is
+     * @return
+     */
+    public Partial getValidFromDate() {
+        List<Observation> nedsattningar = getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
+        Partial fromDate = null;
 
+        for (Observation nedsattning : nedsattningar) {
+            Partial aktivitetsbegransningFromDate = nedsattning.getObservationsPeriod().getFrom();
+            if (fromDate == null || fromDate.isAfter(aktivitetsbegransningFromDate)) {
+                fromDate = aktivitetsbegransningFromDate;
+            }
+        }
+        return fromDate;
+    }
+
+    /**
+     * Certificate specific implementation of when a valid from date is
+     * 
+     * @return
+     */
+    public Partial getValidToDate() {
+        List<Observation> nedsattningar = getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
+        Partial toDate = null;
+
+        for (Observation nedsattning : nedsattningar) {
+            Partial aktivitetsbegransningToDate = nedsattning.getObservationsPeriod().getTom();
+            if (toDate == null || toDate.isBefore(aktivitetsbegransningToDate)) {
+                toDate = aktivitetsbegransningToDate;
+            }
+        }
+        return toDate;
+    }  
 }

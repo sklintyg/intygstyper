@@ -1,8 +1,8 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
-import static se.inera.certificate.model.codes.ObservationsKoder.DIAGNOS;
 import static se.inera.certificate.model.util.Iterables.addAll;
 import static se.inera.certificate.model.util.Iterables.addExisting;
+import static se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder.DIAGNOS;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,12 +25,12 @@ import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
-import se.inera.certificate.model.codes.Aktivitetskoder;
-import se.inera.certificate.model.codes.ObservationsKoder;
-import se.inera.certificate.model.codes.Prognoskoder;
-import se.inera.certificate.model.codes.Referenstypkoder;
-import se.inera.certificate.model.codes.Sysselsattningskoder;
-import se.inera.certificate.model.codes.Vardkontakttypkoder;
+import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
+import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
+import se.inera.certificate.modules.fk7263.model.codes.Prognoskoder;
+import se.inera.certificate.modules.fk7263.model.codes.Referenstypkoder;
+import se.inera.certificate.modules.fk7263.model.codes.Sysselsattningskoder;
+import se.inera.certificate.modules.fk7263.model.codes.Vardkontakttypkoder;
 import se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;

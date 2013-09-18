@@ -9,18 +9,18 @@ import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Vardkontakt;
-import se.inera.certificate.model.codes.ObservationsKoder;
-import se.inera.certificate.model.codes.Referenstypkoder;
-import se.inera.certificate.model.codes.Vardkontakttypkoder;
 import se.inera.certificate.model.util.Strings;
-import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
+import se.inera.certificate.modules.fk7263.model.codes.Referenstypkoder;
+import se.inera.certificate.modules.fk7263.model.codes.Vardkontakttypkoder;
+import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static se.inera.certificate.modules.fk7263.model.Fk7263Intyg.DATE_PATTERN;
+import static se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg.DATE_PATTERN;
 
 
 /**

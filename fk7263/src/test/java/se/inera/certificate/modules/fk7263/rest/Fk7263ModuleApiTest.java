@@ -1,20 +1,22 @@
 package se.inera.certificate.modules.fk7263.rest;
 
-import javax.ws.rs.core.Response;
-import java.io.IOException;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+
+import javax.ws.rs.core.Response;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
+
 import se.inera.certificate.fk7263.model.v1.Utlatande;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.Id;
-import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
+import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
 
 /**

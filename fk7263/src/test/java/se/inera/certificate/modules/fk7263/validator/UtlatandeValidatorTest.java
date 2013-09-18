@@ -17,10 +17,10 @@ import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardkontakt;
-import se.inera.certificate.model.codes.Aktivitetskoder;
-import se.inera.certificate.model.codes.ObservationsKoder;
-import se.inera.certificate.model.codes.Sysselsattningskoder;
-import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
+import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
+import se.inera.certificate.modules.fk7263.model.codes.Sysselsattningskoder;
+import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 
 /**
  * @author andreaskaltenbach, marced

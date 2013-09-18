@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.model;
+package se.inera.certificate.modules.fk7263.model.internal;
 
 import static se.inera.certificate.model.util.Iterables.find;
 import static se.inera.certificate.model.util.Strings.emptyToNull;
@@ -14,11 +14,11 @@ import se.inera.certificate.model.Prognos;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardkontakt;
-import se.inera.certificate.model.codes.Aktivitetskoder;
-import se.inera.certificate.model.codes.ObservationsKoder;
-import se.inera.certificate.model.codes.Prognoskoder;
-import se.inera.certificate.model.codes.Sysselsattningskoder;
 import se.inera.certificate.model.util.Predicate;
+import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
+import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
+import se.inera.certificate.modules.fk7263.model.codes.Prognoskoder;
+import se.inera.certificate.modules.fk7263.model.codes.Sysselsattningskoder;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.external.StatusMeta;
 
@@ -338,5 +338,6 @@ public class Fk7263Intyg extends Fk7263Utlatande {
     public void setStatus(List<StatusMeta> status) {
         this.status = status;
     }
-
+    
+ 
 }

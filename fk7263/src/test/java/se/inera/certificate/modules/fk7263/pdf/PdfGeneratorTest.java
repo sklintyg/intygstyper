@@ -13,7 +13,7 @@ import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.modules.fk7263.model.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
