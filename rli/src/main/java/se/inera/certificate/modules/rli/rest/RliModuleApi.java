@@ -51,7 +51,7 @@ import se.inera.certificate.modules.rli.validator.ExternalValidator;
 public class RliModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(RliModuleApi.class);
-    
+
     @Autowired
     private TransportToExternalConverter transportToExternalConverter;
 
@@ -134,17 +134,19 @@ public class RliModuleApi {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces("application/pdf")
     public Response pdf(CertificateContentHolder certificateContentHolder) {
-        se.inera.certificate.modules.rli.model.internal.Utlatande internalUtlatande = 
-                externalToInternalConverter.fromExternalToInternal(certificateContentHolder);
-        try{
-            
+        se.inera.certificate.modules.rli.model.internal.Utlatande internalUtlatande = externalToInternalConverter
+                .fromExternalToInternal(certificateContentHolder);
+        try {
+
             byte[] generatedPDF = pdfGenerator.generatePDF(internalUtlatande);
-            return Response.ok(generatedPDF).build();
-        } catch (PdfGeneratorException p){
+            return Response.ok(generatedPDF)
+                    .header("Content-Disposition", "filename=" + pdfGenerator.generatePdfFilename(internalUtlatande))
+                    .build();
+        } catch (PdfGeneratorException p) {
             LOG.error("Failed to generate PDF for certificate #" + internalUtlatande.getUtlatandeid(), p);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-        
+
     }
 
     /**
