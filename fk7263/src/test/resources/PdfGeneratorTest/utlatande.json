@@ -317,5 +317,6 @@
             "datum" : "2010-01-24"
         }
     ],
-    "forskrivarkodOchArbetsplatskod" : "123456789011"
+    "validFromDate" : "2011-01-26",
+    "validToDate" : "2011-05-31"
 }

@@ -73,5 +73,7 @@
             "quantity": 25.0,
             "unit": "percent"
         }]
-    }]
+    }],
+    "validFromDate" : "2011-06-17",
+    "validToDate" : "2011-06-30"
 }
