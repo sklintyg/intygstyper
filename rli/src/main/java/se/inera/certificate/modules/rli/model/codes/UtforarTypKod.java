@@ -18,7 +18,6 @@
  */
 package se.inera.certificate.modules.rli.model.codes;
 
-import org.apache.commons.lang3.StringUtils;
 
 public enum UtforarTypKod implements ICodeSystem {
 
@@ -61,20 +60,5 @@ public enum UtforarTypKod implements ICodeSystem {
     @Override
     public String getCodeSystemVersion() {
         return codeSystemVersion;
-    }
-
-    public static UtforarTypKod getFromCode(String code) {
-
-        if (StringUtils.isBlank(code)) {
-            return null;
-        }
-
-        for (UtforarTypKod obsKod : values()) {
-            if (obsKod.getCode().equals(code)) {
-                return obsKod;
-            }
-        }
-
-        return null;
     }
 }

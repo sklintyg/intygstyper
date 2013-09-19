@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import se.inera.certificate.modules.rli.model.codes.CodeConverter;
 import se.inera.certificate.modules.rli.model.codes.RekommendationsKod;
 import se.inera.certificate.modules.rli.model.codes.SjukdomsKannedom;
 import se.inera.certificate.modules.rli.model.internal.Rekommendation;
@@ -41,17 +42,11 @@ public class RekommendationPopulatorImpl implements RekommendationPopulator {
         se.inera.certificate.model.Rekommendation extRekommendation = extRekommendationer
                 .get(0);
 
-        String extRekommendationsKod = InternalModelConverterUtils.getValueFromKod(extRekommendation.getRekommendationskod());
-        RekommendationsKod rekommendationsKod = RekommendationsKod.getFromCode(extRekommendationsKod);
+        RekommendationsKod rekommendationsKod = CodeConverter.fromCode(extRekommendation.getRekommendationskod(), RekommendationsKod.class);
         intRekommendation.setRekommendationskod(rekommendationsKod);
 
-        LOG.trace("- RekommedationsKod code was {}, translated to enum {}", extRekommendationsKod, rekommendationsKod);
-
-        String extSjukdomsKannedom = InternalModelConverterUtils.getValueFromKod(extRekommendation.getSjukdomskannedom());
-        SjukdomsKannedom sjukdomsKannedom = SjukdomsKannedom.getFromCode(extSjukdomsKannedom);
+        SjukdomsKannedom sjukdomsKannedom = CodeConverter.fromCode(extRekommendation.getSjukdomskannedom(), SjukdomsKannedom.class);
         intRekommendation.setSjukdomskannedom(sjukdomsKannedom);
-
-        LOG.trace("- SjukdomsKannedom code was {}, translated to enum {}", extSjukdomsKannedom, sjukdomsKannedom);
 
         intRekommendation.setBeskrivning(extRekommendation.getBeskrivning());
 

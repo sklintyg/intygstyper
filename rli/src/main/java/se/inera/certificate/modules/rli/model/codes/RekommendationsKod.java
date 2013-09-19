@@ -18,7 +18,6 @@
  */
 package se.inera.certificate.modules.rli.model.codes;
 
-import org.apache.commons.lang3.StringUtils;
 
 public enum RekommendationsKod implements ICodeSystem {
 
@@ -75,20 +74,4 @@ public enum RekommendationsKod implements ICodeSystem {
     public String getCodeSystemVersion() {
         return codeSystemVersion;
     }
-
-    public static RekommendationsKod getFromCode(String code) {
-
-        if (StringUtils.isBlank(code)) {
-            return null;
-        }
-
-        for (RekommendationsKod rekKod : values()) {
-            if (rekKod.getCode().equals(code)) {
-                return rekKod;
-            }
-        }
-
-        return null;
-    }
-
 }

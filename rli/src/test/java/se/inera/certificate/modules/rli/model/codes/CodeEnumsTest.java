@@ -30,7 +30,7 @@ public class CodeEnumsTest {
 
         String code = "420008001";
 
-        ArrangemangsTyp res = ArrangemangsTyp.getFromCode(code);
+        ArrangemangsTyp res = CodeConverter.fromCode(code, ArrangemangsTyp.class);
 
         assertNotNull(res);
         assertEquals(code, res.getCode());
@@ -41,7 +41,7 @@ public class CodeEnumsTest {
 
         String code = "39104002";
 
-        ObservationsKod res = ObservationsKod.getFromCode(code);
+        ObservationsKod res = CodeConverter.fromCode(code, ObservationsKod.class);
 
         assertNotNull(res);
         assertEquals(code, res.getCode());
@@ -52,7 +52,7 @@ public class CodeEnumsTest {
 
         String code = "SJK1";
 
-        SjukdomsKannedom res = SjukdomsKannedom.getFromCode(code);
+        SjukdomsKannedom res = CodeConverter.fromCode(code, SjukdomsKannedom.class);
 
         assertNotNull(res);
         assertEquals(code, res.getCode());
@@ -63,7 +63,7 @@ public class CodeEnumsTest {
 
         String code = "REK2";
 
-        RekommendationsKod res = RekommendationsKod.getFromCode(code);
+        RekommendationsKod res = CodeConverter.fromCode(code, RekommendationsKod.class);
 
         assertNotNull(res);
         assertEquals(code, res.getCode());

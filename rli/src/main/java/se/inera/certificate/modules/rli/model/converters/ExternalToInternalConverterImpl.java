@@ -32,6 +32,7 @@ import se.inera.certificate.integration.rest.dto.CertificateStatus;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.modules.rli.model.codes.ArrangemangsTyp;
+import se.inera.certificate.modules.rli.model.codes.CodeConverter;
 import se.inera.certificate.modules.rli.model.internal.Arrangemang;
 import se.inera.certificate.modules.rli.model.internal.HoSPersonal;
 import se.inera.certificate.modules.rli.model.internal.Patient;
@@ -255,8 +256,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
 
         intArr.setPlats(extArr.getPlats());
 
-        String arrTypCode = InternalModelConverterUtils.getValueFromKod(extArr.getArrangemangstyp());
-        ArrangemangsTyp arrTyp = ArrangemangsTyp.getFromCode(arrTypCode);
+        ArrangemangsTyp arrTyp = CodeConverter.fromCode(extArr.getArrangemangstyp(), ArrangemangsTyp.class);
         intArr.setArrangemangstyp(arrTyp);
 
         intArr.setBokningsreferens(extArr.getBokningsreferens());

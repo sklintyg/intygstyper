@@ -18,7 +18,6 @@
  */
 package se.inera.certificate.modules.rli.model.codes;
 
-import org.apache.commons.lang3.StringUtils;
 
 public enum SjukdomsKannedom implements ICodeSystem {
 
@@ -66,20 +65,4 @@ public enum SjukdomsKannedom implements ICodeSystem {
     public String getCodeSystemVersion() {
         return codeSystemVersion;
     }
-
-    public static SjukdomsKannedom getFromCode(String code) {
-
-        if (StringUtils.isBlank(code)) {
-            return null;
-        }
-
-        for (SjukdomsKannedom sjkKod : values()) {
-            if (sjkKod.getCode().equals(code)) {
-                return sjkKod;
-            }
-        }
-
-        return null;
-    }
-
 }
