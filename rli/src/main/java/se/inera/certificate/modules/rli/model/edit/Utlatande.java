@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.rli.model.internal;
+package se.inera.certificate.modules.rli.model.edit;
 
 import java.util.List;
 
@@ -26,6 +26,8 @@ public class Utlatande {
 
     private String utlatandeid;
     
+    private String utlatandeidroot;
+
     private String typAvUtlatande;
 
     private List<String> kommentarer;
@@ -136,6 +138,14 @@ public class Utlatande {
 
     public void setStatus(List<Status> status) {
         this.status = status;
+    }
+
+    public String getUtlatandeidroot() {
+        return utlatandeidroot;
+    }
+
+    public void setUtlatandeidroot(String utlatandeidroot) {
+        this.utlatandeidroot = utlatandeidroot;
     }
 
 }

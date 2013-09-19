@@ -93,7 +93,6 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         Utlatande intUtlatande = new Utlatande();
 
         intUtlatande.setUtlatandeid(InternalModelConverterUtils.getExtensionFromId(extUtlatande.getId()));
-        intUtlatande.setUtlatandeidroot(InternalModelConverterUtils.getRootFromId(extUtlatande.getId()));
 
         intUtlatande.setTypAvUtlatande(InternalModelConverterUtils.getValueFromKod(extUtlatande.getTyp()));
 

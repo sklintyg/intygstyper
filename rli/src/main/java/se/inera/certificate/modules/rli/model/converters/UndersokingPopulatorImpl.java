@@ -239,7 +239,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
         if (currentExam.getUtforsVid() != null) {
             LOG.trace("- Extracting place for the current exam");
             String undersokningPlats = currentExam.getUtforsVid().getNamn();
-            // intUndersokning.setUndersokningsplats(undersokningPlats);
+            intUndersokning.setUndersokningsplats(undersokningPlats);
             intUndersokning.setUtforsVid(convertToIntVardenhet(currentExam.getUtforsVid()));
 
         } else {

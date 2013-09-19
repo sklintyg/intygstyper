@@ -29,17 +29,18 @@ import se.inera.certificate.modules.rli.model.codes.SjukdomsKannedom;
 import se.inera.certificate.modules.rli.model.codes.UtforarTypKod;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
-import se.inera.certificate.modules.rli.model.internal.Arrangemang;
-import se.inera.certificate.modules.rli.model.internal.Graviditet;
-import se.inera.certificate.modules.rli.model.internal.HoSPersonal;
-import se.inera.certificate.modules.rli.model.internal.KomplikationStyrkt;
-import se.inera.certificate.modules.rli.model.internal.OrsakAvbokning;
-import se.inera.certificate.modules.rli.model.internal.Patient;
-import se.inera.certificate.modules.rli.model.internal.Rekommendation;
-import se.inera.certificate.modules.rli.model.internal.Undersokning;
-import se.inera.certificate.modules.rli.model.internal.Utforare;
-import se.inera.certificate.modules.rli.model.internal.Vardenhet;
-import se.inera.certificate.modules.rli.model.internal.Vardgivare;
+
+import se.inera.certificate.modules.rli.model.edit.Arrangemang;
+import se.inera.certificate.modules.rli.model.edit.Graviditet;
+import se.inera.certificate.modules.rli.model.edit.HoSPersonal;
+import se.inera.certificate.modules.rli.model.edit.KomplikationStyrkt;
+import se.inera.certificate.modules.rli.model.edit.OrsakAvbokning;
+import se.inera.certificate.modules.rli.model.edit.Patient;
+import se.inera.certificate.modules.rli.model.edit.Rekommendation;
+import se.inera.certificate.modules.rli.model.edit.Undersokning;
+import se.inera.certificate.modules.rli.model.edit.Utforare;
+import se.inera.certificate.modules.rli.model.edit.Vardenhet;
+import se.inera.certificate.modules.rli.model.edit.Vardgivare;
 
 /**
  * Unit test for InternalToExternalConverter
@@ -345,16 +346,17 @@ public class InternalToExternalConverterTest {
     @Test
     public void testConvertFullInternalToExternal() {
         Utlatande extUtlatande = readUtlatandeFromJsonFile("/rli-sjuk-1-template.json");
-        se.inera.certificate.modules.rli.model.internal.Utlatande intUtlatande = buildInternalUtlatande();
 
+        se.inera.certificate.modules.rli.model.edit.Utlatande intUtlatande = buildInternalUtlatande();
+        
         Utlatande externalConverted = converter.convertUtlatandeFromInternalToExternal(intUtlatande);
 
         assertLenientEquals(extUtlatande, externalConverted);
     }
 
-    private se.inera.certificate.modules.rli.model.internal.Utlatande buildInternalUtlatande() {
-        se.inera.certificate.modules.rli.model.internal.Utlatande utlatande = new se.inera.certificate.modules.rli.model.internal.Utlatande();
-
+    private se.inera.certificate.modules.rli.model.edit.Utlatande buildInternalUtlatande() {
+        se.inera.certificate.modules.rli.model.edit.Utlatande utlatande = new se.inera.certificate.modules.rli.model.edit.Utlatande();
+        
         utlatande.setUtlatandeid("39f80245-9730-4d76-aaff-b04a2f3cfbe7");
         utlatande.setUtlatandeidroot("???");
 
