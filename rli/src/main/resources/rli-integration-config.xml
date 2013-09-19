@@ -66,6 +66,7 @@
     <jaxrs:serviceBeans>
       <bean class="se.inera.certificate.modules.rli.rest.RliModuleApi"/>
       <bean class="se.inera.certificate.modules.rli.rest.RliViewServices"/>
+      <bean class="se.inera.webcert.integration.rest.mock.WebCertModuleDraftMock"/>
     </jaxrs:serviceBeans>
     <jaxrs:providers>
       <ref bean="jacksonJsonProvider"/>
