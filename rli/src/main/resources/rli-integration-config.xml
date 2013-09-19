@@ -61,6 +61,8 @@
   
   <bean id="pdfGenerator" class="se.inera.certificate.modules.rli.pdf.PdfGeneratorImpl"/>
   
+  <bean id="editModelFactory" class="se.inera.certificate.modules.rli.model.factory.EditModelFactoryImpl" />
+  
   <jaxrs:server address="/">
     <jaxrs:serviceBeans>
       <bean class="se.inera.certificate.modules.rli.rest.RliModuleApi"/>
