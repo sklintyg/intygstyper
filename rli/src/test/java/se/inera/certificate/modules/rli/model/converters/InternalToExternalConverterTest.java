@@ -373,7 +373,7 @@ public class InternalToExternalConverterTest {
         pat.setPostadress("Teststigen 1");
         pat.setPostnummer("123 45");
         pat.setPostort("Teststaden");
-        pat.setPersonid("19121212-1212");
+        pat.setPersonid("19121212+1212");
         pat.setFullstandigtNamn("Test Testsson");
         utlatande.setPatient(pat);
 
@@ -403,7 +403,7 @@ public class InternalToExternalConverterTest {
 
         HoSPersonal hosPers = new HoSPersonal();
         hosPers.setFullstandigtNamn("Doktor Doktor");
-        hosPers.setPersonid("19101010-1010");
+        hosPers.setPersonid("19101010+1010");
         hosPers.setVardenhet(vardenhet);
         utlatande.setSkapadAv(hosPers);
 
