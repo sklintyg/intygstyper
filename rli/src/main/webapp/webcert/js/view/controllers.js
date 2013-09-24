@@ -25,6 +25,7 @@ angular.module('controllers.rli.webcert').controller('NewCertCtrl', [ '$scope', 
 
     webcertService.createDraft('RLI', function(result) {
     		$scope.cert = result;
+    		// TODO: Remove when rest client is finished
     		$scope.cert.skapadAv = {
 					vardenhet : {
     						enhetsnamn		: "Test",
@@ -35,16 +36,7 @@ angular.module('controllers.rli.webcert').controller('NewCertCtrl', [ '$scope', 
     						epost 			: "test@vardenheten.se"    						
 					}
     		};
-	});
-//    $scope.cert.skapadAv.vardenhet.enhetsnamn = "Testvårdenhet";
-//    $scope.cert.skapadAv.vardenhet.postadress = "Vårdenhetsvägen 13";
-//    $scope.cert.skapadAv.vardenhet.postort = "Hägersten";
-//    $scope.cert.skapadAv.vardenhet.postnummer = "12637";
-//    $scope.cert.skapadAv.vardenhet.telefonnummer = "08-1337";
-//    $scope.cert.skapadAv.vardenhet.epost = "test@vardenheten.se";
-   
-    // TODO: Remove when editModelFactory implementation is finished
-    
+	}); 
     
     $scope.proceedToCert = function() {
 	   webcertService.saveDraft($scope.cert.utlatandeid, angular.toJson($scope.cert), function(){
