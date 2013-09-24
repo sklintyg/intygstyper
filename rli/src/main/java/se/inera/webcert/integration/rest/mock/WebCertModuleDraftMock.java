@@ -5,16 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response.Status;
 
 import org.slf4j.Logger;
@@ -41,9 +32,13 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
     }
 
     @Override
-    @POST
-    @Consumes("text/plain")
-    @Produces("application/json")
+    public Object getDraftCertificateList() {
+        LOG.info("Getting all draft certificates");
+
+        return mockStore.keySet();
+    }
+
+    @Override
     public Object createDraftCertificate(String certificateType) {
         if (!MODULE_TYPE_RLI.equals(certificateType)) {
             throw new WebApplicationException(Status.BAD_REQUEST);
@@ -58,21 +53,9 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
 
         return utlatande;
     }
-    
-    @Override
-    @Path("/list")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Object getDraftCertificateList(){
-        LOG.info("Getting all draft certificates");
-        return mockStore.keySet();
-    }
 
     @Override
-    @Path("{certId}")
-    @GET
-    @Produces("application/json")
-    public Object getDraftCertificate(@PathParam("certId") String certificateId) {
+    public Object getDraftCertificate(String certificateId) {
         LOG.info("Getting draft with id: {}", certificateId);
 
         Object certificate = mockStore.get(certificateId);
@@ -82,12 +65,9 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
 
         return certificate;
     }
-    
+
     @Override
-    @Path("{certId}")
-    @PUT
-    @Consumes("application/json")
-    public void saveDraftCertificate(@PathParam("certId") String certificateId, Object draftCertificate) {
+    public void saveDraftCertificate(String certificateId, Object draftCertificate) {
         LOG.info("Saving draft with id: {}", certificateId);
 
         if (!mockStore.containsKey(certificateId)) {
@@ -98,10 +78,7 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
     }
 
     @Override
-    @Path("{certId}")
-    @DELETE
-    @Consumes("application/json")
-    public void deleteDraftCertificate(@PathParam("certId") String certificateId) {
+    public void deleteDraftCertificate(String certificateId) {
         LOG.info("Removing draft with id: {}", certificateId);
 
         if (!mockStore.containsKey(certificateId)) {
@@ -112,16 +89,12 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
     }
 
     @Override
-    @Path("{certId}/bulksign")
-    @POST
-    public void addDraftCertificateForSigning(@PathParam("certId") String certificateId) {
+    public void addDraftCertificateForSigning(String certificateId) {
         throw new WebApplicationException(Status.NOT_IMPLEMENTED);
     }
 
     @Override
-    @Path("{certId}/sign")
-    @POST
-    public void signDraftCertificate(@PathParam("certId") String certificateId) {
+    public void signDraftCertificate(String certificateId) {
         throw new WebApplicationException(Status.NOT_IMPLEMENTED);
     }
 }

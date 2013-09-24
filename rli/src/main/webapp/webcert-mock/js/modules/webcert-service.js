@@ -5,6 +5,17 @@
 angular.module('services.webcertService', []);
 angular.module('services.webcertService').factory('webcertService', [ '$http', '$rootScope','$log', function(http, rootScope, $log) {
 
+    // getDraftList
+    function _getDraftList(callback) {
+        http.get(rootScope.MODULE_CONFIG.MODULE_CONTEXT_PATH + '/api/draft').success(function(data) {
+            $log.debug("got draft list data");
+            callback(data);
+        }).error(function(data, status, headers, config) {
+            $log.debug("error " + status);
+            callback(null);
+        });
+    }
+
     // createDraft
     function _createDraft(type, callback) {
         http.post(rootScope.MODULE_CONFIG.MODULE_CONTEXT_PATH + '/api/draft', type, { headers: {'Content-Type': 'text/plain'} }).success(function(data) {
@@ -20,16 +31,6 @@ angular.module('services.webcertService').factory('webcertService', [ '$http', '
     function _getDraft(id, callback) {
         http.get(rootScope.MODULE_CONFIG.MODULE_CONTEXT_PATH + '/api/draft/' + id).success(function(data) {
             $log.debug("got draft data for id " + id);
-            callback(data);
-        }).error(function(data, status, headers, config) {
-            $log.debug("error " + status);
-            callback(null);
-        });
-    }
-    
-    function _getDraftList(callback) {
-    	http.get(rootScope.MODULE_CONFIG.MODULE_CONTEXT_PATH + '/api/draft/list').success(function(data) {
-            $log.debug("got draft list data ");
             callback(data);
         }).error(function(data, status, headers, config) {
             $log.debug("error " + status);
@@ -61,9 +62,9 @@ angular.module('services.webcertService').factory('webcertService', [ '$http', '
 
     // Return public API for our service
     return {
+        getDraftList : _getDraftList,
         createDraft : _createDraft,
         getDraft : _getDraft,
-        getDraftList : _getDraftList,
         saveDraft : _saveDraft,
         deleteDraft : _deleteDraft
     }

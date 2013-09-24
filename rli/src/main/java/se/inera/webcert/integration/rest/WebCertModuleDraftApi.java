@@ -20,6 +20,14 @@ import javax.ws.rs.core.MediaType;
 public interface WebCertModuleDraftApi {
 
     /**
+     * Returns a list of all certificates
+     * @return a JSON object
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    Object getDraftCertificateList();
+
+    /**
      * Creates an empty JSON object for a draft certificate. The type of the draft certificate to be created is
      * identified by certificateType.
      * 
@@ -43,16 +51,6 @@ public interface WebCertModuleDraftApi {
     @Produces(MediaType.APPLICATION_JSON)
     Object getDraftCertificate(@PathParam("certId") String certificateId);
 
-    /**
-     * Returns a list of all certificates
-     * @return a JSON object
-     */
-    @Path("/list")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    Object getDraftCertificateList();
-
-    
     /**
      * Persists the supplied draft certificate using the certificateId as key.
      * 

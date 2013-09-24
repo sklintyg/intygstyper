@@ -25,7 +25,7 @@ public interface WebCertModuleCertficateApi {
     @Path("{certId}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    Object getDraftCertificate(@PathParam("certId") String certificateId);
+    Object getCertificate(@PathParam("certId") String certificateId);
 
     // TODO: Add method for copying a certificate
 
