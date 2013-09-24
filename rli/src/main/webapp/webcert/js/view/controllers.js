@@ -22,17 +22,34 @@
 angular.module('controllers.rli.webcert', []);
 angular.module('controllers.rli.webcert').controller('NewCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', 'webcertService', '$http' , function NewCertCtrl($scope, $filter, $location, $rootScope, webcertService, $http) {
     $scope.cert = {};
-     
-    $scope.createNewCert = function() {
+
     webcertService.createDraft('RLI', function(result) {
     		$scope.cert = result;
-    	});
-    };
+    		$scope.cert.skapadAv = {
+					vardenhet : {
+    						enhetsnamn		: "Test",
+    						postadress		: "Vårdenhetsvägen 13",
+    						postort			: "Hägersten",
+    						postnummer		: "12637",
+    						telefonnummer	: "08-1337",
+    						epost 			: "test@vardenheten.se"    						
+					}
+    		};
+	});
+//    $scope.cert.skapadAv.vardenhet.enhetsnamn = "Testvårdenhet";
+//    $scope.cert.skapadAv.vardenhet.postadress = "Vårdenhetsvägen 13";
+//    $scope.cert.skapadAv.vardenhet.postort = "Hägersten";
+//    $scope.cert.skapadAv.vardenhet.postnummer = "12637";
+//    $scope.cert.skapadAv.vardenhet.telefonnummer = "08-1337";
+//    $scope.cert.skapadAv.vardenhet.epost = "test@vardenheten.se";
+   
+    // TODO: Remove when editModelFactory implementation is finished
+    
     
     $scope.proceedToCert = function() {
-    	webcertService.saveDraft($scope.cert.utlatandeid, angular.toJson($scope.cert), function(){
- 		   console.log("Call completed"); 		 
- 	   });
+	   webcertService.saveDraft($scope.cert.utlatandeid, angular.toJson($scope.cert), function(){
+		   console.log("Call completed"); 		 
+ 	   });	
     	window.location = "#/edit/" + $scope.cert.utlatandeid;
     };
     
@@ -54,25 +71,7 @@ angular.module('controllers.rli.webcert').controller('EditCertCtrl', [ '$scope',
     webcertService.getDraft($routeParams.certId, function(result){
     	$scope.cert = result;
     });
-    
-    //Maybe this isnt so good, might be better with radio buttons in template.. 
-    //Make list of rekommendationskoder
-    $scope.patient_sjuk_choices = [{
-            "value": "REK1",
-            "label": "Jag avråder uttryckligen från resa, då patientens = resenärens tillstånd innebär, att sådan ej kan genomföras utan men."},
-        {
-            "value": "REK2",
-            "label": "Jag avråder ej från resa. Patientens = resenärens tillstånd utgör inget hinder för resa."}];
-    
-    $scope.patient_gravid_choices = [{
-        "value": "REK3",
-        "label": "Jag avråder uttryckligen från resa. Komplikationer i graviditeten har uppkommit efter bokning av resan, vilka innebär hinder för resa."},
-    {
-        "value": "REK4",
-        "label": "Jag avråder ej från resa. Graviditeten utgör inget medicinskt hinder för resa."}];
-       
-   
-    
+
     console.log("The controller at least got this far..");
     
     
