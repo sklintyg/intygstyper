@@ -25,21 +25,31 @@
  */
 var RLIApp = angular.module('RLIViewCertApp', [ 'ui.bootstrap', 'services.certService', 'controllers.rli.ViewCertCtrl', 'directives.mi', 'modules.messages' ]).config([ '$routeProvider', function($routeProvider) {
     $routeProvider.when('/view', {
-        templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/views/view-cert.html',
-        controller : 'ViewCertCtrl'
+        templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/intyg/views/view-cert.html',
+        controller : 'ViewCertCtrl',
+        title : 'Reseläkarintyg'
     }).when('/fel', {
-        templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/views/error.html'
+        templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/intyg/views/error.html'
     // no Controller needed?
     }).otherwise({
         redirectTo : '/view'
     });
 } ]);
 
-RLIApp.run([ '$rootScope', 'messageService', function($rootScope, messageService) {
+RLIApp.run([ '$rootScope', '$route','messageService', function($rootScope, $route, messageService) {
     $rootScope.lang = 'sv';
     $rootScope.DEFAULT_LANG = 'sv';
     $rootScope.MODULE_CONFIG = MODULE_CONFIG;
     messageService.addResources(commonMessageResources);
     messageService.addResources(rliMessages);
 
+	// Update page title
+	$rootScope.page_title = 'Titel';
+    $rootScope.$on('$routeChangeSuccess', function() {
+        //Seems like this is also called when redirecting with a 
+        //partially populated $route.current without the $$route part 
+        if ($route.current.$$route){
+            $rootScope.page_title = $route.current.$$route.title + ' | Mina intyg';
+        }
+    });
 } ]);
