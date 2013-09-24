@@ -14,6 +14,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response.Status;
 
 import org.slf4j.Logger;
@@ -57,6 +58,15 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
 
         return utlatande;
     }
+    
+    @Override
+    @Path("/list")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Object getDraftCertificateList(){
+        LOG.info("Getting all draft certificates");
+        return mockStore.keySet();
+    }
 
     @Override
     @Path("{certId}")
@@ -72,7 +82,7 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
 
         return certificate;
     }
-
+    
     @Override
     @Path("{certId}")
     @PUT

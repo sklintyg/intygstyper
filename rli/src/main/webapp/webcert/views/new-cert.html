@@ -1,0 +1,66 @@
+<div class="row-fluid">
+  <div>
+
+    <!-- Content -->
+    <div class="row-fluid">
+      <div class="span7">
+        <h1>
+       	  Mockup for input in Webcert
+        </h1>
+      </div>
+    </div>
+    <section id="certificate" class="certificate">
+
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="cert">
+            <div class="cert-body">
+   	          <form name="rliForm">
+		
+				<div class="body-row">
+					<span class="title">Skapa nytt intyg</span>
+					    <div style="margin-left:10px;">
+					    
+					      <div style="position:absolute; margin-left:0px; margin-top:0px;">
+							<span class="text" style="padding-bottom: 10px;">Förnamn:</span>
+							<input type="text" name="patient_fornamn" ng-model="cert.patient.fornamn" ng-click="createNewCert()"/>							
+					      </div>
+						      
+					      <div style="position:absolute; margin-left:250px; margin-top:0px;">
+							<span class="text" style="padding-bottom: 10px;">Mellannamn:</span>
+							<input type="text" name="patient_mellannamn" ng-model="cert.patient.mellannamn"/>
+					      </div>
+						      
+						      
+					      <div style="position:relative; margin-left:500px; margin-top:0px;">
+							<span class="text" style="padding-bottom: 10px;">Efternamn:</span>
+							<input type="text" name="patient_efternamn" ng-model="cert.patient.efternamn"/>
+					      </div>						
+						    
+						    
+	
+					      <div style="position:relative; margin-left:0px; margin-top:0px;">
+								<span class="text" style="padding-bottom: 10px;">Personnummer:</span>
+								<input type="text" name="patient_id" ng-model="cert.patient.id"/>
+					      </div>
+					      
+					    </div>		
+	
+			  		<input class="btn" style="margin:10px; border:1px solid black;"
+					 type="button" value="Skapa nytt intyg" id="submit" name="submit" 
+					 ng-click="proceedToCert()" />
+				</div> 
+				
+				<div class="body-row">
+					
+				</div>
+				
+	    	  	</form>
+            	</div> <!-- end of cert-body-->            
+	  		</div><!-- end of cert-->
+		</div>
+      </div>
+    </section>
+
+  </div>
+</div>

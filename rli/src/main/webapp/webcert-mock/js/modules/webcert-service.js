@@ -26,6 +26,16 @@ angular.module('services.webcertService').factory('webcertService', [ '$http', '
             callback(null);
         });
     }
+    
+    function _getDraftList(callback) {
+    	http.get(rootScope.MODULE_CONFIG.MODULE_CONTEXT_PATH + '/api/draft/list').success(function(data) {
+            $log.debug("got draft list data ");
+            callback(data);
+        }).error(function(data, status, headers, config) {
+            $log.debug("error " + status);
+            callback(null);
+        });
+    }
 
     // saveDraft
     function _saveDraft(id, model, callback) {
@@ -53,6 +63,7 @@ angular.module('services.webcertService').factory('webcertService', [ '$http', '
     return {
         createDraft : _createDraft,
         getDraft : _getDraft,
+        getDraftList : _getDraftList,
         saveDraft : _saveDraft,
         deleteDraft : _deleteDraft
     }

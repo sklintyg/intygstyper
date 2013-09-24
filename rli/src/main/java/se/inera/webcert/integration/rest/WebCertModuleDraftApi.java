@@ -44,6 +44,16 @@ public interface WebCertModuleDraftApi {
     Object getDraftCertificate(@PathParam("certId") String certificateId);
 
     /**
+     * Returns a list of all certificates
+     * @return a JSON object
+     */
+    @Path("/list")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    Object getDraftCertificateList();
+
+    
+    /**
      * Persists the supplied draft certificate using the certificateId as key.
      * 
      * @param certificateId
