@@ -7,7 +7,7 @@
     "codeSystem" : "f6fb361a-e31d-48b8-8657-99b63912dd9b",
     "code" : "RLI"
   },
-  "kommentars" : [ "Övriga upplysningar" ],
+  "kommentarer" : [ "Övriga upplysningar" ],
   "signeringsdatum" : "2013-08-12T11:25:00.000",
   "skickatdatum" : "2013-08-12T11:25:30.000",
   "patient" : {
