@@ -43,8 +43,8 @@ import se.inera.certificate.modules.rli.model.factory.EditModelFactory;
 import se.inera.certificate.modules.rli.pdf.PdfGenerator;
 import se.inera.certificate.modules.rli.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
+import se.inera.certificate.modules.rli.rest.dto.CreateNewDraftCertificateHolder;
 import se.inera.certificate.modules.rli.validator.ExternalValidator;
-import se.inera.webcert.integration.rest.dto.CreateNewDraftCertificateHolder;
 
 /**
  * The contract between the certificate module and the generic components (Intygstjänsten and Mina-Intyg).

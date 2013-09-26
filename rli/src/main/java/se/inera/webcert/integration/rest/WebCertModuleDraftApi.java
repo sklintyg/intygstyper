@@ -10,6 +10,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import se.inera.webcert.integration.rest.dto.CreateDraftCertificateHolder;
+
 /**
  * API exposing services for use in modules extending WebCert.
  * 
@@ -31,14 +33,14 @@ public interface WebCertModuleDraftApi {
      * Creates an empty JSON object for a draft certificate. The type of the draft certificate to be created is
      * identified by certificateType.
      * 
-     * @param certificateType
-     *            The type of draft certificate to produce
+     * @param draftInfo
+     *            The type of draft certificate to produce etc
      * @return The draft certificate as a JSON object
      */
     @POST
-    @Consumes(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Object createDraftCertificate(String certificateType);
+    Object createDraftCertificate(CreateDraftCertificateHolder draftInfo);
 
     /**
      * Returns the draft certificate as JSON identified by the certificateId.

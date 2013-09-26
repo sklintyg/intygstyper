@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.modules.rli.model.edit.Utlatande;
 import se.inera.certificate.modules.rli.model.factory.EditModelFactory;
 import se.inera.webcert.integration.rest.WebCertModuleDraftApi;
+import se.inera.webcert.integration.rest.dto.CreateDraftCertificateHolder;
 
 public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
 
@@ -38,7 +39,9 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
     }
 
     @Override
-    public Object createDraftCertificate(String certificateType) {
+    public Object createDraftCertificate(CreateDraftCertificateHolder draftInfo) {
+        String certificateType = draftInfo.getCertificateType();
+
         if (!MODULE_TYPE_RLI.equals(certificateType)) {
             throw new WebApplicationException(Status.BAD_REQUEST);
         }
@@ -47,7 +50,7 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
         LOG.info("Creating new draft (type: {}), with id: {}", certificateType, certificateId);
 
         Utlatande utlatande = editModelFactory.createEditableUtlatande(certificateId,
-                Collections.<String, Object> emptyMap());
+                draftInfo.getInitialParameters());
         mockStore.put(certificateId, utlatande);
         simulateLatency(1000);
         return utlatande;
@@ -96,8 +99,8 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
     public void signDraftCertificate(String certificateId) {
         throw new WebApplicationException(Status.NOT_IMPLEMENTED);
     }
-    
-    private void simulateLatency(long length){
+
+    private void simulateLatency(long length) {
         try {
             Thread.sleep(length);
         } catch (InterruptedException e) {

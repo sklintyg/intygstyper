@@ -1,4 +1,4 @@
-package se.inera.webcert.integration.rest.dto;
+package se.inera.certificate.modules.rli.rest.dto;
 
 import java.util.HashMap;
 import java.util.Map;

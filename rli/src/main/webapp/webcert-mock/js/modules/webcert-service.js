@@ -18,7 +18,7 @@ angular.module('services.webcertService').factory('webcertService', [ '$http', '
 
     // createDraft
     function _createDraft(type, callback) {
-        http.post(rootScope.MODULE_CONFIG.MODULE_CONTEXT_PATH + '/api/draft', type, { headers: {'Content-Type': 'text/plain'} }).success(function(data) {
+        http.post(rootScope.MODULE_CONFIG.MODULE_CONTEXT_PATH + '/api/draft', type).success(function(data) {
             $log.debug("created new draft of type " + type);
             callback(data);
         }).error(function(data, status, headers, config) {
