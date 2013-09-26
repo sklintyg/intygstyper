@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.rli.controller;
+package se.inera.certificate.modules.rli.intyg.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
