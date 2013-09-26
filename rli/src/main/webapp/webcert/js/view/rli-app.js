@@ -25,21 +25,17 @@
  */
 var RLIApp = angular.module('RLIEditCertApp', [ 'controllers.rli.webcert', 'services.webcertService', 'modules.messages', 'directives.mi' ]).config(
         [ '$routeProvider', function($routeProvider) {
-            $routeProvider.when('/edit', {
-                templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/edit-cert.html',
-                controller : 'ListCertCtrl'
-          
-            }).when('/edit/:certId', {
+            $routeProvider.when('/edit/:certId', {
                 templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/edit-cert.html',
                 controller : 'EditCertCtrl'
-          
             }).when('/new', {
                 templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/new-cert.html',
                 controller : 'NewCertCtrl'
-                	
             }).when('/list', {
             	templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/list-cert.html',
             	controller : 'ListCertCtrl'
+            }).otherwise({
+                redirectTo : '/list'
             });
         } ]);
 

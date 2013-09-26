@@ -21,9 +21,7 @@ package se.inera.certificate.modules.rli.webcert.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller("webCertPageController")
@@ -32,10 +30,10 @@ public class PageController {
 
     private static final Logger LOG = LoggerFactory.getLogger(PageController.class);
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ModelAndView displayStart(@PathVariable(value = "id") String id) {
-        LOG.debug("visa-intyg " + id);
-        return new ModelAndView("edit-intyg","id",id);
+    @RequestMapping(value = "*")
+    public ModelAndView displayStart() {
+        LOG.debug("edit-intyg");
+        return new ModelAndView("edit-intyg");
     }
 
 }

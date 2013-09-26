@@ -45,7 +45,7 @@ angular.module('controllers.rli.webcert').controller('NewCertCtrl', [ '$scope', 
 	   webcertService.saveDraft($scope.cert.utlatandeid, angular.toJson($scope.cert), function(){
 		   console.log("Call completed"); 		 
  	   });	
-    	window.location = "#/edit/" + $scope.cert.utlatandeid;
+        $location.path("/edit/" + $scope.cert.utlatandeid);
     };
     
 }]);
@@ -78,14 +78,14 @@ angular.module('controllers.rli.webcert').controller('EditCertCtrl', [ '$scope',
          if (result != null) {
              $scope.cert = result;
          } else {
-        	 window.location("#/list");
+            $location.path("/list");
          }
     });
     
     $scope.deleteDraft = function(){
     	webcertService.deleteDraft($scope.cert.utlatandeid, function(){
     		console.log("Deleted current draft");
-    		window.location = "#/list";
+            $location.path("/list");
     	});
     };
 
@@ -95,8 +95,7 @@ angular.module('controllers.rli.webcert').controller('EditCertCtrl', [ '$scope',
     	console.log("Making save call to REST");
     	webcertService.saveDraft($scope.cert.utlatandeid, angular.toJson($scope.cert), function(){
     		console.log("Call completed");
-    		window.location = "#/list";
-		   
+            $location.path("/list");
     	});
 	};
 }]);
