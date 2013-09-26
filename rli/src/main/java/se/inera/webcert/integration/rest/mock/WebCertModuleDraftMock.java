@@ -34,7 +34,6 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
     @Override
     public Object getDraftCertificateList() {
         LOG.info("Getting all draft certificates");
-
         return mockStore.keySet();
     }
 
@@ -50,7 +49,7 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
         Utlatande utlatande = editModelFactory.createEditableUtlatande(certificateId,
                 Collections.<String, Object> emptyMap());
         mockStore.put(certificateId, utlatande);
-
+        simulateLatency(1000);
         return utlatande;
     }
 
@@ -62,7 +61,7 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
         if (certificate == null) {
             throw new WebApplicationException(Status.NOT_FOUND);
         }
-
+        simulateLatency(1000);
         return certificate;
     }
 
@@ -73,7 +72,7 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
         if (!mockStore.containsKey(certificateId)) {
             throw new WebApplicationException(Status.BAD_REQUEST);
         }
-
+        simulateLatency(1000);
         mockStore.put(certificateId, draftCertificate);
     }
 
@@ -84,7 +83,7 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
         if (!mockStore.containsKey(certificateId)) {
             throw new WebApplicationException(Status.NOT_FOUND);
         }
-
+        simulateLatency(1000);
         mockStore.remove(certificateId);
     }
 
@@ -96,5 +95,13 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
     @Override
     public void signDraftCertificate(String certificateId) {
         throw new WebApplicationException(Status.NOT_IMPLEMENTED);
+    }
+    
+    private void simulateLatency(long length){
+        try {
+            Thread.sleep(length);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

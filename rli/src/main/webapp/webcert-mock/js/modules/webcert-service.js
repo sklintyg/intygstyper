@@ -51,7 +51,7 @@ angular.module('services.webcertService').factory('webcertService', [ '$http', '
 
     // deleteDraft
     function _deleteDraft(id, callback) {
-        http.delete(rootScope.MODULE_CONFIG.MODULE_CONTEXT_PATH + '/api/draft/' + id).success(function(data) {
+        http.delete(rootScope.MODULE_CONFIG.MODULE_CONTEXT_PATH + '/api/draft/' + id ).success(function(data) {
             $log.debug("deleted draft data for id " + id);
             callback(data);
         }).error(function(data, status, headers, config) {

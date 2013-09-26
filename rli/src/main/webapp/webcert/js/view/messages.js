@@ -30,6 +30,7 @@ var rliMessages = {
         "view.label.unit": "Enhet:",
         "view.label.errorpagetitle": "Ett problem har uppstått",
         "view.message.certificateloading": "Hämtar intyg...",
+        "view.message.certificatesaving" : "Sparar intyg...",
         "button.sendtofk": "Skicka",
         "button.downloadprint": "Ladda ner / Skriv ut",
         "button.send": "Skicka",

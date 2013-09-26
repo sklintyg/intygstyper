@@ -70,7 +70,6 @@ public interface WebCertModuleDraftApi {
      */
     @Path("{certId}")
     @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
     void deleteDraftCertificate(@PathParam("certId") String certificateId);
 
     /**

@@ -58,7 +58,6 @@
 <body ng-app="RLIEditCertApp">
 
   <div class="container">
-	<p>Testing forms</p>
     <div id="content-container">
       <div class="content" style="padding-top: 0px;">
         <div class="row-fluid">
