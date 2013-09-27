@@ -1,32 +1,22 @@
 package se.inera.certificate.modules.fk7263.pdf;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import se.inera.certificate.model.LocalDateInterval;
+import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
-import se.inera.certificate.model.Aktivitet;
-import se.inera.certificate.model.Arbetsuppgift;
-import se.inera.certificate.model.Observation;
-import se.inera.certificate.model.Referens;
-import se.inera.certificate.model.Vardkontakt;
-import se.inera.certificate.model.util.Strings;
-import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
-import se.inera.certificate.modules.fk7263.model.codes.Referenstypkoder;
-import se.inera.certificate.modules.fk7263.model.codes.Vardkontakttypkoder;
-import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg.DATE_PATTERN;
-
 
 /**
  * @author andreaskaltenbach
  */
 public class PdfGenerator {
+
+    private static final String DATE_PATTERN = "yyyy-MM-dd";
 
     private static final String PATIENT_NAME = "form1[0].subform[0].flt_PatNamn[0]";
     private static final String PATIENT_SSN = "form1[0].subform[0].flt_PatPersonnummer[0]";
@@ -198,7 +188,7 @@ public class PdfGenerator {
 
         fillTravel();
 
-        setField(CONTACT_WITH_FK, intyg.getKontaktMedForsakringskassanAktuell() != null);
+        setField(CONTACT_WITH_FK, intyg.isKontaktMedFk());
 
         fillPrognose();
 
@@ -206,149 +196,131 @@ public class PdfGenerator {
     }
 
     private void fillPatientDetails() {
-        fillText(PATIENT_NAME, intyg.getPatient().getFullstandigtNamn());
-        fillText(PATIENT_SSN, intyg.getPatient().getId().getExtension());
+        fillText(PATIENT_NAME, intyg.getPatientNamn());
+        fillText(PATIENT_SSN, intyg.getPatientPersonnummer());
     }
 
     private void fillSignerNameAndAddress() {
         fillText(SIGN_NAME, intyg.getNamnfortydligandeOchAdress());
-        fillText(SIGN_DATE, intyg.getSigneringsDatumAsString());
+        fillText(SIGN_DATE, intyg.getSigneringsdatum().toString(DATE_PATTERN));
     }
 
     private void fillTravel() {
-        if (intyg.getForandratRessattAktuellt() != null) {
+        if (intyg.isRessattTillArbeteAktuellt()) {
             checkField(RECOMMENDATION_TRAVEL_YES);
         }
-        if (intyg.getForandratRessattEjAktuellt() != null) {
+        if (intyg.isRehabiliteringEjAktuell()) {
             checkField(RECOMMENDATION_TRAVEL_NO);
         }
     }
 
     private void fillPrognose() {
-        setField(WORK_CAPACITY_FORECAST_YES, intyg.isPrognosFullAterstallning());
-        setField(WORK_CAPACITY_FORECAST_PARTLY, intyg.isPrognosDelvisAterstallning());
-        setField(WORK_CAPACITY_FORECAST_NO, intyg.isPrognosEjAterstallning());
-        if (intyg.isPrognosAterstallningGarEjBedomma()) {
+        setField(WORK_CAPACITY_FORECAST_YES, intyg.isArbetsformataPrognosJa());
+        setField(WORK_CAPACITY_FORECAST_PARTLY, intyg.isArbetsformataPrognosJaDelvis());
+        setField(WORK_CAPACITY_FORECAST_NO, intyg.isArbetsformataPrognosNej());
+        if (intyg.isArbetsformataPrognosGarInteAttBedoma()) {
             checkField(WORK_CAPACITY_FORECAST_UNKNOWN);
         }
-        fillText(WORK_CAPACITY_TEXT, intyg.getPrognosText());
+        fillText(WORK_CAPACITY_TEXT, intyg.getArbetsformagaPrognos());
     }
 
-    private void fillNedsattning(Observation nedsattning, String checkboxFieldName,
-                                 String fromDateFieldName, String toDateFieldName) {
-        if (nedsattning != null) {
+    private void fillNedsattning(LocalDateInterval interval, String checkboxFieldName, String fromDateFieldName,
+            String toDateFieldName) {
+        if (interval != null) {
             checkField(checkboxFieldName);
-            if (nedsattning.getObservationsPeriod() != null) {
-                fillText(fromDateFieldName, nedsattning.getObservationsPeriod().getFrom().toString(DATE_PATTERN));
-                fillText(toDateFieldName, nedsattning.getObservationsPeriod().getTom().toString(DATE_PATTERN));
-            }
+            fillText(fromDateFieldName, interval.getStart().toString(DATE_PATTERN));
+            fillText(toDateFieldName, interval.getEnd().toString(DATE_PATTERN));
         }
     }
 
     private void fillCapacity() {
-        fillNedsattning(intyg.getArbetsformaga(0.0), REDUCED_WORK_CAPACITY_FULL, REDUCED_WORK_CAPACITY_FULL_FROM, REDUCED_WORK_CAPACITY_FULL_TOM);
-        fillNedsattning(intyg.getArbetsformaga(25.0), REDUCED_WORK_CAPACITY_75, REDUCED_WORK_CAPACITY_75_FROM, REDUCED_WORK_CAPACITY_75_TOM);
-        fillNedsattning(intyg.getArbetsformaga(50.0), REDUCED_WORK_CAPACITY_50, REDUCED_WORK_CAPACITY_50_FROM, REDUCED_WORK_CAPACITY_50_TOM);
-        fillNedsattning(intyg.getArbetsformaga(75.0), REDUCED_WORK_CAPACITY_25, REDUCED_WORK_CAPACITY_25_FROM, REDUCED_WORK_CAPACITY_25_TOM);
+        fillNedsattning(intyg.getNedsattMed100(), REDUCED_WORK_CAPACITY_FULL, REDUCED_WORK_CAPACITY_FULL_FROM,
+                REDUCED_WORK_CAPACITY_FULL_TOM);
+        fillNedsattning(intyg.getNedsattMed75(), REDUCED_WORK_CAPACITY_75, REDUCED_WORK_CAPACITY_75_FROM,
+                REDUCED_WORK_CAPACITY_75_TOM);
+        fillNedsattning(intyg.getNedsattMed50(), REDUCED_WORK_CAPACITY_50, REDUCED_WORK_CAPACITY_50_FROM,
+                REDUCED_WORK_CAPACITY_50_TOM);
+        fillNedsattning(intyg.getNedsattMed25(), REDUCED_WORK_CAPACITY_25, REDUCED_WORK_CAPACITY_25_FROM,
+                REDUCED_WORK_CAPACITY_25_TOM);
     }
 
     private void fillCapacityRelativeTo() {
-        if (intyg.isArbetsformagaIForhallandeTillNuvarandeArbete()) {
+        if (intyg.getNuvarandeArbetsuppgifter() != null) {
             checkField(CURRENT_WORK);
-            if (intyg.getPatient().getArbetsuppgifts() != null && !intyg.getPatient().getArbetsuppgifts().isEmpty()) {
-
-                List<String> arbetsuppgifter = new ArrayList<>();
-                for (Arbetsuppgift arbetsuppgift : intyg.getPatient().getArbetsuppgifts()) {
-                    arbetsuppgifter.add(arbetsuppgift.getTypAvArbetsuppgift());
-                }
-                String arbetsuppgift = Strings.join(", ", arbetsuppgifter);
-                fillText(CURRENT_WORK_TEXT_1, arbetsuppgift);
-            }
+            fillText(CURRENT_WORK_TEXT_1, intyg.getNuvarandeArbetsuppgifter());
         }
-        setField(UNEMPLOYMENT, intyg.isArbetsformagaIForhallandeTillArbetsloshet());
-        setField(PARENTAL_LEAVE, intyg.isArbetsformagaIForhallandeTillForaldraledighet());
+        setField(UNEMPLOYMENT, intyg.isArbetsloshet());
+        setField(PARENTAL_LEAVE, intyg.isForaldrarledighet());
     }
 
     private void fillRehabilitation() {
-        setField(RECOMMENDATION_REHAB_YES, intyg.getArbetsinriktadRehabiliteringAktuell() != null);
-        setField(RECOMMENDATION_REHAB_NO, intyg.getArbetsinriktadRehabiliteringEjAktuell() != null);
-        setField(RECOMMENDATION_REHAB_UNKNOWN, intyg.getArbetsinriktadRehabiliteringEjBedombar() != null);
+        setField(RECOMMENDATION_REHAB_YES, intyg.isRehabiliteringAktuell());
+        setField(RECOMMENDATION_REHAB_NO, intyg.isRehabiliteringEjAktuell());
+        setField(RECOMMENDATION_REHAB_UNKNOWN, intyg.isRehabiliteringGarInteAttBedoma());
     }
 
     private void fillRecommendations() {
-        setField(RECOMMENDATIONS_CONTACT_AF, intyg.getRekommenderarKontaktMedArbetsformedlingen() != null);
-        setField(RECOMMENDATIONS_CONTACT_COMPANY_CARE, intyg.getRekommenderarKontaktMedForetagshalsovarden() != null);
-        if (intyg.getRekommenderarOvrigt() != null) {
+        setField(RECOMMENDATIONS_CONTACT_AF, intyg.isRekommendationKontaktArbetsformedlingen());
+        setField(RECOMMENDATIONS_CONTACT_COMPANY_CARE, intyg.isRekommendationKontaktForetagshalsovarden());
+        if (intyg.getRekommendationOvrigt() != null) {
             checkField(RECOMMENDATIONS_OTHER);
-            fillText(RECOMMENDATIONS_OTHER_TEXT, intyg.getRekommenderarOvrigtText());
+            fillText(RECOMMENDATIONS_OTHER_TEXT, intyg.getRekommendationOvrigt());
         }
     }
 
     private void fillActivityLimitation() {
-        fillText(ACTIVITY_LIMITATION, intyg.getAktivitetsnedsattningBeskrivning());
+        fillText(ACTIVITY_LIMITATION, intyg.getAktivitetsbegransning());
     }
 
     private void fillDisability() {
-        fillText(DISABILITIES, intyg.getFunktionsnedsattningBeskrivning());
+        fillText(DISABILITIES, intyg.getFunktionsnedsattning());
     }
 
     private void fillOther() {
-        if (intyg.getKommentars() != null && !intyg.getKommentars().isEmpty()) {
-            fillText(OTHER_INFORMATION, intyg.getKommentars().get(0));
-        }
+        fillText(OTHER_INFORMATION, intyg.getKommentar());
     }
 
     private void fillBasedOn() {
 
-        Vardkontakt minUndersokning = intyg.getVardkontakt(Vardkontakttypkoder.MIN_UNDERSOKNING_AV_PATIENTEN);
-        if (minUndersokning != null) {
+        if (intyg.getUndersokningAvPatienten() != null) {
             checkField(BASED_ON_EXAMINATION);
-            fillText(BASED_ON_EXAMINATION_TIME, minUndersokning.getVardkontaktstid().getStart().toString(DATE_PATTERN));
+            fillText(BASED_ON_EXAMINATION_TIME, intyg.getUndersokningAvPatienten().toString(DATE_PATTERN));
         }
 
-        Vardkontakt minTelefonkontakt = intyg.getVardkontakt(Vardkontakttypkoder.MIN_TELEFONKONTAKT_MED_PATIENTEN);
-        if (minTelefonkontakt != null) {
+        if (intyg.getTelefonkontaktMedPatienten() != null) {
             checkField(BASED_ON_PHONE_CONTACT);
-            fillText(BASED_ON_PHONE_CONTACT_TIME, minTelefonkontakt.getVardkontaktstid().getStart().toString(DATE_PATTERN));
+            fillText(BASED_ON_PHONE_CONTACT_TIME, intyg.getTelefonkontaktMedPatienten().toString(DATE_PATTERN));
         }
 
-        Referens journalReferens = intyg.getReferens(Referenstypkoder.JOURNALUPPGIFT);
-        if (journalReferens != null) {
+        if (intyg.getJournaluppgifter() != null) {
             checkField(BASED_ON_JOURNAL);
-            fillText(BASED_ON_JOURNAL_TIME, journalReferens.getDatum().toString(DATE_PATTERN));
+            fillText(BASED_ON_JOURNAL_TIME, intyg.getJournaluppgifter().toString(DATE_PATTERN));
         }
 
-        Referens annanReferens = intyg.getReferens(Referenstypkoder.ANNAT);
-        if (annanReferens != null) {
+        if (intyg.getAnnanReferens() != null) {
             checkField(BASED_ON_OTHER);
-            fillText(BASED_ON_OTHER_DATE, annanReferens.getDatum().toString(DATE_PATTERN));
+            fillText(BASED_ON_OTHER_DATE, intyg.getAnnanReferens().toString(DATE_PATTERN));
         }
     }
 
     private void fillMeasures() {
-
-        Aktivitet planeradBehandlingInomSjukvarden = intyg.getAtgardInomSjukvarden();
-        if (planeradBehandlingInomSjukvarden != null) {
+        if (intyg.getAtgardInomSjukvarden() != null) {
             checkField(MEASURES_CURRENT);
-            fillText(MEASURES_CURRENT_TEXT, planeradBehandlingInomSjukvarden.getBeskrivning());
+            fillText(MEASURES_CURRENT_TEXT, intyg.getAtgardInomSjukvarden());
         }
 
-        Aktivitet planeradAnnanAtgard = intyg.getAnnanAtgard();
-        if (planeradAnnanAtgard != null) {
+        if (intyg.getAnnanAtgard() != null) {
             checkField(MEASURES_OTHER);
-            fillText(MEASURES_OTHER_TEXT, planeradAnnanAtgard.getBeskrivning());
+            fillText(MEASURES_OTHER_TEXT, intyg.getAnnanAtgard());
         }
     }
 
     private void fillDiseaseCause() {
-        List<Observation> sjukdomsforlopp = intyg.getObservationsByKod(ObservationsKoder.FORLOPP);
-        if (sjukdomsforlopp != null && !sjukdomsforlopp.isEmpty()) {
-            fillText(DISEASE_CAUSE, sjukdomsforlopp.get(0).getBeskrivning());
-        }
+        fillText(DISEASE_CAUSE, intyg.getSjukdomsforlopp());
     }
 
     private void fillIsSuspenseDueToInfection() {
-        setField(SUSPENSION_DUE_TO_INFECTION, intyg.getAvstangningEnligtSmittskyddslagen() != null);
+        setField(SUSPENSION_DUE_TO_INFECTION, intyg.isAvstangningSmittskydd());
     }
 
     private void fillSignerCodes() {
@@ -356,14 +328,8 @@ public class PdfGenerator {
     }
 
     private void fillDiagnose() {
-        List<Observation> diagnosList = intyg.getObservationsByKategori(ObservationsKoder.DIAGNOS);
-        if (diagnosList != null && !diagnosList.isEmpty()) {
-            Observation diagnos = diagnosList.get(0);
-            if (diagnos.getObservationsKod() != null) {
-                fillText(DIAGNOS_CODE, diagnos.getObservationsKod().getCode());
-            }
-            fillText(DIAGNOS, diagnos.getBeskrivning());
-        }
+        fillText(DIAGNOS_CODE, intyg.getDiagnosKod());
+        fillText(DIAGNOS, intyg.getDiagnosBeskrivning());
     }
 
     private void fillText(String fieldId, String text) {

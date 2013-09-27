@@ -29,6 +29,7 @@ import org.xml.sax.SAXException;
 
 import se.inera.certificate.fk7263.model.v1.Utlatande;
 import se.inera.certificate.model.util.Strings;
+import se.inera.certificate.modules.fk7263.model.converter.ExternalToInternalConverter;
 import se.inera.certificate.modules.fk7263.model.converter.ExternalToTransportConverter;
 import se.inera.certificate.modules.fk7263.model.converter.ExternalToTransportFk7263LegacyConverter;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToExternalConverter;
@@ -229,9 +230,11 @@ public class Fk7263ModuleApi {
     @Path("/valid")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public Response validate(Fk7263Intyg utlatande) {
+    public Response validate(Fk7263Utlatande utlatande) {
 
-        List<String> validationErrors = new UtlatandeValidator(utlatande).validate();
+        Fk7263Intyg intyg = new ExternalToInternalConverter(utlatande).convert();
+
+        List<String> validationErrors = new UtlatandeValidator(intyg).validate();
 
         if (validationErrors.isEmpty()) {
             return Response.ok().build();
@@ -290,8 +293,8 @@ public class Fk7263ModuleApi {
 
     protected String pdfFileName(Fk7263Intyg intyg) {
         return String.format("lakarutlatande_%s_%s-%s.pdf",
-                intyg.getPatient().getId().getExtension(),
-                intyg.getValidFromDate().toString(DATE_FORMAT),
-                intyg.getValidToDate().toString(DATE_FORMAT));
+                intyg.getPatientPersonnummer(),
+                intyg.getGiltighet().getFrom().toString(DATE_FORMAT),
+                intyg.getGiltighet().getTom().toString(DATE_FORMAT));
     }
 }
