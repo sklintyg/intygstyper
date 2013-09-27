@@ -1,0 +1,45 @@
+<div class="row-fluid">
+  <div>
+
+    <!-- Content -->
+    <div class="row-fluid">
+      <div class="span7">
+        <h1>
+       	  Mockup for input in Webcert
+        </h1>
+      </div>
+    </div>
+    <section id="certificate" class="certificate">
+
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="cert">
+            <div class="cert-body">
+   	      <form name="rliForm">
+		
+		<div class="body-row" ng-init="getList()">
+		  <span class="title">Lista av intyg</span>
+		  <span style="margin:10px;">Här finns en lista över de intyg som finns för tillfället:</span>
+		  <div style="margin-left:10px;" ng-repeat="cert in draftList">
+		    <div style="position:absolute;">
+		      <a href="#/edit/{{cert}}">{{cert}}</a>
+		    </div>
+		    <div style="position:relative;left:40%;">
+		      <input type="button" value="Ta bort" ng-click="deleteDraft(cert)"/>
+		    </div>
+		  </div> 
+		</div>
+
+		<div class="body-row" style="padding:10px;">
+		  <a href="#/new"><input type="button" value="Skapa nytt intyg" class="btn"/></a>
+		</div>
+		
+	      </form>
+            </div> <!-- end of cert-body-->            
+	  </div><!-- end of cert-->
+	</div>
+      </div>
+    </section>
+
+  </div>
+</div>

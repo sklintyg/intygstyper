@@ -25,7 +25,6 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.joda.time.format.DateTimeFormat;
@@ -121,10 +120,6 @@ public final class PartialConverter {
                 break;
             }
             dateValueList.add(Integer.parseInt(dateValueStr));
-            /**
-             * createInteger thinks this is hex instead of dec...
-             * dateValueList.add(NumberUtils.createInteger(dateValueStr));
-             */
         }
 
         return ArrayUtils.toPrimitive(dateValueList.toArray(new Integer[0]));

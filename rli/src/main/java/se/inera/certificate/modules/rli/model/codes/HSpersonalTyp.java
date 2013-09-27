@@ -18,7 +18,6 @@
  */
 package se.inera.certificate.modules.rli.model.codes;
 
-import org.apache.commons.lang3.StringUtils;
 
 public enum HSpersonalTyp implements ICodeSystem {
 
@@ -63,20 +62,4 @@ public enum HSpersonalTyp implements ICodeSystem {
     public String getCodeSystemVersion() {
         return codeSystemVersion;
     }
-
-    public static HSpersonalTyp getFromCode(String code) {
-
-        if (StringUtils.isBlank(code)) {
-            return null;
-        }
-
-        for (HSpersonalTyp arrKod : values()) {
-            if (arrKod.getCode().equals(code)) {
-                return arrKod;
-            }
-        }
-
-        return null;
-    }
-
 }

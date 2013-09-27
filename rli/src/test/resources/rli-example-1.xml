@@ -70,6 +70,7 @@
                    codeSystemName="KVÅ"/>
     <aktivitetstid>
       <from>2013-08-12</from>
+      <!-- Detta fält ska inte fyllas i när det är möjligt med öppna intervall -->
       <tom>2013-08-12</tom>
     </aktivitetstid>
 
@@ -95,7 +96,8 @@
                    codeSystemName="KVÅ"/>
     <aktivitetstid>
       <from>2013-08-01</from>
-      <tom></tom>
+      <!-- Detta fält ska inte fyllas i när det är möjligt med öppna intervall -->
+      <tom>2013-08-01</tom>
     </aktivitetstid>
   </aktivitet>
 
@@ -118,8 +120,8 @@
                      codeSystemName="SNOMED-CT"/>
     <observationsperiod>
       <from>2010-01-01</from>
-      <tom>2010-01-01</tom>
       <!-- Detta fält ska inte fyllas i när det är möjligt med öppna intervall -->
+      <tom>2010-01-01</tom>
     </observationsperiod>
 
     <utforsAv>
@@ -133,14 +135,14 @@
         <forskrivarkod>DRJEK</forskrivarkod>
 
         <enhet>
-          <enhets-id root="1.2.752.129.2.1.4.1" extension="vardenhet_test2"/>
-          <enhetsnamn>Elixirkliniken, London</enhetsnamn>
+          <hr:enhets-id root="1.2.752.129.2.1.4.1" extension="vardenhet_test2"/>
+          <hr:enhetsnamn>Elixirkliniken, London</hr:enhetsnamn>
 
-          <vardgivare>
-            <vardgivare-id root="1.2.752.129.2.1.4.1"
+          <hr:vardgivare>
+            <hr:vardgivare-id root="1.2.752.129.2.1.4.1"
                            extension="vardgivare_test2"/>
-            <vardgivarnamn>Testvårdgivaren</vardgivarnamn>
-          </vardgivare>
+            <hr:vardgivarnamn>Testvårdgivaren</hr:vardgivarnamn>
+          </hr:vardgivare>
         </enhet>
       </antasAv>
     </utforsAv>

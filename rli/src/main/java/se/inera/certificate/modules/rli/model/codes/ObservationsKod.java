@@ -18,7 +18,6 @@
  */
 package se.inera.certificate.modules.rli.model.codes;
 
-import org.apache.commons.lang3.StringUtils;
 
 public enum ObservationsKod implements ICodeSystem {
 
@@ -62,20 +61,5 @@ public enum ObservationsKod implements ICodeSystem {
     @Override
     public String getCodeSystemVersion() {
         return codeSystemVersion;
-    }
-
-    public static ObservationsKod getFromCode(String code) {
-
-        if (StringUtils.isBlank(code)) {
-            return null;
-        }
-
-        for (ObservationsKod obsKod : values()) {
-            if (obsKod.getCode().equals(code)) {
-                return obsKod;
-            }
-        }
-
-        return null;
     }
 }

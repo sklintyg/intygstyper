@@ -37,15 +37,14 @@
   </bean>
 
   <bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
-    <property name="schemaHandler" ref="schemaHolder"/>
+    <property name="schemaLocations" ref="theSchemas"/>
   </bean>
-  <bean id="schemaHolder" class="org.apache.cxf.jaxrs.utils.schemas.SchemaHandler">
-    <property name="schemaLocations">
-      <util:list id="theSchemas">
-        <value>classpath:/rli_model.xsd</value>
-      </util:list>
-    </property>
-  </bean>
+  <util:list id="theSchemas">
+    <value>classpath:schemas/core_components/iso_dt_subset_1.0.xsd</value>
+    <value>classpath:schemas/core_components/insuranceprocess_healthreporting_2.0.xsd</value>
+    <value>classpath:schemas/rli_model_extension.xsd</value>
+    <value>classpath:schemas/rli_model.xsd</value>
+  </util:list>
 
   <bean id="transportToExternalConverter" class="se.inera.certificate.modules.rli.model.converters.TransportToExternalConverterImpl"/>
   
@@ -61,14 +60,17 @@
   
   <bean id="pdfGenerator" class="se.inera.certificate.modules.rli.pdf.PdfGeneratorImpl"/>
   
+  <bean id="editModelFactory" class="se.inera.certificate.modules.rli.model.factory.EditModelFactoryImpl" />
+  
   <jaxrs:server address="/">
     <jaxrs:serviceBeans>
       <bean class="se.inera.certificate.modules.rli.rest.RliModuleApi"/>
       <bean class="se.inera.certificate.modules.rli.rest.RliViewServices"/>
+      <bean class="se.inera.webcert.integration.rest.mock.WebCertModuleDraftMock"/>
     </jaxrs:serviceBeans>
     <jaxrs:providers>
       <ref bean="jacksonJsonProvider"/>
-      <!--<ref bean="jaxbProvider"/>-->
+      <ref bean="jaxbProvider"/>
     </jaxrs:providers>
   </jaxrs:server>
 

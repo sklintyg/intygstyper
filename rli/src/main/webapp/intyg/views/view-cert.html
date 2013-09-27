@@ -161,8 +161,11 @@
 	              
 	              <div class="body-row">
 	              	<h3>Om den akutella sjukdomen/komplikationen</h3>
-	                <span class="title">Datum för första undersökning</span> <span id="examination-first-date" class="text">{{cert.undersokning.forstaUndersokningsdatum | date:'longDate'}}</span><br/>
-	                <span class="title">Plats för första undersökning</span> <span id="examination-first-place" class="text">{{cert.undersokning.forstaUndersokningsplats}}</span><br/>             
+			<div ng-show="cert.undersokning.forstaUndersokningsdatum">
+	                  <span class="title">Datum för första undersökning</span> <span id="examination-first-date" class="text">{{cert.undersokning.forstaUndersokningsdatum | date:'longDate'}}</span><br/></div>
+			<div ng-show="cert.undersoking.forstaUndersokningsplats">
+	                  <span class="title">Plats för första undersökning</span> <span id="examination-first-place" class="text">{{cert.undersokning.forstaUndersokningsplats}}</span>
+			</div><br/>             
 	                <span class="title">Datum för undersökning</span> <span id="examination-date" class="text">{{cert.undersokning.undersokningsdatum | date:'longDate'}}</span><br/>
 	                <span class="title">Plats för undersökning</span> <span id="examination-place" class="text">{{cert.undersokning.utforsVid.enhetsnamn}}</span>
 	              </div>

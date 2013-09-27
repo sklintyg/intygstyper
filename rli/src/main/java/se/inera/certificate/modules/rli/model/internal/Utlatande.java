@@ -26,8 +26,6 @@ public class Utlatande {
 
     private String utlatandeid;
     
-    private String utlatandeidroot;
-
     private String typAvUtlatande;
 
     private List<String> kommentarer;
@@ -138,14 +136,6 @@ public class Utlatande {
 
     public void setStatus(List<Status> status) {
         this.status = status;
-    }
-
-    public String getUtlatandeidroot() {
-        return utlatandeidroot;
-    }
-
-    public void setUtlatandeidroot(String utlatandeidroot) {
-        this.utlatandeidroot = utlatandeidroot;
     }
 
 }

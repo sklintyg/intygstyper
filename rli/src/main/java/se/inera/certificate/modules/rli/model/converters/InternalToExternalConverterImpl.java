@@ -28,11 +28,12 @@ import se.inera.certificate.modules.rli.model.codes.UtforarTypKod;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
-import se.inera.certificate.modules.rli.model.internal.HoSPersonal;
-import se.inera.certificate.modules.rli.model.internal.KomplikationStyrkt;
-import se.inera.certificate.modules.rli.model.internal.OrsakAvbokning;
-import se.inera.certificate.modules.rli.model.internal.Undersokning;
-import se.inera.certificate.modules.rli.model.internal.Utforare;
+
+import se.inera.certificate.modules.rli.model.edit.HoSPersonal;
+import se.inera.certificate.modules.rli.model.edit.KomplikationStyrkt;
+import se.inera.certificate.modules.rli.model.edit.OrsakAvbokning;
+import se.inera.certificate.modules.rli.model.edit.Undersokning;
+import se.inera.certificate.modules.rli.model.edit.Utforare;
 
 public class InternalToExternalConverterImpl implements InternalToExternalConverter {
 
@@ -55,7 +56,7 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
      */
     @Override
     public Utlatande convertUtlatandeFromInternalToExternal(
-            se.inera.certificate.modules.rli.model.internal.Utlatande source) {
+            se.inera.certificate.modules.rli.model.edit.Utlatande source) {
 
         LOG.debug("Converting Utlatande '{}' from internal to external", source.getUtlatandeid());
 
@@ -89,7 +90,7 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
     }
 
     private List<Rekommendation> convertRekommendationer(
-            se.inera.certificate.modules.rli.model.internal.Rekommendation source) {
+            se.inera.certificate.modules.rli.model.edit.Rekommendation source) {
         Rekommendation rek = new Rekommendation();
         rek.setBeskrivning(source.getBeskrivning());
         rek.setRekommendationskod(buildRekommendationsKod(source.getRekommendationskod()));
@@ -313,7 +314,7 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
         return kod;
     }
 
-    private Vardenhet buildVardenhet(se.inera.certificate.modules.rli.model.internal.Vardenhet source) {
+    private Vardenhet buildVardenhet(se.inera.certificate.modules.rli.model.edit.Vardenhet source) {
         if (source == null) {
             LOG.trace("Internal vardenhet was null");
             return null;
@@ -344,7 +345,7 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
         return hsp;
     }
 
-    Vardenhet convertVardenhet(se.inera.certificate.modules.rli.model.internal.Vardenhet source) {
+    Vardenhet convertVardenhet(se.inera.certificate.modules.rli.model.edit.Vardenhet source) {
         Vardenhet vardenhet = new Vardenhet();
         vardenhet.setEpost(source.getEpost());
         vardenhet.setId(new Id(HSA_ID.getCodeSystem(), source.getEnhetsid()));
@@ -358,14 +359,14 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
         return vardenhet;
     }
 
-    Vardgivare convertVardgivare(se.inera.certificate.modules.rli.model.internal.Vardgivare source) {
+    Vardgivare convertVardgivare(se.inera.certificate.modules.rli.model.edit.Vardgivare source) {
         Vardgivare vardgivare = new Vardgivare();
         vardgivare.setId(new Id(HSA_ID.getCodeSystem(), source.getVardgivarid()));
         vardgivare.setNamn(source.getVardgivarnamn());
         return vardgivare;
     }
 
-    Patient convertPatient(se.inera.certificate.modules.rli.model.internal.Patient source) {
+    Patient convertPatient(se.inera.certificate.modules.rli.model.edit.Patient source) {
         Patient patient = new Patient();
         patient.setEfternamn(source.getEfternamn());
         patient.setFornamn(Arrays.asList(source.getFornamn()));
@@ -378,7 +379,7 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
         return patient;
     }
 
-    Arrangemang convertArrangemang(se.inera.certificate.modules.rli.model.internal.Arrangemang source) {
+    Arrangemang convertArrangemang(se.inera.certificate.modules.rli.model.edit.Arrangemang source) {
         Arrangemang arr = new Arrangemang();
         PartialInterval arrTid = new PartialInterval();
         arrTid.setFrom(PartialConverter.stringToPartial(source.getArrangemangsdatum()));

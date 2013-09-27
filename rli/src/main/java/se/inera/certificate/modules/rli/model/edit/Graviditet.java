@@ -16,27 +16,22 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.rli.controller;
+package se.inera.certificate.modules.rli.model.edit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+public class Graviditet {
 
-@Controller
-@RequestMapping(value = "")
-public class PageController {
+    private String beraknatForlossningsdatum;
 
-    private static final Logger LOG = LoggerFactory.getLogger(PageController.class);
+    public Graviditet() {
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ModelAndView displayStart(@PathVariable(value = "id") String id) {
-        LOG.debug("visa-intyg " + id);
-        return new ModelAndView("intyg", "id", id);
+    }
+
+    public String getBeraknatForlossningsdatum() {
+        return beraknatForlossningsdatum;
+    }
+
+    public void setBeraknatForlossningsdatum(String beraknatForlossningsdatum) {
+        this.beraknatForlossningsdatum = beraknatForlossningsdatum;
     }
 
 }
-

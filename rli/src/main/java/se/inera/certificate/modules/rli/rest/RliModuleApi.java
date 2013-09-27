@@ -19,6 +19,7 @@
 package se.inera.certificate.modules.rli.rest;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HeaderParam;
@@ -38,9 +39,11 @@ import se.inera.certificate.modules.rli.model.converters.ExternalToInternalConve
 import se.inera.certificate.modules.rli.model.converters.ExternalToTransportConverter;
 import se.inera.certificate.modules.rli.model.converters.TransportToExternalConverter;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
+import se.inera.certificate.modules.rli.model.factory.EditModelFactory;
 import se.inera.certificate.modules.rli.pdf.PdfGenerator;
 import se.inera.certificate.modules.rli.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
+import se.inera.certificate.modules.rli.rest.dto.CreateNewDraftCertificateHolder;
 import se.inera.certificate.modules.rli.validator.ExternalValidator;
 
 /**
@@ -66,6 +69,9 @@ public class RliModuleApi {
 
     @Autowired
     private PdfGenerator pdfGenerator;
+    
+    @Autowired
+    private EditModelFactory editModelFactory;
 
     /**
      * Handles conversion from the transport model (XML) to the external JSON model.
@@ -188,5 +194,26 @@ public class RliModuleApi {
         // POJO.
         // TODO: Implement when conversion from an internal model i required.
         return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
+    }
+    
+    /**
+     * Creates a new editable model for use in WebCert. The model is pre populated using data
+     * contained in the CreateNewDraftCertificateHolder parameter.
+     * 
+     * @param draftCertificateHolder
+     * @return
+     */
+    @POST
+    @Path("/new")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createNewInternal(CreateNewDraftCertificateHolder draftCertificateHolder) {
+        
+        String certificateId = draftCertificateHolder.getCertificateId();
+        Map<String, Object> certificateData = draftCertificateHolder.getCertificateData();
+        
+        se.inera.certificate.modules.rli.model.edit.Utlatande editableUtlatande = editModelFactory.createEditableUtlatande(certificateId , certificateData);
+        
+        return Response.ok(editableUtlatande).build();
     }
 }
