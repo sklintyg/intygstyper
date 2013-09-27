@@ -54,8 +54,8 @@
 			
 			<div class="body-row">
 			  <span ng-show="rliForm.patient_fornamn.$error.required || rliForm.patient_efternamn.$error.required || rliForm.patient_id.$error.required"
-				style="color:red; font-weight:bold;">
-			    Missing required fields
+				style="color:red; font-weight:bold; margin-left:10px;">
+			    Information saknas
 			  </span>
 			  
 			  <span class="title">Om patienten:</span> 
@@ -77,8 +77,9 @@
 	
 			
 			<div class="body-row">
-			  <span ng-show="rliForm.arrangemang_plats.$error.required || rliForm.arrangeman_datum.$error.required || rliForm.arrangemang_bokningsdatum.$error.required" style="color:red; font-weight:bold;">
-			    Missing required fields
+			  <span ng-show="rliForm.arrangemang_plats.$error.required || rliForm.arrangeman_datum.$error.required || rliForm.arrangemang_bokningsdatum.$error.required"
+			   style="color:red; font-weight:bold; margin-left:10px;">
+			    Information saknas
 			  </span>
 	
 	
@@ -105,8 +106,8 @@
 			
 			<div class="body-row">
 			  <span ng-show="!cert.rekommendation.sjukdomskannedom"
-				style="color:red; font-weight:bold;">
-			    Missing required fields
+				style="color:red; font-weight:bold; margin-left:10px;">
+			    Information saknas
 			  </span>
 	
 			  <span class="title">Om den aktuella sjukdomen:</span>
@@ -118,11 +119,11 @@
 			    
 			    <div id="right-col" style="position:relative; left:300px; top:0px; width:60%">
 			      <fieldset>
-				<input style="display:inline; margin-bottom:10px;" type="radio" name="SJK1"
-				       ng-model="cert.rekommendation.sjukdomskannedom" value="SJK1" ng-required="!rliForm.SJK2 && !rliForm.SJK3 && !rliForm.SJK4">
+				<input style="display:inline; margin-bottom:10px;" type="radio" name="SJK1" ng-click="setSjukdomskannedom()"
+				       ng-model="sjukdomskannedom" value="SJK1" ng-required="!rliForm.SJK2 && !rliForm.SJK3 && !rliForm.SJK4">
 					Sjukdomen/komplikationen var okänd vid bokningstillfälllet.<br/>
 	
-				<input style="display:inline;" type="radio" ng-model="cert.rekommendation.sjukdomskannedom" value="">
+				<input style="display:inline;" type="radio" ng-model="sjukdomskannedom" value="">
 				<label style="display:block; margin-left:25px; margin-top:-20px;">
 				  	Patientens sjukdom/komplikation är kronisk,
 				  	var känd vid bokningstillfället och utgjorde då inget hinder för resan.
@@ -135,28 +136,28 @@
 	
 				  <!-- Only show if show_opts -->
 	
-				  <div ng-show="cert.rekommendation.sjukdomskannedom == '' || cert.rekommendation.sjukdomskannedom == 'SJK2' || cert.rekommendation.sjukdomskannedom == 'SJK3'"
+				  <div ng-show="sjukdomskannedom == '' || sjukdomskannedom_sub == 'SJK2' || sjukdomskannedom_sub == 'SJK3'"
 				  	style="margin-left:40px;">
-				    <input style="padding-bottom: 10px; margin:10px; " type="radio" name="SJK2"
-					   ng-model="cert.rekommendation.sjukdomskannedom" value="SJK2" ng-required="!rliForm.SJK1 && !rliForm.SJK3 && !rliForm.SJK4">
+				    <input style="padding-bottom: 10px; margin:10px; " type="radio" name="SJK2" ng-click="setSjukdomskannedom()"
+					   ng-model="sjukdomskannedom_sub" value="SJK2" ng-required="!rliForm.SJK1 && !rliForm.SJK3 && !rliForm.SJK4">
 				    ej var möjligt att förutse.<br/>
 				  </div>
 	
 				  <!-- Only show if show_opts -->
 	
-				  <div ng-show="cert.rekommendation.sjukdomskannedom == '' || cert.rekommendation.sjukdomskannedom == 'SJK2' || cert.rekommendation.sjukdomskannedom == 'SJK3'"
+				  <div ng-show="sjukdomskannedom == '' || sjukdomskannedom_sub == 'SJK2' || sjukdomskannedom_sub == 'SJK3'"
 				   style="margin-left:40px;">
-				    <input style="padding-bottom: 10px; margin:10px;" type="radio" name="SJK3"
-					   ng-model="cert.rekommendation.sjukdomskannedom" value="SJK3" ng-required="!rliForm.SJK1 && !rliForm.SJK2 && !rliForm.SJK4">
+				    <input style="padding-bottom: 10px; margin:10px;" type="radio" name="SJK3" ng-click="setSjukdomskannedom()"
+					   ng-model="sjukdomskannedom_sub" value="SJK3" ng-required="!rliForm.SJK1 && !rliForm.SJK2 && !rliForm.SJK4">
 				    var möjlig att förutse.<br/>
 				  </div>
 				</div><!-- end hidden-->
 	
-				<input style="display:inline;" type="radio" name="SJK4"
-				       ng-model="cert.rekommendation.sjukdomskannedom" value="SJK4" ng-required="!rliForm.SJK1 && !rliForm.SJK2 && !rliForm.SJK3">
+				<input style="display:inline;" type="radio" name="SJK4" ng-click="setSjukdomskannedom()"
+				       ng-model="sjukdomskannedom" value="SJK4" ng-required="!rliForm.SJK1 && !rliForm.SJK2 && !rliForm.SJK3">
 				Inget av ovanstående är lämpligt. Ange annat:<br/>			
 				
-				<div style="margin-left:20px;" ng-show="cert.rekommendation.sjukdomskannedom =='SJK4'">
+				<div style="margin-left:20px;" ng-show="sjukdomskannedom =='SJK4'">
 				  <textarea ng-model="cert.rekommendation.beskrivning" rows="5"  style="resize:none; margin-top:10px; width:100%;">
 				  </textarea>
 				</div>
@@ -180,6 +181,7 @@
 				     ng-model="cert.undersokning.komplikationStyrkt" value="AV_PATIENT">
 			      <span style="margin-left:10px;"> Patienten uppger att diagnosen finns sedan: </span> <br/>
 			      <div style="margin-top:10px;">
+			      
 				<input type="text" ng-model="cert.undersokning.forstaUndersokningsdatum" placeholder="Datum"/>
 				<input type="text" ng-model="cert.undersokning.forstaUndersokningsplats" placeholder="Plats"/><br/>
 			      </div>
@@ -189,6 +191,10 @@
 			</div><!-- body-row-->
 	
 			<div class="body-row">
+			  <span ng-show="rliForm.undersokningsplats.$error.required || rliForm.undersokningsdatum.$error.required"
+			   style="color:red; font-weight:bold; margin-left:10px;">
+			    Information saknas
+			  </span>
 			  <span class="title">Plats och datum för den undersökning som ligger till grund för detta utlåtande:</span>
 	
 			  <div id="left-col" style="position:absolute; left:0;">
@@ -198,8 +204,8 @@
 			  <div id="right-col" style="position:relative; left:300px; top:0px;">
 			    <fieldset>
 			      <div style="padding:10px;">
-				<input type="text" ng-model="cert.undersokning.undersokningsdatum" placeholder="Datum"/>
-				<input type="text" ng-model="cert.undersokning.undersokningsplats" placeholder="Plats"/><br/>
+				<input type="date" ng-model="cert.undersokning.undersokningsdatum" name="undersokningsdatum" placeholder="Datum" required/>
+				<input type="text" ng-model="cert.undersokning.undersokningsplats" name="undersokningsplats" placeholder="Plats" required/><br/>
 			      </div>
 			    </fieldset>
 			  </div>
@@ -208,8 +214,8 @@
 			<div class="body-row" ng-show="complicationType == 'sjuk'">
 	
 			  <span ng-show="!cert.rekommendation.rekommendationskod"
-				style="color:red; font-weight:bold;">
-			    Missing required fields
+				style="color:red; font-weight:bold; margin-left:10px;">
+			    Information saknas
 			  </span>
 					  
 			  <span class="title">Rekommendation:</span> 
