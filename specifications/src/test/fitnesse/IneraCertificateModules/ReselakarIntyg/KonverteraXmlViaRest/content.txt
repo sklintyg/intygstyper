@@ -1,7 +1,9 @@
 !1 Konvertera Xml Via Rest
 
 |Konvertera Xml Via REST|
-|typ|filnamn|utlatande_id_extension|typ_av_utlatande|patient_id|matchandeJson?|
-|rli|rli-example-1.xml|39f80245-9730-4d76-aaff-b04a2f3cfbe7|RLI|19121212+1212|ja|
-|rli|rli-example-1.xml|39f80245-9730-4d76-aaff-b04a2f3cfbe|RLU|000000000000|nej|
-|rli|rli-example-2.xml|d53c377e-4103-47f5-9f90-5e1bbd874466|RLI|19331122-4400|ja|
+|typ|filnamn|utlatande_id_extension|typ_av_utlatande|patient_id|patient_fornamn|patient_efternamn|skapadAv_enhetsnamn|matchandeJson?|
+|rli|rli-example-1.xml|39f80245-9730-4d76-aaff-b04a2f3cfbe7|RLI|19121212+1212|Test|Testsson|Testenheten|ja|
+|rli|rli-example-1.xml|39f80245-9730-4d76-aaff-b04a2f3cfbe7|RLI|19121212+1212|test|testsson|Testenheten|nej|
+|rli|rli-example-1.xml|39f80245-9730-4d76-aaff-b04a2f3cfbe|RLU|000000000000|Arne|Johnsson|Testenheten|nej|
+|rli|rli-example-2.xml|d53c377e-4103-47f5-9f90-5e1bbd874466|RLI|19331122-4400|Fröken|Fräken|Testenheten|ja|
+|rli|rli-example-2.xml|d53c377e-4103-47f5-9f90-5e1bbd874466|RLI|19331122-4400|fröken|fräken|testenheten|nej|
