@@ -82,14 +82,6 @@ public class Fk7263Intyg {
 
     private Vardperson vardperson;
 
-    public Fk7263Intyg() {
-
-    }
-
-    public Fk7263Intyg(Fk7263Utlatande external) {
-
-    }
-
     public boolean isAvstangningSmittskydd() {
         return avstangningSmittskydd;
     }
