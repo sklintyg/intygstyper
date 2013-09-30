@@ -119,16 +119,16 @@
 			    
 			    <div id="right-col" style="position:relative; left:300px; top:0px; width:60%">
 			      <fieldset>
-				<input style="display:inline; margin-bottom:10px;" type="radio" name="SJK1" ng-click="setSjukdomskannedom()"
-				       ng-model="sjukdomskannedom" value="SJK1" ng-required="!rliForm.SJK2 && !rliForm.SJK3 && !rliForm.SJK4">
+				<input style="display:inline; margin-bottom:10px;" type="radio" name="SJK1"
+				       ng-model="cert.rekommendation.sjukdomskannedom" value="SJK1" ng-required="!rliForm.SJK2 && !rliForm.SJK3 && !rliForm.SJK4">
 					Sjukdomen/komplikationen var okänd vid bokningstillfälllet.<br/>
 	
-				<input style="display:inline;" type="radio" ng-model="sjukdomskannedom" value="">
-				<label style="display:block; margin-left:25px; margin-top:-20px;">
+				
+				<span style="display:block; margin-left:0px; margin-top:10px;">
 				  	Patientens sjukdom/komplikation är kronisk,
 				  	var känd vid bokningstillfället och utgjorde då inget hinder för resan.
-				  	Tillståndet för nu förvärrats på ett sätt som vid bokningstillfället.<br/>
-				</label>
+				  	Tillståndet för nu förvärrats på ett sätt som vid bokningstillfället<br/>
+				</span>
 	
 				<!-- div for hidden modifying options to above-->
 	
@@ -136,28 +136,26 @@
 	
 				  <!-- Only show if show_opts -->
 	
-				  <div ng-show="sjukdomskannedom == '' || sjukdomskannedom_sub == 'SJK2' || sjukdomskannedom_sub == 'SJK3'"
-				  	style="margin-left:40px;">
-				    <input style="padding-bottom: 10px; margin:10px; " type="radio" name="SJK2" ng-click="setSjukdomskannedom()"
-					   ng-model="sjukdomskannedom_sub" value="SJK2" ng-required="!rliForm.SJK1 && !rliForm.SJK3 && !rliForm.SJK4">
+				  <div style="margin-left:40px;">
+				    <input style="padding-bottom: 10px; margin:10px; " type="radio" name="SJK2" 
+					  ng-model="cert.rekommendation.sjukdomskannedom" value="SJK2" ng-required="!rliForm.SJK1 && !rliForm.SJK3 && !rliForm.SJK4">
 				    ej var möjligt att förutse.<br/>
 				  </div>
 	
 				  <!-- Only show if show_opts -->
 	
-				  <div ng-show="sjukdomskannedom == '' || sjukdomskannedom_sub == 'SJK2' || sjukdomskannedom_sub == 'SJK3'"
-				   style="margin-left:40px;">
-				    <input style="padding-bottom: 10px; margin:10px;" type="radio" name="SJK3" ng-click="setSjukdomskannedom()"
-					   ng-model="sjukdomskannedom_sub" value="SJK3" ng-required="!rliForm.SJK1 && !rliForm.SJK2 && !rliForm.SJK4">
+				  <div style="margin-left:40px;">
+				    <input style="padding-bottom: 10px; margin:10px;" type="radio" name="SJK3" 
+					   ng-model="cert.rekommendation.sjukdomskannedom" value="SJK3" ng-required="!rliForm.SJK1 && !rliForm.SJK2 && !rliForm.SJK4">
 				    var möjlig att förutse.<br/>
 				  </div>
 				</div><!-- end hidden-->
 	
-				<input style="display:inline;" type="radio" name="SJK4" ng-click="setSjukdomskannedom()"
-				       ng-model="sjukdomskannedom" value="SJK4" ng-required="!rliForm.SJK1 && !rliForm.SJK2 && !rliForm.SJK3">
+				<input style="display:inline;" type="radio" name="SJK4" ng-model="cert.rekommendation.sjukdomskannedom"
+				 value="SJK4" ng-required="!rliForm.SJK1 && !rliForm.SJK2 && !rliForm.SJK3">
 				Inget av ovanstående är lämpligt. Ange annat:<br/>			
 				
-				<div style="margin-left:20px;" ng-show="sjukdomskannedom =='SJK4'">
+				<div style="margin-left:20px;" ng-show="cert.rekommendation.sjukdomskannedom =='SJK4'">
 				  <textarea ng-model="cert.rekommendation.beskrivning" rows="5"  style="resize:none; margin-top:10px; width:100%;">
 				  </textarea>
 				</div>

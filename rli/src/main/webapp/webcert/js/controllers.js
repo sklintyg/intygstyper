@@ -134,19 +134,6 @@ angular.module('controllers.rli.webcert').controller('EditCertCtrl', [ '$scope',
     	});
     };
     
-    $scope.setSjukdomskannedom = function(){
-    	$scope.cert.rekommendation = {};
-    	var result; 	
-    	if ($scope.sjukdomskannedom == '') { 
-    	
-    				result = $scope.sjukdomskannedom_sub;
-    	} else {
-    				 result = $scope.sjukdomskannedom;
-    	}
-    	$scope.cert.rekommendation = {
-    			sjukdomskannedom : result
-    	};
-    };
 
     $scope.saveCert = function () {
     	
