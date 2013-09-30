@@ -18,20 +18,47 @@
    	      <form name="rliForm">
 		
 		<div class="body-row" ng-init="getList()">
-		  <span class="title">Lista av intyg</span>
-		  <span style="margin:10px;">Här finns en lista över de intyg som finns för tillfället:</span>
-		  <div style="margin-left:10px;" ng-repeat="cert in draftList">
-		    <div style="position:absolute;">
-		      <a href="#/edit/{{cert}}">{{cert}}</a>
-		    </div>
-		    <div style="position:relative;left:40%;">
-		      <input type="button" value="Ta bort" ng-click="deleteDraft(cert)"/>
-		    </div>
-		  </div> 
+
+			  
+			
+			  <span class="title">Lista av intyg</span>
+			  <span style="margin:10px;">Här finns en lista över de intyg som finns för tillfället:</span>
+
+			<!-- Loading spinner: visibility defined by $scope.doneLoading  -->
+			  <div  ng-hide="doneLoading" style="text-align: left; padding: 0px; margin:10px;">
+			    <img src="/img/ajax-loader.gif" style="text-align: left;" />
+			    <span style="text-align: left; color: #64ABC0; margin-left: 5px;">
+			      <strong>Tar bort intyg</strong>
+			    </span>
+			  </div>
+			  
+			  <div ng-show="doneLoading">
+				  <div style="margin-left:10px;" ng-repeat="cert in draftList">
+				    <div style="position:absolute;">
+				      <a href="#/edit/{{cert}}">{{cert}}</a>
+				    </div>
+				    <div style="position:relative;left:40%;">
+				      <input type="button" value="Ta bort" ng-click="deleteDraft(cert)"/>
+				    </div>
+				  </div> 
+			</div>
 		</div>
 
 		<div class="body-row" style="padding:10px;">
-		  <a href="#/new"><input type="button" value="Skapa nytt intyg" class="btn"/></a>
+				<div id="left-col" style="position:absolute; left:0;">
+					<input style="margin:10px;" type="button" value="Skapa nytt intyg" class="btn" ng-click="createCert()"/>
+					<br>
+					<select ng-model="cert_type" ng-options="opt.type for opt in cert_types"style="margin:10px;">
+						
+					</select>
+				</div>
+	
+				<div id="right-col" style="position:relative; left:40%">
+					<span>Parametrar som kommer med webcert-inloggningen:</span> <br>
+					<textarea json-text style="resize:none; width:50%; height:260px;" ng-model="initial_params.data">					
+					</textarea>
+				
+				</div>	
 		</div>
 		
 	      </form>

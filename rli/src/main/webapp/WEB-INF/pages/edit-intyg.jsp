@@ -80,9 +80,10 @@
 	<script type="text/javascript" src="/js/modules/common-message-resources.js"></script>
 	
 	<%-- Dependencies to module specific components loaded from this modules web app running at "?" context--%>
-	<script type="text/javascript" src="<c:url value="/webcert/js/view/rli-app.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="/webcert/js/view/controllers.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="/webcert/js/view/messages.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/webcert/js/rli-app.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/webcert/js/directives.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/webcert/js/controllers.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/webcert/js/messages.js"/>"></script>
 	<script type="text/javascript" src="<c:url value="/webcert-mock/js/modules/webcert-service.js"/>"></script>
 
 

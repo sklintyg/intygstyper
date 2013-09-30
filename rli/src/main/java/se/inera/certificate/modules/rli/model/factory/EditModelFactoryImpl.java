@@ -1,5 +1,6 @@
 package se.inera.certificate.modules.rli.model.factory;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -39,7 +40,7 @@ public class EditModelFactoryImpl implements EditModelFactory {
         for (Entry<String, Object> entry : certificateData.entrySet()) {
             switch (entry.getKey()) {
             case "skapadAv":
-                populateWithSkapadAv(utlatande, (HosPersonal) entry.getValue());
+                populateWithSkapadAv(utlatande, entry.getValue());
                 break;
 
             default:
@@ -51,20 +52,73 @@ public class EditModelFactoryImpl implements EditModelFactory {
         return utlatande;
     }
 
-    private void populateWithSkapadAv(Utlatande utlatande, HosPersonal skapadAv) {
-        if (skapadAv == null) {
+    private void populateWithSkapadAv(Utlatande utlatande, Object source) {
+        if (source == null) {
             return;
         }
-
+        Map<String, Object> sourceMap = null;
+        
+        if (source instanceof Map<?, ?>){
+            sourceMap = (Map<String, Object>) source;
+        } 
+        if (sourceMap == null){
+            return;
+        }
         HoSPersonal editHoSPersonal = new HoSPersonal();
 
-        editHoSPersonal.setPersonid(InternalModelConverterUtils.getExtensionFromId(skapadAv.getId()));
-        editHoSPersonal.setFullstandigtNamn(skapadAv.getNamn());
-
-        Vardenhet editVardenhet = convertToEditVardenhet(skapadAv.getVardenhet());
-        editHoSPersonal.setVardenhet(editVardenhet);
+        //Go through the map in skapadAv and populate editHoSPersonal 
+        for (Entry<String, Object> entry : sourceMap.entrySet()){
+            switch(entry.getKey()){
+            case "personid":
+                editHoSPersonal.setPersonid((String) entry.getValue());
+                break;
+                
+            case "fullstandigtNamn":
+                editHoSPersonal.setFullstandigtNamn((String) entry.getValue());
+                break;
+            
+            case "vardenhet":
+                if (entry.getValue().getClass() == LinkedHashMap.class) {
+                    editHoSPersonal.setVardenhet(buildVardenhetFromMap( (LinkedHashMap<String, Object>) entry.getValue()));
+                }
+                break;
+            }
+        }
 
         utlatande.setSkapadAv(editHoSPersonal);
+    }
+
+    private Vardenhet buildVardenhetFromMap(Map<String, Object> source) {
+        Vardenhet vardenhet = new Vardenhet();
+        for (Entry<String, Object> entry : source.entrySet()){
+            switch(entry.getKey()){
+            case "enhetsid":
+                vardenhet.setEnhetsid((String) entry.getValue());
+                break;
+            case "enhetsnamn":
+                vardenhet.setEnhetsnamn((String) entry.getValue());
+                break;
+            case "postadress":
+                vardenhet.setPostadress((String) entry.getValue());
+                break;
+            case "postort":
+                vardenhet.setPostort((String) entry.getValue());
+                break;
+            case "postnummer":
+                vardenhet.setPostnummer((String) entry.getValue());
+                break;
+            case "telefonnummer":
+                vardenhet.setTelefonnummer((String) entry.getValue());
+                break;
+            case "epost":
+                vardenhet.setEpost((String) entry.getValue());
+                break;
+            default:
+                LOG.warn("Unknown type of certificate data '{}'", entry.getKey());
+                break;
+            }
+        }
+        return vardenhet;
     }
 
     private Vardenhet convertToEditVardenhet(se.inera.certificate.model.Vardenhet extVardenhet) {
