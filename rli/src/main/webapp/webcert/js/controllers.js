@@ -20,31 +20,28 @@
 
 /* Controllers */
 angular.module('controllers.rli.webcert', []);
-angular.module('controllers.rli.webcert').controller('NewCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', 'webcertService', '$http' , function NewCertCtrl($scope, $filter, $location, $rootScope, webcertService, $http) {
+angular.module('controllers.rli.webcert').controller('NewCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', 'webcertService', '$routeParams' , function NewCertCtrl($scope, $filter, $location, $rootScope, webcertService, $routeParams) {
     $scope.cert = {};
-
-    webcertService.createDraft('RLI', function(result) {
-    		$scope.cert = result;
-    		// TODO: Remove when rest client is finished
-    		$scope.cert.skapadAv = {
-					vardenhet : {
-    						enhetsnamn		: "Test",
-    						postadress		: "Vårdenhetsvägen 13",
-    						postort			: "Hägersten",
-    						postnummer		: "12637",
-    						telefonnummer	: "08-1337",
-    						epost 			: "test@vardenheten.se"    						
-					}
-    		};
-	}); 
+    $scope.doneLoading = false;
+    
+    webcertService.getDraft($routeParams.certId, function(result){
+    	$scope.cert = result;
+ 
+    });
+    
+    $scope.doneLoading = true;
+    
     $scope.changeCompType = function() {
     	$rootScope.complicationType = $scope.complicationType;
     };
     
     $scope.proceedToCert = function() {
-	   webcertService.saveDraft($scope.cert.utlatandeid, angular.toJson($scope.cert), function(){
-		   console.log("Call completed"); 		 
- 	   });	
+    	
+    	webcertService.saveDraft($scope.cert.utlatandeid, angular.toJson($scope.cert), function(){
+    		console.log("Call completed"); 	
+		   
+ 	   	});	
+	   	
         $location.path("/edit/" + $scope.cert.utlatandeid);
     };
     
@@ -53,16 +50,64 @@ angular.module('controllers.rli.webcert').controller('NewCertCtrl', [ '$scope', 
 
 angular.module('controllers.rli.webcert').controller('ListCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', 'webcertService', '$routeParams', function ListCertCtrl($scope, $filter, $location, $rootScope, webcertService, $routeParams) {
 
+	$scope.initial_params = {};
+	$scope.doneLoading = true;
+	$scope.cert_types = [
+	                    {type : 'RLI'},
+	                    {type : 'FK7263'}
+                    ];
+	
+	$scope.cert_type = $scope.cert_types[0];
+	
+	$scope.initial_params.data = {
+		skapadAv : {
+		    personid : "19101010+1010",
+		    fullstandigtNamn : "Doktor Alban",
+		    vardenhet : {
+		      enhetsid 		: "vardenhet_test",
+		      enhetsnamn 	: "Testenheten",
+		      postadress 	: "Teststigen 12",
+		      postnummer 	: "12345",
+		      postort 		: "Tolvberga",
+		      telefonnummer : "012-345678",
+		      epost 		: "ingen@alls.se",
+		    }
+	    }
+	};	
+    
+	
+	
+    $scope.createCert = function() {
+    	$scope.cert = {}; 
+    	
+    	$scope.certificateContent = {
+        		certificateType : $scope.cert_type.type,
+        		initialParameters : $scope.initial_params.data
+        };
+    	
+    	webcertService.createDraft($scope.certificateContent, function(result) {
+    		$scope.cert = result;
+    		console.log("Got: " + $scope.cert.utlatandeid);
+    		
+    		$location.path("/new/" + $scope.cert.utlatandeid);
+    	});
+    	
+    };
+	
+	
 	$scope.getList = function(){
 		webcertService.getDraftList(function(result) {
 			$scope.draftList = result;
-		});	
+		});
+		$scope.doneLoading = true;
 	};
 	
 	$scope.deleteDraft = function(certId) {
+		$scope.doneLoading = false;
 		webcertService.deleteDraft(certId, function(){
 			$scope.getList();
 		});		
+		
 	};
 	
 }]);
@@ -74,12 +119,12 @@ angular.module('controllers.rli.webcert').controller('EditCertCtrl', [ '$scope',
     $scope.displayLoader = false;
     
     webcertService.getDraft($routeParams.certId, function(result){
-    	 $scope.doneLoading = true;
          if (result != null) {
              $scope.cert = result;
          } else {
             $location.path("/list");
          }
+         $scope.doneLoading = true;
     });
     
     $scope.deleteDraft = function(){
@@ -88,6 +133,7 @@ angular.module('controllers.rli.webcert').controller('EditCertCtrl', [ '$scope',
             $location.path("/list");
     	});
     };
+    
 
     $scope.saveCert = function () {
     	

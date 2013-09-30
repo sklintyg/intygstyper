@@ -28,7 +28,7 @@ var RLIApp = angular.module('RLIEditCertApp', [ 'controllers.rli.webcert', 'serv
             $routeProvider.when('/edit/:certId', {
                 templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/edit-cert.html',
                 controller : 'EditCertCtrl'
-            }).when('/new', {
+            }).when('/new/:certId', {
                 templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/new-cert.html',
                 controller : 'NewCertCtrl'
             }).when('/list', {

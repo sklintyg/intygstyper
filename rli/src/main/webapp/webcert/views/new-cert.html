@@ -16,7 +16,16 @@
           <div class="cert">
             <div class="cert-body">
    	      <form name="rliForm">
-		
+		<!-- Loading spinner: visibility defined by $scope.doneLoading  -->
+	  
+	  <div ng-hide="doneLoading" style="text-align: center; padding: 20px;">
+	    <img src="/img/ajax-loader.gif" style="text-align: center;" />
+	    <p style="text-align: center; color: #64ABC0; margin-top: 20px;">
+	      <strong><message key="view.message.certificateloading" /></strong>
+	    </p>
+	  </div>
+	  
+	  <div ng-show="doneLoading">
 		<div class="body-row"> 
 		  <span class="title">Skapa nytt intyg:</span>
 		  
@@ -31,7 +40,7 @@
 		    
 		    <div id="right-col" style="position:relative; left:300px; top:0px;">
 		      <fieldset style="margin-bottom:10px;">
-			<input type="radio" ng-model="complicationType" value="sjuk" ng-change="changeCompType()">
+			<input type="radio" ng-model="complicationType" value="sjuk" checked ng-change="changeCompType()">
 			<label style="margin-left:10px; display:inline;">Resenären är sjuk</label><br/>
 			<input type="radio" ng-model="complicationType" value="gravid" ng-change="changeCompType()">
 			<label style="margin-left:10px; display:inline;">Resenären har fått komplikation under graviditeten</label><br/>
@@ -45,8 +54,8 @@
 		  <input class="btn" style="margin:10px; border:1px solid black;"
 			 type="button" value="Gå vidare till intyget" id="submit" name="submit" 
 			 ng-click="proceedToCert()" />
-		</div><!-- body-row--> 
-			
+			</div><!-- body-row--> 
+			</div>
 	      </form>
             </div> <!-- end of cert-body-->            
 	  </div><!-- end of cert-->

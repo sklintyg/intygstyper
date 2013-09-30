@@ -1,6 +1,5 @@
 package se.inera.webcert.integration.rest.mock;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -75,7 +74,7 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
         if (!mockStore.containsKey(certificateId)) {
             throw new WebApplicationException(Status.BAD_REQUEST);
         }
-        simulateLatency(1000);
+        //simulateLatency(1000);
         mockStore.put(certificateId, draftCertificate);
     }
 
