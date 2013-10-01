@@ -35,7 +35,7 @@ public class PageController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ModelAndView displayStart(@PathVariable(value = "id") String id) {
         LOG.debug("visa-intyg " + id);
-        return new ModelAndView("edit-intyg","id",id);
+        return new ModelAndView("webcert-intyg","id",id);
     }
 
 }
