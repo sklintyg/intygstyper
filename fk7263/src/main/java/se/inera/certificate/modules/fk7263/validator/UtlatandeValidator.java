@@ -1,29 +1,16 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import static java.util.Arrays.asList;
-import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import org.springframework.util.StringUtils;
+import static java.util.Arrays.asList;
+import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 
-import se.inera.certificate.model.Aktivitet;
-import se.inera.certificate.model.Arbetsuppgift;
-import se.inera.certificate.model.HosPersonal;
-import se.inera.certificate.model.Id;
-import se.inera.certificate.model.Observation;
-import se.inera.certificate.model.Referens;
-import se.inera.certificate.model.Vardenhet;
-import se.inera.certificate.model.Vardgivare;
-import se.inera.certificate.model.Vardkontakt;
-import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
-import se.inera.certificate.modules.fk7263.model.codes.Prognoskoder;
-import se.inera.certificate.modules.fk7263.model.codes.Referenstypkoder;
-import se.inera.certificate.modules.fk7263.model.codes.Vardkontakttypkoder;
-import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
+import org.joda.time.LocalDate;
+import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
 
 /**
  * @author andreaskaltenbach, marced
@@ -52,10 +39,10 @@ public class UtlatandeValidator {
 
         validateUtlatande();
 
-        validatePatient(utlatande.getPatient());
+        validatePatient();
 
         validateNonSmittskydd();
-        validateSkapadAvHosPersonal(utlatande.getSkapadAv());
+        validateVardperson();
         validateRessatt();
         validateKommentar();
 
@@ -63,7 +50,7 @@ public class UtlatandeValidator {
     }
 
     private void validateUtlatande() {
-        if (utlatande.getId() == null || isNullOrEmpty(utlatande.getId().getExtension())) {
+        if (utlatande.getId() == null) {
             validationErrors.add("Header: No Lakarutlatande Id found!");
         }
 
@@ -72,129 +59,91 @@ public class UtlatandeValidator {
             validationErrors.add("Header: No or wrong skickatDatum found!");
         }
         // Check signeringsdatum - mandatory
-        if (utlatande.getSigneringsDatum() == null) {
+        if (utlatande.getSigneringsdatum() == null) {
             validationErrors.add("Field 14: No signeringsDatum found!");
         }
 
     }
 
-    private void validatePatient(Fk7263Patient patient) {
+    private void validatePatient() {
 
-        if (patient == null) {
-            validationErrors.add("Header: No Patient element found!");
-            // cant check any more properties on a null patient
-            return;
-        }
         // Check format of patient id (has to be a valid personnummer)
-        if (patient.getId() == null || isNullOrEmpty(patient.getId().getExtension())
-                || !Pattern.matches(PERSON_NUMBER_REGEX, patient.getId().getExtension())) {
+        if (isNullOrEmpty(utlatande.getPatientPersonnummer())
+                || !Pattern.matches(PERSON_NUMBER_REGEX, utlatande.getPatientPersonnummer())) {
             validationErrors
                     .add("Header: Wrong format for patient person-id! Valid format is YYYYMMDD-XXXX or YYYYMMDD+XXXX.");
         }
 
-        // Check patient o.i.d.
-        if (patient.getId() == null || isNullOrEmpty(patient.getId().getRoot())
-                || !PATIENT_ID_OIDS.contains(patient.getId().getRoot())) {
-            validationErrors.add(String.format("Header: Wrong o.i.d. for Patient Id! Should be one of %s",
-                    StringUtils.arrayToCommaDelimitedString(PATIENT_ID_OIDS.toArray())));
-        }
-
         // Get namn for patient - mandatory
-        if (isNullOrEmpty(patient.getFullstandigtNamn())) {
+        if (isNullOrEmpty(utlatande.getPatientNamn())) {
             validationErrors.add("Header: No Patient fullstandigtNamn elements found or set!");
         }
     }
 
-    private void validateSkapadAvHosPersonal(HosPersonal hosPersonal) {
+    private void validateVardperson() {
 
-        if (hosPersonal == null) {
+        if (utlatande.getVardperson() == null) {
             validationErrors.add("Field 15: No SkapadAvHosPersonal element found!");
             return;
         }
 
-        // Check hos-personal id - mandatory
-        validateIdEntity("Field 15: hos-personal-id", hosPersonal.getId(), HOS_PERSONAL_OID);
-
         // Note: hos-personal-name is not mandatory according to insuranceprocess_healthreporting_2.0.xsd ->
         // hosPersonalType
-        if (isNullOrEmpty(hosPersonal.getNamn())) {
+        if (isNullOrEmpty(utlatande.getVardperson().getNamn())) {
             validationErrors.add("Field 15: hos-personal namn not found!");
         }
-        validateHosPersonalEnhet(hosPersonal.getVardenhet());
+        validateHosPersonalEnhet();
     }
 
-    private void validateHosPersonalEnhet(Vardenhet enhet) {
+    private void validateHosPersonalEnhet() {
 
-        if (enhet == null) {
-            validationErrors.add("Field 15: No enhet element found!");
-            return;
-        }
-
-        // Check enhets id - mandatory
-        validateIdEntity("enhets-id", enhet.getId(), ENHET_OID);
+        Vardperson vardperson = utlatande.getVardperson();
 
         // Check enhetsnamn - mandatory
-        if (isNullOrEmpty(enhet.getNamn())) {
+        if (isNullOrEmpty(vardperson.getEnhetsnamn())) {
             validationErrors.add("Field 15: No enhetsnamn found!");
         }
 
         // Check enhetsadress - mandatory
-        if (isNullOrEmpty(enhet.getPostadress())) {
+        if (isNullOrEmpty(vardperson.getPostadress())) {
             validationErrors.add("Field 15: No postadress found for enhet!");
         }
 
-        if (isNullOrEmpty(enhet.getPostnummer())) {
+        if (isNullOrEmpty(vardperson.getPostnummer())) {
             validationErrors.add("Field 15: No postnummer found for enhet!");
         }
 
-        if (isNullOrEmpty(enhet.getPostort())) {
+        if (isNullOrEmpty(vardperson.getPostort())) {
             validationErrors.add("Field 15: No postort found for enhet!");
         }
 
-        if (isNullOrEmpty(enhet.getTelefonnummer())) {
+        if (isNullOrEmpty(vardperson.getTelefonnummer())) {
             validationErrors.add("Field 15: No telefonnummer found for enhet!");
         }
 
-        validateVardgivare(enhet.getVardgivare());
-
-        validateIdEntity("Field 17: Arbetsplatskod", enhet.getArbetsplatskod(), ARBETSPLATS_CODE_OID);
+        validateVardgivare();
 
     }
 
-    private void validateVardgivare(Vardgivare vardgivare) {
-        if (vardgivare == null) {
-            validationErrors.add("Field 15: No vardgivare element found!");
-            return;
-        }
-
-        // Check vardgivare id - mandatory
-        validateIdEntity("Field 15: vardgivare-id", vardgivare.getId(), HOS_PERSONAL_OID);
+    private void validateVardgivare() {
 
         // Check vardgivarename - mandatory
-        if (isNullOrEmpty(vardgivare.getNamn())) {
+        if (isNullOrEmpty(utlatande.getVardperson().getVardgivarnamn())) {
             validationErrors.add("Field 15: No vardgivarenamn found!");
         }
-
     }
 
     private void validateNonSmittskydd() {
 
         // Many fields are optional if smittskydd is checked, if not set validate these below
-        boolean inSmittskydd = utlatande.getAvstangningEnligtSmittskyddslagen() != null;
+        boolean inSmittskydd = utlatande.isAvstangningSmittskydd();
 
         if (inSmittskydd) {
             return;
         }
 
-        // Fält 2 - Check that we got a medicinsktTillstand element
-        if (utlatande.getMedicinsktTillstand() == null) {
-            validationErrors.add("Field 2: No medicinsktTillstand found!");
-            return;
-        }
-
         // Fält 2 - Medicinskt tillstånd kod - mandatory
-        if (utlatande.getMedicinsktTillstand().getObservationsKod() == null
-                || isNullOrEmpty(utlatande.getMedicinsktTillstand().getObservationsKod().getCode())) {
+        if (isNullOrEmpty(utlatande.getDiagnosKod())) {
             validationErrors.add("Field 2: No tillstandskod in medicinsktTillstand found!");
         }
 
@@ -205,26 +154,15 @@ public class UtlatandeValidator {
     private void validateFunktionsnedsattning() {
 
         // Fält 4 - vänster Check that we got a funktionsnedsattning element
-        Observation funktionsnedsattning = utlatande.getFunktionsnedsattning();
+        String funktionsnedsattning = utlatande.getFunktionsnedsattning();
         if (funktionsnedsattning == null) {
             validationErrors.add("Field 4: No funktionsnedsattning element found!");
             return;
         }
 
-        // Fält 4 - höger översta kryssrutan
-        Vardkontakt inUndersokning = utlatande.getVardkontakt(Vardkontakttypkoder.MIN_UNDERSOKNING_AV_PATIENTEN);
-
-        // Fält 4 - höger näst översta kryssrutan
-        Vardkontakt telefonkontakt = utlatande.getVardkontakt(Vardkontakttypkoder.MIN_TELEFONKONTAKT_MED_PATIENTEN);
-
-        // Fält 4 - höger näst nedersta kryssrutan
-        Referens journal = utlatande.getReferens(Referenstypkoder.JOURNALUPPGIFT);
-
-        // Fält 4 - höger nedersta kryssrutan
-        Referens inAnnat = utlatande.getReferens(Referenstypkoder.ANNAT);
-
         // Fält 4 - höger Check that we at least got one field set
-        if (inUndersokning == null && telefonkontakt == null && journal == null && inAnnat == null) {
+        if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
+                && utlatande.getJournaluppgifter() == null && utlatande.getAnnanReferens() == null) {
             validationErrors.add("Field 4: At least 1 vardkontakt or referens element must be set!");
             return;
         }
@@ -233,24 +171,20 @@ public class UtlatandeValidator {
     private void validateArbetsformaga() {
 
         // Fält 8a - arbetsformoga
-        List<Arbetsuppgift> arbetsuppgifts = utlatande.getPatient().getArbetsuppgifts();
-        boolean hasArbetsuppgifts = (arbetsuppgifts != null && !arbetsuppgifts.isEmpty());
+        boolean hasArbetsuppgifts = utlatande.getNuvarandeArbetsuppgifter() != null;
 
-        // Fält 8a
-        boolean nuvarandeArbete = utlatande.isArbetsformagaIForhallandeTillNuvarandeArbete();
-
-        // Fält 8a - Check that we got a arbetsuppgift element if arbete is set
-        if (nuvarandeArbete && !hasArbetsuppgifts) {
-            validationErrors.add("Field 8a: No arbetsuppgift found when arbete set in field 8a!.");
-            return;
-        }
         // validate 8b
-        boolean valid100 = validArbetsformageNedsattning(utlatande.getNedsattning100percent());
-        boolean valid75 = validArbetsformageNedsattning(utlatande.getNedsattning75percent());
-        boolean valid50 = validArbetsformageNedsattning(utlatande.getNedsattning50percent());
-        boolean valid25 = validArbetsformageNedsattning(utlatande.getNedsattning25percent());
+        boolean valid100 = validArbetsformageNedsattning(utlatande.getNedsattMed100());
+        boolean valid75 = validArbetsformageNedsattning(utlatande.getNedsattMed75());
+        boolean valid50 = validArbetsformageNedsattning(utlatande.getNedsattMed50());
+        boolean valid25 = validArbetsformageNedsattning(utlatande.getNedsattMed25());
 
         if (!valid100 && !valid75 && !valid50 && !valid25) {
+            validationErrors.add("Field 8b: Invalid span in arbetsformaga nedsattningfield.");
+        }
+
+        if (utlatande.getNedsattMed100() == null && utlatande.getNedsattMed75() == null
+                && utlatande.getNedsattMed50() == null && utlatande.getNedsattMed25() == null) {
             validationErrors.add("Field 8b: At least 1 nedsatt arbetsformaga field must be filled");
         }
 
@@ -262,20 +196,19 @@ public class UtlatandeValidator {
      * @param nedsattning
      * @return
      */
-    private boolean validArbetsformageNedsattning(Observation nedsattning) {
+    private boolean validArbetsformageNedsattning(LocalDateInterval nedsattning) {
 
-        if (nedsattning == null || !ObservationsKoder.ARBETSFORMAGA.equals(nedsattning.getObservationsKod())) {
-            return false;
+        if (nedsattning == null) {
+            return true;
         }
-        if ((nedsattning.getObservationsPeriod() != null) && (nedsattning.getObservationsPeriod().getFrom() != null)
-                && (nedsattning.getObservationsPeriod().getTom() != null)) {
-            if (nedsattning.getObservationsPeriod().getFrom().isBefore(nedsattning.getObservationsPeriod().getTom())) {
+
+        if (nedsattning.getStart() != null && nedsattning.getEnd() != null) {
+            if (nedsattning.getStart().isBefore(nedsattning.getEnd())) {
                 return true;
             } else {
                 // Must be something wrong with the observationPeriod:
-                validationErrors.add("Field 8b: Invalid date interval (from "
-                        + nedsattning.getObservationsPeriod().getFrom() + ", tom "
-                        + nedsattning.getObservationsPeriod().getTom());
+                validationErrors.add("Field 8b: Invalid date interval (from " + nedsattning.getStart() + ", tom "
+                        + nedsattning.getEnd());
             }
 
         } else {
@@ -288,11 +221,11 @@ public class UtlatandeValidator {
 
     private void validateRessatt() {
         // Fält 11 - optional
-        Aktivitet inForandratRessatt = utlatande.getForandratRessattAktuellt();
-        Aktivitet inEjForandratRessatt = utlatande.getForandratRessattEjAktuellt();
+        boolean inForandratRessatt = utlatande.isRessattTillArbeteAktuellt();
+        boolean inEjForandratRessatt = utlatande.isRessattTillArbeteAktuellt();
 
         // Fält 11 - If set only one should be set
-        if (inForandratRessatt != null && inEjForandratRessatt != null) {
+        if (inForandratRessatt && inEjForandratRessatt) {
             validationErrors.add("Field 11: Only one forandrat ressatt could be set.");
         }
     }
@@ -302,56 +235,14 @@ public class UtlatandeValidator {
         // Fält 13 - Upplysningar - optional
         // If field 4 annat satt or field 10 går ej att bedömma is set then
         // field 13 should contain data.
-        boolean hasKommentar = utlatande.getKommentars() != null && !utlatande.getKommentars().isEmpty();
+        boolean hasKommentar = utlatande.getKommentar() != null;
 
-        Referens annat = utlatande.getReferens(Referenstypkoder.ANNAT);
-        boolean garEjAttBedomma = utlatande.getArbetsformaga() != null
-                && utlatande.getArbetsformaga().getPrognoser() != null
-                && !utlatande.getArbetsformaga().getPrognoser().isEmpty()
-                && Prognoskoder.DET_GAR_INTE_ATT_BEDOMA.equals(utlatande.getArbetsformaga().getPrognoser().get(0)
-                        .getPrognosKod());
+        LocalDate annat = utlatande.getAnnanReferens();
+
+        boolean garEjAttBedomma = utlatande.isArbetsformataPrognosGarInteAttBedoma();
 
         if ((annat != null || garEjAttBedomma) && !hasKommentar) {
             validationErrors.add("Field 13: Field should contain data as field 4 or fields 10 are checked.");
         }
-    }
-
-    /**
-     * Check the validity of an mandatory Id attribute
-     * 
-     * @param fieldName
-     *            - Name of id field used to construct validation error message
-     * @param mandatoryId
-     *            - The Id to check
-     * @param validOIDs
-     *            - List of valid OID's for this Id
-     * @return
-     */
-    private boolean validateIdEntity(String fieldName, Id mandatoryId, List<String> validOIDs) {
-        if (mandatoryId == null) {
-            validationErrors.add(fieldName + " element not found!");
-            return false;
-        }
-
-        // Check id - mandatory
-        if (isNullOrEmpty(mandatoryId.getExtension())) {
-            validationErrors.add(fieldName + " No extension found");
-            return false;
-        }
-
-        // Check o.i.d existence
-        if (isNullOrEmpty(mandatoryId.getRoot())) {
-            validationErrors.add(fieldName + " No root o.i.d found");
-            return false;
-        }
-
-        // Check that o.i.d value is valid
-        if (!validOIDs.contains(mandatoryId.getRoot())) {
-            validationErrors.add(fieldName + " Invalid o.i.d. - Should be one of ["
-                    + StringUtils.collectionToCommaDelimitedString(validOIDs) + "]");
-            return false;
-        }
-
-        return true;
     }
 }

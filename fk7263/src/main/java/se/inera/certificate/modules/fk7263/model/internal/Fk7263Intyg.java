@@ -1,348 +1,93 @@
 package se.inera.certificate.modules.fk7263.model.internal;
 
-import static se.inera.certificate.model.util.Iterables.find;
-import static se.inera.certificate.model.util.Strings.emptyToNull;
-import static se.inera.certificate.model.util.Strings.join;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import se.inera.certificate.model.Aktivitet;
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Observation;
-import se.inera.certificate.model.Prognos;
-import se.inera.certificate.model.Referens;
-import se.inera.certificate.model.Vardenhet;
-import se.inera.certificate.model.Vardkontakt;
-import se.inera.certificate.model.util.Predicate;
-import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
-import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
-import se.inera.certificate.modules.fk7263.model.codes.Prognoskoder;
-import se.inera.certificate.modules.fk7263.model.codes.Sysselsattningskoder;
+import static se.inera.certificate.model.util.Strings.emptyToNull;
+import static se.inera.certificate.model.util.Strings.join;
+
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import se.inera.certificate.model.LocalDateInterval;
+import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.external.StatusMeta;
 
 /**
  * @author andreaskaltenbach
  */
-public class Fk7263Intyg extends Fk7263Utlatande {
+public class Fk7263Intyg {
 
-    public static final String DATE_PATTERN = "yyyy-MM-dd";
+    private String id;
+    private PartialInterval giltighet;
+
+    private LocalDateTime skickatDatum;
+
+    private String patientNamn;
+    private String patientPersonnummer;
+
+    private boolean avstangningSmittskydd;
+
+    private String diagnosKod;
+    private String diagnosBeskrivning;
+
+    private String sjukdomsforlopp;
+
+    private String funktionsnedsattning;
+
+    private LocalDate undersokningAvPatienten;
+    private LocalDate telefonkontaktMedPatienten;
+    private LocalDate journaluppgifter;
+    private LocalDate annanReferens;
+
+    private String aktivitetsbegransning;
+
+    private boolean rekommendationKontaktArbetsformedlingen;
+    private boolean rekommendationKontaktForetagshalsovarden;
+    private String rekommendationOvrigt;
+
+    private String atgardInomSjukvarden;
+    private String annanAtgard;
+
+    private boolean rehabiliteringAktuell;
+    private boolean rehabiliteringEjAktuell;
+    private boolean rehabiliteringGarInteAttBedoma;
+
+    private String nuvarandeArbetsuppgifter;
+    private boolean arbetsloshet;
+    private boolean foraldrarledighet;
+
+    private LocalDateInterval nedsattMed25;
+    private LocalDateInterval nedsattMed50;
+    private LocalDateInterval nedsattMed75;
+    private LocalDateInterval nedsattMed100;
+
+    private String arbetsformagaPrognos;
+
+    private boolean arbetsformataPrognosJa;
+    private boolean arbetsformataPrognosJaDelvis;
+    private boolean arbetsformataPrognosNej;
+    private boolean arbetsformataPrognosGarInteAttBedoma;
+
+    private boolean ressattTillArbeteAktuellt;
+    private boolean ressattTillArbeteEjAktuellt;
+
+    private boolean kontaktMedFk;
+
+    private String kommentar;
 
     private List<StatusMeta> status;
 
-    public Fk7263Intyg() {
+    private LocalDateTime signeringsdatum;
 
+    private Vardperson vardperson;
+
+    public boolean isAvstangningSmittskydd() {
+        return avstangningSmittskydd;
     }
 
-    public Fk7263Intyg(Fk7263Utlatande external) {
-        this.setId(external.getId());
-        this.setTyp(external.getTyp());
-        this.setAktiviteter(external.getAktiviteter());
-        this.setKommentars(external.getKommentars());
-        this.setObservations(external.getObservations());
-        this.setPatient(external.getPatient());
-        this.setReferenser(external.getReferenser());
-        this.setSigneringsDatum(external.getSigneringsDatum());
-        this.setSkapadAv(external.getSkapadAv());
-        this.setSkickatDatum(external.getSkickatDatum());
-        this.setVardkontakter(external.getVardkontakter());
-
-    }
-
-    public String getForskrivarkodOchArbetsplatskod() {
-        List<String> parts = new ArrayList<>();
-        if (getSkapadAv() != null) {
-            parts.add(getSkapadAv().getForskrivarkod());
-
-            if (getSkapadAv().getVardenhet() != null) {
-                parts.add(getSkapadAv().getVardenhet().getArbetsplatskod().getExtension());
-            }
-        }
-        return emptyToNull(join(" - ", parts));
-    }
-
-    public String getNamnfortydligandeOchAdress() {
-        if (getSkapadAv() == null || getSkapadAv().getVardenhet() == null) {
-            return "";
-        }
-
-        Vardenhet enhet = getSkapadAv().getVardenhet();
-        String nameAndAddress = getSkapadAv().getNamn() + "\n" + enhet.getNamn() + "\n" + enhet.getPostadress() + "\n"
-                + enhet.getPostnummer() + " " + enhet.getPostort() + "\n" + enhet.getTelefonnummer();
-        return nameAndAddress;
-    }
-
-    public String getSigneringsDatumAsString() {
-        return getSigneringsDatum().toString(DATE_PATTERN);
-    }
-
-    public String getRekommenderarOvrigtText() {
-        return getAktivitetsText(Aktivitetskoder.OVRIGT);
-    }
-
-    private String getAktivitetsText(Kod aktivitetskod) {
-        Aktivitet activity = getAktivitet(aktivitetskod);
-        if (activity != null) {
-            return activity.getBeskrivning();
-        } else {
-            return null;
-        }
-    }
-
-    public String getAktivitetsnedsattningBeskrivning() {
-        Observation aktivitetsbegransning = getAktivitetsbegransning();
-        return (aktivitetsbegransning != null) ? aktivitetsbegransning.getBeskrivning() : null;
-    }
-
-    public String getFunktionsnedsattningBeskrivning() {
-        Observation funktionsnedsattning = getFunktionsnedsattning();
-        return (funktionsnedsattning != null) ? funktionsnedsattning.getBeskrivning() : null;
-    }
-
-    public Observation getFunktionsnedsattning() {
-        return findObservationByKategori(ObservationsKoder.KROPPSFUNKTIONER);
-    }
-
-    public Observation getMedicinsktTillstand() {
-        return findObservationByKategori(ObservationsKoder.DIAGNOS);
-    }
-
-    public Observation getBedomtTillstand() {
-        return findObservationByKod(ObservationsKoder.FORLOPP);
-    }
-
-    public Observation getAktivitetsbegransning() {
-        return findObservationByKategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
-    }
-
-    public Observation getArbetsformagaAktivitetsbegransning() {
-        return findObservationByKod(ObservationsKoder.ARBETSFORMAGA);
-    }
-
-    public boolean isPrognosDelvisAterstallning() {
-        return Prognoskoder.ATERSTALLAS_DELVIS.equals(getPrognosKod());
-    }
-
-    public boolean isPrognosEjAterstallning() {
-        return Prognoskoder.INTE_ATERSTALLAS.equals(getPrognosKod());
-    }
-
-    public boolean isPrognosFullAterstallning() {
-        return Prognoskoder.ATERSTALLAS_HELT.equals(getPrognosKod());
-    }
-
-    public boolean isPrognosAterstallningGarEjBedomma() {
-        return Prognoskoder.DET_GAR_INTE_ATT_BEDOMA.equals(getPrognosKod());
-    }
-
-    public String getPrognosText() {
-        Prognos prognos = getPrognos();
-
-        if (prognos == null)
-            return null;
-
-        return prognos.getBeskrivning();
-    }
-
-    private Prognos getPrognos() {
-        Observation arbetsformaga = getArbetsformaga();
-        if (arbetsformaga == null || arbetsformaga.getPrognoser() == null || arbetsformaga.getPrognoser().isEmpty()) {
-            return null;
-        }
-
-        return arbetsformaga.getPrognoser().get(0);
-    }
-
-    private Kod getPrognosKod() {
-        Prognos prognos = getPrognos();
-
-        if (prognos == null)
-            return null;
-
-        return prognos.getPrognosKod();
-    }
-
-    public Observation getArbetsformaga(final Double nedsattningsgrad) {
-        return find(getObservationsByKod(ObservationsKoder.ARBETSFORMAGA), new Predicate<Observation>() {
-            @Override
-            public boolean apply(Observation arbetsformaga) {
-                return arbetsformaga.getVarde() != null && !arbetsformaga.getVarde().isEmpty()
-                        && nedsattningsgrad.equals(arbetsformaga.getVarde().get(0).getQuantity());
-            }
-        }, null);
-    }
-
-    // Helper properties for netsattningsgrader to be included in JSON
-    public Observation getNedsattning25percent() {
-        return getArbetsformaga(75.0);
-    }
-
-    public Observation getNedsattning50percent() {
-        return getArbetsformaga(50.0);
-    }
-
-    public Observation getNedsattning75percent() {
-        return getArbetsformaga(25.0);
-    }
-
-    public Observation getNedsattning100percent() {
-        return getArbetsformaga(0.0);
-    }
-
-    public boolean isArbetsformagaIForhallandeTillArbetsloshet() {
-        return containsSysselsattningKod(Sysselsattningskoder.ARBETSLOSHET);
-    }
-
-    public boolean isArbetsformagaIForhallandeTillForaldraledighet() {
-        return containsSysselsattningKod(Sysselsattningskoder.MAMMALEDIG)
-                || containsSysselsattningKod(Sysselsattningskoder.PAPPALEDIG);
-    }
-
-    public boolean isArbetsformagaIForhallandeTillNuvarandeArbete() {
-        return containsSysselsattningKod(Sysselsattningskoder.NUVARANDE_ARBETE);
-    }
-
-    private boolean containsSysselsattningKod(Kod sysselsattningKod) {
-        if (getPatient() != null && getPatient().getSysselsattnings() != null) {
-            for (se.inera.certificate.model.Sysselsattning sysselsattning : getPatient().getSysselsattnings()) {
-                if (sysselsattningKod.equals(sysselsattning.getSysselsattningsTyp())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public Observation getArbetsformaga() {
-        return findObservationByKod(ObservationsKoder.ARBETSFORMAGA);
-    }
-
-    public Aktivitet getForandratRessattAktuellt() {
-        return getAktivitet(Aktivitetskoder.FORANDRA_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT);
-    }
-
-    public Aktivitet getForandratRessattEjAktuellt() {
-        return getAktivitet(Aktivitetskoder.FORANDRA_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT);
-    }
-
-    public Aktivitet getKontaktMedForsakringskassanAktuell() {
-        return getAktivitet(Aktivitetskoder.KONTAKT_MED_FK_AR_AKTUELL);
-    }
-
-    public Aktivitet getArbetsinriktadRehabiliteringAktuell() {
-        return getAktivitet(Aktivitetskoder.ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL);
-    }
-
-    public Aktivitet getArbetsinriktadRehabiliteringEjAktuell() {
-        return getAktivitet(Aktivitetskoder.ARBETSLIVSINRIKTAD_REHABILITERING_AR_INTE_AKTUELL);
-    }
-
-    public Aktivitet getArbetsinriktadRehabiliteringEjBedombar() {
-        return getAktivitet(Aktivitetskoder.GAR_EJ_ATT_BEDOMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL);
-    }
-
-    public Aktivitet getAvstangningEnligtSmittskyddslagen() {
-        return getAktivitet(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
-    }
-
-    public Aktivitet getRekommenderarKontaktMedArbetsformedlingen() {
-        return getAktivitet(Aktivitetskoder.PATIENTEN_BOR_FA_KONTAKT_MED_ARBETSFORMEDLINGEN);
-    }
-
-    public Aktivitet getRekommenderarKontaktMedForetagshalsovarden() {
-        return getAktivitet(Aktivitetskoder.PATIENTEN_BOR_FA_KONTAKT_MED_FORETAGSHALSOVARDEN);
-    }
-
-    public Aktivitet getRekommenderarOvrigt() {
-        return getAktivitet(Aktivitetskoder.OVRIGT);
-    }
-
-    public Aktivitet getAtgardInomSjukvarden() {
-        return getAktivitet(Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN);
-    }
-
-    public Aktivitet getAnnanAtgard() {
-        return getAktivitet(Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD);
-    }
-
-    public boolean isFilledAlways() {
-
-        return true;
-    }
-
-    public boolean isFilledDiagnosis() {
-
-        return getMedicinsktTillstand() != null;
-    }
-
-    public boolean isFilledProgress() {
-        Observation bedomtTillstand = getBedomtTillstand();
-        return (bedomtTillstand != null && !bedomtTillstand.getBeskrivning().trim().equals(""));
-    }
-
-    public boolean isFilledDisabilities() {
-        String value = getFunktionsnedsattningBeskrivning();
-        return value != null && !value.trim().equals("");
-    }
-
-    public boolean isFilledBasedOn() {
-        List<String> kommentars = getKommentars();
-        List<Vardkontakt> vardKontakter = getVardkontakter();
-        List<Referens> referens = getReferenser();
-
-        return (kommentars != null && kommentars.size() > 0) || (vardKontakter != null && vardKontakter.size() > 0)
-                || (referens != null && referens.size() > 0);
-    }
-
-    public boolean isFilledLimitation() {
-        String value = getAktivitetsnedsattningBeskrivning();
-        return value != null && !value.trim().equals("");
-    }
-
-    public boolean isFilledRecommendations() {
-        Aktivitet ovrigt = getRekommenderarOvrigt();
-        return getRekommenderarKontaktMedArbetsformedlingen() != null
-                || getRekommenderarKontaktMedForetagshalsovarden() != null
-                || (ovrigt != null && !ovrigt.getBeskrivning().trim().equals(""));
-    }
-
-    public boolean isFilledPlannedTreatment() {
-        Aktivitet annan = getAnnanAtgard();
-        return getAtgardInomSjukvarden() != null || (annan != null && !annan.getBeskrivning().trim().equals(""));
-    }
-
-    public boolean isFilledWorkRehab() {
-        return getArbetsinriktadRehabiliteringAktuell() != null || getArbetsinriktadRehabiliteringEjAktuell() != null
-                || getArbetsinriktadRehabiliteringEjBedombar() != null;
-    }
-
-    public boolean isFilledPatientWorkCapacity() {
-        return isArbetsformagaIForhallandeTillNuvarandeArbete() || isArbetsformagaIForhallandeTillArbetsloshet()
-                || isArbetsformagaIForhallandeTillForaldraledighet();
-    }
-
-    public boolean isFilledPatientWorkCapacityJudgement() {
-        Observation value = getArbetsformagaAktivitetsbegransning();
-
-        if (value == null || value.getPrognoser() == null || value.getPrognoser().isEmpty())
-            return false;
-
-        Prognos prognos = value.getPrognoser().get(0);
-        return prognos != null && prognos.getBeskrivning() != null && !prognos.getBeskrivning().trim().equals("");
-    }
-
-    public boolean isFilledPrognosis() {
-        return isPrognosFullAterstallning() || isPrognosDelvisAterstallning() || isPrognosEjAterstallning()
-                || isPrognosAterstallningGarEjBedomma();
-    }
-
-    public boolean isFilledPatientOtherTransport() {
-        return getForandratRessattAktuellt() != null || getForandratRessattEjAktuellt() != null;
-    }
-
-    public boolean isFilledFKContact() {
-        return true;
+    public void setAvstangningSmittskydd(boolean avstangningSmittskydd) {
+        this.avstangningSmittskydd = avstangningSmittskydd;
     }
 
     public List<StatusMeta> getStatus() {
@@ -353,4 +98,339 @@ public class Fk7263Intyg extends Fk7263Utlatande {
         this.status = status;
     }
 
+    public String getDiagnosKod() {
+        return diagnosKod;
+    }
+
+    public void setDiagnosKod(String diagnosKod) {
+        this.diagnosKod = diagnosKod;
+    }
+
+    public String getDiagnosBeskrivning() {
+        return diagnosBeskrivning;
+    }
+
+    public void setDiagnosBeskrivning(String diagnosBeskrivning) {
+        this.diagnosBeskrivning = diagnosBeskrivning;
+    }
+
+    public String getSjukdomsforlopp() {
+        return sjukdomsforlopp;
+    }
+
+    public void setSjukdomsforlopp(String sjukdomsforlopp) {
+        this.sjukdomsforlopp = sjukdomsforlopp;
+    }
+
+    public String getFunktionsnedsattning() {
+        return funktionsnedsattning;
+    }
+
+    public void setFunktionsnedsattning(String funktionsnedsattning) {
+        this.funktionsnedsattning = funktionsnedsattning;
+    }
+
+    public LocalDate getUndersokningAvPatienten() {
+        return undersokningAvPatienten;
+    }
+
+    public void setUndersokningAvPatienten(LocalDate undersokningAvPatienten) {
+        this.undersokningAvPatienten = undersokningAvPatienten;
+    }
+
+    public LocalDate getTelefonkontaktMedPatienten() {
+        return telefonkontaktMedPatienten;
+    }
+
+    public void setTelefonkontaktMedPatienten(LocalDate telefonkontaktMedPatienten) {
+        this.telefonkontaktMedPatienten = telefonkontaktMedPatienten;
+    }
+
+    public LocalDate getJournaluppgifter() {
+        return journaluppgifter;
+    }
+
+    public void setJournaluppgifter(LocalDate journaluppgifter) {
+        this.journaluppgifter = journaluppgifter;
+    }
+
+    public LocalDate getAnnanReferens() {
+        return annanReferens;
+    }
+
+    public void setAnnanReferens(LocalDate annanReferens) {
+        this.annanReferens = annanReferens;
+    }
+
+    public String getAktivitetsbegransning() {
+        return aktivitetsbegransning;
+    }
+
+    public void setAktivitetsbegransning(String aktivitetsbegransning) {
+        this.aktivitetsbegransning = aktivitetsbegransning;
+    }
+
+    public boolean isRekommendationKontaktArbetsformedlingen() {
+        return rekommendationKontaktArbetsformedlingen;
+    }
+
+    public void setRekommendationKontaktArbetsformedlingen(boolean rekommendationKontaktArbetsformedlingen) {
+        this.rekommendationKontaktArbetsformedlingen = rekommendationKontaktArbetsformedlingen;
+    }
+
+    public boolean isRekommendationKontaktForetagshalsovarden() {
+        return rekommendationKontaktForetagshalsovarden;
+    }
+
+    public void setRekommendationKontaktForetagshalsovarden(boolean rekommendationKontaktForetagshalsovarden) {
+        this.rekommendationKontaktForetagshalsovarden = rekommendationKontaktForetagshalsovarden;
+    }
+
+    public String getRekommendationOvrigt() {
+        return rekommendationOvrigt;
+    }
+
+    public void setRekommendationOvrigt(String rekommendationOvrigt) {
+        this.rekommendationOvrigt = rekommendationOvrigt;
+    }
+
+    public String getAtgardInomSjukvarden() {
+        return atgardInomSjukvarden;
+    }
+
+    public void setAtgardInomSjukvarden(String atgardInomSjukvarden) {
+        this.atgardInomSjukvarden = atgardInomSjukvarden;
+    }
+
+    public String getAnnanAtgard() {
+        return annanAtgard;
+    }
+
+    public void setAnnanAtgard(String annanAtgard) {
+        this.annanAtgard = annanAtgard;
+    }
+
+    public String getPatientNamn() {
+        return patientNamn;
+    }
+
+    public void setPatientNamn(String patientNamn) {
+        this.patientNamn = patientNamn;
+    }
+
+    public String getPatientPersonnummer() {
+        return patientPersonnummer;
+    }
+
+    public void setPatientPersonnummer(String patientPersonnummer) {
+        this.patientPersonnummer = patientPersonnummer;
+    }
+
+    public boolean isRehabiliteringAktuell() {
+        return rehabiliteringAktuell;
+    }
+
+    public void setRehabiliteringAktuell(boolean rehabiliteringAktuell) {
+        this.rehabiliteringAktuell = rehabiliteringAktuell;
+    }
+
+    public boolean isRehabiliteringEjAktuell() {
+        return rehabiliteringEjAktuell;
+    }
+
+    public void setRehabiliteringEjAktuell(boolean rehabiliteringEjAktuell) {
+        this.rehabiliteringEjAktuell = rehabiliteringEjAktuell;
+    }
+
+    public boolean isRehabiliteringGarInteAttBedoma() {
+        return rehabiliteringGarInteAttBedoma;
+    }
+
+    public void setRehabiliteringGarInteAttBedoma(boolean rehabiliteringGarInteAttBedoma) {
+        this.rehabiliteringGarInteAttBedoma = rehabiliteringGarInteAttBedoma;
+    }
+
+    public String getNuvarandeArbetsuppgifter() {
+        return nuvarandeArbetsuppgifter;
+    }
+
+    public void setNuvarandeArbetsuppgifter(String nuvarandeArbetsuppgifter) {
+        this.nuvarandeArbetsuppgifter = nuvarandeArbetsuppgifter;
+    }
+
+    public boolean isArbetsloshet() {
+        return arbetsloshet;
+    }
+
+    public void setArbetsloshet(boolean arbetsloshet) {
+        this.arbetsloshet = arbetsloshet;
+    }
+
+    public boolean isForaldrarledighet() {
+        return foraldrarledighet;
+    }
+
+    public void setForaldrarledighet(boolean foraldrarledighet) {
+        this.foraldrarledighet = foraldrarledighet;
+    }
+
+    public LocalDateInterval getNedsattMed25() {
+        return nedsattMed25;
+    }
+
+    public void setNedsattMed25(LocalDateInterval nedsattMed25) {
+        this.nedsattMed25 = nedsattMed25;
+    }
+
+    public LocalDateInterval getNedsattMed50() {
+        return nedsattMed50;
+    }
+
+    public void setNedsattMed50(LocalDateInterval nedsattMed50) {
+        this.nedsattMed50 = nedsattMed50;
+    }
+
+    public LocalDateInterval getNedsattMed75() {
+        return nedsattMed75;
+    }
+
+    public void setNedsattMed75(LocalDateInterval nedsattMed75) {
+        this.nedsattMed75 = nedsattMed75;
+    }
+
+    public LocalDateInterval getNedsattMed100() {
+        return nedsattMed100;
+    }
+
+    public void setNedsattMed100(LocalDateInterval nedsattMed100) {
+        this.nedsattMed100 = nedsattMed100;
+    }
+
+    public String getArbetsformagaPrognos() {
+        return arbetsformagaPrognos;
+    }
+
+    public void setArbetsformagaPrognos(String arbetsformagaPrognos) {
+        this.arbetsformagaPrognos = arbetsformagaPrognos;
+    }
+
+    public boolean isArbetsformataPrognosJa() {
+        return arbetsformataPrognosJa;
+    }
+
+    public void setArbetsformataPrognosJa(boolean arbetsformataPrognosJa) {
+        this.arbetsformataPrognosJa = arbetsformataPrognosJa;
+    }
+
+    public boolean isArbetsformataPrognosJaDelvis() {
+        return arbetsformataPrognosJaDelvis;
+    }
+
+    public void setArbetsformataPrognosJaDelvis(boolean arbetsformataPrognosJaDelvis) {
+        this.arbetsformataPrognosJaDelvis = arbetsformataPrognosJaDelvis;
+    }
+
+    public boolean isArbetsformataPrognosNej() {
+        return arbetsformataPrognosNej;
+    }
+
+    public void setArbetsformataPrognosNej(boolean arbetsformataPrognosNej) {
+        this.arbetsformataPrognosNej = arbetsformataPrognosNej;
+    }
+
+    public boolean isArbetsformataPrognosGarInteAttBedoma() {
+        return arbetsformataPrognosGarInteAttBedoma;
+    }
+
+    public void setArbetsformataPrognosGarInteAttBedoma(boolean arbetsformataPrognosGarInteAttBedoma) {
+        this.arbetsformataPrognosGarInteAttBedoma = arbetsformataPrognosGarInteAttBedoma;
+    }
+
+    public boolean isRessattTillArbeteAktuellt() {
+        return ressattTillArbeteAktuellt;
+    }
+
+    public void setRessattTillArbeteAktuellt(boolean ressattTillArbeteAktuellt) {
+        this.ressattTillArbeteAktuellt = ressattTillArbeteAktuellt;
+    }
+
+    public boolean isRessattTillArbeteEjAktuellt() {
+        return ressattTillArbeteEjAktuellt;
+    }
+
+    public void setRessattTillArbeteEjAktuellt(boolean ressattTillArbeteEjAktuellt) {
+        this.ressattTillArbeteEjAktuellt = ressattTillArbeteEjAktuellt;
+    }
+
+    public boolean isKontaktMedFk() {
+        return kontaktMedFk;
+    }
+
+    public void setKontaktMedFk(boolean kontaktMedFk) {
+        this.kontaktMedFk = kontaktMedFk;
+    }
+
+    public String getKommentar() {
+        return kommentar;
+    }
+
+    public void setKommentar(String kommentar) {
+        this.kommentar = kommentar;
+    }
+
+    public LocalDateTime getSigneringsdatum() {
+        return signeringsdatum;
+    }
+
+    public void setSigneringsdatum(LocalDateTime signeringsdatum) {
+        this.signeringsdatum = signeringsdatum;
+    }
+
+    public Vardperson getVardperson() {
+        return vardperson;
+    }
+
+    public void setVardperson(Vardperson vardperson) {
+        this.vardperson = vardperson;
+    }
+
+    public String getForskrivarkodOchArbetsplatskod() {
+        List<String> parts = new ArrayList<>();
+
+        parts.add(vardperson.getForskrivarKod());
+        parts.add(vardperson.getArbetsplatsKod());
+
+        return emptyToNull(join(" - ", parts));
+    }
+
+    public String getNamnfortydligandeOchAdress() {
+        String nameAndAddress = vardperson.getNamn() + "\n" + vardperson.getEnhetsnamn() + "\n"
+                + vardperson.getPostadress() + "\n" + vardperson.getPostnummer() + " " + vardperson.getPostort() + "\n"
+                + vardperson.getTelefonnummer();
+        return nameAndAddress;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getSkickatDatum() {
+        return skickatDatum;
+    }
+
+    public void setSkickatDatum(LocalDateTime skickatDatum) {
+        this.skickatDatum = skickatDatum;
+    }
+
+    public PartialInterval getGiltighet() {
+        return giltighet;
+    }
+
+    public void setGiltighet(PartialInterval giltighet) {
+        this.giltighet = giltighet;
+    }
 }

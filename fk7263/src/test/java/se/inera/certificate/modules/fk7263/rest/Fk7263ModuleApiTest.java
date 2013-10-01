@@ -1,20 +1,16 @@
 package se.inera.certificate.modules.fk7263.rest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 
-import javax.ws.rs.core.Response;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
-
 import se.inera.certificate.fk7263.model.v1.Utlatande;
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.model.Id;
-import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
@@ -78,8 +74,7 @@ public class Fk7263ModuleApiTest {
     @Test
     public void testPdfFileName() {
         Fk7263Intyg intyg = new Fk7263Intyg();
-        intyg.setPatient(new Fk7263Patient());
-        intyg.getPatient().setId(new Id("19121212-1212"));
+        intyg.setPatientPersonnummer("19121212-1212");
         //TODO Create a proper test when model has been updated.
         //assertEquals("lakarutlatande_19121212-1212_20110124-20110331.pdf", fk7263ModuleApi.pdfFileName(intyg));
     }
