@@ -209,7 +209,7 @@ public class PdfGenerator {
         if (intyg.isRessattTillArbeteAktuellt()) {
             checkField(RECOMMENDATION_TRAVEL_YES);
         }
-        if (intyg.isRehabiliteringEjAktuell()) {
+        if (intyg.isRessattTillArbeteEjAktuellt()) {
             checkField(RECOMMENDATION_TRAVEL_NO);
         }
     }
