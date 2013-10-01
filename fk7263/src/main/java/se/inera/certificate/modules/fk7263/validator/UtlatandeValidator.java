@@ -180,6 +180,11 @@ public class UtlatandeValidator {
         boolean valid25 = validArbetsformageNedsattning(utlatande.getNedsattMed25());
 
         if (!valid100 && !valid75 && !valid50 && !valid25) {
+            validationErrors.add("Field 8b: Invalid span in arbetsformaga nedsattningfield.");
+        }
+
+        if (utlatande.getNedsattMed100() == null && utlatande.getNedsattMed75() == null
+                && utlatande.getNedsattMed50() == null && utlatande.getNedsattMed25() == null) {
             validationErrors.add("Field 8b: At least 1 nedsatt arbetsformaga field must be filled");
         }
 
@@ -193,14 +198,16 @@ public class UtlatandeValidator {
      */
     private boolean validArbetsformageNedsattning(LocalDateInterval nedsattning) {
 
-        if (nedsattning.getStart() != null
-                && nedsattning.getEnd() != null) {
+        if (nedsattning == null) {
+            return true;
+        }
+
+        if (nedsattning.getStart() != null && nedsattning.getEnd() != null) {
             if (nedsattning.getStart().isBefore(nedsattning.getEnd())) {
                 return true;
             } else {
                 // Must be something wrong with the observationPeriod:
-                validationErrors.add("Field 8b: Invalid date interval (from "
-                        + nedsattning.getStart() + ", tom "
+                validationErrors.add("Field 8b: Invalid date interval (from " + nedsattning.getStart() + ", tom "
                         + nedsattning.getEnd());
             }
 

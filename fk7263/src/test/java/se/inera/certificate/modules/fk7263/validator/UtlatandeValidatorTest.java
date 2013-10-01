@@ -88,16 +88,6 @@ public class UtlatandeValidatorTest {
     }
 
     @Test
-    public void testInvalidHosPersonalIdExtension() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
-
-        // break hos-personal id extension
-        utlatande.getVardperson().setHsaId("");
-
-        assertEquals(1, new UtlatandeValidator(utlatande).validate().size());
-    }
-
-    @Test
     public void testInvalidHosPersonalNamn() throws Exception {
         Fk7263Intyg utlatande = getValidUtlatande();
 
