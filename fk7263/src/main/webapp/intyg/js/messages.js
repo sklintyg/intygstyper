@@ -84,9 +84,13 @@ var fk7263Messages = {
         "nedsattningsgrad.nedsatt_med_1_2" : "Nedsatt med hälften",
         "nedsattningsgrad.nedsatt_med_1_4" : "Nedsatt med 1/4",
         "vardkontakt.5880005" : "Min undersökning av patienten den %0",
+        "vardkontakt.undersokning" : "Min undersökning av patienten den ",
         "vardkontakt.185317003" : "Min telefonkontakt med patienten den %0",
+        "vardkontakt.telefonkontakt" : "Min telefonkontakt med patienten den ",
         "referens.419891008" : "Journaluppgifter, den %0",
+        "referens.journal" : "Journaluppgifter, den ",
         "referens.74964007" : "Annat, den %0",
+        "referens.annat" : "Annat, den ",
 
         "error.generic" : "Intyget kunde inte visas. Om felet kvarstår kan du kontakta <a href='/web/start#/hjalp'>support</a>. Om du inte kan komma åt intyget på Mina intyg just nu så kan du kontakta din läkare för att få en kopia.<br><br><a href='/web/start'>Gå till Inkorgen och försök igen</a>",
         "error.couldnotsend" : "Intyget kunde inte skickas till Försäkringskassan. Om felet kvarstår kan du kontakta <a href='/web/start#/hjalp'>support</a>.<br><br><a href='/web/start'>Gå till Inkorgen och försök igen</a>",
