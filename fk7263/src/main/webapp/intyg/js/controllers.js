@@ -55,7 +55,7 @@ angular.module('controllers.fk7263').controller('ViewCertCtrl',
                     // added calculated img src for certificate, beacuse for
                     // some reason ng-src with "/img/{{cert.typ }}.png" would
                     // evaluate first to "img/.png" before correct value = 404
-                    result.typ_image = "/img/" + result.typ.code + ".png";
+                    result.typ_image = "/img/fk7263.png";
 	                
                     $scope.cert = result;
                     $rootScope.cert = result;
