@@ -35,11 +35,11 @@
 
 <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
 
-<%-- Dependencies to common static resources components loaded from Mina Intyg "module host" web app running at "/" context --%>
-<link rel="stylesheet" href="/css/bootstrap/2.3.2/bootstrap.css" />
-
-<!--<link rel="stylesheet" href="/css/inera.css" />
-<link rel="stylesheet" href="/css/inera-certificate.css" />-->
+<%-- Dependencies to common static resources components loaded from Webcert "module host" web app running at "/" context --%>
+<link rel="stylesheet" href="/css/bootstrap/2.3.2/bootstrap.css">
+<link rel="stylesheet" href="/css/bootstrap-responsive-modified.css">
+<link rel="stylesheet" href="/css/inera-webcert.css">
+<link rel="stylesheet" href="/css/inera-certificate.css">
 
 <script type="text/javascript">
     /**
@@ -55,48 +55,70 @@
 </script>
 </head>
 
-<!--<body ng-app="FK7263EditCertApp">-->
-<body>
+<body ng-app="FK7263EditCertApp">
 
-  <div class="container">
-
-    <div id="content-container">
-      <div class="content" style="padding-top: 0px;">
-        <div class="row-fluid">
-          <div id="content-body" class="span12" style="padding-top: 25px;">
-            <div ng-view>Webcert Intyg</div>
-          </div>
-        </div>
+  <%-- Web-cert top navigation bar --%>
+  <div id="wcHeader" wc-header 
+    is-doctor="<sec:authentication property="principal.lakare"/>" 
+    user-name="<sec:authentication property="principal.namn"/>"
+    caregiver-name="<sec:authentication property="principal.vardgivare.namn"/>" 
+    menu-defs="[
+     {
+       link :'/web/dashboard#/index', 
+       label:'Mina osignerade intyg',
+       requires_doctor: true
+     },
+     {
+       link :'/web/dashboard#/unsigned', 
+       label:'Enhetens osignerade intyg',
+       requires_doctor: false
+     },
+     {
+       link :'/web/dashboard#/unhandled-qa',
+       label:'Enhetens obesvarade frågor',
+       requires_doctor: false
+     },
+     {
+       link :'/web/dashboard#/create', 
+       label:'Skriv intyg',
+       requires_doctor: false
+     },
+     {
+       link :'/web/dashboard#/about.support',
+       label:'Om webcert',
+       requires_doctor: false
+     },
+    ]">
+  </div>
+  <div class="container-fluid">
+    <%-- No script to show at least something when javascript is off --%>
+    <noscript>
+      <h1>
+        <span><spring:message code="error.noscript.title" /></span>
+      </h1>
+      <div class="alert alert-error">
+        <spring:message code="error.noscript.text" />
       </div>
-    </div>
+    </noscript>
+
+    <%-- ng-view that holds dynamic content managed by angular app --%>
+    <div id="view" ng-view></div>
   </div>
 
-
-  <%-- Dependencies to common (3rd party) components loaded from MI web app running at "/" context--%>
+  <%-- Dependencies to common (3rd party) components loaded from web app running at "/" context--%>
   <script type="text/javascript" src="/js/vendor/angular/1.1.5/angular.js"></script>
   <script type="text/javascript" src="/js/vendor/angular/1.1.5/i18n/angular-locale_sv-se.js"></script>
-  <!--<script type="text/javascript" src="/js/vendor/ui-bootstrap/0.3.0/ui-bootstrap-tpls-0.3.0.js"></script>-->
+  <script type="text/javascript" src="/js/vendor/ui-bootstrap/0.5.0/ui-bootstrap-tpls-0.5.0.js"></script>
 
-  <%-- Dependencies to common components loaded from MI web app running at "/" context--%>
-
-
-  <!--<script type="text/javascript" src="/js/modules/message-module.js"></script>
-  <script type="text/javascript" src="/js/modules/mi-header-directive.js"></script>
-  <script type="text/javascript" src="/js/modules/cert-service.js"></script>
-  <script type="text/javascript" src="/js/modules/common-message-resources.js"></script>-->
-
-
+  <%-- Dependencies to common components loaded from web app running at "/" context--%>
+  <script type="text/javascript" src="/js/common/wc-message-module.js"></script>
+  <script type="text/javascript" src="/js/common/wc-common-directives.js"></script>
+  <script type="text/javascript" src="/js/common/wc-common-message-resources.js"></script>
 
   <%-- Dependencies to module specific components loaded from this modules web app running at "?" context--%>
-
-
- <!-- <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/fk7263-app.js"/>"></script>
+  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/fk7263-app.js"/>"></script>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/controllers.js"/>"></script>
-  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/messages.js"/>"></script>-->
-
-
-
-
+  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/messages.js"/>"></script>
 
 </body>
 </html>
