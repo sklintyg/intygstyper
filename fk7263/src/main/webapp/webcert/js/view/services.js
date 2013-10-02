@@ -44,7 +44,7 @@ angular.module('services.fk7263.wc').factory('fragaSvarService', [ '$http', '$lo
 
     function _getQAForCertificate(id, callback) {
         $log.debug("_getQA");
-        var restPath = '/api/fragasvar/' + id;
+        var restPath = '/moduleapi/intyg/' + id + "/fragasvar";
         $http.get(restPath).success(function(data) {
             $log.debug("got data:" + data);
             callback(data);

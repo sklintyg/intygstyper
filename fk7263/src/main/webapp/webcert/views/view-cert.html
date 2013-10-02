@@ -3,10 +3,10 @@
     <!-- Left side -->
     <div class="webcert-col-shadow"></div>
 
-    
-      <a class="backlink" href="#start"><span message key="common.goback"></span></a>
-      <h1>Läkarintyg FK 7263</h1>
-<div wc-spinner label="info.loadingcertificate" show-spinner="!widgetState.doneLoading" show-content="widgetState.doneLoading">
+
+    <a class="backlink" href="#start"><span message key="common.goback"></span></a>
+    <h1>Läkarintyg FK 7263</h1>
+    <div wc-spinner label="info.loadingcertificate" show-spinner="!widgetState.doneLoading" show-content="widgetState.doneLoading">
       <div class="control-group buttonbar">
         <label class="control-label">Per Persson - 19590504-2343</label>
         <button class="btn btn-info" disabled>Spara</button>
@@ -149,24 +149,28 @@
           <label class="control-label">Skriv en fråga på detta intyg till Försäkringskassan</label>
           <button class="btn btn-success" ng-click="createCert()">Ny fråga</button>
         </div>
-        
+
         <div wc-spinner label="info.loading.existing.qa" show-spinner="!widgetState.doneLoading" show-content="widgetState.doneLoading">
-          <div class="qa-block">
-            <div class="qa-block-head clearfix">
-              <div class="pull-left">
-                <h3>Komplettering</h3>
-                <span class="qa-sender">Fråga från Försäkringskassan</span>
+          <div ng-repeat="qa in qaList">
+            <div class="qa-block">
+              <div class="qa-block-head clearfix">
+                <div class="pull-left">
+                  <h3><span message key="qa.amne.{{qa.amne | lowercase}}"></span></h3>
+                  <span class="qa-sender">Fråga från <span message key="qa.fragestallare.{{qa.frageStallare | lowercase}}"></span></span>
+                </div>
+                <!-- Fraga fran fk eller wc -->
+                <div class="pull-right">
+                  <span ng-show="(qa.frageStallare | lowercase) !='wc'">Mottaget</span><br> 
+                  <span ng-show="(qa.frageStallare | lowercase) =='wc'">Skickat</span>
+                  <span class="qa-date">{{qa.fragaSkickadDatum}}</span>
+                </div>
               </div>
-              <div class="pull-right">
-                <span>Mottaget</span><br> <span class="qa-date">2013-05-06</span>
+              <div class="qa-block-body">
+                {{qa.frageText}}
+                 <a href="#" class="mark-answered">Markera som besvarad</a>
               </div>
-            </div>
-            <div class="qa-block-body">
-              Du har glömt fält 12 och 15 psum dolor sit amet, consectetur adipiscing elit. Integer vel quam eget augue pulvinar ultricies ac vitae nisi. Suspendisse elementum felis at nunc
-              ullamcorper porttitor. Nulla eu justo lacus. Mauris ornare diam sit amet orci cursus tempus. Proin aliquet placerat cursus. <a href="#" class="mark-answered">Markera som besvarad</a>
             </div>
           </div>
-
         </div>
         <!--  end spinner -->
 
