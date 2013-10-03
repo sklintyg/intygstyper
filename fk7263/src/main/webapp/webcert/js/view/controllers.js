@@ -62,6 +62,6 @@ angular.module('controllers.fk7263.webcert').controller('QACtrl', [ '$scope', '$
                 $scope.widgetState.hasError = true;
             }
         });
-    }, 2000);
+    }, 500);
 
 } ]);
