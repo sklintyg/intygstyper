@@ -6,7 +6,9 @@ var fk7263Messages = {
         "view.label.header1":"Diagnos",
         "view.label.field1":"ICD 10",
         "view.label.field2":"Diagnos",
-        "error.generic": "Kunde inte visa intyget"
+        "error.generic": "Kunde inte visa intyget",
+        "info.loadingcertificate" : "Hämtar intyget..",
+        "info.loading.existing.qa": "Hämtar tidigare frågor och svar..."
     },
     "en": {
         "view.label.pagetitle": "Show Certificate"

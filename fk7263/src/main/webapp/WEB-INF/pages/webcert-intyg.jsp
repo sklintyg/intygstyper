@@ -31,7 +31,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="ROBOTS" content="nofollow, noindex" />
 
-<title><spring:message code="application.webcert.name" /></title>
+<title><spring:message code="wc.application.name" /></title>
 
 <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
 
@@ -41,6 +41,8 @@
 <link rel="stylesheet" href="/css/inera-webcert.css">
 <link rel="stylesheet" href="/css/inera-certificate.css">
 
+<script type="text/javascript" src="/usercontext.jsp"></script>
+  
 <script type="text/javascript">
     /**
      Global JS config/constants for this app, to be used by scripts
@@ -49,20 +51,18 @@
         MI_COMMON_API_CONTEXT_PATH : '/moduleapi/certificate/',
         MODULE_CONTEXT_PATH : '<c:out value="${pageContext.request.contextPath}"/>',
         CERT_ID_PARAMETER : '<c:out value="${id}"/>',
-        FROM_PARAMETER : '<c:out value="${from}"/>',
-        PRINCIPAL_NAME : '<%=request.getHeader("X-Username")%>', // How do we get the username? cookie?
-        PROXY_PREFIX : '/m/fk7263' //maybe from serverside config?
+        PROXY_PREFIX : '/m/fk7263'
     }
 </script>
 </head>
 
-<body ng-app="FK7263EditCertApp">
+<body ng-app="FK7263ViewCertApp">
 
   <%-- Web-cert top navigation bar --%>
   <div id="wcHeader" wc-header 
-    is-doctor="<sec:authentication property="principal.lakare"/>" 
-    user-name="<sec:authentication property="principal.namn"/>"
-    caregiver-name="<sec:authentication property="principal.vardgivare.namn"/>" 
+    is-doctor="{{WC_CONTEXT.lakare}}" 
+    user-name="{{WC_CONTEXT.namn}}"
+    caregiver-name="{{WC_CONTEXT.vardgivare.namn}}" 
     menu-defs="[
      {
        link :'/web/dashboard#/index', 
@@ -122,6 +122,7 @@
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/fk7263-app.js"/>"></script>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/controllers.js"/>"></script>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/messages.js"/>"></script>
+  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/services.js"/>"></script>
 
 </body>
 </html>
