@@ -1,8 +1,8 @@
 'use strict';
 
 /* Controllers */
-angular.module('controllers.fk7263.webcert', []);
-angular.module('controllers.fk7263.webcert').controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', function EditCertCtrl($scope, $filter, $location, $rootScope) {
+angular.module('wc.fk7263.controllers', []);
+angular.module('wc.fk7263.controllers').controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', function EditCertCtrl($scope, $filter, $location, $rootScope) {
     $scope.cert = {};
 } ]);
 
@@ -10,7 +10,7 @@ angular.module('controllers.fk7263.webcert').controller('EditCertCtrl', [ '$scop
  * ViewCertCtrl - Controller for logic related to viewing a certificate
  * 
  */
-angular.module('controllers.fk7263.webcert').controller('ViewCertCtrl',
+angular.module('wc.fk7263.controllers').controller('ViewCertCtrl',
         [ '$scope', '$log', '$timeout', 'viewCertificateService', function CreateCertCtrl($scope, $log, $timeout, viewCertificateService) {
 
             // init state
@@ -21,8 +21,8 @@ angular.module('controllers.fk7263.webcert').controller('ViewCertCtrl',
             $scope.cert = {};
 
             // Load certificate json
-            $timeout(function() { // wrap in timeout to simulate latency -
-                                    // remove soon
+           // $timeout(function() { // wrap in timeout to simulate latency -
+                
                 viewCertificateService.getCertificate($scope.MODULE_CONFIG.CERT_ID_PARAMETER, function(result) {
                     $log.debug("Got getCertificate data:" + result);
                     $scope.widgetState.doneLoading = true;
@@ -33,34 +33,5 @@ angular.module('controllers.fk7263.webcert').controller('ViewCertCtrl',
                         $scope.widgetState.hasError = true;
                     }
                 });
-            }, 2000);
+            //}, 2000);
         } ]);
-
-/*******************************************************************************
- * QACtrl - Controller for logic related to viewing a Fraga/Svar for a
- * certificate
- * 
- */
-angular.module('controllers.fk7263.webcert').controller('QACtrl', [ '$scope', '$log', '$timeout', 'fragaSvarService', function CreateCertCtrl($scope, $log, $timeout, fragaSvarService) {
-
-    // init state
-    $scope.qaList = {};
-    $scope.widgetState = {
-        doneLoading : false,
-        hasError : false
-    }
-    // Request loading of QA's for this certificate
-    $timeout(function() { // wrap in timeout to simulate latency - remove soon
-        fragaSvarService.getQAForCertificate($scope.MODULE_CONFIG.CERT_ID_PARAMETER, function(result) {
-            $log.debug("Got getQAForCertificate data:" + result);
-            $scope.widgetState.doneLoading = true;
-            if (result != null) {
-                $scope.qaList = result;
-            } else {
-                // show error view
-                $scope.widgetState.hasError = true;
-            }
-        });
-    }, 500);
-
-} ]);

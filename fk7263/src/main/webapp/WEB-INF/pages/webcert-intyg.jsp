@@ -123,6 +123,7 @@
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/controllers.js"/>"></script>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/messages.js"/>"></script>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/services.js"/>"></script>
+  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/fragasvar-module.js"/>"></script>
 
 </body>
 </html>
