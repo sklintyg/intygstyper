@@ -158,11 +158,11 @@
                   <h3><span message key="qa.amne.{{qa.amne | lowercase}}"></span></h3>
                   <span class="qa-sender">Fråga från <span message key="qa.fragestallare.{{qa.frageStallare | lowercase}}"></span></span>
                 </div>
-                <!-- Fraga fran fk eller wc -->
-                <div class="pull-right">
-                  <span ng-show="(qa.frageStallare | lowercase) !='wc'">Mottaget</span><br> 
-                  <span ng-show="(qa.frageStallare | lowercase) =='wc'">Skickat</span>
-                  <span class="qa-date">{{qa.fragaSkickadDatum}}</span>
+                <!-- Fraga fran fk eller wc? -->
+                <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
+                  <span ng-switch-when="wc">Skickat</span> 
+                  <span ng-switch-default>Mottaget</span><br>
+                  <span class="qa-date">{{qa.frageSkickadDatum | date:'shortDate'}}</span>
                 </div>
               </div>
               <div class="qa-block-body">
