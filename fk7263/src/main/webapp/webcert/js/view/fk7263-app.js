@@ -14,6 +14,10 @@ angular.module('FK7263ViewCertApp').config(
                 templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/view-cert.html',
                 controller : 'ViewCertCtrl'
             // no Controller needed?
+            }).when('/view-mock', {
+              templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/view-cert-mock.html',
+              controller : 'ViewCertCtrl'
+          // no Controller needed?
             }).otherwise({
                 redirectTo : '/view'
             });

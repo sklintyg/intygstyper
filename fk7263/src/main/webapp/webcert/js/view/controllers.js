@@ -20,6 +20,11 @@ angular.module('controllers.fk7263.webcert').controller('ViewCertCtrl',
             }
             $scope.cert = {};
             $scope.cert.filledAlways = true;
+            $scope.newQuestionOpen = false;
+            
+            $scope.toggleQuestionForm = function() {
+            	$scope.newQuestionOpen = !$scope.newQuestionOpen;
+            }
 
             // Load certificate json
             $timeout(function() { // wrap in timeout to simulate latency -
