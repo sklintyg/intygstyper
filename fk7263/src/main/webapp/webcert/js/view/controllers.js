@@ -19,7 +19,6 @@ angular.module('controllers.fk7263.webcert').controller('ViewCertCtrl',
                 hasError : false
             }
             $scope.cert = {};
-            $scope.cert.filledAlways = true;
 
             // Load certificate json
             $timeout(function() { // wrap in timeout to simulate latency -
