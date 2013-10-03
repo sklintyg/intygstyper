@@ -31,7 +31,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="ROBOTS" content="nofollow, noindex" />
 
-<title><spring:message code="application.name" /></title>
+<title><spring:message code="application.webcert.name" /></title>
 
 <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
 
@@ -49,6 +49,7 @@
         MI_COMMON_API_CONTEXT_PATH : '/moduleapi/certificate/',
         MODULE_CONTEXT_PATH : '<c:out value="${pageContext.request.contextPath}"/>',
         CERT_ID_PARAMETER : '<c:out value="${id}"/>',
+        FROM_PARAMETER : '<c:out value="${from}"/>',
         PRINCIPAL_NAME : '<%=request.getHeader("X-Username")%>', // How do we get the username? cookie?
         PROXY_PREFIX : '/m/fk7263' //maybe from serverside config?
     }
@@ -88,7 +89,9 @@
        label:'Om webcert',
        requires_doctor: false
      },
-    ]">
+    ]"
+    
+    default-active="unhandled-qa">
   </div>
   <div class="container-fluid">
     <%-- No script to show at least something when javascript is off --%>
