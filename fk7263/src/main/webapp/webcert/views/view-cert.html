@@ -111,10 +111,13 @@
               </div>
 
               <div wc-cert-field field-number="13" field-label="view.label.otherinformation" filled="cert.kommentar">
-                <span class="tag">{{cert.kommentar}}</span>
+                <div class="tag">{{cert.kommentar}}</div>
               </div>
 
-              
+               <div wc-cert-field field-label="view.label.workcodes" field-number="17" filled="cert.forskrivarkodOchArbetsplatskod">
+                <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
+                <div>{{cert.forskrivarkodOchArbetsplatskod}}</div>
+              </div>
 
               <div class="row-fluid">
                 <div class="span7">
