@@ -13,8 +13,7 @@ angular.module('wc.fk7263.services').factory('viewCertificateService', [ '$http'
 
     function _getCertificate(id, callback) {
         $log.debug("_getCertificates id:" + id);
-        //var restPath = '/api/certificates/' + dataType;
-        var restPath = '/m/fk7263/webcert/views/utlatande_internal.json';// + id;
+        var restPath = '/moduleapi/intyg/' + id;
         $http.get(restPath).success(function(data) {
             $log.debug("_getCertificates data:" + data);
             callback(data);
