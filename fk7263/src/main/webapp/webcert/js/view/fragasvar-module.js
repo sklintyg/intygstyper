@@ -8,7 +8,6 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
     /*
      * Load questions and answers data for a certificate
      */
-
     function _getQAForCertificate(id, callback) {
         $log.debug("_getQA");
         var restPath = '/moduleapi/intyg/' + id + "/fragasvar";
@@ -22,9 +21,27 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
         });
     }
 
+    /*
+     * save new answer to a question
+     */
+
+    function _saveAnswer(fragaSvar, callback) {
+        $log.debug("_saveAnswer");
+        
+        var restPath = '/api/fragasvar/ettenhetsid/' + fragaSvar.internReferens + "/answer";
+        $http.put(restPath, fragaSvar).success(function(data) {
+            $log.debug("got data:" + data);
+            callback(data);
+        }).error(function(data, status, headers, config) {
+            $log.error("error " + status);
+            // Let calling code handle the error of no data response
+            callback(null);
+        });
+    }
     // Return public API for the service
     return {
-        getQAForCertificate : _getQAForCertificate
+        getQAForCertificate : _getQAForCertificate,
+        saveAnswer : _saveAnswer
     }
 } ]);
 
@@ -58,16 +75,27 @@ angular.module('wc.fragasvarmodule').controller('QACtrl', [ '$scope', '$log', '$
     $scope.openIssuesFilter = function(qa) {
         return qa.status != "CLOSED";
     };
-    
+
     $scope.closedIssuesFilter = function(qa) {
         return qa.status === "CLOSED";
     };
-    
+
     $scope.sendAnswer = function sendAnswer(qa) {
-        $log.debug("sendAnswer:" + qa);
-        //fake success:
-        qa.status="ANSWERED";
-        qa.svarSkickadDatum=new Date();
+        $log.debug("saveAnswer:" + qa);
+        var qaActive = qa;
+        fragaSvarService.saveAnswer(qa, function(result) {
+            $log.debug("Got saveAnswer result:" + result);
+            $scope.widgetState.doneLoading = true;
+            if (result != null) {
+                angular.copy(result,qa);
+            } else {
+                // show error view
+                $scope.widgetState.hasError = true;
+            }
+        });
+        // fake success:
+        //qa.status = "ANSWERED";
+        //qa.svarSkickadDatum = new Date();
     }
 
 } ]);
