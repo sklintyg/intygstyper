@@ -62,5 +62,12 @@ angular.module('wc.fragasvarmodule').controller('QACtrl', [ '$scope', '$log', '$
     $scope.closedIssuesFilter = function(qa) {
         return qa.status === "CLOSED";
     };
+    
+    $scope.sendAnswer = function sendAnswer(qa) {
+        $log.debug("sendAnswer:" + qa);
+        //fake success:
+        qa.status="ANSWERED";
+        qa.svarSkickadDatum=new Date();
+    }
 
 } ]);

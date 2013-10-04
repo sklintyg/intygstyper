@@ -245,8 +245,8 @@
                 <!-- väntar på svar från vården -->
                 <label class="control-label">Svar</label>
                 <div class="controls">
-                  <textarea rows="5"></textarea>
-                  <button class="btn btn-success">Skicka svar</button>
+                  <textarea rows="5" ng-model="qa.svarsText"></textarea>
+                  <button class="btn btn-success" ng-click="sendAnswer(qa)">Skicka svar</button>
                   <button class="btn btn-secondary">Markera som behandlad</button>
                 </div>
               </div>
