@@ -114,7 +114,7 @@
                 <div class="tag">{{cert.kommentar}}</div>
               </div>
 
-               <div wc-cert-field field-label="view.label.workcodes" field-number="17" filled="cert.forskrivarkodOchArbetsplatskod">
+              <div wc-cert-field field-label="view.label.workcodes" field-number="17" filled="cert.forskrivarkodOchArbetsplatskod">
                 <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
                 <div>{{cert.forskrivarkodOchArbetsplatskod}}</div>
               </div>
@@ -155,37 +155,183 @@
     <!-- Right side -->
     <div class="row-fluid">
       <div class="span12 webcert-col">
-        <h2 class="col-head">Fråga &amp; Svar</h2>
-        <div class="control-group">
-          <label class="control-label">Skriv en fråga på detta intyg till Försäkringskassan</label>
-          <button class="btn btn-success" ng-click="createCert()">Ny fråga</button>
-        </div>
 
-        <div wc-spinner label="info.loading.existing.qa" show-spinner="!widgetState.doneLoading" show-content="widgetState.doneLoading">
-          <div ng-repeat="qa in qaList">
-            <div class="qa-block">
-              <div class="qa-block-head clearfix">
-                <div class="pull-left">
-                  <h3>
-                    <span message key="qa.amne.{{qa.amne | lowercase}}"></span>
-                  </h3>
-                  <span class="qa-sender">Fråga från <span message key="qa.fragestallare.{{qa.frageStallare | lowercase}}"></span></span>
-                </div>
-                <!-- Fraga fran fk eller wc? -->
-                <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
-                  <span ng-switch-when="wc">Skickat</span> <span ng-switch-default>Mottaget</span><br> <span class="qa-date">{{qa.frageSkickadDatum | date:'shortDate'}}</span>
-                </div>
-              </div>
-              <div class="qa-block-body">
-                {{qa.frageText}} <a href="#" class="mark-answered">Markera som besvarad</a>
-              </div>
-            </div>
+        <h2 class="col-head">Fråga &amp; Svar</h2>
+        <div ng-hide="newQuestionOpen">
+          <div class="control-group">
+            <button class="btn btn-success" ng-click="toggleQuestionForm()">Ny fråga till Försäkringskassan</button>
           </div>
         </div>
-        <!--  end spinner -->
+        <div ng-show="newQuestionOpen">
+          <div class="control-group">
+            <label class="control-label">Ämne</label>
+            <div class="controls">
+              <select>
+                <option value="default">Välj ämne</option>
+                <option value="arbetstidsforlaggning">Arbetstidsförläggning</option>
+                <option value="avstamningsmote">Avstämningsmöte</option>
+                <option value="kontakt">Kontakt</option>
+                <option value="ratta">Rätta</option>
+                <option value="ovrigt">Övrigt</option>
+              </select>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Fråga</label>
+            <div class="controls">
+              <textarea rows="5"></textarea>
+            </div>
+          </div>
+          <div class="control-group">
+            <button class="btn btn-success" ng-click="toggleQuestionForm()">Skicka till Försäkringskassan</button>
+            <button class="btn btn-secondary" ng-click="toggleQuestionForm()">Avbryt fråga</button>
+          </div>
+        </div>
+        <!--  Fragasvar formular end -->
+
+
+
+
+        <div wc-spinner label="info.loading.existing.qa" show-spinner="!widgetState.doneLoading" show-content="widgetState.doneLoading">
+          <h2 class="col-head">Obehandlade frågaor</h2>
+          <div ng-repeat="qa in qaList | filter:openIssuesFilter">
+            <div class="qa-panel">
+
+              <!--  status header -->
+              <h3>
+                Ämne: <strong><span message key="qa.amne.{{qa.amne | lowercase}}"></span></strong>
+              </h3>
+              <p ng-switch="qa.status">
+                <span ng-switch-when="PENDING_INTERNAL_ACTION">Frågan inväntar svar från vårdenheten</span> <span ng-switch-when="PENDING_EXTERNAL_ACTION">Frågan inväntar svar från
+                  Försäkringskassan</span> <span ng-switch-when="ANSWERED">Frågan är besvarad men inte 'stängd'</span> <span ng-switch-default="CLOSED">{{qa.status}}</span>
+              </p>
+
+              <!-- Frågan -->
+              <div class="qa-block qa-block-handled">
+                <div class="qa-block-head clearfix">
+                  <div class="pull-left">
+                    Från: <span class="qa-sender"><span message key="qa.fragestallare.{{qa.frageStallare | lowercase}}"></span></span>
+                  </div>
+                  <!-- Fraga fran fk eller wc? -->
+                  <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
+                    <span ng-switch-when="wc">Skickat: </span> <span ng-switch-default>Mottaget: </span> <span class="qa-date">{{qa.frageSkickadDatum | date:'shortDate'}}</span>
+                  </div>
+                </div>
+                <div class="qa-block-body">{{qa.frageText}}</div>
+              </div>
+
+              <!-- Svarsdelen -->
+
+              <div class="qa-block qa-block-fk" ng-if="qa.status == 'ANSWERED'">
+                <!-- frågan är besvarad -->
+                <div class="qa-block-head clearfix">
+                  <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
+
+                    <span ng-switch-when="wc"> <!--  Frågaställaren var vården - svaret måste kommit från FK --> Från: <span class="qa-sender" message key="qa.fragestallare.fk"></span>
+                    </span> <span ng-switch-default> <!--  Frågaställaren var inte vården - svaret måste alltså kommit från vården --> Från: <span class="qa-sender" message key="qa.fragestallare.wc"></span>
+                    </span>
+
+                  </div>
+                  <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
+                    <!-- motsatt villkor mot frågan -->
+                    <span ng-switch-when="wc">Mottaget: </span> <span ng-switch-default>Skickat: </span> <span class="qa-date">{{qa.svarSkickadDatum | date:'shortDate'}}</span>
+                  </div>
+                </div>
+                <div class="qa-block-body">{{qa.svarsText}}</div>
+              </div>
+
+              <div class="control-group" ng-if="qa.status == 'PENDING_INTERNAL_ACTION'">
+                <!--  väntar på svar från vården, skall kunna svara eller klarmarkera ändå-->
+                <!-- väntar på svar från vården -->
+                <label class="control-label">Svar</label>
+                <div class="controls">
+                  <textarea rows="5"></textarea>
+                  <button class="btn btn-success">Skicka svar</button>
+                  <button class="btn btn-secondary">Markera som behandlad</button>
+                </div>
+              </div>
+              <div class="control-group" ng-if="qa.status == 'PENDING_EXTERNAL_ACTION' || qa.status == 'ANSWERED'">
+                <!--  fått svar eller väntar på svar från FK, skall kunna klarmarkera manuellt ändå -->
+                <div class="controls">
+                  <button class="btn btn-success">Markera som behandlad</button>
+                </div>
+              </div>
+
+            </div>
+            <!-- qa panel -->
+            <br>
+            <!-- replace br  with margin csss -->
+          </div>
+          
+          <!-- ------------------------- BEHANDLADE FRÅGOR --------------------------------------------- -->
+
+          <div class="webcert-col-section">
+            <h2 class="col-head">Behandlade frågor</h2>
+            <div ng-repeat="qa in qaList | filter:closedIssuesFilter">
+              <div class="qa-panel">
+
+                <!--  status header: behandlade har bara status closed, så vi kan inte visa så mycket mer info, ev skulle vi kunna visa "stängd utan att svar fanns"  -->
+                <h3>
+                  Ämne: <strong><span message key="qa.amne.{{qa.amne | lowercase}}"></span></strong>
+                </h3>
+
+                <!-- Frågan -->
+                <div class="qa-block qa-block-handled">
+                  <div class="qa-block-head clearfix">
+                    <div class="pull-left">
+                      Från: <span class="qa-sender"><span message key="qa.fragestallare.{{qa.frageStallare | lowercase}}"></span></span>
+                    </div>
+                    <!-- Fraga fran fk eller wc? -->
+                    <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
+                      <span ng-switch-when="wc">Skickat: </span> <span ng-switch-default>Mottaget: </span> <span class="qa-date">{{qa.frageSkickadDatum | date:'shortDate'}}</span>
+                    </div>
+                  </div>
+                  <div class="qa-block-body">{{qa.frageText}}</div>
+                </div>
+
+                <!-- Svarsdelen -->
+
+                <div class="qa-block qa-block-fk" ng-if="qa.svarsText">
+                  <!-- frågan har en svarstext -->
+                  <div class="qa-block-head clearfix">
+                    <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
+
+                      <span ng-switch-when="wc"> <!--  Frågaställaren var vården - svaret måste kommit från FK --> Från: <span class="qa-sender" message key="qa.fragestallare.fk"></span>
+                      </span> <span ng-switch-default> <!--  Frågaställaren var inte vården - svaret måste alltså kommit från vården --> Från: <span class="qa-sender" message key="qa.fragestallare.wc"></span>
+                      </span>
+
+                    </div>
+                    <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
+                      <!-- motsatt villkor mot frågan -->
+                      <span ng-switch-when="wc">Mottaget: </span> <span ng-switch-default>Skickat: </span> <span class="qa-date">{{qa.svarSkickadDatum | date:'shortDate'}}</span>
+                    </div>
+                  </div>
+                  <div class="qa-block-body">{{qa.svarsText}}</div>
+                </div>
+
+    
+                <div class="control-group">
+                  <!--  Oavsett hur frågan stänged skall man kunna 'öppna' den igen? -->
+                  <div class="controls">
+                    <button class="btn btn-success">Markera som obehandlad</button>
+                  </div>
+                </div>
+
+              </div>
+              <!-- qa panel -->
+              <br>
+            </div>
+          </div>
+          <!--  end ng-repeat -->
+        </div>
+        <!--  end col-section -->
+
 
       </div>
+      <!--  end spinner -->
+
     </div>
   </div>
-  <!-- Right side end -->
+</div>
+<!-- Right side end -->
 </div>

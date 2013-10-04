@@ -1,11 +1,11 @@
 /**
- * Fragasvar Module - services and controllers related to FragaSvar functionality in webcert.
+ * Fragasvar Module - services and controllers related to FragaSvar
+ * functionality in webcert.
  */
 angular.module('wc.fragasvarmodule', []);
 angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$log', function($http, $log) {
 
-    
-    /* 
+    /*
      * Load questions and answers data for a certificate
      */
 
@@ -17,17 +17,16 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
             callback(data);
         }).error(function(data, status, headers, config) {
             $log.error("error " + status);
-            //Let calling code handle the error of no data response 
+            // Let calling code handle the error of no data response
             callback(null);
         });
     }
-    
+
     // Return public API for the service
     return {
         getQAForCertificate : _getQAForCertificate
     }
 } ]);
-
 
 /**
  * QACtrl - Controller for logic related to viewing a Fraga/Svar for a
@@ -55,5 +54,13 @@ angular.module('wc.fragasvarmodule').controller('QACtrl', [ '$scope', '$log', '$
             }
         });
     }, 500);
+
+    $scope.openIssuesFilter = function(qa) {
+        return qa.status != "CLOSED";
+    };
+    
+    $scope.closedIssuesFilter = function(qa) {
+        return qa.status === "CLOSED";
+    };
 
 } ]);
