@@ -5,7 +5,7 @@
 
 
     <a class="backlink" href="/web/dashboard#/unhandled-qa"><span message key="common.goback"></span></a>
-    <h1>Läkarintyg FK 7263</h1>
+    <h1><span message key="view.label.pagetitle.fk7263"></span></h1>
     <div wc-spinner label="info.loadingcertificate" show-spinner="!widgetState.doneLoading" show-content="widgetState.doneLoading">
       <div class="control-group buttonbar">
         <label class="control-label">Per Persson - 19590504-2343</label>
@@ -87,6 +87,30 @@
                   <li ng-show="cert.arbetsloshet"><span message key="view.label.patientworkcapacity.unemployed"></span></li>
                   <li ng-show="cert.foraldrarledighet"><span message key="view.label.patientworkcapacity.parentalleave"></span></li>
                 </ul>
+              </div>
+
+              <div wc-cert-field field-number="8b" field-label="view.label.nedsattning" filled="cert.nedsattMed25||cert.nedsattMed50||cert.nedsattMed75||cert.nedsattMed100">
+
+                  <div ng-show="nedsattMed25 != null">
+                    <strong><span message key="nedsattningsgrad.nedsatt_med_1_4"></span></strong><br> Från och med {{cert.nedsattMed25.start |
+                      date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed25.end | date:'longDate'}}
+                  </div>
+
+                  <div ng-show="cert.nedsattMed50 != null">
+                    <strong><span message key="nedsattningsgrad.nedsatt_med_1_2"></span></strong><br> Från och med {{cert.nedsattMed50.start
+                      | date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed50.end | date:'longDate'}}
+                  </div>
+
+                  <div ng-show="cert.nedsattMed75 != null">
+                    <strong><span message key="nedsattningsgrad.nedsatt_med_3_4"></span></strong><br> Från och med {{cert.nedsattMed75.start |
+                      date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed75.end | date:'longDate'}}
+                  </div>
+
+                  <div ng-show="cert.nedsattMed100 != null">
+                    <strong><span message key="nedsattningsgrad.helt_nedsatt"></span></strong><br> Från och med {{cert.nedsattMed100.start |
+                      date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed100.end | date:'longDate'}}
+                  </div>
+
               </div>
 
               <div wc-cert-field field-number="9" field-label="view.label.patientworkcapacityjudgement" filled="cert.aktivitetsbegransning!=null">{{cert.aktivitetsbegransning}}</div>
@@ -333,4 +357,3 @@
   </div>
 </div>
 <!-- Right side end -->
-</div>
