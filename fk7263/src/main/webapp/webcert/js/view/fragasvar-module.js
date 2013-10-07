@@ -9,8 +9,8 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
      * Load questions and answers data for a certificate
      */
     function _getQAForCertificate(id, callback) {
-        $log.debug("_getQA");
-        var restPath = '/moduleapi/intyg/' + id + "/fragasvar";
+        $log.debug("_getQAForCertificate");
+        var restPath = '/moduleapi/fragasvar/' + id;
         $http.get(restPath).success(function(data) {
             $log.debug("got data:" + data);
             callback(data);
@@ -27,9 +27,9 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
 
     function _saveAnswer(fragaSvar, callback) {
         $log.debug("_saveAnswer");
-        
-        var restPath = '/api/fragasvar/ettenhetsid/' + fragaSvar.internReferens + "/answer";
-        $http.put(restPath, fragaSvar).success(function(data) {
+       
+        var restPath = '/moduleapi/fragasvar/' + fragaSvar.internReferens + "/answer";
+        $http.put(restPath, fragaSvar.svarsText).success(function(data) {
             $log.debug("got data:" + data);
             callback(data);
         }).error(function(data, status, headers, config) {
