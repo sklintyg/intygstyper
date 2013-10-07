@@ -202,8 +202,10 @@
 	                Ämne: <strong><span message key="qa.amne.{{qa.amne | lowercase}}"></span></strong>
 	              </h3>
 	              <p ng-switch="qa.status">
-	                <span ng-switch-when="PENDING_INTERNAL_ACTION">Frågan inväntar svar från vårdenheten</span> <span ng-switch-when="PENDING_EXTERNAL_ACTION">Frågan inväntar svar från
-	                  Försäkringskassan</span> <span ng-switch-when="ANSWERED">Frågan är besvarad men inte 'stängd'</span> <span ng-switch-default="CLOSED">{{qa.status}}</span>
+	                <span ng-switch-when="PENDING_INTERNAL_ACTION">Frågan inväntar svar från vårdenheten</span> 
+                    <span ng-switch-when="PENDING_EXTERNAL_ACTION">Frågan inväntar svar från Försäkringskassan</span> 
+                    <span ng-switch-when="ANSWERED">Inväntar att markeras som behandlad</span> 
+                    <span ng-switch-default="CLOSED">{{qa.status}}</span>
 	              </p>
 	
 	              <!-- Frågan -->
@@ -237,7 +239,7 @@
 	                    <span ng-switch-when="wc">Mottaget: </span> <span ng-switch-default>Skickat: </span> <span class="qa-date">{{qa.svarSkickadDatum | date:'shortDate'}}</span>
 	                  </div>
 	                </div>
-	                <div class="qa-block-body">{{qa.svarsText}}</div>
+	                <div id="{{qa.internReferens}}-svarsText" class="qa-block-body">{{qa.svarsText}}</div>
 	              </div>
 	
 	              <div class="control-group" ng-if="qa.status == 'PENDING_INTERNAL_ACTION'">
@@ -246,7 +248,7 @@
 	                <label class="control-label">Svar</label>
 	                <div class="controls">
 	                  <textarea rows="5" ng-model="qa.svarsText"></textarea>
-	                  <button class="btn btn-success" ng-click="sendAnswer(qa)">Skicka svar</button>
+	                  <button class="btn btn-success" ng-click="sendAnswer(qa)" ng-disabled="!qa.svarsText">Skicka svar</button>
 	                  <button class="btn btn-secondary">Markera som behandlad</button>
 	                </div>
 	              </div>
