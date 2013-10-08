@@ -181,33 +181,26 @@
       <div class="span12 webcert-col">
 
         <h2 class="col-head">Fråga &amp; Svar</h2>
-        <div ng-hide="newQuestionOpen">
+        <div ng-hide="widgetState.newQuestionOpen">
           <div class="control-group">
             <button class="btn btn-success" ng-click="toggleQuestionForm()">Ny fråga till Försäkringskassan</button>
           </div>
         </div>
-        <div ng-show="newQuestionOpen">
+        <div ng-show="widgetState.newQuestionOpen">
           <div class="control-group">
             <label class="control-label">Ämne</label>
             <div class="controls">
-              <select>
-                <option value="default">Välj ämne</option>
-                <option value="arbetstidsforlaggning">Arbetstidsförläggning</option>
-                <option value="avstamningsmote">Avstämningsmöte</option>
-                <option value="kontakt">Kontakt</option>
-                <option value="ratta">Rätta</option>
-                <option value="ovrigt">Övrigt</option>
-              </select>
+              <select id="new-question-topic" ng-model="newQuestion.chosenTopic" ng-options="c.label for c in newQuestion.topics"></select>
             </div>
           </div>
           <div class="control-group">
             <label class="control-label">Fråga</label>
             <div class="controls">
-              <textarea rows="5"></textarea>
+              <textarea rows="5" ng-model="newQuestion.frageText"></textarea>
             </div>
           </div>
           <div class="control-group">
-            <button class="btn btn-success" ng-click="toggleQuestionForm()">Skicka till Försäkringskassan</button>
+            <button class="btn btn-success" ng-click="sendQuestion(newQuestion)" ng-disabled="!newQuestion.frageText">Skicka till Försäkringskassan</button>
             <button class="btn btn-secondary" ng-click="toggleQuestionForm()">Avbryt fråga</button>
           </div>
         </div>

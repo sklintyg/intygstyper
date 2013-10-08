@@ -24,10 +24,9 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
     /*
      * save new answer to a question
      */
-
     function _saveAnswer(fragaSvar, callback) {
         $log.debug("_saveAnswer");
-       
+
         var restPath = '/moduleapi/fragasvar/' + fragaSvar.internReferens + "/answer";
         $http.put(restPath, fragaSvar.svarsText).success(function(data) {
             $log.debug("got data:" + data);
@@ -38,10 +37,32 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
             callback(null);
         });
     }
+
+    /*
+     * save new question
+     */
+    function _saveNewQuestion(certId, question, callback) {
+        $log.debug("_saveNewQuestion");
+        var payload = {};
+          payload.intygsId = certId;
+            payload.amne = question.chosenTopic.value;
+            payload.frageText = question.frageText;
+                
+        var restPath = "/moduleapi/fragasvar";
+        $http.post(restPath, payload).success(function(data) {
+            $log.debug("got callback data:" + data);
+            callback(data);
+        }).error(function(data, status, headers, config) {
+            $log.error("error " + status);
+            // Let calling code handle the error of no data response
+            callback(null);
+        });
+    }
     // Return public API for the service
     return {
         getQAForCertificate : _getQAForCertificate,
-        saveAnswer : _saveAnswer
+        saveAnswer : _saveAnswer,
+        saveNewQuestion : _saveNewQuestion
     }
 } ]);
 
@@ -56,7 +77,8 @@ angular.module('wc.fragasvarmodule').controller('QACtrl', [ '$scope', '$log', '$
     $scope.qaList = {};
     $scope.widgetState = {
         doneLoading : false,
-        hasError : false
+        hasError : false,
+        newQuestionOpen : false
     }
     // Request loading of QA's for this certificate
     $timeout(function() { // wrap in timeout to simulate latency - remove soon
@@ -79,6 +101,12 @@ angular.module('wc.fragasvarmodule').controller('QACtrl', [ '$scope', '$log', '$
     $scope.closedIssuesFilter = function(qa) {
         return qa.status === "CLOSED";
     };
+    $scope.newQuestionOpen = false;
+
+    $scope.toggleQuestionForm = function() {
+        $scope.widgetState.newQuestionOpen = !$scope.widgetState.newQuestionOpen;
+        $scope.initQuestionForm();
+    }
 
     $scope.sendAnswer = function sendAnswer(qa) {
         $log.debug("saveAnswer:" + qa);
@@ -87,15 +115,52 @@ angular.module('wc.fragasvarmodule').controller('QACtrl', [ '$scope', '$log', '$
             $log.debug("Got saveAnswer result:" + result);
             $scope.widgetState.doneLoading = true;
             if (result != null) {
-                angular.copy(result,qa);
+                angular.copy(result, qa);
             } else {
                 // show error view
                 $scope.widgetState.hasError = true;
             }
         });
-        // fake success:
-        //qa.status = "ANSWERED";
-        //qa.svarSkickadDatum = new Date();
+    }
+    $scope.initQuestionForm = function() {
+        $scope.newQuestion = {
+            topics : [ {
+                label : 'Arbetstidsförläggning',
+                value : 'arbetstidsforlaggning'
+            }, {
+                label : 'Avstämningsmöte',
+                value : 'avstamningsmote'
+            }, {
+                label : 'Kontakt',
+                value : 'kontakt'
+            }, {
+                label : 'Rätta',
+                value : 'ratta'
+            }, {
+                label : 'Övrigt',
+                value : 'ovrigt'
+            } ],
+            frageText : ""
+        };
+        $scope.newQuestion.chosenTopic = $scope.newQuestion.topics[4]; // 'Övrigt'
+        // is
+        // default
+    }
+    $scope.initQuestionForm();
+
+    $scope.sendQuestion = function sendQuestion(newQuestion) {
+        $log.debug("sendQuestion:" + newQuestion);
+
+        fragaSvarService.saveNewQuestion($scope.MODULE_CONFIG.CERT_ID_PARAMETER, newQuestion, function(result) {
+            $log.debug("Got saveNewQuestion result:" + result);
+            if (result != null) {
+                // result is a new FragaSvar Instance: add it to our local repo
+                $scope.qaList.push(result);
+            } else {
+                // show error view
+                $scope.widgetState.hasError = true;
+            }
+        });
     }
 
 } ]);
