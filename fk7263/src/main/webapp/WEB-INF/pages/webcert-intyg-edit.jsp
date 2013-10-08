@@ -58,56 +58,84 @@
 
 <body ng-app="FK7263ViewCertApp">
 
-  <div class="container-fluid">
+	<div class="container-fluid">
+	  
+	  <div class="row-fluid">
+	    <div class="span12 webcert-col webcert-col-primary" ng-controller="EditCertCtrl">
 	
-	  <div id="wcHeader" wc-header 
-	   is-doctor="{{WC_CONTEXT.lakare}}" 
-	   user-name="{{WC_CONTEXT.namn}}"
-	   caregiver-name="{{WC_CONTEXT.vardgivare.namn}}" 
-	   menu-defs="[
-	    {
-	      link :'/web/dashboard#/index', 
-	      label:'Mina osignerade intyg',
-	      requires_doctor: true
-	    },
-	    {
-	      link :'/web/dashboard#/unsigned', 
-	      label:'Enhetens osignerade intyg',
-	      requires_doctor: false
-	    },
-	    {
-	      link :'/web/dashboard#/unhandled-qa',
-	      label:'Enhetens obesvarade frågor',
-	      requires_doctor: false
-	    },
-	    {
-	      link :'/web/dashboard#/create', 
-	      label:'Skriv intyg',
-	      requires_doctor: false
-	    },
-	    {
-	      link :'/web/dashboard#/about.support',
-	      label:'Om webcert',
-	      requires_doctor: false
-	    },
-	   ]"
-	   default-active="unhandled-qa">
-    </div>
-
-		<noscript>
-		  <h1>
-		    <span><spring:message code="error.noscript.title" /></span>
-		  </h1>
-		  
-		  <div class="alert alert-error">
-		    <spring:message code="error.noscript.text" />
-		  </div>
-		</noscript>
-
-		<%-- ng-view that holds dynamic content managed by angular app --%>
-		<div id="view" ng-view></div>
-  </div>
+	      <div class="header-fix-top">
+	        <div id="wcHeader" wc-header 
+	          is-doctor="{{WC_CONTEXT.lakare}}" 
+	          user-name="{{WC_CONTEXT.namn}}"
+	          caregiver-name="{{WC_CONTEXT.vardgivare.namn}}" 
+	          menu-defs="[
+	           {
+	             link :'/web/dashboard#/index', 
+	             label:'Mina osignerade intyg',
+	             requires_doctor: true
+	           },
+	           {
+	             link :'/web/dashboard#/unsigned', 
+	             label:'Enhetens osignerade intyg',
+	             requires_doctor: false
+	           },
+	           {
+	             link :'/web/dashboard#/unhandled-qa',
+	             label:'Enhetens obesvarade frågor',
+	             requires_doctor: false
+	           },
+	           {
+	             link :'/web/dashboard#/create', 
+	             label:'Skriv intyg',
+	             requires_doctor: false
+	           },
+	           {
+	             link :'/web/dashboard#/about.support',
+	             label:'Om webcert',
+	             requires_doctor: false
+	           },
+	          ]"
+	          default-active="unhandled-qa">
+	        </div>
+	        <div class="header-fix-panel">   
+	          <a class="backlink" href="/web/dashboard#/unhandled-qa"><span message key="common.goback"></span></a>
+	          <div>
+	            <h1 style="display: inline-block; margin-right: 20px;"><span message key="view.label.pagetitle.fk7263"></span></h1>
+	            <div class="alert alert-warning alert-block">
+	              <strong>Status:</strong> Intyget är sparat.
+	            </div>
+	          </div>
+	          <div wc-spinner label="info.loadingcertificate" show-spinner="!widgetState.doneLoading" show-content="widgetState.doneLoading">
+	            <div class="control-group buttonbar">
+                <label class="control-label">{{cert.patientNamn}} - {{cert.patientPersonnummer}}</label>
+	              <button class="btn btn-info">Spara</button>
+	              <button class="btn btn-info">Släng</button>
+	              <button class="btn btn-info" disabled>Kopiera intyg</button>
+	              <button class="btn btn-info" disabled>
+	                Skriv ut <span class="caret"></span>
+	              </button>
+	              <button class="btn btn-inverse" disabled>Rätta intyg</button>
+	            </div>
+	          </div><!--  spinner end -->
+	        </div>
+	      </div><!-- top end -->
+      	        
+        <noscript>
+          <h1>
+            <span><spring:message code="error.noscript.title" /></span>
+          </h1>
+          
+          <div class="alert alert-error">
+            <spring:message code="error.noscript.text" />
+          </div>
+        </noscript>
   
+    	  <%-- ng-view that holds dynamic content managed by angular app --%>
+			  <div id="view" ng-view></div>
+	    </div>
+	  </div>
+	</div>				  
+    
   <%-- Dependencies to common (3rd party) components loaded from web app running at "/" context--%>
   <script type="text/javascript" src="/js/vendor/angular/1.1.5/angular.js"></script>
   <script type="text/javascript" src="/js/vendor/angular/1.1.5/i18n/angular-locale_sv-se.js"></script>

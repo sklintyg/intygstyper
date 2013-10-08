@@ -38,4 +38,10 @@ public class PageController {
         return new ModelAndView("webcert-intyg","id",id);
     }
 
+    @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
+    public ModelAndView displayEdit(@PathVariable(value = "id") String id) {
+        LOG.debug("edit-intyg " + id);
+        return new ModelAndView("webcert-intyg-edit","id",id);
+    }
+    
 }

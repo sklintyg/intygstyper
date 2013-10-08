@@ -2,13 +2,25 @@
 
 /* Controllers */
 angular.module('wc.fk7263.controllers', []);
+
+/*
+ * EditCertCtrl - Controller for logic related to editing a certificate
+ */
 angular.module('wc.fk7263.controllers').controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', function EditCertCtrl($scope, $filter, $location, $rootScope) {
-    $scope.cert = {};
+
+  // init state
+  $scope.widgetState = {
+      doneLoading : false,
+      hasError : false
+  }
+	
+	$scope.cert = {};
+  $scope.widgetState.doneLoading = true;
+  
 } ]);
 
 /*
  * ViewCertCtrl - Controller for logic related to viewing a certificate
- * 
  */
 angular.module('wc.fk7263.controllers').controller('ViewCertCtrl',
         [ '$scope', '$log', '$timeout', 'viewCertificateService', function CreateCertCtrl($scope, $log, $timeout, viewCertificateService) {
