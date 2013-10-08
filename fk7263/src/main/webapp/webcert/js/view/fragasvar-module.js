@@ -44,11 +44,10 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
     function _saveNewQuestion(certId, question, callback) {
         $log.debug("_saveNewQuestion");
         var payload = {};
-          payload.intygsId = certId;
-            payload.amne = question.chosenTopic.value;
-            payload.frageText = question.frageText;
-                
-        var restPath = "/moduleapi/fragasvar";
+        payload.amne = question.chosenTopic.value;
+        payload.frageText = question.frageText;
+
+        var restPath = "/moduleapi/fragasvar/" + certId;
         $http.post(restPath, payload).success(function(data) {
             $log.debug("got callback data:" + data);
             callback(data);
@@ -126,23 +125,20 @@ angular.module('wc.fragasvarmodule').controller('QACtrl', [ '$scope', '$log', '$
         $scope.newQuestion = {
             topics : [ {
                 label : 'Arbetstidsförläggning',
-                value : 'arbetstidsforlaggning'
+                value : 'ARBETSTIDSFORLAGGNING'
             }, {
                 label : 'Avstämningsmöte',
-                value : 'avstamningsmote'
+                value : 'AVSTAMNINGSMOTE'
             }, {
                 label : 'Kontakt',
-                value : 'kontakt'
-            }, {
-                label : 'Rätta',
-                value : 'ratta'
+                value : 'KONTAKT'
             }, {
                 label : 'Övrigt',
-                value : 'ovrigt'
+                value : 'OVRIGT'
             } ],
             frageText : ""
         };
-        $scope.newQuestion.chosenTopic = $scope.newQuestion.topics[4]; // 'Övrigt'
+        $scope.newQuestion.chosenTopic = $scope.newQuestion.topics[3]; // 'Övrigt'
         // is
         // default
     }
