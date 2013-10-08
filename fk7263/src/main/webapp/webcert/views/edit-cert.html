@@ -1,154 +1,143 @@
-<div class="row-fluid">
-  <div class="span8 webcert-col webcert-col-primary" ng-controller="ViewCertCtrl">
-    <!-- Left side -->
-    <div class="webcert-col-shadow"></div>
+<div class="container-fluid">
+	
+	<div class="row-fluid">
+	  <div class="span12 webcert-col webcert-col-primary" ng-controller="ViewCertCtrl" style="max-width: 1000px;">
 
-
-    <a class="backlink" href="/web/dashboard#/unhandled-qa"><span message key="common.goback"></span></a>
-    <h1><span message key="view.label.pagetitle.fk7263"></span></h1>
-    <div wc-spinner label="info.loadingcertificate" show-spinner="!widgetState.doneLoading" show-content="widgetState.doneLoading">
-      <div class="control-group buttonbar">
-        <label class="control-label">Per Persson - 19590504-2343</label>
-        <button class="btn btn-info" disabled>Spara</button>
-        <button class="btn btn-info" disabled>Släng</button>
-        <button class="btn btn-info">Kopiera intyg</button>
-        <button class="btn btn-info">
-          Skriv ut <span class="caret"></span>
-        </button>
-        <button class="btn btn-inverse">Rätta intyg</button>
-      </div>
-
-      <div class="alert alert-warning">
-        <strong>Status:</strong> Intyget är signerat. Intyget är skickat till Försäkringskassan
-      </div>
-
-      <div id="certificate" class="certificate">
-        <div class="row-fluid">
-          <div class="span12">
-            <div class="cert-body">
-
-              <div wc-cert-field field-number="1" field-label="view.label.smittskydd" filled="true">
-                <span ng-show="cert.avstangningSmittskydd"> <span message key="view.label.yes"></span></span> <span ng-show="!cert.avstangningSmittskydd"> <span message key="view.label.no"></span>
-                </span>
-              </div>
-
-
-              <div wc-cert-field field-number="2" field-label="view.label.diagnosis" filled="cert.diagnosBeskrivning">
-                {{cert.diagnosBeskrivning}} (<span class="tag"><span message key="view.label.diagnosisCode"></span></span> {{cert.diagnosKod}})
-              </div>
-
-              <div wc-cert-field field-number="3" field-label="view.label.progressofdisease" filled="cert.sjukdomsforlopp!=null">{{cert.sjukdomsforlopp}}</div>
-
-              <div wc-cert-field field-number="4" field-label="view.label.disabilities" filled="cert.funktionsnedsattning!=null">{{cert.funktionsnedsattning}}</div>
-
-              <div wc-cert-field field-number="4b" field-label="view.label.basedon"
-                filled="cert.undersokningAvPatienten!=null || telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null">
-                <ul>
-                  <li ng-show="cert.undersokningAvPatienten!=null"><span message key="vardkontakt.undersokning"></span>{{cert.undersokningAvPatienten | date:'longDate' }}</li>
-                  <li ng-show="cert.telefonkontaktMedPatienten!=null"><span message key="vardkontakt.telefonkontakt"></span>{{cert.telefonkontaktMedPatienten | date:'longDate' }}</li>
-                  <li ng-show="cert.journaluppgifter!=null"><span message key="referens.journal"></span>{{cert.journaluppgifter | date:'longDate' }}</li>
-
-
-                  <li ng-show="cert.annanReferens!=null">
-                    <!-- Annat --> <span message key="referens.annat"> </span>{{cert.annanReferens | date:'longDate' }}
-                    <div>
-                      <span class="tag" message key="view.label.reference.to.field13"></span>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-
-              <div wc-cert-field field-number="5" field-label="view.label.limitation" filled="cert.aktivitetsbegransning!=null">{{cert.aktivitetsbegransning}}</div>
-
-              <div wc-cert-field field-number="6a" field-label="view.label.recommendations"
-                filled="cert.rekommendationKontaktArbetsformedlingen|| cert.rekommendationKontaktForetagshalsovarden || cert.rekommendationOvrigt!=null">
-                <ul>
-                  <li ng-show="cert.rekommendationKontaktArbetsformedlingen"><span message key="view.label.recommendations.contact.jobcenter"></span></li>
-                  <li ng-show="cert.rekommendationKontaktForetagshalsovarden"><span message key="view.label.recommendations.contact.healthdepartment"></span></li>
-                  <li ng-show="cert.rekommendationOvrigt != null"><span message key="view.label.recommendations.contact.other"></span> {{cert.rekommenderarOvrigt.beskrivning}}</li>
-                </ul>
-              </div>
-
-              <div wc-cert-field field-number="6b" field-label="view.label.plannedtreatment" filled="cert.atgardInomSjukvarden||cert.annanAtgard">
-                <ul>
-                  <li ng-show="cert.atgardInomSjukvarden != null"><span message key="view.label.plannedtreatment.healthcare"></span> {{cert.atgardInomSjukvarden}}</li>
-                  <li ng-show="cert.annanAtgard != null"><span message key="view.label.plannedtreatment.other"></span> {{cert.annanAtgard}}</li>
-                </ul>
-              </div>
-
-              <div wc-cert-field field-number="7" field-label="view.label.workrehab" filled="cert.rehabiliteringAktuell||cert.rehabiliteringEjAktuell||cert.rehabiliteringGarInteAttBedoma">
-                <span ng-show="cert.rehabiliteringAktuell"> <span message key="view.label.yes"></span></span> <span ng-show="cert.rehabiliteringEjAktuell"> <span message key="view.label.no"></span>
-                </span> <span ng-show="cert.rehabiliteringGarInteAttBedoma"> <span message key="view.label.unjudgeable"></span></span>
-              </div>
-
-              <div wc-cert-field field-number="8a" field-label="view.label.patientworkcapacity" filled="cert.nuvarandeArbetsuppgifter||cert.arbetsloshet||cert.foraldrarledighet">
-                <ul>
-                  <li ng-show="cert.nuvarandeArbetsuppgifter"><span message key="view.label.patientworkcapacity.currentwork"></span> {{cert.nuvarandeArbetsuppgifter}}</li>
-                  <li ng-show="cert.arbetsloshet"><span message key="view.label.patientworkcapacity.unemployed"></span></li>
-                  <li ng-show="cert.foraldrarledighet"><span message key="view.label.patientworkcapacity.parentalleave"></span></li>
-                </ul>
-              </div>
-
-              <div wc-cert-field field-number="9" field-label="view.label.patientworkcapacityjudgement" filled="cert.aktivitetsbegransning!=null">{{cert.aktivitetsbegransning}}</div>
-
-              <div wc-cert-field field-number="10" field-label="view.label.prognosis"
-                filled="cert.arbetsformataPrognosJa || cert.arbetsformataPrognosJaDelvis||cert.arbetsformataPrognosNej||cert.arbetsformataPrognosGarInteAttBedoma">
-
-                <span ng-show="cert.arbetsformataPrognosJa"><span message key="view.label.yes"></span></span> <span ng-show="cert.arbetsformataPrognosJaDelvis"><span message
-                  key="view.label.partialyes"></span></span> <span ng-show="cert.arbetsformataPrognosNej"><span message key="view.label.no"></span></span> <span
-                  ng-show="cert.arbetsformataPrognosGarInteAttBedoma"><span message key="view.label.unjudgeable"></span><br> <span class="tag"><span message key="view.label.comment"></span></span>
-                  <span class="tag" message key="view.label.reference.to.field13"></span> </span>
-              </div>
-
-              <div wc-cert-field field-number="11" field-label="view.label.othertransport" filled="cert.ressattTillArbeteAktuellt || cert.ressattTillArbeteEjAktuellt">
-                <span ng-show="cert.ressattTillArbeteAktuellt"> <span message key="view.label.yes"></span></span> <span ng-show="cert.ressattTillArbeteEjAktuellt"> <span message
-                  key="view.label.no"></span></span>
-              </div>
-
-              <div wc-cert-field field-number="12" field-label="view.label.fkcontact" filled="true">
-                <span ng-show="cert.kontaktMedFk"> <span message key="view.label.yes"></span></span> <span ng-show="!cert.kontaktMedFk"> <span message key="view.label.no"></span>
-                </span>
-              </div>
-
-              <div wc-cert-field field-number="13" field-label="view.label.otherinformation" filled="cert.kommentar">
-                <div class="tag">{{cert.kommentar}}</div>
-              </div>
-
-              <div wc-cert-field field-label="view.label.workcodes" field-number="17" filled="cert.forskrivarkodOchArbetsplatskod">
-                <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
-                <div>{{cert.forskrivarkodOchArbetsplatskod}}</div>
-              </div>
-
-              <div class="row-fluid">
-                <div class="span7">
-                  <div class="infobox">
-                    <h3>
-                      <span message key="view.label.confirmedby"></span>
-                    </h3>
-                    <h4>
-                      <span message key="view.label.date"></span>
-                    </h4>
-                    <p>{{cert.signeringsdatum | date:'longDate'}}</p>
-                    <h4>
-                      <span message key="view.label.contactinfo"></span>
-                    </h4>
-                    <p>
-                      <span class="text">{{cert.vardperson.namn}}</span><br> <span class="text">{{cert.vardperson.enhetsnamn}}</span><br> <span class="text">{{cert.vardperson.postadress}}</span><br>
-                      <span class="text">{{cert.vardperson.postnummer}} {{cert.vardperson.postort}}</span><br> <span class="text">{{cert.vardperson.telefonnummer}}</span><br>
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <!-- cert body -->
-          </div>
+      <noscript>
+        <h1>
+          <span><spring:message code="error.noscript.title" /></span>
+        </h1>
+        
+        <div class="alert alert-error">
+          <spring:message code="error.noscript.text" />
         </div>
-      </div>
-    </div>
-    <!--  spinner end -->
+      </noscript>
+
+			<div style="position:fixed; width: 100%; height: 50%; left: 0px; top: 0px;">
+			  <div id="wcHeader" wc-header 
+			    is-doctor="{{WC_CONTEXT.lakare}}" 
+			    user-name="{{WC_CONTEXT.namn}}"
+			    caregiver-name="{{WC_CONTEXT.vardgivare.namn}}" 
+			    menu-defs="[
+			     {
+			       link :'/web/dashboard#/index', 
+			       label:'Mina osignerade intyg',
+			       requires_doctor: true
+			     },
+			     {
+			       link :'/web/dashboard#/unsigned', 
+			       label:'Enhetens osignerade intyg',
+			       requires_doctor: false
+			     },
+			     {
+			       link :'/web/dashboard#/unhandled-qa',
+			       label:'Enhetens obesvarade frågor',
+			       requires_doctor: false
+			     },
+			     {
+			       link :'/web/dashboard#/create', 
+			       label:'Skriv intyg',
+			       requires_doctor: false
+			     },
+			     {
+			       link :'/web/dashboard#/about.support',
+			       label:'Om webcert',
+			       requires_doctor: false
+			     },
+			    ]"
+			    default-active="unhandled-qa">
+			  </div>
+			  
+        <div style="padding: 20px 0 0 30px; border-bottom: 1px solid #999; background-color: #fff; box-shadow: 0px -5px 25px #323232;">		
+			    <a class="backlink" href="/web/dashboard#/unhandled-qa"><span message key="common.goback"></span></a>
+			    <div style="max-width: 1000px;">
+				    <h1 style="display: inline-block; margin-right: 20px;"><span message key="view.label.pagetitle.fk7263"></span></h1>
+            <div class="alert alert-warning" style="display: inline-block">
+              <strong>Status:</strong> Intyget är sparat.
+            </div>
+	        </div>
+			    <div wc-spinner label="info.loadingcertificate" show-spinner="!widgetState.doneLoading" show-content="widgetState.doneLoading">
+			      <div class="control-group buttonbar">
+			        <label class="control-label">Per Persson - 19590504-2343</label>
+			        <button class="btn btn-info">Spara</button>
+			        <button class="btn btn-info">Släng</button>
+			        <button class="btn btn-info" disabled>Kopiera intyg</button>
+			        <button class="btn btn-info" disabled>
+			          Skriv ut <span class="caret"></span>
+			        </button>
+			        <button class="btn btn-inverse" disabled>Rätta intyg</button>
+			      </div>
+			    </div><!--  spinner end -->
+			  </div>
+		  </div><!-- top end -->
+	
+			<div style="margin-top: 350px">
+        <div class="infobox">
+          Fält 2 - Kod saknas
+        </div>
+			  <div id="certificate" class="certificate">
+			    <div class="row-fluid">
+			      <div class="span12">
+			        <div class="cert-body">
+			
+			          <div wc-cert-field field-number="1" field-label="view.label.smittskydd" filled="true">
+			          </div>
+			
+			
+			          <div wc-cert-field field-number="2" field-label="view.label.diagnosis" filled="cert.diagnosBeskrivning">
+			          </div>
+			
+			          <div wc-cert-field field-number="3" field-label="view.label.progressofdisease" filled="cert.sjukdomsforlopp!=null"></div>
+			
+			          <div wc-cert-field field-number="4" field-label="view.label.disabilities" filled="cert.funktionsnedsattning!=null"></div>
+			
+			          <div wc-cert-field field-number="4b" field-label="view.label.basedon"
+			            filled="cert.undersokningAvPatienten!=null || telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null">
+			          </div>
+			
+			          <div wc-cert-field field-number="5" field-label="view.label.limitation" filled="cert.aktivitetsbegransning!=null"></div>
+			
+			          <div wc-cert-field field-number="6a" field-label="view.label.recommendations"
+			            filled="cert.rekommendationKontaktArbetsformedlingen|| cert.rekommendationKontaktForetagshalsovarden || cert.rekommendationOvrigt!=null">
+			          </div>
+			
+			          <div wc-cert-field field-number="6b" field-label="view.label.plannedtreatment" filled="cert.atgardInomSjukvarden||cert.annanAtgard">
+			          </div>
+			
+			          <div wc-cert-field field-number="7" field-label="view.label.workrehab" filled="cert.rehabiliteringAktuell||cert.rehabiliteringEjAktuell||cert.rehabiliteringGarInteAttBedoma">
+			          </div>
+			
+			          <div wc-cert-field field-number="8a" field-label="view.label.patientworkcapacity" filled="cert.nuvarandeArbetsuppgifter||cert.arbetsloshet||cert.foraldrarledighet">
+			          </div>
+			
+			          <div wc-cert-field field-number="9" field-label="view.label.patientworkcapacityjudgement" filled="cert.aktivitetsbegransning!=null"></div>
+			
+			          <div wc-cert-field field-number="10" field-label="view.label.prognosis"
+			            filled="cert.arbetsformataPrognosJa || cert.arbetsformataPrognosJaDelvis||cert.arbetsformataPrognosNej||cert.arbetsformataPrognosGarInteAttBedoma">
+			
+			          </div>
+			
+			          <div wc-cert-field field-number="11" field-label="view.label.othertransport" filled="cert.ressattTillArbeteAktuellt || cert.ressattTillArbeteEjAktuellt">
+			          </div>
+			
+			          <div wc-cert-field field-number="12" field-label="view.label.fkcontact" filled="true">
+			          </div>
+			
+			          <div wc-cert-field field-number="13" field-label="view.label.otherinformation" filled="cert.kommentar">
+			          </div>
+			
+			          <div wc-cert-field field-label="view.label.workcodes" field-number="17" filled="cert.forskrivarkodOchArbetsplatskod">
+			          </div>
+			
+			        </div>
+			        <!-- cert body -->
+			      </div>
+			    </div>
+			  </div> <!-- certificate -->
+		  </div>
+	
+	  </div>
+
   </div>
 
 </div>
-<!-- Right side end -->
-
