@@ -1,18 +1,19 @@
 package se.inera.certificate.modules.rli.model.factory;
 
-import java.util.LinkedHashMap;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.model.HosPersonal;
-import se.inera.certificate.modules.rli.model.converters.InternalModelConverterUtils;
 import se.inera.certificate.modules.rli.model.edit.HoSPersonal;
 import se.inera.certificate.modules.rli.model.edit.Utlatande;
-import se.inera.certificate.modules.rli.model.edit.Vardenhet;
-import se.inera.certificate.modules.rli.model.edit.Vardgivare;
+
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Factory for creating a editable model.
@@ -40,7 +41,10 @@ public class EditModelFactoryImpl implements EditModelFactory {
         for (Entry<String, Object> entry : certificateData.entrySet()) {
             switch (entry.getKey()) {
             case "skapadAv":
-                populateWithSkapadAv(utlatande, entry.getValue());
+                if (entry.getValue() instanceof Map) {
+                    // Would be nice to get rid of this cast.
+                    populateWithSkapadAv(utlatande, (Map<String, Object>) entry.getValue());
+                }
                 break;
 
             default:
@@ -52,106 +56,48 @@ public class EditModelFactoryImpl implements EditModelFactory {
         return utlatande;
     }
 
-    private void populateWithSkapadAv(Utlatande utlatande, Object source) {
+    private void populateWithSkapadAv(Utlatande utlatande, Map<String, Object> source) {
         if (source == null) {
+            LOG.error("skapadAv was null");
             return;
         }
-        Map<String, Object> sourceMap = null;
-        
-        if (source instanceof Map<?, ?>){
-            sourceMap = (Map<String, Object>) source;
-        } 
-        if (sourceMap == null){
+
+        ObjectMapper mapper = new ObjectMapper();
+        HoSPersonal fromHosPersonal = null;
+        String jsonString = null;
+
+        try {
+            jsonString = createJsonStringFromMap(source);
+            fromHosPersonal = mapper.readValue(jsonString, HoSPersonal.class);
+
+        } catch (IOException e) {
+            LOG.error("Got exception with message " + e.getMessage());
             return;
         }
-        HoSPersonal editHoSPersonal = new HoSPersonal();
 
-        //Go through the map in skapadAv and populate editHoSPersonal 
-        for (Entry<String, Object> entry : sourceMap.entrySet()){
-            switch(entry.getKey()){
-            case "personid":
-                editHoSPersonal.setPersonid((String) entry.getValue());
-                break;
-                
-            case "fullstandigtNamn":
-                editHoSPersonal.setFullstandigtNamn((String) entry.getValue());
-                break;
-            
-            case "vardenhet":
-                if (entry.getValue().getClass() == LinkedHashMap.class) {
-                    editHoSPersonal.setVardenhet(buildVardenhetFromMap( (LinkedHashMap<String, Object>) entry.getValue()));
-                }
-                break;
-            }
+        if (fromHosPersonal == null) {
+            LOG.error("Failed to create HosPersonal from JSON, got null");
+            return;
         }
-
-        utlatande.setSkapadAv(editHoSPersonal);
+        utlatande.setSkapadAv(fromHosPersonal);
     }
 
-    private Vardenhet buildVardenhetFromMap(Map<String, Object> source) {
-        Vardenhet vardenhet = new Vardenhet();
-        for (Entry<String, Object> entry : source.entrySet()){
-            switch(entry.getKey()){
-            case "enhetsid":
-                vardenhet.setEnhetsid((String) entry.getValue());
-                break;
-            case "enhetsnamn":
-                vardenhet.setEnhetsnamn((String) entry.getValue());
-                break;
-            case "postadress":
-                vardenhet.setPostadress((String) entry.getValue());
-                break;
-            case "postort":
-                vardenhet.setPostort((String) entry.getValue());
-                break;
-            case "postnummer":
-                vardenhet.setPostnummer((String) entry.getValue());
-                break;
-            case "telefonnummer":
-                vardenhet.setTelefonnummer((String) entry.getValue());
-                break;
-            case "epost":
-                vardenhet.setEpost((String) entry.getValue());
-                break;
-            default:
-                LOG.warn("Unknown type of certificate data '{}'", entry.getKey());
-                break;
-            }
-        }
-        return vardenhet;
+    /**
+     * Create a json string from a Map<String, object>
+     * 
+     * @param source
+     *            Map<String, object> to convert
+     * @return JSON formatted string
+     * @throws IOException
+     */
+    private String createJsonStringFromMap(Map<String, Object> source) throws IOException {
+        StringWriter writer = new StringWriter();
+        JsonGenerator jsonGenerator = new JsonFactory().createJsonGenerator(writer);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(jsonGenerator, source);
+        jsonGenerator.close();
+
+        return writer.toString();
     }
 
-    private Vardenhet convertToEditVardenhet(se.inera.certificate.model.Vardenhet extVardenhet) {
-        if (extVardenhet == null) {
-            return null;
-        }
-
-        Vardenhet editVardenhet = new Vardenhet();
-
-        editVardenhet.setEnhetsid(InternalModelConverterUtils.getExtensionFromId(extVardenhet.getId()));
-        editVardenhet.setEnhetsnamn(extVardenhet.getNamn());
-        editVardenhet.setPostadress(extVardenhet.getPostadress());
-        editVardenhet.setPostnummer(extVardenhet.getPostnummer());
-        editVardenhet.setPostort(extVardenhet.getPostort());
-        editVardenhet.setTelefonnummer(extVardenhet.getTelefonnummer());
-        editVardenhet.setEpost(extVardenhet.getEpost());
-
-        Vardgivare editVardgivare = convertToEditVardgivare(extVardenhet.getVardgivare());
-        editVardenhet.setVardgivare(editVardgivare);
-
-        return editVardenhet;
-    }
-
-    private Vardgivare convertToEditVardgivare(se.inera.certificate.model.Vardgivare extVardgivare) {
-        if (extVardgivare == null) {
-            return null;
-        }
-
-        Vardgivare editVardgivare = new Vardgivare();
-
-        editVardgivare.setVardgivarid(InternalModelConverterUtils.getExtensionFromId(extVardgivare.getId()));
-        editVardgivare.setVardgivarnamn(extVardgivare.getNamn());
-
-        return editVardgivare;
-    }
 }
