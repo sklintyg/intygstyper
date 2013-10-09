@@ -34,6 +34,31 @@
 	box-shadow: 0px -5px 25px #323232;
 }
 
+/*
+span.help {
+	background-image: url(../img/help.png);
+	width: 27px;
+	height: 27px;
+	display: inline-block;
+}*/
+
+.help {
+  background-color: #008391;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  color: #fff;
+  padding: 0px 5px 0 5px;
+  margin-left: 10px; 
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.counter {
+	font-style: italic;
+	font-size: 11px;
+}
+
 .alert-block {
 	display: inline-block;
 }
@@ -55,6 +80,10 @@
 	border-radius: 8px 8px 8px 8px;	
 }
 
+.cert-body div.body-row-single {
+	padding-left: 20px;
+}
+
 .cert-body .body-row .title {
 	margin: 0;
 	color: #008391;
@@ -62,12 +91,23 @@
 	font-weight: bold;
 	display: block;
 	padding: 10px 20px;
-	background-color: #ededed;
-	-webkit-border-radius: 8px 8px 0px 0px;
-	-moz-border-radius: 8px 8px 0px 0px;
-	border-radius: 8px 8px 0px 0px;
-	border-bottom: 1px solid #d8d8d8;	
+  background-color: #ededed;
+  -webkit-border-radius: 8px 8px 0px 0px;
+  -moz-border-radius: 8px 8px 0px 0px;
+  border-radius: 8px 8px 0px 0px;
+  border-bottom: 1px solid #d8d8d8; 
 }
+
+.cert-body .body-row .title-single {
+  background: none;
+  -webkit-border-radius: 0px 0px 0px 0px;
+  -moz-border-radius: 0px 0px 0px 0px;
+  border-radius: 0px 0px 0px 0px;
+  border: 0;
+  display: inline-block;
+  padding: 10px 10px; 
+}
+
 
 .cert-body .body-row .text {
 	display: block;
@@ -112,4 +152,24 @@ div.infobox h4 {
     padding: 10px 0 5px 0;
     color: #fff;
     font-size: 14px;
+}
+
+.indent {
+	padding-left: 20px;
+}
+
+.block {
+  display: block !important;
+}
+
+.inline-block {
+	display: inline-block !important;
+}
+
+.maxwidth {
+	width: 100% !important;
+}
+
+.diagnose input[type=text] {
+	width: 100%;
 }
