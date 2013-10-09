@@ -152,6 +152,9 @@ angular.module('wc.fragasvarmodule').controller('QACtrl', [ '$scope', '$log', '$
             if (result != null) {
                 // result is a new FragaSvar Instance: add it to our local repo
                 $scope.qaList.push(result);
+                //close question form
+                $scope.toggleQuestionForm();
+                
             } else {
                 // show error view
                 $scope.widgetState.hasError = true;
