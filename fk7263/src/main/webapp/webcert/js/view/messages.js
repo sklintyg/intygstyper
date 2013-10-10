@@ -28,6 +28,7 @@ var fk7263Messages = {
           "view.label.disabilities" : "Funktionsnedsättning - observationer, undersökningsfynd och utredningsresultat",
           "view.label.basedon" : "Intyget baseras på",
           "view.label.comment" : "Kommentar:",
+          "view.label.work" : "Arbete",
           "view.label.limitation" : "Aktivitetsbegränsning relaterat till diagnos och funktionsnedsättning",
           "view.label.recommendations" : "Rekommendationer",
           "view.label.plannedtreatment" : "Planerad eller pågående behandling eller åtgärd",
