@@ -89,7 +89,7 @@
 
               <div wc-cert-field field-number="8b" field-label="view.label.nedsattning" filled="cert.nedsattMed25||cert.nedsattMed50||cert.nedsattMed75||cert.nedsattMed100">
 
-                <div ng-show="nedsattMed25 != null">
+                <div ng-show="cert.nedsattMed25 != null">
                   <strong><span message key="nedsattningsgrad.nedsatt_med_1_4"></span></strong><br> Från och med {{cert.nedsattMed25.start | date:'longDate'}}&ndash; längst till och med
                   {{cert.nedsattMed25.end | date:'longDate'}}
                 </div>
@@ -215,7 +215,7 @@
 
                 <!--  status header -->
                 <h3>
-                  Ämne: <strong><span message key="qa.amne.{{qa.amne | lowercase}}"></span></strong><span class="pull-right">{{qa.senasteHandelseDatum | date:'short'}}</span>
+                  Ämne: <strong><span message key="qa.amne.{{qa.amne | lowercase}}"></span></strong>
                 </h3>
                 <p ng-switch="qa.status">
                   <span ng-switch-when="PENDING_INTERNAL_ACTION">Frågan inväntar svar från vårdenheten</span> <span ng-switch-when="PENDING_EXTERNAL_ACTION">Frågan inväntar svar från

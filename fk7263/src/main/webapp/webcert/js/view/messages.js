@@ -54,6 +54,12 @@ var fk7263Messages = {
           "view.label.confirmedby" : "Ovanstående uppgifter och bedömningar har bekräftas",
           "view.label.date" : "Datum",
           "view.label.contactinfo" : "Namnförtydligande, mottagningens adress och telefon",
+          
+          "edit.label.treatments" : "Åtgärder",
+          "edit.label.recommendations" : "Rekommendationer till Försäkringskassan",
+          "edit.label.fkcontact" : "Kontakt",
+          "edit.label.unitaddress" : "Vårdenhetens adress",
+          
           "vardkontakt.undersokning" : "Min undersökning av patienten den ",
           "vardkontakt.telefonkontakt" : "Min telefonkontakt med patienten den ",
           "referens.journal" : "Journaluppgifter, den ",

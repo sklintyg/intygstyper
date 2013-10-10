@@ -121,6 +121,7 @@
   <%-- Dependencies to module specific components loaded from this modules web app running at "?" context--%>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/fk7263-app.js"/>"></script>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/controllers.js"/>"></script>
+  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/directives.js"/>"></script>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/messages.js"/>"></script>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/services.js"/>"></script>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/fragasvar-module.js"/>"></script>

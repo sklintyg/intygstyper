@@ -1,9 +1,9 @@
 /**
  * Directives used only in module app pages. 
  */
-angular.module('wc.common.directives', []);
+angular.module('wc.fk7263.directives', []);
 
-angular.module('wc.common.directives').directive("wcCertField", ['$rootScope', function($rootScope) {
+angular.module('wc.fk7263.directives').directive("wcCertField", ['$rootScope', function($rootScope) {
   return {
       restrict : "A",
       transclude : true,
