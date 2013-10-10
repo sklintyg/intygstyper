@@ -175,149 +175,139 @@
             <h3 class="title"><span message key="view.label.nedsattning"></span><span class="help">?</span></h3>
             <div class="text">
 					
-              Faktisk tjänstgöringstid <input type="text" id="capacityForWork.actualWorkingHoursPerWeek" name="capacityForWork.actualWorkingHoursPerWeek" value="" class='short control-element'> <span>timmar/vecka</span>
+              <div class="control-group">
+	              Faktisk tjänstgöringstid 
+	              <input style="width: 3em;" type="text" id="capacityForWork.actualWorkingHoursPerWeek" name="capacityForWork.actualWorkingHoursPerWeek" value="" class='short control-element'> 
+	              <span>timmar/vecka</span>
+              </div>
               
-              <input type="checkbox" id="capacityForWork.work25" name="capacityForWork.work25" class='control-element'/>
-              <label for="capacityForWork.work25" class="checkbox">25% nedsatt arbetsförmåga från</label>
-              <input type="text" id="capacityForWork.work25from" name="capacityForWork.work25from" value="" class='date-pick dp-applied control-element'>
-              <div class="text inline">till</div>
-              <input type="text" id="capacityForWork.work25to" name="capacityForWork.work25to" value="" class='date-pick dp-applied control-element'>
-			        <div class="workHoursPerWeek">
-			        Arbetstid timmar/vecka: <span id="workHoursPerWeek25"></span>
-			        </div>
-			        <div>
-			        Arbetstidsförläggning (frivilligt)
-			        <input type="text" id="capacityForWork.rec25LongerWorkingHours" name="capacityForWork.rec25LongerWorkingHours" value="" class='control-element otherInformation'>        
-			        <span class="otherInformationCounter"></span>
-			        <div class="info-transfer" style="margin-left: 20em;">Informationen överförs till ”Övriga upplysningar” i Försäkringskassans blankett.</div>
+              <div class="control-group form-inline">
+	              <input type="checkbox" id="capacityForWork.work25" name="capacityForWork.work25" class='control-element'/>
+	              <label for="capacityForWork.work25" class="checkbox">25% nedsatt arbetsförmåga från</label>
+                <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" />
+                <button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
+	              <span>till</span>
+                <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" />
+                <button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
+                <div class="indent">
+					        <div class="workHoursPerWeek">
+					          Arbetstid timmar/vecka: <span id="workHoursPerWeek25"></span>
+					        </div>
+					        Arbetstidsförläggning (frivilligt)
+					        <input type="text" id="capacityForWork.rec25LongerWorkingHours" name="capacityForWork.rec25LongerWorkingHours" value="" class='control-element otherInformation'>        
+					        <span class="otherInformationCounter"></span>
+					        <div class="info-transfer">Informationen överförs till ”Övriga upplysningar” i Försäkringskassans blankett.</div>
+						    </div>      
+              </div>
 
+              <div class="control-group form-inline">
+	              <input type="checkbox" id="capacityForWork.work50" name="capacityForWork.work50" class='control-element'/>
+	              <label for="capacityForWork.work50" class="checkbox">50% nedsatt arbetsförmåga från</label>
+	              <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" />
+	              <button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
+                <span>till</span>
+	              <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" />
+	              <button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
+                <div class="indent">
+					        <div class="workHoursPerWeek">
+  					        Arbetstid timmar/vecka: <span id="workHoursPerWeek50"></span>
+					        </div>
+					        Arbetstidsförläggning (frivilligt)
+					        <input type="text" id="capacityForWork.rec50LongerWorkingHours" name="capacityForWork.rec50LongerWorkingHours" value="" class='control-element otherInformation'>
+					        <span class="otherInformationCounter"></span>
+                  <div class="info-transfer">Informationen överförs till ”Övriga upplysningar” i Försäkringskassans blankett.</div>
+                </div>      
+              </div>
 
-              <input type="checkbox" id="capacityForWork.work50" name="capacityForWork.work50" class='control-element'/>
-              <label for="capacityForWork.work50" class="checkbox">50% nedsatt arbetsförmåga från</label>
-              <input type="text" id="capacityForWork.work50from" name="capacityForWork.work50from" value="" class='date-pick dp-applied control-element'>
-              <div class="text inline">till</div>
-              <input type="text" id="capacityForWork.work50to" name="capacityForWork.work50to" value="" class='date-pick dp-applied control-element'>
-			        <div class="workHoursPerWeek">
-			        Arbetstid timmar/vecka: <span id="workHoursPerWeek50"></span>
-			        </div>
-			        <div>
-			        Arbetstidsförläggning (frivilligt)
-			        <input type="text" id="capacityForWork.rec50LongerWorkingHours" name="capacityForWork.rec50LongerWorkingHours" value="" class='control-element otherInformation'>
-			        <span class="otherInformationCounter"></span>
-			        <div class="info-transfer" style="margin-left: 20em;">Informationen överförs till ”Övriga upplysningar” i Försäkringskassans blankett.</div>
+              <div class="control-group form-inline">
+	              <input type="checkbox" id="capacityForWork.work75" name="capacityForWork.work75" class='control-element'/>
+	              <label for="capacityForWork.work75" class="checkbox">75% nedsatt arbetsförmåga från</label>
+	              <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" />
+	              <button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
+                <span>till</span>
+	              <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" />
+	              <button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
+                <div class="indent">
+					        <div class="workHoursPerWeek">
+	   				        Arbetstid timmar/vecka: <span id="workHoursPerWeek75"></span>
+					        </div>
+					        Arbetstidsförläggning (frivilligt)
+					        <input type="text" id="capacityForWork.rec75LongerWorkingHours" name="capacityForWork.rec75LongerWorkingHours" value="" class='control-element otherInformation'>        <span class="otherInformationCounter"></span>
+                  <div class="info-transfer">Informationen överförs till ”Övriga upplysningar” i Försäkringskassans blankett.</div>
+                </div>      
+              </div>
 
-              <input type="checkbox" id="capacityForWork.work75" name="capacityForWork.work75" class='control-element'/>
-              <label for="capacityForWork.work75" class="checkbox">75% nedsatt arbetsförmåga från</label>
-              <input type="text" id="capacityForWork.work75from" name="capacityForWork.work75from" value="" class='date-pick dp-applied control-element'>
-              <div class="text inline">till</div>
-              <input type="text" id="capacityForWork.work75to" name="capacityForWork.work75to" value="" class='date-pick dp-applied control-element'>
-			        <div class="workHoursPerWeek">
-			        Arbetstid timmar/vecka: <span id="workHoursPerWeek75"></span>
-			        </div>
-			        <div>
-			        Arbetstidsförläggning (frivilligt)
-			        <input type="text" id="capacityForWork.rec75LongerWorkingHours" name="capacityForWork.rec75LongerWorkingHours" value="" class='control-element otherInformation'>        <span class="otherInformationCounter"></span>
-              <div class="info-transfer" style="margin-left: 20em;">Informationen överförs till ”Övriga upplysningar” i Försäkringskassans blankett.
+              <div class="control-group form-inline">
+	              <input type="checkbox" id="capacityForWork.workFull" name="capacityForWork.workFull" class='control-element'/>
+	              <label for="capacityForWork.workFull" class="checkbox">Helt nedsatt arbetsförmåga från</label>
+	              <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" />
+	              <button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
+                <span>till</span>
+                <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" />
+	              <button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
+              </div>      
 
-              <input type="checkbox" id="capacityForWork.workFull" name="capacityForWork.workFull" class='control-element'/>
-              <label for="capacityForWork.workFull" class="checkbox">Helt nedsatt arbetsförmåga från</label>
-              <input type="text" id="capacityForWork.workFullFrom" name="capacityForWork.workFullFrom" value="" class='date-pick dp-applied control-element'>
-              <div class="text inline">till</div>
-              <input type="text" id="capacityForWork.workFullTo" name="capacityForWork.workFullTo" value="" class='date-pick dp-applied control-element'>
-      </div>
-    </div>
-    <div class="separator-line">&#160;</div>
-    <div>Detta intyg motsvarar en period på: <span id="certificateSpan"></span></div>
-  </div>
-  <div class="separator" style="height: 1.5em;">&#160;</div>
-  <div style="width: 85%">
-    <div class="control-header hasHelp">Patientens arbetsförmåga bedöms nedsatt längre tid än den som försäkringsmedicinska<br/> beslutstödet anger, därför att:</div>
-    <div class="help">
-  <img src="/medcert/resources/images/help.png" class="help-icon" id="help-image-701"></img>
-</div>
-  </div>
-  <div class="section-description"><div class="code">FK7263</div><div class="field">Fält 9</div></div>
-  <div class="separator">&#160;</div>
-  <div class="section-link">
-    <div class="inline"><img src="../../../resources/images/ss.png"></img></div>
-    <div class="inline"><a href="#" onclick="ICF.remote.ST('example_form', 'example_frame',this)" title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
-</div>
-  </div>
-  <div class="control">
-    <div class="text-with-counter">
-      <div style="width: 100%">                <textarea id="capacityForWork.text" name="capacityForWork.text" rows='10' cols='80' class='control-element'></textarea>
-</div>
-      <div class="counter">
-        <div>Tecken kvar: <span class="counter-text"></span></div>
-      </div>
-      <br/> 
-    </div>
-  </div>
-  <div class="separator" style="height: 1.5em;">&#160;</div>
-  <div class="control-header hasHelp">Prognos - kommer patienten att få tillbaka sin arbetsförmåga i nuvarande arbete? (Gäller ej arbetslösa)</div><div class="help">
-  <img src="/medcert/resources/images/help.png" class="help-icon" id="help-image-702"></img>
-</div>
-  <div class="section-description"><div class="code">FK7263</div><div class="field">Fält 10</div></div>
-  <div class="separator">&#160;</div>
-  <div class="section-link">
-    <div class="inline"><img src="../../../resources/images/ss.png"></img></div>
-    <div class="inline"><a href="#" onclick="ICF.remote.ST('example_form', 'example_frame',this)" title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
-</div>
-  </div>
-  <div class="separator">&#160;</div>
-  <div id="forecast-choice" class="control">
-                            <input type="radio" name="capacityForWork.forecast" value="YES"
-                    checked="checked"
-                group='group2' class='radio control-element'
-        >         Ja <br>
-            <input type="radio" name="capacityForWork.forecast" value="PARTLY"
-                group='group2' class='radio control-element'
-        >         Delvis <br>
-            <input type="radio" name="capacityForWork.forecast" value="NO"
-                group='group2' class='radio control-element'
-        >         Nej <br>
-            <input type="radio" name="capacityForWork.forecast" value="UNKNOWN"
-                group='group2' class='radio control-element'
-        >         Går ej att bedöma <br>
-        <div>
-      <div class="input-text">
-      Förtydligande:
-                      <input type="text" id="capacityForWork.forecastText" name="capacityForWork.forecastText" value="" class='control-element otherInformation'>       <span class="otherInformationCounter"></span>
-      </div>    
-      <div class="info-transfer" style="margin-left: 12em; float: left;">Informationen överförs till ”Övriga upplysningar” i Försäkringskassans blankett.
-</div>
-    </div>
-  </div>
-</div>  
-<div class="section">
-  <div class="section-header"><div>Åtgärder</div><div><div class="help">
-  <img src="/medcert/resources/images/help.png" class="help-icon" id="help-image-800"></img>
-</div>
-</div></div>
-  <div class="section-description"><div class="code">FK7263</div><div class="field">Fält 6b</div></div>
-  <div class="separator">&#160;</div>
-  <div class="control-header">Planerad eller pågående behandling eller åtgärd inom sjukvården (ange vilken)</div>
-  <div class="control">
-    <div class="text-with-counter">
-      <div style="width: 100%">                <textarea id="measures.current" name="measures.current" rows='1' cols='120' class='control-element'></textarea>
-</div>
-      <div class="counter">
-        <div>Tecken kvar: <span class="counter-text"></span></div>
-      </div>
-    </div>
-  </div>
-  <div class="control-header">Annan åtgärd (ange vilken)</div>
-  <div class="control">
-    <div class="text-with-counter">
-      <div style="width: 100%">                <textarea id="measures.other" name="measures.other" rows='1' cols='120' class='control-element'></textarea>
-</div>
-      <div class="counter">
-        <div>Tecken kvar: <span class="counter-text"></span></div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="section" id="recommendations">
+              <div>Detta intyg motsvarar en period på: <span id="certificateSpan"></span></div>
+            </div>  
+          </div>
+             
+          <div class="body-row clearfix">
+            <h4 class="cert-field-number"><span message key="view.label.field"></span> 9</h4>
+            <h3 class="title"><span message key="view.label.patientworkcapacityjudgement"></span><span class="help">?</span></h3>
+            <div class="text">
+              <a href="#" onclick="ICF.remote.ST('example_form', 'example_frame',this)" title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
+              <textarea id="capacityForWork.text" name="capacityForWork.text" rows='10' cols='80' class='control-element'></textarea>
+				      <div class="counter">
+				        <div>Tecken kvar: <span class="counter-text"></span></div>
+				      </div>
+            </div>
+          </div>
+
+          <div class="body-row clearfix">
+            <h4 class="cert-field-number"><span message key="view.label.field"></span> 10</h4>
+            <h3 class="title"><span message key="view.label.prognosis"></span><span class="help">?</span></h3>
+            <div class="text">
+
+              <a href="#" onclick="ICF.remote.ST('example_form', 'example_frame',this)" title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
+              <div id="forecast-choice" class="control">
+                <input type="radio" name="capacityForWork.forecast" value="YES" checked="checked" group='group2' class='radio control-element'>         Ja <br>
+                <input type="radio" name="capacityForWork.forecast" value="PARTLY" group='group2' class='radio control-element'> Delvis <br>
+                <input type="radio" name="capacityForWork.forecast" value="NO" group='group2' class='radio control-element'>         Nej <br>
+                <input type="radio" name="capacityForWork.forecast" value="UNKNOWN"group='group2' class='radio control-element'>         Går ej att bedöma <br>
+                Förtydligande:
+                <input type="text" id="capacityForWork.forecastText" name="capacityForWork.forecastText" value="" class='control-element otherInformation'>       
+                <span class="otherInformationCounter"></span>
+              </div>
+              <div class="info-transfer">Informationen överförs till ”Övriga upplysningar” i Försäkringskassans blankett.</div>
+              
+            </div>
+          </div>
+
+          <div class="body-row clearfix">
+            <h4 class="cert-field-number"><span message key="view.label.field"></span> 6b</h4>
+            <h3 class="title"><span message key="view.label.plannedtreatment"></span><span class="help">?</span></h3>
+            <div class="text">
+              
+              <label class="control-header">Planerad eller pågående behandling eller åtgärd inom sjukvården (ange vilken)</label>
+              <textarea id="measures.current" name="measures.current" rows='1' cols='120' class='control-element'></textarea>
+				      <div class="counter">
+				        <div>Tecken kvar: <span class="counter-text"></span></div>
+				      </div>
+				      
+              <label class="control-header">Annan åtgärd (ange vilken)</label>
+              <textarea id="measures.other" name="measures.other" rows='1' cols='120' class='control-element'></textarea>
+				      <div class="counter">
+				        <div>Tecken kvar: <span class="counter-text"></span></div>
+				      </div>
+              
+            </div>
+          </div>
+
+          <div class="body-row clearfix">
+            <h4 class="cert-field-number"><span message key="view.label.field"></span> 6a</h4>
+            <h3 class="title"><span message key="view.label.recommendations"></span><span class="help">?</span></h3>
+            <div class="text">
+
   <div class="section-header"><div>Rekommendationer till Försäkringskassan</div><div><div class="help">
   <img src="/medcert/resources/images/help.png" class="help-icon" id="help-image-900"></img>
 </div>
@@ -484,23 +474,10 @@
 
 
 
-          <div wc-cert-field field-number="6a" field-label="view.label.recommendations"
-            filled="cert.rekommendationKontaktArbetsformedlingen|| cert.rekommendationKontaktForetagshalsovarden || cert.rekommendationOvrigt!=null">
-          </div>
-
-          <div wc-cert-field field-number="6b" field-label="view.label.plannedtreatment" filled="cert.atgardInomSjukvarden||cert.annanAtgard">
-          </div>
 
           <div wc-cert-field field-number="7" field-label="view.label.workrehab" filled="cert.rehabiliteringAktuell||cert.rehabiliteringEjAktuell||cert.rehabiliteringGarInteAttBedoma">
           </div>
 
-
-          <div wc-cert-field field-number="9" field-label="view.label.patientworkcapacityjudgement" filled="cert.aktivitetsbegransning!=null"></div>
-
-          <div wc-cert-field field-number="10" field-label="view.label.prognosis"
-            filled="cert.arbetsformataPrognosJa || cert.arbetsformataPrognosJaDelvis||cert.arbetsformataPrognosNej||cert.arbetsformataPrognosGarInteAttBedoma">
-
-          </div>
 
           <div wc-cert-field field-number="11" field-label="view.label.othertransport" filled="cert.ressattTillArbeteAktuellt || cert.ressattTillArbeteEjAktuellt">
           </div>
