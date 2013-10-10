@@ -1,4 +1,4 @@
-<div class="row-fluid webcert-multicol">
+<div class="row-fluid webcert-multicol" id="viewCertAndQA">
   <div class="span8 webcert-col webcert-col-primary" ng-controller="ViewCertCtrl">
     <!-- Left side -->
     <div class="webcert-col-shadow"></div>
@@ -207,7 +207,7 @@
 
         <div wc-spinner label="info.loading.existing.qa" show-spinner="!widgetState.doneLoading" show-content="widgetState.doneLoading">
 
-          <div class="webcert-col-section" ng-show="(qaList.length | filter:openIssuesFilter) > 0">
+          <div class="webcert-col-section" ng-show="(qaList.length | filter:openIssuesFilter) > 0" id="unhandledQACol">
             <button class="btn btn-info pull-right">Vidarebefordra</button>
             <h2 class="col-head">Obehandlade frågor</h2>
             <div ng-repeat="qa in qaList | filter:openIssuesFilter | orderBy:'senasteHandelseDatum':true">
@@ -261,8 +261,8 @@
                   <!-- väntar på svar från vården -->
                   <label class="control-label">Svar</label>
                   <div class="controls">
-                    <textarea rows="5" ng-model="qa.svarsText"></textarea>
-                    <button class="btn btn-success" ng-click="sendAnswer(qa)" ng-disabled="!qa.svarsText">Skicka svar</button>
+                    <textarea rows="5" ng-model="qa.svarsText" id="answerText-{{qa.internReferens}}"></textarea>
+                    <button class="btn btn-success" ng-click="sendAnswer(qa)" ng-disabled="!qa.svarsText" id="sendAnswerBtn-{{qa.internReferens}}">Skicka svar</button>
                     <button class="btn btn-secondary">Markera som behandlad</button>
                   </div>
                 </div>
