@@ -543,11 +543,11 @@
 	   				<input type="radio" id="recommendationsToFk"	name="recommendationsToFk.reabInQuestion" group="group3" value="YES" class="control-element">
 	   				<label for="recommendationsToFk">Ja</label>
 						<div class="indent">
-							<input type="radio" name="recommendationsToFk.rehabNow"	group="group4" value="NOW" class="control-element">
+							<input id="rehabNow1" type="radio" name="recommendationsToFk.rehabNow"	group="group4" value="NOW" checked>
 							<label for="rehabNow1">Omgående</label><br>
 								
-							<input type="radio" name="recommendationsToFk.rehabNow"	group="group4" value="LATER" class="control-element">
-              <label for="rehabNow1">Senare,  med start</label>
+							<input id="rehabNow2" type="radio" name="recommendationsToFk.rehabNow"	group="group4" value="LATER">
+              <label for="rehabNow2">Senare,  med start</label>
 
 							<input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions"	date-disabled="disabled(date, mode)" ng-required="true" />
 							<button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
@@ -555,12 +555,12 @@
 						</div>
           </div>
           <div class="control-group">
-						<input type="radio" name="recommendationsToFk.reabInQuestion" group="group3" value="NO" checked="checked"	class="control-element">
+						<input type="radio" id="recommendationsToFk2" name="recommendationsToFk.reabInQuestion" group="group3" value="NO" checked="checked"	class="control-element">
 	          <label for="recommendationsToFk2">Nej</label>
           </div>
 					
           <div class="control-group">
-						<input type="radio"	name="recommendationsToFk.reabInQuestion" group="group3" value="UNKNOWN" class="control-element">
+						<input type="radio" id="recommendationsToFk3"	name="recommendationsToFk.reabInQuestion" group="group3" value="UNKNOWN" class="control-element">
 	          <label for="recommendationsToFk3">Går ej att bestämma</label>
           </div>
 
@@ -575,7 +575,7 @@
 					<span message key="edit.label.fkcontact"></span><span class="help">?</span>
 				</h3>
 				<div class="text form-inline">
-					<input type="checkbox" id="contactWithFkRequested" name="contactWithFkRequested" class='control-element' />
+					<input id="cause4" type="checkbox" id="contactWithFkRequested" name="contactWithFkRequested" class='control-element' />
 					<label for="cause4" class="checkbox">Kontakt önskas med	Försäkringskassan</label>
 				</div>
 			</div>
