@@ -68,8 +68,8 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
 
         transportModel.setTypAvUtlatande(IsoTypeConverter.toCD(source.getTyp()));
 
-        if (source.getKommentars() != null) {
-            transportModel.getKommentars().addAll(source.getKommentars());
+        if (source.getKommentarer() != null) {
+            transportModel.getKommentars().addAll(source.getKommentarer());
         }
 
         transportModel.setSigneringsdatum(source.getSigneringsdatum());
@@ -87,8 +87,8 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
         if (source.getAktiviteter() != null) {
             transportModel.getAktivitets().addAll(convertAktiviteter(source.getAktiviteter()));
         }
-        if (source.getObservations() != null) {
-            transportModel.getObservations().addAll(convertObservationer(source.getObservations()));
+        if (source.getObservationer() != null) {
+            transportModel.getObservations().addAll(convertObservationer(source.getObservationer()));
         }
         if (source.getRekommendationer() != null) {
             transportModel.getRekommendations().addAll(convertRekommendationer(source.getRekommendationer()));
@@ -143,8 +143,8 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
         }
         ObservationType observationType = new ObservationType();
 
-        observationType.setObservationskod(IsoTypeConverter.toCD(source.getObservationsKod()));
-        observationType.setObservationsperiod(convertPartialDateInterval(source.getObservationsPeriod()));
+        observationType.setObservationskod(IsoTypeConverter.toCD(source.getObservationskod()));
+        observationType.setObservationsperiod(convertPartialDateInterval(source.getObservationsperiod()));
         observationType.setUtforsAv(convertUtforarroll(source.getUtforsAv()));
 
         return observationType;
@@ -291,8 +291,8 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
 
         patientType.setEfternamn(StringUtils.join(source.getEfternamn(), " "));
 
-        if (source.getPatientrelations() != null) {
-            List<PatientRelationType> patientRelationsTypes = convertPatientRelations(source.getPatientrelations());
+        if (source.getPatientrelationer() != null) {
+            List<PatientRelationType> patientRelationsTypes = convertPatientRelations(source.getPatientrelationer());
             patientType.getPatientRelations().addAll(patientRelationsTypes);
 
         }
@@ -334,7 +334,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
             patientRelationType.getMellannamns().addAll(source.getMellannamn());
         }
         patientRelationType.setEfternamn(source.getEfternamn());
-        patientRelationType.getRelationTyps().addAll(convertRelationTyps(source.getRelationTyps()));
+        patientRelationType.getRelationTyps().addAll(convertRelationTyps(source.getRelationtyper()));
 
         return patientRelationType;
     }

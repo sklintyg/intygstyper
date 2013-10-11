@@ -172,7 +172,7 @@ public class InternalToExternalConverterTest {
         List<Observation> obs = converter.convertObservationer(undersokning);
 
         assertNotNull(obs);
-        assertEquals(ObservationsKod.SJUKDOM.getCode(), obs.get(0).getObservationsKod().getCode());
+        assertEquals(ObservationsKod.SJUKDOM.getCode(), obs.get(0).getObservationskod().getCode());
     }
 
     @Test
@@ -232,7 +232,7 @@ public class InternalToExternalConverterTest {
         List<Observation> obs = converter.convertObservationer(undersokning);
 
         assertEquals(2, obs.size());
-        assertEquals(ObservationsKod.GRAVIDITET.getCode(), obs.get(1).getObservationsKod().getCode());
+        assertEquals(ObservationsKod.GRAVIDITET.getCode(), obs.get(1).getObservationskod().getCode());
     }
 
     @Test

@@ -107,7 +107,7 @@ public class ExternalToInternalConverterTest {
         Patient pat = new Patient();
 
         pat.setId(new Id("PersonId", "19121212-1212"));
-        pat.setFornamn(Arrays.asList("Abel", "Baker"));
+        pat.getFornamn().addAll(Arrays.asList("Abel", "Baker"));
         pat.setEfternamn("Smith Doe");
         pat.setPostadress("Testgatan 123");
         pat.setPostnummer("123 45");

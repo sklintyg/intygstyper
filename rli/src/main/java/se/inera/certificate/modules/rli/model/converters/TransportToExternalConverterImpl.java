@@ -80,7 +80,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 
         externalModel.setTyp(IsoTypeConverter.toKod(source.getTypAvUtlatande()));
 
-        externalModel.getKommentars().addAll(source.getKommentars());
+        externalModel.getKommentarer().addAll(source.getKommentars());
 
         externalModel.setSigneringsdatum(source.getSigneringsdatum());
 
@@ -94,7 +94,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 
         externalModel.getAktiviteter().addAll(convertAktiviteter(source.getAktivitets()));
 
-        externalModel.getObservations().addAll(convertObservations(source.getObservations()));
+        externalModel.getObservationer().addAll(convertObservations(source.getObservations()));
 
         externalModel.setArrangemang(convertArrangemang(source.getArrangemang()));
 
@@ -173,10 +173,10 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
         Observation observation = new Observation();
 
         if (source.getObservationsperiod() != null) {
-            observation.setObservationsPeriod(new PartialInterval(source.getObservationsperiod().getFrom(), source
+            observation.setObservationsperiod(new PartialInterval(source.getObservationsperiod().getFrom(), source
                     .getObservationsperiod().getTom()));
         }
-        observation.setObservationsKod(IsoTypeConverter.toKod(source.getObservationskod()));
+        observation.setObservationskod(IsoTypeConverter.toKod(source.getObservationskod()));
         observation.setUtforsAv(convertUtforarroll(source.getUtforsAv()));
         return observation;
     }
@@ -335,9 +335,9 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
         patient.setPostnummer(source.getPostnummer());
         patient.setPostort(source.getPostort());
 
-        patient.setPatientrelations(convertPatientRelations(source.getPatientRelations()));
-        patient.setFornamn(source.getFornamns());
-        patient.setMellannamn(source.getMellannamns());
+        patient.getPatientrelationer().addAll(convertPatientRelations(source.getPatientRelations()));
+        patient.getFornamn().addAll(source.getFornamns());
+        patient.getMellannamn().addAll(source.getMellannamns());
         patient.setEfternamn(source.getEfternamn());
 
         return patient;
@@ -367,7 +367,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
         patientRelation.getMellannamn().addAll(source.getMellannamns());
 
         for (iso.v21090.dt.v1.CD cd : source.getRelationTyps()) {
-            patientRelation.getRelationTyps().add(IsoTypeConverter.toKod(cd));
+            patientRelation.getRelationtyper().add(IsoTypeConverter.toKod(cd));
         }
         return patientRelation;
 

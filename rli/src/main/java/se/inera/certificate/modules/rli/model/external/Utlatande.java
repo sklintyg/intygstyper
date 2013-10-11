@@ -49,7 +49,7 @@ public class Utlatande {
 
     private Kod typ;
 
-    private List<String> kommentars;
+    private List<String> kommentarer;
 
     private LocalDateTime signeringsdatum;
 
@@ -69,7 +69,7 @@ public class Utlatande {
 
     private List<Rekommendation> rekommendationer;
 
-    private List<Observation> observations;
+    private List<Observation> observationer;
 
     private List<Status> status;
 
@@ -91,11 +91,11 @@ public class Utlatande {
         this.typ = typ;
     }
 
-    public List<String> getKommentars() {
-        if (kommentars == null) {
-            kommentars = new ArrayList<String>();
+    public List<String> getKommentarer() {
+        if (kommentarer == null) {
+            kommentarer = new ArrayList<String>();
         }
-        return this.kommentars;
+        return this.kommentarer;
     }
 
     public LocalDateTime getSigneringsdatum() {
@@ -165,11 +165,11 @@ public class Utlatande {
         return this.rekommendationer;
     }
 
-    public List<Observation> getObservations() {
-        if (observations == null) {
-            observations = new ArrayList<Observation>();
+    public List<Observation> getObservationer() {
+        if (observationer == null) {
+            observationer = new ArrayList<Observation>();
         }
-        return this.observations;
+        return this.observationer;
     }
 
     public List<Status> getStatus() {

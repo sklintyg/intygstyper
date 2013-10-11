@@ -27,11 +27,11 @@ public class Fk7263Utlatande {
 
     private Kod typ;
 
-    private List<String> kommentars = new ArrayList<>();
+    private List<String> kommentarer = new ArrayList<>();
 
-    private LocalDateTime signeringsDatum;
+    private LocalDateTime signeringsdatum;
 
-    private LocalDateTime skickatDatum;
+    private LocalDateTime skickatdatum;
 
     private Fk7263Patient patient;
 
@@ -39,7 +39,7 @@ public class Fk7263Utlatande {
 
     private List<Aktivitet> aktiviteter = new ArrayList<>();
 
-    private List<Observation> observations = new ArrayList<>();
+    private List<Observation> observationer = new ArrayList<>();
 
     private List<Vardkontakt> vardkontakter = new ArrayList<>();
 
@@ -61,20 +61,19 @@ public class Fk7263Utlatande {
         this.typ = typ;
     }
 
-    public List<String> getKommentars() {
-        return kommentars;
+    public List<String> getKommentarer() {
+        if (kommentarer == null) {
+            kommentarer = new ArrayList<>();
+        }
+        return kommentarer;
     }
 
-    public void setKommentars(List<String> kommentar) {
-        this.kommentars = kommentar;
+    public LocalDateTime getSigneringsdatum() {
+        return signeringsdatum;
     }
 
-    public LocalDateTime getSigneringsDatum() {
-        return signeringsDatum;
-    }
-
-    public void setSigneringsDatum(LocalDateTime signeringsDatum) {
-        this.signeringsDatum = signeringsDatum;
+    public void setSigneringsdatum(LocalDateTime signeringsdatum) {
+        this.signeringsdatum = signeringsdatum;
     }
 
     public Fk7263Patient getPatient() {
@@ -94,49 +93,45 @@ public class Fk7263Utlatande {
     }
 
     public List<Aktivitet> getAktiviteter() {
+        if (aktiviteter == null) {
+            aktiviteter = new ArrayList<>();
+        }
         return aktiviteter;
     }
 
-    public void setAktiviteter(List<Aktivitet> aktiviteter) {
-        this.aktiviteter = aktiviteter;
-    }
-
-    public List<Observation> getObservations() {
-        return observations;
-    }
-
-    public void setObservations(List<Observation> observations) {
-        this.observations = observations;
+    public List<Observation> getObservationer() {
+        if (observationer == null) {
+            observationer = new ArrayList<>();
+        }
+        return observationer;
     }
 
     public List<Vardkontakt> getVardkontakter() {
+        if (vardkontakter == null) {
+            vardkontakter = new ArrayList<>();
+        }
         return vardkontakter;
     }
 
-    public void setVardkontakter(List<Vardkontakt> vardkontakter) {
-        this.vardkontakter = vardkontakter;
-    }
-
     public List<Referens> getReferenser() {
+        if (referenser == null) {
+            referenser = new ArrayList<>();
+        }
         return referenser;
     }
 
-    public void setReferenser(List<Referens> referenser) {
-        this.referenser = referenser;
+    public LocalDateTime getSkickatdatum() {
+        return skickatdatum;
     }
 
-    public LocalDateTime getSkickatDatum() {
-        return skickatDatum;
-    }
-
-    public void setSkickatDatum(LocalDateTime skickatDatum) {
-        this.skickatDatum = skickatDatum;
+    public void setSkickatdatum(LocalDateTime skickatdatum) {
+        this.skickatdatum = skickatdatum;
     }
 
     public List<Observation> getObservationsByKod(Kod observationsKod) {
         List<Observation> observations = new ArrayList<>();
-        for (Observation observation : this.observations) {
-            if (observation.getObservationsKod() != null && observation.getObservationsKod().equals(observationsKod)) {
+        for (Observation observation : this.observationer) {
+            if (observation.getObservationskod() != null && observation.getObservationskod().equals(observationsKod)) {
                 observations.add(observation);
             }
         }
@@ -145,9 +140,9 @@ public class Fk7263Utlatande {
 
     public List<Observation> getObservationsByKategori(Kod observationsKategori) {
         List<Observation> observations = new ArrayList<>();
-        for (Observation observation : this.observations) {
-            if (observation.getObservationsKategori() != null
-                    && observation.getObservationsKategori().equals(observationsKategori)) {
+        for (Observation observation : this.observationer) {
+            if (observation.getObservationskategori() != null
+                    && observation.getObservationskategori().equals(observationsKategori)) {
                 observations.add(observation);
             }
         }
@@ -155,21 +150,21 @@ public class Fk7263Utlatande {
     }
 
     public Observation findObservationByKategori(final Kod observationsKategori) {
-        return find(observations, new Predicate<Observation>() {
+        return find(observationer, new Predicate<Observation>() {
             @Override
             public boolean apply(Observation observation) {
-                return observation.getObservationsKategori() != null
-                        && observation.getObservationsKategori().equals(observationsKategori);
+                return observation.getObservationskategori() != null
+                        && observation.getObservationskategori().equals(observationsKategori);
             }
         }, null);
     }
 
     public Observation findObservationByKod(final Kod observationsKod) {
-        return find(observations, new Predicate<Observation>() {
+        return find(observationer, new Predicate<Observation>() {
             @Override
             public boolean apply(Observation observation) {
-                return observation.getObservationsKod() != null
-                        && observation.getObservationsKod().equals(observationsKod);
+                return observation.getObservationskod() != null
+                        && observation.getObservationskod().equals(observationsKod);
             }
         }, null);
     }
@@ -214,7 +209,7 @@ public class Fk7263Utlatande {
         Partial fromDate = null;
 
         for (Observation nedsattning : nedsattningar) {
-            Partial aktivitetsbegransningFromDate = nedsattning.getObservationsPeriod().getFrom();
+            Partial aktivitetsbegransningFromDate = nedsattning.getObservationsperiod().getFrom();
             if (fromDate == null || fromDate.isAfter(aktivitetsbegransningFromDate)) {
                 fromDate = aktivitetsbegransningFromDate;
             }
@@ -232,7 +227,7 @@ public class Fk7263Utlatande {
         Partial toDate = null;
 
         for (Observation nedsattning : nedsattningar) {
-            Partial aktivitetsbegransningToDate = nedsattning.getObservationsPeriod().getTom();
+            Partial aktivitetsbegransningToDate = nedsattning.getObservationsperiod().getTom();
             if (toDate == null || toDate.isBefore(aktivitetsbegransningToDate)) {
                 toDate = aktivitetsbegransningToDate;
             }

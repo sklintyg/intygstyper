@@ -46,7 +46,7 @@ public class ExternalToInternalConverter {
     public Fk7263Intyg convert() {
 
         intyg.setId(source.getId().getExtension());
-        intyg.setSkickatDatum(source.getSkickatDatum());
+        intyg.setSkickatDatum(source.getSkickatdatum());
         intyg.setGiltighet(new PartialInterval(source.getValidFromDate(), source.getValidToDate()));
 
         Aktivitet smittskydd = source.getAktivitet(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
@@ -64,7 +64,7 @@ public class ExternalToInternalConverter {
         convertKommentar();
         convertSkapasAv();
 
-        intyg.setSigneringsdatum(source.getSigneringsDatum());
+        intyg.setSigneringsdatum(source.getSigneringsdatum());
 
         return intyg;
     }
@@ -93,8 +93,8 @@ public class ExternalToInternalConverter {
     }
 
     private void convertKommentar() {
-        if (!source.getKommentars().isEmpty()) {
-            intyg.setKommentar(source.getKommentars().get(0));
+        if (!source.getKommentarer().isEmpty()) {
+            intyg.setKommentar(source.getKommentarer().get(0));
         }
     }
 
@@ -117,7 +117,7 @@ public class ExternalToInternalConverter {
         for (Observation arbetsformaga : arbetsformagor) {
 
             if (!arbetsformaga.getVarde().isEmpty()) {
-                PartialInterval interval = arbetsformaga.getObservationsPeriod();
+                PartialInterval interval = arbetsformaga.getObservationsperiod();
                 PhysicalQuantity quantity = arbetsformaga.getVarde().get(0);
 
                 switch (quantity.getQuantity().toString()) {
@@ -144,13 +144,13 @@ public class ExternalToInternalConverter {
             intyg.setArbetsformagaPrognos(prognoser.get(0).getBeskrivning());
 
             for (Prognos prognos : prognoser) {
-                if (Prognoskoder.ATERSTALLAS_HELT.equals(prognos.getPrognosKod())) {
+                if (Prognoskoder.ATERSTALLAS_HELT.equals(prognos.getPrognoskod())) {
                     intyg.setArbetsformataPrognosJa(true);
-                } else if (Prognoskoder.ATERSTALLAS_DELVIS.equals(prognos.getPrognosKod())) {
+                } else if (Prognoskoder.ATERSTALLAS_DELVIS.equals(prognos.getPrognoskod())) {
                     intyg.setArbetsformataPrognosJaDelvis(true);
-                } else if (Prognoskoder.INTE_ATERSTALLAS.equals(prognos.getPrognosKod())) {
+                } else if (Prognoskoder.INTE_ATERSTALLAS.equals(prognos.getPrognoskod())) {
                     intyg.setArbetsformataPrognosNej(true);
-                } else if (Prognoskoder.DET_GAR_INTE_ATT_BEDOMA.equals(prognos.getPrognosKod())) {
+                } else if (Prognoskoder.DET_GAR_INTE_ATT_BEDOMA.equals(prognos.getPrognoskod())) {
                     intyg.setArbetsformataPrognosGarInteAttBedoma(true);
                 }
             }
@@ -163,15 +163,15 @@ public class ExternalToInternalConverter {
         intyg.setPatientNamn(patient.getFullstandigtNamn());
         intyg.setPatientPersonnummer(patient.getId().getExtension());
 
-        for (Sysselsattning sysselsattning : patient.getSysselsattnings()) {
-            if (Sysselsattningskoder.NUVARANDE_ARBETE.equals(sysselsattning.getSysselsattningsTyp())
-                    && !patient.getArbetsuppgifts().isEmpty()) {
-                intyg.setNuvarandeArbetsuppgifter(patient.getArbetsuppgifts().get(0).getTypAvArbetsuppgift());
-            } else if (Sysselsattningskoder.ARBETSLOSHET.equals(sysselsattning.getSysselsattningsTyp())) {
+        for (Sysselsattning sysselsattning : patient.getSysselsattningar()) {
+            if (Sysselsattningskoder.NUVARANDE_ARBETE.equals(sysselsattning.getSysselsattningstyp())
+                    && !patient.getArbetsuppgifter().isEmpty()) {
+                intyg.setNuvarandeArbetsuppgifter(patient.getArbetsuppgifter().get(0).getTypAvArbetsuppgift());
+            } else if (Sysselsattningskoder.ARBETSLOSHET.equals(sysselsattning.getSysselsattningstyp())) {
                 intyg.setArbetsloshet(true);
-            } else if (Sysselsattningskoder.MAMMALEDIG.equals(sysselsattning.getSysselsattningsTyp())) {
+            } else if (Sysselsattningskoder.MAMMALEDIG.equals(sysselsattning.getSysselsattningstyp())) {
                 intyg.setForaldrarledighet(true);
-            } else if (Sysselsattningskoder.PAPPALEDIG.equals(sysselsattning.getSysselsattningsTyp())) {
+            } else if (Sysselsattningskoder.PAPPALEDIG.equals(sysselsattning.getSysselsattningstyp())) {
                 intyg.setForaldrarledighet(true);
             }
         }
@@ -262,7 +262,7 @@ public class ExternalToInternalConverter {
     private void convertDiagnos() {
         Observation huvudDiagnos = source.findObservationByKategori(ObservationsKoder.DIAGNOS);
         if (huvudDiagnos != null) {
-            intyg.setDiagnosKod(huvudDiagnos.getObservationsKod().getCode());
+            intyg.setDiagnosKod(huvudDiagnos.getObservationskod().getCode());
             intyg.setDiagnosBeskrivning(huvudDiagnos.getBeskrivning());
         }
     }

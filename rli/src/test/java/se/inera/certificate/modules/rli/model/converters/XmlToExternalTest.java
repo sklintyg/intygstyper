@@ -51,7 +51,7 @@ public class XmlToExternalTest {
 
         assertEquals("39f80245-9730-4d76-aaff-b04a2f3cfbe7", extUtlatande.getId().getExtension());
 
-        assertEquals("Övriga upplysningar", extUtlatande.getKommentars().get(0));
+        assertEquals("Övriga upplysningar", extUtlatande.getKommentarer().get(0));
 
         LocalDateTime signeratDate = new LocalDateTime("2013-08-12T11:25:00");
         assertEquals(signeratDate, extUtlatande.getSigneringsdatum());
@@ -108,11 +108,11 @@ public class XmlToExternalTest {
             assertEquals("kv_sjukdomskännedom_intyg", rekommendation.getSjukdomskannedom().getCodeSystemName());
         }
 
-        List<Observation> observationer = extUtlatande.getObservations();
+        List<Observation> observationer = extUtlatande.getObservationer();
         for (Observation observation : observationer) {
-            assertEquals("39104002", observation.getObservationsKod().getCode());
-            assertEquals("1.2.752.116.2.1.1.1", observation.getObservationsKod().getCodeSystem());
-            assertEquals("SNOMED-CT", observation.getObservationsKod().getCodeSystemName());
+            assertEquals("39104002", observation.getObservationskod().getCode());
+            assertEquals("1.2.752.116.2.1.1.1", observation.getObservationskod().getCodeSystem());
+            assertEquals("SNOMED-CT", observation.getObservationskod().getCodeSystemName());
         }
 
         assertEquals("12345678-90", extUtlatande.getArrangemang().getBokningsreferens());

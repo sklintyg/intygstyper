@@ -90,7 +90,7 @@ public class ExternalToTransportConverterTest {
         se.inera.certificate.modules.rli.model.external.Utlatande source = new se.inera.certificate.modules.rli.model.external.Utlatande();
         List<String> l = new ArrayList<String>();
         l.add("KOMMENTARER");
-        source.getKommentars().addAll(l);
+        source.getKommentarer().addAll(l);
 
         Utlatande utl = converter.externalToTransport(source);
 
@@ -113,22 +113,13 @@ public class ExternalToTransportConverterTest {
         patient.setPostadress("Testvägen 23");
         patient.setPostnummer("12345");
         patient.setPostort("Teststaden");
-        List<Arbetsuppgift> arbetsuppgifts = new ArrayList<Arbetsuppgift>();
         Arbetsuppgift a = new Arbetsuppgift();
         a.setTypAvArbetsuppgift("Testare");
-        arbetsuppgifts.add(a);
-        patient.setArbetsuppgifts(arbetsuppgifts);
+        patient.getArbetsuppgifter().add(a);
 
-        List<String> fN = new ArrayList<String>();
-        fN.add("Test");
-        List<String> mN = new ArrayList<String>();
-        mN.add("von");
-
-        patient.setFornamn(fN);
-        patient.setMellannamn(mN);
+        patient.getFornamn().add("Test");
+        patient.getMellannamn().add("von");
         patient.setEfternamn("Testsson");
-
-        List<PatientRelation> pR = new ArrayList<PatientRelation>();
 
         PatientRelation patientRelation = new PatientRelation();
 
@@ -148,12 +139,10 @@ public class ExternalToTransportConverterTest {
         patientRelation.getFornamn().addAll(relationForNamn);
         patientRelation.setPersonId(relationId);
         patientRelation.setRelationskategori(new Kod("relationsKategori"));
-        patientRelation.getRelationTyps().addAll(relationsTyps);
+        patientRelation.getRelationtyper().addAll(relationsTyps);
         patientRelation.setRelationskategori(new Kod("Gifta"));
 
-        pR.add(patientRelation);
-
-        patient.setPatientrelations(pR);
+        patient.getPatientrelationer().add(patientRelation);
 
         return patient;
     }
@@ -161,7 +150,7 @@ public class ExternalToTransportConverterTest {
     private Observation buildObservation() {
         Observation observation = new Observation();
         observation.setBeskrivning("Observationsbeskrivning");
-        observation.setObservationsKod(new Kod("SNOMED-CT"));
+        observation.setObservationskod(new Kod("SNOMED-CT"));
         return observation;
     }
 

@@ -5,7 +5,6 @@ import static se.inera.certificate.model.util.Iterables.addExisting;
 import static se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder.DIAGNOS;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.joda.time.Partial;
@@ -68,30 +67,30 @@ public final class TransportToExternalFk7263LegacyConverter {
         fk7263utlatande.setTyp(typKod);
 
         if (source.getKommentar() != null && !source.getKommentar().isEmpty()) {
-            fk7263utlatande.setKommentars(Arrays.asList(source.getKommentar()));
+            fk7263utlatande.getKommentarer().add(source.getKommentar());
         }
-        fk7263utlatande.setSigneringsDatum(source.getSigneringsdatum());
-        fk7263utlatande.setSkickatDatum(source.getSkickatDatum());
+        fk7263utlatande.setSigneringsdatum(source.getSigneringsdatum());
+        fk7263utlatande.setSkickatdatum(source.getSkickatDatum());
         fk7263utlatande.setSkapadAv(convert(source.getSkapadAvHosPersonal()));
         fk7263utlatande.setPatient(convert(source.getPatient()));
 
-        addExisting(fk7263utlatande.getObservations(), convert(source.getMedicinsktTillstand()));
-        addExisting(fk7263utlatande.getObservations(), convert(source.getBedomtTillstand()));
+        addExisting(fk7263utlatande.getObservationer(), convert(source.getMedicinsktTillstand()));
+        addExisting(fk7263utlatande.getObservationer(), convert(source.getBedomtTillstand()));
 
         for (FunktionstillstandType funktionstillstand : source.getFunktionstillstands()) {
 
-            addAll(fk7263utlatande.getObservations(), convert(funktionstillstand));
+            addAll(fk7263utlatande.getObservationer(), convert(funktionstillstand));
 
             if (funktionstillstand.getArbetsformaga() != null) {
 
                 if (funktionstillstand.getArbetsformaga().getArbetsuppgift() != null) {
-                    fk7263utlatande.getPatient().getArbetsuppgifts()
+                    fk7263utlatande.getPatient().getArbetsuppgifter()
                             .add(convert(funktionstillstand.getArbetsformaga().getArbetsuppgift()));
                 }
                 if (funktionstillstand.getArbetsformaga().getSysselsattnings() != null) {
                     for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType sysselsattning : funktionstillstand
                             .getArbetsformaga().getSysselsattnings()) {
-                        fk7263utlatande.getPatient().getSysselsattnings()
+                        fk7263utlatande.getPatient().getSysselsattningar()
                                 .add(convert(sysselsattning, source.getPatient()));
                     }
                 }
@@ -235,7 +234,7 @@ public final class TransportToExternalFk7263LegacyConverter {
         default:
             throw new IllegalArgumentException("Unknown SysselsattningsType: " + source.getTypAvSysselsattning());
         }
-        sysselsattning.setSysselsattningsTyp(sysselsattningsKod);
+        sysselsattning.setSysselsattningstyp(sysselsattningsKod);
         return sysselsattning;
     }
 
@@ -255,10 +254,10 @@ public final class TransportToExternalFk7263LegacyConverter {
 
         switch (source.getTypAvFunktionstillstand()) {
         case AKTIVITET:
-            observation.setObservationsKategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
+            observation.setObservationskategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
             break;
         case KROPPSFUNKTION:
-            observation.setObservationsKategori(ObservationsKoder.KROPPSFUNKTIONER);
+            observation.setObservationskategori(ObservationsKoder.KROPPSFUNKTIONER);
             break;
         default:
             throw new IllegalArgumentException("Unknown FunktionstillstandType: " + source.getTypAvFunktionstillstand());
@@ -280,16 +279,16 @@ public final class TransportToExternalFk7263LegacyConverter {
             prognos = new Prognos();
             switch (source.getPrognosangivelse()) {
             case ATERSTALLAS_DELVIS:
-                prognos.setPrognosKod(Prognoskoder.ATERSTALLAS_DELVIS);
+                prognos.setPrognoskod(Prognoskoder.ATERSTALLAS_DELVIS);
                 break;
             case ATERSTALLAS_HELT:
-                prognos.setPrognosKod(Prognoskoder.ATERSTALLAS_HELT);
+                prognos.setPrognoskod(Prognoskoder.ATERSTALLAS_HELT);
                 break;
             case DET_GAR_INTE_ATT_BEDOMMA:
-                prognos.setPrognosKod(Prognoskoder.DET_GAR_INTE_ATT_BEDOMA);
+                prognos.setPrognoskod(Prognoskoder.DET_GAR_INTE_ATT_BEDOMA);
                 break;
             case INTE_ATERSTALLAS:
-                prognos.setPrognosKod(Prognoskoder.INTE_ATERSTALLAS);
+                prognos.setPrognoskod(Prognoskoder.INTE_ATERSTALLAS);
                 break;
             }
             prognos.setBeskrivning(source.getMotivering());
@@ -316,7 +315,7 @@ public final class TransportToExternalFk7263LegacyConverter {
      */
     private static Observation convert(ArbetsformagaNedsattningType source) {
         Observation nedsattning = new Observation();
-        nedsattning.setObservationsKod(ObservationsKoder.ARBETSFORMAGA);
+        nedsattning.setObservationskod(ObservationsKoder.ARBETSFORMAGA);
 
         PhysicalQuantity varde = new PhysicalQuantity();
         varde.setUnit("percent");
@@ -334,12 +333,12 @@ public final class TransportToExternalFk7263LegacyConverter {
             varde.setQuantity(75.0);
             break;
         }
-        nedsattning.setVarde(Arrays.<PhysicalQuantity> asList(varde));
+        nedsattning.getVarde().add(varde);
 
         PartialInterval observationsperiod = new PartialInterval();
         observationsperiod.setFrom(new Partial(source.getVaraktighetFrom()));
         observationsperiod.setTom(new Partial(source.getVaraktighetTom()));
-        nedsattning.setObservationsPeriod(observationsperiod);
+        nedsattning.setObservationsperiod(observationsperiod);
 
         return nedsattning;
     }
@@ -348,7 +347,7 @@ public final class TransportToExternalFk7263LegacyConverter {
         Observation observation = new Observation();
         observation.setBeskrivning(bedomtTillstand.getBeskrivning());
         // TODO: ObservationsKategori ?
-        observation.setObservationsKod(ObservationsKoder.FORLOPP);
+        observation.setObservationskod(ObservationsKoder.FORLOPP);
         return observation;
     }
 
@@ -361,8 +360,8 @@ public final class TransportToExternalFk7263LegacyConverter {
 
         if (medicinsktTillstand.getTillstandskod() != null) {
 
-            observation.setObservationsKategori(DIAGNOS);
-            observation.setObservationsKod(IsoTypeConverter.toKod(medicinsktTillstand.getTillstandskod()));
+            observation.setObservationskategori(DIAGNOS);
+            observation.setObservationskod(IsoTypeConverter.toKod(medicinsktTillstand.getTillstandskod()));
         }
         return observation;
     }

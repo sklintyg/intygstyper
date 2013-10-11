@@ -90,8 +90,8 @@
       "code" : "SJK2"
     }
   } ],
-  "observations" : [ {
-    "observationsKod" : {
+  "observationer" : [ {
+    "observationskod" : {
       "codeSystem" : "1.2.752.116.2.1.1.1",
       "codeSystemName" : "SNOMED-CT",
       "code" : "39104002"

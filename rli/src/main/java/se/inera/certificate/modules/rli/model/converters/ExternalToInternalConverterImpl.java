@@ -100,7 +100,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         intUtlatande.setSigneringsdatum(extUtlatande.getSigneringsdatum());
         intUtlatande.setSkickatdatum(extUtlatande.getSkickatdatum());
 
-        intUtlatande.setKommentarer(extUtlatande.getKommentars());
+        intUtlatande.setKommentarer(extUtlatande.getKommentarer());
 
         HoSPersonal intHoSPersonal = convertToIntHoSPersonal(extUtlatande.getSkapadAv());
         intUtlatande.setSkapadAv(intHoSPersonal);

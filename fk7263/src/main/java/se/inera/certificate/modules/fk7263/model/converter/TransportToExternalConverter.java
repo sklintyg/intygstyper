@@ -53,19 +53,19 @@ public final class TransportToExternalConverter {
 
         fk7263utlatande.setId(IsoTypeConverter.toId(source.getUtlatandeId()));
         fk7263utlatande.setTyp(IsoTypeConverter.toKod(source.getTypAvUtlatande()));
-        fk7263utlatande.setKommentars(source.getKommentars());
-        fk7263utlatande.setSigneringsDatum(source.getSigneringsdatum());
-        fk7263utlatande.setSkickatDatum(source.getSkickatdatum());
+        fk7263utlatande.getKommentarer().addAll(source.getKommentars());
+        fk7263utlatande.setSigneringsdatum(source.getSigneringsdatum());
+        fk7263utlatande.setSkickatdatum(source.getSkickatdatum());
 
         fk7263utlatande.setPatient(convert(source.getPatient()));
 
         fk7263utlatande.setSkapadAv(convert(source.getSkapadAv()));
 
-        fk7263utlatande.setObservations(convertObservations(source.getObservations()));
+        fk7263utlatande.getObservationer().addAll(convertObservations(source.getObservations()));
 
-        fk7263utlatande.setAktiviteter(convertAktiviteter(source.getAktivitets()));
-        fk7263utlatande.setReferenser(convertReferenser(source.getReferens()));
-        fk7263utlatande.setVardkontakter(convertVardkontakter(source.getVardkontakts()));
+        fk7263utlatande.getAktiviteter().addAll(convertAktiviteter(source.getAktivitets()));
+        fk7263utlatande.getReferenser().addAll(convertReferenser(source.getReferens()));
+        fk7263utlatande.getVardkontakter().addAll(convertVardkontakter(source.getVardkontakts()));
 
         return fk7263utlatande;
     }
@@ -80,7 +80,7 @@ public final class TransportToExternalConverter {
 
     private static Sysselsattning convert(SysselsattningType source) {
         Sysselsattning sysselsattning = new Sysselsattning();
-        sysselsattning.setSysselsattningsTyp(IsoTypeConverter.toKod(source.getTypAvSysselsattning()));
+        sysselsattning.setSysselsattningstyp(IsoTypeConverter.toKod(source.getTypAvSysselsattning()));
         return sysselsattning;
     }
 
@@ -102,18 +102,18 @@ public final class TransportToExternalConverter {
 
         Observation observation = new Observation();
 
-        observation.setObservationsKategori(IsoTypeConverter.toKod(source.getObservationskategori()));
-        observation.setObservationsKod(IsoTypeConverter.toKod(source.getObservationskod()));
+        observation.setObservationskategori(IsoTypeConverter.toKod(source.getObservationskategori()));
+        observation.setObservationskod(IsoTypeConverter.toKod(source.getObservationskod()));
 
         if (source.getObservationsperiod() != null) {
             PartialInterval observationsPeriod = new PartialInterval(source.getObservationsperiod().getFrom(), source
                     .getObservationsperiod().getTom());
-            observation.setObservationsPeriod(observationsPeriod);
+            observation.setObservationsperiod(observationsPeriod);
         }
 
-        observation.setVarde(convertVarde(source.getVardes()));
+        observation.getVarde().addAll(convertVarde(source.getVardes()));
 
-        observation.setPrognoser(convertPrognoser(source.getPrognos()));
+        observation.getPrognoser().addAll(convertPrognoser(source.getPrognos()));
         observation.setBeskrivning(source.getBeskrivning());
 
         return observation;
@@ -141,7 +141,7 @@ public final class TransportToExternalConverter {
             return null;
 
         Prognos prognos = new Prognos();
-        prognos.setPrognosKod(IsoTypeConverter.toKod(source.getPrognoskod()));
+        prognos.setPrognoskod(IsoTypeConverter.toKod(source.getPrognoskod()));
         prognos.setBeskrivning(source.getBeskrivning());
         return prognos;
     }
@@ -223,16 +223,16 @@ public final class TransportToExternalConverter {
         patient.setId(IsoTypeConverter.toId(source.getPersonId()));
 
         if (!source.getFornamns().isEmpty()) {
-            patient.setFornamn(source.getFornamns());
+            patient.getFornamn().addAll(source.getFornamns());
         }
 
         patient.setEfternamn(source.getEfternamn());
 
         if (!source.getMellannamns().isEmpty()) {
-            patient.setMellannamn(source.getMellannamns());
+            patient.getMellannamn().addAll(source.getMellannamns());
         }
 
-        patient.setSysselsattnings(convert(source.getSysselsattnings()));
+        patient.getSysselsattningar().addAll(convert(source.getSysselsattnings()));
 
         if (!source.getArbetsuppgifts().isEmpty()) {
             List<Arbetsuppgift> arbetsuppgifts = new ArrayList<>();
@@ -241,7 +241,7 @@ public final class TransportToExternalConverter {
                 arbetsuppgift.setTypAvArbetsuppgift(sourceArbetsuppgift.getTypAvArbetsuppgift());
                 arbetsuppgifts.add(arbetsuppgift);
             }
-            patient.setArbetsuppgifts(arbetsuppgifts);
+            patient.getArbetsuppgifter().addAll(arbetsuppgifts);
         }
 
         return patient;

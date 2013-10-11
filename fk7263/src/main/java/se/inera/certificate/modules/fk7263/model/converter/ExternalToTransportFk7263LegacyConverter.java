@@ -65,12 +65,12 @@ public final class ExternalToTransportFk7263LegacyConverter {
         register.getLakarutlatande().setLakarutlatandeId(toII(utlatande.getId()).getExtension());
         register.getLakarutlatande().setTypAvUtlatande(FK7263);
 
-        if (utlatande.getKommentars() != null && !utlatande.getKommentars().isEmpty()) {
-            register.getLakarutlatande().setKommentar(utlatande.getKommentars().get(0));
+        if (utlatande.getKommentarer() != null && !utlatande.getKommentarer().isEmpty()) {
+            register.getLakarutlatande().setKommentar(utlatande.getKommentarer().get(0));
         }
 
-        register.getLakarutlatande().setSigneringsdatum(utlatande.getSigneringsDatum());
-        register.getLakarutlatande().setSkickatDatum(utlatande.getSkickatDatum());
+        register.getLakarutlatande().setSigneringsdatum(utlatande.getSigneringsdatum());
+        register.getLakarutlatande().setSkickatDatum(utlatande.getSkickatdatum());
         register.getLakarutlatande().setPatient(toJaxb(utlatande.getPatient()));
         register.getLakarutlatande().setSkapadAvHosPersonal(toJaxb(utlatande.getSkapadAv()));
 
@@ -131,7 +131,7 @@ public final class ExternalToTransportFk7263LegacyConverter {
                 String beskrivning = prognos.getBeskrivning();
                 arbetsformagaType.setMotivering(beskrivning);
 
-                Kod prognosKod = prognos.getPrognosKod();
+                Kod prognosKod = prognos.getPrognoskod();
                 if (prognosKod != null) {
                     String fk7263String = Prognoskoder.mapToFk7263.get(prognosKod);
                     arbetsformagaType.setPrognosangivelse(Prognosangivelse.fromValue(fk7263String));
@@ -144,14 +144,14 @@ public final class ExternalToTransportFk7263LegacyConverter {
             Fk7263Patient patient = utlatande.getPatient();
 
             // attach arbetsuppgift if available
-            if (patient.getArbetsuppgifts() != null && !patient.getArbetsuppgifts().isEmpty()) {
+            if (patient.getArbetsuppgifter() != null && !patient.getArbetsuppgifter().isEmpty()) {
                 ArbetsuppgiftType arbetsuppgift = new ArbetsuppgiftType();
-                arbetsuppgift.setTypAvArbetsuppgift(patient.getArbetsuppgifts().get(0).getTypAvArbetsuppgift());
+                arbetsuppgift.setTypAvArbetsuppgift(patient.getArbetsuppgifter().get(0).getTypAvArbetsuppgift());
                 arbetsformagaType.setArbetsuppgift(arbetsuppgift);
             }
 
-            if (patient.getSysselsattnings() != null) {
-                arbetsformagaType.getSysselsattnings().addAll(convertSysselsattnings(patient.getSysselsattnings()));
+            if (patient.getSysselsattningar() != null) {
+                arbetsformagaType.getSysselsattnings().addAll(convertSysselsattnings(patient.getSysselsattningar()));
             }
         }
 
@@ -179,9 +179,9 @@ public final class ExternalToTransportFk7263LegacyConverter {
                 }
             }
 
-            if (arbetsformaga.getObservationsPeriod() != null) {
-                nedsattningType.setVaraktighetFrom(new LocalDate(arbetsformaga.getObservationsPeriod().getFrom()));
-                nedsattningType.setVaraktighetTom(new LocalDate(arbetsformaga.getObservationsPeriod().getTom()));
+            if (arbetsformaga.getObservationsperiod() != null) {
+                nedsattningType.setVaraktighetFrom(new LocalDate(arbetsformaga.getObservationsperiod().getFrom()));
+                nedsattningType.setVaraktighetTom(new LocalDate(arbetsformaga.getObservationsperiod().getTom()));
             }
 
             arbetsformagaType.getArbetsformagaNedsattnings().add(nedsattningType);
@@ -202,13 +202,13 @@ public final class ExternalToTransportFk7263LegacyConverter {
 
     private static SysselsattningType convert(Sysselsattning source) {
 
-        if (source == null || source.getSysselsattningsTyp() == null) {
+        if (source == null || source.getSysselsattningstyp() == null) {
             return null;
         }
 
         SysselsattningType sysselsattningTyp = null;
         try {
-            Kod sysselsattning = source.getSysselsattningsTyp();
+            Kod sysselsattning = source.getSysselsattningstyp();
             String fk7263String = Sysselsattningskoder.mapToFk7263.get(sysselsattning);
             if (fk7263String != null) {
                 sysselsattningTyp = new SysselsattningType();
@@ -338,7 +338,7 @@ public final class ExternalToTransportFk7263LegacyConverter {
     private static MedicinsktTillstandType toMedicinsktTillstand(Observation diagnos) {
         MedicinsktTillstandType tillstand = new MedicinsktTillstandType();
         tillstand.setBeskrivning(diagnos.getBeskrivning());
-        tillstand.setTillstandskod(toCD(diagnos.getObservationsKod()));
+        tillstand.setTillstandskod(toCD(diagnos.getObservationskod()));
         return tillstand;
     }
 

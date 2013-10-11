@@ -14,12 +14,12 @@ import se.inera.certificate.model.util.Strings;
 public class Fk7263Patient {
 
     private Id id;
-    private List<String> fornamn = new ArrayList<>();
-    private List<String> mellannamn = new ArrayList<>();
+    private List<String> fornamn;
+    private List<String> mellannamn;
     private String efternamn;
 
-    private List<Sysselsattning> sysselsattnings = new ArrayList<>();
-    private List<Arbetsuppgift> arbetsuppgifts = new ArrayList<>();
+    private List<Sysselsattning> sysselsattningar;
+    private List<Arbetsuppgift> arbetsuppgifter;
 
     public Id getId() {
         return id;
@@ -30,19 +30,17 @@ public class Fk7263Patient {
     }
 
     public List<String> getFornamn() {
+        if (fornamn == null) {
+            fornamn = new ArrayList<>();
+        }
         return fornamn;
     }
 
-    public void setFornamn(List<String> fornamn) {
-        this.fornamn = fornamn;
-    }
-
     public List<String> getMellannamn() {
+        if (mellannamn == null) {
+            mellannamn = new ArrayList<>();
+        }
         return mellannamn;
-    }
-
-    public void setMellannamn(List<String> mellannamn) {
-        this.mellannamn = mellannamn;
     }
 
     public String getEfternamn() {
@@ -56,30 +54,24 @@ public class Fk7263Patient {
     public String getFullstandigtNamn() {
         List<String> names = new ArrayList<>();
 
-        if (fornamn != null) {
-            names.addAll(fornamn);
-        }
-        if (mellannamn != null) {
-            names.addAll(mellannamn);
-        }
+        names.addAll(getFornamn());
+        names.addAll(getMellannamn());
         names.add(efternamn);
 
         return Strings.join(" ", names);
     }
 
-    public List<Sysselsattning> getSysselsattnings() {
-        return sysselsattnings;
+    public List<Sysselsattning> getSysselsattningar() {
+        if (sysselsattningar == null) {
+            sysselsattningar = new ArrayList<>();
+        }
+        return sysselsattningar;
     }
 
-    public void setSysselsattnings(List<Sysselsattning> sysselsattnings) {
-        this.sysselsattnings = sysselsattnings;
-    }
-
-    public List<Arbetsuppgift> getArbetsuppgifts() {
-        return arbetsuppgifts;
-    }
-
-    public void setArbetsuppgifts(List<Arbetsuppgift> arbetsuppgifts) {
-        this.arbetsuppgifts = arbetsuppgifts;
+    public List<Arbetsuppgift> getArbetsuppgifter() {
+        if (arbetsuppgifter == null) {
+            arbetsuppgifter = new ArrayList<>();
+        }
+        return arbetsuppgifter;
     }
 }

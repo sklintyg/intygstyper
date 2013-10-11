@@ -3,7 +3,7 @@
         "from" : "2011-01-26",
         "tom" : "2011-05-31"
     },
-    "skickatDatum" : "2011-03-23T09:29:15.000",
+    "skickatdatum" : "2011-03-23T09:29:15.000",
     "patientNamn" : "Test Testorsson",
     "patientPersonnummer" : "19121212-1212",
     "avstangningSmittskydd" : false,

@@ -43,7 +43,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
         Undersokning intUndersokning = new Undersokning();
 
-        populateUndersokningFromObservationer(extUtlatande.getObservations(), intUndersokning);
+        populateUndersokningFromObservationer(extUtlatande.getObservationer(), intUndersokning);
 
         populateUndersokningFromAktiviteter(extUtlatande.getAktiviteter(), intUndersokning);
 
@@ -251,7 +251,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
 
         LOG.trace("Handling pregnancy observations");
 
-        PartialInterval observationsperiod = obs.getObservationsPeriod();
+        PartialInterval observationsperiod = obs.getObservationsperiod();
         Partial obsPeriodSlut = observationsperiod.getTom();
 
         String estimatedDeliveryDate = PartialConverter.partialToString(obsPeriodSlut);
@@ -278,7 +278,7 @@ public class UndersokingPopulatorImpl implements UndersokningPopulator {
             }
 
             Observation obs = (Observation) obj;
-            Kod obsKod = obs.getObservationsKod();
+            Kod obsKod = obs.getObservationskod();
 
             return (obsKod != null && obsKod.getCode().equals(obsKodEnum.getCode()));
         }

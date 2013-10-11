@@ -191,7 +191,7 @@ public class TransportToExternalConverterTest {
         se.inera.certificate.common.v1.Utlatande source = buildUtlatandeWithoutObservation();
         Utlatande utlatande = converter.transportToExternal(source);
 
-        assertEquals(new ArrayList<String>(), utlatande.getObservations());
+        assertEquals(new ArrayList<String>(), utlatande.getObservationer());
     }
 
     @Test
@@ -253,9 +253,9 @@ public class TransportToExternalConverterTest {
         externalList = converter.convertObservations(transportList);
         Observation externalObs = externalList.get(0);
 
-        assertEquals(transportObs.getObservationsperiod().getFrom(), externalObs.getObservationsPeriod().getFrom());
+        assertEquals(transportObs.getObservationsperiod().getFrom(), externalObs.getObservationsperiod().getFrom());
 
-        assertEquals(transportObs.getObservationsperiod().getTom(), externalObs.getObservationsPeriod().getTom());
+        assertEquals(transportObs.getObservationsperiod().getTom(), externalObs.getObservationsperiod().getTom());
 
         assertEquals(transportObs.getUtforsAv().getAntasAv().getFullstandigtNamn(), externalObs.getUtforsAv()
                 .getAntasAv().getNamn());

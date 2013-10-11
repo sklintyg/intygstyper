@@ -60,7 +60,7 @@ public class UndersokingPopulatorTest {
 
         Observation sjukObs = constructObservation(ObservationsKod.GRAVIDITET);
 
-        sjukObs.getObservationsPeriod().setTom(TestUtils.constructPartial(2013, 12, 24));
+        sjukObs.getObservationsperiod().setTom(TestUtils.constructPartial(2013, 12, 24));
 
         List<Observation> observationer = new ArrayList<Observation>();
         observationer.add(sjukObs);
@@ -124,9 +124,9 @@ public class UndersokingPopulatorTest {
         Observation obs = new Observation();
 
         PartialInterval obsPeriod = new PartialInterval(null, null);
-        obs.setObservationsPeriod(obsPeriod);
+        obs.setObservationsperiod(obsPeriod);
 
-        obs.setObservationsKod(new Kod(obsKod.getCode()));
+        obs.setObservationskod(new Kod(obsKod.getCode()));
 
         return obs;
     }

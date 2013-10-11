@@ -50,15 +50,15 @@ public final class ExternalToTransportConverter {
         utlatande.setUtlatandeId(IsoTypeConverter.toII(source.getId()));
         utlatande.setTypAvUtlatande(IsoTypeConverter.toCD(source.getTyp()));
 
-        addAll(utlatande.getKommentars(), source.getKommentars());
-        utlatande.setSigneringsdatum(source.getSigneringsDatum());
-        utlatande.setSkickatdatum(source.getSkickatDatum());
+        addAll(utlatande.getKommentars(), source.getKommentarer());
+        utlatande.setSigneringsdatum(source.getSigneringsdatum());
+        utlatande.setSkickatdatum(source.getSkickatdatum());
 
         utlatande.setPatient(convert(source.getPatient()));
         utlatande.setSkapadAv(convert(source.getSkapadAv()));
 
         addAll(utlatande.getAktivitets(), convertAktiviteter(source.getAktiviteter()));
-        addAll(utlatande.getObservations(), convertObservations(source.getObservations()));
+        addAll(utlatande.getObservations(), convertObservations(source.getObservationer()));
         addAll(utlatande.getVardkontakts(), convertVardkontakter(source.getVardkontakter()));
         addAll(utlatande.getReferens(), convertReferenser(source.getReferenser()));
 
@@ -123,13 +123,13 @@ public final class ExternalToTransportConverter {
 
     private ObservationType convert(Observation source) {
         ObservationType observation = new ObservationType();
-        observation.setObservationskategori(IsoTypeConverter.toCD(source.getObservationsKategori()));
-        observation.setObservationskod(IsoTypeConverter.toCD(source.getObservationsKod()));
+        observation.setObservationskategori(IsoTypeConverter.toCD(source.getObservationskategori()));
+        observation.setObservationskod(IsoTypeConverter.toCD(source.getObservationskod()));
 
-        if (source.getObservationsPeriod() != null) {
+        if (source.getObservationsperiod() != null) {
             PartialDateInterval interval = new PartialDateInterval();
-            interval.setFrom(source.getObservationsPeriod().getFrom());
-            interval.setTom(source.getObservationsPeriod().getTom());
+            interval.setFrom(source.getObservationsperiod().getFrom());
+            interval.setTom(source.getObservationsperiod().getTom());
             observation.setObservationsperiod(interval);
         }
 
@@ -173,7 +173,7 @@ public final class ExternalToTransportConverter {
             return null;
 
         PrognosType prognos = new PrognosType();
-        prognos.setPrognoskod(IsoTypeConverter.toCD(source.getPrognosKod()));
+        prognos.setPrognoskod(IsoTypeConverter.toCD(source.getPrognoskod()));
         prognos.setBeskrivning(source.getBeskrivning());
         return prognos;
     }
@@ -246,8 +246,8 @@ public final class ExternalToTransportConverter {
         addAll(patient.getFornamns(), source.getFornamn());
         addAll(patient.getMellannamns(), source.getMellannamn());
         patient.setEfternamn(source.getEfternamn());
-        addAll(patient.getSysselsattnings(), convertSysselsattnings(source.getSysselsattnings()));
-        addAll(patient.getArbetsuppgifts(), convertArbetsuppgifts(source.getArbetsuppgifts()));
+        addAll(patient.getSysselsattnings(), convertSysselsattnings(source.getSysselsattningar()));
+        addAll(patient.getArbetsuppgifts(), convertArbetsuppgifts(source.getArbetsuppgifter()));
         return patient;
     }
 
@@ -288,7 +288,7 @@ public final class ExternalToTransportConverter {
             return null;
 
         SysselsattningType sysselsattning = new SysselsattningType();
-        sysselsattning.setTypAvSysselsattning(IsoTypeConverter.toCD(source.getSysselsattningsTyp()));
+        sysselsattning.setTypAvSysselsattning(IsoTypeConverter.toCD(source.getSysselsattningstyp()));
         return sysselsattning;
     }
 

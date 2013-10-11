@@ -77,13 +77,13 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
 
         utlatande.setArrangemang(convertArrangemang(source.getArrangemang()));
 
-        utlatande.getObservations().addAll(convertObservationer(source.getUndersokning()));
+        utlatande.getObservationer().addAll(convertObservationer(source.getUndersokning()));
 
         utlatande.getAktiviteter().addAll(convertAktiviteter(source.getUndersokning()));
 
         utlatande.getRekommendationer().addAll(convertRekommendationer(source.getRekommendation()));
 
-        utlatande.getKommentars().addAll(source.getKommentarer());
+        utlatande.getKommentarer().addAll(source.getKommentarer());
 
         return utlatande;
 
@@ -113,23 +113,23 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
         if (source.getOrsakforavbokning() == OrsakAvbokning.RESENAR_SJUK) {
             Observation o = new Observation();
 
-            o.setObservationsKod(buildObservationsKod(ObservationsKod.SJUKDOM));
+            o.setObservationskod(buildObservationsKod(ObservationsKod.SJUKDOM));
 
             o.setUtforsAv(convertUtforsAv(source.getUtforsAv()));
             obs.add(o);
 
         } else if (source.getOrsakforavbokning() == OrsakAvbokning.RESENAR_GRAVID) {
             Observation o1 = new Observation();
-            o1.setObservationsKod(buildObservationsKod(ObservationsKod.KOMPLIKATION_VID_GRAVIDITET));
+            o1.setObservationskod(buildObservationsKod(ObservationsKod.KOMPLIKATION_VID_GRAVIDITET));
             o1.setUtforsAv(convertUtforsAv(source.getUtforsAv()));
             obs.add(o1);
 
             Observation o2 = new Observation();
-            o2.setObservationsKod(buildObservationsKod(ObservationsKod.GRAVIDITET));
+            o2.setObservationskod(buildObservationsKod(ObservationsKod.GRAVIDITET));
 
             PartialInterval period = new PartialInterval();
             period.setTom(PartialConverter.stringToPartial(source.getGraviditet().getBeraknatForlossningsdatum()));
-            o2.setObservationsPeriod(period);
+            o2.setObservationsperiod(period);
             o2.setUtforsAv(convertUtforsAv(source.getUtforsAv()));
 
             obs.add(o2);
@@ -369,8 +369,8 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
     Patient convertPatient(se.inera.certificate.modules.rli.model.edit.Patient source) {
         Patient patient = new Patient();
         patient.setEfternamn(source.getEfternamn());
-        patient.setFornamn(Arrays.asList(source.getFornamn()));
-        patient.setMellannamn(Arrays.asList(source.getMellannamn()));
+        patient.getFornamn().add(source.getFornamn());
+        patient.getMellannamn().add(source.getMellannamn());
         patient.setId(new Id(PERS_ID_ROOT, source.getPersonid()));
         patient.setPostadress(source.getPostadress());
         patient.setPostnummer(source.getPostnummer());

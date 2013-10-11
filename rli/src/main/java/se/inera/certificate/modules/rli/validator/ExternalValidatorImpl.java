@@ -160,7 +160,7 @@ public class ExternalValidatorImpl implements ExternalValidator {
      * Make sure Utlatande contains 1..* Observation
      */
     private void validateObservationer(Utlatande utlatande, List<String> validationErrors) {
-        List<Observation> observationer = utlatande.getObservations();
+        List<Observation> observationer = utlatande.getObservationer();
 
         if (observationer.isEmpty()) {
             validationErrors.add("No observations found");
@@ -174,8 +174,8 @@ public class ExternalValidatorImpl implements ExternalValidator {
     }
 
     private void checkObservation(Observation source, List<String> validationErrors) {
-        if (source.getObservationsPeriod() == null) {
-            validationErrors.add("No observationsperiod found in: " + source.getObservationsKod().getCode());
+        if (source.getObservationsperiod() == null) {
+            validationErrors.add("No observationsperiod found in: " + source.getObservationskod().getCode());
         }
 
         if (source.getUtforsAv().getAntasAv().getId() == null) {
