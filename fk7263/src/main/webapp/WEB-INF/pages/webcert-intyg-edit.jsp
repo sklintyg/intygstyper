@@ -69,32 +69,32 @@
 	          user-name="{{WC_CONTEXT.namn}}"
 	          caregiver-name="{{WC_CONTEXT.vardgivare.namn}}" 
 	          menu-defs="[
-	           {
-	             link :'/web/dashboard#/index', 
-	             label:'Mina osignerade intyg',
-	             requires_doctor: true
-	           },
-	           {
-	             link :'/web/dashboard#/unsigned', 
-	             label:'Enhetens osignerade intyg',
-	             requires_doctor: false
-	           },
-	           {
-	             link :'/web/dashboard#/unhandled-qa',
-	             label:'Enhetens obesvarade frågor',
-	             requires_doctor: false
-	           },
-	           {
-	             link :'/web/dashboard#/create', 
-	             label:'Skriv intyg',
-	             requires_doctor: false
-	           },
-	           {
-	             link :'/web/dashboard#/about.support',
-	             label:'Om webcert',
-	             requires_doctor: false
-	           },
-	          ]"
+				     {
+				       link :'/web/dashboard#/create', 
+				       label:'Sök/Skriv intyg',
+				       requires_doctor: false
+				     },
+				     {
+				       link :'/web/dashboard#/index', 
+				       label:'Mina osignerade intyg',
+				       requires_doctor: true
+				     },
+				     {
+				       link :'/web/dashboard#/unhandled-qa',
+				       label:'Enhetens frågor och svar',
+				       requires_doctor: false
+				     },
+				     {
+				       link :'/web/dashboard#/unsigned', 
+				       label:'Enhetens osignerade intyg',
+				       requires_doctor: false
+				     },
+				     {
+				       link :'/web/dashboard#/about.support',
+				       label:'Om Webcert',
+				       requires_doctor: false
+				     },
+				    ]"
 	          default-active="unhandled-qa">
 	        </div>
 	        <div class="header-fix-panel">   
