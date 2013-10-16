@@ -24,20 +24,12 @@ public class Fk7263ModuleApiTest {
 
     @Test
     public void testSchemaValidationDuringUnmarshall() throws IOException {
-
-        String registerMedicalCertificate = FileUtils.readFileToString(new ClassPathResource(
-                "Fk7263ModuleApiTest/registerMedicalCertificate_invalid.xml").getFile());
-        Response response = fk7263ModuleApi.unmarshall(registerMedicalCertificate);
-
-        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
-        assertTrue(response.getEntity().toString().startsWith("cvc-complex-type.2.4.b:"));
-
         String utlatande = FileUtils
                 .readFileToString(new ClassPathResource("Fk7263ModuleApiTest/utlatande_invalid.xml").getFile());
-        response = fk7263ModuleApi.unmarshall(utlatande);
+        Response response = fk7263ModuleApi.unmarshall(utlatande);
 
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
-        assertTrue(response.getEntity().toString().startsWith("cvc-complex-type.2.4.b:"));
+        assertTrue(response.getEntity().toString().startsWith("Validation failed for intyg 123456: cvc-complex-type.2.4.b"));
     }
 
     @Test
