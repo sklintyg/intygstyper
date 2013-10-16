@@ -117,7 +117,8 @@ public class Fk7263ModuleApi {
                 validateSchema(utlatandeSchemaValidator, transportXml);
             }
         } catch (ValidationException ex) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+            String message = responseBody(utlatande.getUtlatandeId().getExtension(), ex.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
         }
 
         Fk7263Utlatande externalModel = convertTransportJaxbToModel(jaxbObject);
@@ -129,9 +130,13 @@ public class Fk7263ModuleApi {
         if (validationErrors.isEmpty()) {
             return Response.ok(externalModel).build();
         } else {
-            String response = Strings.join(",", validationErrors);
+            String response = responseBody(internalModel.getId(), Strings.join(",", validationErrors));
             return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
         }
+    }
+
+    private String responseBody(String utlatandeId, String validationErrors) {
+        return "Validation failed for intyg " + utlatandeId + ": " + validationErrors;
     }
 
     private void validateSchema(Validator validator, String xml) {
