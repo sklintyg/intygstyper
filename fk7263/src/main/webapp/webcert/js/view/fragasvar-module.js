@@ -70,96 +70,117 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
  * certificate
  * 
  */
-angular.module('wc.fragasvarmodule').controller('QACtrl', [ '$scope', '$log', '$timeout', 'fragaSvarService', function CreateCertCtrl($scope, $log, $timeout, fragaSvarService) {
+angular.module('wc.fragasvarmodule').controller('QACtrl',
+        [ '$scope', '$rootScope', '$log', '$timeout', 'fragaSvarService', function CreateCertCtrl($scope, $rootScope, $log, $timeout, fragaSvarService) {
 
-    // init state
-    $scope.qaList = {};
-    $scope.widgetState = {
-        doneLoading : false,
-        hasError : false,
-        newQuestionOpen : false
-    }
-    // Request loading of QA's for this certificate
-    $timeout(function() { // wrap in timeout to simulate latency - remove soon
-        fragaSvarService.getQAForCertificate($scope.MODULE_CONFIG.CERT_ID_PARAMETER, function(result) {
-            $log.debug("Got getQAForCertificate data:" + result);
-            $scope.widgetState.doneLoading = true;
-            if (result != null) {
-                $scope.qaList = result;
-            } else {
-                // show error view
-                $scope.widgetState.hasError = true;
+            // init state
+            $scope.qaList = {};
+            $scope.widgetState = {
+                doneLoading : false,
+                hasError : false,
+                newQuestionOpen : false
             }
-        });
-    }, 500);
+            // Request loading of QA's for this certificate
+            fragaSvarService.getQAForCertificate($scope.MODULE_CONFIG.CERT_ID_PARAMETER, function(result) {
+                $log.debug("Got getQAForCertificate data:" + result);
+                $scope.widgetState.doneLoading = true;
+                if (result != null) {
+                    $scope.decorateWithGUIParameters(result);
+                    $scope.qaList = result;
+                } else {
+                    // show error view
+                    $scope.widgetState.hasError = true;
+                }
+            });
 
-    $scope.openIssuesFilter = function(qa) {
-        return qa.status != "CLOSED";
-    };
+            $scope.decorateWithGUIParameters = function(list) {
+                // answerDisabled
+                // answerButtonToolTip
+                angular.forEach(list, function(qa, key) {
+                    if (qa.amne == "PAMINNELSE") {
+                        // RE-020 Påminnelser is never answerable
+                        qa.answerDisabled = true;
+                        qa.answerButtonToolTip = "Påminnelser kan inte besvaras";
+                    } else if (qa.amne == "KOMPLETTERING_AV_LAKARINTYG" && !$rootScope.WC_CONTEXT.lakare) {
+                     // RE-005, RE-006 
+                        qa.answerDisabled = true;
+                        qa.answerButtonToolTip = "Kompletteringar kan endast besvaras av läkare";
+                    } else {
+                        qa.answerDisabled = false;
+                        qa.answerButtonToolTip = "Skicka svaret";
+                    }
 
-    $scope.closedIssuesFilter = function(qa) {
-        return qa.status === "CLOSED";
-    };
-    $scope.newQuestionOpen = false;
-
-    $scope.toggleQuestionForm = function() {
-        $scope.widgetState.newQuestionOpen = !$scope.widgetState.newQuestionOpen;
-        $scope.initQuestionForm();
-    }
-
-    $scope.sendAnswer = function sendAnswer(qa) {
-        $log.debug("saveAnswer:" + qa);
-        var qaActive = qa;
-        fragaSvarService.saveAnswer(qa, function(result) {
-            $log.debug("Got saveAnswer result:" + result);
-            $scope.widgetState.doneLoading = true;
-            if (result != null) {
-                angular.copy(result, qa);
-            } else {
-                // show error view
-                $scope.widgetState.hasError = true;
+                });
             }
-        });
-    }
-    $scope.initQuestionForm = function() {
-        $scope.newQuestion = {
-            topics : [ {
-                label : 'Arbetstidsförläggning',
-                value : 'ARBETSTIDSFORLAGGNING'
-            }, {
-                label : 'Avstämningsmöte',
-                value : 'AVSTAMNINGSMOTE'
-            }, {
-                label : 'Kontakt',
-                value : 'KONTAKT'
-            }, {
-                label : 'Övrigt',
-                value : 'OVRIGT'
-            } ],
-            frageText : ""
-        };
-        $scope.newQuestion.chosenTopic = $scope.newQuestion.topics[3]; // 'Övrigt'
-        // is
-        // default
-    }
-    $scope.initQuestionForm();
+            $scope.openIssuesFilter = function(qa) {
+                return qa.status != "CLOSED";
+            };
 
-    $scope.sendQuestion = function sendQuestion(newQuestion) {
-        $log.debug("sendQuestion:" + newQuestion);
+            $scope.closedIssuesFilter = function(qa) {
+                return qa.status === "CLOSED";
+            };
+            $scope.newQuestionOpen = false;
 
-        fragaSvarService.saveNewQuestion($scope.MODULE_CONFIG.CERT_ID_PARAMETER, newQuestion, function(result) {
-            $log.debug("Got saveNewQuestion result:" + result);
-            if (result != null) {
-                // result is a new FragaSvar Instance: add it to our local repo
-                $scope.qaList.push(result);
-                //close question form
-                $scope.toggleQuestionForm();
-                
-            } else {
-                // show error view
-                $scope.widgetState.hasError = true;
+            $scope.toggleQuestionForm = function() {
+                $scope.widgetState.newQuestionOpen = !$scope.widgetState.newQuestionOpen;
+                $scope.initQuestionForm();
             }
-        });
-    }
 
-} ]);
+            $scope.sendAnswer = function sendAnswer(qa) {
+                $log.debug("saveAnswer:" + qa);
+                var qaActive = qa;
+                fragaSvarService.saveAnswer(qa, function(result) {
+                    $log.debug("Got saveAnswer result:" + result);
+                    $scope.widgetState.doneLoading = true;
+                    if (result != null) {
+                        angular.copy(result, qa);
+                    } else {
+                        // show error view
+                        $scope.widgetState.hasError = true;
+                    }
+                });
+            }
+            $scope.initQuestionForm = function() {
+                // Topics are defined under RE-13
+                $scope.newQuestion = {
+                    topics : [ {
+                        label : 'Arbetstidsförläggning',
+                        value : 'ARBETSTIDSFORLAGGNING'
+                    }, {
+                        label : 'Avstämningsmöte',
+                        value : 'AVSTAMNINGSMOTE'
+                    }, {
+                        label : 'Kontakt',
+                        value : 'KONTAKT'
+                    }, {
+                        label : 'Övrigt',
+                        value : 'OVRIGT'
+                    } ],
+                    frageText : ""
+                };
+                $scope.newQuestion.chosenTopic = $scope.newQuestion.topics[3]; // 'Övrigt'
+                // is
+                // default
+            }
+            $scope.initQuestionForm();
+
+            $scope.sendQuestion = function sendQuestion(newQuestion) {
+                $log.debug("sendQuestion:" + newQuestion);
+
+                fragaSvarService.saveNewQuestion($scope.MODULE_CONFIG.CERT_ID_PARAMETER, newQuestion, function(result) {
+                    $log.debug("Got saveNewQuestion result:" + result);
+                    if (result != null) {
+                        // result is a new FragaSvar Instance: add it to our
+                        // local repo
+                        $scope.qaList.push(result);
+                        // close question form
+                        $scope.toggleQuestionForm();
+
+                    } else {
+                        // show error view
+                        $scope.widgetState.hasError = true;
+                    }
+                });
+            }
+
+        } ]);

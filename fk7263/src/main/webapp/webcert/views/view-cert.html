@@ -239,7 +239,7 @@
                 <!-- Svarsdelen -->
 
                 <div class="qa-block" ng-class="{'qa-block-fk' : (qa.frageStallare | lowercase) == 'wc'}" ng-if="qa.status == 'ANSWERED'">
-                  <!-- frågan är besvarad -->
+                  <!-- frågan är redan BESVARAD -->
                   <div class="qa-block-head clearfix">
                     <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
 
@@ -257,12 +257,11 @@
                 </div>
 
                 <div class="control-group" ng-if="qa.status == 'PENDING_INTERNAL_ACTION'">
-                  <!--  väntar på svar från vården, skall kunna svara eller klarmarkera ändå-->
-                  <!-- väntar på svar från vården -->
+                  <!--  VÄNTAR på svar från vården, men skall kunna klarmarkeras ändå?-->
                   <label class="control-label">Svar</label>
                   <div class="controls">
-                    <textarea rows="5" ng-model="qa.svarsText" id="answerText-{{qa.internReferens}}"></textarea>
-                    <button class="btn btn-success" ng-click="sendAnswer(qa)" ng-disabled="!qa.svarsText" id="sendAnswerBtn-{{qa.internReferens}}">Skicka svar</button>
+                    <textarea rows="5" ng-model="qa.svarsText" id="answerText-{{qa.internReferens}}" ng-disabled="qa.answerDisabled"></textarea>
+                    <button class="btn btn-success" ng-click="sendAnswer(qa)" ng-disabled="!qa.svarsText || qa.answerDisabled" id="sendAnswerBtn-{{qa.internReferens}}" title="{{qa.answerButtonToolTip}}">Skicka svar</button>
                     <button class="btn btn-secondary">Markera som hanterad</button>
                   </div>
                 </div>
