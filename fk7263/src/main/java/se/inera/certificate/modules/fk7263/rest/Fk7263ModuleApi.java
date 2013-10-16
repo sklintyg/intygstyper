@@ -64,7 +64,6 @@ public class Fk7263ModuleApi {
         }
     }
 
-    private static final Validator registerMedicalCertificateSchemaValidator;
     private static final Validator utlatandeSchemaValidator;
 
     private static final String REGISTER_MEDICAL_CERTIFICATE_VERSION = "1.0";
@@ -73,21 +72,11 @@ public class Fk7263ModuleApi {
     // create schema validators
     static {
         try {
-            Source registerMedicalCertificateSchemaFile = new StreamSource(new ClassPathResource(
-                    "/schemas/v3/RegisterMedicalCertificateInteraction/RegisterMedicalCertificate_3.0.xsd").getFile());
-
             Source utlatandeSchemaFile = new StreamSource(new ClassPathResource("/schemas/fk7263_model.xsd").getFile());
-
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-
-            Schema registerMedicalCertificateSchema = schemaFactory
-                    .newSchema(new Source[] { registerMedicalCertificateSchemaFile });
-
             Schema utlatandeSchema = schemaFactory.newSchema(utlatandeSchemaFile);
 
-            registerMedicalCertificateSchemaValidator = registerMedicalCertificateSchema.newValidator();
             utlatandeSchemaValidator = utlatandeSchema.newValidator();
-
         } catch (IOException e) {
             throw new RuntimeException("Failed to read schema file", e);
         } catch (SAXException e) {
@@ -124,9 +113,6 @@ public class Fk7263ModuleApi {
 
         // perform schema validation
         try {
-            if (registerMedicalCertificate != null) {
-                validateSchema(registerMedicalCertificateSchemaValidator, transportXml);
-            }
             if (utlatande != null) {
                 validateSchema(utlatandeSchemaValidator, transportXml);
             }
