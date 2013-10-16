@@ -109,12 +109,7 @@
 	            <div class="control-group buttonbar">
                 <label class="control-label">{{cert.patientNamn}} - {{cert.patientPersonnummer}}</label>
 	              <button class="btn btn-info">Spara</button>
-	              <button class="btn btn-info">Släng</button>
-	              <button class="btn btn-info" disabled>Kopiera intyg</button>
-	              <button class="btn btn-info" disabled>
-	                Skriv ut <span class="caret"></span>
-	              </button>
-	              <button class="btn btn-inverse" disabled>Rätta intyg</button>
+	              <button class="btn btn-info">Ta bort utkast</button>
 	            </div>
 	          </div><!--  spinner end -->
 	        </div>
