@@ -67,6 +67,26 @@ public class UtlatandeValidatorTest {
 
         assertEquals(1, new UtlatandeValidator(utlatande).validate().size());
     }
+    
+    @Test
+    public void testRessattTillArbeteAktuellt() throws Exception {
+    	Fk7263Intyg utlatande = getValidUtlatande();
+
+        utlatande.setRessattTillArbeteAktuellt(true);
+        utlatande.setRessattTillArbeteEjAktuellt(false);
+
+        assertEquals(0, new UtlatandeValidator(utlatande).validate().size());
+    }
+    
+    @Test
+    public void testRessattTillArbeteEjAktuellt() throws Exception {
+    	Fk7263Intyg utlatande = getValidUtlatande();
+
+        utlatande.setRessattTillArbeteAktuellt(false);
+        utlatande.setRessattTillArbeteEjAktuellt(true);
+
+        assertEquals(0, new UtlatandeValidator(utlatande).validate().size());
+    }
 
     @Test
     public void testInvalidPatientIdExtension() throws Exception {
