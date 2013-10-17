@@ -95,7 +95,7 @@
 				       requires_doctor: false
 				     },
 				    ]"
-	          default-active="unhandled-qa">
+	          default-active="create">
 	        </div>
 	        <div class="header-fix-panel">   
 	          <a class="backlink" href="/web/dashboard#/unhandled-qa"><span message key="common.goback"></span></a>
