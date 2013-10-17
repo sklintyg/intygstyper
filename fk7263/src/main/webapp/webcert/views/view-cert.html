@@ -277,7 +277,7 @@
                 <div class="control-group" ng-if="qa.status == 'PENDING_EXTERNAL_ACTION' || qa.status == 'ANSWERED'">
                   <!--  fått svar eller väntar på svar från FK, skall kunna klarmarkera manuellt ändå -->
                   <div class="controls">
-                    <button class="btn btn-success">Markera som hanterad</button>
+                    <button class="btn btn-success" ng-click="updateAsHandled(qa)">Markera som hanterad</button>
                   </div>
                 </div>
 
@@ -338,7 +338,7 @@
               <div class="control-group">
                 <!--  Oavsett hur frågan stänged skall man kunna 'öppna' den igen? -->
                 <div class="controls">
-                  <button class="btn btn-secondary">Markera som ohanterade</button>
+                  <button class="btn btn-secondary" ng-click="updateAsUnHandled(qa)">Markera som ohanterade</button>
                 </div>
               </div>
 
