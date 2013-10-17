@@ -32,10 +32,42 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
             $log.debug("got data:" + data);
             callback(data);
         }).error(function(data, status, headers, config) {
-            $log.error("error " + status);
-            // Let calling code handle the error of no data response
-            callback(null);
-        });
+                $log.error("error " + status);
+                // Let calling code handle the error of no data response
+                callback(null);
+            });
+    }
+    /*
+     * update the handled status to handled ("Closed") of a QuestionAnswer
+     */
+    function _closeAsHandled(fragaSvar, callback) {
+        $log.debug("_closeAsHandled");
+
+        var restPath = '/moduleapi/fragasvar/close/' + fragaSvar.internReferens;
+        $http.get(restPath).success(function(data) {
+            $log.debug("got data:" + data);
+            callback(data);
+        }).error(function(data, status, headers, config) {
+                $log.error("error " + status);
+                // Let calling code handle the error of no data response
+                callback(null);
+            });
+    }
+    /*
+     * update the handled status to unhandled ("ANSWERED or PENDING_EXTERNAL_ACTION depending if the question has an answer set or not") of a QuestionAnswer
+     */
+    function _openAsUnhandled(fragaSvar, callback) {
+        $log.debug("_openAsUnhandled");
+
+        var restPath = '/moduleapi/fragasvar/open/' + fragaSvar.internReferens;
+        $http.get(restPath).success(function(data) {
+            $log.debug("got data:" + data);
+            callback(data);
+        }).error(function(data, status, headers, config) {
+                $log.error("error " + status);
+                // Let calling code handle the error of no data response
+                callback(null);
+            });
     }
 
     /*
@@ -61,7 +93,9 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
     return {
         getQAForCertificate : _getQAForCertificate,
         saveAnswer : _saveAnswer,
-        saveNewQuestion : _saveNewQuestion
+        saveNewQuestion : _saveNewQuestion,
+        closeAsHandled : _closeAsHandled,
+        openAsUnhandled : _openAsUnhandled
     }
 } ]);
 
@@ -140,6 +174,36 @@ angular.module('wc.fragasvarmodule').controller('QACtrl',
                     }
                 });
             }
+
+            $scope.updateAsHandled = function(qa){
+                $log.debug("updateAsHandled:" + qa);
+                fragaSvarService.closeAsHandled(qa, function(result) {
+                    $log.debug("Got saveAnswer result:" + result);
+                    $scope.widgetState.doneLoading = true;
+                    if (result != null) {
+                        angular.copy(result, qa);
+                    } else {
+                        // show error view
+                        $scope.widgetState.hasError = true;
+                    }
+                });
+
+            }
+            $scope.updateAsUnHandled = function(qa){
+                $log.debug("updateAsUnHandled:" + qa);
+                fragaSvarService.openAsUnhandled(qa, function(result) {
+                    $log.debug("Got saveAnswer result:" + result);
+                    $scope.widgetState.doneLoading = true;
+                    if (result != null) {
+                        angular.copy(result, qa);
+                    } else {
+                        // show error view
+                        $scope.widgetState.hasError = true;
+                    }
+                });
+
+            }
+
             $scope.initQuestionForm = function() {
                 // Topics are defined under RE-13
                 $scope.newQuestion = {
