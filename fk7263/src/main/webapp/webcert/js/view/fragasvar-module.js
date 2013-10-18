@@ -3,7 +3,7 @@
  * functionality in webcert.
  */
 angular.module('wc.fragasvarmodule', []);
-angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$log', function($http, $log) {
+angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$log', '$dialog', function($http, $log, $dialog) {
 
     /*
      * Load questions and answers data for a certificate
@@ -91,13 +91,45 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
             onError(data);
         });
     }
+    
+    /*
+     * Toggle vidarebefordrad state
+     */
+    function _setVidareBefordradState(id, isVidareBefordrad, callback) {
+        $log.debug("_setVidareBefordradState");
+        var restPath = '/moduleapi/fragasvar/' + id + "/setDispatchState";
+        $http.put(restPath, isVidareBefordrad.toString()).success(function(data) {
+            $log.debug("got data:" + data);
+            callback(data);
+        }).error(function(data, status, headers, config) {
+            $log.error("error " + status);
+            // Let calling code handle the error of no data response
+            callback(null);
+        });
+    }
+    
+    //Todo: this functionality also exists in wc, maybe refactor to common resource (wc-util)
+    function _showErrorMessageDialog(message, callback) {
+        var msgbox = $dialog.messageBox("Ett fel inträffade", message, [ {
+            label : 'OK',
+            result : true
+        } ]);
+
+        msgbox.open().then(function(result) {
+            if (callback) {
+                callback(result)
+            }
+        });
+    }
     // Return public API for the service
     return {
         getQAForCertificate : _getQAForCertificate,
         saveAnswer : _saveAnswer,
         saveNewQuestion : _saveNewQuestion,
         closeAsHandled : _closeAsHandled,
-        openAsUnhandled : _openAsUnhandled
+        openAsUnhandled : _openAsUnhandled,
+        setVidareBefordradState : _setVidareBefordradState,
+        showErrorMessageDialog: _showErrorMessageDialog
     }
 } ]);
 
@@ -206,7 +238,30 @@ angular.module('wc.fragasvarmodule').controller('QACtrl',
                 });
 
             }
+            $scope.onVidareBefordradChange = function(qa) {
+                qa.updateInProgress = true;
+                $timeout(
+                        function() { // wrap in timeout to
+                                        // simulate
+                            // latency -
+                            fragaSvarService
+                                    .setVidareBefordradState(
+                                            qa.internReferens,
+                                            qa.vidarebefordrad,
+                                            function(result) {
+                                                qa.updateInProgress = false;
 
+                                                if (result != null) {
+                                                    qa.vidarebefordrad = result.vidarebefordrad;
+                                                } else {
+                                                    qa.vidarebefordrad = !qa.vidarebefordrad;
+                                                    fragaSvarService
+                                                            .showErrorMessageDialog("Kunde inte markera/avmarkera frågan som vidarebefordrad. Försök gärna igen för att se om felet är tillfälligt. Annars kan du kontakta supporten");
+                                                }
+                                            });
+                        }, 1000);
+            }
+            
             $scope.updateAsHandled = function(qa) {
                 $log.debug("updateAsHandled:" + qa);
                 qa.doneLoading = false; // trigger local spinner
