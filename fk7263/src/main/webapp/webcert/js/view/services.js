@@ -11,16 +11,16 @@ angular.module('wc.fk7263.services').factory('viewCertificateService', [ '$http'
      * Load certificate details
      */
 
-    function _getCertificate(id, callback) {
+    function _getCertificate(id, onSuccess, onError) {
         $log.debug("_getCertificates id:" + id);
         var restPath = '/moduleapi/intyg/' + id;
         $http.get(restPath).success(function(data) {
             $log.debug("_getCertificates data:" + data);
-            callback(data);
+            onSuccess(data);
         }).error(function(data, status, headers, config) {
             $log.error("error " + status);
             //Let calling code handle the error of no data response 
-            callback(null);
+            onError(data);
         });
     }
     
