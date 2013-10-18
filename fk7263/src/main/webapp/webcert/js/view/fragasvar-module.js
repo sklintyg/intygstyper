@@ -91,7 +91,7 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
             onError(data);
         });
     }
-    
+
     /*
      * Toggle vidarebefordrad state
      */
@@ -107,8 +107,9 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
             callback(null);
         });
     }
-    
-    //Todo: this functionality also exists in wc, maybe refactor to common resource (wc-util)
+
+    // Todo: this functionality also exists in wc, maybe refactor to common
+    // resource (wc-util)
     function _showErrorMessageDialog(message, callback) {
         var msgbox = $dialog.messageBox("Ett fel inträffade", message, [ {
             label : 'OK',
@@ -129,7 +130,7 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
         closeAsHandled : _closeAsHandled,
         openAsUnhandled : _openAsUnhandled,
         setVidareBefordradState : _setVidareBefordradState,
-        showErrorMessageDialog: _showErrorMessageDialog
+        showErrorMessageDialog : _showErrorMessageDialog
     }
 } ]);
 
@@ -138,187 +139,220 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
  * certificate
  * 
  */
-angular.module('wc.fragasvarmodule').controller('QACtrl',
-        [ '$scope', '$rootScope', '$log', '$timeout', 'fragaSvarService', function CreateCertCtrl($scope, $rootScope, $log, $timeout, fragaSvarService) {
+angular
+        .module('wc.fragasvarmodule')
+        .controller(
+                'QACtrl',
+                [
+                        '$scope',
+                        '$rootScope',
+                        '$log',
+                        '$timeout',
+                        'fragaSvarService',
+                        function CreateCertCtrl($scope, $rootScope, $log, $timeout, fragaSvarService) {
 
-            // init state
-            $scope.qaList = {};
-            $scope.widgetState = {
-                doneLoading : false,
-                activeErrorMessageKey : null,
-                newQuestionOpen : false
-            }
+                            // init state
+                            $scope.qaList = {};
+                            $scope.widgetState = {
+                                doneLoading : false,
+                                activeErrorMessageKey : null,
+                                newQuestionOpen : false
+                            }
 
-            // Request loading of QA's for this certificate
-            fragaSvarService.getQAForCertificate($scope.MODULE_CONFIG.CERT_ID_PARAMETER, function(result) {
-                $log.debug("getQAForCertificate:success data:" + result);
-                $scope.widgetState.doneLoading = true;
-                $scope.widgetState.activeErrorMessageKey = null;
-                $scope.decorateWithGUIParameters(result);
-                $scope.qaList = result;
+                            // Request loading of QA's for this certificate
+                            fragaSvarService.getQAForCertificate($scope.MODULE_CONFIG.CERT_ID_PARAMETER, function(result) {
+                                $log.debug("getQAForCertificate:success data:" + result);
+                                $scope.widgetState.doneLoading = true;
+                                $scope.widgetState.activeErrorMessageKey = null;
+                                $scope.decorateWithGUIParameters(result);
+                                $scope.qaList = result;
 
-            }, function(errorData) {
-                // show error view
-                $scope.widgetState.doneLoading = true;
-                $scope.widgetState.activeErrorMessageKey = errorData.errorCode;
-            });
+                            }, function(errorData) {
+                                // show error view
+                                $scope.widgetState.doneLoading = true;
+                                $scope.widgetState.activeErrorMessageKey = errorData.errorCode;
+                            });
 
-            $scope.decorateWithGUIParameters = function(list) {
-                // answerDisabled
-                // answerButtonToolTip
-                angular.forEach(list, function(qa, key) {
-                    if (qa.amne == "PAMINNELSE") {
-                        // RE-020 Påminnelser is never answerable
-                        qa.answerDisabled = true;
-                        qa.answerButtonToolTip = "Påminnelser kan inte besvaras";
-                    } else if (qa.amne == "KOMPLETTERING_AV_LAKARINTYG" && !$rootScope.WC_CONTEXT.lakare) {
-                        // RE-005, RE-006
-                        qa.answerDisabled = true;
-                        qa.answerButtonToolTip = "Kompletteringar kan endast besvaras av läkare";
-                    } else {
-                        qa.answerDisabled = false;
-                        qa.answerButtonToolTip = "Skicka svaret";
-                    }
+                            $scope.decorateWithGUIParameters = function(list) {
+                                // answerDisabled
+                                // answerButtonToolTip
+                                angular.forEach(list, function(qa, key) {
+                                    if (qa.amne == "PAMINNELSE") {
+                                        // RE-020 Påminnelser is never
+                                        // answerable
+                                        qa.answerDisabled = true;
+                                        qa.answerButtonToolTip = "Påminnelser kan inte besvaras";
+                                    } else if (qa.amne == "KOMPLETTERING_AV_LAKARINTYG" && !$rootScope.WC_CONTEXT.lakare) {
+                                        // RE-005, RE-006
+                                        qa.answerDisabled = true;
+                                        qa.answerButtonToolTip = "Kompletteringar kan endast besvaras av läkare";
+                                    } else {
+                                        qa.answerDisabled = false;
+                                        qa.answerButtonToolTip = "Skicka svaret";
+                                    }
 
-                });
-            }
-            $scope.openIssuesFilter = function(qa) {
-                return qa.status != "CLOSED";
-            };
+                                });
+                            }
+                            $scope.openIssuesFilter = function(qa) {
+                                return qa.status != "CLOSED";
+                            };
 
-            $scope.closedIssuesFilter = function(qa) {
-                return qa.status === "CLOSED";
-            };
-            $scope.newQuestionOpen = false;
+                            $scope.closedIssuesFilter = function(qa) {
+                                return qa.status === "CLOSED";
+                            };
+                            $scope.newQuestionOpen = false;
 
-            $scope.toggleQuestionForm = function() {
-                $scope.widgetState.newQuestionOpen = !$scope.widgetState.newQuestionOpen;
-                $scope.initQuestionForm();
-            }
+                            $scope.toggleQuestionForm = function() {
+                                $scope.widgetState.newQuestionOpen = !$scope.widgetState.newQuestionOpen;
+                                $scope.initQuestionForm();
+                            }
 
-            /**
-             * Functions bound to individual fragasvar entities's
-             * 
-             */
-            $scope.sendQuestion = function sendQuestion(newQuestion) {
-                $log.debug("sendQuestion:" + newQuestion);
-                newQuestion.doneLoading = false; // trigger local spinner
-                fragaSvarService.saveNewQuestion($scope.MODULE_CONFIG.CERT_ID_PARAMETER, newQuestion, function(result) {
-                    $log.debug("Got saveNewQuestion result:" + result);
-                    newQuestion.doneLoading = true;
-                    newQuestion.activeErrorMessageKey = null;
-                    if (result != null) {
-                        // result is a new FragaSvar Instance: add it to our
-                        // local repo
-                        $scope.qaList.push(result);
-                        // close question form
-                        $scope.toggleQuestionForm();
+                            /**
+                             * Functions bound to individual fragasvar
+                             * entities's
+                             * 
+                             */
+                            $scope.sendQuestion = function sendQuestion(newQuestion) {
+                                $log.debug("sendQuestion:" + newQuestion);
+                                newQuestion.updateInProgress = true; // trigger
+                                // local
+                                // spinner
+                                $timeout(function() { // simulate
+                                    // latency:remove after
+                                    // testing
 
-                    }
-                }, function(errorData) {
-                    // show error view
-                    newQuestion.doneLoading = true;
-                    newQuestion.activeErrorMessageKey = errorData.errorCode;
-                });
-            }
+                                    fragaSvarService.saveNewQuestion($scope.MODULE_CONFIG.CERT_ID_PARAMETER, newQuestion, function(result) {
+                                        $log.debug("Got saveNewQuestion result:" + result);
+                                        newQuestion.updateInProgress = false;
+                                        newQuestion.activeErrorMessageKey = null;
+                                        if (result != null) {
+                                            // result is a new FragaSvar
+                                            // Instance:
+                                            // add it to our
+                                            // local repo
+                                            $scope.qaList.push(result);
+                                            // close question form
+                                            $scope.toggleQuestionForm();
 
-            $scope.sendAnswer = function sendAnswer(qa) {
-                qa.doneLoading = false; // trigger local spinner
-                fragaSvarService.saveAnswer(qa, function(result) {
-                    $log.debug("Got saveAnswer result:" + result);
-                    qa.doneLoading = true;
-                    qa.activeErrorMessageKey = null;
-                    if (result != null) {
-                        angular.copy(result, qa);
-                    }
-                }, function(errorData) {
-                    // show error view
-                    qa.doneLoading = true;
-                    qa.activeErrorMessageKey = errorData.errorCode;
-                });
+                                        }
+                                    }, function(errorData) {
+                                        // show error view
+                                        newQuestion.updateInProgress = false;
+                                        newQuestion.activeErrorMessageKey = errorData.errorCode;
+                                    });
+                                }, 1000);
+                            }
 
-            }
-            $scope.onVidareBefordradChange = function(qa) {
-                qa.updateInProgress = true;
-                $timeout(
-                        function() { // wrap in timeout to
-                                        // simulate
-                            // latency -
-                            fragaSvarService
-                                    .setVidareBefordradState(
-                                            qa.internReferens,
-                                            qa.vidarebefordrad,
-                                            function(result) {
-                                                qa.updateInProgress = false;
+                            $scope.sendAnswer = function sendAnswer(qa) {
+                                qa.updateInProgress = false; // trigger local
+                                // spinner
+                                $timeout(function() { // simulate
+                                    // latency:remove after
+                                    // testing
+                                    fragaSvarService.saveAnswer(qa, function(result) {
+                                        $log.debug("Got saveAnswer result:" + result);
+                                        qa.updateInProgress = true;
+                                        qa.activeErrorMessageKey = null;
+                                        if (result != null) {
+                                            angular.copy(result, qa);
+                                        }
+                                    }, function(errorData) {
+                                        // show error view
+                                        qa.updateInProgress = true;
+                                        qa.activeErrorMessageKey = errorData.errorCode;
+                                    });
+                                }, 1000);
+                            }
+                            $scope.onVidareBefordradChange = function(qa) {
+                                qa.forwardInProgress = true;
+                                $timeout(
+                                        function() { // simulate
+                                            // latency:remove after
+                                            // testing
 
-                                                if (result != null) {
-                                                    qa.vidarebefordrad = result.vidarebefordrad;
-                                                } else {
-                                                    qa.vidarebefordrad = !qa.vidarebefordrad;
-                                                    fragaSvarService
-                                                            .showErrorMessageDialog("Kunde inte markera/avmarkera frågan som vidarebefordrad. Försök gärna igen för att se om felet är tillfälligt. Annars kan du kontakta supporten");
-                                                }
-                                            });
-                        }, 1000);
-            }
-            
-            $scope.updateAsHandled = function(qa) {
-                $log.debug("updateAsHandled:" + qa);
-                qa.doneLoading = false; // trigger local spinner
-                fragaSvarService.closeAsHandled(qa, function(result) {
-                    $log.debug("Got updateAsHandled result:" + result);
-                    qa.activeErrorMessageKey = null;
-                    qa.doneLoading = true;
-                    if (result != null) {
-                        angular.copy(result, qa);
-                    }
-                }, function(errorData) {
-                    // show error view
-                    qa.doneLoading = true;
-                    qa.activeErrorMessageKey = errorData.errorCode;
-                });
+                                            fragaSvarService
+                                                    .setVidareBefordradState(
+                                                            qa.internReferens,
+                                                            qa.vidarebefordrad,
+                                                            function(result) {
+                                                                qa.forwardInProgress = false;
 
-            }
-            $scope.updateAsUnHandled = function(qa) {
-                $log.debug("updateAsUnHandled:" + qa);
-                qa.doneLoading = false; // trigger local spinner
-                fragaSvarService.openAsUnhandled(qa, function(result) {
-                    $log.debug("Got openAsUnhandled result:" + result);
-                    qa.activeErrorMessageKey = null;
-                    qa.doneLoading = true;
-                    if (result != null) {
-                        angular.copy(result, qa);
-                    }
-                }, function(errorData) {
-                    // show error view
-                    qa.doneLoading = true;
-                    qa.activeErrorMessageKey = errorData.errorCode;
-                });
+                                                                if (result != null) {
+                                                                    qa.vidarebefordrad = result.vidarebefordrad;
+                                                                } else {
+                                                                    qa.vidarebefordrad = !qa.vidarebefordrad;
+                                                                    fragaSvarService
+                                                                            .showErrorMessageDialog("Kunde inte markera/avmarkera frågan som vidarebefordrad. Försök gärna igen för att se om felet är tillfälligt. Annars kan du kontakta supporten");
+                                                                }
+                                                            });
+                                        }, 1000);
+                            }
 
-            }
+                            $scope.updateAsHandled = function(qa) {
+                                $log.debug("updateAsHandled:" + qa);
+                                qa.updateInProgress = true;
+                                $timeout(function() { // simulate
+                                    // latency:remove after
+                                    // testing
 
-            $scope.initQuestionForm = function() {
-                // Topics are defined under RE-13
-                $scope.newQuestion = {
-                    topics : [ {
-                        label : 'Arbetstidsförläggning',
-                        value : 'ARBETSTIDSFORLAGGNING'
-                    }, {
-                        label : 'Avstämningsmöte',
-                        value : 'AVSTAMNINGSMOTE'
-                    }, {
-                        label : 'Kontakt',
-                        value : 'KONTAKT'
-                    }, {
-                        label : 'Övrigt',
-                        value : 'OVRIGT'
-                    } ],
-                    frageText : ""
-                };
-                $scope.newQuestion.chosenTopic = $scope.newQuestion.topics[3]; // 'Övrigt'
-                // is
-                // default
-            }
-            $scope.initQuestionForm();
+                                    fragaSvarService.closeAsHandled(qa, function(result) {
+                                        $log.debug("Got updateAsHandled result:" + result);
+                                        qa.activeErrorMessageKey = null;
+                                        qa.updateInProgress = false;
+                                        if (result != null) {
+                                            angular.copy(result, qa);
+                                        }
+                                    }, function(errorData) {
+                                        // show error view
+                                        qa.updateInProgress = false;
+                                        qa.activeErrorMessageKey = errorData.errorCode;
+                                    });
+                                }, 1000);
+                            }
+                            $scope.updateAsUnHandled = function(qa) {
+                                $log.debug("updateAsUnHandled:" + qa);
+                                $timeout(function() { // simulate
+                                    // latency:remove after
+                                    // testing
+                                    qa.updateInProgress = true; // trigger local
+                                    // spinner
+                                    fragaSvarService.openAsUnhandled(qa, function(result) {
+                                        $log.debug("Got openAsUnhandled result:" + result);
+                                        qa.activeErrorMessageKey = null;
+                                        qa.updateInProgress = false;
+                                        if (result != null) {
+                                            angular.copy(result, qa);
+                                        }
+                                    }, function(errorData) {
+                                        // show error view
+                                        qa.updateInProgress = false;
+                                        qa.activeErrorMessageKey = errorData.errorCode;
+                                    });
+                                }, 1000);
+                            }
 
-        } ]);
+                            $scope.initQuestionForm = function() {
+                                // Topics are defined under RE-13
+                                $scope.newQuestion = {
+                                    topics : [ {
+                                        label : 'Arbetstidsförläggning',
+                                        value : 'ARBETSTIDSFORLAGGNING'
+                                    }, {
+                                        label : 'Avstämningsmöte',
+                                        value : 'AVSTAMNINGSMOTE'
+                                    }, {
+                                        label : 'Kontakt',
+                                        value : 'KONTAKT'
+                                    }, {
+                                        label : 'Övrigt',
+                                        value : 'OVRIGT'
+                                    } ],
+                                    frageText : ""
+                                };
+                                $scope.newQuestion.chosenTopic = $scope.newQuestion.topics[3]; // 'Övrigt'
+                                // is
+                                // default
+                            }
+                            $scope.initQuestionForm();
+
+                        } ]);
