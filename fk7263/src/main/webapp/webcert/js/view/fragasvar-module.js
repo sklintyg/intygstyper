@@ -8,72 +8,74 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
     /*
      * Load questions and answers data for a certificate
      */
-    function _getQAForCertificate(id, callback) {
+    function _getQAForCertificate(id, onSuccess, onError) {
         $log.debug("_getQAForCertificate");
         var restPath = '/moduleapi/fragasvar/' + id;
         $http.get(restPath).success(function(data) {
             $log.debug("got data:" + data);
-            callback(data);
+            onSuccess(data);
         }).error(function(data, status, headers, config) {
             $log.error("error " + status);
             // Let calling code handle the error of no data response
-            callback(null);
+            onError(data);
         });
     }
 
     /*
      * save new answer to a question
      */
-    function _saveAnswer(fragaSvar, callback) {
+    function _saveAnswer(fragaSvar, onSuccess, onError) {
         $log.debug("_saveAnswer");
 
         var restPath = '/moduleapi/fragasvar/' + fragaSvar.internReferens + "/answer";
         $http.put(restPath, fragaSvar.svarsText).success(function(data) {
             $log.debug("got data:" + data);
-            callback(data);
+            onSuccess(data);
         }).error(function(data, status, headers, config) {
-                $log.error("error " + status);
-                // Let calling code handle the error of no data response
-                callback(null);
-            });
+            $log.error("error " + status);
+            // Let calling code handle the error of no data response
+            onError(data);
+        });
     }
     /*
      * update the handled status to handled ("Closed") of a QuestionAnswer
      */
-    function _closeAsHandled(fragaSvar, callback) {
+    function _closeAsHandled(fragaSvar, onSuccess, onError) {
         $log.debug("_closeAsHandled");
 
         var restPath = '/moduleapi/fragasvar/close/' + fragaSvar.internReferens;
         $http.get(restPath).success(function(data) {
             $log.debug("got data:" + data);
-            callback(data);
+            onSuccess(data);
         }).error(function(data, status, headers, config) {
-                $log.error("error " + status);
-                // Let calling code handle the error of no data response
-                callback(null);
-            });
+            $log.error("error " + status);
+            // Let calling code handle the error of no data response
+            onError(data);
+        });
     }
     /*
-     * update the handled status to unhandled ("ANSWERED or PENDING_EXTERNAL_ACTION depending if the question has an answer set or not") of a QuestionAnswer
+     * update the handled status to unhandled ("ANSWERED or
+     * PENDING_EXTERNAL_ACTION depending if the question has an answer set or
+     * not") of a QuestionAnswer
      */
-    function _openAsUnhandled(fragaSvar, callback) {
+    function _openAsUnhandled(fragaSvar, onSuccess, onError) {
         $log.debug("_openAsUnhandled");
 
         var restPath = '/moduleapi/fragasvar/open/' + fragaSvar.internReferens;
         $http.get(restPath).success(function(data) {
             $log.debug("got data:" + data);
-            callback(data);
+            onSuccess(data);
         }).error(function(data, status, headers, config) {
-                $log.error("error " + status);
-                // Let calling code handle the error of no data response
-                callback(null);
-            });
+            $log.error("error " + status);
+            // Let calling code handle the error of no data response
+            onError(data);
+        });
     }
 
     /*
      * save new question
      */
-    function _saveNewQuestion(certId, question, callback) {
+    function _saveNewQuestion(certId, question, onSuccess, onError) {
         $log.debug("_saveNewQuestion");
         var payload = {};
         payload.amne = question.chosenTopic.value;
@@ -82,11 +84,11 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
         var restPath = "/moduleapi/fragasvar/" + certId;
         $http.post(restPath, payload).success(function(data) {
             $log.debug("got callback data:" + data);
-            callback(data);
+            onSuccess(data);
         }).error(function(data, status, headers, config) {
             $log.error("error " + status);
             // Let calling code handle the error of no data response
-            callback(null);
+            onError(data);
         });
     }
     // Return public API for the service
@@ -111,20 +113,22 @@ angular.module('wc.fragasvarmodule').controller('QACtrl',
             $scope.qaList = {};
             $scope.widgetState = {
                 doneLoading : false,
-                hasError : false,
+                activeErrorMessageKey : null,
                 newQuestionOpen : false
             }
+
             // Request loading of QA's for this certificate
             fragaSvarService.getQAForCertificate($scope.MODULE_CONFIG.CERT_ID_PARAMETER, function(result) {
-                $log.debug("Got getQAForCertificate data:" + result);
+                $log.debug("getQAForCertificate:success data:" + result);
                 $scope.widgetState.doneLoading = true;
-                if (result != null) {
-                    $scope.decorateWithGUIParameters(result);
-                    $scope.qaList = result;
-                } else {
-                    // show error view
-                    $scope.widgetState.hasError = true;
-                }
+                $scope.widgetState.activeErrorMessageKey = null;
+                $scope.decorateWithGUIParameters(result);
+                $scope.qaList = result;
+
+            }, function(errorData) {
+                // show error view
+                $scope.widgetState.doneLoading = true;
+                $scope.widgetState.activeErrorMessageKey = errorData.errorCode;
             });
 
             $scope.decorateWithGUIParameters = function(list) {
@@ -136,7 +140,7 @@ angular.module('wc.fragasvarmodule').controller('QACtrl',
                         qa.answerDisabled = true;
                         qa.answerButtonToolTip = "Påminnelser kan inte besvaras";
                     } else if (qa.amne == "KOMPLETTERING_AV_LAKARINTYG" && !$rootScope.WC_CONTEXT.lakare) {
-                     // RE-005, RE-006 
+                        // RE-005, RE-006
                         qa.answerDisabled = true;
                         qa.answerButtonToolTip = "Kompletteringar kan endast besvaras av läkare";
                     } else {
@@ -160,46 +164,80 @@ angular.module('wc.fragasvarmodule').controller('QACtrl',
                 $scope.initQuestionForm();
             }
 
+            /**
+             * Functions bound to individual fragasvar entities's
+             * 
+             */
+            $scope.sendQuestion = function sendQuestion(newQuestion) {
+                $log.debug("sendQuestion:" + newQuestion);
+                newQuestion.doneLoading = false; // trigger local spinner
+                fragaSvarService.saveNewQuestion($scope.MODULE_CONFIG.CERT_ID_PARAMETER, newQuestion, function(result) {
+                    $log.debug("Got saveNewQuestion result:" + result);
+                    newQuestion.doneLoading = true;
+                    newQuestion.activeErrorMessageKey = null;
+                    if (result != null) {
+                        // result is a new FragaSvar Instance: add it to our
+                        // local repo
+                        $scope.qaList.push(result);
+                        // close question form
+                        $scope.toggleQuestionForm();
+
+                    }
+                }, function(errorData) {
+                    // show error view
+                    newQuestion.doneLoading = true;
+                    newQuestion.activeErrorMessageKey = errorData.errorCode;
+                });
+            }
+
             $scope.sendAnswer = function sendAnswer(qa) {
-                $log.debug("saveAnswer:" + qa);
-                var qaActive = qa;
+                qa.doneLoading = false; // trigger local spinner
                 fragaSvarService.saveAnswer(qa, function(result) {
                     $log.debug("Got saveAnswer result:" + result);
-                    $scope.widgetState.doneLoading = true;
+                    qa.doneLoading = true;
+                    qa.activeErrorMessageKey = null;
                     if (result != null) {
                         angular.copy(result, qa);
-                    } else {
-                        // show error view
-                        $scope.widgetState.hasError = true;
                     }
+                }, function(errorData) {
+                    // show error view
+                    qa.doneLoading = true;
+                    qa.activeErrorMessageKey = errorData.errorCode;
                 });
+
             }
 
-            $scope.updateAsHandled = function(qa){
+            $scope.updateAsHandled = function(qa) {
                 $log.debug("updateAsHandled:" + qa);
+                qa.doneLoading = false; // trigger local spinner
                 fragaSvarService.closeAsHandled(qa, function(result) {
-                    $log.debug("Got saveAnswer result:" + result);
-                    $scope.widgetState.doneLoading = true;
+                    $log.debug("Got updateAsHandled result:" + result);
+                    qa.activeErrorMessageKey = null;
+                    qa.doneLoading = true;
                     if (result != null) {
                         angular.copy(result, qa);
-                    } else {
-                        // show error view
-                        $scope.widgetState.hasError = true;
                     }
+                }, function(errorData) {
+                    // show error view
+                    qa.doneLoading = true;
+                    qa.activeErrorMessageKey = errorData.errorCode;
                 });
 
             }
-            $scope.updateAsUnHandled = function(qa){
+            $scope.updateAsUnHandled = function(qa) {
                 $log.debug("updateAsUnHandled:" + qa);
+                qa.doneLoading = false; // trigger local spinner
                 fragaSvarService.openAsUnhandled(qa, function(result) {
-                    $log.debug("Got saveAnswer result:" + result);
-                    $scope.widgetState.doneLoading = true;
+                    $log.debug("Got openAsUnhandled result:" + result);
+                    qa.activeErrorMessageKey = null;
+                    qa.doneLoading = true;
                     if (result != null) {
                         angular.copy(result, qa);
-                    } else {
-                        // show error view
-                        $scope.widgetState.hasError = true;
                     }
+                }, function(errorData) {
+                    // show error view
+                    qa.doneLoading = true;
+                    qa.activeErrorMessageKey = errorData.errorCode;
                 });
 
             }
@@ -227,24 +265,5 @@ angular.module('wc.fragasvarmodule').controller('QACtrl',
                 // default
             }
             $scope.initQuestionForm();
-
-            $scope.sendQuestion = function sendQuestion(newQuestion) {
-                $log.debug("sendQuestion:" + newQuestion);
-
-                fragaSvarService.saveNewQuestion($scope.MODULE_CONFIG.CERT_ID_PARAMETER, newQuestion, function(result) {
-                    $log.debug("Got saveNewQuestion result:" + result);
-                    if (result != null) {
-                        // result is a new FragaSvar Instance: add it to our
-                        // local repo
-                        $scope.qaList.push(result);
-                        // close question form
-                        $scope.toggleQuestionForm();
-
-                    } else {
-                        // show error view
-                        $scope.widgetState.hasError = true;
-                    }
-                });
-            }
 
         } ]);

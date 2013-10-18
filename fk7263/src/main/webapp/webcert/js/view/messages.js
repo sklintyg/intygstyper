@@ -69,6 +69,15 @@ var fk7263Messages = {
           "nedsattningsgrad.nedsatt_med_3_4" : "Nedsatt med 3/4",
           "nedsattningsgrad.nedsatt_med_1_2" : "Nedsatt med hälften",
           "nedsattningsgrad.nedsatt_med_1_4" : "Nedsatt med 1/4",
+          //errors
+          "error.could_not_load_cert" : "Kunde inte hämta intyget.",
+          "error.could_not_load_cert_qa" : "Kunde inte hämta frågor och svar för intyget.",
+          //fragaSvar errors
+          "error.external_system_problem": "Försäkringskassans system kan just nu inte ta emot informationen. Försök igen",
+          "error.internal_problem": "Ett tekniskt problem inträffade. Försök igen och kontakta supporten om problemet kvarstår.",
+          "error.invalid_state": "Funktionen är inte giltig, förmodligen har en annan användare ändrat informationen medan du arbetat på samma post. Ladda om informationen och försök igen",
+          "error.unknown_internal_problem": "Ett tekniskt problem inträffade. Försök igen och kontakta supporten om problemet kvarstår.",
+          "error.authorization_problem": "Du har inte behörighet att utföra funktionen, kontakta supporten för mer information."
 
     },
     "en": {
