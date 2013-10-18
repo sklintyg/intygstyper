@@ -209,7 +209,7 @@
 
             <h2 class="col-head">Ohanterade frågor</h2>
             <div ng-repeat="qa in qaList | filter:openIssuesFilter | orderBy:'senasteHandelseDatum':true">
-              <div class="qa-panel">
+              <div class="qa-panel" id="qaunhandled-{{qa.internReferens}}">
 
                 <!--  status header -->
 	              <button class="btn btn-info pull-right" title="Skicka e-post med en länk till detta intyg för att informera den som ska hantera frågan/svaret" ng-click="openDialog(qa.internReferens)">
@@ -293,7 +293,7 @@
         <div class="webcert-col-section" ng-show="(qaList.length | filter:closedIssuesFilter) > 0">
           <h2 class="col-head">Hanterade frågor</h2>
           <div ng-repeat="qa in qaList | filter:closedIssuesFilter | orderBy:'senasteHandelseDatum':true">
-            <div class="qa-panel">
+            <div class="qa-panel" id="qahandled-{{qa.internReferens}}">
 
               <!--  status header: hanterade har bara status closed, så vi kan inte visa så mycket mer info, ev skulle vi kunna visa "stängd utan att svar fanns"  -->
               <h3>
@@ -338,7 +338,7 @@
               <div class="control-group">
                 <!--  Oavsett hur frågan stänged skall man kunna 'öppna' den igen? -->
                 <div class="controls">
-                  <button class="btn btn-secondary" ng-click="updateAsUnHandled(qa)">Markera som ohanterade</button>
+                  <button class="btn btn-secondary" ng-click="updateAsUnHandled(qa)" id="markAsUnhandledBtn-{{qa.internReferens}}">Markera som ohanterade</button>
                 </div>
               </div>
 
