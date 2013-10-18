@@ -344,6 +344,9 @@ public final class TransportToExternalFk7263LegacyConverter {
     }
 
     private static Observation convert(BedomtTillstandType bedomtTillstand) {
+    	if (bedomtTillstand == null) {
+    		return null;
+    	}
         Observation observation = new Observation();
         observation.setBeskrivning(bedomtTillstand.getBeskrivning());
         // TODO: ObservationsKategori ?

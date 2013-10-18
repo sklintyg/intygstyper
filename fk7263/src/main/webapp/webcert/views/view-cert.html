@@ -1,5 +1,5 @@
 <div class="row-fluid webcert-multicol" id="viewCertAndQA">
-  <div class="span8 webcert-col webcert-col-primary" ng-controller="ViewCertCtrl">
+  <div class="span6 webcert-col webcert-col-primary" ng-controller="ViewCertCtrl">
     <!-- Left side -->
     <div class="webcert-col-shadow"></div>
 
@@ -171,7 +171,7 @@
 
   <!-- Certificate Left side end -->
 
-  <div class="span4" ng-controller="QACtrl">
+  <div class="span6" ng-controller="QACtrl">
     <!-- Right side -->
     <div class="row-fluid">
       <div class="span12 webcert-col">
@@ -209,13 +209,13 @@
 
             <h2 class="col-head">Ohanterade frågor</h2>
             <div ng-repeat="qa in qaList | filter:openIssuesFilter | orderBy:'senasteHandelseDatum':true">
-              <div class="qa-panel" id="qaunhandled-{{qa.internReferens}}">
+              <div class="qa-panel">
 
                 <!--  status header -->
 	              <button class="btn btn-info pull-right" title="Skicka e-post med en länk till detta intyg för att informera den som ska hantera frågan/svaret" ng-click="openDialog(qa.internReferens)">
 	                <img src="/img/mail.png">
 	              </button>
-
+                
                 <div class="status-header">
 	                <h3 class="inline-block">
 	                  Ämne: <strong><span message key="qa.amne.{{qa.amne | lowercase}}"></span></strong>
@@ -228,7 +228,7 @@
 	                  <input id="forward-{{qa.internReferens}}" type="checkbox"/> <label for="forward-{{qa.internReferens}}">Vidarebefordrad</label>
 	                </div>
                 </div>
-
+                
                 <!-- Frågan -->
                 <div class="qa-block" ng-class="{'qa-block-handled' : qa.status == 'ANSWERED', 'qa-block-fk' : (qa.frageStallare | lowercase) == 'fk'}">
                   <div class="qa-block-head clearfix">
@@ -293,7 +293,7 @@
         <div class="webcert-col-section" ng-show="(qaList.length | filter:closedIssuesFilter) > 0">
           <h2 class="col-head">Hanterade frågor</h2>
           <div ng-repeat="qa in qaList | filter:closedIssuesFilter | orderBy:'senasteHandelseDatum':true">
-            <div class="qa-panel" id="qahandled-{{qa.internReferens}}">
+            <div class="qa-panel">
 
               <!--  status header: hanterade har bara status closed, så vi kan inte visa så mycket mer info, ev skulle vi kunna visa "stängd utan att svar fanns"  -->
               <h3>
@@ -338,7 +338,7 @@
               <div class="control-group">
                 <!--  Oavsett hur frågan stänged skall man kunna 'öppna' den igen? -->
                 <div class="controls">
-                  <button class="btn btn-secondary" ng-click="updateAsUnHandled(qa)" id="markAsUnhandledBtn-{{qa.internReferens}}">Markera som ohanterade</button>
+                  <button class="btn btn-secondary" ng-click="updateAsUnHandled(qa)">Markera som ohanterade</button>
                 </div>
               </div>
 

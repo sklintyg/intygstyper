@@ -222,7 +222,7 @@ public class UtlatandeValidator {
     private void validateRessatt() {
         // Fält 11 - optional
         boolean inForandratRessatt = utlatande.isRessattTillArbeteAktuellt();
-        boolean inEjForandratRessatt = utlatande.isRessattTillArbeteAktuellt();
+        boolean inEjForandratRessatt = utlatande.isRessattTillArbeteEjAktuellt();
 
         // Fält 11 - If set only one should be set
         if (inForandratRessatt && inEjForandratRessatt) {
