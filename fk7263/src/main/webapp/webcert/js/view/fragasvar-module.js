@@ -245,14 +245,14 @@ angular
                             }
 
                             $scope.sendAnswer = function sendAnswer(qa) {
-                                qa.updateInProgress = false; // trigger local
+                                qa.updateInProgress = true; // trigger local
                                 // spinner
                                 $timeout(function() { // simulate
                                     // latency:remove after
                                     // testing
                                     fragaSvarService.saveAnswer(qa, function(result) {
                                         $log.debug("Got saveAnswer result:" + result);
-                                        qa.updateInProgress = true;
+                                        qa.updateInProgress = false;
                                         qa.activeErrorMessageKey = null;
                                         if (result != null) {
                                             angular.copy(result, qa);
@@ -260,7 +260,7 @@ angular
                                         }
                                     }, function(errorData) {
                                         // show error view
-                                        qa.updateInProgress = true;
+                                        qa.updateInProgress = false;
                                         qa.activeErrorMessageKey = errorData.errorCode;
                                     });
                                 }, 1000);
@@ -292,7 +292,7 @@ angular
 
                             $scope.updateAsHandled = function(qa) {
                                 $log.debug("updateAsHandled:" + qa);
-                                qa.updateInProgress = true;
+                                qa.updateHandledStateInProgress = true;
                                 $timeout(function() { // simulate
                                     // latency:remove after
                                     // testing
@@ -300,36 +300,36 @@ angular
                                     fragaSvarService.closeAsHandled(qa, function(result) {
                                         $log.debug("Got updateAsHandled result:" + result);
                                         qa.activeErrorMessageKey = null;
-                                        qa.updateInProgress = false;
+                                        qa.updateHandledStateInProgress = false;
                                         if (result != null) {
                                             angular.copy(result, qa);
                                             $scope.activeQA = qa.internReferens;
                                         }
                                     }, function(errorData) {
                                         // show error view
-                                        qa.updateInProgress = false;
+                                        qa.updateHandledStateInProgress = false;
                                         qa.activeErrorMessageKey = errorData.errorCode;
                                     });
                                 }, 1000);
                             }
                             $scope.updateAsUnHandled = function(qa) {
                                 $log.debug("updateAsUnHandled:" + qa);
+                                qa.updateHandledStateInProgress = true; // trigger local
                                 $timeout(function() { // simulate
                                     // latency:remove after
                                     // testing
-                                    qa.updateInProgress = true; // trigger local
                                     // spinner
                                     fragaSvarService.openAsUnhandled(qa, function(result) {
                                         $log.debug("Got openAsUnhandled result:" + result);
                                         qa.activeErrorMessageKey = null;
-                                        qa.updateInProgress = false;
+                                        qa.updateHandledStateInProgress = false;
                                         if (result != null) {
                                             angular.copy(result, qa);
                                             $scope.activeQA = qa.internReferens;
                                         }
                                     }, function(errorData) {
                                         // show error view
-                                        qa.updateInProgress = false;
+                                        qa.updateHandledStateInProgress = false;
                                         qa.activeErrorMessageKey = errorData.errorCode;
                                     });
                                 }, 1000);
