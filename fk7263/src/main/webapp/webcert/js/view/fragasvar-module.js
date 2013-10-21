@@ -231,6 +231,7 @@ angular
                                             // add it to our
                                             // local repo
                                             $scope.qaList.push(result);
+                                            $scope.activeQA = result.internReferens;
                                             // close question form
                                             $scope.toggleQuestionForm();
 
@@ -255,6 +256,7 @@ angular
                                         qa.activeErrorMessageKey = null;
                                         if (result != null) {
                                             angular.copy(result, qa);
+                                            $scope.activeQA = qa.internReferens;
                                         }
                                     }, function(errorData) {
                                         // show error view
@@ -301,6 +303,7 @@ angular
                                         qa.updateInProgress = false;
                                         if (result != null) {
                                             angular.copy(result, qa);
+                                            $scope.activeQA = qa.internReferens;
                                         }
                                     }, function(errorData) {
                                         // show error view
@@ -322,6 +325,7 @@ angular
                                         qa.updateInProgress = false;
                                         if (result != null) {
                                             angular.copy(result, qa);
+                                            $scope.activeQA = qa.internReferens;
                                         }
                                     }, function(errorData) {
                                         // show error view
