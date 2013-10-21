@@ -164,7 +164,7 @@ angular
                                 $log.debug("getQAForCertificate:success data:" + result);
                                 $scope.widgetState.doneLoading = true;
                                 $scope.widgetState.activeErrorMessageKey = null;
-                                $scope.decorateWithGUIParameters(result);
+                                decorateWithGUIParameters(result);
                                 $scope.qaList = result;
 
                             }, function(errorData) {
@@ -173,25 +173,28 @@ angular
                                 $scope.widgetState.activeErrorMessageKey = errorData.errorCode;
                             });
 
-                            $scope.decorateWithGUIParameters = function(list) {
+                           var decorateWithGUIParameters = function(list) {
                                 // answerDisabled
                                 // answerButtonToolTip
                                 angular.forEach(list, function(qa, key) {
-                                    if (qa.amne == "PAMINNELSE") {
-                                        // RE-020 Påminnelser is never
-                                        // answerable
-                                        qa.answerDisabled = true;
-                                        qa.answerButtonToolTip = "Påminnelser kan inte besvaras";
-                                    } else if (qa.amne == "KOMPLETTERING_AV_LAKARINTYG" && !$rootScope.WC_CONTEXT.lakare) {
-                                        // RE-005, RE-006
-                                        qa.answerDisabled = true;
-                                        qa.answerButtonToolTip = "Kompletteringar kan endast besvaras av läkare";
-                                    } else {
-                                        qa.answerDisabled = false;
-                                        qa.answerButtonToolTip = "Skicka svaret";
-                                    }
-
+                                    decorateSingleItem(qa);
                                 });
+                            }
+
+                            var decorateSingleItem = function(qa) {
+                                if (qa.amne == "PAMINNELSE") {
+                                    // RE-020 Påminnelser is never
+                                    // answerable
+                                    qa.answerDisabled = true;
+                                    qa.answerButtonToolTip = "Påminnelser kan inte besvaras";
+                                } else if (qa.amne == "KOMPLETTERING_AV_LAKARINTYG" && !$rootScope.WC_CONTEXT.lakare) {
+                                    // RE-005, RE-006
+                                    qa.answerDisabled = true;
+                                    qa.answerButtonToolTip = "Kompletteringar kan endast besvaras av läkare";
+                                } else {
+                                    qa.answerDisabled = false;
+                                    qa.answerButtonToolTip = "Skicka svaret";
+                                }
                             }
                             $scope.openIssuesFilter = function(qa) {
                                 return qa.status != "CLOSED";
@@ -226,6 +229,7 @@ angular
                                         newQuestion.updateInProgress = false;
                                         newQuestion.activeErrorMessageKey = null;
                                         if (result != null) {
+                                            decorateSingleItem(result);
                                             // result is a new FragaSvar
                                             // Instance:
                                             // add it to our
@@ -244,6 +248,16 @@ angular
                                 }, 1000);
                             }
 
+                            $scope.dismissProxy = function(qa) {
+                                for ( var i = 0; i < $scope.qaList.length; i++) {
+                                    if (qa === $scope.qaList[i]) {
+                                        $scope.qaList.splice(i, 1);
+                                        return;
+                                    }
+                                }
+
+                            }
+
                             $scope.sendAnswer = function sendAnswer(qa) {
                                 qa.updateInProgress = true; // trigger local
                                 // spinner
@@ -255,8 +269,15 @@ angular
                                         qa.updateInProgress = false;
                                         qa.activeErrorMessageKey = null;
                                         if (result != null) {
+                                            decorateSingleItem(result);
+                                            // Create a proxyCopy
+                                            var proxyCopy = angular.copy(qa);
+                                            proxyCopy.proxyMessage = "fragasvar.answer.is.sent";
+                                            $scope.qaList.push(proxyCopy);
+                                            // update real item
                                             angular.copy(result, qa);
                                             $scope.activeQA = qa.internReferens;
+
                                         }
                                     }, function(errorData) {
                                         // show error view
@@ -302,6 +323,12 @@ angular
                                         qa.activeErrorMessageKey = null;
                                         qa.updateHandledStateInProgress = false;
                                         if (result != null) {
+                                            decorateSingleItem(result);
+                                            // Create a proxyCopy
+                                            var proxyCopy = angular.copy(qa);
+                                            proxyCopy.proxyMessage = "fragasvar.marked.as.hanterad";
+                                            $scope.qaList.push(proxyCopy);
+
                                             angular.copy(result, qa);
                                             $scope.activeQA = qa.internReferens;
                                         }
@@ -314,7 +341,8 @@ angular
                             }
                             $scope.updateAsUnHandled = function(qa) {
                                 $log.debug("updateAsUnHandled:" + qa);
-                                qa.updateHandledStateInProgress = true; // trigger local
+                                qa.updateHandledStateInProgress = true; // trigger
+                                // local
                                 $timeout(function() { // simulate
                                     // latency:remove after
                                     // testing
@@ -323,7 +351,14 @@ angular
                                         $log.debug("Got openAsUnhandled result:" + result);
                                         qa.activeErrorMessageKey = null;
                                         qa.updateHandledStateInProgress = false;
+                                        
                                         if (result != null) {
+                                            decorateSingleItem(result);
+                                         // Create a proxyCopy
+                                            var proxyCopy = angular.copy(qa);
+                                            proxyCopy.proxyMessage = "fragasvar.marked.as.ohanterad";
+                                            $scope.qaList.push(proxyCopy);
+
                                             angular.copy(result, qa);
                                             $scope.activeQA = qa.internReferens;
                                         }

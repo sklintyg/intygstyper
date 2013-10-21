@@ -210,7 +210,9 @@
           </div>
 
           <div class="control-group">
-            <button class="btn btn-success" ng-click="sendQuestion(newQuestion)" ng-disabled="!newQuestion.frageText || newQuestion.updateInProgress" id="sendQuestionBtn"><img src="/img/ajax-loader-small-green.gif" ng-show="newQuestion.updateInProgress">Skicka till Försäkringskassan</button>
+            <button class="btn btn-success" ng-click="sendQuestion(newQuestion)" ng-disabled="!newQuestion.frageText || newQuestion.updateInProgress" id="sendQuestionBtn">
+              <img src="/img/ajax-loader-small-green.gif" ng-show="newQuestion.updateInProgress">Skicka till Försäkringskassan
+            </button>
             <button class="btn btn-secondary" ng-click="toggleQuestionForm()" id="cancelQuestionBtn">Avbryt fråga</button>
           </div>
         </div>
@@ -226,10 +228,16 @@
 
 
           <div class="webcert-col-section" ng-show="(qaList.length | filter:openIssuesFilter) > 0" id="unhandledQACol">
-
             <h2 class="col-head">Ohanterade frågor</h2>
-            <div ng-repeat="qa in qaList | filter:openIssuesFilter | orderBy:'senasteHandelseDatum':true"  scroll-here-if="qa.internReferens == activeQA">
-              <div class="qa-panel" id="qaunhandled-{{qa.internReferens}}">
+            <div ng-repeat="qa in qaList | filter:openIssuesFilter | orderBy:'senasteHandelseDatum':true">
+              <div ng-if="qa.proxyMessage">
+                <div alert type="'info'" close="dismissProxy(qa)">
+                  <span message key="{{qa.proxyMessage}}"></span>
+                </div>
+              </div>
+
+              <div class="qa-panel" id="qaunhandled-{{qa.internReferens}}" ng-if="!qa.proxyMessage">
+
 
                 <!--  status header -->
                 <button class="btn btn-info pull-right" title="Skicka e-post med en länk till detta intyg för att informera den som ska hantera frågan/svaret" ng-click="openDialog(qa.internReferens)">
@@ -296,8 +304,12 @@
                         <span message key="error.{{qa.activeErrorMessageKey}}"></span>
                       </div>
                       <button class="btn btn-success" ng-click="sendAnswer(qa)" ng-disabled="!qa.svarsText || qa.answerDisabled || qa.updateInProgress" id="sendAnswerBtn-{{qa.internReferens}}"
-                        title="{{qa.answerButtonToolTip}}"><img src="/img/ajax-loader-small-green.gif" ng-show="qa.updateInProgress">Skicka svar</button>
-                    <button class="btn btn-secondary" ng-click="updateAsHandled(qa)" id="markAsHandledFkOriginBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress"><img src="/img/ajax-loader-small-green.gif" ng-show="qa.updateHandledStateInProgress">Markera som hanterad</button>
+                        title="{{qa.answerButtonToolTip}}">
+                        <img src="/img/ajax-loader-small-green.gif" ng-show="qa.updateInProgress">Skicka svar
+                      </button>
+                      <button class="btn btn-secondary" ng-click="updateAsHandled(qa)" id="markAsHandledFkOriginBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress">
+                        <img src="/img/ajax-loader-small-green.gif" ng-show="qa.updateHandledStateInProgress">Markera som hanterad
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -308,7 +320,9 @@
                     <span message key="error.{{qa.activeErrorMessageKey}}"></span>
                   </div>
                   <div class="controls">
-                    <button class="btn btn-success" ng-click="updateAsHandled(qa)" id="markAsHandledWcOriginBtn-{{qa.internReferens}}"  ng-disabled="qa.updateHandledStateInProgress"><img src="/img/ajax-loader-small-green.gif" ng-show="qa.updateHandledStateInProgress">Markera som hanterad</button>
+                    <button class="btn btn-success" ng-click="updateAsHandled(qa)" id="markAsHandledWcOriginBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress">
+                      <img src="/img/ajax-loader-small-green.gif" ng-show="qa.updateHandledStateInProgress">Markera som hanterad
+                    </button>
                   </div>
                 </div>
 
@@ -323,8 +337,15 @@
 
         <div class="webcert-col-section" ng-show="(qaList.length | filter:closedIssuesFilter) > 0">
           <h2 class="col-head">Hanterade frågor</h2>
-          <div ng-repeat="qa in qaList | filter:closedIssuesFilter | orderBy:'senasteHandelseDatum':true" scroll-here-if="qa.internReferens == activeQA">
-            <div class="qa-panel" id="qahandled-{{qa.internReferens}}">
+          <div ng-repeat="qa in qaList | filter:closedIssuesFilter | orderBy:'senasteHandelseDatum':true">
+
+            <div ng-if="qa.proxyMessage">
+                <div alert type="'info'" close="dismissProxy(qa)">
+                  <span message key="{{qa.proxyMessage}}"></span>
+                </div>
+              </div>
+
+            <div class="qa-panel" id="qahandled-{{qa.internReferens}}" ng-if="!qa.proxyMessage">
 
               <!--  status header: hanterade har bara status closed, så vi kan inte visa så mycket mer info, ev skulle vi kunna visa "stängd utan att svar fanns"  -->
               <h3>
@@ -369,7 +390,9 @@
               <div class="control-group">
                 <!--  Oavsett hur frågan stänged skall man kunna 'öppna' den igen? -->
                 <div class="controls">
-                  <button class="btn btn-secondary" ng-click="updateAsUnHandled(qa)" id="markAsUnhandledBtn-{{qa.internReferens}}"  ng-disabled="qa.updateHandledStateInProgress"><img src="/img/ajax-loader-small-green.gif" ng-show="qa.updateHandledStateInProgress">Markera som ohanterad</button>
+                  <button class="btn btn-secondary" ng-click="updateAsUnHandled(qa)" id="markAsUnhandledBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress">
+                    <img src="/img/ajax-loader-small-green.gif" ng-show="qa.updateHandledStateInProgress">Markera som ohanterad
+                  </button>
                 </div>
               </div>
 
