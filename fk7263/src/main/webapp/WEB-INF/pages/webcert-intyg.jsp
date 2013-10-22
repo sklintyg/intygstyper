@@ -86,9 +86,11 @@
   <script type="text/javascript" src="/js/vendor/angular/1.1.5/i18n/angular-locale_sv-se.js"></script>
   <script type="text/javascript" src="/js/vendor/ui-bootstrap/0.6.0/ui-bootstrap-tpls-0.6.0.js"></script>
 
-  <%-- Dependencies to common components loaded from web app running at "/" context--%>
+  <%-- Dependencies to common components loaded from WC web app running in "/" context--%>
   <script type="text/javascript" src="/js/common/wc-message-module.js"></script>
+  <script type="text/javascript" src="/js/common/wc-utils.js"></script>
   <script type="text/javascript" src="/js/common/wc-common-directives.js"></script>
+  <script type="text/javascript" src="/js/common/wc-common-fragasvar-module.js"></script>
   <script type="text/javascript" src="/js/common/wc-common-message-resources.js"></script>
 
   <%-- Dependencies to module specific components loaded from this modules web app running at "?" context--%>

@@ -1,9 +1,10 @@
 /**
- * Fragasvar Module - services and controllers related to FragaSvar
- * functionality in webcert.
+ * Fragasvar Module - specific services and controllers related to FragaSvar
+ * functionality in fk7263 module. 
+ * (Common Fragasvar functionality is contained in wc-common-fragasvar-module in WC app)
  */
 angular.module('wc.fragasvarmodule', []);
-angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$log', '$modal', function($http, $log, $modal) {
+angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$log', function($http, $log) {
 
     /*
      * Load questions and answers data for a certificate
@@ -92,49 +93,6 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
         });
     }
 
-    /*
-     * Toggle vidarebefordrad state
-     */
-    function _setVidareBefordradState(id, isVidareBefordrad, callback) {
-        $log.debug("_setVidareBefordradState");
-        var restPath = '/moduleapi/fragasvar/' + id + "/setDispatchState";
-        $http.put(restPath, isVidareBefordrad.toString()).success(function(data) {
-            $log.debug("got data:" + data);
-            callback(data);
-        }).error(function(data, status, headers, config) {
-            $log.error("error " + status);
-            // Let calling code handle the error of no data response
-            callback(null);
-        });
-    }
-
-    // Todo: this functionality also exists in wc, maybe refactor to common
-    // resource (wc-util?)
-    function _showErrorMessageDialog(message, callback) {
-        
-        var msgbox = $modal.open({
-              template: 
-                  '  <div class="modal-header">'
-                  + '  <h3>Tekniskt fel</h3>'
-                  + '</div>'
-                  + '<div class="modal-body">'
-                  +   '{{bodyText}}'
-                  + '</div>'
-                  + '<div class="modal-footer">'
-                  +     '<button class="btn btn-success" ng-click="$close()">OK</button>'
-                  + '</div>',
-                controller : function($scope, $modalInstance, bodyText) {
-                    $scope.bodyText = bodyText;
-                },                  
-              resolve: { bodyText: function() { return angular.copy(message);}}
-        });
-
-        msgbox.result.then(function(result) {
-          if (callback) {
-              callback(result)
-          }
-        }, function() {});
-      }
 
     // Return public API for the service
     return {
@@ -142,9 +100,7 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
         saveAnswer : _saveAnswer,
         saveNewQuestion : _saveNewQuestion,
         closeAsHandled : _closeAsHandled,
-        openAsUnhandled : _openAsUnhandled,
-        setVidareBefordradState : _setVidareBefordradState,
-        showErrorMessageDialog : _showErrorMessageDialog
+        openAsUnhandled : _openAsUnhandled
     }
 } ]);
 
@@ -163,7 +119,9 @@ angular
                         '$log',
                         '$timeout',
                         'fragaSvarService',
-                        function CreateCertCtrl($scope, $rootScope, $log, $timeout, fragaSvarService) {
+                        'fragaSvarCommonService',
+                        'wcDialogService',
+                        function CreateCertCtrl($scope, $rootScope, $log, $timeout, fragaSvarService, fragaSvarCommonService, wcDialogService) {
 
                             // init state
                             $scope.qaList = {};
@@ -307,7 +265,7 @@ angular
                                             // latency:remove after
                                             // testing
 
-                                            fragaSvarService
+                                            fragaSvarCommonService
                                                     .setVidareBefordradState(
                                                             qa.internReferens,
                                                             qa.vidarebefordrad,
@@ -318,7 +276,7 @@ angular
                                                                     qa.vidarebefordrad = result.vidarebefordrad;
                                                                 } else {
                                                                     qa.vidarebefordrad = !qa.vidarebefordrad;
-                                                                    fragaSvarService
+                                                                    wcDialogService
                                                                             .showErrorMessageDialog("Kunde inte markera/avmarkera frågan som vidarebefordrad. Försök gärna igen för att se om felet är tillfälligt. Annars kan du kontakta supporten");
                                                                 }
                                                             });
