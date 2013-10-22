@@ -240,10 +240,10 @@
 
 
                 <!--  status header -->
-                <button class="btn btn-info pull-right" title="Skicka e-post med en länk till detta intyg för att informera den som ska hantera frågan/svaret" ng-click="openDialog(qa.internReferens)">
+               <button class="btn btn-info pull-right" title="Skicka e-post med en länk till detta intyg för att informera den som ska hantera frågan/svaret" ng-click="openMailDialog(qa)">
                   <img src="/img/mail.png">
                 </button>
-
+                
                 <div class="status-header">
                   <h3 class="inline-block">
                     Ämne: <strong><span message key="qa.amne.{{qa.amne | lowercase}}"></span></strong>

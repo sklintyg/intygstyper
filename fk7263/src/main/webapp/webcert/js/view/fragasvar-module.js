@@ -118,10 +118,11 @@ angular
                         '$rootScope',
                         '$log',
                         '$timeout',
+                        '$window',
                         'fragaSvarService',
                         'fragaSvarCommonService',
                         'wcDialogService',
-                        function CreateCertCtrl($scope, $rootScope, $log, $timeout, fragaSvarService, fragaSvarCommonService, wcDialogService) {
+                        function CreateCertCtrl($scope, $rootScope, $log, $timeout, $window, fragaSvarService, fragaSvarCommonService, wcDialogService) {
 
                             // init state
                             $scope.qaList = {};
@@ -342,6 +343,15 @@ angular
                                 }, 1000);
                             }
 
+                            // Handle vidarebefordra dialog
+                            $scope.openMailDialog = function(qa) {
+                                $timeout(function() {
+                                    fragaSvarCommonService.handleVidareBefodradToggle(qa, $scope.onVidareBefordradChange);
+                                }, 1000);
+                                //Launch mail client
+                                $window.location = fragaSvarCommonService.buildMailToLink(qa);
+                            }
+                            
                             $scope.initQuestionForm = function() {
                                 // Topics are defined under RE-13
                                 $scope.newQuestion = {
