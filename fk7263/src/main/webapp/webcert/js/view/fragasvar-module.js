@@ -3,7 +3,7 @@
  * functionality in webcert.
  */
 angular.module('wc.fragasvarmodule', []);
-angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$log', '$dialog', function($http, $log, $dialog) {
+angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$log', '$modal', function($http, $log, $modal) {
 
     /*
      * Load questions and answers data for a certificate
@@ -109,19 +109,33 @@ angular.module('wc.fragasvarmodule').factory('fragaSvarService', [ '$http', '$lo
     }
 
     // Todo: this functionality also exists in wc, maybe refactor to common
-    // resource (wc-util)
+    // resource (wc-util?)
     function _showErrorMessageDialog(message, callback) {
-        var msgbox = $dialog.messageBox("Ett fel inträffade", message, [ {
-            label : 'OK',
-            result : true
-        } ]);
-
-        msgbox.open().then(function(result) {
-            if (callback) {
-                callback(result)
-            }
+        
+        var msgbox = $modal.open({
+              template: 
+                  '  <div class="modal-header">'
+                  + '  <h3>Tekniskt fel</h3>'
+                  + '</div>'
+                  + '<div class="modal-body">'
+                  +   '{{bodyText}}'
+                  + '</div>'
+                  + '<div class="modal-footer">'
+                  +     '<button class="btn btn-success" ng-click="$close()">OK</button>'
+                  + '</div>',
+                controller : function($scope, $modalInstance, bodyText) {
+                    $scope.bodyText = bodyText;
+                },                  
+              resolve: { bodyText: function() { return angular.copy(message);}}
         });
-    }
+
+        msgbox.result.then(function(result) {
+          if (callback) {
+              callback(result)
+          }
+        }, function() {});
+      }
+
     // Return public API for the service
     return {
         getQAForCertificate : _getQAForCertificate,
