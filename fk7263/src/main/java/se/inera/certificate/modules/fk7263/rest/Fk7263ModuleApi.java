@@ -39,8 +39,8 @@ import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
 import se.inera.certificate.modules.fk7263.validator.UtlatandeValidator;
 import se.inera.certificate.validate.ValidationException;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
-import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
 
 /**
  * @author andreaskaltenbach, marced
@@ -51,7 +51,6 @@ public class Fk7263ModuleApi {
 
     private static final Unmarshaller unmarshaller;
 
-    private static final String CONTENT_DISPOSITION = "Content-Disposition";
     private static final String DATE_FORMAT = "yyyyMMdd";
 
     // Create unmarshaller for the transport format(s) this module can handle

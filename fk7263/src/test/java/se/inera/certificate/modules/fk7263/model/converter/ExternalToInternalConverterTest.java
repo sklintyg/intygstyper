@@ -33,8 +33,6 @@ public class ExternalToInternalConverterTest {
         JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
                 "ExternalToInternalConverterTest/utlatande_internal.json").getInputStream());
 
-        System.out.println(objectMapper.writeValueAsString(tree));
-
         assertEquals("JSON does not match expectation. Resulting JSON is \n" + tree.toString() + "\n", expectedTree,
                 tree);
     }
