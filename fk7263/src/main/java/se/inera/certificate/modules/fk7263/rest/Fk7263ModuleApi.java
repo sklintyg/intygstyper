@@ -117,7 +117,14 @@ public class Fk7263ModuleApi {
                 validateSchema(utlatandeSchemaValidator, transportXml);
             }
         } catch (ValidationException ex) {
-            String message = responseBody(utlatande.getUtlatandeId().getExtension(), ex.getMessage());
+            String utlatandeId = utlatande.getUtlatandeId().getExtension();
+            String enhetsId = null;
+            if (utlatande.getSkapadAv() != null &&
+                utlatande.getSkapadAv().getEnhet() != null &&
+                utlatande.getSkapadAv().getEnhet().getEnhetsId() != null) {
+                utlatande.getSkapadAv().getEnhet().getEnhetsId().getExtension();
+            }
+            String message = responseBody(utlatandeId, enhetsId, ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
         }
 
@@ -130,13 +137,21 @@ public class Fk7263ModuleApi {
         if (validationErrors.isEmpty()) {
             return Response.ok(externalModel).build();
         } else {
-            String response = responseBody(internalModel.getId(), Strings.join(",", validationErrors));
+            String response = responseBody(internalModel.getId(), internalModel.getVardperson().getEnhetsId(), Strings.join(",", validationErrors));
             return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
         }
     }
 
-    private String responseBody(String utlatandeId, String validationErrors) {
-        return "Validation failed for intyg " + utlatandeId + ": " + validationErrors;
+    private String responseBody(String utlatandeId, String enhetsId, String validationErrors) {
+        StringBuffer sb = new StringBuffer("Validation failed for intyg ");
+        sb.append(utlatandeId);
+        if (enhetsId != null) {
+            sb.append(" issued by ");
+            sb.append(enhetsId);
+        }
+        sb.append(": ");
+        sb.append(validationErrors);
+        return sb.toString();
     }
 
     private void validateSchema(Validator validator, String xml) {

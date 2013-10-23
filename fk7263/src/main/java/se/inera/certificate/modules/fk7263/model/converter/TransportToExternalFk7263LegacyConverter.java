@@ -6,9 +6,13 @@ import static se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder.
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.joda.time.Partial;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import se.inera.certificate.logging.LogMarkers;
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.HosPersonal;
@@ -49,6 +53,9 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
  * @author marced
  */
 public final class TransportToExternalFk7263LegacyConverter {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransportToExternalFk7263LegacyConverter.class);
+
     public static final String FK_7263 = "fk7263";
 
     private TransportToExternalFk7263LegacyConverter() {
@@ -72,7 +79,7 @@ public final class TransportToExternalFk7263LegacyConverter {
         fk7263utlatande.setSigneringsdatum(source.getSigneringsdatum());
         fk7263utlatande.setSkickatdatum(source.getSkickatDatum());
         fk7263utlatande.setSkapadAv(convert(source.getSkapadAvHosPersonal()));
-        fk7263utlatande.setPatient(convert(source.getPatient()));
+        fk7263utlatande.setPatient(convert(source.getPatient(), source));
 
         addExisting(fk7263utlatande.getObservationer(), convert(source.getMedicinsktTillstand()));
         addExisting(fk7263utlatande.getObservationer(), convert(source.getBedomtTillstand()));
@@ -99,7 +106,14 @@ public final class TransportToExternalFk7263LegacyConverter {
 
         for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType aktivitetType : source
                 .getAktivitets()) {
-            addExisting(fk7263utlatande.getAktiviteter(), convert(aktivitetType));
+            Aktivitet aktivitet = convert(aktivitetType);
+            if (aktivitet != null) {
+                addExisting(fk7263utlatande.getAktiviteter(), aktivitet);
+            } else {
+                LOGGER.info(LogMarkers.VALIDATION, "Validation failed for intyg " + source.getLakarutlatandeId() + " issued by " + 
+                        source.getSkapadAvHosPersonal().getEnhet().getEnhetsId().getExtension() +
+                        ": Aktivitet with missing aktivitetskod found - ignored.");
+            }
         }
 
         for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ReferensType referensType : source.getReferens()) {
@@ -157,6 +171,10 @@ public final class TransportToExternalFk7263LegacyConverter {
         Aktivitet aktivitet = new Aktivitet();
 
         Kod aktivitetsCode = null;
+
+        if (source.getAktivitetskod() == null) {
+            return null;
+        }
 
         switch (source.getAktivitetskod()) {
         case PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN:
@@ -381,15 +399,27 @@ public final class TransportToExternalFk7263LegacyConverter {
         return hosPersonal;
     }
 
+    private static final String PERSON_NUMBER_WITHOUT_DASH_REGEX = "[0-9]{12}";
+
     /**
      * Creates and converts basic patient info
      * 
      * @param source
      * @return
      */
-    private static Fk7263Patient convert(se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType source) {
+    private static Fk7263Patient convert(se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType source, Lakarutlatande lakarutlatande) {
         Fk7263Patient patient = new Fk7263Patient();
         patient.setId(IsoTypeConverter.toId(source.getPersonId()));
+        // If the personNumber is missing the separating dash, simply insert it.
+        // This is a temporary fix, since the schema currently allows any format
+        String personNumber = patient.getId().getExtension();
+        if (personNumber.length() == 12 && Pattern.matches(PERSON_NUMBER_WITHOUT_DASH_REGEX, personNumber)) {
+            patient.getId().setExtension(personNumber.substring(0,8) + "-" + personNumber.substring(8));
+            LOGGER.warn(LogMarkers.VALIDATION, "Validation failed for intyg " + lakarutlatande.getLakarutlatandeId() + " issued by " + 
+                                   lakarutlatande.getSkapadAvHosPersonal().getEnhet().getEnhetsId().getExtension() +
+                                   ": Person-id is lacking a separating dash - corrected.");
+        }
+
         // we only have fullstandigt namn available in the legacy jaxb
         patient.setEfternamn(source.getFullstandigtNamn());
         return patient;
