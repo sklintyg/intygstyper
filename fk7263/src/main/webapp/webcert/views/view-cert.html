@@ -52,7 +52,7 @@
           </div>
 
 
-          <div class="webcert-col-section" ng-show="(qaList.length | filter:openIssuesFilter) > 0" id="unhandledQACol">
+          <div class="webcert-col-section" ng-show="(qaList | filter:openIssuesFilter).length > 0" id="unhandledQACol">
             <h2 class="col-head">Ohanterade frågor</h2>
             <div ng-repeat="qa in qaList | filter:openIssuesFilter | orderBy:'senasteHandelseDatum':true">
               <div ng-if="qa.proxyMessage">
@@ -160,7 +160,7 @@
 
         <!-- ------------------------- HANTERADE FRÅGOR --------------------------------------------- -->
 
-        <div class="webcert-col-section" ng-show="(qaList.length | filter:closedIssuesFilter) > 0">
+        <div class="webcert-col-section" ng-show="(qaList | filter:closedIssuesFilter).length > 0">
           <h2 class="col-head">Hanterade frågor</h2>
           <div ng-repeat="qa in qaList | filter:closedIssuesFilter | orderBy:'senasteHandelseDatum':true">
 
