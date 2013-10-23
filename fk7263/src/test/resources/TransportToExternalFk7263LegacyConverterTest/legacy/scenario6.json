@@ -1,0 +1,122 @@
+{
+    "id": {
+        "extension": "6ea04fd0-5fef-4809-823b-efeddf8a4d55"
+    },
+    "typ": {
+        "code": "fk7263"
+    },
+    "signeringsdatum": "2013-03-17T00:00:00.000",
+    "skickatdatum": "2013-03-17T00:00:00.000",
+    "patient": {
+        "id": {
+            "root": "1.2.752.129.2.1.3.1",
+            "extension": "19121212-1212"
+        },
+        "efternamn": "Test Testorsson",
+        "arbetsuppgifter": [
+            {
+                "typAvArbetsuppgift": "Dirigent Dirigerar en f\u00f6r st\u00f6rre orkester p\u00e5 deltid"
+            }
+        ],
+        "fullstandigtNamn": "Test Testorsson"
+    },
+    "skapadAv": {
+        "id": {
+            "root": "1.2.752.129.2.1.4.1",
+            "extension": "Personal HSA-ID"
+        },
+        "namn": "En Läkare",
+        "forskrivarkod": "1234567",
+        "vardenhet": {
+            "id": {
+                "root": "1.2.752.129.2.1.4.1",
+                "extension": "Enhetsid"
+            },
+            "arbetsplatskod": {
+                "root": "1.2.752.29.4.71",
+                "extension": "123456789011"
+            },
+            "namn": "Kir Mott",
+            "postadress": "Lasarettv\u00e4gen 13",
+            "postnummer": "85150",
+            "postort": "Sundsvall",
+            "telefonnummer": "060-8188000",
+            "vardgivare": {
+                "id": {
+                    "root": "1.2.752.129.2.1.4.1",
+                    "extension": "VardgivarId"
+                },
+                "namn": "Landstinget Norrland"
+            }
+        }
+    },
+    "observationer": [
+        {
+            "observationskategori": {
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "439401001"
+            },
+            "observationskod": {
+                "code": "S47"
+            },
+            "beskrivning": "Kl\u00e4mskada p\u00e5 \u00f6verarm"
+        },
+        {
+            "observationskod": {
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "288524001"
+            },
+            "beskrivning": "Aktuellt sjukdomsf\u00f6rlopp"
+        },
+        {
+            "observationskategori": {
+                "codeSystem": "1.2.752.116.1.1.3.1.1",
+                "codeSystemName": "ICF",
+                "code": "b"
+            },
+            "beskrivning": "Kraftigt nedsatt r\u00f6rlighet i \u00f6verarmen pga skadan. B\u00f6j- och str\u00e4ckf\u00f6rm\u00e5gan \u00e4r mycket d\u00e5lig. Sm\u00e4rtar vid r\u00f6relse vilket ger att patienten inte kan anv\u00e4nda armen s\u00e4rkilt mycket."
+        },
+        {
+            "observationskategori": {
+                "codeSystem": "1.2.752.116.1.1.3.1.1",
+                "codeSystemName": "ICF",
+                "code": "d"
+            },
+            "beskrivning": "Aktivitetsneds\u00e4ttning: Patienten b\u00f6r/kan inte anv\u00e4nda armen f\u00f6rr\u00e4n skadan l\u00e4kt. Skadan f\u00f6rv\u00e4rras vid f\u00f6r tidigt p\u00e5tvingad belastning. Patienten kan inte lyfta armen utan den ska h\u00e5llas riktad ned\u00e5t och i fast l\u00e4ge s\u00e5 mycket som m\u00f6jligt under tiden f\u00f6r l\u00e4kning."
+        },
+        {
+            "observationskod": {
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "302119000"
+            },
+            "observationsperiod": {
+                "from": "2013-03-17",
+                "tom": "2013-04-07"
+            },
+            "varde": [
+                {
+                    "quantity": 0.0,
+                    "unit": "percent"
+                }
+            ]
+        }
+    ],
+    "vardkontakter": [
+        {
+            "vardkontakttyp": {
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "5880005"
+            },
+            "vardkontaktstid": {
+                "start": "2013-03-17",
+                "end": "2013-03-17"
+            }
+        }
+    ],
+    "validFromDate": "2013-03-17",
+    "validToDate": "2013-04-07"
+}
