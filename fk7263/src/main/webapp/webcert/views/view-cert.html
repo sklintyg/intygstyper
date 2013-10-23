@@ -210,7 +210,7 @@
           </div>
 
           <div class="control-group">
-            <button class="btn btn-success" ng-click="sendQuestion(newQuestion)" ng-disabled="!newQuestion.frageText || newQuestion.updateInProgress" id="sendQuestionBtn">
+            <button class="btn btn-success" ng-click="sendQuestion(newQuestion)" ng-disabled="!questionValidForSubmit(newQuestion)" title="{{newQuestion.sendButtonToolTip}}" id="sendQuestionBtn">
               <img src="/img/ajax-loader-small-green.gif" ng-show="newQuestion.updateInProgress">Skicka till Försäkringskassan
             </button>
             <button class="btn btn-secondary" ng-click="toggleQuestionForm()" id="cancelQuestionBtn">Avbryt fråga</button>
