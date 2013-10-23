@@ -35,7 +35,6 @@ import se.inera.certificate.common.v1.PatientRelationType;
 import se.inera.certificate.common.v1.PatientType;
 import se.inera.certificate.common.v1.RekommendationType;
 import se.inera.certificate.common.v1.UtforarrollType;
-import se.inera.certificate.common.v1.Utlatande;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
@@ -47,6 +46,8 @@ import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.rli.v1.Arrangemang;
+import se.inera.certificate.common.v1.Utlatande;
+
 import iso.v21090.dt.v1.CD;
 
 public class ExternalToTransportConverterImpl implements ExternalToTransportConverter {

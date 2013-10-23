@@ -3,9 +3,11 @@ package se.inera.certificate.modules.fk7263.model.converter;
 import java.util.ArrayList;
 import java.util.List;
 
+import iso.v21090.dt.v1.PQ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.EnhetType;
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.VardgivareType;
 import se.inera.certificate.fk7263.model.v1.AktivitetType;
 import se.inera.certificate.fk7263.model.v1.ArbetsuppgiftType;
 import se.inera.certificate.fk7263.model.v1.HosPersonalType;
@@ -31,9 +33,6 @@ import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
-import iso.v21090.dt.v1.PQ;
 
 /**
  * @author marced
