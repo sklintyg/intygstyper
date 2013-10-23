@@ -162,4 +162,24 @@ public class UtlatandeValidatorTest {
         assertEquals(1, new UtlatandeValidator(utlatande).validate().size());
     }
 
+    @Test
+    public void testDatumIntervallSammaDag() throws Exception {
+        Fk7263Intyg utlatande = getValidUtlatande();
+
+        // remove skickatdatum
+        utlatande.getNedsattMed100().setEnd(utlatande.getNedsattMed100().getStart());
+
+        assertEquals(0, new UtlatandeValidator(utlatande).validate().size());
+    }
+
+
+    @Test
+    public void testFelaktigtDatumIntervall() throws Exception {
+        Fk7263Intyg utlatande = getValidUtlatande();
+
+        // remove skickatdatum
+        utlatande.getNedsattMed100().setEnd(utlatande.getNedsattMed100().getStart().minusDays(1));
+
+        assertEquals(1, new UtlatandeValidator(utlatande).validate().size());
+    }
 }

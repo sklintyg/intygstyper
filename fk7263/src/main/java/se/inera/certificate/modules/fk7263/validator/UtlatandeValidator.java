@@ -203,12 +203,12 @@ public class UtlatandeValidator {
         }
 
         if (nedsattning.getStart() != null && nedsattning.getEnd() != null) {
-            if (nedsattning.getStart().isBefore(nedsattning.getEnd())) {
-                return true;
-            } else {
+            if (nedsattning.getEnd().isBefore(nedsattning.getStart())) {
                 // Must be something wrong with the observationPeriod:
                 validationErrors.add("Field 8b: Invalid date interval (from " + nedsattning.getStart() + ", tom "
                         + nedsattning.getEnd());
+            } else {
+                return true;
             }
 
         } else {
