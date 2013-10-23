@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<utlatande xmlns="urn:intyg:common-model:1" xmlns:ns2="urn:riv:insuranceprocess:healthreporting:2">
+<utlatande xmlns="urn:riv:clinicalprocess:healtcond:certificate:1">
   <utlatande-id root="" extension="123456"/>
 </utlatande>

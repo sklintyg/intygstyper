@@ -1,76 +1,73 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.IOException;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
+import java.io.IOException;
 
-import org.junit.Test;
-import org.springframework.core.io.ClassPathResource;
-
-import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
+import static org.junit.Assert.assertEquals;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.core.io.ClassPathResource;
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
+import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
 /**
  * @author marced
  */
 public class TransportToExternalFk7263LegacyConverterTest {
 
-    @Test
-    public void testConversion() throws JAXBException, IOException {
+	private JAXBContext jaxbContext;
+	private Unmarshaller unmarshaller;
+	private ObjectMapper objectMapper;
+	private final static String resourceRoot = "TransportToExternalFk7263LegacyConverterTest/";
 
-        // read utlatandeType from file
-        JAXBContext jaxbContext = JAXBContext.newInstance(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande.class);
-        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        
-        JAXBElement<Lakarutlatande> utlatandeElement = unmarshaller.unmarshal(new StreamSource(new ClassPathResource(
-                "TransportToExternalFk7263LegacyConverterTest/legacy-maximalt-fk7263-transport.xml").getInputStream()), Lakarutlatande.class);
+	private JAXBElement<Lakarutlatande> readUtlatandeTypeFromFile(String file)
+			throws JAXBException, IOException {
+		JAXBElement<Lakarutlatande> utlatandeElement = unmarshaller.unmarshal(
+				new StreamSource(new ClassPathResource(file).getInputStream()),
+				Lakarutlatande.class);
+		return utlatandeElement;
+	}
 
-        Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter.convert(utlatandeElement.getValue());
+	@Before
+	public void setUp() throws JAXBException, IOException {
+		jaxbContext = JAXBContext
+				.newInstance(se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande.class);
+		unmarshaller = jaxbContext.createUnmarshaller();
+		objectMapper = new CustomObjectMapper();
+	}
 
-        // serialize utlatande to JSON and compare with expected JSON
-        ObjectMapper objectMapper = new CustomObjectMapper();
-        JsonNode tree = objectMapper.valueToTree(externalModel);
-        JsonNode expectedTree = objectMapper.readTree(new ClassPathResource("TransportToExternalFk7263LegacyConverterTest/legacy-maximalt-fk7263-external.json").getInputStream());
+	@Test
+	public void testConversionWithMaximalCertificate() throws JAXBException,
+			IOException {
 
-        assertEquals("JSON does not match expectation. Resulting JSON is \n" + tree.toString() + "\n", expectedTree, tree);
-    }
-    
-    @Test
-    public void testConversionWithMinimalCertificate() throws JAXBException, IOException {
+		// read utlatandeType from file
 
-        // read utlatandeType from file
-        JAXBContext jaxbContext = JAXBContext.newInstance(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande.class);
-        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        
-        JAXBElement<Lakarutlatande> utlatandeElement = unmarshaller.unmarshal(new StreamSource(new ClassPathResource(
-                "TransportToExternalFk7263LegacyConverterTest/legacy-minimalt-fk7263-transport.xml").getInputStream()), Lakarutlatande.class);
+		JAXBElement<Lakarutlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
+				+ "legacy-maximalt-fk7263-transport.xml");
 
-        Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter.convert(utlatandeElement.getValue());
-        
-        // serialize utlatande to JSON and compare with expected JSON
-        ObjectMapper objectMapper = new CustomObjectMapper();
-        JsonNode tree = objectMapper.valueToTree(externalModel);
-        JsonNode expectedTree = objectMapper.readTree(new ClassPathResource("TransportToExternalFk7263LegacyConverterTest/legacy-minimalt-fk7263-external.json").getInputStream());
+		Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter
+				.convert(utlatandeElement.getValue());
 
-        assertEquals("JSON does not match expectation. Resulting JSON is \n" + tree.toString() + "\n", expectedTree, tree);
-    }
-    
+		// serialize utlatande to JSON and compare with expected JSON
+		JsonNode tree = objectMapper.valueToTree(externalModel);
+		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+				resourceRoot + "legacy-maximalt-fk7263-external.json")
+				.getInputStream());
+
+		assertEquals("JSON does not match expectation. Resulting JSON is \n"
+				+ tree.toString() + "\n", expectedTree, tree);
+	}
+
     @Test
     public void testInvalidPnrGetsCorrected() throws JAXBException, IOException {
-
-        // read utlatandeType from file
-        JAXBContext jaxbContext = JAXBContext.newInstance(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande.class);
-        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         
         JAXBElement<Lakarutlatande> utlatandeElement = unmarshaller.unmarshal(new StreamSource(new ClassPathResource(
                 "TransportToExternalFk7263LegacyConverterTest/legacy-minimalt-fk7263-ofullstandigt-pnr-transport.xml").getInputStream()), Lakarutlatande.class);
@@ -78,10 +75,326 @@ public class TransportToExternalFk7263LegacyConverterTest {
         Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter.convert(utlatandeElement.getValue());
         
         // serialize utlatande to JSON and compare with expected JSON
-        ObjectMapper objectMapper = new CustomObjectMapper();
         JsonNode tree = objectMapper.valueToTree(externalModel);
         JsonNode expectedTree = objectMapper.readTree(new ClassPathResource("TransportToExternalFk7263LegacyConverterTest/legacy-minimalt-fk7263-external.json").getInputStream());
 
         assertEquals("JSON does not match expectation. Resulting JSON is \n" + tree.toString() + "\n", expectedTree, tree);
     }
+
+    @Test
+	public void testConversionWithMinimalCertificate() throws JAXBException,
+			IOException {
+
+		// read utlatandeType from file
+		JAXBElement<Lakarutlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
+				+ "legacy-minimalt-fk7263-transport.xml");
+
+		Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter
+				.convert(utlatandeElement.getValue());
+
+		// serialize utlatande to JSON and compare with expected JSON
+		JsonNode tree = objectMapper.valueToTree(externalModel);
+		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+				resourceRoot + "legacy-minimalt-fk7263-external.json")
+				.getInputStream());
+
+		assertEquals("JSON does not match expectation. Resulting JSON is \n"
+				+ tree.toString() + "\n", expectedTree, tree);
+	}
+
+	// Below are tests for different ways of filling out an FK7263-form,
+	// see readme in
+	// /resource/TransportToExternalFK763LegacyConverterTest/legacy for more
+	// info
+
+	/**
+	 * Tests scenario 1, with fields: 1, 8b, 14 - 17
+	 * 
+	 * @throws JAXBException
+	 * @throws IOException
+	 */
+	@Test
+	public void testScenario1() throws JAXBException, IOException {
+		JAXBElement<Lakarutlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
+				+ "legacy/scenario1.xml");
+		Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter
+				.convert(utlatandeElement.getValue());
+
+		// serialize utlatande to JSON and compare with expected JSON
+		JsonNode tree = objectMapper.valueToTree(externalModel);
+		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+				resourceRoot + "legacy/scenario1.json").getInputStream());
+
+		assertEquals("JSON does not match expectation. Resulting JSON is \n"
+				+ tree.toString() + "\n", expectedTree, tree);
+	}
+
+	/**
+	 * Tests scenario 2 with fields: 1, 8b, 10, 14-17
+	 * 
+	 * @throws JAXBException
+	 * @throws IOException
+	 */
+	@Test
+	public void testScenario2() throws JAXBException, IOException {
+		JAXBElement<Lakarutlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
+				+ "legacy/scenario2.xml");
+		Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter
+				.convert(utlatandeElement.getValue());
+
+		// serialize utlatande to JSON and compare with expected JSON
+		JsonNode tree = objectMapper.valueToTree(externalModel);
+		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+				resourceRoot + "legacy/scenario2.json").getInputStream());
+
+		assertEquals("JSON does not match expectation. Resulting JSON is \n"
+				+ tree.toString() + "\n", expectedTree, tree);
+	}
+
+	/**
+	 * Tests scenario 3 with fields: 1, 8b, 10, 13, 14-17
+	 * 
+	 * @throws JAXBException
+	 * @throws IOException
+	 */
+	@Test
+	public void testScenario3() throws JAXBException, IOException {
+		JAXBElement<Lakarutlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
+				+ "legacy/scenario3.xml");
+		Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter
+				.convert(utlatandeElement.getValue());
+
+		// serialize utlatande to JSON and compare with expected JSON
+		JsonNode tree = objectMapper.valueToTree(externalModel);
+		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+				resourceRoot + "legacy/scenario3.json").getInputStream());
+
+		assertEquals("JSON does not match expectation. Resulting JSON is \n"
+				+ tree.toString() + "\n", expectedTree, tree);
+	}
+
+	/**
+	 * Tests scenario 4 with fields: 2b, 4a, 4b, 5, 8a, 8b, 14-17
+	 * 
+	 * @throws JAXBException
+	 * @throws IOException
+	 */
+	@Test
+	public void testScenario4() throws JAXBException, IOException {
+		JAXBElement<Lakarutlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
+				+ "legacy/scenario4.xml");
+		Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter
+				.convert(utlatandeElement.getValue());
+
+		// serialize utlatande to JSON and compare with expected JSON
+		JsonNode tree = objectMapper.valueToTree(externalModel);
+		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+				resourceRoot + "legacy/scenario4.json").getInputStream());
+
+		assertEquals("JSON does not match expectation. Resulting JSON is \n"
+				+ tree.toString() + "\n", expectedTree, tree);
+	}
+
+	/**
+	 * Tests scenario 5 with fields: 2a, 2b, 4a, 4b, 5, 8a, 8b, 14-17
+	 * 
+	 * @throws JAXBException
+	 * @throws IOException
+	 */
+	@Test
+	public void testScenario5() throws JAXBException, IOException {
+		JAXBElement<Lakarutlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
+				+ "legacy/scenario5.xml");
+		Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter
+				.convert(utlatandeElement.getValue());
+
+		// serialize utlatande to JSON and compare with expected JSON
+		JsonNode tree = objectMapper.valueToTree(externalModel);
+		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+				resourceRoot + "legacy/scenario5.json").getInputStream());
+
+		assertEquals("JSON does not match expectation. Resulting JSON is \n"
+				+ tree.toString() + "\n", expectedTree, tree);
+	}
+
+	/**
+	 * Tests scenario 6 with fields: 2a, 2b, 3, 4a, 4b, 5, 8a, 8b, 14-17
+	 * 
+	 * @throws JAXBException
+	 * @throws IOException
+	 */
+	@Test
+	public void testScenario6() throws JAXBException, IOException {
+		JAXBElement<Lakarutlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
+				+ "legacy/scenario6.xml");
+		Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter
+				.convert(utlatandeElement.getValue());
+
+		// serialize utlatande to JSON and compare with expected JSON
+		JsonNode tree = objectMapper.valueToTree(externalModel);
+		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+				resourceRoot + "legacy/scenario6.json").getInputStream());
+
+		assertEquals("JSON does not match expectation. Resulting JSON is \n"
+				+ tree.toString() + "\n", expectedTree, tree);
+	}
+
+	/**
+	 * Tests scenario 7 with fields: 2b, 4a, 4b, 5, 6b, 8a, 8b, 11, 13, 14-17
+	 * 
+	 * @throws JAXBException
+	 * @throws IOException
+	 */
+	@Test
+	public void testScenario7() throws JAXBException, IOException {
+		JAXBElement<Lakarutlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
+				+ "legacy/scenario7.xml");
+		Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter
+				.convert(utlatandeElement.getValue());
+
+		// serialize utlatande to JSON and compare with expected JSON
+		JsonNode tree = objectMapper.valueToTree(externalModel);
+		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+				resourceRoot + "legacy/scenario7.json").getInputStream());
+
+		assertEquals("JSON does not match expectation. Resulting JSON is \n"
+				+ tree.toString() + "\n", expectedTree, tree);
+	}
+
+	/**
+	 * Tests scenario 8 with fields: 2b, 4a, 4b, 5, 8a, 8b, 11, 14-17
+	 * 
+	 * @throws JAXBException
+	 * @throws IOException
+	 */
+	@Test
+	public void testScenario8() throws JAXBException, IOException {
+		JAXBElement<Lakarutlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
+				+ "legacy/scenario8.xml");
+		Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter
+				.convert(utlatandeElement.getValue());
+
+		// serialize utlatande to JSON and compare with expected JSON
+		JsonNode tree = objectMapper.valueToTree(externalModel);
+		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+				resourceRoot + "legacy/scenario8.json").getInputStream());
+
+		assertEquals("JSON does not match expectation. Resulting JSON is \n"
+				+ tree.toString() + "\n", expectedTree, tree);
+	}
+
+	/**
+	 * Tests scenario 9 with fields: 2a, 2b, 4a, 4b, 5, 7, 8a, 8b, 9, 10, 11,
+	 * 14-17
+	 * 
+	 * @throws JAXBException
+	 * @throws IOException
+	 */
+	@Test
+	public void testScenario9() throws JAXBException, IOException {
+		JAXBElement<Lakarutlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
+				+ "legacy/scenario9.xml");
+		Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter
+				.convert(utlatandeElement.getValue());
+
+		// serialize utlatande to JSON and compare with expected JSON
+		JsonNode tree = objectMapper.valueToTree(externalModel);
+		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+				resourceRoot + "legacy/scenario9.json").getInputStream());
+
+		assertEquals("JSON does not match expectation. Resulting JSON is \n"
+				+ tree.toString() + "\n", expectedTree, tree);
+	}
+
+	/**
+	 * Tests scenario 10 with fields: 2a, 2b, 3, 4a, 4b, 5, 6b, 7, 8a, 8b, 9,
+	 * 10, 12, 14-17
+	 * 
+	 * @throws JAXBException
+	 * @throws IOException
+	 */
+	@Test
+	public void testScenario10() throws JAXBException, IOException {
+		JAXBElement<Lakarutlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
+				+ "legacy/scenario10.xml");
+		Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter
+				.convert(utlatandeElement.getValue());
+
+		// serialize utlatande to JSON and compare with expected JSON
+		JsonNode tree = objectMapper.valueToTree(externalModel);
+		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+				resourceRoot + "legacy/scenario10.json").getInputStream());
+
+		assertEquals("JSON does not match expectation. Resulting JSON is \n"
+				+ tree.toString() + "\n", expectedTree, tree);
+	}
+
+	/**
+	 * Tests scenario 11 with fields: 2a, 2b, 3, 4a, 4b, 5, 6a, 6b, 7, 8a, 8b,
+	 * 9, 10, 14-17
+	 * 
+	 * @throws JAXBException
+	 * @throws IOException
+	 */
+	@Test
+	public void testScenario11() throws JAXBException, IOException {
+		JAXBElement<Lakarutlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
+				+ "legacy/scenario11.xml");
+		Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter
+				.convert(utlatandeElement.getValue());
+
+		// serialize utlatande to JSON and compare with expected JSON
+		JsonNode tree = objectMapper.valueToTree(externalModel);
+		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+				resourceRoot + "legacy/scenario11.json").getInputStream());
+
+		assertEquals("JSON does not match expectation. Resulting JSON is \n"
+				+ tree.toString() + "\n", expectedTree, tree);
+	}
+
+	/**
+	 * Tests scenario 12 with fields: 2a, 2b, 3, 4a, 4b, 5, 6a, 6b, 7, 8a, 8b,
+	 * 9, 10, 12, 13, 14-17
+	 * 
+	 * @throws JAXBException
+	 * @throws IOException
+	 */
+	@Test
+	public void testScenario12() throws JAXBException, IOException {
+		JAXBElement<Lakarutlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
+				+ "legacy/scenario12.xml");
+		Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter
+				.convert(utlatandeElement.getValue());
+
+		// serialize utlatande to JSON and compare with expected JSON
+		JsonNode tree = objectMapper.valueToTree(externalModel);
+		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+				resourceRoot + "legacy/scenario12.json").getInputStream());
+
+		assertEquals("JSON does not match expectation. Resulting JSON is \n"
+				+ tree.toString() + "\n", expectedTree, tree);
+	}
+
+	/**
+	 * Tests scenario 13 with fields: 2a, 2b, 3, 4a, 4b, 5, 6a, 6b, 7, 8a, 8b,
+	 * 9, 10, 11, 12, 13, 14-17
+	 * 
+	 * @throws JAXBException
+	 * @throws IOException
+	 */
+	@Test
+	public void testScenario13() throws JAXBException, IOException {
+		JAXBElement<Lakarutlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
+				+ "legacy/scenario13.xml");
+		Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter
+				.convert(utlatandeElement.getValue());
+
+		// serialize utlatande to JSON and compare with expected JSON
+		JsonNode tree = objectMapper.valueToTree(externalModel);
+		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+				resourceRoot + "legacy/scenario13.json").getInputStream());
+
+		assertEquals("JSON does not match expectation. Resulting JSON is \n"
+				+ tree.toString() + "\n", expectedTree, tree);
+	}
 }

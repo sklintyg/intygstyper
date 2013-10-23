@@ -13,7 +13,7 @@ import se.inera.certificate.fk7263.model.v1.Utlatande;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
-import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
 
 /**
  * @author andreaskaltenbach

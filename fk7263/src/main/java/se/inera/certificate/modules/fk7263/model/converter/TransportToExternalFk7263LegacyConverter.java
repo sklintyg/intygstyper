@@ -12,6 +12,15 @@ import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType;
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.BedomtTillstandType;
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.FunktionstillstandType;
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.EnhetType;
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.HosPersonalType;
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.VardgivareType;
 import se.inera.certificate.logging.LogMarkers;
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Arbetsuppgift;
@@ -37,18 +46,9 @@ import se.inera.certificate.modules.fk7263.model.codes.Vardkontakttypkoder;
 import se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.BedomtTillstandType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.FunktionstillstandType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 
 /**
- * Converts se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande Jaxb structure to External model
+ * Converts se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande Jaxb structure to External model
  * 
  * @author marced
  */
@@ -95,7 +95,7 @@ public final class TransportToExternalFk7263LegacyConverter {
                             .add(convert(funktionstillstand.getArbetsformaga().getArbetsuppgift()));
                 }
                 if (funktionstillstand.getArbetsformaga().getSysselsattnings() != null) {
-                    for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType sysselsattning : funktionstillstand
+                    for (se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType sysselsattning : funktionstillstand
                             .getArbetsformaga().getSysselsattnings()) {
                         fk7263utlatande.getPatient().getSysselsattningar()
                                 .add(convert(sysselsattning, source.getPatient()));
@@ -104,7 +104,7 @@ public final class TransportToExternalFk7263LegacyConverter {
             }
         }
 
-        for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType aktivitetType : source
+        for (se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.AktivitetType aktivitetType : source
                 .getAktivitets()) {
             Aktivitet aktivitet = convert(aktivitetType);
             if (aktivitet != null) {
@@ -116,11 +116,11 @@ public final class TransportToExternalFk7263LegacyConverter {
             }
         }
 
-        for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ReferensType referensType : source.getReferens()) {
+        for (se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ReferensType referensType : source.getReferens()) {
             addExisting(fk7263utlatande.getReferenser(), convert(referensType));
         }
 
-        for (se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType vardkontaktType : source
+        for (se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType vardkontaktType : source
                 .getVardkontakts()) {
             addExisting(fk7263utlatande.getVardkontakter(), convert(vardkontaktType));
         }
@@ -128,7 +128,7 @@ public final class TransportToExternalFk7263LegacyConverter {
         return fk7263utlatande;
     }
 
-    private static Vardkontakt convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType source) {
+    private static Vardkontakt convert(se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType source) {
         Vardkontakt vardkontakt = new Vardkontakt();
 
         switch (source.getVardkontakttyp()) {
@@ -150,7 +150,7 @@ public final class TransportToExternalFk7263LegacyConverter {
         return vardkontakt;
     }
 
-    private static Referens convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ReferensType source) {
+    private static Referens convert(se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ReferensType source) {
         Referens referens = new Referens();
 
         switch (source.getReferenstyp()) {
@@ -167,7 +167,7 @@ public final class TransportToExternalFk7263LegacyConverter {
         return referens;
     }
 
-    private static Aktivitet convert(se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType source) {
+    private static Aktivitet convert(se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.AktivitetType source) {
         Aktivitet aktivitet = new Aktivitet();
 
         Kod aktivitetsCode = null;
@@ -223,8 +223,8 @@ public final class TransportToExternalFk7263LegacyConverter {
     }
 
     private static Sysselsattning convert(
-            se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType source,
-            se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType patient) {
+            se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType source,
+            se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.PatientType patient) {
 
         Sysselsattning sysselsattning = new Sysselsattning();
         Kod sysselsattningsKod = null;
@@ -257,7 +257,7 @@ public final class TransportToExternalFk7263LegacyConverter {
     }
 
     private static Arbetsuppgift convert(
-            se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsuppgiftType source) {
+            se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsuppgiftType source) {
 
         Arbetsuppgift arbetsuppgift = new Arbetsuppgift();
         arbetsuppgift.setTypAvArbetsuppgift(source.getTypAvArbetsuppgift());
@@ -407,7 +407,7 @@ public final class TransportToExternalFk7263LegacyConverter {
      * @param source
      * @return
      */
-    private static Fk7263Patient convert(se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType source, Lakarutlatande lakarutlatande) {
+    private static Fk7263Patient convert(se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.PatientType source, Lakarutlatande lakarutlatande) {
         Fk7263Patient patient = new Fk7263Patient();
         patient.setId(IsoTypeConverter.toId(source.getPersonId()));
         // If the personNumber is missing the separating dash, simply insert it.

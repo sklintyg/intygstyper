@@ -39,8 +39,8 @@ import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
 import se.inera.certificate.modules.fk7263.validator.UtlatandeValidator;
 import se.inera.certificate.validate.ValidationException;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
-import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
 
 /**
  * @author andreaskaltenbach, marced
@@ -49,34 +49,30 @@ public class Fk7263ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(Fk7263ModuleApi.class);
 
-    private static final Unmarshaller unmarshaller;
-
-    private static final String CONTENT_DISPOSITION = "Content-Disposition";
     private static final String DATE_FORMAT = "yyyyMMdd";
 
-    // Create unmarshaller for the transport format(s) this module can handle
+    private static JAXBContext jaxbContext;
+
+    // Create JAXB context for the transport format(s) this module can handle
     static {
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(Utlatande.class, RegisterMedicalCertificate.class);
-            unmarshaller = jaxbContext.createUnmarshaller();
+            jaxbContext = JAXBContext.newInstance(Utlatande.class, RegisterMedicalCertificate.class);
         } catch (JAXBException e) {
             throw new RuntimeException("Failed to create JAXB context", e);
         }
     }
 
-    private static final Validator utlatandeSchemaValidator;
+    private static Schema utlatandeSchema;
 
     private static final String REGISTER_MEDICAL_CERTIFICATE_VERSION = "1.0";
     private static final String UTLATANDE_VERSION = "2.0";
 
-    // create schema validators
+    // create schema for validation
     static {
         try {
             Source utlatandeSchemaFile = new StreamSource(new ClassPathResource("/schemas/fk7263_model.xsd").getFile());
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema utlatandeSchema = schemaFactory.newSchema(utlatandeSchemaFile);
-
-            utlatandeSchemaValidator = utlatandeSchema.newValidator();
+            utlatandeSchema = schemaFactory.newSchema(utlatandeSchemaFile);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read schema file", e);
         } catch (SAXException e) {
@@ -107,14 +103,15 @@ public class Fk7263ModuleApi {
         }
 
         if (registerMedicalCertificate == null && utlatande == null) {
-            LOG.warn("Unsupported XML message: " + transportXml);
+            LOG.warn("Unsupported XML message: {}", transportXml);
             throw new RuntimeException("Unsupported XML message: " + transportXml);
         }
 
         // perform schema validation
         try {
             if (utlatande != null) {
-                validateSchema(utlatandeSchemaValidator, transportXml);
+                Validator validator = utlatandeSchema.newValidator();
+                validateSchema(validator, transportXml);
             }
         } catch (ValidationException ex) {
             String utlatandeId = utlatande.getUtlatandeId().getExtension();
@@ -183,12 +180,12 @@ public class Fk7263ModuleApi {
     }
 
     private Fk7263Utlatande convertToModel(Lakarutlatande legacyUtlatande) {
-        LOG.debug("Converting " + legacyUtlatande.getClass().getCanonicalName() + " to externalModuleFormat");
+        LOG.debug("Converting {} to externalModuleFormat", legacyUtlatande.getClass().getCanonicalName());
         return TransportToExternalFk7263LegacyConverter.convert(legacyUtlatande);
     }
 
     private Fk7263Utlatande convertToModel(Utlatande genericUtlatande) {
-        LOG.debug("Converting " + genericUtlatande.getClass().getCanonicalName() + " to externalModuleFormat");
+        LOG.debug("Converting {}  to externalModuleFormat", genericUtlatande.getClass().getCanonicalName());
         return TransportToExternalConverter.convert(genericUtlatande);
     }
 
@@ -200,6 +197,7 @@ public class Fk7263ModuleApi {
      */
     private Object unmarshallTransportXML(String transportXml) {
         try {
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             return unmarshaller.unmarshal(new StringReader(transportXml));
         } catch (JAXBException e) {
             LOG.error("Failed to unmarshal transportXml", e);

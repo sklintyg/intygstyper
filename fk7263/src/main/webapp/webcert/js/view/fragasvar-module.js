@@ -352,10 +352,23 @@ angular
                                 $window.location = fragaSvarCommonService.buildMailToLink(qa);
                             }
                             
+                            $scope.questionValidForSubmit = function(newQuestion) {
+                                var validToSend= newQuestion.chosenTopic.value && newQuestion.frageText && !newQuestion.updateInProgress;
+                                if (!validToSend) {
+                                    newQuestion.sendButtonToolTip = "Du måste välja ett ämne och skriva en frågetext innan du kan skicka frågan";
+                                } else {
+                                    newQuestion.sendButtonToolTip = "Skicka frågan";
+                                }
+                                return validToSend;
+                            }
+                            
                             $scope.initQuestionForm = function() {
                                 // Topics are defined under RE-13
                                 $scope.newQuestion = {
                                     topics : [ {
+                                        label : 'Välj ämne',
+                                        value : null
+                                    },{
                                         label : 'Arbetstidsförläggning',
                                         value : 'ARBETSTIDSFORLAGGNING'
                                     }, {
@@ -370,7 +383,7 @@ angular
                                     } ],
                                     frageText : ""
                                 };
-                                $scope.newQuestion.chosenTopic = $scope.newQuestion.topics[3]; // 'Övrigt'
+                                $scope.newQuestion.chosenTopic = $scope.newQuestion.topics[0]; // 'Välj ämne'
                                 // is
                                 // default
                             }

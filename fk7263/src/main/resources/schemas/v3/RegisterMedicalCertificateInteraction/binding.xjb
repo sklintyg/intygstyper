@@ -12,19 +12,19 @@
 
   <jxb:bindings schemaLocation="../../core_components/insuranceprocess_healthreporting_2.0.xsd" node="/xs:schema">
     <jxb:schemaBindings>
-      <jxb:package name="se.inera.ifv.insuranceprocess.healthreporting.v2"/>
+      <jxb:package name="se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2"/>
     </jxb:schemaBindings>
   </jxb:bindings>
-  
+
   <jxb:bindings schemaLocation="../../core_components/MU7263-RIV_3.0.xsd" node="/xs:schema">
     <jxb:schemaBindings>
-      <jxb:package name="se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3"/>
+      <jxb:package name="se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3"/>
     </jxb:schemaBindings>
   </jxb:bindings>
   
   <jxb:bindings schemaLocation="RegisterMedicalCertificate_3.0.xsd" node="/xs:schema">
     <jxb:schemaBindings>
-      <jxb:package name="se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3"/>
+      <jxb:package name="se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3"/>
     </jxb:schemaBindings>
   </jxb:bindings>
 

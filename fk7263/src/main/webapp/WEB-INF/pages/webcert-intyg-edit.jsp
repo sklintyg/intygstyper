@@ -74,7 +74,7 @@
 	          <a class="backlink" href="/web/dashboard#/unhandled-qa"><span message key="common.goback"></span></a>
 	          <div>
 	            <h1 style="display: inline-block; margin-right: 20px;"><span message key="view.label.pagetitle.fk7263"></span></h1>
-	            <div class="alert alert-warning alert-block">
+	            <div class="alert alert-info alert-block">
 	              <strong>Status:</strong> Intyget är sparat.
 	            </div>
 	          </div>
@@ -107,11 +107,13 @@
   <%-- Dependencies to common (3rd party) components loaded from web app running at "/" context--%>
   <script type="text/javascript" src="/js/vendor/angular/1.1.5/angular.js"></script>
   <script type="text/javascript" src="/js/vendor/angular/1.1.5/i18n/angular-locale_sv-se.js"></script>
-  <script type="text/javascript" src="/js/vendor/ui-bootstrap/0.5.0/ui-bootstrap-tpls-0.5.0.js"></script>
+  <script type="text/javascript" src="/js/vendor/ui-bootstrap/0.6.0/ui-bootstrap-tpls-0.6.0.js"></script>
 
   <%-- Dependencies to common components loaded from web app running at "/" context--%>
   <script type="text/javascript" src="/js/common/wc-message-module.js"></script>
+  <script type="text/javascript" src="/js/common/wc-utils.js"></script>
   <script type="text/javascript" src="/js/common/wc-common-directives.js"></script>
+  <script type="text/javascript" src="/js/common/wc-common-fragasvar-module.js"></script>
   <script type="text/javascript" src="/js/common/wc-common-message-resources.js"></script>
 
   <%-- Dependencies to module specific components loaded from this modules web app running at "?" context--%>
