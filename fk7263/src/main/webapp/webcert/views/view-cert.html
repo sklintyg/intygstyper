@@ -297,13 +297,13 @@
                   <!--  VÄNTAR på svar från vården, men skall kunna klarmarkeras ändå?-->
                   <label class="control-label">Svar</label>
                   <div class="controls">
-                    <textarea rows="5" ng-model="qa.svarsText" id="answerText-{{qa.internReferens}}" ng-disabled="qa.answerDisabled"></textarea>
+                    <textarea rows="5" ng-model="qa.svarsText" id="answerText-{{qa.internReferens}}" ng-show="!qa.answerDisabled"></textarea>
                     <div>
                       <!-- error message occuring when inteacting with server for this FragaSvar-->
                       <div id="{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey" class="alert alert-error">
                         <span message key="error.{{qa.activeErrorMessageKey}}"></span>
                       </div>
-                      <button class="btn btn-success" ng-click="sendAnswer(qa)" ng-disabled="!qa.svarsText || qa.answerDisabled || qa.updateInProgress" id="sendAnswerBtn-{{qa.internReferens}}"
+                      <button class="btn btn-success" ng-click="sendAnswer(qa)" ng-disabled="!qa.svarsText || qa.updateInProgress" ng-show="!qa.answerDisabled" id="sendAnswerBtn-{{qa.internReferens}}"
                         title="{{qa.answerButtonToolTip}}">
                         <img src="/img/ajax-loader-small-green.gif" ng-show="qa.updateInProgress">Skicka svar
                       </button>
