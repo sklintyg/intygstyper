@@ -120,7 +120,7 @@
 
                 <div class="control-group" ng-if="qa.status == 'PENDING_INTERNAL_ACTION'">
                   <!--  VÄNTAR på svar från vården, men skall kunna klarmarkeras ändå?-->
-                  <label class="control-label">Svar</label>
+                  <label class="control-label" ng-show="!qa.answerDisabled">Svar</label>
                   <div class="controls">
                     <textarea rows="5" ng-model="qa.svarsText" id="answerText-{{qa.internReferens}}" ng-show="!qa.answerDisabled"></textarea>
                     <div>
