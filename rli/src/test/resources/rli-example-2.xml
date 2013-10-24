@@ -19,7 +19,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<utlatande xmlns="urn:riv:clinicalprocess:healtcond:certificate:1" xmlns:rli="urn:intyg:rli:model:1"
+<utlatande xmlns="urn:riv:clinicalprocess:healthcond:certificate:1" xmlns:rli="urn:intyg:rli:model:1"
            xmlns:hr="urn:riv:insuranceprocess:healthreporting:2">
 
   <!-- Reseläkarintyg. Definierar en patient Fröken Fräken (19331122-4400)
