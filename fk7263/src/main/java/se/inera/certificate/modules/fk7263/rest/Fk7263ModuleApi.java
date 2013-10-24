@@ -49,33 +49,30 @@ public class Fk7263ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(Fk7263ModuleApi.class);
 
-    private static final Unmarshaller unmarshaller;
-
     private static final String DATE_FORMAT = "yyyyMMdd";
 
-    // Create unmarshaller for the transport format(s) this module can handle
+    private static JAXBContext jaxbContext;
+
+    // Create JAXB context for the transport format(s) this module can handle
     static {
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(Utlatande.class, RegisterMedicalCertificate.class);
-            unmarshaller = jaxbContext.createUnmarshaller();
+            jaxbContext = JAXBContext.newInstance(Utlatande.class, RegisterMedicalCertificate.class);
         } catch (JAXBException e) {
             throw new RuntimeException("Failed to create JAXB context", e);
         }
     }
 
-    private static final Validator utlatandeSchemaValidator;
+    private static Schema utlatandeSchema;
 
     private static final String REGISTER_MEDICAL_CERTIFICATE_VERSION = "1.0";
     private static final String UTLATANDE_VERSION = "2.0";
 
-    // create schema validators
+    // create schema for validation
     static {
         try {
             Source utlatandeSchemaFile = new StreamSource(new ClassPathResource("/schemas/fk7263_model.xsd").getFile());
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema utlatandeSchema = schemaFactory.newSchema(utlatandeSchemaFile);
-
-            utlatandeSchemaValidator = utlatandeSchema.newValidator();
+            utlatandeSchema = schemaFactory.newSchema(utlatandeSchemaFile);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read schema file", e);
         } catch (SAXException e) {
@@ -106,17 +103,25 @@ public class Fk7263ModuleApi {
         }
 
         if (registerMedicalCertificate == null && utlatande == null) {
-            LOG.warn("Unsupported XML message: " + transportXml);
+            LOG.warn("Unsupported XML message: {}", transportXml);
             throw new RuntimeException("Unsupported XML message: " + transportXml);
         }
 
         // perform schema validation
         try {
             if (utlatande != null) {
-                validateSchema(utlatandeSchemaValidator, transportXml);
+                Validator validator = utlatandeSchema.newValidator();
+                validateSchema(validator, transportXml);
             }
         } catch (ValidationException ex) {
-            String message = responseBody(utlatande.getUtlatandeId().getExtension(), ex.getMessage());
+            String utlatandeId = utlatande.getUtlatandeId().getExtension();
+            String enhetsId = null;
+            if (utlatande.getSkapadAv() != null &&
+                utlatande.getSkapadAv().getEnhet() != null &&
+                utlatande.getSkapadAv().getEnhet().getEnhetsId() != null) {
+                utlatande.getSkapadAv().getEnhet().getEnhetsId().getExtension();
+            }
+            String message = responseBody(utlatandeId, enhetsId, ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
         }
 
@@ -129,13 +134,21 @@ public class Fk7263ModuleApi {
         if (validationErrors.isEmpty()) {
             return Response.ok(externalModel).build();
         } else {
-            String response = responseBody(internalModel.getId(), Strings.join(",", validationErrors));
+            String response = responseBody(internalModel.getId(), internalModel.getVardperson().getEnhetsId(), Strings.join(",", validationErrors));
             return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
         }
     }
 
-    private String responseBody(String utlatandeId, String validationErrors) {
-        return "Validation failed for intyg " + utlatandeId + ": " + validationErrors;
+    private String responseBody(String utlatandeId, String enhetsId, String validationErrors) {
+        StringBuffer sb = new StringBuffer("Validation failed for intyg ");
+        sb.append(utlatandeId);
+        if (enhetsId != null) {
+            sb.append(" issued by ");
+            sb.append(enhetsId);
+        }
+        sb.append(": ");
+        sb.append(validationErrors);
+        return sb.toString();
     }
 
     private void validateSchema(Validator validator, String xml) {
@@ -167,12 +180,12 @@ public class Fk7263ModuleApi {
     }
 
     private Fk7263Utlatande convertToModel(Lakarutlatande legacyUtlatande) {
-        LOG.debug("Converting " + legacyUtlatande.getClass().getCanonicalName() + " to externalModuleFormat");
+        LOG.debug("Converting {} to externalModuleFormat", legacyUtlatande.getClass().getCanonicalName());
         return TransportToExternalFk7263LegacyConverter.convert(legacyUtlatande);
     }
 
     private Fk7263Utlatande convertToModel(Utlatande genericUtlatande) {
-        LOG.debug("Converting " + genericUtlatande.getClass().getCanonicalName() + " to externalModuleFormat");
+        LOG.debug("Converting {}  to externalModuleFormat", genericUtlatande.getClass().getCanonicalName());
         return TransportToExternalConverter.convert(genericUtlatande);
     }
 
@@ -184,6 +197,7 @@ public class Fk7263ModuleApi {
      */
     private Object unmarshallTransportXML(String transportXml) {
         try {
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             return unmarshaller.unmarshal(new StringReader(transportXml));
         } catch (JAXBException e) {
             LOG.error("Failed to unmarshal transportXml", e);
