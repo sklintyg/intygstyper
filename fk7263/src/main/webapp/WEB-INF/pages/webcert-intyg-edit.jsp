@@ -71,20 +71,11 @@
 	          default-active="create">
 	        </div>
 	        <div class="header-fix-panel">   
-	          <a class="backlink" href="/web/dashboard#/unhandled-qa"><span message key="common.goback"></span></a>
-	          <div>
-	            <h1 style="display: inline-block; margin-right: 20px;"><span message key="view.label.pagetitle.fk7263"></span></h1>
-	            <div class="alert alert-info alert-block">
-	              <strong>Status:</strong> Intyget är sparat.
-	            </div>
-	          </div>
-	          <div wc-spinner label="info.loadingcertificate" show-spinner="!widgetState.doneLoading" show-content="widgetState.doneLoading">
-	            <div class="control-group buttonbar">
-                <label class="control-label">{{cert.patientNamn}} - {{cert.patientPersonnummer}}</label>
-	              <button class="btn btn-info">Spara</button>
-	              <button class="btn btn-info">Ta bort utkast</button>
-	            </div>
-	          </div><!--  spinner end -->
+	          <a class="backlink-icon" href="/web/dashboard#/create" title="Tillbaka till Skriv intyg"></a>
+            <h1 style="display: inline-block; margin-right: 20px;"><span message key="view.label.pagetitle.fk7263"></span></h1>
+            <div class="inline-block">
+              <label class="control-label">{{cert.patientNamn}} - {{cert.patientPersonnummer}}</label>
+            </div>
 	        </div>
 	      </div><!-- top end -->
       	        

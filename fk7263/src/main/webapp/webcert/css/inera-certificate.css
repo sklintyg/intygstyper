@@ -16,6 +16,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+ 
+ a.backlink-icon {
+	display: block;
+	width: 24px;
+	height: 24px;
+	background: transparent url(/img/tillbaka.png) center left no-repeat;
+	float: left;
+	margin: 2px 20px 0 0;
+}
+
+a:hover.backlink-icon {
+  background:transparent url(/img/tillbaka_hoover.png) center left no-repeat;
+}
 
 .header-fix-top {
 	position:fixed;
@@ -24,8 +37,13 @@
 	top: 0px;
 }
 
+.header-fix-top h1 {
+	margin: 0 20px 0 0;
+	line-height: 29px;
+}
+
 .header-fix-panel {
-	padding: 20px 0 0 30px;
+	padding: 20px 0 10px 30px;
 	border-bottom: 1px solid #999;
 	background-color: #fff;
 	-ms-box-shadow: 0px -5px 25px #323232;
