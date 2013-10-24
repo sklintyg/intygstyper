@@ -36,7 +36,7 @@
 
           <div class="control-group">
             <button class="btn btn-success" ng-click="sendQuestion(newQuestion)" ng-disabled="!questionValidForSubmit(newQuestion)" title="{{newQuestion.sendButtonToolTip}}" id="sendQuestionBtn">
-              <img src="/img/ajax-loader-small-green.gif" ng-show="newQuestion.updateInProgress">Skicka till Försäkringskassan
+              <img src="/img/loader-small-green.gif" ng-show="newQuestion.updateInProgress">Skicka till Försäkringskassan
             </button>
             <button class="btn btn-secondary" ng-click="toggleQuestionForm()" id="cancelQuestionBtn">Avbryt fråga</button>
           </div>
@@ -130,10 +130,10 @@
                       </div>
                       <button class="btn btn-success" ng-click="sendAnswer(qa)" ng-disabled="!qa.svarsText || qa.updateInProgress" ng-show="!qa.answerDisabled" id="sendAnswerBtn-{{qa.internReferens}}"
                         title="{{qa.answerButtonToolTip}}">
-                        <img src="/img/ajax-loader-small-green.gif" ng-show="qa.updateInProgress">Skicka svar
+                        <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Skicka svar
                       </button>
                       <button class="btn btn-secondary" ng-click="updateAsHandled(qa)" id="markAsHandledFkOriginBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress">
-                        <img src="/img/ajax-loader-small-green.gif" ng-show="qa.updateHandledStateInProgress">Markera som hanterad
+                        <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera som hanterad
                       </button>
                     </div>
                   </div>
@@ -146,7 +146,7 @@
                   </div>
                   <div class="controls">
                     <button class="btn btn-success" ng-click="updateAsHandled(qa)" id="markAsHandledWcOriginBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress">
-                      <img src="/img/ajax-loader-small-green.gif" ng-show="qa.updateHandledStateInProgress">Markera som hanterad
+                      <img src="/img/loader-small-green.gif" ng-show="qa.updateHandledStateInProgress">Markera som hanterad
                     </button>
                   </div>
                 </div>
@@ -216,7 +216,7 @@
                 <!--  Oavsett hur frågan stänged skall man kunna 'öppna' den igen? -->
                 <div class="controls">
                   <button class="btn btn-secondary" ng-click="updateAsUnHandled(qa)" id="markAsUnhandledBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress">
-                    <img src="/img/ajax-loader-small-green.gif" ng-show="qa.updateHandledStateInProgress">Markera som ohanterad
+                    <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera som ohanterad
                   </button>
                 </div>
               </div>
