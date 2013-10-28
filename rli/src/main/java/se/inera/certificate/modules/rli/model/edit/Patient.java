@@ -28,8 +28,6 @@ public class Patient {
 
     private String efternamn;
 
-    private String mellannamn;
-
     private String postadress;
     
     private String postnummer;
@@ -70,14 +68,6 @@ public class Patient {
 
     public void setEfternamn(String efternamn) {
         this.efternamn = efternamn;
-    }
-
-    public String getMellannamn() {
-        return mellannamn;
-    }
-
-    public void setMellannamn(String mellannamn) {
-        this.mellannamn = mellannamn;
     }
 
     public String getPostadress() {

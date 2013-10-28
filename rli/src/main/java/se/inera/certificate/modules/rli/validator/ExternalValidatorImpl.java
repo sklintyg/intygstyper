@@ -228,8 +228,8 @@ public class ExternalValidatorImpl implements ExternalValidator {
     /**
      * Make sure Utlatande contains 1..* Rekommendationer and that a correct code is used.
      */
-    private void validateRekommendationer(Utlatande utlatande, List<String> validationErrors) {
-        final String REK_CODE = "REK[1-7]{1}";
+    public void validateRekommendationer(Utlatande utlatande, List<String> validationErrors) {
+        final String REK_CODE = "REK[1-2, 5-7]{1}";
         final String SJK_CODE = "SJK[1-4]{1}";
 
         List<Rekommendation> rekommendationer = utlatande.getRekommendationer();

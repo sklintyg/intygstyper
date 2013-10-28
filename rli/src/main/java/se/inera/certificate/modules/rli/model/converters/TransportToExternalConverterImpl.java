@@ -337,7 +337,6 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 
         patient.getPatientrelationer().addAll(convertPatientRelations(source.getPatientRelations()));
         patient.getFornamn().addAll(source.getFornamns());
-        patient.getMellannamn().addAll(source.getMellannamns());
         patient.setEfternamn(source.getEfternamn());
 
         return patient;
@@ -363,8 +362,12 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
         patientRelation.setPostnummer(source.getPostnummer());
         patientRelation.setPostort(source.getPostort());
         patientRelation.getFornamn().addAll(source.getFornamns());
+        
+        /* Until schema for PatientType is fixed, take mellannamn and put in fornamn*/
+        patientRelation.getFornamn().addAll(source.getMellannamns());
+        
         patientRelation.setEfternamn(source.getEfternamn());
-        patientRelation.getMellannamn().addAll(source.getMellannamns());
+        
 
         for (iso.v21090.dt.v1.CD cd : source.getRelationTyps()) {
             patientRelation.getRelationtyper().add(IsoTypeConverter.toKod(cd));
