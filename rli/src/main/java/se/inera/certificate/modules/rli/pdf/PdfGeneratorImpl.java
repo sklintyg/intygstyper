@@ -4,7 +4,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
+import se.inera.certificate.modules.rli.model.internal.KomplikationStyrkt;
+import se.inera.certificate.modules.rli.model.internal.OrsakAvbokning;
 import se.inera.certificate.modules.rli.model.internal.Utlatande;
 
 import com.itextpdf.text.DocumentException;
@@ -17,29 +20,49 @@ import com.itextpdf.text.pdf.PdfStamper;
  */
 public class PdfGeneratorImpl implements PdfGenerator {
 
-    private static final String PATIENT_SSN = "Personnummer";
-    private static final String PATIENT_NAME = "FullstandigtNamn";
-    private static final String PATIENT_POSTAL_CODE = "Postnummer";
-    private static final String PATIENT_POSTAL_ADDRESS = "Postadress";
-    private static final String PATIENT_POSTAL_CITY = "Postort";
+    private static final String PATIENT_SSN = "Patient_personnummer";
+    private static final String PATIENT_NAME = "Patient_namn";
+    private static final String PATIENT_POSTAL_CODE = "Patient_postnummer";
+    private static final String PATIENT_POSTAL_ADDRESS = "Patient_postadress";
+    private static final String PATIENT_POSTAL_CITY = "Patient_postort";
 
     private static final String TRAVEL_DESTINATION = "Resmal";
-    private static final String TRAVEL_BOOKING_NUMBER = "Bokningsnummer";
+    private static final String TRAVEL_BOOKING_NUMBER = "Bokningsreferens";
     private static final String TRAVEL_BOOKING_DATE = "Bokningsdatum";
-    private static final String TRAVEL_CANCEL_DATE = "Avbokningsdatum";
+    private static final String TRAVEL_CANCEL_DATE = "Avbestallningsdatum";
     private static final String TRAVEL_DEPARTURE_DATE = "Avresedatum";
+   
+    // Special field only set when patient is pregnant
+    private static final String BABY_DUE_DATE = "Barnet_beraknas_fodas";
 
-//    private static final String SICK_KNOWLEDGE = "Sjukdomskannedom";
+    private static final String SJK_CHECK1 = "SJK1";
+    private static final String SJK_CHECK2 = "SJK2";
+    private static final String SJK_CHECK3 = "SJK3";
+    private static final String SJK_CHECK4 = "SJK4";
+    private static final String SJK_CHECK5 = "SJK5";
 
-    private static final String CERT_SIGN_DATE = "Signeringdatum";
+    private static final String CONFIRMED_BY_DR = "Forsta_undersokning_lakare_intygar_check";
 
-    private static final String PHYSICIAN_NAME = "Lakarensnamn";
+    private static final String CONFIRMED_BY_PATIENT = "Forsta_undersokning_patient_intygar_check";
 
-    private static final String COMMENTS = "Kommentarer";
+    private static final String DATE_BY_PATIENT = "Forsta_undersokning_datum_patient_intygar";
+    private static final String PLACE_BY_PATIENT = "Forsta_undersokning_plats_patient_intygar";
+    private static final String DATE_BY_DR = "Forsta_undersokning_datum_lakare_intygar";
+    private static final String PLACE_BY_DR = "Forsta_undersokning_plats_lakare_intygar";
 
-    // SJK4Beskrivning 4
+    private static final String DATE_EXAM = "Undersokning_datum";
+    private static final String PLACE_EXAM = "Undersokning_plats";
 
-    public static final String PDF_SJUK_TEMPLATE = "pdf/RLI_template.pdf";
+    private static final String SIGNED = "Signerat_av";
+
+    private static final String COMMENTS = "Ovriga_upplysningar";
+
+    private static final String CAREUNIT_NAME = "Vardenhet_namn";
+    private static final String CAREUNIT_ADDRESS = "Vardenhet_postadress";
+    private static final String CAREUNIT_POSTALNUMBER = "Vardenhet_postnummer";
+    private static final String CAREUNIT_CITY = "Vardenhet_postort";
+    private static final String CAREUNIT_TELEPHONE = "Vardenhet_telefon";
+    private static final String CAREUNIT_EMAIL = "Vardenhet_epost";
 
     private static final String dateFormat = "yyMMdd";
 
@@ -59,25 +82,23 @@ public class PdfGeneratorImpl implements PdfGenerator {
      * @see se.inera.certificate.modules.rli.pdf.PdfGenerator#getBytes()
      */
     @Override
-    public byte[] generatePDF(Utlatande utlatande) throws PdfGeneratorException {
+    public byte[] generatePDF(Utlatande utlatande) throws PdfGeneratorException, IOException, DocumentException {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        try {
-            PdfReader pdfReader = new PdfReader(PDF_SJUK_TEMPLATE);
+        String type = utlatande.getUndersokning().getOrsakforavbokning().toString();
+        
+        PdfReader pdfReader = new PdfReader("pdf/" + type + "_blankett.pdf");
 
-            PdfStamper pdfStamper = new PdfStamper(pdfReader, outputStream);
-            pdfStamper.setFormFlattening(true);
+        PdfStamper pdfStamper = new PdfStamper(pdfReader, outputStream);
+        
+        pdfStamper.setFormFlattening(true);
 
-            AcroFields fields = pdfStamper.getAcroFields();
+        AcroFields fields = pdfStamper.getAcroFields();
 
-            populatePdfFields(utlatande, fields);
+        populatePdfFields(utlatande, fields);
 
-            pdfStamper.close();
-
-        } catch (IOException | DocumentException e) {
-            throw new PdfGeneratorException("Pdf generation failed", e);
-        }
+        pdfStamper.close();
 
         return outputStream.toByteArray();
     }
@@ -90,15 +111,79 @@ public class PdfGeneratorImpl implements PdfGenerator {
      *            pdf
      * @param fields
      *            The fields of the pdf
+     * @throws DocumentException
+     * @throws IOException
      */
-    private void populatePdfFields(Utlatande utlatande, AcroFields fields) {
+    private void populatePdfFields(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
         fillPatientDetails(utlatande, fields);
 
         fillSignerNameAndAddress(utlatande, fields);
 
+        fillVardenhetInformation(utlatande, fields);
+
         fillTravelInformation(utlatande, fields);
 
+        setSJKAndREKCheckBoxes(utlatande, fields);
+
+        fillForstaUndersokning(utlatande, fields);
+
+        fillUndersokning(utlatande, fields);
+
         fillMisc(utlatande, fields);
+    }
+
+    private void fillVardenhetInformation(Utlatande utlatande, AcroFields fields) {
+        fillText(fields, CAREUNIT_NAME, utlatande.getSkapadAv().getVardenhet().getEnhetsnamn());
+        fillText(fields, CAREUNIT_ADDRESS, utlatande.getSkapadAv().getVardenhet().getPostadress());
+        fillText(fields, CAREUNIT_POSTALNUMBER, utlatande.getSkapadAv().getVardenhet().getPostnummer());
+        fillText(fields, CAREUNIT_CITY, utlatande.getSkapadAv().getVardenhet().getPostort());
+        fillText(fields, CAREUNIT_TELEPHONE, utlatande.getSkapadAv().getVardenhet().getTelefonnummer());
+        fillText(fields, CAREUNIT_EMAIL, utlatande.getSkapadAv().getVardenhet().getEpost());
+    }
+
+    private void fillUndersokning(Utlatande utlatande, AcroFields fields) {
+        if (utlatande.getUndersokning().getUndersokningsplats() != null
+                && utlatande.getUndersokning().getUndersokningsdatum() != null) {
+            fillText(fields, DATE_EXAM, utlatande.getUndersokning().getUndersokningsdatum());
+            fillText(fields, PLACE_EXAM, utlatande.getUndersokning().getUndersokningsplats());
+        }
+    }
+
+    private void fillForstaUndersokning(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
+        String utforsAv = (utlatande.getUndersokning().getKomplikationstyrkt() == KomplikationStyrkt.AV_HOS_PERSONAL) ? "223366009"
+                : "116154003";
+
+        if (utforsAv.equals("116154003")) {
+            fields.setField(CONFIRMED_BY_PATIENT, "Yes");
+            fillText(fields, DATE_BY_PATIENT, utlatande.getUndersokning().getForstaUndersokningsdatum());
+            fillText(fields, PLACE_BY_PATIENT, utlatande.getUndersokning().getForstaUndersokningsplats());
+        } else if (utforsAv.equals("223366009")) {
+            fields.setField(CONFIRMED_BY_DR, "Yes");
+            fillText(fields, DATE_BY_DR, utlatande.getUndersokning().getForstaUndersokningsdatum());
+            fillText(fields, PLACE_BY_DR, utlatande.getUndersokning().getForstaUndersokningsplats());
+        }
+    }
+
+    private void setSJKAndREKCheckBoxes(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
+        if (utlatande.getRekommendation() == null) {
+            return;
+        }
+
+        String sjuk_code = null;
+        String rek_code = null;
+
+        sjuk_code = utlatande.getRekommendation().getSjukdomskannedom().getCode();
+        rek_code = utlatande.getRekommendation().getRekommendationskod().getCode();
+
+        if (sjuk_code == "SJK3" || sjuk_code == "SJK4") {
+            fields.setField(sjuk_code, "Yes");
+            fields.setField(SJK_CHECK2, "Yes");
+        } else {
+            fields.setField(sjuk_code, "Yes");
+        }
+
+        fields.setField(rek_code, "Yes");
+
     }
 
     /**
@@ -124,9 +209,8 @@ public class PdfGeneratorImpl implements PdfGenerator {
      * @param fields
      */
     private void fillSignerNameAndAddress(Utlatande utlatande, AcroFields fields) {
-        fillText(fields, PHYSICIAN_NAME, utlatande.getSkapadAv().getFullstandigtNamn());
+        fillText(fields, SIGNED, utlatande.getSkapadAv().getFullstandigtNamn() + "\n" + utlatande.getSigneringsdatum());
 
-        fillText(fields, CERT_SIGN_DATE, utlatande.getSigneringsdatum().toString(dateFormat));
     }
 
     /**
@@ -137,6 +221,11 @@ public class PdfGeneratorImpl implements PdfGenerator {
      * @param fields
      */
     private void fillTravelInformation(Utlatande utlatande, AcroFields fields) {
+        
+        if (utlatande.getUndersokning().getOrsakforavbokning() == OrsakAvbokning.RESENAR_GRAVID) {
+            fillText(fields, BABY_DUE_DATE, utlatande.getUndersokning().getGraviditet().getBeraknatForlossningsdatum());
+        }
+        
         fillText(fields, TRAVEL_BOOKING_DATE, utlatande.getArrangemang().getBokningsdatum());
         fillText(fields, TRAVEL_BOOKING_NUMBER, utlatande.getArrangemang().getBokningsreferens());
         fillText(fields, TRAVEL_CANCEL_DATE, utlatande.getArrangemang().getAvbestallningsdatum());
@@ -146,7 +235,7 @@ public class PdfGeneratorImpl implements PdfGenerator {
 
     private void fillMisc(Utlatande utlatande, AcroFields fields) {
         String text = StringUtils.join(utlatande.getKommentarer(), " ");
-        fillText(fields, COMMENTS, text.toString());
+        fillText(fields, COMMENTS, text);
     }
 
     /**
