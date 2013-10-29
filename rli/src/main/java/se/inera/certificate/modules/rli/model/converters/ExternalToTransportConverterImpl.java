@@ -21,13 +21,18 @@ package se.inera.certificate.modules.rli.model.converters;
 import java.util.ArrayList;
 import java.util.List;
 
+import static se.inera.certificate.modules.rli.model.converters.IsoTypeConverter.toArbetsplatsKod;
+import static se.inera.certificate.modules.rli.model.converters.IsoTypeConverter.toHsaId;
+import static se.inera.certificate.modules.rli.model.converters.IsoTypeConverter.toPersonId;
+import static se.inera.certificate.modules.rli.model.converters.IsoTypeConverter.toUtlatandeId;
+import static se.inera.certificate.modules.rli.model.converters.IsoTypeConverter.toUtlatandeTyp;
+
+import iso.v21090.dt.v1.CD;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import riv.insuranceprocess.healthreporting._2.EnhetType;
-import riv.insuranceprocess.healthreporting._2.VardgivareType;
 import se.inera.certificate.common.v1.AktivitetType;
+import se.inera.certificate.common.v1.EnhetType;
 import se.inera.certificate.common.v1.HosPersonalType;
 import se.inera.certificate.common.v1.ObservationType;
 import se.inera.certificate.common.v1.PartialDateInterval;
@@ -35,6 +40,8 @@ import se.inera.certificate.common.v1.PatientRelationType;
 import se.inera.certificate.common.v1.PatientType;
 import se.inera.certificate.common.v1.RekommendationType;
 import se.inera.certificate.common.v1.UtforarrollType;
+import se.inera.certificate.common.v1.Utlatande;
+import se.inera.certificate.common.v1.VardgivareType;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
@@ -46,9 +53,6 @@ import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.rli.v1.Arrangemang;
-import se.inera.certificate.common.v1.Utlatande;
-
-import iso.v21090.dt.v1.CD;
 
 public class ExternalToTransportConverterImpl implements ExternalToTransportConverter {
 
@@ -65,9 +69,9 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
 
         Utlatande transportModel = new Utlatande();
 
-        transportModel.setUtlatandeId(IsoTypeConverter.toII(source.getId()));
+        transportModel.setUtlatandeId(toUtlatandeId((source.getId())));
 
-        transportModel.setTypAvUtlatande(IsoTypeConverter.toCD(source.getTyp()));
+        transportModel.setTypAvUtlatande(toUtlatandeTyp(source.getTyp()));
 
         if (source.getKommentarer() != null) {
             transportModel.getKommentars().addAll(source.getKommentarer());
@@ -225,9 +229,9 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
         EnhetType enhetType = new EnhetType();
 
         if (source.getArbetsplatskod() != null) {
-            enhetType.setArbetsplatskod(IsoTypeConverter.toII(source.getArbetsplatskod()));
+            enhetType.setArbetsplatskod(toArbetsplatsKod(source.getArbetsplatskod()));
         }
-        enhetType.setEnhetsId(IsoTypeConverter.toII(source.getId()));
+        enhetType.setEnhetsId(toHsaId(source.getId()));
         enhetType.setEnhetsnamn(source.getNamn());
         enhetType.setEpost(source.getEpost());
         enhetType.setPostadress(source.getPostadress());
@@ -246,7 +250,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
         }
         VardgivareType vardgivareType = new VardgivareType();
 
-        vardgivareType.setVardgivareId(IsoTypeConverter.toII(source.getId()));
+        vardgivareType.setVardgivareId(toHsaId(source.getId()));
         vardgivareType.setVardgivarnamn(source.getNamn());
         return vardgivareType;
     }
@@ -280,7 +284,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
         patientType.setPostnummer(source.getPostnummer());
         patientType.setPostort(source.getPostort());
 
-        patientType.setPersonId(IsoTypeConverter.toII(source.getId()));
+        patientType.setPersonId(toPersonId(source.getId()));
 
         if (source.getFornamn() != null) {
             patientType.getFornamns().addAll(source.getFornamn());
@@ -328,7 +332,7 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
         patientRelationType.setPostnummer(source.getPostnummer());
         patientRelationType.setPostort(source.getPostort());
 
-        patientRelationType.setPersonId(IsoTypeConverter.toII(source.getPersonId()));
+        patientRelationType.setPersonId(toPersonId(source.getPersonId()));
         patientRelationType.setRelationskategori(IsoTypeConverter.toCD(source.getRelationskategori()));
         patientRelationType.getFornamns().addAll(source.getFornamn());
         if (source.getMellannamn() != null) {

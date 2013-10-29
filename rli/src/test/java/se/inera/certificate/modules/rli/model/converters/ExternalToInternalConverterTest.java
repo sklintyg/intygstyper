@@ -1,17 +1,16 @@
 package se.inera.certificate.modules.rli.model.converters;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
@@ -164,7 +163,7 @@ public class ExternalToInternalConverterTest {
 
         HosPersonal hosPers = new HosPersonal();
 
-        hosPers.setId(new Id("19101010-1010"));
+        hosPers.setId(new Id(null, "19101010-1010"));
         hosPers.setNamn("Börje Dengroth");
         hosPers.setForskrivarkod("12345-67");
 
@@ -196,8 +195,8 @@ public class ExternalToInternalConverterTest {
 
         Vardenhet vardenhet = new Vardenhet();
 
-        vardenhet.setId(new Id("123-456"));
-        vardenhet.setArbetsplatskod(new Id("1234-56"));
+        vardenhet.setId(new Id(null, "123-456"));
+        vardenhet.setArbetsplatskod(new Id(null, "1234-56"));
         vardenhet.setNamn("Tolvberga Vårdcentral");
         vardenhet.setPostadress("Nollstigen 12");
         vardenhet.setPostnummer("12345");
@@ -215,7 +214,7 @@ public class ExternalToInternalConverterTest {
 
         Vardgivare vardgivare = new Vardgivare();
 
-        vardgivare.setId(new Id("1234567"));
+        vardgivare.setId(new Id(null, "1234567"));
         vardgivare.setNamn("Landstinget");
 
         return vardgivare;
