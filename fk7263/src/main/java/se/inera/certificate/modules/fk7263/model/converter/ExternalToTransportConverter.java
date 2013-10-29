@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static se.inera.certificate.model.util.Iterables.addAll;
+import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toHsaId;
 import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toUtlatandeId;
 import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toUtlatandeTyp;
 
@@ -204,7 +205,7 @@ public final class ExternalToTransportConverter {
             return null;
 
         HosPersonalType hosPersonal = new HosPersonalType();
-        hosPersonal.setPersonalId(IsoTypeConverter.toII(source.getId()));
+        hosPersonal.setPersonalId(toHsaId(source.getId()));
         hosPersonal.setFullstandigtNamn(source.getNamn());
         hosPersonal.setForskrivarkod(source.getForskrivarkod());
         hosPersonal.setEnhet(convert(source.getVardenhet()));
@@ -216,7 +217,7 @@ public final class ExternalToTransportConverter {
             return null;
 
         EnhetType enhet = new EnhetType();
-        enhet.setEnhetsId(IsoTypeConverter.toHsaId(source.getId()));
+        enhet.setEnhetsId(toHsaId(source.getId()));
         enhet.setArbetsplatskod(IsoTypeConverter.toArbetsplatsKod(source.getArbetsplatskod()));
         enhet.setEnhetsnamn(source.getNamn());
         enhet.setPostadress(source.getPostadress());
@@ -233,7 +234,7 @@ public final class ExternalToTransportConverter {
             return null;
 
         VardgivareType vardgivare = new VardgivareType();
-        vardgivare.setVardgivareId(IsoTypeConverter.toHsaId(source.getId()));
+        vardgivare.setVardgivareId(toHsaId(source.getId()));
         vardgivare.setVardgivarnamn(source.getNamn());
         return vardgivare;
     }
