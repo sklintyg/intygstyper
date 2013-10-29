@@ -1,17 +1,16 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
-import static se.inera.certificate.model.util.Iterables.addAll;
-import static se.inera.certificate.model.util.Iterables.addExisting;
-import static se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder.DIAGNOS;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import static se.inera.certificate.model.util.Iterables.addAll;
+import static se.inera.certificate.model.util.Iterables.addExisting;
+import static se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder.DIAGNOS;
+
 import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.BedomtTillstandType;
@@ -56,7 +55,8 @@ public final class TransportToExternalFk7263LegacyConverter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportToExternalFk7263LegacyConverter.class);
 
-    public static final String FK_7263 = "fk7263";
+    private static final String FK_7263 = "fk7263";
+    private static final String UTLATANDE_TYP_OID = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
 
     private TransportToExternalFk7263LegacyConverter() {
     }
@@ -67,11 +67,8 @@ public final class TransportToExternalFk7263LegacyConverter {
     public static Fk7263Utlatande convert(Lakarutlatande source) {
         Fk7263Utlatande fk7263utlatande = new Fk7263Utlatande();
 
-        // TODO: What about root and other ID properties?
-        fk7263utlatande.setId(new Id(source.getLakarutlatandeId()));
-        // TODO: what about other Kod attributes, version, etc?
-        Kod typKod = new Kod(FK_7263);
-        fk7263utlatande.setTyp(typKod);
+        fk7263utlatande.setId(new Id(null, source.getLakarutlatandeId()));
+        fk7263utlatande.setTyp(new Kod(UTLATANDE_TYP_OID, FK_7263));
 
         if (source.getKommentar() != null && !source.getKommentar().isEmpty()) {
             fk7263utlatande.getKommentarer().add(source.getKommentar());

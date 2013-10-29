@@ -3,19 +3,22 @@ package se.inera.certificate.modules.fk7263.model.converter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toId;
+import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toKod;
+
 import iso.v21090.dt.v1.PQ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.EnhetType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.VardgivareType;
 import se.inera.certificate.fk7263.model.v1.AktivitetType;
 import se.inera.certificate.fk7263.model.v1.ArbetsuppgiftType;
+import se.inera.certificate.fk7263.model.v1.EnhetType;
 import se.inera.certificate.fk7263.model.v1.HosPersonalType;
 import se.inera.certificate.fk7263.model.v1.ObservationType;
 import se.inera.certificate.fk7263.model.v1.PatientType;
 import se.inera.certificate.fk7263.model.v1.PrognosType;
 import se.inera.certificate.fk7263.model.v1.ReferensType;
 import se.inera.certificate.fk7263.model.v1.SysselsattningType;
+import se.inera.certificate.fk7263.model.v1.VardgivareType;
 import se.inera.certificate.fk7263.model.v1.VardkontaktType;
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Arbetsuppgift;
@@ -33,7 +36,6 @@ import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
-
 /**
  * @author marced
  */
@@ -50,8 +52,8 @@ public final class TransportToExternalConverter {
     public static Fk7263Utlatande convert(se.inera.certificate.fk7263.model.v1.Utlatande source) {
         Fk7263Utlatande fk7263utlatande = new Fk7263Utlatande();
 
-        fk7263utlatande.setId(IsoTypeConverter.toId(source.getUtlatandeId()));
-        fk7263utlatande.setTyp(IsoTypeConverter.toKod(source.getTypAvUtlatande()));
+        fk7263utlatande.setId(toId(source.getUtlatandeId()));
+        fk7263utlatande.setTyp(toKod(source.getTypAvUtlatande()));
         fk7263utlatande.getKommentarer().addAll(source.getKommentars());
         fk7263utlatande.setSigneringsdatum(source.getSigneringsdatum());
         fk7263utlatande.setSkickatdatum(source.getSkickatdatum());
@@ -219,7 +221,7 @@ public final class TransportToExternalConverter {
     private static Fk7263Patient convert(PatientType source) {
 
         Fk7263Patient patient = new Fk7263Patient();
-        patient.setId(IsoTypeConverter.toId(source.getPersonId()));
+        patient.setId(toId(source.getPersonId()));
 
         if (!source.getFornamns().isEmpty()) {
             patient.getFornamn().addAll(source.getFornamns());
@@ -251,7 +253,7 @@ public final class TransportToExternalConverter {
         Vardenhet vardenhet = new Vardenhet();
         vardenhet.setId(IsoTypeConverter.toId(source.getEnhetsId()));
         vardenhet.setNamn(source.getEnhetsnamn());
-        vardenhet.setArbetsplatskod(IsoTypeConverter.toId(source.getArbetsplatskod()));
+        vardenhet.setArbetsplatskod(toId(source.getArbetsplatskod()));
         vardenhet.setPostadress(source.getPostadress());
         vardenhet.setPostnummer(source.getPostnummer());
         vardenhet.setPostort(source.getPostort());
@@ -264,7 +266,7 @@ public final class TransportToExternalConverter {
     private static Vardgivare convert(VardgivareType source) {
 
         Vardgivare vardgivare = new Vardgivare();
-        vardgivare.setId(IsoTypeConverter.toId(source.getVardgivareId()));
+        vardgivare.setId(toId(source.getVardgivareId()));
         vardgivare.setNamn(source.getVardgivarnamn());
         return vardgivare;
     }
