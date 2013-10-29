@@ -11,12 +11,6 @@
     </jxb:schemaBindings>
   </jxb:bindings>
 
-  <jxb:bindings schemaLocation="core_components/insuranceprocess_healthreporting_2.0.xsd" node="/xs:schema">
-    <jxb:schemaBindings>
-      <jxb:package name="se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2"/>
-    </jxb:schemaBindings>
-  </jxb:bindings>
-
   <jxb:bindings schemaLocation="fk7263_model.xsd" node="/xs:schema">
     <jxb:schemaBindings>
       <jxb:package name="se.inera.certificate.fk7263.model.v1"/>

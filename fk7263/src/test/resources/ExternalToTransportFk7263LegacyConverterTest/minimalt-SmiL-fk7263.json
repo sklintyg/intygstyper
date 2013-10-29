@@ -3,6 +3,7 @@
         "extension" : "365f9321-1f54-44ab-b473-aaaaaa"
     },
     "typ" : {
+        "codeSystem" : "f6fb361a-e31d-48b8-8657-99b63912dd9b",
         "code" : "fk7263"
     },
     "signeringsdatum" : "2011-01-24T00:00:00",
