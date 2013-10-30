@@ -95,7 +95,7 @@ span.help {
 
 .cert-body div.body-row {
 	margin: 0 0 20px 0;
-	background-color: #ededed;
+	background-color: #e5e5e5;
 	border: 1px solid #d8d8d8;
 	-webkit-border-radius: 8px 8px 8px 8px;
 	-moz-border-radius: 8px 8px 8px 8px;
@@ -113,7 +113,6 @@ span.help {
 	font-weight: bold;
 	display: block;
 	padding: 10px 20px;
-  background-color: #ededed;
   -webkit-border-radius: 8px 8px 0px 0px;
   -moz-border-radius: 8px 8px 0px 0px;
   border-radius: 8px 8px 0px 0px;
@@ -195,8 +194,13 @@ div.infobox h4 {
 	width: 100%;
 }
 
+.qa-column {
+	max-width: 550px;
+	padding-right: 20px;
+}
+
 .qa-panel {
-  background-color: #ddd;
+  background-color: #eaeaea;
   -webkit-border-radius: 8px 8px 8px 8px;
   -moz-border-radius: 8px 8px 8px 8px;
   border-radius: 8px 8px 8px 8px;
@@ -205,10 +209,19 @@ div.infobox h4 {
   max-width: 600px;
 }
 
+.qa-panel p, .qa-panel label {
+	margin-bottom: 5px;
+	font-size: 13px;
+}
+
+.qa-panel .control-group {
+	margin: 0;
+}
+
 .qa-panel h3 {
   font-size: 13px;
   margin: 0;
-  padding: 0 0 10px 0;
+  padding: 0 0 5px 0;
   font-weight: normal;
 }
 
@@ -254,4 +267,9 @@ div.infobox h4 {
 
 .qa-sender, .qa-date {
   font-weight: bold;
+}
+
+.edit-form {
+	margin-top: 200px; 
+	max-width: 800px
 }
