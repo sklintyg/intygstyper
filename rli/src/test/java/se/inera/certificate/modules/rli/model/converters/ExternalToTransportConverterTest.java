@@ -161,12 +161,12 @@ public class ExternalToTransportConverterTest {
 
     private Vardenhet buildEnhet() {
         Vardenhet enhet = new Vardenhet();
-        enhet.setArbetsplatskod(new Id("Vårdenhet"));
-        enhet.setId(new Id("enhetsId"));
+        enhet.setArbetsplatskod(new Id(null, "Vårdenhet"));
+        enhet.setId(new Id(null, "enhetsId"));
         enhet.setNamn("Enhetsnamn");
 
         Vardgivare vardgivare = new Vardgivare();
-        vardgivare.setId(new Id("vårdgivarID"));
+        vardgivare.setId(new Id(null, "vårdgivarID"));
         vardgivare.setNamn("Vårdgivarnamn");
 
         enhet.setVardgivare(vardgivare);

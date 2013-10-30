@@ -18,30 +18,34 @@
  */
 package se.inera.certificate.modules.rli.model.converters;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
+import iso.v21090.dt.v1.CD;
+import iso.v21090.dt.v1.II;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.junit.Before;
 import org.junit.Test;
-
-import riv.insuranceprocess.healthreporting._2.EnhetType;
-import riv.insuranceprocess.healthreporting._2.VardgivareType;
+import se.inera.certificate.common.v1.ArbetsplatsKod;
+import se.inera.certificate.common.v1.EnhetType;
 import se.inera.certificate.common.v1.HosPersonalType;
+import se.inera.certificate.common.v1.HsaId;
 import se.inera.certificate.common.v1.ObservationType;
 import se.inera.certificate.common.v1.PartialDateInterval;
 import se.inera.certificate.common.v1.PatientType;
+import se.inera.certificate.common.v1.PersonId;
 import se.inera.certificate.common.v1.UtforarrollType;
+import se.inera.certificate.common.v1.UtlatandeId;
+import se.inera.certificate.common.v1.UtlatandeTyp;
+import se.inera.certificate.common.v1.VardgivareType;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
-import iso.v21090.dt.v1.CD;
-import iso.v21090.dt.v1.II;
 
 /**
  * Test class for TransportToExternal, contains methods for setting up Utlatande using both the transport model and the
@@ -83,8 +87,8 @@ public class TransportToExternalConverterTest {
 
     private PatientType buildPatientType() {
         PatientType pt = new PatientType();
-        II patientID = new II();
-        patientID.setIdentifierName("patientID");
+        PersonId patientID = new PersonId();
+        //patientID.setIdentifierName("patientID");
         patientID.setExtension("patientID");
         pt.setPersonId(patientID);
         pt.setPostadress("Testgatan 23");
@@ -139,9 +143,9 @@ public class TransportToExternalConverterTest {
     private EnhetType buildEnhetType() {
         EnhetType enhet = new EnhetType();
 
-        II ap = new II();
+        ArbetsplatsKod ap = new ArbetsplatsKod();
         ap.setExtension("AP-kod");
-        II enhetID = new II();
+        HsaId enhetID = new HsaId();
         enhetID.setExtension("EnhetID");
 
         enhet.setArbetsplatskod(ap);
@@ -154,7 +158,7 @@ public class TransportToExternalConverterTest {
 
     private VardgivareType buildVardgivareType() {
         VardgivareType vardgivare = new VardgivareType();
-        II id = new II();
+        HsaId id = new HsaId();
         id.setExtension("VardgivarID");
         vardgivare.setVardgivareId(id);
         vardgivare.setVardgivarnamn("Vardgivarnamn");
@@ -169,9 +173,9 @@ public class TransportToExternalConverterTest {
         utlatande.setPatient(buildPatientType());
         utlatande.setSkapadAv(buildHosPersonalType());
 
-        CD typ = new CD();
+        UtlatandeTyp typ = new UtlatandeTyp();
         typ.setCode("SNOMED-CT");
-        II id = new II();
+        UtlatandeId id = new UtlatandeId();
         id.setExtension("UtlåtandeID");
 
         utlatande.setTypAvUtlatande(typ);

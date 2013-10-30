@@ -22,12 +22,15 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.Rekommendation;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
 import se.inera.certificate.modules.rli.validator.ExternalValidatorImpl;
 
@@ -55,6 +58,44 @@ public class ExternalValidatorTest {
         return utlatande;
     }
 
+    @Test
+    public void testValidateRekommendationskod() {
+        
+        List<String> valErrors = new ArrayList<String>();
+        
+        Utlatande utlatande = buildTestUtlatande("/rli-example-1.json");
+        
+        Kod sjkCode = new Kod();
+        sjkCode.setCode("SJK1");
+        sjkCode.setCodeSystem("kv_rekommendation_intyg");
+        
+        Kod validCode = new Kod();
+        validCode.setCode("REK1");
+        validCode.setCodeSystem("kv_rekommendation_intyg");
+        
+        Kod invalidCode = new Kod();
+        invalidCode.setCode("REK3");
+        invalidCode.setCodeSystem("kv_rekommendation_intyg");
+
+        Rekommendation validRekommendation = new Rekommendation();
+        validRekommendation.setRekommendationskod(validCode);
+        validRekommendation.setSjukdomskannedom(sjkCode);
+
+        utlatande.getRekommendationer().clear();
+        utlatande.getRekommendationer().add(validRekommendation);
+        validator.validateRekommendationer(utlatande, valErrors);
+        assertTrue(valErrors.isEmpty());
+        
+        Rekommendation invalidRekommendation = new Rekommendation();
+        invalidRekommendation.setRekommendationskod(invalidCode);
+        
+        utlatande.getRekommendationer().clear();
+        utlatande.getRekommendationer().add(invalidRekommendation);
+        validator.validateRekommendationer(utlatande, valErrors);
+        assertTrue(valErrors.contains("No valid rekommendationskod found"));
+        assertTrue(valErrors.contains("No valid sjukdomskannedomskod found"));
+        
+    }
     @Test
     public void testValidate() {
         Utlatande utlatande = buildTestUtlatande("/rli-example-1.json");
@@ -97,7 +138,6 @@ public class ExternalValidatorTest {
         assertTrue(validationErrors.contains("No valid rekommendationskod found"));
         
         assertTrue(validationErrors.contains("No valid sjukdomskannedomskod found"));
-        
         
     }
 }

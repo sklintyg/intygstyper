@@ -370,7 +370,6 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
         Patient patient = new Patient();
         patient.setEfternamn(source.getEfternamn());
         patient.getFornamn().add(source.getFornamn());
-        patient.getMellannamn().add(source.getMellannamn());
         patient.setId(new Id(PERS_ID_ROOT, source.getPersonid()));
         patient.setPostadress(source.getPostadress());
         patient.setPostnummer(source.getPostnummer());

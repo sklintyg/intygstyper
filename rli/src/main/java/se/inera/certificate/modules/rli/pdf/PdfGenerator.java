@@ -18,6 +18,10 @@
  */
 package se.inera.certificate.modules.rli.pdf;
 
+import java.io.IOException;
+
+import com.itextpdf.text.DocumentException;
+
 import se.inera.certificate.modules.rli.model.internal.Utlatande;
 
 /**
@@ -32,8 +36,10 @@ public interface PdfGenerator {
      * @param utlatande An Internal Utlatande containing the data to be used in the resulting pdf
      * @return a byte array containing the generated pdf
      * @throws PdfGeneratorException
+     * @throws IOException 
+     * @throws DocumentException 
      */
-    public abstract byte[] generatePDF(Utlatande utlatande) throws PdfGeneratorException;
+    public abstract byte[] generatePDF(Utlatande utlatande) throws PdfGeneratorException, IOException, DocumentException;
     
     public abstract String generatePdfFilename(Utlatande utlatande);
 }

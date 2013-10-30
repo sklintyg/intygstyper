@@ -23,16 +23,15 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import riv.insuranceprocess.healthreporting._2.EnhetType;
-import riv.insuranceprocess.healthreporting._2.VardgivareType;
 import se.inera.certificate.common.v1.AktivitetType;
+import se.inera.certificate.common.v1.EnhetType;
 import se.inera.certificate.common.v1.HosPersonalType;
 import se.inera.certificate.common.v1.ObservationType;
 import se.inera.certificate.common.v1.PatientRelationType;
 import se.inera.certificate.common.v1.PatientType;
 import se.inera.certificate.common.v1.RekommendationType;
 import se.inera.certificate.common.v1.UtforarrollType;
+import se.inera.certificate.common.v1.VardgivareType;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.PartialInterval;
@@ -337,7 +336,6 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
 
         patient.getPatientrelationer().addAll(convertPatientRelations(source.getPatientRelations()));
         patient.getFornamn().addAll(source.getFornamns());
-        patient.getMellannamn().addAll(source.getMellannamns());
         patient.setEfternamn(source.getEfternamn());
 
         return patient;
@@ -363,8 +361,12 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
         patientRelation.setPostnummer(source.getPostnummer());
         patientRelation.setPostort(source.getPostort());
         patientRelation.getFornamn().addAll(source.getFornamns());
+        
+        /* Until schema for PatientType is fixed, take mellannamn and put in fornamn*/
+        patientRelation.getFornamn().addAll(source.getMellannamns());
+        
         patientRelation.setEfternamn(source.getEfternamn());
-        patientRelation.getMellannamn().addAll(source.getMellannamns());
+        
 
         for (iso.v21090.dt.v1.CD cd : source.getRelationTyps()) {
             patientRelation.getRelationtyper().add(IsoTypeConverter.toKod(cd));

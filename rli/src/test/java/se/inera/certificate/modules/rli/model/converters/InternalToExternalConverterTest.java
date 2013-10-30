@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
@@ -111,9 +112,8 @@ public class InternalToExternalConverterTest {
         se.inera.certificate.model.Patient extP = converter.convertPatient(intP);
 
         assertNotNull(extP);
-        assertEquals("Johan", extP.getFornamn().get(0));
+        assertEquals("Johan Mutumba", StringUtils.join(extP.getFornamn()," "));
         assertEquals("Johansson", extP.getEfternamn());
-        assertEquals("Mutumba", extP.getMellannamn().get(0));
         assertEquals("Johan Mutumba Johansson", extP.getFullstandigtNamn());
         assertEquals("19121212-1212", extP.getId().getExtension());
         assertEquals("Genvägen", extP.getPostadress());
@@ -126,8 +126,7 @@ public class InternalToExternalConverterTest {
         Patient patient = new Patient();
 
         patient.setEfternamn("Johansson");
-        patient.setFornamn("Johan");
-        patient.setMellannamn("Mutumba");
+        patient.setFornamn("Johan Mutumba");
         patient.setFullstandigtNamn("Johan Mutumba Johansson");
         patient.setPersonid("19121212-1212");
         patient.setPostadress("Genvägen");
