@@ -17,6 +17,20 @@
       <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
     </encoder>
   </appender>
+  
+    <!--Daily rolling file appender -->
+  <appender name="FILE"
+    class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${catalina.home}/logs/fk7263-module.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${catalina.home}/logs/fk7263-module.%d{yyyy-MM-dd}.log
+      </fileNamePattern>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%date{ISO8601} [%thread] %-5level %logger{10} - %msg%n
+      </pattern>
+    </encoder>
+  </appender>
 
   <logger name="org.apache.camel" level="WARN" />
 
@@ -26,12 +40,13 @@
   <logger name="org.springframework.web" level="WARN" />
   <logger name="org.springframework.http" level="WARN" />
 
-  <logger name="org.apache.cxf" level="error" />
+  <logger name="org.apache.cxf" level="ERROR" />
 
-  <logger name="se.inera.certificate.web" level="DEBUG" />
+  <logger name="se.inera.certificate.modules.fk7263" level="ERROR" />
 
   <root level="WARN">
     <appender-ref ref="STDOUT" />
+    <appender-ref ref="FILE" />
   </root>
 
 </configuration>

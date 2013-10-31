@@ -19,7 +19,7 @@
   </parent>
 
   <artifactId>rli</artifactId>
-  <name>Reselakarintyg</name>
+  <name>Intyg vid avbeställning av resa</name>
   <properties>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
   </properties>
