@@ -17,10 +17,10 @@
       <p message key="confirm.label.summarypagedesc"></p>
       <div class="well cert-summary">
         <span>{{cert.skickatDatum | date:'longDate'}}</span> 
-        <span message key="certificatetypes.{{cert.typ.code}}.commonname"></span>
-        <span message key="certificatetypes.{{cert.typ.code}}.typename"></span>
-        <span>{{cert.validFromDate |
-          date:'longDate'}}&ndash;{{cert.validToDate | date:'longDate'}}</span> 
+        <span message key="certificatetypes.fk7263.commonname"></span>
+        <span message key="certificatetypes.fk7263.typename"></span>
+        <span>{{cert.giltighet.from |
+          date:'longDate'}}&ndash;{{cert.giltighet.tom | date:'longDate'}}</span> 
           <span>{{cert.vardenhet.namn}}</span>
 
       </div>
