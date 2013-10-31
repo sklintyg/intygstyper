@@ -151,6 +151,7 @@ angular
                                 // answerButtonToolTip
                                 angular.forEach(list, function(qa, key) {
                                     decorateSingleItem(qa);
+                                    fragaSvarCommonService.decorateSingleItemMeasure(qa);
                                 });
                             }
 
@@ -159,14 +160,14 @@ angular
                                     // RE-020 Påminnelser is never
                                     // answerable
                                     qa.answerDisabled = true;
-                                    qa.answerButtonToolTip = "Påminnelser kan inte besvaras";
+                                    qa.answerDisabledReason = undefined; // Påminnelser kan inte besvaras men det behöver vi inte säga
                                 } else if (qa.amne == "KOMPLETTERING_AV_LAKARINTYG" && !$rootScope.WC_CONTEXT.lakare) {
                                     // RE-005, RE-006
                                     qa.answerDisabled = true;
-                                    qa.answerButtonToolTip = "Kompletteringar kan endast besvaras av läkare";
+                                    qa.answerDisabledReason = "Kompletteringar kan endast besvaras av läkare.";
                                 } else {
                                     qa.answerDisabled = false;
-                                    qa.answerButtonToolTip = "Skicka svaret";
+                                    qa.answerDisabledReason = undefined;
                                 }
                             }
                             $scope.openIssuesFilter = function(qa) {

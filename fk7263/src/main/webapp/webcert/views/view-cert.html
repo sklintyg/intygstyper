@@ -73,9 +73,8 @@
                   <h3 class="inline-block">
                     Ämne: <strong><span message key="qa.amne.{{qa.amne | lowercase}}"></span></strong>
                   </h3>
-                  <p ng-switch="qa.status">
-                    <span ng-switch-when="PENDING_INTERNAL_ACTION">Frågan inväntar svar från vårdenheten</span> <span ng-switch-when="PENDING_EXTERNAL_ACTION">Frågan inväntar svar från
-                      Försäkringskassan</span> <span ng-switch-when="ANSWERED">Inväntar att markeras som hanterad</span> <span ng-switch-default="CLOSED">{{qa.status}}</span>
+                  <p>
+                    Åtgärd: <strong><span message key="qa.measure.{{qa.measureResKey}}"></span></strong>
                   </p>
                   <div class="form-inline">
                     <input id="mark-as-forwarded-{{qa.internReferens}}" type="checkbox" ng-disabled="qa.forwardInProgress" ng-model="qa.vidarebefordrad" ng-change="onVidareBefordradChange(qa)" /> <label
@@ -122,14 +121,16 @@
                   <!--  VÄNTAR på svar från vården, men skall kunna klarmarkeras ändå?-->
                   <label class="control-label" ng-show="!qa.answerDisabled">Svar</label>
                   <div class="controls">
+                    <div class="alert alert-info" ng-show="qa.answerDisabled && qa.answerDisabledReason">
+                      {{qa.answerDisabledReason}}
+                    </div>
                     <textarea rows="5" ng-model="qa.svarsText" id="answerText-{{qa.internReferens}}" ng-show="!qa.answerDisabled"></textarea>
                     <div>
                       <!-- error message occuring when inteacting with server for this FragaSvar-->
                       <div id="{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey" class="alert alert-error">
                         <span message key="error.{{qa.activeErrorMessageKey}}"></span>
                       </div>
-                      <button class="btn btn-success" ng-click="sendAnswer(qa)" ng-disabled="!qa.svarsText || qa.updateInProgress" ng-show="!qa.answerDisabled" id="sendAnswerBtn-{{qa.internReferens}}"
-                        title="{{qa.answerButtonToolTip}}">
+                      <button class="btn btn-success" ng-click="sendAnswer(qa)" ng-disabled="!qa.svarsText || qa.updateInProgress" ng-show="!qa.answerDisabled" id="sendAnswerBtn-{{qa.internReferens}}">
                         <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Skicka svar
                       </button>
                       <button class="btn btn-secondary" ng-click="updateAsHandled(qa)" id="markAsHandledFkOriginBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress">
