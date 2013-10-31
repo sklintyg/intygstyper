@@ -151,7 +151,6 @@ angular
                                 // answerButtonToolTip
                                 angular.forEach(list, function(qa, key) {
                                     decorateSingleItem(qa);
-                                    fragaSvarCommonService.decorateSingleItemMeasure(qa);
                                 });
                             }
 
@@ -169,6 +168,7 @@ angular
                                     qa.answerDisabled = false;
                                     qa.answerDisabledReason = undefined;
                                 }
+                                fragaSvarCommonService.decorateSingleItemMeasure(qa);
                             }
                             $scope.openIssuesFilter = function(qa) {
                                 return qa.status != "CLOSED";
