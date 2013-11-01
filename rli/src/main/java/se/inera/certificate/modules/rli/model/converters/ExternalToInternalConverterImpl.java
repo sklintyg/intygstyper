@@ -66,7 +66,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
     }
 
     @Override
-    public Utlatande fromExternalToInternal(CertificateContentHolder certificateContentHolder) {
+    public Utlatande fromExternalToInternal(CertificateContentHolder certificateContentHolder) throws ConverterException {
 
         se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande = certificateContentHolder
                 .getCertificateContent();
@@ -87,7 +87,7 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
     }
 
     Utlatande convertUtlatandeFromExternalToInternal(
-            se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande) {
+            se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande) throws ConverterException {
 
         LOG.debug("Converting Utlatande '{}' from external to internal", extUtlatande.getId());
 
@@ -128,13 +128,12 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         intUtlatande.setRekommendation(intRekommendation);
     }
 
-    Vardenhet convertToIntVardenhet(se.inera.certificate.model.Vardenhet extVardenhet) {
+    Vardenhet convertToIntVardenhet(se.inera.certificate.model.Vardenhet extVardenhet) throws ConverterException {
 
         LOG.trace("Converting vardenhet");
 
         if (extVardenhet == null) {
-            LOG.trace("External Vardenhet is null, can not convert");
-            return null;
+            throw new ConverterException("External Vardenhet is null, can not convert");
         }
 
         Vardenhet intVardenhet = new Vardenhet();
@@ -153,13 +152,12 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         return intVardenhet;
     }
 
-    Vardgivare convertToIntVardgivare(se.inera.certificate.model.Vardgivare extVardgivare) {
+    Vardgivare convertToIntVardgivare(se.inera.certificate.model.Vardgivare extVardgivare) throws ConverterException {
 
         LOG.trace("Converting vardgivare");
 
         if (extVardgivare == null) {
-            LOG.trace("External vardgivare is null, can not convert");
-            return null;
+            throw new ConverterException("External vardgivare is null, can not convert");
         }
 
         Vardgivare intVardgivare = new Vardgivare();
@@ -170,20 +168,19 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         return intVardgivare;
     }
 
-    HoSPersonal convertToIntHoSPersonal(HosPersonal extHoSPersonal) {
+    HoSPersonal convertToIntHoSPersonal(HosPersonal extHoSPersonal) throws ConverterException {
 
         LOG.trace("Converting HoSPersonal");
 
         if (extHoSPersonal == null) {
-            LOG.trace("External HoSPersonal is null, can not convert");
-            return null;
+            throw new ConverterException("External HoSPersonal is null, can not convert");
         }
 
         HoSPersonal intHoSPersonal = new HoSPersonal();
 
         intHoSPersonal.setPersonid(InternalModelConverterUtils.getExtensionFromId(extHoSPersonal.getId()));
         intHoSPersonal.setFullstandigtNamn(extHoSPersonal.getNamn());
-        // intHoSPersonal.setBefattning(befattning);
+        intHoSPersonal.setBefattning(extHoSPersonal.getBefattning());
 
         Vardenhet intVardenhet = convertToIntVardenhet(extHoSPersonal.getVardenhet());
         intHoSPersonal.setVardenhet(intVardenhet);
@@ -215,13 +212,12 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         return intStatuses;
     }
 
-    Patient convertToIntPatient(se.inera.certificate.model.Patient extPatient) {
+    Patient convertToIntPatient(se.inera.certificate.model.Patient extPatient) throws ConverterException {
 
         LOG.trace("Converting patient");
 
         if (extPatient == null) {
-            LOG.trace("No Patient found to convert");
-            return null;
+            throw new ConverterException("No Patient found to convert");
         }
 
         Patient intPatient = new Patient();
@@ -243,13 +239,12 @@ public class ExternalToInternalConverterImpl implements ExternalToInternalConver
         return intPatient;
     }
 
-    Arrangemang convertToIntArrangemang(se.inera.certificate.modules.rli.model.external.Arrangemang extArr) {
+    Arrangemang convertToIntArrangemang(se.inera.certificate.modules.rli.model.external.Arrangemang extArr) throws ConverterException {
 
         LOG.trace("Converting arrangemang");
 
         if (extArr == null) {
-            LOG.trace("- No arrangemang found to convert");
-            return null;
+            throw new ConverterException("No arrangemang found to convert");
         }
 
         Arrangemang intArr = new Arrangemang();

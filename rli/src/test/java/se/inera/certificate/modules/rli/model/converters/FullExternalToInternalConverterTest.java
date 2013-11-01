@@ -44,7 +44,7 @@ public class FullExternalToInternalConverterTest {
     }
 
     @Test
-    public void testConvertUtlatande() {
+    public void testConvertUtlatande() throws Exception {
 
         se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande = readUtlatandeFromJsonFile("/rli-example-3.json");
 
@@ -135,6 +135,7 @@ public class FullExternalToInternalConverterTest {
         HoSPersonal hosPers = new HoSPersonal();
         hosPers.setFullstandigtNamn("Doktor Alban");
         hosPers.setPersonid("19101010-1010");
+        hosPers.setBefattning("Specialistläkare");
         hosPers.setVardenhet(vardenhet);
         utlatande.setSkapadAv(hosPers);
 

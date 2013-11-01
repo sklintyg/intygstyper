@@ -9,6 +9,7 @@ import javax.xml.bind.JAXB;
 import org.apache.commons.io.FilenameUtils;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.certificate.modules.rli.model.converters.ConverterException;
 import se.inera.certificate.modules.rli.model.converters.TransportToExternalConverter;
 import se.inera.certificate.modules.rli.model.converters.TransportToExternalConverterImpl;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
@@ -54,10 +55,12 @@ public final class XmlToJsonConverter {
         try {
             utlatande = JAXB
                     .unmarshal(new FileInputStream(xmlFileName), se.inera.certificate.common.v1.Utlatande.class);
+            writeExternalToFile(transportConverter.transportToExternal(utlatande), generateJsonFilename(xmlFileName));
         } catch (IOException ie) {
             ie.printStackTrace();
+        } catch (ConverterException e) {
+            e.printStackTrace();
         }
-        writeExternalToFile(transportConverter.transportToExternal(utlatande), generateJsonFilename(xmlFileName));
     }
 
     private void writeExternalToFile(Utlatande utlatande, File filename) {
