@@ -199,13 +199,16 @@ div.infobox h4 {
 	padding-right: 20px;
 }
 
+.panel-container { /* IE8 doesn't understand margin-bottom on elements added by scripting so place this around and use padding instead */
+  padding-bottom: 20px;	
+}
+
 .qa-panel {
   background-color: #eaeaea;
   -webkit-border-radius: 8px 8px 8px 8px;
   -moz-border-radius: 8px 8px 8px 8px;
   border-radius: 8px 8px 8px 8px;
   padding: 20px;
-  margin-bottom: 20px; 
   max-width: 600px;
 }
 
@@ -226,7 +229,6 @@ div.infobox h4 {
 }
 
 .qa-block {
-  margin: 0 0 20px 0;
   background-color: #fff;
   border: 1px solid #d8d8d8;
   -webkit-border-radius: 8px 8px 8px 8px;
