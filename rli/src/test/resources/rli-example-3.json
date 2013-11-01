@@ -28,6 +28,7 @@
             "extension" : "19101010-1010"
         },
         "namn" : "Doktor Alban",
+        "befattning" : "Specialistläkare",
         "vardenhet" : {
             "id" : {
                 "root" : "1.2.752.129.2.1.4.1",

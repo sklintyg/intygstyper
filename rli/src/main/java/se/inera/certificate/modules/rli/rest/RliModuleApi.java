@@ -35,6 +35,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.model.util.Strings;
+import se.inera.certificate.modules.rli.model.converters.ConverterException;
 import se.inera.certificate.modules.rli.model.converters.ExternalToInternalConverter;
 import se.inera.certificate.modules.rli.model.converters.ExternalToTransportConverter;
 import se.inera.certificate.modules.rli.model.converters.TransportToExternalConverter;
@@ -47,7 +48,8 @@ import se.inera.certificate.modules.rli.rest.dto.CreateNewDraftCertificateHolder
 import se.inera.certificate.modules.rli.validator.ExternalValidator;
 
 /**
- * The contract between the certificate module and the generic components (Intygstjänsten and Mina-Intyg).
+ * The contract between the certificate module and the generic components
+ * (Intygstjänsten and Mina-Intyg).
  * 
  * @author Gustav Norbäcker, R2M
  */
@@ -69,17 +71,19 @@ public class RliModuleApi {
 
     @Autowired
     private PdfGenerator pdfGenerator;
-    
+
     @Autowired
     private EditModelFactory editModelFactory;
 
     /**
-     * Handles conversion from the transport model (XML) to the external JSON model.
+     * Handles conversion from the transport model (XML) to the external JSON
+     * model.
      * 
      * @param transportModel
      *            The transport model to convert.
      * 
-     * @return An instance of the external model, generated from the transport model.
+     * @return An instance of the external model, generated from the transport
+     *         model.
      */
     @POST
     @Path("/unmarshall")
@@ -104,8 +108,9 @@ public class RliModuleApi {
     }
 
     /**
-     * Validates the external model. If the validation succeeds, a empty result will be returned. If the validation
-     * fails, a list of validation messages will be returned as a HTTP 400.
+     * Validates the external model. If the validation succeeds, a empty result
+     * will be returned. If the validation fails, a list of validation messages
+     * will be returned as a HTTP 400.
      * 
      * @param externalModel
      *            The external model to validate.
@@ -133,23 +138,27 @@ public class RliModuleApi {
      * @param externalModel
      *            The external model to generate a PDF from.
      * 
-     * @return A binary stream containing a PDF template populated with the information of the external model.
+     * @return A binary stream containing a PDF template populated with the
+     *         information of the external model.
      */
     @POST
     @Path("/pdf")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces("application/pdf")
     public Response pdf(CertificateContentHolder certificateContentHolder) {
-        se.inera.certificate.modules.rli.model.internal.Utlatande internalUtlatande = externalToInternalConverter
-                .fromExternalToInternal(certificateContentHolder);
         try {
-
+            
+            se.inera.certificate.modules.rli.model.internal.Utlatande internalUtlatande = externalToInternalConverter
+                    .fromExternalToInternal(certificateContentHolder);
+            
             byte[] generatedPDF = pdfGenerator.generatePDF(internalUtlatande);
+            
             return Response.ok(generatedPDF)
                     .header("Content-Disposition", "filename=" + pdfGenerator.generatePdfFilename(internalUtlatande))
                     .build();
+            
         } catch (Exception p) {
-            LOG.error("Failed to generate PDF for certificate #" + internalUtlatande.getUtlatandeid(), p);
+            LOG.error("Failed to generate PDF for certificate!", p);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
 
@@ -161,7 +170,8 @@ public class RliModuleApi {
      * @param externalModel
      *            The external model to convert.
      * 
-     * @return An instance of the internal model, generated from the external model.
+     * @return An instance of the internal model, generated from the external
+     *         model.
      */
     @PUT
     @Path("/internal")
@@ -169,10 +179,16 @@ public class RliModuleApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Response convertExternalToInternal(CertificateContentHolder certificateContentHolder) {
 
-        se.inera.certificate.modules.rli.model.internal.Utlatande internalModel = externalToInternalConverter
-                .fromExternalToInternal(certificateContentHolder);
+        se.inera.certificate.modules.rli.model.internal.Utlatande internalModel;
 
-        Response response = Response.status(Response.Status.OK).entity(internalModel).build();
+        Response response = null;
+
+        try {
+            internalModel = externalToInternalConverter.fromExternalToInternal(certificateContentHolder);
+            response = Response.status(Response.Status.OK).entity(internalModel).build();
+        } catch (ConverterException e) {
+            response = Response.status(Response.Status.BAD_REQUEST).build();
+        }
 
         return response;
     }
@@ -183,7 +199,8 @@ public class RliModuleApi {
      * @param internalModel
      *            The internal model to convert.
      * 
-     * @return An instance of the external model, generated from the internal model.
+     * @return An instance of the external model, generated from the internal
+     *         model.
      */
     @PUT
     @Path("/external")
@@ -195,10 +212,11 @@ public class RliModuleApi {
         // TODO: Implement when conversion from an internal model i required.
         return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
     }
-    
+
     /**
-     * Creates a new editable model for use in WebCert. The model is pre populated using data
-     * contained in the CreateNewDraftCertificateHolder parameter.
+     * Creates a new editable model for use in WebCert. The model is pre
+     * populated using data contained in the CreateNewDraftCertificateHolder
+     * parameter.
      * 
      * @param draftCertificateHolder
      * @return
@@ -208,12 +226,13 @@ public class RliModuleApi {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createNewInternal(CreateNewDraftCertificateHolder draftCertificateHolder) {
-        
+
         String certificateId = draftCertificateHolder.getCertificateId();
         Map<String, Object> certificateData = draftCertificateHolder.getCertificateData();
-        
-        se.inera.certificate.modules.rli.model.edit.Utlatande editableUtlatande = editModelFactory.createEditableUtlatande(certificateId , certificateData);
-        
+
+        se.inera.certificate.modules.rli.model.edit.Utlatande editableUtlatande = editModelFactory
+                .createEditableUtlatande(certificateId, certificateData);
+
         return Response.ok(editableUtlatande).build();
     }
 }

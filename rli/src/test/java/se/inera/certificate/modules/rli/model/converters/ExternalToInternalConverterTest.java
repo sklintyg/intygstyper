@@ -45,7 +45,7 @@ public class ExternalToInternalConverterTest {
     }
 
     @Test
-    public void testConvertUtlatande() {
+    public void testConvertUtlatande() throws Exception {
 
         Utlatande extUtlatande = readUtlatandeFromJsonFile("/rli-example-1.json");
 
@@ -83,7 +83,7 @@ public class ExternalToInternalConverterTest {
     }
 
     @Test
-    public void testConvertToIntPatient() {
+    public void testConvertToIntPatient()  throws Exception {
 
         Patient extPatient = buildPatient();
 
@@ -116,7 +116,7 @@ public class ExternalToInternalConverterTest {
     }
 
     @Test
-    public void testConvertToIntArrangemang() {
+    public void testConvertToIntArrangemang() throws Exception {
 
         Arrangemang extArr = buildArrangemang();
         se.inera.certificate.modules.rli.model.internal.Arrangemang res = converter.convertToIntArrangemang(extArr);
@@ -148,7 +148,7 @@ public class ExternalToInternalConverterTest {
     }
 
     @Test
-    public void testConvertToIntHoSPersonal() {
+    public void testConvertToIntHoSPersonal() throws Exception {
 
         HosPersonal extHoSPersonal = buildHoSPersonal();
         HoSPersonal res = converter.convertToIntHoSPersonal(extHoSPersonal);
@@ -174,7 +174,7 @@ public class ExternalToInternalConverterTest {
     }
 
     @Test
-    public void testConvertToIntVardenhet() {
+    public void testConvertToIntVardenhet() throws Exception {
 
         Vardenhet extVardenhet = buildVardenhet();
         se.inera.certificate.modules.rli.model.internal.Vardenhet res = converter.convertToIntVardenhet(extVardenhet);

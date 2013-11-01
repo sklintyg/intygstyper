@@ -5,6 +5,6 @@ import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
 
 public interface ExternalToInternalConverter {
 
-    Utlatande fromExternalToInternal(CertificateContentHolder certificateContentHolder);
+    Utlatande fromExternalToInternal(CertificateContentHolder certificateContentHolder) throws ConverterException;
 
 }
