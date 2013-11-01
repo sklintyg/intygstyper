@@ -90,11 +90,15 @@ public class RliModuleApi {
     @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_JSON)
     public Response unmarshall(se.inera.certificate.common.v1.Utlatande transportModel) {
-
-        Utlatande externalModel = transportToExternalConverter.transportToExternal(transportModel);
-
-        Response response = Response.status(Response.Status.OK).entity(externalModel).build();
-
+        Utlatande externalModel = null;
+        Response response = null;
+        try {
+            externalModel = transportToExternalConverter.transportToExternal(transportModel);
+            response = Response.status(Response.Status.OK).entity(externalModel).build();
+        } catch (ConverterException ce) {
+            LOG.error("Error in unmarshall", ce);
+            response = Response.status(Response.Status.BAD_REQUEST).build();
+        }
         return response;
     }
 

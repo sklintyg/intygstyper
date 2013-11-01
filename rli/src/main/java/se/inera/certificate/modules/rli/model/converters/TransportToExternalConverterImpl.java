@@ -69,7 +69,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * certificate.common.v1.Utlatande)
      */
     @Override
-    public Utlatande transportToExternal(se.inera.certificate.common.v1.Utlatande source) {
+    public Utlatande transportToExternal(se.inera.certificate.common.v1.Utlatande source) throws ConverterException {
 
         LOG.debug("Converting Utlatande '{}' from transport to external", source.getUtlatandeId());
 
@@ -108,8 +108,9 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @param source
      *            List of RekommendationType to be converted
      * @return List of Rekommendation
+     * @throws ConverterException
      */
-    List<Rekommendation> convertRekommendationer(List<RekommendationType> source) {
+    List<Rekommendation> convertRekommendationer(List<RekommendationType> source) throws ConverterException {
         LOG.trace("Converting rekommendationer");
 
         List<Rekommendation> rekommendationer = new ArrayList<Rekommendation>();
@@ -128,10 +129,11 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @param source
      *            RekommendationType
      * @return Rekommendation, or null if source is null
+     * @throws ConverterException
      */
-    private Rekommendation convertRekommendation(RekommendationType source) {
+    private Rekommendation convertRekommendation(RekommendationType source) throws ConverterException {
         if (source == null) {
-            return null;
+            throw new ConverterException("RekommendationType was null, cannot convert");
         }
         Rekommendation rekommendation = new Rekommendation();
 
@@ -147,8 +149,9 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @param source
      *            List of objects of type ObservationType to be converted
      * @return List of objects of type Observation
+     * @throws ConverterException
      */
-    List<Observation> convertObservations(List<ObservationType> source) {
+    List<Observation> convertObservations(List<ObservationType> source) throws ConverterException {
 
         LOG.trace("Converting observationer");
 
@@ -167,8 +170,9 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @param source
      *            ObservationType to be converted
      * @return object of type Observation
+     * @throws ConverterException
      */
-    private Observation convertObservation(ObservationType source) {
+    private Observation convertObservation(ObservationType source) throws ConverterException {
         Observation observation = new Observation();
 
         if (source.getObservationsperiod() != null) {
@@ -186,8 +190,9 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @param source
      *            List of UtforarrollType
      * @return List of Utforarroll
+     * @throws ConverterException
      */
-    List<Utforarroll> convertUtforarroller(List<UtforarrollType> source) {
+    List<Utforarroll> convertUtforarroller(List<UtforarrollType> source) throws ConverterException {
         LOG.trace("Converting utforarroller");
 
         List<Utforarroll> utforsAvs = new ArrayList<>();
@@ -205,13 +210,19 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @param source
      *            UtforarrollType
      * @return Utforarroll, or null if source is null
+     * @throws ConverterException
      */
-    private Utforarroll convertUtforarroll(UtforarrollType source) {
+    private Utforarroll convertUtforarroll(UtforarrollType source) throws ConverterException {
         if (source == null) {
-            return null;
+            throw new ConverterException();
         }
+
         Utforarroll utforarroll = new Utforarroll();
-        utforarroll.setAntasAv(convertHosPersonal(source.getAntasAv()));
+
+        if (source.getAntasAv() != null) {
+            utforarroll.setAntasAv(convertHosPersonal(source.getAntasAv()));
+        }
+
         utforarroll.setUtforartyp(IsoTypeConverter.toKod(source.getUtforartyp()));
         return utforarroll;
     }
@@ -222,12 +233,13 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @param source
      *            se.inera.certificate.rli.v1.Arrangemang
      * @return import se.inera.certificate.modules.rli.model.external.Arrangemang
+     * @throws ConverterException
      */
-    Arrangemang convertArrangemang(se.inera.certificate.rli.v1.Arrangemang source) {
+    Arrangemang convertArrangemang(se.inera.certificate.rli.v1.Arrangemang source) throws ConverterException {
         LOG.trace("Converting arrangemang");
 
         if (source == null) {
-            return null;
+            throw new ConverterException();
         }
         Arrangemang arrangemang = new Arrangemang();
 
@@ -248,8 +260,9 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @param source
      *            the list of AktivitetType's to be converted
      * @return a List containing Aktiviteter
+     * @throws ConverterException
      */
-    List<Aktivitet> convertAktiviteter(List<AktivitetType> source) {
+    List<Aktivitet> convertAktiviteter(List<AktivitetType> source) throws ConverterException {
 
         LOG.trace("Converting aktiviteter");
 
@@ -268,23 +281,29 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @param source
      *            the object of AktivitetType to be converted
      * @return Aktivitet
+     * @throws ConverterException
      */
-    private Aktivitet convertAktivitet(AktivitetType source) {
+    private Aktivitet convertAktivitet(AktivitetType source) throws ConverterException {
 
         if (source == null) {
-            return null;
+            throw new ConverterException();
         }
 
         Aktivitet aktivitet = new Aktivitet();
-
-        aktivitet.setBeskrivning(source.getBeskrivning());
         aktivitet.setAktivitetskod(IsoTypeConverter.toKod(source.getAktivitetskod()));
         if (source.getAktivitetstid() != null) {
             aktivitet.setAktivitetstid(new PartialInterval(source.getAktivitetstid().getFrom(), source
                     .getAktivitetstid().getTom()));
         }
-        aktivitet.setBeskrivning(source.getBeskrivning());
-        aktivitet.setUtforsVid(convertEnhet(source.getUtforsVidEnhet()));
+        if (source.getBeskrivning() != null) {
+            aktivitet.setBeskrivning(source.getBeskrivning());
+        }
+        if (source.getUtforsVidEnhet() != null) {
+            aktivitet.setUtforsVid(convertEnhet(source.getUtforsVidEnhet()));
+        }
+        if (source.getPlats() != null) {
+            aktivitet.setPlats(source.getPlats());
+        }
         // aktivitet.getUtforsAvs().addAll(convertUtforarroller(source.getUtforsAvs()));
 
         return aktivitet;
@@ -296,12 +315,13 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @param source
      *            HosPersonalType to be converted
      * @return HosPersonal, or null if source is null
+     * @throws ConverterException
      */
-    HosPersonal convertHosPersonal(HosPersonalType source) {
+    HosPersonal convertHosPersonal(HosPersonalType source) throws ConverterException {
 
         LOG.trace("Converting HosPersonal");
         if (source == null) {
-            return null;
+            throw new ConverterException();
         }
 
         HosPersonal hosPersonal = new HosPersonal();
@@ -319,12 +339,13 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @param source
      *            PatientType to be converted
      * @return Patient, or null if source is null
+     * @throws ConverterException
      */
-    Patient convertPatient(PatientType source) {
+    Patient convertPatient(PatientType source) throws ConverterException {
         LOG.trace("Converting patient");
 
         if (source == null) {
-            return null;
+            throw new ConverterException();
         }
 
         Patient patient = new Patient();
@@ -361,12 +382,11 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
         patientRelation.setPostnummer(source.getPostnummer());
         patientRelation.setPostort(source.getPostort());
         patientRelation.getFornamn().addAll(source.getFornamns());
-        
-        /* Until schema for PatientType is fixed, take mellannamn and put in fornamn*/
+
+        /* Until schema for PatientType is fixed, take mellannamn and put in fornamn */
         patientRelation.getFornamn().addAll(source.getMellannamns());
-        
+
         patientRelation.setEfternamn(source.getEfternamn());
-        
 
         for (iso.v21090.dt.v1.CD cd : source.getRelationTyps()) {
             patientRelation.getRelationtyper().add(IsoTypeConverter.toKod(cd));
@@ -381,12 +401,13 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @param source
      *            EnhetType to be converted
      * @return Enhet, or null if source is null
+     * @throws ConverterException
      */
 
-    Vardenhet convertEnhet(EnhetType source) {
+    Vardenhet convertEnhet(EnhetType source) throws ConverterException {
         LOG.trace("Converting enhet");
         if (source == null) {
-            return null;
+            throw new ConverterException();
         }
         Vardenhet vardenhet = new Vardenhet();
         vardenhet.setId(IsoTypeConverter.toId(source.getEnhetsId()));
@@ -408,12 +429,13 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @param source
      *            VardgivareType to be converted
      * @return Vardgivare, or null if source is null
+     * @throws ConverterException
      */
-    Vardgivare convertVardgivare(VardgivareType source) {
+    Vardgivare convertVardgivare(VardgivareType source) throws ConverterException {
 
         LOG.trace("Converting vardgivare");
         if (source == null) {
-            return null;
+            throw new ConverterException();
         }
         Vardgivare vardgivare = new Vardgivare();
         vardgivare.setId(IsoTypeConverter.toId(source.getVardgivareId()));

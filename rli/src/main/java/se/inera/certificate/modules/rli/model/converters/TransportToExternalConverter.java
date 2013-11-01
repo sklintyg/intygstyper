@@ -32,6 +32,7 @@ public interface TransportToExternalConverter {
      * @param source
      *            Utlatande in the transport format to be converted to external format
      * @return se.inera.certificate.modules.rli.model.external.Utlatande
+     * @throws ConverterException 
      */
-    Utlatande transportToExternal(se.inera.certificate.common.v1.Utlatande source);
+    Utlatande transportToExternal(se.inera.certificate.common.v1.Utlatande source) throws ConverterException;
 }

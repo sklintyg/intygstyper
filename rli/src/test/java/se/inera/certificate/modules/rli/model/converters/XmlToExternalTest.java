@@ -19,6 +19,7 @@
 package se.inera.certificate.modules.rli.model.converters;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.io.InputStream;
 import java.util.List;
@@ -44,7 +45,13 @@ public class XmlToExternalTest {
     }
 
     @Test
-    public void testXmlToExternal() {
+    public void testXmlToExternalExample2() throws ConverterException {
+        converter.transportToExternal(unmarshallXml("rli-example-2.xml"));
+
+    }
+
+    @Test
+    public void testXmlToExternal() throws ConverterException {
         Utlatande extUtlatande = converter.transportToExternal(unmarshallXml("rli-example-1.xml"));
 
         assertEquals("RLI", extUtlatande.getTyp().getCode());
