@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <utlatande xmlns="urn:riv:clinicalprocess:healthcond:certificate:1">
-  <utlatande-id extension="b2f6d5bc-2f50-4623-9ce9-bf1ee5404347"/>
+  <utlatande-id root="b2f6d5bc-2f50-4623-9ce9-bf1ee5404347"/>
   <typAvUtlatande code="fk7263" codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b"/>
   <kommentar>Har haft mailkontakt med patienten
     Prognosen att återgå till arbete är svår att bedömma förrän utredningen är genomförd.
@@ -34,11 +34,11 @@
       <enhets-id root="1.2.752.129.2.1.4.1" extension="VardenhetY"/>
       <arbetsplatskod root="1.2.752.29.4.71" extension="123456789011"/>
       <enhetsnamn>Kir mott</enhetsnamn>
-      <ns2:postadress>Lasarettsvägen 13</ns2:postadress>
-      <ns2:postnummer>85150</ns2:postnummer>
-      <ns2:postort>Sundsvall</ns2:postort>
-      <ns2:telefonnummer>060-1818000</ns2:telefonnummer>
-      <ns2:vardgivare>
+      <postadress>Lasarettsvägen 13</postadress>
+      <postnummer>85150</postnummer>
+      <postort>Sundsvall</postort>
+      <telefonnummer>060-1818000</telefonnummer>
+      <vardgivare>
         <vardgivare-id root="1.2.752.129.2.1.4.1" extension="VardgivarId"/>
         <vardgivarnamn>Landstinget Norrland</vardgivarnamn>
       </vardgivare>
