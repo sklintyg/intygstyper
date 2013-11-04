@@ -160,8 +160,8 @@
   <xs:complexType name="rekommendationType">
     <xs:sequence>
       <xs:element name="rekommendationskod" type="iso:CD"/>
-      <xs:element name="beskrivning" type="xs:string" minOccurs="0"/>
       <xs:element name="sjukdomskannedom" type="iso:CD"/>
+      <xs:element name="beskrivning" type="xs:string" minOccurs="0"/>
 
       <xs:any namespace="##other" processContents="lax" minOccurs="0"
               maxOccurs="unbounded"/>
@@ -171,13 +171,11 @@
   <xs:complexType name="observationType">
     <xs:sequence>
       <xs:element name="observationskod" type="iso:CD" />
-      <xs:element name="observationsperiod" type="partialDateInterval" />
-
+      <xs:element name="observationsperiod" type="partialDateInterval" minOccurs="0" maxOccurs="1"/>
       <xs:element name="utforsAv" type="utforarrollType" minOccurs="0" />
-
-      <xs:element name="plats" type="xs:string" maxOccurs="1" minOccurs="0"></xs:element>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0"
-        maxOccurs="unbounded" />
+      <xs:element name="plats" type="xs:string" maxOccurs="1" minOccurs="0"/>
+<!--       <xs:any namespace="##other" processContents="lax" minOccurs="0" -->
+<!--         maxOccurs="unbounded" /> -->
     </xs:sequence>
   </xs:complexType>
 

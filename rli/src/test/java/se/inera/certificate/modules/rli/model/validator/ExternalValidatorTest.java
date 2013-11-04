@@ -124,9 +124,6 @@ public class ExternalValidatorTest {
         
         assertTrue(validationErrors.contains("An Efternamn must be provided for Patient"));
         
-        //Observation related:
-        assertTrue(validationErrors.contains("No observationsperiod found in: 39104002"));
-
         //Arrangemang related:
         assertTrue(validationErrors.contains("Code in arrangemang must be SNOMED-CT code: 420008001"));
         

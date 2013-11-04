@@ -41,6 +41,7 @@ import se.inera.certificate.model.Rekommendation;
 import se.inera.certificate.model.Utforarroll;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
+import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
@@ -173,14 +174,28 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      * @throws ConverterException
      */
     private Observation convertObservation(ObservationType source) throws ConverterException {
+        if (source.getObservationskod() == null) {
+            throw new ConverterException("Observationskod was null");
+        }
+
+        if (source.getObservationskod().getCode() == ObservationsKod.GRAVIDITET.getCode()
+                && source.getObservationsperiod() == null) {
+            throw new ConverterException("Observationcode Graviditet must contain a time period");
+        }
+
         Observation observation = new Observation();
 
-        if (source.getObservationsperiod() != null) {
+        if (source.getObservationsperiod() != null
+                && source.getObservationskod().getCode() == ObservationsKod.GRAVIDITET.getCode()) {
             observation.setObservationsperiod(new PartialInterval(source.getObservationsperiod().getFrom(), source
                     .getObservationsperiod().getTom()));
         }
+        
         observation.setObservationskod(IsoTypeConverter.toKod(source.getObservationskod()));
-        observation.setUtforsAv(convertUtforarroll(source.getUtforsAv()));
+
+        if (source.getUtforsAv() != null) {
+            observation.setUtforsAv(convertUtforarroll(source.getUtforsAv()));
+        }
         return observation;
     }
 
@@ -214,7 +229,7 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
      */
     private Utforarroll convertUtforarroll(UtforarrollType source) throws ConverterException {
         if (source == null) {
-            throw new ConverterException();
+            throw new ConverterException("Utforarroll was null");
         }
 
         Utforarroll utforarroll = new Utforarroll();
@@ -239,16 +254,25 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
         LOG.trace("Converting arrangemang");
 
         if (source == null) {
-            throw new ConverterException();
+            throw new ConverterException("Arrangemang was null");
         }
         Arrangemang arrangemang = new Arrangemang();
 
         arrangemang.setArrangemangstid(new PartialInterval(source.getArrangemangstid().getFrom(), source
                 .getArrangemangstid().getTom()));
+
         arrangemang.setArrangemangstyp(IsoTypeConverter.toKod(source.getArrangemangstyp()));
-        arrangemang.setAvbestallningsdatum(source.getAvbestallningsdatum());
+
+        if (source.getAvbestallningsdatum() != null) {
+            arrangemang.setAvbestallningsdatum(source.getAvbestallningsdatum());
+        }
+
         arrangemang.setBokningsdatum(source.getBokningsdatum());
-        arrangemang.setBokningsreferens(source.getBokningsreferens());
+
+        if (source.getBokningsreferens() != null) {
+            arrangemang.setBokningsreferens(source.getBokningsreferens());
+        }
+
         arrangemang.setPlats(source.getPlats());
         return arrangemang;
     }
@@ -286,11 +310,13 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
     private Aktivitet convertAktivitet(AktivitetType source) throws ConverterException {
 
         if (source == null) {
-            throw new ConverterException();
+            throw new ConverterException("Aktivitet was null");
         }
 
         Aktivitet aktivitet = new Aktivitet();
+
         aktivitet.setAktivitetskod(IsoTypeConverter.toKod(source.getAktivitetskod()));
+
         if (source.getAktivitetstid() != null) {
             aktivitet.setAktivitetstid(new PartialInterval(source.getAktivitetstid().getFrom(), source
                     .getAktivitetstid().getTom()));
@@ -304,8 +330,10 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
         if (source.getPlats() != null) {
             aktivitet.setPlats(source.getPlats());
         }
-        // aktivitet.getUtforsAvs().addAll(convertUtforarroller(source.getUtforsAvs()));
 
+        if (!source.getBeskrivsAvs().isEmpty()) {
+            aktivitet.getBeskrivsAv().addAll(convertUtforarroller(source.getBeskrivsAvs()));
+        }
         return aktivitet;
     }
 
@@ -325,9 +353,18 @@ public class TransportToExternalConverterImpl implements TransportToExternalConv
         }
 
         HosPersonal hosPersonal = new HosPersonal();
+
         hosPersonal.setId(IsoTypeConverter.toId(source.getPersonalId()));
         hosPersonal.setNamn(source.getFullstandigtNamn());
-        hosPersonal.setForskrivarkod(source.getForskrivarkod());
+
+        if (source.getForskrivarkod() != null) {
+            hosPersonal.setForskrivarkod(source.getForskrivarkod());
+        }
+
+        if (source.getBefattning() != null) {
+            hosPersonal.setBefattning(source.getBefattning());
+        }
+
         hosPersonal.setVardenhet(convertEnhet(source.getEnhet()));
 
         return hosPersonal;

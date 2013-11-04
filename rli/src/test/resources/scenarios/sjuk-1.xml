@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<utlatande xmlns="urn:riv:clinicalprocess:healthcond:certificate:1" xmlns:rli="urn:intyg:rli:model:1">
+<utlatande xmlns="urn:riv:clinicalprocess:healthcond:certificate:1"
+  xmlns:rli="urn:intyg:rli:model:1">
 
   <utlatande-id root="???" extension="d53c377e-4103-47f5-9f90-5e1bbd874466" />
   <typAvUtlatande code="RLI"
@@ -109,5 +110,5 @@
       codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT" />
     <rli:plats>New York</rli:plats>
   </rli:arrangemang>
-  
+
 </utlatande>

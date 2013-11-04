@@ -117,12 +117,6 @@
     <!-- displayName="Sjukdom" -->
     <observationskod code="39104002" codeSystem="1.2.752.116.2.1.1.1"
                      codeSystemName="SNOMED-CT"/>
-    <observationsperiod>
-      <from>2010-01-01</from>
-      <!-- Detta fält ska inte fyllas i när det är möjligt med öppna intervall -->
-      <tom>2010-01-01</tom>
-    </observationsperiod>
-
     <utforsAv>
       <!-- displayName="hälso- och sjukvårdspersonal" -->
       <utforartyp code="223366009" codeSystem="1.2.752.116.2.1.1.1"

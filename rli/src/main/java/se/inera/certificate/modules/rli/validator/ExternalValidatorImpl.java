@@ -34,6 +34,7 @@ import se.inera.certificate.model.Rekommendation;
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
 import se.inera.certificate.modules.rli.model.codes.ArrangemangsTyp;
 import se.inera.certificate.modules.rli.model.codes.HSpersonalTyp;
+import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
@@ -174,7 +175,8 @@ public class ExternalValidatorImpl implements ExternalValidator {
     }
 
     private void checkObservation(Observation source, List<String> validationErrors) {
-        if (source.getObservationsperiod() == null) {
+        if (source.getObservationskod().getCode() == ObservationsKod.GRAVIDITET.getCode()
+                && source.getObservationsperiod() == null) {
             validationErrors.add("No observationsperiod found in: " + source.getObservationskod().getCode());
         }
 
