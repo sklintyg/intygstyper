@@ -290,10 +290,6 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
             patientType.getFornamns().addAll(source.getFornamn());
         }
 
-        if (source.getMellannamn() != null) {
-            patientType.getMellannamns().addAll(source.getMellannamn());
-        }
-
         patientType.setEfternamn(StringUtils.join(source.getEfternamn(), " "));
 
         if (source.getPatientrelationer() != null) {
@@ -335,9 +331,6 @@ public class ExternalToTransportConverterImpl implements ExternalToTransportConv
         patientRelationType.setPersonId(toPersonId(source.getPersonId()));
         patientRelationType.setRelationskategori(IsoTypeConverter.toCD(source.getRelationskategori()));
         patientRelationType.getFornamns().addAll(source.getFornamn());
-        if (source.getMellannamn() != null) {
-            patientRelationType.getMellannamns().addAll(source.getMellannamn());
-        }
         patientRelationType.setEfternamn(source.getEfternamn());
         patientRelationType.getRelationTyps().addAll(convertRelationTyps(source.getRelationtyper()));
 

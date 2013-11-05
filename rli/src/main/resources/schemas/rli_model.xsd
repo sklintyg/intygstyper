@@ -95,8 +95,6 @@
       <xs:element name="person-id" type="personId"/>
       <xs:element name="fornamn" type="xs:string" maxOccurs="unbounded"/>
       <xs:element name="efternamn" type="xs:string"/>
-      <xs:element name="mellannamn" type="xs:string" minOccurs="0"
-                  maxOccurs="unbounded"/>
       <xs:element name="postadress" type="xs:string"/>
       <xs:element name="postnummer" type="xs:string"/>
       <xs:element name="postort" type="xs:string"/>

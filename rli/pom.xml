@@ -1,16 +1,17 @@
 <?xml version="1.0"?>
-<!-- Copyright (C) 2013 Inera AB (http://www.inera.se) This file is part
-	of Inera Certificate Web (http://code.google.com/p/inera-certificate-web).
-	Inera Certificate Web is free software: you can redistribute it and/or modify
-	it under the terms of the GNU Affero General Public License as published
-	by the Free Software Foundation, either version 3 of the License, or (at
-	your option) any later version. Inera Certificate Web is distributed in the
-	hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-	warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-	GNU Affero General Public License for more details. You should have received
-	a copy of the GNU Affero General Public License along with this program.
-	If not, see <http://www.gnu.org/licenses />. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<!-- Copyright (C) 2013 Inera AB (http://www.inera.se) This file is part 
+  of Inera Certificate Web (http://code.google.com/p/inera-certificate-web). 
+  Inera Certificate Web is free software: you can redistribute it and/or modify 
+  it under the terms of the GNU Affero General Public License as published 
+  by the Free Software Foundation, either version 3 of the License, or (at 
+  your option) any later version. Inera Certificate Web is distributed in the 
+  hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied 
+  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+  GNU Affero General Public License for more details. You should have received 
+  a copy of the GNU Affero General Public License along with this program. 
+  If not, see <http://www.gnu.org/licenses />. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>se.inera.certificate.modules</groupId>
@@ -31,9 +32,9 @@
       <artifactId>module-api</artifactId>
     </dependency>
     <dependency>
-       <groupId>se.inera.certificate</groupId>
-       <artifactId>integration-util</artifactId>
-     </dependency>
+      <groupId>se.inera.certificate</groupId>
+      <artifactId>integration-util</artifactId>
+    </dependency>
     <dependency>
       <groupId>se.inera.certificate</groupId>
       <artifactId>model</artifactId>
@@ -105,6 +106,12 @@
       <artifactId>spring-context</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <scope>test</scope>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-transports-http</artifactId>
       <exclusions>
@@ -151,9 +158,9 @@
       <artifactId>itextpdf</artifactId>
     </dependency>
     <dependency>
-	  <groupId>org.apache.commons</groupId>
-	  <artifactId>commons-lang3</artifactId>
-	  <version>3.1</version>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.1</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -167,15 +174,15 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-		<groupId>commons-collections</groupId>
-		<artifactId>commons-collections</artifactId>
-		<version>3.2.1</version>
-	</dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>3.2.1</version>
+    </dependency>
     <dependency>
-    	<groupId>org.unitils</groupId>
-    	<artifactId>unitils-core</artifactId>
-    	<version>3.3</version>
-    	<scope>test</scope>
+      <groupId>org.unitils</groupId>
+      <artifactId>unitils-core</artifactId>
+      <version>3.3</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -203,9 +210,9 @@
           <!-- Default execution -->
           <execution />
 
-          <!-- The exec-maven-plugin below needs the XmlToJsonConverter compiled already
-               in the 'generate-test-resources' phase. This extra compile execution handles
-               this extra compilation. -->
+          <!-- The exec-maven-plugin below needs the XmlToJsonConverter compiled 
+            already in the 'generate-test-resources' phase. This extra compile execution 
+            handles this extra compilation. -->
           <execution>
             <id>exec-maven-plugin-precompile</id>
             <goals>
@@ -264,7 +271,7 @@
           </arguments>
         </configuration>
       </plugin>
-       <plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
