@@ -74,7 +74,7 @@
 	          <a class="backlink-icon" href="/web/dashboard#/create" title="Tillbaka till Skriv intyg"></a>
             <h1 style="display: inline-block; margin-right: 20px;"><span message key="view.label.pagetitle.fk7263"></span></h1>
             <div class="inline-block">
-              <label class="control-label">{{cert.patientNamn}} - {{cert.patientPersonnummer}}</label>
+              <label class="control-label">{{cert.patientNamn || "Per Persson"}} - {{cert.patientPersonnummer || "19361123-5678"}}</label>
             </div>
 	        </div>
 	      </div><!-- top end -->

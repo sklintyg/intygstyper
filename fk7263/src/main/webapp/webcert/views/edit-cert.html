@@ -16,70 +16,65 @@
 				<h4 class="cert-field-number">
 					<span message key="view.label.field"></span> 1
 				</h4>
-				<input id="smittskydd" name="smittskydd" type="checkbox" />
-				<label for="smittskydd" class="control-label title-single"><span message key="view.label.smittskydd"></span>
+				<input id="smittskydd" name="smittskydd" type="checkbox" ng-model="cert.avstangningSmittskydd" />
+				<label for="smittskydd" class="control-label title-single"><span message key="view.label.smittskydd"></span></label>
 			</div>
-
-			<div class="body-row clearfix">
+			
+			<div class="body-row clearfix" ng-hide="cert.avstangningSmittskydd">
 				<h4 class="cert-field-number">
 					<span message key="view.label.field"></span> 4b
 				</h4>
 				<h3 class="title">
-					<span message key="view.label.basedon"></span><span class="help">?</span>
+					<span message key="view.label.basedon"></span><span class="help" tooltip-trigger="click" tooltip-html-unsafe="{{htmlTooltip}}">?</span>
 				</h3>
 				<div class="text">
 					<div class="control-group form-inline">
 						<input type="checkbox" id="informationBasedOn.examination"
-							name="informationBasedOn.examination" class="inline" /> <label
+							name="informationBasedOn.examination" class="inline"
+							ng-model="widgetState.basedOnCheck[0]" ng-change="autoEnterDate(0)"/> 
+						<label
 							for="informationBasedOn.examination" class="inline"
-							style="min-width: 250px">Min undersökning av patienten</label> <input
-							type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt"
-							is-open="opened" min="minDate" max="'2015-06-22'"
-							datepicker-options="dateOptions"
-							date-disabled="disabled(date, mode)" ng-required="true" />
-						<button class="btn" ng-click="open()">
-							<i class="icon-calendar"></i>
-						</button>
+							style="min-width: 250px">Min undersökning av patienten</label>
+						<input type="text" id="dp0" datepicker-popup ng-model="cert.undersokningAvPatienten" is-open="widgetState.dpState0.open" ng-change="updateCheck(0)"/>
+            <button class="btn" ng-click="toggleDatePickerInstance(widgetState.dpState0)" ng-disabled="widgetState.dpState0.open">
+              <i class="icon-calendar"></i>
+            </button>
 					</div>
 					<div class="control-group form-inline">
 						<input type="checkbox" id="informationBasedOn.phoneContact"
-							name="informationBasedOn.phoneContact" /> <label
+							name="informationBasedOn.phoneContact" ng-model="widgetState.basedOnCheck[1]" ng-change="autoEnterDate(1)" />
+						<label
 							for="informationBasedOn.phoneContact" class="checkbox"
 							style="min-width: 250px">Min telefonkontakt med patienten</label>
-						<input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt"
-							is-open="opened" min="minDate" max="'2015-06-22'"
-							datepicker-options="dateOptions"
-							date-disabled="disabled(date, mode)" ng-required="true" />
-						<button class="btn" ng-click="open()">
-							<i class="icon-calendar"></i>
-						</button>
+            <input type="text" id="dp1" datepicker-popup ng-model="cert.telefonkontaktMedPatienten" is-open="widgetState.dpState1.open"  ng-change="updateCheck(1)"/>
+            <button class="btn" ng-click="toggleDatePickerInstance(widgetState.dpState1)" ng-disabled="widgetState.dpState1.open">
+              <i class="icon-calendar"></i>
+            </button>
+
 					</div>
 					<div class="control-group form-inline">
 						<input type="checkbox" id="informationBasedOn.journal"
-							name="informationBasedOn.journal" class='control-element' /> <label
+							name="informationBasedOn.journal" class='control-element' ng-model="widgetState.basedOnCheck[2]" ng-change="autoEnterDate(2)"/>
+						<label
 							for="informationBasedOn.journal" class="checkbox"
-							style="min-width: 250px">Journaluppgifter</label> <input
-							type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt"
-							is-open="opened" min="minDate" max="'2015-06-22'"
-							datepicker-options="dateOptions"
-							date-disabled="disabled(date, mode)" ng-required="true" />
-						<button class="btn" ng-click="open()">
-							<i class="icon-calendar"></i>
-						</button>
+							style="min-width: 250px">Journaluppgifter</label>
+            <input type="text" id="dp2" datepicker-popup ng-model="cert.journaluppgifter" is-open="widgetState.dpState2.open" ng-change="updateCheck(2)"/>
+            <button class="btn" ng-click="toggleDatePickerInstance(widgetState.dpState2)" ng-disabled="widgetState.dpState2.open">
+              <i class="icon-calendar"></i>
+            </button>
 					</div>
 					<div class="control-group form-inline">
 						<input type="checkbox" id="informationBasedOn.other"
-							name="informationBasedOn.other" class='control-element' /> <label
+							name="informationBasedOn.other" class='control-element' ng-model="widgetState.basedOnCheck[3]" ng-change="autoEnterDate(3)"/>
+						<label
 							for="informationBasedOn.other" class="checkbox"
-							style="min-width: 250px">Annat</label> <input type="text"
-							datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened"
-							min="minDate" max="'2015-06-22'" datepicker-options="dateOptions"
-							date-disabled="disabled(date, mode)" ng-required="true" />
-						<button class="btn" ng-click="open()">
-							<i class="icon-calendar"></i>
-						</button>
+							style="min-width: 250px">Annat</label> 
+            <input type="text" id="dp3" datepicker-popup ng-model="cert.annanReferens" is-open="widgetState.dpState3.open" ng-change="updateCheck(3)"/>
+            <button class="btn" ng-click="toggleDatePickerInstance(widgetState.dpState3)" ng-disabled="widgetState.dpState3.open">
+              <i class="icon-calendar"></i>
+            </button>
 					</div>
-					<div class="otherText indent">
+					<div class="otherText indent" ng-if="widgetState.basedOnCheck[3]">
 						<span>Ange vad:</span><br />
 						<textarea id="informationBasedOn.otherText"
 							name="informationBasedOn.otherText" rows='2' cols='40'
@@ -95,7 +90,7 @@
 				</div>
 			</div>
 
-			<div class="body-row clearfix diagnose">
+			<div class="body-row clearfix diagnose" ng-hide="cert.avstangningSmittskydd">
 				<h4 class="cert-field-number">
 					<span message key="view.label.field"></span> 2
 				</h4>
@@ -109,14 +104,14 @@
 							<label class="control-label">ICD 10</label>
 							<div class="controls">
 								<input type="text" id="diagnose.code" name="diagnose.code"
-									value="" class='diagnose-code control-element'>
+									value="" class='diagnose-code control-element' ng-model="selected_main_diagnosecode" typeahead="d.value as d.label for d in diagnose_codes | filter:$viewValue | limitTo:8">
 							</div>
 						</div>
 						<div class='span9'>
 							<label class="control-label">Diagnos</label>
 							<div class="controls">
 								<input type="text" id="diagnose.description"
-									name="diagnose.description" value="">
+									name="diagnose.description" value="" ng-model="selected_main_diagnose_code" typeahead="d.value as d.label for d in diagnoses | filter:$viewValue | limitTo:8">
 							</div>
 						</div>
 					</div>
@@ -164,7 +159,7 @@
 				</div>
 			</div>
 
-			<div class="body-row clearfix">
+			<div class="body-row clearfix" ng-hide="cert.avstangningSmittskydd">
 				<h4 class="cert-field-number">
 					<span message key="view.label.field"></span> 3
 				</h4>
@@ -184,7 +179,7 @@
 				</div>
 			</div>
 
-			<div class="body-row clearfix">
+			<div class="body-row clearfix" ng-hide="cert.avstangningSmittskydd">
 				<h4 class="cert-field-number">
 					<span message key="view.label.field"></span> 4
 				</h4>
@@ -208,7 +203,7 @@
 				</div>
 			</div>
 
-			<div class="body-row clearfix">
+			<div class="body-row clearfix" ng-hide="cert.avstangningSmittskydd">
 				<h4 class="cert-field-number">
 					<span message key="view.label.field"></span> 5
 				</h4>
@@ -230,7 +225,7 @@
 				</div>
 			</div>
 
-			<div class="body-row clearfix">
+			<div class="body-row clearfix" ng-hide="cert.avstangningSmittskydd">
 				<h4 class="cert-field-number">
 					<span message key="view.label.field"></span> 8a
 				</h4>
