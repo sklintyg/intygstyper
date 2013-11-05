@@ -68,7 +68,7 @@
 	          is-doctor="{{WC_CONTEXT.lakare}}" 
 	          user-name="{{WC_CONTEXT.namn}}"
 	          caregiver-name="{{WC_CONTEXT.vardgivare.namn}}" 
-	          default-active="create">
+	          default-active="index">
 	        </div>
 	        <div class="header-fix-panel">   
 	          <a class="backlink-icon" href="/web/dashboard#/create" title="Tillbaka till Skriv intyg"></a>
