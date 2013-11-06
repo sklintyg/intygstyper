@@ -136,7 +136,9 @@
 					</div>
 
 					<div class="control-group form-inline inline-block">
-						<label class="control-label">Förtydligande av diagnos/diagnoser</label><span class="help">?</span>
+						<div>
+						  <label class="control-label">Förtydligande av diagnos/diagnoser</label><span class="help">?</span>
+						</div>
 						<textarea id="diagnose.clarification" name="diagnose.clarification" rows='5' cols='80'              
 						  ng-model="cert.diagnosBeskrivning" ng-change="updateCounter(cert.diagnosBeskrivning.length, 100)" maxlength=100></textarea>
 						<div class="counter">

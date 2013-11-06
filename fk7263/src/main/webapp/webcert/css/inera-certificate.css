@@ -196,8 +196,8 @@ div.infobox h4 {
 	width: 100% !important;
 }
 
-.diagnose input[type=text] {
-	
+input[datepicker-popup] {
+	width: 80px;
 }
 
 .qa-column {
