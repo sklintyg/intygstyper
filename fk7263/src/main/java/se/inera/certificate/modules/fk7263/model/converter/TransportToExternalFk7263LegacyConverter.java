@@ -1,16 +1,17 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
-
 import static se.inera.certificate.model.util.Iterables.addAll;
 import static se.inera.certificate.model.util.Iterables.addExisting;
 import static se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder.DIAGNOS;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+
 import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.BedomtTillstandType;
@@ -47,7 +48,8 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
 /**
- * Converts se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande Jaxb structure to External model
+ * Converts se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande Jaxb structure to
+ * External model
  * 
  * @author marced
  */
@@ -86,16 +88,18 @@ public final class TransportToExternalFk7263LegacyConverter {
             addAll(fk7263utlatande.getObservationer(), convert(funktionstillstand));
 
             if (funktionstillstand.getArbetsformaga() != null) {
+                if (fk7263utlatande.getPatient() != null) {
+                    if (funktionstillstand.getArbetsformaga().getArbetsuppgift() != null) {
+                        fk7263utlatande.getPatient().getArbetsuppgifter()
+                                .add(convert(funktionstillstand.getArbetsformaga().getArbetsuppgift()));
 
-                if (funktionstillstand.getArbetsformaga().getArbetsuppgift() != null) {
-                    fk7263utlatande.getPatient().getArbetsuppgifter()
-                            .add(convert(funktionstillstand.getArbetsformaga().getArbetsuppgift()));
-                }
-                if (funktionstillstand.getArbetsformaga().getSysselsattnings() != null) {
-                    for (se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType sysselsattning : funktionstillstand
-                            .getArbetsformaga().getSysselsattnings()) {
-                        fk7263utlatande.getPatient().getSysselsattningar()
-                                .add(convert(sysselsattning, source.getPatient()));
+                    }
+                    if (funktionstillstand.getArbetsformaga().getSysselsattnings() != null) {
+                        for (se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType sysselsattning : funktionstillstand
+                                .getArbetsformaga().getSysselsattnings()) {
+                            fk7263utlatande.getPatient().getSysselsattningar()
+                                    .add(convert(sysselsattning, source.getPatient()));
+                        }
                     }
                 }
             }
@@ -107,13 +111,14 @@ public final class TransportToExternalFk7263LegacyConverter {
             if (aktivitet != null) {
                 addExisting(fk7263utlatande.getAktiviteter(), aktivitet);
             } else {
-                LOGGER.info(LogMarkers.VALIDATION, "Validation failed for intyg " + source.getLakarutlatandeId() + " issued by " + 
-                        source.getSkapadAvHosPersonal().getEnhet().getEnhetsId().getExtension() +
-                        ": Aktivitet with missing aktivitetskod found - ignored.");
+                LOGGER.info(LogMarkers.VALIDATION, "Validation failed for intyg " + source.getLakarutlatandeId()
+                        + " issued by " + source.getSkapadAvHosPersonal().getEnhet().getEnhetsId().getExtension()
+                        + ": Aktivitet with missing aktivitetskod found - ignored.");
             }
         }
 
-        for (se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ReferensType referensType : source.getReferens()) {
+        for (se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ReferensType referensType : source
+                .getReferens()) {
             addExisting(fk7263utlatande.getReferenser(), convert(referensType));
         }
 
@@ -125,7 +130,8 @@ public final class TransportToExternalFk7263LegacyConverter {
         return fk7263utlatande;
     }
 
-    private static Vardkontakt convert(se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType source) {
+    private static Vardkontakt convert(
+            se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType source) {
         Vardkontakt vardkontakt = new Vardkontakt();
 
         switch (source.getVardkontakttyp()) {
@@ -147,7 +153,8 @@ public final class TransportToExternalFk7263LegacyConverter {
         return vardkontakt;
     }
 
-    private static Referens convert(se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ReferensType source) {
+    private static Referens convert(
+            se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ReferensType source) {
         Referens referens = new Referens();
 
         switch (source.getReferenstyp()) {
@@ -164,7 +171,8 @@ public final class TransportToExternalFk7263LegacyConverter {
         return referens;
     }
 
-    private static Aktivitet convert(se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.AktivitetType source) {
+    private static Aktivitet convert(
+            se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.AktivitetType source) {
         Aktivitet aktivitet = new Aktivitet();
 
         Kod aktivitetsCode = null;
@@ -255,7 +263,9 @@ public final class TransportToExternalFk7263LegacyConverter {
 
     private static Arbetsuppgift convert(
             se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsuppgiftType source) {
-
+        if (source == null) {
+            return null;
+        }
         Arbetsuppgift arbetsuppgift = new Arbetsuppgift();
         arbetsuppgift.setTypAvArbetsuppgift(source.getTypAvArbetsuppgift());
         return arbetsuppgift;
@@ -351,17 +361,21 @@ public final class TransportToExternalFk7263LegacyConverter {
         nedsattning.getVarde().add(varde);
 
         PartialInterval observationsperiod = new PartialInterval();
-        observationsperiod.setFrom(new Partial(source.getVaraktighetFrom()));
-        observationsperiod.setTom(new Partial(source.getVaraktighetTom()));
+        if (source.getVaraktighetFrom() != null) {
+            observationsperiod.setFrom(new Partial(source.getVaraktighetFrom()));
+        }
+        if (source.getVaraktighetTom() != null) {
+            observationsperiod.setTom(new Partial(source.getVaraktighetTom()));
+        }
         nedsattning.setObservationsperiod(observationsperiod);
 
         return nedsattning;
     }
 
     private static Observation convert(BedomtTillstandType bedomtTillstand) {
-    	if (bedomtTillstand == null) {
-    		return null;
-    	}
+        if (bedomtTillstand == null) {
+            return null;
+        }
         Observation observation = new Observation();
         observation.setBeskrivning(bedomtTillstand.getBeskrivning());
         // TODO: ObservationsKategori ?
@@ -385,7 +399,9 @@ public final class TransportToExternalFk7263LegacyConverter {
     }
 
     private static HosPersonal convert(HosPersonalType source) {
-
+        if (source == null) {
+            return null;
+        }
         HosPersonal hosPersonal = new HosPersonal();
         hosPersonal.setId(IsoTypeConverter.toId(source.getPersonalId()));
         hosPersonal.setNamn(source.getFullstandigtNamn());
@@ -404,17 +420,22 @@ public final class TransportToExternalFk7263LegacyConverter {
      * @param source
      * @return
      */
-    private static Fk7263Patient convert(se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.PatientType source, Lakarutlatande lakarutlatande) {
+    private static Fk7263Patient convert(
+            se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.PatientType source,
+            Lakarutlatande lakarutlatande) {
+        if (source == null) {
+            return null;
+        }
         Fk7263Patient patient = new Fk7263Patient();
         patient.setId(IsoTypeConverter.toId(source.getPersonId()));
         // If the personNumber is missing the separating dash, simply insert it.
         // This is a temporary fix, since the schema currently allows any format
         String personNumber = patient.getId().getExtension();
         if (personNumber.length() == 12 && Pattern.matches(PERSON_NUMBER_WITHOUT_DASH_REGEX, personNumber)) {
-            patient.getId().setExtension(personNumber.substring(0,8) + "-" + personNumber.substring(8));
-            LOGGER.warn(LogMarkers.VALIDATION, "Validation failed for intyg " + lakarutlatande.getLakarutlatandeId() + " issued by " + 
-                                   lakarutlatande.getSkapadAvHosPersonal().getEnhet().getEnhetsId().getExtension() +
-                                   ": Person-id is lacking a separating dash - corrected.");
+            patient.getId().setExtension(personNumber.substring(0, 8) + "-" + personNumber.substring(8));
+            LOGGER.warn(LogMarkers.VALIDATION, "Validation failed for intyg " + lakarutlatande.getLakarutlatandeId()
+                    + " issued by " + lakarutlatande.getSkapadAvHosPersonal().getEnhet().getEnhetsId().getExtension()
+                    + ": Person-id is lacking a separating dash - corrected.");
         }
 
         // we only have fullstandigt namn available in the legacy jaxb
@@ -423,7 +444,9 @@ public final class TransportToExternalFk7263LegacyConverter {
     }
 
     private static Vardenhet convert(EnhetType source) {
-
+        if (source == null) {
+            return null;
+        }
         Vardenhet vardenhet = new Vardenhet();
         vardenhet.setId(IsoTypeConverter.toId(source.getEnhetsId()));
         vardenhet.setNamn(source.getEnhetsnamn());
@@ -438,7 +461,9 @@ public final class TransportToExternalFk7263LegacyConverter {
     }
 
     private static Vardgivare convert(VardgivareType source) {
-
+        if (source == null) {
+            return null;
+        }
         Vardgivare vardgivare = new Vardgivare();
         vardgivare.setId(IsoTypeConverter.toId(source.getVardgivareId()));
         vardgivare.setNamn(source.getVardgivarnamn());

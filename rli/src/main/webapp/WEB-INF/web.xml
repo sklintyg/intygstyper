@@ -25,7 +25,7 @@
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:/rli-config.xml, classpath:/rli-integration-config.xml, /WEB-INF/web-security.xml</param-value>
+    <param-value>classpath:/rli-config.xml, classpath:/rli-beans.xml, classpath:/rli-integration-config.xml, /WEB-INF/web-security.xml</param-value>
   </context-param>
 
   <!-- Start spring context -->

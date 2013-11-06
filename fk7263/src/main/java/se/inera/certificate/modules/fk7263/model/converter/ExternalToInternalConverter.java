@@ -1,13 +1,14 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
-import java.util.List;
-
 import static org.joda.time.DateTimeFieldType.dayOfMonth;
 import static org.joda.time.DateTimeFieldType.monthOfYear;
 import static org.joda.time.DateTimeFieldType.year;
 
+import java.util.List;
+
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
+
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.LocalDateInterval;
@@ -71,24 +72,42 @@ public class ExternalToInternalConverter {
 
     private void convertSkapasAv() {
         HosPersonal personal = source.getSkapadAv();
-        Vardenhet enhet = personal.getVardenhet();
-        Vardgivare vardgivare = enhet.getVardgivare();
-
         Vardperson vardperson = new Vardperson();
-        vardperson.setHsaId(personal.getId().getExtension());
-        vardperson.setNamn(personal.getNamn());
-        vardperson.setForskrivarKod(personal.getForskrivarkod());
-        vardperson.setEnhetsId(enhet.getId().getExtension());
-        vardperson.setArbetsplatsKod(enhet.getArbetsplatskod().getExtension());
-        vardperson.setEnhetsnamn(enhet.getNamn());
-        vardperson.setPostadress(enhet.getPostadress());
-        vardperson.setPostnummer(enhet.getPostnummer());
-        vardperson.setPostort(enhet.getPostort());
-        vardperson.setTelefonnummer(enhet.getTelefonnummer());
-        vardperson.setEpost(enhet.getEpost());
-        vardperson.setVardgivarId(vardgivare.getId().getExtension());
-        vardperson.setVardgivarnamn(vardgivare.getNamn());
+        if (personal != null) {
+            if (personal.getId() != null) {
+                vardperson.setHsaId(personal.getId().getExtension());
+            }
 
+            vardperson.setNamn(personal.getNamn());
+            vardperson.setForskrivarKod(personal.getForskrivarkod());
+
+            Vardenhet enhet = personal.getVardenhet();
+            if (enhet != null) {
+
+                if (enhet.getId() != null) {
+                    vardperson.setEnhetsId(enhet.getId().getExtension());
+                }
+
+                if (enhet.getArbetsplatskod() != null) {
+                    vardperson.setArbetsplatsKod(enhet.getArbetsplatskod().getExtension());
+                }
+
+                vardperson.setEnhetsnamn(enhet.getNamn());
+                vardperson.setPostadress(enhet.getPostadress());
+                vardperson.setPostnummer(enhet.getPostnummer());
+                vardperson.setPostort(enhet.getPostort());
+                vardperson.setTelefonnummer(enhet.getTelefonnummer());
+                vardperson.setEpost(enhet.getEpost());
+
+                Vardgivare vardgivare = enhet.getVardgivare();
+                if (vardgivare != null) {
+                    if (vardgivare.getId() != null) {
+                        vardperson.setVardgivarId(vardgivare.getId().getExtension());
+                    }
+                    vardperson.setVardgivarnamn(vardgivare.getNamn());
+                }
+            }
+        }
         intyg.setVardperson(vardperson);
     }
 
@@ -99,10 +118,16 @@ public class ExternalToInternalConverter {
     }
 
     private LocalDate toLocalDate(Partial partial) {
+        if (partial == null) {
+            return null;
+        }
         return new LocalDate(partial.get(year()), partial.get(monthOfYear()), partial.get(dayOfMonth()));
     }
 
     private LocalDateInterval toDatumInterval(PartialInterval interval) {
+        if (interval == null) {
+            return null;
+        }
         return new LocalDateInterval(toLocalDate(interval.getFrom()), toLocalDate(interval.getTom()));
     }
 
@@ -160,6 +185,10 @@ public class ExternalToInternalConverter {
     private void convertPatient() {
 
         Fk7263Patient patient = source.getPatient();
+        if(patient == null) {
+            return;
+        }
+
         intyg.setPatientNamn(patient.getFullstandigtNamn());
         intyg.setPatientPersonnummer(patient.getId().getExtension());
 
@@ -218,7 +247,8 @@ public class ExternalToInternalConverter {
     }
 
     private void convertAktivitetsbegransning() {
-        Observation aktivitetsbegransning = source.findObservationByKategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
+        Observation aktivitetsbegransning = source
+                .findObservationByKategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
         if (aktivitetsbegransning != null) {
             intyg.setAktivitetsbegransning(aktivitetsbegransning.getBeskrivning());
         }
