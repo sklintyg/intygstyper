@@ -19,61 +19,10 @@
 
 -->
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:jaxrs="http://cxf.apache.org/jaxrs" xmlns:cxf="http://cxf.apache.org/core"
-       xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
-
-  <cxf:bus>
-    <cxf:features>
-      <cxf:logging/>
-    </cxf:features>
-  </cxf:bus>
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
   
+  <import resource="rli-beans.xml"/>
+    
   <bean id="rliModuleApi" class="se.inera.certificate.modules.rli.rest.RliModuleApi"/>
-
-  <bean id="objectMapper" class="se.inera.certificate.integration.json.CustomObjectMapper"/>
-
-  <bean id="jacksonJsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">
-    <property name="mapper" ref="objectMapper"/>
-  </bean>
-
-  <bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
-    <property name="schemaLocations" ref="theSchemas"/>
-  </bean>
-  <util:list id="theSchemas">
-    <value>classpath:schemas/core_components/iso_dt_subset_1.0.xsd</value>
-    <value>classpath:schemas/core_components/insuranceprocess_healthreporting_2.0.xsd</value>
-    <value>classpath:schemas/rli_model_extension.xsd</value>
-    <value>classpath:schemas/rli_model.xsd</value>
-  </util:list>
-
-  <bean id="transportToExternalConverter" class="se.inera.certificate.modules.rli.model.converters.TransportToExternalConverterImpl"/>
-  
-  <bean id="externalToTransportConverter" class="se.inera.certificate.modules.rli.model.converters.ExternalToTransportConverterImpl"/>
-  
-  <bean id="externalValidator" class="se.inera.certificate.modules.rli.validator.ExternalValidatorImpl"/>
-  
-  <bean id="externalToInternalConverter" class="se.inera.certificate.modules.rli.model.converters.ExternalToInternalConverterImpl"/>
-  
-  <bean id="rekommendationPopulator" class="se.inera.certificate.modules.rli.model.converters.RekommendationPopulatorImpl"/>
-  
-  <bean id="undersokningPopulator" class="se.inera.certificate.modules.rli.model.converters.UndersokingPopulatorImpl"/>
-  
-  <bean id="pdfGenerator" class="se.inera.certificate.modules.rli.pdf.PdfGeneratorImpl"/>
-  
-  <bean id="editModelFactory" class="se.inera.certificate.modules.rli.model.factory.EditModelFactoryImpl" />
-  
-  <jaxrs:server address="/">
-    <jaxrs:serviceBeans>
-      <bean class="se.inera.certificate.modules.rli.rest.RliModuleApi"/>
-      <!-- Temporary mockup - remove when implemented in WebCert -->
-      <bean class="se.inera.webcert.integration.rest.mock.WebCertModuleDraftMock"/>
-    </jaxrs:serviceBeans>
-    <jaxrs:providers>
-      <ref bean="jacksonJsonProvider"/>
-      <ref bean="jaxbProvider"/>
-    </jaxrs:providers>
-  </jaxrs:server>
 
 </beans>
