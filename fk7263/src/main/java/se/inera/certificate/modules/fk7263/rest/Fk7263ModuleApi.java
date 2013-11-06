@@ -1,5 +1,9 @@
 package se.inera.certificate.modules.fk7263.rest;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -17,15 +21,14 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.List;
 
-import com.itextpdf.text.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.xml.sax.SAXException;
+
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
 import se.inera.certificate.fk7263.model.v1.Utlatande;
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.converter.ExternalToInternalConverter;
@@ -37,10 +40,11 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263CertificateConte
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
+import se.inera.certificate.modules.fk7263.validator.ExternalUtlatandeValidator;
 import se.inera.certificate.modules.fk7263.validator.UtlatandeValidator;
 import se.inera.certificate.validate.ValidationException;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
+
+import com.itextpdf.text.DocumentException;
 
 /**
  * @author andreaskaltenbach, marced
@@ -116,27 +120,47 @@ public class Fk7263ModuleApi {
         } catch (ValidationException ex) {
             String utlatandeId = utlatande.getUtlatandeId().getExtension();
             String enhetsId = null;
-            if (utlatande.getSkapadAv() != null &&
-                utlatande.getSkapadAv().getEnhet() != null &&
-                utlatande.getSkapadAv().getEnhet().getEnhetsId() != null) {
+            if (utlatande.getSkapadAv() != null && utlatande.getSkapadAv().getEnhet() != null
+                    && utlatande.getSkapadAv().getEnhet().getEnhetsId() != null) {
                 utlatande.getSkapadAv().getEnhet().getEnhetsId().getExtension();
             }
             String message = responseBody(utlatandeId, enhetsId, ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
         }
 
+        Fk7263Intyg internalModel = null;
         Fk7263Utlatande externalModel = convertTransportJaxbToModel(jaxbObject);
-        Fk7263Intyg internalModel = toInternal(externalModel);
-
-        // validate
-        List<String> validationErrors = new UtlatandeValidator(internalModel).validate();
+        // validate external properties first
+        List<String> validationErrors = new ExternalUtlatandeValidator(externalModel).validate();
+        if (validationErrors.isEmpty()) {
+            // passed first level validation, now validate business logic with internal model validation
+            internalModel = toInternal(externalModel);
+            validationErrors.addAll((new UtlatandeValidator(internalModel).validate()));
+        }
 
         if (validationErrors.isEmpty()) {
             return Response.ok(externalModel).build();
         } else {
-            String response = responseBody(internalModel.getId(), internalModel.getVardperson().getEnhetsId(), Strings.join(",", validationErrors));
+
+            String response = responseBody(extractCertificateId(externalModel), extractEnhetsId(externalModel), Strings.join(",", validationErrors));
             return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
         }
+    }
+
+    private String extractCertificateId(Fk7263Utlatande externalModel) {
+        if (externalModel != null && externalModel.getId() != null) {
+            return externalModel.getId().getExtension();
+        }
+        return "<not set>";
+    }
+
+    private String extractEnhetsId(Fk7263Utlatande externalModel) {
+        if (externalModel != null && externalModel.getSkapadAv() != null
+                && externalModel.getSkapadAv().getVardenhet() != null
+                && externalModel.getSkapadAv().getVardenhet().getId() != null) {
+            return externalModel.getSkapadAv().getVardenhet().getId().getExtension();
+        }
+        return "<not set>";
     }
 
     private String responseBody(String utlatandeId, String enhetsId, String validationErrors) {
@@ -231,10 +255,14 @@ public class Fk7263ModuleApi {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public Response validate(Fk7263Utlatande utlatande) {
-
-        Fk7263Intyg intyg = new ExternalToInternalConverter(utlatande).convert();
-
-        List<String> validationErrors = new UtlatandeValidator(intyg).validate();
+        Fk7263Intyg internalModel = null;
+        // validate external properties first
+        List<String> validationErrors = new ExternalUtlatandeValidator(utlatande).validate();
+        if (validationErrors.isEmpty()) {
+            // passed first level validation, now validate business logic with internal model validation
+            internalModel = toInternal(utlatande);
+            validationErrors.addAll((new UtlatandeValidator(internalModel).validate()));
+        }
 
         if (validationErrors.isEmpty()) {
             return Response.ok().build();
@@ -250,8 +278,8 @@ public class Fk7263ModuleApi {
 
     /**
      * The signature of this method must be compatible with the specified "interface" in
-     * se.inera.certificate.integration.rest.ModuleRestApi Jackson will try to satisfy the signature of this
-     * method once it's been resolved, so the real contract is actually the json structure.
+     * se.inera.certificate.integration.rest.ModuleRestApi Jackson will try to satisfy the signature of this method once
+     * it's been resolved, so the real contract is actually the json structure.
      * 
      * @param contentHolder
      * @return
@@ -296,9 +324,7 @@ public class Fk7263ModuleApi {
     }
 
     protected String pdfFileName(Fk7263Intyg intyg) {
-        return String.format("lakarutlatande_%s_%s-%s.pdf",
-                intyg.getPatientPersonnummer(),
-                intyg.getGiltighet().getFrom().toString(DATE_FORMAT),
-                intyg.getGiltighet().getTom().toString(DATE_FORMAT));
+        return String.format("lakarutlatande_%s_%s-%s.pdf", intyg.getPatientPersonnummer(), intyg.getGiltighet()
+                .getFrom().toString(DATE_FORMAT), intyg.getGiltighet().getTom().toString(DATE_FORMAT));
     }
 }

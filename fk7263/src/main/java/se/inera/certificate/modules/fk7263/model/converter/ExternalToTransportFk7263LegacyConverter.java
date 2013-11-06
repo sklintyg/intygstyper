@@ -1,34 +1,14 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static se.inera.certificate.model.util.Iterables.addAll;
 import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toCD;
 import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toII;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.joda.time.LocalDate;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.HosPersonalType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.PatientType;
-import se.inera.certificate.model.Aktivitet;
-import se.inera.certificate.model.HosPersonal;
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Observation;
-import se.inera.certificate.model.Prognos;
-import se.inera.certificate.model.Referens;
-import se.inera.certificate.model.Sysselsattning;
-import se.inera.certificate.model.Vardenhet;
-import se.inera.certificate.model.Vardgivare;
-import se.inera.certificate.model.Vardkontakt;
-import se.inera.certificate.model.util.Strings;
-import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
-import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
-import se.inera.certificate.modules.fk7263.model.codes.Prognoskoder;
-import se.inera.certificate.modules.fk7263.model.codes.Referenstypkoder;
-import se.inera.certificate.modules.fk7263.model.codes.Sysselsattningskoder;
-import se.inera.certificate.modules.fk7263.model.codes.Vardkontakttypkoder;
-import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
-import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
+
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
@@ -49,7 +29,28 @@ import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Va
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Vardkontakttyp;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.EnhetType;
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.HosPersonalType;
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.PatientType;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.VardgivareType;
+import se.inera.certificate.model.Aktivitet;
+import se.inera.certificate.model.HosPersonal;
+import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.Observation;
+import se.inera.certificate.model.Prognos;
+import se.inera.certificate.model.Referens;
+import se.inera.certificate.model.Sysselsattning;
+import se.inera.certificate.model.Vardenhet;
+import se.inera.certificate.model.Vardgivare;
+import se.inera.certificate.model.Vardkontakt;
+import se.inera.certificate.model.util.Strings;
+import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
+import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
+import se.inera.certificate.modules.fk7263.model.codes.Prognoskoder;
+import se.inera.certificate.modules.fk7263.model.codes.Referenstypkoder;
+import se.inera.certificate.modules.fk7263.model.codes.Sysselsattningskoder;
+import se.inera.certificate.modules.fk7263.model.codes.Vardkontakttypkoder;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
 public final class ExternalToTransportFk7263LegacyConverter {
 
@@ -61,7 +62,9 @@ public final class ExternalToTransportFk7263LegacyConverter {
     public static RegisterMedicalCertificate getJaxbObject(Fk7263Utlatande utlatande) {
         RegisterMedicalCertificate register = new RegisterMedicalCertificate();
         register.setLakarutlatande(new Lakarutlatande());
-        register.getLakarutlatande().setLakarutlatandeId(toII(utlatande.getId()).getExtension());
+        if (utlatande.getId()!=null) {
+            register.getLakarutlatande().setLakarutlatandeId(toII(utlatande.getId()).getExtension());
+        }
         register.getLakarutlatande().setTypAvUtlatande(FK7263);
 
         if (utlatande.getKommentarer() != null && !utlatande.getKommentarer().isEmpty()) {
