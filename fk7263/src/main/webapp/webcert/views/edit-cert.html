@@ -25,7 +25,7 @@
 					<span message key="view.label.field"></span> 4b
 				</h4>
 				<h3 class="title">
-					<span message key="view.label.basedon"></span><span class="help" tooltip-trigger="click" tooltip-html-unsafe="{{htmlTooltip}}">?</span>
+					<span message key="view.label.basedon"></span><span class="help" tooltip-trigger="click" tooltip-html-unsafe="{{helpTooltip}}">?</span>
 				</h3>
 				<div class="text">
 					<div class="control-group form-inline">
@@ -54,7 +54,7 @@
 					</div>
 					<div class="control-group form-inline">
 						<input type="checkbox" id="informationBasedOn.journal"
-							name="informationBasedOn.journal" class='control-element' ng-model="widgetState.basedOnCheck[2]" ng-change="autoEnterDate(2)"/>
+							name="informationBasedOn.journal"  ng-model="widgetState.basedOnCheck[2]" ng-change="autoEnterDate(2)"/>
 						<label
 							for="informationBasedOn.journal" class="checkbox"
 							style="min-width: 250px">Journaluppgifter</label>
@@ -65,7 +65,7 @@
 					</div>
 					<div class="control-group form-inline">
 						<input type="checkbox" id="informationBasedOn.other"
-							name="informationBasedOn.other" class='control-element' ng-model="widgetState.basedOnCheck[3]" ng-change="autoEnterDate(3)"/>
+							name="informationBasedOn.other"  ng-model="widgetState.basedOnCheck[3]" ng-change="autoEnterDate(3)"/>
 						<label
 							for="informationBasedOn.other" class="checkbox"
 							style="min-width: 250px">Annat</label> 
@@ -78,7 +78,7 @@
 						<span>Ange vad:</span><br />
 						<textarea id="informationBasedOn.otherText"
 							name="informationBasedOn.otherText" rows='2' cols='40'
-							class='control-element otherInformation'></textarea>
+							class='otherInformation'></textarea>
 						<div class="info-transfer">Informationen överförs till
 							"Övriga upplysningar" i Försäkringskassans blankett.</div>
 					</div>
@@ -99,19 +99,19 @@
 				</h3>
 				<div class="text">
 
-					<div class="control-group">
+					<div class="row-fluid control-group">
 						<div class='span3'>
 							<label class="control-label">ICD 10</label>
-							<div class="controls">
+							<div class="row-fluid controls">
 								<input type="text" id="diagnose.code" name="diagnose.code"
-									value="" class='diagnose-code control-element' ng-model="selected_main_diagnosecode" typeahead="d.value as d.label for d in diagnose_codes | filter:$viewValue | limitTo:8">
+									value="" class='diagnose-code span11' ng-model="selected_main_diagnosecode" typeahead="d.value as d.label for d in diagnose_codes | filter:$viewValue | limitTo:8">
 							</div>
 						</div>
 						<div class='span9'>
 							<label class="control-label">Diagnos</label>
-							<div class="controls">
-								<input type="text" id="diagnose.description"
-									name="diagnose.description" value="" ng-model="selected_main_diagnose_code" typeahead="d.value as d.label for d in diagnoses | filter:$viewValue | limitTo:8">
+							<div class="row-fluid controls">
+								<input type="text" id="diagnose.description" class="span12"
+									name="diagnose.description" value="" ng-model="selected_main_diagnose" typeahead="d.value as d.label for d in diagnoses | filter:$viewValue | limitTo:8">
 							</div>
 						</div>
 					</div>
@@ -119,40 +119,34 @@
 						<div class='span3'>
 							<label class="control-label">ICD 10</label>
 							<div class="controls">
-								<input type="text" id="diagnose.codeOpt1"
-									name="diagnose.codeOpt1" value="" class="block"> <input
-									type="text" id="diagnose.codeOpt2" name="diagnose.codeOpt2"
-									value="">
+								<input type="text" id="diagnose.codeOpt1" name="diagnose.codeOpt1" value="" class="span11">
+								<input type="text" id="diagnose.codeOpt2" name="diagnose.codeOpt2" value="" class="span11">
 							</div>
 						</div>
 						<div class='span9'>
-							<label class="control-label inline-block">Ytterligare
+							<label class="control-label inline-block unbreakable">Ytterligare
 								diagnoser (frivilligt)</label><span class="help">?</span>
 							<div class="controls">
 								<input type="text" id="diagnose.descriptionOpt1"
-									name="diagnose.descriptionOpt1" value="" class="block ">
+									name="diagnose.descriptionOpt1" value="" class="block span12">
 								<input type="text" id="diagnose.descriptionOpt2"
-									name="diagnose.descriptionOpt2" value="">
+									name="diagnose.descriptionOpt2" value="" class="block span12">
 							</div>
 						</div>
 					</div>
 
 					<div class="control-group form-inline inline-block">
-						<label class="control-label">Förtydligande av
-							diagnos/diagnoser</label><span class="help">?</span>
-						<textarea id="diagnose.clarification"
-							name="diagnose.clarification" rows='5' cols='80'
-							class='control-element'></textarea>
+						<label class="control-label">Förtydligande av diagnos/diagnoser</label><span class="help">?</span>
+						<textarea id="diagnose.clarification" name="diagnose.clarification" rows='5' cols='80'              
+						  ng-model="cert.diagnosBeskrivning" ng-change="updateCounter(cert.diagnosBeskrivning.length, 100)" maxlength=100></textarea>
 						<div class="counter">
-							<div>
-								Tecken kvar: <span class="counter-text"></span>
-							</div>
+							Tecken kvar: {{100 - cert.diagnosBeskrivning.length}}
 						</div>
 					</div>
 
 					<div class="control-group form-inline">
 						<input type="checkbox" id="diagnose.multipleDiagnoses"
-							name="diagnose.multipleDiagnoses" class='control-element' /> <label
+							name="diagnose.multipleDiagnoses"  /> <label
 							for="diagnose.multipleDiagnoses">Samsjuklighet föreligger</label><span
 							class="help">?</span>
 					</div>
@@ -170,7 +164,7 @@
 				<div class="text">
 
 					<textarea id="diseaseCause" name="diseaseCause" rows='5' cols='80'
-						class='control-element'></textarea>
+						></textarea>
 					<div class="counter">
 						<div>
 							Tecken kvar: <span class="counter-text"></span>
@@ -189,12 +183,11 @@
 				</h3>
 				<div class="text">
 
-					<a href="#" class=""
-						onclick="ICF.remote.ST('example_form', 'example_frame',this)"
+					<a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
 						title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
 						försäkringsmedicinska beslutstöd</a>
 					<textarea id="disabilities" name="disabilities" rows='6' cols='80'
-						class='control-element'></textarea>
+						></textarea>
 					<div class="counter">
 						<div>
 							Tecken kvar: <span class="counter-text"></span>
@@ -216,7 +209,7 @@
 						title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
 						försäkringsmedicinska beslutstöd</a>
 					<textarea id="activityLimitation" name="activityLimitation"
-						rows='10' cols='80' class='control-element'></textarea>
+						rows='10' cols='80' ></textarea>
 					<div class="counter">
 						<div>
 							Tecken kvar: <span class="counter-text"></span>
@@ -245,7 +238,7 @@
 								<label for="currentWork">Ange aktuella arbetsuppgifter</label>
 								<div class="controls">
 									<textarea id="currentWork" name="currentWork" rows='2'
-										cols='80' class='control-element'></textarea>
+										cols='80' ></textarea>
 									<div class="counter">
 										<div>
 											Tecken kvar: <span class="counter-text"></span>
@@ -289,7 +282,7 @@
 
 					<div class="control-group form-inline">
 						<input type="checkbox" id="capacityForWork.work25"
-							name="capacityForWork.work25" class='control-element' /> <label
+							name="capacityForWork.work25"  /> <label
 							for="capacityForWork.work25" class="checkbox">25% nedsatt
 							arbetsförmåga från</label> <input type="text"
 							datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened"
@@ -312,7 +305,7 @@
 							Arbetstidsförläggning (frivilligt) <input type="text"
 								id="capacityForWork.rec25LongerWorkingHours"
 								name="capacityForWork.rec25LongerWorkingHours" value=""
-								class='control-element otherInformation'> <span
+								class='otherInformation'> <span
 								class="otherInformationCounter"></span>
 							<div class="info-transfer">Informationen överförs till
 								”Övriga upplysningar” i Försäkringskassans blankett.</div>
@@ -321,7 +314,7 @@
 
 					<div class="control-group form-inline">
 						<input type="checkbox" id="capacityForWork.work50"
-							name="capacityForWork.work50" class='control-element' /> <label
+							name="capacityForWork.work50"  /> <label
 							for="capacityForWork.work50" class="checkbox">50% nedsatt
 							arbetsförmåga från</label> <input type="text"
 							datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened"
@@ -344,7 +337,7 @@
 							Arbetstidsförläggning (frivilligt) <input type="text"
 								id="capacityForWork.rec50LongerWorkingHours"
 								name="capacityForWork.rec50LongerWorkingHours" value=""
-								class='control-element otherInformation'> <span
+								class='otherInformation'> <span
 								class="otherInformationCounter"></span>
 							<div class="info-transfer">Informationen överförs till
 								”Övriga upplysningar” i Försäkringskassans blankett.</div>
@@ -353,7 +346,7 @@
 
 					<div class="control-group form-inline">
 						<input type="checkbox" id="capacityForWork.work75"
-							name="capacityForWork.work75" class='control-element' /> <label
+							name="capacityForWork.work75"  /> <label
 							for="capacityForWork.work75" class="checkbox">75% nedsatt
 							arbetsförmåga från</label> <input type="text"
 							datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened"
@@ -376,7 +369,7 @@
 							Arbetstidsförläggning (frivilligt) <input type="text"
 								id="capacityForWork.rec75LongerWorkingHours"
 								name="capacityForWork.rec75LongerWorkingHours" value=""
-								class='control-element otherInformation'> <span
+								class='otherInformation'> <span
 								class="otherInformationCounter"></span>
 							<div class="info-transfer">Informationen överförs till
 								”Övriga upplysningar” i Försäkringskassans blankett.</div>
@@ -385,7 +378,7 @@
 
 					<div class="control-group form-inline">
 						<input type="checkbox" id="capacityForWork.workFull"
-							name="capacityForWork.workFull" class='control-element' /> <label
+							name="capacityForWork.workFull"  /> <label
 							for="capacityForWork.workFull" class="checkbox">Helt
 							nedsatt arbetsförmåga från</label> <input type="text"
 							datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened"
@@ -423,7 +416,7 @@
 						title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
 						försäkringsmedicinska beslutstöd</a>
 					<textarea id="capacityForWork.text" name="capacityForWork.text"
-						rows='10' cols='80' class='control-element'></textarea>
+						rows='10' cols='80' ></textarea>
 					<div class="counter">
 						<div>
 							Tecken kvar: <span class="counter-text"></span>
@@ -466,7 +459,7 @@
 								Förtydligande: <input type="text"
 									id="capacityForWork.forecastText"
 									name="capacityForWork.forecastText" value=""
-									class='control-element otherInformation'> <span
+									class='otherInformation'> <span
 									class="otherInformationCounter"></span>
 			          <div class="info-transfer">Informationen överförs till
 			            ”Övriga upplysningar” i Försäkringskassans blankett.</div>
@@ -490,7 +483,7 @@
 						<label class="control-label">Planerad eller pågående
 							behandling eller åtgärd inom sjukvården (ange vilken)</label>
 						<textarea id="measures.current" name="measures.current" rows='1'
-							cols='120' class='control-element'></textarea>
+							cols='120' ></textarea>
 						<div class="counter">
 							<div>
 								Tecken kvar: <span class="counter-text"></span>
@@ -501,7 +494,7 @@
           <div class="control-group">
 						<label class="control-label">Annan åtgärd (ange vilken)</label>
 						<textarea id="measures.other" name="measures.other" rows='1'
-							cols='120' class='control-element'></textarea>
+							cols='120' ></textarea>
 						<div class="counter">
 							<div>
 								Tecken kvar: <span class="counter-text"></span>
@@ -521,20 +514,20 @@
 				<div class="text form-inline">
 
           <div class="control-group">
-						<input type="checkbox" id="recommendationsToFk.travel" name="recommendationsToFk.travel" class='control-element' />
+						<input type="checkbox" id="recommendationsToFk.travel" name="recommendationsToFk.travel"  />
 						<label for="recommendationsToFk.travel">Resor till och från	arbetet med annat färdmedel än normalt kan göra det möjligt för	patienten att återgå i arbete</label> <span class="help">?</span>
 				  </div>
           <div class="control-group">
-					  <input type="checkbox" id="recommendationsToFk.contactAf" name="recommendationsToFk.contactAf" class='control-element' />
+					  <input type="checkbox" id="recommendationsToFk.contactAf" name="recommendationsToFk.contactAf"  />
 					  <label for="recommendationsToFk.contactAf">Patienten bör komma i kontakt med arbetsförmedlingen</label> <span class="help">?</span>
           </div>
           <div class="control-group">
-					  <input type="checkbox" id="recommendationsToFk.contactCompanyCare" name="recommendationsToFk.contactCompanyCare" class='control-element' />
+					  <input type="checkbox" id="recommendationsToFk.contactCompanyCare" name="recommendationsToFk.contactCompanyCare"  />
 					  <label for="recommendationsToFk.contactCompanyCare">Patienten bör	komma i kontakt med företagshälsovården</label> <span class="help">?</span>
           </div>
 
           <div class="control-group">
-						<input type="checkbox" id="recommendationsToFk.other"	name="recommendationsToFk.other" class='control-element' />
+						<input type="checkbox" id="recommendationsToFk.other"	name="recommendationsToFk.other"  />
 						<label for="recommendationsToFk.other">Övrigt (ange vad)</label>
   					<input type="text" id="recommendationsToFk.otherText" name="recommendationsToFk.otherText" value="" class='control-text-long control-element'>
           </div>
@@ -579,7 +572,7 @@
 					<span message key="edit.label.fkcontact"></span><span class="help">?</span>
 				</h3>
 				<div class="text form-inline">
-					<input id="cause4" type="checkbox" id="contactWithFkRequested" name="contactWithFkRequested" class='control-element' />
+					<input id="cause4" type="checkbox" id="contactWithFkRequested" name="contactWithFkRequested"  />
 					<label for="cause4" class="checkbox">Kontakt önskas med	Försäkringskassan</label>
 				</div>
 			</div>
@@ -595,7 +588,7 @@
 				<div class="text">
 
 					<textarea id="otherInformation" name="otherInformation" rows='10'
-						cols='120' class='control-element otherInformation'></textarea>
+						cols='120' class='otherInformation'></textarea>
 					<div class="counter">
 						<div>
 							Tecken kvar: <span class="otherInformationCounter"></span>
@@ -623,7 +616,7 @@
 							<div class="controls">
 								<input type="text" id="clinicInfo.postalAddress"
 									name="clinicInfo.postalAddress" value="Agatan 12"
-									class='control-element'>
+									>
 							</div>
 						</div>
 						<div class="control-group">
@@ -631,7 +624,7 @@
 							<div class="controls">
 								<input type="text" id="clinicInfo.postalCode"
 									name="clinicInfo.postalCode" value="12345"
-									class='control-element'>
+									>
 							</div>
 						</div>
 						<div class="control-group">
@@ -639,14 +632,14 @@
 							<div class="controls">
 								<input type="text" id="clinicInfo.postalCity"
 									name="clinicInfo.postalCity" value="Teststad"
-									class='control-element'>
+									>
 							</div>
 						</div>
 						<div class="control-group">
 							<label class="control-label">Telefonnummer</label>
 							<div class="controls">
 								<input type="text" id="clinicInfo.phone" name="clinicInfo.phone"
-									value="023-2234324" class='control-element'>
+									value="023-2234324" >
 							</div>
 						</div>
 						<div class="control-group">
@@ -654,7 +647,7 @@
 							<div class="controls">
 								<input type="text" id="clinicInfo.email" name="clinicInfo.email"
 									value="mats.ekhammar@callistaenterprise.se"
-									class='control-element'>
+									>
 							</div>
 						</div>
 					</div>

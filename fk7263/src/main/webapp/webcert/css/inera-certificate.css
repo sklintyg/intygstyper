@@ -197,7 +197,7 @@ div.infobox h4 {
 }
 
 .diagnose input[type=text] {
-	width: 100%;
+	
 }
 
 .qa-column {
@@ -280,4 +280,10 @@ div.infobox h4 {
 .edit-form {
 	margin-top: 200px; 
 	max-width: 800px
+}
+
+.soclink { 
+	background-image: url(../img/ss16.png);
+	background-repeat: no-repeat;
+	padding-left: 20px;
 }
