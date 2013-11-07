@@ -8,11 +8,14 @@ import java.util.List;
 import org.springframework.util.StringUtils;
 
 import se.inera.certificate.model.HosPersonal;
+import se.inera.certificate.model.Id;
+import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
+import se.inera.certificate.modules.fk7263.model.converter.TransportToExternalFk7263LegacyConverter;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
 /**
@@ -22,7 +25,7 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
  * 
  * @author marced
  */
-public class ExternalUtlatandeValidator {
+public class ProgrammaticLegacyTransportSchemaValidator {
 
     private Fk7263Utlatande externalutlatande;
 
@@ -42,11 +45,14 @@ public class ExternalUtlatandeValidator {
 
     private static final String VALIDATION_ERROR_PREFIX = "Validation Error (em):";
 
-    public ExternalUtlatandeValidator(Fk7263Utlatande externalutlatande) {
+    public ProgrammaticLegacyTransportSchemaValidator(Fk7263Utlatande externalutlatande) {
         this.externalutlatande = externalutlatande;
     }
 
     public List<String> validate() {
+        
+        validateUtlatande();
+        
         validateDiagonse();
 
         validatePatient();
@@ -54,6 +60,27 @@ public class ExternalUtlatandeValidator {
         validateHospersonal();
 
         return validationErrors;
+    }
+
+    private void validateUtlatande() {
+        
+        Kod typ = externalutlatande.getTyp();
+        if (!TransportToExternalFk7263LegacyConverter.FK_7263.equals(typ.getCode())) {
+            addValidationError("Head: Invalid utlatandetyp - must be " + TransportToExternalFk7263LegacyConverter.FK_7263);
+        }
+        if (!TransportToExternalFk7263LegacyConverter.UTLATANDE_TYP_OID.equals(typ.getCodeSystem())) {
+            addValidationError("Head: Invalid utlatandetyp code system - must be " + TransportToExternalFk7263LegacyConverter.UTLATANDE_TYP_OID);
+        }
+        
+        
+        Id id = externalutlatande.getId();
+        //TODO: change to check mandatory root when schema is updated to reflect this
+        if (StringUtils.isEmpty(id.getExtension())) {
+            addValidationError("Head: Utlatande Id.extension is mandatory!");
+        }
+        
+        
+        
     }
 
     private void validateDiagonse() {
