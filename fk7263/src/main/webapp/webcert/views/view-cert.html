@@ -25,7 +25,7 @@
           <div class="control-group">
             <label class="control-label">Fråga</label>
             <div class="controls">
-              <textarea rows="5" ng-model="newQuestion.frageText" id="newQuestionText"></textarea>
+              <textarea rows="5" class="span9" ng-model="newQuestion.frageText" id="newQuestionText"></textarea>
             </div>
           </div>
 
@@ -127,7 +127,7 @@
 	                    <div class="alert alert-info" ng-show="qa.answerDisabled && qa.answerDisabledReason">
 	                      {{qa.answerDisabledReason}}
 	                    </div>
-	                    <textarea rows="5" ng-model="qa.svarsText" id="answerText-{{qa.internReferens}}" ng-show="!qa.answerDisabled"></textarea>
+	                    <textarea rows="5" class="span9" ng-model="qa.svarsText" id="answerText-{{qa.internReferens}}" ng-show="!qa.answerDisabled"></textarea>
 	                    <div>
 	                      <!-- error message occuring when inteacting with server for this FragaSvar-->
 	                      <div id="{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey" class="alert alert-error">
