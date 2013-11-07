@@ -43,12 +43,12 @@
   </patient>
 
   <skapadAv>
-    <personal-id root="1.2.752.129.2.1.4.1" extension="19101010+1010"/>
+    <personal-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-ABC123"/>
     <fullstandigtNamn>Doktor Alban</fullstandigtNamn>
     <forskrivarkod>ABC123</forskrivarkod>
 
     <enhet>
-      <enhets-id root="1.2.752.129.2.1.4.1" extension="vardenhet_test"/>
+      <enhets-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-1337"/>
       <enhetsnamn>Testenheten</enhetsnamn>
       <postadress>Teststigen 12</postadress>
       <postnummer>12345</postnummer>
@@ -57,7 +57,7 @@
       <epost>ingen@alls.se</epost>
       <vardgivare>
         <vardgivare-id root="1.2.752.129.2.1.4.1"
-                          extension="vardgivare_test"/>
+                          extension="SE0000000000-h4xx"/>
         <vardgivarnamn>Testvårdgivaren</vardgivarnamn>
       </vardgivare>
     </enhet>
@@ -74,7 +74,7 @@
     </aktivitetstid>
 
     <utforsVidEnhet>
-      <enhets-id root="1.2.752.129.2.1.4.1" extension="vardenhet_test"/>
+      <enhets-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-1337"/>
       <enhetsnamn>Testenheten</enhetsnamn>
       <postadress>Teststigen 12</postadress>
       <postnummer>12345</postnummer>
@@ -83,7 +83,7 @@
       <epost>ingen@alls.se</epost>
       <vardgivare>
         <vardgivare-id root="1.2.752.129.2.1.4.1"
-                          extension="vardgivare_test"/>
+                          extension="SE0000000000-h4xx"/>
         <vardgivarnamn>Testvårdgivaren</vardgivarnamn>
       </vardgivare>
     </utforsVidEnhet>
@@ -123,17 +123,17 @@
                   codeSystemName="SNOMED-CT"/>
 
       <antasAv>
-        <personal-id root="1.2.752.129.2.1.4.1" extension="190101010101"/>
+        <personal-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-DRJEK"/>
         <fullstandigtNamn>Dr Jekyll</fullstandigtNamn>
         <forskrivarkod>DRJEK</forskrivarkod>
 
         <enhet>
-          <enhets-id root="1.2.752.129.2.1.4.1" extension="vardenhet_test2"/>
+          <enhets-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-f00bar"/>
           <enhetsnamn>Elixirkliniken, London</enhetsnamn>
 
           <vardgivare>
             <vardgivare-id root="1.2.752.129.2.1.4.1"
-                           extension="vardgivare_test2"/>
+                           extension="SE0000000000-0xbeefbabe"/>
             <vardgivarnamn>Testvårdgivaren</vardgivarnamn>
           </vardgivare>
         </enhet>

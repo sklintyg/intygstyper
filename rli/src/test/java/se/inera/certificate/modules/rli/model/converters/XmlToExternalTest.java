@@ -74,18 +74,18 @@ public class XmlToExternalTest {
         assertEquals("Stockholm", extUtlatande.getPatient().getPostort());
 
         assertEquals("1.2.752.129.2.1.4.1", extUtlatande.getSkapadAv().getId().getRoot());
-        assertEquals("19101010+1010", extUtlatande.getSkapadAv().getId().getExtension());
+        assertEquals("SE0000000000-ABC123", extUtlatande.getSkapadAv().getId().getExtension());
         assertEquals("Doktor Alban", extUtlatande.getSkapadAv().getNamn());
         assertEquals("ABC123", extUtlatande.getSkapadAv().getForskrivarkod());
 
         // skapad av ->enhet
         assertEquals("1.2.752.129.2.1.4.1", extUtlatande.getSkapadAv().getVardenhet().getId().getRoot());
-        assertEquals("vardenhet_test", extUtlatande.getSkapadAv().getVardenhet().getId().getExtension());
+        assertEquals("SE0000000000-1337", extUtlatande.getSkapadAv().getVardenhet().getId().getExtension());
         assertEquals("Testenheten", extUtlatande.getSkapadAv().getVardenhet().getNamn());
 
         // skapad av -> enhet -> vardgivare
         assertEquals("1.2.752.129.2.1.4.1", extUtlatande.getSkapadAv().getVardenhet().getVardgivare().getId().getRoot());
-        assertEquals("vardgivare_test", extUtlatande.getSkapadAv().getVardenhet().getVardgivare().getId()
+        assertEquals("SE0000000000-h4xx", extUtlatande.getSkapadAv().getVardenhet().getVardgivare().getId()
                 .getExtension());
         assertEquals("Testvårdgivaren", extUtlatande.getSkapadAv().getVardenhet().getVardgivare().getNamn());
 
@@ -98,11 +98,11 @@ public class XmlToExternalTest {
         assertEquals("KVÅ", a.getAktivitetskod().getCodeSystemName());
 
         assertEquals("1.2.752.129.2.1.4.1", a.getUtforsVid().getId().getRoot());
-        assertEquals("vardenhet_test", a.getUtforsVid().getId().getExtension());
+        assertEquals("SE0000000000-1337", a.getUtforsVid().getId().getExtension());
         assertEquals("Testenheten", a.getUtforsVid().getNamn());
 
         assertEquals("1.2.752.129.2.1.4.1", a.getUtforsVid().getVardgivare().getId().getRoot());
-        assertEquals("vardgivare_test", a.getUtforsVid().getVardgivare().getId().getExtension());
+        assertEquals("SE0000000000-h4xx", a.getUtforsVid().getVardgivare().getId().getExtension());
         assertEquals("Testvårdgivaren", a.getUtforsVid().getVardgivare().getNamn());
 
         List<Rekommendation> rekommendationer = extUtlatande.getRekommendationer();
