@@ -140,17 +140,15 @@
 						  <label class="control-label">Förtydligande av diagnos/diagnoser</label><span class="help">?</span>
 						</div>
 						<textarea id="diagnose.clarification" name="diagnose.clarification" rows='5' cols='80'              
-						  ng-model="cert.diagnosBeskrivning" ng-change="updateCounter(cert.diagnosBeskrivning.length, 100)" maxlength=100></textarea>
+						  ng-model="cert.diagnosBeskrivning" maxlength="{{inputLimits.diagnosBeskrivning}}"></textarea>
 						<div class="counter">
-							Tecken kvar: {{100 - cert.diagnosBeskrivning.length}}
+							Tecken kvar: {{inputLimits.diagnosBeskrivning - cert.diagnosBeskrivning.length}}
 						</div>
 					</div>
 
 					<div class="control-group form-inline">
-						<input type="checkbox" id="diagnose.multipleDiagnoses"
-							name="diagnose.multipleDiagnoses"  /> <label
-							for="diagnose.multipleDiagnoses">Samsjuklighet föreligger</label><span
-							class="help">?</span>
+						<input type="checkbox" id="diagnose.multipleDiagnoses" name="diagnose.multipleDiagnoses" ng-model="cert.otherData.samsjuklighet" />
+						<label for="diagnose.multipleDiagnoses">Samsjuklighet föreligger</label><span class="help">?</span>
 					</div>
 				</div>
 			</div>
@@ -165,11 +163,10 @@
 				</h3>
 				<div class="text">
 
-					<textarea id="diseaseCause" name="diseaseCause" rows='5' cols='80'
-						></textarea>
+					<textarea id="diseaseCause" name="diseaseCause" rows='5' cols='80' ng-model="cert.sjukdomsforlopp"></textarea>
 					<div class="counter">
 						<div>
-							Tecken kvar: <span class="counter-text"></span>
+							Tecken kvar: {{inputLimits.diagnosBeskrivning - cert.sjukdomsforlopp.length}}
 						</div>
 					</div>
 				</div>
