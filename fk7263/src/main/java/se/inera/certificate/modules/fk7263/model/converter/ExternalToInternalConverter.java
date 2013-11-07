@@ -1,14 +1,13 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
+import java.util.List;
+
 import static org.joda.time.DateTimeFieldType.dayOfMonth;
 import static org.joda.time.DateTimeFieldType.monthOfYear;
 import static org.joda.time.DateTimeFieldType.year;
 
-import java.util.List;
-
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
-
 import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.LocalDateInterval;
@@ -46,7 +45,7 @@ public class ExternalToInternalConverter {
 
     public Fk7263Intyg convert() {
 
-        intyg.setId(source.getId().getExtension());
+        intyg.setId(source.getId().getRoot());
         intyg.setSkickatDatum(source.getSkickatdatum());
         intyg.setGiltighet(new PartialInterval(source.getValidFromDate(), source.getValidToDate()));
 
