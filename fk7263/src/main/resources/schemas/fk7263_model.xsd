@@ -55,7 +55,7 @@
   </xs:complexType>
 
   <xs:complexType name="utlatandeTyp">
-    <xs:attribute name="code" type="xs:string" use="required"/>
+    <xs:attribute name="code" type="xs:string" use="required" fixed="fk7263"/>
     <xs:attribute name="codeSystem" type="xs:string" use="required" fixed="f6fb361a-e31d-48b8-8657-99b63912dd9b"/>
   </xs:complexType>
 
@@ -71,7 +71,7 @@
   </xs:simpleType>
   <xs:simpleType name="patientIdExtension">
     <xs:restriction base="xs:string">
-      <xs:pattern value="(\d{8})([+-])(\d{3})(\d)"/>
+      <xs:pattern value="\d{8}-\d{4}"/>
     </xs:restriction>
   </xs:simpleType>
 
