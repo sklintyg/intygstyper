@@ -50,9 +50,9 @@ public class ExternalValidatorImpl implements ExternalValidator {
     private IdValidator idValidator;
 
     public ExternalValidatorImpl() {
-        idValidator = new SimpleIdValidatorBuilder().withPersonnummerValidator(true)
-                .withSamordningsnummerValidator(true).build();
-
+        idValidator = new SimpleIdValidatorBuilder().withPersonnummerValidator(false)
+                .withSamordningsnummerValidator(false)
+                .withHsaIdValidator().build();
     }
 
     /*
@@ -147,6 +147,7 @@ public class ExternalValidatorImpl implements ExternalValidator {
             if (!skapatAv.getId().getRoot().equals(HSpersonalTyp.HSA_ID.getCode())) {
                 validationErrors.add("PersonalId should be an HSA-ID with root: " + HSpersonalTyp.HSA_ID.getCode());
             }
+            validationErrors.addAll(idValidator.validate(skapatAv.getId()));
         } else {
             validationErrors.add("No personal ID found");
         }
