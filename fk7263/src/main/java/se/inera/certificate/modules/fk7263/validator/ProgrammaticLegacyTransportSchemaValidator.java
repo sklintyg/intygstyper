@@ -74,9 +74,8 @@ public class ProgrammaticLegacyTransportSchemaValidator {
         
         
         Id id = externalutlatande.getId();
-        //TODO: change to check mandatory root when schema is updated to reflect this
-        if (StringUtils.isEmpty(id.getExtension())) {
-            addValidationError("Head: Utlatande Id.extension is mandatory!");
+        if (StringUtils.isEmpty(id.getRoot())) {
+            addValidationError("Head: Utlatande Id.root is mandatory!");
         }
         
         
