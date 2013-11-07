@@ -1,14 +1,13 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static se.inera.certificate.model.util.Iterables.addAll;
 import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toCD;
 import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toII;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.joda.time.LocalDate;
-
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
@@ -63,7 +62,7 @@ public final class ExternalToTransportFk7263LegacyConverter {
         RegisterMedicalCertificate register = new RegisterMedicalCertificate();
         register.setLakarutlatande(new Lakarutlatande());
         if (utlatande.getId()!=null) {
-            register.getLakarutlatande().setLakarutlatandeId(toII(utlatande.getId()).getExtension());
+            register.getLakarutlatande().setLakarutlatandeId(toII(utlatande.getId()).getRoot());
         }
         register.getLakarutlatande().setTypAvUtlatande(FK7263);
 
