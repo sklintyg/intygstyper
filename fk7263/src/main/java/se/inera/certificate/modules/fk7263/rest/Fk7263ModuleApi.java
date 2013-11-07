@@ -2,6 +2,7 @@ package se.inera.certificate.modules.fk7263.rest;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -40,7 +41,7 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263CertificateConte
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
-import se.inera.certificate.modules.fk7263.validator.ExternalUtlatandeValidator;
+import se.inera.certificate.modules.fk7263.validator.ProgrammaticLegacyTransportSchemaValidator;
 import se.inera.certificate.modules.fk7263.validator.UtlatandeValidator;
 import se.inera.certificate.validate.ValidationException;
 
@@ -96,45 +97,42 @@ public class Fk7263ModuleApi {
 
         Object jaxbObject = unmarshallTransportXML(transportXml);
 
-        RegisterMedicalCertificate registerMedicalCertificate = null;
-        Utlatande utlatande = null;
+        boolean schemaValidated = false;
 
         if (jaxbObject instanceof RegisterMedicalCertificate) {
-            registerMedicalCertificate = (RegisterMedicalCertificate) jaxbObject;
-        }
-        if (jaxbObject instanceof Utlatande) {
-            utlatande = (Utlatande) jaxbObject;
-        }
-
-        if (registerMedicalCertificate == null && utlatande == null) {
+            schemaValidated = false;
+        } else if (jaxbObject instanceof Utlatande) {
+            Utlatande utlatande = (Utlatande) jaxbObject;
+            // perform schema validation
+            try {
+                Validator validator = utlatandeSchema.newValidator();
+                validateSchema(validator, transportXml);
+                schemaValidated = true;
+            } catch (ValidationException ex) {
+                String utlatandeId = utlatande.getUtlatandeId().getExtension();
+                String enhetsId = null;
+                if (utlatande.getSkapadAv() != null && utlatande.getSkapadAv().getEnhet() != null
+                        && utlatande.getSkapadAv().getEnhet().getEnhetsId() != null) {
+                    utlatande.getSkapadAv().getEnhet().getEnhetsId().getExtension();
+                }
+                String message = responseBody(utlatandeId, enhetsId, ex.getMessage());
+                return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
+            }
+        } else {
             LOG.warn("Unsupported XML message: {}", transportXml);
             throw new RuntimeException("Unsupported XML message: " + transportXml);
         }
 
-        // perform schema validation
-        try {
-            if (utlatande != null) {
-                Validator validator = utlatandeSchema.newValidator();
-                validateSchema(validator, transportXml);
-            }
-        } catch (ValidationException ex) {
-            String utlatandeId = utlatande.getUtlatandeId().getExtension();
-            String enhetsId = null;
-            if (utlatande.getSkapadAv() != null && utlatande.getSkapadAv().getEnhet() != null
-                    && utlatande.getSkapadAv().getEnhet().getEnhetsId() != null) {
-                utlatande.getSkapadAv().getEnhet().getEnhetsId().getExtension();
-            }
-            String message = responseBody(utlatandeId, enhetsId, ex.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
+
+        Fk7263Utlatande externalModel = convertTransportJaxbToModel(jaxbObject);
+        List<String> validationErrors = new ArrayList<String>();
+
+        if (!schemaValidated) {
+            validationErrors = new ProgrammaticLegacyTransportSchemaValidator(externalModel).validate();
         }
 
-        Fk7263Intyg internalModel = null;
-        Fk7263Utlatande externalModel = convertTransportJaxbToModel(jaxbObject);
-        // validate external properties first
-        List<String> validationErrors = new ExternalUtlatandeValidator(externalModel).validate();
         if (validationErrors.isEmpty()) {
-            // passed first level validation, now validate business logic with internal model validation
-            internalModel = toInternal(externalModel);
+            Fk7263Intyg internalModel = toInternal(externalModel);
             validationErrors.addAll((new UtlatandeValidator(internalModel).validate()));
         }
 
@@ -142,7 +140,8 @@ public class Fk7263ModuleApi {
             return Response.ok(externalModel).build();
         } else {
 
-            String response = responseBody(extractCertificateId(externalModel), extractEnhetsId(externalModel), Strings.join(",", validationErrors));
+            String response = responseBody(extractCertificateId(externalModel), extractEnhetsId(externalModel),
+                    Strings.join(",", validationErrors));
             return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
         }
     }
@@ -257,7 +256,7 @@ public class Fk7263ModuleApi {
     public Response validate(Fk7263Utlatande utlatande) {
         Fk7263Intyg internalModel = null;
         // validate external properties first
-        List<String> validationErrors = new ExternalUtlatandeValidator(utlatande).validate();
+        List<String> validationErrors = new ProgrammaticLegacyTransportSchemaValidator(utlatande).validate();
         if (validationErrors.isEmpty()) {
             // passed first level validation, now validate business logic with internal model validation
             internalModel = toInternal(utlatande);

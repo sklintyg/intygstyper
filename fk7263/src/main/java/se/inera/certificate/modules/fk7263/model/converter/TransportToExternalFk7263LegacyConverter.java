@@ -56,8 +56,8 @@ public final class TransportToExternalFk7263LegacyConverter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportToExternalFk7263LegacyConverter.class);
 
-    private static final String FK_7263 = "fk7263";
-    private static final String UTLATANDE_TYP_OID = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
+    public static final String FK_7263 = "fk7263";
+    public static final String UTLATANDE_TYP_OID = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
 
     private TransportToExternalFk7263LegacyConverter() {
     }
