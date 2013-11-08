@@ -19,7 +19,9 @@
 package se.inera.certificate.modules.rli.model.codes;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -46,4 +48,27 @@ public class CodeConverterTest {
 
     }
 
+    /**
+     * Checks that a {@link ICodeSystem} and a {@link Kod} can be compared without null pointer exceptions.
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void testMatches() throws Exception {
+        assertTrue(CodeConverter.matches(TestKod.CODE_RED, new Kod(TestKod.CODE_SYSTEM, TestKod.CODE_SYSTEM_NAME,
+                TestKod.CODE_SYSTEM_VERSION, "CODE_RED")));
+        assertFalse(CodeConverter.matches(TestKod.CODE_RED, new Kod(TestKod.CODE_SYSTEM, TestKod.CODE_SYSTEM_NAME,
+                null, "CODE_RED")));
+        assertFalse(CodeConverter.matches(TestKod.CODE_RED, new Kod(TestKod.CODE_SYSTEM, null, null, "CODE_RED")));
+        assertFalse(CodeConverter.matches(TestKod.CODE_RED, new Kod(null, null, null, "CODE_RED")));
+
+        ICodeSystem emptyKod = new EmptyCodeSystem();
+        assertFalse(CodeConverter.matches(emptyKod, new Kod(TestKod.CODE_SYSTEM, TestKod.CODE_SYSTEM_NAME,
+                TestKod.CODE_SYSTEM_VERSION, "CODE_RED")));
+        assertFalse(CodeConverter.matches(emptyKod, new Kod(TestKod.CODE_SYSTEM, TestKod.CODE_SYSTEM_NAME, null,
+                "CODE_RED")));
+        assertFalse(CodeConverter.matches(emptyKod, new Kod(TestKod.CODE_SYSTEM, null, null, "CODE_RED")));
+        assertFalse(CodeConverter.matches(emptyKod, new Kod(null, null, null, "CODE_RED")));
+        assertTrue(CodeConverter.matches(emptyKod, new Kod(null, null, null, null)));
+    }
 }

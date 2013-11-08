@@ -1,6 +1,6 @@
 package se.inera.certificate.modules.rli.model.converters;
 
-import static se.inera.certificate.modules.rli.model.codes.HSpersonalTyp.HSA_ID;
+import static se.inera.certificate.modules.rli.model.codes.HSpersonalKod.HSA_ID;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,11 +20,11 @@ import se.inera.certificate.model.Utforarroll;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
-import se.inera.certificate.modules.rli.model.codes.HSpersonalTyp;
+import se.inera.certificate.modules.rli.model.codes.HSpersonalKod;
 import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
 import se.inera.certificate.modules.rli.model.codes.RekommendationsKod;
-import se.inera.certificate.modules.rli.model.codes.SjukdomsKannedom;
-import se.inera.certificate.modules.rli.model.codes.UtforarTypKod;
+import se.inera.certificate.modules.rli.model.codes.SjukdomskannedomKod;
+import se.inera.certificate.modules.rli.model.codes.UtforarrollKod;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
@@ -98,7 +98,7 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
         return Arrays.asList(rek);
     }
 
-    private Kod buildSjukdomskannedomsKod(SjukdomsKannedom sk) {
+    private Kod buildSjukdomskannedomsKod(SjukdomskannedomKod sk) {
         return new Kod(sk.getCodeSystem(), sk.getCodeSystemName(), sk.getCodeSystemVersion(), sk.getCode());
     }
 
@@ -156,13 +156,13 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
         Kod kod = null;
 
         // TODO: This should of course use the ENUM somehow..
-        if (typ.equals(UtforarTypKod.AV_HOS_PERSONAL.getCode())) {
-            kod = new Kod(UtforarTypKod.AV_HOS_PERSONAL.getCodeSystem(),
-                    UtforarTypKod.AV_HOS_PERSONAL.getCodeSystemName(),
-                    UtforarTypKod.AV_HOS_PERSONAL.getCodeSystemVersion(), UtforarTypKod.AV_HOS_PERSONAL.getCode());
-        } else if (typ.equals(UtforarTypKod.AV_PATIENT.getCode())) {
-            kod = new Kod(UtforarTypKod.AV_PATIENT.getCodeSystem(), UtforarTypKod.AV_PATIENT.getCodeSystemName(),
-                    UtforarTypKod.AV_PATIENT.getCodeSystemVersion(), UtforarTypKod.AV_PATIENT.getCode());
+        if (typ.equals(UtforarrollKod.AV_HOS_PERSONAL.getCode())) {
+            kod = new Kod(UtforarrollKod.AV_HOS_PERSONAL.getCodeSystem(),
+                    UtforarrollKod.AV_HOS_PERSONAL.getCodeSystemName(),
+                    UtforarrollKod.AV_HOS_PERSONAL.getCodeSystemVersion(), UtforarrollKod.AV_HOS_PERSONAL.getCode());
+        } else if (typ.equals(UtforarrollKod.AV_PATIENT.getCode())) {
+            kod = new Kod(UtforarrollKod.AV_PATIENT.getCodeSystem(), UtforarrollKod.AV_PATIENT.getCodeSystemName(),
+                    UtforarrollKod.AV_PATIENT.getCodeSystemVersion(), UtforarrollKod.AV_PATIENT.getCode());
         }
         return kod;
     }
@@ -304,12 +304,12 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
         Kod kod = null;
         switch (kS) {
         case AV_HOS_PERSONAL:
-            kod = new Kod(UtforarTypKod.AV_HOS_PERSONAL.getCodeSystem(),
-                    UtforarTypKod.AV_HOS_PERSONAL.getCodeSystemName(),
-                    UtforarTypKod.AV_HOS_PERSONAL.getCodeSystemVersion(), UtforarTypKod.AV_HOS_PERSONAL.getCode());
+            kod = new Kod(UtforarrollKod.AV_HOS_PERSONAL.getCodeSystem(),
+                    UtforarrollKod.AV_HOS_PERSONAL.getCodeSystemName(),
+                    UtforarrollKod.AV_HOS_PERSONAL.getCodeSystemVersion(), UtforarrollKod.AV_HOS_PERSONAL.getCode());
         case AV_PATIENT:
-            kod = new Kod(UtforarTypKod.AV_PATIENT.getCodeSystem(), UtforarTypKod.AV_PATIENT.getCodeSystemName(),
-                    UtforarTypKod.AV_PATIENT.getCodeSystemVersion(), UtforarTypKod.AV_PATIENT.getCode());
+            kod = new Kod(UtforarrollKod.AV_PATIENT.getCodeSystem(), UtforarrollKod.AV_PATIENT.getCodeSystemName(),
+                    UtforarrollKod.AV_PATIENT.getCodeSystemVersion(), UtforarrollKod.AV_PATIENT.getCode());
         }
         return kod;
     }
@@ -323,7 +323,7 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
         Vardenhet vardenhet = new Vardenhet();
         vardenhet.setNamn(source.getEnhetsnamn());
         vardenhet.setEpost(source.getEpost());
-        vardenhet.setId(new Id(HSpersonalTyp.HSA_ID.getCode(), source.getEnhetsid()));
+        vardenhet.setId(new Id(HSpersonalKod.HSA_ID.getCode(), source.getEnhetsid()));
         vardenhet.setPostadress(source.getPostadress());
         vardenhet.setPostnummer(source.getPostnummer());
         vardenhet.setPostort(source.getPostort());

@@ -18,16 +18,55 @@
  */
 package se.inera.certificate.modules.rli.model.codes;
 
+import se.inera.certificate.model.Kod;
+
+/**
+ * The base of all codes used by this module.
+ */
 public interface ICodeSystem {
 
+    /**
+     * The code value of a specific code.
+     * 
+     * @return The code value.
+     */
     String getCode();
 
+    /**
+     * A textual description of a specific code.
+     * 
+     * @return The textual description of the code.
+     */
     String getDescription();
 
+    /**
+     * The id of the code system that this code is defined in.
+     * 
+     * @return The code system.
+     */
     String getCodeSystem();
 
+    /**
+     * The name of the code system that this code is defined in.
+     * 
+     * @return The code system name.
+     */
     String getCodeSystemName();
 
+    /**
+     * The version of the code system that this code is defined in.
+     * 
+     * @return The code system version.
+     */
     String getCodeSystemVersion();
 
+    /**
+     * Checks if a specific code system enum matches a specified {@link Kod}.
+     * 
+     * @param kod
+     *            The kod to match
+     * 
+     * @return <code>true</code> if this enum matches the kod, <code>false</code> otherwise.
+     */
+    boolean matches(Kod kod);
 }

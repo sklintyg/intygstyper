@@ -21,29 +21,45 @@ package se.inera.certificate.modules.rli.model.codes;
 import se.inera.certificate.model.Kod;
 
 /**
- * Represents all the codes used by this module to define aktiviteter.
+ * Represents all the codes used by this module to define sjukdomskännedom.
  */
-public enum AktivitetsKod implements ICodeSystem {
+public enum SjukdomskannedomKod implements ICodeSystem {
 
-    /** Klinisk undersökning */
-    KLINISK_UNDERSOKNING("AV020", "klinisk undersökning UNS", "KVÅ", "1.2.752.116.1.3.2.1.4"),
+    /** Sjukdomen/komplikationen okänd vid bokningstillfälllet. */
+    SJK1("SJK1", "Sjukdomen/komplikationen var okänd vid bokningstillfälllet."),
 
-    /** Första undersökning */
-    FORSTA_UNDERSOKNING("AKT13", "Första undersökning", "kv_aktiviteter_intyg", "8040b4d1-67dc-42e1-a938-de5374e9526a"),
+    /**
+     * Patientens sjukdom/komplikation är kronisk, känd vid bokningstillfället, utgjorde då inget hinder för resan. Har
+     * nu förvärrats och var ej möljligt att förutse.
+     */
+    SJK2(
+            "SJK2",
+            "Patientens sjukdom/komplikation är kronisk, var känd vid bokningstillfället och utgjorde då inget hinder för resan. Tillståndet för nu förvärrats på ett sätt som vid bokningstillfället ej var möjligt att förutse."),
 
-    /** Omvårdnadsåtgärd */
-    OMVARDNADSATGARD("9632001", "Omvårdnadsåtgärd", "SNOMED-CT", "1.2.752.116.2.1.1.1");
+    /**
+     * Patientens sjukdom/komplikation är kronisk, känd vid bokningstillfället, utgjorde då inget hinder för resan. Har
+     * ni förvärrats och VAR möjligt att förutse.
+     */
+    SJK3(
+            "SJK3",
+            "Patientens sjukdom/komplikation är kronisk, var känd vid bokningstillfället och utgjorde då inget hinder för resan. Tillståndet för nu förvärrats på ett sätt som vid bokningstillfället var möjligt att förutse."),
+
+    /** Inget av ovanstående är tillämpligt. */
+    SJK4("SJK4", "Inget av ovanstående är tillämpligt.");
+
+    private static String codeSystemName = "kv_sjukdomskännedom_intyg";
+
+    private static String codeSystem = "f3a556c4-d54b-4f67-8496-d5259df70493";
+
+    private static String codeSystemVersion = null;
 
     private String code;
-    private String description;
-    private String codeSystemName;
-    private String codeSystem;
 
-    private AktivitetsKod(String code, String description, String codeSystemName, String codeSystem) {
+    private String description;
+
+    private SjukdomskannedomKod(String code, String desc) {
         this.code = code;
-        this.description = description;
-        this.codeSystemName = codeSystemName;
-        this.codeSystem = codeSystem;
+        this.description = desc;
     }
 
     /**
@@ -67,7 +83,7 @@ public enum AktivitetsKod implements ICodeSystem {
      */
     @Override
     public String getCodeSystem() {
-        return this.codeSystem;
+        return codeSystem;
     }
 
     /**
@@ -75,7 +91,7 @@ public enum AktivitetsKod implements ICodeSystem {
      */
     @Override
     public String getCodeSystemName() {
-        return this.codeSystemName;
+        return codeSystemName;
     }
 
     /**
@@ -83,7 +99,7 @@ public enum AktivitetsKod implements ICodeSystem {
      */
     @Override
     public String getCodeSystemVersion() {
-        return null;
+        return codeSystemVersion;
     }
 
     /**

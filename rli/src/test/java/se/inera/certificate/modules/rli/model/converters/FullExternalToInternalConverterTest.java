@@ -14,9 +14,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.modules.rli.model.codes.ArrangemangsTyp;
+import se.inera.certificate.modules.rli.model.codes.ArrangemangsKod;
 import se.inera.certificate.modules.rli.model.codes.RekommendationsKod;
-import se.inera.certificate.modules.rli.model.codes.SjukdomsKannedom;
+import se.inera.certificate.modules.rli.model.codes.SjukdomskannedomKod;
 import se.inera.certificate.modules.rli.model.internal.Arrangemang;
 import se.inera.certificate.modules.rli.model.internal.HoSPersonal;
 import se.inera.certificate.modules.rli.model.internal.KomplikationStyrkt;
@@ -86,7 +86,7 @@ public class FullExternalToInternalConverterTest {
 
         Arrangemang arr = new Arrangemang();
         arr.setArrangemangsdatum("2013-08-22");
-        arr.setArrangemangstyp(ArrangemangsTyp.RESA);
+        arr.setArrangemangstyp(ArrangemangsKod.RESA);
         arr.setAvbestallningsdatum("2013-08");
         arr.setPlats("New York");
         arr.setBokningsreferens("12345678-90");
@@ -141,7 +141,7 @@ public class FullExternalToInternalConverterTest {
 
         Rekommendation rekommendation = new Rekommendation();
         rekommendation.setRekommendationskod(RekommendationsKod.REK1);
-        rekommendation.setSjukdomskannedom(SjukdomsKannedom.SJK2);
+        rekommendation.setSjukdomskannedom(SjukdomskannedomKod.SJK2);
         utlatande.setRekommendation(rekommendation);
 
         Undersokning undersokning = new Undersokning();

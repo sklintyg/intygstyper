@@ -18,47 +18,76 @@
  */
 package se.inera.certificate.modules.rli.model.codes;
 
+import se.inera.certificate.model.Kod;
 
-public enum UtforarTypKod implements ICodeSystem {
+/**
+ * Represents all the codes used by this module to define HoSPersonal.
+ */
+public enum HSpersonalKod implements ICodeSystem {
 
-    AV_PATIENT("116154003", "Patient"), 
-    AV_HOS_PERSONAL("223366009", "Hälso- och sjukvårdspersonal");
+    /** HSA id root */
+    HSA_ID("1.2.752.129.2.1.4.1", "root");
 
-    private static String codeSystemName = "SNOMED-CT";
+    private static String codeSystemName = "HSA";
 
-    private static String codeSystem = "1.2.752.116.2.1.1.1";
+    private static String codeSystem = "1.2.752.129.2.1.4.1";
 
-    private static String codeSystemVersion = "";
+    private static String codeSystemVersion = null;
 
     private String code;
 
     private String description;
 
-    private UtforarTypKod(String code, String desc) {
+    private HSpersonalKod(String code, String desc) {
         this.code = code;
         this.description = desc;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getCode() {
-        return code;
+        return this.code;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystem() {
         return codeSystem;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystemName() {
         return codeSystemName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystemVersion() {
         return codeSystemVersion;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean matches(Kod kod) {
+        return CodeConverter.matches(this, kod);
     }
 }

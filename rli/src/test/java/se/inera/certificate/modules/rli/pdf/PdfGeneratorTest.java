@@ -11,9 +11,9 @@ import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 
-import se.inera.certificate.modules.rli.model.codes.ArrangemangsTyp;
+import se.inera.certificate.modules.rli.model.codes.ArrangemangsKod;
 import se.inera.certificate.modules.rli.model.codes.RekommendationsKod;
-import se.inera.certificate.modules.rli.model.codes.SjukdomsKannedom;
+import se.inera.certificate.modules.rli.model.codes.SjukdomskannedomKod;
 import se.inera.certificate.modules.rli.model.internal.Arrangemang;
 import se.inera.certificate.modules.rli.model.internal.Graviditet;
 import se.inera.certificate.modules.rli.model.internal.HoSPersonal;
@@ -83,7 +83,7 @@ public class PdfGeneratorTest {
 
         Arrangemang arr = new Arrangemang();
         arr.setArrangemangsdatum("2013-08-22");
-        arr.setArrangemangstyp(ArrangemangsTyp.RESA);
+        arr.setArrangemangstyp(ArrangemangsKod.RESA);
         arr.setAvbestallningsdatum("2013-08");
         arr.setPlats("Östberga");
         arr.setBokningsreferens("12345678-90");
@@ -122,7 +122,7 @@ public class PdfGeneratorTest {
 
         Rekommendation rekommendation = new Rekommendation();
         rekommendation.setRekommendationskod(RekommendationsKod.REK1);
-        rekommendation.setSjukdomskannedom(SjukdomsKannedom.SJK3);
+        rekommendation.setSjukdomskannedom(SjukdomskannedomKod.SJK3);
         utlatande.setRekommendation(rekommendation);
 
         Undersokning undersokning = new Undersokning();
@@ -150,7 +150,7 @@ public class PdfGeneratorTest {
 
         Arrangemang arr = new Arrangemang();
         arr.setArrangemangsdatum("2013-08-22");
-        arr.setArrangemangstyp(ArrangemangsTyp.RESA);
+        arr.setArrangemangstyp(ArrangemangsKod.RESA);
         arr.setAvbestallningsdatum("2013-08");
         arr.setPlats("Östberga");
         arr.setBokningsreferens("12345678-90");
@@ -189,7 +189,7 @@ public class PdfGeneratorTest {
 
         Rekommendation rekommendation = new Rekommendation();
         rekommendation.setRekommendationskod(RekommendationsKod.REK1);
-        rekommendation.setSjukdomskannedom(SjukdomsKannedom.SJK3);
+        rekommendation.setSjukdomskannedom(SjukdomskannedomKod.SJK3);
         utlatande.setRekommendation(rekommendation);
 
         Undersokning undersokning = new Undersokning();

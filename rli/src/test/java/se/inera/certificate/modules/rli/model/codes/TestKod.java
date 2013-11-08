@@ -18,15 +18,17 @@
  */
 package se.inera.certificate.modules.rli.model.codes;
 
+import se.inera.certificate.model.Kod;
+
 public enum TestKod implements ICodeSystem {
 
     CODE_RED("CODE_RED", "Code Red"), CODE_BLUE("CODE_BLUE", "Code Blue"), CODE_BLACK("", "");
 
-    private static String codeSystemName = "ColorCodes";
+    public static final String CODE_SYSTEM_NAME = "ColorCodes";
 
-    private static String codeSystem = "CC";
+    public static final String CODE_SYSTEM = "CC";
 
-    private static String codeSystemVersion = "1.0";
+    public static final String CODE_SYSTEM_VERSION = "1.0";
 
     private String code;
 
@@ -49,17 +51,21 @@ public enum TestKod implements ICodeSystem {
 
     @Override
     public String getCodeSystem() {
-        return codeSystem;
+        return CODE_SYSTEM;
     }
 
     @Override
     public String getCodeSystemName() {
-        return codeSystemName;
+        return CODE_SYSTEM_NAME;
     }
 
     @Override
     public String getCodeSystemVersion() {
-        return codeSystemVersion;
+        return CODE_SYSTEM_VERSION;
     }
 
+    @Override
+    public boolean matches(Kod kod) {
+        return CodeConverter.matches(this, kod);
+    }
 }

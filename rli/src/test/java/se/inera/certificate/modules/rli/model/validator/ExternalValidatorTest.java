@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -63,7 +64,7 @@ public class ExternalValidatorTest {
             System.out.println(s);
         }
 
-        assertTrue(validationErrors.isEmpty());
+        assertTrue(StringUtils.join(validationErrors, ", "), validationErrors.isEmpty());
     }
 
     @Test

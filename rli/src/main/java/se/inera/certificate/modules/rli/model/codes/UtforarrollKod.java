@@ -18,37 +18,40 @@
  */
 package se.inera.certificate.modules.rli.model.codes;
 
+import se.inera.certificate.model.Kod;
 
-public enum SjukdomsKannedom implements ICodeSystem {
+/**
+ * Represents all the codes used by this module to define utförarroll.
+ */
+public enum UtforarrollKod implements ICodeSystem {
 
-    SJK1("SJK1", "Sjukdomen/komplikationen var okänd vid bokningstillfälllet."), 
-    SJK2("SJK2","Patientens sjukdom/komplikation är kronisk, var känd vid bokningstillfället och utgjorde då inget hinder för resan. Tillståndet för nu förvärrats på ett sätt som vid bokningstillfället ej var möjligt att förutse."),
-    SJK3("SJK3","Patientens sjukdom/komplikation är kronisk, var känd vid bokningstillfället och utgjorde då inget hinder för resan. Tillståndet för nu förvärrats på ett sätt som vid bokningstillfället var möjligt att förutse."), 
-    SJK4("SJK4", "Inget av ovanstående är tillämpligt.");
+    /** Patient */
+    AV_PATIENT("116154003", "Patient"),
 
-    private static String codeSystemName = "kv_sjukdomskännedom_intyg";
+    /** Hälso- och sjukvårdspersonal */
+    AV_HOS_PERSONAL("223366009", "Hälso- och sjukvårdspersonal");
 
-    private static String codeSystem = "f3a556c4-d54b-4f67-8496-d5259df70493";
+    private static String codeSystemName = "SNOMED-CT";
 
-    private static String codeSystemVersion = null;
+    private static String codeSystem = "1.2.752.116.2.1.1.1";
+
+    private static String codeSystemVersion = "";
 
     private String code;
 
     private String description;
 
-    private SjukdomsKannedom(String code, String desc) {
+    private UtforarrollKod(String code, String desc) {
         this.code = code;
         this.description = desc;
     }
 
-    @Override
     public String getCode() {
-        return this.code;
+        return code;
     }
 
-    @Override
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     @Override
@@ -64,5 +67,10 @@ public enum SjukdomsKannedom implements ICodeSystem {
     @Override
     public String getCodeSystemVersion() {
         return codeSystemVersion;
+    }
+
+    @Override
+    public boolean matches(Kod kod) {
+        return CodeConverter.matches(this, kod);
     }
 }

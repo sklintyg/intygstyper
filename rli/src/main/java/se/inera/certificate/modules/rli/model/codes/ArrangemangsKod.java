@@ -18,14 +18,19 @@
  */
 package se.inera.certificate.modules.rli.model.codes;
 
+import se.inera.certificate.model.Kod;
 
-public enum HSpersonalTyp implements ICodeSystem {
+/**
+ * Represents all the codes used by this module to define arrangemang.
+ */
+public enum ArrangemangsKod implements ICodeSystem {
 
-    HSA_ID("1.2.752.129.2.1.4.1", "root");
+    /** Resa */
+    RESA("420008001", "Resa");
 
-    private static String codeSystemName = "HSA";
+    private static String codeSystemName = "SNOMED-CT";
 
-    private static String codeSystem = "1.2.752.129.2.1.4.1";
+    private static String codeSystem = "1.2.752.116.2.1.1.1";
 
     private static String codeSystemVersion = null;
 
@@ -33,33 +38,56 @@ public enum HSpersonalTyp implements ICodeSystem {
 
     private String description;
 
-    private HSpersonalTyp(String code, String desc) {
+    private ArrangemangsKod(String code, String desc) {
         this.code = code;
         this.description = desc;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCode() {
         return this.code;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getDescription() {
         return this.description;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystem() {
         return codeSystem;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystemName() {
         return codeSystemName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystemVersion() {
         return codeSystemVersion;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean matches(Kod kod) {
+        return CodeConverter.matches(this, kod);
     }
 }

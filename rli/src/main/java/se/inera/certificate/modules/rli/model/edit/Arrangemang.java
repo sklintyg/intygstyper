@@ -18,7 +18,7 @@
  */
 package se.inera.certificate.modules.rli.model.edit;
 
-import se.inera.certificate.modules.rli.model.codes.ArrangemangsTyp;
+import se.inera.certificate.modules.rli.model.codes.ArrangemangsKod;
 
 public class Arrangemang {
 
@@ -32,7 +32,7 @@ public class Arrangemang {
     
     private String arrangemangslutdatum;
 
-    private ArrangemangsTyp arrangemangstyp;
+    private ArrangemangsKod arrangemangstyp;
 
     private String avbestallningsdatum;
 
@@ -72,11 +72,11 @@ public class Arrangemang {
         this.arrangemangsdatum = arrangemangsdatum;
     }
 
-    public ArrangemangsTyp getArrangemangstyp() {
+    public ArrangemangsKod getArrangemangstyp() {
         return arrangemangstyp;
     }
 
-    public void setArrangemangstyp(ArrangemangsTyp arrangemangstyp) {
+    public void setArrangemangstyp(ArrangemangsKod arrangemangstyp) {
         this.arrangemangstyp = arrangemangstyp;
     }
 

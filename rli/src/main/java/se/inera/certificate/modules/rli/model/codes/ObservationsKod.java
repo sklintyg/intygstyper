@@ -18,11 +18,20 @@
  */
 package se.inera.certificate.modules.rli.model.codes;
 
+import se.inera.certificate.model.Kod;
 
+/**
+ * Represents all the codes used by this module to define observationer.
+ */
 public enum ObservationsKod implements ICodeSystem {
 
+    /** Sjukdom */
     SJUKDOM("39104002", "Sjukdom"), 
+    
+    /** Gravid */
     GRAVIDITET("289908002", "Gravid"),
+    
+    /** Komplikation vid graviditet */
     KOMPLIKATION_VID_GRAVIDITET("90821003", "Komplikation vid graviditet");
 
     private static String codeSystemName = "SNOMED-CT";
@@ -48,18 +57,35 @@ public enum ObservationsKod implements ICodeSystem {
         return description;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystem() {
         return codeSystem;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystemName() {
         return codeSystemName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystemVersion() {
         return codeSystemVersion;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean matches(Kod kod) {
+        return CodeConverter.matches(this, kod);
     }
 }
