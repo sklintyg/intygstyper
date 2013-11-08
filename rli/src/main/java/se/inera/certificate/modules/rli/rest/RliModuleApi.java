@@ -231,11 +231,8 @@ public class RliModuleApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createNewInternal(CreateNewDraftCertificateHolder draftCertificateHolder) {
 
-        String certificateId = draftCertificateHolder.getCertificateId();
-        Map<String, Object> certificateData = draftCertificateHolder.getCertificateData();
-
         se.inera.certificate.modules.rli.model.edit.Utlatande editableUtlatande = editModelFactory
-                .createEditableUtlatande(certificateId, certificateData);
+                .createEditableUtlatande(draftCertificateHolder);
 
         return Response.ok(editableUtlatande).build();
     }

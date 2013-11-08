@@ -3,7 +3,7 @@ package se.inera.certificate.modules.rli.model.converters;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
-import static se.inera.certificate.modules.rli.model.codes.HSpersonalTyp.HSA_ID;
+import static se.inera.certificate.modules.rli.model.codes.HSpersonalKod.HSA_ID;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,11 +23,11 @@ import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
-import se.inera.certificate.modules.rli.model.codes.ArrangemangsTyp;
+import se.inera.certificate.modules.rli.model.codes.ArrangemangsKod;
 import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
 import se.inera.certificate.modules.rli.model.codes.RekommendationsKod;
-import se.inera.certificate.modules.rli.model.codes.SjukdomsKannedom;
-import se.inera.certificate.modules.rli.model.codes.UtforarTypKod;
+import se.inera.certificate.modules.rli.model.codes.SjukdomskannedomKod;
+import se.inera.certificate.modules.rli.model.codes.UtforarrollKod;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
 
@@ -143,7 +143,7 @@ public class InternalToExternalConverterTest {
 
         assertNotNull(extArr);
         assertEquals("2001-03-03", extArr.getArrangemangstid().getFrom().toString("yyyy-MM-dd"));
-        assertEquals(ArrangemangsTyp.RESA.getCode(), extArr.getArrangemangstyp().getCode());
+        assertEquals(ArrangemangsKod.RESA.getCode(), extArr.getArrangemangstyp().getCode());
         assertEquals("2001-02-02", extArr.getAvbestallningsdatum().toString("yyyy-MM-dd"));
         assertEquals("2001-01-01", extArr.getBokningsdatum().toString("yyyy-MM-dd"));
         assertEquals("Tegucigalpa", extArr.getPlats());
@@ -155,7 +155,7 @@ public class InternalToExternalConverterTest {
         Arrangemang arr = new Arrangemang();
 
         arr.setArrangemangsdatum("2001-03-03");
-        arr.setArrangemangstyp(ArrangemangsTyp.RESA);
+        arr.setArrangemangstyp(ArrangemangsKod.RESA);
         arr.setAvbestallningsdatum("2001-02-02");
         arr.setBokningsdatum("2001-01-01");
         arr.setBokningsreferens("Bokningsreferens");
@@ -209,7 +209,7 @@ public class InternalToExternalConverterTest {
 
         Utforare utforsAv = new Utforare();
         utforsAv.setAntasAv(antasAv);
-        utforsAv.setUtforartyp(UtforarTypKod.AV_HOS_PERSONAL.getCode());
+        utforsAv.setUtforartyp(UtforarrollKod.AV_HOS_PERSONAL.getCode());
         return utforsAv;
     }
 
@@ -379,7 +379,7 @@ public class InternalToExternalConverterTest {
         Arrangemang arr = new Arrangemang();
         arr.setArrangemangsdatum("2013-07-22");
         arr.setArrangemangslutdatum("2013-08-02");
-        arr.setArrangemangstyp(ArrangemangsTyp.RESA);
+        arr.setArrangemangstyp(ArrangemangsKod.RESA);
         arr.setAvbestallningsdatum("2013-08");
         arr.setPlats("New York");
         arr.setBokningsreferens("12345678-90");
@@ -408,7 +408,7 @@ public class InternalToExternalConverterTest {
 
         Rekommendation rekommendation = new Rekommendation();
         rekommendation.setRekommendationskod(RekommendationsKod.REK1);
-        rekommendation.setSjukdomskannedom(SjukdomsKannedom.SJK2);
+        rekommendation.setSjukdomskannedom(SjukdomskannedomKod.SJK2);
         utlatande.setRekommendation(rekommendation);
 
         Undersokning undersokning = new Undersokning();
@@ -437,7 +437,7 @@ public class InternalToExternalConverterTest {
 
         Utforare utforsAv = new Utforare();
         utforsAv.setAntasAv(antasAv);
-        utforsAv.setUtforartyp(UtforarTypKod.AV_HOS_PERSONAL.getCode());
+        utforsAv.setUtforartyp(UtforarrollKod.AV_HOS_PERSONAL.getCode());
         undersokning.setUtforsAv(utforsAv);
         utlatande.setUndersokning(undersokning);
 

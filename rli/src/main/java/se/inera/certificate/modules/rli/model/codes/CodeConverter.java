@@ -106,4 +106,36 @@ public final class CodeConverter {
         throw new RuntimeException(String.format("Found no valid enum for code '%s' of type '%s'", code,
                 type.getSimpleName()));
     }
+
+    /**
+     * Checks if a specified code enum matches a specified {@link Kod}.
+     * 
+     * @param codeEnum
+     *            The code enum to match.
+     * @param kod
+     *            The kod to match.
+     * @return <code>true</code> if the code enum and kod matches, <code>false</code> otherwise.
+     */
+    public static boolean matches(ICodeSystem codeEnum, Kod kod) {
+        if (codeEnum == null) {
+            return kod == null;
+        }
+        if (kod == null) {
+            return false;
+        }
+
+        if (codeEnum.getCode() != null ? !codeEnum.getCode().equals(kod.getCode()) : kod.getCode() != null)
+            return false;
+        if (codeEnum.getCodeSystem() != null ? !codeEnum.getCodeSystem().equals(kod.getCodeSystem()) : kod
+                .getCodeSystem() != null)
+            return false;
+        if (codeEnum.getCodeSystemName() != null ? !codeEnum.getCodeSystemName().equals(kod.getCodeSystemName()) : kod
+                .getCodeSystemName() != null)
+            return false;
+        if (codeEnum.getCodeSystemVersion() != null ? !codeEnum.getCodeSystemVersion().equals(
+                kod.getCodeSystemVersion()) : kod.getCodeSystemVersion() != null)
+            return false;
+
+        return true;
+    }
 }

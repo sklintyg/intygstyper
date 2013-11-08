@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.modules.rli.model.codes.CodeConverter;
 import se.inera.certificate.modules.rli.model.codes.RekommendationsKod;
-import se.inera.certificate.modules.rli.model.codes.SjukdomsKannedom;
+import se.inera.certificate.modules.rli.model.codes.SjukdomskannedomKod;
 import se.inera.certificate.modules.rli.model.internal.Rekommendation;
 
 public class RekommendationPopulatorImpl implements RekommendationPopulator {
@@ -45,7 +45,7 @@ public class RekommendationPopulatorImpl implements RekommendationPopulator {
         RekommendationsKod rekommendationsKod = CodeConverter.fromCode(extRekommendation.getRekommendationskod(), RekommendationsKod.class);
         intRekommendation.setRekommendationskod(rekommendationsKod);
 
-        SjukdomsKannedom sjukdomsKannedom = CodeConverter.fromCode(extRekommendation.getSjukdomskannedom(), SjukdomsKannedom.class);
+        SjukdomskannedomKod sjukdomsKannedom = CodeConverter.fromCode(extRekommendation.getSjukdomskannedom(), SjukdomskannedomKod.class);
         intRekommendation.setSjukdomskannedom(sjukdomsKannedom);
 
         intRekommendation.setBeskrivning(extRekommendation.getBeskrivning());

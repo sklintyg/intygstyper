@@ -18,34 +18,37 @@
  */
 package se.inera.certificate.modules.rli.model.codes;
 
+import se.inera.certificate.model.Kod;
 
-public enum ArrangemangsTyp implements ICodeSystem {
+/**
+ * Represents the code used by this module to define the Utlåtandetyp.
+ */
+public enum UtlatandeKod implements ICodeSystem {
 
-    RESA("420008001", "Resa");
+    /** Intyg vid avbeställd resa */
+    IVAR("RLI", "Intyg vid avbeställd resa");
 
-    private static String codeSystemName = "SNOMED-CT";
+    private static String codeSystemName = "kv_utlåtandetyp_intyg";
 
-    private static String codeSystem = "1.2.752.116.2.1.1.1";
+    private static String codeSystem = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
 
-    private static String codeSystemVersion = null;
+    private static String codeSystemVersion = "";
 
     private String code;
 
     private String description;
 
-    private ArrangemangsTyp(String code, String desc) {
+    private UtlatandeKod(String code, String desc) {
         this.code = code;
         this.description = desc;
     }
 
-    @Override
     public String getCode() {
-        return this.code;
+        return code;
     }
 
-    @Override
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     @Override
@@ -61,5 +64,10 @@ public enum ArrangemangsTyp implements ICodeSystem {
     @Override
     public String getCodeSystemVersion() {
         return codeSystemVersion;
+    }
+
+    @Override
+    public boolean matches(Kod kod) {
+        return CodeConverter.matches(this, kod);
     }
 }

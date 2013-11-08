@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.modules.rli.model.edit.Utlatande;
 import se.inera.certificate.modules.rli.model.factory.EditModelFactory;
+import se.inera.certificate.modules.rli.rest.dto.CreateNewDraftCertificateHolder;
 import se.inera.webcert.integration.rest.WebCertModuleDraftApi;
 import se.inera.webcert.integration.rest.dto.CreateDraftCertificateHolder;
 
@@ -48,8 +49,11 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
         String certificateId = UUID.randomUUID().toString();
         LOG.info("Creating new draft (type: {}), with id: {}", certificateType, certificateId);
 
-        Utlatande utlatande = editModelFactory.createEditableUtlatande(certificateId,
-                draftInfo.getInitialParameters());
+        CreateNewDraftCertificateHolder newDraftData = new CreateNewDraftCertificateHolder();
+        newDraftData.setCertificateId(certificateId);
+        newDraftData.setSkapadAv(draftInfo.getSkapadAv());
+//        newDraftData.setSomethingOnlyWebcertKnowsAbout("Evil hidden stuff");
+        Utlatande utlatande = editModelFactory.createEditableUtlatande(newDraftData);
         mockStore.put(certificateId, utlatande);
         simulateLatency(1000);
         return utlatande;

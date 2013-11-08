@@ -18,18 +18,35 @@
  */
 package se.inera.certificate.modules.rli.model.codes;
 
+import se.inera.certificate.model.Kod;
 
+/**
+ * Represents all the codes used by this module to define rekommendationer.
+ */
 public enum RekommendationsKod implements ICodeSystem {
 
-    REK1("REK1", 
-            "Patientens tillstånd innebär att resan innebär risk för men. Patienten rekommenderas därför att inte genomföra resan."), 
-    REK2("REK2", 
+    /** Patient rekomenderas inte att resa */
+    REK1("REK1",
+            "Patientens tillstånd innebär att resan innebär risk för men. Patienten rekommenderas därför att inte genomföra resan."),
+
+    /** Patient avråds inte från att resa */
+    REK2(
+            "REK2",
             "Patientens tillstånd innebär inte någon ökad risk för men vid resa. Patienten rekommenderas därför inte att avstå från resan."),
-    REK5("REK5", 
-            "Patientens tillstånd föranleder speciell omvårdnad. Resenären rekommenderas därför att som närstående ställa in resan och ge denna omvårdnad."), 
-    REK6("REK6",
-            "Patientens tillstånd är allvarligt. Resenären rekommenderas därför som närstående till patienten att ej genomföra resan."), 
-    REK7("REK7", 
+
+    /** Patient behöver speciell omvårndad - rekommenderas inte resa. */
+    REK5(
+            "REK5",
+            "Patientens tillstånd föranleder speciell omvårdnad. Resenären rekommenderas därför att som närstående ställa in resan och ge denna omvårdnad."),
+
+    /** Patients tillstånd allvarligt - resenär avråds att resa. */
+    REK6(
+            "REK6",
+            "Patientens tillstånd är allvarligt. Resenären rekommenderas därför som närstående till patienten att ej genomföra resan."),
+
+    /** Patients tillsånd INTE allvarligt - resenär avråds INTE från att resa. */
+    REK7(
+            "REK7",
             "Patientens tillstånd är inte så allvarligt att resenären behöver avstå resan. Resenären avrådes därför inte från resan.");
 
     private static String codeSystemName = "kv_rekommendation_intyg";
@@ -47,28 +64,51 @@ public enum RekommendationsKod implements ICodeSystem {
         this.description = desc;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCode() {
         return this.code;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getDescription() {
         return this.description;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystem() {
         return codeSystem;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystemName() {
         return codeSystemName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystemVersion() {
         return codeSystemVersion;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean matches(Kod kod) {
+        return CodeConverter.matches(this, kod);
     }
 }

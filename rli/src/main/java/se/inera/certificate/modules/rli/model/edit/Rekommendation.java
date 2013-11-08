@@ -19,13 +19,13 @@
 package se.inera.certificate.modules.rli.model.edit;
 
 import se.inera.certificate.modules.rli.model.codes.RekommendationsKod;
-import se.inera.certificate.modules.rli.model.codes.SjukdomsKannedom;
+import se.inera.certificate.modules.rli.model.codes.SjukdomskannedomKod;
 
 public class Rekommendation {
 
     private RekommendationsKod rekommendationskod;
 
-    private SjukdomsKannedom sjukdomskannedom;
+    private SjukdomskannedomKod sjukdomskannedom;
 
     private String beskrivning;
 
@@ -41,11 +41,11 @@ public class Rekommendation {
         this.rekommendationskod = rekommendationskod;
     }
 
-    public SjukdomsKannedom getSjukdomskannedom() {
+    public SjukdomskannedomKod getSjukdomskannedom() {
         return sjukdomskannedom;
     }
 
-    public void setSjukdomskannedom(SjukdomsKannedom sjukdomskannedom) {
+    public void setSjukdomskannedom(SjukdomskannedomKod sjukdomskannedom) {
         this.sjukdomskannedom = sjukdomskannedom;
     }
 

@@ -18,19 +18,40 @@
  */
 package se.inera.certificate.modules.rli.model.codes;
 
+import se.inera.certificate.model.Kod;
 
+/**
+ * Represents all the codes used by this module to define befattningar.
+ */
 public enum BefattningsKod implements ICodeSystem {
 
-    OVERLAKARE("201010", "Överläkare"), 
+    /** Överläkare */
+    OVERLAKARE("201010", "Överläkare"),
+
+    /** Distriktsläkare/Specialist allmänmedicin */
     DISTRIKTSLAKARE("201011", "Distriktsläkare/Specialist allmänmedicin"),
+
+    /** Skolläkare */
     SKOLLAKARE("201012", "Skolläkare"),
+
+    /** Företagsläkare */
     FORETAGSLAKARE("201013", "Företagsläkare"),
+
+    /** Specialistläkare */
     SPECIALISTLAKARE("202010", "Specialistläkare"),
+
+    /** ST-läkare */
     LAKARE_LEG_SPECIALISTTJANSTGORING("203010", "Legitimerad läkare under specialiseringstjänstgöring (STläkare)"),
+
+    /** Vikarierande läkare */
     LAKARE_LEG_ANNAN("203090", "Legitimerad läkare under till exempel vikariat"),
+
+    /** AT-läkare */
     LAKARE_EJ_LEG_ALLMANTJANSTGORING("204010", "Ej legitimerad läkare under allmäntjänstgöring (AT-läkare)"),
+
+    /** Ej legitimerad läkare */
     LAKARE_EJ_LEG_ANNAN("204090", "Ej legitimerad läkare under till exempel vikariat eller provtjänstgöring");
-    
+
     private static String codeSystemName = "HSA";
 
     private static String codeSystem = "1.2.752.129.2.1.4.1";
@@ -54,18 +75,35 @@ public enum BefattningsKod implements ICodeSystem {
         return description;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystem() {
         return codeSystem;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystemName() {
         return codeSystemName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystemVersion() {
         return codeSystemVersion;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean matches(Kod kod) {
+        return CodeConverter.matches(this, kod);
     }
 }
