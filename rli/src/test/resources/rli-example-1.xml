@@ -72,7 +72,7 @@
       <!-- Detta fält ska inte fyllas i när det är möjligt med öppna intervall -->
       <tom>2013-08-12</tom>
     </aktivitetstid>
-
+    <plats>London</plats>
     <utforsVidEnhet>
       <enhets-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-1337"/>
       <enhetsnamn>Testenheten</enhetsnamn>
@@ -98,6 +98,7 @@
       <!-- Detta fält ska inte fyllas i när det är möjligt med öppna intervall -->
       <tom>2013-08-01</tom>
     </aktivitetstid>
+    <plats>Säffle</plats>
   </aktivitet>
 
   <rekommendation>

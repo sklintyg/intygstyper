@@ -1,14 +1,13 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
+
 import org.apache.cxf.common.util.StringUtils;
 import org.joda.time.LocalDate;
-
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
@@ -22,7 +21,7 @@ public class UtlatandeValidator {
 
     private List<String> validationErrors = new ArrayList<>();
 
-    public static final String PERSON_NUMBER_REGEX = "[0-9]{8}[-+][0-9]{4}";
+    public static final String PERSON_NUMBER_REGEX = "[0-9]{8}-[0-9]{4}";
 
     private static final String VALIDATION_ERROR_PREFIX = "Validation Error (im):";
 

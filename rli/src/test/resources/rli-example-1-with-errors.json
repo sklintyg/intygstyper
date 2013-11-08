@@ -86,12 +86,12 @@
             "rekommendationskod" : {
                 "codeSystem" : "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                 "codeSystemName" : "kv_rekommendation_intyg",
-                "code" : "SEK7"
+                "code" : "RK7"
             },
             "sjukdomskannedom" : {
                 "codeSystem" : "f3a556c4-d54b-4f67-8496-d5259df70493",
                 "codeSystemName" : "kv_sjukdomskännedom_intyg",
-                "code" : "SIK2"
+                "code" : "SK2"
             }
         }
     ],
