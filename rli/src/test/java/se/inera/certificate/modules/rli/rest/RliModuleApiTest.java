@@ -3,6 +3,7 @@ package se.inera.certificate.modules.rli.rest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -11,6 +12,9 @@ import java.util.Map;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXB;
 
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.inera.certificate.common.v1.Utlatande;
+import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.modules.rli.rest.dto.CreateNewDraftCertificateHolder;
 
 @ContextConfiguration(locations = ("/rli-test-config.xml"))
@@ -104,11 +109,14 @@ public class RliModuleApiTest {
     }
 
     @Test
-    public void testCreateNewEditableCert() {
+    public void testCreateNewEditableCert() throws JsonParseException, JsonMappingException, IOException {
         CreateNewDraftCertificateHolder draftCertHolder = new CreateNewDraftCertificateHolder();
 
+        HosPersonal skapadAv = new ObjectMapper().readValue(new ClassPathResource("initial-parameters.json").getFile(),
+                HosPersonal.class);
+
         draftCertHolder.setCertificateId("new_ID");
-        draftCertHolder.setCertificateData(createInitialData());
+        draftCertHolder.setSkapadAv(skapadAv);
 
         se.inera.certificate.modules.rli.model.edit.Utlatande utlatande = (se.inera.certificate.modules.rli.model.edit.Utlatande) rliModuleApi
                 .createNewInternal(draftCertHolder).getEntity();
@@ -116,31 +124,5 @@ public class RliModuleApiTest {
         assertNotNull(utlatande);
         assertNotNull(utlatande.getSkapadAv());
 
-    }
-
-    private Map<String, Object> createInitialData() {
-        Map<String, Object> initialData = new HashMap<String, Object>();
-        Map<String, Serializable> skapadAv = new HashMap<String, Serializable>();
-
-        Map<String, String> vardgivare = new HashMap<String, String>();
-        vardgivare.put("vardgivarid", "vardgivare_test");
-        vardgivare.put("vardgivarnamn", "Testvårdgivaren");
-
-        HashMap<String, Object> vardenhet = new HashMap<String, Object>();
-        vardenhet.put("enhetsid", "testenhet");
-        vardenhet.put("enhetsnamn", "testnamn");
-        vardenhet.put("postadress", "Testvägen12");
-        vardenhet.put("postnummer", "12334");
-        vardenhet.put("postort", "Tolvberga");
-        vardenhet.put("telefonnummer", "08-1337");
-        vardenhet.put("epost", "test@test.com");
-        vardenhet.put("vardgivare", vardgivare);
-
-        skapadAv.put("personid", "personid");
-        skapadAv.put("fullstandigtNamn", "personnamn");
-        skapadAv.put("vardenhet", vardenhet);
-
-        initialData.put("skapadAv", skapadAv);
-        return initialData;
     }
 }

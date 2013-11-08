@@ -168,6 +168,7 @@ public class ExternalValidatorInstance {
             if (AktivitetsKod.FORSTA_UNDERSOKNING.matches(aktivitet.getAktivitetskod())) {
                 assertNotNull(aktivitet.getAktivitetstid(), "aktivitet.aktivitetstid");
             }
+            
         }
 
     }

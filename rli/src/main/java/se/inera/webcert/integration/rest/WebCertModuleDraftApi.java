@@ -1,5 +1,7 @@
 package se.inera.webcert.integration.rest;
 
+import java.io.IOException;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -9,6 +11,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.xml.bind.JAXBException;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import se.inera.webcert.integration.rest.dto.CreateDraftCertificateHolder;
 
@@ -36,11 +42,15 @@ public interface WebCertModuleDraftApi {
      * @param draftInfo
      *            The type of draft certificate to produce etc
      * @return The draft certificate as a JSON object
+     * @throws IOException 
+     * @throws JsonMappingException 
+     * @throws JsonParseException 
+     * @throws JAXBException 
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Object createDraftCertificate(CreateDraftCertificateHolder draftInfo);
+    Object createDraftCertificate(CreateDraftCertificateHolder draftInfo) throws JsonParseException, JsonMappingException, IOException, JAXBException;
 
     /**
      * Returns the draft certificate as JSON identified by the certificateId.

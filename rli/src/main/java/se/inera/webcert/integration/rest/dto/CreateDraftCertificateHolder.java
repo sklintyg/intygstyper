@@ -1,13 +1,17 @@
 package se.inera.webcert.integration.rest.dto;
 
-import java.util.HashMap;
-import java.util.Map;
+import se.inera.certificate.model.HosPersonal;
+import se.inera.certificate.model.Patient;
 
 public class CreateDraftCertificateHolder {
 
     private String certificateType;
 
-    private Map<String, Object> initialParameters;
+    private HosPersonal skapadAv;
+    
+    private Patient patientInfo;
+    
+    private Object somethingOnlyWebcertKnowsAbout;
 
     public String getCertificateType() {
         return certificateType;
@@ -17,10 +21,27 @@ public class CreateDraftCertificateHolder {
         this.certificateType = certificateType;
     }
 
-    public Map<String, Object> getInitialParameters() {
-        if (initialParameters == null) {
-            initialParameters = new HashMap<>();
-        }
-        return initialParameters;
+    public HosPersonal getSkapadAv() {
+        return skapadAv;
+    }
+
+    public void setSkapadAv(HosPersonal skapadAv) {
+        this.skapadAv = skapadAv;
+    }
+
+    public Patient getPatientInfo() {
+        return patientInfo;
+    }
+
+    public void setPatientInfo(Patient patientInfo) {
+        this.patientInfo = patientInfo;
+    }
+
+    public Object getSomethingOnlyWebcertKnowsAbout() {
+        return somethingOnlyWebcertKnowsAbout;
+    }
+
+    public void setSomethingOnlyWebcertKnowsAbout(Object somethingOnlyWebcertKnowsAbout) {
+        this.somethingOnlyWebcertKnowsAbout = somethingOnlyWebcertKnowsAbout;
     }
 }

@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.rli.rest.dto;
+package se.inera.webcert.integration.rest.dto;
 
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Patient;
@@ -10,6 +10,8 @@ public class CreateNewDraftCertificateHolder {
     private HosPersonal skapadAv;
     
     private Patient patientInfo;
+    
+    private Object somethingOnlyWebcertKnowsAbout;
 
     public String getCertificateId() {
         return certificateId;
@@ -33,5 +35,13 @@ public class CreateNewDraftCertificateHolder {
 
     public void setPatientInfo(Patient patientInfo) {
         this.patientInfo = patientInfo;
+    }
+
+    public Object getSomethingOnlyWebcertKnowsAbout() {
+        return somethingOnlyWebcertKnowsAbout;
+    }
+
+    public void setSomethingOnlyWebcertKnowsAbout(Object somethingOnlyWebcertKnowsAbout) {
+        this.somethingOnlyWebcertKnowsAbout = somethingOnlyWebcertKnowsAbout;
     }
 }
