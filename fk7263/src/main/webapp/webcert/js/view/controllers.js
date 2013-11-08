@@ -31,11 +31,9 @@ angular.module('wc.fk7263.controllers').controller('EditCertCtrl', [ '$scope', '
     		arbetsformagaPrognos : 600,
     		atgardInomSjukvarden : 66,
     		annanAtgard : 66,
-    		ovrigt : 420 // 420 = combined 13
+    		ovrigt : 420 // 420 = combined field 13 (and dependencies) limit
     }; 
     
-    $scope.otherCounter = 420;
-
     $scope.widgetState.doneLoading = true;
     $scope.today = new Date();
     
@@ -67,22 +65,21 @@ angular.module('wc.fk7263.controllers').controller('EditCertCtrl', [ '$scope', '
       });
     }
 
-    $scope.selected_main_diagnosecode = undefined;
     $scope.diagnose_codes = [
-             {value:"J44.0", label:"J44.0 Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion"},
-             {value:"K92.2", label:"K92.2 Gastrointestinal blödning, ospecificerad"}
-           ];
+      {value:"J44.0", label:"J44.0 Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion"},
+      {value:"K92.2", label:"K92.2 Gastrointestinal blödning, ospecificerad"}
+    ];
 
-    $scope.selected_main_diagnose = undefined;
     $scope.diagnoses = [
-                        {value:"Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion", label:"J44.0 Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion"},
-                        {value:"Gastrointestinal blödning, ospecificerad", label:"K92.2 Gastrointestinal blödning, ospecificerad"}
-                      ];
+      {value:"Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion", label:"J44.0 Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion"},
+      {value:"Gastrointestinal blödning, ospecificerad", label:"K92.2 Gastrointestinal blödning, ospecificerad"}
+    ];
     
     $scope.cert = {
     		otherData : {
     			samsjuklighet : false
     		},
+    		workTime : '',
       	"id":"intyg-1","giltighet":{"from":"2011-01-26","tom":"2011-05-31"},"skickatDatum":"2011-03-23T09:29:15.000","patientNamn":"Test Testorsson stubbe",
   			"patientPersonnummer":"19121212-1212","avstangningSmittskydd":false,"diagnosKod":"S47","diagnosBeskrivning":"Medicinskttillstånd: Klämskada på överarm",
   			"sjukdomsforlopp":"Bedömttillstånd: Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.",

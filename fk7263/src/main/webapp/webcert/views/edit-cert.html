@@ -104,14 +104,14 @@
 							<label class="control-label">ICD 10</label>
 							<div class="row-fluid controls">
 								<input type="text" id="diagnose.code" name="diagnose.code"
-									value="" class='diagnose-code span11' ng-model="selected_main_diagnosecode" typeahead="d.value as d.label for d in diagnose_codes | filter:$viewValue | limitTo:8">
+									value="" class='diagnose-code span11' ng-model="cert.diagnosKod" typeahead="d.value as d.label for d in diagnose_codes | filter:$viewValue | limitTo:8">
 							</div>
 						</div>
 						<div class='span9'>
 							<label class="control-label">Diagnos</label>
 							<div class="row-fluid controls">
 								<input type="text" id="diagnose.description" class="span12"
-									name="diagnose.description" value="" ng-model="selected_main_diagnose" typeahead="d.value as d.label for d in diagnoses | filter:$viewValue | limitTo:8">
+									name="diagnose.description" value="" ng-model="cert.diagnosBeskrivning" typeahead="d.value as d.label for d in diagnoses | filter:$viewValue | limitTo:8">
 							</div>
 						</div>
 					</div>
@@ -166,7 +166,7 @@
 					<textarea id="diseaseCause" name="diseaseCause" rows='5' cols='80' ng-model="cert.sjukdomsforlopp"></textarea>
 					<div class="counter">
 						<div>
-							Tecken kvar: {{inputLimits.diagnosBeskrivning - cert.sjukdomsforlopp.length}}
+							Tecken kvar: {{inputLimits.sjukdomsforlopp - cert.sjukdomsforlopp.length}}
 						</div>
 					</div>
 				</div>
@@ -185,12 +185,9 @@
 					<a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
 						title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
 						försäkringsmedicinska beslutstöd</a>
-					<textarea id="disabilities" name="disabilities" rows='6' cols='80'
-						></textarea>
+					<textarea id="disabilities" name="disabilities" rows='6' cols='80' ng-model="cert.funktionsnedsattning" maxlength="{{inputLimits.funktionsnedsattning}}"></textarea>
 					<div class="counter">
-						<div>
-							Tecken kvar: <span class="counter-text"></span>
-						</div>
+						Tecken kvar: {{inputLimits.funktionsnedsattning - cert.funktionsnedsattning.length}}
 					</div>
 				</div>
 			</div>
@@ -207,12 +204,9 @@
 						onclick="ICF.remote.ST('example_form', 'example_frame',this)"
 						title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
 						försäkringsmedicinska beslutstöd</a>
-					<textarea id="activityLimitation" name="activityLimitation"
-						rows='10' cols='80' ></textarea>
+					<textarea id="activityLimitation" name="activityLimitation"	rows='10' cols='80' ng-model="cert.aktivitetsbegransning" maxlength="{{inputLimits.aktivitetsbegransning}}"></textarea>
 					<div class="counter">
-						<div>
-							Tecken kvar: <span class="counter-text"></span>
-						</div>
+						Tecken kvar: {{inputLimits.aktivitetsbegransning - cert.aktivitetsbegransning.length}}
 					</div>
 				</div>
 			</div>
@@ -236,12 +230,9 @@
 							<div class="indent">
 								<label for="currentWork">Ange aktuella arbetsuppgifter</label>
 								<div class="controls">
-									<textarea id="currentWork" name="currentWork" rows='2'
-										cols='80' ></textarea>
+									<textarea id="currentWork" name="currentWork" rows='2' cols='80' ng-model="cert.nuvarandeArbetsuppgifter" maxlength="{{inputLimits.nuvarandeArbetsuppgifter}}"></textarea>
 									<div class="counter">
-										<div>
-											Tecken kvar: <span class="counter-text"></span>
-										</div>
+										Tecken kvar: {{inputLimits.nuvarandeArbetsuppgifter - cert.nuvarandeArbetsuppgifter.length}}
 									</div>
 								</div>
 							</div>
@@ -276,66 +267,42 @@
 						Faktisk tjänstgöringstid <input style="width: 3em;" type="text"
 							id="capacityForWork.actualWorkingHoursPerWeek"
 							name="capacityForWork.actualWorkingHoursPerWeek" value=""
-							class='short control-element'> <span>timmar/vecka</span>
+							class='short control-element'
+							ng-model="cert.workTime"> <span>timmar/vecka</span>
 					</div>
 
 					<div class="control-group form-inline">
-						<input type="checkbox" id="capacityForWork.work25"
-							name="capacityForWork.work25"  /> <label
-							for="capacityForWork.work25" class="checkbox">25% nedsatt
-							arbetsförmåga från</label> <input type="text"
-							datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened"
-							min="minDate" max="'2015-06-22'" datepicker-options="dateOptions"
-							date-disabled="disabled(date, mode)" ng-required="true" />
-						<button class="btn" ng-click="open()">
-							<i class="icon-calendar"></i>
-						</button>
-						<span>till</span> <input type="text"
-							datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened"
-							min="minDate" max="'2015-06-22'" datepicker-options="dateOptions"
-							date-disabled="disabled(date, mode)" ng-required="true" />
-						<button class="btn" ng-click="open()">
-							<i class="icon-calendar"></i>
-						</button>
+						<input type="checkbox" id="capacityForWork.work25" name="capacityForWork.work25"  />
+						<label for="capacityForWork.work25" class="checkbox">25% nedsatt arbetsförmåga från</label> 
+						<input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened"	min="minDate" max="'2015-06-22'" datepicker-options="dateOptions"	date-disabled="disabled(date, mode)" ng-required="true" />
+						<button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
+						<span>till</span> 
+            <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" />
+            <button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
 						<div class="indent">
 							<div class="workHoursPerWeek">
-								Arbetstid timmar/vecka: <span id="workHoursPerWeek25"></span>
+								Arbetstid timmar/vecka: <strong>{{cert.workTime / 4}}</strong>
 							</div>
-							Arbetstidsförläggning (frivilligt) <input type="text"
-								id="capacityForWork.rec25LongerWorkingHours"
-								name="capacityForWork.rec25LongerWorkingHours" value=""
-								class='otherInformation'> <span
+							Arbetstidsförläggning (frivilligt) <input type="text" id="capacityForWork.rec25LongerWorkingHours" name="capacityForWork.rec25LongerWorkingHours" value="" class='otherInformation'> <span
 								class="otherInformationCounter"></span>
-							<div class="info-transfer">Informationen överförs till
-								”Övriga upplysningar” i Försäkringskassans blankett.</div>
+							<div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
 						</div>
 					</div>
 
 					<div class="control-group form-inline">
-						<input type="checkbox" id="capacityForWork.work50"
-							name="capacityForWork.work50"  /> <label
-							for="capacityForWork.work50" class="checkbox">50% nedsatt
-							arbetsförmåga från</label> <input type="text"
-							datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened"
-							min="minDate" max="'2015-06-22'" datepicker-options="dateOptions"
-							date-disabled="disabled(date, mode)" ng-required="true" />
-						<button class="btn" ng-click="open()">
-							<i class="icon-calendar"></i>
-						</button>
-						<span>till</span> <input type="text"
-							datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened"
-							min="minDate" max="'2015-06-22'" datepicker-options="dateOptions"
-							date-disabled="disabled(date, mode)" ng-required="true" />
-						<button class="btn" ng-click="open()">
-							<i class="icon-calendar"></i>
-						</button>
+						<input type="checkbox" id="capacityForWork.work50" name="capacityForWork.work50" /> <label for="capacityForWork.work50" class="checkbox">50% nedsatt arbetsförmåga från</label>
+							
+            <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" />
+            <button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
+						<span>till</span>
+            <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" />
+            <button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
+
 						<div class="indent">
 							<div class="workHoursPerWeek">
-								Arbetstid timmar/vecka: <span id="workHoursPerWeek50"></span>
+								Arbetstid timmar/vecka: <strong>{{cert.workTime / 2}}</strong>
 							</div>
-							Arbetstidsförläggning (frivilligt) <input type="text"
-								id="capacityForWork.rec50LongerWorkingHours"
-								name="capacityForWork.rec50LongerWorkingHours" value=""
+							Arbetstidsförläggning (frivilligt) <input type="text"	id="capacityForWork.rec50LongerWorkingHours" name="capacityForWork.rec50LongerWorkingHours" value=""
 								class='otherInformation'> <span
 								class="otherInformationCounter"></span>
 							<div class="info-transfer">Informationen överförs till
@@ -363,7 +330,7 @@
 						</button>
 						<div class="indent">
 							<div class="workHoursPerWeek">
-								Arbetstid timmar/vecka: <span id="workHoursPerWeek75"></span>
+								Arbetstid timmar/vecka: <strong>{{cert.workTime * 0.75}}</strong>
 							</div>
 							Arbetstidsförläggning (frivilligt) <input type="text"
 								id="capacityForWork.rec75LongerWorkingHours"
@@ -414,12 +381,9 @@
 						onclick="ICF.remote.ST('example_form', 'example_frame',this)"
 						title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
 						försäkringsmedicinska beslutstöd</a>
-					<textarea id="capacityForWork.text" name="capacityForWork.text"
-						rows='10' cols='80' ></textarea>
+					<textarea id="capacityForWork.text" name="capacityForWork.text"	rows='10' cols='80' ng-model="cert.arbetsformagaPrognos" maxlength="{{inputLimits.arbetsformagaPrognos}}"></textarea>
 					<div class="counter">
-						<div>
-							Tecken kvar: <span class="counter-text"></span>
-						</div>
+						Tecken kvar: {{inputLimits.arbetsformagaPrognos - cert.arbetsformagaPrognos.length}}
 					</div>
 				</div>
 			</div>
