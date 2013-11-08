@@ -31,61 +31,57 @@
 					<div class="control-group form-inline">
 						<input type="checkbox" id="informationBasedOn.examination"
 							name="informationBasedOn.examination" class="inline"
-							ng-model="widgetState.basedOnCheck[0]" ng-change="autoEnterDate(0)"/> 
+							ng-model="basedOnState.check[0]" ng-change="autoEnterDate(0)"/> 
 						<label
 							for="informationBasedOn.examination" class="inline"
 							style="min-width: 250px">Min undersökning av patienten</label>
-						<input type="text" id="dp0" datepicker-popup ng-model="cert.undersokningAvPatienten" is-open="widgetState.dpState0.open" ng-change="updateCheck(0)"/>
-            <button class="btn" ng-click="toggleDatePickerInstance(widgetState.dpState0)" ng-disabled="widgetState.dpState0.open">
+						<input type="text" datepicker-popup ng-model="cert.undersokningAvPatienten" is-open="basedOnState.dpState0.open" ng-change="updateCheck(0)"/>
+            <button class="btn" ng-click="toggleDatePickerInstance(basedOnState.dpState0)" ng-disabled="basedOnState.dpState0.open">
               <i class="icon-calendar"></i>
             </button>
 					</div>
 					<div class="control-group form-inline">
 						<input type="checkbox" id="informationBasedOn.phoneContact"
-							name="informationBasedOn.phoneContact" ng-model="widgetState.basedOnCheck[1]" ng-change="autoEnterDate(1)" />
+							name="informationBasedOn.phoneContact" ng-model="basedOnState.check[1]" ng-change="autoEnterDate(1)" />
 						<label
 							for="informationBasedOn.phoneContact" class="checkbox"
 							style="min-width: 250px">Min telefonkontakt med patienten</label>
-            <input type="text" id="dp1" datepicker-popup ng-model="cert.telefonkontaktMedPatienten" is-open="widgetState.dpState1.open"  ng-change="updateCheck(1)"/>
-            <button class="btn" ng-click="toggleDatePickerInstance(widgetState.dpState1)" ng-disabled="widgetState.dpState1.open">
+            <input type="text" id="dp1" datepicker-popup ng-model="cert.telefonkontaktMedPatienten" is-open="basedOnState.dpState1.open"  ng-change="updateCheck(1)"/>
+            <button class="btn" ng-click="toggleDatePickerInstance(basedOnState.dpState1)" ng-disabled="basedOnState.dpState1.open">
               <i class="icon-calendar"></i>
             </button>
 
 					</div>
 					<div class="control-group form-inline">
 						<input type="checkbox" id="informationBasedOn.journal"
-							name="informationBasedOn.journal"  ng-model="widgetState.basedOnCheck[2]" ng-change="autoEnterDate(2)"/>
+							name="informationBasedOn.journal"  ng-model="basedOnState.check[2]" ng-change="autoEnterDate(2)"/>
 						<label
 							for="informationBasedOn.journal" class="checkbox"
 							style="min-width: 250px">Journaluppgifter</label>
-            <input type="text" id="dp2" datepicker-popup ng-model="cert.journaluppgifter" is-open="widgetState.dpState2.open" ng-change="updateCheck(2)"/>
-            <button class="btn" ng-click="toggleDatePickerInstance(widgetState.dpState2)" ng-disabled="widgetState.dpState2.open">
+            <input type="text" id="dp2" datepicker-popup ng-model="cert.journaluppgifter" is-open="basedOnState.dpState2.open" ng-change="updateCheck(2)"/>
+            <button class="btn" ng-click="toggleDatePickerInstance(basedOnState.dpState2)" ng-disabled="basedOnState.dpState2.open">
               <i class="icon-calendar"></i>
             </button>
 					</div>
 					<div class="control-group form-inline">
 						<input type="checkbox" id="informationBasedOn.other"
-							name="informationBasedOn.other"  ng-model="widgetState.basedOnCheck[3]" ng-change="autoEnterDate(3)"/>
+							name="informationBasedOn.other"  ng-model="basedOnState.check[3]" ng-change="autoEnterDate(3)"/>
 						<label
 							for="informationBasedOn.other" class="checkbox"
 							style="min-width: 250px">Annat</label> 
-            <input type="text" id="dp3" datepicker-popup ng-model="cert.annanReferens" is-open="widgetState.dpState3.open" ng-change="updateCheck(3)"/>
-            <button class="btn" ng-click="toggleDatePickerInstance(widgetState.dpState3)" ng-disabled="widgetState.dpState3.open">
+            <input type="text" id="dp3" datepicker-popup ng-model="cert.annanReferens" is-open="basedOnState.dpState3.open" ng-change="updateCheck(3)"/>
+            <button class="btn" ng-click="toggleDatePickerInstance(basedOnState.dpState3)" ng-disabled="basedOnState.dpState3.open">
               <i class="icon-calendar"></i>
             </button>
 					</div>
-					<div class="otherText indent" ng-if="widgetState.basedOnCheck[3]">
+					<div class="otherText indent" ng-if="basedOnState.check[3]">
 						<span>Ange vad:</span><br />
-						<textarea id="informationBasedOn.otherText"
-							name="informationBasedOn.otherText" rows='2' cols='40'
-							class='otherInformation'></textarea>
-						<div class="info-transfer">Informationen överförs till
-							"Övriga upplysningar" i Försäkringskassans blankett.</div>
-					</div>
-					<div class="counter pull-right">
-						<div>
-							<span class="otherInformationCounter"></span>
-						</div>
+						<textarea id="informationBasedOn.otherText"	name="informationBasedOn.otherText" rows='2' cols='40'
+							class='otherInformation' ng-model="cert.otherData.baseradPaAnnat"></textarea>
+            <div class="counter">
+              Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}
+            </div>
+						<div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
 					</div>
 				</div>
 			</div>
@@ -124,8 +120,7 @@
 							</div>
 						</div>
 						<div class='span9'>
-							<label class="control-label inline-block unbreakable">Ytterligare
-								diagnoser (frivilligt)</label><span class="help">?</span>
+							<label class="control-label inline-block unbreakable">Ytterligare	diagnoser (frivilligt)</label><span class="help">?</span>
 							<div class="controls">
 								<input type="text" id="diagnose.descriptionOpt1"
 									name="diagnose.descriptionOpt1" value="" class="block span12">
@@ -183,8 +178,7 @@
 				<div class="text">
 
 					<a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
-						title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
-						försäkringsmedicinska beslutstöd</a>
+						title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
 					<textarea id="disabilities" name="disabilities" rows='6' cols='80' ng-model="cert.funktionsnedsattning" maxlength="{{inputLimits.funktionsnedsattning}}"></textarea>
 					<div class="counter">
 						Tecken kvar: {{inputLimits.funktionsnedsattning - cert.funktionsnedsattning.length}}
@@ -200,10 +194,8 @@
 					<span message key="view.label.limitation"></span><span class="help">?</span>
 				</h3>
 				<div class="text">
-					<a href="#" class=""
-						onclick="ICF.remote.ST('example_form', 'example_frame',this)"
-						title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
-						försäkringsmedicinska beslutstöd</a>
+					<a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
+            title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
 					<textarea id="activityLimitation" name="activityLimitation"	rows='10' cols='80' ng-model="cert.aktivitetsbegransning" maxlength="{{inputLimits.aktivitetsbegransning}}"></textarea>
 					<div class="counter">
 						Tecken kvar: {{inputLimits.aktivitetsbegransning - cert.aktivitetsbegransning.length}}
@@ -211,6 +203,7 @@
 				</div>
 			</div>
 
+      <!-- Arbete -->
 			<div class="body-row clearfix" ng-hide="cert.avstangningSmittskydd">
 				<h4 class="cert-field-number">
 					<span message key="view.label.field"></span> 8a
@@ -220,14 +213,11 @@
 				</h3>
 				<div class="text">
 					<div class="control-group form-inline">
-						<label class="control-label"><span message
-							key="view.label.patientworkcapacity"></span></label>
+						<label class="control-label"><span message key="view.label.patientworkcapacity"></span></label>
 						<div class="controls form-inline">
-							<input id="work1" type="radio" id="basedOnWork"
-								name="basedOnWork" group="group1" value="CURRENT"
-								checked="checked" class="control-element"> <label
-								for="work1">Nuvarande arbete</label><span class="help">?</span>
-							<div class="indent">
+							<input id="work1" type="radio" id="basedOnWork"	name="basedOnWork" value="CURRENT" ng-model="cert.basedOnWork" checked="checked" class="control-element"> 
+							<label for="work1">Nuvarande arbete</label><span class="help">?</span>
+							<div class="indent" ng-if="cert.basedOnWork == 'CURRENT'">
 								<label for="currentWork">Ange aktuella arbetsuppgifter</label>
 								<div class="controls">
 									<textarea id="currentWork" name="currentWork" rows='2' cols='80' ng-model="cert.nuvarandeArbetsuppgifter" maxlength="{{inputLimits.nuvarandeArbetsuppgifter}}"></textarea>
@@ -239,20 +229,17 @@
 						</div>
 					</div>
 					<div class="control-group form-inline">
-						<input id="work2" type="radio" name="basedOnWork" group="group1"
-							value="UNEMPLOYMENT" class="control-element"> <label
-							for="work2" class="">Arbetslöshet - att utföra arbete på
-							den reguljära arbetsmarknaden</label><span class="help">?</span>
+						<input id="work2" type="radio" name="basedOnWork" group="group1" value="UNEMPLOYMENT" ng-model="cert.basedOnWork" class="control-element">
+						<label for="work2" class="">Arbetslöshet - att utföra arbete på den reguljära arbetsmarknaden</label><span class="help">?</span>
 					</div>
 					<div class="control-group form-inline">
-						<input id="work3" type="radio" name="basedOnWork" group="group1"
-							value="PARENTAL_LEAVE" class="control-element"> <label
-							for="work3" class="">Föräldraledighet med föräldrapenning
-							- att vårda sitt barn</label><span class="help">?</span>
+						<input id="work3" type="radio" name="basedOnWork" group="group1" value="PARENTAL_LEAVE" ng-model="cert.basedOnWork" class="control-element">
+						<label for="work3" class="">Föräldraledighet med föräldrapenning - att vårda sitt barn</label><span class="help">?</span>
 					</div>
 				</div>
 			</div>
 
+      <!-- Arbetsförmåga -->
 			<div class="body-row clearfix">
 				<h4 class="cert-field-number">
 					<span message key="view.label.field"></span> 8b
@@ -271,99 +258,83 @@
 							ng-model="cert.workTime"> <span>timmar/vecka</span>
 					</div>
 
+          <!-- 25% -->
 					<div class="control-group form-inline">
-						<input type="checkbox" id="capacityForWork.work25" name="capacityForWork.work25"  />
+						<input type="checkbox" id="capacityForWork.work25" name="capacityForWork.work25" ng-model="workState.check25"/>
 						<label for="capacityForWork.work25" class="checkbox">25% nedsatt arbetsförmåga från</label> 
-						<input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened"	min="minDate" max="'2015-06-22'" datepicker-options="dateOptions"	date-disabled="disabled(date, mode)" ng-required="true" />
-						<button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
+            
+            <input type="text" datepicker-popup ng-model="cert.nedsattMed25.start" is-open="workState.dpState25From.open" ng-change="updateTotalCertDays()"/>
+            <button class="btn" ng-click="toggleDatePickerInstance(workState.dpState25From)" ng-disabled="workState.dpState25From.open"><i class="icon-calendar"></i></button>
 						<span>till</span> 
-            <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" />
-            <button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
-						<div class="indent">
-							<div class="workHoursPerWeek">
+            <input type="text" datepicker-popup ng-model="cert.nedsattMed25.end" is-open="workState.dpState25To.open" ng-change="updateTotalCertDays()"/>
+            <button class="btn" ng-click="toggleDatePickerInstance(workState.dpState25To)" ng-disabled="workState.dpState25To.open"><i class="icon-calendar"></i></button>
+						<div class="indent" ng-if="workState.check25">
+							<div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
 								Arbetstid timmar/vecka: <strong>{{cert.workTime / 4}}</strong>
 							</div>
-							Arbetstidsförläggning (frivilligt) <input type="text" id="capacityForWork.rec25LongerWorkingHours" name="capacityForWork.rec25LongerWorkingHours" value="" class='otherInformation'> <span
-								class="otherInformationCounter"></span>
+							Arbetstidsförläggning (frivilligt) <input type="text" ng-model="cert.otherData.workingHours25" id="capacityForWork.rec25LongerWorkingHours" name="capacityForWork.rec25LongerWorkingHours" value="" class='otherInformation'>
+							 Tecken kvar:  {{inputLimits.ovrigt - getTotalOvrigtLength()}}
 							<div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
 						</div>
 					</div>
 
+          <!-- 50% -->
 					<div class="control-group form-inline">
-						<input type="checkbox" id="capacityForWork.work50" name="capacityForWork.work50" /> <label for="capacityForWork.work50" class="checkbox">50% nedsatt arbetsförmåga från</label>
+						<input type="checkbox" id="capacityForWork.work50" name="capacityForWork.work50" ng-model="workState.check50" /> 
+						<label for="capacityForWork.work50" class="checkbox">50% nedsatt arbetsförmåga från</label>
 							
-            <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" />
-            <button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
-						<span>till</span>
-            <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" />
-            <button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
-
-						<div class="indent">
-							<div class="workHoursPerWeek">
+            <input type="text" datepicker-popup ng-model="cert.nedsattMed50.start" is-open="workState.dpState50From.open" ng-change="updateTotalCertDays()"/>
+            <button class="btn" ng-click="toggleDatePickerInstance(workState.dpState50From)" ng-disabled="workState.dpState50From.open"><i class="icon-calendar"></i></button>
+            <span>till</span> 
+            <input type="text" datepicker-popup ng-model="cert.nedsattMed50.end" is-open="workState.dpState50To.open" ng-change="updateTotalCertDays()"/>
+            <button class="btn" ng-click="toggleDatePickerInstance(workState.dpState50To)" ng-disabled="workState.dpState50To.open"><i class="icon-calendar"></i></button>
+            <div class="indent" ng-if="workState.check50">
+							<div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
 								Arbetstid timmar/vecka: <strong>{{cert.workTime / 2}}</strong>
 							</div>
-							Arbetstidsförläggning (frivilligt) <input type="text"	id="capacityForWork.rec50LongerWorkingHours" name="capacityForWork.rec50LongerWorkingHours" value=""
-								class='otherInformation'> <span
-								class="otherInformationCounter"></span>
-							<div class="info-transfer">Informationen överförs till
-								”Övriga upplysningar” i Försäkringskassans blankett.</div>
+							Arbetstidsförläggning (frivilligt) <input type="text"	ng-model="cert.otherData.workingHours50" id="capacityForWork.rec50LongerWorkingHours" name="capacityForWork.rec50LongerWorkingHours" value=""
+								class='otherInformation'> 
+								Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}
+							<div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
 						</div>
 					</div>
 
+          <!-- 75% -->
 					<div class="control-group form-inline">
-						<input type="checkbox" id="capacityForWork.work75"
-							name="capacityForWork.work75"  /> <label
-							for="capacityForWork.work75" class="checkbox">75% nedsatt
-							arbetsförmåga från</label> <input type="text"
-							datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened"
-							min="minDate" max="'2015-06-22'" datepicker-options="dateOptions"
-							date-disabled="disabled(date, mode)" ng-required="true" />
-						<button class="btn" ng-click="open()">
-							<i class="icon-calendar"></i>
-						</button>
-						<span>till</span> <input type="text"
-							datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened"
-							min="minDate" max="'2015-06-22'" datepicker-options="dateOptions"
-							date-disabled="disabled(date, mode)" ng-required="true" />
-						<button class="btn" ng-click="open()">
-							<i class="icon-calendar"></i>
-						</button>
-						<div class="indent">
-							<div class="workHoursPerWeek">
+						<input type="checkbox" id="capacityForWork.work75" name="capacityForWork.work75" ng-model="workState.check75" /> 
+						<label for="capacityForWork.work75" class="checkbox">75% nedsatt arbetsförmåga från</label> 
+						
+            <input type="text" datepicker-popup ng-model="cert.nedsattMed75.start" is-open="workState.dpState75From.open" ng-change="updateTotalCertDays()"/>
+            <button class="btn" ng-click="toggleDatePickerInstance(workState.dpState75From)" ng-disabled="workState.dpState75From.open"><i class="icon-calendar"></i></button>
+            <span>till</span> 
+            <input type="text" datepicker-popup ng-model="cert.nedsattMed75.end" is-open="workState.dpState75To.open" ng-change="updateTotalCertDays()"/>
+            <button class="btn" ng-click="toggleDatePickerInstance(workState.dpState75To)" ng-disabled="workState.dpState75To.open"><i class="icon-calendar"></i></button>
+            <div class="indent" ng-if="workState.check75">
+							<div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
 								Arbetstid timmar/vecka: <strong>{{cert.workTime * 0.75}}</strong>
 							</div>
-							Arbetstidsförläggning (frivilligt) <input type="text"
+							Arbetstidsförläggning (frivilligt) <input type="text" ng-model="cert.otherData.workingHours75" 
 								id="capacityForWork.rec75LongerWorkingHours"
 								name="capacityForWork.rec75LongerWorkingHours" value=""
-								class='otherInformation'> <span
-								class="otherInformationCounter"></span>
-							<div class="info-transfer">Informationen överförs till
-								”Övriga upplysningar” i Försäkringskassans blankett.</div>
+								class='otherInformation'> Tecken kvar:  {{inputLimits.ovrigt - getTotalOvrigtLength()}}
+							<div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
 						</div>
 					</div>
 
+          <!-- 100% -->
 					<div class="control-group form-inline">
-						<input type="checkbox" id="capacityForWork.workFull"
-							name="capacityForWork.workFull"  /> <label
-							for="capacityForWork.workFull" class="checkbox">Helt
-							nedsatt arbetsförmåga från</label> <input type="text"
-							datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened"
-							min="minDate" max="'2015-06-22'" datepicker-options="dateOptions"
-							date-disabled="disabled(date, mode)" ng-required="true" />
-						<button class="btn" ng-click="open()">
-							<i class="icon-calendar"></i>
-						</button>
-						<span>till</span> <input type="text"
-							datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened"
-							min="minDate" max="'2015-06-22'" datepicker-options="dateOptions"
-							date-disabled="disabled(date, mode)" ng-required="true" />
-						<button class="btn" ng-click="open()">
-							<i class="icon-calendar"></i>
-						</button>
+						<input type="checkbox" id="capacityForWork.workFull" name="capacityForWork.workFull" ng-model="workState.check100" /> 
+						<label for="capacityForWork.workFull" class="checkbox">Helt	nedsatt arbetsförmåga från</label>
+						
+            <input type="text" datepicker-popup ng-model="cert.nedsattMed100.start" is-open="workState.dpState100From.open" ng-change="updateTotalCertDays()"/>
+            <button class="btn" ng-click="toggleDatePickerInstance(workState.dpState100From)" ng-disabled="workState.dpState100From.open"><i class="icon-calendar"></i></button>
+            <span>till</span> 
+            <input type="text" datepicker-popup ng-model="cert.nedsattMed100.end" is-open="workState.dpState100To.open" ng-change="updateTotalCertDays()"/>
+            <button class="btn" ng-click="toggleDatePickerInstance(workState.dpState100To)" ng-disabled="workState.dpState100To.open"><i class="icon-calendar"></i></button>
 					</div>
 
-					<div>
-						Detta intyg motsvarar en period på: <span id="certificateSpan"></span>
+					<div ng-show="totalCertDays">
+						Detta intyg motsvarar en period på: {{totalCertDays}}
 					</div>
 				</div>
 			</div>
@@ -377,10 +348,8 @@
 						class="help">?</span>
 				</h3>
 				<div class="text">
-					<a href="#"
-						onclick="ICF.remote.ST('example_form', 'example_frame',this)"
-						title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
-						försäkringsmedicinska beslutstöd</a>
+					<a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
+            title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
 					<textarea id="capacityForWork.text" name="capacityForWork.text"	rows='10' cols='80' ng-model="cert.arbetsformagaPrognos" maxlength="{{inputLimits.arbetsformagaPrognos}}"></textarea>
 					<div class="counter">
 						Tecken kvar: {{inputLimits.arbetsformagaPrognos - cert.arbetsformagaPrognos.length}}
@@ -388,6 +357,7 @@
 				</div>
 			</div>
 
+      <!-- Prognos -->
 			<div class="body-row clearfix">
 				<h4 class="cert-field-number">
 					<span message key="view.label.field"></span> 10
@@ -397,35 +367,32 @@
 				</h3>
 				<div class="text">
 
-					<a href="#" onclick="ICF.remote.ST('example_form', 'example_frame',this)"	title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
+					<a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
+            title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
 					<div class="form-inline">
 					
             <div class="control-group">
-							<input type="radio" id="capacityForWork1" name="capacityForWork.forecast" value="YES"	checked="checked" group='group2' class='radio control-element'>
+							<input type="radio" id="capacityForWork1" name="capacityForWork.forecast" value="YES"	ng-model="cert.prognosis" checked="checked">
 							<label for="capacityForWork1">Ja</label>
 						</div>
 						
             <div class="control-group">
-							<input type="radio" id="capacityForWork2" name="capacityForWork.forecast" value="PARTLY" group='group2' class='radio control-element'>
+							<input type="radio" id="capacityForWork2" name="capacityForWork.forecast" value="PARTLY" ng-model="cert.prognosis">
 	            <label for="capacityForWork2">Delvis</label>
             </div>
             
             <div class="control-group">
-						  <input type="radio"	id="capacityForWork3" name="capacityForWork.forecast" value="NO" group='group2'	class='radio control-element'> 
+						  <input type="radio"	id="capacityForWork3" name="capacityForWork.forecast" value="NO" ng-model="cert.prognosis">
               <label for="capacityForWork3">Nej</label>
             </div>
             
             <div class="control-group">
-						  <input type="radio" id="capacityForWork4" name="capacityForWork.forecast" value="UNKNOWN"	group='group2' class='radio control-element'> 
+						  <input type="radio" id="capacityForWork4" name="capacityForWork.forecast" value="UNKNOWN" ng-model="cert.prognosis">
 	            <label for="capacityForWork4">Går ej att bedöma</label> 
-	            <div class="indent">
-								Förtydligande: <input type="text"
-									id="capacityForWork.forecastText"
-									name="capacityForWork.forecastText" value=""
-									class='otherInformation'> <span
-									class="otherInformationCounter"></span>
-			          <div class="info-transfer">Informationen överförs till
-			            ”Övriga upplysningar” i Försäkringskassans blankett.</div>
+	            <div class="indent" ng-show="cert.prognosis == 'UNKNOWN'">
+								Förtydligande: <input type="text"	ng-model="cert.otherData.prognosisClarification" id="capacityForWork.forecastText"	name="capacityForWork.forecastText" value=""
+									class='otherInformation'> Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}
+			          <div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
 		          </div>
             </div>
 					</div>
@@ -433,6 +400,7 @@
 				</div>
 			</div>
 
+      <!-- Åtgärder -->
 			<div class="body-row clearfix">
 				<h4 class="cert-field-number">
 					<span message key="view.label.field"></span> 6b
@@ -445,28 +413,25 @@
           <div class="control-group">
 						<label class="control-label">Planerad eller pågående
 							behandling eller åtgärd inom sjukvården (ange vilken)</label>
-						<textarea id="measures.current" name="measures.current" rows='1'
-							cols='120' ></textarea>
+						<textarea id="measures.current" name="measures.current" rows='1' cols='120' ng-model="cert.atgardInomSjukvarden" maxlength="{{inputLimits.atgardInomSjukvarden}}"></textarea>
 						<div class="counter">
-							<div>
-								Tecken kvar: <span class="counter-text"></span>
-							</div>
+							Tecken kvar: {{inputLimits.atgardInomSjukvarden - cert.atgardInomSjukvarden.length}}
 						</div>
 					</div>
 
           <div class="control-group">
 						<label class="control-label">Annan åtgärd (ange vilken)</label>
-						<textarea id="measures.other" name="measures.other" rows='1'
-							cols='120' ></textarea>
+						<textarea id="measures.other" name="measures.other" rows='1' cols='120' ng-model="cert.annanAtgard" maxlength="{{inputLimits.annanAtgard}}"></textarea>
 						<div class="counter">
 							<div>
-								Tecken kvar: <span class="counter-text"></span>
+								Tecken kvar: {{inputLimits.annanAtgard - cert.annanAtgard.length}}
 							</div>
 						</div>
           </div>
 				</div>
 			</div>
 
+      <!-- Rekommendationer -->
 			<div class="body-row clearfix">
 				<h4 class="cert-field-number">
 					<span message key="view.label.field"></span> 6a, 7, 11
@@ -477,50 +442,60 @@
 				<div class="text form-inline">
 
           <div class="control-group">
-						<input type="checkbox" id="recommendationsToFk.travel" name="recommendationsToFk.travel"  />
+						<input type="checkbox" id="recommendationsToFk.travel" name="recommendationsToFk.travel" ng-model="cert.ressattTillArbeteAktuellt" />
 						<label for="recommendationsToFk.travel">Resor till och från	arbetet med annat färdmedel än normalt kan göra det möjligt för	patienten att återgå i arbete</label> <span class="help">?</span>
 				  </div>
           <div class="control-group">
-					  <input type="checkbox" id="recommendationsToFk.contactAf" name="recommendationsToFk.contactAf"  />
+					  <input type="checkbox" id="recommendationsToFk.contactAf" name="recommendationsToFk.contactAf" ng-model="cert.rekommendationKontaktArbetsformedlingen" />
 					  <label for="recommendationsToFk.contactAf">Patienten bör komma i kontakt med arbetsförmedlingen</label> <span class="help">?</span>
           </div>
           <div class="control-group">
-					  <input type="checkbox" id="recommendationsToFk.contactCompanyCare" name="recommendationsToFk.contactCompanyCare"  />
+					  <input type="checkbox" id="recommendationsToFk.contactCompanyCare" name="recommendationsToFk.contactCompanyCare" ng-model="cert.rekommendationKontaktForetagshalsovarden" />
 					  <label for="recommendationsToFk.contactCompanyCare">Patienten bör	komma i kontakt med företagshälsovården</label> <span class="help">?</span>
           </div>
 
           <div class="control-group">
-						<input type="checkbox" id="recommendationsToFk.other"	name="recommendationsToFk.other"  />
+						<input type="checkbox" id="recommendationsToFk.other"	name="recommendationsToFk.other" ng-model="cert.rekommendationOvrigtCheck" />
 						<label for="recommendationsToFk.other">Övrigt (ange vad)</label>
-  					<input type="text" id="recommendationsToFk.otherText" name="recommendationsToFk.otherText" value="" class='control-text-long control-element'>
+  					<div class="indent" ng-if="cert.rekommendationOvrigtCheck || (cert.rekommendationOvrigt && cert.rekommendationOvrigt != '')">
+  					   <input type="text" id="recommendationsToFk.otherText" name="recommendationsToFk.otherText" value="" class='maxwidth' ng-model="cert.rekommendationOvrigt">
+  					</div>
           </div>
 
           <div class="control-group">
   					<label class="control-label">Är arbetslivsinriktad rehabilitering	aktuell?</label><span class="help">?</span>
           </div>
 
+          <!-- Rehab -->
+
+          <!-- YES -->
           <div class="control-group">
-	   				<input type="radio" id="recommendationsToFk"	name="recommendationsToFk.reabInQuestion" group="group3" value="YES" class="control-element">
+	   				
+	   				<input type="radio" id="recommendationsToFk" name="recommendationsToFk.reabInQuestion" value="YES" ng-model="cert.rehab" class="control-element">
 	   				<label for="recommendationsToFk">Ja</label>
-						<div class="indent">
-							<input id="rehabNow1" type="radio" name="recommendationsToFk.rehabNow"	group="group4" value="NOW" checked>
+						<div class="indent" ng-show="cert.rehab == 'YES'">
+							<input id="rehabNow1" type="radio" name="recommendationsToFk.rehabNow" value="NOW" ng-model="cert.rehabNow" checked>
 							<label for="rehabNow1">Omgående</label><br>
 								
-							<input id="rehabNow2" type="radio" name="recommendationsToFk.rehabNow"	group="group4" value="LATER">
-              <label for="rehabNow2">Senare,  med start</label>
-
-							<input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions"	date-disabled="disabled(date, mode)" ng-required="true" />
-							<button class="btn" ng-click="open()"><i class="icon-calendar"></i></button>
-							<div class="info-transfer" style="white-space: nowrap";>Informationen	överförs till ”Övriga upplysningar” i Försäkringskassans blankett.</div>
+							<input id="rehabNow2" type="radio" name="recommendationsToFk.rehabNow" value="LATER" ng-model="cert.rehabNow">
+              <label for="rehabNow2">Senare, med start</label>
+              
+	            <input type="text" datepicker-popup ng-model="cert.otherData.rehabWhen" is-open="rehabState.dp.open"/>
+	            <button class="btn" ng-click="toggleDatePickerInstance(rehabState.dp)" ng-disabled="rehabState.dp.open"><i class="icon-calendar"></i></button>
+              
+							<div class="info-transfer" style="white-space: nowrap">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
 						</div>
           </div>
+          
+          <!-- NO -->
           <div class="control-group">
-						<input type="radio" id="recommendationsToFk2" name="recommendationsToFk.reabInQuestion" group="group3" value="NO" checked="checked"	class="control-element">
+						<input type="radio" id="recommendationsToFk2" name="recommendationsToFk.reabInQuestion" group="group3" value="NO" ng-model="cert.rehab" checked="checked"	class="control-element">
 	          <label for="recommendationsToFk2">Nej</label>
           </div>
 					
+          <!-- UNKNOWN -->
           <div class="control-group">
-						<input type="radio" id="recommendationsToFk3"	name="recommendationsToFk.reabInQuestion" group="group3" value="UNKNOWN" class="control-element">
+						<input type="radio" id="recommendationsToFk3"	name="recommendationsToFk.reabInQuestion" group="group3" value="UNKNOWN" ng-model="cert.rehab" class="control-element">
 	          <label for="recommendationsToFk3">Går ej att bestämma</label>
           </div>
 
@@ -535,7 +510,7 @@
 					<span message key="edit.label.fkcontact"></span><span class="help">?</span>
 				</h3>
 				<div class="text form-inline">
-					<input id="cause4" type="checkbox" id="contactWithFkRequested" name="contactWithFkRequested"  />
+					<input id="cause4" type="checkbox" id="contactWithFkRequested" name="contactWithFkRequested" ng-model="cert.kontaktMedFk" />
 					<label for="cause4" class="checkbox">Kontakt önskas med	Försäkringskassan</label>
 				</div>
 			</div>
@@ -549,13 +524,9 @@
 						class="help">?</span>
 				</h3>
 				<div class="text">
-
-					<textarea id="otherInformation" name="otherInformation" rows='10'
-						cols='120' class='otherInformation'></textarea>
+					<textarea id="otherInformation" name="otherInformation" rows='10'	cols='120' class='otherInformation' ng-model="cert.kommentar" maxlength="{{inputLimits.ovrigt - getTotalOvrigtLength()}}"></textarea>
 					<div class="counter">
-						<div>
-							Tecken kvar: <span class="otherInformationCounter"></span>
-						</div>
+						Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}
 					</div>
 				</div>
 			</div>

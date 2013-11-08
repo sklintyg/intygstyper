@@ -181,7 +181,7 @@ div.infobox h4 {
 }
 
 .indent {
-	padding-left: 20px;
+	padding-left: 20px !important;
 }
 
 .block {
