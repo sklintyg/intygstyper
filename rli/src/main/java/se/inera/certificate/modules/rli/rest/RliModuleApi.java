@@ -19,7 +19,6 @@
 package se.inera.certificate.modules.rli.rest;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HeaderParam;
@@ -42,7 +41,6 @@ import se.inera.certificate.modules.rli.model.converters.TransportToExternalConv
 import se.inera.certificate.modules.rli.model.external.Utlatande;
 import se.inera.certificate.modules.rli.model.factory.EditModelFactory;
 import se.inera.certificate.modules.rli.pdf.PdfGenerator;
-import se.inera.certificate.modules.rli.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
 import se.inera.certificate.modules.rli.rest.dto.CreateNewDraftCertificateHolder;
 import se.inera.certificate.modules.rli.validator.ExternalValidator;

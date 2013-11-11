@@ -35,11 +35,11 @@ public class PdfGeneratorImpl implements PdfGenerator {
     // Special field only set when patient is pregnant
     private static final String BABY_DUE_DATE = "Barnet_beraknas_fodas";
 
-    private static final String SJK_CHECK1 = "SJK1";
-    private static final String SJK_CHECK2 = "SJK2";
-    private static final String SJK_CHECK3 = "SJK3";
-    private static final String SJK_CHECK4 = "SJK4";
-    private static final String SJK_CHECK5 = "SJK5";
+    private static final String SJK1 = "SJK1";
+    private static final String SJK2 = "SJK2";
+    private static final String SJK3 = "SJK3";
+    private static final String SJK4 = "SJK4";
+    private static final String SJK5 = "SJK5";
 
     private static final String CONFIRMED_BY_DR = "Forsta_undersokning_lakare_intygar_check";
 
@@ -175,9 +175,9 @@ public class PdfGeneratorImpl implements PdfGenerator {
         sjuk_code = utlatande.getRekommendation().getSjukdomskannedom().getCode();
         rek_code = utlatande.getRekommendation().getRekommendationskod().getCode();
 
-        if (sjuk_code == "SJK3" || sjuk_code == "SJK4") {
+        if (sjuk_code == SJK3 || sjuk_code == SJK4) {
             fields.setField(sjuk_code, "Yes");
-            fields.setField(SJK_CHECK2, "Yes");
+            fields.setField(SJK2, "Yes");
         } else {
             fields.setField(sjuk_code, "Yes");
         }
