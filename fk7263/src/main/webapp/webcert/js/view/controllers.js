@@ -178,10 +178,16 @@ angular.module('wc.fk7263.controllers').controller('EditCertCtrl', [ '$scope', '
     	if(newVal == 'LATER' && $scope.cert.otherData.rehabWhen == ''){
     		$scope.cert.otherData.rehabWhen = $scope.today;
     	}
-    	else {
+    	else if(newVal == 'NOW') {
     		$scope.cert.otherData.rehabWhen = '';
     	}
     });
+
+    $scope.$watch('cert.otherData.rehabWhen', function(newVal, oldVal) {
+    	if(isDate(newVal)){
+    		$scope.cert.rehabNow = 'LATER';
+    	}
+		});
     
     // Default data
     $scope.cert = {
