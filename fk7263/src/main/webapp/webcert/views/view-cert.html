@@ -62,7 +62,7 @@
               </div>
 
               <div class="panel-container">
-	              <div class="qa-panel" id="qaunhandled-{{qa.internReferens}}" ng-if="!qa.proxyMessage">
+	              <div class="qa-panel" id="qaunhandled-{{qa.internReferens}}" ng-show="!qa.proxyMessage" ng-animate="'collapse'">
 	
 	                <!--  status header -->
 	               <button class="btn btn-info pull-right" title="Skicka e-post med en länk till detta intyg för att informera den som ska hantera frågan/svaret" ng-click="openMailDialog(qa)">
@@ -177,7 +177,7 @@
               </div>
 
             <div class="panel-container">
-	            <div class="qa-panel" id="qahandled-{{qa.internReferens}}" ng-if="!qa.proxyMessage">
+	            <div class="qa-panel" id="qahandled-{{qa.internReferens}}" ng-show="!qa.proxyMessage" ng-animate="'collapse'">
 	
 	              <!--  status header: hanterade har bara status closed, så vi kan inte visa så mycket mer info, ev skulle vi kunna visa "stängd utan att svar fanns"  -->
 	              <h3>
