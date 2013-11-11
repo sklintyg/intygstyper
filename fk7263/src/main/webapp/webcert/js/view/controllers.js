@@ -32,12 +32,16 @@ angular.module('wc.fk7263.controllers').controller('EditCertCtrl', [ '$scope', '
     }; 
     
     $scope.getTotalOvrigtLength = function(){
-    	return $scope.cert.kommentar.length + $scope.cert.otherData.baseradPaAnnat.length 
+    	var totalOvrigtLength = $scope.cert.kommentar.length + $scope.cert.otherData.baseradPaAnnat.length 
     		+ $scope.cert.otherData.workingHours25.length + $scope.cert.otherData.workingHours50.length + $scope.cert.otherData.workingHours75.length + $scope.cert.otherData.workingHours100.length
-    		+ $scope.cert.otherData.prognosisClarification.length
-    		+ $scope.cert.otherData.rehabWhen.length; 
+    		+ $scope.cert.otherData.prognosisClarification.length;
+    	
+    	if($scope.cert.otherData.rehabWhen instanceof Date){
+    		totalOvrigtLength += ($filter('date')($scope.cert.otherData.rehabWhen, 'yyyy-MM-dd')).length;
+    	}
     	// NOTE: this date (rehabWhen) will probably need a label and therefore use more than the length of the date when merged with the other fields. 
-    	// Remember to add length for the label as well (probably applies to all in otherData)
+    	// Remember to add length for the label as well (probably applies to all in cert.otherData)
+    	return totalOvrigtLength;
     }
     
     // Based on handling (4b)
@@ -160,7 +164,7 @@ angular.module('wc.fk7263.controllers').controller('EditCertCtrl', [ '$scope', '
       var minDate = getMinMaxDate('min', startDates);
       var maxDate = getMinMaxDate('max', endDates);
       
-      if(!minDate || !maxDate) { return false; } // return if there's no valid range span yet
+      if(!minDate || !maxDate) { return $scope.totalCertDays = false; } // return if there's no valid range span yet
       
       $scope.totalCertDays = Math.round(Math.abs((minDate.getTime() - maxDate.getTime())/(oneDay))) + 1;    
     }
