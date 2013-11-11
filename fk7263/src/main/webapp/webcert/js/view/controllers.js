@@ -92,48 +92,31 @@ angular.module('wc.fk7263.controllers').controller('EditCertCtrl', [ '$scope', '
         dpState100From : { open : false }, dpState100To : { open : false },
     }
     
-    $scope.$watch('workState.check25', function(newVal, oldVal) {
-    	if(newVal){
-    		$scope.cert.nedsattMed25.start = $scope.today;
-    		$scope.cert.nedsattMed25.end = $scope.today;
+    function updateWorkStateDate(checked, model) {
+    	if(checked){
+    		if(!isDate(model.start)) model.start = $scope.today;
+    		if(!isDate(model.end)) model.end = $scope.today;
     	}	else {
-    		$scope.cert.nedsattMed25.start = "";
-    		$scope.cert.nedsattMed25.end = "";
+    		model.start = "";
+    		model.end = "";
     	}
   		$scope.updateTotalCertDays();
+    }
+    
+    $scope.$watch('workState.check25', function(newVal, oldVal) {
+    	updateWorkStateDate(newVal, $scope.cert.nedsattMed25);
     });
 
     $scope.$watch('workState.check50', function(newVal, oldVal) {
-    	if(newVal){
-    		$scope.cert.nedsattMed50.start = $scope.today;
-    		$scope.cert.nedsattMed50.end = $scope.today;
-    	}	else {
-    		$scope.cert.nedsattMed50.start = "";
-    		$scope.cert.nedsattMed50.end = "";
-    	}
-  		$scope.updateTotalCertDays();
+    	updateWorkStateDate(newVal, $scope.cert.nedsattMed50);
     });
 
     $scope.$watch('workState.check75', function(newVal, oldVal) {
-    	if(newVal){
-    		$scope.cert.nedsattMed75.start = $scope.today;
-    		$scope.cert.nedsattMed75.end = $scope.today;
-    	}	else {
-    		$scope.cert.nedsattMed75.start = "";
-    		$scope.cert.nedsattMed75.end = "";
-    	}
-  		$scope.updateTotalCertDays();
+    	updateWorkStateDate(newVal, $scope.cert.nedsattMed75);
     });
     
     $scope.$watch('workState.check100', function(newVal, oldVal) {
-    	if(newVal){
-    		$scope.cert.nedsattMed100.start = $scope.today;
-    		$scope.cert.nedsattMed100.end = $scope.today;
-    	}	else {
-    		$scope.cert.nedsattMed100.start = "";
-    		$scope.cert.nedsattMed100.end = "";
-    	}
-  		$scope.updateTotalCertDays();
+    	updateWorkStateDate(newVal, $scope.cert.nedsattMed100);
     });
     
     function isDate(date){
