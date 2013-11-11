@@ -83,7 +83,7 @@
 			 		
 					<div class="otherText indent" ng-if="basedOnState.check[3]">
 						<span>Ange vad:</span><br />
-						<textarea id="informationBasedOn.otherText"	name="informationBasedOn.otherText" rows='2' cols='40'
+						<textarea id="informationBasedOn.otherText"	name="informationBasedOn.otherText" rows='2'
 							class='otherInformation' ng-model="cert.otherData.baseradPaAnnat"></textarea>
             <div class="counter">
               Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}
@@ -126,8 +126,8 @@
 								<input type="text" id="diagnose.codeOpt2" name="diagnose.codeOpt2" value="" class="span11">
 							</div>
 						</div>
-						<div class='span9'>
-							<label class="control-label inline-block unbreakable">Ytterligare	diagnoser (frivilligt)</label><span class="help">?</span>
+						<div class='span9 unbreakable'>
+							<label class="control-label inline-block">Ytterligare	diagnoser (frivilligt)</label><span class="help">?</span>
 							<div class="controls">
 								<input type="text" id="diagnose.descriptionOpt1"
 									name="diagnose.descriptionOpt1" value="" class="block span12">
@@ -137,11 +137,11 @@
 						</div>
 					</div>
 
-					<div class="control-group form-inline inline-block">
+					<div class="control-group form-inline">
 						<div>
 						  <label class="control-label">Förtydligande av diagnos/diagnoser</label><span class="help">?</span>
 						</div>
-						<textarea id="diagnose.clarification" name="diagnose.clarification" rows='5' cols='80'              
+						<textarea id="diagnose.clarification" name="diagnose.clarification" rows='5'              
 						  ng-model="cert.diagnosBeskrivning" maxlength="{{inputLimits.diagnosBeskrivning}}"></textarea>
 						<div class="counter">
 							Tecken kvar: {{inputLimits.diagnosBeskrivning - cert.diagnosBeskrivning.length}}
@@ -165,7 +165,7 @@
 				</h3>
 				<div class="text">
 
-					<textarea id="diseaseCause" name="diseaseCause" rows='5' cols='80' ng-model="cert.sjukdomsforlopp"></textarea>
+					<textarea id="diseaseCause" name="diseaseCause" rows='5' ng-model="cert.sjukdomsforlopp"></textarea>
 					<div class="counter">
 						<div>
 							Tecken kvar: {{inputLimits.sjukdomsforlopp - cert.sjukdomsforlopp.length}}
@@ -186,7 +186,7 @@
 
 					<a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
 						title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
-					<textarea id="disabilities" name="disabilities" rows='6' cols='80' ng-model="cert.funktionsnedsattning" maxlength="{{inputLimits.funktionsnedsattning}}"></textarea>
+					<textarea id="disabilities" name="disabilities" rows='6' ng-model="cert.funktionsnedsattning" maxlength="{{inputLimits.funktionsnedsattning}}"></textarea>
 					<div class="counter">
 						Tecken kvar: {{inputLimits.funktionsnedsattning - cert.funktionsnedsattning.length}}
 					</div>
@@ -203,7 +203,7 @@
 				<div class="text">
 					<a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
             title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
-					<textarea id="activityLimitation" name="activityLimitation"	rows='10' cols='80' ng-model="cert.aktivitetsbegransning" maxlength="{{inputLimits.aktivitetsbegransning}}"></textarea>
+					<textarea id="activityLimitation" name="activityLimitation"	rows='10' ng-model="cert.aktivitetsbegransning" maxlength="{{inputLimits.aktivitetsbegransning}}"></textarea>
 					<div class="counter">
 						Tecken kvar: {{inputLimits.aktivitetsbegransning - cert.aktivitetsbegransning.length}}
 					</div>
@@ -227,7 +227,7 @@
 							<div class="indent" ng-if="cert.basedOnWork == 'CURRENT'">
 								<label for="currentWork">Ange aktuella arbetsuppgifter</label>
 								<div class="controls">
-									<textarea id="currentWork" name="currentWork" rows='2' cols='80' ng-model="cert.nuvarandeArbetsuppgifter" maxlength="{{inputLimits.nuvarandeArbetsuppgifter}}"></textarea>
+									<textarea id="currentWork" name="currentWork" rows='2' ng-model="cert.nuvarandeArbetsuppgifter" maxlength="{{inputLimits.nuvarandeArbetsuppgifter}}"></textarea>
 									<div class="counter">
 										Tecken kvar: {{inputLimits.nuvarandeArbetsuppgifter - cert.nuvarandeArbetsuppgifter.length}}
 									</div>
@@ -357,7 +357,7 @@
 				<div class="text">
 					<a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
             title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
-					<textarea id="capacityForWork.text" name="capacityForWork.text"	rows='10' cols='80' ng-model="cert.arbetsformagaPrognos" maxlength="{{inputLimits.arbetsformagaPrognos}}"></textarea>
+					<textarea id="capacityForWork.text" name="capacityForWork.text"	rows='10' ng-model="cert.arbetsformagaPrognos" maxlength="{{inputLimits.arbetsformagaPrognos}}"></textarea>
 					<div class="counter">
 						Tecken kvar: {{inputLimits.arbetsformagaPrognos - cert.arbetsformagaPrognos.length}}
 					</div>
@@ -420,7 +420,7 @@
           <div class="control-group">
 						<label class="control-label">Planerad eller pågående
 							behandling eller åtgärd inom sjukvården (ange vilken)</label>
-						<textarea id="measures.current" name="measures.current" rows='1' cols='120' ng-model="cert.atgardInomSjukvarden" maxlength="{{inputLimits.atgardInomSjukvarden}}"></textarea>
+						<textarea id="measures.current" name="measures.current" rows='1' ng-model="cert.atgardInomSjukvarden" maxlength="{{inputLimits.atgardInomSjukvarden}}"></textarea>
 						<div class="counter">
 							Tecken kvar: {{inputLimits.atgardInomSjukvarden - cert.atgardInomSjukvarden.length}}
 						</div>
@@ -428,7 +428,7 @@
 
           <div class="control-group">
 						<label class="control-label">Annan åtgärd (ange vilken)</label>
-						<textarea id="measures.other" name="measures.other" rows='1' cols='120' ng-model="cert.annanAtgard" maxlength="{{inputLimits.annanAtgard}}"></textarea>
+						<textarea id="measures.other" name="measures.other" rows='1' ng-model="cert.annanAtgard" maxlength="{{inputLimits.annanAtgard}}"></textarea>
 						<div class="counter">
 							<div>
 								Tecken kvar: {{inputLimits.annanAtgard - cert.annanAtgard.length}}
@@ -531,7 +531,7 @@
 						class="help">?</span>
 				</h3>
 				<div class="text">
-					<textarea id="otherInformation" name="otherInformation" rows='10'	cols='120' class='otherInformation' ng-model="cert.kommentar" maxlength="{{inputLimits.ovrigt - getTotalOvrigtLength()}}"></textarea>
+					<textarea id="otherInformation" name="otherInformation" rows='10'	class='otherInformation' ng-model="cert.kommentar" maxlength="{{inputLimits.ovrigt - getTotalOvrigtLength()}}"></textarea>
 					<div class="counter">
 						Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}
 					</div>

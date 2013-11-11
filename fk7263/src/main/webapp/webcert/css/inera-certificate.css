@@ -100,7 +100,7 @@ span.help {
 }
 
 .cert-body div.body-row {
-	margin: 0 0 20px 0;
+	margin: 0 20px 20px 0;
 	background-color: #e5e5e5;
 	border: 1px solid #d8d8d8;
 	-webkit-border-radius: 8px 8px 8px 8px;
@@ -166,6 +166,7 @@ div.infobox {
     border-radius: 8px 8px 8px 8px;
     color: #fff;
     padding: 20px;
+    margin-right: 20px;
 }
 
 div.infobox h3 {
