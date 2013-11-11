@@ -112,7 +112,7 @@ public class InternalToExternalConverterTest {
         se.inera.certificate.model.Patient extP = converter.convertPatient(intP);
 
         assertNotNull(extP);
-        assertEquals("Johan Mutumba", StringUtils.join(extP.getFornamn()," "));
+        assertEquals("Johan Mutumba", StringUtils.join(extP.getFornamn(), " "));
         assertEquals("Johansson", extP.getEfternamn());
         assertEquals("Johan Mutumba Johansson", extP.getFullstandigtNamn());
         assertEquals("19121212-1212", extP.getId().getExtension());
@@ -184,8 +184,6 @@ public class InternalToExternalConverterTest {
 
         assertNotNull(facit.getUtforsVid().getNamn());
         assertNotNull(akt.get(0).getUtforsVid().getNamn());
-
-        // assertEquals(facit.getUtforsVid().getNamn(), akt.get(0).getUtforsVid().getNamn());
 
     }
 
@@ -347,7 +345,7 @@ public class InternalToExternalConverterTest {
         Utlatande extUtlatande = readUtlatandeFromJsonFile("/rli-sjuk-1-template.json");
 
         se.inera.certificate.modules.rli.model.edit.Utlatande intUtlatande = buildInternalUtlatande();
-        
+
         Utlatande externalConverted = converter.convertUtlatandeFromInternalToExternal(intUtlatande);
 
         assertLenientEquals(extUtlatande, externalConverted);
@@ -355,7 +353,7 @@ public class InternalToExternalConverterTest {
 
     private se.inera.certificate.modules.rli.model.edit.Utlatande buildInternalUtlatande() {
         se.inera.certificate.modules.rli.model.edit.Utlatande utlatande = new se.inera.certificate.modules.rli.model.edit.Utlatande();
-        
+
         utlatande.setUtlatandeid("39f80245-9730-4d76-aaff-b04a2f3cfbe7");
         utlatande.setUtlatandeidroot("???");
 

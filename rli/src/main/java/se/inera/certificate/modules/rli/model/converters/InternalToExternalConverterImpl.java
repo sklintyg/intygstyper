@@ -204,20 +204,7 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
             akt1.setAktivitetstid(period);
         }
 
-        /** Determine what kind of location to add for first Aktivitet */
-        // TODO: Decide if the first exam should Plats ALWAYS or if this depends on other stuff
-
-        // if (source.getKomplikationstyrkt() == KomplikationStyrkt.AV_PATIENT
-        // && source.getForstaUndersokningsplats() != null) {
-        //
-        // akt1.setPlats(source.getForstaUndersokningsplats());
-        //
-        // } else if (source.getKomplikationstyrkt() == KomplikationStyrkt.AV_HOS_PERSONAL
-        // && source.getForstaUndersokningsplats() != null) {
-        //
-        // akt1.setUtforsVid(buildVardenhet(source.getUtforsVid()));
-        // akt1.getBeskrivsAv().addAll(buildUtforarrollFromKomplikationStyrkt(KomplikationStyrkt.AV_HOS_PERSONAL));
-        // }
+        /** Add a Plats if we're dealing with ForstaUndersokning */
         if (source.getForstaUndersokningsplats() != null) {
             akt1.setPlats(source.getForstaUndersokningsplats());
         }
@@ -236,18 +223,6 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
         akt2.setAktivitetstid(period2);
 
         /** Determine what kind of location to add for second Aktivitet */
-
-        // if (source.getKomplikationstyrkt() == KomplikationStyrkt.AV_PATIENT
-        // && source.getUndersokningsplats() != null) {
-        //
-        // akt1.setPlats(source.getUndersokningsplats());
-        //
-        // } else if (source.getKomplikationstyrkt() == KomplikationStyrkt.AV_HOS_PERSONAL
-        // && source.getUndersokningsplats() != null) {
-        //
-        // akt1.setUtforsVid(buildVardenhet(source.getUtforsVid()));
-        // akt1.getBeskrivsAv().addAll(buildUtforarrollFromKomplikationStyrkt(KomplikationStyrkt.AV_HOS_PERSONAL));
-        // }
         // TODO: This should always be UtforsVid no?
 
         if (source.getUtforsVid() != null) {
