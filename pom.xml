@@ -20,7 +20,7 @@
   <name>Inera Certificate Modules</name>
   <scm>
     <connection>scm:git:https://code.google.com/p/inera-certificate-modules/</connection>
-    <tag>HEAD</tag>
+    <tag>certificates-1.1-RB</tag>
   </scm>
   <distributionManagement>
     <repository>
