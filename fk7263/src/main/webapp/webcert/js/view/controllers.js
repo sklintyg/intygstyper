@@ -46,32 +46,22 @@ angular.module('wc.fk7263.controllers').controller('EditCertCtrl', [ '$scope', '
     
     // Based on handling (4b)
     $scope.basedOnState = {
-        check : [false,false,false,false],
+        check : { undersokningAvPatienten : false, telefonkontaktMedPatienten : false, journaluppgifter : false, annanReferens : false },
         dpState0 : { open : false },
         dpState1 : { open : false },
         dpState2 : { open : false },
         dpState3 : { open : false }
     }
-
-    $scope.autoEnterDate = function(index) { // Reuse this for 8a?
-    	if($scope.basedOnState.check[index]){ // TODO: redo this with $scope.$eval and receive the datamodel to be changed
-    		if(index == 0 && $scope.cert.undersokningAvPatienten == ""){ $scope.cert.undersokningAvPatienten = $scope.today;}
-    		else if(index == 1 && $scope.cert.telefonkontaktMedPatienten == ""){	$scope.cert.telefonkontaktMedPatienten = $scope.today;}
-    		else if(index == 2 && $scope.cert.journaluppgifter == ""){$scope.cert.journaluppgifter = $scope.today;}
-    		else if(index == 3 && $scope.cert.annanReferens == ""){$scope.cert.annanReferens = $scope.today;}
-    	}
-    	else {
-    		if(index == 0) { $scope.cert.undersokningAvPatienten = ""; }
-    		else if(index == 1) {	$scope.cert.telefonkontaktMedPatienten = ""; }
-    		else if(index == 2) { $scope.cert.journaluppgifter = ""; }
-    		else if(index == 3) { $scope.cert.annanReferens = ""; }
-  		}
-    }
-        
-    $scope.updateCheck = function(index) {
-    	$scope.basedOnState.check[index]=true;
-    }
     
+    $scope.autoEnterDate = function(modelName) {
+    	if($scope.basedOnState.check[modelName]){
+    		if($scope.cert[modelName] == "") $scope.cert[modelName] = $scope.today;
+    	}
+    	else{
+    		$scope.cert[modelName] = "";
+    	}
+    }
+
     // Diagnose handling (2)
     $scope.diagnose_codes = [
       {value:"J44.0", label:"J44.0 Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion"},

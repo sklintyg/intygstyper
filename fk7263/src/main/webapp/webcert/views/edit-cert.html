@@ -28,52 +28,59 @@
 					<span message key="view.label.basedon"></span><span class="help" tooltip-trigger="click" tooltip-html-unsafe="{{helpTooltip}}">?</span>
 				</h3>
 				<div class="text">
+
 					<div class="control-group form-inline">
 						<input type="checkbox" id="informationBasedOn.examination"
 							name="informationBasedOn.examination" class="inline"
-							ng-model="basedOnState.check[0]" ng-change="autoEnterDate(0)"/> 
+							ng-model="basedOnState.check.undersokningAvPatienten" ng-change="autoEnterDate('undersokningAvPatienten')"/>
 						<label
 							for="informationBasedOn.examination" class="inline"
 							style="min-width: 250px">Min undersökning av patienten</label>
-						<input type="text" datepicker-popup ng-model="cert.undersokningAvPatienten" is-open="basedOnState.dpState0.open" ng-change="updateCheck(0)"/>
+						<input type="text" datepicker-popup ng-model="cert.undersokningAvPatienten" is-open="basedOnState.dpState0.open" ng-change="basedOnState.check.undersokningAvPatienten = true"/>
             <button class="btn" ng-click="toggleDatePickerInstance(basedOnState.dpState0)" ng-disabled="basedOnState.dpState0.open">
               <i class="icon-calendar"></i>
             </button>
 					</div>
+ 
 					<div class="control-group form-inline">
 						<input type="checkbox" id="informationBasedOn.phoneContact"
-							name="informationBasedOn.phoneContact" ng-model="basedOnState.check[1]" ng-change="autoEnterDate(1)" />
+							name="informationBasedOn.phoneContact"
+							ng-model="basedOnState.check.telefonkontaktMedPatienten" ng-change="autoEnterDate('telefonkontaktMedPatienten')" />
 						<label
 							for="informationBasedOn.phoneContact" class="checkbox"
 							style="min-width: 250px">Min telefonkontakt med patienten</label>
-            <input type="text" id="dp1" datepicker-popup ng-model="cert.telefonkontaktMedPatienten" is-open="basedOnState.dpState1.open"  ng-change="updateCheck(1)"/>
+            <input type="text" id="dp1" datepicker-popup ng-model="cert.telefonkontaktMedPatienten" is-open="basedOnState.dpState1.open"  ng-change="basedOnState.check.telefonkontaktMedPatienten = true"/>
             <button class="btn" ng-click="toggleDatePickerInstance(basedOnState.dpState1)" ng-disabled="basedOnState.dpState1.open">
               <i class="icon-calendar"></i>
             </button>
-
 					</div>
+
 					<div class="control-group form-inline">
 						<input type="checkbox" id="informationBasedOn.journal"
-							name="informationBasedOn.journal"  ng-model="basedOnState.check[2]" ng-change="autoEnterDate(2)"/>
+							name="informationBasedOn.journal"
+							ng-model="basedOnState.check.journaluppgifter" ng-change="autoEnterDate('journaluppgifter')"/>
 						<label
 							for="informationBasedOn.journal" class="checkbox"
 							style="min-width: 250px">Journaluppgifter</label>
-            <input type="text" id="dp2" datepicker-popup ng-model="cert.journaluppgifter" is-open="basedOnState.dpState2.open" ng-change="updateCheck(2)"/>
+            <input type="text" id="dp2" datepicker-popup ng-model="cert.journaluppgifter" is-open="basedOnState.dpState2.open" ng-change="basedOnState.check.journaluppgifter = true"/>
             <button class="btn" ng-click="toggleDatePickerInstance(basedOnState.dpState2)" ng-disabled="basedOnState.dpState2.open">
               <i class="icon-calendar"></i>
             </button>
 					</div>
+
 					<div class="control-group form-inline">
 						<input type="checkbox" id="informationBasedOn.other"
-							name="informationBasedOn.other"  ng-model="basedOnState.check[3]" ng-change="autoEnterDate(3)"/>
+							name="informationBasedOn.other"
+							ng-model="basedOnState.check.annanReferens" ng-change="autoEnterDate('annanReferens')"/>
 						<label
 							for="informationBasedOn.other" class="checkbox"
 							style="min-width: 250px">Annat</label> 
-            <input type="text" id="dp3" datepicker-popup ng-model="cert.annanReferens" is-open="basedOnState.dpState3.open" ng-change="updateCheck(3)"/>
+            <input type="text" id="dp3" datepicker-popup ng-model="cert.annanReferens" is-open="basedOnState.dpState3.open" ng-change="basedOnState.check.annanReferens = true"/>
             <button class="btn" ng-click="toggleDatePickerInstance(basedOnState.dpState3)" ng-disabled="basedOnState.dpState3.open">
               <i class="icon-calendar"></i>
             </button>
 					</div>
+			 		
 					<div class="otherText indent" ng-if="basedOnState.check[3]">
 						<span>Ange vad:</span><br />
 						<textarea id="informationBasedOn.otherText"	name="informationBasedOn.otherText" rows='2' cols='40'
