@@ -13,27 +13,24 @@ import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
-import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Rekommendation;
 import se.inera.certificate.model.Utforarroll;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
+import se.inera.certificate.modules.rli.model.codes.CodeConverter;
 import se.inera.certificate.modules.rli.model.codes.HSpersonalKod;
 import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
-import se.inera.certificate.modules.rli.model.codes.RekommendationsKod;
-import se.inera.certificate.modules.rli.model.codes.SjukdomskannedomKod;
 import se.inera.certificate.modules.rli.model.codes.UtforarrollKod;
-import se.inera.certificate.modules.rli.model.external.Aktivitet;
-import se.inera.certificate.modules.rli.model.external.Arrangemang;
-import se.inera.certificate.modules.rli.model.external.Utlatande;
-
 import se.inera.certificate.modules.rli.model.edit.HoSPersonal;
 import se.inera.certificate.modules.rli.model.edit.KomplikationStyrkt;
 import se.inera.certificate.modules.rli.model.edit.OrsakAvbokning;
 import se.inera.certificate.modules.rli.model.edit.Undersokning;
 import se.inera.certificate.modules.rli.model.edit.Utforare;
+import se.inera.certificate.modules.rli.model.external.Aktivitet;
+import se.inera.certificate.modules.rli.model.external.Arrangemang;
+import se.inera.certificate.modules.rli.model.external.Utlatande;
 
 public class InternalToExternalConverterImpl implements InternalToExternalConverter {
 
@@ -43,46 +40,28 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
 
     private static final String RLI_INTYGSTYP_CODESYSTEM = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
 
-    public InternalToExternalConverterImpl() {
-        // TODO Auto-generated constructor stub
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * se.inera.certificate.modules.rli.model.converters.InternalToExternalConverter#convertUtlatandeFromInternalToExternal
-     * (se.inera.certificate.modules.rli.model.internal.Utlatande)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Utlatande convertUtlatandeFromInternalToExternal(
-            se.inera.certificate.modules.rli.model.edit.Utlatande source) {
+            se.inera.certificate.modules.rli.model.edit.Utlatande source) throws ConverterException {
 
         LOG.debug("Converting Utlatande '{}' from internal to external", source.getUtlatandeid());
 
         Utlatande utlatande = new Utlatande();
-
         utlatande.setId(new Id(source.getUtlatandeidroot(), source.getUtlatandeid()));
-
         /** Is this valid? */
         utlatande.setTyp(new Kod(RLI_INTYGSTYP_CODESYSTEM, null, null, "RLI"));
-
         utlatande.setSigneringsdatum(source.getSigneringsdatum());
-
-        utlatande.setSkapadAv(convertHoSPersonal(source.getSkapadAv()));
-
         utlatande.setSkickatdatum(source.getSkickatdatum());
 
+        utlatande.setSkapadAv(convertHoSPersonal(source.getSkapadAv()));
         utlatande.setPatient(convertPatient(source.getPatient()));
-
         utlatande.setArrangemang(convertArrangemang(source.getArrangemang()));
-
         utlatande.getObservationer().addAll(convertObservationer(source.getUndersokning()));
-
         utlatande.getAktiviteter().addAll(convertAktiviteter(source.getUndersokning()));
-
         utlatande.getRekommendationer().addAll(convertRekommendationer(source.getRekommendation()));
-
         utlatande.getKommentarer().addAll(source.getKommentarer());
 
         return utlatande;
@@ -93,17 +72,9 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
             se.inera.certificate.modules.rli.model.edit.Rekommendation source) {
         Rekommendation rek = new Rekommendation();
         rek.setBeskrivning(source.getBeskrivning());
-        rek.setRekommendationskod(buildRekommendationsKod(source.getRekommendationskod()));
-        rek.setSjukdomskannedom(buildSjukdomskannedomsKod(source.getSjukdomskannedom()));
+        rek.setRekommendationskod(CodeConverter.toKod(source.getRekommendationskod()));
+        rek.setSjukdomskannedom(CodeConverter.toKod(source.getSjukdomskannedom()));
         return Arrays.asList(rek);
-    }
-
-    private Kod buildSjukdomskannedomsKod(SjukdomskannedomKod sk) {
-        return new Kod(sk.getCodeSystem(), sk.getCodeSystemName(), sk.getCodeSystemVersion(), sk.getCode());
-    }
-
-    private Kod buildRekommendationsKod(RekommendationsKod rk) {
-        return new Kod(rk.getCodeSystem(), rk.getCodeSystemName(), rk.getCodeSystemVersion(), rk.getCode());
     }
 
     List<Observation> convertObservationer(Undersokning source) {
@@ -112,24 +83,19 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
 
         if (source.getOrsakforavbokning() == OrsakAvbokning.RESENAR_SJUK) {
             Observation o = new Observation();
-
-            o.setObservationskod(buildObservationsKod(ObservationsKod.SJUKDOM));
-
+            o.setObservationskod(CodeConverter.toKod(ObservationsKod.SJUKDOM));
             o.setUtforsAv(convertUtforsAv(source.getUtforsAv()));
             obs.add(o);
 
         } else if (source.getOrsakforavbokning() == OrsakAvbokning.RESENAR_GRAVID) {
             Observation o1 = new Observation();
-            o1.setObservationskod(buildObservationsKod(ObservationsKod.KOMPLIKATION_VID_GRAVIDITET));
+            o1.setObservationskod(CodeConverter.toKod(ObservationsKod.KOMPLIKATION_VID_GRAVIDITET));
             o1.setUtforsAv(convertUtforsAv(source.getUtforsAv()));
             obs.add(o1);
 
             Observation o2 = new Observation();
-            o2.setObservationskod(buildObservationsKod(ObservationsKod.GRAVIDITET));
-
-            PartialInterval period = new PartialInterval();
-            period.setTom(PartialConverter.stringToPartial(source.getGraviditet().getBeraknatForlossningsdatum()));
-            o2.setObservationsperiod(period);
+            o2.setObservationskod(CodeConverter.toKod(ObservationsKod.GRAVIDITET));
+            o2.setObservationsperiod(PartialConverter.toPartialInterval(null, source.getGraviditet().getBeraknatForlossningsdatum()));
             o2.setUtforsAv(convertUtforsAv(source.getUtforsAv()));
 
             obs.add(o2);
@@ -167,12 +133,7 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
         return kod;
     }
 
-    private Kod buildObservationsKod(ObservationsKod obsKod) {
-        return new Kod(obsKod.getCodeSystem(), obsKod.getCodeSystemName(), obsKod.getCodeSystemVersion(),
-                obsKod.getCode());
-    }
-
-    List<Aktivitet> convertAktiviteter(Undersokning source) {
+    List<Aktivitet> convertAktiviteter(Undersokning source) throws ConverterException {
         List<Aktivitet> aktiviteter = new ArrayList<Aktivitet>();
 
         if (source.getOrsakforavbokning() == OrsakAvbokning.RESENAR_SJUK) {
@@ -184,24 +145,22 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
     }
 
     /**
-     * 
-     * Create necessary Aktiviteter for a pregnant person
+     * Create necessary Aktiviteter for a pregnant person.
      * 
      * @param aktiviteter
      *            ArrayList of Aktiviteter
      * @param source
      *            se.inera.certificate.modules.rli.model.internal.Undersokning
+     * @throws ConverterException 
      */
-    private void buildAktiviteterGravid(List<Aktivitet> aktiviteter, Undersokning source) {
+    private void buildAktiviteterGravid(List<Aktivitet> aktiviteter, Undersokning source) throws ConverterException {
         /** Create first Aktivitet */
         Aktivitet akt1 = new Aktivitet();
-        akt1.setAktivitetskod(buildAktivitetsKod(AktivitetsKod.FORSTA_UNDERSOKNING));
+        akt1.setAktivitetskod(CodeConverter.toKod(AktivitetsKod.FORSTA_UNDERSOKNING));
 
-        PartialInterval period = new PartialInterval();
-        if (source.getForstaUndersokningsdatum() != null) {
-            period.setFrom(PartialConverter.stringToPartial(source.getForstaUndersokningsdatum()));
-            period.setTom(PartialConverter.stringToPartial(source.getForstaUndersokningsdatum()));
-            akt1.setAktivitetstid(period);
+        String undersokningsDatum = source.getForstaUndersokningsdatum();
+        if (undersokningsDatum != null) {
+            akt1.setAktivitetstid(PartialConverter.toPartialInterval(undersokningsDatum, undersokningsDatum));
         }
 
         /** Add a Plats if we're dealing with ForstaUndersokning */
@@ -212,15 +171,11 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
 
         /** Create second Aktivitet */
         Aktivitet akt2 = new Aktivitet();
-        akt2.setAktivitetskod(buildAktivitetsKod(AktivitetsKod.KLINISK_UNDERSOKNING));
-        if (source.getUndersokningsdatum() == null) {
-            LOG.warn("Mandatory date in KLINISK_UNDERSOKNING missing, aborting");
-            return;
+        akt2.setAktivitetskod(CodeConverter.toKod(AktivitetsKod.KLINISK_UNDERSOKNING));
+        if (undersokningsDatum == null) {
+            throw new ConverterException("Mandatory date in KLINISK_UNDERSOKNING missing, aborting");
         }
-        PartialInterval period2 = new PartialInterval();
-        period2.setFrom(PartialConverter.stringToPartial(source.getUndersokningsdatum()));
-        period2.setTom(PartialConverter.stringToPartial(source.getUndersokningsdatum()));
-        akt2.setAktivitetstid(period2);
+        akt2.setAktivitetstid(PartialConverter.toPartialInterval(undersokningsDatum, undersokningsDatum));
 
         /** Determine what kind of location to add for second Aktivitet */
         // TODO: This should always be UtforsVid no?
@@ -241,20 +196,18 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
      *            ArrayList of Aktiviteter
      * @param source
      *            se.inera.certificate.modules.rli.model.internal.Undersokning
+     * @throws ConverterException 
      */
-    private void buildAktivitetSjuk(List<Aktivitet> aktiviteter, Undersokning source) {
+    private void buildAktivitetSjuk(List<Aktivitet> aktiviteter, Undersokning source) throws ConverterException {
         Aktivitet akt = new Aktivitet();
-        akt.setAktivitetskod(buildAktivitetsKod(AktivitetsKod.KLINISK_UNDERSOKNING));
+        akt.setAktivitetskod(CodeConverter.toKod(AktivitetsKod.KLINISK_UNDERSOKNING));
 
         if (source.getUndersokningsdatum() == null) {
-            LOG.warn("Mandatory date in KLINISK_UNDERSOKNING missing, aborting");
-            return;
+            throw new ConverterException("Mandatory date in KLINISK_UNDERSOKNING missing, aborting");
         }
 
-        PartialInterval period2 = new PartialInterval();
-        period2.setFrom(PartialConverter.stringToPartial(source.getUndersokningsdatum()));
-        period2.setTom(PartialConverter.stringToPartial(source.getUndersokningsdatum()));
-        akt.setAktivitetstid(period2);
+        String undersokningsdatum = source.getUndersokningsdatum();
+        akt.setAktivitetstid(PartialConverter.toPartialInterval(undersokningsdatum, undersokningsdatum));
 
         if (source.getKomplikationstyrkt() == KomplikationStyrkt.AV_PATIENT && source.getUndersokningsplats() != null) {
             akt.setPlats(source.getUndersokningsplats());
@@ -268,25 +221,22 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
 
     }
 
-    private List<Utforarroll> buildUtforarrollFromKomplikationStyrkt(KomplikationStyrkt kS) {
+    private List<Utforarroll> buildUtforarrollFromKomplikationStyrkt(KomplikationStyrkt kS) throws ConverterException {
         List<Utforarroll> list = new ArrayList<Utforarroll>();
         Utforarroll utf = new Utforarroll();
         utf.setUtforartyp(buildUtforarKodFromKomplikationStyrkt(kS));
         return list;
     }
 
-    private Kod buildUtforarKodFromKomplikationStyrkt(KomplikationStyrkt kS) {
-        Kod kod = null;
+    private Kod buildUtforarKodFromKomplikationStyrkt(KomplikationStyrkt kS) throws ConverterException {
         switch (kS) {
         case AV_HOS_PERSONAL:
-            kod = new Kod(UtforarrollKod.AV_HOS_PERSONAL.getCodeSystem(),
-                    UtforarrollKod.AV_HOS_PERSONAL.getCodeSystemName(),
-                    UtforarrollKod.AV_HOS_PERSONAL.getCodeSystemVersion(), UtforarrollKod.AV_HOS_PERSONAL.getCode());
+            return CodeConverter.toKod(UtforarrollKod.AV_HOS_PERSONAL);
         case AV_PATIENT:
-            kod = new Kod(UtforarrollKod.AV_PATIENT.getCodeSystem(), UtforarrollKod.AV_PATIENT.getCodeSystemName(),
-                    UtforarrollKod.AV_PATIENT.getCodeSystemVersion(), UtforarrollKod.AV_PATIENT.getCode());
+            return CodeConverter.toKod(UtforarrollKod.AV_PATIENT);
         }
-        return kod;
+        
+        throw new ConverterException("Unknown komplikation: " + kS);
     }
 
     private Vardenhet buildVardenhet(se.inera.certificate.modules.rli.model.edit.Vardenhet source) {
@@ -305,11 +255,6 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
         vardenhet.setTelefonnummer(source.getTelefonnummer());
         vardenhet.setVardgivare(convertVardgivare(source.getVardgivare()));
         return vardenhet;
-    }
-
-    private Kod buildAktivitetsKod(AktivitetsKod aktKod) {
-        return new Kod(aktKod.getCodeSystem(), aktKod.getCodeSystemName(), aktKod.getCodeSystemVersion(),
-                aktKod.getCode());
     }
 
     HosPersonal convertHoSPersonal(HoSPersonal source) {
@@ -355,14 +300,9 @@ public class InternalToExternalConverterImpl implements InternalToExternalConver
 
     Arrangemang convertArrangemang(se.inera.certificate.modules.rli.model.edit.Arrangemang source) {
         Arrangemang arr = new Arrangemang();
-        PartialInterval arrTid = new PartialInterval();
-        arrTid.setFrom(PartialConverter.stringToPartial(source.getArrangemangsdatum()));
-        arrTid.setTom(PartialConverter.stringToPartial(source.getArrangemangslutdatum()));
 
-        arr.setArrangemangstid(arrTid);
-        arr.setArrangemangstyp(new Kod(source.getArrangemangstyp().getCodeSystem(), source.getArrangemangstyp()
-                .getCodeSystemName(), source.getArrangemangstyp().getCodeSystemVersion(), source.getArrangemangstyp()
-                .getCode()));
+        arr.setArrangemangstid(PartialConverter.toPartialInterval(source.getArrangemangsdatum(), source.getArrangemangslutdatum()));
+        arr.setArrangemangstyp(CodeConverter.toKod(source.getArrangemangstyp()));
         arr.setAvbestallningsdatum(PartialConverter.stringToPartial(source.getAvbestallningsdatum()));
         arr.setBokningsdatum(PartialConverter.stringToPartial(source.getBokningsdatum()));
         arr.setBokningsreferens(source.getBokningsreferens());

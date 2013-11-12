@@ -175,7 +175,7 @@ public class InternalToExternalConverterTest {
     }
 
     @Test
-    public void testSjukUndersokningToExtAktivitet() {
+    public void testSjukUndersokningToExtAktivitet() throws Exception {
         Undersokning undersokning = buildUndersokningSjuk();
         List<Aktivitet> akt = converter.convertAktiviteter(undersokning);
         Aktivitet facit = buildSjukAktivitetFacit();
@@ -233,7 +233,7 @@ public class InternalToExternalConverterTest {
     }
 
     @Test
-    public void testGravidUndersokningToExtAktivitet() {
+    public void testGravidUndersokningToExtAktivitet() throws Exception {
         Undersokning undersokning = buildUndersokningGravid();
         List<Aktivitet> converted = converter.convertAktiviteter(undersokning);
         List<Aktivitet> facit = buildGravidAktivitetFacit();
@@ -341,7 +341,7 @@ public class InternalToExternalConverterTest {
     }
 
     @Test
-    public void testConvertFullInternalToExternal() {
+    public void testConvertFullInternalToExternal() throws Exception {
         Utlatande extUtlatande = readUtlatandeFromJsonFile("/rli-sjuk-1-template.json");
 
         se.inera.certificate.modules.rli.model.edit.Utlatande intUtlatande = buildInternalUtlatande();
