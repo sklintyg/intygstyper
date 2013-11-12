@@ -43,32 +43,26 @@ public class ExternalValidatorTest {
         validator = new ExternalValidatorImpl();
     }
 
-    private Utlatande buildTestUtlatande(String filename) {
+    private Utlatande buildTestUtlatande(String filename) throws IOException {
         ObjectMapper mapper = new CustomObjectMapper();
         Utlatande utlatande = null;
 
-        try {
-            InputStream is = this.getClass().getResourceAsStream(filename);
-            utlatande = mapper.readValue(is, Utlatande.class);
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
+        InputStream is = this.getClass().getResourceAsStream(filename);
+        utlatande = mapper.readValue(is, Utlatande.class);
+
         return utlatande;
     }
 
     @Test
-    public void testValidate() {
+    public void testValidate() throws IOException {
         Utlatande utlatande = buildTestUtlatande("/rli-example-1.json");
         List<String> validationErrors = validator.validate(utlatande);
-        for ( String s : validationErrors) {
-            System.out.println(s);
-        }
 
         assertTrue(StringUtils.join(validationErrors, ", "), validationErrors.isEmpty());
     }
 
     @Test
-    public void testValidateWithErrors() {
+    public void testValidateWithErrors() throws IOException {
         Utlatande utlatande = buildTestUtlatande("/rli-example-1-with-errors.json");
         List<String> validationErrors = validator.validate(utlatande);
 

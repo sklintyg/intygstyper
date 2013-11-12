@@ -4,7 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.modules.rli.model.internal.KomplikationStyrkt;
 import se.inera.certificate.modules.rli.model.internal.OrsakAvbokning;
@@ -31,7 +30,7 @@ public class PdfGeneratorImpl implements PdfGenerator {
     private static final String TRAVEL_BOOKING_DATE = "Bokningsdatum";
     private static final String TRAVEL_CANCEL_DATE = "Avbestallningsdatum";
     private static final String TRAVEL_DEPARTURE_DATE = "Avresedatum";
-   
+
     // Special field only set when patient is pregnant
     private static final String BABY_DUE_DATE = "Barnet_beraknas_fodas";
 
@@ -64,7 +63,8 @@ public class PdfGeneratorImpl implements PdfGenerator {
     private static final String CAREUNIT_TELEPHONE = "Vardenhet_telefon";
     private static final String CAREUNIT_EMAIL = "Vardenhet_epost";
 
-    private static final String dateFormat = "yyMMdd";
+    private static final String DATEFORMAT_FOR_FILENAMES = "yyMMdd";
+    private static final String DATE_FORMAT = "yyyy-MM-dd";
 
     public PdfGeneratorImpl() {
 
@@ -72,8 +72,9 @@ public class PdfGeneratorImpl implements PdfGenerator {
 
     @Override
     public String generatePdfFilename(Utlatande utlatande) {
-        return String.format("lakarutlatande_%s_%s-%s.pdf", utlatande.getPatient().getPersonid(), utlatande
-                .getArrangemang().getBokningsdatum(), utlatande.getSigneringsdatum().toString(dateFormat));
+        return String
+                .format("lakarutlatande_%s_%s-%s.pdf", utlatande.getPatient().getPersonid(), utlatande.getArrangemang()
+                        .getBokningsdatum(), utlatande.getSigneringsdatum().toString(DATEFORMAT_FOR_FILENAMES));
     }
 
     /*
@@ -87,11 +88,11 @@ public class PdfGeneratorImpl implements PdfGenerator {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         String type = utlatande.getUndersokning().getOrsakforavbokning().toString();
-        
+
         PdfReader pdfReader = new PdfReader("pdf/" + type + "_blankett.pdf");
 
         PdfStamper pdfStamper = new PdfStamper(pdfReader, outputStream);
-        
+
         pdfStamper.setFormFlattening(true);
 
         AcroFields fields = pdfStamper.getAcroFields();
@@ -142,11 +143,21 @@ public class PdfGeneratorImpl implements PdfGenerator {
     }
 
     private void fillUndersokning(Utlatande utlatande, AcroFields fields) {
-        if (utlatande.getUndersokning().getUndersokningsplats() != null
-                && utlatande.getUndersokning().getUndersokningsdatum() != null) {
+        if (utlatande.getUndersokning().getUndersokningsdatum() != null) {
             fillText(fields, DATE_EXAM, utlatande.getUndersokning().getUndersokningsdatum());
+        }
+        /**
+         * If KLINISK_UNDERSOKNING has a structured info about Plats (which it should), then use Vardenhet.Enhetsnamn
+         * for Plats
+         */
+        if (utlatande.getUndersokning().getUtforsVid() != null) {
+            fillText(fields, PLACE_EXAM, utlatande.getUndersokning().getUtforsVid().getEnhetsnamn());
+        }
+        /** Else use Undersokningsplats if it is specified (which it shouldn't */
+        else if (utlatande.getUndersokning().getUndersokningsplats() != null) {
             fillText(fields, PLACE_EXAM, utlatande.getUndersokning().getUndersokningsplats());
         }
+
     }
 
     private void fillForstaUndersokning(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
@@ -209,7 +220,8 @@ public class PdfGeneratorImpl implements PdfGenerator {
      * @param fields
      */
     private void fillSignerNameAndAddress(Utlatande utlatande, AcroFields fields) {
-        fillText(fields, SIGNED, utlatande.getSkapadAv().getFullstandigtNamn() + "\n" + utlatande.getSigneringsdatum());
+        fillText(fields, SIGNED, utlatande.getSkapadAv().getFullstandigtNamn() + "\n"
+                + utlatande.getSigneringsdatum().toString(DATE_FORMAT));
 
     }
 
@@ -221,11 +233,10 @@ public class PdfGeneratorImpl implements PdfGenerator {
      * @param fields
      */
     private void fillTravelInformation(Utlatande utlatande, AcroFields fields) {
-        
+
         if (utlatande.getUndersokning().getOrsakforavbokning() == OrsakAvbokning.RESENAR_GRAVID) {
             fillText(fields, BABY_DUE_DATE, utlatande.getUndersokning().getGraviditet().getBeraknatForlossningsdatum());
         }
-        
         fillText(fields, TRAVEL_BOOKING_DATE, utlatande.getArrangemang().getBokningsdatum());
         fillText(fields, TRAVEL_BOOKING_NUMBER, utlatande.getArrangemang().getBokningsreferens());
         fillText(fields, TRAVEL_CANCEL_DATE, utlatande.getArrangemang().getAvbestallningsdatum());
