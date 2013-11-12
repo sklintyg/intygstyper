@@ -501,6 +501,10 @@ angular.module('wc.fk7263.controllers').controller('ViewCertCtrl', [ '$scope', '
     }, function(errorData) {
         // show error view
         $scope.widgetState.doneLoading = true;
-        $scope.widgetState.activeErrorMessageKey = "error.could_not_load_cert";
+        if (errorData && errorData.errorCode === "AUTHORIZATION_PROBLEM") {
+            $scope.widgetState.activeErrorMessageKey = "error.could_not_load_cert_not_auth";
+        } else {
+            $scope.widgetState.activeErrorMessageKey = "error.could_not_load_cert";
+        }
     });
 } ]);
