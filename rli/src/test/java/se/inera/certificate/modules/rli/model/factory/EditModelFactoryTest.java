@@ -18,11 +18,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class EditModelFactoryTest {
-    EditModelFactoryImpl factory;
+    EditModelFactory factory;
 
     @Before
     public void setUp() throws Exception {
-        factory = new EditModelFactoryImpl();
+        factory = new EditModelFactory();
     }
 
     @Test

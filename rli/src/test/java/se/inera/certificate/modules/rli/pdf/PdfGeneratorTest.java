@@ -29,10 +29,10 @@ import com.itextpdf.text.DocumentException;
 
 public class PdfGeneratorTest {
 
-    private PdfGeneratorImpl pdfGen;
+    private PdfGenerator pdfGen;
 
     public PdfGeneratorTest() {
-        pdfGen = new PdfGeneratorImpl();
+        pdfGen = new PdfGenerator();
     }
 
     @Test

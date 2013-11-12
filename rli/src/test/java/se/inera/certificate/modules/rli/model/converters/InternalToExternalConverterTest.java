@@ -51,11 +51,11 @@ import se.inera.certificate.modules.rli.model.edit.Vardgivare;
  */
 public class InternalToExternalConverterTest {
 
-    private InternalToExternalConverterImpl converter;
+    private InternalToExternalConverter converter;
 
     @Before
     public void setUp() throws Exception {
-        this.converter = new InternalToExternalConverterImpl();
+        this.converter = new InternalToExternalConverter();
     }
 
     @Test
@@ -207,7 +207,7 @@ public class InternalToExternalConverterTest {
 
         Utforare utforsAv = new Utforare();
         utforsAv.setAntasAv(antasAv);
-        utforsAv.setUtforartyp(UtforarrollKod.AV_HOS_PERSONAL.getCode());
+        utforsAv.setUtforartyp(UtforarrollKod.AV_HOS_PERSONAL);
         return utforsAv;
     }
 
@@ -435,7 +435,7 @@ public class InternalToExternalConverterTest {
 
         Utforare utforsAv = new Utforare();
         utforsAv.setAntasAv(antasAv);
-        utforsAv.setUtforartyp(UtforarrollKod.AV_HOS_PERSONAL.getCode());
+        utforsAv.setUtforartyp(UtforarrollKod.AV_HOS_PERSONAL);
         undersokning.setUtforsAv(utforsAv);
         utlatande.setUndersokning(undersokning);
 

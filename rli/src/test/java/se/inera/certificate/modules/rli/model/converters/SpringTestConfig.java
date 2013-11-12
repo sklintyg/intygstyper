@@ -11,18 +11,18 @@ public class SpringTestConfig {
     }
 
     @Bean(name = { "externalToInternalConverter" })
-    public ExternalToInternalConverterImpl getExternalToInternalConverterImpl() {
-        return new ExternalToInternalConverterImpl();
+    public ExternalToInternalConverter getExternalToInternalConverterImpl() {
+        return new ExternalToInternalConverter();
     }
 
     @Bean
     public UndersokningPopulator getUndersokningPopulator() {
-        return new UndersokingPopulatorImpl();
+        return new UndersokningPopulator();
     }
 
     @Bean
     public RekommendationPopulator getRekommendationPopulator() {
-        return new RekommendationPopulatorImpl();
+        return new RekommendationPopulator();
     }
 
 }

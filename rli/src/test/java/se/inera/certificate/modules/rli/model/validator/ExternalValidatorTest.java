@@ -30,17 +30,17 @@ import org.junit.Test;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
-import se.inera.certificate.modules.rli.validator.ExternalValidatorImpl;
+import se.inera.certificate.modules.rli.validator.ExternalValidator;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ExternalValidatorTest {
 
-    private ExternalValidatorImpl validator;
+    private ExternalValidator validator;
 
     @Before
     public void setUp() throws Exception {
-        validator = new ExternalValidatorImpl();
+        validator = new ExternalValidator();
     }
 
     private Utlatande buildTestUtlatande(String filename) throws IOException {

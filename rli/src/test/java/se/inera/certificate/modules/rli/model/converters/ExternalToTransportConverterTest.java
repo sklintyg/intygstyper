@@ -44,11 +44,11 @@ import se.inera.certificate.modules.rli.model.external.Aktivitet;
 
 public class ExternalToTransportConverterTest {
 
-    private static ExternalToTransportConverterImpl converter;
+    private static ExternalToTransportConverter converter;
 
     @Before
     public void setUp() throws Exception {
-        converter = new ExternalToTransportConverterImpl();
+        converter = new ExternalToTransportConverter();
     }
 
     @Test
