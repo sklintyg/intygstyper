@@ -1,21 +1,41 @@
 'use strict';
 
-/* 
- * App Module 
+/*
+ * App Module
  */
-angular.module('FK7263ViewCertApp', [ 'ui.bootstrap', 'wc.fk7263.controllers', 'wc.fk7263.directives', 'wc.fk7263.services', 'wc.fragasvarmodule', 'modules.messages','wc.common.directives', 'wc.utils', 'wc.common.fragasvarmodule' ]);
-angular.module('FK7263ViewCertApp').config(
-        [ '$routeProvider', function($routeProvider) {
-            $routeProvider.when('/edit', {
-                templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/edit-cert.html',
-                controller : 'EditCertCtrl'
-            }).when('/view', {
-                templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/view-cert.html',
-                controller : 'ViewCertCtrl'
-            }).otherwise({
-                redirectTo : '/view'
-            });
-        } ]);
+angular.module('FK7263ViewCertApp', [ 'ui.bootstrap', 'wc.fk7263.controllers', 'wc.fk7263.directives', 'wc.fk7263.services', 'wc.fragasvarmodule', 'modules.messages', 'wc.common.directives',
+        'wc.utils', 'wc.common.fragasvarmodule' ]);
+angular.module('FK7263ViewCertApp').config([ '$routeProvider', '$httpProvider', 'http403ResponseInterceptorProvider', function($routeProvider, $httpProvider, http403ResponseInterceptorProvider) {
+    $routeProvider.when('/edit', {
+        templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/edit-cert.html',
+        controller : 'EditCertCtrl'
+    }).when('/view', {
+        templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/view-cert.html',
+        controller : 'ViewCertCtrl'
+    }).otherwise({
+        redirectTo : '/view'
+    });
+
+    // Add cache buster interceptor
+    $httpProvider.interceptors.push('httpRequestInterceptorCacheBuster');
+
+    // Configure 403 interceptor provider
+    http403ResponseInterceptorProvider.setRedirectUrl("/error.jsp?reason=denied");
+    $httpProvider.responseInterceptors.push('http403ResponseInterceptor');
+} ]);
+
+// Global config of default date picker config (individual attributes can be
+// overridden per directive usage)
+angular.module('FK7263ViewCertApp').constant('datepickerPopupConfig', {
+    dateFormat : "yyyy-MM- dd",
+    closeOnDateSelection : true,
+    appendToBody : false,
+    showWeeks : true,
+    closeText : 'OK',
+    currentText : "Idag",
+    toggleWeeksText : "Visa Veckor",
+    clearText : "Rensa"
+});
 
 angular.module('FK7263ViewCertApp').run([ '$rootScope', 'messageService', function($rootScope, messageService) {
     $rootScope.lang = 'sv';
