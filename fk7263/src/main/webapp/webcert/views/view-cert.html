@@ -107,8 +107,8 @@
                       <div class="qa-block-head clearfix">
                         <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
 
-                          <span ng-switch-when="wc"> <!--  Frågaställaren var vården - svaret måste kommit från FK --> Från: <span class="qa-sender" message key="qa.fragestallare.fk"></span>
-                          </span> <span ng-switch-default> <!--  Frågaställaren var inte vården - svaret måste alltså kommit från vården --> Från: <span class="qa-sender" message
+                          <span ng-switch-when="wc"> <!--  Frågaställaren var Vårdenheten - svaret måste kommit från FK --> Från: <span class="qa-sender" message key="qa.fragestallare.fk"></span>
+                          </span> <span ng-switch-default> <!--  Frågaställaren var inte Vårdenheten - svaret måste alltså kommit från Vårdenheten --> Från: <span class="qa-sender" message
                             key="qa.fragestallare.wc"></span>
                           </span>
 
@@ -123,7 +123,7 @@
                   </div>
 
                   <div class="control-group" ng-if="qa.status == 'PENDING_INTERNAL_ACTION'">
-                    <!--  VÄNTAR på svar från vården, men skall kunna klarmarkeras ändå?-->
+                    <!--  VÄNTAR på svar från Vårdenheten, men skall kunna klarmarkeras ändå?-->
                     <label class="control-label" ng-show="!qa.answerDisabled">Svar</label>
                     <div class="controls">
                       <div class="alert alert-info" ng-show="qa.answerDisabled && qa.answerDisabledReason">{{qa.answerDisabledReason}}</div>
@@ -209,8 +209,8 @@
                     <div class="qa-block-head clearfix">
                       <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
 
-                        <span ng-switch-when="wc"> <!--  Frågaställaren var vården - svaret måste kommit från FK --> Från: <span class="qa-sender" message key="qa.fragestallare.fk"></span>
-                        </span> <span ng-switch-default> <!--  Frågaställaren var inte vården - svaret måste alltså kommit från vården --> Från: <span class="qa-sender" message
+                        <span ng-switch-when="wc"> <!--  Frågaställaren var Vårdenheten - svaret måste kommit från FK --> Från: <span class="qa-sender" message key="qa.fragestallare.fk"></span>
+                        </span> <span ng-switch-default> <!--  Frågaställaren var inte Vårdenheten - svaret måste alltså kommit från Vårdenheten --> Från: <span class="qa-sender" message
                           key="qa.fragestallare.wc"></span>
                         </span>
 
