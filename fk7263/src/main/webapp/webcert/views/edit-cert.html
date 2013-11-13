@@ -303,12 +303,12 @@
 						<span>till</span> 
             <input type="text" datepicker-popup ng-model="cert.nedsattMed25.end" is-open="workState.dpState25To.open" ng-change="updateTotalCertDays()"/>
             <button class="btn" ng-click="toggleDatePickerInstance(workState.dpState25To)" ng-disabled="workState.dpState25To.open"><i class="icon-calendar"></i></button>
-						<div class="indent" ng-if="workState.check25">
+						<div class="indent pad10" ng-if="workState.check25">
 							<div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
 								Arbetstid timmar/vecka: <strong>{{cert.workTime / 4}}</strong>
 							</div>
 							Arbetstidsförläggning (frivilligt) <input type="text" ng-model="cert.otherData.workingHours25" id="capacityForWork.rec25LongerWorkingHours" name="capacityForWork.rec25LongerWorkingHours" value="" class='otherInformation'>
-							 Tecken kvar:  {{inputLimits.ovrigt - getTotalOvrigtLength()}}
+							<span class="counter">Tecken kvar:  {{inputLimits.ovrigt - getTotalOvrigtLength()}}</span>
 							<div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
 						</div>
 					</div>
@@ -323,13 +323,13 @@
             <span>till</span> 
             <input type="text" datepicker-popup ng-model="cert.nedsattMed50.end" is-open="workState.dpState50To.open" ng-change="updateTotalCertDays()"/>
             <button class="btn" ng-click="toggleDatePickerInstance(workState.dpState50To)" ng-disabled="workState.dpState50To.open"><i class="icon-calendar"></i></button>
-            <div class="indent" ng-if="workState.check50">
+            <div class="indent pad10" ng-if="workState.check50">
 							<div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
 								Arbetstid timmar/vecka: <strong>{{cert.workTime / 2}}</strong>
 							</div>
 							Arbetstidsförläggning (frivilligt) <input type="text"	ng-model="cert.otherData.workingHours50" id="capacityForWork.rec50LongerWorkingHours" name="capacityForWork.rec50LongerWorkingHours" value=""
 								class='otherInformation'> 
-								Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}
+              <span class="counter">Tecken kvar:  {{inputLimits.ovrigt - getTotalOvrigtLength()}}</span>
 							<div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
 						</div>
 					</div>
@@ -344,14 +344,15 @@
             <span>till</span> 
             <input type="text" datepicker-popup ng-model="cert.nedsattMed75.end" is-open="workState.dpState75To.open" ng-change="updateTotalCertDays()"/>
             <button class="btn" ng-click="toggleDatePickerInstance(workState.dpState75To)" ng-disabled="workState.dpState75To.open"><i class="icon-calendar"></i></button>
-            <div class="indent" ng-if="workState.check75">
+            <div class="indent pad10" ng-if="workState.check75">
 							<div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
 								Arbetstid timmar/vecka: <strong>{{cert.workTime * 0.75}}</strong>
 							</div>
 							Arbetstidsförläggning (frivilligt) <input type="text" ng-model="cert.otherData.workingHours75" 
 								id="capacityForWork.rec75LongerWorkingHours"
 								name="capacityForWork.rec75LongerWorkingHours" value=""
-								class='otherInformation'> Tecken kvar:  {{inputLimits.ovrigt - getTotalOvrigtLength()}}
+								class='otherInformation'>
+              <span class="counter">Tecken kvar:  {{inputLimits.ovrigt - getTotalOvrigtLength()}}</span>
 							<div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
 						</div>
 					</div>
