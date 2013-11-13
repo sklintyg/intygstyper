@@ -270,6 +270,10 @@
           </button>
           <button class="btn btn-inverse">Rätta intyg</button>
         </div>
+        
+        <div class="alert alert-info" style="margin-right: 20px;">
+          <strong>Status:</strong> Intyget är signerat och skickat till Försäkringskassan.        
+        </div>
 
         <div id="certificate" class="certificate">
           <div class="row-fluid">
@@ -280,7 +284,6 @@
                   <span ng-show="cert.avstangningSmittskydd"> <span message key="view.label.yes"></span></span> <span ng-show="!cert.avstangningSmittskydd"> <span message key="view.label.no"></span>
                   </span>
                 </div>
-
 
                 <div wc-cert-field field-number="2" field-label="view.label.diagnosis" filled="cert.diagnosBeskrivning">
                   {{cert.diagnosBeskrivning}} (<span class="tag"><span message key="view.label.diagnosisCode"></span></span> {{cert.diagnosKod}})
