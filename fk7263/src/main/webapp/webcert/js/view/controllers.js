@@ -41,8 +41,12 @@ angular
                             $scope.toggleShowComplete = function(){
                             	$scope.widgetState.showComplete = !$scope.widgetState.showComplete;
                             	if($scope.widgetState.showComplete) {
-                            		$location.hash('top');
-                            		$anchorScroll();
+                            		
+                                var old = $location.hash();
+                                $location.hash('top');
+                                $anchorScroll();
+                                //reset to old to keep any additional routing logic from kicking in
+                                $location.hash(old);
                             	}
                             }
                             
