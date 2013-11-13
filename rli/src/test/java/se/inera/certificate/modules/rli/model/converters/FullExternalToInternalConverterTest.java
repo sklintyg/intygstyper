@@ -32,7 +32,7 @@ public class FullExternalToInternalConverterTest {
 
     private ApplicationContext ctx;
 
-    private ExternalToInternalConverterImpl converter;
+    private ExternalToInternalConverter converter;
 
     public FullExternalToInternalConverterTest() {
         this.ctx = new AnnotationConfigApplicationContext(SpringTestConfig.class);
@@ -40,7 +40,7 @@ public class FullExternalToInternalConverterTest {
 
     @Before
     public void setUp() {
-        this.converter = this.ctx.getBean("externalToInternalConverter", ExternalToInternalConverterImpl.class);
+        this.converter = this.ctx.getBean("externalToInternalConverter", ExternalToInternalConverter.class);
     }
 
     @Test

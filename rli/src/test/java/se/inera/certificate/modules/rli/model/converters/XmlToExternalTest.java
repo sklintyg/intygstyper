@@ -40,7 +40,7 @@ public class XmlToExternalTest {
 
     @Before
     public void setUp() {
-        converter = new TransportToExternalConverterImpl();
+        converter = new TransportToExternalConverter();
     }
 
     @Test

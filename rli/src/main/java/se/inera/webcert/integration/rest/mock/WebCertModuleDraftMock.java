@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import se.inera.certificate.modules.rli.model.converters.ConverterException;
 import se.inera.certificate.modules.rli.model.edit.Utlatande;
 import se.inera.certificate.modules.rli.model.factory.EditModelFactory;
 import se.inera.certificate.modules.rli.rest.dto.CreateNewDraftCertificateHolder;
@@ -47,13 +48,21 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
         }
 
         String certificateId = UUID.randomUUID().toString();
+
         LOG.info("Creating new draft (type: {}), with id: {}", certificateType, certificateId);
 
         CreateNewDraftCertificateHolder newDraftData = new CreateNewDraftCertificateHolder();
         newDraftData.setCertificateId(certificateId);
         newDraftData.setSkapadAv(draftInfo.getSkapadAv());
-//        newDraftData.setSomethingOnlyWebcertKnowsAbout("Evil hidden stuff");
-        Utlatande utlatande = editModelFactory.createEditableUtlatande(newDraftData);
+        newDraftData.setPatientInfo(draftInfo.getPatientInfo());
+
+        // newDraftData.setSomethingOnlyWebcertKnowsAbout("Evil hidden stuff");
+        Utlatande utlatande = null;
+        try {
+            utlatande = editModelFactory.createEditableUtlatande(newDraftData);
+        } catch (ConverterException e) {
+            e.printStackTrace();
+        }
         mockStore.put(certificateId, utlatande);
         simulateLatency(1000);
         return utlatande;
@@ -78,7 +87,7 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
         if (!mockStore.containsKey(certificateId)) {
             throw new WebApplicationException(Status.BAD_REQUEST);
         }
-        //simulateLatency(1000);
+        // simulateLatency(1000);
         mockStore.put(certificateId, draftCertificate);
     }
 

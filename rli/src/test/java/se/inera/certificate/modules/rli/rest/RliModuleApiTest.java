@@ -3,11 +3,7 @@ package se.inera.certificate.modules.rli.rest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXB;
@@ -108,21 +104,4 @@ public class RliModuleApiTest {
         return JAXB.unmarshal(new ClassPathResource("scenarios/" + resource).getFile(), Utlatande.class);
     }
 
-    @Test
-    public void testCreateNewEditableCert() throws JsonParseException, JsonMappingException, IOException {
-        CreateNewDraftCertificateHolder draftCertHolder = new CreateNewDraftCertificateHolder();
-
-        HosPersonal skapadAv = new ObjectMapper().readValue(new ClassPathResource("initial-parameters.json").getFile(),
-                HosPersonal.class);
-
-        draftCertHolder.setCertificateId("new_ID");
-        draftCertHolder.setSkapadAv(skapadAv);
-
-        se.inera.certificate.modules.rli.model.edit.Utlatande utlatande = (se.inera.certificate.modules.rli.model.edit.Utlatande) rliModuleApi
-                .createNewInternal(draftCertHolder).getEntity();
-
-        assertNotNull(utlatande);
-        assertNotNull(utlatande.getSkapadAv());
-
-    }
 }

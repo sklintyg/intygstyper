@@ -14,26 +14,26 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
   <bean id="transportToExternalConverter"
-    class="se.inera.certificate.modules.rli.model.converters.TransportToExternalConverterImpl" />
+    class="se.inera.certificate.modules.rli.model.converters.TransportToExternalConverter" />
 
   <bean id="externalToTransportConverter"
-    class="se.inera.certificate.modules.rli.model.converters.ExternalToTransportConverterImpl" />
+    class="se.inera.certificate.modules.rli.model.converters.ExternalToTransportConverter" />
 
   <bean id="externalValidator"
-    class="se.inera.certificate.modules.rli.validator.ExternalValidatorImpl" />
+    class="se.inera.certificate.modules.rli.validator.ExternalValidator" />
 
   <bean id="externalToInternalConverter"
-    class="se.inera.certificate.modules.rli.model.converters.ExternalToInternalConverterImpl" />
+    class="se.inera.certificate.modules.rli.model.converters.ExternalToInternalConverter" />
 
   <bean id="rekommendationPopulator"
-    class="se.inera.certificate.modules.rli.model.converters.RekommendationPopulatorImpl" />
+    class="se.inera.certificate.modules.rli.model.converters.RekommendationPopulator" />
 
   <bean id="undersokningPopulator"
-    class="se.inera.certificate.modules.rli.model.converters.UndersokingPopulatorImpl" />
+    class="se.inera.certificate.modules.rli.model.converters.UndersokningPopulator" />
 
-  <bean id="pdfGenerator" class="se.inera.certificate.modules.rli.pdf.PdfGeneratorImpl" />
+  <bean id="pdfGenerator" class="se.inera.certificate.modules.rli.pdf.PdfGenerator" />
 
   <bean id="editModelFactory"
-    class="se.inera.certificate.modules.rli.model.factory.EditModelFactoryImpl" />
+    class="se.inera.certificate.modules.rli.model.factory.EditModelFactory" />
 
 </beans>

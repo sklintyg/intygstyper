@@ -25,9 +25,9 @@ angular.module('controllers.rli.webcert').controller('NewCertCtrl', [ '$scope', 
     $scope.doneLoading = false;
    
     /*
-     *  Calls method getDraft in webcertService to get a draft corresponding 
-     *  to the id provided in $routeParams.certId
-     */
+	 * Calls method getDraft in webcertService to get a draft corresponding to
+	 * the id provided in $routeParams.certId
+	 */
     webcertService.getDraft($routeParams.certId, function(result){
     	if ($routeParams.certId == null || $routeParams.certId == 'undefined') {
     		console.log("$routeParams.certId was null or undefined");
@@ -40,17 +40,17 @@ angular.module('controllers.rli.webcert').controller('NewCertCtrl', [ '$scope', 
     $scope.doneLoading = true;
     
     /*
-     * Injects complicationType into the $rootScope 
-     * (this is used to determine visibility for certain div's in other controllers templates)
-     */
+	 * Injects complicationType into the $rootScope (this is used to determine
+	 * visibility for certain div's in other controllers templates)
+	 */
     $scope.changeCompType = function() {
     	$rootScope.complicationType = $scope.complicationType;
     };
     
     /*
-     * proceedToCert saves the current draft and redirects to /edit/utlatandeid 
-     * for current cert.
-     */
+	 * proceedToCert saves the current draft and redirects to /edit/utlatandeid
+	 * for current cert.
+	 */
     $scope.proceedToCert = function() {
     	webcertService.saveDraft($scope.cert.utlatandeid, angular.toJson($scope.cert), function(){
     		console.log("Call completed"); 	
@@ -65,7 +65,7 @@ angular.module('controllers.rli.webcert').controller('ListCertCtrl', [ '$scope',
 	$scope.initial_params = {};
 	$scope.doneLoading = true;
 	
-	/* Different types of certificates  */
+	/* Different types of certificates */
 	$scope.cert_types = [
 	                    {type : 'RLI'},
 	                    {type : 'FK7263'}
@@ -73,33 +73,63 @@ angular.module('controllers.rli.webcert').controller('ListCertCtrl', [ '$scope',
 	/* Initiate cert_type to RLI */
 	$scope.cert_type = $scope.cert_types[0];
 	
-	/* Set initial parameters (can be changed in corresponding textarea in template) */
-	$scope.initial_params.data = {
-		skapadAv : {
-		    personid : "19101010+1010",
-		    fullstandigtNamn : "Doktor Alban",
-		    vardenhet : {
-		      enhetsid 		: "vardenhet_test",
-		      enhetsnamn 	: "Testenheten",
-		      postadress 	: "Teststigen 12",
-		      postnummer 	: "12345",
-		      postort 		: "Tolvberga",
-		      telefonnummer : "012-345678",
-		      epost 		: "ingen@alls.se",
-		    }
-	    }
-	};	
-	
 	/*
-	 * Creates a new draft using the information in $scope.certificateContent
-	 * by calling createDraft in webcertService, then redirects to /new/utlatandeid
+	 * Set initial parameters (can be changed in corresponding textarea in
+	 * template)
+	 */
+	$scope.initial_params.data = {
+			skapadAv:{
+				id:{
+					"root":"1.2.752.129.2.1.4.1",
+					"extension":"19101010-1010"
+				},
+				namn:"Doktor Alban",
+				vardenhet:{
+					id:{
+						"root":"1.2.752.129.2.1.4.1",
+						"extension":"vardenhet_test"
+					},
+					namn		:"Testenheten",
+					postadress	:"Teststigen 12",
+					postnummer	:"12345",
+					postort		:"Tolvberga",
+					telefonnummer:"012-345678",
+					epost		:"ingen@alls.se",
+					vardgivare :{
+						id :{
+							root:"1.2.752.129.2.1.4.1",
+							extension:"19101010-1010"
+						},
+						namn:"vårdgivarnamn"
+					}
+				}
+			},
+			patientInfo:{
+				id:{
+					root:"1.2.752.129.2.1.3.1",
+					extension:"19121212-1212"
+				},
+				fornamn:[
+					"johnny"
+				],
+				efternamn:"appleseed",
+				postadress:"Testvägen 12",
+				postnummer:"1337",
+				postort:"Huddinge"
+			}
+		};
+
+	/*
+	 * Creates a new draft using the information in $scope.certificateContent by
+	 * calling createDraft in webcertService, then redirects to /new/utlatandeid
 	 * for current cert
 	 */
     $scope.createCert = function() {
-    	$scope.cert = {}; 
+    	$scope.cert = {};
     	$scope.certificateContent = {
         		certificateType : $scope.cert_type.type,
-        		initialParameters : $scope.initial_params.data
+        		skapadAv : eval($scope.initial_params.data.skapadAv),
+        		patientInfo : eval($scope.initial_params.data.patientInfo)
         };
     	
     	webcertService.createDraft($scope.certificateContent, function(result) {
@@ -139,9 +169,9 @@ angular.module('controllers.rli.webcert').controller('EditCertCtrl', [ '$scope',
     $scope.displayLoader = false;
 
     /*
-     * Gets cert draft using certId specified in $routeParams,
-     * redirect to /list if no corresponding draft is found
-     */
+	 * Gets cert draft using certId specified in $routeParams, redirect to /list
+	 * if no corresponding draft is found
+	 */
     webcertService.getDraft($routeParams.certId, function(result){
          if (result != null) {
              $scope.cert = result;
@@ -152,8 +182,8 @@ angular.module('controllers.rli.webcert').controller('EditCertCtrl', [ '$scope',
     });
     
     /*
-     * Delete current draft and redirect to /list
-     */
+	 * Delete current draft and redirect to /list
+	 */
     $scope.deleteDraft = function(){
     	webcertService.deleteDraft($scope.cert.utlatandeid, function(){
     		console.log("Deleted current draft");
@@ -162,8 +192,8 @@ angular.module('controllers.rli.webcert').controller('EditCertCtrl', [ '$scope',
     };
     
     /*
-     * Saves the draft by making a saveDraft call to webcertService
-     */
+	 * Saves the draft by making a saveDraft call to webcertService
+	 */
     $scope.saveCert = function () {
     	$scope.displayLoader = true;
     	console.log("Making save call to REST");

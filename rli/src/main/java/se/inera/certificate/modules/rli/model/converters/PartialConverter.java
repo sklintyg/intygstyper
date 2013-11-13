@@ -30,6 +30,8 @@ import org.joda.time.Partial;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import se.inera.certificate.model.PartialInterval;
+
 /**
  * Utility for converting a joda-time Partial to String and vice versa.
  * 
@@ -123,5 +125,13 @@ public final class PartialConverter {
         }
 
         return ArrayUtils.toPrimitive(dateValueList.toArray(new Integer[0]));
+    }
+
+    public static PartialInterval toPartialInterval(String from, String tom) {
+        PartialInterval result = new PartialInterval();
+        result.setFrom(stringToPartial(from));
+        result.setTom(stringToPartial(tom));
+
+        return result;
     }
 }

@@ -160,13 +160,16 @@ public class ExternalValidatorInstance {
 
         for (Aktivitet aktivitet : aktiviteter) {
             assertKodInEnum(aktivitet.getAktivitetskod(), AktivitetsKod.class, "aktivitet.aktivitetskod");
-//            assertNotNull(aktivitet.getPlats(), "aktivitet.plats");
 
+            /** Make sure Aktivitet of type KLINISK_UNDERSOKNING contains utforsVid */
             if (AktivitetsKod.KLINISK_UNDERSOKNING.matches(aktivitet.getAktivitetskod())) {
                 assertNotNull(aktivitet.getAktivitetstid(), "aktivitet.aktivitetstid");
+                assertNotNull(aktivitet.getUtforsVid(), "aktivitet.utforsVid");
             }
+            /** Make sure Aktivitet of type FORSTA_UNDERSOKNING contains Plats */
             if (AktivitetsKod.FORSTA_UNDERSOKNING.matches(aktivitet.getAktivitetskod())) {
                 assertNotNull(aktivitet.getAktivitetstid(), "aktivitet.aktivitetstid");
+                assertNotNull(aktivitet.getPlats(), "aktivitet.plats");
             }
             
         }

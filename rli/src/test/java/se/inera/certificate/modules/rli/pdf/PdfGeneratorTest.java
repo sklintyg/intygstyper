@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import org.joda.time.LocalDateTime;
-import org.junit.Before;
 import org.junit.Test;
 
 import se.inera.certificate.modules.rli.model.codes.ArrangemangsKod;
@@ -30,10 +29,10 @@ import com.itextpdf.text.DocumentException;
 
 public class PdfGeneratorTest {
 
-    private PdfGeneratorImpl pdfGen;
+    private PdfGenerator pdfGen;
 
     public PdfGeneratorTest() {
-        pdfGen = new PdfGeneratorImpl();
+        pdfGen = new PdfGenerator();
     }
 
     @Test

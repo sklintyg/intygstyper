@@ -58,7 +58,7 @@ import se.inera.certificate.modules.rli.model.external.Utlatande;
 
 public class TransportToExternalConverterTest {
 
-    private TransportToExternalConverterImpl converter;
+    private TransportToExternalConverter converter;
 
     private ObservationType buildObservationType() {
         CD cd = new CD();
@@ -186,7 +186,7 @@ public class TransportToExternalConverterTest {
     @Before
     public void setUp() {
         // Initiate converter
-        converter = new TransportToExternalConverterImpl();
+        converter = new TransportToExternalConverter();
 
     }
 

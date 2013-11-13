@@ -3,23 +3,25 @@
  */
 package se.inera.certificate.modules.rli.model.edit;
 
+import se.inera.certificate.modules.rli.model.codes.UtforarrollKod;
+
 
 /**
  * @author erik
  *
  */
 public class Utforare {
-    private String utforartyp;
+    private UtforarrollKod utforartyp;
     private HoSPersonal antasAv;
     
     public Utforare(){
         
     }
     
-    public String getUtforartyp() {
+    public UtforarrollKod getUtforartyp() {
         return utforartyp;
     }
-    public void setUtforartyp(String utforartyp) {
+    public void setUtforartyp(UtforarrollKod utforartyp) {
         this.utforartyp = utforartyp;
     }
     

@@ -228,10 +228,13 @@ public class RliModuleApi {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createNewInternal(CreateNewDraftCertificateHolder draftCertificateHolder) {
-
-        se.inera.certificate.modules.rli.model.edit.Utlatande editableUtlatande = editModelFactory
+        se.inera.certificate.modules.rli.model.edit.Utlatande editableUtlatande = null;
+        try {
+            editableUtlatande = editModelFactory
                 .createEditableUtlatande(draftCertificateHolder);
-
+        } catch (ConverterException ce) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
         return Response.ok(editableUtlatande).build();
     }
 }

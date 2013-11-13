@@ -11,7 +11,7 @@ import org.apache.commons.io.FilenameUtils;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.rli.model.converters.ConverterException;
 import se.inera.certificate.modules.rli.model.converters.TransportToExternalConverter;
-import se.inera.certificate.modules.rli.model.converters.TransportToExternalConverterImpl;
+import se.inera.certificate.modules.rli.model.converters.TransportToExternalConverter;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
 
 /**
@@ -28,7 +28,7 @@ public final class XmlToJsonConverter {
     private CustomObjectMapper objectMapper;
 
     private XmlToJsonConverter() {
-        this.transportConverter = new TransportToExternalConverterImpl();
+        this.transportConverter = new TransportToExternalConverter();
         this.objectMapper = new CustomObjectMapper();
     }
 

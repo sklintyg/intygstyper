@@ -51,11 +51,11 @@ import se.inera.certificate.modules.rli.model.edit.Vardgivare;
  */
 public class InternalToExternalConverterTest {
 
-    private InternalToExternalConverterImpl converter;
+    private InternalToExternalConverter converter;
 
     @Before
     public void setUp() throws Exception {
-        this.converter = new InternalToExternalConverterImpl();
+        this.converter = new InternalToExternalConverter();
     }
 
     @Test
@@ -175,7 +175,7 @@ public class InternalToExternalConverterTest {
     }
 
     @Test
-    public void testSjukUndersokningToExtAktivitet() {
+    public void testSjukUndersokningToExtAktivitet() throws Exception {
         Undersokning undersokning = buildUndersokningSjuk();
         List<Aktivitet> akt = converter.convertAktiviteter(undersokning);
         Aktivitet facit = buildSjukAktivitetFacit();
@@ -207,7 +207,7 @@ public class InternalToExternalConverterTest {
 
         Utforare utforsAv = new Utforare();
         utforsAv.setAntasAv(antasAv);
-        utforsAv.setUtforartyp(UtforarrollKod.AV_HOS_PERSONAL.getCode());
+        utforsAv.setUtforartyp(UtforarrollKod.AV_HOS_PERSONAL);
         return utforsAv;
     }
 
@@ -233,7 +233,7 @@ public class InternalToExternalConverterTest {
     }
 
     @Test
-    public void testGravidUndersokningToExtAktivitet() {
+    public void testGravidUndersokningToExtAktivitet() throws Exception {
         Undersokning undersokning = buildUndersokningGravid();
         List<Aktivitet> converted = converter.convertAktiviteter(undersokning);
         List<Aktivitet> facit = buildGravidAktivitetFacit();
@@ -341,7 +341,7 @@ public class InternalToExternalConverterTest {
     }
 
     @Test
-    public void testConvertFullInternalToExternal() {
+    public void testConvertFullInternalToExternal() throws Exception {
         Utlatande extUtlatande = readUtlatandeFromJsonFile("/rli-sjuk-1-template.json");
 
         se.inera.certificate.modules.rli.model.edit.Utlatande intUtlatande = buildInternalUtlatande();
@@ -435,7 +435,7 @@ public class InternalToExternalConverterTest {
 
         Utforare utforsAv = new Utforare();
         utforsAv.setAntasAv(antasAv);
-        utforsAv.setUtforartyp(UtforarrollKod.AV_HOS_PERSONAL.getCode());
+        utforsAv.setUtforartyp(UtforarrollKod.AV_HOS_PERSONAL);
         undersokning.setUtforsAv(utforsAv);
         utlatande.setUndersokning(undersokning);
 

@@ -71,6 +71,7 @@ var fk7263Messages = {
         "nedsattningsgrad.nedsatt_med_1_4" : "Nedsatt med 1/4",
         // errors
         "error.could_not_load_cert" : "Kunde inte hämta intyget.",
+        "error.could_not_load_cert_not_auth" : "Kunde inte hämta intyget eftersom du saknar behörighet.",
         "error.could_not_load_cert_qa" : "Kunde inte hämta frågor och svar för intyget.",
         // fragaSvar errors
         "error.external_system_problem" : "Försäkringskassans system kan just nu inte ta emot informationen. Försök igen",

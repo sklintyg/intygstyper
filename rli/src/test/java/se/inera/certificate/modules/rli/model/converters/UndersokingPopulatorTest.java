@@ -33,11 +33,11 @@ import se.inera.certificate.modules.rli.model.internal.Undersokning;
  */
 public class UndersokingPopulatorTest {
 
-    private UndersokingPopulatorImpl converter;
+    private UndersokningPopulator converter;
 
     @Before
     public void setUp() {
-        this.converter = new UndersokingPopulatorImpl();
+        this.converter = new UndersokningPopulator();
     }
 
     @Test
