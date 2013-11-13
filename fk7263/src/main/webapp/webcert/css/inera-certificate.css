@@ -39,13 +39,15 @@ a:hover.backlink-icon {
 }
 
 .header-fix-top-expand {
-  position: absolute;
-  left: 50%;
+  position: relative;
+  top: -20px;
+  right: 30px;
 }
 
 .header-fix-top-expand-wrapper {
-  position: relative;
-  left: -50%;
+  position: absolute;
+  right: 0;
+  top: 0;
   background-color: #f0f0f0;
   text-align: center;
   -webkit-border-radius: 0 0 5px 5px;
@@ -84,9 +86,9 @@ span.help {
   -ms-border-radius: 50%;
   border-radius: 50%;
   color: #fff;
-  padding: 0 5px 0 5px;
+  padding: 1px 5px 1px 5px;
   margin-left: 10px; 
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
 }
 
@@ -373,3 +375,55 @@ input[datepicker-popup] {
   opacity:0.5;
   max-height: 800px;
 }
+
+.header-wrapper {
+	max-height: 110px;
+	overflow: hidden;
+}
+
+.menucollapse-hide, .menucollapse-show {
+  -webkit-transition:all ease-out 0.3s;
+  -moz-transition:all ease-out 0.3s;
+  -o-transition:all ease-out 0.3s;
+  transition:all ease-out 0.3s;
+  position: relative;
+  margin-top: 0;
+}
+
+.menucollapse-hide {
+  margin-top: 0;
+}
+.menucollapse-hide.menucollapse-hide-active {
+  margin-top: -100px;
+}
+
+.menucollapse-show {
+  margin-top: -100px;
+}
+.menucollapse-show.menucollapse-show-active {
+  margin-top: 0;
+}
+
+/*
+.menucollapse-hide, .menucollapse-show {
+  -webkit-transition:all ease-out 0.5s;
+  -moz-transition:all ease-out 0.5s;
+  -o-transition:all ease-out 0.5s;
+  transition:all ease-out 0.5s;
+  position: relative;
+  max-height: 100px;
+}
+
+.menucollapse-hide {
+  max-height: 100px;
+}
+.menucollapse-hide.menucollapse-hide-active {
+  max-height: 5px;
+}
+
+.menucollapse-show {
+  max-height: 5px;
+}
+.menucollapse-show.menucollapse-show-active {
+  max-height: 100px;
+}*/

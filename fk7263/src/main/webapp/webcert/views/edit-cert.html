@@ -1,10 +1,5 @@
 <div class="header-fix-top">
-  <div class="header-fix-top-expand">
-    <div class="header-fix-top-expand-wrapper">
-      <button class="btn btn-link" ng-click="toggleHeader()"><span ng-if="widgetState.collapsedHeader">Visa</span><span ng-if="!widgetState.collapsedHeader">Dölj</span> meny</button>
-    </div>
-  </div>
-  <div ng-hide="widgetState.collapsedHeader">
+  <div class="header-wrapper" ng-hide="widgetState.collapsedHeader" ng-animate="'menucollapse'">
 	  <div id="wcHeader" wc-header 
 	    is-doctor="{{WC_CONTEXT.lakare}}" 
 	    user-name="{{WC_CONTEXT.namn}}"
@@ -13,6 +8,11 @@
 	  </div>
   </div>
   <div class="header-fix-panel">
+	  <div class="header-fix-top-expand">
+	    <div class="header-fix-top-expand-wrapper">
+	      <button class="btn btn-link" ng-click="toggleHeader()"><span ng-if="widgetState.collapsedHeader">Visa</span><span ng-if="!widgetState.collapsedHeader">Dölj</span> meny</button>
+	    </div>
+	  </div>
     <a class="backlink-icon" href="/web/dashboard#/create" title="Tillbaka till Skriv intyg"></a>
     <h1 style="display: inline-block; margin-right: 20px;"><span message key="view.label.pagetitle.fk7263"></span></h1>
     <div class="inline-block">
@@ -32,7 +32,7 @@
 
 <div class="edit-form" ng-class="{'collapsed' : widgetState.collapsedHeader}">
 
-  <div class="alert alert-error" ng-show="widgetState.showComplete">
+  <div class="alert alert-error" ng-show="widgetState.showComplete" style="margin-right: 20px">
 	  <h3>Följande fält behöver kompletteras:</h3>
 	  Fält 2 - Kod saknas
 	</div>
