@@ -38,6 +38,22 @@ a:hover.backlink-icon {
 	z-index: 2000;
 }
 
+.header-fix-top-expand {
+  position: absolute;
+  left: 50%;
+}
+
+.header-fix-top-expand-wrapper {
+  position: relative;
+  left: -50%;
+  background-color: #f0f0f0;
+  text-align: center;
+  -webkit-border-radius: 0 0 5px 5px;
+  -moz-border-radius: 0 0 5px 5px;
+  -ms-border-radius: 0 0 5px 5px;
+  border-radius: 0 0 5px 5px;
+}
+
 .header-fix-top h1 {
 	margin: 0 20px 0 0;
 	line-height: 29px;
@@ -63,8 +79,9 @@ span.help {
 
 .help {
   background-color: #008391;
-  -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
   border-radius: 50%;
   color: #fff;
   padding: 0 5px 0 5px;
@@ -279,8 +296,12 @@ input[datepicker-popup] {
 }
 
 .edit-form {
-	margin-top: 200px; 
+	margin-top: 250px; 
 	max-width: 800px
+}
+
+.collapsed {
+	margin-top: 150px;
 }
 
 .soclink { 

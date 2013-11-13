@@ -58,37 +58,22 @@
 
 <body ng-app="FK7263ViewCertApp">
 
-	<div class="container-fluid">
+  <a id="top"></a>
+  <div class="container-fluid">
 	  
-	  <div class="row-fluid">
-	    <div class="span12 webcert-col webcert-col-primary" ng-controller="EditCertCtrl">
+    <div class="row-fluid">
+      <div class="span12 webcert-col webcert-col-single" ng-controller="EditCertCtrl">
 	
-	      <div class="header-fix-top">
-	        <div id="wcHeader" wc-header 
-	          is-doctor="{{WC_CONTEXT.lakare}}" 
-	          user-name="{{WC_CONTEXT.namn}}"
-	          caregiver-name="{{WC_CONTEXT.vardgivare.namn}}" 
-	          default-active="index">
-	        </div>
-	        <div class="header-fix-panel">   
-	          <a class="backlink-icon" href="/web/dashboard#/create" title="Tillbaka till Skriv intyg"></a>
-            <h1 style="display: inline-block; margin-right: 20px;"><span message key="view.label.pagetitle.fk7263"></span></h1>
-            <div class="inline-block">
-              <label class="control-label">{{cert.patientNamn || "Per Persson"}} - {{cert.patientPersonnummer || "19361123-5678"}}</label>
-            </div>
-	        </div>
-	      </div><!-- top end -->
-      	        
-        <noscript>
-          <h1>
-            <span><spring:message code="error.noscript.title" /></span>
-          </h1>
-          
-          <div class="alert alert-error">
-            <spring:message code="error.noscript.text" />
-          </div>
-        </noscript>
-  
+			  <noscript>
+			    <h1>
+			      <span><spring:message code="error.noscript.title" /></span>
+			    </h1>
+			    
+			    <div class="alert alert-error">
+			      <spring:message code="error.noscript.text" />
+			    </div>
+			  </noscript>
+
     	  <%-- ng-view that holds dynamic content managed by angular app --%>
 			  <div id="view" ng-view></div>
 	    </div>

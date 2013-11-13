@@ -16,12 +16,15 @@ angular
                         '$location',
                         '$rootScope',
                         '$timeout',
-                        function EditCertCtrl($scope, $filter, $location, $rootScope, $timeout) {
+                        '$anchorScroll',
+                        function EditCertCtrl($scope, $filter, $location, $rootScope, $timeout, $anchorScroll) {
 
                             // init state
                             $scope.widgetState = {
                                 doneLoading : false,
                                 hasError : false,
+                                showComplete : false,
+                                collapsedHeader : false
                             }
                             $scope.widgetState.doneLoading = true;
                             $scope.today = new Date();
@@ -30,6 +33,19 @@ angular
                             // comparison
                             // accuracy (using new Date() also sets
                             // time)
+                            
+                            $scope.toggleHeader = function(){
+                            	$scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
+                            }
+
+                            $scope.toggleShowComplete = function(){
+                            	$scope.widgetState.showComplete = !$scope.widgetState.showComplete;
+                            	if($scope.widgetState.showComplete) {
+                            		$location.hash('top');
+                            		$anchorScroll();
+                            	}
+                            }
+                            
                             $scope.helpTooltip = "Ange vad uppgifterna i intyget baseras på. Flera alternativ kan väljas.<br><br> <a href='#'>Öppna hjälpen</a>";
 
                             // Input limit handling
