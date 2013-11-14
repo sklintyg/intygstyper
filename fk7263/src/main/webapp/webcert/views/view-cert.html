@@ -268,7 +268,9 @@
         </div>
         
         <div class="alert alert-info" style="margin-right: 20px;">
-          <strong>Status:</strong> Intyget är signerat och skickat till Försäkringskassan.        
+          <strong>Status:</strong> 
+          <span ng-if="certProperties.sentToFK">Intyget är signerat och skickat till Försäkringskassan.</span>
+          <span ng-if="!certProperties.sentToFK">Intyget är signerat och skickat till Intygstjänsten.</span>
         </div>
 
         <div id="certificate" class="certificate">
