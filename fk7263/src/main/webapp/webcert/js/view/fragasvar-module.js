@@ -194,10 +194,7 @@ angular
                                 newQuestion.updateInProgress = true; // trigger
                                 // local
                                 // spinner
-                                $timeout(function() { // simulate
-                                    // latency:remove after
-                                    // testing
-
+                     
                                     fragaSvarService.saveNewQuestion($scope.MODULE_CONFIG.CERT_ID_PARAMETER, newQuestion, function(result) {
                                         $log.debug("Got saveNewQuestion result:" + result);
                                         newQuestion.updateInProgress = false;
@@ -219,7 +216,6 @@ angular
                                         newQuestion.updateInProgress = false;
                                         newQuestion.activeErrorMessageKey = errorData.errorCode;
                                     });
-                                }, 1000);
                             }
 
                             $scope.dismissProxy = function(qa) {
@@ -235,9 +231,7 @@ angular
                             $scope.sendAnswer = function sendAnswer(qa) {
                                 qa.updateInProgress = true; // trigger local
                                 // spinner
-                                $timeout(function() { // simulate
-                                    // latency:remove after
-                                    // testing
+               
                                     fragaSvarService.saveAnswer(qa, function(result) {
                                         $log.debug("Got saveAnswer result:" + result);
                                         qa.updateInProgress = false;
@@ -258,15 +252,10 @@ angular
                                         qa.updateInProgress = false;
                                         qa.activeErrorMessageKey = errorData.errorCode;
                                     });
-                                }, 1000);
                             }
                             $scope.onVidareBefordradChange = function(qa) {
                                 qa.forwardInProgress = true;
-                                $timeout(
-                                        function() { // simulate
-                                            // latency:remove after
-                                            // testing
-
+                   
                                             fragaSvarCommonService
                                                     .setVidareBefordradState(
                                                             qa.internReferens,
@@ -282,16 +271,12 @@ angular
                                                                             .showErrorMessageDialog("Kunde inte markera/avmarkera frågan som vidarebefordrad. Försök gärna igen för att se om felet är tillfälligt. Annars kan du kontakta supporten");
                                                                 }
                                                             });
-                                        }, 1000);
                             }
 
                             $scope.updateAsHandled = function(qa) {
                                 $log.debug("updateAsHandled:" + qa);
                                 qa.updateHandledStateInProgress = true;
-                                $timeout(function() { // simulate
-                                    // latency:remove after
-                                    // testing
-
+             
                                     fragaSvarService.closeAsHandled(qa, function(result) {
                                         $log.debug("Got updateAsHandled result:" + result);
                                         qa.activeErrorMessageKey = null;
@@ -311,16 +296,12 @@ angular
                                         qa.updateHandledStateInProgress = false;
                                         qa.activeErrorMessageKey = errorData.errorCode;
                                     });
-                                }, 1000);
                             }
                             $scope.updateAsUnHandled = function(qa) {
                                 $log.debug("updateAsUnHandled:" + qa);
                                 qa.updateHandledStateInProgress = true; // trigger
                                 // local
-                                $timeout(function() { // simulate
-                                    // latency:remove after
-                                    // testing
-                                    // spinner
+      
                                     fragaSvarService.openAsUnhandled(qa, function(result) {
                                         $log.debug("Got openAsUnhandled result:" + result);
                                         qa.activeErrorMessageKey = null;
@@ -341,11 +322,11 @@ angular
                                         qa.updateHandledStateInProgress = false;
                                         qa.activeErrorMessageKey = errorData.errorCode;
                                     });
-                                }, 1000);
                             }
 
                             // Handle vidarebefordra dialog
                             $scope.openMailDialog = function(qa) {
+                                //use timeout so that external mail client has a chance to start before showing dialog
                                 $timeout(function() {
                                     fragaSvarCommonService.handleVidareBefodradToggle(qa, $scope.onVidareBefordradChange);
                                 }, 1000);
