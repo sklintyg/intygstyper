@@ -89,7 +89,7 @@
   <%-- Dependencies to common components loaded from WC web app running in "/" context--%>
   <script type="text/javascript" src="/js/common/wc-message-module.js"></script>
   <script type="text/javascript" src="/js/common/wc-utils.js"></script>
-  <script type="text/javascript" src="/js/common/wc-common-directives.js"></script>
+  <script type="text/javascript" src="/js/common/wc-common.js"></script>
   <script type="text/javascript" src="/js/common/wc-common-fragasvar-module.js"></script>
   <script type="text/javascript" src="/js/common/wc-common-message-resources.js"></script>
 
