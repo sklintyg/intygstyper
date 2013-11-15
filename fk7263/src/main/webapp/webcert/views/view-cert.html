@@ -89,7 +89,7 @@
                     <div class="qa-block" ng-class="{'qa-block-handled' : qa.status == 'ANSWERED', 'qa-block-fk' : (qa.frageStallare | lowercase) == 'fk'}">
                       <div class="qa-block-head clearfix">
                         <div class="pull-left">
-                          Från: <span class="qa-sender" ng-switch="qa.frageStallare | lowercase"> <span ng-switch-when="wc">{{qa.vardAktorNamn}}</span> <span ng-switch-default message
+                          Från: <span class="qa-sender" ng-switch="qa.frageStallare | lowercase"> <span id="fraga-vard-aktor-namn-{{qa.internReferens}}" ng-switch-when="wc">{{qa.vardAktorNamn}}</span> <span ng-switch-default message
                             key="qa.fragestallare.{{qa.frageStallare | lowercase}}"></span>
                           </span>
                         </div>
@@ -110,7 +110,7 @@
                         <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
 
                           <span ng-switch-when="wc"> <!--  Frågaställaren var Vårdenheten - svaret måste kommit från FK --> Från: <span class="qa-sender" message key="qa.fragestallare.fk"></span>
-                          </span> <span ng-switch-default> <!--  Frågaställaren var inte Vårdenheten - svaret måste alltså kommit från Vårdenheten --> Från: <span class="qa-sender">{{qa.vardAktorNamn}}</span>
+                          </span> <span ng-switch-default> <!--  Frågaställaren var inte Vårdenheten - svaret måste alltså kommit från Vårdenheten --> Från: <span  id="svar-vard-aktor-namn-{{qa.internReferens}}" class="qa-sender">{{qa.vardAktorNamn}}</span>
                           </span>
 
                         </div>
@@ -191,7 +191,7 @@
                   <div class="qa-block qa-block-handled" ng-class="{'qa-block-fk' : (qa.frageStallare | lowercase) == 'fk'}">
                     <div class="qa-block-head clearfix">
                       <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
-                        Från: <span class="qa-sender" ng-switch-when="wc">{{qa.vardAktorNamn}}</span> <span ng-switch-default message key="qa.fragestallare.{{qa.frageStallare | lowercase}}"></span>
+                        Från: <span class="qa-sender" id="fraga-vard-aktor-namn-{{qa.internReferens}}" ng-switch-when="wc">{{qa.vardAktorNamn}}</span> <span ng-switch-default message key="qa.fragestallare.{{qa.frageStallare | lowercase}}"></span>
                       </div>
                       <!-- Fraga fran fk eller wc? -->
                       <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
@@ -209,7 +209,7 @@
                     <!-- frågan har en svarstext -->
                     <div class="qa-block-head clearfix">
                       <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
-                        Från: <span class="qa-sender" ng-switch-when="wc"><span message key="qa.fragestallare.{{qa.frageStallare | lowercase}}"></span></span> <span ng-switch-default>{{qa.vardAktorNamn}}</span>
+                        Från: <span class="qa-sender" ng-switch-when="wc"><span message key="qa.fragestallare.{{qa.frageStallare | lowercase}}"></span></span> <span id="svar-vard-aktor-namn-{{qa.internReferens}}" ng-switch-default>{{qa.vardAktorNamn}}</span>
                       </div>
                       <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
                         <!-- motsatt villkor mot frågan -->
