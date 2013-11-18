@@ -64,10 +64,7 @@
 						<label
 							for="informationBasedOn.examination" class="inline"
 							style="min-width: 250px">Min undersökning av patienten</label>
-						<input type="text" datepicker-popup ng-model="cert.undersokningAvPatienten" is-open="basedOnState.dpState0.open" ng-change="basedOnState.check.undersokningAvPatienten = true"/>
-            <button class="btn" ng-click="toggleDatePickerInstance(basedOnState.dpState0)" ng-disabled="basedOnState.dpState0.open">
-              <i class="icon-calendar"></i>
-            </button>
+                           <span wc-date-picker-field target-model="cert.undersokningAvPatienten" on-change="basedOnState.check.undersokningAvPatienten = true" dom-id="undersokningAvPatienten-date"></span>
 					</div>
  
 					<div class="control-group form-inline">
@@ -77,10 +74,7 @@
 						<label
 							for="informationBasedOn.phoneContact" class="checkbox"
 							style="min-width: 250px">Min telefonkontakt med patienten</label>
-            <input type="text" id="dp1" datepicker-popup ng-model="cert.telefonkontaktMedPatienten" is-open="basedOnState.dpState1.open"  ng-change="basedOnState.check.telefonkontaktMedPatienten = true"/>
-            <button class="btn" ng-click="toggleDatePickerInstance(basedOnState.dpState1)" ng-disabled="basedOnState.dpState1.open">
-              <i class="icon-calendar"></i>
-            </button>
+                           <span wc-date-picker-field target-model="cert.telefonkontaktMedPatienten" on-change="basedOnState.check.telefonkontaktMedPatienten = true" dom-id="telefonkontaktMedPatienten-date"></span>
 					</div>
 
 					<div class="control-group form-inline">
@@ -90,10 +84,7 @@
 						<label
 							for="informationBasedOn.journal" class="checkbox"
 							style="min-width: 250px">Journaluppgifter</label>
-            <input type="text" id="dp2" datepicker-popup ng-model="cert.journaluppgifter" is-open="basedOnState.dpState2.open" ng-change="basedOnState.check.journaluppgifter = true"/>
-            <button class="btn" ng-click="toggleDatePickerInstance(basedOnState.dpState2)" ng-disabled="basedOnState.dpState2.open">
-              <i class="icon-calendar"></i>
-            </button>
+                           <span wc-date-picker-field target-model="cert.journaluppgifter" on-change="basedOnState.check.journaluppgifter = true" dom-id="journaluppgifter-date"></span>              
 					</div>
 
 					<div class="control-group form-inline">
@@ -103,10 +94,7 @@
 						<label
 							for="informationBasedOn.other" class="checkbox"
 							style="min-width: 250px">Annat</label> 
-            <input type="text" id="dp3" datepicker-popup ng-model="cert.annanReferens" is-open="basedOnState.dpState3.open" ng-change="basedOnState.check.annanReferens = true"/>
-            <button class="btn" ng-click="toggleDatePickerInstance(basedOnState.dpState3)" ng-disabled="basedOnState.dpState3.open">
-              <i class="icon-calendar"></i>
-            </button>
+                           <span wc-date-picker-field target-model="cert.annanReferens" on-change="basedOnState.check.annanReferens = true" dom-id="annanReferens-date"></span>
 					</div>
 			 		
 					<div class="otherText indent" ng-if="basedOnState.check.annanReferens">
@@ -297,12 +285,9 @@
 					<div class="control-group form-inline">
 						<input type="checkbox" id="capacityForWork.work25" name="capacityForWork.work25" ng-model="workState.check25"/>
 						<label for="capacityForWork.work25" class="checkbox">25% nedsatt arbetsförmåga från</label> 
-            
-            <input type="text" datepicker-popup ng-model="cert.nedsattMed25.start" is-open="workState.dpState25From.open" ng-change="updateTotalCertDays()"/>
-            <button class="btn" ng-click="toggleDatePickerInstance(workState.dpState25From)" ng-disabled="workState.dpState25From.open"><i class="icon-calendar"></i></button>
-						<span>till</span> 
-            <input type="text" datepicker-popup ng-model="cert.nedsattMed25.end" is-open="workState.dpState25To.open" ng-change="updateTotalCertDays()"/>
-            <button class="btn" ng-click="toggleDatePickerInstance(workState.dpState25To)" ng-disabled="workState.dpState25To.open"><i class="icon-calendar"></i></button>
+                        <span wc-date-picker-field target-model="cert.nedsattMed25.start" on-change="updateTotalCertDays()" dom-id="nedsattMed25-start-date"></span>
+						<span>till</span>
+                        <span wc-date-picker-field target-model="cert.nedsattMed25.end" on-change="updateTotalCertDays()" dom-id="nedsattMed25-end-date"></span> 
 						<div class="indent pad10" ng-if="workState.check25">
 							<div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
 								Arbetstid timmar/vecka: <strong>{{cert.workTime / 4}}</strong>
@@ -317,19 +302,16 @@
 					<div class="control-group form-inline">
 						<input type="checkbox" id="capacityForWork.work50" name="capacityForWork.work50" ng-model="workState.check50" /> 
 						<label for="capacityForWork.work50" class="checkbox">50% nedsatt arbetsförmåga från</label>
-							
-            <input type="text" datepicker-popup ng-model="cert.nedsattMed50.start" is-open="workState.dpState50From.open" ng-change="updateTotalCertDays()"/>
-            <button class="btn" ng-click="toggleDatePickerInstance(workState.dpState50From)" ng-disabled="workState.dpState50From.open"><i class="icon-calendar"></i></button>
-            <span>till</span> 
-            <input type="text" datepicker-popup ng-model="cert.nedsattMed50.end" is-open="workState.dpState50To.open" ng-change="updateTotalCertDays()"/>
-            <button class="btn" ng-click="toggleDatePickerInstance(workState.dpState50To)" ng-disabled="workState.dpState50To.open"><i class="icon-calendar"></i></button>
-            <div class="indent pad10" ng-if="workState.check50">
-							<div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
-								Arbetstid timmar/vecka: <strong>{{cert.workTime / 2}}</strong>
-							</div>
-							Arbetstidsförläggning (frivilligt) <input type="text"	ng-model="cert.otherData.workingHours50" id="capacityForWork.rec50LongerWorkingHours" name="capacityForWork.rec50LongerWorkingHours" value=""
-								class='otherInformation'> 
-              <span class="counter">Tecken kvar:  {{inputLimits.ovrigt - getTotalOvrigtLength()}}</span>
+						 <span wc-date-picker-field target-model="cert.nedsattMed50.start" on-change="updateTotalCertDays()" dom-id="nedsattMed50-start-date"></span>	
+                        <span>till</span> 
+                        <span wc-date-picker-field target-model="cert.nedsattMed50.end" on-change="updateTotalCertDays()" dom-id="nedsattMed50-end-date"></span>
+                        <div class="indent pad10" ng-if="workState.check50">
+            							<div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
+            								Arbetstid timmar/vecka: <strong>{{cert.workTime / 2}}</strong>
+            							</div>
+            							Arbetstidsförläggning (frivilligt) <input type="text"	ng-model="cert.otherData.workingHours50" id="capacityForWork.rec50LongerWorkingHours" name="capacityForWork.rec50LongerWorkingHours" value=""
+            								class='otherInformation'> 
+                          <span class="counter">Tecken kvar:  {{inputLimits.ovrigt - getTotalOvrigtLength()}}</span>
 							<div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
 						</div>
 					</div>
@@ -338,13 +320,10 @@
 					<div class="control-group form-inline">
 						<input type="checkbox" id="capacityForWork.work75" name="capacityForWork.work75" ng-model="workState.check75" /> 
 						<label for="capacityForWork.work75" class="checkbox">75% nedsatt arbetsförmåga från</label> 
-						
-            <input type="text" datepicker-popup ng-model="cert.nedsattMed75.start" is-open="workState.dpState75From.open" ng-change="updateTotalCertDays()"/>
-            <button class="btn" ng-click="toggleDatePickerInstance(workState.dpState75From)" ng-disabled="workState.dpState75From.open"><i class="icon-calendar"></i></button>
-            <span>till</span> 
-            <input type="text" datepicker-popup ng-model="cert.nedsattMed75.end" is-open="workState.dpState75To.open" ng-change="updateTotalCertDays()"/>
-            <button class="btn" ng-click="toggleDatePickerInstance(workState.dpState75To)" ng-disabled="workState.dpState75To.open"><i class="icon-calendar"></i></button>
-            <div class="indent pad10" ng-if="workState.check75">
+						<span wc-date-picker-field target-model="cert.nedsattMed75.start" on-change="updateTotalCertDays()" dom-id="nedsattMed75-start-date"></span>
+                        <span>till</span>
+                        <span wc-date-picker-field target-model="cert.nedsattMed75.end" on-change="updateTotalCertDays()" dom-id="nedsattMed75-end-date"></span> 
+                        <div class="indent pad10" ng-if="workState.check75">
 							<div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
 								Arbetstid timmar/vecka: <strong>{{cert.workTime * 0.75}}</strong>
 							</div>
@@ -352,7 +331,7 @@
 								id="capacityForWork.rec75LongerWorkingHours"
 								name="capacityForWork.rec75LongerWorkingHours" value=""
 								class='otherInformation'>
-              <span class="counter">Tecken kvar:  {{inputLimits.ovrigt - getTotalOvrigtLength()}}</span>
+                           <span class="counter">Tecken kvar:  {{inputLimits.ovrigt - getTotalOvrigtLength()}}</span>
 							<div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
 						</div>
 					</div>
@@ -361,12 +340,9 @@
 					<div class="control-group form-inline">
 						<input type="checkbox" id="capacityForWork.workFull" name="capacityForWork.workFull" ng-model="workState.check100" /> 
 						<label for="capacityForWork.workFull" class="checkbox">Helt	nedsatt arbetsförmåga från</label>
-						
-            <input type="text" datepicker-popup ng-model="cert.nedsattMed100.start" is-open="workState.dpState100From.open" ng-change="updateTotalCertDays()"/>
-            <button class="btn" ng-click="toggleDatePickerInstance(workState.dpState100From)" ng-disabled="workState.dpState100From.open"><i class="icon-calendar"></i></button>
-            <span>till</span> 
-            <input type="text" datepicker-popup ng-model="cert.nedsattMed100.end" is-open="workState.dpState100To.open" ng-change="updateTotalCertDays()"/>
-            <button class="btn" ng-click="toggleDatePickerInstance(workState.dpState100To)" ng-disabled="workState.dpState100To.open"><i class="icon-calendar"></i></button>
+						<span wc-date-picker-field target-model="cert.nedsattMed100.start" on-change="updateTotalCertDays()" dom-id="nedsattMed100-start-date"></span>
+                        <span>till</span> 
+                        <span wc-date-picker-field target-model="cert.nedsattMed100.end" on-change="updateTotalCertDays()" dom-id="nedsattMed100-end-date"></span>
 					</div>
 
 					<div ng-show="totalCertDays">
@@ -515,9 +491,7 @@
 								
 							<input id="rehabNow2" type="radio" name="recommendationsToFk.rehabNow" value="LATER" ng-model="cert.rehabNow">
               <label for="rehabNow2">Senare, med start</label>
-              
-	            <input type="text" datepicker-popup ng-model="cert.otherData.rehabWhen" is-open="rehabState.dp.open"/>
-	            <button class="btn" ng-click="toggleDatePickerInstance(rehabState.dp)" ng-disabled="rehabState.dp.open"><i class="icon-calendar"></i></button>
+              <span wc-date-picker-field target-model="cert.otherData.rehabWhen" dom-id="cert-otherData-rehabWhen-date"></span>
               
 							<div class="info-transfer" style="white-space: nowrap">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
 						</div>
