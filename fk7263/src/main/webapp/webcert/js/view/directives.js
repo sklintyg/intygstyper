@@ -42,9 +42,9 @@ angular.module('wc.fk7263.directives').directive(
 
                         },
                         template : '<span>'
-                                   + '<input id="{{domId}}" type="text" datepicker-popup ng-model="targetModel" is-open="isOpen" ng-change="onChange()">'
+                                   + '<input id="{{domId}}" type="text" datepicker-popup ng-model="targetModel" is-open="isOpen" ng-change="onChange()"/>'
                                    + '<button id="{{domId}}-toggle" class="btn" ng-click="toggleOpen()" ng-disabled="isOpen"><i class="icon-calendar"></i></button>'
-                                   +'<span>'
+                                   +'</span>'
                     }
                 } ]);
 
