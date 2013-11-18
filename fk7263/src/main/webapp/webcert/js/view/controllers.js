@@ -92,18 +92,6 @@ angular
                                     telefonkontaktMedPatienten : false,
                                     journaluppgifter : false,
                                     annanReferens : false
-                                },
-                                dpState0 : {
-                                    open : false
-                                },
-                                dpState1 : {
-                                    open : false
-                                },
-                                dpState2 : {
-                                    open : false
-                                },
-                                dpState3 : {
-                                    open : false
                                 }
                             }
 
@@ -138,31 +126,7 @@ angular
                                 check25 : false,
                                 check50 : false,
                                 check75 : false,
-                                check100 : false,
-                                dpState25From : {
-                                    open : false
-                                },
-                                dpState25To : {
-                                    open : false
-                                },
-                                dpState50From : {
-                                    open : false
-                                },
-                                dpState50To : {
-                                    open : false
-                                },
-                                dpState75From : {
-                                    open : false
-                                },
-                                dpState75To : {
-                                    open : false
-                                },
-                                dpState100From : {
-                                    open : false
-                                },
-                                dpState100To : {
-                                    open : false
-                                },
+                                check100 : false
                             }
 
                             function updateWorkStateDate(checked, model) {
@@ -249,12 +213,6 @@ angular
                             }
 
                             // Rekommendationer 6a, 7, 11
-                            $scope.rehabState = {
-                                dp : {
-                                    open : false
-                                }
-                            };
-
                             $scope.$watch('cert.rehabNow', function(newVal, oldVal) {
                                 if (newVal == 'LATER' && $scope.cert.otherData.rehabWhen == '') {
                                     $scope.cert.otherData.rehabWhen = $scope.today;
@@ -366,12 +324,6 @@ angular
                                 "namnfortydligandeOchAdress" : "En Läkare\nCentrum väst\nLasarettsvägen 13\n85150 Sundsvall\n060-1818000"
                             };
 
-                            // General datepicker handling
-                            $scope.toggleDatePickerInstance = function(instance) {
-                                $timeout(function() {
-                                    instance.open = !instance.open;
-                                });
-                            }
 
                             // Original test data
                             /*
