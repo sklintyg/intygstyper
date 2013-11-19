@@ -62,7 +62,7 @@ public class ExternalToTransportConverter {
 
     }
 
-    public Utlatande externalToTransport(se.inera.certificate.modules.rli.model.external.Utlatande source) {
+    public Utlatande externalToTransport(se.inera.certificate.modules.rli.model.external.Utlatande source) throws ConverterException {
 
         LOG.debug("Converting Utlatande '{}' from external to transport", source.getId());
 

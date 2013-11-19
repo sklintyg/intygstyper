@@ -86,7 +86,7 @@ public class ExternalToTransportConverterTest {
     }
 
     @Test
-    public void convertKommentarer() {
+    public void convertKommentarer() throws Exception {
         se.inera.certificate.modules.rli.model.external.Utlatande source = new se.inera.certificate.modules.rli.model.external.Utlatande();
         List<String> l = new ArrayList<String>();
         l.add("KOMMENTARER");
