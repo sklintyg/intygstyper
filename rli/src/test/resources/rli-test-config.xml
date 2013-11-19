@@ -44,7 +44,7 @@
 
 	<jaxrs:server address="http://localhost:8880/rli">
 		<jaxrs:serviceBeans>
-			<bean class="se.inera.certificate.modules.rli.rest.RliModuleApi" />
+			<bean class="se.inera.certificate.modules.rli.rest.RliModuleService" />
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
 			<ref bean="jacksonJsonProvider" />
@@ -53,7 +53,7 @@
 	</jaxrs:server>
 
 	<jaxrs:client id="rliModule" address="http://localhost:8880/rli"
-		serviceClass="se.inera.certificate.modules.rli.rest.RliModule">
+		serviceClass="se.inera.certificate.modules.rli.rest.RliModuleApi">
 		<jaxrs:providers>
 			<ref bean="jacksonJsonProvider" />
 			<ref bean="jaxbProvider" />

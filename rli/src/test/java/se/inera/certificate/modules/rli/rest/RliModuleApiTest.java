@@ -24,7 +24,7 @@ import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
 import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
 
 /**
- * Sets up an actual HTTP server and client to test the {@link RliModule} service. This is the place to verify that
+ * Sets up an actual HTTP server and client to test the {@link RliModuleApi} service. This is the place to verify that
  * response headers and response statuses etc are correct.
  */
 @ContextConfiguration(locations = ("/rli-test-config.xml"))
@@ -33,7 +33,7 @@ public class RliModuleApiTest {
 
     /** An HTTP client proxy wired to the test HTTP server. */
     @Autowired
-    private RliModule rliModule;
+    private RliModuleApi rliModule;
 
     @Autowired
     private CustomObjectMapper objectMapper;

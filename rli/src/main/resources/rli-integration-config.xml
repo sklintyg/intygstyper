@@ -42,7 +42,7 @@
 
   <jaxrs:server address="/">
     <jaxrs:serviceBeans>
-      <bean class="se.inera.certificate.modules.rli.rest.RliModuleApi" />
+      <bean class="se.inera.certificate.modules.rli.rest.RliModuleService" />
       <!-- Temporary mockup - remove when implemented in WebCert -->
       <bean
         class="se.inera.webcert.integration.rest.mock.WebCertModuleDraftMock" />
