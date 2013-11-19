@@ -66,7 +66,7 @@ public class XmlToExternalTest {
         assertEquals(skickatDate, extUtlatande.getSkickatdatum());
 
         assertEquals("1.2.752.129.2.1.3.1", extUtlatande.getPatient().getId().getRoot());
-        assertEquals("19121212+1212", extUtlatande.getPatient().getId().getExtension());
+        assertEquals("19121212-1212", extUtlatande.getPatient().getId().getExtension());
         assertEquals("Test", extUtlatande.getPatient().getFornamn().get(0));
         assertEquals("Testsson", extUtlatande.getPatient().getEfternamn());
         assertEquals("Teststigen 1", extUtlatande.getPatient().getPostadress());

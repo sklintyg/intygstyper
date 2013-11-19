@@ -34,7 +34,7 @@
   <skickatdatum>2013-08-12T11:25:30</skickatdatum>
 
   <patient>
-    <person-id root="1.2.752.129.2.1.3.1" extension="19121212+1212"/>
+    <person-id root="1.2.752.129.2.1.3.1" extension="19121212-1212"/>
     <fornamn>Test</fornamn>
     <efternamn>Testsson</efternamn>
     <postadress>Teststigen 1</postadress>
