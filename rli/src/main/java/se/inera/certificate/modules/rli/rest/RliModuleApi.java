@@ -20,14 +20,14 @@ package se.inera.certificate.modules.rli.rest;
 
 import java.util.List;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.ServiceUnavailableException;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,12 +46,11 @@ import se.inera.certificate.modules.rli.rest.dto.CreateNewDraftCertificateHolder
 import se.inera.certificate.modules.rli.validator.ExternalValidator;
 
 /**
- * The contract between the certificate module and the generic components
- * (Intygstjänsten and Mina-Intyg).
+ * The contract between the certificate module and the generic components (Intygstjänsten and Mina-Intyg).
  * 
  * @author Gustav Norbäcker, R2M
  */
-public class RliModuleApi {
+public class RliModuleApi implements RliModule {
 
     private static final Logger LOG = LoggerFactory.getLogger(RliModuleApi.class);
 
@@ -73,168 +72,109 @@ public class RliModuleApi {
     @Autowired
     private EditModelFactory editModelFactory;
 
+    @Context
+    private HttpServletResponse httpResponse;
+
+    // @HeaderParam("X-Schema-Version")
+    // private String SchemaVersion;
+
     /**
-     * Handles conversion from the transport model (XML) to the external JSON
-     * model.
-     * 
-     * @param transportModel
-     *            The transport model to convert.
-     * 
-     * @return An instance of the external model, generated from the transport
-     *         model.
+     * {@inheritDoc}
      */
-    @POST
-    @Path("/unmarshall")
-    @Consumes(MediaType.APPLICATION_XML)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response unmarshall(se.inera.certificate.common.v1.Utlatande transportModel) {
-        Utlatande externalModel = null;
-        Response response = null;
+    @Override
+    public Utlatande unmarshall(se.inera.certificate.common.v1.Utlatande transportModel) {
         try {
-            externalModel = transportToExternalConverter.transportToExternal(transportModel);
-            response = Response.status(Response.Status.OK).entity(externalModel).build();
-        } catch (ConverterException ce) {
-            LOG.error("Error in unmarshall", ce);
-            response = Response.status(Response.Status.BAD_REQUEST).build();
-        }
-        return response;
-    }
+            return transportToExternalConverter.transportToExternal(transportModel);
 
-    @POST
-    @Path("/marshall")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_XML)
-    public Response marshall(@HeaderParam("X-Schema-Version") String version, String moduleExternalJson) {
-        // TODO Auto-generated method stub
-        return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
+        } catch (ConverterException e) {
+            LOG.error("Error in unmarshall", e);
+            throw new BadRequestException(e);
+        }
     }
 
     /**
-     * Validates the external model. If the validation succeeds, a empty result
-     * will be returned. If the validation fails, a list of validation messages
-     * will be returned as a HTTP 400.
-     * 
-     * @param externalModel
-     *            The external model to validate.
-     * @return
+     * {@inheritDoc}
      */
-    @POST
-    @Path("/valid")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
-    public Response validate(Utlatande utlatande) {
+    @Override
+    public se.inera.certificate.common.v1.Utlatande marshall(Utlatande externalModel) {
+        try {
+            return externalToTransportConverter.externalToTransport(externalModel);
+
+        } catch (ConverterException e) {
+            LOG.error("Error in marshall", e);
+            throw new BadRequestException(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String validate(Utlatande utlatande) {
 
         List<String> validationErrors = externalValidator.validate(utlatande);
 
         if (validationErrors.isEmpty()) {
-            return Response.ok().build();
+            return null;
+
         } else {
             String response = Strings.join(",", validationErrors);
-            return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
+            throw new WebApplicationException(Response.status(Status.BAD_REQUEST).entity(response).build());
         }
     }
 
     /**
-     * Generates a PDF from the external model.
-     * 
-     * @param externalModel
-     *            The external model to generate a PDF from.
-     * 
-     * @return A binary stream containing a PDF template populated with the
-     *         information of the external model.
+     * {@inheritDoc}
      */
-    @POST
-    @Path("/pdf")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces("application/pdf")
-    public Response pdf(CertificateContentHolder certificateContentHolder) {
+    @Override
+    public byte[] pdf(CertificateContentHolder certificateContentHolder) {
         try {
-            
             se.inera.certificate.modules.rli.model.internal.Utlatande internalUtlatande = externalToInternalConverter
                     .fromExternalToInternal(certificateContentHolder);
-            
-            byte[] generatedPDF = pdfGenerator.generatePDF(internalUtlatande);
-            
-            return Response.ok(generatedPDF)
-                    .header("Content-Disposition", "filename=" + pdfGenerator.generatePdfFilename(internalUtlatande))
-                    .build();
-            
+
+            httpResponse.addHeader("Content-Disposition",
+                    "filename=" + pdfGenerator.generatePdfFilename(internalUtlatande));
+
+            return pdfGenerator.generatePDF(internalUtlatande);
+
         } catch (Exception p) {
             LOG.error("Failed to generate PDF for certificate!", p);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            throw new InternalServerErrorException(p);
         }
-
     }
 
     /**
-     * Handles conversion from the external model to the internal model.
-     * 
-     * @param externalModel
-     *            The external model to convert.
-     * 
-     * @return An instance of the internal model, generated from the external
-     *         model.
+     * {@inheritDoc}
      */
-    @PUT
-    @Path("/internal")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response convertExternalToInternal(CertificateContentHolder certificateContentHolder) {
-
-        se.inera.certificate.modules.rli.model.internal.Utlatande internalModel;
-
-        Response response = null;
-
+    @Override
+    public se.inera.certificate.modules.rli.model.internal.Utlatande convertExternalToInternal(
+            CertificateContentHolder certificateContentHolder) {
         try {
-            internalModel = externalToInternalConverter.fromExternalToInternal(certificateContentHolder);
-            response = Response.status(Response.Status.OK).entity(internalModel).build();
+            return externalToInternalConverter.fromExternalToInternal(certificateContentHolder);
         } catch (ConverterException e) {
-            response = Response.status(Response.Status.BAD_REQUEST).build();
+            throw new BadRequestException(e);
         }
-
-        return response;
     }
 
     /**
-     * Handles conversion from the internal model to the external model.
-     * 
-     * @param internalModel
-     *            The internal model to convert.
-     * 
-     * @return An instance of the external model, generated from the internal
-     *         model.
+     * {@inheritDoc}
      */
-    @PUT
-    @Path("/external")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response convertInternalToExternal(se.inera.certificate.modules.rli.model.internal.Utlatande internalModel) {
-        // TODO: Change the return type of this method to the internal model
-        // POJO.
+    @Override
+    public se.inera.certificate.modules.rli.model.internal.Utlatande convertInternalToExternal(
+            se.inera.certificate.modules.rli.model.internal.Utlatande internalModel) {
         // TODO: Implement when conversion from an internal model i required.
-        return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
+        throw new ServiceUnavailableException();
     }
 
     /**
-     * Creates a new editable model for use in WebCert. The model is pre
-     * populated using data contained in the CreateNewDraftCertificateHolder
-     * parameter.
-     * 
-     * @param draftCertificateHolder
-     * @return
+     * {@inheritDoc}
      */
-    @POST
-    @Path("/new")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response createNewInternal(CreateNewDraftCertificateHolder draftCertificateHolder) {
-        se.inera.certificate.modules.rli.model.edit.Utlatande editableUtlatande = null;
+    @Override
+    public se.inera.certificate.modules.rli.model.edit.Utlatande createNewInternal(CreateNewDraftCertificateHolder draftCertificateHolder) {
         try {
-            editableUtlatande = editModelFactory
-                .createEditableUtlatande(draftCertificateHolder);
-        } catch (ConverterException ce) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return editModelFactory.createEditableUtlatande(draftCertificateHolder);
+        } catch (ConverterException e) {
+            throw new BadRequestException(e);
         }
-        return Response.ok(editableUtlatande).build();
     }
 }
