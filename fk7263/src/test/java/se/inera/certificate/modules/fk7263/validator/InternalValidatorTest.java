@@ -1,12 +1,13 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import java.io.IOException;
-
 import static org.junit.Assert.assertEquals;
+
+import java.io.IOException;
 
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
+
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
@@ -14,17 +15,31 @@ import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 /**
  * @author andreaskaltenbach, marced
  */
-public class UtlatandeValidatorTest {
+public class InternalValidatorTest {
 
     private Fk7263Intyg getValidUtlatande() throws IOException {
         // read valid certificate from file
         return new CustomObjectMapper().readValue(
-                new ClassPathResource("UtlatandeValidatorTest/utlatande.json").getFile(), Fk7263Intyg.class);
+                new ClassPathResource("InternalValidatorTest/utlatande.json").getFile(), Fk7263Intyg.class);
     }
 
     @Test
     public void testHappyCase() throws Exception {
-        assertEquals(0, new UtlatandeValidator(getValidUtlatande()).validate().size());
+        assertEquals(0, new InternalValidator(getValidUtlatande()).validate().size());
+    }
+
+    @Test
+    public void testSmittskyddRelaxesOtherMandatoryInfo() throws Exception {
+        Fk7263Intyg utlatande = getValidUtlatande();
+        utlatande.setAvstangningSmittskydd(true);
+        utlatande.setDiagnosKod("");
+        // remove all vardkontakter
+        utlatande.setUndersokningAvPatienten(null);
+        utlatande.setTelefonkontaktMedPatienten(null);
+        utlatande.setJournaluppgifter(null);
+        utlatande.setAnnanReferens(null);
+
+        assertEquals(0, new InternalValidator(utlatande).validate().size());
     }
 
     @Test
@@ -32,7 +47,16 @@ public class UtlatandeValidatorTest {
         Fk7263Intyg utlatande = getValidUtlatande();
         utlatande.setKommentar(null);
 
-        assertEquals(1, new UtlatandeValidator(utlatande).validate().size());
+        assertEquals(1, new InternalValidator(utlatande).validate().size());
+    }
+
+    @Test
+    public void testMissingCommentOkIfField4And10NotFilled() throws Exception {
+        Fk7263Intyg utlatande = getValidUtlatande();
+        utlatande.setKommentar(null);
+        utlatande.setAnnanReferens(null);
+        utlatande.setArbetsformataPrognosGarInteAttBedoma(false);
+        assertEquals(0, new InternalValidator(utlatande).validate().size());
     }
 
     @Test
@@ -47,14 +71,14 @@ public class UtlatandeValidatorTest {
         utlatande.setJournaluppgifter(null);
         utlatande.setAnnanReferens(null);
 
-        assertEquals(1, new UtlatandeValidator(utlatande).validate().size());
+        assertEquals(1, new InternalValidator(utlatande).validate().size());
     }
 
     @Test
     public void testMissingMedicinsktTillstand() throws Exception {
         Fk7263Intyg utlatande = getValidUtlatande();
         utlatande.setDiagnosKod(null);
-        assertEquals(1, new UtlatandeValidator(utlatande).validate().size());
+        assertEquals(1, new InternalValidator(utlatande).validate().size());
     }
 
     @Test
@@ -65,56 +89,27 @@ public class UtlatandeValidatorTest {
         utlatande.setRessattTillArbeteAktuellt(true);
         utlatande.setRessattTillArbeteEjAktuellt(true);
 
-        assertEquals(1, new UtlatandeValidator(utlatande).validate().size());
+        assertEquals(1, new InternalValidator(utlatande).validate().size());
     }
-    
+
     @Test
     public void testRessattTillArbeteAktuellt() throws Exception {
-    	Fk7263Intyg utlatande = getValidUtlatande();
+        Fk7263Intyg utlatande = getValidUtlatande();
 
         utlatande.setRessattTillArbeteAktuellt(true);
         utlatande.setRessattTillArbeteEjAktuellt(false);
 
-        assertEquals(0, new UtlatandeValidator(utlatande).validate().size());
+        assertEquals(0, new InternalValidator(utlatande).validate().size());
     }
-    
+
     @Test
     public void testRessattTillArbeteEjAktuellt() throws Exception {
-    	Fk7263Intyg utlatande = getValidUtlatande();
+        Fk7263Intyg utlatande = getValidUtlatande();
 
         utlatande.setRessattTillArbeteAktuellt(false);
         utlatande.setRessattTillArbeteEjAktuellt(true);
 
-        assertEquals(0, new UtlatandeValidator(utlatande).validate().size());
-    }
-
-    @Test
-    public void testInvalidPatientIdExtension() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
-
-        utlatande.setPatientPersonnummer("10101010");
-
-        assertEquals(1, new UtlatandeValidator(utlatande).validate().size());
-    }
-
-    @Test
-    public void testInvalidPatientName() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
-
-        // remove name
-        utlatande.setPatientNamn(null);
-
-        assertEquals(1, new UtlatandeValidator(utlatande).validate().size());
-    }
-
-    @Test
-    public void testInvalidHosPersonalNamn() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
-
-        // break hos-personal id extension
-        utlatande.getVardperson().setNamn(null);
-
-        assertEquals(1, new UtlatandeValidator(utlatande).validate().size());
+        assertEquals(0, new InternalValidator(utlatande).validate().size());
     }
 
     @Test
@@ -127,7 +122,7 @@ public class UtlatandeValidatorTest {
         utlatande.setNedsattMed50(null);
         utlatande.setNedsattMed25(null);
 
-        assertEquals(1, new UtlatandeValidator(utlatande).validate().size());
+        assertEquals(1, new InternalValidator(utlatande).validate().size());
     }
 
     @Test
@@ -139,27 +134,7 @@ public class UtlatandeValidatorTest {
         reversedPeriod.setStart(new LocalDate(2011, 4, 1));
         reversedPeriod.setEnd(new LocalDate(2011, 2, 1));
 
-        assertEquals(1, new UtlatandeValidator(utlatande).validate().size());
-    }
-
-    @Test
-    public void testMissingSigneringsDatum() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
-
-        // remove signeringsdatum
-        utlatande.setSigneringsdatum(null);
-
-        assertEquals(1, new UtlatandeValidator(utlatande).validate().size());
-    }
-
-    @Test
-    public void testMissingSkickatDatum() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
-
-        // remove skickatdatum
-        utlatande.setSkickatDatum(null);
-
-        assertEquals(1, new UtlatandeValidator(utlatande).validate().size());
+        assertEquals(1, new InternalValidator(utlatande).validate().size());
     }
 
     @Test
@@ -169,9 +144,8 @@ public class UtlatandeValidatorTest {
         // remove skickatdatum
         utlatande.getNedsattMed100().setEnd(utlatande.getNedsattMed100().getStart());
 
-        assertEquals(0, new UtlatandeValidator(utlatande).validate().size());
+        assertEquals(0, new InternalValidator(utlatande).validate().size());
     }
-
 
     @Test
     public void testFelaktigtDatumIntervall() throws Exception {
@@ -180,6 +154,6 @@ public class UtlatandeValidatorTest {
         // remove skickatdatum
         utlatande.getNedsattMed100().setEnd(utlatande.getNedsattMed100().getStart().minusDays(1));
 
-        assertEquals(1, new UtlatandeValidator(utlatande).validate().size());
+        assertEquals(1, new InternalValidator(utlatande).validate().size());
     }
 }

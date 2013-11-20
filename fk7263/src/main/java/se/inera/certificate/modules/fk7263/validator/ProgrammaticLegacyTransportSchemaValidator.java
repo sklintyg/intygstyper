@@ -1,20 +1,19 @@
 package se.inera.certificate.modules.fk7263.validator;
 
 import static java.util.Arrays.asList;
+import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.springframework.util.StringUtils;
 
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.util.Strings;
-import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToExternalFk7263LegacyConverter;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
@@ -25,11 +24,9 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
  * 
  * @author marced
  */
-public class ProgrammaticLegacyTransportSchemaValidator {
+public class ProgrammaticLegacyTransportSchemaValidator extends AbstractValidator {
 
     private Fk7263Utlatande externalutlatande;
-
-    private List<String> validationErrors = new ArrayList<>();
 
     private static final String PERSON_NUMBER_REGEX = "[0-9]{8}[-+][0-9]{4}";
 
@@ -41,75 +38,77 @@ public class ProgrammaticLegacyTransportSchemaValidator {
 
     private static final List<String> ARBETSPLATS_CODE_OID = asList("1.2.752.29.4.71");
 
-    private static final List<String> VALID_DIAGNOSE_CODE_SYSTEMS = asList("ICD-10");
-
-    private static final String VALIDATION_ERROR_PREFIX = "Validation Error (em):";
-
     public ProgrammaticLegacyTransportSchemaValidator(Fk7263Utlatande externalutlatande) {
         this.externalutlatande = externalutlatande;
     }
 
     public List<String> validate() {
-        
+
         validateUtlatande();
-        
-        validateDiagonse();
-
         validatePatient();
-
         validateHospersonal();
 
         return validationErrors;
     }
 
     private void validateUtlatande() {
-        
+
         Kod typ = externalutlatande.getTyp();
-        if (!TransportToExternalFk7263LegacyConverter.FK_7263.equals(typ.getCode())) {
-            addValidationError("Head: Invalid utlatandetyp - must be " + TransportToExternalFk7263LegacyConverter.FK_7263);
+
+        if (typ == null || !TransportToExternalFk7263LegacyConverter.FK_7263.equals(typ.getCode())) {
+            addValidationError("Head: Invalid utlatandetyp - must be "
+                    + TransportToExternalFk7263LegacyConverter.FK_7263);
         }
-        if (!TransportToExternalFk7263LegacyConverter.UTLATANDE_TYP_OID.equals(typ.getCodeSystem())) {
-            addValidationError("Head: Invalid utlatandetyp code system - must be " + TransportToExternalFk7263LegacyConverter.UTLATANDE_TYP_OID);
+        if (typ == null || !TransportToExternalFk7263LegacyConverter.UTLATANDE_TYP_OID.equals(typ.getCodeSystem())) {
+            addValidationError("Head: Invalid utlatandetyp code system - must be "
+                    + TransportToExternalFk7263LegacyConverter.UTLATANDE_TYP_OID);
         }
-        
-        
+
         Id id = externalutlatande.getId();
-        if (StringUtils.isEmpty(id.getRoot())) {
+        if (id == null || StringUtils.isEmpty(id.getRoot())) {
             addValidationError("Head: Utlatande Id.root is mandatory!");
         }
-        
-        
-        
-    }
 
-    private void validateDiagonse() {
-
-        Observation huvudDiagnos = externalutlatande.findObservationByKategori(ObservationsKoder.DIAGNOS);
-        if (huvudDiagnos == null || huvudDiagnos.getObservationskod() == null
-                || StringUtils.isEmpty(huvudDiagnos.getObservationskod().getCode())) {
-            addValidationError("Field 2: Missing diagnose code");
-            return;
+        // Check skickat datum - mandatory
+        if (externalutlatande.getSkickatdatum() == null) {
+            addValidationError("Header: No or wrong skickatDatum found!");
         }
-
-        if (StringUtils.isEmpty(huvudDiagnos.getObservationskod().getCodeSystemName())
-                || !VALID_DIAGNOSE_CODE_SYSTEMS.contains(huvudDiagnos.getObservationskod().getCodeSystemName())) {
-            addValidationError(String.format("Field 2: Invalid diagnose code system! Should be one of %s",
-                    Strings.join(" or ", VALID_DIAGNOSE_CODE_SYSTEMS)));
-            return;
+        // Check signeringsdatum - mandatory
+        if (externalutlatande.getSigneringsdatum() == null) {
+            addValidationError("Field 14: No signeringsDatum found!");
         }
 
     }
 
     private void validatePatient() {
         if (externalutlatande.getPatient() == null) {
-            addValidationError("missing patient element");
+            addValidationError("Missing patient element");
             return;
         }
 
-        if (externalutlatande.getPatient().getId() == null
-                || !PATIENT_ID_OIDS.contains(externalutlatande.getPatient().getId().getRoot())) {
+        if (externalutlatande.getPatient().getId() == null) {
+            addValidationError("Missing patient Id element");
+            return;
+        }
+
+        // Check OID
+        if (!PATIENT_ID_OIDS.contains(externalutlatande.getPatient().getId().getRoot())) {
             addValidationError(String.format("Wrong o.i.d. for Patient Id! Should be one of %s",
                     Strings.join(" or ", PATIENT_ID_OIDS)));
+        }
+
+        // Check format of patient idextension (has to be a valid personnummer)
+        String personNummer = externalutlatande.getPatient().getId().getExtension();
+        if (isNullOrEmpty(personNummer) || !Pattern.matches(PERSON_NUMBER_REGEX, personNummer)) {
+            addValidationError("Header: Invalid format for patient person-id! Valid format is YYYYMMDD-XXXX or YYYYMMDD+XXXX.");
+        }
+
+        /*
+         * Patient name - mandatory (TransportToExternalFk7263LegacyConverter converts fullstandigtNamn -> Efternamn)
+         */
+        if (isNullOrEmpty(externalutlatande.getPatient().getEfternamn())) {
+            addValidationError("Header: No Patient fullstandigtNamn elements found or set!");
+
         }
 
     }
@@ -127,6 +126,15 @@ public class ProgrammaticLegacyTransportSchemaValidator {
                     Strings.join(",", HOS_PERSONAL_OID)));
         }
 
+        if (StringUtils.isEmpty(hosPersonal.getId().getExtension())) {
+            addValidationError("Field 15: hos-personal id not found");
+        }
+        // Note: hos-personal-name is not mandatory according to insuranceprocess_healthreporting_2.0.xsd ->
+        // hosPersonalType
+        if (isNullOrEmpty(hosPersonal.getNamn())) {
+            addValidationError("Field 15: hos-personal namn not found!");
+        }
+
         validateHosPersonalEnhet();
     }
 
@@ -140,23 +148,49 @@ public class ProgrammaticLegacyTransportSchemaValidator {
             return;
         }
 
-        // Check enhetsIdRoot - mandatory
+        if (isNullOrEmpty(vardenhet.getPostadress())) {
+            addValidationError("Field 15: No postadress found for enhet!");
+        }
+
+        if (isNullOrEmpty(vardenhet.getPostnummer())) {
+            addValidationError("Field 15: No postnummer found for enhet!");
+        }
+
+        if (isNullOrEmpty(vardenhet.getPostort())) {
+            addValidationError("Field 15: No postort found for enhet!");
+        }
+
+        if (isNullOrEmpty(vardenhet.getTelefonnummer())) {
+            addValidationError("Field 15: No telefonnummer found for enhet!");
+        }
+
+        // Check enhetsId - mandatory
         if (vardenhet.getId() == null || !ENHET_OID.contains(vardenhet.getId().getRoot())) {
             addValidationError(String.format(
                     "Field 15: No hos-personal enhetsId root found or was invalid! Should be one of %s",
                     Strings.join(",", ENHET_OID)));
+        }
+        if (vardenhet.getId()==null || isNullOrEmpty(vardenhet.getId().getExtension())) {
+            addValidationError("Field 15: No enhetsId extension found!");
+        }
+
+        // Check enhetsnamn - mandatory
+        if (isNullOrEmpty(vardenhet.getNamn())) {
+            addValidationError("Field 15: No enhetsnamn found!");
         }
 
         if (vardenhet.getArbetsplatskod() == null) {
             addValidationError("Field 17: No arbetsplatskod found for enhet!");
             return;
         }
-
         if (vardenhet.getArbetsplatskod() == null
                 || !ARBETSPLATS_CODE_OID.contains(vardenhet.getArbetsplatskod().getRoot())) {
             addValidationError(String.format(
                     "Field 17: Invalid arbetsplatskod root found for enhet! Should be one of %s",
                     Strings.join(" or ", ARBETSPLATS_CODE_OID)));
+        }
+        if (vardenhet.getArbetsplatskod() == null || isNullOrEmpty(vardenhet.getArbetsplatskod().getExtension())) {
+            addValidationError("Field 17: Invalid arbetsplatskod extension found for enhet!");
         }
 
         validateVardgivare();
@@ -177,9 +211,15 @@ public class ProgrammaticLegacyTransportSchemaValidator {
             addValidationError(String.format("Field 15: No vardgivarId root found or was invalid! Should be one of %s",
                     Strings.join(" or ", ENHET_OID)));
         }
+
+        if (vardgivare.getId() == null || isNullOrEmpty(vardgivare.getId().getExtension())) {
+            addValidationError("Field 15: No vardgivarId extension found or was invalid!");
+        }
+
+        // Check vardgivarename - mandatory
+        if (isNullOrEmpty(vardgivare.getNamn())) {
+            addValidationError("Field 15: No vardgivarenamn found!");
+        }
     }
 
-    private void addValidationError(String errorDesc) {
-        validationErrors.add(VALIDATION_ERROR_PREFIX + errorDesc);
-    }
 }

@@ -41,8 +41,9 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263CertificateConte
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
+import se.inera.certificate.modules.fk7263.validator.ExternalValidator;
+import se.inera.certificate.modules.fk7263.validator.InternalValidator;
 import se.inera.certificate.modules.fk7263.validator.ProgrammaticLegacyTransportSchemaValidator;
-import se.inera.certificate.modules.fk7263.validator.UtlatandeValidator;
 import se.inera.certificate.validate.ValidationException;
 
 import com.itextpdf.text.DocumentException;
@@ -86,6 +87,11 @@ public class Fk7263ModuleApi {
     }
 
     /**
+     * Unmmarshalls transport format xml into fitting JaxB Object tree and perform schema validation.
+     * If no schema validation errors are found, next validation step is external model format transformation and validation 
+     * Last step is to validate internal format specific rules.
+     * 
+     * 
      * @param transportXml
      * @return
      */
@@ -96,70 +102,86 @@ public class Fk7263ModuleApi {
     public Response unmarshall(String transportXml) {
 
         Object jaxbObject = unmarshallTransportXML(transportXml);
+        Fk7263Utlatande externalModel = null;
+        List<String> validationErrors = new ArrayList<String>();
 
-        boolean schemaValidated = false;
-
+        // Perform Schema type validation
         if (jaxbObject instanceof RegisterMedicalCertificate) {
-            schemaValidated = false;
+            externalModel = convertTransportJaxbToModel(jaxbObject);
+            validationErrors.addAll(new ProgrammaticLegacyTransportSchemaValidator(externalModel).validate());
         } else if (jaxbObject instanceof Utlatande) {
-            Utlatande utlatande = (Utlatande) jaxbObject;
-            // perform schema validation
             try {
                 Validator validator = utlatandeSchema.newValidator();
                 validateSchema(validator, transportXml);
-                schemaValidated = true;
+                externalModel = convertTransportJaxbToModel(jaxbObject);
             } catch (ValidationException ex) {
-                String utlatandeId = utlatande.getUtlatandeId().getExtension();
-                String enhetsId = null;
-                if (utlatande.getSkapadAv() != null && utlatande.getSkapadAv().getEnhet() != null
-                        && utlatande.getSkapadAv().getEnhet().getEnhetsId() != null) {
-                    utlatande.getSkapadAv().getEnhet().getEnhetsId().getExtension();
-                }
-                String message = responseBody(utlatandeId, enhetsId, ex.getMessage());
-                return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
+                validationErrors.add(ex.getMessage());
             }
         } else {
             LOG.warn("Unsupported XML message: {}", transportXml);
             throw new RuntimeException("Unsupported XML message: " + transportXml);
         }
 
-
-        Fk7263Utlatande externalModel = convertTransportJaxbToModel(jaxbObject);
-        List<String> validationErrors = new ArrayList<String>();
-
-        if (!schemaValidated) {
-            validationErrors = new ProgrammaticLegacyTransportSchemaValidator(externalModel).validate();
+        // If no validation errors so far, continue with external validation...
+        if (validationErrors.isEmpty()) {
+            validationErrors.addAll((new ExternalValidator(externalModel).validate()));
         }
-
+        // If no validation errors so far, continue with internal validation...
         if (validationErrors.isEmpty()) {
             Fk7263Intyg internalModel = toInternal(externalModel);
-            validationErrors.addAll((new UtlatandeValidator(internalModel).validate()));
+            validationErrors.addAll((new InternalValidator(internalModel).validate()));
         }
 
         if (validationErrors.isEmpty()) {
             return Response.ok(externalModel).build();
         } else {
 
-            String response = responseBody(extractCertificateId(externalModel), extractEnhetsId(externalModel),
+            String response = responseBody(extractCertificateId(jaxbObject), extractEnhetsId(jaxbObject),
                     Strings.join(",", validationErrors));
             return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
         }
     }
 
-    private String extractCertificateId(Fk7263Utlatande externalModel) {
-        if (externalModel != null && externalModel.getId() != null) {
-            return externalModel.getId().getExtension();
+    private String extractCertificateId(Object jaxbObject) {
+        String certificateId = "<not set>";
+        if (jaxbObject != null) {
+            if (jaxbObject instanceof RegisterMedicalCertificate) {
+                RegisterMedicalCertificate cert = (RegisterMedicalCertificate) jaxbObject;
+                if (cert.getLakarutlatande() != null) {
+                    certificateId = cert.getLakarutlatande().getLakarutlatandeId();
+                }
+            } else if (jaxbObject instanceof Utlatande) {
+                Utlatande cert = (Utlatande) jaxbObject;
+                if (cert.getUtlatandeId() != null) {
+                    certificateId = "[id-root: " + cert.getUtlatandeId().getRoot() + " id-extension: "
+                            + cert.getUtlatandeId().getExtension() + "]";
+                }
+            }
         }
-        return "<not set>";
+        return certificateId;
     }
 
-    private String extractEnhetsId(Fk7263Utlatande externalModel) {
-        if (externalModel != null && externalModel.getSkapadAv() != null
-                && externalModel.getSkapadAv().getVardenhet() != null
-                && externalModel.getSkapadAv().getVardenhet().getId() != null) {
-            return externalModel.getSkapadAv().getVardenhet().getId().getExtension();
+    private String extractEnhetsId(Object jaxbObject) {
+        String enhetsId = "<not set>";
+        if (jaxbObject != null) {
+            if (jaxbObject instanceof RegisterMedicalCertificate) {
+                RegisterMedicalCertificate cert = (RegisterMedicalCertificate) jaxbObject;
+                if (cert.getLakarutlatande() != null && cert.getLakarutlatande().getSkapadAvHosPersonal() != null
+                        && cert.getLakarutlatande().getSkapadAvHosPersonal().getEnhet() != null
+                        && cert.getLakarutlatande().getSkapadAvHosPersonal().getEnhet().getEnhetsId() != null) {
+
+                    enhetsId = cert.getLakarutlatande().getSkapadAvHosPersonal().getEnhet().getEnhetsId()
+                            .getExtension();
+                }
+            } else if (jaxbObject instanceof Utlatande) {
+                Utlatande cert = (Utlatande) jaxbObject;
+                if (cert.getSkapadAv() != null && cert.getSkapadAv().getEnhet() != null
+                        && cert.getSkapadAv().getEnhet().getEnhetsId() != null) {
+                    enhetsId = cert.getSkapadAv().getEnhet().getEnhetsId().getExtension();
+                }
+            }
         }
-        return "<not set>";
+        return enhetsId;
     }
 
     private String responseBody(String utlatandeId, String enhetsId, String validationErrors) {
@@ -260,7 +282,7 @@ public class Fk7263ModuleApi {
         if (validationErrors.isEmpty()) {
             // passed first level validation, now validate business logic with internal model validation
             internalModel = toInternal(utlatande);
-            validationErrors.addAll((new UtlatandeValidator(internalModel).validate()));
+            validationErrors.addAll((new InternalValidator(internalModel).validate()));
         }
 
         if (validationErrors.isEmpty()) {
