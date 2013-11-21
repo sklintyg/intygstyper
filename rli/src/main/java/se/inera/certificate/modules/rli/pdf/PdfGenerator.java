@@ -5,9 +5,9 @@ import java.io.IOException;
 
 import org.apache.commons.lang3.StringUtils;
 
-import se.inera.certificate.modules.rli.model.internal.KomplikationStyrkt;
-import se.inera.certificate.modules.rli.model.internal.OrsakAvbokning;
-import se.inera.certificate.modules.rli.model.internal.Utlatande;
+import se.inera.certificate.modules.rli.model.internal.mi.KomplikationStyrkt;
+import se.inera.certificate.modules.rli.model.internal.mi.OrsakAvbokning;
+import se.inera.certificate.modules.rli.model.internal.mi.Utlatande;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
@@ -76,32 +76,31 @@ public class PdfGenerator {
                         .getBokningsdatum(), utlatande.getSigneringsdatum().toString(DATEFORMAT_FOR_FILENAMES));
     }
 
-    public byte[] generatePDF(Utlatande utlatande) throws PdfGeneratorException, IOException, DocumentException {
+    public byte[] generatePDF(Utlatande utlatande) throws PdfGeneratorException {
+        try {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            String type = utlatande.getUndersokning().getOrsakforavbokning().toString();
 
-        String type = utlatande.getUndersokning().getOrsakforavbokning().toString();
+            PdfReader pdfReader = new PdfReader("pdf/" + type + "_blankett.pdf");
+            PdfStamper pdfStamper = new PdfStamper(pdfReader, outputStream);
+            pdfStamper.setFormFlattening(true);
+            AcroFields fields = pdfStamper.getAcroFields();
+            populatePdfFields(utlatande, fields);
+            pdfStamper.close();
 
-        PdfReader pdfReader = new PdfReader("pdf/" + type + "_blankett.pdf");
+            return outputStream.toByteArray();
 
-        PdfStamper pdfStamper = new PdfStamper(pdfReader, outputStream);
-
-        pdfStamper.setFormFlattening(true);
-
-        AcroFields fields = pdfStamper.getAcroFields();
-
-        populatePdfFields(utlatande, fields);
-
-        pdfStamper.close();
-
-        return outputStream.toByteArray();
+        } catch (Exception e) {
+            throw new PdfGeneratorException(e);
+        }
     }
 
     /**
      * Method for filling out the fields of a pdf with data from the RLI-internal model
      * 
      * @param utlatande
-     *            {@link se.inera.certificate.modules.rli.model.internal.Utlatande} containing data for populating the
+     *            {@link se.inera.certificate.modules.rli.model.internal.mi.Utlatande} containing data for populating the
      *            pdf
      * @param fields
      *            The fields of the pdf

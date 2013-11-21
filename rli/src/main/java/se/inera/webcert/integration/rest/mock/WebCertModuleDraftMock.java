@@ -11,9 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.certificate.modules.rli.model.converters.ConverterException;
-import se.inera.certificate.modules.rli.model.edit.Utlatande;
-import se.inera.certificate.modules.rli.model.factory.EditModelFactory;
+import se.inera.certificate.modules.rli.model.converter.ConverterException;
+import se.inera.certificate.modules.rli.model.converter.WebcertModelFactory;
+import se.inera.certificate.modules.rli.model.internal.wc.Utlatande;
 import se.inera.certificate.modules.rli.rest.dto.CreateNewDraftCertificateHolder;
 import se.inera.webcert.integration.rest.WebCertModuleDraftApi;
 import se.inera.webcert.integration.rest.dto.CreateDraftCertificateHolder;
@@ -27,7 +27,7 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
     private final Map<String, Object> mockStore;
 
     @Autowired
-    private EditModelFactory editModelFactory;
+    private WebcertModelFactory editModelFactory;
 
     public WebCertModuleDraftMock() {
         this.mockStore = new HashMap<>();
@@ -59,7 +59,7 @@ public class WebCertModuleDraftMock implements WebCertModuleDraftApi {
         // newDraftData.setSomethingOnlyWebcertKnowsAbout("Evil hidden stuff");
         Utlatande utlatande = null;
         try {
-            utlatande = editModelFactory.createEditableUtlatande(newDraftData);
+            utlatande = editModelFactory.createNewWebcertDraft(newDraftData);
         } catch (ConverterException e) {
             e.printStackTrace();
         }
