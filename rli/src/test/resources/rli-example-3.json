@@ -82,7 +82,7 @@
         },
         {
             "aktivitetskod" : {
-                "codeSystem" : "1.2.752.116.1.3.2.1.4",
+                "codeSystem" : "8040b4d1-67dc-42e1-a938-de5374e9526a",
                 "codeSystemName" : "kv_aktiviteter_intyg",
                 "code" : "AKT13"
             },
@@ -129,7 +129,7 @@
                         "extension" : "190101010101"
                     },
                     "namn" : "Dr Jekyll",
-                    "enhet" : {
+                    "vardenhet" : {
                         "id" : {
                             "root" : "1.2.752.129.2.1.4.1",
                             "extension" : "vardenhet_test2"

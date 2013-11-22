@@ -32,7 +32,7 @@ public enum UtlatandeKod implements ICodeSystem {
 
     private static String codeSystem = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
 
-    private static String codeSystemVersion = "";
+    private static String codeSystemVersion = null;
 
     private String code;
 

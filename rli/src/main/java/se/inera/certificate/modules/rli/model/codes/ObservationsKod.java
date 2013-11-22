@@ -38,7 +38,7 @@ public enum ObservationsKod implements ICodeSystem {
 
     private static String codeSystem = "1.2.752.116.2.1.1.1";
 
-    private static String codeSystemVersion = "";
+    private static String codeSystemVersion = null;
 
     private String code;
 
