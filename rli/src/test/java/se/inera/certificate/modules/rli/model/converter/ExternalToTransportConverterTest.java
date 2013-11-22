@@ -1,5 +1,4 @@
 /**
-/**
  * Copyright (C) 2013 Inera AB (http://www.inera.se)
  *
  * This file is part of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules).
