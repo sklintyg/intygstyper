@@ -19,8 +19,8 @@ import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
+import se.inera.certificate.modules.rli.model.codes.CodeConverter;
 import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
-import se.inera.certificate.modules.rli.model.converter.UndersokningPopulator;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.internal.mi.KomplikationStyrkt;
 import se.inera.certificate.modules.rli.model.internal.mi.OrsakAvbokning;
@@ -34,15 +34,15 @@ import se.inera.certificate.modules.rli.model.internal.mi.Undersokning;
  */
 public class UndersokingPopulatorTest {
 
-    private UndersokningPopulator converter;
+    private ExternalToInternalConverter converter;
 
     @Before
     public void setUp() {
-        this.converter = new UndersokningPopulator();
+        this.converter = new ExternalToInternalConverter();
     }
 
     @Test
-    public void testPopulateUndersokningRekommendationMedSjukdom() {
+    public void testPopulateUndersokningRekommendationMedSjukdom() throws Exception {
 
         Observation sjukObs = constructObservation(ObservationsKod.SJUKDOM);
 
@@ -57,7 +57,7 @@ public class UndersokingPopulatorTest {
     }
 
     @Test
-    public void testPopulateUndersokningRekommendationMedGravid() {
+    public void testPopulateUndersokningRekommendationMedGravid() throws Exception {
 
         Observation sjukObs = constructObservation(ObservationsKod.GRAVIDITET);
 
@@ -77,7 +77,7 @@ public class UndersokingPopulatorTest {
     }
 
     @Test
-    public void testpopulateFromAktiviteter1() {
+    public void testpopulateFromAktiviteter1() throws Exception {
 
         Aktivitet firstExam = constructAktivitet(AktivitetsKod.FORSTA_UNDERSOKNING, 2012, 5, 0);
         firstExam.setPlats("Sjukhus A");
@@ -101,7 +101,7 @@ public class UndersokingPopulatorTest {
     }
 
     @Test
-    public void testpopulateFromAktiviteter2() {
+    public void testpopulateFromAktiviteter2() throws Exception {
 
         Aktivitet currentExam = constructAktivitet(AktivitetsKod.KLINISK_UNDERSOKNING, 2013, 6, 12);
         Vardenhet sjukhusEnhetX = constructEnhet("Sjukhus X");
@@ -127,7 +127,7 @@ public class UndersokingPopulatorTest {
         PartialInterval obsPeriod = new PartialInterval(null, null);
         obs.setObservationsperiod(obsPeriod);
 
-        obs.setObservationskod(new Kod(obsKod.getCode()));
+        obs.setObservationskod(CodeConverter.toKod(obsKod));
 
         return obs;
     }
@@ -159,7 +159,7 @@ public class UndersokingPopulatorTest {
         PartialInterval atid = new PartialInterval(from, null);
 
         Aktivitet a = new Aktivitet();
-        a.setAktivitetskod(new Kod(aktivitetsKod.getCode()));
+        a.setAktivitetskod(CodeConverter.toKod(aktivitetsKod));
         a.setAktivitetstid(atid);
 
         return a;

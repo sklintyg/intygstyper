@@ -8,16 +8,16 @@ import java.io.InputStream;
 import java.util.Arrays;
 
 import org.joda.time.LocalDateTime;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.rli.model.codes.ArrangemangsKod;
 import se.inera.certificate.modules.rli.model.codes.RekommendationsKod;
 import se.inera.certificate.modules.rli.model.codes.SjukdomskannedomKod;
-import se.inera.certificate.modules.rli.model.converter.ExternalToInternalConverter;
 import se.inera.certificate.modules.rli.model.internal.mi.Arrangemang;
 import se.inera.certificate.modules.rli.model.internal.mi.HoSPersonal;
 import se.inera.certificate.modules.rli.model.internal.mi.KomplikationStyrkt;
@@ -29,20 +29,12 @@ import se.inera.certificate.modules.rli.model.internal.mi.Utlatande;
 import se.inera.certificate.modules.rli.model.internal.mi.Vardenhet;
 import se.inera.certificate.modules.rli.model.internal.mi.Vardgivare;
 
+@ContextConfiguration(locations = ("/rli-test-config.xml"))
+@RunWith(SpringJUnit4ClassRunner.class)
 public class FullExternalToInternalConverterTest {
 
-    private ApplicationContext ctx;
-
+    @Autowired
     private ExternalToInternalConverter converter;
-
-    public FullExternalToInternalConverterTest() {
-        this.ctx = new AnnotationConfigApplicationContext(SpringTestConfig.class);
-    }
-
-    @Before
-    public void setUp() {
-        this.converter = this.ctx.getBean("externalToInternalConverter", ExternalToInternalConverter.class);
-    }
 
     @Test
     public void testConvertUtlatande() throws Exception {

@@ -25,20 +25,30 @@ import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
 import se.inera.certificate.integration.rest.dto.CertificateStatus;
 import se.inera.certificate.model.HosPersonal;
+import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.PartialInterval;
+import se.inera.certificate.model.Utforarroll;
+import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
 import se.inera.certificate.modules.rli.model.codes.ArrangemangsKod;
 import se.inera.certificate.modules.rli.model.codes.CodeConverter;
+import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
+import se.inera.certificate.modules.rli.model.codes.RekommendationsKod;
+import se.inera.certificate.modules.rli.model.codes.SjukdomskannedomKod;
+import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.internal.mi.Arrangemang;
+import se.inera.certificate.modules.rli.model.internal.mi.Graviditet;
 import se.inera.certificate.modules.rli.model.internal.mi.HoSPersonal;
+import se.inera.certificate.modules.rli.model.internal.mi.KomplikationStyrkt;
+import se.inera.certificate.modules.rli.model.internal.mi.OrsakAvbokning;
 import se.inera.certificate.modules.rli.model.internal.mi.Patient;
 import se.inera.certificate.modules.rli.model.internal.mi.Rekommendation;
 import se.inera.certificate.modules.rli.model.internal.mi.Status;
 import se.inera.certificate.modules.rli.model.internal.mi.Undersokning;
+import se.inera.certificate.modules.rli.model.internal.mi.Utforare;
 import se.inera.certificate.modules.rli.model.internal.mi.Utlatande;
 import se.inera.certificate.modules.rli.model.internal.mi.Vardenhet;
 import se.inera.certificate.modules.rli.model.internal.mi.Vardgivare;
@@ -55,23 +65,11 @@ public class ExternalToInternalConverter {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExternalToInternalConverter.class);
 
-    @Autowired
-    private UndersokningPopulator undersokingPopulator;
-
-    @Autowired
-    private RekommendationPopulator rekommendationPopulator;
-
-    public ExternalToInternalConverter() {
-
-    }
-
     public Utlatande fromExternalToInternal(CertificateContentHolder certificateContentHolder) throws ConverterException {
-
         se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande = certificateContentHolder
                 .getCertificateContent();
 
         Utlatande intUtlatande = convertUtlatandeFromExternalToInternal(extUtlatande);
-
         decorateWithStatusInfo(intUtlatande, certificateContentHolder.getCertificateContentMeta());
 
         return intUtlatande;
@@ -82,23 +80,18 @@ public class ExternalToInternalConverter {
 
         List<Status> intStatuses = convertToIntStatuses(certStatuses);
         intUtlatande.setStatus(intStatuses);
-
     }
 
     Utlatande convertUtlatandeFromExternalToInternal(
             se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande) throws ConverterException {
-
         LOG.debug("Converting Utlatande '{}' from external to internal", extUtlatande.getId());
 
         Utlatande intUtlatande = new Utlatande();
 
         intUtlatande.setUtlatandeid(InternalModelConverterUtils.getExtensionFromId(extUtlatande.getId()));
-
         intUtlatande.setTypAvUtlatande(InternalModelConverterUtils.getValueFromKod(extUtlatande.getTyp()));
-
         intUtlatande.setSigneringsdatum(extUtlatande.getSigneringsdatum());
         intUtlatande.setSkickatdatum(extUtlatande.getSkickatdatum());
-
         intUtlatande.setKommentarer(extUtlatande.getKommentarer());
 
         HoSPersonal intHoSPersonal = convertToIntHoSPersonal(extUtlatande.getSkapadAv());
@@ -110,21 +103,13 @@ public class ExternalToInternalConverter {
         Arrangemang intArrangemang = convertToIntArrangemang(extUtlatande.getArrangemang());
         intUtlatande.setArrangemang(intArrangemang);
 
-        populateUndersokingRekommendation(extUtlatande, intUtlatande);
-
-        return intUtlatande;
-    }
-
-    private void populateUndersokingRekommendation(
-            se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande, Utlatande intUtlatande) {
-
-        LOG.trace("Populating Utlatande with Undersokning and Rekommendation");
-
-        Undersokning intUndersokning = undersokingPopulator.createAndPopulateUndersokning(extUtlatande);
+        Undersokning intUndersokning = createUndersokning(extUtlatande);
         intUtlatande.setUndersokning(intUndersokning);
 
-        Rekommendation intRekommendation = rekommendationPopulator.createAndPopulateRekommendation(extUtlatande);
+        Rekommendation intRekommendation = createRekommendation(extUtlatande);
         intUtlatande.setRekommendation(intRekommendation);
+
+        return intUtlatande;
     }
 
     Vardenhet convertToIntVardenhet(se.inera.certificate.model.Vardenhet extVardenhet) throws ConverterException {
@@ -274,4 +259,151 @@ public class ExternalToInternalConverter {
         return intArr;
     }
 
+    private Utforare convertToIntUtforare(Utforarroll source) throws ConverterException {
+        LOG.trace("Converting to internal Utforare");
+        Utforare utforsAv = new Utforare();
+        utforsAv.setUtforartyp(source.getUtforartyp().getCode());
+        if (source.getAntasAv() != null) {
+            utforsAv.setAntasAv(convertToIntHoSPersonal(source.getAntasAv()));
+        }
+        return utforsAv;
+    }
+
+    private Rekommendation createRekommendation(se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande)
+            throws ConverterException {
+        LOG.trace("Creating and poulating Rekommendation");
+
+        Rekommendation intRekommendation = new Rekommendation();
+
+        if (extUtlatande.getRekommendationer().size() != 1) {
+            throw new ConverterException("- Rekommendationer should contain only 1 Rekommendation");
+        }
+
+        se.inera.certificate.model.Rekommendation extRekommendation = extUtlatande.getRekommendationer().get(0);
+
+        intRekommendation.setRekommendationskod(CodeConverter.fromCode(extRekommendation.getRekommendationskod(),
+                RekommendationsKod.class));
+        intRekommendation.setSjukdomskannedom(CodeConverter.fromCode(extRekommendation.getSjukdomskannedom(),
+                SjukdomskannedomKod.class));
+        intRekommendation.setBeskrivning(extRekommendation.getBeskrivning());
+
+        return intRekommendation;
+    }
+
+    private Undersokning createUndersokning(
+            se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande) throws ConverterException {
+        LOG.trace("Creating and populating Undersokning");
+
+        Undersokning intUndersokning = new Undersokning();
+
+        populateUndersokningFromObservationer(extUtlatande.getObservationer(), intUndersokning);
+        populateUndersokningFromAktiviteter(extUtlatande.getAktiviteter(), intUndersokning);
+
+        return intUndersokning;
+    }
+    
+    void populateUndersokningFromObservationer(List<Observation> observationer, Undersokning intUndersokning) throws ConverterException {
+        LOG.trace("Populating Undersokning from Observationer");
+
+        if (observationer.isEmpty()) {
+            throw new ConverterException("No observations found! Can not populate undersokning!");
+        }
+
+        for (Observation observation : observationer) {
+            if (ObservationsKod.SJUKDOM.matches(observation.getObservationskod())) {
+                intUndersokning.setOrsakforavbokning(OrsakAvbokning.RESENAR_SJUK);
+                if (observation.getUtforsAv() != null) {
+                    intUndersokning.setUtforsAv(convertToIntUtforare(observation.getUtforsAv()));
+                }
+
+            } else if (ObservationsKod.GRAVIDITET.matches(observation.getObservationskod())) {
+
+                intUndersokning.setOrsakforavbokning(OrsakAvbokning.RESENAR_GRAVID);
+                if (observation.getUtforsAv() != null) {
+                    intUndersokning.setUtforsAv(convertToIntUtforare(observation.getUtforsAv()));
+                }
+
+                String estimatedDeliveryDate = PartialConverter.partialToString(observation.getObservationsperiod()
+                        .getTom());
+                Graviditet pregnancyInfo = new Graviditet();
+                pregnancyInfo.setBeraknatForlossningsdatum(estimatedDeliveryDate);
+                intUndersokning.setGraviditet(pregnancyInfo);
+            }
+        }
+    }
+    
+    void populateUndersokningFromAktiviteter(List<Aktivitet> aktiviteter, Undersokning intUndersokning) throws ConverterException {
+        LOG.trace("Populating Undersokning from Aktiviteter");
+
+        if (aktiviteter.isEmpty()) {
+            throw new ConverterException("No aktiviteter found, can not continue with population");
+        }
+
+        for (Aktivitet aktivitet : aktiviteter) {
+            if (AktivitetsKod.FORSTA_UNDERSOKNING.matches(aktivitet.getAktivitetskod())) {
+                populateFirstExam(intUndersokning, aktivitet);
+                
+            } else if (AktivitetsKod.KLINISK_UNDERSOKNING.matches(aktivitet.getAktivitetskod())) {
+                populateCurrentExam(intUndersokning, aktivitet);
+            }
+        }
+    }
+    
+    private void populateFirstExam(Undersokning intUndersokning, Aktivitet firstExam) throws ConverterException {
+        if (firstExam == null) {
+            throw new ConverterException("- firstExam is null, can not populate first exam info");
+        }
+
+        String forstaUndersokningDatum = getExamDateFromAktivitet(firstExam);
+        intUndersokning.setForstaUndersokningsdatum(forstaUndersokningDatum);
+
+        KomplikationStyrkt komplikationStyrkt;
+        String forstaUndersokningPlats;
+
+        if (firstExam.getUtforsVid() != null) {
+            komplikationStyrkt = KomplikationStyrkt.AV_HOS_PERSONAL;
+            forstaUndersokningPlats = firstExam.getUtforsVid().getNamn();
+            intUndersokning.setUtforsVid(convertToIntVardenhet(firstExam.getUtforsVid()));
+
+        } else {
+            komplikationStyrkt = KomplikationStyrkt.AV_PATIENT;
+            forstaUndersokningPlats = firstExam.getPlats();
+        }
+
+        intUndersokning.setForstaUndersokningsplats(forstaUndersokningPlats);
+        intUndersokning.setKomplikationstyrkt(komplikationStyrkt);
+    }
+
+    private void populateCurrentExam(Undersokning intUndersokning, Aktivitet currentExam) throws ConverterException {
+        if (currentExam == null) {
+            throw new ConverterException("- currentExam is null, can not populate current exam info");
+        }
+        
+        String undersokningDatum = getExamDateFromAktivitet(currentExam);
+        intUndersokning.setUndersokningsdatum(undersokningDatum);
+
+        if (currentExam.getUtforsVid() != null) {
+            String undersokningPlats = currentExam.getUtforsVid().getNamn();
+            intUndersokning.setUndersokningsplats(undersokningPlats);
+            intUndersokning.setUtforsVid(convertToIntVardenhet(currentExam.getUtforsVid()));
+
+        } else {
+            throw new ConverterException("- Place for current exam could not be determined");
+        }
+    }
+    
+    private String getExamDateFromAktivitet(Aktivitet aktivitet) {
+
+        PartialInterval aktivitetstid = aktivitet.getAktivitetstid();
+
+        if (aktivitetstid == null) {
+            return null;
+        }
+
+        if (aktivitetstid.getFrom() != null) {
+            return PartialConverter.partialToString(aktivitetstid.getFrom());
+        }
+
+        return null;
+    }
 }

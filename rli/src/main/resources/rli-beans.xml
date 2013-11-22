@@ -25,12 +25,6 @@
   <bean id="externalToInternalConverter"
     class="se.inera.certificate.modules.rli.model.converter.ExternalToInternalConverter" />
 
-  <bean id="rekommendationPopulator"
-    class="se.inera.certificate.modules.rli.model.converter.RekommendationPopulator" />
-
-  <bean id="undersokningPopulator"
-    class="se.inera.certificate.modules.rli.model.converter.UndersokningPopulator" />
-
   <bean id="pdfGenerator" class="se.inera.certificate.modules.rli.pdf.PdfGenerator" />
 
   <bean id="webcertModelFactory"

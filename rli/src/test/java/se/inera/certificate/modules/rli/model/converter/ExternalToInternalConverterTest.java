@@ -1,16 +1,20 @@
 package se.inera.certificate.modules.rli.model.converter;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
@@ -19,7 +23,6 @@ import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
-import se.inera.certificate.modules.rli.model.converter.ExternalToInternalConverter;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
 import se.inera.certificate.modules.rli.model.internal.mi.HoSPersonal;
@@ -30,20 +33,12 @@ import se.inera.certificate.modules.rli.model.internal.mi.HoSPersonal;
  * @author Niklas Pettersson, R2M
  * 
  */
+@ContextConfiguration(locations = ("/rli-test-config.xml"))
+@RunWith(SpringJUnit4ClassRunner.class)
 public class ExternalToInternalConverterTest {
 
-    private ApplicationContext ctx;
-
+    @Autowired
     private ExternalToInternalConverter converter;
-
-    public ExternalToInternalConverterTest() {
-        this.ctx = new AnnotationConfigApplicationContext(SpringTestConfig.class);
-    }
-
-    @Before
-    public void setUp() {
-        this.converter = this.ctx.getBean("externalToInternalConverter", ExternalToInternalConverter.class);
-    }
 
     @Test
     public void testConvertUtlatande() throws Exception {
