@@ -16,7 +16,7 @@ public final class InternalModelConverterUtils {
     public static String getExtensionFromId(Id id) {
         return (id != null) ? id.getExtension() : null;
     }
-    
+
     public static String getRootFromId(Id id) {
         return (id != null) ? id.getRoot() : null;
     }

@@ -4,8 +4,8 @@ import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
 
 /**
- * Wrapper class for holding the Utlatande in external format of a certificate as well as
- * metadata about the certificate, such as status
+ * Wrapper class for holding the Utlatande in external format of a certificate as well as metadata about the
+ * certificate, such as status
  * 
  * @author marced
  */

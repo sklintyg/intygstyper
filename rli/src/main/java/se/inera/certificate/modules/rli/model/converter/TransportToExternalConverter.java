@@ -66,7 +66,7 @@ public class TransportToExternalConverter {
      * @param source
      *            Utlatande in the transport format to be converted to external format
      * @return se.inera.certificate.modules.rli.model.external.Utlatande
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     public Utlatande transportToExternal(se.inera.certificate.common.v1.Utlatande source) throws ConverterException {
 
@@ -188,7 +188,7 @@ public class TransportToExternalConverter {
             observation.setObservationsperiod(new PartialInterval(source.getObservationsperiod().getFrom(), source
                     .getObservationsperiod().getTom()));
         }
-        
+
         observation.setObservationskod(IsoTypeConverter.toKod(source.getObservationskod()));
 
         if (source.getUtforsAv() != null) {

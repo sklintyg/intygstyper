@@ -29,6 +29,7 @@ public interface WebCertModuleDraftApi {
 
     /**
      * Returns a list of all certificates
+     * 
      * @return a JSON object
      */
     @GET
@@ -42,15 +43,16 @@ public interface WebCertModuleDraftApi {
      * @param draftInfo
      *            The type of draft certificate to produce etc
      * @return The draft certificate as a JSON object
-     * @throws IOException 
-     * @throws JsonMappingException 
-     * @throws JsonParseException 
-     * @throws JAXBException 
+     * @throws IOException
+     * @throws JsonMappingException
+     * @throws JsonParseException
+     * @throws JAXBException
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Object createDraftCertificate(CreateDraftCertificateHolder draftInfo) throws JsonParseException, JsonMappingException, IOException, JAXBException;
+    Object createDraftCertificate(CreateDraftCertificateHolder draftInfo) throws JsonParseException,
+            JsonMappingException, IOException, JAXBException;
 
     /**
      * Returns the draft certificate as JSON identified by the certificateId.

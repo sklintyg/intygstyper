@@ -171,7 +171,7 @@ public class ExternalValidatorInstance {
                 assertNotNull(aktivitet.getAktivitetstid(), "aktivitet.aktivitetstid");
                 assertNotNull(aktivitet.getPlats(), "aktivitet.plats");
             }
-            
+
         }
 
     }

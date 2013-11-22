@@ -6,11 +6,11 @@ import se.inera.certificate.model.Patient;
 public class CreateNewDraftCertificateHolder {
 
     private String certificateId;
-    
+
     private HosPersonal skapadAv;
-    
+
     private Patient patientInfo;
-    
+
     private Object somethingOnlyWebcertKnowsAbout;
 
     public String getCertificateId() {

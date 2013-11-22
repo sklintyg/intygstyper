@@ -37,11 +37,11 @@ public class WebcertModelFactory {
 
     private void populateWithPatientInfo(Utlatande utlatande, se.inera.certificate.model.Patient patient)
             throws ConverterException {
-        
+
         if (patient == null) {
             throw new ConverterException("Got null while trying to populateWithPatientInfo");
         }
-        
+
         utlatande.setPatient(convertPatientToEdit(patient));
     }
 
@@ -54,7 +54,7 @@ public class WebcertModelFactory {
         patient.setPostadress(patientInfo.getPostadress());
         patient.setPostnummer(patientInfo.getPostnummer());
         patient.setPostort(patientInfo.getPostort());
-        
+
         return patient;
     }
 

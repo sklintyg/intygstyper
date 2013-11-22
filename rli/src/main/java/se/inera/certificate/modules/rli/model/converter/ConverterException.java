@@ -4,7 +4,7 @@ package se.inera.certificate.modules.rli.model.converter;
  * Exception for converting services.
  * 
  * @author nikpet
- *
+ * 
  */
 public class ConverterException extends Exception {
 

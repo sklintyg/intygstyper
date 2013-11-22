@@ -65,7 +65,8 @@ public class ExternalToInternalConverter {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExternalToInternalConverter.class);
 
-    public Utlatande fromExternalToInternal(CertificateContentHolder certificateContentHolder) throws ConverterException {
+    public Utlatande fromExternalToInternal(CertificateContentHolder certificateContentHolder)
+            throws ConverterException {
         se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande = certificateContentHolder
                 .getCertificateContent();
 
@@ -223,7 +224,8 @@ public class ExternalToInternalConverter {
         return intPatient;
     }
 
-    Arrangemang convertToIntArrangemang(se.inera.certificate.modules.rli.model.external.Arrangemang extArr) throws ConverterException {
+    Arrangemang convertToIntArrangemang(se.inera.certificate.modules.rli.model.external.Arrangemang extArr)
+            throws ConverterException {
 
         LOG.trace("Converting arrangemang");
 
@@ -290,8 +292,8 @@ public class ExternalToInternalConverter {
         return intRekommendation;
     }
 
-    private Undersokning createUndersokning(
-            se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande) throws ConverterException {
+    private Undersokning createUndersokning(se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande)
+            throws ConverterException {
         LOG.trace("Creating and populating Undersokning");
 
         Undersokning intUndersokning = new Undersokning();
@@ -301,8 +303,9 @@ public class ExternalToInternalConverter {
 
         return intUndersokning;
     }
-    
-    void populateUndersokningFromObservationer(List<Observation> observationer, Undersokning intUndersokning) throws ConverterException {
+
+    void populateUndersokningFromObservationer(List<Observation> observationer, Undersokning intUndersokning)
+            throws ConverterException {
         LOG.trace("Populating Undersokning from Observationer");
 
         if (observationer.isEmpty()) {
@@ -331,8 +334,9 @@ public class ExternalToInternalConverter {
             }
         }
     }
-    
-    void populateUndersokningFromAktiviteter(List<Aktivitet> aktiviteter, Undersokning intUndersokning) throws ConverterException {
+
+    void populateUndersokningFromAktiviteter(List<Aktivitet> aktiviteter, Undersokning intUndersokning)
+            throws ConverterException {
         LOG.trace("Populating Undersokning from Aktiviteter");
 
         if (aktiviteter.isEmpty()) {
@@ -342,13 +346,13 @@ public class ExternalToInternalConverter {
         for (Aktivitet aktivitet : aktiviteter) {
             if (AktivitetsKod.FORSTA_UNDERSOKNING.matches(aktivitet.getAktivitetskod())) {
                 populateFirstExam(intUndersokning, aktivitet);
-                
+
             } else if (AktivitetsKod.KLINISK_UNDERSOKNING.matches(aktivitet.getAktivitetskod())) {
                 populateCurrentExam(intUndersokning, aktivitet);
             }
         }
     }
-    
+
     private void populateFirstExam(Undersokning intUndersokning, Aktivitet firstExam) throws ConverterException {
         if (firstExam == null) {
             throw new ConverterException("- firstExam is null, can not populate first exam info");
@@ -378,7 +382,7 @@ public class ExternalToInternalConverter {
         if (currentExam == null) {
             throw new ConverterException("- currentExam is null, can not populate current exam info");
         }
-        
+
         String undersokningDatum = getExamDateFromAktivitet(currentExam);
         intUndersokning.setUndersokningsdatum(undersokningDatum);
 
@@ -391,7 +395,7 @@ public class ExternalToInternalConverter {
             throw new ConverterException("- Place for current exam could not be determined");
         }
     }
-    
+
     private String getExamDateFromAktivitet(Aktivitet aktivitet) {
 
         PartialInterval aktivitetstid = aktivitet.getAktivitetstid();

@@ -91,7 +91,8 @@ public class InternalToExternalConverter {
 
             Observation o2 = new Observation();
             o2.setObservationskod(CodeConverter.toKod(ObservationsKod.GRAVIDITET));
-            o2.setObservationsperiod(PartialConverter.toPartialInterval(null, source.getGraviditet().getBeraknatForlossningsdatum()));
+            o2.setObservationsperiod(PartialConverter.toPartialInterval(null, source.getGraviditet()
+                    .getBeraknatForlossningsdatum()));
             o2.setUtforsAv(convertUtforsAv(source.getUtforsAv()));
 
             obs.add(o2);
@@ -132,7 +133,7 @@ public class InternalToExternalConverter {
      *            ArrayList of Aktiviteter
      * @param source
      *            se.inera.certificate.modules.rli.model.internal.Undersokning
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     private void buildAktiviteterGravid(List<Aktivitet> aktiviteter, Undersokning source) throws ConverterException {
         /** Create first Aktivitet */
@@ -177,7 +178,7 @@ public class InternalToExternalConverter {
      *            ArrayList of Aktiviteter
      * @param source
      *            se.inera.certificate.modules.rli.model.internal.Undersokning
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     private void buildAktivitetSjuk(List<Aktivitet> aktiviteter, Undersokning source) throws ConverterException {
         Aktivitet akt = new Aktivitet();
@@ -216,7 +217,7 @@ public class InternalToExternalConverter {
         case AV_PATIENT:
             return CodeConverter.toKod(UtforarrollKod.AV_PATIENT);
         }
-        
+
         throw new ConverterException("Unknown komplikation: " + kS);
     }
 
@@ -282,7 +283,8 @@ public class InternalToExternalConverter {
     Arrangemang convertArrangemang(se.inera.certificate.modules.rli.model.internal.wc.Arrangemang source) {
         Arrangemang arr = new Arrangemang();
 
-        arr.setArrangemangstid(PartialConverter.toPartialInterval(source.getArrangemangsdatum(), source.getArrangemangslutdatum()));
+        arr.setArrangemangstid(PartialConverter.toPartialInterval(source.getArrangemangsdatum(),
+                source.getArrangemangslutdatum()));
         arr.setArrangemangstyp(CodeConverter.toKod(source.getArrangemangstyp()));
         arr.setAvbestallningsdatum(PartialConverter.stringToPartial(source.getAvbestallningsdatum()));
         arr.setBokningsdatum(PartialConverter.stringToPartial(source.getBokningsdatum()));

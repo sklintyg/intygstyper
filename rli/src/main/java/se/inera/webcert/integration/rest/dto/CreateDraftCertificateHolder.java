@@ -8,9 +8,9 @@ public class CreateDraftCertificateHolder {
     private String certificateType;
 
     private HosPersonal skapadAv;
-    
+
     private Patient patientInfo;
-    
+
     private Object somethingOnlyWebcertKnowsAbout;
 
     public String getCertificateType() {

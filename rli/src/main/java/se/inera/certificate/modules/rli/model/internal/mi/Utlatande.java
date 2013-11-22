@@ -25,7 +25,7 @@ import org.joda.time.LocalDateTime;
 public class Utlatande {
 
     private String utlatandeid;
-    
+
     private String typAvUtlatande;
 
     private List<String> kommentarer;

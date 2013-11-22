@@ -3,26 +3,26 @@
  */
 package se.inera.certificate.modules.rli.model.internal.mi;
 
-
 /**
  * @author erik
- *
+ * 
  */
 public class Utforare {
     private String utforartyp;
     private HoSPersonal antasAv;
-    
-    public Utforare(){
-        
+
+    public Utforare() {
+
     }
-    
+
     public String getUtforartyp() {
         return utforartyp;
     }
+
     public void setUtforartyp(String utforartyp) {
         this.utforartyp = utforartyp;
     }
-    
+
     public HoSPersonal getAntasAv() {
         return antasAv;
     }
@@ -30,5 +30,5 @@ public class Utforare {
     public void setAntasAv(HoSPersonal antasAv) {
         this.antasAv = antasAv;
     }
-    
+
 }

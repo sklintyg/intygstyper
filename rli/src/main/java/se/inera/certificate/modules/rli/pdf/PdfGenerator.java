@@ -98,8 +98,8 @@ public class PdfGenerator {
      * Method for filling out the fields of a pdf with data from the RLI-internal model
      * 
      * @param utlatande
-     *            {@link se.inera.certificate.modules.rli.model.internal.mi.Utlatande} containing data for populating the
-     *            pdf
+     *            {@link se.inera.certificate.modules.rli.model.internal.mi.Utlatande} containing data for populating
+     *            the pdf
      * @param fields
      *            The fields of the pdf
      * @throws DocumentException

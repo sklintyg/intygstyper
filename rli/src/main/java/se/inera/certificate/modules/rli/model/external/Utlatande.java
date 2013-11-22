@@ -54,7 +54,7 @@ public class Utlatande {
     private LocalDateTime signeringsdatum;
 
     private LocalDateTime skickatdatum;
-    
+
     private Patient patient;
 
     private HosPersonal skapadAv;
