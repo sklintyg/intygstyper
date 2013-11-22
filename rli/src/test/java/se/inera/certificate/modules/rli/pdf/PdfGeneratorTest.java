@@ -13,17 +13,17 @@ import org.junit.Test;
 import se.inera.certificate.modules.rli.model.codes.ArrangemangsKod;
 import se.inera.certificate.modules.rli.model.codes.RekommendationsKod;
 import se.inera.certificate.modules.rli.model.codes.SjukdomskannedomKod;
-import se.inera.certificate.modules.rli.model.internal.Arrangemang;
-import se.inera.certificate.modules.rli.model.internal.Graviditet;
-import se.inera.certificate.modules.rli.model.internal.HoSPersonal;
-import se.inera.certificate.modules.rli.model.internal.KomplikationStyrkt;
-import se.inera.certificate.modules.rli.model.internal.OrsakAvbokning;
-import se.inera.certificate.modules.rli.model.internal.Patient;
-import se.inera.certificate.modules.rli.model.internal.Rekommendation;
-import se.inera.certificate.modules.rli.model.internal.Undersokning;
-import se.inera.certificate.modules.rli.model.internal.Utlatande;
-import se.inera.certificate.modules.rli.model.internal.Vardenhet;
-import se.inera.certificate.modules.rli.model.internal.Vardgivare;
+import se.inera.certificate.modules.rli.model.internal.mi.Arrangemang;
+import se.inera.certificate.modules.rli.model.internal.mi.Graviditet;
+import se.inera.certificate.modules.rli.model.internal.mi.HoSPersonal;
+import se.inera.certificate.modules.rli.model.internal.mi.KomplikationStyrkt;
+import se.inera.certificate.modules.rli.model.internal.mi.OrsakAvbokning;
+import se.inera.certificate.modules.rli.model.internal.mi.Patient;
+import se.inera.certificate.modules.rli.model.internal.mi.Rekommendation;
+import se.inera.certificate.modules.rli.model.internal.mi.Undersokning;
+import se.inera.certificate.modules.rli.model.internal.mi.Utlatande;
+import se.inera.certificate.modules.rli.model.internal.mi.Vardenhet;
+import se.inera.certificate.modules.rli.model.internal.mi.Vardgivare;
 
 import com.itextpdf.text.DocumentException;
 

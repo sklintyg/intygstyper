@@ -132,7 +132,7 @@ public class RliModuleApiTest {
     @Test(expected = ServiceUnavailableException.class)
     public void testConvertInternalToExternal() throws Exception {
         // TODO: Change test when service is implemented
-        rliModule.convertInternalToExternal(new se.inera.certificate.modules.rli.model.internal.Utlatande());
+        rliModule.convertInternalToExternal(new se.inera.certificate.modules.rli.model.internal.mi.Utlatande());
     }
 
     private void assertResponseStatus(Status status) {

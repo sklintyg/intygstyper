@@ -82,7 +82,7 @@ public interface RliModuleApi {
     @Path("/internal")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    se.inera.certificate.modules.rli.model.internal.Utlatande convertExternalToInternal(
+    se.inera.certificate.modules.rli.model.internal.mi.Utlatande convertExternalToInternal(
             CertificateContentHolder certificateContentHolder);
 
     /**
@@ -97,8 +97,8 @@ public interface RliModuleApi {
     @Path("/external")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    se.inera.certificate.modules.rli.model.internal.Utlatande convertInternalToExternal(
-            se.inera.certificate.modules.rli.model.internal.Utlatande internalModel);
+    se.inera.certificate.modules.rli.model.internal.mi.Utlatande convertInternalToExternal(
+            se.inera.certificate.modules.rli.model.internal.mi.Utlatande internalModel);
 
     /**
      * Creates a new editable model for use in WebCert. The model is pre populated using data contained in the
@@ -111,7 +111,7 @@ public interface RliModuleApi {
     @Path("/new")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    se.inera.certificate.modules.rli.model.edit.Utlatande createNewInternal(
+    se.inera.certificate.modules.rli.model.internal.wc.Utlatande createNewInternal(
             CreateNewDraftCertificateHolder draftCertificateHolder);
 
 }

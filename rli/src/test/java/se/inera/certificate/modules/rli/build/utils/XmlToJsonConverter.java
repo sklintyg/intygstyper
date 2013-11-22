@@ -9,9 +9,8 @@ import javax.xml.bind.JAXB;
 import org.apache.commons.io.FilenameUtils;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.modules.rli.model.converters.ConverterException;
-import se.inera.certificate.modules.rli.model.converters.TransportToExternalConverter;
-import se.inera.certificate.modules.rli.model.converters.TransportToExternalConverter;
+import se.inera.certificate.modules.rli.model.converter.ConverterException;
+import se.inera.certificate.modules.rli.model.converter.TransportToExternalConverter;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
 
 /**
