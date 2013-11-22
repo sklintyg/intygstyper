@@ -34,11 +34,11 @@ public class PdfGenerator {
     // Special field only set when patient is pregnant
     private static final String BABY_DUE_DATE = "Barnet_beraknas_fodas";
 
-    private static final String SJK1 = "SJK1";
+    // private static final String SJK1 = "SJK1";
     private static final String SJK2 = "SJK2";
     private static final String SJK3 = "SJK3";
     private static final String SJK4 = "SJK4";
-    private static final String SJK5 = "SJK5";
+    // private static final String SJK5 = "SJK5";
 
     private static final String CONFIRMED_BY_DR = "Forsta_undersokning_lakare_intygar_check";
 
@@ -66,14 +66,12 @@ public class PdfGenerator {
     private static final String DATEFORMAT_FOR_FILENAMES = "yyMMdd";
     private static final String DATE_FORMAT = "yyyy-MM-dd";
 
-    public PdfGenerator() {
-
-    }
-
     public String generatePdfFilename(Utlatande utlatande) {
-        return String
-                .format("lakarutlatande_%s_%s-%s.pdf", utlatande.getPatient().getPersonid(), utlatande.getArrangemang()
-                        .getBokningsdatum(), utlatande.getSigneringsdatum().toString(DATEFORMAT_FOR_FILENAMES));
+        String personId = utlatande.getPatient().getPersonid();
+        String dateOfReservation = utlatande.getArrangemang().getBokningsdatum();
+        String certificateSignatureDate = utlatande.getSigneringsdatum().toString(DATEFORMAT_FOR_FILENAMES);
+
+        return String.format("lakarutlatande_%s_%s-%s.pdf", personId, dateOfReservation, certificateSignatureDate);
     }
 
     public byte[] generatePDF(Utlatande utlatande) throws PdfGeneratorException {

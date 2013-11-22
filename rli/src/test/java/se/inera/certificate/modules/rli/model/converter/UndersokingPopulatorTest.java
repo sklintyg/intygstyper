@@ -13,7 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import se.inera.certificate.model.Id;
-import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.Vardenhet;

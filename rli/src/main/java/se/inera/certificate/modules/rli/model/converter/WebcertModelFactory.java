@@ -2,8 +2,6 @@ package se.inera.certificate.modules.rli.model.converter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.modules.rli.model.internal.wc.HoSPersonal;
@@ -21,8 +19,6 @@ import se.inera.certificate.modules.rli.rest.dto.CreateNewDraftCertificateHolder
  * 
  */
 public class WebcertModelFactory {
-
-    private static final Logger LOG = LoggerFactory.getLogger(WebcertModelFactory.class);
 
     public Utlatande createNewWebcertDraft(CreateNewDraftCertificateHolder newDraftData) throws ConverterException {
 
