@@ -49,9 +49,8 @@
      **/
     var MODULE_CONFIG = {
         MI_COMMON_API_CONTEXT_PATH : '/moduleapi/certificate/',
-        MODULE_CONTEXT_PATH : '<c:out value="${pageContext.request.contextPath}"/>',
-        CERT_ID_PARAMETER : '<c:out value="${id}"/>',
-        PROXY_PREFIX : '/m/fk7263'
+        MODULE_CONTEXT_PATH : '/m/fk7263',
+        CERT_ID_PARAMETER : '<c:out value="${id}"/>'
     }
 </script>
 </head>

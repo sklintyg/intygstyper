@@ -47,10 +47,9 @@
      **/
     var MODULE_CONFIG = {
         MI_COMMON_API_CONTEXT_PATH : '/moduleapi/certificate/',
-        MODULE_CONTEXT_PATH : '<c:out value="${pageContext.request.contextPath}"/>',
+        MODULE_CONTEXT_PATH : '/m/fk7263',
         CERT_ID_PARAMETER : '<c:out value="${id}"/>',
-        PRINCIPAL_NAME : '<%=request.getHeader("X-Username")%>', // How do we get the username? cookie?
-        PROXY_PREFIX : '/m/fk7263' //maybe from serverside config?
+        PRINCIPAL_NAME : '<%=request.getHeader("X-Username")%>'
     }
 </script>
 </head>
