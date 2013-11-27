@@ -273,11 +273,15 @@
       <div ng-show="!widgetState.activeErrorMessageKey">
         <div class="control-group buttonbar">
           <label class="control-label">{{cert.patientNamn}} - {{cert.patientPersonnummer}}</label>
-          <button class="btn btn-info">Kopiera intyg</button>
-          <button class="btn btn-info">
-            Skriv ut <span class="caret"></span>
-          </button>
-          <button class="btn btn-inverse">Rätta intyg</button>
+          <form id="view-as-pdf" action="/moduleapi/intyg/{{cert.id}}/pdf" method="get" target="_blank">
+              <p class="btn-row">
+                <!--<button class="btn btn-info">Kopiera intyg</button>-->
+                <button id="downloadprint" type="submit" class="btn btn-info">
+                  Skriv ut
+                </button>
+                <!--<button class="btn btn-inverse">Rätta intyg</button>-->
+              </p>
+            </form>
         </div>
 
         <div class="alert alert-info" style="margin-right: 20px; max-width: 530px;">
