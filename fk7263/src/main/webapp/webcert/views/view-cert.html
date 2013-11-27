@@ -74,7 +74,7 @@
                 <div class="qa-panel" id="qaunhandled-{{qa.internReferens}}" ng-show="!qa.proxyMessage" ng-animate="'collapse'">
 
                   <!--  status header -->
-                  <button class="btn btn-info pull-right" title="Skicka e-post med en länk till detta intyg för att informera den som ska hantera frågan/svaret" ng-click="openMailDialog(qa)">
+                  <button class="btn btn-info pull-right" title="Skicka ett mejl med direktlänk till denna fråga för att till exempel meddela ansvarig läkare att åtgärd behöver vidtas." ng-click="openMailDialog(qa)">
                     <img src="/img/mail.png">
                   </button>
 
@@ -146,7 +146,8 @@
                           id="sendAnswerBtn-{{qa.internReferens}}">
                           <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Skicka svar
                         </button>
-                        <button class="btn btn-secondary" ng-click="updateAsHandled(qa)" id="markAsHandledFkOriginBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress">
+                        <button class="btn btn-secondary" ng-click="updateAsHandled(qa)" id="markAsHandledFkOriginBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress"
+                          title="Om du markerar frågan som hanterad kommer den inte längre visas som ohanterad på enhetens översikt över obehandlade frågor.">
                           <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera som hanterad
                         </button>
                       </div>
@@ -159,7 +160,8 @@
                       <span message key="error.{{qa.activeErrorMessageKey}}"></span>
                     </div>
                     <div class="controls">
-                      <button class="btn btn-secondary" ng-click="updateAsHandled(qa)" id="markAsHandledWcOriginBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress">
+                      <button class="btn btn-secondary" ng-click="updateAsHandled(qa)" id="markAsHandledWcOriginBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress"
+                        title="Om du markerar frågan som hanterad kommer den inte längre visas som ohanterad på enhetens översikt över obehandlade frågor.">
                         <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera som hanterad
                       </button>
                     </div>
