@@ -11,7 +11,7 @@
           
           <div ng-if="widgetState.sentMessage">
             <div alert type="'info'" close="dismissProxy()">
-	            <h3>Frågan skickad till Försäkringskassan</h3>
+	            <strong>Frågan skickad till Försäkringskassan</strong><br>
 	            Vårdenheten får ett mejl när svar har inkommit.
             </div>
           </div>
@@ -21,7 +21,7 @@
               <button class="btn btn-success" ng-click="toggleQuestionForm()" id="askQuestionBtn">Ny fråga till Försäkringskassan</button>
             </div>
           </div>
-          <div ng-if="!certProperties.sentToFK && (qaList.length<1)" class="alert alert-info">Intyget har inte skickats till försäkringskassan. Frågor kan därför ej ställas för intyget.</div>
+          <div ng-if="!certProperties.sentToFK && (qaList.length<1)" class="alert alert-info"><strong>Intyget har inte skickats till försäkringskassan</strong><br> Frågor kan därför ej ställas för intyget.</div>
 
           <div ng-show="widgetState.newQuestionOpen">
             <div class="control-group" id="newQuestionForm">
