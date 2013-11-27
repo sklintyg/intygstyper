@@ -129,7 +129,8 @@ angular
                             $scope.widgetState = {
                                 doneLoading : false,
                                 activeErrorMessageKey : null,
-                                newQuestionOpen : false
+                                newQuestionOpen : false,
+                                sentMessage : false
                             }
 
                             // Request loading of QA's for this certificate
@@ -177,11 +178,12 @@ angular
                             $scope.closedIssuesFilter = function(qa) {
                                 return qa.status === "CLOSED";
                             };
-                            $scope.newQuestionOpen = false;
 
                             $scope.toggleQuestionForm = function() {
                                 $scope.widgetState.newQuestionOpen = !$scope.widgetState.newQuestionOpen;
                                 $scope.initQuestionForm();
+                                // hide sent message
+                                $scope.widgetState.sentMessage = false;
                             }
 
                             /**
@@ -209,7 +211,8 @@ angular
                                             $scope.activeQA = result.internReferens;
                                             // close question form
                                             $scope.toggleQuestionForm();
-
+                                            // show sent message
+                                            $scope.widgetState.sentMessage = true;
                                         }
                                     }, function(errorData) {
                                         // show error view
@@ -219,6 +222,12 @@ angular
                             }
 
                             $scope.dismissProxy = function(qa) {
+                            	
+                            		if(qa == undefined){
+                            			$scope.widgetState.sentMessage = false;
+                            			return;
+                            		}
+                            	
                                 for ( var i = 0; i < $scope.qaList.length; i++) {
                                     if (qa === $scope.qaList[i]) {
                                         $scope.qaList.splice(i, 1);
