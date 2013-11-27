@@ -39,6 +39,8 @@ import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
+import se.inera.certificate.modules.rli.model.codes.ArrangemangsKod;
+import se.inera.certificate.modules.rli.model.codes.CodeConverter;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
 import se.inera.certificate.modules.rli.model.internal.mi.HoSPersonal;
@@ -144,7 +146,7 @@ public class ExternalToInternalConverterTest {
     private Arrangemang buildArrangemang() {
 
         Arrangemang arr = new Arrangemang();
-        arr.setArrangemangstyp(new Kod("420008001"));
+        arr.setArrangemangstyp(CodeConverter.toKod(ArrangemangsKod.RESA));
         arr.setBokningsreferens("1234567-890");
         arr.setPlats("Långtbortistan");
         arr.setBokningsdatum(TestUtils.constructPartial(2013, 8, 6));

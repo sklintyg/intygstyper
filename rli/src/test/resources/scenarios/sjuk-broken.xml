@@ -24,7 +24,7 @@
 
   <utlatande-id root="???" extension="d53c377e-4103-47f5-9f90-5e1bbd874466" />
   <typAvUtlatande code="RLI"
-    codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b" />
+    codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b" codeSystemName="kv_utlåtandetyp_intyg" />
   
   <kommentar>En ytterligare upplysning</kommentar>  
       
@@ -33,12 +33,12 @@
 
 
   <skapadAv>
-    <personal-id root="1.2.752.129.2.1.4.1" extension="19101010-1010" />
+    <personal-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-ABC123"/>
     <fullstandigtNamn>Doktor Alban</fullstandigtNamn>
     <forskrivarkod>ABC123</forskrivarkod>
 
     <enhet>
-      <enhets-id root="1.2.752.129.2.1.4.1" extension="vardenhet_test" />
+      <enhets-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-1337"/>
       <enhetsnamn>Testenheten</enhetsnamn>
       <postadress>Teststigen 12</postadress>
       <postnummer>12345</postnummer>
@@ -47,14 +47,14 @@
       <epost>ingen@alls.se</epost>
       <vardgivare>
         <vardgivare-id root="1.2.752.129.2.1.4.1"
-          extension="vardgivare_test" />
+          extension="SE0000000000-h4xx" />
         <vardgivarnamn>Testvårdgivaren</vardgivarnamn>
       </vardgivare>
     </enhet>
   </skapadAv>
 
   <aktivitet>
-    <aktivitetskod code="AKT13" codeSystem="1.2.752.116.1.3.2.1.4"
+    <aktivitetskod code="AKT13" codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a"
       codeSystemName="kv_aktiviteter_intyg" />
     
     <plats>Vårdcentralen västernorrland</plats>
@@ -70,7 +70,7 @@
       codeSystemName="KVÅ" />
 
     <utforsVidEnhet>
-      <enhets-id root="1.2.752.129.2.1.4.1" extension="vardenhet_test" />
+      <enhets-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-1337"/>
       <enhetsnamn>Testenheten</enhetsnamn>
       <postadress>Teststigen 12</postadress>
       <postnummer>12345</postnummer>
@@ -79,7 +79,7 @@
       <epost>ingen@alls.se</epost>
       <vardgivare>
         <vardgivare-id root="1.2.752.129.2.1.4.1"
-          extension="vardgivare_test" />
+          extension="SE0000000000-h4xx" />
         <vardgivarnamn>Testvårdgivaren</vardgivarnamn>
       </vardgivare>
     </utforsVidEnhet>

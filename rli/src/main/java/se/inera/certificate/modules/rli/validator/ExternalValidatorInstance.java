@@ -78,7 +78,6 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * 
      * Validates that required attributes connected with the actual class Utlatande are present
      */
     private void validateUtlatande(Utlatande utlatande) {
@@ -88,7 +87,6 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * 
      * Validates Arrangemang in Utlatande First makes sure Arrangemang is not null, if so, the required attributes are
      * validated in turn and any errors are added to validation error list
      */
@@ -137,7 +135,6 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * 
      * Make sure Utlatande contains 1..* Observation
      */
     private void validateObservationer(List<Observation> observationer) {
@@ -147,12 +144,16 @@ public class ExternalValidatorInstance {
         }
 
         for (Observation observation : observationer) {
-            assertKodInEnum(observation.getObservationskod(), ObservationsKod.class, "observation.observationskod");
+            String entity = "observation" + getDisplayCode(observation.getObservationskod());
+
+            assertKodInEnum(observation.getObservationskod(), ObservationsKod.class, entity + ".observationskod");
             if (ObservationsKod.GRAVIDITET.matches(observation.getObservationskod())) {
-                assertNotNull(observation.getObservationsperiod(), "observation.observationsperiod");
+                assertNotNull(observation.getObservationsperiod(), entity + ".observationsperiod");
             }
 
-            validateUtforsAv(observation.getUtforsAv(), "observation");
+            if (observation.getUtforsAv() != null) {
+                validateUtforsAv(observation.getUtforsAv(), entity);
+            }
         }
 
     }
@@ -164,7 +165,6 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * 
      * Validate Aktiviteter,
      */
     private void validateAktiviteter(List<Aktivitet> aktiviteter) {
@@ -177,17 +177,18 @@ public class ExternalValidatorInstance {
         }
 
         for (Aktivitet aktivitet : aktiviteter) {
-            assertKodInEnum(aktivitet.getAktivitetskod(), AktivitetsKod.class, "aktivitet.aktivitetskod");
+            String entity = "aktivitet" + getDisplayCode(aktivitet.getAktivitetskod());
+            assertKodInEnum(aktivitet.getAktivitetskod(), AktivitetsKod.class, entity + ".aktivitetskod");
 
             /** Make sure Aktivitet of type KLINISK_UNDERSOKNING contains utforsVid */
             if (AktivitetsKod.KLINISK_UNDERSOKNING.matches(aktivitet.getAktivitetskod())) {
-                assertNotNull(aktivitet.getAktivitetstid(), "aktivitet.aktivitetstid");
-                assertNotNull(aktivitet.getUtforsVid(), "aktivitet.utforsVid");
+                assertNotNull(aktivitet.getAktivitetstid(), entity + ".aktivitetstid");
+                assertNotNull(aktivitet.getUtforsVid(), entity + ".utforsVid");
             }
             /** Make sure Aktivitet of type FORSTA_UNDERSOKNING contains Plats */
             if (AktivitetsKod.FORSTA_UNDERSOKNING.matches(aktivitet.getAktivitetskod())) {
-                assertNotNull(aktivitet.getAktivitetstid(), "aktivitet.aktivitetstid");
-                assertNotNull(aktivitet.getPlats(), "aktivitet.plats");
+                assertNotNull(aktivitet.getAktivitetstid(), entity + ".aktivitetstid");
+                assertNotNull(aktivitet.getPlats(), entity + ".plats");
             }
 
         }
@@ -224,6 +225,14 @@ public class ExternalValidatorInstance {
         assertNotEmpty(patient.getPostort(), "patient.postort");
     }
 
+    private String getDisplayCode(Kod kod) {
+        if (kod == null || kod.getCode() == null) {
+            return "[?]";
+        }
+
+        return "[" + kod.getCode() + "]";
+    }
+
     private void validationError(String error) {
         validationErrors.add(error);
     }
@@ -250,7 +259,7 @@ public class ExternalValidatorInstance {
                 CodeConverter.fromCode(kod, expectedEnum);
                 return AssertionResult.SUCCESS;
             } catch (Exception e) {
-                validationError("Kod " + element + " was unknown");
+                validationError(String.format("Kod '%s' in %s was unknown", kod.getCode(), element));
             }
         }
         return AssertionResult.FAILURE;

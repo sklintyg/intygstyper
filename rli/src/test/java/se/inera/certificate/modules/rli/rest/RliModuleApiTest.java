@@ -22,6 +22,7 @@ import java.io.IOException;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ServiceUnavailableException;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.JAXB;
@@ -151,6 +152,52 @@ public class RliModuleApiTest {
     public void testConvertInternalToExternal() throws Exception {
         // TODO: Change test when service is implemented
         rliModule.convertInternalToExternal(new se.inera.certificate.modules.rli.model.internal.mi.Utlatande());
+    }
+
+    @Test
+    public void testRegisterCertificateRoudtrip() throws Exception {
+        se.inera.certificate.modules.rli.model.external.Utlatande utlatande;
+        try {
+            /* Sjuk scenarios */
+            {
+                utlatande = rliModule.unmarshall(getXmlResource("scenarios/sjuk-1.xml"));
+                rliModule.validate(utlatande);
+            }
+            {
+                utlatande = rliModule.unmarshall(getXmlResource("scenarios/sjuk-2.xml"));
+                rliModule.validate(utlatande);
+            }
+            {
+                utlatande = rliModule.unmarshall(getXmlResource("scenarios/sjuk-3.xml"));
+                rliModule.validate(utlatande);
+            }
+            {
+                utlatande = rliModule.unmarshall(getXmlResource("scenarios/sjuk-4.xml"));
+                rliModule.validate(utlatande);
+            }
+
+            /* Gravid scenarios */
+            {
+                utlatande = rliModule.unmarshall(getXmlResource("scenarios/gravid-1.xml"));
+                rliModule.validate(utlatande);
+            }
+            {
+                utlatande = rliModule.unmarshall(getXmlResource("scenarios/gravid-2.xml"));
+                rliModule.validate(utlatande);
+            }
+            {
+                utlatande = rliModule.unmarshall(getXmlResource("scenarios/gravid-3.xml"));
+                rliModule.validate(utlatande);
+            }
+            {
+                utlatande = rliModule.unmarshall(getXmlResource("scenarios/gravid-4.xml"));
+                rliModule.validate(utlatande);
+            }
+        } catch (WebApplicationException e) {
+            e.printStackTrace();
+            System.out.println("**** " + e.getResponse().getEntity());
+            Assert.fail();
+        }
     }
 
     private void assertResponseStatus(Status status) {
