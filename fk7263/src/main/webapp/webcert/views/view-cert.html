@@ -8,6 +8,14 @@
         <a class="backlink" href="/web/dashboard#/unhandled-qa"><span message key="common.goback"></span></a>
         <h1>Fråga &amp; Svar</h1>
         <div wc-spinner label="info.loading.existing.qa" show-spinner="!widgetState.doneLoading" show-content="widgetState.doneLoading">
+          
+          <div ng-if="widgetState.sentMessage">
+            <div alert type="'info'" close="dismissProxy()">
+	            <h3>Frågan skickad till Försäkringskassan</h3>
+	            Vårdenheten får ett mejl när svar har inkommit.
+            </div>
+          </div>
+          
           <div ng-show="!widgetState.newQuestionOpen && (certProperties.sentToFK || qaList.length>0)">
             <div class="control-group">
               <button class="btn btn-success" ng-click="toggleQuestionForm()" id="askQuestionBtn">Ny fråga till Försäkringskassan</button>
