@@ -1,9 +1,25 @@
+/**
+ * Copyright (C) 2013 Inera AB (http://www.inera.se)
+ *
+ * This file is part of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules).
+ *
+ * Inera Certificate Modules is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Inera Certificate Modules is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.certificate.modules.rli.model.converter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.modules.rli.model.internal.wc.HoSPersonal;
@@ -22,8 +38,6 @@ import se.inera.certificate.modules.rli.rest.dto.CreateNewDraftCertificateHolder
  */
 public class WebcertModelFactory {
 
-    private static final Logger LOG = LoggerFactory.getLogger(WebcertModelFactory.class);
-
     public Utlatande createNewWebcertDraft(CreateNewDraftCertificateHolder newDraftData) throws ConverterException {
 
         Utlatande utlatande = new Utlatande();
@@ -41,11 +55,11 @@ public class WebcertModelFactory {
 
     private void populateWithPatientInfo(Utlatande utlatande, se.inera.certificate.model.Patient patient)
             throws ConverterException {
-        
+
         if (patient == null) {
             throw new ConverterException("Got null while trying to populateWithPatientInfo");
         }
-        
+
         utlatande.setPatient(convertPatientToEdit(patient));
     }
 
@@ -58,7 +72,7 @@ public class WebcertModelFactory {
         patient.setPostadress(patientInfo.getPostadress());
         patient.setPostnummer(patientInfo.getPostnummer());
         patient.setPostort(patientInfo.getPostort());
-        
+
         return patient;
     }
 

@@ -29,9 +29,9 @@ public class Patient {
     private String efternamn;
 
     private String postadress;
-    
+
     private String postnummer;
-    
+
     private String postort;
 
     public Patient() {

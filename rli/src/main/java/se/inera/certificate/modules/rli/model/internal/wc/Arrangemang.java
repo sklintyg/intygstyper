@@ -29,7 +29,7 @@ public class Arrangemang {
     private String plats;
 
     private String arrangemangsdatum;
-    
+
     private String arrangemangslutdatum;
 
     private ArrangemangsKod arrangemangstyp;

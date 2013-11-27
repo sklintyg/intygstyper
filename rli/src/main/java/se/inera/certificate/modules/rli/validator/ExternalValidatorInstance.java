@@ -1,3 +1,21 @@
+/**
+ * Copyright (C) 2013 Inera AB (http://www.inera.se)
+ *
+ * This file is part of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules).
+ *
+ * Inera Certificate Modules is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Inera Certificate Modules is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.certificate.modules.rli.validator;
 
 import java.util.ArrayList;
@@ -75,7 +93,7 @@ public class ExternalValidatorInstance {
      * validated in turn and any errors are added to validation error list
      */
     private void validateArrangemang(Arrangemang arrangemang) {
-        if (assertNotNull(arrangemang, "arrangemang")) {
+        if (assertNotNull(arrangemang, "arrangemang").failed()) {
             return;
         }
 
@@ -86,7 +104,7 @@ public class ExternalValidatorInstance {
     }
 
     private void validateHosPersonal(HosPersonal skapatAv, String elementPrefix) {
-        if (assertNotNull(skapatAv, elementPrefix)) {
+        if (assertNotNull(skapatAv, elementPrefix).failed()) {
             return;
         }
 
@@ -103,14 +121,14 @@ public class ExternalValidatorInstance {
     }
 
     private void validateVardenhet(Vardenhet vardenhet, String elementPrefix) {
-        if (assertNotNull(vardenhet, elementPrefix + ".vardenhet")) {
+        if (assertNotNull(vardenhet, elementPrefix + ".vardenhet").failed()) {
             return;
         }
 
         assertValidHsaId(vardenhet.getId(), elementPrefix + ".vardenhet.id");
         assertNotEmpty(vardenhet.getNamn(), elementPrefix + ".vardenhet.namn");
 
-        if (assertNotNull(vardenhet.getVardgivare(), elementPrefix + ".vardenhet.vardgivare")) {
+        if (assertNotNull(vardenhet.getVardgivare(), elementPrefix + ".vardenhet.vardgivare").failed()) {
             return;
         }
 
@@ -171,7 +189,7 @@ public class ExternalValidatorInstance {
                 assertNotNull(aktivitet.getAktivitetstid(), "aktivitet.aktivitetstid");
                 assertNotNull(aktivitet.getPlats(), "aktivitet.plats");
             }
-            
+
         }
 
     }
@@ -190,7 +208,7 @@ public class ExternalValidatorInstance {
      * Make sure Utlatande contains 1 Patient
      */
     private void validatePatient(Patient patient) {
-        if (assertNotNull(patient, "patient")) {
+        if (assertNotNull(patient, "patient").failed()) {
             return;
         }
 
@@ -210,46 +228,72 @@ public class ExternalValidatorInstance {
         validationErrors.add(error);
     }
 
-    private boolean assertNotNull(Object value, String element) {
+    private AssertionResult assertNotNull(Object value, String element) {
         if (value == null) {
             validationError(element + " was not found");
-            return true;
+            return AssertionResult.FAILURE;
         }
-        return false;
+        return AssertionResult.SUCCESS;
     }
 
-    private boolean assertNotEmpty(String value, String element) {
+    private AssertionResult assertNotEmpty(String value, String element) {
         if (value == null || value.isEmpty()) {
             validationError(element + " was empty");
-            return true;
+            return AssertionResult.FAILURE;
         }
-        return false;
+        return AssertionResult.SUCCESS;
     }
 
-    private boolean assertKodInEnum(Kod kod, Class<? extends ICodeSystem> expectedEnum, String element) {
-        assertNotNull(kod, element);
-        try {
-            CodeConverter.fromCode(kod, expectedEnum);
-        } catch (Exception e) {
-            validationError("Kod " + element + " was unknown");
-            return true;
+    private AssertionResult assertKodInEnum(Kod kod, Class<? extends ICodeSystem> expectedEnum, String element) {
+        if (assertNotNull(kod, element).success()) {
+            try {
+                CodeConverter.fromCode(kod, expectedEnum);
+                return AssertionResult.SUCCESS;
+            } catch (Exception e) {
+                validationError("Kod " + element + " was unknown");
+            }
         }
-        return false;
+        return AssertionResult.FAILURE;
     }
 
     private void assertValidPersonId(Id id, String element) {
-        assertNotNull(id, element);
-        if (!id.getRoot().equals("1.2.752.129.2.1.3.1") && !id.getRoot().equals("1.2.752.129.2.1.3.3")) {
-            validationError(element + " should be a personnummer or samordningsnummer");
+        if (assertNotNull(id, element).success()) {
+            if (!id.getRoot().equals("1.2.752.129.2.1.3.1") && !id.getRoot().equals("1.2.752.129.2.1.3.3")) {
+                validationError(element + " should be a personnummer or samordningsnummer");
+            }
+            validationErrors.addAll(ID_VALIDATOR.validate(id));
         }
-        validationErrors.addAll(ID_VALIDATOR.validate(id));
     }
 
     private void assertValidHsaId(Id id, String element) {
-        assertNotNull(id, element);
-        if (!id.getRoot().equals(HSpersonalKod.HSA_ID.getCode())) {
-            validationError(element + " should be an HSA-ID with root: " + HSpersonalKod.HSA_ID.getCode());
+        if (assertNotNull(id, element).success()) {
+            if (!id.getRoot().equals(HSpersonalKod.HSA_ID.getCode())) {
+                validationError(element + " should be an HSA-ID with root: " + HSpersonalKod.HSA_ID.getCode());
+            }
+            validationErrors.addAll(ID_VALIDATOR.validate(id));
         }
-        validationErrors.addAll(ID_VALIDATOR.validate(id));
+    }
+
+    /**
+     * Since the validator assertions doesn't throw exceptions on assertion failure, they instead return an assertion
+     * result. This might be used to implement conditional logic based on if an assertion {@link #failed()} or was
+     * {@link #success()}ful.
+     */
+    private static enum AssertionResult {
+        SUCCESS(true), FAILURE(false);
+
+        private AssertionResult(boolean assertSuccessfull) {
+            this.assertSuccessful = assertSuccessfull;
+        }
+
+        private final boolean assertSuccessful;
+
+        public boolean failed() {
+            return !assertSuccessful;
+        }
+
+        public boolean success() {
+            return assertSuccessful;
+        }
     }
 }

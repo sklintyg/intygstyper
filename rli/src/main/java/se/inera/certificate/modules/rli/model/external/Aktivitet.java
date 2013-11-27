@@ -27,11 +27,9 @@ package se.inera.certificate.modules.rli.model.external;
  * 
  * @author Gustav Norbäcker, R2M
  */
-public class Aktivitet extends se.inera.certificate.model.Aktivitet{
-    
-  
+public class Aktivitet extends se.inera.certificate.model.Aktivitet {
+
     private String plats;
-  
 
     public String getPlats() {
         return plats;

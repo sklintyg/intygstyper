@@ -1,3 +1,21 @@
+/**
+ * Copyright (C) 2013 Inera AB (http://www.inera.se)
+ *
+ * This file is part of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules).
+ *
+ * Inera Certificate Modules is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Inera Certificate Modules is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.webcert.integration.rest;
 
 import java.io.IOException;
@@ -29,6 +47,7 @@ public interface WebCertModuleDraftApi {
 
     /**
      * Returns a list of all certificates
+     * 
      * @return a JSON object
      */
     @GET
@@ -42,15 +61,16 @@ public interface WebCertModuleDraftApi {
      * @param draftInfo
      *            The type of draft certificate to produce etc
      * @return The draft certificate as a JSON object
-     * @throws IOException 
-     * @throws JsonMappingException 
-     * @throws JsonParseException 
-     * @throws JAXBException 
+     * @throws IOException
+     * @throws JsonMappingException
+     * @throws JsonParseException
+     * @throws JAXBException
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Object createDraftCertificate(CreateDraftCertificateHolder draftInfo) throws JsonParseException, JsonMappingException, IOException, JAXBException;
+    Object createDraftCertificate(CreateDraftCertificateHolder draftInfo) throws JsonParseException,
+            JsonMappingException, IOException, JAXBException;
 
     /**
      * Returns the draft certificate as JSON identified by the certificateId.

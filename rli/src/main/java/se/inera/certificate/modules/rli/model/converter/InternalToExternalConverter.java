@@ -1,3 +1,21 @@
+/**
+ * Copyright (C) 2013 Inera AB (http://www.inera.se)
+ *
+ * This file is part of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules).
+ *
+ * Inera Certificate Modules is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Inera Certificate Modules is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.certificate.modules.rli.model.converter;
 
 import static se.inera.certificate.modules.rli.model.codes.HSpersonalKod.HSA_ID;
@@ -91,7 +109,8 @@ public class InternalToExternalConverter {
 
             Observation o2 = new Observation();
             o2.setObservationskod(CodeConverter.toKod(ObservationsKod.GRAVIDITET));
-            o2.setObservationsperiod(PartialConverter.toPartialInterval(null, source.getGraviditet().getBeraknatForlossningsdatum()));
+            o2.setObservationsperiod(PartialConverter.toPartialInterval(null, source.getGraviditet()
+                    .getBeraknatForlossningsdatum()));
             o2.setUtforsAv(convertUtforsAv(source.getUtforsAv()));
 
             obs.add(o2);
@@ -132,7 +151,7 @@ public class InternalToExternalConverter {
      *            ArrayList of Aktiviteter
      * @param source
      *            se.inera.certificate.modules.rli.model.internal.Undersokning
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     private void buildAktiviteterGravid(List<Aktivitet> aktiviteter, Undersokning source) throws ConverterException {
         /** Create first Aktivitet */
@@ -177,7 +196,7 @@ public class InternalToExternalConverter {
      *            ArrayList of Aktiviteter
      * @param source
      *            se.inera.certificate.modules.rli.model.internal.Undersokning
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     private void buildAktivitetSjuk(List<Aktivitet> aktiviteter, Undersokning source) throws ConverterException {
         Aktivitet akt = new Aktivitet();
@@ -216,7 +235,7 @@ public class InternalToExternalConverter {
         case AV_PATIENT:
             return CodeConverter.toKod(UtforarrollKod.AV_PATIENT);
         }
-        
+
         throw new ConverterException("Unknown komplikation: " + kS);
     }
 
@@ -282,7 +301,8 @@ public class InternalToExternalConverter {
     Arrangemang convertArrangemang(se.inera.certificate.modules.rli.model.internal.wc.Arrangemang source) {
         Arrangemang arr = new Arrangemang();
 
-        arr.setArrangemangstid(PartialConverter.toPartialInterval(source.getArrangemangsdatum(), source.getArrangemangslutdatum()));
+        arr.setArrangemangstid(PartialConverter.toPartialInterval(source.getArrangemangsdatum(),
+                source.getArrangemangslutdatum()));
         arr.setArrangemangstyp(CodeConverter.toKod(source.getArrangemangstyp()));
         arr.setAvbestallningsdatum(PartialConverter.stringToPartial(source.getAvbestallningsdatum()));
         arr.setBokningsdatum(PartialConverter.stringToPartial(source.getBokningsdatum()));

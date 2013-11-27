@@ -1,3 +1,21 @@
+/**
+ * Copyright (C) 2013 Inera AB (http://www.inera.se)
+ *
+ * This file is part of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules).
+ *
+ * Inera Certificate Modules is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Inera Certificate Modules is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.certificate.modules.rli.pdf;
 
 import java.io.ByteArrayOutputStream;
@@ -34,11 +52,11 @@ public class PdfGenerator {
     // Special field only set when patient is pregnant
     private static final String BABY_DUE_DATE = "Barnet_beraknas_fodas";
 
-    private static final String SJK1 = "SJK1";
+    // private static final String SJK1 = "SJK1";
     private static final String SJK2 = "SJK2";
     private static final String SJK3 = "SJK3";
     private static final String SJK4 = "SJK4";
-    private static final String SJK5 = "SJK5";
+    // private static final String SJK5 = "SJK5";
 
     private static final String CONFIRMED_BY_DR = "Forsta_undersokning_lakare_intygar_check";
 
@@ -66,14 +84,12 @@ public class PdfGenerator {
     private static final String DATEFORMAT_FOR_FILENAMES = "yyMMdd";
     private static final String DATE_FORMAT = "yyyy-MM-dd";
 
-    public PdfGenerator() {
-
-    }
-
     public String generatePdfFilename(Utlatande utlatande) {
-        return String
-                .format("lakarutlatande_%s_%s-%s.pdf", utlatande.getPatient().getPersonid(), utlatande.getArrangemang()
-                        .getBokningsdatum(), utlatande.getSigneringsdatum().toString(DATEFORMAT_FOR_FILENAMES));
+        String personId = utlatande.getPatient().getPersonid();
+        String dateOfReservation = utlatande.getArrangemang().getBokningsdatum();
+        String certificateSignatureDate = utlatande.getSigneringsdatum().toString(DATEFORMAT_FOR_FILENAMES);
+
+        return String.format("lakarutlatande_%s_%s-%s.pdf", personId, dateOfReservation, certificateSignatureDate);
     }
 
     public byte[] generatePDF(Utlatande utlatande) throws PdfGeneratorException {
@@ -100,8 +116,8 @@ public class PdfGenerator {
      * Method for filling out the fields of a pdf with data from the RLI-internal model
      * 
      * @param utlatande
-     *            {@link se.inera.certificate.modules.rli.model.internal.mi.Utlatande} containing data for populating the
-     *            pdf
+     *            {@link se.inera.certificate.modules.rli.model.internal.mi.Utlatande} containing data for populating
+     *            the pdf
      * @param fields
      *            The fields of the pdf
      * @throws DocumentException

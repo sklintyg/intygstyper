@@ -23,9 +23,9 @@ public class Undersokning {
     private OrsakAvbokning orsakForAvbokning;
 
     private Utforare utforsAv;
-    
+
     private Vardenhet utforsVid;
-    
+
     private String forstaUndersokningsdatum;
 
     private String forstaUndersokningsplats;

@@ -26,11 +26,11 @@ import se.inera.certificate.model.Kod;
 public enum ObservationsKod implements ICodeSystem {
 
     /** Sjukdom */
-    SJUKDOM("39104002", "Sjukdom"), 
-    
+    SJUKDOM("39104002", "Sjukdom"),
+
     /** Gravid */
     GRAVIDITET("289908002", "Gravid"),
-    
+
     /** Komplikation vid graviditet */
     KOMPLIKATION_VID_GRAVIDITET("90821003", "Komplikation vid graviditet");
 

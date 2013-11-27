@@ -177,7 +177,8 @@ public class RliModuleService implements RliModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public se.inera.certificate.modules.rli.model.internal.wc.Utlatande createNewInternal(CreateNewDraftCertificateHolder draftCertificateHolder) {
+    public se.inera.certificate.modules.rli.model.internal.wc.Utlatande createNewInternal(
+            CreateNewDraftCertificateHolder draftCertificateHolder) {
         try {
             return webcertModelFactory.createNewWebcertDraft(draftCertificateHolder);
 
