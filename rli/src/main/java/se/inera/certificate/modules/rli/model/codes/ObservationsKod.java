@@ -25,13 +25,13 @@ import se.inera.certificate.model.Kod;
  */
 public enum ObservationsKod implements ICodeSystem {
 
-    /** Sjukdom */
+    /** Sjukdom (39104002) */
     SJUKDOM("39104002", "Sjukdom"),
 
-    /** Gravid */
+    /** Gravid (289908002) */
     GRAVIDITET("289908002", "Gravid"),
 
-    /** Komplikation vid graviditet */
+    /** Komplikation vid graviditet (90821003) */
     KOMPLIKATION_VID_GRAVIDITET("90821003", "Komplikation vid graviditet");
 
     private static String codeSystemName = "SNOMED-CT";

@@ -25,26 +25,26 @@ import se.inera.certificate.model.Kod;
  */
 public enum RekommendationsKod implements ICodeSystem {
 
-    /** Patient rekomenderas inte att resa */
+    /** Patient rekomenderas inte att resa (REK1) */
     REK1("REK1",
             "Patientens tillstånd innebär att resan innebär risk för men. Patienten rekommenderas därför att inte genomföra resan."),
 
-    /** Patient avråds inte från att resa */
+    /** Patient avråds inte från att resa (REK2) */
     REK2(
             "REK2",
             "Patientens tillstånd innebär inte någon ökad risk för men vid resa. Patienten rekommenderas därför inte att avstå från resan."),
 
-    /** Patient behöver speciell omvårndad - rekommenderas inte resa. */
+    /** Patient behöver speciell omvårndad - rekommenderas inte resa. (REK5) */
     REK5(
             "REK5",
             "Patientens tillstånd föranleder speciell omvårdnad. Resenären rekommenderas därför att som närstående ställa in resan och ge denna omvårdnad."),
 
-    /** Patients tillstånd allvarligt - resenär avråds att resa. */
+    /** Patients tillstånd allvarligt - resenär avråds att resa. (REK6) */
     REK6(
             "REK6",
             "Patientens tillstånd är allvarligt. Resenären rekommenderas därför som närstående till patienten att ej genomföra resan."),
 
-    /** Patients tillsånd INTE allvarligt - resenär avråds INTE från att resa. */
+    /** Patients tillsånd INTE allvarligt - resenär avråds INTE från att resa. (REK7) */
     REK7(
             "REK7",
             "Patientens tillstånd är inte så allvarligt att resenären behöver avstå resan. Resenären avrådes därför inte från resan.");
