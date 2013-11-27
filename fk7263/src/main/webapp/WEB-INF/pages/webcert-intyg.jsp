@@ -64,7 +64,7 @@
 	   is-doctor="{{WC_CONTEXT.lakare}}" 
 	   user-name="{{WC_CONTEXT.namn}}"
 	   caregiver-name="{{WC_CONTEXT.vardgivare[0].namn}}" 
-	   default-active="unhandled-qa">
+	   default-active="index"> <!-- v0.5. v1.0: unhandled-qa -->
     </div>
 
 		<noscript>
