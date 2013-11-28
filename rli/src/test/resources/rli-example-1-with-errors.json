@@ -138,8 +138,7 @@
         "bokningsreferens" : "12345678-90",
         "bokningsdatum" : "2013-01-01",
         "arrangemangstid" : {
-            "from" : "2013-07-22",
-            "tom" : "2013-08-02"
+            "from" : "2013-07-22"
         },
         "avbestallningsdatum" : "2013-08",
         "arrangemangstyp" : {

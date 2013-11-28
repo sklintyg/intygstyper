@@ -96,7 +96,10 @@ public class ExternalValidatorInstance {
         }
 
         assertNotNull(arrangemang.getBokningsdatum(), "arrangemang.bokningsdatum");
-        assertNotNull(arrangemang.getArrangemangstid(), "arrangemang.arrangemangstid");
+        if (assertNotNull(arrangemang.getArrangemangstid(), "arrangemang.arrangemangstid").success()) {
+            assertNotNull(arrangemang.getArrangemangstid().getFrom(), "arrangemang.arrangemangstid.from");
+            assertNull(arrangemang.getArrangemangstid().getTom(), "arrangemang.arrangemangstid.tom");
+        }
         assertKodInEnum(arrangemang.getArrangemangstyp(), ArrangemangsKod.class, "arrangemang.arrangemangstyp");
         assertNotEmpty(arrangemang.getPlats(), "plats");
     }
@@ -126,12 +129,10 @@ public class ExternalValidatorInstance {
         assertValidHsaId(vardenhet.getId(), elementPrefix + ".vardenhet.id");
         assertNotEmpty(vardenhet.getNamn(), elementPrefix + ".vardenhet.namn");
 
-        if (assertNotNull(vardenhet.getVardgivare(), elementPrefix + ".vardenhet.vardgivare").failed()) {
-            return;
+        if (assertNotNull(vardenhet.getVardgivare(), elementPrefix + ".vardenhet.vardgivare").success()) {
+            assertValidHsaId(vardenhet.getVardgivare().getId(), elementPrefix + ".vardenhet.vardgivare.id");
+            assertNotEmpty(vardenhet.getVardgivare().getNamn(), elementPrefix + ".vardenhet.vardgivare.namn");
         }
-
-        assertValidHsaId(vardenhet.getVardgivare().getId(), elementPrefix + ".vardenhet.vardgivare.id");
-        assertNotEmpty(vardenhet.getVardgivare().getNamn(), elementPrefix + ".vardenhet.vardgivare.namn");
     }
 
     /**
@@ -148,7 +149,13 @@ public class ExternalValidatorInstance {
 
             assertKodInEnum(observation.getObservationskod(), ObservationsKod.class, entity + ".observationskod");
             if (ObservationsKod.GRAVIDITET.matches(observation.getObservationskod())) {
-                assertNotNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                if (assertNotNull(observation.getObservationsperiod(), entity + ".observationsperiod").success()) {
+                    assertNull(observation.getObservationsperiod().getFrom(), entity + ".observationsperiod.from");
+                    assertNotNull(observation.getObservationsperiod().getTom(), entity + ".observationsperiod.tom");
+                }
+
+            } else {
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
             }
 
             if (observation.getUtforsAv() != null) {
@@ -215,6 +222,9 @@ public class ExternalValidatorInstance {
 
         assertValidPersonId(patient.getId(), "patient.id");
 
+        if (patient.getFornamn().size() < 1) {
+            validationError("patient.fornamn must contain at least one name");
+        }
         for (String fornamn : patient.getFornamn()) {
             assertNotEmpty(fornamn, "patient.fornamn");
         }
@@ -240,6 +250,14 @@ public class ExternalValidatorInstance {
     private AssertionResult assertNotNull(Object value, String element) {
         if (value == null) {
             validationError(element + " was not found");
+            return AssertionResult.FAILURE;
+        }
+        return AssertionResult.SUCCESS;
+    }
+
+    private AssertionResult assertNull(Object value, String element) {
+        if (value != null) {
+            validationError(element + " should not be defined");
             return AssertionResult.FAILURE;
         }
         return AssertionResult.SUCCESS;

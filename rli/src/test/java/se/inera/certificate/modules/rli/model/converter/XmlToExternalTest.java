@@ -126,7 +126,6 @@ public class XmlToExternalTest {
         assertEquals("12345678-90", extUtlatande.getArrangemang().getBokningsreferens());
         assertEquals("2013-01-01", extUtlatande.getArrangemang().getBokningsdatum().toString());
         assertEquals("2013-07-22", extUtlatande.getArrangemang().getArrangemangstid().getFrom().toString());
-        assertEquals("2013-08-02", extUtlatande.getArrangemang().getArrangemangstid().getTom().toString());
         assertEquals("2013-08", extUtlatande.getArrangemang().getAvbestallningsdatum().toString());
         assertEquals("420008001", extUtlatande.getArrangemang().getArrangemangstyp().getCode());
         assertEquals("1.2.752.116.2.1.1.1", extUtlatande.getArrangemang().getArrangemangstyp().getCodeSystem());

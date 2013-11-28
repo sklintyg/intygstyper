@@ -140,8 +140,6 @@
     <rli:bokningsdatum>2013-01-01</rli:bokningsdatum>
     <rli:arrangemangstid>
       <from>2013-07-22</from>
-      <tom>2013-08-02</tom>
-      <!-- Detta fält ska inte fyllas i när det är möjligt med öppna intervall -->
     </rli:arrangemangstid>
     <rli:avbestallningsdatum>2013-08</rli:avbestallningsdatum>
     <!-- displayName="Resa" -->
