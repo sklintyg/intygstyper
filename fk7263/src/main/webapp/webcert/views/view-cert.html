@@ -73,24 +73,30 @@
 
                 <div class="qa-panel" id="qaunhandled-{{qa.internReferens}}" ng-show="!qa.proxyMessage" ng-animate="'collapse'">
 
-                  <!--  status header -->
-                  <button class="btn pull-right"  ng-class="{'btn-info': !qa.vidarebefordrad, 'btn-secondary' : qa.vidarebefordrad}" title="Skicka ett mejl med direktlänk till denna fråga för att till exempel meddela ansvarig läkare att åtgärd behöver vidtas." ng-click="openMailDialog(qa)">
-                    <img ng-if="!qa.vidarebefordrad" src="/img/mail.png">
-                    <img ng-if="qa.vidarebefordrad" src="/img/mail_dark.png">
-                  </button>
-
-                  <div class="status-header">
-                    <h3 class="inline-block">
-                      Ämne: <strong><span message key="qa.amne.{{qa.amne | lowercase}}"></span></strong><span ng-show="qa.meddelandeRubrik"> - {{qa.meddelandeRubrik}}</span>
-                    </h3>
-                    <p>
-                      Åtgärd: <strong><span message key="qa.measure.{{qa.measureResKey}}"></span></strong>
-                    </p>
-                    <div class="form-inline">
-                      <input id="mark-as-forwarded-{{qa.internReferens}}" type="checkbox" ng-disabled="qa.forwardInProgress" ng-model="qa.vidarebefordrad" ng-change="onVidareBefordradChange(qa)" /> <label
-                        for="mark-as-forwarded-{{qa.internReferens}}">Vidarebefordrad</label> <span ng-if="qa.forwardInProgress"> <img src="/img/ajax-loader-kit-16x16.gif">
-                      </span>
-                    </div>
+                  <div class="row-fluid">
+	                  <div class="span9">
+		                  <div class="status-header">
+		                    <h3 class="inline-block">
+		                      Ämne: <strong><span message key="qa.amne.{{qa.amne | lowercase}}"></span></strong><span ng-show="qa.meddelandeRubrik"> - {{qa.meddelandeRubrik}}</span>
+		                    </h3>
+		                    <p>
+		                      Åtgärd: <strong><span message key="qa.measure.{{qa.measureResKey}}"></span></strong>
+		                    </p>
+		                    <div class="form-inline">
+		                      <input id="mark-as-forwarded-{{qa.internReferens}}" type="checkbox" ng-disabled="qa.forwardInProgress" ng-model="qa.vidarebefordrad" ng-change="onVidareBefordradChange(qa)" /> <label
+		                        for="mark-as-forwarded-{{qa.internReferens}}">Vidarebefordrad</label> <span ng-if="qa.forwardInProgress"> <img src="/img/ajax-loader-kit-16x16.gif">
+		                      </span>
+		                    </div>
+		                  </div>
+	                  </div>
+	                  
+	                  <div class="span3">
+		                  <!--  status header -->
+		                  <button class="btn pull-right"  ng-class="{'btn-info': !qa.vidarebefordrad, 'btn-secondary' : qa.vidarebefordrad}" title="Skicka ett mejl med direktlänk till denna fråga för att till exempel meddela ansvarig läkare att åtgärd behöver vidtas." ng-click="openMailDialog(qa)">
+		                    <img ng-if="!qa.vidarebefordrad" src="/img/mail.png">
+		                    <img ng-if="qa.vidarebefordrad" src="/img/mail_dark.png">
+		                  </button>
+	                  </div>
                   </div>
 
                   <!-- Frågan -->
