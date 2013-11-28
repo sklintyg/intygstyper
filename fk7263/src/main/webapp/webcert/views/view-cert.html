@@ -72,7 +72,7 @@
 
                   <div class="status-header">
                     <h3 class="inline-block">
-                      Ämne: <strong><span message key="qa.amne.{{qa.amne | lowercase}}"></span></strong>
+                      Ämne: <strong><span message key="qa.amne.{{qa.amne | lowercase}}"></span></strong><span ng-show="qa.meddelandeRubrik"> - {{qa.meddelandeRubrik}}</span>
                     </h3>
                     <p>
                       Åtgärd: <strong><span message key="qa.measure.{{qa.measureResKey}}"></span></strong>
@@ -92,13 +92,22 @@
                           Från: <span class="qa-sender" ng-switch="qa.frageStallare | lowercase"> <span id="fraga-vard-aktor-namn-{{qa.internReferens}}" ng-switch-when="wc">{{qa.vardAktorNamn}}</span> <span ng-switch-default message
                             key="qa.fragestallare.{{qa.frageStallare | lowercase}}"></span>
                           </span>
+                            <div ng-repeat="kontakt in qa.externaKontakter">
+                                {{kontakt}}
+                            </div>
                         </div>
                         <!-- Fraga fran fk eller wc? -->
                         <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
                           <span ng-switch-when="wc">Skickat: </span> <span ng-switch-default>Mottaget: </span> <span class="qa-date">{{qa.frageSkickadDatum | date:'shortDate'}}</span>
                         </div>
                       </div>
+
                       <div class="qa-block-body">{{qa.frageText}}</div>
+                        <div class="qa-block-body" ng-repeat="komplettering in qa.kompletteringar">
+                            <strong><span >{{komplettering.falt}}</span></strong>
+                            <span>{{komplettering.text}}
+                            </span>
+                        </div>
                     </div>
                   </div>
 
