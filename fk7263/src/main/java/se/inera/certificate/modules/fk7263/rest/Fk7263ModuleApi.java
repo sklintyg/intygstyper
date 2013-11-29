@@ -148,7 +148,7 @@ public class Fk7263ModuleApi {
 
     private String extractCertificateId(Fk7263Utlatande externalModel) {
         if (externalModel != null && externalModel.getId() != null) {
-            return externalModel.getId().getExtension();
+            return externalModel.getId().getRoot();
         }
         return "<not set>";
     }
