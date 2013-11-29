@@ -62,7 +62,8 @@
 	  <div id="wcHeader" wc-header 
 	   is-doctor="{{WC_CONTEXT.lakare}}" 
 	   user-name="{{WC_CONTEXT.namn}}"
-	   caregiver-name="{{WC_CONTEXT.vardgivare[0].namn}}" 
+	   caregiver-name="{{WC_CONTEXT.vardgivare[0].namn}}"
+       careunit-name="{{WC_CONTEXT.vardgivare[0].vardenheter[0].namn}}"
 	   default-active="index"> <!-- v0.5. v1.0: unhandled-qa -->
     </div>
 
