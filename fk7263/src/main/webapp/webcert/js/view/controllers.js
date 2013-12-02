@@ -460,6 +460,16 @@ angular.module('wc.fk7263.controllers').controller('ViewCertCtrl', [ '$scope', '
         }
         return false;
     }
+    var isRevoked = function(statusArr) {
+        if (statusArr) {
+            for ( var i = 0; i < statusArr.length; i++) {
+                if (statusArr[i].type === "CANCELLED") {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     // Load certificate json
     viewCertificateService.getCertificate($scope.MODULE_CONFIG.CERT_ID_PARAMETER, function(result) {
@@ -469,6 +479,7 @@ angular.module('wc.fk7263.controllers').controller('ViewCertCtrl', [ '$scope', '
             $scope.cert = result.certificateContent;
 
             $scope.certProperties.sentToFK = isSentToFK(result.certificateContentMeta.statuses);
+            $scope.certProperties.isRevoked = isRevoked(result.certificateContentMeta.statuses);
         }
     }, function(errorData) {
         // show error view
