@@ -1,0 +1,77 @@
+{
+    "utlatandeid": "d53c377e-4103-47f5-9f90-5e1bbd874466",
+    "typAvUtlatande": "RLI",
+    "signeringsdatum": "2013-08-12T15:57:00.000",
+    "skickatdatum": "2013-08-12T16:01:30.000",
+    "skapadAv": {
+        "personid": "SE0000000000-ABC123",
+        "fullstandigtNamn": "Doktor Alban",
+        "vardenhet": {
+            "enhetsid": "SE0000000000-1337",
+            "enhetsnamn": "Testenheten",
+            "postadress": "Teststigen 12",
+            "postnummer": "12345",
+            "postort": "Tolvberga",
+            "telefonnummer": "012-345678",
+            "epost": "ingen@alls.se",
+            "vardgivare": {
+                "vardgivarid": "SE0000000000-h4xx",
+                "vardgivarnamn": "Testv\u00e5rdgivaren"
+            }
+        }
+    },
+    "patient": {
+        "personid": "19331122-4400",
+        "fullstandigtNamn": "Fr\u00f6ken Fr\u00e4ken",
+        "fornamn": "Fr\u00f6ken",
+        "efternamn": "Fr\u00e4ken",
+        "postadress": "Genv\u00e4gen 1",
+        "postnummer": "150 21",
+        "postort": "M\u00f6lnbo"
+    },
+    "arrangemang": {
+        "bokningsdatum": "2013-01-01",
+        "plats": "New York",
+        "arrangemangsdatum": "2013-07-22",
+        "arrangemangslutdatum": "2013-07-22",
+        "arrangemangstyp": "RESA",
+        "avbestallningsdatum": "2013-08-10"
+    },
+    "undersokning": {
+        "utforsAv": {
+            "utforartyp": "223366009",
+            "antasAv": {
+                "personid": "SE0000000000-DRJEK",
+                "fullstandigtNamn": "Dr Jekyll",
+                "vardenhet": {
+                    "enhetsid": "SE0000000000-f00bar",
+                    "enhetsnamn": "Elixirkliniken, London",
+                    "vardgivare": {
+                        "vardgivarid": "SE0000000000-0xbeefbabe",
+                        "vardgivarnamn": "Testv\u00e5rdgivaren"
+                    }
+                }
+            }
+        },
+        "utforsVid": {
+            "enhetsid": "SE0000000000-1337",
+            "enhetsnamn": "Testenheten",
+            "postadress": "Teststigen 12",
+            "postnummer": "12345",
+            "postort": "Tolvberga",
+            "telefonnummer": "012-345678",
+            "epost": "ingen@alls.se",
+            "vardgivare": {
+                "vardgivarid": "SE0000000000-h4xx",
+                "vardgivarnamn": "Testv\u00e5rdgivaren"
+            }
+        },
+        "undersokningsdatum": "2013-08-12",
+        "undersokningsplats": "Testenheten",
+        "orsakforavbokning": "RESENAR_SJUK"
+    },
+    "rekommendation": {
+        "rekommendationskod": "REK2",
+        "sjukdomskannedom": "SJK1"
+    }
+}

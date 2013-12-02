@@ -61,37 +61,37 @@ public class RliModuleApiTest {
     public void testUnmarshallScenarios() throws Exception {
         /* Sjuk scenarios */
         {
-            rliModule.unmarshall(getXmlResource("scenarios/sjuk-1.xml"));
+            rliModule.unmarshall(getXmlResource("scenarios/transport/sjuk-1.xml"));
             assertResponseStatus(Status.OK);
         }
         {
-            rliModule.unmarshall(getXmlResource("scenarios/sjuk-2.xml"));
+            rliModule.unmarshall(getXmlResource("scenarios/transport/sjuk-2.xml"));
             assertResponseStatus(Status.OK);
         }
         {
-            rliModule.unmarshall(getXmlResource("scenarios/sjuk-3.xml"));
+            rliModule.unmarshall(getXmlResource("scenarios/transport/sjuk-3.xml"));
             assertResponseStatus(Status.OK);
         }
         {
-            rliModule.unmarshall(getXmlResource("scenarios/sjuk-4.xml"));
+            rliModule.unmarshall(getXmlResource("scenarios/transport/sjuk-4.xml"));
             assertResponseStatus(Status.OK);
         }
 
         /* Gravid scenarios */
         {
-            rliModule.unmarshall(getXmlResource("scenarios/gravid-1.xml"));
+            rliModule.unmarshall(getXmlResource("scenarios/transport/gravid-1.xml"));
             assertResponseStatus(Status.OK);
         }
         {
-            rliModule.unmarshall(getXmlResource("scenarios/gravid-2.xml"));
+            rliModule.unmarshall(getXmlResource("scenarios/transport/gravid-2.xml"));
             assertResponseStatus(Status.OK);
         }
         {
-            rliModule.unmarshall(getXmlResource("scenarios/gravid-3.xml"));
+            rliModule.unmarshall(getXmlResource("scenarios/transport/gravid-3.xml"));
             assertResponseStatus(Status.OK);
         }
         {
-            rliModule.unmarshall(getXmlResource("scenarios/gravid-4.xml"));
+            rliModule.unmarshall(getXmlResource("scenarios/transport/gravid-4.xml"));
             assertResponseStatus(Status.OK);
         }
     }
@@ -160,37 +160,37 @@ public class RliModuleApiTest {
         try {
             /* Sjuk scenarios */
             {
-                utlatande = rliModule.unmarshall(getXmlResource("scenarios/sjuk-1.xml"));
+                utlatande = rliModule.unmarshall(getXmlResource("scenarios/transport/sjuk-1.xml"));
                 rliModule.validate(utlatande);
             }
             {
-                utlatande = rliModule.unmarshall(getXmlResource("scenarios/sjuk-2.xml"));
+                utlatande = rliModule.unmarshall(getXmlResource("scenarios/transport/sjuk-2.xml"));
                 rliModule.validate(utlatande);
             }
             {
-                utlatande = rliModule.unmarshall(getXmlResource("scenarios/sjuk-3.xml"));
+                utlatande = rliModule.unmarshall(getXmlResource("scenarios/transport/sjuk-3.xml"));
                 rliModule.validate(utlatande);
             }
             {
-                utlatande = rliModule.unmarshall(getXmlResource("scenarios/sjuk-4.xml"));
+                utlatande = rliModule.unmarshall(getXmlResource("scenarios/transport/sjuk-4.xml"));
                 rliModule.validate(utlatande);
             }
 
             /* Gravid scenarios */
             {
-                utlatande = rliModule.unmarshall(getXmlResource("scenarios/gravid-1.xml"));
+                utlatande = rliModule.unmarshall(getXmlResource("scenarios/transport/gravid-1.xml"));
                 rliModule.validate(utlatande);
             }
             {
-                utlatande = rliModule.unmarshall(getXmlResource("scenarios/gravid-2.xml"));
+                utlatande = rliModule.unmarshall(getXmlResource("scenarios/transport/gravid-2.xml"));
                 rliModule.validate(utlatande);
             }
             {
-                utlatande = rliModule.unmarshall(getXmlResource("scenarios/gravid-3.xml"));
+                utlatande = rliModule.unmarshall(getXmlResource("scenarios/transport/gravid-3.xml"));
                 rliModule.validate(utlatande);
             }
             {
-                utlatande = rliModule.unmarshall(getXmlResource("scenarios/gravid-4.xml"));
+                utlatande = rliModule.unmarshall(getXmlResource("scenarios/transport/gravid-4.xml"));
                 rliModule.validate(utlatande);
             }
         } catch (WebApplicationException e) {

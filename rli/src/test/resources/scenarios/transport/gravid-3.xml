@@ -147,6 +147,7 @@
     <rli:arrangemangstid>
       <from>2013-07-22</from>
     </rli:arrangemangstid>
+    <rli:avbestallningsdatum>2013-08-10</rli:avbestallningsdatum>
     <rli:arrangemangstyp code="420008001"
       codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT" />
     <rli:plats>New York</rli:plats>

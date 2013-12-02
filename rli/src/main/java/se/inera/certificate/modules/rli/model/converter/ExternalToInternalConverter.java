@@ -69,10 +69,8 @@ public class ExternalToInternalConverter {
             throws ConverterException {
         se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande = certificateContentHolder
                 .getCertificateContent();
-
         Utlatande intUtlatande = convertUtlatandeFromExternalToInternal(extUtlatande);
         decorateWithStatusInfo(intUtlatande, certificateContentHolder.getCertificateContentMeta());
-
         return intUtlatande;
     }
 
