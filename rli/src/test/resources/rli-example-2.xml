@@ -26,7 +26,7 @@
 
   <utlatande-id root="???" extension="d53c377e-4103-47f5-9f90-5e1bbd874466"/>
   <!-- displayName="Läkarintyg vid avbeställd resa" -->
-  <typAvUtlatande code="RLI" codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b"/>
+  <typAvUtlatande code="RLI" codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b" codeSystemName="kv_utlåtandetyp_intyg"/>
   <kommentar>Övriga upplysningar</kommentar>
   <signeringsdatum>2013-08-12T15:57:00</signeringsdatum>
   <skickatdatum>2013-08-12T16:01:30</skickatdatum>

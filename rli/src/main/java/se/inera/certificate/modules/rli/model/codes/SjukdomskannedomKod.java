@@ -25,12 +25,12 @@ import se.inera.certificate.model.Kod;
  */
 public enum SjukdomskannedomKod implements ICodeSystem {
 
-    /** Sjukdomen/komplikationen okänd vid bokningstillfälllet. */
+    /** Sjukdomen/komplikationen okänd vid bokningstillfälllet. (SJK1) */
     SJK1("SJK1", "Sjukdomen/komplikationen var okänd vid bokningstillfälllet."),
 
     /**
      * Patientens sjukdom/komplikation är kronisk, känd vid bokningstillfället, utgjorde då inget hinder för resan. Har
-     * nu förvärrats och var ej möljligt att förutse.
+     * nu förvärrats och var ej möljligt att förutse. (SJK2)
      */
     SJK2(
             "SJK2",
@@ -38,13 +38,13 @@ public enum SjukdomskannedomKod implements ICodeSystem {
 
     /**
      * Patientens sjukdom/komplikation är kronisk, känd vid bokningstillfället, utgjorde då inget hinder för resan. Har
-     * ni förvärrats och VAR möjligt att förutse.
+     * ni förvärrats och VAR möjligt att förutse. (SJK3)
      */
     SJK3(
             "SJK3",
             "Patientens sjukdom/komplikation är kronisk, var känd vid bokningstillfället och utgjorde då inget hinder för resan. Tillståndet för nu förvärrats på ett sätt som vid bokningstillfället var möjligt att förutse."),
 
-    /** Inget av ovanstående är tillämpligt. */
+    /** Inget av ovanstående är tillämpligt. (SJK4) */
     SJK4("SJK4", "Inget av ovanstående är tillämpligt.");
 
     private static String codeSystemName = "kv_sjukdomskännedom_intyg";

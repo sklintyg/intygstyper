@@ -75,35 +75,17 @@ public final class CodeConverter {
      *             if no enum constant was defined for the specified kod.
      */
     public static <T extends ICodeSystem> T fromCode(Kod kod, Class<T> type) {
-        String code = kod == null ? null : kod.getCode();
-        return fromCode(code, type);
-    }
-
-    /**
-     * Converts from a code value to a specified enum representing that value.
-     * 
-     * @param code
-     *            The code value to convert to an enum.
-     * @param type
-     *            The enum class to convert to.
-     * 
-     * @return An enum instance of <code>null</code> if the code value was <code>null</code>.
-     * 
-     * @throws RuntimeException
-     *             if no enum constant was defined for the specified code value.
-     */
-    public static <T extends ICodeSystem> T fromCode(String code, Class<T> type) {
-        if (code == null) {
+        if (kod == null) {
             return null;
         }
 
         for (T enumConstant : type.getEnumConstants()) {
-            if (enumConstant.getCode().equals(code)) {
+            if (matches(enumConstant, kod)) {
                 return enumConstant;
             }
         }
 
-        throw new RuntimeException(String.format("Found no valid enum for code '%s' of type '%s'", code,
+        throw new RuntimeException(String.format("Found no valid enum for code '%s' of type '%s'", kod,
                 type.getSimpleName()));
     }
 

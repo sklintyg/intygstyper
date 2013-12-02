@@ -42,30 +42,6 @@ public final class IsoTypeConverter {
         return new Id(ii.getRoot(), ii.getExtension());
     }
 
-    public static Id toId(HsaId hsaId) {
-        if (hsaId == null)
-            return null;
-        return new Id(hsaId.getRoot(), hsaId.getExtension());
-    }
-
-    public static Id toId(PersonId personId) {
-        if (personId == null)
-            return null;
-        return new Id(personId.getRoot(), personId.getExtension());
-    }
-
-    public static Id toId(ArbetsplatsKod arbetsplatskod) {
-        if (arbetsplatskod == null)
-            return null;
-        return new Id(arbetsplatskod.getRoot(), arbetsplatskod.getExtension());
-    }
-
-    public static Id toId(UtlatandeId utlatandeId) {
-        if (utlatandeId == null)
-            return null;
-        return new Id(utlatandeId.getRoot(), utlatandeId.getExtension());
-    }
-
     public static II toII(Id id) {
         if (id == null)
             return null;
@@ -122,12 +98,6 @@ public final class IsoTypeConverter {
         return new Kod(cd.getCodeSystem(), cd.getCodeSystemName(), cd.getCodeSystemVersion(), cd.getCode());
     }
 
-    public static Kod toKod(UtlatandeTyp utlatandeTyp) {
-        if (utlatandeTyp == null)
-            return null;
-        return new Kod(utlatandeTyp.getCodeSystem(), utlatandeTyp.getCode());
-    }
-
     public static CD toCD(Kod kod) {
         if (kod == null)
             return null;
@@ -147,6 +117,8 @@ public final class IsoTypeConverter {
         UtlatandeTyp utlatandeTyp = new UtlatandeTyp();
         utlatandeTyp.setCode(kod.getCode());
         utlatandeTyp.setCodeSystem(kod.getCodeSystem());
+        utlatandeTyp.setCodeSystemName(kod.getCodeSystemName());
+        utlatandeTyp.setCodeSystemVersion(kod.getCodeSystemVersion());
 
         return utlatandeTyp;
     }

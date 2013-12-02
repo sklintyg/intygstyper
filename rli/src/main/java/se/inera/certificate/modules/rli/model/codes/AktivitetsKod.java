@@ -25,13 +25,13 @@ import se.inera.certificate.model.Kod;
  */
 public enum AktivitetsKod implements ICodeSystem {
 
-    /** Klinisk undersökning */
+    /** Klinisk undersökning (AV020) */
     KLINISK_UNDERSOKNING("AV020", "klinisk undersökning UNS", "KVÅ", "1.2.752.116.1.3.2.1.4"),
 
-    /** Första undersökning */
+    /** Första undersökning (AKT13) */
     FORSTA_UNDERSOKNING("AKT13", "Första undersökning", "kv_aktiviteter_intyg", "8040b4d1-67dc-42e1-a938-de5374e9526a"),
 
-    /** Omvårdnadsåtgärd */
+    /** Omvårdnadsåtgärd (9632001) */
     OMVARDNADSATGARD("9632001", "Omvårdnadsåtgärd", "SNOMED-CT", "1.2.752.116.2.1.1.1");
 
     private String code;

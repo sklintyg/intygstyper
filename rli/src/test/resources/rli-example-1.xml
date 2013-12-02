@@ -28,7 +28,7 @@
 
   <utlatande-id root="???" extension="39f80245-9730-4d76-aaff-b04a2f3cfbe7"/>
   <!-- displayName="Läkarintyg vid avbeställd resa" -->
-  <typAvUtlatande code="RLI" codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b"/>
+  <typAvUtlatande code="RLI" codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b" codeSystemName="kv_utlåtandetyp_intyg"/>
   <kommentar>Övriga upplysningar</kommentar>
   <signeringsdatum>2013-08-12T11:25:00</signeringsdatum>
   <skickatdatum>2013-08-12T11:25:30</skickatdatum>
@@ -56,8 +56,7 @@
       <telefonnummer>012-345678</telefonnummer>
       <epost>ingen@alls.se</epost>
       <vardgivare>
-        <vardgivare-id root="1.2.752.129.2.1.4.1"
-                          extension="SE0000000000-h4xx"/>
+        <vardgivare-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-h4xx"/>
         <vardgivarnamn>Testvårdgivaren</vardgivarnamn>
       </vardgivare>
     </enhet>
@@ -65,8 +64,7 @@
 
   <aktivitet>
     <!-- displayName="klinisk undersökning UNS" -->
-    <aktivitetskod code="AV020" codeSystem="1.2.752.116.1.3.2.1.4"
-                   codeSystemName="KVÅ"/>
+    <aktivitetskod code="AV020" codeSystem="1.2.752.116.1.3.2.1.4" codeSystemName="KVÅ"/>
     <aktivitetstid>
       <from>2013-08-12</from>
       <!-- Detta fält ska inte fyllas i när det är möjligt med öppna intervall -->
@@ -82,8 +80,7 @@
       <telefonnummer>012-345678</telefonnummer>
       <epost>ingen@alls.se</epost>
       <vardgivare>
-        <vardgivare-id root="1.2.752.129.2.1.4.1"
-                          extension="SE0000000000-h4xx"/>
+        <vardgivare-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-h4xx"/>
         <vardgivarnamn>Testvårdgivaren</vardgivarnamn>
       </vardgivare>
     </utforsVidEnhet>
@@ -91,8 +88,7 @@
 
   <aktivitet>
     <!-- displayName="Första klinisk undersökning UNS" -->
-    <aktivitetskod code="AKT13" codeSystem="1.2.752.116.1.3.2.1.4"
-                   codeSystemName="KVÅ"/>
+    <aktivitetskod code="AKT13" codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a" codeSystemName="kv_aktiviteter_intyg"/>
     <aktivitetstid>
       <from>2013-08-01</from>
       <!-- Detta fält ska inte fyllas i när det är möjligt med öppna intervall -->
@@ -116,12 +112,10 @@
 
   <observation>
     <!-- displayName="Sjukdom" -->
-    <observationskod code="39104002" codeSystem="1.2.752.116.2.1.1.1"
-                     codeSystemName="SNOMED-CT"/>
+    <observationskod code="39104002" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
     <utforsAv>
       <!-- displayName="hälso- och sjukvårdspersonal" -->
-      <utforartyp code="223366009" codeSystem="1.2.752.116.2.1.1.1"
-                  codeSystemName="SNOMED-CT"/>
+      <utforartyp code="223366009" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
 
       <antasAv>
         <personal-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-DRJEK"/>
@@ -133,8 +127,7 @@
           <enhetsnamn>Elixirkliniken, London</enhetsnamn>
 
           <vardgivare>
-            <vardgivare-id root="1.2.752.129.2.1.4.1"
-                           extension="SE0000000000-0xbeefbabe"/>
+            <vardgivare-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-0xbeefbabe"/>
             <vardgivarnamn>Testvårdgivaren</vardgivarnamn>
           </vardgivare>
         </enhet>
@@ -147,13 +140,10 @@
     <rli:bokningsdatum>2013-01-01</rli:bokningsdatum>
     <rli:arrangemangstid>
       <from>2013-07-22</from>
-      <tom>2013-08-02</tom>
-      <!-- Detta fält ska inte fyllas i när det är möjligt med öppna intervall -->
     </rli:arrangemangstid>
     <rli:avbestallningsdatum>2013-08</rli:avbestallningsdatum>
     <!-- displayName="Resa" -->
-    <rli:arrangemangstyp code="420008001" codeSystem="1.2.752.116.2.1.1.1"
-                         codeSystemName="SNOMED-CT"/>
+    <rli:arrangemangstyp code="420008001" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
     <rli:plats>New York</rli:plats>
   </rli:arrangemang>
 </utlatande>

@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import se.inera.certificate.common.v1.AktivitetType;
 import se.inera.certificate.common.v1.EnhetType;
 import se.inera.certificate.common.v1.HosPersonalType;
@@ -41,7 +42,6 @@ import se.inera.certificate.model.Rekommendation;
 import se.inera.certificate.model.Utforarroll;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
-import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
@@ -176,15 +176,9 @@ public class TransportToExternalConverter {
             throw new ConverterException("Observationskod was null");
         }
 
-        if (source.getObservationskod().getCode() == ObservationsKod.GRAVIDITET.getCode()
-                && source.getObservationsperiod() == null) {
-            throw new ConverterException("Observationcode Graviditet must contain a time period");
-        }
-
         Observation observation = new Observation();
 
-        if (source.getObservationsperiod() != null
-                && source.getObservationskod().getCode() == ObservationsKod.GRAVIDITET.getCode()) {
+        if (source.getObservationsperiod() != null) {
             observation.setObservationsperiod(new PartialInterval(source.getObservationsperiod().getFrom(), source
                     .getObservationsperiod().getTom()));
         }

@@ -34,6 +34,7 @@
   <modules>
     <module>fk7263</module>
     <module>rli</module>
+    <module>module-archetype</module>
     <module>specifications</module>
   </modules>
 

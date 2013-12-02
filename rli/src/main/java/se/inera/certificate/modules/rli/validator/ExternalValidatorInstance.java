@@ -78,7 +78,6 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * 
      * Validates that required attributes connected with the actual class Utlatande are present
      */
     private void validateUtlatande(Utlatande utlatande) {
@@ -88,7 +87,6 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * 
      * Validates Arrangemang in Utlatande First makes sure Arrangemang is not null, if so, the required attributes are
      * validated in turn and any errors are added to validation error list
      */
@@ -98,7 +96,10 @@ public class ExternalValidatorInstance {
         }
 
         assertNotNull(arrangemang.getBokningsdatum(), "arrangemang.bokningsdatum");
-        assertNotNull(arrangemang.getArrangemangstid(), "arrangemang.arrangemangstid");
+        if (assertNotNull(arrangemang.getArrangemangstid(), "arrangemang.arrangemangstid").success()) {
+            assertNotNull(arrangemang.getArrangemangstid().getFrom(), "arrangemang.arrangemangstid.from");
+            assertNull(arrangemang.getArrangemangstid().getTom(), "arrangemang.arrangemangstid.tom");
+        }
         assertKodInEnum(arrangemang.getArrangemangstyp(), ArrangemangsKod.class, "arrangemang.arrangemangstyp");
         assertNotEmpty(arrangemang.getPlats(), "plats");
     }
@@ -128,16 +129,13 @@ public class ExternalValidatorInstance {
         assertValidHsaId(vardenhet.getId(), elementPrefix + ".vardenhet.id");
         assertNotEmpty(vardenhet.getNamn(), elementPrefix + ".vardenhet.namn");
 
-        if (assertNotNull(vardenhet.getVardgivare(), elementPrefix + ".vardenhet.vardgivare").failed()) {
-            return;
+        if (assertNotNull(vardenhet.getVardgivare(), elementPrefix + ".vardenhet.vardgivare").success()) {
+            assertValidHsaId(vardenhet.getVardgivare().getId(), elementPrefix + ".vardenhet.vardgivare.id");
+            assertNotEmpty(vardenhet.getVardgivare().getNamn(), elementPrefix + ".vardenhet.vardgivare.namn");
         }
-
-        assertValidHsaId(vardenhet.getVardgivare().getId(), elementPrefix + ".vardenhet.vardgivare.id");
-        assertNotEmpty(vardenhet.getVardgivare().getNamn(), elementPrefix + ".vardenhet.vardgivare.namn");
     }
 
     /**
-     * 
      * Make sure Utlatande contains 1..* Observation
      */
     private void validateObservationer(List<Observation> observationer) {
@@ -147,12 +145,22 @@ public class ExternalValidatorInstance {
         }
 
         for (Observation observation : observationer) {
-            assertKodInEnum(observation.getObservationskod(), ObservationsKod.class, "observation.observationskod");
+            String entity = "observation" + getDisplayCode(observation.getObservationskod());
+
+            assertKodInEnum(observation.getObservationskod(), ObservationsKod.class, entity + ".observationskod");
             if (ObservationsKod.GRAVIDITET.matches(observation.getObservationskod())) {
-                assertNotNull(observation.getObservationsperiod(), "observation.observationsperiod");
+                if (assertNotNull(observation.getObservationsperiod(), entity + ".observationsperiod").success()) {
+                    assertNull(observation.getObservationsperiod().getFrom(), entity + ".observationsperiod.from");
+                    assertNotNull(observation.getObservationsperiod().getTom(), entity + ".observationsperiod.tom");
+                }
+
+            } else {
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
             }
 
-            validateUtforsAv(observation.getUtforsAv(), "observation");
+            if (observation.getUtforsAv() != null) {
+                validateUtforsAv(observation.getUtforsAv(), entity);
+            }
         }
 
     }
@@ -164,7 +172,6 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * 
      * Validate Aktiviteter,
      */
     private void validateAktiviteter(List<Aktivitet> aktiviteter) {
@@ -177,17 +184,18 @@ public class ExternalValidatorInstance {
         }
 
         for (Aktivitet aktivitet : aktiviteter) {
-            assertKodInEnum(aktivitet.getAktivitetskod(), AktivitetsKod.class, "aktivitet.aktivitetskod");
+            String entity = "aktivitet" + getDisplayCode(aktivitet.getAktivitetskod());
+            assertKodInEnum(aktivitet.getAktivitetskod(), AktivitetsKod.class, entity + ".aktivitetskod");
 
             /** Make sure Aktivitet of type KLINISK_UNDERSOKNING contains utforsVid */
             if (AktivitetsKod.KLINISK_UNDERSOKNING.matches(aktivitet.getAktivitetskod())) {
-                assertNotNull(aktivitet.getAktivitetstid(), "aktivitet.aktivitetstid");
-                assertNotNull(aktivitet.getUtforsVid(), "aktivitet.utforsVid");
+                assertNotNull(aktivitet.getAktivitetstid(), entity + ".aktivitetstid");
+                assertNotNull(aktivitet.getUtforsVid(), entity + ".utforsVid");
             }
             /** Make sure Aktivitet of type FORSTA_UNDERSOKNING contains Plats */
             if (AktivitetsKod.FORSTA_UNDERSOKNING.matches(aktivitet.getAktivitetskod())) {
-                assertNotNull(aktivitet.getAktivitetstid(), "aktivitet.aktivitetstid");
-                assertNotNull(aktivitet.getPlats(), "aktivitet.plats");
+                assertNotNull(aktivitet.getAktivitetstid(), entity + ".aktivitetstid");
+                assertNotNull(aktivitet.getPlats(), entity + ".plats");
             }
 
         }
@@ -214,6 +222,9 @@ public class ExternalValidatorInstance {
 
         assertValidPersonId(patient.getId(), "patient.id");
 
+        if (patient.getFornamn().size() < 1) {
+            validationError("patient.fornamn must contain at least one name");
+        }
         for (String fornamn : patient.getFornamn()) {
             assertNotEmpty(fornamn, "patient.fornamn");
         }
@@ -224,6 +235,14 @@ public class ExternalValidatorInstance {
         assertNotEmpty(patient.getPostort(), "patient.postort");
     }
 
+    private String getDisplayCode(Kod kod) {
+        if (kod == null || kod.getCode() == null) {
+            return "[?]";
+        }
+
+        return "[" + kod.getCode() + "]";
+    }
+
     private void validationError(String error) {
         validationErrors.add(error);
     }
@@ -231,6 +250,14 @@ public class ExternalValidatorInstance {
     private AssertionResult assertNotNull(Object value, String element) {
         if (value == null) {
             validationError(element + " was not found");
+            return AssertionResult.FAILURE;
+        }
+        return AssertionResult.SUCCESS;
+    }
+
+    private AssertionResult assertNull(Object value, String element) {
+        if (value != null) {
+            validationError(element + " should not be defined");
             return AssertionResult.FAILURE;
         }
         return AssertionResult.SUCCESS;
@@ -250,7 +277,7 @@ public class ExternalValidatorInstance {
                 CodeConverter.fromCode(kod, expectedEnum);
                 return AssertionResult.SUCCESS;
             } catch (Exception e) {
-                validationError("Kod " + element + " was unknown");
+                validationError(String.format("Kod '%s' in %s was unknown", kod.getCode(), element));
             }
         }
         return AssertionResult.FAILURE;
