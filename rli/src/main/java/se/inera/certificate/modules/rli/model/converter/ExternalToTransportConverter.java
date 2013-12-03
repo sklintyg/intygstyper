@@ -18,19 +18,19 @@
  */
 package se.inera.certificate.modules.rli.model.converter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static se.inera.certificate.modules.rli.model.converter.IsoTypeConverter.toArbetsplatsKod;
 import static se.inera.certificate.modules.rli.model.converter.IsoTypeConverter.toHsaId;
 import static se.inera.certificate.modules.rli.model.converter.IsoTypeConverter.toPersonId;
 import static se.inera.certificate.modules.rli.model.converter.IsoTypeConverter.toUtlatandeId;
 import static se.inera.certificate.modules.rli.model.converter.IsoTypeConverter.toUtlatandeTyp;
-
 import iso.v21090.dt.v1.CD;
-import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import se.inera.certificate.common.v1.AktivitetType;
 import se.inera.certificate.common.v1.EnhetType;
 import se.inera.certificate.common.v1.HosPersonalType;
@@ -155,6 +155,21 @@ public class ExternalToTransportConverter {
         return observationType;
     }
 
+    List<UtforarrollType> convertUtforarroller(List<Utforarroll> source) {
+        LOG.trace("Starting convertUtforarroller");
+        if (source == null) {
+            LOG.trace("Utforarroll list was null, could not convert");
+            return null;
+        }
+        List<UtforarrollType> converted = new ArrayList<UtforarrollType>();
+        for (Utforarroll a : source) {
+            if (a != null) {
+                converted.add(convertUtforarroll(a));
+            }
+        }
+        return converted;
+    }
+
     UtforarrollType convertUtforarroll(Utforarroll source) {
         if (source == null) {
             LOG.trace("Utforarroll was null, could not convert");
@@ -217,6 +232,8 @@ public class ExternalToTransportConverter {
         aktivitet.setAktivitetskod(IsoTypeConverter.toCD(source.getAktivitetskod()));
         aktivitet.setAktivitetstid(convertPartialDateInterval(source.getAktivitetstid()));
         aktivitet.setUtforsVidEnhet(convertEnhet(source.getUtforsVid()));
+        aktivitet.setPlats(source.getPlats());
+        aktivitet.getBeskrivsAvs().addAll(convertUtforarroller(source.getBeskrivsAv()));
 
         return aktivitet;
     }
@@ -290,7 +307,7 @@ public class ExternalToTransportConverter {
             patientType.getFornamns().addAll(source.getFornamn());
         }
 
-        patientType.setEfternamn(StringUtils.join(source.getEfternamn(), " "));
+        patientType.setEfternamn(source.getEfternamn());
 
         if (source.getPatientrelationer() != null) {
             List<PatientRelationType> patientRelationsTypes = convertPatientRelations(source.getPatientrelationer());

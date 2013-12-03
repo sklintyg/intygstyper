@@ -20,19 +20,16 @@ package se.inera.certificate.modules.rli.model.validator;
 
 import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
-import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
+import se.inera.certificate.modules.rli.utils.Scenario;
+import se.inera.certificate.modules.rli.utils.ScenarioCreator;
 import se.inera.certificate.modules.rli.validator.ExternalValidator;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ExternalValidatorTest {
 
@@ -43,28 +40,20 @@ public class ExternalValidatorTest {
         validator = new ExternalValidator();
     }
 
-    private Utlatande buildTestUtlatande(String filename) throws IOException {
-        ObjectMapper mapper = new CustomObjectMapper();
-        Utlatande utlatande = null;
+    @Test
+    public void testValidate() throws Exception {
+        for (Scenario scenario : ScenarioCreator.getExternalScenarios("sjuk-?")) {
+            Utlatande utlatande = scenario.asExternalModel();
+            List<String> validationErrors = validator.validate(utlatande);
 
-        InputStream is = this.getClass().getResourceAsStream(filename);
-        utlatande = mapper.readValue(is, Utlatande.class);
-
-        return utlatande;
+            assertTrue(StringUtils.join(validationErrors, ", "), validationErrors.isEmpty());
+        }
     }
 
     @Test
-    public void testValidate() throws IOException {
-        Utlatande utlatande = buildTestUtlatande("/rli-example-1.json");
-        List<String> validationErrors = validator.validate(utlatande);
-
-        assertTrue(StringUtils.join(validationErrors, ", "), validationErrors.isEmpty());
-    }
-
-    @Test
-    public void testValidateWithErrors() throws IOException {
-        Utlatande utlatande = buildTestUtlatande("/rli-example-1-with-errors.json");
-        List<String> validationErrors = validator.validate(utlatande);
+    public void testValidateWithErrors() throws Exception {
+        List<String> validationErrors = validator.validate(ScenarioCreator.getExternalScenario("sjuk-broken")
+                .asExternalModel());
 
         assertTrue(!validationErrors.isEmpty());
     }

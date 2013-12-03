@@ -18,14 +18,10 @@
  */
 package se.inera.certificate.modules.rli.rest;
 
-import java.io.IOException;
-
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ServiceUnavailableException;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import javax.xml.bind.JAXB;
 
 import junit.framework.Assert;
 
@@ -33,14 +29,14 @@ import org.apache.cxf.jaxrs.client.WebClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import se.inera.certificate.common.v1.Utlatande;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
 import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
+import se.inera.certificate.modules.rli.utils.Scenario;
+import se.inera.certificate.modules.rli.utils.ScenarioCreator;
 
 /**
  * Sets up an actual HTTP server and client to test the {@link RliModuleApi} service. This is the place to verify that
@@ -60,65 +56,40 @@ public class RliModuleApiTest {
     @Test
     public void testUnmarshallScenarios() throws Exception {
         /* Sjuk scenarios */
-        {
-            rliModule.unmarshall(getXmlResource("scenarios/transport/sjuk-1.xml"));
+        for (Scenario scenario : ScenarioCreator.getTransportScenarios("sjuk-?")) {
+            rliModule.unmarshall(scenario.asTransportModel());
             assertResponseStatus(Status.OK);
         }
-        {
-            rliModule.unmarshall(getXmlResource("scenarios/transport/sjuk-2.xml"));
-            assertResponseStatus(Status.OK);
-        }
-        {
-            rliModule.unmarshall(getXmlResource("scenarios/transport/sjuk-3.xml"));
-            assertResponseStatus(Status.OK);
-        }
-        {
-            rliModule.unmarshall(getXmlResource("scenarios/transport/sjuk-4.xml"));
-            assertResponseStatus(Status.OK);
-        }
-
         /* Gravid scenarios */
-        {
-            rliModule.unmarshall(getXmlResource("scenarios/transport/gravid-1.xml"));
-            assertResponseStatus(Status.OK);
-        }
-        {
-            rliModule.unmarshall(getXmlResource("scenarios/transport/gravid-2.xml"));
-            assertResponseStatus(Status.OK);
-        }
-        {
-            rliModule.unmarshall(getXmlResource("scenarios/transport/gravid-3.xml"));
-            assertResponseStatus(Status.OK);
-        }
-        {
-            rliModule.unmarshall(getXmlResource("scenarios/transport/gravid-4.xml"));
+        for (Scenario scenario : ScenarioCreator.getTransportScenarios("gravid-?")) {
+            rliModule.unmarshall(scenario.asTransportModel());
             assertResponseStatus(Status.OK);
         }
     }
 
     @Test(expected = BadRequestException.class)
     public void testUnmarshallBroken() throws Exception {
-        rliModule.unmarshall(getXmlResource("scenarios/sjuk-broken.xml"));
+        for (Scenario scenario : ScenarioCreator.getTransportScenarios("*-broken")) {
+            rliModule.unmarshall(scenario.asTransportModel());
+        }
     }
 
     @Test
     public void testMarshall() throws Exception {
-        rliModule.marshall(getJsonResource("rli-example-1.json"));
-
+        rliModule.marshall(ScenarioCreator.getExternalScenario("sjuk-1").asExternalModel());
         assertResponseStatus(Status.OK);
     }
 
     @Test
     public void testValidate() throws Exception {
-        rliModule.validate(getJsonResource("rli-example-1.json"));
-
+        rliModule.validate(ScenarioCreator.getExternalScenario("sjuk-1").asExternalModel());
         assertResponseStatus(Status.NO_CONTENT);
     }
 
     @Test
     public void testValidateWithErrors() throws Exception {
         try {
-            rliModule.validate(getJsonResource("rli-example-1-with-errors.json"));
+            rliModule.validate(ScenarioCreator.getExternalScenario("sjuk-broken").asExternalModel());
             Assert.fail("Expected BadRequestException");
 
         } catch (BadRequestException e) {
@@ -129,19 +100,19 @@ public class RliModuleApiTest {
     @Test
     public void testPdf() throws Exception {
         CertificateContentHolder holder = new CertificateContentHolder();
-        holder.setCertificateContent(getJsonResource("rli-example-1.json"));
+        holder.setCertificateContent(ScenarioCreator.getExternalScenario("sjuk-1").asExternalModel());
         holder.setCertificateContentMeta(new CertificateContentMeta());
 
         rliModule.pdf(holder);
 
         assertResponseStatus(Status.OK);
-        assertResponseHeader("filename=lakarutlatande_19121212-1212_2013-01-01-130812.pdf", "Content-Disposition");
+        assertResponseHeader("filename=lakarutlatande_19331122-4400_2013-01-01-130812.pdf", "Content-Disposition");
     }
 
     @Test
     public void testConvertExternalToInternal() throws Exception {
         CertificateContentHolder holder = new CertificateContentHolder();
-        holder.setCertificateContent(getJsonResource("rli-example-1.json"));
+        holder.setCertificateContent(ScenarioCreator.getExternalScenario("sjuk-1").asExternalModel());
         holder.setCertificateContentMeta(new CertificateContentMeta());
         rliModule.convertExternalToInternal(holder);
 
@@ -157,46 +128,16 @@ public class RliModuleApiTest {
     @Test
     public void testRegisterCertificateRoudtrip() throws Exception {
         se.inera.certificate.modules.rli.model.external.Utlatande utlatande;
-        try {
-            /* Sjuk scenarios */
-            {
-                utlatande = rliModule.unmarshall(getXmlResource("scenarios/transport/sjuk-1.xml"));
-                rliModule.validate(utlatande);
-            }
-            {
-                utlatande = rliModule.unmarshall(getXmlResource("scenarios/transport/sjuk-2.xml"));
-                rliModule.validate(utlatande);
-            }
-            {
-                utlatande = rliModule.unmarshall(getXmlResource("scenarios/transport/sjuk-3.xml"));
-                rliModule.validate(utlatande);
-            }
-            {
-                utlatande = rliModule.unmarshall(getXmlResource("scenarios/transport/sjuk-4.xml"));
-                rliModule.validate(utlatande);
-            }
+        /* Sjuk scenarios */
+        for (Scenario scenario : ScenarioCreator.getTransportScenarios("sjuk-?")) {
+            utlatande = rliModule.unmarshall(scenario.asTransportModel());
+            rliModule.validate(utlatande);
+        }
 
-            /* Gravid scenarios */
-            {
-                utlatande = rliModule.unmarshall(getXmlResource("scenarios/transport/gravid-1.xml"));
-                rliModule.validate(utlatande);
-            }
-            {
-                utlatande = rliModule.unmarshall(getXmlResource("scenarios/transport/gravid-2.xml"));
-                rliModule.validate(utlatande);
-            }
-            {
-                utlatande = rliModule.unmarshall(getXmlResource("scenarios/transport/gravid-3.xml"));
-                rliModule.validate(utlatande);
-            }
-            {
-                utlatande = rliModule.unmarshall(getXmlResource("scenarios/transport/gravid-4.xml"));
-                rliModule.validate(utlatande);
-            }
-        } catch (WebApplicationException e) {
-            e.printStackTrace();
-            System.out.println("**** " + e.getResponse().getEntity());
-            Assert.fail();
+        /* Gravid scenarios */
+        for (Scenario scenario : ScenarioCreator.getTransportScenarios("gravid-?")) {
+            utlatande = rliModule.unmarshall(scenario.asTransportModel());
+            rliModule.validate(utlatande);
         }
     }
 
@@ -210,15 +151,5 @@ public class RliModuleApiTest {
 
     private Response getClientResponse() {
         return WebClient.client(rliModule).getResponse();
-    }
-
-    private Utlatande getXmlResource(String resource) throws IOException {
-        return JAXB.unmarshal(new ClassPathResource(resource).getFile(), Utlatande.class);
-    }
-
-    private se.inera.certificate.modules.rli.model.external.Utlatande getJsonResource(String resource)
-            throws IOException {
-        return objectMapper.readValue(new ClassPathResource(resource).getFile(),
-                se.inera.certificate.modules.rli.model.external.Utlatande.class);
     }
 }

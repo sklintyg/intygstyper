@@ -81,7 +81,7 @@ public class ExternalToInternalConverter {
         intUtlatande.setStatus(intStatuses);
     }
 
-    Utlatande convertUtlatandeFromExternalToInternal(
+    private Utlatande convertUtlatandeFromExternalToInternal(
             se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande) throws ConverterException {
         LOG.debug("Converting Utlatande '{}' from external to internal", extUtlatande.getId());
 
@@ -111,7 +111,7 @@ public class ExternalToInternalConverter {
         return intUtlatande;
     }
 
-    Vardenhet convertToIntVardenhet(se.inera.certificate.model.Vardenhet extVardenhet) throws ConverterException {
+    private Vardenhet convertToIntVardenhet(se.inera.certificate.model.Vardenhet extVardenhet) throws ConverterException {
 
         LOG.trace("Converting vardenhet");
 
@@ -135,7 +135,7 @@ public class ExternalToInternalConverter {
         return intVardenhet;
     }
 
-    Vardgivare convertToIntVardgivare(se.inera.certificate.model.Vardgivare extVardgivare) throws ConverterException {
+    private Vardgivare convertToIntVardgivare(se.inera.certificate.model.Vardgivare extVardgivare) throws ConverterException {
 
         LOG.trace("Converting vardgivare");
 
@@ -151,7 +151,7 @@ public class ExternalToInternalConverter {
         return intVardgivare;
     }
 
-    HoSPersonal convertToIntHoSPersonal(HosPersonal extHoSPersonal) throws ConverterException {
+    private HoSPersonal convertToIntHoSPersonal(HosPersonal extHoSPersonal) throws ConverterException {
 
         LOG.trace("Converting HoSPersonal");
 
@@ -171,7 +171,7 @@ public class ExternalToInternalConverter {
         return intHoSPersonal;
     }
 
-    List<Status> convertToIntStatuses(List<CertificateStatus> certStatuses) {
+    private List<Status> convertToIntStatuses(List<CertificateStatus> certStatuses) {
 
         List<Status> intStatuses = new ArrayList<Status>();
 
@@ -195,7 +195,7 @@ public class ExternalToInternalConverter {
         return intStatuses;
     }
 
-    Patient convertToIntPatient(se.inera.certificate.model.Patient extPatient) throws ConverterException {
+    private Patient convertToIntPatient(se.inera.certificate.model.Patient extPatient) throws ConverterException {
 
         LOG.trace("Converting patient");
 
@@ -222,7 +222,7 @@ public class ExternalToInternalConverter {
         return intPatient;
     }
 
-    Arrangemang convertToIntArrangemang(se.inera.certificate.modules.rli.model.external.Arrangemang extArr)
+    private Arrangemang convertToIntArrangemang(se.inera.certificate.modules.rli.model.external.Arrangemang extArr)
             throws ConverterException {
 
         LOG.trace("Converting arrangemang");
@@ -302,7 +302,7 @@ public class ExternalToInternalConverter {
         return intUndersokning;
     }
 
-    void populateUndersokningFromObservationer(List<Observation> observationer, Undersokning intUndersokning)
+    private void populateUndersokningFromObservationer(List<Observation> observationer, Undersokning intUndersokning)
             throws ConverterException {
         LOG.trace("Populating Undersokning from Observationer");
 
@@ -333,7 +333,7 @@ public class ExternalToInternalConverter {
         }
     }
 
-    void populateUndersokningFromAktiviteter(List<Aktivitet> aktiviteter, Undersokning intUndersokning)
+    private void populateUndersokningFromAktiviteter(List<Aktivitet> aktiviteter, Undersokning intUndersokning)
             throws ConverterException {
         LOG.trace("Populating Undersokning from Aktiviteter");
 

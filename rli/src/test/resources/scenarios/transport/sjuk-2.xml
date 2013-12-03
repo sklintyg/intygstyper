@@ -80,9 +80,7 @@
 
     <sjukdomskannedom code="SJK2"
       codeSystem="f3a556c4-d54b-4f67-8496-d5259df70493" codeSystemName="kv_sjukdomskännedom_intyg" />
-    <beskrivning>
-      Här följer en annan förklaring än ovan
-    </beskrivning>
+    <beskrivning>Här följer en annan förklaring än ovan</beskrivning>
   </rekommendation>
 
   <observation>

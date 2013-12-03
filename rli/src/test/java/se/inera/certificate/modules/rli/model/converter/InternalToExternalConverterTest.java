@@ -32,7 +32,9 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.unitils.reflectionassert.ReflectionAssert;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.HosPersonal;
@@ -46,11 +48,8 @@ import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
 import se.inera.certificate.modules.rli.model.codes.RekommendationsKod;
 import se.inera.certificate.modules.rli.model.codes.SjukdomskannedomKod;
 import se.inera.certificate.modules.rli.model.codes.UtforarrollKod;
-import se.inera.certificate.modules.rli.model.converter.InternalToExternalConverter;
-import se.inera.certificate.modules.rli.model.converter.PartialConverter;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
-
 import se.inera.certificate.modules.rli.model.internal.wc.Arrangemang;
 import se.inera.certificate.modules.rli.model.internal.wc.Graviditet;
 import se.inera.certificate.modules.rli.model.internal.wc.HoSPersonal;
@@ -62,6 +61,8 @@ import se.inera.certificate.modules.rli.model.internal.wc.Undersokning;
 import se.inera.certificate.modules.rli.model.internal.wc.Utforare;
 import se.inera.certificate.modules.rli.model.internal.wc.Vardenhet;
 import se.inera.certificate.modules.rli.model.internal.wc.Vardgivare;
+import se.inera.certificate.modules.rli.utils.Scenario;
+import se.inera.certificate.modules.rli.utils.ScenarioCreator;
 
 /**
  * Unit test for InternalToExternalConverter
@@ -76,6 +77,19 @@ public class InternalToExternalConverterTest {
     @Before
     public void setUp() throws Exception {
         this.converter = new InternalToExternalConverter();
+    }
+
+    @Test
+    @Ignore
+    public void testConvertUtlatandeFromInternalToExternal() throws Exception {
+        for (Scenario scenario : ScenarioCreator.getInternalWCScenarios("sjuk-?")) {
+            se.inera.certificate.modules.rli.model.internal.wc.Utlatande intUtlatande = scenario.asInternalWCModel();
+
+            Utlatande actual = converter.convertUtlatandeFromInternalToExternal(intUtlatande);
+
+            Utlatande expected = scenario.asExternalModel();
+            ReflectionAssert.assertLenientEquals(expected, actual);
+        }
     }
 
     @Test
