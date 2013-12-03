@@ -119,10 +119,10 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="enhetsnamn" type="xs:string"/>
-      <xs:element name="postadress" type="xs:string" minOccurs="0"/>
-      <xs:element name="postnummer" type="xs:string" minOccurs="0"/>
-      <xs:element name="postort" type="xs:string" minOccurs="0"/>
-      <xs:element name="telefonnummer" type="xs:string" minOccurs="0"/>
+      <xs:element name="postadress" type="xs:string"/>
+      <xs:element name="postnummer" type="xs:string"/>
+      <xs:element name="postort" type="xs:string"/>
+      <xs:element name="telefonnummer" type="xs:string"/>
       <xs:element name="epost" type="xs:string" minOccurs="0"/>
       <xs:element name="vardgivare" type="vardgivareType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
