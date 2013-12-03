@@ -5,6 +5,8 @@ import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
 
 public interface Scenario {
 
+    String getName();
+
     Utlatande asTransportModel() throws ScenarioNotFoundException;
 
     se.inera.certificate.modules.rli.model.external.Utlatande asExternalModel() throws ScenarioNotFoundException;

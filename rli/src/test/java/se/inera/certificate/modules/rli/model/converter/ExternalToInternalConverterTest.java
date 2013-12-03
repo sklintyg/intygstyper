@@ -50,7 +50,7 @@ public class ExternalToInternalConverterTest {
                     .fromExternalToInternal(extUtlatande);
 
             se.inera.certificate.modules.rli.model.internal.mi.Utlatande expected = scenario.asInternalMIModel();
-            ReflectionAssert.assertLenientEquals(expected, actual);
+            ReflectionAssert.assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
     }
 }

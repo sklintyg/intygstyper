@@ -88,7 +88,7 @@ public class InternalToExternalConverterTest {
             Utlatande actual = converter.convertUtlatandeFromInternalToExternal(intUtlatande);
 
             Utlatande expected = scenario.asExternalModel();
-            ReflectionAssert.assertLenientEquals(expected, actual);
+            ReflectionAssert.assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
     }
 

@@ -44,7 +44,7 @@ public class ExternalToTransportConverterTest {
 
             Utlatande expected = scenario.asTransportModel();
 
-            ReflectionAssert.assertLenientEquals(expected, actual);
+            ReflectionAssert.assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
     }
 }

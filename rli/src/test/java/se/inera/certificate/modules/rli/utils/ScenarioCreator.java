@@ -96,6 +96,11 @@ public class ScenarioCreator {
         }
 
         @Override
+        public String getName() {
+            return FilenameUtils.getBaseName(scenarioFile.getName());
+        }
+
+        @Override
         public Utlatande asTransportModel() throws ScenarioNotFoundException {
             try {
                 return ResourceConverterUtils.toTransport(getTransportModelFor(scenarioFile));

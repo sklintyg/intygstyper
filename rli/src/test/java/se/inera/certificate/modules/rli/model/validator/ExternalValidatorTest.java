@@ -46,7 +46,8 @@ public class ExternalValidatorTest {
             Utlatande utlatande = scenario.asExternalModel();
             List<String> validationErrors = validator.validate(utlatande);
 
-            assertTrue(StringUtils.join(validationErrors, ", "), validationErrors.isEmpty());
+            assertTrue("Error in scenario " + scenario.getName() + "\n" + StringUtils.join(validationErrors, ", "),
+                    validationErrors.isEmpty());
         }
     }
 
