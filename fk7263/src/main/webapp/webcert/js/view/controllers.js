@@ -486,6 +486,8 @@ angular.module('wc.fk7263.controllers').controller('ViewCertCtrl', [ '$scope', '
         $scope.widgetState.doneLoading = true;
         if (errorData && errorData.errorCode === "AUTHORIZATION_PROBLEM") {
             $scope.widgetState.activeErrorMessageKey = "error.could_not_load_cert_not_auth";
+        } else if (errorData && errorData.errorCode) {
+            $scope.widgetState.activeErrorMessageKey = "error." + errorData.errorCode;
         } else {
             $scope.widgetState.activeErrorMessageKey = "error.could_not_load_cert";
         }

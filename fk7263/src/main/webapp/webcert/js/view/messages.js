@@ -70,15 +70,16 @@ var fk7263Messages = {
         "nedsattningsgrad.nedsatt_med_1_2" : "Nedsatt med hälften",
         "nedsattningsgrad.nedsatt_med_1_4" : "Nedsatt med 1/4",
         // errors
-        "error.could_not_load_cert" : "<strong>Kunde inte hämta intyget.",
+        "error.could_not_load_cert" : "<strong>Ett tekniskt problem inträffade.</strong>Kunde inte hämta intyget.",
         "error.could_not_load_cert_not_auth" : "<strong>Kunde inte hämta intyget eftersom du saknar behörighet.",
         "error.could_not_load_cert_qa" : "<strong>Kunde inte hämta frågor och svar för intyget.",
         // fragaSvar errors
         "error.external_system_problem" : "<strong>Försäkringskassans system kan just nu inte ta emot informationen. Försök igen</strong>",
-        "error.internal_problem" : "<strong>Ett tekniskt problem inträffade.</strong>Försök igen och kontakta supporten om problemet kvarstår.",
+        "error.internal_problem" : "<strong>Ett tekniskt problem inträffade.</strong><br>Försök igen och kontakta supporten om problemet kvarstår.",
         "error.invalid_state" : "<strong>Funktionen är inte giltig</strong>Förmodligen har en annan användare ändrat informationen medan du arbetat på samma post. Ladda om informationen och försök igen",
         "error.unknown_internal_problem" : "<strong>Ett tekniskt problem inträffade</strong><br> Försök igen och kontakta supporten om problemet kvarstår.",
         "error.authorization_problem" : "<strong>Du har inte behörighet att utföra funktionen, kontakta supporten för mer information.</strong>",
+        "error.data_not_found" : "<strong>Intyget kunde inte hittas i intygstjänsten.</strong><br> Intyget kunde inte hämtas.",
         "fragasvar.answer.is.sent" : "<strong>Svaret har skickats till Försäkringskassan</strong><br> Frågan är nu markerad som hanterad och visas nu under 'Hanterade frågor' längre ner på sidan.",
         "fragasvar.marked.as.ohanterad" : "<strong>Frågan är nu markerad som ohanterad</strong><br> Den visas nu under 'Ohanterade frågor' längre upp på sidan.",
         "fragasvar.marked.as.hanterad" : "<strong>Frågan är nu markerad som hanterad</strong><br> Den visas nu under 'Hanterade frågor' längre ner på sidan."
