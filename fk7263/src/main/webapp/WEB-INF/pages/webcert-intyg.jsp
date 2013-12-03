@@ -41,6 +41,13 @@
 <link rel="stylesheet" href="/css/inera-webcert.css">
 <link rel="stylesheet" href="<c:url context="/m/fk7263" value="/webcert/css/inera-certificate.css"/>">
 
+<SCRIPT LANGUAGE="VBScript">
+    Function ControlExists(objectID)
+    on error resume next
+    ControlExists = IsObject(CreateObject(objectID))
+    End Function
+</SCRIPT>
+
 <script type="text/javascript" src="/usercontext.jsp"></script>
   
 <script type="text/javascript">
@@ -100,6 +107,8 @@
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/messages.js"/>"></script>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/services.js"/>"></script>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/fragasvar-module.js"/>"></script>
+
+  <script type="text/javascript" src="<c:url value="/siths.jsp"/>"></script>
 
 </body>
 </html>
