@@ -47,7 +47,7 @@ public class ExternalToInternalConverterTest {
             CertificateContentHolder extUtlatande = scenario.asExternalModelWithHolder();
 
             se.inera.certificate.modules.rli.model.internal.mi.Utlatande actual = converter
-                    .fromExternalToInternal(extUtlatande);
+                    .convert(extUtlatande);
 
             se.inera.certificate.modules.rli.model.internal.mi.Utlatande expected = scenario.asInternalMIModel();
             ReflectionAssert.assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);

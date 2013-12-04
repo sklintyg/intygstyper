@@ -23,10 +23,6 @@ import se.inera.certificate.model.Kod;
 
 public final class InternalModelConverterUtils {
 
-    private InternalModelConverterUtils() {
-
-    }
-
     public static String getValueFromKod(Kod kod) {
         return (kod != null) ? kod.getCode() : null;
     }

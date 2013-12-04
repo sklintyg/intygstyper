@@ -46,7 +46,7 @@ public class InternalToExternalConverterTest {
         for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
             se.inera.certificate.modules.rli.model.internal.wc.Utlatande intUtlatande = scenario.asInternalWCModel();
 
-            Utlatande actual = converter.convertUtlatandeFromInternalToExternal(intUtlatande);
+            Utlatande actual = converter.convert(intUtlatande);
 
             Utlatande expected = scenario.asExternalModel();
             ReflectionAssert.assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);

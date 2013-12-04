@@ -40,7 +40,7 @@ public class ExternalToTransportConverterTest {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande = scenario.asExternalModel();
 
-            Utlatande actual = converter.externalToTransport(extUtlatande);
+            Utlatande actual = converter.convert(extUtlatande);
 
             Utlatande expected = scenario.asTransportModel();
 

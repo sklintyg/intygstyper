@@ -65,7 +65,7 @@ public class ExternalToInternalConverter {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExternalToInternalConverter.class);
 
-    public Utlatande fromExternalToInternal(CertificateContentHolder certificateContentHolder)
+    public Utlatande convert(CertificateContentHolder certificateContentHolder)
             throws ConverterException {
         se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande = certificateContentHolder
                 .getCertificateContent();

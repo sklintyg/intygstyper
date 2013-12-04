@@ -48,7 +48,7 @@ public class TransportToExternalConverterTest {
         for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
             se.inera.certificate.common.v1.Utlatande utlatande = scenario.asTransportModel();
 
-            Utlatande actual = converter.transportToExternal(utlatande);
+            Utlatande actual = converter.convert(utlatande);
 
             Utlatande expected = scenario.asExternalModel();
             ReflectionAssert.assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);
