@@ -65,6 +65,14 @@ angular
                                 ovrigt : 420
                             // 420 = combined field 13 (and dependencies) limit
                             };
+                            
+                            $scope.$watch('cert.otherData.baseradPaAnnat', function(newVal, oldVal) {
+                            	var totalOvrigtLength = $scope.getTotalOvrigtLength();
+                              if(totalOvrigtLength > $scope.inputLimits.ovrigt){
+                              	// Remove characters over limit from current field
+                              	$scope.cert.otherData.baseradPaAnnat = $scope.cert.otherData.baseradPaAnnat.substr(0,newVal.length - (totalOvrigtLength - $scope.inputLimits.ovrigt));
+                              }
+                            });
 
                             $scope.getTotalOvrigtLength = function() {
                                 var totalOvrigtLength = $scope.cert.kommentar.length + $scope.cert.otherData.baseradPaAnnat.length + $scope.cert.otherData.workingHours25.length
