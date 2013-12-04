@@ -188,7 +188,7 @@
           <configuration>
             <systemProperties>
               <systemProperty>
-                <name>catalina.home</name>
+                <name>catalina.base</name>
                 <value>${project.build.directory}/logs</value>
               </systemProperty>
             </systemProperties>
@@ -266,7 +266,7 @@
               <value>true</value>
             </systemProperty>
             <systemProperty>
-              <name>catalina.home</name>
+              <name>catalina.base</name>
               <value>${project.build.directory}/logs</value>
             </systemProperty>            
           </systemProperties>
@@ -519,7 +519,7 @@
                   <value>true</value>
                 </systemProperty>
                 <systemProperty>
-                  <name>catalina.home</name>
+                  <name>catalina.base</name>
                   <value>${project.build.directory}</value>
                 </systemProperty>             
               </systemProperties>
@@ -556,7 +556,7 @@
                   <value>true</value>
                 </systemProperty>
                 <systemProperty>
-                  <name>catalina.home</name>
+                  <name>catalina.base</name>
                   <value>${project.build.directory}</value>
                 </systemProperty>             
               </systemProperties>
@@ -600,7 +600,7 @@
                   <value>true</value>
                 </systemProperty>
                 <systemProperty>
-                  <name>catalina.home</name>
+                  <name>catalina.base</name>
                   <value>${project.build.directory}</value>
                 </systemProperty>             
               </systemProperties>
