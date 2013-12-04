@@ -43,7 +43,7 @@ public class InternalToExternalConverterTest {
 
     @Test
     public void testConvertUtlatandeFromInternalToExternal() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getInternalWCScenarios("sjuk-?")) {
+        for (Scenario scenario : ScenarioCreator.getInternalWCScenarios("valid-*")) {
             se.inera.certificate.modules.rli.model.internal.wc.Utlatande intUtlatande = scenario.asInternalWCModel();
 
             Utlatande actual = converter.convertUtlatandeFromInternalToExternal(intUtlatande);
@@ -51,5 +51,6 @@ public class InternalToExternalConverterTest {
             Utlatande expected = scenario.asExternalModel();
             ReflectionAssert.assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
+        
     }
 }

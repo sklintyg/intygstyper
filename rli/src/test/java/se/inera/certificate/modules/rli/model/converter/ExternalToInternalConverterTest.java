@@ -43,7 +43,7 @@ public class ExternalToInternalConverterTest {
 
     @Test
     public void testConvertUtlatande() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getExternalScenarios("sjuk-?")) {
+        for (Scenario scenario : ScenarioCreator.getExternalScenarios("valid-*")) {
             CertificateContentHolder extUtlatande = scenario.asExternalModelWithHolder();
 
             se.inera.certificate.modules.rli.model.internal.mi.Utlatande actual = converter

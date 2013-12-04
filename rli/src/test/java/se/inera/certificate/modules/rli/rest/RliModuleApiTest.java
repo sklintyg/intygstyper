@@ -54,13 +54,7 @@ public class RliModuleApiTest {
 
     @Test
     public void testUnmarshallScenarios() throws Exception {
-        /* Sjuk scenarios */
-        for (Scenario scenario : ScenarioCreator.getTransportScenarios("sjuk-?")) {
-            rliModule.unmarshall(scenario.asTransportModel());
-            assertResponseStatus(Status.OK);
-        }
-        /* Gravid scenarios */
-        for (Scenario scenario : ScenarioCreator.getTransportScenarios("gravid-?")) {
+        for (Scenario scenario : ScenarioCreator.getTransportScenarios("valid-*")) {
             rliModule.unmarshall(scenario.asTransportModel());
             assertResponseStatus(Status.OK);
         }
@@ -68,18 +62,14 @@ public class RliModuleApiTest {
 
     @Test(expected = BadRequestException.class)
     public void testUnmarshallBroken() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getTransportScenarios("*-broken")) {
+        for (Scenario scenario : ScenarioCreator.getTransportScenarios("invalid-*")) {
             rliModule.unmarshall(scenario.asTransportModel());
         }
     }
 
     @Test
     public void testMarshall() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getExternalScenarios("sjuk-?")) {
-            rliModule.marshall(scenario.asExternalModel());
-            assertResponseStatus(Status.OK);
-        }
-        for (Scenario scenario : ScenarioCreator.getExternalScenarios("gravid-?")) {
+        for (Scenario scenario : ScenarioCreator.getExternalScenarios("valid-*")) {
             rliModule.marshall(scenario.asExternalModel());
             assertResponseStatus(Status.OK);
         }
@@ -88,11 +78,7 @@ public class RliModuleApiTest {
 
     @Test
     public void testValidate() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getExternalScenarios("sjuk-?")) {
-            rliModule.validate(scenario.asExternalModel());
-            assertResponseStatus(Status.NO_CONTENT);
-        }
-        for (Scenario scenario : ScenarioCreator.getExternalScenarios("gravid-?")) {
+        for (Scenario scenario : ScenarioCreator.getExternalScenarios("valid-*")) {
             rliModule.validate(scenario.asExternalModel());
             assertResponseStatus(Status.NO_CONTENT);
         }
@@ -101,7 +87,7 @@ public class RliModuleApiTest {
     @Test
     public void testValidateWithErrors() throws Exception {
         try {
-            rliModule.validate(ScenarioCreator.getExternalScenario("sjuk-broken").asExternalModel());
+            rliModule.validate(ScenarioCreator.getExternalScenario("invalid-sjuk-1").asExternalModel());
             Assert.fail("Expected BadRequestException");
 
         } catch (BadRequestException e) {
@@ -112,7 +98,7 @@ public class RliModuleApiTest {
     @Test
     public void testPdf() throws Exception {
         CertificateContentHolder holder = new CertificateContentHolder();
-        holder.setCertificateContent(ScenarioCreator.getExternalScenario("sjuk-1").asExternalModel());
+        holder.setCertificateContent(ScenarioCreator.getExternalScenario("valid-sjuk-1").asExternalModel());
         holder.setCertificateContentMeta(new CertificateContentMeta());
 
         rliModule.pdf(holder);
@@ -124,13 +110,7 @@ public class RliModuleApiTest {
     @Test
     public void testConvertExternalToInternal() throws Exception {
         CertificateContentHolder holder = new CertificateContentHolder();
-        for (Scenario scenario : ScenarioCreator.getExternalScenarios("sjuk-?")) {
-            holder.setCertificateContent(scenario.asExternalModel());
-            holder.setCertificateContentMeta(new CertificateContentMeta());
-            rliModule.convertExternalToInternal(holder);
-            assertResponseStatus(Status.OK);
-        }
-        for (Scenario scenario : ScenarioCreator.getExternalScenarios("gravid-?")) {
+        for (Scenario scenario : ScenarioCreator.getExternalScenarios("valid-*")) {
             holder.setCertificateContent(scenario.asExternalModel());
             holder.setCertificateContentMeta(new CertificateContentMeta());
             rliModule.convertExternalToInternal(holder);
@@ -140,7 +120,7 @@ public class RliModuleApiTest {
 
     @Test
     public void testConvertInternalToExternal() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getInternalWCScenarios("sjuk-?")) {
+        for (Scenario scenario : ScenarioCreator.getInternalWCScenarios("valid-*")) {
             rliModule.convertInternalToExternal(scenario.asInternalWCModel());
             assertResponseStatus(Status.OK);
         }
@@ -149,14 +129,7 @@ public class RliModuleApiTest {
     @Test
     public void testRegisterCertificateRoudtrip() throws Exception {
         se.inera.certificate.modules.rli.model.external.Utlatande utlatande;
-        /* Sjuk scenarios */
-        for (Scenario scenario : ScenarioCreator.getTransportScenarios("sjuk-?")) {
-            utlatande = rliModule.unmarshall(scenario.asTransportModel());
-            rliModule.validate(utlatande);
-        }
-
-        /* Gravid scenarios */
-        for (Scenario scenario : ScenarioCreator.getTransportScenarios("gravid-?")) {
+        for (Scenario scenario : ScenarioCreator.getTransportScenarios("valid-*")) {
             utlatande = rliModule.unmarshall(scenario.asTransportModel());
             rliModule.validate(utlatande);
         }

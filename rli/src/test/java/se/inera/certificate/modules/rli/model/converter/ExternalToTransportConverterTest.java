@@ -37,7 +37,7 @@ public class ExternalToTransportConverterTest {
 
     @Test
     public void testConvertUtlatande() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getExternalScenarios("sjuk-?")) {
+        for (Scenario scenario : ScenarioCreator.getExternalScenarios("valid-*")) {
             se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande = scenario.asExternalModel();
 
             Utlatande actual = converter.externalToTransport(extUtlatande);

@@ -40,7 +40,7 @@ public class PdfGeneratorTest {
 
     @Test
     public void testGeneratePdfPatientIsSick() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getInternalMIScenarios("sjuk-?")) {
+        for (Scenario scenario : ScenarioCreator.getInternalMIScenarios("valid-sjuk-?")) {
             byte[] pdf = pdfGen.generatePDF(scenario.asInternalMIModel());
             assertNotNull("Error in scenario " + scenario.getName(), pdf);
             writePdfToFile(pdf);
@@ -49,7 +49,7 @@ public class PdfGeneratorTest {
 
     @Test
     public void testGeneratePdfPatientIsPregnant() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getInternalMIScenarios("gravid-?")) {
+        for (Scenario scenario : ScenarioCreator.getInternalMIScenarios("valid-gravid-?")) {
             byte[] pdf = pdfGen.generatePDF(scenario.asInternalMIModel());
             assertNotNull("Error in scenario " + scenario.getName(), pdf);
             writePdfToFile(pdf);

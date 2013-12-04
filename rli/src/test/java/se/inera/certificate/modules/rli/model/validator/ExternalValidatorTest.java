@@ -42,7 +42,7 @@ public class ExternalValidatorTest {
 
     @Test
     public void testValidate() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getExternalScenarios("sjuk-?")) {
+        for (Scenario scenario : ScenarioCreator.getExternalScenarios("valid-*")) {
             Utlatande utlatande = scenario.asExternalModel();
             List<String> validationErrors = validator.validate(utlatande);
 
@@ -53,7 +53,7 @@ public class ExternalValidatorTest {
 
     @Test
     public void testValidateWithErrors() throws Exception {
-        List<String> validationErrors = validator.validate(ScenarioCreator.getExternalScenario("sjuk-broken")
+        List<String> validationErrors = validator.validate(ScenarioCreator.getExternalScenario("invalid-sjuk-1")
                 .asExternalModel());
 
         assertTrue(!validationErrors.isEmpty());
