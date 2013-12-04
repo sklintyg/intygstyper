@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.rli.model.internal.wc;
+package se.inera.certificate.modules.rli.model.converter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -30,6 +30,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import se.inera.certificate.modules.rli.model.converter.ConverterException;
 import se.inera.certificate.modules.rli.model.converter.WebcertModelFactory;
+import se.inera.certificate.modules.rli.model.internal.wc.Utlatande;
 import se.inera.certificate.modules.rli.rest.dto.CreateNewDraftCertificateHolder;
 
 import com.fasterxml.jackson.core.JsonParseException;
