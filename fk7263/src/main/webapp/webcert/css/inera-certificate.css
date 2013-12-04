@@ -138,8 +138,7 @@ span.help {
 }
 
 .revoked-certificate {
-    background-color: #eeeeee;
-    color: #aaaaaa;
+  color: #aaaaaa;
 }
 .revoked-certificate div.infobox, .revoked-certificate div.infobox h3, .revoked-certificate div.infobox h4{
     background-color: #e5e5e5;
