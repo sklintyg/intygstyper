@@ -21,9 +21,9 @@
     <!--Daily rolling file appender -->
   <appender name="FILE"
     class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>${catalina.home}/logs/fk7263-module.log</file>
+    <file>${catalina.base}/logs/fk7263-module.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${catalina.home}/logs/fk7263-module.%d{yyyy-MM-dd}.log
+      <fileNamePattern>${catalina.base}/logs/fk7263-module.%d{yyyy-MM-dd}.log
       </fileNamePattern>
     </rollingPolicy>
     <encoder>
