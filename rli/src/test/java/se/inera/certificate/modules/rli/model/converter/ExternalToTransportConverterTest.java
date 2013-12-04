@@ -18,9 +18,10 @@
  */
 package se.inera.certificate.modules.rli.model.converter;
 
+import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.unitils.reflectionassert.ReflectionAssert;
 
 import se.inera.certificate.common.v1.Utlatande;
 import se.inera.certificate.modules.rli.utils.Scenario;
@@ -44,7 +45,7 @@ public class ExternalToTransportConverterTest {
 
             Utlatande expected = scenario.asTransportModel();
 
-            ReflectionAssert.assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);
+            assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
     }
 }

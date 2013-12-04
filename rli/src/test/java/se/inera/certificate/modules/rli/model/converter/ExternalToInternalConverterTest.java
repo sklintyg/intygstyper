@@ -18,9 +18,10 @@
  */
 package se.inera.certificate.modules.rli.model.converter;
 
+import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.unitils.reflectionassert.ReflectionAssert;
 
 import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
 import se.inera.certificate.modules.rli.utils.Scenario;
@@ -46,11 +47,10 @@ public class ExternalToInternalConverterTest {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             CertificateContentHolder extUtlatande = scenario.asExternalModelWithHolder();
 
-            se.inera.certificate.modules.rli.model.internal.mi.Utlatande actual = converter
-                    .convert(extUtlatande);
+            se.inera.certificate.modules.rli.model.internal.mi.Utlatande actual = converter.convert(extUtlatande);
 
             se.inera.certificate.modules.rli.model.internal.mi.Utlatande expected = scenario.asInternalMIModel();
-            ReflectionAssert.assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);
+            assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
     }
 }

@@ -18,6 +18,9 @@
  */
 package se.inera.certificate.modules.rli.rest;
 
+import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
+import static se.inera.certificate.modules.rli.utils.ResourceConverterUtils.wrapExternalWithHolder;
+
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -33,6 +36,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
+import se.inera.certificate.modules.rli.model.internal.mi.Utlatande;
 import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
 import se.inera.certificate.modules.rli.utils.Scenario;
 import se.inera.certificate.modules.rli.utils.ScenarioFinder;
@@ -86,25 +90,30 @@ public class RliModuleApiTest {
 
     @Test
     public void testValidateWithErrors() throws Exception {
-        try {
-            rliModule.validate(ScenarioFinder.getExternalScenario("invalid-sjuk-1").asExternalModel());
-            Assert.fail("Expected BadRequestException");
+        for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {
+            try {
+                rliModule.validate(ScenarioFinder.getExternalScenario("invalid-sjuk-1").asExternalModel());
+                Assert.fail("Expected BadRequestException, running scenario " + scenario.getName());
 
-        } catch (BadRequestException e) {
-            Assert.assertFalse(e.getResponse().getEntity().toString().isEmpty());
+            } catch (BadRequestException e) {
+                Assert.assertFalse("Error in scenario " + scenario.getName(), e.getResponse().getEntity().toString()
+                        .isEmpty());
+            }
         }
     }
 
     @Test
     public void testPdf() throws Exception {
-        CertificateContentHolder holder = new CertificateContentHolder();
-        holder.setCertificateContent(ScenarioFinder.getExternalScenario("valid-sjuk-1").asExternalModel());
-        holder.setCertificateContentMeta(new CertificateContentMeta());
+        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
+            CertificateContentHolder holder = scenario.asExternalModelWithHolder();
 
-        rliModule.pdf(holder);
+            rliModule.pdf(holder);
 
-        assertResponseStatus(Status.OK);
-        assertResponseHeader("filename=lakarutlatande_19331122-4400_2013-01-01-130812.pdf", "Content-Disposition");
+            assertResponseStatus(Status.OK);
+            String contentDisposition = getClientResponse().getHeaderString("Content-Disposition");
+            Assert.assertTrue("Error in scenario " + scenario.getName(),
+                    contentDisposition.startsWith("filename=lakarutlatande"));
+        }
     }
 
     @Test
@@ -128,19 +137,20 @@ public class RliModuleApiTest {
 
     @Test
     public void testRegisterCertificateRoudtrip() throws Exception {
-        se.inera.certificate.modules.rli.model.external.Utlatande utlatande;
+        se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande;
+        Utlatande intUtlatande;
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
-            utlatande = rliModule.unmarshall(scenario.asTransportModel());
-            rliModule.validate(utlatande);
+            extUtlatande = rliModule.unmarshall(scenario.asTransportModel());
+            rliModule.validate(extUtlatande);
+            intUtlatande = rliModule.convertExternalToInternal(wrapExternalWithHolder(extUtlatande));
+
+            Utlatande expected = scenario.asInternalMIModel();
+            assertLenientEquals("Error in scenario " + scenario.getName(), expected, intUtlatande);
         }
     }
 
     private void assertResponseStatus(Status status) {
         Assert.assertEquals(status.getStatusCode(), getClientResponse().getStatus());
-    }
-
-    private void assertResponseHeader(String expectedValue, String headerName) {
-        Assert.assertEquals(expectedValue, getClientResponse().getHeaderString(headerName));
     }
 
     private Response getClientResponse() {
