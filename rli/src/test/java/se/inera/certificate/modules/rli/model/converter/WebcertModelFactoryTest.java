@@ -28,9 +28,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
-import se.inera.certificate.modules.rli.model.converter.ConverterException;
-import se.inera.certificate.modules.rli.model.converter.WebcertModelFactory;
-import se.inera.certificate.modules.rli.model.internal.wc.Utlatande;
 import se.inera.certificate.modules.rli.rest.dto.CreateNewDraftCertificateHolder;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -38,7 +35,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class WebcertModelFactoryTest {
-    WebcertModelFactory factory;
+
+    private WebcertModelFactory factory;
 
     @Before
     public void setUp() throws Exception {
@@ -48,7 +46,7 @@ public class WebcertModelFactoryTest {
     @Test
     public void testCreateEditableModel() throws JsonParseException, JsonMappingException, IOException {
         CreateNewDraftCertificateHolder draftCertHolder = new ObjectMapper().readValue(new ClassPathResource(
-                "initial-parameters.json").getFile(), CreateNewDraftCertificateHolder.class);
+                "webcert-model-factory-request.json").getFile(), CreateNewDraftCertificateHolder.class);
 
         se.inera.certificate.modules.rli.model.internal.wc.Utlatande utlatande = null;
 

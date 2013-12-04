@@ -24,7 +24,7 @@ import org.unitils.reflectionassert.ReflectionAssert;
 
 import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
 import se.inera.certificate.modules.rli.utils.Scenario;
-import se.inera.certificate.modules.rli.utils.ScenarioCreator;
+import se.inera.certificate.modules.rli.utils.ScenarioFinder;
 
 /**
  * Unit test for the ExternalToInteralConverter. This test is Spring configured.
@@ -43,7 +43,7 @@ public class ExternalToInternalConverterTest {
 
     @Test
     public void testConvertUtlatande() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getExternalScenarios("valid-*")) {
+        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             CertificateContentHolder extUtlatande = scenario.asExternalModelWithHolder();
 
             se.inera.certificate.modules.rli.model.internal.mi.Utlatande actual = converter

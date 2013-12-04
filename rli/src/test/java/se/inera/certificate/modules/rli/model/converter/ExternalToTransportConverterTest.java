@@ -24,7 +24,7 @@ import org.unitils.reflectionassert.ReflectionAssert;
 
 import se.inera.certificate.common.v1.Utlatande;
 import se.inera.certificate.modules.rli.utils.Scenario;
-import se.inera.certificate.modules.rli.utils.ScenarioCreator;
+import se.inera.certificate.modules.rli.utils.ScenarioFinder;
 
 public class ExternalToTransportConverterTest {
 
@@ -37,7 +37,7 @@ public class ExternalToTransportConverterTest {
 
     @Test
     public void testConvertUtlatande() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getExternalScenarios("valid-*")) {
+        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande = scenario.asExternalModel();
 
             Utlatande actual = converter.externalToTransport(extUtlatande);

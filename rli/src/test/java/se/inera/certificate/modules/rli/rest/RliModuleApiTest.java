@@ -35,7 +35,7 @@ import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
 import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
 import se.inera.certificate.modules.rli.utils.Scenario;
-import se.inera.certificate.modules.rli.utils.ScenarioCreator;
+import se.inera.certificate.modules.rli.utils.ScenarioFinder;
 
 /**
  * Sets up an actual HTTP server and client to test the {@link RliModuleApi} service. This is the place to verify that
@@ -54,7 +54,7 @@ public class RliModuleApiTest {
 
     @Test
     public void testUnmarshallScenarios() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getTransportScenarios("valid-*")) {
+        for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
             rliModule.unmarshall(scenario.asTransportModel());
             assertResponseStatus(Status.OK);
         }
@@ -62,14 +62,14 @@ public class RliModuleApiTest {
 
     @Test(expected = BadRequestException.class)
     public void testUnmarshallBroken() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getTransportScenarios("invalid-*")) {
+        for (Scenario scenario : ScenarioFinder.getTransportScenarios("invalid-*")) {
             rliModule.unmarshall(scenario.asTransportModel());
         }
     }
 
     @Test
     public void testMarshall() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getExternalScenarios("valid-*")) {
+        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             rliModule.marshall(scenario.asExternalModel());
             assertResponseStatus(Status.OK);
         }
@@ -78,7 +78,7 @@ public class RliModuleApiTest {
 
     @Test
     public void testValidate() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getExternalScenarios("valid-*")) {
+        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             rliModule.validate(scenario.asExternalModel());
             assertResponseStatus(Status.NO_CONTENT);
         }
@@ -87,7 +87,7 @@ public class RliModuleApiTest {
     @Test
     public void testValidateWithErrors() throws Exception {
         try {
-            rliModule.validate(ScenarioCreator.getExternalScenario("invalid-sjuk-1").asExternalModel());
+            rliModule.validate(ScenarioFinder.getExternalScenario("invalid-sjuk-1").asExternalModel());
             Assert.fail("Expected BadRequestException");
 
         } catch (BadRequestException e) {
@@ -98,7 +98,7 @@ public class RliModuleApiTest {
     @Test
     public void testPdf() throws Exception {
         CertificateContentHolder holder = new CertificateContentHolder();
-        holder.setCertificateContent(ScenarioCreator.getExternalScenario("valid-sjuk-1").asExternalModel());
+        holder.setCertificateContent(ScenarioFinder.getExternalScenario("valid-sjuk-1").asExternalModel());
         holder.setCertificateContentMeta(new CertificateContentMeta());
 
         rliModule.pdf(holder);
@@ -110,7 +110,7 @@ public class RliModuleApiTest {
     @Test
     public void testConvertExternalToInternal() throws Exception {
         CertificateContentHolder holder = new CertificateContentHolder();
-        for (Scenario scenario : ScenarioCreator.getExternalScenarios("valid-*")) {
+        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             holder.setCertificateContent(scenario.asExternalModel());
             holder.setCertificateContentMeta(new CertificateContentMeta());
             rliModule.convertExternalToInternal(holder);
@@ -120,7 +120,7 @@ public class RliModuleApiTest {
 
     @Test
     public void testConvertInternalToExternal() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getInternalWCScenarios("valid-*")) {
+        for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
             rliModule.convertInternalToExternal(scenario.asInternalWCModel());
             assertResponseStatus(Status.OK);
         }
@@ -129,7 +129,7 @@ public class RliModuleApiTest {
     @Test
     public void testRegisterCertificateRoudtrip() throws Exception {
         se.inera.certificate.modules.rli.model.external.Utlatande utlatande;
-        for (Scenario scenario : ScenarioCreator.getTransportScenarios("valid-*")) {
+        for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
             utlatande = rliModule.unmarshall(scenario.asTransportModel());
             rliModule.validate(utlatande);
         }
