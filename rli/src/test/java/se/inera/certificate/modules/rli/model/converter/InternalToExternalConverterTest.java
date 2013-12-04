@@ -18,13 +18,14 @@
  */
 package se.inera.certificate.modules.rli.model.converter;
 
+import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.unitils.reflectionassert.ReflectionAssert;
 
 import se.inera.certificate.modules.rli.model.external.Utlatande;
 import se.inera.certificate.modules.rli.utils.Scenario;
-import se.inera.certificate.modules.rli.utils.ScenarioCreator;
+import se.inera.certificate.modules.rli.utils.ScenarioFinder;
 
 /**
  * Unit test for InternalToExternalConverter
@@ -43,13 +44,13 @@ public class InternalToExternalConverterTest {
 
     @Test
     public void testConvertUtlatandeFromInternalToExternal() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getInternalWCScenarios("valid-*")) {
+        for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
             se.inera.certificate.modules.rli.model.internal.wc.Utlatande intUtlatande = scenario.asInternalWCModel();
 
-            Utlatande actual = converter.convertUtlatandeFromInternalToExternal(intUtlatande);
+            Utlatande actual = converter.convert(intUtlatande);
 
             Utlatande expected = scenario.asExternalModel();
-            ReflectionAssert.assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);
+            assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
         
     }

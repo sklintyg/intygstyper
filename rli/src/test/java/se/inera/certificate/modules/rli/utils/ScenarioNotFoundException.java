@@ -1,5 +1,8 @@
 package se.inera.certificate.modules.rli.utils;
 
+/**
+ * Thrown when an expected scenario wasn't found.
+ */
 public class ScenarioNotFoundException extends Exception {
 
     private static final long serialVersionUID = 2092187161098644931L;

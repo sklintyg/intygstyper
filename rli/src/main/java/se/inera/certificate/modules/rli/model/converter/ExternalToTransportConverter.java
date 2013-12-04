@@ -58,11 +58,7 @@ public class ExternalToTransportConverter {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExternalToTransportConverter.class);
 
-    public ExternalToTransportConverter() {
-
-    }
-
-    public Utlatande externalToTransport(se.inera.certificate.modules.rli.model.external.Utlatande source)
+    public Utlatande convert(se.inera.certificate.modules.rli.model.external.Utlatande source)
             throws ConverterException {
 
         LOG.debug("Converting Utlatande '{}' from external to transport", source.getId());
@@ -101,7 +97,7 @@ public class ExternalToTransportConverter {
         return transportModel;
     }
 
-    List<RekommendationType> convertRekommendationer(List<Rekommendation> source) {
+    private List<RekommendationType> convertRekommendationer(List<Rekommendation> source) {
         LOG.trace("Starting convertRekommendationer");
 
         List<RekommendationType> rekommendationTypes = new ArrayList<RekommendationType>();
@@ -113,7 +109,7 @@ public class ExternalToTransportConverter {
         return rekommendationTypes;
     }
 
-    RekommendationType convertRekommendation(Rekommendation source) {
+    private RekommendationType convertRekommendation(Rekommendation source) {
         if (source == null) {
             LOG.trace("Rekommendation was null, could not convert");
             return null;
@@ -126,7 +122,7 @@ public class ExternalToTransportConverter {
         return rType;
     }
 
-    List<ObservationType> convertObservationer(List<Observation> source) {
+    private List<ObservationType> convertObservationer(List<Observation> source) {
         LOG.trace("Starting convertObservationer");
         if (source == null) {
             LOG.trace("List<Observation> was null, could not convert");
@@ -141,7 +137,7 @@ public class ExternalToTransportConverter {
         return observationTypes;
     }
 
-    ObservationType convertObservation(Observation source) {
+    private ObservationType convertObservation(Observation source) {
         if (source == null) {
             LOG.trace("Observation was null, could not convert");
             return null;
@@ -155,7 +151,7 @@ public class ExternalToTransportConverter {
         return observationType;
     }
 
-    List<UtforarrollType> convertUtforarroller(List<Utforarroll> source) {
+    private List<UtforarrollType> convertUtforarroller(List<Utforarroll> source) {
         LOG.trace("Starting convertUtforarroller");
         if (source == null) {
             LOG.trace("Utforarroll list was null, could not convert");
@@ -170,7 +166,7 @@ public class ExternalToTransportConverter {
         return converted;
     }
 
-    UtforarrollType convertUtforarroll(Utforarroll source) {
+    private UtforarrollType convertUtforarroll(Utforarroll source) {
         if (source == null) {
             LOG.trace("Utforarroll was null, could not convert");
             return null;
@@ -182,7 +178,7 @@ public class ExternalToTransportConverter {
         return utforsAv;
     }
 
-    HosPersonalType convertHosPersonal(HosPersonal source) {
+    private HosPersonalType convertHosPersonal(HosPersonal source) {
         if (source == null) {
             LOG.trace("HosPersonal was null, could not convert");
             return null;
@@ -206,7 +202,7 @@ public class ExternalToTransportConverter {
         return pdi;
     }
 
-    List<AktivitetType> convertAktiviteter(List<Aktivitet> source) {
+    private List<AktivitetType> convertAktiviteter(List<Aktivitet> source) {
         LOG.trace("Starting convertAktiviteter");
         if (source == null) {
             LOG.trace("Aktivitet list was null, could not convert");
@@ -221,7 +217,7 @@ public class ExternalToTransportConverter {
         return converted;
     }
 
-    AktivitetType convertAktivitet(Aktivitet source) {
+    private AktivitetType convertAktivitet(Aktivitet source) {
         if (source == null) {
             LOG.trace("Aktivitet was null, could not convert");
             return null;
@@ -289,7 +285,7 @@ public class ExternalToTransportConverter {
         return arrangemang;
     }
 
-    PatientType convertPatient(Patient source) {
+    private PatientType convertPatient(Patient source) {
         if (source == null) {
             LOG.trace("Patient was null, could not convert");
             return null;
@@ -317,7 +313,7 @@ public class ExternalToTransportConverter {
         return patientType;
     }
 
-    List<PatientRelationType> convertPatientRelations(List<PatientRelation> source) {
+    private List<PatientRelationType> convertPatientRelations(List<PatientRelation> source) {
         LOG.trace("Starting convert in convertPatientRelations");
         if (source == null) {
             LOG.trace("PatientRelation was null, could not convert");

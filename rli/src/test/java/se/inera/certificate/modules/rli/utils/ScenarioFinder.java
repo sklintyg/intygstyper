@@ -12,36 +12,75 @@ import org.apache.commons.io.filefilter.WildcardFileFilter;
 import se.inera.certificate.common.v1.Utlatande;
 import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
 
-public class ScenarioCreator {
+/**
+ * Finds and creates scenarios based on scenario files placed in src/test/resources.
+ */
+public class ScenarioFinder {
 
-    public static final File TRANSPORT_MODEL_PATH = new File("src/test/resources/scenarios/transport");
+    private static final File TRANSPORT_MODEL_PATH = new File("src/test/resources/scenarios/transport");
 
-    public static final File EXTERNAL_MODEL_PATH = new File("src/test/resources/scenarios/external");
+    private static final File EXTERNAL_MODEL_PATH = new File("src/test/resources/scenarios/external");
 
-    public static final File INTERNAL_MODEL_MI_PATH = new File("src/test/resources/scenarios/internal-mi");
+    private static final File INTERNAL_MODEL_MI_PATH = new File("src/test/resources/scenarios/internal-mi");
 
-    public static final File INTERNAL_MODEL_WC_PATH = new File("src/test/resources/scenarios/internal-wc");
+    private static final File INTERNAL_MODEL_WC_PATH = new File("src/test/resources/scenarios/internal-wc");
 
-    public static final String TRANSPORT_MODEL_EXT = ".xml";
+    private static final String TRANSPORT_MODEL_EXT = ".xml";
 
-    public static final String EXTERNAL_MODEL_EXT = ".json";
+    private static final String EXTERNAL_MODEL_EXT = ".json";
 
-    public static final String INTERNAL_MODEL_MI_EXT = ".json";
+    private static final String INTERNAL_MODEL_MI_EXT = ".json";
 
-    public static final String INTERNAL_MODEL_WC_EXT = ".json";
+    private static final String INTERNAL_MODEL_WC_EXT = ".json";
 
+    /**
+     * Finds the specified transport scenarios that matches the wildcard string.
+     * 
+     * @param scenarioWithWildcards
+     *            A wildcard string matching scenarios. '*' and '?' can be used.
+     * @return A list of matching transport scenarios.
+     * @throws ScenarioNotFoundException
+     *             If no scenarios could be found.
+     */
     public static List<Scenario> getTransportScenarios(String scenarioWithWildcards) throws ScenarioNotFoundException {
         return getScenarios(scenarioWithWildcards + TRANSPORT_MODEL_EXT, TRANSPORT_MODEL_PATH, "transport");
     }
 
+    /**
+     * Finds the specified external scenarios that matches the wildcard string.
+     * 
+     * @param scenarioWithWildcards
+     *            A wildcard string matching scenarios. '*' and '?' can be used.
+     * @return A list of matching external scenarios.
+     * @throws ScenarioNotFoundException
+     *             If no scenarios could be found.
+     */
     public static List<Scenario> getExternalScenarios(String scenarioWithWildcards) throws ScenarioNotFoundException {
         return getScenarios(scenarioWithWildcards + EXTERNAL_MODEL_EXT, EXTERNAL_MODEL_PATH, "external");
     }
 
+    /**
+     * Finds the specified internal Mina Intyg scenarios that matches the wildcard string.
+     * 
+     * @param scenarioWithWildcards
+     *            A wildcard string matching scenarios. '*' and '?' can be used.
+     * @return A list of matching internal Mina Intyg scenarios.
+     * @throws ScenarioNotFoundException
+     *             If no scenarios could be found.
+     */
     public static List<Scenario> getInternalMIScenarios(String scenarioWithWildcards) throws ScenarioNotFoundException {
         return getScenarios(scenarioWithWildcards + INTERNAL_MODEL_MI_EXT, INTERNAL_MODEL_MI_PATH, "internal MI");
     }
 
+    /**
+     * Finds the specified inernal WebCert scenarios that matches the wildcard string.
+     * 
+     * @param scenarioWithWildcards
+     *            A wildcard string matching scenarios. '*' and '?' can be used.
+     * @return A list of matching internal WebCert scenarios.
+     * @throws ScenarioNotFoundException
+     *             If no scenarios could be found.
+     */
     public static List<Scenario> getInternalWCScenarios(String scenarioWithWildcards) throws ScenarioNotFoundException {
         return getScenarios(scenarioWithWildcards + INTERNAL_MODEL_WC_EXT, INTERNAL_MODEL_WC_PATH, "internal WC");
     }
@@ -61,23 +100,59 @@ public class ScenarioCreator {
         return result;
     }
 
+    /**
+     * Finds the specified transport scenario matching the name.
+     * 
+     * @param filename
+     *            A name matching a scenario.
+     * @return A matching transport scenario.
+     * @throws ScenarioNotFoundException
+     *             If no scenario could be found.
+     */
     public static Scenario getTransportScenario(String filename) throws ScenarioNotFoundException {
         return getScenario(filename + TRANSPORT_MODEL_EXT, TRANSPORT_MODEL_PATH, "transport");
     }
 
+    /**
+     * Finds the specified external scenario matching the name.
+     * 
+     * @param filename
+     *            A name matching a scenario.
+     * @return A matching external scenario.
+     * @throws ScenarioNotFoundException
+     *             If no scenario could be found.
+     */
     public static Scenario getExternalScenario(String filename) throws ScenarioNotFoundException {
         return getScenario(filename + EXTERNAL_MODEL_EXT, EXTERNAL_MODEL_PATH, "external");
     }
 
+    /**
+     * Finds the specified internal Mina Intyg scenario matching the name.
+     * 
+     * @param filename
+     *            A name matching a scenario.
+     * @return A matching internal Mina Intyg scenario.
+     * @throws ScenarioNotFoundException
+     *             If no scenario could be found.
+     */
     public static Scenario getInternalMIScenario(String filename) throws ScenarioNotFoundException {
         return getScenario(filename + INTERNAL_MODEL_MI_EXT, INTERNAL_MODEL_MI_PATH, "internal MI");
     }
 
+    /**
+     * Finds the specified internal WebCert scenario matching the name.
+     * 
+     * @param filename
+     *            A name matching a scenario.
+     * @return A matching internal WebCert scenario.
+     * @throws ScenarioNotFoundException
+     *             If no scenario could be found.
+     */
     public static Scenario getInternalWCScenario(String filename) throws ScenarioNotFoundException {
         return getScenario(filename + INTERNAL_MODEL_WC_EXT, INTERNAL_MODEL_WC_PATH, "internal WC");
     }
 
-    public static Scenario getScenario(String filename, File scenarioPath, String model)
+    private static Scenario getScenario(String filename, File scenarioPath, String model)
             throws ScenarioNotFoundException {
         File file = new File(scenarioPath, filename);
         if (!file.exists() || !file.isFile()) {
@@ -87,19 +162,29 @@ public class ScenarioCreator {
         return new FileBasedScenario(file);
     }
 
+    /**
+     * Scenario implementation using files.
+     */
     private static class FileBasedScenario implements Scenario {
 
+        /** The file that represents the current scenario. */
         private final File scenarioFile;
 
         private FileBasedScenario(File scenarioFile) {
             this.scenarioFile = scenarioFile;
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public String getName() {
             return FilenameUtils.getBaseName(scenarioFile.getName());
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public Utlatande asTransportModel() throws ScenarioNotFoundException {
             try {
@@ -109,6 +194,9 @@ public class ScenarioCreator {
             }
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public se.inera.certificate.modules.rli.model.external.Utlatande asExternalModel()
                 throws ScenarioNotFoundException {
@@ -119,6 +207,9 @@ public class ScenarioCreator {
             }
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public CertificateContentHolder asExternalModelWithHolder() throws ScenarioNotFoundException {
             try {
@@ -128,6 +219,9 @@ public class ScenarioCreator {
             }
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public se.inera.certificate.modules.rli.model.internal.mi.Utlatande asInternalMIModel()
                 throws ScenarioNotFoundException {
@@ -138,6 +232,9 @@ public class ScenarioCreator {
             }
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public se.inera.certificate.modules.rli.model.internal.wc.Utlatande asInternalWCModel()
                 throws ScenarioNotFoundException {

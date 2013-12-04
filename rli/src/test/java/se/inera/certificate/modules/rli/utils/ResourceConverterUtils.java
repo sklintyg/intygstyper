@@ -26,10 +26,14 @@ public class ResourceConverterUtils {
     }
 
     public static CertificateContentHolder toExternalWithHolder(File resource) throws IOException {
+        return wrapExternalWithHolder(toExternal(resource));
+    }
+
+    public static CertificateContentHolder wrapExternalWithHolder(
+            se.inera.certificate.modules.rli.model.external.Utlatande externalModel) throws IOException {
         CertificateContentHolder result = new CertificateContentHolder();
 
-        result.setCertificateContent(OBJECT_MAPPER.readValue(resource,
-                se.inera.certificate.modules.rli.model.external.Utlatande.class));
+        result.setCertificateContent(externalModel);
 
         CertificateContentMeta meta = new CertificateContentMeta();
         meta.setId(result.getCertificateContent().getId().getRoot());

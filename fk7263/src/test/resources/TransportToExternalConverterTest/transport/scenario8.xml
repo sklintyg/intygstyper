@@ -21,9 +21,7 @@
 
 	<skapadAv>
 		<personal-id root="1.2.752.129.2.1.4.1" extension="Personal HSA-ID" />
-		<fullstandigtNamn>
-			Dr Doktor
-		</fullstandigtNamn>
+		<fullstandigtNamn>Dr Doktor</fullstandigtNamn>
 		<enhet>
 			<enhets-id root="1.2.752.129.2.1.4.1" extension="enhetsid" />
 			<arbetsplatskod root="1.2.752.29.4.71"
@@ -65,15 +63,13 @@
 	<observation>
 		<observationskategori code="b"
 			codeSystem="1.2.752.116.1.1.3.1.1" codeSystemName="ICF" />
-		<beskrivning>Funktionsnedsättning - observationer
-		</beskrivning>
+		<beskrivning>Funktionsnedsättning - observationer</beskrivning>
 	</observation>
 
 	<observation>
 		<observationskategori code="d"
 			codeSystem="1.2.752.116.1.1.3.1.1" codeSystemName="ICF" />
-		<beskrivning> Aktivitetsbegränsning
-		</beskrivning>
+		<beskrivning>Aktivitetsbegränsning</beskrivning>
 	</observation>
 
 	<observation>

@@ -18,13 +18,14 @@
  */
 package se.inera.certificate.modules.rli.model.converter;
 
+import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.unitils.reflectionassert.ReflectionAssert;
 
 import se.inera.certificate.modules.rli.model.external.Utlatande;
 import se.inera.certificate.modules.rli.utils.Scenario;
-import se.inera.certificate.modules.rli.utils.ScenarioCreator;
+import se.inera.certificate.modules.rli.utils.ScenarioFinder;
 
 /**
  * Test class for TransportToExternal, contains methods for setting up Utlatande using both the transport model and the
@@ -45,13 +46,13 @@ public class TransportToExternalConverterTest {
 
     @Test
     public void testTransportToExternal() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getInternalWCScenarios("valid-*")) {
+        for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
             se.inera.certificate.common.v1.Utlatande utlatande = scenario.asTransportModel();
 
-            Utlatande actual = converter.transportToExternal(utlatande);
+            Utlatande actual = converter.convert(utlatande);
 
             Utlatande expected = scenario.asExternalModel();
-            ReflectionAssert.assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);
+            assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
     }
 }

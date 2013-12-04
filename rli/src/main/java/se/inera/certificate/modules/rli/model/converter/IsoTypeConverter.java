@@ -33,9 +33,6 @@ import se.inera.certificate.model.Kod;
  */
 public final class IsoTypeConverter {
 
-    private IsoTypeConverter() {
-    }
-
     public static Id toId(II ii) {
         if (ii == null)
             return null;
