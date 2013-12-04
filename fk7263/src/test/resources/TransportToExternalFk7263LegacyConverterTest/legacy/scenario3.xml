@@ -1,9 +1,7 @@
 <lakarutlatande xmlns:ns1="urn:riv:insuranceprocess:healthreporting:mu7263:3"
 	xmlns:ns2="urn:riv:insuranceprocess:healthreporting:2" xmlns="urn:riv:insuranceprocess:healthreporting:mu7263:3">
-	<lakarutlatande-id>6ea04fd0-5fef-4809-823b-efeddf8a4d55
-	</lakarutlatande-id>
-	<typAvUtlatande>Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om
-		allmän försäkring</typAvUtlatande>
+	<lakarutlatande-id>6ea04fd0-5fef-4809-823b-efeddf8a4d55</lakarutlatande-id>
+	<typAvUtlatande>Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring</typAvUtlatande>
 	<kommentar>Det går inte att bedöma</kommentar>
 	<signeringsdatum>2013-03-17T00:00:00</signeringsdatum>
 	<skickatDatum>2013-03-17T00:00:00</skickatDatum>
@@ -51,10 +49,7 @@
 		<arbetsformaga>
 			<prognosangivelse>Det_gar_inte_att_bedomma</prognosangivelse>
 			<arbetsuppgift>
-				<typAvArbetsuppgift>Dirigent
-					Dirigerar en för större orkester på
-					deltid
-				</typAvArbetsuppgift>
+				<typAvArbetsuppgift>Dirigent Dirigerar en för större orkester på deltid</typAvArbetsuppgift>
 			</arbetsuppgift>
 
 			<arbetsformagaNedsattning>
