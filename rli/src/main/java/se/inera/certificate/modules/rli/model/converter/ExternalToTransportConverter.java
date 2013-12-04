@@ -189,7 +189,6 @@ public class ExternalToTransportConverter {
         }
         HosPersonalType hosPersonalType = new HosPersonalType();
         hosPersonalType.setEnhet(convertEnhet(source.getVardenhet()));
-        hosPersonalType.setForskrivarkod(source.getForskrivarkod());
         hosPersonalType.setFullstandigtNamn(source.getNamn());
         hosPersonalType.setPersonalId(IsoTypeConverter.toII(source.getId()));
 

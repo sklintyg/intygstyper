@@ -19,7 +19,6 @@
 package se.inera.certificate.modules.rli.rest;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.ServiceUnavailableException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -76,14 +75,27 @@ public class RliModuleApiTest {
 
     @Test
     public void testMarshall() throws Exception {
-        rliModule.marshall(ScenarioCreator.getExternalScenario("sjuk-1").asExternalModel());
-        assertResponseStatus(Status.OK);
+        for (Scenario scenario : ScenarioCreator.getExternalScenarios("sjuk-?")) {
+            rliModule.marshall(scenario.asExternalModel());
+            assertResponseStatus(Status.OK);
+        }
+        for (Scenario scenario : ScenarioCreator.getExternalScenarios("gravid-?")) {
+            rliModule.marshall(scenario.asExternalModel());
+            assertResponseStatus(Status.OK);
+        }
+
     }
 
     @Test
     public void testValidate() throws Exception {
-        rliModule.validate(ScenarioCreator.getExternalScenario("sjuk-1").asExternalModel());
-        assertResponseStatus(Status.NO_CONTENT);
+        for (Scenario scenario : ScenarioCreator.getExternalScenarios("sjuk-?")) {
+            rliModule.validate(scenario.asExternalModel());
+            assertResponseStatus(Status.NO_CONTENT);
+        }
+        for (Scenario scenario : ScenarioCreator.getExternalScenarios("gravid-?")) {
+            rliModule.validate(scenario.asExternalModel());
+            assertResponseStatus(Status.NO_CONTENT);
+        }
     }
 
     @Test
@@ -112,17 +124,26 @@ public class RliModuleApiTest {
     @Test
     public void testConvertExternalToInternal() throws Exception {
         CertificateContentHolder holder = new CertificateContentHolder();
-        holder.setCertificateContent(ScenarioCreator.getExternalScenario("sjuk-1").asExternalModel());
-        holder.setCertificateContentMeta(new CertificateContentMeta());
-        rliModule.convertExternalToInternal(holder);
-
-        assertResponseStatus(Status.OK);
+        for (Scenario scenario : ScenarioCreator.getExternalScenarios("sjuk-?")) {
+            holder.setCertificateContent(scenario.asExternalModel());
+            holder.setCertificateContentMeta(new CertificateContentMeta());
+            rliModule.convertExternalToInternal(holder);
+            assertResponseStatus(Status.OK);
+        }
+        for (Scenario scenario : ScenarioCreator.getExternalScenarios("gravid-?")) {
+            holder.setCertificateContent(scenario.asExternalModel());
+            holder.setCertificateContentMeta(new CertificateContentMeta());
+            rliModule.convertExternalToInternal(holder);
+            assertResponseStatus(Status.OK);
+        }
     }
 
-    @Test(expected = ServiceUnavailableException.class)
+    @Test
     public void testConvertInternalToExternal() throws Exception {
-        // TODO: Change test when service is implemented
-        rliModule.convertInternalToExternal(new se.inera.certificate.modules.rli.model.internal.mi.Utlatande());
+        for (Scenario scenario : ScenarioCreator.getInternalWCScenarios("sjuk-?")) {
+            rliModule.convertInternalToExternal(scenario.asInternalWCModel());
+            assertResponseStatus(Status.OK);
+        }
     }
 
     @Test

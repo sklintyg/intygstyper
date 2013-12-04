@@ -33,7 +33,6 @@
             "extension": "SE0000000000-ABC123"
         },
         "namn": "Doktor Alban",
-        "forskrivarkod": "ABC123",
         "vardenhet": {
             "id": {
                 "root": "1.2.752.129.2.1.4.1",

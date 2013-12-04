@@ -34,7 +34,7 @@ public class Undersokning {
 
     private String undersokningsplats;
 
-    private KomplikationStyrkt komplikationStyrkt;
+    private String komplikationStyrkt;
 
     private Graviditet graviditet;
 
@@ -84,11 +84,11 @@ public class Undersokning {
         this.undersokningsplats = undersokningPlats;
     }
 
-    public KomplikationStyrkt getKomplikationstyrkt() {
+    public String getKomplikationstyrkt() {
         return komplikationStyrkt;
     }
 
-    public void setKomplikationstyrkt(KomplikationStyrkt komplikationStyrkt) {
+    public void setKomplikationstyrkt(String komplikationStyrkt) {
         this.komplikationStyrkt = komplikationStyrkt;
     }
 

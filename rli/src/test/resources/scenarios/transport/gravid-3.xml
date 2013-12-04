@@ -40,7 +40,6 @@
   <skapadAv>
     <personal-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-ABC123"/>
     <fullstandigtNamn>Doktor Alban</fullstandigtNamn>
-    <forskrivarkod>ABC123</forskrivarkod>
 
     <enhet>
       <enhets-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-1337"/>
@@ -75,7 +74,6 @@
       <antasAv>
         <personal-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-ABC123"/>
         <fullstandigtNamn>Doktor Alban</fullstandigtNamn>
-        <forskrivarkod>ABC123</forskrivarkod>
 
         <enhet>
           <enhets-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-1337"/>
