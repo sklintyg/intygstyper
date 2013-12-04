@@ -10,8 +10,10 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 
+import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.core.io.ClassPathResource;
 
 import se.inera.certificate.fk7263.model.v1.Utlatande;
@@ -46,7 +48,7 @@ public class TransportToExternalConverterTest {
 	}
 
 	@Test
-	public void testConversion() throws JAXBException, IOException {
+	public void testConversion() throws JAXBException, IOException, JSONException {
 
 		// read fk7263 xml from file
 		JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
@@ -60,8 +62,7 @@ public class TransportToExternalConverterTest {
 		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
 				resourceRoot + "maximalt-fk7263.json").getInputStream());
 
-		assertEquals("JSON does not match expectation. Resulting JSON is \n"
-				+ tree.toString() + "\n", expectedTree, tree);
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
 	}
 
 	// Below are tests for different ways of filling out an FK7263-form,
@@ -74,9 +75,10 @@ public class TransportToExternalConverterTest {
 	 * 
 	 * @throws JAXBException
 	 * @throws IOException
+	 * @throws JSONException 
 	 */
 	@Test
-	public void testScenario1() throws JAXBException, IOException {
+	public void testScenario1() throws JAXBException, IOException, JSONException {
 		JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
 				+ "transport/scenario1.xml");
 		Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -87,8 +89,7 @@ public class TransportToExternalConverterTest {
 		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
 				resourceRoot + "transport/scenario1.json").getInputStream());
 
-		assertEquals("JSON does not match expectation. Resulting JSON is \n"
-				+ tree.toString() + "\n", expectedTree, tree);
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
 	}
 
 	/**
@@ -96,9 +97,10 @@ public class TransportToExternalConverterTest {
 	 * 
 	 * @throws JAXBException
 	 * @throws IOException
+	 * @throws JSONException 
 	 */
 	@Test
-	public void testScenario2() throws JAXBException, IOException {
+	public void testScenario2() throws JAXBException, IOException, JSONException {
 		JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
 				+ "transport/scenario2.xml");
 		Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -109,8 +111,7 @@ public class TransportToExternalConverterTest {
 		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
 				resourceRoot + "transport/scenario2.json").getInputStream());
 
-		assertEquals("JSON does not match expectation. Resulting JSON is \n"
-				+ tree.toString() + "\n", expectedTree, tree);
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
 	}
 
 	/**
@@ -118,9 +119,10 @@ public class TransportToExternalConverterTest {
 	 * 
 	 * @throws JAXBException
 	 * @throws IOException
+	 * @throws JSONException 
 	 */
 	@Test
-	public void testScenario3() throws JAXBException, IOException {
+	public void testScenario3() throws JAXBException, IOException, JSONException {
 		JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
 				+ "transport/scenario3.xml");
 		Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -131,8 +133,7 @@ public class TransportToExternalConverterTest {
 		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
 				resourceRoot + "transport/scenario3.json").getInputStream());
 
-		assertEquals("JSON does not match expectation. Resulting JSON is \n"
-				+ tree.toString() + "\n", expectedTree, tree);
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
 	}
 
 	/**
@@ -140,9 +141,10 @@ public class TransportToExternalConverterTest {
 	 * 
 	 * @throws JAXBException
 	 * @throws IOException
+	 * @throws JSONException 
 	 */
 	@Test
-	public void testScenario4() throws JAXBException, IOException {
+	public void testScenario4() throws JAXBException, IOException, JSONException {
 		JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
 				+ "transport/scenario4.xml");
 		Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -153,8 +155,7 @@ public class TransportToExternalConverterTest {
 		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
 				resourceRoot + "transport/scenario4.json").getInputStream());
 
-		assertEquals("JSON does not match expectation. Resulting JSON is \n"
-				+ tree.toString() + "\n", expectedTree, tree);
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
 	}
 
 	/**
@@ -162,9 +163,10 @@ public class TransportToExternalConverterTest {
 	 * 
 	 * @throws JAXBException
 	 * @throws IOException
+	 * @throws JSONException 
 	 */
 	@Test
-	public void testScenario5() throws JAXBException, IOException {
+	public void testScenario5() throws JAXBException, IOException, JSONException {
 		JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
 				+ "transport/scenario5.xml");
 		Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -175,8 +177,7 @@ public class TransportToExternalConverterTest {
 		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
 				resourceRoot + "transport/scenario5.json").getInputStream());
 
-		assertEquals("JSON does not match expectation. Resulting JSON is \n"
-				+ tree.toString() + "\n", expectedTree, tree);
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
 	}
 
 	/**
@@ -184,9 +185,10 @@ public class TransportToExternalConverterTest {
 	 * 
 	 * @throws JAXBException
 	 * @throws IOException
+	 * @throws JSONException 
 	 */
 	@Test
-	public void testScenario6() throws JAXBException, IOException {
+	public void testScenario6() throws JAXBException, IOException, JSONException {
 		JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
 				+ "transport/scenario6.xml");
 		Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -197,8 +199,7 @@ public class TransportToExternalConverterTest {
 		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
 				resourceRoot + "transport/scenario6.json").getInputStream());
 
-		assertEquals("JSON does not match expectation. Resulting JSON is \n"
-				+ tree.toString() + "\n", expectedTree, tree);
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
 	}
 
 	/**
@@ -206,9 +207,10 @@ public class TransportToExternalConverterTest {
 	 * 
 	 * @throws JAXBException
 	 * @throws IOException
+	 * @throws JSONException 
 	 */
 	@Test
-	public void testScenario7() throws JAXBException, IOException {
+	public void testScenario7() throws JAXBException, IOException, JSONException {
 		JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
 				+ "transport/scenario7.xml");
 		Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -219,8 +221,7 @@ public class TransportToExternalConverterTest {
 		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
 				resourceRoot + "transport/scenario7.json").getInputStream());
 
-		assertEquals("JSON does not match expectation. Resulting JSON is \n"
-				+ tree.toString() + "\n", expectedTree, tree);
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
 	}
 
 	/**
@@ -228,9 +229,10 @@ public class TransportToExternalConverterTest {
 	 * 
 	 * @throws JAXBException
 	 * @throws IOException
+	 * @throws JSONException 
 	 */
 	@Test
-	public void testScenario8() throws JAXBException, IOException {
+	public void testScenario8() throws JAXBException, IOException, JSONException {
 		JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
 				+ "transport/scenario8.xml");
 		Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -241,8 +243,7 @@ public class TransportToExternalConverterTest {
 		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
 				resourceRoot + "transport/scenario8.json").getInputStream());
 
-		assertEquals("JSON does not match expectation. Resulting JSON is \n"
-				+ tree.toString() + "\n", expectedTree, tree);
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
 	}
 
 	/**
@@ -251,9 +252,10 @@ public class TransportToExternalConverterTest {
 	 * 
 	 * @throws JAXBException
 	 * @throws IOException
+	 * @throws JSONException 
 	 */
 	@Test
-	public void testScenario9() throws JAXBException, IOException {
+	public void testScenario9() throws JAXBException, IOException, JSONException {
 		JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot+ "transport/scenario9.xml");
 		Fk7263Utlatande externalModel = TransportToExternalConverter.convert(utlatandeElement.getValue());
 
@@ -262,8 +264,7 @@ public class TransportToExternalConverterTest {
 		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
 				resourceRoot + "transport/scenario9.json").getInputStream());
 
-		assertEquals("JSON does not match expectation. Resulting JSON is \n"
-				+ tree.toString() + "\n", expectedTree, tree);
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
 	}
 
 	/**
@@ -272,9 +273,10 @@ public class TransportToExternalConverterTest {
 	 * 
 	 * @throws JAXBException
 	 * @throws IOException
+	 * @throws JSONException 
 	 */
 	@Test
-	public void testScenario10() throws JAXBException, IOException {
+	public void testScenario10() throws JAXBException, IOException, JSONException {
 		JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
 				+ "transport/scenario10.xml");
 		Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -285,8 +287,7 @@ public class TransportToExternalConverterTest {
 		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
 				resourceRoot + "transport/scenario10.json").getInputStream());
 
-		assertEquals("JSON does not match expectation. Resulting JSON is \n"
-				+ tree.toString() + "\n", expectedTree, tree);
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
 	}
 
 	/**
@@ -295,9 +296,10 @@ public class TransportToExternalConverterTest {
 	 * 
 	 * @throws JAXBException
 	 * @throws IOException
+	 * @throws JSONException 
 	 */
 	@Test
-	public void testScenario11() throws JAXBException, IOException {
+	public void testScenario11() throws JAXBException, IOException, JSONException {
 		JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
 				+ "transport/scenario11.xml");
 		Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -308,8 +310,7 @@ public class TransportToExternalConverterTest {
 		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
 				resourceRoot + "transport/scenario11.json").getInputStream());
 
-		assertEquals("JSON does not match expectation. Resulting JSON is \n"
-				+ tree.toString() + "\n", expectedTree, tree);
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
 	}
 
 	/**
@@ -318,9 +319,10 @@ public class TransportToExternalConverterTest {
 	 * 
 	 * @throws JAXBException
 	 * @throws IOException
+	 * @throws JSONException 
 	 */
 	@Test
-	public void testScenario12() throws JAXBException, IOException {
+	public void testScenario12() throws JAXBException, IOException, JSONException {
 		JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
 				+ "transport/scenario12.xml");
 		Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -331,8 +333,7 @@ public class TransportToExternalConverterTest {
 		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
 				resourceRoot + "transport/scenario12.json").getInputStream());
 
-		assertEquals("JSON does not match expectation. Resulting JSON is \n"
-				+ tree.toString() + "\n", expectedTree, tree);
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
 	}
 
 	/**
@@ -341,9 +342,10 @@ public class TransportToExternalConverterTest {
 	 * 
 	 * @throws JAXBException
 	 * @throws IOException
+	 * @throws JSONException 
 	 */
 	@Test
-	public void testScenario13() throws JAXBException, IOException {
+	public void testScenario13() throws JAXBException, IOException, JSONException {
 		JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
 				+ "transport/scenario13.xml");
 		Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -354,7 +356,6 @@ public class TransportToExternalConverterTest {
 		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
 				resourceRoot + "transport/scenario13.json").getInputStream());
 
-		assertEquals("JSON does not match expectation. Resulting JSON is \n"
-				+ tree.toString() + "\n", expectedTree, tree);
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
 	}
 }
