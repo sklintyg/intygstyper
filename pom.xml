@@ -77,6 +77,20 @@
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.14.1</version>
+          <configuration>
+            <argLine>-Dcatalina.base=${project.build.directory}/catalina.base</argLine>
+            <systemProperties>
+              <property>
+                <name>java.awt.headless</name>
+                <value>true</value>
+              </property>
+            </systemProperties>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-release-plugin</artifactId>
           <version>2.4.1</version>
           <configuration>
@@ -167,7 +181,7 @@
             <systemProperties>
               <systemProperty>
                 <name>catalina.base</name>
-                <value>${project.build.directory}/logs</value>
+                <value>${project.build.directory}/catalina.base</value>
               </systemProperty>
             </systemProperties>
           </configuration>
@@ -239,7 +253,7 @@
             </systemProperty>
             <systemProperty>
               <name>catalina.base</name>
-              <value>${project.build.directory}/logs</value>
+              <value>${project.build.directory}/catalina.base</value>
             </systemProperty>            
           </systemProperties>
         </configuration>
@@ -470,7 +484,7 @@
                 </systemProperty>
                 <systemProperty>
                   <name>catalina.base</name>
-                  <value>${project.build.directory}</value>
+                  <value>${project.build.directory}/catalina.base</value>
                 </systemProperty>             
               </systemProperties>
             </configuration>
@@ -507,7 +521,7 @@
                 </systemProperty>
                 <systemProperty>
                   <name>catalina.base</name>
-                  <value>${project.build.directory}</value>
+                  <value>${project.build.directory}/catalina.base</value>
                 </systemProperty>             
               </systemProperties>
             </configuration>
@@ -544,7 +558,7 @@
                 </systemProperty>
                 <systemProperty>
                   <name>catalina.base</name>
-                  <value>${project.build.directory}</value>
+                  <value>${project.build.directory}/catalina.base</value>
                 </systemProperty>             
               </systemProperties>
             </configuration>
