@@ -41,6 +41,13 @@
 <link rel="stylesheet" href="/css/inera-webcert.css">
 <link rel="stylesheet" href="<c:url context="/m/fk7263" value="/webcert/css/inera-certificate.css"/>">
 
+<SCRIPT LANGUAGE="VBScript">
+    Function ControlExists(objectID)
+    on error resume next
+    ControlExists = IsObject(CreateObject(objectID))
+    End Function
+</SCRIPT>
+
 <script type="text/javascript" src="/usercontext.jsp"></script>
   
 <script type="text/javascript">
@@ -59,13 +66,8 @@
 
   <div class="container-fluid">
 	
-	  <div id="wcHeader" wc-header 
-	   is-doctor="{{WC_CONTEXT.lakare}}" 
-	   user-name="{{WC_CONTEXT.namn}}"
-	   caregiver-name="{{WC_CONTEXT.vardgivare[0].namn}}"
-       careunit-name="{{WC_CONTEXT.vardgivare[0].vardenheter[0].namn}}"
-	   default-active="index"> <!-- v0.5. v1.0: unhandled-qa -->
-    </div>
+	  <div id="wcHeader" wc-header user="WC_CONTEXT" default-active="index"> <!-- v0.5. v1.0: unhandled-qa -->
+      </div>
 
 		<noscript>
 		  <h1>
@@ -100,6 +102,8 @@
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/messages.js"/>"></script>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/services.js"/>"></script>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/fragasvar-module.js"/>"></script>
+
+  <script type="text/javascript" src="<c:url value="/siths.jsp"/>"></script>
 
 </body>
 </html>
