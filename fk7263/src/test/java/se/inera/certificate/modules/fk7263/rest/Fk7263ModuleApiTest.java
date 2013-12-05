@@ -33,7 +33,7 @@ public class Fk7263ModuleApiTest {
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
         assertTrue(response.getEntity().toString().contains("Validation failed for intyg"));
         assertTrue(response.getEntity().toString().contains("123456"));
-        assertTrue(response.getEntity().toString().contains("cvc-complex-type.2.4.b"));
+        assertTrue(response.getEntity().toString().contains("cvc-minLength-valid"));
     }
 
     @Test
