@@ -101,7 +101,7 @@
 					<div class="otherText indent" ng-if="basedOnState.check.annanReferens">
 						<span>Ange vad:</span><br />
 						<textarea id="informationBasedOn.otherText"	name="informationBasedOn.otherText" rows='2'
-							class='otherInformation' ng-model="cert.otherData.baseradPaAnnat"></textarea>
+							class='otherInformation' ng-model="cert.otherData.baseradPaAnnat" ng-change="limitOtherField('baseradPaAnnat)"></textarea>
             <div class="counter">
               Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}
             </div>
@@ -159,7 +159,7 @@
 						  <label class="control-label">Förtydligande av diagnos/diagnoser</label><span class="help">?</span>
 						</div>
 						<textarea id="diagnose.clarification" name="diagnose.clarification" rows='5'              
-						  ng-model="cert.diagnosBeskrivning" maxlength="{{inputLimits.diagnosBeskrivning}}"></textarea>
+						  ng-model="cert.diagnosBeskrivning" maxlength="{{inputLimits.diagnosBeskrivning}}" ng-change="limitFieldLength('diagnosBeskrivning')"></textarea>
 						<div class="counter">
 							Tecken kvar: {{inputLimits.diagnosBeskrivning - cert.diagnosBeskrivning.length}}
 						</div>
@@ -182,7 +182,7 @@
 				</h3>
 				<div class="text">
 
-					<textarea id="diseaseCause" name="diseaseCause" rows='5' ng-model="cert.sjukdomsforlopp"></textarea>
+					<textarea id="diseaseCause" name="diseaseCause" rows='5' ng-model="cert.sjukdomsforlopp" ng-change="limitFieldLength('sjukdomsforlopp')"></textarea>
 					<div class="counter">
 						<div>
 							Tecken kvar: {{inputLimits.sjukdomsforlopp - cert.sjukdomsforlopp.length}}
@@ -203,7 +203,7 @@
 
 					<a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
 						title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
-					<textarea id="disabilities" name="disabilities" rows='6' ng-model="cert.funktionsnedsattning" maxlength="{{inputLimits.funktionsnedsattning}}"></textarea>
+					<textarea id="disabilities" name="disabilities" rows='6' ng-model="cert.funktionsnedsattning" maxlength="{{inputLimits.funktionsnedsattning}}" ng-change="limitFieldLength('funktionsnedsattning')"></textarea>
 					<div class="counter">
 						Tecken kvar: {{inputLimits.funktionsnedsattning - cert.funktionsnedsattning.length}}
 					</div>
@@ -220,7 +220,7 @@
 				<div class="text">
 					<a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
             title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
-					<textarea id="activityLimitation" name="activityLimitation"	rows='10' ng-model="cert.aktivitetsbegransning" maxlength="{{inputLimits.aktivitetsbegransning}}"></textarea>
+					<textarea id="activityLimitation" name="activityLimitation"	rows='10' ng-model="cert.aktivitetsbegransning" maxlength="{{inputLimits.aktivitetsbegransning}}" ng-change="limitFieldLength('aktivitetsbegransning')"></textarea>
 					<div class="counter">
 						Tecken kvar: {{inputLimits.aktivitetsbegransning - cert.aktivitetsbegransning.length}}
 					</div>
@@ -244,7 +244,7 @@
 							<div class="indent" ng-if="cert.basedOnWork == 'CURRENT'">
 								<label for="currentWork">Ange aktuella arbetsuppgifter</label>
 								<div class="controls">
-									<textarea id="currentWork" name="currentWork" rows='2' ng-model="cert.nuvarandeArbetsuppgifter" maxlength="{{inputLimits.nuvarandeArbetsuppgifter}}"></textarea>
+									<textarea id="currentWork" name="currentWork" rows='2' ng-model="cert.nuvarandeArbetsuppgifter" maxlength="{{inputLimits.nuvarandeArbetsuppgifter}}" ng-change="limitFieldLength('nuvarandeArbetsuppgifter')"></textarea>
 									<div class="counter">
 										Tecken kvar: {{inputLimits.nuvarandeArbetsuppgifter - cert.nuvarandeArbetsuppgifter.length}}
 									</div>
@@ -293,7 +293,7 @@
 							<div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
 								Arbetstid timmar/vecka: <strong>{{cert.workTime / 4}}</strong>
 							</div>
-							Arbetstidsförläggning (frivilligt) <input type="text" ng-model="cert.otherData.workingHours25" id="capacityForWork.rec25LongerWorkingHours" name="capacityForWork.rec25LongerWorkingHours" value="" class='otherInformation'>
+							Arbetstidsförläggning (frivilligt) <input type="text" ng-model="cert.otherData.workingHours25" id="capacityForWork.rec25LongerWorkingHours" name="capacityForWork.rec25LongerWorkingHours" value="" class='otherInformation' ng-change="limitOtherField('workingHours25')">
 							<span class="counter">Tecken kvar:  {{inputLimits.ovrigt - getTotalOvrigtLength()}}</span>
 							<div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
 						</div>
@@ -311,7 +311,7 @@
             								Arbetstid timmar/vecka: <strong>{{cert.workTime / 2}}</strong>
             							</div>
             							Arbetstidsförläggning (frivilligt) <input type="text"	ng-model="cert.otherData.workingHours50" id="capacityForWork.rec50LongerWorkingHours" name="capacityForWork.rec50LongerWorkingHours" value=""
-            								class='otherInformation'> 
+            								class='otherInformation' ng-change="limitOtherField('workingHours50')"> 
                           <span class="counter">Tecken kvar:  {{inputLimits.ovrigt - getTotalOvrigtLength()}}</span>
 							<div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
 						</div>
@@ -331,7 +331,7 @@
 							Arbetstidsförläggning (frivilligt) <input type="text" ng-model="cert.otherData.workingHours75" 
 								id="capacityForWork.rec75LongerWorkingHours"
 								name="capacityForWork.rec75LongerWorkingHours" value=""
-								class='otherInformation'>
+								class='otherInformation'  ng-change="limitOtherField('workingHours75')">
                            <span class="counter">Tecken kvar:  {{inputLimits.ovrigt - getTotalOvrigtLength()}}</span>
 							<div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
 						</div>
@@ -363,7 +363,7 @@
 				<div class="text">
 					<a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
             title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
-					<textarea id="capacityForWork.text" name="capacityForWork.text"	rows='10' ng-model="cert.arbetsformagaPrognos" maxlength="{{inputLimits.arbetsformagaPrognos}}"></textarea>
+					<textarea id="capacityForWork.text" name="capacityForWork.text"	rows='10' ng-model="cert.arbetsformagaPrognos" maxlength="{{inputLimits.arbetsformagaPrognos}}" ng-change="limitFieldLength('arbetsformagaPrognos')"></textarea>
 					<div class="counter">
 						Tecken kvar: {{inputLimits.arbetsformagaPrognos - cert.arbetsformagaPrognos.length}}
 					</div>
@@ -404,7 +404,7 @@
 	            <label for="capacityForWork4">Går ej att bedöma</label> 
 	            <div class="indent" ng-show="cert.prognosis == 'UNKNOWN'">
 								Förtydligande: <input type="text"	ng-model="cert.otherData.prognosisClarification" id="capacityForWork.forecastText"	name="capacityForWork.forecastText" value=""
-									class='otherInformation'> Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}
+									class='otherInformation' ng-change="limitOtherField('prognosisClarification')"> Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}
 			          <div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
 		          </div>
             </div>
@@ -424,9 +424,8 @@
 				<div class="text">
 
           <div class="control-group">
-						<label class="control-label">Planerad eller pågående
-							behandling eller åtgärd inom sjukvården (ange vilken)</label>
-						<textarea id="measures.current" name="measures.current" rows='1' ng-model="cert.atgardInomSjukvarden" maxlength="{{inputLimits.atgardInomSjukvarden}}"></textarea>
+						<label class="control-label">Planerad eller pågående behandling eller åtgärd inom sjukvården (ange vilken)</label>
+						<textarea id="measures.current" name="measures.current" rows='1' ng-model="cert.atgardInomSjukvarden" maxlength="{{inputLimits.atgardInomSjukvarden}}" ng-change="limitFieldLength('atgardInomSjukvarden')"></textarea>
 						<div class="counter">
 							Tecken kvar: {{inputLimits.atgardInomSjukvarden - cert.atgardInomSjukvarden.length}}
 						</div>
@@ -434,7 +433,7 @@
 
           <div class="control-group">
 						<label class="control-label">Annan åtgärd (ange vilken)</label>
-						<textarea id="measures.other" name="measures.other" rows='1' ng-model="cert.annanAtgard" maxlength="{{inputLimits.annanAtgard}}"></textarea>
+						<textarea id="measures.other" name="measures.other" rows='1' ng-model="cert.annanAtgard" maxlength="{{inputLimits.annanAtgard}}" ng-change="limitFieldLength('annanAtgard')"></textarea>
 						<div class="counter">
 							<div>
 								Tecken kvar: {{inputLimits.annanAtgard - cert.annanAtgard.length}}
@@ -535,7 +534,7 @@
 						class="help">?</span>
 				</h3>
 				<div class="text">
-					<textarea id="otherInformation" name="otherInformation" rows='10'	class='otherInformation' ng-model="cert.kommentar" maxlength="{{inputLimits.ovrigt - getTotalOvrigtLength()}}"></textarea>
+					<textarea id="otherInformation" name="otherInformation" rows='10'	class='otherInformation' ng-model="cert.kommentar" ng-change="limitOtherField('kommentar')"></textarea>
 					<div class="counter">
 						Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}
 					</div>

@@ -65,19 +65,32 @@ angular
                                 ovrigt : 420
                             // 420 = combined field 13 (and dependencies) limit
                             };
+
+                            $scope.limitFieldLength = function(field){
+                            	$scope.cert[field] = $scope.cert[field].substr(0,$scope.inputLimits[field]);
+                            }
                             
-                            $scope.$watch('cert.otherData.baseradPaAnnat', function(newVal, oldVal) {
+                            function limitOvrigtLength(val){
                             	var totalOvrigtLength = $scope.getTotalOvrigtLength();
                               if(totalOvrigtLength > $scope.inputLimits.ovrigt){
                               	// Remove characters over limit from current field
-                              	$scope.cert.otherData.baseradPaAnnat = $scope.cert.otherData.baseradPaAnnat.substr(0,newVal.length - (totalOvrigtLength - $scope.inputLimits.ovrigt));
+                              	return val.substr(0,val.length - (totalOvrigtLength - $scope.inputLimits.ovrigt));
                               }
-                            });
-
+                            	return val;
+                            }
+                            
+                            $scope.limitOtherField = function(field){
+                            	$scope.cert[field] = limitOvrigtLength($scope.cert[field])
+                            }
+                            
                             $scope.getTotalOvrigtLength = function() {
-                                var totalOvrigtLength = $scope.cert.kommentar.length + $scope.cert.otherData.baseradPaAnnat.length + $scope.cert.otherData.workingHours25.length
-                                        + $scope.cert.otherData.workingHours50.length + $scope.cert.otherData.workingHours75.length + $scope.cert.otherData.workingHours100.length
-                                        + $scope.cert.otherData.prognosisClarification.length;
+                                var totalOvrigtLength = $scope.cert.kommentar.length
+                          				+ $scope.cert.otherData.baseradPaAnnat.length
+                          				+ $scope.cert.otherData.workingHours25.length
+                                  + $scope.cert.otherData.workingHours50.length
+                                  + $scope.cert.otherData.workingHours75.length
+                                  + $scope.cert.otherData.workingHours100.length
+                                  + $scope.cert.otherData.prognosisClarification.length;
 
                                 if ($scope.cert.otherData.rehabWhen instanceof Date) {
                                     totalOvrigtLength += ($filter('date')($scope.cert.otherData.rehabWhen, 'yyyy-MM-dd')).length;
