@@ -23,7 +23,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
-import javax.ws.rs.ServiceUnavailableException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -35,10 +34,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.rli.model.converter.ConverterException;
-import se.inera.certificate.modules.rli.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.rli.model.converter.ExternalToInternalConverter;
 import se.inera.certificate.modules.rli.model.converter.ExternalToTransportConverter;
+import se.inera.certificate.modules.rli.model.converter.InternalToExternalConverter;
 import se.inera.certificate.modules.rli.model.converter.TransportToExternalConverter;
+import se.inera.certificate.modules.rli.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
 import se.inera.certificate.modules.rli.pdf.PdfGenerator;
 import se.inera.certificate.modules.rli.pdf.PdfGeneratorException;
@@ -66,6 +66,9 @@ public class RliModuleService implements RliModuleApi {
 
     @Autowired
     private ExternalToInternalConverter externalToInternalConverter;
+    
+    @Autowired
+    private InternalToExternalConverter internalToExternalConverter;
 
     @Autowired
     private PdfGenerator pdfGenerator;
@@ -85,7 +88,7 @@ public class RliModuleService implements RliModuleApi {
     @Override
     public Utlatande unmarshall(se.inera.certificate.common.v1.Utlatande transportModel) {
         try {
-            return transportToExternalConverter.transportToExternal(transportModel);
+            return transportToExternalConverter.convert(transportModel);
 
         } catch (ConverterException e) {
             LOG.error("Could not unmarshall transport model to external model", e);
@@ -99,7 +102,7 @@ public class RliModuleService implements RliModuleApi {
     @Override
     public se.inera.certificate.common.v1.Utlatande marshall(Utlatande externalModel) {
         try {
-            return externalToTransportConverter.externalToTransport(externalModel);
+            return externalToTransportConverter.convert(externalModel);
 
         } catch (ConverterException e) {
             LOG.error("Could not marshall external model to transport model", e);
@@ -131,7 +134,7 @@ public class RliModuleService implements RliModuleApi {
     public byte[] pdf(CertificateContentHolder certificateContentHolder) {
         try {
             se.inera.certificate.modules.rli.model.internal.mi.Utlatande internalUtlatande = externalToInternalConverter
-                    .fromExternalToInternal(certificateContentHolder);
+                    .convert(certificateContentHolder);
 
             httpResponse.addHeader("Content-Disposition",
                     "filename=" + pdfGenerator.generatePdfFilename(internalUtlatande));
@@ -155,7 +158,7 @@ public class RliModuleService implements RliModuleApi {
     public se.inera.certificate.modules.rli.model.internal.mi.Utlatande convertExternalToInternal(
             CertificateContentHolder certificateContentHolder) {
         try {
-            return externalToInternalConverter.fromExternalToInternal(certificateContentHolder);
+            return externalToInternalConverter.convert(certificateContentHolder);
 
         } catch (ConverterException e) {
             LOG.error("Could not convert external model to internal model", e);
@@ -167,10 +170,14 @@ public class RliModuleService implements RliModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public se.inera.certificate.modules.rli.model.internal.mi.Utlatande convertInternalToExternal(
-            se.inera.certificate.modules.rli.model.internal.mi.Utlatande internalModel) {
-        // TODO: Implement when conversion from an internal model i required.
-        throw new ServiceUnavailableException();
+    public se.inera.certificate.modules.rli.model.external.Utlatande convertInternalToExternal(
+            se.inera.certificate.modules.rli.model.internal.wc.Utlatande internalModel) {
+        try {
+            return internalToExternalConverter.convert(internalModel);
+        } catch (ConverterException e) {
+            LOG.error("Could not convert external model to internal model", e);
+            throw new BadRequestException(e);
+        }
     }
 
     /**

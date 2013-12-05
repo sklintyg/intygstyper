@@ -55,10 +55,6 @@ public class TransportToExternalConverter {
 
     private static final Logger LOG = LoggerFactory.getLogger(TransportToExternalConverter.class);
 
-    public TransportToExternalConverter() {
-
-    }
-
     /**
      * Converts from the transport format (se.inera.certificate.common.v1.Utlatande) to the external format
      * (se.inera.certificate.modules.rli.model.external.Utlatande).
@@ -68,7 +64,7 @@ public class TransportToExternalConverter {
      * @return se.inera.certificate.modules.rli.model.external.Utlatande
      * @throws ConverterException
      */
-    public Utlatande transportToExternal(se.inera.certificate.common.v1.Utlatande source) throws ConverterException {
+    public Utlatande convert(se.inera.certificate.common.v1.Utlatande source) throws ConverterException {
 
         LOG.debug("Converting Utlatande '{}' from transport to external", source.getUtlatandeId());
 
@@ -109,7 +105,7 @@ public class TransportToExternalConverter {
      * @return List of Rekommendation
      * @throws ConverterException
      */
-    List<Rekommendation> convertRekommendationer(List<RekommendationType> source) throws ConverterException {
+    private List<Rekommendation> convertRekommendationer(List<RekommendationType> source) throws ConverterException {
         LOG.trace("Converting rekommendationer");
 
         List<Rekommendation> rekommendationer = new ArrayList<Rekommendation>();
@@ -150,7 +146,7 @@ public class TransportToExternalConverter {
      * @return List of objects of type Observation
      * @throws ConverterException
      */
-    List<Observation> convertObservations(List<ObservationType> source) throws ConverterException {
+    private List<Observation> convertObservations(List<ObservationType> source) throws ConverterException {
 
         LOG.trace("Converting observationer");
 
@@ -199,7 +195,7 @@ public class TransportToExternalConverter {
      * @return List of Utforarroll
      * @throws ConverterException
      */
-    List<Utforarroll> convertUtforarroller(List<UtforarrollType> source) throws ConverterException {
+    private List<Utforarroll> convertUtforarroller(List<UtforarrollType> source) throws ConverterException {
         LOG.trace("Converting utforarroller");
 
         List<Utforarroll> utforsAvs = new ArrayList<>();
@@ -242,7 +238,7 @@ public class TransportToExternalConverter {
      * @return import se.inera.certificate.modules.rli.model.external.Arrangemang
      * @throws ConverterException
      */
-    Arrangemang convertArrangemang(se.inera.certificate.rli.v1.Arrangemang source) throws ConverterException {
+    private Arrangemang convertArrangemang(se.inera.certificate.rli.v1.Arrangemang source) throws ConverterException {
         LOG.trace("Converting arrangemang");
 
         if (source == null) {
@@ -278,7 +274,7 @@ public class TransportToExternalConverter {
      * @return a List containing Aktiviteter
      * @throws ConverterException
      */
-    List<Aktivitet> convertAktiviteter(List<AktivitetType> source) throws ConverterException {
+    private List<Aktivitet> convertAktiviteter(List<AktivitetType> source) throws ConverterException {
 
         LOG.trace("Converting aktiviteter");
 
@@ -337,7 +333,7 @@ public class TransportToExternalConverter {
      * @return HosPersonal, or null if source is null
      * @throws ConverterException
      */
-    HosPersonal convertHosPersonal(HosPersonalType source) throws ConverterException {
+    private HosPersonal convertHosPersonal(HosPersonalType source) throws ConverterException {
 
         LOG.trace("Converting HosPersonal");
         if (source == null) {
@@ -370,7 +366,7 @@ public class TransportToExternalConverter {
      * @return Patient, or null if source is null
      * @throws ConverterException
      */
-    Patient convertPatient(PatientType source) throws ConverterException {
+    private Patient convertPatient(PatientType source) throws ConverterException {
         LOG.trace("Converting patient");
 
         if (source == null) {
@@ -433,7 +429,7 @@ public class TransportToExternalConverter {
      * @throws ConverterException
      */
 
-    Vardenhet convertEnhet(EnhetType source) throws ConverterException {
+    private Vardenhet convertEnhet(EnhetType source) throws ConverterException {
         LOG.trace("Converting enhet");
         if (source == null) {
             throw new ConverterException();
@@ -460,7 +456,7 @@ public class TransportToExternalConverter {
      * @return Vardgivare, or null if source is null
      * @throws ConverterException
      */
-    Vardgivare convertVardgivare(VardgivareType source) throws ConverterException {
+    private Vardgivare convertVardgivare(VardgivareType source) throws ConverterException {
 
         LOG.trace("Converting vardgivare");
         if (source == null) {
@@ -472,5 +468,4 @@ public class TransportToExternalConverter {
 
         return vardgivare;
     }
-
 }

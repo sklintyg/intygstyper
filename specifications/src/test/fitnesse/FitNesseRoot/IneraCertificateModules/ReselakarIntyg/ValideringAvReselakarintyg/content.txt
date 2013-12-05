@@ -1,6 +1,0 @@
-!1 Validering av ett reseläkarintyg.
-
-|Validera Rese intyg|
-|typ|intyg|fel?|kommentar|
-|rli|rli-example-1.json|200|Inga fel|
-|rli|external-missing-fields.json|400|Saknar obligatoriska fält|

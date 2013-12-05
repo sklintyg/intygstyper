@@ -28,7 +28,7 @@ import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
 import se.inera.certificate.modules.rli.utils.Scenario;
-import se.inera.certificate.modules.rli.utils.ScenarioCreator;
+import se.inera.certificate.modules.rli.utils.ScenarioFinder;
 
 public class PdfGeneratorTest {
 
@@ -40,18 +40,18 @@ public class PdfGeneratorTest {
 
     @Test
     public void testGeneratePdfPatientIsSick() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getInternalMIScenarios("sjuk-?")) {
+        for (Scenario scenario : ScenarioFinder.getInternalMIScenarios("valid-sjuk-?")) {
             byte[] pdf = pdfGen.generatePDF(scenario.asInternalMIModel());
-            assertNotNull(pdf);
+            assertNotNull("Error in scenario " + scenario.getName(), pdf);
             writePdfToFile(pdf);
         }
     }
 
     @Test
     public void testGeneratePdfPatientIsPregnant() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getInternalMIScenarios("gravid-?")) {
+        for (Scenario scenario : ScenarioFinder.getInternalMIScenarios("valid-gravid-?")) {
             byte[] pdf = pdfGen.generatePDF(scenario.asInternalMIModel());
-            assertNotNull(pdf);
+            assertNotNull("Error in scenario " + scenario.getName(), pdf);
             writePdfToFile(pdf);
         }
     }

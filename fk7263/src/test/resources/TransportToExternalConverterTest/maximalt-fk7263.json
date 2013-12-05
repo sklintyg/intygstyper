@@ -7,7 +7,7 @@
         "code" : "fk7263"
     },
     "kommentarer" : [
-        "Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling."
+        "Prognosen för patienten är god.\nHan kommer att kunna återgå till sitt arbete efter genomförd behandling."
     ],
     "signeringsdatum" : "2011-01-26T00:00:00.000",
     "skickatdatum" : "2011-03-23T09:29:15.000",
@@ -160,7 +160,7 @@
                 "codeSystemName" : "SNOMED-CT",
                 "code" : "288524001"
             },
-            "beskrivning" : "Bedömttillstånd: Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid."
+            "beskrivning" : "Bedömttillstånd: Patienten klämde höger överarm vid olycka i hemmet.\nProblemen har pågått en längre tid."
         },
         {
             "observationskategori" : {
@@ -168,7 +168,7 @@
                 "codeSystemName" : "ICF",
                 "code" : "b"
             },
-            "beskrivning" : "Funktionstillstånd-Kroppsfunktion: Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj- och sträckförmågan är mycket dålig. Smärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket."
+            "beskrivning" : "Funktionstillstånd-Kroppsfunktion: Kraftigt nedsatt rörlighet i överarmen pga skadan.\nBöj- och sträckförmågan är mycket dålig.\nSmärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket."
         },
         {
             "observationskategori" : {
@@ -176,7 +176,7 @@
                 "codeSystemName" : "ICF",
                 "code" : "d"
             },
-            "beskrivning" : "Funktionstillstånd-Aktivitet: Patienten bör/kan inte använda armen förrän skadan läkt. Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning."
+            "beskrivning" : "Funktionstillstånd-Aktivitet: Patienten bör/kan inte använda armen förrän skadan läkt.\nSkadan förvärras vid för tidigt påtvingad belastning.\nPatienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning."
         },
         {
             "observationskod" : {

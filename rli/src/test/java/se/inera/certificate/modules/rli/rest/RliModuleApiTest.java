@@ -18,8 +18,10 @@
  */
 package se.inera.certificate.modules.rli.rest;
 
+import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
+import static se.inera.certificate.modules.rli.utils.ResourceConverterUtils.wrapExternalWithHolder;
+
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.ServiceUnavailableException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -34,9 +36,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
+import se.inera.certificate.modules.rli.model.internal.mi.Utlatande;
 import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
 import se.inera.certificate.modules.rli.utils.Scenario;
-import se.inera.certificate.modules.rli.utils.ScenarioCreator;
+import se.inera.certificate.modules.rli.utils.ScenarioFinder;
 
 /**
  * Sets up an actual HTTP server and client to test the {@link RliModuleApi} service. This is the place to verify that
@@ -55,13 +58,7 @@ public class RliModuleApiTest {
 
     @Test
     public void testUnmarshallScenarios() throws Exception {
-        /* Sjuk scenarios */
-        for (Scenario scenario : ScenarioCreator.getTransportScenarios("sjuk-?")) {
-            rliModule.unmarshall(scenario.asTransportModel());
-            assertResponseStatus(Status.OK);
-        }
-        /* Gravid scenarios */
-        for (Scenario scenario : ScenarioCreator.getTransportScenarios("gravid-?")) {
+        for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
             rliModule.unmarshall(scenario.asTransportModel());
             assertResponseStatus(Status.OK);
         }
@@ -69,84 +66,91 @@ public class RliModuleApiTest {
 
     @Test(expected = BadRequestException.class)
     public void testUnmarshallBroken() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getTransportScenarios("*-broken")) {
+        for (Scenario scenario : ScenarioFinder.getTransportScenarios("invalid-*")) {
             rliModule.unmarshall(scenario.asTransportModel());
         }
     }
 
     @Test
     public void testMarshall() throws Exception {
-        rliModule.marshall(ScenarioCreator.getExternalScenario("sjuk-1").asExternalModel());
-        assertResponseStatus(Status.OK);
+        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
+            rliModule.marshall(scenario.asExternalModel());
+            assertResponseStatus(Status.OK);
+        }
+
     }
 
     @Test
     public void testValidate() throws Exception {
-        rliModule.validate(ScenarioCreator.getExternalScenario("sjuk-1").asExternalModel());
-        assertResponseStatus(Status.NO_CONTENT);
+        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
+            rliModule.validate(scenario.asExternalModel());
+            assertResponseStatus(Status.NO_CONTENT);
+        }
     }
 
     @Test
     public void testValidateWithErrors() throws Exception {
-        try {
-            rliModule.validate(ScenarioCreator.getExternalScenario("sjuk-broken").asExternalModel());
-            Assert.fail("Expected BadRequestException");
+        for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {
+            try {
+                rliModule.validate(ScenarioFinder.getExternalScenario("invalid-sjuk-1").asExternalModel());
+                Assert.fail("Expected BadRequestException, running scenario " + scenario.getName());
 
-        } catch (BadRequestException e) {
-            Assert.assertFalse(e.getResponse().getEntity().toString().isEmpty());
+            } catch (BadRequestException e) {
+                Assert.assertFalse("Error in scenario " + scenario.getName(), e.getResponse().getEntity().toString()
+                        .isEmpty());
+            }
         }
     }
 
     @Test
     public void testPdf() throws Exception {
-        CertificateContentHolder holder = new CertificateContentHolder();
-        holder.setCertificateContent(ScenarioCreator.getExternalScenario("sjuk-1").asExternalModel());
-        holder.setCertificateContentMeta(new CertificateContentMeta());
+        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
+            CertificateContentHolder holder = scenario.asExternalModelWithHolder();
 
-        rliModule.pdf(holder);
+            rliModule.pdf(holder);
 
-        assertResponseStatus(Status.OK);
-        assertResponseHeader("filename=lakarutlatande_19331122-4400_2013-01-01-130812.pdf", "Content-Disposition");
+            assertResponseStatus(Status.OK);
+            String contentDisposition = getClientResponse().getHeaderString("Content-Disposition");
+            Assert.assertTrue("Error in scenario " + scenario.getName(),
+                    contentDisposition.startsWith("filename=lakarutlatande"));
+        }
     }
 
     @Test
     public void testConvertExternalToInternal() throws Exception {
         CertificateContentHolder holder = new CertificateContentHolder();
-        holder.setCertificateContent(ScenarioCreator.getExternalScenario("sjuk-1").asExternalModel());
-        holder.setCertificateContentMeta(new CertificateContentMeta());
-        rliModule.convertExternalToInternal(holder);
-
-        assertResponseStatus(Status.OK);
+        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
+            holder.setCertificateContent(scenario.asExternalModel());
+            holder.setCertificateContentMeta(new CertificateContentMeta());
+            rliModule.convertExternalToInternal(holder);
+            assertResponseStatus(Status.OK);
+        }
     }
 
-    @Test(expected = ServiceUnavailableException.class)
+    @Test
     public void testConvertInternalToExternal() throws Exception {
-        // TODO: Change test when service is implemented
-        rliModule.convertInternalToExternal(new se.inera.certificate.modules.rli.model.internal.mi.Utlatande());
+        for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
+            rliModule.convertInternalToExternal(scenario.asInternalWCModel());
+            assertResponseStatus(Status.OK);
+        }
     }
 
     @Test
     public void testRegisterCertificateRoudtrip() throws Exception {
-        se.inera.certificate.modules.rli.model.external.Utlatande utlatande;
-        /* Sjuk scenarios */
-        for (Scenario scenario : ScenarioCreator.getTransportScenarios("sjuk-?")) {
-            utlatande = rliModule.unmarshall(scenario.asTransportModel());
-            rliModule.validate(utlatande);
-        }
+        se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande;
+        Utlatande intUtlatande;
+        for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
+            extUtlatande = rliModule.unmarshall(scenario.asTransportModel());
+            rliModule.validate(extUtlatande);
+            intUtlatande = rliModule.convertExternalToInternal(wrapExternalWithHolder(extUtlatande));
 
-        /* Gravid scenarios */
-        for (Scenario scenario : ScenarioCreator.getTransportScenarios("gravid-?")) {
-            utlatande = rliModule.unmarshall(scenario.asTransportModel());
-            rliModule.validate(utlatande);
+            Utlatande expected = scenario.asInternalMIModel();
+            assertLenientEquals("Error in scenario " + scenario.getName(), expected, intUtlatande);
         }
     }
 
     private void assertResponseStatus(Status status) {
         Assert.assertEquals(status.getStatusCode(), getClientResponse().getStatus());
-    }
-
-    private void assertResponseHeader(String expectedValue, String headerName) {
-        Assert.assertEquals(expectedValue, getClientResponse().getHeaderString(headerName));
     }
 
     private Response getClientResponse() {

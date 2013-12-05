@@ -77,7 +77,7 @@
                 "codeSystemName": "ICF",
                 "code": "b"
             },
-            "beskrivning": "Kraftigt nedsatt r\u00f6rlighet i \u00f6verarmen pga skadan. B\u00f6j- och str\u00e4ckf\u00f6rm\u00e5gan \u00e4r mycket d\u00e5lig. Sm\u00e4rtar vid r\u00f6relse vilket ger att patienten inte kan anv\u00e4nda armen s\u00e4rkilt mycket."
+            "beskrivning": "Kraftigt nedsatt r\u00f6rlighet i \u00f6verarmen pga skadan.\nB\u00f6j- och str\u00e4ckf\u00f6rm\u00e5gan \u00e4r mycket d\u00e5lig.\nSm\u00e4rtar vid r\u00f6relse vilket ger att patienten inte kan anv\u00e4nda armen s\u00e4rkilt mycket."
         },
         {
             "observationskategori": {
@@ -85,7 +85,7 @@
                 "codeSystemName": "ICF",
                 "code": "d"
             },
-            "beskrivning": "Aktivitetsneds\u00e4ttning: Patienten b\u00f6r/kan inte anv\u00e4nda armen f\u00f6rr\u00e4n skadan l\u00e4kt. Skadan f\u00f6rv\u00e4rras vid f\u00f6r tidigt p\u00e5tvingad belastning. Patienten kan inte lyfta armen utan den ska h\u00e5llas riktad ned\u00e5t och i fast l\u00e4ge s\u00e5 mycket som m\u00f6jligt under tiden f\u00f6r l\u00e4kning."
+            "beskrivning": "Aktivitetsneds\u00e4ttning: Patienten b\u00f6r/kan inte anv\u00e4nda armen f\u00f6rr\u00e4n skadan l\u00e4kt.\nSkadan f\u00f6rv\u00e4rras vid f\u00f6r tidigt p\u00e5tvingad belastning.\nPatienten kan inte lyfta armen utan den ska h\u00e5llas riktad ned\u00e5t och i fast l\u00e4ge s\u00e5 mycket som m\u00f6jligt under tiden f\u00f6r l\u00e4kning."
         },
         {
             "observationskod": {

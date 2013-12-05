@@ -1,10 +1,7 @@
 <lakarutlatande xmlns:ns1="urn:riv:insuranceprocess:healthreporting:mu7263:3"
 	xmlns:ns2="urn:riv:insuranceprocess:healthreporting:2" xmlns="urn:riv:insuranceprocess:healthreporting:mu7263:3">
-	<lakarutlatande-id>6ea04fd0-5fef-4809-823b-efeddf8a4d55
-	</lakarutlatande-id>
-	<typAvUtlatande>Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om
-		allmän försäkring
-	</typAvUtlatande>
+	<lakarutlatande-id>6ea04fd0-5fef-4809-823b-efeddf8a4d55</lakarutlatande-id>
+	<typAvUtlatande>Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring</typAvUtlatande>
 
 	<kommentar>Det går inte att bedöma pga solförmörkelse</kommentar>
 
@@ -67,40 +64,22 @@
 	</aktivitet>
 
 	<funktionstillstand>
-		<beskrivning>Kraftigt nedsatt rörlighet i överarmen pga skadan.
-			Böj- och sträckförmågan är mycket dålig.
-			Smärtar vid rörelse vilket
-			ger att patienten inte kan använda armen särkilt
-			mycket.
-		</beskrivning>
+			<beskrivning>Kraftigt nedsatt rörlighet i överarmen pga skadan.
+Böj- och sträckförmågan är mycket dålig.
+Smärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket.</beskrivning>
 		<typAvFunktionstillstand>Kroppsfunktion</typAvFunktionstillstand>
 	</funktionstillstand>
 
 	<funktionstillstand>
-		<beskrivning>Patienten bör/kan inte använda armen förrän skadan
-			läkt. Skadan förvärras vid för tidigt
-			påtvingad belastning. Patienten
-			kan inte lyfta armen utan den ska hållas
-			riktad nedåt och i fast läge
-			så mycket
-			som möjligt under tiden för läkning.
-		</beskrivning>
+			<beskrivning>Patienten bör/kan inte använda armen förrän skadan läkt.
+Skadan förvärras vid för tidigt påtvingad belastning.
+Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning.</beskrivning>
 		<typAvFunktionstillstand>Aktivitet</typAvFunktionstillstand>
 		<arbetsformaga>
-			<motivering>Skadan har förvärrats vid varje tillfälle patienten
-				använt armen. Måste hållas i total stillhet
-				tills läkningsprocessen
-				kommit en bit på väg. Eventuellt kan utredning
-				visa att operation är
-				nödvändig för att
-				läka skadan.
-			</motivering>
+				<motivering>Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.</motivering>
 			<prognosangivelse>Det_gar_inte_att_bedomma</prognosangivelse>
 			<arbetsuppgift>
-				<typAvArbetsuppgift>Dirigent
-					Dirigerar en för större orkester på
-					deltid
-				</typAvArbetsuppgift>
+				<typAvArbetsuppgift>Dirigent Dirigerar en för större orkester på deltid</typAvArbetsuppgift>
 			</arbetsuppgift>
 			<arbetsformagaNedsattning>
 				<varaktighetFrom>2013-03-17</varaktighetFrom>
@@ -114,10 +93,7 @@
 		<typAvFunktionstillstand>Aktivitet</typAvFunktionstillstand>
 		<arbetsformaga>
 			<arbetsuppgift>
-				<typAvArbetsuppgift>Dirigent
-					Dirigerar en för större orkester på
-					deltid
-				</typAvArbetsuppgift>
+				<typAvArbetsuppgift>Dirigent Dirigerar en för större orkester på deltid</typAvArbetsuppgift>
 			</arbetsuppgift>
 
 			<arbetsformagaNedsattning>

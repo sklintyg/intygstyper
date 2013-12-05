@@ -18,6 +18,7 @@
  */
 package se.inera.certificate.modules.rli.model.internal.wc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.LocalDateTime;
@@ -69,6 +70,9 @@ public class Utlatande {
     }
 
     public List<String> getKommentarer() {
+        if (kommentarer == null) {
+            kommentarer = new ArrayList<String>();
+        }
         return kommentarer;
     }
 

@@ -34,6 +34,10 @@
   <bean id="externalToInternalConverter"
     class="se.inera.certificate.modules.rli.model.converter.ExternalToInternalConverter" />
 
+<bean id="internalToExternalConverter"
+    class="se.inera.certificate.modules.rli.model.converter.InternalToExternalConverter" />
+
+
   <bean id="pdfGenerator" class="se.inera.certificate.modules.rli.pdf.PdfGenerator" />
 
   <bean id="webcertModelFactory"

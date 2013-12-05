@@ -28,7 +28,7 @@ import org.junit.Test;
 
 import se.inera.certificate.modules.rli.model.external.Utlatande;
 import se.inera.certificate.modules.rli.utils.Scenario;
-import se.inera.certificate.modules.rli.utils.ScenarioCreator;
+import se.inera.certificate.modules.rli.utils.ScenarioFinder;
 import se.inera.certificate.modules.rli.validator.ExternalValidator;
 
 public class ExternalValidatorTest {
@@ -42,17 +42,18 @@ public class ExternalValidatorTest {
 
     @Test
     public void testValidate() throws Exception {
-        for (Scenario scenario : ScenarioCreator.getExternalScenarios("sjuk-?")) {
+        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             Utlatande utlatande = scenario.asExternalModel();
             List<String> validationErrors = validator.validate(utlatande);
 
-            assertTrue(StringUtils.join(validationErrors, ", "), validationErrors.isEmpty());
+            assertTrue("Error in scenario " + scenario.getName() + "\n" + StringUtils.join(validationErrors, ", "),
+                    validationErrors.isEmpty());
         }
     }
 
     @Test
     public void testValidateWithErrors() throws Exception {
-        List<String> validationErrors = validator.validate(ScenarioCreator.getExternalScenario("sjuk-broken")
+        List<String> validationErrors = validator.validate(ScenarioFinder.getExternalScenario("invalid-sjuk-1")
                 .asExternalModel());
 
         assertTrue(!validationErrors.isEmpty());

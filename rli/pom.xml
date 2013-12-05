@@ -198,30 +198,6 @@
       </plugin>
 
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <executions>
-          <!-- Default execution -->
-          <execution />
-
-          <!-- The exec-maven-plugin below needs the XmlToJsonConverter compiled 
-            already in the 'generate-test-resources' phase. This extra compile execution 
-            handles this extra compilation. -->
-          <execution>
-            <id>exec-maven-plugin-precompile</id>
-            <goals>
-              <goal>testCompile</goal>
-            </goals>
-            <phase>generate-test-resources</phase>
-            <configuration>
-              <testIncludes>
-                <include>se/inera/certificate/modules/rli/build/utils/XmlToJsonConverter.java</include>
-              </testIncludes>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-xjc-plugin</artifactId>
         <version>2.6.0</version>
@@ -244,27 +220,6 @@
         </executions>
       </plugin>
 
-      <!-- Generates external model json test files from the transport model. -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>java</goal>
-            </goals>
-            <phase>generate-test-resources</phase>
-          </execution>
-        </executions>
-        <configuration>
-          <mainClass>se.inera.certificate.modules.rli.build.utils.XmlToJsonConverter</mainClass>
-          <classpathScope>test</classpathScope>
-          <arguments>
-            <argument>${basedir}/src/test/resources/rli-example-1.xml</argument>
-            <argument>${basedir}/src/test/resources/rli-example-2.xml</argument>
-          </arguments>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>

@@ -11,8 +11,7 @@
 		<fornamn>Test</fornamn>
 		<efternamn>Testorsson</efternamn>
 		<arbetsuppgift>
-			<typAvArbetsuppgift>Arbetsuppgift
-			</typAvArbetsuppgift>
+			<typAvArbetsuppgift>Arbetsuppgift</typAvArbetsuppgift>
 		</arbetsuppgift>
 		<sysselsattning>
 			<typAvSysselsattning code="224375002" codeSystem="1.2.752.116.2.1.1.1"
@@ -22,9 +21,7 @@
 
 	<skapadAv>
 		<personal-id root="1.2.752.129.2.1.4.1" extension="Personal HSA-ID" />
-		<fullstandigtNamn>
-			Dr Doktor
-		</fullstandigtNamn>
+		<fullstandigtNamn>Dr Doktor</fullstandigtNamn>
 		<enhet>
 			<enhets-id root="1.2.752.129.2.1.4.1" extension="enhetsid" />
 			<arbetsplatskod root="1.2.752.29.4.71"
@@ -55,8 +52,7 @@
 	<aktivitet>
 		<aktivitetskod code="AKT2"
 			codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a" codeSystemName="kv_aktiviteter_intyg" />
-		<beskrivning>Annan åtgärd - ange vilken
-		</beskrivning>
+		<beskrivning>Annan åtgärd - ange vilken</beskrivning>
 	</aktivitet>
 
 	<aktivitet>
@@ -79,22 +75,19 @@
 	<observation>
 		<observationskod code="288524001" codeSystem="1.2.752.116.2.1.1.1"
 			codeSystemName="SNOMED-CT" />
-		<beskrivning>Sjukdomsförlopp
-		</beskrivning>
+		<beskrivning>Sjukdomsförlopp</beskrivning>
 	</observation>
 
 	<observation>
 		<observationskategori code="b"
 			codeSystem="1.2.752.116.1.1.3.1.1" codeSystemName="ICF" />
-		<beskrivning>Funktionsnedsättning - observationer
-		</beskrivning>
+		<beskrivning>Funktionsnedsättning - observationer</beskrivning>
 	</observation>
 
 	<observation>
 		<observationskategori code="d"
 			codeSystem="1.2.752.116.1.1.3.1.1" codeSystemName="ICF" />
-		<beskrivning> Aktivitetsbegränsning
-		</beskrivning>
+		<beskrivning>Aktivitetsbegränsning</beskrivning>
 	</observation>
 
 	<observation>
@@ -108,9 +101,7 @@
 		<prognos>
 			<prognoskod code="PRO2" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7"
 				codeSystemName="kv_prognos_intyg" />
-			<beskrivning>Patientens förmåga bedöms nedsatt längre än vad som
-				anges ovan pga:
-			</beskrivning>
+			<beskrivning>Patientens förmåga bedöms nedsatt längre än vad som anges ovan pga:</beskrivning>
 		</prognos>
 	</observation>
 
