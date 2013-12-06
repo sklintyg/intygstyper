@@ -49,7 +49,7 @@ public class CodeConverterTest {
     }
 
     /**
-     * Checks that a {@link ICodeSystem} and a {@link Kod} can be compared without null pointer exceptions.
+     * Checks that a {@link CodeSystem} and a {@link Kod} can be compared without null pointer exceptions.
      * 
      * @throws Exception
      */
@@ -62,7 +62,7 @@ public class CodeConverterTest {
         assertFalse(CodeConverter.matches(TestKod.CODE_RED, new Kod(TestKod.CODE_SYSTEM, null, null, "CODE_RED")));
         assertFalse(CodeConverter.matches(TestKod.CODE_RED, new Kod(null, null, null, "CODE_RED")));
 
-        ICodeSystem emptyKod = new EmptyCodeSystem();
+        CodeSystem emptyKod = new EmptyCodeSystem();
         assertFalse(CodeConverter.matches(emptyKod, new Kod(TestKod.CODE_SYSTEM, TestKod.CODE_SYSTEM_NAME,
                 TestKod.CODE_SYSTEM_VERSION, "CODE_RED")));
         assertFalse(CodeConverter.matches(emptyKod, new Kod(TestKod.CODE_SYSTEM, TestKod.CODE_SYSTEM_NAME, null,

@@ -23,7 +23,7 @@ import se.inera.certificate.model.Kod;
 /**
  * Represents the code used by this module to define the Utlåtandetyp.
  */
-public enum UtlatandeKod implements ICodeSystem {
+public enum UtlatandeKod implements CodeSystem {
 
     /** Intyg vid avbeställd resa (RLI) */
     IVAR("RLI", "Intyg vid avbeställd resa");

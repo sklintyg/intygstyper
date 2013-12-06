@@ -28,8 +28,8 @@ import se.inera.certificate.model.Kod;
  */
 public enum UtlatandeKod implements CodeSystem {
 
-    /** Intyg vid avbeställd resa (RLI) */
-    IVAR("RLI", "Intyg vid avbeställd resa");
+    // TODO: Create specific Code representing module
+    CHANGEME ("intyg_code", "Intyg: textual description");
 
     private static String codeSystemName = "kv_utlåtandetyp_intyg";
 

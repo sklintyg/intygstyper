@@ -42,16 +42,16 @@ import se.inera.certificate.modules.rli.utils.Scenario;
 import se.inera.certificate.modules.rli.utils.ScenarioFinder;
 
 /**
- * Sets up an actual HTTP server and client to test the {@link RliModuleApi} service. This is the place to verify that
+ * Sets up an actual HTTP server and client to test the {@link ModuleApi} service. This is the place to verify that
  * response headers and response statuses etc are correct.
  */
 @ContextConfiguration(locations = ("/rli-test-config.xml"))
 @RunWith(SpringJUnit4ClassRunner.class)
-public class RliModuleApiTest {
+public class ModuleApiTest {
 
     /** An HTTP client proxy wired to the test HTTP server. */
     @Autowired
-    private RliModuleApi rliModule;
+    private ModuleApi rliModule;
 
     @Autowired
     private CustomObjectMapper objectMapper;
@@ -60,7 +60,7 @@ public class RliModuleApiTest {
     public void testUnmarshallScenarios() throws Exception {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
             rliModule.unmarshall(scenario.asTransportModel());
-            assertResponseStatus(Status.OK);
+            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
         }
     }
 
@@ -75,7 +75,7 @@ public class RliModuleApiTest {
     public void testMarshall() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             rliModule.marshall(scenario.asExternalModel());
-            assertResponseStatus(Status.OK);
+            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
         }
 
     }
@@ -84,7 +84,7 @@ public class RliModuleApiTest {
     public void testValidate() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             rliModule.validate(scenario.asExternalModel());
-            assertResponseStatus(Status.NO_CONTENT);
+            assertResponseStatus("Error in scenario " + scenario.getName(), Status.NO_CONTENT);
         }
     }
 
@@ -92,7 +92,7 @@ public class RliModuleApiTest {
     public void testValidateWithErrors() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {
             try {
-                rliModule.validate(ScenarioFinder.getExternalScenario("invalid-sjuk-1").asExternalModel());
+                rliModule.validate(scenario.asExternalModel());
                 Assert.fail("Expected BadRequestException, running scenario " + scenario.getName());
 
             } catch (BadRequestException e) {
@@ -109,7 +109,7 @@ public class RliModuleApiTest {
 
             rliModule.pdf(holder);
 
-            assertResponseStatus(Status.OK);
+            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
             String contentDisposition = getClientResponse().getHeaderString("Content-Disposition");
             Assert.assertTrue("Error in scenario " + scenario.getName(),
                     contentDisposition.startsWith("filename=lakarutlatande"));
@@ -123,7 +123,7 @@ public class RliModuleApiTest {
             holder.setCertificateContent(scenario.asExternalModel());
             holder.setCertificateContentMeta(new CertificateContentMeta());
             rliModule.convertExternalToInternal(holder);
-            assertResponseStatus(Status.OK);
+            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
         }
     }
 
@@ -131,7 +131,7 @@ public class RliModuleApiTest {
     public void testConvertInternalToExternal() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
             rliModule.convertInternalToExternal(scenario.asInternalWCModel());
-            assertResponseStatus(Status.OK);
+            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
         }
     }
 
@@ -149,8 +149,8 @@ public class RliModuleApiTest {
         }
     }
 
-    private void assertResponseStatus(Status status) {
-        Assert.assertEquals(status.getStatusCode(), getClientResponse().getStatus());
+    private void assertResponseStatus(String message, Status status) {
+        Assert.assertEquals(message, status.getStatusCode(), getClientResponse().getStatus());
     }
 
     private Response getClientResponse() {

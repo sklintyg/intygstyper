@@ -1,4 +1,7 @@
-package se.inera.certificate.modules.rli.utils;
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+package ${package}.${artifactId}.utils;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -9,8 +12,8 @@ import java.util.List;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 
-import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
-import se.inera.certificate.rli.model.v1.Utlatande;
+import se.inera.certificate.common.v1.Utlatande;
+import ${package}.${artifactId}.rest.dto.CertificateContentHolder;
 
 /**
  * Finds and creates scenarios based on scenario files placed in src/test/resources.
@@ -198,7 +201,7 @@ public class ScenarioFinder {
          * {@inheritDoc}
          */
         @Override
-        public se.inera.certificate.modules.rli.model.external.Utlatande asExternalModel()
+        public ${package}.${artifactId}.model.external.Utlatande asExternalModel()
                 throws ScenarioNotFoundException {
             try {
                 return ResourceConverterUtils.toExternal(getExternalModelFor(scenarioFile));
@@ -223,7 +226,7 @@ public class ScenarioFinder {
          * {@inheritDoc}
          */
         @Override
-        public se.inera.certificate.modules.rli.model.internal.mi.Utlatande asInternalMIModel()
+        public ${package}.${artifactId}.model.internal.mi.Utlatande asInternalMIModel()
                 throws ScenarioNotFoundException {
             try {
                 return ResourceConverterUtils.toInternalMI(getInternalMIModelFor(scenarioFile));
@@ -236,7 +239,7 @@ public class ScenarioFinder {
          * {@inheritDoc}
          */
         @Override
-        public se.inera.certificate.modules.rli.model.internal.wc.Utlatande asInternalWCModel()
+        public ${package}.${artifactId}.model.internal.wc.Utlatande asInternalWCModel()
                 throws ScenarioNotFoundException {
             try {
                 return ResourceConverterUtils.toInternalWC(getInternalWCModelFor(scenarioFile));

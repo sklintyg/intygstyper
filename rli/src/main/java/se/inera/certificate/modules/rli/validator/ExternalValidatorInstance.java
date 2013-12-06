@@ -33,8 +33,8 @@ import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
 import se.inera.certificate.modules.rli.model.codes.ArrangemangsKod;
 import se.inera.certificate.modules.rli.model.codes.BefattningsKod;
 import se.inera.certificate.modules.rli.model.codes.CodeConverter;
+import se.inera.certificate.modules.rli.model.codes.CodeSystem;
 import se.inera.certificate.modules.rli.model.codes.HSpersonalKod;
-import se.inera.certificate.modules.rli.model.codes.ICodeSystem;
 import se.inera.certificate.modules.rli.model.codes.ObservationsKod;
 import se.inera.certificate.modules.rli.model.codes.RekommendationsKod;
 import se.inera.certificate.modules.rli.model.codes.SjukdomskannedomKod;
@@ -271,7 +271,7 @@ public class ExternalValidatorInstance {
         return AssertionResult.SUCCESS;
     }
 
-    private AssertionResult assertKodInEnum(Kod kod, Class<? extends ICodeSystem> expectedEnum, String element) {
+    private AssertionResult assertKodInEnum(Kod kod, Class<? extends CodeSystem> expectedEnum, String element) {
         if (assertNotNull(kod, element).success()) {
             try {
                 CodeConverter.fromCode(kod, expectedEnum);

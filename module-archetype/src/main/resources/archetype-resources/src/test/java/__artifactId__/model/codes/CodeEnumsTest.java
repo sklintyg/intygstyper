@@ -25,53 +25,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
+import org.junit.Ignore;
 
 import se.inera.certificate.model.Kod;
 
 public class CodeEnumsTest {
-
+    
+    @Ignore
     @Test
-    public void testArrangemangsTyp() {
-
-        Kod kod = new Kod("1.2.752.116.2.1.1.1", "SNOMED-CT", null, "420008001");
-
-        ArrangemangsKod res = CodeConverter.fromCode(kod, ArrangemangsKod.class);
-
-        assertNotNull(res);
-        assertEquals(kod, CodeConverter.toKod(res));
+    public void test() {
+        //TODO: Test the modules ENUMs here.
     }
-
-    @Test
-    public void testObservationsKod() {
-
-        Kod kod = new Kod("1.2.752.116.2.1.1.1", "SNOMED-CT", null, "39104002");
-
-        ObservationsKod res = CodeConverter.fromCode(kod, ObservationsKod.class);
-
-        assertNotNull(res);
-        assertEquals(kod, CodeConverter.toKod(res));
-    }
-
-    @Test
-    public void testSjukdomsKannedom() {
-
-        Kod kod = new Kod("f3a556c4-d54b-4f67-8496-d5259df70493", "kv_sjukdomskännedom_intyg", null, "SJK1");
-
-        SjukdomskannedomKod res = CodeConverter.fromCode(kod, SjukdomskannedomKod.class);
-
-        assertNotNull(res);
-        assertEquals(kod, CodeConverter.toKod(res));
-    }
-
-    @Test
-    public void testRekommendationsKod() {
-
-        Kod kod = new Kod("5a931b99-bda8-4f1e-8a6d-6f8a3f40a459", "kv_rekommendation_intyg", null, "REK2");
-
-        RekommendationsKod res = CodeConverter.fromCode(kod, RekommendationsKod.class);
-
-        assertNotNull(res);
-        assertEquals(kod, CodeConverter.toKod(res));
-    }
+   
 
 }

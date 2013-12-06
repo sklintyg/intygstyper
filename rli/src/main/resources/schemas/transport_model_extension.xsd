@@ -19,15 +19,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:intyg:rli:model:1"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:intyg:rli:model:ext:1"
 	xmlns:iso="urn:iso:21090:dt:1" xmlns:c="urn:riv:clinicalprocess:healthcond:certificate:1"
-	targetNamespace="urn:intyg:rli:model:1" elementFormDefault="qualified"
+	targetNamespace="urn:intyg:rli:model:ext:1" elementFormDefault="qualified"
 	attributeFormDefault="unqualified" version="0.1">
 
 	<xs:import namespace="urn:iso:21090:dt:1" schemaLocation="core_components/iso_dt_subset_1.0.xsd" />
 
 	<xs:import namespace="urn:riv:clinicalprocess:healthcond:certificate:1"
-		schemaLocation="rli_model.xsd" />
+		schemaLocation="transport_model.xsd" />
 
 	<xs:element name="arrangemang" type="arrangemangType" />
 

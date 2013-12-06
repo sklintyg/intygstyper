@@ -23,7 +23,7 @@ import se.inera.certificate.model.Kod;
 /**
  * Represents all the codes used by this module to define befattningar.
  */
-public enum BefattningsKod implements ICodeSystem {
+public enum BefattningsKod implements CodeSystem {
 
     /** Överläkare (201010) */
     OVERLAKARE("201010", "Överläkare"),

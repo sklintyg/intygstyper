@@ -23,14 +23,14 @@ import java.util.List;
 
 import org.joda.time.LocalDateTime;
 
+import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Status;
-import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Rekommendation;
+import se.inera.certificate.model.Status;
 import se.inera.certificate.model.Vardkontakt;
 
 /**

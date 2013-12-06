@@ -1,16 +1,19 @@
-package se.inera.certificate.modules.rli.utils;
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+package ${package}.${artifactId}.utils;
 
 import java.io.File;
 import java.io.IOException;
 
 import javax.xml.bind.JAXB;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import se.inera.certificate.common.v1.Utlatande;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
-import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
-import se.inera.certificate.rli.model.v1.Utlatande;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import ${package}.${artifactId}.rest.dto.CertificateContentHolder;
 
 public class ResourceConverterUtils {
 
@@ -20,9 +23,9 @@ public class ResourceConverterUtils {
         return JAXB.unmarshal(resource, Utlatande.class);
     }
 
-    public static se.inera.certificate.modules.rli.model.external.Utlatande toExternal(File resource)
+    public static ${package}.${artifactId}.model.external.Utlatande toExternal(File resource)
             throws IOException {
-        return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.rli.model.external.Utlatande.class);
+        return OBJECT_MAPPER.readValue(resource, ${package}.${artifactId}.model.external.Utlatande.class);
     }
 
     public static CertificateContentHolder toExternalWithHolder(File resource) throws IOException {
@@ -30,7 +33,7 @@ public class ResourceConverterUtils {
     }
 
     public static CertificateContentHolder wrapExternalWithHolder(
-            se.inera.certificate.modules.rli.model.external.Utlatande externalModel) throws IOException {
+            ${package}.${artifactId}.model.external.Utlatande externalModel) throws IOException {
         CertificateContentHolder result = new CertificateContentHolder();
 
         result.setCertificateContent(externalModel);
@@ -45,13 +48,13 @@ public class ResourceConverterUtils {
         return result;
     }
 
-    public static se.inera.certificate.modules.rli.model.internal.mi.Utlatande toInternalMI(File resource)
+    public static ${package}.${artifactId}.model.internal.mi.Utlatande toInternalMI(File resource)
             throws IOException {
-        return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.rli.model.internal.mi.Utlatande.class);
+        return OBJECT_MAPPER.readValue(resource, ${package}.${artifactId}.model.internal.mi.Utlatande.class);
     }
 
-    public static se.inera.certificate.modules.rli.model.internal.wc.Utlatande toInternalWC(File resource)
+    public static ${package}.${artifactId}.model.internal.wc.Utlatande toInternalWC(File resource)
             throws IOException {
-        return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.rli.model.internal.wc.Utlatande.class);
+        return OBJECT_MAPPER.readValue(resource, ${package}.${artifactId}.model.internal.wc.Utlatande.class);
     }
 }

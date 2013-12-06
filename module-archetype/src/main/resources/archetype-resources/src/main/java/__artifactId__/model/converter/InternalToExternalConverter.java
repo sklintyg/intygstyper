@@ -24,13 +24,13 @@ package ${package}.${artifactId}.model.converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.modules.rli.model.external.Utlatande;
+import ${package}.${artifactId}.model.external.Utlatande;
 
 public class InternalToExternalConverter {
 
     private static final Logger LOG = LoggerFactory.getLogger(InternalToExternalConverter.class);
 
-    public Utlatande convertUtlatandeFromInternalToExternal(
+    public Utlatande fromInternalToExternal(
             ${package}.${artifactId}.model.internal.wc.Utlatande source) throws ConverterException {
         // TODO: Implement
         return null;
