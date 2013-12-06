@@ -13,6 +13,7 @@ import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
+import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.model.util.Predicate;
@@ -199,9 +200,10 @@ public class Fk7263Utlatande {
             }
         }, null);
     }
-    
+
     /**
-     * Certificate specific implementation of when a valid from date is
+     * Certificate specific implementation of when a valid from date is.
+     * Iterate through all From dates and return the earliest (non-null) date.
      * @return
      */
     public Partial getValidFromDate() {
@@ -209,16 +211,19 @@ public class Fk7263Utlatande {
         Partial fromDate = null;
 
         for (Observation nedsattning : nedsattningar) {
-            Partial aktivitetsbegransningFromDate = nedsattning.getObservationsperiod().getFrom();
-            if (fromDate == null || fromDate.isAfter(aktivitetsbegransningFromDate)) {
-                fromDate = aktivitetsbegransningFromDate;
+            PartialInterval nextObservationsperiod = nedsattning.getObservationsperiod();
+            if (nextObservationsperiod != null) {
+                if (fromDate == null || fromDate.isAfter(nextObservationsperiod.getFrom())) {
+                    fromDate = nextObservationsperiod.getFrom();
+                }
             }
         }
         return fromDate;
     }
 
     /**
-     * Certificate specific implementation of when a valid from date is
+     * Certificate specific implementation of when a valid from date is.
+     * Iterate through all Tom dates and return the latest (non-null) date.
      * 
      * @return
      */
@@ -227,11 +232,13 @@ public class Fk7263Utlatande {
         Partial toDate = null;
 
         for (Observation nedsattning : nedsattningar) {
-            Partial aktivitetsbegransningToDate = nedsattning.getObservationsperiod().getTom();
-            if (toDate == null || toDate.isBefore(aktivitetsbegransningToDate)) {
-                toDate = aktivitetsbegransningToDate;
+            PartialInterval nextObservationsperiod = nedsattning.getObservationsperiod();
+            if (nextObservationsperiod != null) {
+                if (toDate == null || toDate.isBefore(nextObservationsperiod.getTom())) {
+                    toDate = nextObservationsperiod.getTom();
+                }
             }
         }
         return toDate;
-    }  
+    }
 }
