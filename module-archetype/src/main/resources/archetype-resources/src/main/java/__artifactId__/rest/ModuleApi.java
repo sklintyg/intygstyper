@@ -1,3 +1,6 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
 /**
  * Copyright (C) 2013 Inera AB (http://www.inera.se)
  *
@@ -16,7 +19,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.rli.rest;
+package ${package}.${artifactId}.rest;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -25,12 +28,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import se.inera.certificate.modules.rli.model.external.Utlatande;
-import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
-import se.inera.certificate.modules.rli.rest.dto.CreateNewDraftCertificateHolder;
+import ${package}.${artifactId}.model.external.Utlatande;
+import ${package}.${artifactId}.rest.dto.CertificateContentHolder;
+import ${package}.${artifactId}.rest.dto.CreateNewDraftCertificateHolder;
 
 @Path("")
-public interface RliModuleApi {
+public interface ModuleApi {
 
     /**
      * Handles conversion from the transport model (XML) to the external JSON model.
@@ -100,7 +103,7 @@ public interface RliModuleApi {
     @Path("/internal")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    se.inera.certificate.modules.rli.model.internal.mi.Utlatande convertExternalToInternal(
+    ${package}.${artifactId}.model.internal.mi.Utlatande convertExternalToInternal(
             CertificateContentHolder certificateContentHolder);
 
     /**
@@ -115,8 +118,8 @@ public interface RliModuleApi {
     @Path("/external")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    se.inera.certificate.modules.rli.model.external.Utlatande convertInternalToExternal(
-            se.inera.certificate.modules.rli.model.internal.wc.Utlatande internalModel);
+    ${package}.${artifactId}.model.internal.mi.Utlatande convertInternalToExternal(
+            ${package}.${artifactId}.model.internal.mi.Utlatande internalModel);
 
     /**
      * Creates a new editable model for use in WebCert. The model is pre populated using data contained in the
@@ -129,7 +132,7 @@ public interface RliModuleApi {
     @Path("/new")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    se.inera.certificate.modules.rli.model.internal.wc.Utlatande createNewInternal(
+    ${package}.${artifactId}.model.internal.wc.Utlatande createNewInternal(
             CreateNewDraftCertificateHolder draftCertificateHolder);
 
 }

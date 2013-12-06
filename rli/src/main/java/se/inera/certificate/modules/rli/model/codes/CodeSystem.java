@@ -23,7 +23,7 @@ import se.inera.certificate.model.Kod;
 /**
  * The base of all codes used by this module.
  */
-public interface ICodeSystem {
+public interface CodeSystem {
 
     /**
      * The code value of a specific code.

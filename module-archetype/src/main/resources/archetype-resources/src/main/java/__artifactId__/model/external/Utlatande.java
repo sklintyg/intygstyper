@@ -40,7 +40,6 @@ import se.inera.certificate.model.Vardkontakt;
  * The utlåtande used by RLI. This class is a copy of the common external model (defined in se.inera.certificate.model),
  * extending with:
  * <ul>
- * <li> {@link Arrangemang}
  * <li> {@link Aktivitet}
  * </ul>
  * 
@@ -75,8 +74,6 @@ public class Utlatande {
     private List<Observation> observationer;
 
     private List<Status> status;
-
-    private Arrangemang arrangemang;
 
     public Id getId() {
         return id;
@@ -180,13 +177,5 @@ public class Utlatande {
             status = new ArrayList<Status>();
         }
         return this.status;
-    }
-
-    public Arrangemang getArrangemang() {
-        return arrangemang;
-    }
-
-    public void setArrangemang(Arrangemang arrangemang) {
-        this.arrangemang = arrangemang;
     }
 }

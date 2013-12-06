@@ -20,8 +20,8 @@ package se.inera.certificate.modules.rli.model.external;
 
 import org.joda.time.Partial;
 
-import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.PartialInterval;
 
 public class Arrangemang {
 

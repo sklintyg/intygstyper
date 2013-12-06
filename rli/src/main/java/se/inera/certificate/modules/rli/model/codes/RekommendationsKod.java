@@ -23,7 +23,7 @@ import se.inera.certificate.model.Kod;
 /**
  * Represents all the codes used by this module to define rekommendationer.
  */
-public enum RekommendationsKod implements ICodeSystem {
+public enum RekommendationsKod implements CodeSystem {
 
     /** Patient rekomenderas inte att resa (REK1) */
     REK1("REK1",

@@ -20,7 +20,7 @@ package se.inera.certificate.modules.rli.model.codes;
 
 import se.inera.certificate.model.Kod;
 
-class EmptyCodeSystem implements ICodeSystem {
+class EmptyCodeSystem implements CodeSystem {
 
     @Override
     public String getCode() {

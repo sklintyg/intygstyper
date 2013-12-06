@@ -61,7 +61,7 @@ public class PdfGenerator {
     }
 
     /**
-     * Method for filling out the fields of a pdf with data from the RLI-internal model
+     * Method for filling out the fields of a pdf with data from the internal model
      * 
      * @param utlatande
      *            {@link ${package}.${artifactId}.model.internal.mi.Utlatande} containing data for populating

@@ -1,7 +1,10 @@
-package se.inera.certificate.modules.rli.utils;
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+package ${package}.${artifactId}.utils;
 
-import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
-import se.inera.certificate.rli.model.v1.Utlatande;
+import se.inera.certificate.common.v1.Utlatande;
+import ${package}.${artifactId}.rest.dto.CertificateContentHolder;
 
 /**
  * Defines a scenario that can be tested. The following models (as POJOs) can be extracted from a scenario:
@@ -39,7 +42,7 @@ public interface Scenario {
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
      */
-    se.inera.certificate.modules.rli.model.external.Utlatande asExternalModel() throws ScenarioNotFoundException;
+    ${package}.${artifactId}.model.external.Utlatande asExternalModel() throws ScenarioNotFoundException;
 
     /**
      * Returns the scenario as a external model, wrapped in a {@link CertificateContentHolder}.
@@ -57,7 +60,7 @@ public interface Scenario {
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
      */
-    se.inera.certificate.modules.rli.model.internal.mi.Utlatande asInternalMIModel() throws ScenarioNotFoundException;
+    ${package}.${artifactId}.model.internal.mi.Utlatande asInternalMIModel() throws ScenarioNotFoundException;
 
     /**
      * Returns the scenario as a internal WebCert model.
@@ -66,5 +69,5 @@ public interface Scenario {
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
      */
-    se.inera.certificate.modules.rli.model.internal.wc.Utlatande asInternalWCModel() throws ScenarioNotFoundException;
+    ${package}.${artifactId}.model.internal.wc.Utlatande asInternalWCModel() throws ScenarioNotFoundException;
 }

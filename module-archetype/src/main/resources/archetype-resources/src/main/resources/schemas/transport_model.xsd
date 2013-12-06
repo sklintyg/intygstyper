@@ -20,13 +20,14 @@
 
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns="urn:riv:clinicalprocess:healthcond:certificate:1" xmlns:rli="urn:intyg:rli:model:1"
+           xmlns="urn:riv:clinicalprocess:healthcond:certificate:1" xmlns:${artifactId}="urn:intyg:${artifactId}:model:ext:1"
            xmlns:iso="urn:iso:21090:dt:1" targetNamespace="urn:riv:clinicalprocess:healthcond:certificate:1"
            elementFormDefault="qualified" attributeFormDefault="unqualified"
            version="1.0">
 
   <xs:import namespace="urn:iso:21090:dt:1" schemaLocation="core_components/iso_dt_subset_1.0.xsd"/>
-  <xs:import namespace="urn:intyg:rli:model:1" schemaLocation="rli_model_extension.xsd"/>
+  <!-- TODO: Import this if you need to extend the common transport model with module specific entities -->
+  <!-- <xs:import namespace="urn:intyg:${artifactId}:model:ext:1" schemaLocation="transport_model_extension.xsd"/> -->
 
   <xs:element name="utlatande" type="utlatandeType"/>
 
@@ -40,14 +41,6 @@
 
       <xs:element name="patient" type="patientType"/>
       <xs:element name="skapadAv" type="hosPersonalType"/>
-      <xs:element name="aktivitet" type="aktivitetType"
-                  maxOccurs="unbounded"/>
-      <xs:element name="rekommendation" type="rekommendationType"
-                  maxOccurs="unbounded"/>
-      <xs:element name="observation" type="observationType"
-                  maxOccurs="unbounded"/>
-
-      <xs:element ref="rli:arrangemang"/>
 
       <xs:any namespace="##other" processContents="lax" minOccurs="0"
               maxOccurs="unbounded"/>
@@ -128,76 +121,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="patientRelationType">
-    <xs:sequence>
-      <xs:element name="relationskategori" type="iso:CD"/>
-      <xs:element name="relationTyp" type="iso:CD" maxOccurs="unbounded"/>
-      <xs:element name="person-id" type="personId" minOccurs="0"/>
-      <xs:element name="fornamn" type="xs:string" maxOccurs="unbounded"/>
-      <xs:element name="efternamn" type="xs:string"/>
-      <xs:element name="mellannamn" type="xs:string" minOccurs="0"
-                  maxOccurs="unbounded"/>
-      <xs:element name="postadress" type="xs:string" minOccurs="0"/>
-      <xs:element name="postnummer" type="xs:string" minOccurs="0"/>
-      <xs:element name="postort" type="xs:string" minOccurs="0"/>
-
-      <xs:any namespace="##other" processContents="lax" minOccurs="0"
-              maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="aktivitetType">
-    <xs:sequence>
-      <xs:element name="aktivitetskod" type="iso:CD"/>
-      <xs:element name="aktivitetstid" type="partialDateInterval"
-                  minOccurs="0"/>
-      <xs:element name="beskrivning" type="xs:string" minOccurs="0"/>
-
-      <xs:element name="plats" type="xs:string" minOccurs="0"/>
-
-      <xs:element name="utforsVidEnhet" type="enhetType"
-                  minOccurs="0"/>
-      <xs:element name="beskrivsAv" type="utforarrollType"
-                  minOccurs="0" maxOccurs="unbounded"/>
-
-      <xs:any namespace="##other" processContents="lax" minOccurs="0"
-              maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="utforarrollType">
-    <xs:sequence>
-      <xs:element name="utforartyp" type="iso:CD"/>
-
-      <xs:element name="antasAv" type="hosPersonalType" minOccurs="0"/>
-
-      <xs:any namespace="##other" processContents="lax" minOccurs="0"
-              maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="rekommendationType">
-    <xs:sequence>
-      <xs:element name="rekommendationskod" type="iso:CD"/>
-      <xs:element name="sjukdomskannedom" type="iso:CD"/>
-      <xs:element name="beskrivning" type="xs:string" minOccurs="0"/>
-
-      <xs:any namespace="##other" processContents="lax" minOccurs="0"
-              maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="observationType">
-    <xs:sequence>
-      <xs:element name="observationskod" type="iso:CD" />
-      <xs:element name="observationsperiod" type="partialDateInterval" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="utforsAv" type="utforarrollType" minOccurs="0" />
-      <xs:element name="plats" type="xs:string" maxOccurs="1" minOccurs="0"/>
-
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="hosPersonalType">
     <xs:sequence>
       <xs:element name="personal-id" type="iso:II">
@@ -212,9 +135,6 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      <!-- Skyddad identitet -->
-      <xs:element name="forskrivarkod" type="xs:string" minOccurs="0"/>
-      <xs:element name="befattning" type="xs:string" minOccurs="0"/>
       <xs:element name="enhet" type="enhetType"/>
 
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>

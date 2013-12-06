@@ -43,11 +43,7 @@ public class Utlatande {
 
     private Patient patient;
 
-    private Arrangemang arrangemang;
-
     private Undersokning undersokning;
-
-    private Rekommendation rekommendation;
 
     private List<Status> status;
 
@@ -111,28 +107,12 @@ public class Utlatande {
         this.patient = patient;
     }
 
-    public Arrangemang getArrangemang() {
-        return arrangemang;
-    }
-
-    public void setArrangemang(Arrangemang arrangemang) {
-        this.arrangemang = arrangemang;
-    }
-
     public Undersokning getUndersokning() {
         return undersokning;
     }
 
     public void setUndersokning(Undersokning undersokning) {
         this.undersokning = undersokning;
-    }
-
-    public Rekommendation getRekommendation() {
-        return rekommendation;
-    }
-
-    public void setRekommendation(Rekommendation rekommendation) {
-        this.rekommendation = rekommendation;
     }
 
     public List<Status> getStatus() {

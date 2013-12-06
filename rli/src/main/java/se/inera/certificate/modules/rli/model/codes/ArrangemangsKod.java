@@ -23,7 +23,7 @@ import se.inera.certificate.model.Kod;
 /**
  * Represents all the codes used by this module to define arrangemang.
  */
-public enum ArrangemangsKod implements ICodeSystem {
+public enum ArrangemangsKod implements CodeSystem {
 
     /** Resa (420008001) */
     RESA("420008001", "Resa");

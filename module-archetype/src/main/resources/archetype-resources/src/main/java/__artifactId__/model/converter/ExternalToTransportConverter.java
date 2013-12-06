@@ -23,7 +23,7 @@ package ${package}.${artifactId}.model.converter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import se.inera.certificate.${artifactId}.v1.Utlatande;
+import se.inera.certificate.common.v1.Utlatande;
 
 public class ExternalToTransportConverter {
 
