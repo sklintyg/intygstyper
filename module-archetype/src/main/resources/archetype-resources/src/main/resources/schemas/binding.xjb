@@ -1,6 +1,6 @@
 #set( $symbol_pound = '#' )
 #set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
+#set( $symbol_escaped = '\' )
 <?xml version="1.0"?>
 <jxb:bindings version="1.0" 
     xmlns:jxb="http://java.sun.com/xml/ns/jaxb" 
@@ -8,21 +8,21 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:c="urn:riv:clinicalprocess:healthcond:certificate:1">
 
-  <jxb:bindings schemaLocation="schemas/core_components/iso_dt_subset_1.0.xsd" node="/xs:schema">
+  <jxb:bindings schemaLocation="core_components/iso_dt_subset_1.0.xsd" node="/xs:schema">
     <jxb:schemaBindings>
       <jxb:package name="iso.v21090.dt.v1"/>
     </jxb:schemaBindings>
   </jxb:bindings>
 
-  <jxb:bindings schemaLocation="schemas/${artifactId}_model.xsd" node="/xs:schema">
+  <jxb:bindings schemaLocation="transport_model.xsd" node="/xs:schema">
     <jxb:schemaBindings>
-      <jxb:package name="se.inera.certificate.${artifactId}.v1"/>
+      <jxb:package name="se.inera.certificate.${artifactId}.model.v1"/>
     </jxb:schemaBindings>
   </jxb:bindings>
 
-  <jxb:bindings schemaLocation="schemas/${artifactId}_model_extension.xsd" node="/xs:schema">
+  <jxb:bindings schemaLocation="transport_model_extension.xsd" node="/xs:schema">
     <jxb:schemaBindings>
-      <jxb:package name="se.inera.certificate.${artifactId}.extension.v1"/>
+      <jxb:package name="se.inera.certificate.${artifactId}.model.ext.v1"/>
     </jxb:schemaBindings>
   </jxb:bindings>
 

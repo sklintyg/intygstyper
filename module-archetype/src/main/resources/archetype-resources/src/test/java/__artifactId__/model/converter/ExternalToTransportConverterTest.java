@@ -26,9 +26,9 @@ import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import se.inera.certificate.common.v1.Utlatande;
 import ${package}.${artifactId}.utils.Scenario;
 import ${package}.${artifactId}.utils.ScenarioFinder;
+import se.inera.certificate.${artifactId}.model.v1.Utlatande;
 
 public class ExternalToTransportConverterTest {
 
@@ -44,7 +44,7 @@ public class ExternalToTransportConverterTest {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             ${package}.${artifactId}.model.external.Utlatande extUtlatande = scenario.asExternalModel();
 
-            Utlatande actual = converter.externalToTransport(extUtlatande);
+            Utlatande actual = converter.convert(extUtlatande);
 
             Utlatande expected = scenario.asTransportModel();
 

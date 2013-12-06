@@ -45,16 +45,16 @@ import ${package}.${artifactId}.utils.Scenario;
 import ${package}.${artifactId}.utils.ScenarioFinder;
 
 /**
- * Sets up an actual HTTP server and client to test the {@link RliModuleApi} service. This is the place to verify that
+ * Sets up an actual HTTP server and client to test the {@link ModuleApi} service. This is the place to verify that
  * response headers and response statuses etc are correct.
  */
 @ContextConfiguration(locations = ("/${artifactId}-test-config.xml"))
 @RunWith(SpringJUnit4ClassRunner.class)
-public class RliModuleApiTest {
+public class ModuleApiTest {
 
     /** An HTTP client proxy wired to the test HTTP server. */
     @Autowired
-    private RliModuleApi ${artifactId}Module;
+    private ModuleApi ${artifactId}Module;
 
     @Autowired
     private CustomObjectMapper objectMapper;
@@ -63,7 +63,7 @@ public class RliModuleApiTest {
     public void testUnmarshallScenarios() throws Exception {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
             ${artifactId}Module.unmarshall(scenario.asTransportModel());
-            assertResponseStatus(Status.OK);
+            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
         }
     }
 
@@ -78,7 +78,7 @@ public class RliModuleApiTest {
     public void testMarshall() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             ${artifactId}Module.marshall(scenario.asExternalModel());
-            assertResponseStatus(Status.OK);
+            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
         }
 
     }
@@ -87,7 +87,7 @@ public class RliModuleApiTest {
     public void testValidate() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             ${artifactId}Module.validate(scenario.asExternalModel());
-            assertResponseStatus(Status.NO_CONTENT);
+            assertResponseStatus("Error in scenario " + scenario.getName(), Status.NO_CONTENT);
         }
     }
 
@@ -112,7 +112,7 @@ public class RliModuleApiTest {
 
             ${artifactId}Module.pdf(holder);
 
-            assertResponseStatus(Status.OK);
+            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
             String contentDisposition = getClientResponse().getHeaderString("Content-Disposition");
             Assert.assertTrue("Error in scenario " + scenario.getName(),
                     contentDisposition.startsWith("filename=lakarutlatande"));
@@ -126,7 +126,7 @@ public class RliModuleApiTest {
             holder.setCertificateContent(scenario.asExternalModel());
             holder.setCertificateContentMeta(new CertificateContentMeta());
             ${artifactId}Module.convertExternalToInternal(holder);
-            assertResponseStatus(Status.OK);
+            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
         }
     }
 
@@ -134,7 +134,7 @@ public class RliModuleApiTest {
     public void testConvertInternalToExternal() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
             ${artifactId}Module.convertInternalToExternal(scenario.asInternalWCModel());
-            assertResponseStatus(Status.OK);
+            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
         }
     }
 
@@ -152,8 +152,8 @@ public class RliModuleApiTest {
         }
     }
 
-    private void assertResponseStatus(Status status) {
-        Assert.assertEquals(status.getStatusCode(), getClientResponse().getStatus());
+    private void assertResponseStatus(String message, Status status) {
+        Assert.assertEquals(message, status.getStatusCode(), getClientResponse().getStatus());
     }
 
     private Response getClientResponse() {

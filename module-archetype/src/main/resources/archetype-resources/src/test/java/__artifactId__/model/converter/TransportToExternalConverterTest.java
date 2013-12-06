@@ -50,7 +50,7 @@ public class TransportToExternalConverterTest {
     @Test
     public void testTransportToExternal() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
-            se.inera.certificate.common.v1.Utlatande utlatande = scenario.asTransportModel();
+            se.inera.certificate.${artifactId}.model.v1.Utlatande utlatande = scenario.asTransportModel();
 
             Utlatande actual = converter.convert(utlatande);
 

@@ -3,8 +3,8 @@
 #set( $symbol_escape = '\' )
 package ${package}.${artifactId}.utils;
 
-import se.inera.certificate.common.v1.Utlatande;
 import ${package}.${artifactId}.rest.dto.CertificateContentHolder;
+import se.inera.certificate.${artifactId}.model.v1.Utlatande;
 
 /**
  * Defines a scenario that can be tested. The following models (as POJOs) can be extracted from a scenario:

@@ -30,7 +30,7 @@ public class InternalToExternalConverter {
 
     private static final Logger LOG = LoggerFactory.getLogger(InternalToExternalConverter.class);
 
-    public Utlatande fromInternalToExternal(
+    public Utlatande convert(
             ${package}.${artifactId}.model.internal.wc.Utlatande source) throws ConverterException {
         // TODO: Implement
         return null;

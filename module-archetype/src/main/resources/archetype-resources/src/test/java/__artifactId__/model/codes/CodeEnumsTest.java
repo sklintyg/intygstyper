@@ -30,12 +30,9 @@ import org.junit.Ignore;
 import se.inera.certificate.model.Kod;
 
 public class CodeEnumsTest {
-    
-    @Ignore
+
     @Test
     public void test() {
         //TODO: Test the modules ENUMs here.
     }
-   
-
 }

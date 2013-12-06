@@ -54,10 +54,6 @@ public final class PartialConverter {
     private static final DateTimeFieldType[] PARTIAL_FIELDS = new DateTimeFieldType[] { DateTimeFieldType.year(),
             DateTimeFieldType.monthOfYear(), DateTimeFieldType.dayOfMonth() };
 
-    private PartialConverter() {
-
-    }
-
     /**
      * Converts a Partial to a string on the form yyyy(-MM(-dd)).
      * 

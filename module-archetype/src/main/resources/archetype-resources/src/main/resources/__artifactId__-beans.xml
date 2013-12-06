@@ -37,6 +37,10 @@
   <bean id="externalToInternalConverter"
     class="${package}.${artifactId}.model.converter.ExternalToInternalConverter" />
 
+<bean id="internalToExternalConverter"
+    class="${package}.${artifactId}.model.converter.InternalToExternalConverter" />
+
+
   <bean id="pdfGenerator" class="${package}.${artifactId}.pdf.PdfGenerator" />
 
   <bean id="webcertModelFactory"

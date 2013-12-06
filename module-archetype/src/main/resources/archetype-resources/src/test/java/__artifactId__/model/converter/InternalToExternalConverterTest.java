@@ -50,7 +50,7 @@ public class InternalToExternalConverterTest {
         for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
             ${package}.${artifactId}.model.internal.wc.Utlatande intUtlatande = scenario.asInternalWCModel();
 
-            Utlatande actual = converter.fromInternalToExternal(intUtlatande);
+            Utlatande actual = converter.convert(intUtlatande);
 
             Utlatande expected = scenario.asExternalModel();
             assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);

@@ -12,8 +12,8 @@ import java.util.List;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 
-import se.inera.certificate.common.v1.Utlatande;
 import ${package}.${artifactId}.rest.dto.CertificateContentHolder;
+import se.inera.certificate.${artifactId}.model.v1.Utlatande;
 
 /**
  * Finds and creates scenarios based on scenario files placed in src/test/resources.

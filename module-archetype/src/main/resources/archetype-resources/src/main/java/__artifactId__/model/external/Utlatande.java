@@ -42,8 +42,6 @@ import se.inera.certificate.model.Vardkontakt;
  * <ul>
  * <li> {@link Aktivitet}
  * </ul>
- * 
- * @author Gustav Norbäcker, R2M
  */
 public class Utlatande {
 
