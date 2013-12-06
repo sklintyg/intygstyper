@@ -23,7 +23,7 @@ import se.inera.certificate.model.Kod;
 /**
  * Represents all the codes used by this module to define aktiviteter.
  */
-public enum AktivitetsKod implements ICodeSystem {
+public enum AktivitetsKod implements CodeSystem {
 
     /** Klinisk undersökning (AV020) */
     KLINISK_UNDERSOKNING("AV020", "klinisk undersökning UNS", "KVÅ", "1.2.752.116.1.3.2.1.4"),

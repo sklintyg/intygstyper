@@ -23,7 +23,7 @@ import se.inera.certificate.model.Kod;
 /**
  * Represents all the codes used by this module to define HoSPersonal.
  */
-public enum HSpersonalKod implements ICodeSystem {
+public enum HSpersonalKod implements CodeSystem {
 
     /** HSA id root */
     HSA_ID("1.2.752.129.2.1.4.1", "root");

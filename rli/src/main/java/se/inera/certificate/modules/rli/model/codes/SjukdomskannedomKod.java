@@ -23,7 +23,7 @@ import se.inera.certificate.model.Kod;
 /**
  * Represents all the codes used by this module to define sjukdomskännedom.
  */
-public enum SjukdomskannedomKod implements ICodeSystem {
+public enum SjukdomskannedomKod implements CodeSystem {
 
     /** Sjukdomen/komplikationen okänd vid bokningstillfälllet. (SJK1) */
     SJK1("SJK1", "Sjukdomen/komplikationen var okänd vid bokningstillfälllet."),

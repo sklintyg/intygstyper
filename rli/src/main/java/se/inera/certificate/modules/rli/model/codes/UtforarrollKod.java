@@ -23,7 +23,7 @@ import se.inera.certificate.model.Kod;
 /**
  * Represents all the codes used by this module to define utförarroll.
  */
-public enum UtforarrollKod implements ICodeSystem {
+public enum UtforarrollKod implements CodeSystem {
 
     /** Patient (116154003) */
     AV_PATIENT("116154003", "Patient"),
