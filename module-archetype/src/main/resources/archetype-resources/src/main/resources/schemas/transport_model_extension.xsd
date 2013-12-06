@@ -1,3 +1,6 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
@@ -43,7 +46,7 @@
 				minOccurs="0" />
 			<xs:element name="plats" type="xs:string" />
 
-			<xs:any namespace="##other" processContents="lax" minOccurs="0"
+			<xs:any namespace="$symbol_pound$symbol_poundother" processContents="lax" minOccurs="0"
 				maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
