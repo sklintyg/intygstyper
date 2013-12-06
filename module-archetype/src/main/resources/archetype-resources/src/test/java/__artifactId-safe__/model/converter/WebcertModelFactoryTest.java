@@ -65,8 +65,5 @@ public class WebcertModelFactoryTest {
         /** Just verify some stuff from the json to make sure all is well.. */
         assertEquals("testID", utlatande.getUtlatandeid());
         assertEquals("johnny appleseed", utlatande.getPatient().getFullstandigtNamn());
-
-        /** Kinda stupid, but verify that correct dateformat is used */
-        assertEquals(LocalDate.now().toString(), utlatande.getUndersokning().getUndersokningsdatum());
     }
 }

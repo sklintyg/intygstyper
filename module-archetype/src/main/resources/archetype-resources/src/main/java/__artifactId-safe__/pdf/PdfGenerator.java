@@ -26,8 +26,6 @@ import java.io.IOException;
 
 import org.apache.commons.lang3.StringUtils;
 
-import ${package}.${artifactId-safe}.model.internal.mi.KomplikationStyrkt;
-import ${package}.${artifactId-safe}.model.internal.mi.OrsakAvbokning;
 import ${package}.${artifactId-safe}.model.internal.mi.Utlatande;
 
 import com.itextpdf.text.DocumentException;

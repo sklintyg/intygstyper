@@ -43,10 +43,6 @@ public class Utlatande {
 
     private Patient patient;
 
-    private Undersokning undersokning;
-
-    private List<Status> status;
-
     public Utlatande() {
 
     }
@@ -105,22 +101,6 @@ public class Utlatande {
 
     public void setPatient(Patient patient) {
         this.patient = patient;
-    }
-
-    public Undersokning getUndersokning() {
-        return undersokning;
-    }
-
-    public void setUndersokning(Undersokning undersokning) {
-        this.undersokning = undersokning;
-    }
-
-    public List<Status> getStatus() {
-        return status;
-    }
-
-    public void setStatus(List<Status> status) {
-        this.status = status;
     }
 
     public String getUtlatandeidroot() {
