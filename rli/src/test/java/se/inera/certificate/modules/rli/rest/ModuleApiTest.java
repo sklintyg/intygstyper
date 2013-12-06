@@ -60,7 +60,7 @@ public class ModuleApiTest {
     public void testUnmarshallScenarios() throws Exception {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
             rliModule.unmarshall(scenario.asTransportModel());
-            assertResponseStatus(Status.OK);
+            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
         }
     }
 
@@ -75,7 +75,7 @@ public class ModuleApiTest {
     public void testMarshall() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             rliModule.marshall(scenario.asExternalModel());
-            assertResponseStatus(Status.OK);
+            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
         }
 
     }
@@ -84,7 +84,7 @@ public class ModuleApiTest {
     public void testValidate() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             rliModule.validate(scenario.asExternalModel());
-            assertResponseStatus(Status.NO_CONTENT);
+            assertResponseStatus("Error in scenario " + scenario.getName(), Status.NO_CONTENT);
         }
     }
 
@@ -92,7 +92,7 @@ public class ModuleApiTest {
     public void testValidateWithErrors() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {
             try {
-                rliModule.validate(ScenarioFinder.getExternalScenario("invalid-sjuk-1").asExternalModel());
+                rliModule.validate(scenario.asExternalModel());
                 Assert.fail("Expected BadRequestException, running scenario " + scenario.getName());
 
             } catch (BadRequestException e) {
@@ -109,7 +109,7 @@ public class ModuleApiTest {
 
             rliModule.pdf(holder);
 
-            assertResponseStatus(Status.OK);
+            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
             String contentDisposition = getClientResponse().getHeaderString("Content-Disposition");
             Assert.assertTrue("Error in scenario " + scenario.getName(),
                     contentDisposition.startsWith("filename=lakarutlatande"));
@@ -123,7 +123,7 @@ public class ModuleApiTest {
             holder.setCertificateContent(scenario.asExternalModel());
             holder.setCertificateContentMeta(new CertificateContentMeta());
             rliModule.convertExternalToInternal(holder);
-            assertResponseStatus(Status.OK);
+            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
         }
     }
 
@@ -131,7 +131,7 @@ public class ModuleApiTest {
     public void testConvertInternalToExternal() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
             rliModule.convertInternalToExternal(scenario.asInternalWCModel());
-            assertResponseStatus(Status.OK);
+            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
         }
     }
 
@@ -149,8 +149,8 @@ public class ModuleApiTest {
         }
     }
 
-    private void assertResponseStatus(Status status) {
-        Assert.assertEquals(status.getStatusCode(), getClientResponse().getStatus());
+    private void assertResponseStatus(String message, Status status) {
+        Assert.assertEquals(message, status.getStatusCode(), getClientResponse().getStatus());
     }
 
     private Response getClientResponse() {
