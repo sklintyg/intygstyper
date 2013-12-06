@@ -42,16 +42,16 @@ import se.inera.certificate.modules.rli.utils.Scenario;
 import se.inera.certificate.modules.rli.utils.ScenarioFinder;
 
 /**
- * Sets up an actual HTTP server and client to test the {@link RliModuleApi} service. This is the place to verify that
+ * Sets up an actual HTTP server and client to test the {@link ModuleApi} service. This is the place to verify that
  * response headers and response statuses etc are correct.
  */
 @ContextConfiguration(locations = ("/rli-test-config.xml"))
 @RunWith(SpringJUnit4ClassRunner.class)
-public class RliModuleApiTest {
+public class ModuleApiTest {
 
     /** An HTTP client proxy wired to the test HTTP server. */
     @Autowired
-    private RliModuleApi rliModule;
+    private ModuleApi rliModule;
 
     @Autowired
     private CustomObjectMapper objectMapper;

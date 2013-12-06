@@ -30,7 +30,7 @@ import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
 import se.inera.certificate.modules.rli.rest.dto.CreateNewDraftCertificateHolder;
 
 @Path("")
-public interface RliModuleApi {
+public interface ModuleApi {
 
     /**
      * Handles conversion from the transport model (XML) to the external JSON model.
