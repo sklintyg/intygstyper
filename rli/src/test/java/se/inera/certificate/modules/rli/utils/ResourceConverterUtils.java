@@ -5,12 +5,12 @@ import java.io.IOException;
 
 import javax.xml.bind.JAXB;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import se.inera.certificate.common.v1.Utlatande;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
 import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
+import se.inera.certificate.rli.model.v1.Utlatande;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ResourceConverterUtils {
 

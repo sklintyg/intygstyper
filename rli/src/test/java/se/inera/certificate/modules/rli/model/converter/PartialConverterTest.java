@@ -27,8 +27,6 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.junit.Test;
 
-import se.inera.certificate.modules.rli.model.converter.PartialConverter;
-
 public class PartialConverterTest {
 
     @Test

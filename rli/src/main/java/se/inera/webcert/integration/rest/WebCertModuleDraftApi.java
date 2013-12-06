@@ -31,10 +31,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBException;
 
+import se.inera.webcert.integration.rest.dto.CreateDraftCertificateHolder;
+
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-
-import se.inera.webcert.integration.rest.dto.CreateDraftCertificateHolder;
 
 /**
  * API exposing services for use in modules extending WebCert.

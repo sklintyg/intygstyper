@@ -23,9 +23,9 @@ import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import se.inera.certificate.common.v1.Utlatande;
 import se.inera.certificate.modules.rli.utils.Scenario;
 import se.inera.certificate.modules.rli.utils.ScenarioFinder;
+import se.inera.certificate.rli.model.v1.Utlatande;
 
 public class ExternalToTransportConverterTest {
 

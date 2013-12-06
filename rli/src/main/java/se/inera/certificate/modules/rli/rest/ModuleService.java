@@ -86,7 +86,7 @@ public class ModuleService implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public Utlatande unmarshall(se.inera.certificate.common.v1.Utlatande transportModel) {
+    public Utlatande unmarshall(se.inera.certificate.rli.model.v1.Utlatande transportModel) {
         try {
             return transportToExternalConverter.convert(transportModel);
 
@@ -100,7 +100,7 @@ public class ModuleService implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public se.inera.certificate.common.v1.Utlatande marshall(Utlatande externalModel) {
+    public se.inera.certificate.rli.model.v1.Utlatande marshall(Utlatande externalModel) {
         try {
             return externalToTransportConverter.convert(externalModel);
 

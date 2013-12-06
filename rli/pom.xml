@@ -210,9 +210,9 @@
             <configuration>
               <xsdOptions>
                 <xsdOption>
-                  <xsd>src/main/resources/schemas/rli_model.xsd</xsd>
+                  <xsd>src/main/resources/schemas/transport_model.xsd</xsd>
                   <extension>true</extension>
-                  <bindingFile>${basedir}/src/main/resources/binding.xjb</bindingFile>
+                  <bindingFile>${basedir}/src/main/resources/schemas/binding.xjb</bindingFile>
                 </xsdOption>
               </xsdOptions>
             </configuration>

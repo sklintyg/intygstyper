@@ -24,15 +24,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.common.v1.AktivitetType;
-import se.inera.certificate.common.v1.EnhetType;
-import se.inera.certificate.common.v1.HosPersonalType;
-import se.inera.certificate.common.v1.ObservationType;
-import se.inera.certificate.common.v1.PatientRelationType;
-import se.inera.certificate.common.v1.PatientType;
-import se.inera.certificate.common.v1.RekommendationType;
-import se.inera.certificate.common.v1.UtforarrollType;
-import se.inera.certificate.common.v1.VardgivareType;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.PartialInterval;
@@ -45,6 +36,15 @@ import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
+import se.inera.certificate.rli.model.v1.AktivitetType;
+import se.inera.certificate.rli.model.v1.EnhetType;
+import se.inera.certificate.rli.model.v1.HosPersonalType;
+import se.inera.certificate.rli.model.v1.ObservationType;
+import se.inera.certificate.rli.model.v1.PatientRelationType;
+import se.inera.certificate.rli.model.v1.PatientType;
+import se.inera.certificate.rli.model.v1.RekommendationType;
+import se.inera.certificate.rli.model.v1.UtforarrollType;
+import se.inera.certificate.rli.model.v1.VardgivareType;
 
 /**
  * Converter between transport and external model.
@@ -64,7 +64,7 @@ public class TransportToExternalConverter {
      * @return se.inera.certificate.modules.rli.model.external.Utlatande
      * @throws ConverterException
      */
-    public Utlatande convert(se.inera.certificate.common.v1.Utlatande source) throws ConverterException {
+    public Utlatande convert(se.inera.certificate.rli.model.v1.Utlatande source) throws ConverterException {
 
         LOG.debug("Converting Utlatande '{}' from transport to external", source.getUtlatandeId());
 
@@ -238,7 +238,8 @@ public class TransportToExternalConverter {
      * @return import se.inera.certificate.modules.rli.model.external.Arrangemang
      * @throws ConverterException
      */
-    private Arrangemang convertArrangemang(se.inera.certificate.rli.v1.Arrangemang source) throws ConverterException {
+    private Arrangemang convertArrangemang(se.inera.certificate.rli.model.ext.v1.Arrangemang source)
+            throws ConverterException {
         LOG.trace("Converting arrangemang");
 
         if (source == null) {
