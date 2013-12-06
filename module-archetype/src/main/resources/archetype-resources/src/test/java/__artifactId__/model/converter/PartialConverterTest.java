@@ -30,8 +30,6 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.junit.Test;
 
-import ${package}.${artifactId}.model.converter.PartialConverter;
-
 public class PartialConverterTest {
 
     @Test

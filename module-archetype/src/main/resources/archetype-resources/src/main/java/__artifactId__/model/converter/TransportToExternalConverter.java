@@ -42,7 +42,7 @@ public class TransportToExternalConverter {
      * @return ${package}.${artifactId}.model.external.Utlatande
      * @throws ConverterException
      */
-    public Utlatande transportToExternal(se.inera.certificate.common.v1.Utlatande source) throws ConverterException {
+    public Utlatande convert(se.inera.certificate.${artifactId}.model.v1.Utlatande source) throws ConverterException {
         // TODO: Implement
         return null;
     }

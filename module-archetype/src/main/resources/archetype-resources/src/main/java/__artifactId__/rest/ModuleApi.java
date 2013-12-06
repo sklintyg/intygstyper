@@ -47,7 +47,7 @@ public interface ModuleApi {
     @Path("/unmarshall")
     @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_JSON)
-    Utlatande unmarshall(se.inera.certificate.common.v1.Utlatande transportModel);
+    Utlatande unmarshall(se.inera.certificate.${artifactId}.model.v1.Utlatande transportModel);
 
     /**
      * Handles conversion from the external JSON model to the transport model (XML).
@@ -61,7 +61,7 @@ public interface ModuleApi {
     @Path("/marshall")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_XML)
-    se.inera.certificate.common.v1.Utlatande marshall(Utlatande externalModel);
+    se.inera.certificate.${artifactId}.model.v1.Utlatande marshall(Utlatande externalModel);
 
     /**
      * Validates the external model. If the validation succeeds, a empty result will be returned. If the validation
@@ -118,8 +118,8 @@ public interface ModuleApi {
     @Path("/external")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    ${package}.${artifactId}.model.internal.mi.Utlatande convertInternalToExternal(
-            ${package}.${artifactId}.model.internal.mi.Utlatande internalModel);
+    ${package}.${artifactId}.model.external.Utlatande convertInternalToExternal(
+            ${package}.${artifactId}.model.internal.wc.Utlatande internalModel);
 
     /**
      * Creates a new editable model for use in WebCert. The model is pre populated using data contained in the

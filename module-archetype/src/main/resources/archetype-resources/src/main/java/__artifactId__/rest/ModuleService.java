@@ -26,7 +26,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
-import javax.ws.rs.ServiceUnavailableException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -38,10 +37,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.model.util.Strings;
 import ${package}.${artifactId}.model.converter.ConverterException;
-import ${package}.${artifactId}.model.converter.WebcertModelFactory;
 import ${package}.${artifactId}.model.converter.ExternalToInternalConverter;
 import ${package}.${artifactId}.model.converter.ExternalToTransportConverter;
+import ${package}.${artifactId}.model.converter.InternalToExternalConverter;
 import ${package}.${artifactId}.model.converter.TransportToExternalConverter;
+import ${package}.${artifactId}.model.converter.WebcertModelFactory;
 import ${package}.${artifactId}.model.external.Utlatande;
 import ${package}.${artifactId}.pdf.PdfGenerator;
 import ${package}.${artifactId}.pdf.PdfGeneratorException;
@@ -69,6 +69,9 @@ public class ModuleService implements ModuleApi {
 
     @Autowired
     private ExternalToInternalConverter externalToInternalConverter;
+    
+    @Autowired
+    private InternalToExternalConverter internalToExternalConverter;
 
     @Autowired
     private PdfGenerator pdfGenerator;
@@ -79,13 +82,16 @@ public class ModuleService implements ModuleApi {
     @Context
     private HttpServletResponse httpResponse;
 
+    // @HeaderParam("X-Schema-Version")
+    // private String SchemaVersion;
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public Utlatande unmarshall(se.inera.certificate.common.v1.Utlatande transportModel) {
+    public Utlatande unmarshall(se.inera.certificate.${artifactId}.model.v1.Utlatande transportModel) {
         try {
-            return transportToExternalConverter.transportToExternal(transportModel);
+            return transportToExternalConverter.convert(transportModel);
 
         } catch (ConverterException e) {
             LOG.error("Could not unmarshall transport model to external model", e);
@@ -97,9 +103,9 @@ public class ModuleService implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public se.inera.certificate.common.v1.Utlatande marshall(Utlatande externalModel) {
+    public se.inera.certificate.${artifactId}.model.v1.Utlatande marshall(Utlatande externalModel) {
         try {
-            return externalToTransportConverter.externalToTransport(externalModel);
+            return externalToTransportConverter.convert(externalModel);
 
         } catch (ConverterException e) {
             LOG.error("Could not marshall external model to transport model", e);
@@ -130,7 +136,7 @@ public class ModuleService implements ModuleApi {
     public byte[] pdf(CertificateContentHolder certificateContentHolder) {
         try {
             ${package}.${artifactId}.model.internal.mi.Utlatande internalUtlatande = externalToInternalConverter
-                    .fromExternalToInternal(certificateContentHolder);
+                    .convert(certificateContentHolder);
 
             httpResponse.addHeader("Content-Disposition",
                     "filename=" + pdfGenerator.generatePdfFilename(internalUtlatande));
@@ -154,7 +160,7 @@ public class ModuleService implements ModuleApi {
     public ${package}.${artifactId}.model.internal.mi.Utlatande convertExternalToInternal(
             CertificateContentHolder certificateContentHolder) {
         try {
-            return externalToInternalConverter.fromExternalToInternal(certificateContentHolder);
+            return externalToInternalConverter.convert(certificateContentHolder);
 
         } catch (ConverterException e) {
             LOG.error("Could not convert external model to internal model", e);
@@ -166,10 +172,14 @@ public class ModuleService implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public ${package}.${artifactId}.model.internal.mi.Utlatande convertInternalToExternal(
-            ${package}.${artifactId}.model.internal.mi.Utlatande internalModel) {
-        // TODO: Implement when conversion from an internal model i required.
-        throw new ServiceUnavailableException();
+    public ${package}.${artifactId}.model.external.Utlatande convertInternalToExternal(
+            ${package}.${artifactId}.model.internal.wc.Utlatande internalModel) {
+        try {
+            return internalToExternalConverter.convert(internalModel);
+        } catch (ConverterException e) {
+            LOG.error("Could not convert external model to internal model", e);
+            throw new BadRequestException(e);
+        }
     }
 
     /**

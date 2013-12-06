@@ -28,7 +28,7 @@
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:/${artifactId}-config.xml, classpath:/${artifactId}-beans.xml, classpath:/${artifactId}-integration-config.xml, /WEB-INF/web-security.xml</param-value>
+    <param-value>classpath:/${artifactId}-config.xml, /WEB-INF/web-security.xml</param-value>
   </context-param>
 
   <!-- Start spring context -->

@@ -50,7 +50,7 @@ public class ExternalToInternalConverterTest {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             CertificateContentHolder extUtlatande = scenario.asExternalModelWithHolder();
 
-            ${package}.${artifactId}.model.internal.mi.Utlatande actual = converter.fromExternalToInternal(extUtlatande);
+            ${package}.${artifactId}.model.internal.mi.Utlatande actual = converter.convert(extUtlatande);
 
             ${package}.${artifactId}.model.internal.mi.Utlatande expected = scenario.asInternalMIModel();
             assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);

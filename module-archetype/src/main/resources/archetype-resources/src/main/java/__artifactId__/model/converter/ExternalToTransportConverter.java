@@ -23,13 +23,13 @@ package ${package}.${artifactId}.model.converter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import se.inera.certificate.common.v1.Utlatande;
+import se.inera.certificate.${artifactId}.model.v1.Utlatande;
 
 public class ExternalToTransportConverter {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExternalToTransportConverter.class);
 
-    public Utlatande externalToTransport(${package}.${artifactId}.model.external.Utlatande source)
+    public Utlatande convert(${package}.${artifactId}.model.external.Utlatande source)
             throws ConverterException {
         // TODO: Implement
         return null;
