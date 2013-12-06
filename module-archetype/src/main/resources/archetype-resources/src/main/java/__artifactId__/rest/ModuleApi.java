@@ -33,7 +33,7 @@ import ${package}.${artifactId}.rest.dto.CertificateContentHolder;
 import ${package}.${artifactId}.rest.dto.CreateNewDraftCertificateHolder;
 
 @Path("")
-public interface RliModuleApi {
+public interface ModuleApi {
 
     /**
      * Handles conversion from the transport model (XML) to the external JSON model.

@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ${package}.${artifactId}.model.internal.wc;
+package ${package}.${artifactId}.model.converter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -31,16 +31,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
-import ${package}.${artifactId}.model.converter.ConverterException;
-import ${package}.${artifactId}.model.converter.WebcertModelFactory;
 import ${package}.${artifactId}.rest.dto.CreateNewDraftCertificateHolder;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class EditModelFactoryTest {
-    WebcertModelFactory factory;
+public class WebcertModelFactoryTest {
+
+    private WebcertModelFactory factory;
 
     @Before
     public void setUp() throws Exception {
@@ -50,7 +49,7 @@ public class EditModelFactoryTest {
     @Test
     public void testCreateEditableModel() throws JsonParseException, JsonMappingException, IOException {
         CreateNewDraftCertificateHolder draftCertHolder = new ObjectMapper().readValue(new ClassPathResource(
-                "initial-parameters.json").getFile(), CreateNewDraftCertificateHolder.class);
+                "webcert-model-factory-request.json").getFile(), CreateNewDraftCertificateHolder.class);
 
         ${package}.${artifactId}.model.internal.wc.Utlatande utlatande = null;
 

@@ -25,8 +25,6 @@ public class Undersokning {
 
     private OrsakAvbokning orsakForAvbokning;
 
-    private Utforare utforsAv;
-
     private Vardenhet utforsVid;
 
     private String forstaUndersokningsdatum;
@@ -38,8 +36,6 @@ public class Undersokning {
     private String undersokningsplats;
 
     private KomplikationStyrkt komplikationStyrkt;
-
-    private Graviditet graviditet;
 
     private String komplikationsbeskrivning;
 
@@ -95,28 +91,12 @@ public class Undersokning {
         this.komplikationStyrkt = komplikationStyrkt;
     }
 
-    public Graviditet getGraviditet() {
-        return graviditet;
-    }
-
-    public void setGraviditet(Graviditet graviditet) {
-        this.graviditet = graviditet;
-    }
-
     public String getKomplikationsbeskrivning() {
         return komplikationsbeskrivning;
     }
 
     public void setKomplikationsbeskrivning(String komplikationBeskrivning) {
         this.komplikationsbeskrivning = komplikationBeskrivning;
-    }
-
-    public Utforare getUtforsAv() {
-        return utforsAv;
-    }
-
-    public void setUtforsAv(Utforare utforsAv) {
-        this.utforsAv = utforsAv;
     }
 
     public Vardenhet getUtforsVid() {

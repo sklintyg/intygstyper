@@ -54,9 +54,9 @@ import ${package}.${artifactId}.validator.ExternalValidator;
  * 
  * @author Gustav Norbäcker, R2M
  */
-public class RliModuleService implements RliModuleApi {
+public class ModuleService implements ModuleApi {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RliModuleService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ModuleService.class);
 
     @Autowired
     private TransportToExternalConverter transportToExternalConverter;

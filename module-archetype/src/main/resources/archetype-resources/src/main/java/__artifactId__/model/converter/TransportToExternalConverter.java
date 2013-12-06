@@ -24,7 +24,7 @@ package ${package}.${artifactId}.model.converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.modules.rli.model.external.Utlatande;
+import ${package}.${artifactId}.model.external.Utlatande;
 
 /**
  * Converter between transport and external model.
