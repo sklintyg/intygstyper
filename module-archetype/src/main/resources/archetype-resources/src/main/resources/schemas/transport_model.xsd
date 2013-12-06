@@ -23,7 +23,7 @@
 
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns="urn:riv:clinicalprocess:healthcond:certificate:1" xmlns:${artifactId}="urn:intyg:${artifactId}:model:ext:1"
+           xmlns="urn:riv:clinicalprocess:healthcond:certificate:1" xmlns:extension="urn:intyg:${artifactId}:model:ext:1"
            xmlns:iso="urn:iso:21090:dt:1" targetNamespace="urn:riv:clinicalprocess:healthcond:certificate:1"
            elementFormDefault="qualified" attributeFormDefault="unqualified"
            version="1.0">
