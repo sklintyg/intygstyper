@@ -31,9 +31,9 @@
 	<!--Daily rolling file appender -->
 	<appender name="FILE"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${catalina.home}/logs/ivar-module.log</file>
+		<file>${catalina.base}/logs/ivar-module.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${catalina.home}/logs/ivar-module.%d{yyyy-MM-dd}.log
+			<fileNamePattern>${catalina.base}/logs/ivar-module.%d{yyyy-MM-dd}.log
 			</fileNamePattern>
 		</rollingPolicy>
 		<encoder>
