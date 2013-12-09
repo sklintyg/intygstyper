@@ -25,13 +25,8 @@ import org.joda.time.LocalDateTime;
 
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Status;
-import se.inera.certificate.model.HosPersonal;
-import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Patient;
-import se.inera.certificate.model.Referens;
-import se.inera.certificate.model.Rekommendation;
-import se.inera.certificate.model.Vardkontakt;
+import se.inera.certificate.model.Status;
 
 /**
  * The utlåtande used by RLI. This class is a copy of the common external model (defined in se.inera.certificate.model),
@@ -52,15 +47,13 @@ public class Utlatande {
 
     private LocalDateTime skickatdatum;
 
+    private Kod intygAvser;
+
     private Patient patient;
 
     private HosPersonal skapadAv;
 
-    private List<HosPersonal> harDeltagandeHosPersonal;
-
     private List<Vardkontakt> vardkontakter;
-
-    private List<Referens> referenser;
 
     private List<Aktivitet> aktiviteter;
 
@@ -109,6 +102,14 @@ public class Utlatande {
         this.skickatdatum = skickatdatum;
     }
 
+    public Kod getIntygAvser() {
+        return intygAvser;
+    }
+
+    public void setIntygAvser(Kod intygAvser) {
+        this.intygAvser = intygAvser;
+    }
+
     public Patient getPatient() {
         return patient;
     }
@@ -125,25 +126,11 @@ public class Utlatande {
         this.skapadAv = skapadAv;
     }
 
-    public List<HosPersonal> getHarDeltagandeHosPersonal() {
-        if (harDeltagandeHosPersonal == null) {
-            harDeltagandeHosPersonal = new ArrayList<HosPersonal>();
-        }
-        return this.harDeltagandeHosPersonal;
-    }
-
     public List<Vardkontakt> getVardkontakter() {
         if (vardkontakter == null) {
             vardkontakter = new ArrayList<Vardkontakt>();
         }
         return this.vardkontakter;
-    }
-
-    public List<Referens> getReferenser() {
-        if (referenser == null) {
-            referenser = new ArrayList<Referens>();
-        }
-        return this.referenser;
     }
 
     public List<Aktivitet> getAktiviteter() {

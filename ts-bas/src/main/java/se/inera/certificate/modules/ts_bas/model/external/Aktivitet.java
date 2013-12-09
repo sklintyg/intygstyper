@@ -18,18 +18,31 @@
  */
 package se.inera.certificate.modules.ts_bas.model.external;
 
+import se.inera.certificate.model.Id;
+import se.inera.certificate.model.Kod;
+
 /**
  * The aktivitet used by RLI. This class is a copy of the common external model (defined in se.inera.certificate.model),
  * extending with:
  * <ul>
  * <li> {@link #plats}
  * </ul>
- * 
- * @author Gustav Norbäcker, R2M
  */
 public class Aktivitet extends se.inera.certificate.model.Aktivitet {
 
+    private Id id;
+
     private String plats;
+
+    private Kod metod;
+
+    public Id getId() {
+        return id;
+    }
+
+    public void setId(Id id) {
+        this.id = id;
+    }
 
     public String getPlats() {
         return plats;
@@ -37,5 +50,13 @@ public class Aktivitet extends se.inera.certificate.model.Aktivitet {
 
     public void setPlats(String plats) {
         this.plats = plats;
+    }
+
+    public Kod getMetod() {
+        return metod;
+    }
+
+    public void setMetod(Kod metod) {
+        this.metod = metod;
     }
 }
