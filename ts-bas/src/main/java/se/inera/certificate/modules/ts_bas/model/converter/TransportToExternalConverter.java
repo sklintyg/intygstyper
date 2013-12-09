@@ -18,10 +18,24 @@
  */
 package se.inera.certificate.modules.ts_bas.model.converter;
 
+import iso.v21090.dt.v1.CD;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.Patient;
+import se.inera.certificate.model.Vardenhet;
+import se.inera.certificate.model.Vardgivare;
+import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
+import se.inera.certificate.ts_bas.model.v1.EnhetType;
+import se.inera.certificate.ts_bas.model.v1.HosPersonalType;
+import se.inera.certificate.ts_bas.model.v1.PatientType;
+import se.inera.certificate.ts_bas.model.v1.VardgivareType;
 
 /**
  * Converter between transport and external model.
@@ -40,8 +54,73 @@ public class TransportToExternalConverter {
      * @throws ConverterException
      */
     public Utlatande convert(se.inera.certificate.ts_bas.model.v1.Utlatande source) throws ConverterException {
-        // TODO: Implement
+        Utlatande utlatande = new Utlatande();
+        utlatande.setId(IsoTypeConverter.toId(source.getUtlatandeId()));
+        utlatande.setTyp(IsoTypeConverter.toKod(source.getTypAvUtlatande()));
+        utlatande.setPatient(convertPatient(source.getPatient()));
+        utlatande.setSigneringsdatum(source.getSigneringsdatum());
+        utlatande.setSkapadAv(convertHosPersonal(source.getSkapadAv()));
+        utlatande.setSkickatdatum(source.getSkickatdatum());
+        utlatande.getIntygAvser().addAll(convertCDtoKod(source.getIntygAvsers()));
+
         LOG.trace("Converting transport model to external");
-        return null;
+        return utlatande;
+    }
+
+    /**
+     * Convert from List of CD to List of Kod
+     * @param source The list to convert 
+     * @return A list of codes in Kod
+     */
+    private List<Kod> convertCDtoKod(List<CD> source) {
+        List<Kod> converted = new ArrayList<Kod>();
+        for (CD cd : source) {
+            converted.add(IsoTypeConverter.toKod(cd));
+        }
+        return converted;
+    }
+
+    private HosPersonal convertHosPersonal(HosPersonalType source) {
+        HosPersonal skapadAv = new HosPersonal();
+        skapadAv.setBefattning(source.getBefattning());
+        skapadAv.setId(IsoTypeConverter.toId(source.getPersonalId()));
+        skapadAv.setNamn(source.getFullstandigtNamn());
+        skapadAv.setVardenhet(convertVardenhet(source.getEnhet()));
+        skapadAv.getSpecialiteter().addAll(convertCDtoKod(source.getSpecialitets()));
+        
+        return skapadAv;
+    }
+
+    private Vardenhet convertVardenhet(EnhetType source) {
+        Vardenhet vardenhet = new Vardenhet();
+        vardenhet.setId(IsoTypeConverter.toId(source.getEnhetsId()));
+        vardenhet.setNamn(source.getEnhetsnamn());
+        vardenhet.setPostadress(source.getPostadress());
+        vardenhet.setPostnummer(source.getPostnummer());
+        vardenhet.setPostort(source.getPostort());
+        vardenhet.setTelefonnummer(source.getTelefonnummer());
+        vardenhet.setVardgivare(convertVardgivare(source.getVardgivare()));
+
+        return vardenhet;
+    }
+
+    private Vardgivare convertVardgivare(VardgivareType source) {
+        Vardgivare vardgivare = new Vardgivare();
+        vardgivare.setId(IsoTypeConverter.toId(source.getVardgivareId()));
+        vardgivare.setNamn(source.getVardgivarnamn());
+
+        return vardgivare;
+    }
+
+    private Patient convertPatient(PatientType source) {
+        Patient patient = new Patient();
+        patient.setEfternamn(source.getEfternamn());
+        patient.getFornamn().addAll(source.getFornamns());
+        patient.setId(IsoTypeConverter.toId(source.getPersonId()));
+        patient.setPostadress(source.getPostadress());
+        patient.setPostnummer(source.getPostnummer());
+        patient.setPostort(source.getPostort());
+
+        return patient;
     }
 }

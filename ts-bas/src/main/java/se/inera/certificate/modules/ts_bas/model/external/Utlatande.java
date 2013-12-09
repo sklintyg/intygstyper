@@ -47,13 +47,13 @@ public class Utlatande {
 
     private LocalDateTime skickatdatum;
 
-    private Kod intygAvser;
+    private List<Kod> intygAvser;
 
     private Patient patient;
 
     private HosPersonal skapadAv;
 
-    private List<Vardkontakt> vardkontakter;
+    private Vardkontakt vardkontakt;
 
     private List<Aktivitet> aktiviteter;
 
@@ -102,12 +102,11 @@ public class Utlatande {
         this.skickatdatum = skickatdatum;
     }
 
-    public Kod getIntygAvser() {
+    public List<Kod> getIntygAvser() {
+        if (intygAvser == null) {
+            intygAvser = new ArrayList<Kod>();
+        }
         return intygAvser;
-    }
-
-    public void setIntygAvser(Kod intygAvser) {
-        this.intygAvser = intygAvser;
     }
 
     public Patient getPatient() {
@@ -126,11 +125,12 @@ public class Utlatande {
         this.skapadAv = skapadAv;
     }
 
-    public List<Vardkontakt> getVardkontakter() {
-        if (vardkontakter == null) {
-            vardkontakter = new ArrayList<Vardkontakt>();
-        }
-        return this.vardkontakter;
+    public Vardkontakt getVardkontakt() {
+        return vardkontakt;
+    }
+
+    public void setVardkontakt(Vardkontakt vardkontakt) {
+        this.vardkontakt = vardkontakt;
     }
 
     public List<Aktivitet> getAktiviteter() {
