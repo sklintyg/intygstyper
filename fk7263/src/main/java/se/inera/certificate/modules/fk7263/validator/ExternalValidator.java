@@ -6,8 +6,10 @@ import java.util.List;
 
 import org.springframework.util.StringUtils;
 
+import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.util.Strings;
+import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
 import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
@@ -16,7 +18,7 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
  * 
  * @author marced
  */
-public class ExternalValidator extends AbstractValidator{
+public class ExternalValidator extends AbstractValidator {
 
     private Fk7263Utlatande externalUtlatande;
 
@@ -36,9 +38,16 @@ public class ExternalValidator extends AbstractValidator{
     private void validateDiagnose() {
 
         Observation huvudDiagnos = externalUtlatande.findObservationByKategori(ObservationsKoder.DIAGNOS);
+        Aktivitet smittskydd = externalUtlatande.getAktivitet(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
+
         if (huvudDiagnos == null || huvudDiagnos.getObservationskod() == null
                 || StringUtils.isEmpty(huvudDiagnos.getObservationskod().getCode())) {
-            addValidationError("Field 2: Missing diagnose code");
+
+            //No huvudDiagnosis found: This is an error unless smittskydd is set
+            if (smittskydd == null) {
+                addValidationError("Field 2: Missing diagnose code");
+            }
+            //Since we don't have any huvuddiagnos, there is no use for further checking code system etc
             return;
         }
 
@@ -49,6 +58,6 @@ public class ExternalValidator extends AbstractValidator{
             return;
         }
 
-    }  
+    }
 
 }
