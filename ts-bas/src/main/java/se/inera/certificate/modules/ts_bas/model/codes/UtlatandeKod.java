@@ -26,7 +26,7 @@ import se.inera.certificate.model.Kod;
 public enum UtlatandeKod implements CodeSystem {
 
     // TODO: Create specific Code representing module
-    CHANGEME ("intyg_code", "Intyg: textual description");
+    TS_BAS ("TS-BAS", "Transportstyrlesen bas");
 
     private static String codeSystemName = "kv_utlåtandetyp_intyg";
 
