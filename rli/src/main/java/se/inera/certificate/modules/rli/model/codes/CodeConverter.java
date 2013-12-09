@@ -34,7 +34,7 @@ public final class CodeConverter {
 
     }
 
-    public static Kod toKod(ICodeSystem codeEnum) {
+    public static Kod toKod(CodeSystem codeEnum) {
 
         if (codeEnum == null) {
             return null;
@@ -74,7 +74,7 @@ public final class CodeConverter {
      * @throws RuntimeException
      *             if no enum constant was defined for the specified kod.
      */
-    public static <T extends ICodeSystem> T fromCode(Kod kod, Class<T> type) {
+    public static <T extends CodeSystem> T fromCode(Kod kod, Class<T> type) {
         if (kod == null) {
             return null;
         }
@@ -98,7 +98,7 @@ public final class CodeConverter {
      *            The kod to match.
      * @return <code>true</code> if the code enum and kod matches, <code>false</code> otherwise.
      */
-    public static boolean matches(ICodeSystem codeEnum, Kod kod) {
+    public static boolean matches(CodeSystem codeEnum, Kod kod) {
         if (codeEnum == null) {
             return kod == null;
         }

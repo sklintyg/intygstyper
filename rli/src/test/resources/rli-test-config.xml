@@ -25,6 +25,7 @@
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<import resource="rli-beans.xml" />
+	<import resource="rli-model-config.xml" />
 
 	<cxf:bus>
 		<cxf:features>
@@ -32,28 +33,9 @@
 		</cxf:features>
 	</cxf:bus>
 
-	<util:list id="theSchemas">
-		<value>classpath:schemas/core_components/iso_dt_subset_1.0.xsd</value>
-		<value>classpath:schemas/core_components/insuranceprocess_healthreporting_2.0.xsd</value>
-		<value>classpath:schemas/rli_model_extension.xsd</value>
-		<value>classpath:schemas/rli_model.xsd</value>
-	</util:list>
-
-	<bean id="objectMapper"
-		class="se.inera.certificate.integration.json.CustomObjectMapper" />
-
-	<bean id="jacksonJsonProvider"
-		class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">
-		<property name="mapper" ref="objectMapper" />
-	</bean>
-
-	<bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
-		<property name="schemaLocations" ref="theSchemas" />
-	</bean>
-
 	<jaxrs:server address="http://localhost:8880/rli">
 		<jaxrs:serviceBeans>
-			<bean class="se.inera.certificate.modules.rli.rest.RliModuleService" />
+			<bean class="se.inera.certificate.modules.rli.rest.ModuleService" />
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
 			<ref bean="jacksonJsonProvider" />
@@ -62,7 +44,7 @@
 	</jaxrs:server>
 
 	<jaxrs:client id="rliModule" address="http://localhost:8880/rli"
-		serviceClass="se.inera.certificate.modules.rli.rest.RliModuleApi">
+		serviceClass="se.inera.certificate.modules.rli.rest.ModuleApi">
 		<jaxrs:providers>
 			<ref bean="jacksonJsonProvider" />
 			<ref bean="jaxbProvider" />

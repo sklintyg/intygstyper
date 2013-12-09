@@ -23,7 +23,7 @@ import se.inera.certificate.model.Kod;
 /**
  * Represents all the codes used by this module to define observationer.
  */
-public enum ObservationsKod implements ICodeSystem {
+public enum ObservationsKod implements CodeSystem {
 
     /** Sjukdom (39104002) */
     SJUKDOM("39104002", "Sjukdom"),

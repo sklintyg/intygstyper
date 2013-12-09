@@ -20,7 +20,7 @@ package se.inera.certificate.modules.rli.model.codes;
 
 import se.inera.certificate.model.Kod;
 
-public enum TestKod implements ICodeSystem {
+public enum TestKod implements CodeSystem {
 
     CODE_RED("CODE_RED", "Code Red"), CODE_BLUE("CODE_BLUE", "Code Blue"), CODE_BLACK("", "");
 

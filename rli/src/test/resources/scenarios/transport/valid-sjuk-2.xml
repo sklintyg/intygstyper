@@ -11,7 +11,7 @@
   received a copy of the GNU Affero General Public License along with this 
   program. If not, see <http://www.gnu.org/licenses/>. -->
 <utlatande xmlns="urn:riv:clinicalprocess:healthcond:certificate:1"
-  xmlns:rli="urn:intyg:rli:model:1">
+  xmlns:rli="urn:intyg:rli:model:ext:1">
 
   <utlatande-id root="???" extension="d53c377e-4103-47f5-9f90-5e1bbd874466" />
   <typAvUtlatande code="RLI"

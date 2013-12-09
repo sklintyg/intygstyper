@@ -198,6 +198,7 @@
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-xjc-plugin</artifactId>
@@ -211,15 +212,16 @@
             <configuration>
               <xsdOptions>
                 <xsdOption>
-                  <xsd>src/main/resources/schemas/rli_model.xsd</xsd>
+                  <xsd>src/main/resources/schemas/transport_model.xsd</xsd>
                   <extension>true</extension>
-                  <bindingFile>${basedir}/src/main/resources/binding.xjb</bindingFile>
+                  <bindingFile>${basedir}/src/main/resources/schemas/binding.xjb</bindingFile>
                 </xsdOption>
               </xsdOptions>
             </configuration>
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
