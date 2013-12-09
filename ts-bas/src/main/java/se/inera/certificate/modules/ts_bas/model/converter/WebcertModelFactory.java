@@ -33,6 +33,7 @@ public class WebcertModelFactory {
 
     public Utlatande createNewWebcertDraft(CreateNewDraftCertificateHolder newDraftData) throws ConverterException {
         // TODO: Implement
+        LOG.trace("Creating new internal model for draft");
         return null;
     }
 }

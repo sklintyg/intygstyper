@@ -21,17 +21,12 @@ package se.inera.certificate.modules.ts_bas.validator;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Patient;
-import se.inera.certificate.model.Rekommendation;
-import se.inera.certificate.model.Utforarroll;
-import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
-import se.inera.certificate.modules.ts_bas.model.codes.HSpersonalKod;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeSystem;
+import se.inera.certificate.modules.ts_bas.model.codes.HSpersonalKod;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
 import se.inera.certificate.validate.IdValidator;

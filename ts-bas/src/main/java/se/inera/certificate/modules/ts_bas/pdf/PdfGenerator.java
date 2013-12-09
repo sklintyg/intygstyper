@@ -21,8 +21,6 @@ package se.inera.certificate.modules.ts_bas.pdf;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import org.apache.commons.lang3.StringUtils;
-
 import se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande;
 
 import com.itextpdf.text.DocumentException;

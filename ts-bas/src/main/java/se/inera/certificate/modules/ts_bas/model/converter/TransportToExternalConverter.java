@@ -41,6 +41,7 @@ public class TransportToExternalConverter {
      */
     public Utlatande convert(se.inera.certificate.ts_bas.model.v1.Utlatande source) throws ConverterException {
         // TODO: Implement
+        LOG.trace("Converting transport model to external");
         return null;
     }
 }
