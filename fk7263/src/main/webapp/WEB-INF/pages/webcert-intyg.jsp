@@ -103,7 +103,7 @@
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/services.js"/>"></script>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/webcert/js/view/fragasvar-module.js"/>"></script>
 
-  <script type="text/javascript" src="<c:url value="/siths.jsp"/>"></script>
+  <script type="text/javascript" src="/siths.jsp"></script>
 
 </body>
 </html>
