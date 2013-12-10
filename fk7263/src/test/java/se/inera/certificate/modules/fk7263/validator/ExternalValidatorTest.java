@@ -9,8 +9,10 @@ import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
+import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
 import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
@@ -39,6 +41,19 @@ public class ExternalValidatorTest {
         assertTrue(removed);
         assertEquals(1, new ExternalValidator(utlatande).validate().size());
     }
+    
+    @Test
+    public void testMissingDiagnoseCodeButHasSmittSkydd() throws Exception {
+        Fk7263Utlatande utlatande = getValidUtlatande();
+        Observation huvudDiagnos = utlatande.findObservationByKategori(ObservationsKoder.DIAGNOS);
+        utlatande.getObservationer().remove(huvudDiagnos);
+       
+        Aktivitet smittskyddsAktivitet = new Aktivitet();
+        smittskyddsAktivitet.setAktivitetskod(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
+        utlatande.getAktiviteter().add(smittskyddsAktivitet);
+       
+        assertEquals(0, new ExternalValidator(utlatande).validate().size());
+    }
 
     @Test
     public void testInvalidDiagnoseCodeSystem() throws Exception {
@@ -50,5 +65,18 @@ public class ExternalValidatorTest {
 
         assertEquals(1, new ExternalValidator(utlatande).validate().size());
     }
+    
+    @Test
+    public void testSmittskyddButInvalidDiagnoseCodeSystem() throws Exception {
+        Fk7263Utlatande utlatande = getValidUtlatande();
+        Observation huvudDiagnos = utlatande.findObservationByKategori(ObservationsKoder.DIAGNOS);
+        utlatande.getObservationer().remove(huvudDiagnos);
+        huvudDiagnos.setObservationskod(new Kod("non-existing-code-system", "a value"));
+        utlatande.getObservationer().add(huvudDiagnos);
+        Aktivitet smittskyddsAktivitet = new Aktivitet();
+        smittskyddsAktivitet.setAktivitetskod(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
+        utlatande.getAktiviteter().add(smittskyddsAktivitet);
 
+        assertEquals(1, new ExternalValidator(utlatande).validate().size());
+    }
 }

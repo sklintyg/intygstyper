@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<jxb:bindings version="1.0" 
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb" 
+    xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:c="urn:riv:clinicalprocess:healthcond:certificate:1">
+
+  <jxb:bindings schemaLocation="core_components/iso_dt_subset_1.0.xsd" node="/xs:schema">
+    <jxb:schemaBindings>
+      <jxb:package name="iso.v21090.dt.v1"/>
+    </jxb:schemaBindings>
+  </jxb:bindings>
+
+  <jxb:bindings schemaLocation="transport_model.xsd" node="/xs:schema">
+    <jxb:schemaBindings>
+      <jxb:package name="se.inera.certificate.ts_bas.model.v1"/>
+    </jxb:schemaBindings>
+  </jxb:bindings>
+
+  <jxb:bindings>
+    <jxb:globalBindings>
+      <xjc:simple/>
+      <jxb:javaType name="org.joda.time.LocalDate" xmlType="c:date"
+                     parseMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.parseIsoDate"
+                     printMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.printIsoDate"/>
+      <jxb:javaType name="org.joda.time.LocalDateTime" xmlType="c:dateTime"
+                     parseMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.parseIsoDateTime"
+                     printMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.printIsoDateTime"/>
+      <jxb:javaType name="org.joda.time.Partial" xmlType="c:partialDate"
+                     parseMethod="se.inera.certificate.schema.adapter.PartialAdapter.parsePartial"
+                     printMethod="se.inera.certificate.schema.adapter.PartialAdapter.printPartial"/>
+      <jxb:javaType name="org.joda.time.LocalDate" xmlType="xs:date"
+                     parseMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.parseDate"
+                     printMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.printDate"/>
+      <jxb:javaType name="org.joda.time.LocalDateTime" xmlType="xs:dateTime"
+                     parseMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.parseDateTime"
+                     printMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.printDateTime"/>
+    </jxb:globalBindings>
+  </jxb:bindings>
+
+</jxb:bindings>
