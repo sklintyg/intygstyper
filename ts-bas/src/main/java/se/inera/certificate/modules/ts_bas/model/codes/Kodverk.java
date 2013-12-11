@@ -8,7 +8,11 @@ public enum Kodverk {
 
     AKTIVITETER("8040b4d1-67dc-42e1-a938-de5374e9526a", "kv_aktiviteter_intyg", null),
 
-    OBSERVATIONER("to-come", "kv_observationer_intyg", null);
+    // TODO: Change to correct OID when this is available 
+    OBSERVATIONER("to-come", "kv_observationer_intyg", null),
+
+    // TODO: Change to correct OID when this is available 
+    ID_KONTROLL("???", "kv_id_kontroll", null);
 
     private Kodverk(String codeSystem, String codeSystemName, String codeSystemVersion) {
         this.codeSystem = codeSystem;
