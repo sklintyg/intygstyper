@@ -43,6 +43,15 @@ public class InternalValidatorTest {
     }
 
     @Test
+    public void testNoSmittskyddDiagnoseMandatory() throws Exception {
+        Fk7263Intyg utlatande = getValidUtlatande();
+        utlatande.setAvstangningSmittskydd(false);
+        utlatande.setDiagnosKod("");
+
+        assertEquals(1, new InternalValidator(utlatande).validate().size());
+    }
+
+    @Test
     public void testMissingComment() throws Exception {
         Fk7263Intyg utlatande = getValidUtlatande();
         utlatande.setKommentar(null);
@@ -75,10 +84,18 @@ public class InternalValidatorTest {
     }
 
     @Test
-    public void testMissingMedicinsktTillstand() throws Exception {
+    public void testSmittskyddMissingVardkontaktOrReferens() throws Exception {
         Fk7263Intyg utlatande = getValidUtlatande();
-        utlatande.setDiagnosKod(null);
-        assertEquals(1, new InternalValidator(utlatande).validate().size());
+        utlatande.setAvstangningSmittskydd(true);
+        // remove all vardkontakter
+        utlatande.setUndersokningAvPatienten(null);
+        utlatande.setTelefonkontaktMedPatienten(null);
+
+        // remove all referenser
+        utlatande.setJournaluppgifter(null);
+        utlatande.setAnnanReferens(null);
+
+        assertEquals(0, new InternalValidator(utlatande).validate().size());
     }
 
     @Test
@@ -88,6 +105,40 @@ public class InternalValidatorTest {
         // set two activities with conflicting activity code
         utlatande.setRessattTillArbeteAktuellt(true);
         utlatande.setRessattTillArbeteEjAktuellt(true);
+
+        assertEquals(1, new InternalValidator(utlatande).validate().size());
+    }
+
+    @Test
+    public void testMultipleRehabilitering() throws Exception {
+        Fk7263Intyg utlatande = getValidUtlatande();
+
+        // set conflicting values
+        utlatande.setRehabiliteringAktuell(true);
+        utlatande.setRehabiliteringEjAktuell(true);
+
+        assertEquals(1, new InternalValidator(utlatande).validate().size());
+    }
+
+    @Test
+    public void testMultiplearbetsformagaprognos() throws Exception {
+        Fk7263Intyg utlatande = getValidUtlatande();
+
+        // set conflicting values
+        utlatande.setArbetsformataPrognosGarInteAttBedoma(true);
+        utlatande.setArbetsformataPrognosJa(true);
+
+        assertEquals(1, new InternalValidator(utlatande).validate().size());
+    }
+
+    @Test
+    public void testNoArbetsformagas() throws Exception {
+        Fk7263Intyg utlatande = getValidUtlatande();
+        utlatande.setAvstangningSmittskydd(false);
+        // set conflicting values
+        utlatande.setNuvarandeArbetsuppgifter("");
+        utlatande.setArbetsloshet(false);
+        utlatande.setForaldrarledighet(false);
 
         assertEquals(1, new InternalValidator(utlatande).validate().size());
     }

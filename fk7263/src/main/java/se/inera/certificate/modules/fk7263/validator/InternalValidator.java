@@ -4,6 +4,7 @@ import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 
 import java.util.List;
 
+import org.apache.cxf.common.util.StringUtils;
 import org.joda.time.LocalDate;
 
 import se.inera.certificate.model.LocalDateInterval;
@@ -24,58 +25,75 @@ public class InternalValidator extends AbstractValidator {
 
     public List<String> validate() {
 
-        validateNonSmittskydd();
+        validateDiagnose();
+        validateFunktionsnedsattning();
+        validateRehabilitering();
+        validateArbetsformaga();
+        validatePrognos();
         validateRessatt();
         validateKommentar();
 
         return validationErrors;
     }
 
-    private void validateNonSmittskydd() {
-
-        // Many fields are optional if smittskydd is checked, if not set validate these below
-        boolean inSmittskydd = utlatande.isAvstangningSmittskydd();
-
-        if (inSmittskydd) {
-            return;
-        }
+    private void validateDiagnose() {
 
         // Fält 2 - Medicinskt tillstånd kod - mandatory if not smittskydd
-        if (isNullOrEmpty(utlatande.getDiagnosKod())) {
+        if (!utlatande.isAvstangningSmittskydd() && isNullOrEmpty(utlatande.getDiagnosKod())) {
             addValidationError("Field 2: No tillstandskod in medicinsktTillstand found!");
         }
 
-        validateFunktionsnedsattning();
-        validateArbetsformaga();
+        // Fält 3 - always optional regardless of smittskydd
+
     }
 
     private void validateFunktionsnedsattning() {
 
         // Fält 4 - vänster Check that we got a funktionsnedsattning element
         String funktionsnedsattning = utlatande.getFunktionsnedsattning();
-        if (funktionsnedsattning == null) {
+        if (!utlatande.isAvstangningSmittskydd() && (funktionsnedsattning == null)) {
             addValidationError("Field 4: No funktionsnedsattning element found!");
             return;
         }
 
-        // Fält 4 - höger Check that we at least got one field set
-        if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
-                && utlatande.getJournaluppgifter() == null && utlatande.getAnnanReferens() == null) {
-            addValidationError("Field 4: At least 1 vardkontakt or referens element must be set!");
-            return;
+        // Fält 4 - höger Check that we at least got one field set if not smittskydd
+        if (!utlatande.isAvstangningSmittskydd()) {
+            if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
+                    && utlatande.getJournaluppgifter() == null && utlatande.getAnnanReferens() == null) {
+                addValidationError("Field 4: At least 1 vardkontakt or referens element must be set!");
+                return;
+            }
+        }
+    }
+
+    private void validateRehabilitering() {
+        // Fält 7 - 3 optional checkboxes (but exclusive!)
+        if (!hasMaxOneTruth(utlatande.isRehabiliteringAktuell(), utlatande.isRehabiliteringEjAktuell(),
+                utlatande.isRehabiliteringGarInteAttBedoma())) {
+            addValidationError("Field 7: Only one rehabilitering field can be checked!");
+        }
+    }
+
+    private void validatePrognos() {
+        // Fält 10 - 4 optional checkboxes (but exclusive!)
+        if (!hasMaxOneTruth(utlatande.isArbetsformataPrognosGarInteAttBedoma(), utlatande.isArbetsformataPrognosJa(),
+                utlatande.isArbetsformataPrognosJaDelvis(), utlatande.isArbetsformataPrognosNej())) {
+            addValidationError("Field 10: Only one arbetsformaga.prognos field can be checked!");
         }
     }
 
     private void validateArbetsformaga() {
 
-        // Fält 8a - arbetsformoga - sysselsattning
-        boolean hasArbetsuppgifts = utlatande.getNuvarandeArbetsuppgifter() != null;
+        // Fält 8a - arbetsformoga - sysselsattning - applies of not smittskydd is set
+        if (!utlatande.isAvstangningSmittskydd()) {
+            boolean hasArbetsuppgifts = !StringUtils.isEmpty(utlatande.getNuvarandeArbetsuppgifter());
 
-        if (!hasArbetsuppgifts && !utlatande.isArbetsloshet() && !utlatande.isForaldrarledighet()) {
-            addValidationError("Field 8a: At least 1 sysselsattning must be set");
+            if (!hasArbetsuppgifts && !utlatande.isArbetsloshet() && !utlatande.isForaldrarledighet()) {
+                addValidationError("Field 8a: At least 1 sysselsattning must be set");
+            }
         }
 
-        // validate 8b
+        // validate 8b - regardless of smittskydd
         boolean valid100 = validArbetsformageNedsattning(utlatande.getNedsattMed100());
         boolean valid75 = validArbetsformageNedsattning(utlatande.getNedsattMed75());
         boolean valid50 = validArbetsformageNedsattning(utlatande.getNedsattMed50());
@@ -147,4 +165,16 @@ public class InternalValidator extends AbstractValidator {
         }
     }
 
+    private boolean hasMaxOneTruth(boolean... values) {
+        boolean found = false;
+        for (boolean b : values) {
+            if (b) {
+                if (found) {
+                    return false;
+                }
+                found = true;
+            }
+        }
+        return true;
+    }
 }

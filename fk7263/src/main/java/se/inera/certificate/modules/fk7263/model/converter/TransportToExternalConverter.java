@@ -36,6 +36,7 @@ import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
+
 /**
  * @author marced
  */
@@ -162,11 +163,11 @@ public final class TransportToExternalConverter {
 
         Vardkontakt vardkontakt = new Vardkontakt();
         vardkontakt.setVardkontakttyp(IsoTypeConverter.toKod(source.getVardkontakttyp()));
-
-        LocalDateInterval vardkontaktTid = new LocalDateInterval(source.getVardkontakttid().getFrom(), source
-                .getVardkontakttid().getTom());
-        vardkontakt.setVardkontaktstid(vardkontaktTid);
-
+        if (source.getVardkontakttid() != null) {
+            LocalDateInterval vardkontaktTid = new LocalDateInterval(source.getVardkontakttid().getFrom(), source
+                    .getVardkontakttid().getTom());
+            vardkontakt.setVardkontaktstid(vardkontaktTid);
+        }
         return vardkontakt;
     }
 
