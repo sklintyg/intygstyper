@@ -86,9 +86,8 @@ public class ExternalValidator extends AbstractValidator {
     private void validateSysselSattning() {
         Fk7263Patient patient = externalUtlatande.getPatient();
         for (Sysselsattning sysselsattning : externalUtlatande.getPatient().getSysselsattningar()) {
-            if (Sysselsattningskoder.NUVARANDE_ARBETE.equals(sysselsattning.getSysselsattningstyp())
-                    && !patient.getArbetsuppgifter().isEmpty()) {
-                if (StringUtils.isEmpty(patient.getArbetsuppgifter().get(0).getTypAvArbetsuppgift())) {
+            if (Sysselsattningskoder.NUVARANDE_ARBETE.equals(sysselsattning.getSysselsattningstyp())) {
+                if (patient.getArbetsuppgifter().isEmpty() || StringUtils.isEmpty(patient.getArbetsuppgifter().get(0).getTypAvArbetsuppgift())) {
                     addValidationError("Field 8a(1): 'beskrivning aktuella arbetsuppgifter' is mandatory when 'nuvarande arbete' is checked.");
                 }
             }
