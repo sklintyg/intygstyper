@@ -19,8 +19,8 @@ public enum ObservationsKod implements CodeSystem {
     /** Nattblindhet (H53.6) */
     NATTBLINDHET("H53.6", "Nattblindhet", ICD_10),
 
-    /** Progressiv ögonsjukdom (OBSTS1) */
-    PROGRESIV_OGONSJUKDOM("OBSTS1", "Progressiv ögonsjukdom", OBSERVATIONER),
+    /** Progressiv ögonsjukdom (OBS1) */
+    PROGRESIV_OGONSJUKDOM("OBS1", "Progressiv ögonsjukdom", OBSERVATIONER),
 
     /** Ej korrigerad synskärpa (420050001) */
     EJ_KORRIGERAD_SYNSKARPA("420050001", "Ej korrigerad synskärpa", SNOMED_CT),
@@ -28,49 +28,49 @@ public enum ObservationsKod implements CodeSystem {
     /** Korrigerad synskärpa (397535007) */
     KORRIGERAD_SYNSKARPA("397535007", "Korrigerad synskärpa", SNOMED_CT),
 
-    /** Synskärpa, med kontaktlins (OBSTS2) */
-    SYNSKARPA_KONTAKTLINS("OBSTS2", "Synskärpa, med kontaktlins", OBSERVATIONER),
+    /** Synskärpa, med kontaktlins (OBS2) */
+    SYNSKARPA_KONTAKTLINS("OBS2", "Synskärpa, med kontaktlins", OBSERVATIONER),
 
     /** Synskärpa, med glasögon (408333000) */
     SYNSKARPA_GLASOGON("408333000", "Synskärpa, med glasögon", SNOMED_CT),
 
-    /** Överraskande anfall av balansrubbningningar eller yrsel (OBSTS3) */
-    ANFALL_BALANSRUBBNING_YRSEL("OBSTS3", "Överraskande anfall av balansrubbningningar eller yrsel", OBSERVATIONER),
+    /** Överraskande anfall av balansrubbningningar eller yrsel (OBS3) */
+    ANFALL_BALANSRUBBNING_YRSEL("OBS3", "Överraskande anfall av balansrubbningningar eller yrsel", OBSERVATIONER),
 
-    /** Svårigheter att uppfatta vanlig samtalsstämma på fyta meters avstånd (OBSTS4) */
-    SVARIGHET_SAMTAL_4M("OBSTS4", "Svårigheter att uppfatta vanlig samtalsstämma på fyta meters avstånd", OBSERVATIONER),
+    /** Svårigheter att uppfatta vanlig samtalsstämma på fyta meters avstånd (OBS4) */
+    SVARIGHET_SAMTAL_4M("OBS4", "Svårigheter att uppfatta vanlig samtalsstämma på fyta meters avstånd", OBSERVATIONER),
 
     /**
      * Sjukdom eller funktionsnedsättning som påverkar rörligheten så att fordon inte kan köras på ett trafiksäkert sätt
-     * (OBSTS5)
+     * (OBS5)
      */
     FORSAMRAD_RORLIGHET_FRAMFORA_FORDON(
-            "OBSTS5",
+            "OBS5",
             "Sjukdom eller funktionsnedsättning som påverkar rörligheten och som medför att fordon inte kan köras på ett trafiksäkert sätt",
             OBSERVATIONER),
 
-    /** Otillräcklig rörelseförmågan för att kunna hjälpa passagerare in och ut ur fordonet samt med bilbälte (OBSTS6) */
-    FORSAMRAD_RORLIGHET_HJALPA_PASSAGERARE("OBSTS6",
+    /** Otillräcklig rörelseförmågan för att kunna hjälpa passagerare in och ut ur fordonet samt med bilbälte (OBS6) */
+    FORSAMRAD_RORLIGHET_HJALPA_PASSAGERARE("OBS6",
             "Otillräcklig rörelseförmågan för att kunna hjälpa passagerare in och ut ur fordonet samt med bilbälte",
             OBSERVATIONER),
 
-    /** "Hjärt- och kärlsjukdom som innebär en trafiksäkerhetsrisk (OBSTS7) */
+    /** "Hjärt- och kärlsjukdom som innebär en trafiksäkerhetsrisk (OBS7) */
     HJART_KARLSJUKDOM_TRAFIKSAKERHETSRISK(
-            "OBSTS7",
+            "OBS7",
             "Hjärt- och kärlsjukdom som kan medföra en påtaglig risk för att hjärnans funktioner akut försämras eller som i övrigt innebär en trafiksäkerhetsrisk",
             OBSERVATIONER),
 
     /**
      * Riskfaktorer för stroke (tidigare stroke eller TIA, förhöjt blodtryck, förmaksflimmer eller kärlmissbildning)
-     * (OBSTS8)
+     * (OBS8)
      */
     RISKFAKTORER_STROKE(
-            "OBSTS8",
+            "OBS8",
             "Riskfaktorer för stroke (tidigare stroke eller TIA, förhöjt blodtryck, förmaksflimmer eller kärlmissbildning)",
             OBSERVATIONER),
 
-    /** Tecken på hjärnskada efter trauma, stroke eller anna sjukdom i centrala nervsystemet (OBSTS9) */
-    TECKEN_PA_HJARNSKADA("OBSTS9",
+    /** Tecken på hjärnskada efter trauma, stroke eller anna sjukdom i centrala nervsystemet (OBS9) */
+    TECKEN_PA_HJARNSKADA("OBS9",
             "Tecken på hjärnskada efter trauma, stroke eller anna sjukdom i centrala nervsystemet", OBSERVATIONER),
 
     /** Diabetes mellitus typ 1 (E10) */
@@ -94,44 +94,44 @@ public enum ObservationsKod implements CodeSystem {
     /** Epilepsi, ospecificerad (G40.9) */
     EPILEPSI("G40.9", "Epilepsi, ospecificerad", ICD_10),
 
-    /** Nedsatt njurfunktion som kan innebära trafiksäkerhetsrisk (OBSTS10) */
-    NEDSATT_NJURFUNKTION_TRAFIKSAKERHETSRISK("OBSTS10", "Nedsatt njurfunktion som kan innebära trafiksäkerhetsrisk",
+    /** Nedsatt njurfunktion som kan innebära trafiksäkerhetsrisk (OBS10) */
+    NEDSATT_NJURFUNKTION_TRAFIKSAKERHETSRISK("OBS10", "Nedsatt njurfunktion som kan innebära trafiksäkerhetsrisk",
             OBSERVATIONER),
 
-    /** Tecken på sviktande kognitiv funktion (OBSTS11) */
-    SVIKTANDE_KOGNITIV_FUNKTION("OBSTS11", "Tecken på sviktande kognitiv funktion", OBSERVATIONER),
+    /** Tecken på sviktande kognitiv funktion (OBS11) */
+    SVIKTANDE_KOGNITIV_FUNKTION("OBS11", "Tecken på sviktande kognitiv funktion", OBSERVATIONER),
 
-    /** Tecken på sömn- eller vakenhetsstörning (OBSTS12) */
-    SOMN_VAKENHETSSTORNING("OBSTS12", "Tecken på sömn- eller vakenhetsstörning", OBSERVATIONER),
+    /** Tecken på sömn- eller vakenhetsstörning (OBS12) */
+    SOMN_VAKENHETSSTORNING("OBS12", "Tecken på sömn- eller vakenhetsstörning", OBSERVATIONER),
 
-    /** Tecken på missbruk av alkohol, narkotika eller läkemedel (OBSTS13) */
-    TECKEN_PA_MISSBRUK("OBSTS13", "Tecken på missbruk av alkohol, narkotika eller läkemedel", OBSERVATIONER),
+    /** Tecken på missbruk av alkohol, narkotika eller läkemedel (OBS13) */
+    TECKEN_PA_MISSBRUK("OBS13", "Tecken på missbruk av alkohol, narkotika eller läkemedel", OBSERVATIONER),
 
-    /** Behov av provtagning avseende aktuellt bruk av alkohol eller narkotika (OBSTS14) */
-    BEHOV_AV_PROVTAGNING_MISSBRUK("OBSTS14", "Behov av provtagning avseende aktuellt bruk av alkohol eller narkotika",
+    /** Behov av provtagning avseende aktuellt bruk av alkohol eller narkotika (OBS14) */
+    BEHOV_AV_PROVTAGNING_MISSBRUK("OBS14", "Behov av provtagning avseende aktuellt bruk av alkohol eller narkotika",
             OBSERVATIONER),
 
-    /** Regelbundet läkarordinerat bruk av läkemedel som kan innebära en trafiksäkerhetsrisk (OBSTS15) */
-    LAKEMEDELSANVANDNING_TRAFIKSAKERHETSRISK("OBSTS15",
+    /** Regelbundet läkarordinerat bruk av läkemedel som kan innebära en trafiksäkerhetsrisk (OBS15) */
+    LAKEMEDELSANVANDNING_TRAFIKSAKERHETSRISK("OBS15",
             "Regelbundet läkarordinerat bruk av läkemedel som kan innebära en trafiksäkerhetsrisk", OBSERVATIONER),
 
     /**
      * psykisk sjukdom eller störning, till exempel schizofreni, annan psykos eller bipolär (manodepressiv) sjukdom
-     * (OBSTS16)
+     * (OBS16)
      */
     PSYKISK_SJUKDOM(
-            "OBSTS16",
+            "OBS16",
             "psykisk sjukdom eller störning, till exempel schizofreni, annan psykos eller bipolär (manodepressiv) sjukdom",
             OBSERVATIONER),
 
-    /** Förekomst avADHD, ADD, DAMP, Aspergers syndrom eller Tourettes syndrom (OBSTS17) */
-    ADHD_DAMP_MM("OBSTS17", "Förekomst avADHD, ADD, DAMP, Aspergers syndrom eller Tourettes syndrom", OBSERVATIONER),
+    /** Förekomst avADHD, ADD, DAMP, Aspergers syndrom eller Tourettes syndrom (OBS17) */
+    ADHD_DAMP_MM("OBS17", "Förekomst avADHD, ADD, DAMP, Aspergers syndrom eller Tourettes syndrom", OBSERVATIONER),
 
     /** Psykisk utvecklingsstörning (129104009) */
     PSYKISK_UTVECKLINGSSTORNING("129104009", "Psykisk utvecklingsstörning", SNOMED_CT),
 
-    /** Förekomst av stadigvarande medicinering (OBSTS18) */
-    STADIGVARANDE_MEDICINERING("OBSTS18", "Förekomst av stadigvarande medicinering", OBSERVATIONER);
+    /** Förekomst av stadigvarande medicinering (OBS18) */
+    STADIGVARANDE_MEDICINERING("OBS18", "Förekomst av stadigvarande medicinering", OBSERVATIONER);
 
     private final String code;
 
