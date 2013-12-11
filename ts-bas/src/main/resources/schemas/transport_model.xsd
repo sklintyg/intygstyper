@@ -150,6 +150,18 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="observationType">
+    <xs:sequence>
+      <xs:element name="observationsid" type="iso:II" minOccurs="0" />
+      <xs:element name="observationskod" type="iso:CD" />
+      <xs:element name="forekomst" type="xs:boolean" minOccurs="0"/>
+      <xs:element name="lateralitet" type="iso:CD" minOccurs="0" />
+      <xs:element name="varde" type="iso:PQ" minOccurs="0"/>
+      <xs:element name="beskrivning" type="xs:string" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="rekommendationType">
     <xs:sequence>
       <xs:element name="rekommendationskod" type="iso:CD"/>
@@ -158,17 +170,6 @@
 
       <xs:any namespace="##other" processContents="lax" minOccurs="0"
               maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="observationType">
-    <xs:sequence>
-      <xs:element name="observationsid" type="iso:II" minOccurs="0" />
-      <xs:element name="observationskod" type="iso:CD" />
-      <xs:element name="varde" type="iso:PQ" minOccurs="0"/>
-      <xs:element name="forekomst" type="xs:boolean" minOccurs="0"/>
-
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
 

@@ -21,6 +21,7 @@ package se.inera.certificate.modules.ts_bas.model.converter;
 import iso.v21090.dt.v1.CD;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -30,12 +31,18 @@ import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
+import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
+import se.inera.certificate.modules.ts_bas.model.external.Observation;
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
+import se.inera.certificate.modules.ts_bas.model.external.Vardkontakt;
+import se.inera.certificate.ts_bas.model.v1.AktivitetType;
 import se.inera.certificate.ts_bas.model.v1.EnhetType;
 import se.inera.certificate.ts_bas.model.v1.HosPersonalType;
+import se.inera.certificate.ts_bas.model.v1.ObservationType;
 import se.inera.certificate.ts_bas.model.v1.PatientType;
 import se.inera.certificate.ts_bas.model.v1.VardgivareType;
+import se.inera.certificate.ts_bas.model.v1.VardkontaktType;
 
 /**
  * Converter between transport and external model.
@@ -54,6 +61,9 @@ public class TransportToExternalConverter {
      * @throws ConverterException
      */
     public Utlatande convert(se.inera.certificate.ts_bas.model.v1.Utlatande source) throws ConverterException {
+        if (source == null) {
+            throw new ConverterException("Source Utlatande was null, cannot convert");
+        }
         Utlatande utlatande = new Utlatande();
         utlatande.setId(IsoTypeConverter.toId(source.getUtlatandeId()));
         utlatande.setTyp(IsoTypeConverter.toKod(source.getTypAvUtlatande()));
@@ -62,14 +72,143 @@ public class TransportToExternalConverter {
         utlatande.setSkapadAv(convertHosPersonal(source.getSkapadAv()));
         utlatande.setSkickatdatum(source.getSkickatdatum());
         utlatande.getIntygAvser().addAll(convertCDtoKod(source.getIntygAvsers()));
+        utlatande.getObservationer().addAll(convertObservationer(source.getObservations()));
+        utlatande.getAktiviteter().addAll(convertAktiviteter(source.getAktivitets()));
+        utlatande.setVardkontakt(convertVardkontakt(source.getVardkontakt()));
 
-        LOG.trace("Converting transport model to external");
         return utlatande;
+    }
+
+    private Vardkontakt convertVardkontakt(VardkontaktType source) {
+        Vardkontakt vardkontakt = new Vardkontakt();
+        vardkontakt.setIdkontroll(IsoTypeConverter.toKod(source.getIdKontroll()));
+        vardkontakt.setVardkontakttyp(IsoTypeConverter.toKod(source.getVardkontakttyp()));
+
+        return vardkontakt;
+    }
+
+    /**
+     * Convert a collection of AktivitetType to collection of Aktivitet
+     * 
+     * @param source
+     * @return
+     * @throws ConverterException
+     */
+    private Collection<? extends Aktivitet> convertAktiviteter(List<AktivitetType> source) throws ConverterException {
+        if (source == null) {
+            throw new ConverterException("No aktiviteter found, conversion stopped");
+        }
+
+        List<Aktivitet> aktiviteter = new ArrayList<Aktivitet>();
+        for (AktivitetType akt : source) {
+            aktiviteter.add(convertAktivitet(akt));
+        }
+
+        return aktiviteter;
+    }
+
+    /**
+     * Convert a single AktivitetType to Aktivitet
+     * 
+     * @param source
+     *            AktivitetType
+     * @return Aktivitet
+     */
+    private Aktivitet convertAktivitet(AktivitetType source) {
+        Aktivitet aktivitet = new Aktivitet();
+
+        aktivitet.setAktivitetskod(IsoTypeConverter.toKod(source.getAktivitetskod()));
+
+        if (source.getAktivitetstid() != null) {
+            aktivitet.setAktivitetstid(PartialConverter.toPartialInterval(source.getAktivitetstid().getFrom()
+                    .toString(), source.getAktivitetstid().getTom().toString()));
+        }
+
+        if (source.getBeskrivning() != null) {
+            aktivitet.setBeskrivning(source.getBeskrivning());
+        }
+
+        if (source.getAktivitetsstatus() != null) {
+            // TODO: Fix this in XSD and implement conversion
+        }
+
+        if (source.getAktivitetsid() != null) {
+            aktivitet.setId(IsoTypeConverter.toId(source.getAktivitetsid()));
+        }
+
+        if (source.getMetod() != null) {
+            aktivitet.setMetod(IsoTypeConverter.toKod(source.getMetod()));
+        }
+
+        if (source.getPlats() != null) {
+            aktivitet.setPlats(source.getPlats());
+        }
+
+        return aktivitet;
+    }
+
+    /**
+     * Converts a collection of ObservationType to a collection of Observation
+     * 
+     * @param source
+     * @return
+     * @throws ConverterException
+     */
+
+    private Collection<? extends Observation> convertObservationer(List<ObservationType> source)
+            throws ConverterException {
+        if (source == null) {
+            throw new ConverterException("No observations found, conversion stopped");
+        }
+
+        List<Observation> observationer = new ArrayList<Observation>();
+        for (ObservationType obs : source) {
+            observationer.add(convertObservation(obs));
+        }
+
+        return observationer;
+    }
+
+    /**
+     * Convert a single ObservationType to Observation
+     * 
+     * @param source
+     *            ObservationType
+     * @return Observation
+     */
+    private Observation convertObservation(ObservationType source) {
+        Observation observation = new Observation();
+
+        if (source.getBeskrivning() != null) {
+            observation.setBeskrivning(source.getBeskrivning());
+        }
+
+        if (source.isForekomst() != null) {
+            observation.setForekonst((source.isForekomst() ? true : false));
+        }
+
+        if (source.getObservationsid() != null) {
+            observation.setId(IsoTypeConverter.toId(source.getObservationsid()));
+        }
+
+        observation.setObservationskategori(IsoTypeConverter.toKod(source.getObservationskod()));
+
+        if (source.getLateralitet() != null) {
+            observation.setLateralitet(IsoTypeConverter.toKod(source.getLateralitet()));
+        }
+
+        if (source.getVarde() != null) {
+            observation.getVarde().add(IsoTypeConverter.toPhysicalQuantity(source.getVarde()));
+        }
+
+        return observation;
     }
 
     /**
      * Convert from List of CD to List of Kod
-     * @param source The list to convert 
+     * 
+     * @param source
+     *            The list to convert
      * @return A list of codes in Kod
      */
     private List<Kod> convertCDtoKod(List<CD> source) {
@@ -87,7 +226,7 @@ public class TransportToExternalConverter {
         skapadAv.setNamn(source.getFullstandigtNamn());
         skapadAv.setVardenhet(convertVardenhet(source.getEnhet()));
         skapadAv.getSpecialiteter().addAll(convertCDtoKod(source.getSpecialitets()));
-        
+
         return skapadAv;
     }
 
