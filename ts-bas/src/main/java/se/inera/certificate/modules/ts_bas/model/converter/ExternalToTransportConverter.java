@@ -63,7 +63,12 @@ public class ExternalToTransportConverter {
         utlatande.setSkickatdatum(source.getSkickatdatum());
         utlatande.setTypAvUtlatande(IsoTypeConverter.toUtlatandeTyp(source.getTyp()));
         utlatande.setUtlatandeId(IsoTypeConverter.toUtlatandeId(source.getId()));
-        utlatande.setVardkontakt(convertVardkontakt(source.getVardkontakter().get(0)));
+        
+        /** Just make sure getVardkontakter() doesn't return an empty list before getting an index.. */
+        if (!source.getVardkontakter().isEmpty()) {
+            utlatande.setVardkontakt(convertVardkontakt(source.getVardkontakter().get(0)));
+        }
+        
         utlatande.getAktivitets().addAll(convertAktiviteter(source.getAktiviteter()));
         utlatande.getObservations().addAll(convertObservationer(source.getObservationer()));
         utlatande.getIntygAvsers().addAll(convertCodes(source.getIntygAvser()));
