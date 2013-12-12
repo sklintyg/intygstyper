@@ -35,6 +35,8 @@ public class Aktivitet extends se.inera.certificate.model.Aktivitet {
     private String plats;
 
     private Kod metod;
+    
+    private Kod aktivitetsstatus;
 
     public Id getId() {
         return id;
@@ -58,5 +60,13 @@ public class Aktivitet extends se.inera.certificate.model.Aktivitet {
 
     public void setMetod(Kod metod) {
         this.metod = metod;
+    }
+    
+    public Kod getAktivitetsstatus() {
+        return aktivitetsstatus;
+    }
+
+    public void setAktivitetsstatus(Kod aktivitetsstatus) {
+        this.aktivitetsstatus = aktivitetsstatus;
     }
 }

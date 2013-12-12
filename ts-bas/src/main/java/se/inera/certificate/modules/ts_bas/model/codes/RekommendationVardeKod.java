@@ -23,7 +23,7 @@ import se.inera.certificate.model.Kod;
 /**
  * Represents all the codes used by this module to define HoSPersonal.
  */
-public enum RekommendationsKod implements CodeSystem {
+public enum RekommendationVardeKod implements CodeSystem {
 
     /** Medeltung lastbil (C1) */
     C1("VAR1", "Medeltung lastbil"),
@@ -77,8 +77,7 @@ public enum RekommendationsKod implements CodeSystem {
     
     private static String codeSystemName = "kv_rekommendation_intyg";
 
-    // TODO: Change to correct OID when available
-    private static String codeSystem = "rekommendation.patienten.uppfyller.kraven";
+    private static String codeSystem = "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459";
 
     private static String codeSystemVersion = null;
 
@@ -86,7 +85,7 @@ public enum RekommendationsKod implements CodeSystem {
 
     private String description;
 
-    private RekommendationsKod(String code, String desc) {
+    private RekommendationVardeKod(String code, String desc) {
         this.code = code;
         this.description = desc;
     }
