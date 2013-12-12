@@ -5,10 +5,8 @@ import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 import java.util.List;
 
 import org.apache.cxf.common.util.StringUtils;
-import org.joda.time.Instant;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
-import org.joda.time.ReadableInterval;
 
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;

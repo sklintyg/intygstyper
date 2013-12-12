@@ -1,14 +1,13 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.List;
 
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
