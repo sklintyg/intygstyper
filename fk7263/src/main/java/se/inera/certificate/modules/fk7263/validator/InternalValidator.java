@@ -95,35 +95,36 @@ public class InternalValidator extends AbstractValidator {
         }
 
         // validate 8b - regardless of smittskydd
-        validateIntervals("Field 8b", utlatande.getNedsattMed100(), utlatande.getNedsattMed75(), utlatande.getNedsattMed50(),
-                utlatande.getNedsattMed25());
+        validateIntervals("Field 8b", utlatande.getNedsattMed100(), utlatande.getNedsattMed75(),
+                utlatande.getNedsattMed50(), utlatande.getNedsattMed25());
 
     }
 
     protected boolean validateIntervals(String fieldId, LocalDateInterval... intervals) {
         if (intervals == null || allNulls(intervals)) {
-            addValidationError(fieldId+ ": At least 1 interval must be filled");
+            addValidationError(fieldId + ": At least 1 interval must be filled");
             return false;
         }
-        
+
         for (int i = 0; i < intervals.length; i++) {
             if (intervals[i] != null) {
                 Interval oneInterval = createInterval(intervals[i].getStart(), intervals[i].getEnd());
                 if (oneInterval == null) {
-                    addValidationError(fieldId+ ": Invalid date interval (from " + intervals[i].getStart() + ", tom "
+                    addValidationError(fieldId + ": Invalid date interval (from " + intervals[i].getStart() + ", tom "
                             + intervals[i].getEnd());
                     return false;
                 }
-                for (int j = i+1; j < intervals.length; j++) {
+                for (int j = i + 1; j < intervals.length; j++) {
                     if (intervals[j] != null) {
                         Interval anotherInterval = createInterval(intervals[j].getStart(), intervals[j].getEnd());
                         if (anotherInterval == null) {
-                            addValidationError(fieldId+ ": Invalid date interval (from " + intervals[j].getStart()
+                            addValidationError(fieldId + ": Invalid date interval (from " + intervals[j].getStart()
                                     + ", tom " + intervals[j].getEnd());
                             return false;
                         }
-                        if (oneInterval.overlaps(anotherInterval)) {
-                            addValidationError(fieldId+ ": Overlapping date intervals (" + oneInterval.toString()
+                        // Overlap OR abuts(one intervals tom day== another's from day) is considered invalid
+                        if (oneInterval.overlaps(anotherInterval) || oneInterval.abuts(anotherInterval)) {
+                            addValidationError(fieldId + ": Overlapping date intervals (" + oneInterval.toString()
                                     + " vs " + anotherInterval.toString() + ")");
                             return false;
                         }
@@ -137,8 +138,8 @@ public class InternalValidator extends AbstractValidator {
     }
 
     private boolean allNulls(LocalDateInterval[] intervals) {
-        for(LocalDateInterval interval: intervals) {
-            if (interval !=null) {
+        for (LocalDateInterval interval : intervals) {
+            if (interval != null) {
                 return false;
             }
         }
@@ -147,7 +148,7 @@ public class InternalValidator extends AbstractValidator {
 
     private Interval createInterval(LocalDate start, LocalDate end) {
         if ((start == null || end == null || start.isAfter(end))) {
-           return null;
+            return null;
         } else {
             return new Interval(start.toDate().getTime(), end.toDate().getTime());
         }
