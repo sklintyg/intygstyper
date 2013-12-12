@@ -28,14 +28,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
+import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
+import se.inera.certificate.modules.ts_bas.model.external.Observation;
+import se.inera.certificate.modules.ts_bas.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_bas.model.external.Vardkontakt;
+import se.inera.certificate.ts_bas.model.v1.AktivitetType;
 import se.inera.certificate.ts_bas.model.v1.EnhetType;
 import se.inera.certificate.ts_bas.model.v1.HosPersonalType;
+import se.inera.certificate.ts_bas.model.v1.ObservationType;
+import se.inera.certificate.ts_bas.model.v1.PartialDateInterval;
 import se.inera.certificate.ts_bas.model.v1.PatientType;
+import se.inera.certificate.ts_bas.model.v1.RekommendationType;
 import se.inera.certificate.ts_bas.model.v1.Utlatande;
 import se.inera.certificate.ts_bas.model.v1.VardgivareType;
 import se.inera.certificate.ts_bas.model.v1.VardkontaktType;
@@ -56,15 +64,196 @@ public class ExternalToTransportConverter {
         utlatande.setTypAvUtlatande(IsoTypeConverter.toUtlatandeTyp(source.getTyp()));
         utlatande.setUtlatandeId(IsoTypeConverter.toUtlatandeId(source.getId()));
         utlatande.setVardkontakt(convertVardkontakt(source.getVardkontakt()));
+        utlatande.getAktivitets().addAll(convertAktiviteter(source.getAktiviteter()));
+        utlatande.getObservations().addAll(convertObservationer(source.getObservationer()));
+        utlatande.getIntygAvsers().addAll(convertCodes(source.getIntygAvser()));
+        utlatande.getRekommendations().addAll(convertRekommendationer(source.getRekommendationer()));
 
         return utlatande;
+    }
+
+    /**
+     * Convert collection of Rekommendation to collection of RekommendationType
+     * 
+     * @param source
+     * @return
+     * @throws ConverterException
+     */
+    private Collection<? extends RekommendationType> convertRekommendationer(List<Rekommendation> source)
+            throws ConverterException {
+        if (source == null) {
+            throw new ConverterException();
+        }
+        List<RekommendationType> rekommendationer = new ArrayList<RekommendationType>();
+        for (Rekommendation rek : source) {
+            rekommendationer.add(convertRekommendation(rek));
+        }
+        return rekommendationer;
+    }
+
+    /**
+     * Convert a single Rekommendation to RekommendationType
+     * 
+     * @param source
+     * @return
+     */
+    private RekommendationType convertRekommendation(Rekommendation source) {
+        RekommendationType rekommendation = new RekommendationType();
+        if (source.getBeskrivning() != null) {
+            rekommendation.setBeskrivning(source.getBeskrivning());
+        }
+
+        rekommendation.setRekommendationskod(IsoTypeConverter.toCD(source.getRekommendationskod()));
+
+        if (source.getVarde() != null) {
+            rekommendation.getVardes().add(IsoTypeConverter.toCD(source.getVarde()));
+        }
+        return rekommendation;
+    }
+
+    /**
+     * Convert collection of Kod to collection of CD
+     * 
+     * @param source
+     * @return
+     * @throws ConverterException
+     */
+    private Collection<? extends CD> convertCodes(List<Kod> source) throws ConverterException {
+        if (source == null) {
+            throw new ConverterException();
+        }
+        List<CD> codes = new ArrayList<CD>();
+        for (Kod kod : source) {
+            codes.add(IsoTypeConverter.toCD(kod));
+        }
+        return codes;
+    }
+
+    /**
+     * Convert a Collection of Observation to Collection of ObservationType
+     * 
+     * @param source
+     * @return
+     * @throws ConverterException
+     */
+    private Collection<? extends ObservationType> convertObservationer(List<Observation> source)
+            throws ConverterException {
+        if (source == null) {
+            throw new ConverterException("Observationer source was null, conversion failing");
+        }
+        List<ObservationType> observationer = new ArrayList<ObservationType>();
+        for (Observation obs : source) {
+            observationer.add(convertObservation(obs));
+        }
+
+        return observationer;
+    }
+
+    /**
+     * Convert a single Observation to ObservationType
+     * 
+     * @param source
+     * @return
+     */
+    private ObservationType convertObservation(Observation source) {
+        ObservationType observation = new ObservationType();
+        if (source.getBeskrivning() != null) {
+            observation.setBeskrivning(source.getBeskrivning());
+        }
+        if (source.getForekonst() != null) {
+            observation.setForekomst(source.getForekonst());
+        }
+        if (source.getLateralitet() != null) {
+            observation.setLateralitet(IsoTypeConverter.toCD(source.getLateralitet()));
+        }
+        if (source.getId() != null) {
+            observation.setObservationsid(IsoTypeConverter.toII(source.getId()));
+        }
+        observation.setObservationskod(IsoTypeConverter.toCD(source.getObservationskod()));
+
+        if (!source.getVarde().isEmpty()) {
+            observation.setVarde(IsoTypeConverter.toPQ(source.getVarde().get(0)));
+        }
+
+        return observation;
+    }
+
+    /**
+     * Convert Collection of Aktivitet to Collection of AktivitetType
+     * 
+     * @param source
+     * @return
+     * @throws ConverterException
+     */
+    private Collection<? extends AktivitetType> convertAktiviteter(List<Aktivitet> source) throws ConverterException {
+        if (source == null) {
+            throw new ConverterException("Aktivitet source was null, conversion failing");
+        }
+        List<AktivitetType> aktiviteter = new ArrayList<AktivitetType>();
+        for (Aktivitet aktivitet : source) {
+            aktiviteter.add(convertAktivitet(aktivitet));
+        }
+        return aktiviteter;
+    }
+
+    /**
+     * Convert a single Aktivitet to AktivitetType
+     * 
+     * @param source
+     *            Aktivitet
+     * @return AktivitetType
+     */
+    private AktivitetType convertAktivitet(Aktivitet source) {
+        AktivitetType aktivitet = new AktivitetType();
+
+        if (source.getId() != null) {
+            aktivitet.setAktivitetsid(IsoTypeConverter.toII(source.getId()));
+        }
+
+        aktivitet.setAktivitetskod(IsoTypeConverter.toCD(source.getAktivitetskod()));
+        
+        if (source.getAktivitetsstatus() != null) {
+            aktivitet.setAktivitetsstatus(IsoTypeConverter.toCD(source.getAktivitetsstatus()));
+        }
+        
+        if (source.getAktivitetstid() != null) {
+            aktivitet.setAktivitetstid(convertPartialDateInterval(source.getAktivitetstid()));
+        }
+        if (source.getBeskrivning() != null) {
+            aktivitet.setBeskrivning(source.getBeskrivning());
+        }
+        if (source.getMetod() != null) {
+            aktivitet.setMetod(IsoTypeConverter.toCD(source.getMetod()));
+        }
+        if (source.getPlats() != null) {
+            aktivitet.setPlats(source.getPlats());
+        }
+
+        return aktivitet;
+    }
+
+    /**
+     * Convert PartialInterval to PartialDateInterval
+     * 
+     * @param source
+     * @return
+     */
+    private PartialDateInterval convertPartialDateInterval(PartialInterval source) {
+        if (source == null) {
+            LOG.trace("Source PartialDateInterval was null, could not convert");
+            return null;
+        }
+        PartialDateInterval pdi = new PartialDateInterval();
+        pdi.setFrom(source.getFrom());
+        pdi.setTom(source.getTom());
+        return pdi;
     }
 
     private VardkontaktType convertVardkontakt(Vardkontakt source) {
         VardkontaktType vardkontakt = new VardkontaktType();
         vardkontakt.setIdKontroll(IsoTypeConverter.toCD(source.getIdkontroll()));
         vardkontakt.setVardkontakttyp(IsoTypeConverter.toCD(source.getVardkontakttyp()));
-        
+
         return vardkontakt;
     }
 
