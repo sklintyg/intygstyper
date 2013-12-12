@@ -32,6 +32,7 @@ public class ExternalToTransportConverter {
     public Utlatande convert(${package}.${artifactId-safe}.model.external.Utlatande source)
             throws ConverterException {
         // TODO: Implement
+        LOG.trace("Converting external model to transport");
         return null;
     }
 }

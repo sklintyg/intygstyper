@@ -24,14 +24,9 @@ package ${package}.${artifactId-safe}.validator;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Patient;
-import se.inera.certificate.model.Rekommendation;
-import se.inera.certificate.model.Utforarroll;
-import se.inera.certificate.model.Vardenhet;
 import ${package}.${artifactId-safe}.model.codes.CodeConverter;
 import ${package}.${artifactId-safe}.model.codes.HSpersonalKod;
 import ${package}.${artifactId-safe}.model.codes.CodeSystem;

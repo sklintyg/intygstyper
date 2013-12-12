@@ -33,6 +33,7 @@ public class InternalToExternalConverter {
     public Utlatande convert(
             ${package}.${artifactId-safe}.model.internal.wc.Utlatande source) throws ConverterException {
         // TODO: Implement
+        LOG.trace("Converting internal model to external");
         return null;
     }
 }

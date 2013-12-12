@@ -21,13 +21,7 @@
  */
 package ${package}.${artifactId-safe}.model.codes;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import org.junit.Test;
-import org.junit.Ignore;
-
-import se.inera.certificate.model.Kod;
 
 public class CodeEnumsTest {
 

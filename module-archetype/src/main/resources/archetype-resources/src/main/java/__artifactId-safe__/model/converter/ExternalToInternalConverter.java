@@ -41,6 +41,7 @@ public class ExternalToInternalConverter {
     public Utlatande convert(CertificateContentHolder certificateContentHolder)
             throws ConverterException {
         // TODO: Implement
+        LOG.trace("Converting external model to internal");
         return null;
     }
 }
