@@ -34,6 +34,7 @@ import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_bas.model.external.Observation;
+import se.inera.certificate.modules.ts_bas.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
 import se.inera.certificate.modules.ts_bas.model.external.Vardkontakt;
 import se.inera.certificate.ts_bas.model.v1.AktivitetType;
@@ -41,6 +42,7 @@ import se.inera.certificate.ts_bas.model.v1.EnhetType;
 import se.inera.certificate.ts_bas.model.v1.HosPersonalType;
 import se.inera.certificate.ts_bas.model.v1.ObservationType;
 import se.inera.certificate.ts_bas.model.v1.PatientType;
+import se.inera.certificate.ts_bas.model.v1.RekommendationType;
 import se.inera.certificate.ts_bas.model.v1.VardgivareType;
 import se.inera.certificate.ts_bas.model.v1.VardkontaktType;
 
@@ -73,10 +75,37 @@ public class TransportToExternalConverter {
         utlatande.setSkickatdatum(source.getSkickatdatum());
         utlatande.getIntygAvser().addAll(convertCDtoKod(source.getIntygAvsers()));
         utlatande.getObservationer().addAll(convertObservationer(source.getObservations()));
+        utlatande.getRekommendationer().addAll(convertRekommendationer(source.getRekommendations()));
         utlatande.getAktiviteter().addAll(convertAktiviteter(source.getAktivitets()));
         utlatande.setVardkontakt(convertVardkontakt(source.getVardkontakt()));
-
         return utlatande;
+    }
+
+    private Collection<? extends Rekommendation> convertRekommendationer(List<RekommendationType> source)
+            throws ConverterException {
+        if (source == null) {
+            throw new ConverterException();
+        }
+        List<Rekommendation> rekommendationer = new ArrayList<Rekommendation>();
+        for (RekommendationType rek : source) {
+            rekommendationer.add(convertRekommendation(rek));
+        }
+        return rekommendationer;
+    }
+
+    private Rekommendation convertRekommendation(RekommendationType source) {
+        Rekommendation rekommendation = new Rekommendation();
+        if (source.getBeskrivning() != null) {
+            rekommendation.setBeskrivning(source.getBeskrivning());
+        }
+        
+        rekommendation.setRekommendationskod(IsoTypeConverter.toKod(source.getRekommendationskod()));
+        
+        if (!source.getVardes().isEmpty()) {
+            rekommendation.setVarde(IsoTypeConverter.toKod(source.getVardes().get(0)));
+        }
+        
+        return rekommendation;
     }
 
     private Vardkontakt convertVardkontakt(VardkontaktType source) {
@@ -129,7 +158,7 @@ public class TransportToExternalConverter {
         }
 
         if (source.getAktivitetsstatus() != null) {
-            // TODO: Fix this in XSD and implement conversion
+            aktivitet.setAktivitetsstatus(IsoTypeConverter.toKod(source.getAktivitetsstatus()));
         }
 
         if (source.getAktivitetsid() != null) {
@@ -191,7 +220,7 @@ public class TransportToExternalConverter {
             observation.setId(IsoTypeConverter.toId(source.getObservationsid()));
         }
 
-        observation.setObservationskategori(IsoTypeConverter.toKod(source.getObservationskod()));
+        observation.setObservationskod(IsoTypeConverter.toKod(source.getObservationskod()));
 
         if (source.getLateralitet() != null) {
             observation.setLateralitet(IsoTypeConverter.toKod(source.getLateralitet()));

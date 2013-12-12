@@ -21,7 +21,6 @@ package se.inera.certificate.modules.ts_bas.model.converter;
 import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
@@ -45,10 +44,9 @@ public class TransportToExternalConverterTest {
         converter = new TransportToExternalConverter();
     }
 
-    @Ignore
     @Test
     public void testTransportToExternal() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
+        for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
             se.inera.certificate.ts_bas.model.v1.Utlatande utlatande = scenario.asTransportModel();
 
             Utlatande actual = converter.convert(utlatande);
