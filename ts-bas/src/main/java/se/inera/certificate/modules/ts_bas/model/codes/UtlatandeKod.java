@@ -26,7 +26,10 @@ import se.inera.certificate.model.Kod;
 public enum UtlatandeKod implements CodeSystem {
 
     // TODO: Create specific Code representing module
-    TS_BAS ("TS-BAS", "Transportstyrlesen bas");
+    TS_BAS("TSTRK1007 (U06, V06)",
+            "Läkarintyg- avseende högre körkortsbehörigheter eller taxiförarlegitimation- på begäran från Transportstyrelsen"),
+    
+    TS_DIABETES("TSTRK1031 (U06, V02)", "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.");
 
     private static String codeSystemName = "kv_utlåtandetyp_intyg";
 
