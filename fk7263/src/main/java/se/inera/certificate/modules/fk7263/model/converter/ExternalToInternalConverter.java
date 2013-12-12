@@ -2,17 +2,8 @@ package se.inera.certificate.modules.fk7263.model.converter;
 
 import java.util.List;
 
-import static org.joda.time.DateTimeFieldType.dayOfMonth;
-import static org.joda.time.DateTimeFieldType.monthOfYear;
-import static org.joda.time.DateTimeFieldType.year;
-
-import org.joda.time.LocalDate;
-import org.joda.time.Partial;
-import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.LocalDateInterval;
-import se.inera.certificate.model.Observation;
-import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Prognos;
 import se.inera.certificate.model.Referens;
@@ -26,6 +17,8 @@ import se.inera.certificate.modules.fk7263.model.codes.Prognoskoder;
 import se.inera.certificate.modules.fk7263.model.codes.Referenstypkoder;
 import se.inera.certificate.modules.fk7263.model.codes.Sysselsattningskoder;
 import se.inera.certificate.modules.fk7263.model.codes.Vardkontakttypkoder;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
@@ -47,9 +40,9 @@ public class ExternalToInternalConverter {
 
         intyg.setId(source.getId().getRoot());
         intyg.setSkickatDatum(source.getSkickatdatum());
-        intyg.setGiltighet(new PartialInterval(source.getValidFromDate(), source.getValidToDate()));
+        intyg.setGiltighet(new LocalDateInterval(source.getValidFromDate(), source.getValidToDate()));
 
-        Aktivitet smittskydd = source.getAktivitet(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
+        Fk7263Aktivitet smittskydd = source.getAktivitet(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
         intyg.setAvstangningSmittskydd(smittskydd != null);
 
         convertDiagnos();
@@ -116,46 +109,32 @@ public class ExternalToInternalConverter {
         }
     }
 
-    private LocalDate toLocalDate(Partial partial) {
-        if (partial == null) {
-            return null;
-        }
-        return new LocalDate(partial.get(year()), partial.get(monthOfYear()), partial.get(dayOfMonth()));
-    }
-
-    private LocalDateInterval toDatumInterval(PartialInterval interval) {
-        if (interval == null) {
-            return null;
-        }
-        return new LocalDateInterval(toLocalDate(interval.getFrom()), toLocalDate(interval.getTom()));
-    }
-
     private void convertArbetsformaga() {
-        List<Observation> arbetsformagor = source.getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
+        List<Fk7263Observation> arbetsformagor = source.getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
 
         if (!arbetsformagor.isEmpty()) {
-            Observation arbetsformaga = arbetsformagor.get(0);
+            Fk7263Observation arbetsformaga = arbetsformagor.get(0);
             convertPrognoser(arbetsformaga.getPrognoser());
         }
 
-        for (Observation arbetsformaga : arbetsformagor) {
+        for (Fk7263Observation arbetsformaga : arbetsformagor) {
 
             if (!arbetsformaga.getVarde().isEmpty()) {
-                PartialInterval interval = arbetsformaga.getObservationsperiod();
+                LocalDateInterval interval = arbetsformaga.getObservationsperiod();
                 PhysicalQuantity quantity = arbetsformaga.getVarde().get(0);
 
                 switch (quantity.getQuantity().toString()) {
                 case "75.0":
-                    intyg.setNedsattMed25(toDatumInterval(interval));
+                    intyg.setNedsattMed25(interval);
                     break;
                 case "50.0":
-                    intyg.setNedsattMed50(toDatumInterval(interval));
+                    intyg.setNedsattMed50(interval);
                     break;
                 case "25.0":
-                    intyg.setNedsattMed75(toDatumInterval(interval));
+                    intyg.setNedsattMed75(interval);
                     break;
                 case "0.0":
-                    intyg.setNedsattMed100(toDatumInterval(interval));
+                    intyg.setNedsattMed100(interval);
                     break;
                 }
             }
@@ -208,7 +187,7 @@ public class ExternalToInternalConverter {
 
     private void convertAktiviteter() {
 
-        for (Aktivitet aktivitet : source.getAktiviteter()) {
+        for (Fk7263Aktivitet aktivitet : source.getAktiviteter()) {
 
             if (Aktivitetskoder.PATIENTEN_BOR_FA_KONTAKT_MED_ARBETSFORMEDLINGEN.equals(aktivitet.getAktivitetskod())) {
                 intyg.setRekommendationKontaktArbetsformedlingen(true);
@@ -246,7 +225,7 @@ public class ExternalToInternalConverter {
     }
 
     private void convertAktivitetsbegransning() {
-        Observation aktivitetsbegransning = source
+        Fk7263Observation aktivitetsbegransning = source
                 .findObservationByKategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
         if (aktivitetsbegransning != null) {
             intyg.setAktivitetsbegransning(aktivitetsbegransning.getBeskrivning());
@@ -257,10 +236,10 @@ public class ExternalToInternalConverter {
         for (Vardkontakt vardkontakt : source.getVardkontakter()) {
             if (Vardkontakttypkoder.MIN_UNDERSOKNING_AV_PATIENTEN.equals(vardkontakt.getVardkontakttyp())
                     && vardkontakt.getVardkontaktstid() != null) {
-                intyg.setUndersokningAvPatienten(vardkontakt.getVardkontaktstid().getStart());
+                intyg.setUndersokningAvPatienten(vardkontakt.getVardkontaktstid().getFrom());
             } else if (Vardkontakttypkoder.MIN_TELEFONKONTAKT_MED_PATIENTEN.equals(vardkontakt.getVardkontakttyp())
                     && vardkontakt.getVardkontaktstid() != null) {
-                intyg.setTelefonkontaktMedPatienten(vardkontakt.getVardkontaktstid().getStart());
+                intyg.setTelefonkontaktMedPatienten(vardkontakt.getVardkontaktstid().getTom());
             }
         }
     }
@@ -277,21 +256,21 @@ public class ExternalToInternalConverter {
     }
 
     private void convertFunktionsnedsattning() {
-        Observation funktionsnedsattning = source.findObservationByKategori(ObservationsKoder.KROPPSFUNKTIONER);
+        Fk7263Observation funktionsnedsattning = source.findObservationByKategori(ObservationsKoder.KROPPSFUNKTIONER);
         if (funktionsnedsattning != null) {
             intyg.setFunktionsnedsattning(funktionsnedsattning.getBeskrivning());
         }
     }
 
     private void convertSjukdomsforlopp() {
-        List<Observation> sjukdomsforlopp = source.getObservationsByKod(ObservationsKoder.FORLOPP);
+        List<Fk7263Observation> sjukdomsforlopp = source.getObservationsByKod(ObservationsKoder.FORLOPP);
         if (sjukdomsforlopp != null && !sjukdomsforlopp.isEmpty()) {
             intyg.setSjukdomsforlopp(sjukdomsforlopp.get(0).getBeskrivning());
         }
     }
 
     private void convertDiagnos() {
-        Observation huvudDiagnos = source.findObservationByKategori(ObservationsKoder.DIAGNOS);
+        Fk7263Observation huvudDiagnos = source.findObservationByKategori(ObservationsKoder.DIAGNOS);
         if (huvudDiagnos != null) {
             if (huvudDiagnos.getObservationskod() != null) {
                 intyg.setDiagnosKod(huvudDiagnos.getObservationskod().getCode());

@@ -20,12 +20,9 @@ import se.inera.certificate.fk7263.model.v1.ReferensType;
 import se.inera.certificate.fk7263.model.v1.SysselsattningType;
 import se.inera.certificate.fk7263.model.v1.VardgivareType;
 import se.inera.certificate.fk7263.model.v1.VardkontaktType;
-import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.LocalDateInterval;
-import se.inera.certificate.model.Observation;
-import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Prognos;
 import se.inera.certificate.model.Referens;
@@ -34,6 +31,8 @@ import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
@@ -86,13 +85,13 @@ public final class TransportToExternalConverter {
         return sysselsattning;
     }
 
-    private static List<Observation> convertObservations(List<ObservationType> source) {
+    private static List<Fk7263Observation> convertObservations(List<ObservationType> source) {
         if (source == null)
             return null;
 
-        List<Observation> observations = new ArrayList<>();
+        List<Fk7263Observation> observations = new ArrayList<>();
         for (ObservationType observationType : source) {
-            Observation observation = convert(observationType);
+            Fk7263Observation observation = convert(observationType);
             if (observation != null) {
                 observations.add(observation);
             }
@@ -100,15 +99,15 @@ public final class TransportToExternalConverter {
         return observations;
     }
 
-    private static Observation convert(ObservationType source) {
+    private static Fk7263Observation convert(ObservationType source) {
 
-        Observation observation = new Observation();
+        Fk7263Observation observation = new Fk7263Observation();
 
         observation.setObservationskategori(IsoTypeConverter.toKod(source.getObservationskategori()));
         observation.setObservationskod(IsoTypeConverter.toKod(source.getObservationskod()));
 
         if (source.getObservationsperiod() != null) {
-            PartialInterval observationsPeriod = new PartialInterval(source.getObservationsperiod().getFrom(), source
+            LocalDateInterval observationsPeriod = new LocalDateInterval(source.getObservationsperiod().getFrom(), source
                     .getObservationsperiod().getTom());
             observation.setObservationsperiod(observationsPeriod);
         }
@@ -189,19 +188,19 @@ public final class TransportToExternalConverter {
         return referens;
     }
 
-    private static List<Aktivitet> convertAktiviteter(List<AktivitetType> source) {
+    private static List<Fk7263Aktivitet> convertAktiviteter(List<AktivitetType> source) {
         if (source == null)
             return null;
 
-        List<Aktivitet> aktiviteter = new ArrayList<>();
+        List<Fk7263Aktivitet> aktiviteter = new ArrayList<>();
         for (AktivitetType aktivitet : source) {
             aktiviteter.add(convert(aktivitet));
         }
         return aktiviteter;
     }
 
-    private static Aktivitet convert(AktivitetType source) {
-        Aktivitet aktivitet = new Aktivitet();
+    private static Fk7263Aktivitet convert(AktivitetType source) {
+        Fk7263Aktivitet aktivitet = new Fk7263Aktivitet();
         aktivitet.setBeskrivning(source.getBeskrivning());
         aktivitet.setAktivitetskod(IsoTypeConverter.toKod(source.getAktivitetskod()));
         return aktivitet;

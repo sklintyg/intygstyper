@@ -9,8 +9,6 @@ import static se.inera.certificate.model.util.Strings.join;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import se.inera.certificate.model.LocalDateInterval;
-import se.inera.certificate.model.PartialInterval;
-import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.external.StatusMeta;
 
 /**
@@ -19,7 +17,7 @@ import se.inera.certificate.modules.fk7263.model.external.StatusMeta;
 public class Fk7263Intyg {
 
     private String id;
-    private PartialInterval giltighet;
+    private LocalDateInterval giltighet;
 
     private LocalDateTime skickatDatum;
 
@@ -426,11 +424,11 @@ public class Fk7263Intyg {
         this.skickatDatum = skickatDatum;
     }
 
-    public PartialInterval getGiltighet() {
+    public LocalDateInterval getGiltighet() {
         return giltighet;
     }
 
-    public void setGiltighet(PartialInterval giltighet) {
+    public void setGiltighet(LocalDateInterval giltighet) {
         this.giltighet = giltighet;
     }
 }

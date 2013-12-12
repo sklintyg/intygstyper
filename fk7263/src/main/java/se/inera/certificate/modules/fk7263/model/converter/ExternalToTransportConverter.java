@@ -16,7 +16,6 @@ import se.inera.certificate.fk7263.model.v1.DateInterval;
 import se.inera.certificate.fk7263.model.v1.EnhetType;
 import se.inera.certificate.fk7263.model.v1.HosPersonalType;
 import se.inera.certificate.fk7263.model.v1.ObservationType;
-import se.inera.certificate.fk7263.model.v1.PartialDateInterval;
 import se.inera.certificate.fk7263.model.v1.PatientType;
 import se.inera.certificate.fk7263.model.v1.PrognosType;
 import se.inera.certificate.fk7263.model.v1.ReferensType;
@@ -24,10 +23,8 @@ import se.inera.certificate.fk7263.model.v1.SysselsattningType;
 import se.inera.certificate.fk7263.model.v1.Utlatande;
 import se.inera.certificate.fk7263.model.v1.VardgivareType;
 import se.inera.certificate.fk7263.model.v1.VardkontaktType;
-import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.HosPersonal;
-import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Prognos;
 import se.inera.certificate.model.Referens;
@@ -36,6 +33,8 @@ import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
@@ -106,31 +105,31 @@ public final class ExternalToTransportConverter {
 
         if (source.getVardkontaktstid() != null) {
             DateInterval vardkontakttid = new DateInterval();
-            vardkontakttid.setFrom(source.getVardkontaktstid().getStart());
-            vardkontakttid.setTom(source.getVardkontaktstid().getEnd());
+            vardkontakttid.setFrom(source.getVardkontaktstid().getFrom());
+            vardkontakttid.setTom(source.getVardkontaktstid().getTom());
             vardkontakt.setVardkontakttid(vardkontakttid);
         }
         return vardkontakt;
     }
 
-    private List<ObservationType> convertObservations(List<Observation> source) {
+    private List<ObservationType> convertObservations(List<Fk7263Observation> source) {
         if (source == null)
             return null;
 
         List<ObservationType> observations = new ArrayList<>();
-        for (Observation observation : source) {
+        for (Fk7263Observation observation : source) {
             observations.add(convert(observation));
         }
         return observations;
     }
 
-    private ObservationType convert(Observation source) {
+    private ObservationType convert(Fk7263Observation source) {
         ObservationType observation = new ObservationType();
         observation.setObservationskategori(IsoTypeConverter.toCD(source.getObservationskategori()));
         observation.setObservationskod(IsoTypeConverter.toCD(source.getObservationskod()));
 
         if (source.getObservationsperiod() != null) {
-            PartialDateInterval interval = new PartialDateInterval();
+            DateInterval interval = new DateInterval();
             interval.setFrom(source.getObservationsperiod().getFrom());
             interval.setTom(source.getObservationsperiod().getTom());
             observation.setObservationsperiod(interval);
@@ -181,19 +180,19 @@ public final class ExternalToTransportConverter {
         return prognos;
     }
 
-    private List<AktivitetType> convertAktiviteter(List<Aktivitet> source) {
+    private List<AktivitetType> convertAktiviteter(List<Fk7263Aktivitet> source) {
         if (source == null)
             return null;
 
         List<AktivitetType> aktiviteter = new ArrayList<>();
 
-        for (Aktivitet aktivitet : source) {
+        for (Fk7263Aktivitet aktivitet : source) {
             aktiviteter.add(convert(aktivitet));
         }
         return aktiviteter;
     }
 
-    private AktivitetType convert(Aktivitet source) {
+    private AktivitetType convert(Fk7263Aktivitet source) {
         AktivitetType aktivitet = new AktivitetType();
         aktivitet.setAktivitetskod(IsoTypeConverter.toCD(source.getAktivitetskod()));
         aktivitet.setBeskrivning(source.getBeskrivning());

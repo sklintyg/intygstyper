@@ -1,12 +1,11 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
-
 import java.util.List;
+
+import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 
 import org.apache.cxf.common.util.StringUtils;
 import org.joda.time.LocalDate;
-
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 
@@ -121,11 +120,11 @@ public class InternalValidator extends AbstractValidator {
             return true;
         }
 
-        if (nedsattning.getStart() != null && nedsattning.getEnd() != null) {
-            if (nedsattning.getEnd().isBefore(nedsattning.getStart())) {
+        if (nedsattning.getFrom() != null && nedsattning.getTom() != null) {
+            if (nedsattning.getTom().isBefore(nedsattning.getFrom())) {
                 // Must be something wrong with the observationPeriod:
-                addValidationError("Field 8b: Invalid date interval (from " + nedsattning.getStart() + ", tom "
-                        + nedsattning.getEnd());
+                addValidationError("Field 8b: Invalid date interval (from " + nedsattning.getFrom() + ", tom "
+                        + nedsattning.getTom());
             } else {
                 return true;
             }

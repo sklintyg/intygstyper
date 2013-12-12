@@ -26,9 +26,6 @@
       <jxb:javaType name="org.joda.time.LocalDateTime" xmlType="c:dateTime"
                     parseMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.parseIsoDateTime"
                     printMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.printIsoDateTime"/>
-      <jxb:javaType name="org.joda.time.Partial" xmlType="c:partialDate"
-                    parseMethod="se.inera.certificate.schema.adapter.PartialAdapter.parsePartial"
-                    printMethod="se.inera.certificate.schema.adapter.PartialAdapter.printPartial"/>
       <jxb:javaType name="org.joda.time.LocalDate" xmlType="xs:date"
                     parseMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.parseDate"
                     printMethod="se.inera.certificate.schema.adapter.LocalDateAdapter.printDate"/>
