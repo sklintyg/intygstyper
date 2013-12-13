@@ -9,17 +9,20 @@ public enum AktivitetKod implements CodeSystem {
     /** provtagning avseende aktuellt bruk av alkohol eller narkotika (AKT14) */
     PROVTAGNING_ALKOHO_NARKOTIKA("AKT14", "provtagning avseende aktuellt bruk av alkohol eller narkotika", AKTIVITETER),
 
-    /** Vårdinsats för missbruk eller beroende av alkohol, narkotika eller läkemedel (AKT15) */
+    /** Substansrehabilitering (AKT15) */
     VARDINSATS_MISSBRUK_BEROENDE("AKT15",
             "Vårdinsats för missbruk eller beroende av alkohol, narkotika eller läkemedel", AKTIVITETER),
 
     /** Undersökning med > +8 dioptriers korrektionsglad (AKT17) */
     UNDERSOKNING_PLUS8_KORREKTIONSGRAD("AKT17", "Undersökning med > +8 dioptriers korrektionsglad", AKTIVITETER),
     
-    /** Synfältsprövning */
+    /** Prövning av ögats rörlighet (AKT18) */
+    PROVNING_AV_OGATS_RORLIGHET("AKT18", "Prövning av ögats rörlighet ", AKTIVITETER),
+    
+    /** Synfältsprövning (86944008) */
     SYNFALTSUNDERSOKNING("86944008", "Synfältsundersökning", SNOMED_CT),
     
-    /** Vård på sjukhus eller kontakt med läkare*/
+    /** Vård på sjukhus eller kontakt med läkare (AKT19)*/
     VARD_PA_SJUKHUS("AKT19", "Vård på sjukhus eller kontakt med läkare", AKTIVITETER);
     
     private final String code;
