@@ -9,7 +9,7 @@ public enum AktivitetKod implements CodeSystem {
     /** provtagning avseende aktuellt bruk av alkohol eller narkotika (AKT14) */
     PROVTAGNING_ALKOHO_NARKOTIKA("AKT14", "provtagning avseende aktuellt bruk av alkohol eller narkotika", AKTIVITETER),
 
-    /** Substansrehabilitering (AKT15) */
+    /** Vårdinsats för missbruk eller beroende av alkohol, narkotika eller läkemedel (AKT15) */
     VARDINSATS_MISSBRUK_BEROENDE("AKT15",
             "Vårdinsats för missbruk eller beroende av alkohol, narkotika eller läkemedel", AKTIVITETER),
 

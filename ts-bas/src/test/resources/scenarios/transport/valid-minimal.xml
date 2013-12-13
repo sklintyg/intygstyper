@@ -23,10 +23,10 @@
   </p:patient>
 
   <p:skapadAv>
-    <p:personal-id extension="SE-1213131-1333" root="1.2.752.129.2.1.4.1" />
+    <p:personal-id extension="SE0000000000-1333" root="1.2.752.129.2.1.4.1" />
     <p:fullstandigtNamn>Doktor Thompson</p:fullstandigtNamn>
     <p:enhet>
-      <p:enhets-id extension="SE-VARDENHET-1337" root="1.2.752.129.2.1.4.1" />
+      <p:enhets-id extension="SE0000000000-1337" root="1.2.752.129.2.1.4.1" />
       <p:enhetsnamn>Vårdenhet Väst</p:enhetsnamn>
       <p:postadress>Enhetsvägen 12</p:postadress>
       <p:postnummer>54321</p:postnummer>
@@ -34,7 +34,7 @@
       <p:telefonnummer>08-1337</p:telefonnummer>
       <p:vardgivare>
         <p:vardgivare-id root="1.2.752.129.2.1.4.1"
-          extension="HAHAHHSAA" />
+          extension="SE0000000000-HAHAHHSAA" />
         <p:vardgivarnamn>Vårdgivarnamn</p:vardgivarnamn>
       </p:vardgivare>
     </p:enhet>
@@ -52,8 +52,6 @@
   <p:aktivitet>
     <p:aktivitetskod code="AKT19"
       codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a" codeSystemName="kv_aktiviteter_intyg" />
-    <p:aktivitetsstatus code="NO" codeSystem="to_be_implemented"
-      codeSystemName="kv_aktivitets_status" />
     <p:forekomst>false</p:forekomst>
   </p:aktivitet>
   

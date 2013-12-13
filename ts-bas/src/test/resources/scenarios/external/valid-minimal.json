@@ -33,13 +33,13 @@
     "skapadAv": {
         "id": {
             "root": "1.2.752.129.2.1.4.1",
-            "extension": "SE-1213131-1333"
+            "extension": "SE0000000000-1333"
         },
         "namn": "Doktor Thompson",
         "vardenhet": {
             "id": {
                 "root": "1.2.752.129.2.1.4.1",
-                "extension": "SE-VARDENHET-1337"
+                "extension": "SE0000000000-1337"
             },
             "namn": "Vårdenhet Väst",
             "postadress": "Enhetsvägen 12",
@@ -49,7 +49,7 @@
             "vardgivare": {
                 "id": {
                     "root": "1.2.752.129.2.1.4.1",
-                    "extension": "HAHAHHSAA"
+                    "extension": "SE0000000000-HAHAHHSAA"
                 },
                 "namn": "Vårdgivarnamn"
             }
@@ -75,11 +75,6 @@
                 "codeSystem": "8040b4d1-67dc-42e1-a938-de5374e9526a",
                 "codeSystemName": "kv_aktiviteter_intyg",
                 "code": "AKT19"
-            },
-            "aktivitetsstatus": {
-                "codeSystem": "to_be_implemented",
-                "codeSystemName": "kv_aktivitets_status",
-                "code": "NO"
             },
             "forekomst" : false
         },
