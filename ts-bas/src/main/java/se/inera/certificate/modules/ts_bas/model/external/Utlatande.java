@@ -60,6 +60,8 @@ public class Utlatande {
     private List<Rekommendation> rekommendationer;
 
     private List<Observation> observationer;
+    
+    private List<ObservationAktivitetRelation> observationAktivitetRelation;
 
     private List<Status> status;
 
@@ -151,6 +153,13 @@ public class Utlatande {
             observationer = new ArrayList<Observation>();
         }
         return this.observationer;
+    }
+    
+    public List<ObservationAktivitetRelation> getObservationAktivitetRelationer() {
+        if (observationAktivitetRelation == null) {
+            observationAktivitetRelation = new ArrayList<ObservationAktivitetRelation>();
+        }
+        return this.observationAktivitetRelation ;
     }
 
     public List<Status> getStatus() {

@@ -34,12 +34,14 @@ import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_bas.model.external.Observation;
+import se.inera.certificate.modules.ts_bas.model.external.ObservationAktivitetRelation;
 import se.inera.certificate.modules.ts_bas.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
 import se.inera.certificate.modules.ts_bas.model.external.Vardkontakt;
 import se.inera.certificate.ts_bas.model.v1.AktivitetType;
 import se.inera.certificate.ts_bas.model.v1.EnhetType;
 import se.inera.certificate.ts_bas.model.v1.HosPersonalType;
+import se.inera.certificate.ts_bas.model.v1.ObservationAktivitetRelationType;
 import se.inera.certificate.ts_bas.model.v1.ObservationType;
 import se.inera.certificate.ts_bas.model.v1.PatientType;
 import se.inera.certificate.ts_bas.model.v1.RekommendationType;
@@ -80,7 +82,31 @@ public class TransportToExternalConverter {
         utlatande.getRekommendationer().addAll(convertRekommendationer(source.getRekommendations()));
         utlatande.getAktiviteter().addAll(convertAktiviteter(source.getAktivitets()));
         utlatande.getVardkontakter().add(convertVardkontakt(source.getVardkontakt()));
+        utlatande.getObservationAktivitetRelationer().addAll(
+                convertObservationAktivitetRelationer(source.getObservationAktivitetRelations()));
         return utlatande;
+    }
+
+    private Collection<? extends ObservationAktivitetRelation> convertObservationAktivitetRelationer(
+            List<ObservationAktivitetRelationType> source) throws ConverterException{
+        if (source == null) {
+            throw new ConverterException();
+        }
+        List<ObservationAktivitetRelation> converted = new ArrayList<ObservationAktivitetRelation>();
+            
+        for (ObservationAktivitetRelationType it : source){
+            converted.add(convertObservationRelation(it));
+        }
+        
+        return converted;
+    }
+
+    private ObservationAktivitetRelation convertObservationRelation(ObservationAktivitetRelationType source) {
+        ObservationAktivitetRelation converted = new ObservationAktivitetRelation();
+        converted.setAktivitetsid(IsoTypeConverter.toId(source.getAktivitetsid()));
+        converted.setObservationsid(IsoTypeConverter.toId(source.getObservationsid()));
+        
+        return converted;
     }
 
     private Collection<? extends Rekommendation> convertRekommendationer(List<RekommendationType> source)
@@ -100,13 +126,13 @@ public class TransportToExternalConverter {
         if (source.getBeskrivning() != null) {
             rekommendation.setBeskrivning(source.getBeskrivning());
         }
-        
+
         rekommendation.setRekommendationskod(IsoTypeConverter.toKod(source.getRekommendationskod()));
-        
+
         if (!source.getVardes().isEmpty()) {
             rekommendation.setVarde(IsoTypeConverter.toKod(source.getVardes().get(0)));
         }
-        
+
         return rekommendation;
     }
 
@@ -174,11 +200,11 @@ public class TransportToExternalConverter {
         if (source.getPlats() != null) {
             aktivitet.setPlats(source.getPlats());
         }
-        
+
         if (source.isForekomst() != null) {
             aktivitet.setForekomst(source.isForekomst());
         }
-        
+
         return aktivitet;
     }
 

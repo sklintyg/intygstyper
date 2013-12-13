@@ -35,11 +35,13 @@ import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_bas.model.external.Observation;
+import se.inera.certificate.modules.ts_bas.model.external.ObservationAktivitetRelation;
 import se.inera.certificate.modules.ts_bas.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_bas.model.external.Vardkontakt;
 import se.inera.certificate.ts_bas.model.v1.AktivitetType;
 import se.inera.certificate.ts_bas.model.v1.EnhetType;
 import se.inera.certificate.ts_bas.model.v1.HosPersonalType;
+import se.inera.certificate.ts_bas.model.v1.ObservationAktivitetRelationType;
 import se.inera.certificate.ts_bas.model.v1.ObservationType;
 import se.inera.certificate.ts_bas.model.v1.PartialDateInterval;
 import se.inera.certificate.ts_bas.model.v1.PatientType;
@@ -73,10 +75,33 @@ public class ExternalToTransportConverter {
         utlatande.getObservations().addAll(convertObservationer(source.getObservationer()));
         utlatande.getIntygAvsers().addAll(convertCodes(source.getIntygAvser()));
         utlatande.getRekommendations().addAll(convertRekommendationer(source.getRekommendationer()));
+        utlatande.getObservationAktivitetRelations().addAll(
+                convertObservationAktivitetRelationer(source.getObservationAktivitetRelationer()));
 
         return utlatande;
     }
 
+    private Collection<? extends ObservationAktivitetRelationType> convertObservationAktivitetRelationer(
+            List<ObservationAktivitetRelation> source) throws ConverterException {
+        if (source == null) {
+            throw new ConverterException();
+        }
+        List<ObservationAktivitetRelationType> converted = new ArrayList<ObservationAktivitetRelationType>();
+
+        for (ObservationAktivitetRelation it : source) {
+            converted.add(convertObservationRelation(it));
+        }
+
+        return converted;
+    }
+
+    private ObservationAktivitetRelationType convertObservationRelation(ObservationAktivitetRelation source) {
+        ObservationAktivitetRelationType converted = new ObservationAktivitetRelationType();
+        converted.setAktivitetsid(IsoTypeConverter.toII(source.getAktivitetsid()));
+        converted.setObservationsid(IsoTypeConverter.toII(source.getObservationsid()));
+        
+        return converted;
+    }
     /**
      * Convert collection of Rekommendation to collection of RekommendationType
      * 
