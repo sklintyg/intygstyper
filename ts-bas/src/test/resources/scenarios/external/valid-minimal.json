@@ -80,7 +80,16 @@
                 "codeSystem": "to_be_implemented",
                 "codeSystemName": "kv_aktivitets_status",
                 "code": "NO"
-            }
+            },
+            "forekomst" : false
+        },
+        {
+            "aktivitetskod": {
+                "codeSystem": "8040b4d1-67dc-42e1-a938-de5374e9526a",
+                "codeSystemName": "kv_aktiviteter_intyg",
+                "code": "AKT15"
+            },
+            "forekomst" : false
         }
     ],
     "rekommendationer": [
@@ -108,7 +117,7 @@
                 "root": "1.2.752.129.2.1.2.1",
                 "extension": "1234"
             },
-            "forekonst": false
+            "forekomst": true
         },
         {
             "observationskod": {
@@ -116,7 +125,7 @@
                 "codeSystemName": "ICD_10",
                 "code": "H53.6"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -124,7 +133,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS1"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -136,7 +145,7 @@
                 "root": "1.2.752.129.2.1.2.1",
                 "extension": "1234"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -144,7 +153,7 @@
                 "codeSystemName": "ICD_10",
                 "code": "H55.9"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -200,7 +209,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS3"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -208,7 +217,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS4"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -216,7 +225,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS5"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -224,7 +233,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS7"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -232,7 +241,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS9"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -240,7 +249,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS8"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -248,7 +257,7 @@
                 "codeSystemName": "ICD_10",
                 "code": "E10"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -260,7 +269,7 @@
                 "root": "1.2.752.129.2.1.2.1",
                 "extension": "diabetes2"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -268,7 +277,7 @@
                 "codeSystemName": "SNOMED-CT",
                 "code": "407624006"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -276,7 +285,7 @@
                 "codeSystemName": "ICD_10",
                 "code": "G40.9"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -284,7 +293,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBSSTS10"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -292,7 +301,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBSSTS11"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -300,7 +309,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS12"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -308,7 +317,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS13"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -316,7 +325,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS16"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -324,7 +333,7 @@
                 "codeSystemName": "SNOMED-CT",
                 "code": "129104009"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -332,7 +341,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS17"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -340,7 +349,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS18"
             },
-            "forekonst": false
+            "forekomst": false
         }
     ]
 }

@@ -174,7 +174,11 @@ public class TransportToExternalConverter {
         if (source.getPlats() != null) {
             aktivitet.setPlats(source.getPlats());
         }
-
+        
+        if (source.isForekomst() != null) {
+            aktivitet.setForekomst(source.isForekomst());
+        }
+        
         return aktivitet;
     }
 
@@ -215,7 +219,7 @@ public class TransportToExternalConverter {
         }
 
         if (source.isForekomst() != null) {
-            observation.setForekonst((source.isForekomst() ? true : false));
+            observation.setForekomst(source.isForekomst());
         }
 
         if (source.getObservationsid() != null) {

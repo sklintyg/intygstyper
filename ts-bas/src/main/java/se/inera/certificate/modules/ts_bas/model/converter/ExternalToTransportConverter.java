@@ -63,12 +63,12 @@ public class ExternalToTransportConverter {
         utlatande.setSkickatdatum(source.getSkickatdatum());
         utlatande.setTypAvUtlatande(IsoTypeConverter.toUtlatandeTyp(source.getTyp()));
         utlatande.setUtlatandeId(IsoTypeConverter.toUtlatandeId(source.getId()));
-        
+
         /** Just make sure getVardkontakter() doesn't return an empty list before getting an index.. */
         if (!source.getVardkontakter().isEmpty()) {
             utlatande.setVardkontakt(convertVardkontakt(source.getVardkontakter().get(0)));
         }
-        
+
         utlatande.getAktivitets().addAll(convertAktiviteter(source.getAktiviteter()));
         utlatande.getObservations().addAll(convertObservationer(source.getObservationer()));
         utlatande.getIntygAvsers().addAll(convertCodes(source.getIntygAvser()));
@@ -165,8 +165,8 @@ public class ExternalToTransportConverter {
         if (source.getBeskrivning() != null) {
             observation.setBeskrivning(source.getBeskrivning());
         }
-        if (source.getForekonst() != null) {
-            observation.setForekomst(source.getForekonst());
+        if (source.getForekomst() != null) {
+            observation.setForekomst(source.getForekomst());
         }
         if (source.getLateralitet() != null) {
             observation.setLateralitet(IsoTypeConverter.toCD(source.getLateralitet()));
@@ -216,11 +216,11 @@ public class ExternalToTransportConverter {
         }
 
         aktivitet.setAktivitetskod(IsoTypeConverter.toCD(source.getAktivitetskod()));
-        
+
         if (source.getAktivitetsstatus() != null) {
             aktivitet.setAktivitetsstatus(IsoTypeConverter.toCD(source.getAktivitetsstatus()));
         }
-        
+
         if (source.getAktivitetstid() != null) {
             aktivitet.setAktivitetstid(convertPartialDateInterval(source.getAktivitetstid()));
         }
@@ -232,6 +232,9 @@ public class ExternalToTransportConverter {
         }
         if (source.getPlats() != null) {
             aktivitet.setPlats(source.getPlats());
+        }
+        if (source.getForekomst() != null) {
+            aktivitet.setForekomst(source.getForekomst());
         }
 
         return aktivitet;
