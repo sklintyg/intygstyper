@@ -23,7 +23,10 @@ public enum AktivitetKod implements CodeSystem {
     INSULINBEHANDLING("225302006", "Insulinbehandling", SNOMED_CT),
 
     /** Undersökning med > +8 dioptriers korrektionsglad (AKT17) */
-    UNDERSOKNING_PLUS8_KORREKTIONSGRAD("AKT17", "Undersökning med > +8 dioptriers korrektionsglad", AKTIVITETER);
+    UNDERSOKNING_PLUS8_KORREKTIONSGRAD("AKT17", "Undersökning med > +8 dioptriers korrektionsglad", AKTIVITETER),
+    
+    /** Synfältsprövning */
+    SYNFALTSUNDERSOKNING("86944008", "Synfältsundersökning", SNOMED_CT);
 
     private final String code;
 
