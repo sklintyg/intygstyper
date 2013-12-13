@@ -183,7 +183,7 @@
   <xs:complexType name="referensType">
     <xs:sequence>
       <xs:element name="referenstyp" type="iso:CD"/>
-      <xs:element name="referensdatum" type="date" minOccurs="0"/>
+      <xs:element name="referensdatum" type="date"/>
 
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>

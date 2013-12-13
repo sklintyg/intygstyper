@@ -63,6 +63,8 @@ public class TransportToExternalConverter {
      * @throws ConverterException
      */
     public Utlatande convert(se.inera.certificate.ts_bas.model.v1.Utlatande source) throws ConverterException {
+        LOG.trace("Converting transport model to external");
+
         if (source == null) {
             throw new ConverterException("Source Utlatande was null, cannot convert");
         }
@@ -77,7 +79,7 @@ public class TransportToExternalConverter {
         utlatande.getObservationer().addAll(convertObservationer(source.getObservations()));
         utlatande.getRekommendationer().addAll(convertRekommendationer(source.getRekommendations()));
         utlatande.getAktiviteter().addAll(convertAktiviteter(source.getAktivitets()));
-        utlatande.setVardkontakt(convertVardkontakt(source.getVardkontakt()));
+        utlatande.getVardkontakter().add(convertVardkontakt(source.getVardkontakt()));
         return utlatande;
     }
 

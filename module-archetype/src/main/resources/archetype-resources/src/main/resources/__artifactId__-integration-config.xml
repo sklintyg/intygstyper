@@ -29,7 +29,7 @@
 
   <jaxrs:server address="/">
     <jaxrs:serviceBeans>
-      <bean class="${package}.${artifactId}.rest.ModuleService" />
+      <bean class="${package}.${artifactId-safe}.rest.ModuleService" />
     </jaxrs:serviceBeans>
     <jaxrs:providers>
       <ref bean="jacksonJsonProvider" />

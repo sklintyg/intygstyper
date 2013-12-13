@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
@@ -41,7 +40,6 @@ public class ExternalValidatorTest {
         validator = new ExternalValidator();
     }
 
-    @Ignore
     @Test
     public void testValidate() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
@@ -53,10 +51,9 @@ public class ExternalValidatorTest {
         }
     }
 
-    @Ignore
     @Test
     public void testValidateWithErrors() throws Exception {
-        List<String> validationErrors = validator.validate(ScenarioFinder.getExternalScenario("invalid-sjuk-1")
+        List<String> validationErrors = validator.validate(ScenarioFinder.getExternalScenario("invalid-1")
                 .asExternalModel());
 
         assertTrue(!validationErrors.isEmpty());

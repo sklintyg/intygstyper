@@ -37,9 +37,7 @@
 
   <util:list id="theSchemas">
     <value>classpath:schemas/core_components/iso_dt_subset_1.0.xsd</value>
-    <value>classpath:schemas/core_components/insuranceprocess_healthreporting_2.0.xsd</value>
-    <value>classpath:schemas/ts-bas_model_extension.xsd</value>
-    <value>classpath:schemas/ts-bas_model.xsd</value>
+    <value>classpath:schemas/transport_model.xsd</value>
   </util:list>
 
 </beans>

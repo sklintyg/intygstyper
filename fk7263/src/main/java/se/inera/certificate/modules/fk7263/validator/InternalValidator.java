@@ -5,6 +5,7 @@ import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 import java.util.List;
 
 import org.apache.cxf.common.util.StringUtils;
+import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
 import se.inera.certificate.model.LocalDateInterval;
@@ -94,18 +95,62 @@ public class InternalValidator extends AbstractValidator {
         }
 
         // validate 8b - regardless of smittskydd
-        boolean valid100 = validArbetsformageNedsattning(utlatande.getNedsattMed100());
-        boolean valid75 = validArbetsformageNedsattning(utlatande.getNedsattMed75());
-        boolean valid50 = validArbetsformageNedsattning(utlatande.getNedsattMed50());
-        boolean valid25 = validArbetsformageNedsattning(utlatande.getNedsattMed25());
+        validateIntervals("Field 8b", utlatande.getNedsattMed100(), utlatande.getNedsattMed75(),
+                utlatande.getNedsattMed50(), utlatande.getNedsattMed25());
 
-        if (!valid100 && !valid75 && !valid50 && !valid25) {
-            addValidationError("Field 8b: Invalid span in arbetsformaga nedsattningfield.");
+    }
+
+    protected boolean validateIntervals(String fieldId, LocalDateInterval... intervals) {
+        if (intervals == null || allNulls(intervals)) {
+            addValidationError(fieldId + ": At least 1 interval must be filled");
+            return false;
         }
 
-        if (utlatande.getNedsattMed100() == null && utlatande.getNedsattMed75() == null
-                && utlatande.getNedsattMed50() == null && utlatande.getNedsattMed25() == null) {
-            addValidationError("Field 8b: At least 1 nedsatt arbetsformaga field must be filled");
+        for (int i = 0; i < intervals.length; i++) {
+            if (intervals[i] != null) {
+                Interval oneInterval = createInterval(intervals[i].getStart(), intervals[i].getEnd());
+                if (oneInterval == null) {
+                    addValidationError(fieldId + ": Invalid date interval (from " + intervals[i].getStart() + ", tom "
+                            + intervals[i].getEnd());
+                    return false;
+                }
+                for (int j = i + 1; j < intervals.length; j++) {
+                    if (intervals[j] != null) {
+                        Interval anotherInterval = createInterval(intervals[j].getStart(), intervals[j].getEnd());
+                        if (anotherInterval == null) {
+                            addValidationError(fieldId + ": Invalid date interval (from " + intervals[j].getStart()
+                                    + ", tom " + intervals[j].getEnd());
+                            return false;
+                        }
+                        // Overlap OR abuts(one intervals tom day== another's from day) is considered invalid
+                        if (oneInterval.overlaps(anotherInterval) || oneInterval.abuts(anotherInterval)) {
+                            addValidationError(fieldId + ": Overlapping date intervals (" + oneInterval.toString()
+                                    + " vs " + anotherInterval.toString() + ")");
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        return true;
+
+    }
+
+    private boolean allNulls(LocalDateInterval[] intervals) {
+        for (LocalDateInterval interval : intervals) {
+            if (interval != null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private Interval createInterval(LocalDate start, LocalDate end) {
+        if ((start == null || end == null || start.isAfter(end))) {
+            return null;
+        } else {
+            return new Interval(start.toDate().getTime(), end.toDate().getTime());
         }
     }
 
