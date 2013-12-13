@@ -18,6 +18,8 @@
  */
 package se.inera.certificate.modules.ts_bas.model.external;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 
@@ -37,6 +39,8 @@ public class Aktivitet extends se.inera.certificate.model.Aktivitet {
     private Kod metod;
     
     private Kod aktivitetsstatus;
+    
+    private Boolean forekomst;
 
     public Id getId() {
         return id;
@@ -68,5 +72,13 @@ public class Aktivitet extends se.inera.certificate.model.Aktivitet {
 
     public void setAktivitetsstatus(Kod aktivitetsstatus) {
         this.aktivitetsstatus = aktivitetsstatus;
+    }
+
+    public Boolean getForekomst() {
+        return forekomst;
+    }
+
+    public void setForekomst(Boolean forekomst) {
+        this.forekomst = forekomst;
     }
 }

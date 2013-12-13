@@ -77,7 +77,8 @@
                 "codeSystem": "to_be_implemented",
                 "codeSystemName": "kv_aktivitets_status",
                 "code": "NO"
-            }
+            },
+            "forekomst" : true
         }
     ],
     "rekommendationer": [
