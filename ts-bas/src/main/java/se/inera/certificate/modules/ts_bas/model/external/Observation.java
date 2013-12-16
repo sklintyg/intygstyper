@@ -1,7 +1,5 @@
 package se.inera.certificate.modules.ts_bas.model.external;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 
