@@ -19,31 +19,36 @@
 package se.inera.certificate.modules.ts_bas.model.codes;
 
 import se.inera.certificate.model.Kod;
-
+import static se.inera.certificate.modules.ts_bas.model.codes.Kodverk.ID_KONTROLL;
 /**
- * Represents the code used by this module to define the Utlåtandetyp.
+ * Represents the code used by this module to define id-kontroll,
+ * Needs to be updated when proper codes are delivered..
  */
-public enum UtlatandeKod implements CodeSystem {
+public enum IdKontrollKod implements CodeSystem {
 
-    // TODO: Create specific Code representing module
-    TS_BAS("TSTRK1007 (U06, V06)",
-            "Läkarintyg- avseende högre körkortsbehörigheter eller taxiförarlegitimation- på begäran från Transportstyrelsen"),
-    
-    TS_DIABETES("TSTRK1031 (U06, V02)", "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.");
+    ID_KORT ("IDK1", "SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.", ID_KONTROLL),
+    FORETAG_ELLER_TJANSTEKORT ("IDK2","SIS-märkt företagskort eller tjänstekort.", ID_KONTROLL),
+    KORKORT ("IDK3", "Svenskt körkort", ID_KONTROLL),
+    PERS_KANNEDOM ("IDK4", "Personlig kännedom", ID_KONTROLL),
+    FORSAKRAN_KAP18 ("IDK5","Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2)", ID_KONTROLL),
+    PASS ("IDK6","Svenskt EU-pass, annat EU-pass utfärdade från och med 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz fron och med den 1 september 2006.", ID_KONTROLL);
 
-    private static String codeSystemName = "kv_utlåtandetyp_intyg";
+    private final String codeSystemName;
 
-    private static String codeSystem = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
+    private final String codeSystem;
 
-    private static String codeSystemVersion = null;
+    private final String codeSystemVersion;
 
     private String code;
 
     private String description;
 
-    private UtlatandeKod(String code, String desc) {
+    private IdKontrollKod(String code, String desc, Kodverk kodverk) {
         this.code = code;
         this.description = desc;
+        this.codeSystemName = kodverk.getCodeSystemName();
+        this.codeSystem = kodverk.getCodeSystem();
+        this.codeSystemVersion = kodverk.getCodeSystemVersion();
     }
 
     public String getCode() {

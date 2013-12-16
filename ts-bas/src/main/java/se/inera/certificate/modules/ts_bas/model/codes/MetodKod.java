@@ -21,19 +21,16 @@ package se.inera.certificate.modules.ts_bas.model.codes;
 import se.inera.certificate.model.Kod;
 
 /**
- * Represents the code used by this module to define the Utlåtandetyp.
+ * Represents all the codes used by this module to define HoSPersonal.
  */
-public enum UtlatandeKod implements CodeSystem {
+public enum MetodKod implements CodeSystem {
 
-    // TODO: Create specific Code representing module
-    TS_BAS("TSTRK1007 (U06, V06)",
-            "Läkarintyg- avseende högre körkortsbehörigheter eller taxiförarlegitimation- på begäran från Transportstyrelsen"),
-    
-    TS_DIABETES("TSTRK1031 (U06, V02)", "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.");
+    /** Donders konfrontationsmetod (används vid synfältsprövning)*/
+    DONDERS_KONFRONTATIONSMETOD("MET1", "Donders konfrontationsmetod");
 
-    private static String codeSystemName = "kv_utlåtandetyp_intyg";
+    private static String codeSystemName = "kv_metod";
 
-    private static String codeSystem = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
+    private static String codeSystem = "????";
 
     private static String codeSystemVersion = null;
 
@@ -41,34 +38,54 @@ public enum UtlatandeKod implements CodeSystem {
 
     private String description;
 
-    private UtlatandeKod(String code, String desc) {
+    private MetodKod(String code, String desc) {
         this.code = code;
         this.description = desc;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getCode() {
-        return code;
+        return this.code;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystem() {
         return codeSystem;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystemName() {
         return codeSystemName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystemVersion() {
         return codeSystemVersion;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean matches(Kod kod) {
         return CodeConverter.matches(this, kod);

@@ -44,7 +44,7 @@
   </beans>
 
   <beans>
-    <context:component-scan base-package="se.inera.certificate.modules.ts-bas" />
+    <context:component-scan base-package="se.inera.certificate.modules.ts_bas" />
     <bean id="messageSource"
       class="org.springframework.context.support.ResourceBundleMessageSource">
       <property name="basenames">

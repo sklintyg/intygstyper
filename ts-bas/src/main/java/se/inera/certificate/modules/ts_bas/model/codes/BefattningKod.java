@@ -21,54 +21,78 @@ package se.inera.certificate.modules.ts_bas.model.codes;
 import se.inera.certificate.model.Kod;
 
 /**
- * Represents the code used by this module to define the Utlåtandetyp.
+ * Represents all the codes used by this module to define HoSPersonal.
  */
-public enum UtlatandeKod implements CodeSystem {
-
-    // TODO: Create specific Code representing module
-    TS_BAS("TSTRK1007 (U06, V06)",
-            "Läkarintyg- avseende högre körkortsbehörigheter eller taxiförarlegitimation- på begäran från Transportstyrelsen"),
+public enum BefattningKod implements CodeSystem {
     
-    TS_DIABETES("TSTRK1031 (U06, V02)", "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.");
+    OVERLAKARE("201010","Överläkare"),
+    DISTRIKT_ELLER_ALLMANMEDICIN("201011","Distriktsläkare/Specialist allmänmedicin"),
+    SKOLLAKARE("201012","Skolläkare"),
+    FORETAGSLAKARE("201013","Företagsläkare"),
+    SPECIALISTLAKARE("202010","Specialistläkare"),
+    STLAKARE("203010","Legitimerad läkare under specialiseringstjänstgöring (STläkare)"),
+    LAKARE_ANNAN("203090","Legitimerad läkare under till exempel vikariat"),
+    LAKARE_EJ_LEG_AT("204010","Ej legitimerad läkare under allmäntjänstgöring (AT-läkare)"),
+    LAKARE_EJ_LEG_ANNAN("204090","Ej legitimerad läkare under till exempel vikariat eller provtjänstgöring");
+    
+    private static String codeSystemName = "Befattning HSA";
 
-    private static String codeSystemName = "kv_utlåtandetyp_intyg";
+    private static String codeSystem = "1.2.752.129.2.2.1.4";
 
-    private static String codeSystem = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
-
-    private static String codeSystemVersion = null;
+    private static String codeSystemVersion = "3.1";
 
     private String code;
 
     private String description;
 
-    private UtlatandeKod(String code, String desc) {
+    private BefattningKod(String code, String desc) {
         this.code = code;
         this.description = desc;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getCode() {
-        return code;
+        return this.code;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystem() {
         return codeSystem;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystemName() {
         return codeSystemName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCodeSystemVersion() {
         return codeSystemVersion;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean matches(Kod kod) {
         return CodeConverter.matches(this, kod);

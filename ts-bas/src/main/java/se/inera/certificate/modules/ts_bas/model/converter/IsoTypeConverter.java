@@ -20,8 +20,10 @@ package se.inera.certificate.modules.ts_bas.model.converter;
 
 import iso.v21090.dt.v1.CD;
 import iso.v21090.dt.v1.II;
+import iso.v21090.dt.v1.PQ;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.ts_bas.model.v1.ArbetsplatsKod;
 import se.inera.certificate.ts_bas.model.v1.HsaId;
 import se.inera.certificate.ts_bas.model.v1.PersonId;
@@ -115,5 +117,27 @@ public final class IsoTypeConverter {
         utlatandeTyp.setCodeSystemVersion(kod.getCodeSystemVersion());
 
         return utlatandeTyp;
+    }
+    
+    public static PhysicalQuantity toPhysicalQuantity(PQ pq) {
+        if (pq == null) {
+            return null;
+        }
+        
+        PhysicalQuantity physicalQuantity = new PhysicalQuantity();
+        physicalQuantity.setQuantity(pq.getValue());
+        physicalQuantity.setUnit(pq.getUnit());
+        return physicalQuantity;
+    }
+    
+    public static PQ toPQ(PhysicalQuantity physicalQuantity) {
+        if (physicalQuantity == null) {
+            return null;
+        }
+        
+        PQ pq = new PQ();
+        pq.setValue(physicalQuantity.getQuantity());
+        pq.setUnit(physicalQuantity.getUnit());
+        return pq;
     }
 }

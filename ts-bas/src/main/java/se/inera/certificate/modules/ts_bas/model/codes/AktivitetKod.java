@@ -13,18 +13,18 @@ public enum AktivitetKod implements CodeSystem {
     VARDINSATS_MISSBRUK_BEROENDE("AKT15",
             "Vårdinsats för missbruk eller beroende av alkohol, narkotika eller läkemedel", AKTIVITETER),
 
-    /** Tablettbehandling (AKT16) */
-    TABLETTBEHANDLING("AKT16", "Tablettbehandling", AKTIVITETER),
-
-    /** Kostbehandling (284071006) */
-    KOSTBEHANDLING("284071006", "Kostbehandling", SNOMED_CT),
-
-    /** Insulinbehandling (225302006) */
-    INSULINBEHANDLING("225302006", "Insulinbehandling", SNOMED_CT),
-
     /** Undersökning med > +8 dioptriers korrektionsglad (AKT17) */
-    UNDERSOKNING_PLUS8_KORREKTIONSGRAD("AKT17", "Undersökning med > +8 dioptriers korrektionsglad", AKTIVITETER);
-
+    UNDERSOKNING_PLUS8_KORREKTIONSGRAD("AKT17", "Undersökning med > +8 dioptriers korrektionsglad", AKTIVITETER),
+    
+    /** Prövning av ögats rörlighet (AKT18) */
+    PROVNING_AV_OGATS_RORLIGHET("AKT18", "Prövning av ögats rörlighet ", AKTIVITETER),
+    
+    /** Synfältsprövning (86944008) */
+    SYNFALTSUNDERSOKNING("86944008", "Synfältsundersökning", SNOMED_CT),
+    
+    /** Vård på sjukhus eller kontakt med läkare (AKT19)*/
+    VARD_PA_SJUKHUS("AKT19", "Vård på sjukhus eller kontakt med läkare", AKTIVITETER);
+    
     private final String code;
 
     private final String description;

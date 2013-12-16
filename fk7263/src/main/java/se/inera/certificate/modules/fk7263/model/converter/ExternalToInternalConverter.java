@@ -184,7 +184,7 @@ public class ExternalToInternalConverter {
     private void convertPatient() {
 
         Fk7263Patient patient = source.getPatient();
-        if(patient == null) {
+        if (patient == null) {
             return;
         }
 
@@ -255,9 +255,11 @@ public class ExternalToInternalConverter {
 
     private void convertVardkontakter() {
         for (Vardkontakt vardkontakt : source.getVardkontakter()) {
-            if (Vardkontakttypkoder.MIN_UNDERSOKNING_AV_PATIENTEN.equals(vardkontakt.getVardkontakttyp())) {
+            if (Vardkontakttypkoder.MIN_UNDERSOKNING_AV_PATIENTEN.equals(vardkontakt.getVardkontakttyp())
+                    && vardkontakt.getVardkontaktstid() != null) {
                 intyg.setUndersokningAvPatienten(vardkontakt.getVardkontaktstid().getStart());
-            } else if (Vardkontakttypkoder.MIN_TELEFONKONTAKT_MED_PATIENTEN.equals(vardkontakt.getVardkontakttyp())) {
+            } else if (Vardkontakttypkoder.MIN_TELEFONKONTAKT_MED_PATIENTEN.equals(vardkontakt.getVardkontakttyp())
+                    && vardkontakt.getVardkontaktstid() != null) {
                 intyg.setTelefonkontaktMedPatienten(vardkontakt.getVardkontaktstid().getStart());
             }
         }
@@ -291,7 +293,9 @@ public class ExternalToInternalConverter {
     private void convertDiagnos() {
         Observation huvudDiagnos = source.findObservationByKategori(ObservationsKoder.DIAGNOS);
         if (huvudDiagnos != null) {
-            intyg.setDiagnosKod(huvudDiagnos.getObservationskod().getCode());
+            if (huvudDiagnos.getObservationskod() != null) {
+                intyg.setDiagnosKod(huvudDiagnos.getObservationskod().getCode());
+            }
             intyg.setDiagnosBeskrivning(huvudDiagnos.getBeskrivning());
         }
     }

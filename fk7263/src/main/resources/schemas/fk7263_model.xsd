@@ -174,7 +174,7 @@
   <xs:complexType name="vardkontaktType">
     <xs:sequence>
       <xs:element name="vardkontakttyp" type="iso:CD"/>
-      <xs:element name="vardkontakttid" type="dateInterval" minOccurs="0"/>
+      <xs:element name="vardkontakttid" type="dateInterval"/>
 
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -183,7 +183,7 @@
   <xs:complexType name="referensType">
     <xs:sequence>
       <xs:element name="referenstyp" type="iso:CD"/>
-      <xs:element name="referensdatum" type="date" minOccurs="0"/>
+      <xs:element name="referensdatum" type="date"/>
 
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -267,6 +267,13 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:complexType name="partialDateInterval">
+    <xs:sequence>
+      <xs:element name="from" type="partialDate"/>
+      <xs:element name="tom" type="partialDate"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="dateInterval">
     <xs:sequence>
       <xs:element name="from" type="date"/>
@@ -274,10 +281,5 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="partialDateInterval">
-    <xs:sequence>
-      <xs:element name="from" type="partialDate"/>
-      <xs:element name="tom" type="partialDate"/>
-    </xs:sequence>
-  </xs:complexType>
+  
 </xs:schema>

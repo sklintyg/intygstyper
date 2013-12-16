@@ -19,16 +19,29 @@
 package se.inera.certificate.modules.ts_bas.validator;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
+import se.inera.certificate.model.Vardenhet;
+import se.inera.certificate.model.Vardgivare;
+import se.inera.certificate.modules.ts_bas.model.codes.AktivitetKod;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeSystem;
 import se.inera.certificate.modules.ts_bas.model.codes.HSpersonalKod;
+import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
+import se.inera.certificate.modules.ts_bas.model.codes.IntygAvserKod;
+import se.inera.certificate.modules.ts_bas.model.codes.SpecialitetKod;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
+import se.inera.certificate.modules.ts_bas.model.codes.VardkontakttypKod;
+import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
+import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
+import se.inera.certificate.modules.ts_bas.model.external.Observation;
+import se.inera.certificate.modules.ts_bas.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
+import se.inera.certificate.modules.ts_bas.model.external.Vardkontakt;
 import se.inera.certificate.validate.IdValidator;
 import se.inera.certificate.validate.SimpleIdValidatorBuilder;
 
@@ -37,6 +50,13 @@ public class ExternalValidatorInstance {
     private final List<String> validationErrors;
 
     private final static IdValidator ID_VALIDATOR;
+
+    private static final Kod AKT_86944008 = CodeConverter.toKod(AktivitetKod.SYNFALTSUNDERSOKNING);
+    private static final Kod AKT_AKT18 = CodeConverter.toKod(AktivitetKod.PROVNING_AV_OGATS_RORLIGHET);
+    private static final Kod AKT_AKT17 = CodeConverter.toKod(AktivitetKod.UNDERSOKNING_PLUS8_KORREKTIONSGRAD);
+    private static final Kod AKT_AKT15 = CodeConverter.toKod(AktivitetKod.VARDINSATS_MISSBRUK_BEROENDE);
+    private static final Kod AKT_AKT14 = CodeConverter.toKod(AktivitetKod.PROVTAGNING_ALKOHO_NARKOTIKA);
+    private static final Kod AKT_AKT19 = CodeConverter.toKod(AktivitetKod.VARD_PA_SJUKHUS);
 
     static {
         SimpleIdValidatorBuilder builder = new SimpleIdValidatorBuilder();
@@ -54,7 +74,11 @@ public class ExternalValidatorInstance {
     public List<String> validate(Utlatande utlatande) {
         validateUtlatande(utlatande);
         validatePatient(utlatande.getPatient());
-        // TODO: Add more validation methods
+        validateHosPersonal(utlatande.getSkapadAv());
+        validateAktiviteter(utlatande.getAktiviteter());
+        validateVardkontakter(utlatande.getVardkontakter());
+        validateRekommendationer(utlatande.getRekommendationer());
+        validateObservationer(utlatande.getObservationer());
 
         return validationErrors;
     }
@@ -66,6 +90,9 @@ public class ExternalValidatorInstance {
         assertNotNull(utlatande.getId(), "id");
         assertKodInEnum(utlatande.getTyp(), UtlatandeKod.class, "utlatandetyp");
         assertNotNull(utlatande.getSigneringsdatum(), "signeringsdatum");
+        for (Kod intygAvser : utlatande.getIntygAvser()) {
+            assertKodInEnum(intygAvser, IntygAvserKod.class, "intygAvser");
+        }
     }
 
     /**
@@ -89,6 +116,166 @@ public class ExternalValidatorInstance {
         assertNotEmpty(patient.getPostadress(), "patient.postadress");
         assertNotEmpty(patient.getPostnummer(), "patient.postnummer");
         assertNotEmpty(patient.getPostort(), "patient.postort");
+    }
+
+    private void validateHosPersonal(HosPersonal skapadAv) {
+        if (assertNotNull(skapadAv, "skapadAv").failed()) {
+            return;
+        }
+
+        assertValidHsaId(skapadAv.getId(), "skapadAv.id");
+
+        assertNotEmpty(skapadAv.getNamn(), "skapadAv.fullstandigtNamn");
+        // for (Kod befattning : skapadAv.getBefattning()) {
+        // assertKodInEnum(befattning, BefattningKod.class, "skapadAv.befattning");
+        // }
+        for (Kod specialitet : skapadAv.getSpecialiteter()) {
+            assertKodInEnum(specialitet, SpecialitetKod.class, "skapadAv.specialitet");
+        }
+
+        validateVardenhet(skapadAv.getVardenhet(), "skapadAv");
+    }
+
+    private void validateVardenhet(Vardenhet vardenhet, String prefix) {
+        if (assertNotNull(vardenhet, prefix + ".vardenhet").failed()) {
+            return;
+        }
+
+        assertValidHsaId(vardenhet.getId(), prefix + ".vardenhet.id");
+        assertNotEmpty(vardenhet.getNamn(), prefix + ".vardenhet.namn");
+        assertNotEmpty(vardenhet.getPostadress(), prefix + ".vardenhet.portadress");
+        assertNotEmpty(vardenhet.getPostort(), prefix + ".vardenhet.postort");
+        assertNotEmpty(vardenhet.getPostnummer(), prefix + ".vardenhet.postnummer");
+        assertNotEmpty(vardenhet.getTelefonnummer(), prefix + ".vardenhet.telefonnummer");
+
+        validateVardgivare(vardenhet.getVardgivare(), prefix + ".vardgivare");
+    }
+
+    private void validateVardgivare(Vardgivare vardgivare, String prefix) {
+        if (assertNotNull(vardgivare, prefix + ".vardgivare").failed()) {
+            return;
+        }
+
+        assertValidHsaId(vardgivare.getId(), prefix + ".vardgivare.id");
+        assertNotEmpty(vardgivare.getNamn(), prefix + ".vardgivare.namn");
+    }
+
+    private void validateAktiviteter(List<Aktivitet> aktiviteter) {
+        Iterable<Kod> kodList = new AktiviteterIterable(aktiviteter);
+        assertKodCountBetween(kodList, AKT_86944008, 1, 1, "aktiviteter");
+        assertKodCountBetween(kodList, AKT_AKT18, 1, 1, "aktiviteter");
+        assertKodCountBetween(kodList, AKT_AKT17, 0, 1, "aktiviteter");
+        assertKodCountBetween(kodList, AKT_AKT15, 1, 1, "aktiviteter");
+        assertKodCountBetween(kodList, AKT_AKT14, 0, 1, "aktiviteter");
+        assertKodCountBetween(kodList, AKT_AKT19, 1, 1, "aktiviteter");
+
+        for (Aktivitet aktivitet : aktiviteter) {
+            String entity = "aktivitet" + getDisplayCode(aktivitet.getAktivitetskod());
+            assertKodInEnum(aktivitet.getAktivitetskod(), AktivitetKod.class, entity + ".aktivitetsKod");
+
+            if (aktivitet.getAktivitetskod().equals(AKT_86944008)) {
+                assertNotNull(aktivitet.getId(), entity + ".aktivitetsId");
+                assertNull(aktivitet.getForekomst(), entity + ".forekomst");
+                assertNotNull(aktivitet.getMetod(), entity + ".metod");
+                assertNull(aktivitet.getAktivitetstid(), entity + ".aktivitetstid");
+                assertNull(aktivitet.getPlats(), entity + ".plats");
+                assertNull(aktivitet.getBeskrivning(), entity + ".beskrivning");
+
+            } else if (aktivitet.getAktivitetskod().equals(AKT_AKT18)) {
+                assertNotNull(aktivitet.getId(), entity + ".aktivitetsId");
+                assertNull(aktivitet.getForekomst(), entity + ".forekomst");
+                assertNull(aktivitet.getMetod(), entity + ".metod");
+                assertNull(aktivitet.getAktivitetstid(), entity + ".aktivitetstid");
+                assertNull(aktivitet.getPlats(), entity + ".plats");
+                assertNull(aktivitet.getBeskrivning(), entity + ".beskrivning");
+
+            } else if (aktivitet.getAktivitetskod().equals(AKT_AKT17)) {
+                assertNull(aktivitet.getId(), entity + ".aktivitetsId");
+                assertNotNull(aktivitet.getForekomst(), entity + ".forekomst");
+                assertNull(aktivitet.getMetod(), entity + ".metod");
+                assertNull(aktivitet.getAktivitetstid(), entity + ".aktivitetstid");
+                assertNull(aktivitet.getPlats(), entity + ".plats");
+                assertNull(aktivitet.getBeskrivning(), entity + ".beskrivning");
+
+            } else if (aktivitet.getAktivitetskod().equals(AKT_AKT15)) {
+                assertNull(aktivitet.getId(), entity + ".aktivitetsId");
+                assertNotNull(aktivitet.getForekomst(), entity + ".forekomst");
+                assertNull(aktivitet.getMetod(), entity + ".metod");
+                assertNull(aktivitet.getAktivitetstid(), entity + ".aktivitetstid");
+                assertNull(aktivitet.getPlats(), entity + ".plats");
+                assertNull(aktivitet.getBeskrivning(), entity + ".beskrivning");
+
+            } else if (aktivitet.getAktivitetskod().equals(AKT_AKT14)) {
+                assertNull(aktivitet.getId(), entity + ".aktivitetsId");
+                assertNotNull(aktivitet.getForekomst(), entity + ".forekomst");
+                assertNull(aktivitet.getMetod(), entity + ".metod");
+                assertNull(aktivitet.getAktivitetstid(), entity + ".aktivitetstid");
+                assertNull(aktivitet.getPlats(), entity + ".plats");
+                assertNull(aktivitet.getBeskrivning(), entity + ".beskrivning");
+
+            } else if (aktivitet.getAktivitetskod().equals(AKT_AKT19)) {
+                assertNull(aktivitet.getId(), entity + ".aktivitetsId");
+                assertNotNull(aktivitet.getForekomst(), entity + ".forekomst");
+                assertNull(aktivitet.getMetod(), entity + ".metod");
+            }
+        }
+    }
+
+    private void validateVardkontakter(List<Vardkontakt> vardkontakter) {
+        if (vardkontakter.size() != 1) {
+            validationError("Expected only one vardkontakt");
+            return;
+        }
+
+        Vardkontakt vardkontakt = vardkontakter.get(0);
+        assertKodInEnum(vardkontakt.getVardkontakttyp(), VardkontakttypKod.class, "vardkontakt.vardkontakttyp");
+        assertKodInEnum(vardkontakt.getIdkontroll(), IdKontrollKod.class, "vardkontakt.idkontroll");
+    }
+
+    private void validateRekommendationer(List<Rekommendation> rekommendationer) {
+        // TODO Auto-generated method stub
+
+    }
+
+    private void validateObservationer(List<Observation> observationer) {
+        // TODO Auto-generated method stub
+
+    }
+
+    private static class AktiviteterIterable implements Iterable<Kod> {
+        private final List<Aktivitet> aktivieter;
+
+        public AktiviteterIterable(List<Aktivitet> aktivieter) {
+            this.aktivieter = aktivieter;
+        }
+
+        @Override
+        public Iterator<Kod> iterator() {
+            final Iterator<Aktivitet> iter = aktivieter.iterator();
+            return new Iterator<Kod>() {
+                @Override
+                public boolean hasNext() {
+                    return iter.hasNext();
+                }
+
+                @Override
+                public Kod next() {
+                    return iter.next().getAktivitetskod();
+                }
+
+                @Override
+                public void remove() {
+                }
+            };
+        }
+    }
+
+    private String getDisplayCode(Kod kod) {
+        if (kod == null || kod.getCode() == null) {
+            return "[?]";
+        }
+
+        return "[" + kod.getCode() + "]";
     }
 
     private void validationError(String error) {
@@ -129,6 +316,28 @@ public class ExternalValidatorInstance {
             }
         }
         return AssertionResult.FAILURE;
+    }
+
+    private AssertionResult assertKodCountBetween(Iterable<Kod> kodSet, Kod kodToCount, int minCount, int maxCount,
+            String element) {
+        int count = 0;
+        for (Kod kod : kodSet) {
+            if (kod.equals(kodToCount)) {
+                count++;
+            }
+        }
+
+        if (maxCount < count || count < minCount) {
+            if (minCount == maxCount) {
+                validationError(String.format("%s must exist %s times", element + getDisplayCode(kodToCount), minCount));
+            } else {
+                validationError(String.format("%s must exist between %s and %s times", element
+                        + getDisplayCode(kodToCount), minCount, maxCount));
+            }
+            return AssertionResult.FAILURE;
+        }
+
+        return AssertionResult.SUCCESS;
     }
 
     private void assertValidPersonId(Id id, String element) {

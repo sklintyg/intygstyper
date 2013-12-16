@@ -23,24 +23,24 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
   <bean id="transportToExternalConverter"
-    class="se.inera.certificate.modules.ts-bas.model.converter.TransportToExternalConverter" />
+    class="se.inera.certificate.modules.ts_bas.model.converter.TransportToExternalConverter" />
 
   <bean id="externalToTransportConverter"
-    class="se.inera.certificate.modules.ts-bas.model.converter.ExternalToTransportConverter" />
+    class="se.inera.certificate.modules.ts_bas.model.converter.ExternalToTransportConverter" />
 
   <bean id="externalValidator"
-    class="se.inera.certificate.modules.ts-bas.validator.ExternalValidator" />
+    class="se.inera.certificate.modules.ts_bas.validator.ExternalValidator" />
 
   <bean id="externalToInternalConverter"
-    class="se.inera.certificate.modules.ts-bas.model.converter.ExternalToInternalConverter" />
+    class="se.inera.certificate.modules.ts_bas.model.converter.ExternalToInternalConverter" />
 
 <bean id="internalToExternalConverter"
-    class="se.inera.certificate.modules.ts-bas.model.converter.InternalToExternalConverter" />
+    class="se.inera.certificate.modules.ts_bas.model.converter.InternalToExternalConverter" />
 
 
-  <bean id="pdfGenerator" class="se.inera.certificate.modules.ts-bas.pdf.PdfGenerator" />
+  <bean id="pdfGenerator" class="se.inera.certificate.modules.ts_bas.pdf.PdfGenerator" />
 
   <bean id="webcertModelFactory"
-    class="se.inera.certificate.modules.ts-bas.model.converter.WebcertModelFactory" />
+    class="se.inera.certificate.modules.ts_bas.model.converter.WebcertModelFactory" />
 
 </beans>

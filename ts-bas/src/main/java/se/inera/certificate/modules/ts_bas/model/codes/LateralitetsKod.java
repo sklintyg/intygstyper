@@ -19,31 +19,34 @@
 package se.inera.certificate.modules.ts_bas.model.codes;
 
 import se.inera.certificate.model.Kod;
+import static se.inera.certificate.modules.ts_bas.model.codes.Kodverk.SNOMED_CT;
 
 /**
  * Represents the code used by this module to define the Utlåtandetyp.
  */
-public enum UtlatandeKod implements CodeSystem {
+public enum LateralitetsKod implements CodeSystem {
 
     // TODO: Create specific Code representing module
-    TS_BAS("TSTRK1007 (U06, V06)",
-            "Läkarintyg- avseende högre körkortsbehörigheter eller taxiförarlegitimation- på begäran från Transportstyrelsen"),
-    
-    TS_DIABETES("TSTRK1031 (U06, V02)", "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.");
+    HOGER ("24028007", "Höger öga", SNOMED_CT),
+    VANSTER ("7771000", "Vänster öga", SNOMED_CT),
+    BINOKULART ("51440002", "Höger och vänster", SNOMED_CT);
 
-    private static String codeSystemName = "kv_utlåtandetyp_intyg";
+    private final String codeSystemName;
 
-    private static String codeSystem = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
+    private final String codeSystem;
 
-    private static String codeSystemVersion = null;
+    private final String codeSystemVersion;
 
     private String code;
 
     private String description;
 
-    private UtlatandeKod(String code, String desc) {
+    private LateralitetsKod(String code, String description, Kodverk kodverk) {
         this.code = code;
-        this.description = desc;
+        this.description = description;
+        this.codeSystem = kodverk.getCodeSystem();
+        this.codeSystemName = kodverk.getCodeSystemName();
+        this.codeSystemVersion = kodverk.getCodeSystemVersion();
     }
 
     public String getCode() {

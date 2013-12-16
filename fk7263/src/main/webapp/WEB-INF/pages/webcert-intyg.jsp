@@ -86,7 +86,7 @@
   <%-- Dependencies to common (3rd party) components loaded from web app running at "/" context--%>
   <script type="text/javascript" src="/js/vendor/angular/1.1.5/angular.js"></script>
   <script type="text/javascript" src="/js/vendor/angular/1.1.5/i18n/angular-locale_sv-se.js"></script>
-  <script type="text/javascript" src="/js/vendor/ui-bootstrap/0.6.0/ui-bootstrap-tpls-0.7.0-SNAPSHOT.js"></script>
+  <script type="text/javascript" src="/js/vendor/ui-bootstrap/0.7.0/ui-bootstrap-tpls-0.7.0.js"></script>
 
   <%-- Dependencies to common components loaded from WC web app running in "/" context--%>
   <script type="text/javascript" src="/js/common/wc-message-module.js"></script>
