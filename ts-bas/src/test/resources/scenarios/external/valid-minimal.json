@@ -133,7 +133,7 @@
         {
             "observationskod": {
                 "codeSystem": "1.2.752.116.1.1.1.1.1",
-                "codeSystemName": "ICD_10",
+                "codeSystemName": "ICD-10",
                 "code": "H53.4"
             },
             "id": {
@@ -145,7 +145,7 @@
         {
             "observationskod": {
                 "codeSystem": "1.2.752.116.1.1.1.1.1",
-                "codeSystemName": "ICD_10",
+                "codeSystemName": "ICD-10",
                 "code": "H53.6"
             },
             "forekomst": false
@@ -161,7 +161,7 @@
         {
             "observationskod": {
                 "codeSystem": "1.2.752.116.1.1.1.1.1",
-                "codeSystemName": "ICD_10",
+                "codeSystemName": "ICD-10",
                 "code": "H53.2"
             },
             "id": {
@@ -173,7 +173,7 @@
         {
             "observationskod": {
                 "codeSystem": "1.2.752.116.1.1.1.1.1",
-                "codeSystemName": "ICD_10",
+                "codeSystemName": "ICD-10",
                 "code": "H55.9"
             },
             "forekomst": false
@@ -277,7 +277,7 @@
         {
             "observationskod": {
                 "codeSystem": "1.2.752.116.1.1.1.1.1",
-                "codeSystemName": "ICD_10",
+                "codeSystemName": "ICD-10",
                 "code": "E10"
             },
             "forekomst": false
@@ -285,7 +285,7 @@
         {
             "observationskod": {
                 "codeSystem": "1.2.752.116.1.1.1.1.1",
-                "codeSystemName": "ICD_10",
+                "codeSystemName": "ICD-10",
                 "code": "E11"
             },
             "id": {
@@ -305,7 +305,7 @@
         {
             "observationskod": {
                 "codeSystem": "1.2.752.116.1.1.1.1.1",
-                "codeSystemName": "ICD_10",
+                "codeSystemName": "ICD-10",
                 "code": "G40.9"
             },
             "forekomst": false
@@ -314,7 +314,7 @@
             "observationskod": {
                 "codeSystem": "to-come",
                 "codeSystemName": "kv_observationer_intyg",
-                "code": "OBSSTS10"
+                "code": "OBS10"
             },
             "forekomst": false
         },
@@ -322,7 +322,7 @@
             "observationskod": {
                 "codeSystem": "to-come",
                 "codeSystemName": "kv_observationer_intyg",
-                "code": "OBSSTS11"
+                "code": "OBS11"
             },
             "forekomst": false
         },

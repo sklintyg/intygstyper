@@ -22,12 +22,12 @@ import se.inera.certificate.model.Kod;
 
 public enum RekommendationsKod implements CodeSystem {
 
-    /** Rekommendationskoder specifika för TS */
-    REK8("REK8", "Patienten uppfyller kraven för"),
-    
-    REK9("REK9", "Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i"),
-    
-    REK10("REK10", "Lämplighet att inneha behörighet med hänsyn till de körningar och arbetsformer som är aktuella vid sådant innehav");
+    /** Patienten uppfyller kraven för (REK8) */
+    PATIENT_UPPFYLLER_KRAV_FOR("REK8", "Patienten uppfyller kraven för"),
+
+    /** Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i (REK9) */
+    PATIENT_BOR_UNDESOKAS_AV_SPECIALIST("REK9",
+            "Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i");
 
     private static String codeSystemName = "kv_rekommendation_intyg";
 

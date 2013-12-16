@@ -87,14 +87,14 @@
     <p:observationsid root="1.2.752.129.2.1.2.1"
       extension="6" />
     <p:observationskod code="H53.4" codeSystem="1.2.752.116.1.1.1.1.1"
-      codeSystemName="ICD_10" />
+      codeSystemName="ICD-10" />
     <p:forekomst>true</p:forekomst>
   </p:observation>
 
   <!--  Begränsning av seende vid nedsatt belysning -->
   <p:observation>
     <p:observationskod code="H53.6" codeSystem="1.2.752.116.1.1.1.1.1"
-      codeSystemName="ICD_10" />
+      codeSystemName="ICD-10" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
@@ -108,13 +108,13 @@
     <p:observationsid root="1.2.752.129.2.1.2.1"
       extension="7" />
     <p:observationskod code="H53.2" codeSystem="1.2.752.116.1.1.1.1.1"
-      codeSystemName="ICD_10" />
+      codeSystemName="ICD-10" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
   <p:observation>
     <p:observationskod code="H55.9" codeSystem="1.2.752.116.1.1.1.1.1"
-      codeSystemName="ICD_10" />
+      codeSystemName="ICD-10" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
@@ -182,7 +182,7 @@
   <!-- Diabetes (7.2) -->
   <p:observation>
     <p:observationskod code="E10" codeSystem="1.2.752.116.1.1.1.1.1"
-      codeSystemName="ICD_10" />
+      codeSystemName="ICD-10" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
@@ -190,7 +190,7 @@
     <p:observationsid root="1.2.752.129.2.1.2.1"
       extension="diabetes2" />
     <p:observationskod code="E11" codeSystem="1.2.752.116.1.1.1.1.1"
-      codeSystemName="ICD_10" />
+      codeSystemName="ICD-10" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
@@ -204,20 +204,20 @@
   <!-- Epilepsi etc (9.1) -->
   <p:observation>
     <p:observationskod code="G40.9" codeSystem="1.2.752.116.1.1.1.1.1"
-      codeSystemName="ICD_10" />
+      codeSystemName="ICD-10" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
   <!-- Njursjukdomar (10) -->
   <p:observation>
-    <p:observationskod code="OBSSTS10" codeSystem="to-come"
+    <p:observationskod code="OBS10" codeSystem="to-come"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
   <!-- Demens och kognitiva störningar (11) -->
   <p:observation>
-    <p:observationskod code="OBSSTS11" codeSystem="to-come"
+    <p:observationskod code="OBS11" codeSystem="to-come"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
