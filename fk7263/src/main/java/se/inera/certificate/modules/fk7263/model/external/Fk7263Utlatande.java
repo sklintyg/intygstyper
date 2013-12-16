@@ -1,19 +1,16 @@
 package se.inera.certificate.modules.fk7263.model.external;
 
-import static se.inera.certificate.model.util.Iterables.find;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.LocalDateTime;
-import org.joda.time.Partial;
+import static se.inera.certificate.model.util.Iterables.find;
 
-import se.inera.certificate.model.Aktivitet;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Observation;
-import se.inera.certificate.model.PartialInterval;
+import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.model.util.Predicate;
@@ -38,9 +35,9 @@ public class Fk7263Utlatande {
 
     private HosPersonal skapadAv;
 
-    private List<Aktivitet> aktiviteter = new ArrayList<>();
+    private List<Fk7263Aktivitet> aktiviteter = new ArrayList<>();
 
-    private List<Observation> observationer = new ArrayList<>();
+    private List<Fk7263Observation> observationer = new ArrayList<>();
 
     private List<Vardkontakt> vardkontakter = new ArrayList<>();
 
@@ -93,14 +90,14 @@ public class Fk7263Utlatande {
         this.skapadAv = skapadAv;
     }
 
-    public List<Aktivitet> getAktiviteter() {
+    public List<Fk7263Aktivitet> getAktiviteter() {
         if (aktiviteter == null) {
             aktiviteter = new ArrayList<>();
         }
         return aktiviteter;
     }
 
-    public List<Observation> getObservationer() {
+    public List<Fk7263Observation> getObservationer() {
         if (observationer == null) {
             observationer = new ArrayList<>();
         }
@@ -129,9 +126,9 @@ public class Fk7263Utlatande {
         this.skickatdatum = skickatdatum;
     }
 
-    public List<Observation> getObservationsByKod(Kod observationsKod) {
-        List<Observation> observations = new ArrayList<>();
-        for (Observation observation : this.observationer) {
+    public List<Fk7263Observation> getObservationsByKod(Kod observationsKod) {
+        List<Fk7263Observation> observations = new ArrayList<>();
+        for (Fk7263Observation observation : this.observationer) {
             if (observation.getObservationskod() != null && observation.getObservationskod().equals(observationsKod)) {
                 observations.add(observation);
             }
@@ -139,9 +136,9 @@ public class Fk7263Utlatande {
         return observations;
     }
 
-    public List<Observation> getObservationsByKategori(Kod observationsKategori) {
-        List<Observation> observations = new ArrayList<>();
-        for (Observation observation : this.observationer) {
+    public List<Fk7263Observation> getObservationsByKategori(Kod observationsKategori) {
+        List<Fk7263Observation> observations = new ArrayList<>();
+        for (Fk7263Observation observation : this.observationer) {
             if (observation.getObservationskategori() != null
                     && observation.getObservationskategori().equals(observationsKategori)) {
                 observations.add(observation);
@@ -150,34 +147,34 @@ public class Fk7263Utlatande {
         return observations;
     }
 
-    public Observation findObservationByKategori(final Kod observationsKategori) {
-        return find(observationer, new Predicate<Observation>() {
+    public Fk7263Observation findObservationByKategori(final Kod observationsKategori) {
+        return find(observationer, new Predicate<Fk7263Observation>() {
             @Override
-            public boolean apply(Observation observation) {
+            public boolean apply(Fk7263Observation observation) {
                 return observation.getObservationskategori() != null
                         && observation.getObservationskategori().equals(observationsKategori);
             }
         }, null);
     }
 
-    public Observation findObservationByKod(final Kod observationsKod) {
-        return find(observationer, new Predicate<Observation>() {
+    public Fk7263Observation findObservationByKod(final Kod observationsKod) {
+        return find(observationer, new Predicate<Fk7263Observation>() {
             @Override
-            public boolean apply(Observation observation) {
+            public boolean apply(Fk7263Observation observation) {
                 return observation.getObservationskod() != null
                         && observation.getObservationskod().equals(observationsKod);
             }
         }, null);
     }
 
-    public Aktivitet getAktivitet(final Kod aktivitetsKod) {
+    public Fk7263Aktivitet getAktivitet(final Kod aktivitetsKod) {
         if (aktiviteter == null) {
             return null;
         }
 
-        return find(aktiviteter, new Predicate<Aktivitet>() {
+        return find(aktiviteter, new Predicate<Fk7263Aktivitet>() {
             @Override
-            public boolean apply(Aktivitet aktivitet) {
+            public boolean apply(Fk7263Aktivitet aktivitet) {
                 return aktivitetsKod.equals(aktivitet.getAktivitetskod());
             }
         }, null);
@@ -206,12 +203,12 @@ public class Fk7263Utlatande {
      * Iterate through all From dates and return the earliest (non-null) date.
      * @return
      */
-    public Partial getValidFromDate() {
-        List<Observation> nedsattningar = getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
-        Partial fromDate = null;
+    public LocalDate getValidFromDate() {
+        List<Fk7263Observation> nedsattningar = getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
+        LocalDate fromDate = null;
 
-        for (Observation nedsattning : nedsattningar) {
-            PartialInterval nextObservationsperiod = nedsattning.getObservationsperiod();
+        for (Fk7263Observation nedsattning : nedsattningar) {
+            LocalDateInterval nextObservationsperiod = nedsattning.getObservationsperiod();
             if (nextObservationsperiod != null) {
                 if (fromDate == null || fromDate.isAfter(nextObservationsperiod.getFrom())) {
                     fromDate = nextObservationsperiod.getFrom();
@@ -227,14 +224,14 @@ public class Fk7263Utlatande {
      * 
      * @return
      */
-    public Partial getValidToDate() {
-        List<Observation> nedsattningar = getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
-        Partial toDate = null;
+    public LocalDate getValidToDate() {
+        List<Fk7263Observation> nedsattningar = getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
+        LocalDate toDate = null;
 
-        for (Observation nedsattning : nedsattningar) {
-            PartialInterval nextObservationsperiod = nedsattning.getObservationsperiod();
+        for (Fk7263Observation nedsattning : nedsattningar) {
+            LocalDateInterval nextObservationsperiod = nedsattning.getObservationsperiod();
             if (nextObservationsperiod != null) {
-                if (toDate == null || toDate.isBefore(nextObservationsperiod.getTom())) {
+                if (toDate == null || toDate.isBefore(nextObservationsperiod.getFrom())) {
                     toDate = nextObservationsperiod.getTom();
                 }
             }

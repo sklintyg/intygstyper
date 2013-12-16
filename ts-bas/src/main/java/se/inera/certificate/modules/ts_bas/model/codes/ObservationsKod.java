@@ -73,6 +73,9 @@ public enum ObservationsKod implements CodeSystem {
     TECKEN_PA_HJARNSKADA("OBS9",
             "Tecken på hjärnskada efter trauma, stroke eller anna sjukdom i centrala nervsystemet", OBSERVATIONER),
 
+    /** Har diabetes? (73211009) */
+    HAR_DIABETES("73211009", "Har diabetes", SNOMED_CT),
+            
     /** Diabetes mellitus typ 1 (E10) */
     DIABETES_TYP_1("E10", "Diabetes mellitus typ 1", ICD_10),
 

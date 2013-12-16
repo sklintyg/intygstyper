@@ -1,18 +1,17 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import static java.util.Arrays.asList;
-
 import java.util.List;
 
-import org.springframework.util.StringUtils;
+import static java.util.Arrays.asList;
 
-import se.inera.certificate.model.Aktivitet;
-import se.inera.certificate.model.Observation;
+import org.springframework.util.StringUtils;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
 import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
 import se.inera.certificate.modules.fk7263.model.codes.Sysselsattningskoder;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
@@ -42,40 +41,40 @@ public class ExternalValidator extends AbstractValidator {
 
     private void validateObservationDescriptions() {
         // Field 3:
-        Observation forlopp = externalUtlatande.findObservationByKod(ObservationsKoder.FORLOPP);
+        Fk7263Observation forlopp = externalUtlatande.findObservationByKod(ObservationsKoder.FORLOPP);
         // If forlopp observation exist, it must have an description set
         if (forlopp != null && StringUtils.isEmpty(forlopp.getBeskrivning())) {
             addValidationError("Field 3: beskrivning is mandatory for this observation.");
         }
 
         // Field 4:
-        Observation kroppsFunktion = externalUtlatande.findObservationByKategori(ObservationsKoder.KROPPSFUNKTIONER);
+        Fk7263Observation kroppsFunktion = externalUtlatande.findObservationByKategori(ObservationsKoder.KROPPSFUNKTIONER);
         if (kroppsFunktion != null && StringUtils.isEmpty(kroppsFunktion.getBeskrivning())) {
             addValidationError("Field 4: beskrivning is mandatory for this observation.");
         }
 
         // Field 5:
-        Observation aktivitetsBegransning = externalUtlatande
+        Fk7263Observation aktivitetsBegransning = externalUtlatande
                 .findObservationByKategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
         if (aktivitetsBegransning != null && StringUtils.isEmpty(aktivitetsBegransning.getBeskrivning())) {
             addValidationError("Field 5: beskrivning is mandatory for this observation.");
         }
 
         // Field 6a:
-        Aktivitet ovrigtRekomendation = externalUtlatande.getAktivitet(Aktivitetskoder.OVRIGT);
+        Fk7263Aktivitet ovrigtRekomendation = externalUtlatande.getAktivitet(Aktivitetskoder.OVRIGT);
         if (ovrigtRekomendation != null && StringUtils.isEmpty(ovrigtRekomendation.getBeskrivning())) {
             addValidationError("Field 6a: beskrivning is mandatory for this Aktivitet.");
         }
 
         // Field 6b.1:
-        Aktivitet planeradAktivitetInomSjukVarden = externalUtlatande
+        Fk7263Aktivitet planeradAktivitetInomSjukVarden = externalUtlatande
                 .getAktivitet(Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN);
         if (planeradAktivitetInomSjukVarden != null
                 && StringUtils.isEmpty(planeradAktivitetInomSjukVarden.getBeskrivning())) {
             addValidationError("Field 6b(1): beskrivning is mandatory for this Aktivitet.");
         }
         // Field 6b.2:
-        Aktivitet planeradAktivitetAnnan = externalUtlatande
+        Fk7263Aktivitet planeradAktivitetAnnan = externalUtlatande
                 .getAktivitet(Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD);
         if (planeradAktivitetAnnan != null && StringUtils.isEmpty(planeradAktivitetAnnan.getBeskrivning())) {
             addValidationError("Field 6b(2): beskrivning is mandatory for this Aktivitet.");
@@ -96,8 +95,8 @@ public class ExternalValidator extends AbstractValidator {
 
     private void validateDiagnose() {
 
-        Observation huvudDiagnos = externalUtlatande.findObservationByKategori(ObservationsKoder.DIAGNOS);
-        Aktivitet smittskydd = externalUtlatande.getAktivitet(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
+        Fk7263Observation huvudDiagnos = externalUtlatande.findObservationByKategori(ObservationsKoder.DIAGNOS);
+        Fk7263Aktivitet smittskydd = externalUtlatande.getAktivitet(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
 
         if (huvudDiagnos == null || huvudDiagnos.getObservationskod() == null
                 || StringUtils.isEmpty(huvudDiagnos.getObservationskod().getCode())) {

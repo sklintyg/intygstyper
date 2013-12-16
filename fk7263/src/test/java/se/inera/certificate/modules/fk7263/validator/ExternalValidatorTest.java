@@ -1,21 +1,20 @@
 package se.inera.certificate.modules.fk7263.validator;
 
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
-
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
-
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
 import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
 import se.inera.certificate.modules.fk7263.model.codes.Sysselsattningskoder;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
@@ -39,7 +38,7 @@ public class ExternalValidatorTest {
     public void testMissingDiagnoseCode() throws Exception {
         Fk7263Utlatande utlatande = getValidUtlatande();
 
-        Observation huvudDiagnos = utlatande.findObservationByKategori(ObservationsKoder.DIAGNOS);
+        Fk7263Observation huvudDiagnos = utlatande.findObservationByKategori(ObservationsKoder.DIAGNOS);
         boolean removed = utlatande.getObservationer().remove(huvudDiagnos);
         assertTrue(removed);
         assertEquals(1, new ExternalValidator(utlatande).validate().size());
@@ -48,10 +47,10 @@ public class ExternalValidatorTest {
     @Test
     public void testMissingDiagnoseCodeButHasSmittSkydd() throws Exception {
         Fk7263Utlatande utlatande = getValidUtlatande();
-        Observation huvudDiagnos = utlatande.findObservationByKategori(ObservationsKoder.DIAGNOS);
+        Fk7263Observation huvudDiagnos = utlatande.findObservationByKategori(ObservationsKoder.DIAGNOS);
         utlatande.getObservationer().remove(huvudDiagnos);
 
-        Aktivitet smittskyddsAktivitet = new Aktivitet();
+        Fk7263Aktivitet smittskyddsAktivitet = new Fk7263Aktivitet();
         smittskyddsAktivitet.setAktivitetskod(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
         utlatande.getAktiviteter().add(smittskyddsAktivitet);
 
@@ -74,11 +73,11 @@ public class ExternalValidatorTest {
     @Test
     public void testSmittskyddButInvalidDiagnoseCodeSystem() throws Exception {
         Fk7263Utlatande utlatande = getValidUtlatande();
-        Observation huvudDiagnos = utlatande.findObservationByKategori(ObservationsKoder.DIAGNOS);
+        Fk7263Observation huvudDiagnos = utlatande.findObservationByKategori(ObservationsKoder.DIAGNOS);
         utlatande.getObservationer().remove(huvudDiagnos);
         huvudDiagnos.setObservationskod(new Kod("non-existing-code-system", "a value"));
         utlatande.getObservationer().add(huvudDiagnos);
-        Aktivitet smittskyddsAktivitet = new Aktivitet();
+        Fk7263Aktivitet smittskyddsAktivitet = new Fk7263Aktivitet();
         smittskyddsAktivitet.setAktivitetskod(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
         utlatande.getAktiviteter().add(smittskyddsAktivitet);
 
@@ -88,7 +87,7 @@ public class ExternalValidatorTest {
     @Test
     public void testInvalidDiagnoseCodeSystem() throws Exception {
         Fk7263Utlatande utlatande = getValidUtlatande();
-        Observation huvudDiagnos = utlatande.findObservationByKategori(ObservationsKoder.DIAGNOS);
+        Fk7263Observation huvudDiagnos = utlatande.findObservationByKategori(ObservationsKoder.DIAGNOS);
         utlatande.getObservationer().remove(huvudDiagnos);
         huvudDiagnos.setObservationskod(new Kod("non-existing-code-system", "a value"));
         utlatande.getObservationer().add(huvudDiagnos);
@@ -100,7 +99,7 @@ public class ExternalValidatorTest {
     public void testInvalidObservationForloppBeskrivning() throws Exception {
         Fk7263Utlatande utlatande = getValidUtlatande();
 
-        Observation observation = utlatande.findObservationByKod(ObservationsKoder.FORLOPP);
+        Fk7263Observation observation = utlatande.findObservationByKod(ObservationsKoder.FORLOPP);
         observation.setBeskrivning("");
 
         assertEquals(1, new ExternalValidator(utlatande).validate().size());
@@ -110,7 +109,7 @@ public class ExternalValidatorTest {
     public void testInvalidObservationAktivitetsbegransningBeskrivning() throws Exception {
         Fk7263Utlatande utlatande = getValidUtlatande();
 
-        Observation observation = utlatande.findObservationByKategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
+        Fk7263Observation observation = utlatande.findObservationByKategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
         observation.setBeskrivning("");
 
         assertEquals(1, new ExternalValidator(utlatande).validate().size());
@@ -120,7 +119,7 @@ public class ExternalValidatorTest {
     public void testInvalidObservationKroppFunktionsBeskrivning() throws Exception {
         Fk7263Utlatande utlatande = getValidUtlatande();
 
-        Observation observation = utlatande.findObservationByKategori(ObservationsKoder.KROPPSFUNKTIONER);
+        Fk7263Observation observation = utlatande.findObservationByKategori(ObservationsKoder.KROPPSFUNKTIONER);
         observation.setBeskrivning("");
 
         assertEquals(1, new ExternalValidator(utlatande).validate().size());
@@ -130,7 +129,7 @@ public class ExternalValidatorTest {
     public void testInvalidAktivitetOvrigtRekommendationBeskrivning() throws Exception {
         Fk7263Utlatande utlatande = getValidUtlatande();
 
-        Aktivitet aktivitet = utlatande.getAktivitet(Aktivitetskoder.OVRIGT);
+        Fk7263Aktivitet aktivitet = utlatande.getAktivitet(Aktivitetskoder.OVRIGT);
         aktivitet.setBeskrivning("");
 
         assertEquals(1, new ExternalValidator(utlatande).validate().size());
@@ -140,7 +139,7 @@ public class ExternalValidatorTest {
     public void testInvalidAktivitetPlanSjukvardBeskrivning() throws Exception {
         Fk7263Utlatande utlatande = getValidUtlatande();
 
-        Aktivitet aktivitet = utlatande
+        Fk7263Aktivitet aktivitet = utlatande
                 .getAktivitet(Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN);
         aktivitet.setBeskrivning("");
 
@@ -151,7 +150,7 @@ public class ExternalValidatorTest {
     public void testInvalidAktivitetPlanAnnanAtgardBeskrivning() throws Exception {
         Fk7263Utlatande utlatande = getValidUtlatande();
 
-        Aktivitet aktivitet = utlatande.getAktivitet(Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD);
+        Fk7263Aktivitet aktivitet = utlatande.getAktivitet(Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD);
         aktivitet.setBeskrivning("");
 
         assertEquals(1, new ExternalValidator(utlatande).validate().size());

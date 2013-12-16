@@ -8,7 +8,6 @@ import static se.inera.certificate.model.util.Iterables.addAll;
 import static se.inera.certificate.model.util.Iterables.addExisting;
 import static se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder.DIAGNOS;
 
-import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
@@ -21,14 +20,11 @@ import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.EnhetType
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.VardgivareType;
 import se.inera.certificate.logging.LogMarkers;
-import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.LocalDateInterval;
-import se.inera.certificate.model.Observation;
-import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Prognos;
 import se.inera.certificate.model.Referens;
@@ -43,6 +39,8 @@ import se.inera.certificate.modules.fk7263.model.codes.Referenstypkoder;
 import se.inera.certificate.modules.fk7263.model.codes.Sysselsattningskoder;
 import se.inera.certificate.modules.fk7263.model.codes.Vardkontakttypkoder;
 import se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
@@ -106,7 +104,7 @@ public final class TransportToExternalFk7263LegacyConverter {
 
         for (se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.AktivitetType aktivitetType : source
                 .getAktivitets()) {
-            Aktivitet aktivitet = convert(aktivitetType);
+            Fk7263Aktivitet aktivitet = convert(aktivitetType);
             if (aktivitet != null) {
                 addExisting(fk7263utlatande.getAktiviteter(), aktivitet);
             } else {
@@ -146,8 +144,8 @@ public final class TransportToExternalFk7263LegacyConverter {
 
         // In FK7263Legacy case, we set fromDate=endDate since we only have 1 date
         LocalDateInterval vardkontaktTid = new LocalDateInterval();
-        vardkontaktTid.setStart(source.getVardkontaktstid());
-        vardkontaktTid.setEnd(source.getVardkontaktstid());
+        vardkontaktTid.setFrom(source.getVardkontaktstid());
+        vardkontaktTid.setTom(source.getVardkontaktstid());
         vardkontakt.setVardkontaktstid(vardkontaktTid);
         return vardkontakt;
     }
@@ -170,9 +168,9 @@ public final class TransportToExternalFk7263LegacyConverter {
         return referens;
     }
 
-    private static Aktivitet convert(
+    private static Fk7263Aktivitet convert(
             se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.AktivitetType source) {
-        Aktivitet aktivitet = new Aktivitet();
+        Fk7263Aktivitet aktivitet = new Fk7263Aktivitet();
 
         Kod aktivitetsCode = null;
 
@@ -270,11 +268,11 @@ public final class TransportToExternalFk7263LegacyConverter {
         return arbetsuppgift;
     }
 
-    private static List<Observation> convert(FunktionstillstandType source) {
+    private static List<Fk7263Observation> convert(FunktionstillstandType source) {
 
-        List<Observation> observations = new ArrayList<Observation>();
+        List<Fk7263Observation> observations = new ArrayList<Fk7263Observation>();
 
-        Observation observation = new Observation();
+        Fk7263Observation observation = new Fk7263Observation();
 
         switch (source.getTypAvFunktionstillstand()) {
         case AKTIVITET:
@@ -296,7 +294,7 @@ public final class TransportToExternalFk7263LegacyConverter {
         return observations;
     }
 
-    private static List<Observation> convert(ArbetsformagaType source) {
+    private static List<Fk7263Observation> convert(ArbetsformagaType source) {
 
         Prognos prognos = null;
         if (source.getPrognosangivelse() != null) {
@@ -318,10 +316,10 @@ public final class TransportToExternalFk7263LegacyConverter {
             prognos.setBeskrivning(source.getMotivering());
         }
 
-        List<Observation> observations = new ArrayList<>();
+        List<Fk7263Observation> observations = new ArrayList<>();
 
         for (ArbetsformagaNedsattningType nedsattning : source.getArbetsformagaNedsattnings()) {
-            Observation arbetsformaga = convert(nedsattning);
+            Fk7263Observation arbetsformaga = convert(nedsattning);
             if (prognos != null) {
                 arbetsformaga.getPrognoser().add(prognos);
             }
@@ -337,8 +335,8 @@ public final class TransportToExternalFk7263LegacyConverter {
      * @param source
      * @return
      */
-    private static Observation convert(ArbetsformagaNedsattningType source) {
-        Observation nedsattning = new Observation();
+    private static Fk7263Observation convert(ArbetsformagaNedsattningType source) {
+        Fk7263Observation nedsattning = new Fk7263Observation();
         nedsattning.setObservationskod(ObservationsKoder.ARBETSFORMAGA);
 
         PhysicalQuantity varde = new PhysicalQuantity();
@@ -359,34 +357,34 @@ public final class TransportToExternalFk7263LegacyConverter {
         }
         nedsattning.getVarde().add(varde);
 
-        PartialInterval observationsperiod = new PartialInterval();
+        LocalDateInterval observationsperiod = new LocalDateInterval();
         if (source.getVaraktighetFrom() != null) {
-            observationsperiod.setFrom(new Partial(source.getVaraktighetFrom()));
+            observationsperiod.setFrom(source.getVaraktighetFrom());
         }
         if (source.getVaraktighetTom() != null) {
-            observationsperiod.setTom(new Partial(source.getVaraktighetTom()));
+            observationsperiod.setTom(source.getVaraktighetTom());
         }
         nedsattning.setObservationsperiod(observationsperiod);
 
         return nedsattning;
     }
 
-    private static Observation convert(BedomtTillstandType bedomtTillstand) {
+    private static Fk7263Observation convert(BedomtTillstandType bedomtTillstand) {
         if (bedomtTillstand == null) {
             return null;
         }
-        Observation observation = new Observation();
+        Fk7263Observation observation = new Fk7263Observation();
         observation.setBeskrivning(bedomtTillstand.getBeskrivning());
         // TODO: ObservationsKategori ?
         observation.setObservationskod(ObservationsKoder.FORLOPP);
         return observation;
     }
 
-    private static Observation convert(MedicinsktTillstandType medicinsktTillstand) {
+    private static Fk7263Observation convert(MedicinsktTillstandType medicinsktTillstand) {
         if (medicinsktTillstand == null) {
             return null;
         }
-        Observation observation = new Observation();
+        Fk7263Observation observation = new Fk7263Observation();
         observation.setBeskrivning(medicinsktTillstand.getBeskrivning());
 
         if (medicinsktTillstand.getTillstandskod() != null) {

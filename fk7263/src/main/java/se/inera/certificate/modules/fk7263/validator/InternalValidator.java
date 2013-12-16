@@ -1,13 +1,12 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
-
 import java.util.List;
+
+import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 
 import org.apache.cxf.common.util.StringUtils;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
-
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 
@@ -108,18 +107,18 @@ public class InternalValidator extends AbstractValidator {
 
         for (int i = 0; i < intervals.length; i++) {
             if (intervals[i] != null) {
-                Interval oneInterval = createInterval(intervals[i].getStart(), intervals[i].getEnd());
+                Interval oneInterval = createInterval(intervals[i].getFrom(), intervals[i].getTom());
                 if (oneInterval == null) {
-                    addValidationError(fieldId + ": Invalid date interval (from " + intervals[i].getStart() + ", tom "
-                            + intervals[i].getEnd());
+                    addValidationError(fieldId + ": Invalid date interval (from " + intervals[i].getFrom() + ", tom "
+                            + intervals[i].getTom());
                     return false;
                 }
                 for (int j = i + 1; j < intervals.length; j++) {
                     if (intervals[j] != null) {
-                        Interval anotherInterval = createInterval(intervals[j].getStart(), intervals[j].getEnd());
+                        Interval anotherInterval = createInterval(intervals[j].getFrom(), intervals[j].getTom());
                         if (anotherInterval == null) {
-                            addValidationError(fieldId + ": Invalid date interval (from " + intervals[j].getStart()
-                                    + ", tom " + intervals[j].getEnd());
+                            addValidationError(fieldId + ": Invalid date interval (from " + intervals[j].getFrom()
+                                    + ", tom " + intervals[j].getTom());
                             return false;
                         }
                         // Overlap OR abuts(one intervals tom day== another's from day) is considered invalid
@@ -166,11 +165,11 @@ public class InternalValidator extends AbstractValidator {
             return true;
         }
 
-        if (nedsattning.getStart() != null && nedsattning.getEnd() != null) {
-            if (nedsattning.getEnd().isBefore(nedsattning.getStart())) {
+        if (nedsattning.getFrom() != null && nedsattning.getTom() != null) {
+            if (nedsattning.getTom().isBefore(nedsattning.getFrom())) {
                 // Must be something wrong with the observationPeriod:
-                addValidationError("Field 8b: Invalid date interval (from " + nedsattning.getStart() + ", tom "
-                        + nedsattning.getEnd());
+                addValidationError("Field 8b: Invalid date interval (from " + nedsattning.getFrom() + ", tom "
+                        + nedsattning.getTom());
             } else {
                 return true;
             }
