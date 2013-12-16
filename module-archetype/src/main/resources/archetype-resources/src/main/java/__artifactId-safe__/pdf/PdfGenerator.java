@@ -24,8 +24,6 @@ package ${package}.${artifactId-safe}.pdf;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import org.apache.commons.lang3.StringUtils;
-
 import ${package}.${artifactId-safe}.model.internal.mi.Utlatande;
 
 import com.itextpdf.text.DocumentException;

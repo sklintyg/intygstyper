@@ -46,6 +46,8 @@
       <xs:element name="rekommendation" type="rekommendationType" maxOccurs="2" />
       <xs:element name="observation" type="observationType"
                   maxOccurs="unbounded"/>
+      <xs:element name="observationAktivitetRelation" type="observationAktivitetRelationType"
+                  minOccurs="0" maxOccurs="unbounded" />
 
       <xs:any namespace="##other" processContents="lax" minOccurs="0"
               maxOccurs="unbounded"/>
@@ -144,6 +146,7 @@
                   minOccurs="0"/>
       <xs:element name="plats" type="xs:string" minOccurs="0"/>
       <xs:element name="metod" type="iso:CD" minOccurs="0"/>
+      <xs:element name="forekomst" type="xs:boolean" minOccurs="0"/>
 
       <xs:any namespace="##other" processContents="lax" minOccurs="0"
               maxOccurs="unbounded"/>
@@ -224,6 +227,13 @@
       <xs:element name="vardgivarnamn" type="xs:string"/>
 
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="observationAktivitetRelationType">
+    <xs:sequence>
+      <xs:element name="observationsid" type="iso:II"/>
+      <xs:element name="aktivitetsid" type="iso:II"/>
     </xs:sequence>
   </xs:complexType>
 

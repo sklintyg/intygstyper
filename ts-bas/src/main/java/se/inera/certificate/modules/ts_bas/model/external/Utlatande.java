@@ -29,10 +29,10 @@ import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Status;
 
 /**
- * The utlåtande used by RLI. This class is a copy of the common external model (defined in se.inera.certificate.model),
- * extending with:
+ * The utlåtande used by ts-bas. This class is a copy of the common external model (defined in
+ * se.inera.certificate.model), extending with:
  * <ul>
- * <li> {@link Aktivitet}
+ * <li> {@link #intygAvser}
  * </ul>
  */
 public class Utlatande {
@@ -53,13 +53,15 @@ public class Utlatande {
 
     private HosPersonal skapadAv;
 
-    private Vardkontakt vardkontakt;
-
     private List<Aktivitet> aktiviteter;
+
+    private List<Vardkontakt> vardkontakter;
 
     private List<Rekommendation> rekommendationer;
 
     private List<Observation> observationer;
+    
+    private List<ObservationAktivitetRelation> observationAktivitetRelation;
 
     private List<Status> status;
 
@@ -125,12 +127,11 @@ public class Utlatande {
         this.skapadAv = skapadAv;
     }
 
-    public Vardkontakt getVardkontakt() {
-        return vardkontakt;
-    }
-
-    public void setVardkontakt(Vardkontakt vardkontakt) {
-        this.vardkontakt = vardkontakt;
+    public List<Vardkontakt> getVardkontakter() {
+        if (vardkontakter == null) {
+            vardkontakter = new ArrayList<>();
+        }
+        return vardkontakter;
     }
 
     public List<Aktivitet> getAktiviteter() {
@@ -152,6 +153,13 @@ public class Utlatande {
             observationer = new ArrayList<Observation>();
         }
         return this.observationer;
+    }
+    
+    public List<ObservationAktivitetRelation> getObservationAktivitetRelationer() {
+        if (observationAktivitetRelation == null) {
+            observationAktivitetRelation = new ArrayList<ObservationAktivitetRelation>();
+        }
+        return this.observationAktivitetRelation ;
     }
 
     public List<Status> getStatus() {

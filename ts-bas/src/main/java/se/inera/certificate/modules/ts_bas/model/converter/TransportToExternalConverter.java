@@ -34,12 +34,14 @@ import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_bas.model.external.Observation;
+import se.inera.certificate.modules.ts_bas.model.external.ObservationAktivitetRelation;
 import se.inera.certificate.modules.ts_bas.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
 import se.inera.certificate.modules.ts_bas.model.external.Vardkontakt;
 import se.inera.certificate.ts_bas.model.v1.AktivitetType;
 import se.inera.certificate.ts_bas.model.v1.EnhetType;
 import se.inera.certificate.ts_bas.model.v1.HosPersonalType;
+import se.inera.certificate.ts_bas.model.v1.ObservationAktivitetRelationType;
 import se.inera.certificate.ts_bas.model.v1.ObservationType;
 import se.inera.certificate.ts_bas.model.v1.PatientType;
 import se.inera.certificate.ts_bas.model.v1.RekommendationType;
@@ -63,6 +65,8 @@ public class TransportToExternalConverter {
      * @throws ConverterException
      */
     public Utlatande convert(se.inera.certificate.ts_bas.model.v1.Utlatande source) throws ConverterException {
+        LOG.trace("Converting transport model to external");
+
         if (source == null) {
             throw new ConverterException("Source Utlatande was null, cannot convert");
         }
@@ -77,8 +81,32 @@ public class TransportToExternalConverter {
         utlatande.getObservationer().addAll(convertObservationer(source.getObservations()));
         utlatande.getRekommendationer().addAll(convertRekommendationer(source.getRekommendations()));
         utlatande.getAktiviteter().addAll(convertAktiviteter(source.getAktivitets()));
-        utlatande.setVardkontakt(convertVardkontakt(source.getVardkontakt()));
+        utlatande.getVardkontakter().add(convertVardkontakt(source.getVardkontakt()));
+        utlatande.getObservationAktivitetRelationer().addAll(
+                convertObservationAktivitetRelationer(source.getObservationAktivitetRelations()));
         return utlatande;
+    }
+
+    private Collection<? extends ObservationAktivitetRelation> convertObservationAktivitetRelationer(
+            List<ObservationAktivitetRelationType> source) throws ConverterException{
+        if (source == null) {
+            throw new ConverterException();
+        }
+        List<ObservationAktivitetRelation> converted = new ArrayList<ObservationAktivitetRelation>();
+            
+        for (ObservationAktivitetRelationType it : source){
+            converted.add(convertObservationRelation(it));
+        }
+        
+        return converted;
+    }
+
+    private ObservationAktivitetRelation convertObservationRelation(ObservationAktivitetRelationType source) {
+        ObservationAktivitetRelation converted = new ObservationAktivitetRelation();
+        converted.setAktivitetsid(IsoTypeConverter.toId(source.getAktivitetsid()));
+        converted.setObservationsid(IsoTypeConverter.toId(source.getObservationsid()));
+        
+        return converted;
     }
 
     private Collection<? extends Rekommendation> convertRekommendationer(List<RekommendationType> source)
@@ -98,13 +126,13 @@ public class TransportToExternalConverter {
         if (source.getBeskrivning() != null) {
             rekommendation.setBeskrivning(source.getBeskrivning());
         }
-        
+
         rekommendation.setRekommendationskod(IsoTypeConverter.toKod(source.getRekommendationskod()));
-        
+
         if (!source.getVardes().isEmpty()) {
             rekommendation.setVarde(IsoTypeConverter.toKod(source.getVardes().get(0)));
         }
-        
+
         return rekommendation;
     }
 
@@ -173,6 +201,10 @@ public class TransportToExternalConverter {
             aktivitet.setPlats(source.getPlats());
         }
 
+        if (source.isForekomst() != null) {
+            aktivitet.setForekomst(source.isForekomst());
+        }
+
         return aktivitet;
     }
 
@@ -213,7 +245,7 @@ public class TransportToExternalConverter {
         }
 
         if (source.isForekomst() != null) {
-            observation.setForekonst((source.isForekomst() ? true : false));
+            observation.setForekomst(source.isForekomst());
         }
 
         if (source.getObservationsid() != null) {

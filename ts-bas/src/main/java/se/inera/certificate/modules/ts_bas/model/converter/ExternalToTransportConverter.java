@@ -35,11 +35,13 @@ import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_bas.model.external.Observation;
+import se.inera.certificate.modules.ts_bas.model.external.ObservationAktivitetRelation;
 import se.inera.certificate.modules.ts_bas.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_bas.model.external.Vardkontakt;
 import se.inera.certificate.ts_bas.model.v1.AktivitetType;
 import se.inera.certificate.ts_bas.model.v1.EnhetType;
 import se.inera.certificate.ts_bas.model.v1.HosPersonalType;
+import se.inera.certificate.ts_bas.model.v1.ObservationAktivitetRelationType;
 import se.inera.certificate.ts_bas.model.v1.ObservationType;
 import se.inera.certificate.ts_bas.model.v1.PartialDateInterval;
 import se.inera.certificate.ts_bas.model.v1.PatientType;
@@ -63,15 +65,43 @@ public class ExternalToTransportConverter {
         utlatande.setSkickatdatum(source.getSkickatdatum());
         utlatande.setTypAvUtlatande(IsoTypeConverter.toUtlatandeTyp(source.getTyp()));
         utlatande.setUtlatandeId(IsoTypeConverter.toUtlatandeId(source.getId()));
-        utlatande.setVardkontakt(convertVardkontakt(source.getVardkontakt()));
+
+        /** Just make sure getVardkontakter() doesn't return an empty list before getting an index.. */
+        if (!source.getVardkontakter().isEmpty()) {
+            utlatande.setVardkontakt(convertVardkontakt(source.getVardkontakter().get(0)));
+        }
+
         utlatande.getAktivitets().addAll(convertAktiviteter(source.getAktiviteter()));
         utlatande.getObservations().addAll(convertObservationer(source.getObservationer()));
         utlatande.getIntygAvsers().addAll(convertCodes(source.getIntygAvser()));
         utlatande.getRekommendations().addAll(convertRekommendationer(source.getRekommendationer()));
+        utlatande.getObservationAktivitetRelations().addAll(
+                convertObservationAktivitetRelationer(source.getObservationAktivitetRelationer()));
 
         return utlatande;
     }
 
+    private Collection<? extends ObservationAktivitetRelationType> convertObservationAktivitetRelationer(
+            List<ObservationAktivitetRelation> source) throws ConverterException {
+        if (source == null) {
+            throw new ConverterException();
+        }
+        List<ObservationAktivitetRelationType> converted = new ArrayList<ObservationAktivitetRelationType>();
+
+        for (ObservationAktivitetRelation it : source) {
+            converted.add(convertObservationRelation(it));
+        }
+
+        return converted;
+    }
+
+    private ObservationAktivitetRelationType convertObservationRelation(ObservationAktivitetRelation source) {
+        ObservationAktivitetRelationType converted = new ObservationAktivitetRelationType();
+        converted.setAktivitetsid(IsoTypeConverter.toII(source.getAktivitetsid()));
+        converted.setObservationsid(IsoTypeConverter.toII(source.getObservationsid()));
+        
+        return converted;
+    }
     /**
      * Convert collection of Rekommendation to collection of RekommendationType
      * 
@@ -160,8 +190,8 @@ public class ExternalToTransportConverter {
         if (source.getBeskrivning() != null) {
             observation.setBeskrivning(source.getBeskrivning());
         }
-        if (source.getForekonst() != null) {
-            observation.setForekomst(source.getForekonst());
+        if (source.getForekomst() != null) {
+            observation.setForekomst(source.getForekomst());
         }
         if (source.getLateralitet() != null) {
             observation.setLateralitet(IsoTypeConverter.toCD(source.getLateralitet()));
@@ -211,11 +241,11 @@ public class ExternalToTransportConverter {
         }
 
         aktivitet.setAktivitetskod(IsoTypeConverter.toCD(source.getAktivitetskod()));
-        
+
         if (source.getAktivitetsstatus() != null) {
             aktivitet.setAktivitetsstatus(IsoTypeConverter.toCD(source.getAktivitetsstatus()));
         }
-        
+
         if (source.getAktivitetstid() != null) {
             aktivitet.setAktivitetstid(convertPartialDateInterval(source.getAktivitetstid()));
         }
@@ -227,6 +257,9 @@ public class ExternalToTransportConverter {
         }
         if (source.getPlats() != null) {
             aktivitet.setPlats(source.getPlats());
+        }
+        if (source.getForekomst() != null) {
+            aktivitet.setForekomst(source.getForekomst());
         }
 
         return aktivitet;

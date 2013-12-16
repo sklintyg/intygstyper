@@ -1,6 +1,11 @@
 package se.inera.certificate.modules.fk7263.validator;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -93,8 +98,8 @@ public class InternalValidatorTest {
         // remove all referenser
         utlatande.setJournaluppgifter(null);
         utlatande.setAnnanReferens(null);
-
-        assertEquals(0, new InternalValidator(utlatande).validate().size());
+        List<String> result = new InternalValidator(utlatande).validate();
+        assertEquals(0, result.size());
     }
 
     @Test
@@ -176,7 +181,7 @@ public class InternalValidatorTest {
     }
 
     @Test
-    public void testNedsattArbetsformagaInvalidInterval() throws Exception {
+    public void testNedsattArbetsformagaInvalidIntervalStartEnd() throws Exception {
         Fk7263Intyg utlatande = getValidUtlatande();
 
         // Screw up one of the intervals so from > tom
@@ -206,4 +211,70 @@ public class InternalValidatorTest {
 
         assertEquals(1, new InternalValidator(utlatande).validate().size());
     }
+    @Test
+    public void testFelaktigtDatumIntervallNoEndDate() throws Exception {
+        Fk7263Intyg utlatande = getValidUtlatande();
+
+        // remove skickatdatum
+        utlatande.getNedsattMed100().setEnd(null);
+
+        assertEquals(1, new InternalValidator(utlatande).validate().size());
+    }
+    
+    @Test
+    public void testNedsattArbetsformagaInvalidIntervalOverlap() throws Exception {
+        Fk7263Intyg utlatande = getValidUtlatande();
+
+        LocalDateInterval first = utlatande.getNedsattMed25();
+        first.setStart(new LocalDate(2013, 4, 1));
+        first.setEnd(new LocalDate(2013, 4, 20));
+        
+        LocalDateInterval second = utlatande.getNedsattMed50();
+        second.setStart(new LocalDate(2013, 4, 18));
+        second.setEnd(new LocalDate(2013, 5, 12));
+
+        assertEquals(1, new InternalValidator(utlatande).validate().size());
+    }
+    @Test
+    public void testNedsattArbetsformagaInvalidIntervalAbut() throws Exception {
+        Fk7263Intyg utlatande = getValidUtlatande();
+
+        LocalDateInterval first = utlatande.getNedsattMed25();
+        first.setStart(new LocalDate(2013, 4, 1));
+        first.setEnd(new LocalDate(2013, 4, 20));
+        
+        LocalDateInterval second = utlatande.getNedsattMed50();
+        second.setStart(new LocalDate(2013, 4, 20));
+        second.setEnd(new LocalDate(2013, 5, 12));
+
+        assertEquals(1, new InternalValidator(utlatande).validate().size());
+    }
+    
+    @Test
+    public void testNedsattArbetsformagaInvalidIntervalStart() throws Exception {
+        Fk7263Intyg utlatande = getValidUtlatande();
+
+        // remove end date
+        utlatande.getNedsattMed100().setEnd(null);
+        assertEquals(1, new InternalValidator(utlatande).validate().size());
+
+    }
+    
+    @Test
+    public void testValidateIntervalsOverlaps() throws Exception {
+        Fk7263Intyg utlatande = getValidUtlatande();
+
+        LocalDateInterval[] intervals = new LocalDateInterval[5];
+        intervals[0] = new LocalDateInterval(new LocalDate(2013,1,1), new LocalDate(2013,2,20));
+        intervals[1] = new LocalDateInterval(new LocalDate(2013,2,21), new LocalDate(2013,3,15));
+        intervals[2] = new LocalDateInterval(new LocalDate(2013,2,12), new LocalDate(2013,3,25));
+        intervals[3] = new LocalDateInterval(new LocalDate(2013,3,25), new LocalDate(2013,6,1));
+        assertFalse(new InternalValidator(utlatande).validateIntervals("test", intervals));
+        assertTrue(new InternalValidator(utlatande).validateIntervals("test",  intervals[0]));
+        assertTrue(new InternalValidator(utlatande).validateIntervals("test",  intervals[0], intervals[1]));
+        assertFalse(new InternalValidator(utlatande).validateIntervals("test", (LocalDateInterval[]) null));
+
+    }
+
+    
 }

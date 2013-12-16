@@ -26,24 +26,24 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
   <bean id="transportToExternalConverter"
-    class="${package}.${artifactId}.model.converter.TransportToExternalConverter" />
+    class="${package}.${artifactId-safe}.model.converter.TransportToExternalConverter" />
 
   <bean id="externalToTransportConverter"
-    class="${package}.${artifactId}.model.converter.ExternalToTransportConverter" />
+    class="${package}.${artifactId-safe}.model.converter.ExternalToTransportConverter" />
 
   <bean id="externalValidator"
-    class="${package}.${artifactId}.validator.ExternalValidator" />
+    class="${package}.${artifactId-safe}.validator.ExternalValidator" />
 
   <bean id="externalToInternalConverter"
-    class="${package}.${artifactId}.model.converter.ExternalToInternalConverter" />
+    class="${package}.${artifactId-safe}.model.converter.ExternalToInternalConverter" />
 
 <bean id="internalToExternalConverter"
-    class="${package}.${artifactId}.model.converter.InternalToExternalConverter" />
+    class="${package}.${artifactId-safe}.model.converter.InternalToExternalConverter" />
 
 
-  <bean id="pdfGenerator" class="${package}.${artifactId}.pdf.PdfGenerator" />
+  <bean id="pdfGenerator" class="${package}.${artifactId-safe}.pdf.PdfGenerator" />
 
   <bean id="webcertModelFactory"
-    class="${package}.${artifactId}.model.converter.WebcertModelFactory" />
+    class="${package}.${artifactId-safe}.model.converter.WebcertModelFactory" />
 
 </beans>
