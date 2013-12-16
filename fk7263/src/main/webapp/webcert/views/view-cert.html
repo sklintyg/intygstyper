@@ -255,7 +255,7 @@
                         <span ng-switch-when="wc">Mottaget: </span> <span ng-switch-default>Skickat: </span> <span class="qa-date">{{qa.svarSkickadDatum | date:'shortDate'}}</span>
                       </div>
                     </div>
-                    <div class="qa-block-body">{{qa.svarsText}}</div>
+                    <div class="qa-block-body" id="qaHandledSvarstext-{{qa.internReferens}}">{{qa.svarsText}}</div>
                   </div>
                 </div>
 
@@ -325,7 +325,7 @@
               <div class="cert-body">
 
                 <div wc-cert-field field-number="1" field-label="view.label.smittskydd" filled="true">
-                  <span ng-show="cert.avstangningSmittskydd"> <span message key="view.label.yes"></span></span> <span ng-show="!cert.avstangningSmittskydd"> <span message key="view.label.no"></span>
+                  <span ng-show="cert.avstangningSmittskydd" id="field1yes"> <span message key="view.label.yes"></span></span> <span ng-show="!cert.avstangningSmittskydd" id="field1no"> <span message key="view.label.no"></span>
                   </span>
                 </div>
 
