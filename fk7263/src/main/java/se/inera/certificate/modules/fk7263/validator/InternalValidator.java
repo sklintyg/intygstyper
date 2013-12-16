@@ -107,18 +107,18 @@ public class InternalValidator extends AbstractValidator {
 
         for (int i = 0; i < intervals.length; i++) {
             if (intervals[i] != null) {
-                Interval oneInterval = createInterval(intervals[i].getStart(), intervals[i].getEnd());
+                Interval oneInterval = createInterval(intervals[i].getFrom(), intervals[i].getTom());
                 if (oneInterval == null) {
-                    addValidationError(fieldId + ": Invalid date interval (from " + intervals[i].getStart() + ", tom "
-                            + intervals[i].getEnd());
+                    addValidationError(fieldId + ": Invalid date interval (from " + intervals[i].getFrom() + ", tom "
+                            + intervals[i].getTom());
                     return false;
                 }
                 for (int j = i + 1; j < intervals.length; j++) {
                     if (intervals[j] != null) {
-                        Interval anotherInterval = createInterval(intervals[j].getStart(), intervals[j].getEnd());
+                        Interval anotherInterval = createInterval(intervals[j].getFrom(), intervals[j].getTom());
                         if (anotherInterval == null) {
-                            addValidationError(fieldId + ": Invalid date interval (from " + intervals[j].getStart()
-                                    + ", tom " + intervals[j].getEnd());
+                            addValidationError(fieldId + ": Invalid date interval (from " + intervals[j].getFrom()
+                                    + ", tom " + intervals[j].getTom());
                             return false;
                         }
                         // Overlap OR abuts(one intervals tom day== another's from day) is considered invalid
