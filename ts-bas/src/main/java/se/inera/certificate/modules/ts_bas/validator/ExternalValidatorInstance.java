@@ -34,10 +34,8 @@ import se.inera.certificate.modules.ts_bas.model.codes.IntygAvserKod;
 import se.inera.certificate.modules.ts_bas.model.codes.SpecialitetKod;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.codes.VardkontakttypKod;
-import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
-import se.inera.certificate.modules.ts_bas.model.external.Observation;
-import se.inera.certificate.modules.ts_bas.model.external.Rekommendation;
+import se.inera.certificate.modules.ts_bas.model.external.ObservationAktivitetRelation;
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
 import se.inera.certificate.modules.ts_bas.model.external.Vardkontakt;
 import se.inera.certificate.validate.IdValidator;
@@ -46,6 +44,10 @@ import se.inera.certificate.validate.SimpleIdValidatorBuilder;
 public class ExternalValidatorInstance {
 
     protected final List<String> validationErrors;
+
+    private AktiviteterValidationInstance aktivitetInstance;
+    private ObservationerValidationInstance observationInstance;
+    private RekommendationerValidationInstance rekommendationInstance;
 
     private final static IdValidator ID_VALIDATOR;
 
@@ -67,13 +69,19 @@ public class ExternalValidatorInstance {
     }
 
     public List<String> validate(Utlatande utlatande) {
+        aktivitetInstance = new AktiviteterValidationInstance(validationErrors, utlatande.getAktiviteter());
+        observationInstance = new ObservationerValidationInstance(validationErrors, utlatande.getObservationer());
+        rekommendationInstance = new RekommendationerValidationInstance(validationErrors,
+                utlatande.getRekommendationer());
+
         validateUtlatande(utlatande);
         validatePatient(utlatande.getPatient());
         validateHosPersonal(utlatande.getSkapadAv());
-        validateAktiviteter(utlatande.getAktiviteter());
+        aktivitetInstance.validateAktiviteter();
         validateVardkontakter(utlatande.getVardkontakter());
-        validateRekommendationer(utlatande.getRekommendationer());
-        validateObservationer(utlatande.getObservationer());
+        rekommendationInstance.validateRekommendationer();
+        observationInstance.validateObservationer();
+        validateObservationAktivitetRelation(utlatande.getObservationAktivitetRelationer());
 
         return validationErrors;
     }
@@ -155,12 +163,6 @@ public class ExternalValidatorInstance {
         assertNotEmpty(vardgivare.getNamn(), prefix + ".vardgivare.namn");
     }
 
-    private void validateAktiviteter(List<Aktivitet> aktiviteter) {
-        AktiviteterValidationInstance instance = new AktiviteterValidationInstance(validationErrors);
-
-        instance.validateAktiviteter(aktiviteter);
-    }
-
     private void validateVardkontakter(List<Vardkontakt> vardkontakter) {
         if (vardkontakter.size() != 1) {
             validationError("Expected only one vardkontakt");
@@ -172,16 +174,18 @@ public class ExternalValidatorInstance {
         assertKodInEnum(vardkontakt.getIdkontroll(), IdKontrollKod.class, "vardkontakt.idkontroll");
     }
 
-    private void validateRekommendationer(List<Rekommendation> rekommendationer) {
-        RekommendationerValidationInstance instance = new RekommendationerValidationInstance(validationErrors);
+    private void validateObservationAktivitetRelation(List<ObservationAktivitetRelation> observationAktivitetRelationer) {
+        for (ObservationAktivitetRelation relation : observationAktivitetRelationer) {
+            String element = String.format("observationAktivitetRelation[%s, %s]", relation.getObservationsid()
+                    .getExtension(), relation.getAktivitetsid().getExtension());
 
-        instance.validateRekommendationer(rekommendationer);
-    }
-
-    private void validateObservationer(List<Observation> observationer) {
-        ObservationerValidationInstance instance = new ObservationerValidationInstance(validationErrors);
-
-        instance.validateObservationer(observationer);
+            Id obsId = relation.getObservationsid();
+            assertNotNull(observationInstance.getObservationWithId(obsId),
+                    String.format("observation %s in %s", obsId.getExtension(), element));
+            Id aktId = relation.getAktivitetsid();
+            assertNotNull(aktivitetInstance.getAktivitetWithId(aktId),
+                    String.format("aktivitet %s in %s", aktId.getExtension(), element));
+        }
     }
 
     protected String getDisplayCode(Kod kod) {

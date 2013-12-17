@@ -14,11 +14,14 @@ public class RekommendationerValidationInstance extends ExternalValidatorInstanc
     private static final Kod REK_REK8 = CodeConverter.toKod(RekommendationsKod.PATIENT_UPPFYLLER_KRAV_FOR);
     private static final Kod REK_REK9 = CodeConverter.toKod(RekommendationsKod.PATIENT_BOR_UNDESOKAS_AV_SPECIALIST);
 
-    public RekommendationerValidationInstance(List<String> validationErrors) {
+    private final List<Rekommendation> rekommendationer;
+
+    public RekommendationerValidationInstance(List<String> validationErrors, List<Rekommendation> rekommendationer) {
         super(validationErrors);
+        this.rekommendationer = rekommendationer;
     }
 
-    public void validateRekommendationer(List<Rekommendation> rekommendationer) {
+    public void validateRekommendationer() {
         Iterable<Kod> kodList = new RekommendationerIterable(rekommendationer);
         assertKodCountBetween(kodList, REK_REK8, 1, 1, "rekommendationer");
         assertKodCountBetween(kodList, REK_REK9, 0, 1, "rekommendationer");

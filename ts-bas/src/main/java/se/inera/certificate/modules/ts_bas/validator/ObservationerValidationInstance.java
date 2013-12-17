@@ -3,6 +3,7 @@ package se.inera.certificate.modules.ts_bas.validator;
 import java.util.Iterator;
 import java.util.List;
 
+import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
@@ -22,11 +23,14 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
     private static final Kod OBS_E11 = CodeConverter.toKod(ObservationsKod.DIABETES_TYP_2);
     private static final Kod OBS_G40_9 = CodeConverter.toKod(ObservationsKod.EPILEPSI);
 
-    public ObservationerValidationInstance(List<String> validationErrors) {
+    private final List<Observation> observationer;
+
+    public ObservationerValidationInstance(List<String> validationErrors, List<Observation> observationer) {
         super(validationErrors);
+        this.observationer = observationer;
     }
 
-    public void validateObservationer(List<Observation> observationer) {
+    public void validateObservationer() {
 
         boolean hasDiabetes = false;
         Observation diabetesTyp = null;
@@ -98,6 +102,26 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
             assertNotNull(diabetesTyp, msg);
         }
 
+    }
+
+    public Observation getObservationWithKod(Kod observationskod) {
+        for (Observation observation : observationer) {
+            if (observationskod.equals(observation.getObservationskod())) {
+                return observation;
+            }
+        }
+
+        return null;
+    }
+
+    public Observation getObservationWithId(Id id) {
+        for (Observation observation : observationer) {
+            if (id.equals(observation.getId())) {
+                return observation;
+            }
+        }
+
+        return null;
     }
 
     private static class ObservationerIterable implements Iterable<Kod> {

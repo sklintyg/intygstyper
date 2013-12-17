@@ -56,18 +56,18 @@
         }
     },
     "vardkontakter": [
-	      {
-	        "vardkontakttyp": {
-	            "codeSystem": "1.2.752.116.2.1.1.1",
-	            "codeSystemName": "SNOMED-CT",
-	            "code": "5880005"
-	        },
-	        "idkontroll": {
-	            "codeSystem": "???",
-	            "codeSystemName": "kv_id_kontroll",
-	            "code": "IDK6"
-	        }
-	      }
+          {
+            "vardkontakttyp": {
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "5880005"
+            },
+            "idkontroll": {
+                "codeSystem": "???",
+                "codeSystemName": "kv_id_kontroll",
+                "code": "IDK6"
+            }
+          }
       ],
     "aktiviteter": [
         {
@@ -79,26 +79,26 @@
             "forekomst" : false
         },
         {
-        	"id" : {
-        		"root" : "1.2.752.129.2.1.2.1",
-        		"extension" : "6"
-        	},
+            "id" : {
+                "root" : "1.2.752.129.2.1.2.1",
+                "extension" : "1"
+            },
             "aktivitetskod": {
                 "codeSystem": "1.2.752.116.2.1.1.1",
                 "codeSystemName": "SNOMED-CT",
                 "code": "86944008"
             },
             "metod" : {
-            	"code" : "MET1",
-            	"codeSystem" : "????",
-            	"codeSystemName" : "kv_metod"
+                "code" : "MET1",
+                "codeSystem" : "????",
+                "codeSystemName" : "kv_metod"
             }
         },
         {
-           	"id" : {
-        		"root" : "1.2.752.129.2.1.2.1",
-        		"extension" : "7"
-        	},
+           "id" : {
+                "root" : "1.2.752.129.2.1.2.1",
+                "extension" : "2"
+            },
             "aktivitetskod": {
                 "codeSystem": "8040b4d1-67dc-42e1-a938-de5374e9526a",
                 "codeSystemName": "kv_aktiviteter_intyg",
@@ -106,14 +106,14 @@
             }
         },
         {
-        	"aktivitetskod" : {
-        		 "codeSystem": "8040b4d1-67dc-42e1-a938-de5374e9526a",
+            "aktivitetskod" : {
+                 "codeSystem": "8040b4d1-67dc-42e1-a938-de5374e9526a",
                  "codeSystemName": "kv_aktiviteter_intyg",
                  "code": "AKT19"
              },
              "aktivitetstid" : {
-            	 "from" : "2012-12-12",
-            	 "tom"  : "2012-12-12"
+                 "from" : "2012-12-12",
+                 "tom"  : "2012-12-12"
              },
              "beskrivning" : "Spontan självantändning",
              "plats" : "Vårdcentralen i Trollhättan",
@@ -143,7 +143,7 @@
             },
             "id": {
                 "root": "1.2.752.129.2.1.2.1",
-                "extension": "6"
+                "extension": "3"
             },
             "forekomst": true
         },
@@ -171,7 +171,7 @@
             },
             "id": {
                 "root": "1.2.752.129.2.1.2.1",
-                "extension": "7"
+                "extension": "4"
             },
             "forekomst": false
         },
@@ -382,24 +382,24 @@
     ],
     "observationAktivitetRelationer" : [
         {
-	    	"observationsid" : {
-	    		"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "6"
+            "observationsid" : {
+                "root" : "1.2.752.129.2.1.2.1",
+                "extension" : "3"
             },
-	        "aktivitetsid" : {
-	        	"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "6"
-        	}  
-      	},
-      	{
-      		"observationsid" : {
-	    		"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "7"
+            "aktivitetsid" : {
+                "root" : "1.2.752.129.2.1.2.1",
+                "extension" : "1"
+            }
+        },
+        {
+            "observationsid" : {
+                "root" : "1.2.752.129.2.1.2.1",
+                "extension" : "4"
             },
-	        "aktivitetsid" : {
-	        	"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "7"
-        	}  
-      	}
+            "aktivitetsid" : {
+                "root" : "1.2.752.129.2.1.2.1",
+                "extension" : "2"
+            }
+        }
     ]
 }

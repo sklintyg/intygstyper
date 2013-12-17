@@ -3,6 +3,7 @@ package se.inera.certificate.modules.ts_bas.validator;
 import java.util.Iterator;
 import java.util.List;
 
+import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.ts_bas.model.codes.AktivitetKod;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
@@ -17,11 +18,14 @@ public class AktiviteterValidationInstance extends ExternalValidatorInstance {
     private static final Kod AKT_AKT14 = CodeConverter.toKod(AktivitetKod.PROVTAGNING_ALKOHO_NARKOTIKA);
     private static final Kod AKT_AKT19 = CodeConverter.toKod(AktivitetKod.VARD_PA_SJUKHUS);
 
-    public AktiviteterValidationInstance(List<String> validationErrors) {
+    private final List<Aktivitet> aktiviteter;
+
+    public AktiviteterValidationInstance(List<String> validationErrors, List<Aktivitet> aktiviteter) {
         super(validationErrors);
+        this.aktiviteter = aktiviteter;
     }
 
-    public void validateAktiviteter(List<Aktivitet> aktiviteter) {
+    public void validateAktiviteter() {
         Iterable<Kod> kodList = new AktiviteterIterable(aktiviteter);
         assertKodCountBetween(kodList, AKT_86944008, 1, 1, "aktiviteter");
         assertKodCountBetween(kodList, AKT_AKT18, 1, 1, "aktiviteter");
@@ -87,6 +91,26 @@ public class AktiviteterValidationInstance extends ExternalValidatorInstance {
                 assertNull(aktivitet.getMetod(), entity + ".metod");
             }
         }
+    }
+
+    public Aktivitet getAktivitetWithKod(Kod aktivitetskod) {
+        for (Aktivitet aktivitet : aktiviteter) {
+            if (aktivitetskod.equals(aktivitet.getAktivitetskod())) {
+                return aktivitet;
+            }
+        }
+
+        return null;
+    }
+
+    public Aktivitet getAktivitetWithId(Id id) {
+        for (Aktivitet aktivitet : aktiviteter) {
+            if (id.equals(aktivitet.getId())) {
+                return aktivitet;
+            }
+        }
+
+        return null;
     }
 
     private static class AktiviteterIterable implements Iterable<Kod> {
