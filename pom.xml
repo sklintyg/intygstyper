@@ -14,12 +14,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.inera.certificate.modules</groupId>
   <artifactId>certificates</artifactId>
-  <version>1.0.7-SNAPSHOT</version>
+  <version>1.0.7</version>
   <packaging>pom</packaging>
   <name>Inera Certificate Modules</name>
   <scm>
     <connection>scm:git:https://code.google.com/p/inera-certificate-modules/</connection>
-    <tag>certificate-modules-1.0-RB</tag>
+    <tag>certificates-1.0.7</tag>
   </scm>
   <distributionManagement>
     <repository>
@@ -282,12 +282,12 @@
       <dependency>
         <groupId>se.inera.certificate</groupId>
         <artifactId>module-api</artifactId>
-        <version>1.0.7-SNAPSHOT</version>
+        <version>1.0.7</version>
       </dependency>
       <dependency>
         <groupId>se.inera.certificate</groupId>
         <artifactId>model</artifactId>
-        <version>1.0.7-SNAPSHOT</version>
+        <version>1.0.7</version>
       </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
