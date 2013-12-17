@@ -25,8 +25,8 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
 
     private final List<Observation> observationer;
 
-    public ObservationerValidationInstance(List<String> validationErrors, List<Observation> observationer) {
-        super(validationErrors);
+    public ObservationerValidationInstance(ExternalValidatorInstance prototype, List<Observation> observationer) {
+        super(prototype.validationErrors, prototype.context);
         this.observationer = observationer;
     }
 

@@ -45,6 +45,8 @@ public class ExternalValidatorInstance {
 
     protected final List<String> validationErrors;
 
+    protected ValidationContext context;
+
     private AktiviteterValidationInstance aktivitetInstance;
     private ObservationerValidationInstance observationInstance;
     private RekommendationerValidationInstance rekommendationInstance;
@@ -64,15 +66,16 @@ public class ExternalValidatorInstance {
         validationErrors = new ArrayList<>();
     }
 
-    /* package */ExternalValidatorInstance(List<String> validationErrors) {
+    /* package */ExternalValidatorInstance(List<String> validationErrors, ValidationContext context) {
         this.validationErrors = validationErrors;
+        this.context = context;
     }
 
     public List<String> validate(Utlatande utlatande) {
-        aktivitetInstance = new AktiviteterValidationInstance(validationErrors, utlatande.getAktiviteter());
-        observationInstance = new ObservationerValidationInstance(validationErrors, utlatande.getObservationer());
-        rekommendationInstance = new RekommendationerValidationInstance(validationErrors,
-                utlatande.getRekommendationer());
+        context = new ValidationContext(utlatande);
+        aktivitetInstance = new AktiviteterValidationInstance(this, utlatande.getAktiviteter());
+        observationInstance = new ObservationerValidationInstance(this, utlatande.getObservationer());
+        rekommendationInstance = new RekommendationerValidationInstance(this, utlatande.getRekommendationer());
 
         validateUtlatande(utlatande);
         validatePatient(utlatande.getPatient());

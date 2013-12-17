@@ -20,8 +20,8 @@ public class AktiviteterValidationInstance extends ExternalValidatorInstance {
 
     private final List<Aktivitet> aktiviteter;
 
-    public AktiviteterValidationInstance(List<String> validationErrors, List<Aktivitet> aktiviteter) {
-        super(validationErrors);
+    public AktiviteterValidationInstance(ExternalValidatorInstance prototype, List<Aktivitet> aktiviteter) {
+        super(prototype.validationErrors, prototype.context);
         this.aktiviteter = aktiviteter;
     }
 
