@@ -21,7 +21,9 @@ public class ValidationContext {
         for (Observation observation : utlatande.getObservationer()) {
             Kod observationskod = observation.getObservationskod();
             if (observationskod != null && observationskod.equals(KOD_HAR_DIABETES)) {
-                return true;
+                if (observation.getForekomst() != null) {
+                    return observation.getForekomst();
+                }
             }
         }
         return false;

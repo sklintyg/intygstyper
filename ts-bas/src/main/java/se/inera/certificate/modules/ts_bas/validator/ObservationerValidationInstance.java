@@ -67,17 +67,6 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
                         assertNotNull(observation.getBeskrivning(), entity + ".beskrivning");
                     }
                 }
-            } else if (observation.getObservationskod().equals(OBS_73211009)) {
-                // Check if patient has diabetes
-                hasDiabetes = observation.getForekomst() != null ? observation.getForekomst() : false;
-
-            } else if (observation.getObservationskod().equals(OBS_E10)
-                    || observation.getObservationskod().equals(OBS_E11)) {
-                // Diabetes type 1 or 2 ?
-                if (observation.getForekomst() != null) {
-                    diabetesTyp = observation;
-                    msg = entity + ".diabetes type";
-                }
 
             } else if (observation.getObservationskod().equals(OBS_OBS7)) {
                 // Check OBS7 (Riskfaktor för stroke)
@@ -86,6 +75,7 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
                         assertNotNull(observation.getBeskrivning(), entity + ".beskrivning");
                     }
                 }
+
             } else if (observation.getObservationskod().equals(OBS_G40_9)) {
                 // Check OBS4 (Sjukdom som påverkar och medför att fordon inte kan köras på trafiksäkert sätt)
                 if (assertNotNull(observation.getForekomst(), entity + ".förekomst").success()) {
@@ -97,11 +87,15 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
 
             // TODO: Check all other observations here
         }
-        // If the diabetes flag is set, assert that an observation of the type of diabetes is supplied
-        if (hasDiabetes) {
-            assertNotNull(diabetesTyp, msg);
-        }
 
+        // If the diabetes flag is set, assert that an observation of the type of diabetes is supplied
+        if (context.isDiabetesContext()) {
+            Observation diabetesTyp1 = getObservationWithKod(OBS_E10); 
+            Observation diabetesTyp2 = getObservationWithKod(OBS_E11);
+            if (diabetesTyp1 == null && diabetesTyp2 == null) {
+                validationError("observation E10 or E11 must be present when observation 73211009 exitst");
+            }
+        }
     }
 
     public Observation getObservationWithKod(Kod observationskod) {
