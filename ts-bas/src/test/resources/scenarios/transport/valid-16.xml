@@ -117,6 +117,12 @@
   </p:observation>
 
   <p:observation>
+    <p:observationskod code="OBS2" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <p:observation>
     <p:observationsid root="1.2.752.129.2.1.2.1"
       extension="4" />
     <p:observationskod code="H53.2" codeSystem="1.2.752.116.1.1.1.1.1"
@@ -134,24 +140,43 @@
   <p:observation>
     <p:observationskod code="420050001" codeSystem="1.2.752.116.2.1.1.1"
       codeSystemName="SNOMED-CT" />
-    <p:lateralitet code="hoger" codeSystem="lateralitet.changeme.please" />
+    <p:lateralitet code="24028007" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
     <p:varde value="0.0" />
   </p:observation>
 
   <p:observation>
     <p:observationskod code="420050001" codeSystem="1.2.752.116.2.1.1.1"
       codeSystemName="SNOMED-CT" />
-    <p:lateralitet code="vanster" codeSystem="lateralitet.changeme.please" />
+    <p:lateralitet code="7771000" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
     <p:varde value="0.0" />
   </p:observation>
 
   <p:observation>
     <p:observationskod code="420050001" codeSystem="1.2.752.116.2.1.1.1"
       codeSystemName="SNOMED-CT" />
-    <p:lateralitet code="binokulart" codeSystem="lateralitet.changeme.please" />
+    <p:lateralitet code="51440002" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
     <p:varde value="0.0" />
   </p:observation>
 
+  <!-- Kontaktlinser -->
+  <p:observation>
+    <p:observationskod code="285049007" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
+    <p:forekomst>false</p:forekomst>
+    <p:lateralitet code="24028007" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
+  </p:observation>
+
+  <p:observation>
+    <p:observationskod code="285049007" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
+    <p:forekomst>false</p:forekomst>
+    <p:lateralitet code="7771000" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
+  </p:observation>
   <!-- Hörsel och balanssinne (4.1 - 4.2 -->
   <p:observation>
     <p:observationskod code="OBS3" codeSystem="to-come"
@@ -168,6 +193,12 @@
   <!-- Rörelseorganens funktion (5.1) -->
   <p:observation>
     <p:observationskod code="OBS5" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <p:observation>
+    <p:observationskod code="OBS6" codeSystem="to-come"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
@@ -244,6 +275,12 @@
   <!-- Alkohol, narkotika och läkemedel (13.1 - 13.2) -->
   <p:observation>
     <p:observationskod code="OBS13" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <p:observation>
+    <p:observationskod code="OBS15" codeSystem="to-come"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>

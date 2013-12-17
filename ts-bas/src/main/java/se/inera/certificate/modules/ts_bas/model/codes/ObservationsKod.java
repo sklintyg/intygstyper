@@ -30,6 +30,9 @@ public enum ObservationsKod implements CodeSystem {
 
     /** Synskärpa, med glasögon (408333000) */
     SYNSKARPA_GLASOGON("408333000", "Synskärpa, med glasögon", SNOMED_CT),
+    
+    /** Kontaktlinser (285049007) */
+    KONTAKTLINSER("285049007", "Kontaktlinser", SNOMED_CT),
 
     /** Överraskande anfall av balansrubbningningar eller yrsel (OBS2) */
     ANFALL_BALANSRUBBNING_YRSEL("OBS2", "Överraskande anfall av balansrubbningningar eller yrsel", OBSERVATIONER),

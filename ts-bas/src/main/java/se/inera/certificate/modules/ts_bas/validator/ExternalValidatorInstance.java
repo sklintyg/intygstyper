@@ -19,6 +19,7 @@
 package se.inera.certificate.modules.ts_bas.validator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import se.inera.certificate.model.Id;
@@ -212,7 +213,13 @@ public class ExternalValidatorInstance {
     }
 
     protected AssertionResult assertNull(Object value, String element) {
-        if (value != null) {
+        if (value instanceof Collection<?>) {
+            if (!((Collection<?>)value).isEmpty()) {
+                validationError(element + " should not be empty");
+                return AssertionResult.FAILURE;
+                
+            }
+        } else if (value != null) {
             validationError(element + " should not be defined");
             return AssertionResult.FAILURE;
         }

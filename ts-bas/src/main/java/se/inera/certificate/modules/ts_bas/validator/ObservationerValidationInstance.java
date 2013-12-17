@@ -14,11 +14,32 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
     private static final Kod OBS_H53_4 = CodeConverter.toKod(ObservationsKod.SYNFALTSDEFEKTER);
     private static final Kod OBS_H53_6 = CodeConverter.toKod(ObservationsKod.NATTBLINDHET);
     private static final Kod OBS_OBS1 = CodeConverter.toKod(ObservationsKod.PROGRESIV_OGONSJUKDOM);
+    private static final Kod OBS_OBS2 = CodeConverter.toKod(ObservationsKod.ANFALL_BALANSRUBBNING_YRSEL);
+    private static final Kod OBS_OBS3 = CodeConverter.toKod(ObservationsKod.SVARIGHET_SAMTAL_4M);
     private static final Kod OBS_OBS4 = CodeConverter.toKod(ObservationsKod.FORSAMRAD_RORLIGHET_FRAMFORA_FORDON);
+    private static final Kod OBS_OBS6 = CodeConverter.toKod(ObservationsKod.HJART_KARLSJUKDOM_TRAFIKSAKERHETSRISK);
     private static final Kod OBS_OBS7 = CodeConverter.toKod(ObservationsKod.RISKFAKTORER_STROKE);
+    private static final Kod OBS_OBS8 = CodeConverter.toKod(ObservationsKod.TECKEN_PA_HJARNSKADA);
+    private static final Kod OBS_OBS9 = CodeConverter.toKod(ObservationsKod.DIABETIKER_KOSTBEHANDLING);
+    private static final Kod OBS_OBS10 = CodeConverter.toKod(ObservationsKod.NEDSATT_NJURFUNKTION_TRAFIKSAKERHETSRISK);
+    private static final Kod OBS_OBS11 = CodeConverter.toKod(ObservationsKod.SVIKTANDE_KOGNITIV_FUNKTION);
+    private static final Kod OBS_OBS12 = CodeConverter.toKod(ObservationsKod.SOMN_VAKENHETSSTORNING);
+    private static final Kod OBS_OBS13 = CodeConverter.toKod(ObservationsKod.TECKEN_PA_MISSBRUK);
+    private static final Kod OBS_OBS15 = CodeConverter.toKod(ObservationsKod.LAKEMEDELSANVANDNING_TRAFIKSAKERHETSRISK);
+    private static final Kod OBS_OBS16 = CodeConverter.toKod(ObservationsKod.PSYKISK_SJUKDOM);
+    private static final Kod OBS_OBS17 = CodeConverter.toKod(ObservationsKod.ADHD_DAMP_MM);
+    private static final Kod OBS_OBS18 = CodeConverter.toKod(ObservationsKod.STADIGVARANDE_MEDICINERING);
+
+    private static final Kod OBS_170746006 = CodeConverter.toKod(ObservationsKod.DIABETIKER_INSULINBEHANDLING);
+    private static final Kod OBS_170746002 = CodeConverter.toKod(ObservationsKod.DIABETIKER_TABLETTBEHANDLING);
+    private static final Kod OBS_129104009 = CodeConverter.toKod(ObservationsKod.PSYKISK_UTVECKLINGSSTORNING);
+    private static final Kod OBS_73211009 = CodeConverter.toKod(ObservationsKod.HAR_DIABETES);
+    private static final Kod OBS_420050001 = CodeConverter.toKod(ObservationsKod.EJ_KORRIGERAD_SYNSKARPA);
+    private static final Kod OBS_397535007 = CodeConverter.toKod(ObservationsKod.KORRIGERAD_SYNSKARPA);
+    private static final Kod OBS_285049007 = CodeConverter.toKod(ObservationsKod.KONTAKTLINSER);
+
     private static final Kod OBS_H53_2 = CodeConverter.toKod(ObservationsKod.DIPLOPI);
     private static final Kod OBS_H55_9 = CodeConverter.toKod(ObservationsKod.NYSTAGMUS_MM);
-    private static final Kod OBS_73211009 = CodeConverter.toKod(ObservationsKod.HAR_DIABETES);
     private static final Kod OBS_E10 = CodeConverter.toKod(ObservationsKod.DIABETES_TYP_1);
     private static final Kod OBS_E11 = CodeConverter.toKod(ObservationsKod.DIABETES_TYP_2);
     private static final Kod OBS_G40_9 = CodeConverter.toKod(ObservationsKod.EPILEPSI);
@@ -32,21 +53,37 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
 
     public void validateObservationer() {
 
-        boolean hasDiabetes = false;
-        Observation diabetesTyp = null;
-        String msg = null;
         Iterable<Kod> kodList = new ObservationerIterable(observationer);
 
         assertKodCountBetween(kodList, OBS_H53_4, 1, 1, "observationer");
         assertKodCountBetween(kodList, OBS_H53_6, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS1, 1, 1, "observationer");
         assertKodCountBetween(kodList, OBS_H53_2, 1, 1, "observationer");
         assertKodCountBetween(kodList, OBS_H55_9, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_73211009, 0, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS4, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS7, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_G40_9, 1, 1, "observationer");
 
+        assertKodCountBetween(kodList, OBS_OBS1, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS2, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS3, 0, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS4, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS6, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS7, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS8, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS9, 0, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS10, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS11, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS12, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS13, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS16, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS17, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS18, 1, 1, "observationer");
+
+        assertKodCountBetween(kodList, OBS_129104009, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_73211009, 0, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_285049007, 2, 2, "observationer");
+        assertKodCountBetween(kodList, OBS_397535007, 0, 3, "observationer");
+        assertKodCountBetween(kodList, OBS_420050001, 3, 3, "observationer");
+
+        assertKodCountBetween(kodList, OBS_G40_9, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS15, 1, 1, "observationer");
         // TODO: Count all other observations here
 
         for (Observation observation : observationer) {
@@ -57,8 +94,81 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
                 assertNotNull(observation.getForekomst(), entity + ".förekomst");
                 assertNotNull(observation.getId(), entity + ".observationsid");
 
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
+
             } else if (observation.getObservationskod().equals(OBS_H53_6)) {
                 assertNotNull(observation.getForekomst(), entity + ".förekomst");
+
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
+
+            } else if (observation.getObservationskod().equals(OBS_285049007)) {
+                assertNotNull(observation.getForekomst(), entity + ".förekomst");
+                assertNotNull(observation.getLateralitet(), entity + ".lateralitet");
+
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
+
+            } else if (observation.getObservationskod().equals(OBS_397535007)) {
+                assertNotNull(observation.getForekomst(), entity + ".förekomst");
+                assertNotNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNotNull(observation.getVarde(), entity + ".varde");
+
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+
+            } else if (observation.getObservationskod().equals(OBS_420050001)) {
+                assertNotNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNotNull(observation.getVarde(), entity + ".varde");
+                
+                assertNull(observation.getForekomst(), entity + ".förekomst");
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                
+            }  else if (observation.getObservationskod().equals(OBS_OBS1)) {
+                assertNotNull(observation.getForekomst(), entity + ".förekomst");
+
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
+
+            } else if (observation.getObservationskod().equals(OBS_OBS2)) {
+                assertNotNull(observation.getForekomst(), entity + ".förekomst");
+
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
+
+            } else if (observation.getObservationskod().equals(OBS_OBS3)) {
+                assertNotNull(observation.getForekomst(), entity + ".förekomst");
+
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
 
             } else if (observation.getObservationskod().equals(OBS_OBS4)) {
                 // Check OBS4 (Sjukdom som påverkar och medför att fordon inte kan köras på trafiksäkert sätt)
@@ -67,14 +177,118 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
                         assertNotNull(observation.getBeskrivning(), entity + ".beskrivning");
                     }
                 }
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
+
+            } else if (observation.getObservationskod().equals(OBS_OBS6)) {
+                assertNotNull(observation.getForekomst(), entity + ".förekomst");
+
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
 
             } else if (observation.getObservationskod().equals(OBS_OBS7)) {
-                // Check OBS7 (Riskfaktor för stroke)
+                // (Riskfaktor för stroke)
                 if (assertNotNull(observation.getForekomst(), entity + ".förekomst").success()) {
                     if (observation.getForekomst()) {
                         assertNotNull(observation.getBeskrivning(), entity + ".beskrivning");
                     }
                 }
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
+
+            } else if (observation.getObservationskod().equals(OBS_OBS8)) {
+                assertNotNull(observation.getForekomst(), entity + ".förekomst");
+
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
+
+            }
+            // Diabetes treatment related
+            else if (observation.getObservationskod().equals(OBS_OBS9)) {
+                assertNotNull(observation.getForekomst(), entity + ".förekomst");
+
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
+
+            } else if (observation.getObservationskod().equals(OBS_170746002)) {
+                assertNotNull(observation.getForekomst(), entity + ".förekomst");
+
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
+
+            } else if (observation.getObservationskod().equals(OBS_170746006)) {
+                assertNotNull(observation.getForekomst(), entity + ".förekomst");
+
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
+
+            }
+            // Diabetes related end
+            else if (observation.getObservationskod().equals(OBS_OBS10)) {
+                assertNotNull(observation.getForekomst(), entity + ".förekomst");
+
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
+
+            } else if (observation.getObservationskod().equals(OBS_OBS11)) {
+                assertNotNull(observation.getForekomst(), entity + ".förekomst");
+
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
+
+            } else if (observation.getObservationskod().equals(OBS_OBS12)) {
+                assertNotNull(observation.getForekomst(), entity + ".förekomst");
+
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
+
+            } else if (observation.getObservationskod().equals(OBS_OBS13)) {
+                assertNotNull(observation.getForekomst(), entity + ".förekomst");
+
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
 
             } else if (observation.getObservationskod().equals(OBS_G40_9)) {
                 // Check OBS4 (Sjukdom som påverkar och medför att fordon inte kan köras på trafiksäkert sätt)
@@ -83,17 +297,51 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
                         assertNotNull(observation.getBeskrivning(), entity + ".beskrivning");
                     }
                 }
-            }
 
+            } else if (observation.getObservationskod().equals(OBS_G40_9)) {
+                // Check OBS4 (Sjukdom som påverkar och medför att fordon inte kan köras på trafiksäkert sätt)
+
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
+
+            } else if (observation.getObservationskod().equals(OBS_OBS15)) {
+                if (assertNotNull(observation.getForekomst(), entity + ".förekomst").success()) {
+                    if (observation.getForekomst()) {
+                        assertNotNull(observation.getBeskrivning(), entity + ".beskrivning");
+                    }
+                }
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
+
+            }
             // TODO: Check all other observations here
         }
 
         // If the diabetes flag is set, assert that an observation of the type of diabetes is supplied
         if (context.isDiabetesContext()) {
-            Observation diabetesTyp1 = getObservationWithKod(OBS_E10); 
+            Observation diabetesTyp1 = getObservationWithKod(OBS_E10);
             Observation diabetesTyp2 = getObservationWithKod(OBS_E11);
             if (diabetesTyp1 == null && diabetesTyp2 == null) {
                 validationError("observation E10 or E11 must be present when observation 73211009 exitst");
+            }
+
+            if (diabetesTyp1 != null && diabetesTyp2 != null) {
+                validationError("only one of E10 or E11 can be present at the same time");
+            }
+
+            if (diabetesTyp2 != null) {
+                if (assertNotNull(getObservationWithKod(OBS_170746002), ".tabletter").failed()
+                        || assertNotNull(getObservationWithKod(OBS_170746006), ".insulin").failed()
+                        || assertNotNull(getObservationWithKod(OBS_OBS9), ".insulin").failed()) {
+                    validationError("At least one treatment for diabetes type2 must be specified");
+                }
             }
         }
     }
@@ -118,7 +366,7 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
         return null;
     }
 
-    private static class ObservationerIterable implements Iterable<Kod> {
+    protected static class ObservationerIterable implements Iterable<Kod> {
         private final List<Observation> observationer;
 
         public ObservationerIterable(List<Observation> observationer) {
