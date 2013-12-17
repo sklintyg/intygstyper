@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:utlatande xmlns:p="urn:riv:clinicalprocess:healthcond:certificate:1"
+  xmlns:p1="urn:iso:21090:dt:1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="urn:riv:clinicalprocess:healthcond:certificate:1 ../../../../main/resources/schemas/transport_model.xsd ">
+
+  <p:utlatande-id root="1.2.752.129.2.1.2.1" extension="987654321" />
+
+  <p:typAvUtlatande code="TSTRK1007 (U06, V06)"
+    codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b" codeSystemName="kv_utlåtandetyp_intyg" />
+
+  <p:signeringsdatum>2013-08-12T15:57:00</p:signeringsdatum>
+
+  <p:intygAvser code="IAV3" codeSystem="todo"
+    codeSystemName="kv_intygavser_intyg" />
+
+  <p:patient>
+    <p:person-id extension="19121212-1212" root="1.2.752.129.2.1.3.1" />
+    <p:fornamn>Johnny</p:fornamn>
+    <p:efternamn>Appleseed</p:efternamn>
+    <p:postadress>Testvägen 12</p:postadress>
+    <p:postnummer>123456</p:postnummer>
+    <p:postort>Testort</p:postort>
+  </p:patient>
+
+  <p:skapadAv>
+    <p:personal-id extension="SE0000000000-1333" root="1.2.752.129.2.1.4.1" />
+    <p:fullstandigtNamn>Doktor Thompson</p:fullstandigtNamn>
+    <p:enhet>
+      <p:enhets-id extension="SE0000000000-1337" root="1.2.752.129.2.1.4.1" />
+      <p:enhetsnamn>Vårdenhet Väst</p:enhetsnamn>
+      <p:postadress>Enhetsvägen 12</p:postadress>
+      <p:postnummer>54321</p:postnummer>
+      <p:postort>Tumba</p:postort>
+      <p:telefonnummer>08-1337</p:telefonnummer>
+      <p:vardgivare>
+        <p:vardgivare-id root="1.2.752.129.2.1.4.1"
+          extension="SE0000000000-HAHAHHSAA" />
+        <p:vardgivarnamn>Vårdgivarnamn</p:vardgivarnamn>
+      </p:vardgivare>
+    </p:enhet>
+  </p:skapadAv>
+
+  <p:vardkontakt>
+    <p:vardkontakttyp code="5880005" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
+    <p:idKontroll code="IDK6" codeSystem="???"
+      codeSystemName="kv_id_kontroll" />
+  </p:vardkontakt>
+  
+<!--  AKTIVITETER -->
+  <!-- Vård på sjukhus (16.1) -->
+  <p:aktivitet>
+    <p:aktivitetskod code="AKT19"
+      codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a" codeSystemName="kv_aktiviteter_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:aktivitet>
+  
+  <!-- Vårdinsats för missbruk eller beroende av alkohol, narkotika eller läkemedel (13.2) -->
+  <p:aktivitet>
+    <p:aktivitetskod code="AKT15" codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a" codeSystemName="kv_aktiviteter_intyg"/>
+    <p:forekomst>false</p:forekomst>
+  </p:aktivitet>
+
+  <!-- Synfältsprövning (Donders konfrontationsmetod)  -->
+  <p:aktivitet>
+    <p:aktivitetsid root="1.2.752.129.2.1.2.1" extension="6"/>
+    <p:aktivitetskod code="86944008" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
+    <p:metod code="MET1" codeSystem="????" codeSystemName="kv_metod"/>
+  </p:aktivitet>
+  
+  <p:aktivitet>
+    <p:aktivitetsid root="1.2.752.129.2.1.2.1" extension="7"/>
+    <p:aktivitetskod code="AKT18" codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a" codeSystemName="kv_aktiviteter_intyg"/>
+  </p:aktivitet>
+  
+<!--  Aktiviteter end -->
+  
+  <!-- Patienten uppfyller kraven (19.1) -->
+  <p:rekommendation>
+    <p:rekommendationskod code="REK8"
+      codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
+    <p:varde code="VAR3" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg"/>
+  </p:rekommendation>
+
+  <!-- Synfunktioner (3.1 - 3.5) -->
+  <p:observation>
+    <p:observationsid root="1.2.752.129.2.1.2.1"
+      extension="6" />
+    <p:observationskod code="H53.4" codeSystem="1.2.752.116.1.1.1.1.1"
+      codeSystemName="ICD-10" />
+    <p:forekomst>true</p:forekomst>
+  </p:observation>
+
+  <!--  Begränsning av seende vid nedsatt belysning -->
+  <p:observation>
+    <p:observationskod code="H53.6" codeSystem="1.2.752.116.1.1.1.1.1"
+      codeSystemName="ICD-10" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <p:observation>
+    <p:observationskod code="OBS1" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <p:observation>
+    <p:observationsid root="1.2.752.129.2.1.2.1"
+      extension="7" />
+    <p:observationskod code="H53.2" codeSystem="1.2.752.116.1.1.1.1.1"
+      codeSystemName="ICD-10" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <p:observation>
+    <p:observationskod code="H55.9" codeSystem="1.2.752.116.1.1.1.1.1"
+      codeSystemName="ICD-10" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <!-- Synfunktion utan korrektion (3.5.1 - 3.5.3) -->
+  <p:observation>
+    <p:observationskod code="420050001" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
+    <p:lateralitet code="hoger" codeSystem="lateralitet.changeme.please" />
+    <p:varde value="0.0" />
+  </p:observation>
+
+  <p:observation>
+    <p:observationskod code="420050001" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
+    <p:lateralitet code="vanster" codeSystem="lateralitet.changeme.please" />
+    <p:varde value="0.0" />
+  </p:observation>
+
+  <p:observation>
+    <p:observationskod code="420050001" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
+    <p:lateralitet code="binokulart" codeSystem="lateralitet.changeme.please" />
+    <p:varde value="0.0" />
+  </p:observation>
+
+  <!-- Hörsel och balanssinne (4.1 - 4.2 -->
+  <p:observation>
+    <p:observationskod code="OBS3" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <p:observation>
+    <p:observationskod code="OBS4" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <!-- Rörelseorganens funktion + beskrivning  (5.1 + 5.2) -->
+  <!-- BREAKING TEST, should contain an element Beskrivning as well -->
+  <p:observation>
+    <p:observationskod code="OBS5" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>true</p:forekomst>
+  </p:observation>
+
+  <!-- Hjärt och kärlsjukdomar (6.1 - 6.3) -->
+  <p:observation>
+    <p:observationskod code="OBS7" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <p:observation>
+    <p:observationskod code="OBS9" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <p:observation>
+    <p:observationskod code="OBS8" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <!-- Diabetes (7.2) -->
+  <p:observation>
+    <p:observationskod code="E10" codeSystem="1.2.752.116.1.1.1.1.1"
+      codeSystemName="ICD-10" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <p:observation>
+    <p:observationsid root="1.2.752.129.2.1.2.1"
+      extension="diabetes2" />
+    <p:observationskod code="E11" codeSystem="1.2.752.116.1.1.1.1.1"
+      codeSystemName="ICD-10" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <!-- Neurologiska sjukdomar (8) -->
+  <p:observation>
+    <p:observationskod code="407624006" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <!-- Epilepsi etc (9.1) -->
+  <p:observation>
+    <p:observationskod code="G40.9" codeSystem="1.2.752.116.1.1.1.1.1"
+      codeSystemName="ICD-10" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <!-- Njursjukdomar (10) -->
+  <p:observation>
+    <p:observationskod code="OBS10" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <!-- Demens och kognitiva störningar (11) -->
+  <p:observation>
+    <p:observationskod code="OBS11" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <!-- Sömn- och vakenhetsstörningar (12) -->
+  <p:observation>
+    <p:observationskod code="OBS12" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <!-- Alkohol, narkotika och läkemedel (13.1 - 13.2) -->
+  <p:observation>
+    <p:observationskod code="OBS13" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <!-- Psykisk sjukdom eller störning (14) -->
+  <p:observation>
+    <p:observationskod code="OBS16" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <!-- Psykisk utvecklingsstörning (15.1) -->
+  <p:observation>
+    <p:observationskod code="129104009" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <!-- ADHD DAMP (15.2) -->
+  <p:observation>
+    <p:observationskod code="OBS17" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <!-- Stadigvarande medicinering (17.1) -->
+  <p:observation>
+    <p:observationskod code="OBS18" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+  
+  <p:observationAktivitetRelation>
+    <p:observationsid root="1.2.752.129.2.1.2.1" extension="6"/>
+    <p:aktivitetsid root="1.2.752.129.2.1.2.1" extension="6"/>
+  </p:observationAktivitetRelation>
+
+  <p:observationAktivitetRelation>
+    <p:observationsid root="1.2.752.129.2.1.2.1" extension="7"/>
+    <p:aktivitetsid root="1.2.752.129.2.1.2.1" extension="7"/>
+  </p:observationAktivitetRelation>
+  
+  
+</p:utlatande>

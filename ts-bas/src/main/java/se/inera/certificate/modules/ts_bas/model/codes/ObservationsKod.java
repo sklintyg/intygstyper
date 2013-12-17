@@ -28,49 +28,46 @@ public enum ObservationsKod implements CodeSystem {
     /** Korrigerad synskärpa (397535007) */
     KORRIGERAD_SYNSKARPA("397535007", "Korrigerad synskärpa", SNOMED_CT),
 
-    /** Synskärpa, med kontaktlins (OBS2) */
-    SYNSKARPA_KONTAKTLINS("OBS2", "Synskärpa, med kontaktlins", OBSERVATIONER),
-
     /** Synskärpa, med glasögon (408333000) */
     SYNSKARPA_GLASOGON("408333000", "Synskärpa, med glasögon", SNOMED_CT),
 
-    /** Överraskande anfall av balansrubbningningar eller yrsel (OBS3) */
-    ANFALL_BALANSRUBBNING_YRSEL("OBS3", "Överraskande anfall av balansrubbningningar eller yrsel", OBSERVATIONER),
+    /** Överraskande anfall av balansrubbningningar eller yrsel (OBS2) */
+    ANFALL_BALANSRUBBNING_YRSEL("OBS2", "Överraskande anfall av balansrubbningningar eller yrsel", OBSERVATIONER),
 
-    /** Svårigheter att uppfatta vanlig samtalsstämma på fyta meters avstånd (OBS4) */
-    SVARIGHET_SAMTAL_4M("OBS4", "Svårigheter att uppfatta vanlig samtalsstämma på fyta meters avstånd", OBSERVATIONER),
+    /** Svårigheter att uppfatta vanlig samtalsstämma på fyta meters avstånd (OBS3) */
+    SVARIGHET_SAMTAL_4M("OBS3", "Svårigheter att uppfatta vanlig samtalsstämma på fyta meters avstånd", OBSERVATIONER),
 
     /**
      * Sjukdom eller funktionsnedsättning som påverkar rörligheten så att fordon inte kan köras på ett trafiksäkert sätt
-     * (OBS5)
+     * (OBS4)
      */
     FORSAMRAD_RORLIGHET_FRAMFORA_FORDON(
-            "OBS5",
+            "OBS4",
             "Sjukdom eller funktionsnedsättning som påverkar rörligheten och som medför att fordon inte kan köras på ett trafiksäkert sätt",
             OBSERVATIONER),
 
-    /** Otillräcklig rörelseförmågan för att kunna hjälpa passagerare in och ut ur fordonet samt med bilbälte (OBS6) */
-    FORSAMRAD_RORLIGHET_HJALPA_PASSAGERARE("OBS6",
+    /** Otillräcklig rörelseförmågan för att kunna hjälpa passagerare in och ut ur fordonet samt med bilbälte (OBS5) */
+    FORSAMRAD_RORLIGHET_HJALPA_PASSAGERARE("OBS5",
             "Otillräcklig rörelseförmågan för att kunna hjälpa passagerare in och ut ur fordonet samt med bilbälte",
             OBSERVATIONER),
 
-    /** "Hjärt- och kärlsjukdom som innebär en trafiksäkerhetsrisk (OBS7) */
+    /** "Hjärt- och kärlsjukdom som innebär en trafiksäkerhetsrisk (OBS6) */
     HJART_KARLSJUKDOM_TRAFIKSAKERHETSRISK(
-            "OBS7",
+            "OBS6",
             "Hjärt- och kärlsjukdom som kan medföra en påtaglig risk för att hjärnans funktioner akut försämras eller som i övrigt innebär en trafiksäkerhetsrisk",
             OBSERVATIONER),
 
     /**
      * Riskfaktorer för stroke (tidigare stroke eller TIA, förhöjt blodtryck, förmaksflimmer eller kärlmissbildning)
-     * (OBS8)
+     * (OBS7)
      */
     RISKFAKTORER_STROKE(
-            "OBS8",
+            "OBS7",
             "Riskfaktorer för stroke (tidigare stroke eller TIA, förhöjt blodtryck, förmaksflimmer eller kärlmissbildning)",
             OBSERVATIONER),
 
-    /** Tecken på hjärnskada efter trauma, stroke eller anna sjukdom i centrala nervsystemet (OBS9) */
-    TECKEN_PA_HJARNSKADA("OBS9",
+    /** Tecken på hjärnskada efter trauma, stroke eller anna sjukdom i centrala nervsystemet (OBS8) */
+    TECKEN_PA_HJARNSKADA("OBS8",
             "Tecken på hjärnskada efter trauma, stroke eller anna sjukdom i centrala nervsystemet", OBSERVATIONER),
 
     /** Har diabetes? (73211009) */

@@ -53,9 +53,11 @@ public class ExternalValidatorTest {
 
     @Test
     public void testValidateWithErrors() throws Exception {
-        List<String> validationErrors = validator.validate(ScenarioFinder.getExternalScenario("invalid-1")
-                .asExternalModel());
+        for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {
+            List<String> validationErrors = validator.validate(scenario.asExternalModel());
 
-        assertTrue(!validationErrors.isEmpty());
+            assertTrue("Error in scenario " + scenario.getName() + "\n" + StringUtils.join(validationErrors, ", "),
+                    !validationErrors.isEmpty());
+        }
     }
 }

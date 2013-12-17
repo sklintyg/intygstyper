@@ -278,7 +278,7 @@ public class ExternalValidatorInstance {
      * result. This might be used to implement conditional logic based on if an assertion {@link #failed()} or was
      * {@link #success()}ful.
      */
-    private static enum AssertionResult {
+    protected static enum AssertionResult {
         SUCCESS(true), FAILURE(false);
 
         private AssertionResult(boolean assertSuccessfull) {
