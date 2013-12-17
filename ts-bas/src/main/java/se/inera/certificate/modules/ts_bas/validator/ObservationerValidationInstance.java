@@ -17,6 +17,7 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
     private static final Kod OBS_OBS2 = CodeConverter.toKod(ObservationsKod.ANFALL_BALANSRUBBNING_YRSEL);
     private static final Kod OBS_OBS3 = CodeConverter.toKod(ObservationsKod.SVARIGHET_SAMTAL_4M);
     private static final Kod OBS_OBS4 = CodeConverter.toKod(ObservationsKod.FORSAMRAD_RORLIGHET_FRAMFORA_FORDON);
+    private static final Kod OBS_OBS5 = CodeConverter.toKod(ObservationsKod.FORSAMRAD_RORLIGHET_HJALPA_PASSAGERARE);
     private static final Kod OBS_OBS6 = CodeConverter.toKod(ObservationsKod.HJART_KARLSJUKDOM_TRAFIKSAKERHETSRISK);
     private static final Kod OBS_OBS7 = CodeConverter.toKod(ObservationsKod.RISKFAKTORER_STROKE);
     private static final Kod OBS_OBS8 = CodeConverter.toKod(ObservationsKod.TECKEN_PA_HJARNSKADA);
@@ -64,6 +65,7 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
         assertKodCountBetween(kodList, OBS_OBS2, 1, 1, "observationer");
         assertKodCountBetween(kodList, OBS_OBS3, 0, 1, "observationer");
         assertKodCountBetween(kodList, OBS_OBS4, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS5, 0, 1, "observationer");
         assertKodCountBetween(kodList, OBS_OBS6, 1, 1, "observationer");
         assertKodCountBetween(kodList, OBS_OBS7, 1, 1, "observationer");
         assertKodCountBetween(kodList, OBS_OBS8, 1, 1, "observationer");
@@ -133,14 +135,14 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
             } else if (observation.getObservationskod().equals(OBS_420050001)) {
                 assertNotNull(observation.getLateralitet(), entity + ".lateralitet");
                 assertNotNull(observation.getVarde(), entity + ".varde");
-                
+
                 assertNull(observation.getForekomst(), entity + ".förekomst");
                 assertNull(observation.getId(), entity + ".observationsid");
                 assertNull(observation.getBeskrivning(), entity + ".beskrivning");
                 assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
                 assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
-                
-            }  else if (observation.getObservationskod().equals(OBS_OBS1)) {
+
+            } else if (observation.getObservationskod().equals(OBS_OBS1)) {
                 assertNotNull(observation.getForekomst(), entity + ".förekomst");
 
                 assertNull(observation.getId(), entity + ".observationsid");
@@ -183,7 +185,17 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
                 assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
                 assertNull(observation.getVarde(), entity + ".varde");
 
-            } else if (observation.getObservationskod().equals(OBS_OBS6)) {
+            } else if (observation.getObservationskod().equals(OBS_OBS3)) {
+                assertNotNull(observation.getForekomst(), entity + ".förekomst");
+
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
+
+            } else if (observation.getObservationskod().equals(OBS_OBS5)) {
                 assertNotNull(observation.getForekomst(), entity + ".förekomst");
 
                 assertNull(observation.getId(), entity + ".observationsid");
@@ -337,11 +349,21 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
             }
 
             if (diabetesTyp2 != null) {
-                if (assertNotNull(getObservationWithKod(OBS_170746002), ".tabletter").failed()
-                        || assertNotNull(getObservationWithKod(OBS_170746006), ".insulin").failed()
-                        || assertNotNull(getObservationWithKod(OBS_OBS9), ".insulin").failed()) {
+                Observation treatmentTablett = getObservationWithKod(OBS_170746002);
+                Observation treatmentInsulin = getObservationWithKod(OBS_170746006);
+                Observation treatmentKost = getObservationWithKod(OBS_OBS9);
+                if (treatmentTablett == null && treatmentInsulin == null && treatmentKost == null) {
                     validationError("At least one treatment for diabetes type2 must be specified");
                 }
+            }
+        }
+
+        // If the persontransport flag is set, assert required observations are supplied
+        if (context.isPersontransportContext()) {
+            Observation rorelseformaga = getObservationWithKod(OBS_OBS5);
+
+            if (rorelseformaga == null) {
+                validationError("observation OBS5 must be present when intygAvser contains any of [D1, D1E, D, DE, or TAXI]");
             }
         }
     }

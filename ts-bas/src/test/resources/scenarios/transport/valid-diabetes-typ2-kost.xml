@@ -238,23 +238,10 @@
   <p:observation>
     <p:observationskod code="OBS9" codeSystem="to-come"
       codeSystemName="kv_observationer_intyg" />
-    <p:forekomst>false</p:forekomst>
-  </p:observation>
-
-  <!-- behandling av diabetes: tabletter -->
-  <p:observation>
-    <p:observationskod code="170746002" codeSystem="1.2.752.116.2.1.1.1"
-      codeSystemName="SNOMED-CT" />
-    <p:forekomst>false</p:forekomst>
-  </p:observation>
-
-  <!-- behandling av diabetes: insulin -->
-  <p:observation>
-    <p:observationskod code="170747006" codeSystem="1.2.752.116.2.1.1.1"
-      codeSystemName="SNOMED-CT" />
     <p:forekomst>true</p:forekomst>
   </p:observation>
 
+ 
 
   <!-- Neurologiska sjukdomar (8) -->
   <p:observation>
