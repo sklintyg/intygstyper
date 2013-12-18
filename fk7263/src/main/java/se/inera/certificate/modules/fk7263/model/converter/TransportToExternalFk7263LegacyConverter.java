@@ -153,16 +153,20 @@ public final class TransportToExternalFk7263LegacyConverter {
     private static Referens convert(
             se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ReferensType source) {
         Referens referens = new Referens();
-
-        switch (source.getReferenstyp()) {
-        case JOURNALUPPGIFTER:
-            referens.setReferenstyp(Referenstypkoder.JOURNALUPPGIFT);
-            break;
-        case ANNAT:
-            referens.setReferenstyp(Referenstypkoder.ANNAT);
-            break;
-        default:
-            throw new IllegalArgumentException("Unknown ReferensType: " + source.getReferenstyp());
+        if (source == null) {
+            return null;
+        }
+        if (source.getReferenstyp() != null) {
+            switch (source.getReferenstyp()) {
+            case JOURNALUPPGIFTER:
+                referens.setReferenstyp(Referenstypkoder.JOURNALUPPGIFT);
+                break;
+            case ANNAT:
+                referens.setReferenstyp(Referenstypkoder.ANNAT);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown ReferensType: " + source.getReferenstyp());
+            }
         }
         referens.setDatum(source.getDatum());
         return referens;
@@ -338,25 +342,27 @@ public final class TransportToExternalFk7263LegacyConverter {
     private static Fk7263Observation convert(ArbetsformagaNedsattningType source) {
         Fk7263Observation nedsattning = new Fk7263Observation();
         nedsattning.setObservationskod(ObservationsKoder.ARBETSFORMAGA);
-
-        PhysicalQuantity varde = new PhysicalQuantity();
-        varde.setUnit("percent");
-        switch (source.getNedsattningsgrad()) {
-        case HELT_NEDSATT:
-            varde.setQuantity(0.0);
-            break;
-        case NEDSATT_MED_3_4:
-            varde.setQuantity(25.0);
-            break;
-        case NEDSATT_MED_1_2:
-            varde.setQuantity(50.0);
-            break;
-        case NEDSATT_MED_1_4:
-            varde.setQuantity(75.0);
-            break;
+        if (source.getNedsattningsgrad() != null) {
+            PhysicalQuantity varde = new PhysicalQuantity();
+            varde.setUnit("percent");
+            switch (source.getNedsattningsgrad()) {
+            case HELT_NEDSATT:
+                varde.setQuantity(0.0);
+                break;
+            case NEDSATT_MED_3_4:
+                varde.setQuantity(25.0);
+                break;
+            case NEDSATT_MED_1_2:
+                varde.setQuantity(50.0);
+                break;
+            case NEDSATT_MED_1_4:
+                varde.setQuantity(75.0);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown Nedsattningsgrad: " + source.getNedsattningsgrad());
+            }
+            nedsattning.getVarde().add(varde);
         }
-        nedsattning.getVarde().add(varde);
-
         LocalDateInterval observationsperiod = new LocalDateInterval();
         if (source.getVaraktighetFrom() != null) {
             observationsperiod.setFrom(source.getVaraktighetFrom());
@@ -424,17 +430,19 @@ public final class TransportToExternalFk7263LegacyConverter {
             return null;
         }
         Fk7263Patient patient = new Fk7263Patient();
-        patient.setId(IsoTypeConverter.toId(source.getPersonId()));
-        // If the personNumber is missing the separating dash, simply insert it.
-        // This is a temporary fix, since the schema currently allows any format
-        String personNumber = patient.getId().getExtension();
-        if (personNumber.length() == 12 && Pattern.matches(PERSON_NUMBER_WITHOUT_DASH_REGEX, personNumber)) {
-            patient.getId().setExtension(personNumber.substring(0, 8) + "-" + personNumber.substring(8));
-            LOGGER.warn(LogMarkers.VALIDATION, "Validation failed for intyg " + lakarutlatande.getLakarutlatandeId()
-                    + " issued by " + lakarutlatande.getSkapadAvHosPersonal().getEnhet().getEnhetsId().getExtension()
-                    + ": Person-id is lacking a separating dash - corrected.");
+        if (source.getPersonId() != null) {
+            patient.setId(IsoTypeConverter.toId(source.getPersonId()));
+            // If the personNumber is missing the separating dash, simply insert it.
+            // This is a temporary fix, since the schema currently allows any format
+            String personNumber = patient.getId().getExtension();
+            if (personNumber.length() == 12 && Pattern.matches(PERSON_NUMBER_WITHOUT_DASH_REGEX, personNumber)) {
+                patient.getId().setExtension(personNumber.substring(0, 8) + "-" + personNumber.substring(8));
+                LOGGER.warn(LogMarkers.VALIDATION,
+                        "Validation failed for intyg " + lakarutlatande.getLakarutlatandeId() + " issued by "
+                                + lakarutlatande.getSkapadAvHosPersonal().getEnhet().getEnhetsId().getExtension()
+                                + ": Person-id is lacking a separating dash - corrected.");
+            }
         }
-
         // we only have fullstandigt namn available in the legacy jaxb
         patient.setEfternamn(source.getFullstandigtNamn());
         return patient;
