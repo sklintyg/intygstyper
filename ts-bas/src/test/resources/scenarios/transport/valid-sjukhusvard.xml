@@ -190,12 +190,6 @@
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
-  <!-- Rörelseorganens funktion (5.1) -->
-  <p:observation>
-    <p:observationskod code="OBS5" codeSystem="to-come"
-      codeSystemName="kv_observationer_intyg" />
-    <p:forekomst>false</p:forekomst>
-  </p:observation>
 
   <p:observation>
     <p:observationskod code="OBS6" codeSystem="to-come"

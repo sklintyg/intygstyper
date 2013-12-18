@@ -184,12 +184,6 @@
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
-  <!-- Rörelseorganens funktion (5.1) -->
-  <p:observation>
-    <p:observationskod code="OBS5" codeSystem="to-come"
-      codeSystemName="kv_observationer_intyg" />
-    <p:forekomst>false</p:forekomst>
-  </p:observation>
 
   <!-- Hjärt- och kärlsjukdom som innebär en trafiksäkerhetsrisk (OBS6) -->
   <p:observation>

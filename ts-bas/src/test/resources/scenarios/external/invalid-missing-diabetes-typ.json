@@ -89,7 +89,7 @@
         {
         	"id" : {
         		"root" : "1.2.752.129.2.1.2.1",
-        		"extension" : "6"
+        		"extension" : "1"
         	},
             "aktivitetskod": {
                 "codeSystem": "1.2.752.116.2.1.1.1",
@@ -105,7 +105,7 @@
         {
            	"id" : {
         		"root" : "1.2.752.129.2.1.2.1",
-        		"extension" : "7"
+        		"extension" : "2"
         	},
             "aktivitetskod": {
                 "codeSystem": "8040b4d1-67dc-42e1-a938-de5374e9526a",
@@ -138,7 +138,7 @@
             },
             "id": {
                 "root": "1.2.752.129.2.1.2.1",
-                "extension": "6"
+                "extension": "3"
             },
             "forekomst": true
         },
@@ -166,7 +166,7 @@
             },
             "id": {
                 "root": "1.2.752.129.2.1.2.1",
-                "extension": "7"
+                "extension": "4"
             },
             "forekomst": false
         },
@@ -364,21 +364,21 @@
         {
 	    	"observationsid" : {
 	    		"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "6"
+	            "extension" : "3"
             },
 	        "aktivitetsid" : {
 	        	"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "6"
+	            "extension" : "1"
         	}  
       	},
       	{
       		"observationsid" : {
 	    		"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "7"
+	            "extension" : "4"
             },
 	        "aktivitetsid" : {
 	        	"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "7"
+	            "extension" : "2"
         	}  
       	}
     ]

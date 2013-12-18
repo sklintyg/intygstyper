@@ -125,8 +125,11 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
             } else if (observation.getObservationskod().equals(OBS_397535007)) {
                 assertNotNull(observation.getForekomst(), entity + ".förekomst");
                 assertNotNull(observation.getLateralitet(), entity + ".lateralitet");
-                assertNotNull(observation.getVarde(), entity + ".varde");
-
+                if (assertNotNull(observation.getVarde(), entity + ".varde").success()) {
+                    if (observation.getVarde().get(0).getQuantity() < 0.0 || observation.getVarde().get(0).getQuantity() > 2.0) {
+                        validationError("Varde for synskarpa med korrektion must be in the interval 0.0 <= X <= 2.0");
+                    }
+                }
                 assertNull(observation.getId(), entity + ".observationsid");
                 assertNull(observation.getBeskrivning(), entity + ".beskrivning");
                 assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
@@ -134,7 +137,11 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
 
             } else if (observation.getObservationskod().equals(OBS_420050001)) {
                 assertNotNull(observation.getLateralitet(), entity + ".lateralitet");
-                assertNotNull(observation.getVarde(), entity + ".varde");
+                if (assertNotNull(observation.getVarde(), entity + ".varde").success()) {
+                    if (observation.getVarde().get(0).getQuantity() < 0.0 || observation.getVarde().get(0).getQuantity() > 2.0) {
+                        validationError("Varde for synskarpa utan korrektion must be in the interval 0.0 <= X <= 2.0");
+                    }
+                }
 
                 assertNull(observation.getForekomst(), entity + ".förekomst");
                 assertNull(observation.getId(), entity + ".observationsid");
@@ -347,7 +354,8 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
             if (diabetesTyp1 != null && diabetesTyp2 != null) {
                 validationError("only one of E10 or E11 can be present at the same time");
             }
-
+            
+            //Also determine a treatment is specified if type2 diabetes is confirmed
             if (diabetesTyp2 != null) {
                 Observation treatmentTablett = getObservationWithKod(OBS_170746002);
                 Observation treatmentInsulin = getObservationWithKod(OBS_170746006);

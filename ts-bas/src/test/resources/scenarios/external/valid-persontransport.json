@@ -13,8 +13,14 @@
         {
             "codeSystem": "todo",
             "codeSystemName": "kv_intygavser_intyg",
+            "code": "IAV9"
+        },
+        {
+            "codeSystem": "todo",
+            "codeSystemName": "kv_intygavser_intyg",
             "code": "IAV3"
         }
+        
     ],
     "patient": {
         "id": {
@@ -215,10 +221,10 @@
                 }
             ],
             "lateralitet": {
-        		"codeSystem": "1.2.752.116.2.1.1.1",
-        		"codeSystemName": "SNOMED-CT",
-        		"code": "7771000"
-        	}
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "7771000"
+            }
         },
         {
             "observationskod": {
@@ -232,10 +238,10 @@
                 }
             ],
             "lateralitet": {
-        		"codeSystem": "1.2.752.116.2.1.1.1",
-        		"codeSystemName": "SNOMED-CT",
-        		"code": "51440002"
-        	}
+            	"codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+            	"code": "51440002"
+            }
         },
         {
             "observationskod": {
@@ -279,7 +285,14 @@
             },
             "forekomst": false
         },
-
+        {
+            "observationskod": {
+                "codeSystem": "to-come",
+                "codeSystemName": "kv_observationer_intyg",
+                "code": "OBS5"
+            },
+            "forekomst": false
+        },
         {
             "observationskod": {
                 "codeSystem": "to-come",
@@ -288,6 +301,7 @@
             },
             "forekomst": false
         },
+
         {
             "observationskod": {
                 "codeSystem": "to-come",
@@ -296,7 +310,14 @@
             },
             "forekomst": false
         },
-       
+        {
+            "observationskod": {
+                "codeSystem": "to-come",
+                "codeSystemName": "kv_observationer_intyg",
+                "code": "OBS9"
+            },
+            "forekomst": false
+        },
         {
             "observationskod": {
                 "codeSystem": "to-come",
@@ -305,14 +326,13 @@
             },
             "forekomst": false
         },
-        
         {
-        	"observationskod" : {
-        		"code" : "73211009",
-        		"codeSystem" : "1.2.752.116.2.1.1.1",
-        		"codeSystemName" : "SNOMED-CT"
-        	},
-        	"forekomst" : true
+            "observationskod": {
+                "codeSystem": "1.2.752.116.1.1.1.1.1",
+                "codeSystemName": "ICD-10",
+                "code": "E10"
+            },
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -320,30 +340,12 @@
                 "codeSystemName": "ICD-10",
                 "code": "E11"
             },
-            "forekomst": true
-        },
-        
-        {
-            "observationskod": {
-                "codeSystem": "1.2.752.116.2.1.1.1",
-                "codeSystemName": "SNOMED-CT",
-                "code": "170745003"
+            "id": {
+                "root": "1.2.752.129.2.1.2.1",
+                "extension": "diabetes2"
             },
             "forekomst": false
         },
-        
-        
-        
-        {
-            "observationskod": {
-                "codeSystem": "to-come",
-                "codeSystemName": "kv_observationer_intyg",
-                "code": "OBS9"
-            },
-            "forekomst": true
-        },       
-        
-        
         {
             "observationskod": {
                 "codeSystem": "1.2.752.116.2.1.1.1",
@@ -392,6 +394,7 @@
             },
             "forekomst": false
         },
+        
         {
             "observationskod": {
                 "codeSystem": "to-come",

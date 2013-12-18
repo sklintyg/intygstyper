@@ -10,7 +10,9 @@
 
   <p:signeringsdatum>2013-08-12T15:57:00</p:signeringsdatum>
 
-  <p:intygAvser code="IAV3" codeSystem="todo"
+  <p:intygAvser code="IAV9" codeSystem="todo"
+    codeSystemName="kv_intygavser_intyg" />
+<p:intygAvser code="IAV3" codeSystem="todo"
     codeSystemName="kv_intygavser_intyg" />
 
   <p:patient>
@@ -115,7 +117,6 @@
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
-
   <p:observation>
     <p:observationsid root="1.2.752.129.2.1.2.1"
       extension="4" />
@@ -130,7 +131,7 @@
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
- <!-- Synfunktion utan korrektion (3.5.1 - 3.5.3) -->
+  <!-- Synfunktion utan korrektion (3.5.1 - 3.5.3) -->
   <p:observation>
     <p:observationskod code="420050001" codeSystem="1.2.752.116.2.1.1.1"
       codeSystemName="SNOMED-CT" />
@@ -185,13 +186,19 @@
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
+  <!-- Rörelseorganens funktion (5.1) -->
+  <p:observation>
+    <p:observationskod code="OBS5" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
 
+  <!-- Hjärt- och kärlsjukdom som innebär en trafiksäkerhetsrisk (OBS6) -->
   <p:observation>
     <p:observationskod code="OBS6" codeSystem="to-come"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
-
 
   <!-- Hjärt och kärlsjukdomar (6.1 - 6.3) -->
   <p:observation>
@@ -200,42 +207,32 @@
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
-  <!-- Tecken på hjärnskada, trauma eller stroke -->
+  <p:observation>
+    <p:observationskod code="OBS9" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
   <p:observation>
     <p:observationskod code="OBS8" codeSystem="to-come"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
-  <!-- Har diabetes (7.1) -->
-  <p:observation>
-    <p:observationskod code="73211009" codeSystem="1.2.752.116.2.1.1.1"
-      codeSystemName="SNOMED-CT" />
-    <p:forekomst>true</p:forekomst>
-  </p:observation>
-
   <!-- Diabetes (7.2) -->
   <p:observation>
-    <p:observationskod code="E11" codeSystem="1.2.752.116.1.1.1.1.1"
+    <p:observationskod code="E10" codeSystem="1.2.752.116.1.1.1.1.1"
       codeSystemName="ICD-10" />
-    <p:forekomst>true</p:forekomst>
-  </p:observation>
-
-  <!-- behandling av diabetes: enbart kost -->
-  <p:observation>
-    <p:observationskod code="170745003" codeSystem="1.2.752.116.2.1.1.1"
-      codeSystemName="SNOMED-CT" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
-  <!-- behandling av diabetes: kost -->
   <p:observation>
-    <p:observationskod code="OBS9" codeSystem="to-come"
-      codeSystemName="kv_observationer_intyg" />
-    <p:forekomst>true</p:forekomst>
+    <p:observationsid root="1.2.752.129.2.1.2.1"
+      extension="diabetes2" />
+    <p:observationskod code="E11" codeSystem="1.2.752.116.1.1.1.1.1"
+      codeSystemName="ICD-10" />
+    <p:forekomst>false</p:forekomst>
   </p:observation>
-
- 
 
   <!-- Neurologiska sjukdomar (8) -->
   <p:observation>
@@ -279,6 +276,14 @@
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
+  <!-- Regelbundet läkarordinerat bruk av läkemedel som kan innebära en trafiksäkerhetsrisk 
+    (OBS15) -->
+  <p:observation>
+    <p:observationskod code="OBS15" codeSystem="to-come"
+      codeSystemName="kv_observationer_intyg" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
   <!-- Psykisk sjukdom eller störning (14) -->
   <p:observation>
     <p:observationskod code="OBS16" codeSystem="to-come"
@@ -290,12 +295,6 @@
   <p:observation>
     <p:observationskod code="129104009" codeSystem="1.2.752.116.2.1.1.1"
       codeSystemName="SNOMED-CT" />
-    <p:forekomst>false</p:forekomst>
-  </p:observation>
-
-  <p:observation>
-    <p:observationskod code="OBS15" codeSystem="to-come"
-      codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
