@@ -155,16 +155,20 @@ public final class TransportToExternalFk7263LegacyConverter {
     private static Referens convert(
             se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ReferensType source) {
         Referens referens = new Referens();
-
-        switch (source.getReferenstyp()) {
-        case JOURNALUPPGIFTER:
-            referens.setReferenstyp(Referenstypkoder.JOURNALUPPGIFT);
-            break;
-        case ANNAT:
-            referens.setReferenstyp(Referenstypkoder.ANNAT);
-            break;
-        default:
-            throw new IllegalArgumentException("Unknown ReferensType: " + source.getReferenstyp());
+        if (source == null) {
+            return null;
+        }
+        if (source.getReferenstyp() != null) {
+            switch (source.getReferenstyp()) {
+            case JOURNALUPPGIFTER:
+                referens.setReferenstyp(Referenstypkoder.JOURNALUPPGIFT);
+                break;
+            case ANNAT:
+                referens.setReferenstyp(Referenstypkoder.ANNAT);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown ReferensType: " + source.getReferenstyp());
+            }
         }
         referens.setDatum(source.getDatum());
         return referens;
@@ -344,24 +348,27 @@ public final class TransportToExternalFk7263LegacyConverter {
     private static Observation convert(ArbetsformagaNedsattningType source) {
         Observation nedsattning = new Observation();
         nedsattning.setObservationskod(ObservationsKoder.ARBETSFORMAGA);
-
-        PhysicalQuantity varde = new PhysicalQuantity();
-        varde.setUnit("percent");
-        switch (source.getNedsattningsgrad()) {
-        case HELT_NEDSATT:
-            varde.setQuantity(0.0);
-            break;
-        case NEDSATT_MED_3_4:
-            varde.setQuantity(25.0);
-            break;
-        case NEDSATT_MED_1_2:
-            varde.setQuantity(50.0);
-            break;
-        case NEDSATT_MED_1_4:
-            varde.setQuantity(75.0);
-            break;
+        if (source.getNedsattningsgrad() != null) {
+            PhysicalQuantity varde = new PhysicalQuantity();
+            varde.setUnit("percent");
+            switch (source.getNedsattningsgrad()) {
+            case HELT_NEDSATT:
+                varde.setQuantity(0.0);
+                break;
+            case NEDSATT_MED_3_4:
+                varde.setQuantity(25.0);
+                break;
+            case NEDSATT_MED_1_2:
+                varde.setQuantity(50.0);
+                break;
+            case NEDSATT_MED_1_4:
+                varde.setQuantity(75.0);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown Nedsattningsgrad: " + source.getNedsattningsgrad());
+            }
+            nedsattning.getVarde().add(varde);
         }
-        nedsattning.getVarde().add(varde);
 
         PartialInterval observationsperiod = new PartialInterval();
         if (source.getVaraktighetFrom() != null) {
@@ -428,7 +435,9 @@ public final class TransportToExternalFk7263LegacyConverter {
             return null;
         }
         Fk7263Patient patient = new Fk7263Patient();
-        patient.setId(IsoTypeConverter.toId(source.getPersonId()));
+        if (source.getPersonId() != null) {
+            patient.setId(IsoTypeConverter.toId(source.getPersonId()));
+        }
 
         // we only have fullstandigt namn available in the legacy jaxb
         patient.setEfternamn(source.getFullstandigtNamn());
