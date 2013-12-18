@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.util.Strings;
@@ -47,8 +48,20 @@ public class ProgrammaticLegacyTransportSchemaValidator extends AbstractValidato
         validateUtlatande();
         validatePatient();
         validateHospersonal();
+        validateReferens();
 
         return validationErrors;
+    }
+
+    private void validateReferens() {
+        if (externalutlatande.getReferenser() != null) {
+            for (Referens r : externalutlatande.getReferenser()) {
+                if (r.getDatum() == null) {
+                    addValidationError("Field 4: Referens is missing datum");
+                }
+            }
+        }
+
     }
 
     private void validateUtlatande() {
@@ -170,7 +183,7 @@ public class ProgrammaticLegacyTransportSchemaValidator extends AbstractValidato
                     "Field 15: No hos-personal enhetsId root found or was invalid! Should be one of %s",
                     Strings.join(",", ENHET_OID)));
         }
-        if (vardenhet.getId()==null || isNullOrEmpty(vardenhet.getId().getExtension())) {
+        if (vardenhet.getId() == null || isNullOrEmpty(vardenhet.getId().getExtension())) {
             addValidationError("Field 15: No enhetsId extension found!");
         }
 
