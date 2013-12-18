@@ -11,6 +11,7 @@ import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
+import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.util.Strings;
@@ -56,8 +57,20 @@ public class ProgrammaticLegacyTransportSchemaValidator {
         validatePatient();
 
         validateHospersonal();
+        validateReferens();
 
         return validationErrors;
+    }
+
+    private void validateReferens() {
+        if (externalutlatande.getReferenser() != null) {
+            for (Referens r : externalutlatande.getReferenser()) {
+                if (r.getDatum() == null) {
+                    addValidationError("Field 4: Referens is missing datum");
+                }
+            }
+        }
+
     }
 
     private void validateUtlatande() {
