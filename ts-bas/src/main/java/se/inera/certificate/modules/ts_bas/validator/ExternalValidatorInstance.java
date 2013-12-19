@@ -27,15 +27,19 @@ import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
+import se.inera.certificate.modules.ts_bas.model.codes.AktivitetKod;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeSystem;
 import se.inera.certificate.modules.ts_bas.model.codes.HSpersonalKod;
 import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_bas.model.codes.IntygAvserKod;
+import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_bas.model.codes.SpecialitetKod;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.codes.VardkontakttypKod;
+import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
+import se.inera.certificate.modules.ts_bas.model.external.Observation;
 import se.inera.certificate.modules.ts_bas.model.external.ObservationAktivitetRelation;
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
 import se.inera.certificate.modules.ts_bas.model.external.Vardkontakt;
@@ -184,11 +188,26 @@ public class ExternalValidatorInstance {
                     .getExtension(), relation.getAktivitetsid().getExtension());
 
             Id obsId = relation.getObservationsid();
-            assertNotNull(observationInstance.getObservationWithId(obsId),
-                    String.format("observation %s in %s", obsId.getExtension(), element));
+            Observation obs = observationInstance.getObservationWithId(obsId);
+            assertNotNull(obs, String.format("observation %s in %s", obsId.getExtension(), element));
             Id aktId = relation.getAktivitetsid();
-            assertNotNull(aktivitetInstance.getAktivitetWithId(aktId),
-                    String.format("aktivitet %s in %s", aktId.getExtension(), element));
+            Aktivitet akt = aktivitetInstance.getAktivitetWithId(aktId);
+            assertNotNull(akt, String.format("aktivitet %s in %s", aktId.getExtension(), element));
+
+            if (obs.getObservationskod().equals(CodeConverter.toKod(ObservationsKod.SYNFALTSDEFEKTER))) {
+                if (!akt.getAktivitetskod().equals(CodeConverter.toKod(AktivitetKod.SYNFALTSUNDERSOKNING))) {
+                    validationError("Observation H53.4 must relate to aktivitet 86944008");
+                }
+
+            } else if (obs.getObservationskod().equals(CodeConverter.toKod(ObservationsKod.DIPLOPI))) {
+                if (!akt.getAktivitetskod().equals(CodeConverter.toKod(AktivitetKod.PROVNING_AV_OGATS_RORLIGHET))) {
+                    validationError("Observation H53.2 must relate to aktivitet AKT18");
+                }
+
+            } else {
+                validationError(String.format("Observation %s should not relate to aktivitet %s", obsId.getExtension(),
+                        aktId.getExtension()));
+            }
         }
     }
 
