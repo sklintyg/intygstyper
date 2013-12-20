@@ -60,8 +60,8 @@ public class TransportToExternalConverter {
      * (se.inera.certificate.modules.ts_bas.model.external.Utlatande).
      * 
      * @param source
-     *            Utlatande in the transport format to be converted to external format
-     * @return se.inera.certificate.modules.ts_bas.model.external.Utlatande
+     *            {@link Utlatande} in the transport format to be converted to external format
+     * @return {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
      * @throws ConverterException
      */
     public Utlatande convert(se.inera.certificate.ts_bas.model.v1.Utlatande source) throws ConverterException {
@@ -87,28 +87,51 @@ public class TransportToExternalConverter {
         return utlatande;
     }
 
+    /**
+     * Convert a collection of ObservationAktivitetRelationTypes to ObservationAktivitetRelations
+     * 
+     * @param source
+     *            List of {@link ObservationAktivitetRelationType}
+     * @return List of {@link ObservationAktivitetRelation}
+     * @throws ConverterException
+     */
     private Collection<? extends ObservationAktivitetRelation> convertObservationAktivitetRelationer(
-            List<ObservationAktivitetRelationType> source) throws ConverterException{
+            List<ObservationAktivitetRelationType> source) throws ConverterException {
         if (source == null) {
             throw new ConverterException();
         }
         List<ObservationAktivitetRelation> converted = new ArrayList<ObservationAktivitetRelation>();
-            
-        for (ObservationAktivitetRelationType it : source){
+
+        for (ObservationAktivitetRelationType it : source) {
             converted.add(convertObservationRelation(it));
         }
-        
+
         return converted;
     }
 
+    /**
+     * Convert a single ObservationAktivitetRelationType to ObservationAktivitetRelation
+     * 
+     * @param source
+     *            {@link ObservationAktivitetRelationType}
+     * @return {@link ObservationAktivitetRelation}
+     */
     private ObservationAktivitetRelation convertObservationRelation(ObservationAktivitetRelationType source) {
         ObservationAktivitetRelation converted = new ObservationAktivitetRelation();
         converted.setAktivitetsid(IsoTypeConverter.toId(source.getAktivitetsid()));
         converted.setObservationsid(IsoTypeConverter.toId(source.getObservationsid()));
-        
+
         return converted;
     }
 
+    /**
+     * Converts a list of RekommendationType to Rekommendation
+     * 
+     * @param source
+     *            {@link RekommendationType}
+     * @return
+     * @throws ConverterException
+     */
     private Collection<? extends Rekommendation> convertRekommendationer(List<RekommendationType> source)
             throws ConverterException {
         if (source == null) {
@@ -121,6 +144,13 @@ public class TransportToExternalConverter {
         return rekommendationer;
     }
 
+    /**
+     * Convert a RekommendationType to Rekommendation
+     * 
+     * @param source
+     *            {@link RekommendationType}
+     * @return {@link Rekommendation}
+     */
     private Rekommendation convertRekommendation(RekommendationType source) {
         Rekommendation rekommendation = new Rekommendation();
         if (source.getBeskrivning() != null) {
@@ -136,6 +166,13 @@ public class TransportToExternalConverter {
         return rekommendation;
     }
 
+    /**
+     * Convert a VardkontaktType to Vardkontakt
+     * 
+     * @param source
+     *            {@link VardkontaktType}
+     * @return {@link Vardkontakt}
+     */
     private Vardkontakt convertVardkontakt(VardkontaktType source) {
         Vardkontakt vardkontakt = new Vardkontakt();
         vardkontakt.setIdkontroll(IsoTypeConverter.toKod(source.getIdKontroll()));
@@ -148,7 +185,8 @@ public class TransportToExternalConverter {
      * Convert a collection of AktivitetType to collection of Aktivitet
      * 
      * @param source
-     * @return
+     *            List of {@link AktivitetType}
+     * @return List of {@link Aktivitet}
      * @throws ConverterException
      */
     private Collection<? extends Aktivitet> convertAktiviteter(List<AktivitetType> source) throws ConverterException {
@@ -168,8 +206,8 @@ public class TransportToExternalConverter {
      * Convert a single AktivitetType to Aktivitet
      * 
      * @param source
-     *            AktivitetType
-     * @return Aktivitet
+     *            {@link AktivitetType}
+     * @return {@link Aktivitet}
      */
     private Aktivitet convertAktivitet(AktivitetType source) {
         Aktivitet aktivitet = new Aktivitet();
@@ -212,7 +250,8 @@ public class TransportToExternalConverter {
      * Converts a collection of ObservationType to a collection of Observation
      * 
      * @param source
-     * @return
+     *            List of {@link ObservationType}
+     * @return List of {@link Observation}
      * @throws ConverterException
      */
 
@@ -234,8 +273,8 @@ public class TransportToExternalConverter {
      * Convert a single ObservationType to Observation
      * 
      * @param source
-     *            ObservationType
-     * @return Observation
+     *            {@link ObservationType}
+     * @return {@link Observation}
      */
     private Observation convertObservation(ObservationType source) {
         Observation observation = new Observation();
@@ -269,8 +308,8 @@ public class TransportToExternalConverter {
      * Convert from List of CD to List of Kod
      * 
      * @param source
-     *            The list to convert
-     * @return A list of codes in Kod
+     *            List of {@link CD}
+     * @return List of {@link Kod}
      */
     private List<Kod> convertCDtoKod(List<CD> source) {
         List<Kod> converted = new ArrayList<Kod>();
@@ -280,6 +319,13 @@ public class TransportToExternalConverter {
         return converted;
     }
 
+    /**
+     * Convert HosPersonalType to HosPersonal
+     * 
+     * @param source
+     *            {@link HosPersonalType}
+     * @return {@link HosPersonal}
+     */
     private HosPersonal convertHosPersonal(HosPersonalType source) {
         HosPersonal skapadAv = new HosPersonal();
         skapadAv.setBefattning(source.getBefattning());
@@ -291,6 +337,13 @@ public class TransportToExternalConverter {
         return skapadAv;
     }
 
+    /**
+     * Convert EnhetType to Vardenhet
+     * 
+     * @param source
+     *            {@link EnhetType}
+     * @return {@link Vardenhet}
+     */
     private Vardenhet convertVardenhet(EnhetType source) {
         Vardenhet vardenhet = new Vardenhet();
         vardenhet.setId(IsoTypeConverter.toId(source.getEnhetsId()));
@@ -304,6 +357,13 @@ public class TransportToExternalConverter {
         return vardenhet;
     }
 
+    /**
+     * Convert VardgivareType to Vardgivare
+     * 
+     * @param source
+     *            {@link VardgivareType}
+     * @return {@link Vardgivare}
+     */
     private Vardgivare convertVardgivare(VardgivareType source) {
         Vardgivare vardgivare = new Vardgivare();
         vardgivare.setId(IsoTypeConverter.toId(source.getVardgivareId()));
@@ -312,6 +372,13 @@ public class TransportToExternalConverter {
         return vardgivare;
     }
 
+    /**
+     * Convert PatientType to Patient
+     * 
+     * @param source
+     *            {@link PatientType}
+     * @return {@link Patient}
+     */
     private Patient convertPatient(PatientType source) {
         Patient patient = new Patient();
         patient.setEfternamn(source.getEfternamn());

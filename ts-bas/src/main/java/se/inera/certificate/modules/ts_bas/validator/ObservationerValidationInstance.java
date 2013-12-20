@@ -7,6 +7,7 @@ import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
+import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_bas.model.external.Observation;
 
 public class ObservationerValidationInstance extends ExternalValidatorInstance {
@@ -52,6 +53,11 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
         this.observationer = observationer;
     }
 
+    /**
+     * Validate all the observations. Make sure required observations are present, and that the correct number is
+     * present.
+     * 
+     */
     public void validateObservationer() {
 
         Iterable<Kod> kodList = new ObservationerIterable(observationer);
@@ -126,7 +132,8 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
                 assertNotNull(observation.getForekomst(), entity + ".förekomst");
                 assertNotNull(observation.getLateralitet(), entity + ".lateralitet");
                 if (assertNotNull(observation.getVarde(), entity + ".varde").success()) {
-                    if (observation.getVarde().get(0).getQuantity() < 0.0 || observation.getVarde().get(0).getQuantity() > 2.0) {
+                    if (observation.getVarde().get(0).getQuantity() < 0.0
+                            || observation.getVarde().get(0).getQuantity() > 2.0) {
                         validationError("Varde for synskarpa med korrektion must be in the interval 0.0 <= X <= 2.0");
                     }
                 }
@@ -138,7 +145,8 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
             } else if (observation.getObservationskod().equals(OBS_420050001)) {
                 assertNotNull(observation.getLateralitet(), entity + ".lateralitet");
                 if (assertNotNull(observation.getVarde(), entity + ".varde").success()) {
-                    if (observation.getVarde().get(0).getQuantity() < 0.0 || observation.getVarde().get(0).getQuantity() > 2.0) {
+                    if (observation.getVarde().get(0).getQuantity() < 0.0
+                            || observation.getVarde().get(0).getQuantity() > 2.0) {
                         validationError("Varde for synskarpa utan korrektion must be in the interval 0.0 <= X <= 2.0");
                     }
                 }
@@ -354,8 +362,8 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
             if (diabetesTyp1 != null && diabetesTyp2 != null) {
                 validationError("only one of E10 or E11 can be present at the same time");
             }
-            
-            //Also determine a treatment is specified if type2 diabetes is confirmed
+
+            // Also determine a treatment is specified if type2 diabetes is confirmed
             if (diabetesTyp2 != null) {
                 Observation treatmentTablett = getObservationWithKod(OBS_170746002);
                 Observation treatmentInsulin = getObservationWithKod(OBS_170746006);
@@ -376,6 +384,13 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
         }
     }
 
+    /**
+     * Returns an Observation based on the specified Kod, or <code>null</code> if none where found.
+     * 
+     * @param observationskod
+     *            Find an observation with this {@link Kod}
+     * @return an {@link Observation} if it is found, or null otherwise
+     */
     public Observation getObservationWithKod(Kod observationskod) {
         for (Observation observation : observationer) {
             if (observationskod.equals(observation.getObservationskod())) {
@@ -385,7 +400,13 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
 
         return null;
     }
-
+    /**
+     * Returns an Observation based on the specified Id, or <code>null</code> if none where found.
+     * 
+     * @param observationskod
+     *            Find an observation with this {@link Id}
+     * @return an {@link Observation} if it is found, or null otherwise
+     */
     public Observation getObservationWithId(Id id) {
         for (Observation observation : observationer) {
             if (id.equals(observation.getId())) {
@@ -395,7 +416,9 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
 
         return null;
     }
-
+    /**
+     * An {@link Iterable} emitting the {@link Kod}er of an underlying list of {@link Observation}er.
+     */
     protected static class ObservationerIterable implements Iterable<Kod> {
         private final List<Observation> observationer;
 

@@ -54,6 +54,16 @@ public class ExternalToTransportConverter {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExternalToTransportConverter.class);
 
+    /**
+     * Converts from the external format ({@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}) to the
+     * transport format ({@link se.inera.certificate.ts_bas.model.v1.Utlatande}).
+     * 
+     * @param source
+     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande} in the external format to be
+     *            converted to transport format
+     * @return {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @throws ConverterException
+     */
     public Utlatande convert(se.inera.certificate.modules.ts_bas.model.external.Utlatande source)
             throws ConverterException {
         LOG.trace("Converting external model to transport");
@@ -66,7 +76,7 @@ public class ExternalToTransportConverter {
         utlatande.setTypAvUtlatande(IsoTypeConverter.toUtlatandeTyp(source.getTyp()));
         utlatande.setUtlatandeId(IsoTypeConverter.toUtlatandeId(source.getId()));
 
-        /** Just make sure getVardkontakter() doesn't return an empty list before getting an index.. */
+        // Just make sure getVardkontakter() doesn't return an empty list before getting an index..
         if (!source.getVardkontakter().isEmpty()) {
             utlatande.setVardkontakt(convertVardkontakt(source.getVardkontakter().get(0)));
         }
@@ -81,6 +91,14 @@ public class ExternalToTransportConverter {
         return utlatande;
     }
 
+    /**
+     * Convert a Collection of ObservationAktivitetRelation to ObservationAktivitetRelationType
+     * 
+     * @param source
+     *            List of {@link ObservationAktivitetRelation}
+     * @return List of {@link ObservationAktivitetRelationType}
+     * @throws ConverterException
+     */
     private Collection<? extends ObservationAktivitetRelationType> convertObservationAktivitetRelationer(
             List<ObservationAktivitetRelation> source) throws ConverterException {
         if (source == null) {
@@ -95,18 +113,27 @@ public class ExternalToTransportConverter {
         return converted;
     }
 
+    /**
+     * Converts a single ObservationAktivitetRelation to ObservationAktivitetRelationType
+     * 
+     * @param source
+     *            {@link ObservationAktivitetRelation}
+     * @return {@link ObservationAktivitetRelationType}
+     */
     private ObservationAktivitetRelationType convertObservationRelation(ObservationAktivitetRelation source) {
         ObservationAktivitetRelationType converted = new ObservationAktivitetRelationType();
         converted.setAktivitetsid(IsoTypeConverter.toII(source.getAktivitetsid()));
         converted.setObservationsid(IsoTypeConverter.toII(source.getObservationsid()));
-        
+
         return converted;
     }
+
     /**
      * Convert collection of Rekommendation to collection of RekommendationType
      * 
      * @param source
-     * @return
+     *            {@link Rekommendation}
+     * @return {@link RekommendationType}
      * @throws ConverterException
      */
     private Collection<? extends RekommendationType> convertRekommendationer(List<Rekommendation> source)
@@ -125,7 +152,8 @@ public class ExternalToTransportConverter {
      * Convert a single Rekommendation to RekommendationType
      * 
      * @param source
-     * @return
+     *            {@link Rekommendation}
+     * @return {@link RekommendationType}
      */
     private RekommendationType convertRekommendation(Rekommendation source) {
         RekommendationType rekommendation = new RekommendationType();
@@ -145,7 +173,8 @@ public class ExternalToTransportConverter {
      * Convert collection of Kod to collection of CD
      * 
      * @param source
-     * @return
+     *            List of {@link Kod}
+     * @return List of {@link CD}
      * @throws ConverterException
      */
     private Collection<? extends CD> convertCodes(List<Kod> source) throws ConverterException {
@@ -163,7 +192,8 @@ public class ExternalToTransportConverter {
      * Convert a Collection of Observation to Collection of ObservationType
      * 
      * @param source
-     * @return
+     *            List of {@link Observation}
+     * @return List of {@link ObservationType}
      * @throws ConverterException
      */
     private Collection<? extends ObservationType> convertObservationer(List<Observation> source)
@@ -183,7 +213,8 @@ public class ExternalToTransportConverter {
      * Convert a single Observation to ObservationType
      * 
      * @param source
-     * @return
+     *            {@link Observation}
+     * @return {@link ObservationType}
      */
     private ObservationType convertObservation(Observation source) {
         ObservationType observation = new ObservationType();
@@ -212,7 +243,8 @@ public class ExternalToTransportConverter {
      * Convert Collection of Aktivitet to Collection of AktivitetType
      * 
      * @param source
-     * @return
+     *            List of {@link Aktivitet}
+     * @return List of {@link AktivitetType}
      * @throws ConverterException
      */
     private Collection<? extends AktivitetType> convertAktiviteter(List<Aktivitet> source) throws ConverterException {
@@ -230,8 +262,8 @@ public class ExternalToTransportConverter {
      * Convert a single Aktivitet to AktivitetType
      * 
      * @param source
-     *            Aktivitet
-     * @return AktivitetType
+     *            {@link Aktivitet}
+     * @return {@link AktivitetType}
      */
     private AktivitetType convertAktivitet(Aktivitet source) {
         AktivitetType aktivitet = new AktivitetType();
@@ -269,7 +301,8 @@ public class ExternalToTransportConverter {
      * Convert PartialInterval to PartialDateInterval
      * 
      * @param source
-     * @return
+     *            {@link PartialInterval}
+     * @return {@link PartialDateInterval}
      */
     private PartialDateInterval convertPartialDateInterval(PartialInterval source) {
         if (source == null) {
@@ -282,6 +315,13 @@ public class ExternalToTransportConverter {
         return pdi;
     }
 
+    /**
+     * Convert a Vardkontakt to VardkontaktType
+     * 
+     * @param source
+     *            {@link Vardkontakt}
+     * @return {@link VardkontaktType}
+     */
     private VardkontaktType convertVardkontakt(Vardkontakt source) {
         VardkontaktType vardkontakt = new VardkontaktType();
         vardkontakt.setIdKontroll(IsoTypeConverter.toCD(source.getIdkontroll()));
@@ -290,6 +330,13 @@ public class ExternalToTransportConverter {
         return vardkontakt;
     }
 
+    /**
+     * Convert at Patient to PatientType
+     * 
+     * @param source
+     *            {@link Patient}
+     * @return {@link PatientType}
+     */
     private PatientType convertPatient(Patient source) {
         PatientType patient = new PatientType();
         patient.getFornamns().addAll(source.getFornamn());
@@ -302,6 +349,13 @@ public class ExternalToTransportConverter {
         return patient;
     }
 
+    /**
+     * Convert a HosPersonal to HosPersonalType
+     * 
+     * @param source
+     *            {@link HosPersonal}
+     * @return {@link HosPersonalType}
+     */
     private HosPersonalType convertHosPersonal(HosPersonal source) {
         HosPersonalType hosPersonal = new HosPersonalType();
         hosPersonal.setBefattning(source.getBefattning());
@@ -313,6 +367,13 @@ public class ExternalToTransportConverter {
         return hosPersonal;
     }
 
+    /**
+     * Convert a Collection of Kod to CD
+     * 
+     * @param source
+     *            List of {@link Kod}
+     * @return List of {@link CD}
+     */
     private Collection<? extends CD> convertKodToCD(List<Kod> source) {
         List<CD> koder = new ArrayList<CD>();
         for (Kod kod : source) {
@@ -321,6 +382,13 @@ public class ExternalToTransportConverter {
         return koder;
     }
 
+    /**
+     * Convert a Vardenhet to EnhetType
+     * 
+     * @param source
+     *            {@link Vardenhet}
+     * @return {@link EnhetType}
+     */
     private EnhetType convertVardenhet(Vardenhet source) {
         EnhetType enhet = new EnhetType();
         enhet.setEnhetsId(IsoTypeConverter.toHsaId(source.getId()));
@@ -334,6 +402,13 @@ public class ExternalToTransportConverter {
         return enhet;
     }
 
+    /**
+     * Convert a Vardgivare to VardgivareType
+     * 
+     * @param source
+     *            {@link Vardgivare}
+     * @return {@link VardgivareType}
+     */
     private VardgivareType convertVardgivare(Vardgivare source) {
         VardgivareType vardgivare = new VardgivareType();
         vardgivare.setVardgivareId(IsoTypeConverter.toHsaId(source.getId()));
