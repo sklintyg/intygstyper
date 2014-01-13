@@ -220,6 +220,9 @@ public class ExternalValidatorInstance {
      *            List of {@link ObservationAktivitetRelationer}
      */
     private void validateObservationAktivitetRelation(List<ObservationAktivitetRelation> observationAktivitetRelationer) {
+        boolean synfaltsdefekterRelation = false;
+        boolean diplopiRelation = false;
+
         for (ObservationAktivitetRelation relation : observationAktivitetRelationer) {
             String element = String.format("observationAktivitetRelation[%s, %s]", relation.getObservationsid()
                     .getExtension(), relation.getAktivitetsid().getExtension());
@@ -234,17 +237,28 @@ public class ExternalValidatorInstance {
             if (obs.getObservationskod().equals(CodeConverter.toKod(ObservationsKod.SYNFALTSDEFEKTER))) {
                 if (!akt.getAktivitetskod().equals(CodeConverter.toKod(AktivitetKod.SYNFALTSUNDERSOKNING))) {
                     validationError("Observation H53.4 must relate to aktivitet 86944008");
+                } else {
+                    synfaltsdefekterRelation = true;
                 }
 
             } else if (obs.getObservationskod().equals(CodeConverter.toKod(ObservationsKod.DIPLOPI))) {
                 if (!akt.getAktivitetskod().equals(CodeConverter.toKod(AktivitetKod.PROVNING_AV_OGATS_RORLIGHET))) {
                     validationError("Observation H53.2 must relate to aktivitet AKT18");
+                } else {
+                    diplopiRelation = true;
                 }
 
             } else {
                 validationError(String.format("Observation %s should not relate to aktivitet %s", obsId.getExtension(),
                         aktId.getExtension()));
             }
+        }
+
+        if (!synfaltsdefekterRelation) {
+            validationError("Expected an observationAktivitetRelation between observation H53.4 and aktivitet 86944008");
+        }
+        if (!diplopiRelation) {
+            validationError("Expected an observationAktivitetRelation between observation H53.2 and aktivitet AKT18");
         }
     }
 
