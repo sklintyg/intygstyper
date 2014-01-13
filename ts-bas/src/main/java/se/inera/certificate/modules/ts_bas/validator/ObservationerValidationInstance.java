@@ -7,7 +7,6 @@ import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
-import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_bas.model.external.Observation;
 
 public class ObservationerValidationInstance extends ExternalValidatorInstance {
@@ -377,9 +376,13 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
         // If the persontransport flag is set, assert required observations are supplied
         if (context.isPersontransportContext()) {
             Observation rorelseformaga = getObservationWithKod(OBS_OBS5);
-
             if (rorelseformaga == null) {
                 validationError("observation OBS5 must be present when intygAvser contains any of [D1, D1E, D, DE, or TAXI]");
+            }
+
+            Observation samtal4meter = getObservationWithKod(OBS_OBS3);
+            if (samtal4meter == null) {
+                validationError("observation OBS3 must be present when intygAvser contains any of [D1, D1E, D, DE, or TAXI]");
             }
         }
     }
@@ -400,6 +403,7 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
 
         return null;
     }
+
     /**
      * Returns an Observation based on the specified Id, or <code>null</code> if none where found.
      * 
@@ -416,6 +420,7 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
 
         return null;
     }
+
     /**
      * An {@link Iterable} emitting the {@link Kod}er of an underlying list of {@link Observation}er.
      */

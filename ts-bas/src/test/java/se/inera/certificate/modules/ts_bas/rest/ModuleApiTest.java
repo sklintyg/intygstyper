@@ -57,7 +57,6 @@ public class ModuleApiTest {
     @Autowired
     private CustomObjectMapper objectMapper;
 
-    @Ignore
     @Test
     public void testUnmarshallScenarios() throws Exception {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
@@ -74,7 +73,6 @@ public class ModuleApiTest {
         }
     }
     
-    @Ignore
     @Test
     public void testMarshall() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
@@ -84,7 +82,6 @@ public class ModuleApiTest {
 
     }
     
-    @Ignore
     @Test
     public void testValidate() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
@@ -93,7 +90,6 @@ public class ModuleApiTest {
         }
     }
 
-    @Ignore
     @Test
     public void testValidateWithErrors() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {

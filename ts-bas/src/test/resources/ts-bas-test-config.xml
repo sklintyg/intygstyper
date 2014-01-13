@@ -35,7 +35,7 @@
 
 	<jaxrs:server address="http://localhost:8880/ts-bas">
 		<jaxrs:serviceBeans>
-			<bean class="se.inera.certificate.modules.ts-bas.rest.RliModuleService" />
+			<bean class="se.inera.certificate.modules.ts_bas.rest.ModuleService" />
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
 			<ref bean="jacksonJsonProvider" />
@@ -44,7 +44,7 @@
 	</jaxrs:server>
 
 	<jaxrs:client id="ts-basModule" address="http://localhost:8880/ts-bas"
-		serviceClass="se.inera.certificate.modules.ts-bas.rest.RliModuleApi">
+		serviceClass="se.inera.certificate.modules.ts_bas.rest.ModuleApi">
 		<jaxrs:providers>
 			<ref bean="jacksonJsonProvider" />
 			<ref bean="jaxbProvider" />
