@@ -13,14 +13,8 @@
         {
             "codeSystem": "todo",
             "codeSystemName": "kv_intygavser_intyg",
-            "code": "IAV9"
-        },
-        {
-            "codeSystem": "todo",
-            "codeSystemName": "kv_intygavser_intyg",
             "code": "IAV3"
         }
-        
     ],
     "patient": {
         "id": {
@@ -85,14 +79,6 @@
             "forekomst" : false
         },
         {
-            "aktivitetskod": {
-                "codeSystem": "8040b4d1-67dc-42e1-a938-de5374e9526a",
-                "codeSystemName": "kv_aktiviteter_intyg",
-                "code": "AKT15"
-            },
-            "forekomst" : false
-        },
-        {
         	"id" : {
         		"root" : "1.2.752.129.2.1.2.1",
         		"extension" : "1"
@@ -108,6 +94,15 @@
             	"codeSystemName" : "kv_metod"
             }
         },
+        {
+            "aktivitetskod": {
+                "codeSystem": "8040b4d1-67dc-42e1-a938-de5374e9526a",
+                "codeSystemName": "kv_aktiviteter_intyg",
+                "code": "AKT15"
+            },
+            "forekomst" : false
+        },        
+        
         {
            	"id" : {
         		"root" : "1.2.752.129.2.1.2.1",
@@ -275,7 +270,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS3"
             },
-            "forekomst": true
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -285,14 +280,7 @@
             },
             "forekomst": false
         },
-        {
-            "observationskod": {
-                "codeSystem": "to-come",
-                "codeSystemName": "kv_observationer_intyg",
-                "code": "OBS5"
-            },
-            "forekomst": false
-        },
+
         {
             "observationskod": {
                 "codeSystem": "to-come",
@@ -437,16 +425,7 @@
         }
     ],
     "observationAktivitetRelationer" : [
-        {
-	    	"observationsid" : {
-	    		"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "3"
-            },
-	        "aktivitetsid" : {
-	        	"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "1"
-        	}  
-      	},
+
       	{
       		"observationsid" : {
 	    		"root" : "1.2.752.129.2.1.2.1",

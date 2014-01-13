@@ -13,14 +13,8 @@
         {
             "codeSystem": "todo",
             "codeSystemName": "kv_intygavser_intyg",
-            "code": "IAV9"
-        },
-        {
-            "codeSystem": "todo",
-            "codeSystemName": "kv_intygavser_intyg",
             "code": "IAV3"
         }
-        
     ],
     "patient": {
         "id": {
@@ -243,6 +237,59 @@
             	"code": "51440002"
             }
         },
+        
+        {
+            "observationskod": {
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "397535007"
+            },
+            "varde": [
+                {
+                    "quantity": 0.0
+                }
+            ],
+            "lateralitet": {
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "24028007"
+            }
+        },
+        {
+            "observationskod": {
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "397535007"
+            },
+            "varde": [
+                {
+                    "quantity": 0.0
+                }
+            ],
+            "lateralitet": {
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "7771000"
+            }
+        },
+        {
+            "observationskod": {
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "397535007"
+            },
+            "varde": [
+                {
+                    "quantity": 0.0
+                }
+            ],
+            "lateralitet": {
+            	"codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+            	"code": "51440002"
+            }
+        },
+        
         {
             "observationskod": {
                 "codeSystem": "1.2.752.116.2.1.1.1",
@@ -275,7 +322,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS3"
             },
-            "forekomst": true
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -285,14 +332,7 @@
             },
             "forekomst": false
         },
-        {
-            "observationskod": {
-                "codeSystem": "to-come",
-                "codeSystemName": "kv_observationer_intyg",
-                "code": "OBS5"
-            },
-            "forekomst": false
-        },
+
         {
             "observationskod": {
                 "codeSystem": "to-come",

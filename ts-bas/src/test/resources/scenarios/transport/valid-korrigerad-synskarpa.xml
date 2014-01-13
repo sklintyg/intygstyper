@@ -10,9 +10,7 @@
 
   <p:signeringsdatum>2013-08-12T15:57:00</p:signeringsdatum>
 
-  <p:intygAvser code="IAV9" codeSystem="todo"
-    codeSystemName="kv_intygavser_intyg" />
-<p:intygAvser code="IAV3" codeSystem="todo"
+  <p:intygAvser code="IAV3" codeSystem="todo"
     codeSystemName="kv_intygavser_intyg" />
 
   <p:patient>
@@ -156,6 +154,31 @@
     <p:varde value="0.0" />
   </p:observation>
 
+  <!-- Synfunktion med korrektion (3.6.1 - 3.6.3) -->
+  <p:observation>
+    <p:observationskod code="397535007" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
+    <p:lateralitet code="24028007" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
+    <p:varde value="0.0" />
+  </p:observation>
+
+  <p:observation>
+    <p:observationskod code="397535007" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
+    <p:lateralitet code="7771000" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
+    <p:varde value="0.0" />
+  </p:observation>
+
+  <p:observation>
+    <p:observationskod code="397535007" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
+    <p:lateralitet code="51440002" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
+    <p:varde value="0.0" />
+  </p:observation>
+
   <!-- Kontaktlinser -->
   <p:observation>
     <p:observationskod code="285049007" codeSystem="1.2.752.116.2.1.1.1"
@@ -177,7 +200,7 @@
   <p:observation>
     <p:observationskod code="OBS3" codeSystem="to-come"
       codeSystemName="kv_observationer_intyg" />
-    <p:forekomst>true</p:forekomst>
+    <p:forekomst>false</p:forekomst>
   </p:observation>
 
   <p:observation>
@@ -186,12 +209,6 @@
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
-  <!-- Rörelseorganens funktion (5.1) -->
-  <p:observation>
-    <p:observationskod code="OBS5" codeSystem="to-come"
-      codeSystemName="kv_observationer_intyg" />
-    <p:forekomst>false</p:forekomst>
-  </p:observation>
 
   <!-- Hjärt- och kärlsjukdom som innebär en trafiksäkerhetsrisk (OBS6) -->
   <p:observation>
