@@ -89,7 +89,7 @@
         {
         	"id" : {
         		"root" : "1.2.752.129.2.1.2.1",
-        		"extension" : "6"
+        		"extension" : "1"
         	},
             "aktivitetskod": {
                 "codeSystem": "1.2.752.116.2.1.1.1",
@@ -105,7 +105,7 @@
         {
            	"id" : {
         		"root" : "1.2.752.129.2.1.2.1",
-        		"extension" : "7"
+        		"extension" : "2"
         	},
             "aktivitetskod": {
                 "codeSystem": "8040b4d1-67dc-42e1-a938-de5374e9526a",
@@ -138,7 +138,7 @@
             },
             "id": {
                 "root": "1.2.752.129.2.1.2.1",
-                "extension": "6"
+                "extension": "3"
             },
             "forekomst": true
         },
@@ -160,13 +160,21 @@
         },
         {
             "observationskod": {
+                "codeSystem": "to-come",
+                "codeSystemName": "kv_observationer_intyg",
+                "code": "OBS2"
+            },
+            "forekomst": false
+        },
+        {
+            "observationskod": {
                 "codeSystem": "1.2.752.116.1.1.1.1.1",
                 "codeSystemName": "ICD-10",
                 "code": "H53.2"
             },
             "id": {
                 "root": "1.2.752.129.2.1.2.1",
-                "extension": "7"
+                "extension": "4"
             },
             "forekomst": false
         },
@@ -177,6 +185,32 @@
                 "code": "H55.9"
             },
             "forekomst": false
+        },
+        {
+            "observationskod": {
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "285049007"
+            },
+            "forekomst" : false,
+            "lateralitet": {
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "24028007"
+            }
+        },
+        {
+        	"observationskod": {
+        		"codeSystem": "1.2.752.116.2.1.1.1",
+        		"codeSystemName": "SNOMED-CT",
+        		"code": "285049007"
+        	},
+        	"forekomst" : false,
+        	"lateralitet": {
+        		"codeSystem": "1.2.752.116.2.1.1.1",
+        		"codeSystemName": "SNOMED-CT",
+        		"code": "7771000"
+        	}
         },
         {
             "observationskod": {
@@ -247,6 +281,14 @@
                 "codeSystem": "to-come",
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS5"
+            },
+            "forekomst": false
+        },
+        {
+            "observationskod": {
+                "codeSystem": "to-come",
+                "codeSystemName": "kv_observationer_intyg",
+                "code": "OBS6"
             },
             "forekomst": false
         },
@@ -346,6 +388,15 @@
             "observationskod": {
                 "codeSystem": "to-come",
                 "codeSystemName": "kv_observationer_intyg",
+                "code": "OBS15"
+            },
+            "forekomst": false
+        },
+
+        {
+            "observationskod": {
+                "codeSystem": "to-come",
+                "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS16"
             },
             "forekomst": false
@@ -379,21 +430,21 @@
         {
 	    	"observationsid" : {
 	    		"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "6"
+	            "extension" : "3"
             },
 	        "aktivitetsid" : {
 	        	"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "6"
+	            "extension" : "1"
         	}  
       	},
       	{
       		"observationsid" : {
 	    		"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "7"
+	            "extension" : "4"
             },
 	        "aktivitetsid" : {
 	        	"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "7"
+	            "extension" : "2"
         	}  
       	}
     ]

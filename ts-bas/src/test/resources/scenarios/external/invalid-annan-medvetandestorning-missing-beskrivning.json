@@ -5,7 +5,8 @@
     },
     "typ": {
         "codeSystem": "f6fb361a-e31d-48b8-8657-99b63912dd9b",
-        "codeSystemName": "kv_utlåtandetyp_intyg"
+        "codeSystemName": "kv_utlåtandetyp_intyg",
+        "code" : "TSTRK1007 (U06, V06)"
     },
     "signeringsdatum": "2013-08-12T15:57:00.000",
     "intygAvser": [
@@ -32,13 +33,13 @@
     "skapadAv": {
         "id": {
             "root": "1.2.752.129.2.1.4.1",
-            "extension": "SE-1213131-1333"
+            "extension": "SE0000000000-1333"
         },
         "namn": "Doktor Thompson",
         "vardenhet": {
             "id": {
                 "root": "1.2.752.129.2.1.4.1",
-                "extension": "SE-VARDENHET-1337"
+                "extension": "SE0000000000-1333"
             },
             "namn": "Vårdenhet Väst",
             "postadress": "Enhetsvägen 12",
@@ -48,7 +49,7 @@
             "vardgivare": {
                 "id": {
                     "root": "1.2.752.129.2.1.4.1",
-                    "extension": "HAHAHHSAA"
+                    "extension": "SE0000000000-1333"
                 },
                 "namn": "Vårdgivarnamn"
             }
@@ -71,14 +72,44 @@
             "aktivitetskod": {
                 "codeSystem": "8040b4d1-67dc-42e1-a938-de5374e9526a",
                 "codeSystemName": "kv_aktiviteter_intyg",
+                "code": "AKT15"
+            },
+            "forekomst" : false
+        },                    
+		{
+		    "id" : {
+		        "root" : "1.2.752.129.2.1.2.1",
+		        "extension" : "1"
+		    },
+		    "aktivitetskod": {
+		        "codeSystem": "1.2.752.116.2.1.1.1",
+		        "codeSystemName": "SNOMED-CT",
+		        "code": "86944008"
+		    },
+		    "metod" : {
+		        "code" : "MET1",
+		        "codeSystem" : "????",
+		        "codeSystemName" : "kv_metod"
+		    }
+		},
+		{
+           "id" : {
+                "root" : "1.2.752.129.2.1.2.1",
+                "extension" : "2"
+            },
+            "aktivitetskod": {
+                "codeSystem": "8040b4d1-67dc-42e1-a938-de5374e9526a",
+                "codeSystemName": "kv_aktiviteter_intyg",
+                "code": "AKT18"
+            }
+        },
+        {
+            "aktivitetskod": {
+                "codeSystem": "8040b4d1-67dc-42e1-a938-de5374e9526a",
+                "codeSystemName": "kv_aktiviteter_intyg",
                 "code": "AKT19"
             },
-            "aktivitetsstatus": {
-                "codeSystem": "to_be_implemented",
-                "codeSystemName": "kv_aktivitets_status",
-                "code": "NO"
-            },
-            "forekomst" : true
+            "forekomst" : false
         }
     ],
     "rekommendationer": [
@@ -104,9 +135,9 @@
             },
             "id": {
                 "root": "1.2.752.129.2.1.2.1",
-                "extension": "1234"
+                "extension": "3"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -114,7 +145,7 @@
                 "codeSystemName": "ICD-10",
                 "code": "H53.6"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -122,7 +153,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS1"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -132,9 +163,9 @@
             },
             "id": {
                 "root": "1.2.752.129.2.1.2.1",
-                "extension": "1234"
+                "extension": "4"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -142,7 +173,7 @@
                 "codeSystemName": "ICD-10",
                 "code": "H55.9"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -156,8 +187,9 @@
                 }
             ],
             "lateralitet": {
-                "codeSystem": "lateralitet.changeme.please",
-                "code": "hoger"
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "24028007"
             }
         },
         {
@@ -172,8 +204,9 @@
                 }
             ],
             "lateralitet": {
-                "codeSystem": "lateralitet.changeme.please",
-                "code": "vanster"
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "7771000"
             }
         },
         {
@@ -188,9 +221,44 @@
                 }
             ],
             "lateralitet": {
-                "codeSystem": "lateralitet.changeme.please",
-                "code": "binokulart"
+            	"codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+            	"code": "51440002"
             }
+        },
+        {
+            "observationskod": {
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "285049007"
+            },
+            "forekomst" : false,
+            "lateralitet": {
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "24028007"
+            }
+        },
+        {
+        	"observationskod": {
+        		"codeSystem": "1.2.752.116.2.1.1.1",
+        		"codeSystemName": "SNOMED-CT",
+        		"code": "285049007"
+        	},
+        	"forekomst" : false,
+        	"lateralitet": {
+        		"codeSystem": "1.2.752.116.2.1.1.1",
+        		"codeSystemName": "SNOMED-CT",
+        		"code": "7771000"
+        	}
+        },
+        {
+            "observationskod": {
+                "codeSystem": "to-come",
+                "codeSystemName": "kv_observationer_intyg",
+                "code": "OBS2"
+            },
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -198,7 +266,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS3"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -206,7 +274,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS4"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -214,7 +282,15 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS5"
             },
-            "forekonst": false
+            "forekomst": false
+        },
+        {
+            "observationskod": {
+                "codeSystem": "to-come",
+                "codeSystemName": "kv_observationer_intyg",
+                "code": "OBS6"
+            },
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -222,7 +298,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS7"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -230,7 +306,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS9"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -238,7 +314,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS8"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -246,7 +322,7 @@
                 "codeSystemName": "ICD-10",
                 "code": "E10"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -258,7 +334,7 @@
                 "root": "1.2.752.129.2.1.2.1",
                 "extension": "diabetes2"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -266,7 +342,7 @@
                 "codeSystemName": "SNOMED-CT",
                 "code": "407624006"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -274,7 +350,7 @@
                 "codeSystemName": "ICD-10",
                 "code": "G40.9"
             },
-            "forekonst": false
+            "forekomst": true
         },
         {
             "observationskod": {
@@ -282,7 +358,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS10"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -290,7 +366,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS11"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -298,7 +374,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS12"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -306,7 +382,15 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS13"
             },
-            "forekonst": false
+            "forekomst": false
+        },
+        {
+            "observationskod": {
+                "codeSystem": "to-come",
+                "codeSystemName": "kv_observationer_intyg",
+                "code": "OBS15"
+            },
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -314,7 +398,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS16"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -322,7 +406,7 @@
                 "codeSystemName": "SNOMED-CT",
                 "code": "129104009"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -330,7 +414,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS17"
             },
-            "forekonst": false
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -338,7 +422,29 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS18"
             },
-            "forekonst": false
+            "forekomst": false
+        }
+    ],
+    "observationAktivitetRelationer" : [
+        {
+            "observationsid" : {
+                "root" : "1.2.752.129.2.1.2.1",
+                "extension" : "3"
+            },
+            "aktivitetsid" : {
+                "root" : "1.2.752.129.2.1.2.1",
+                "extension" : "1"
+            }
+        },
+        {
+            "observationsid" : {
+                "root" : "1.2.752.129.2.1.2.1",
+                "extension" : "4"
+            },
+            "aktivitetsid" : {
+                "root" : "1.2.752.129.2.1.2.1",
+                "extension" : "2"
+            }
         }
     ]
 }
