@@ -38,9 +38,37 @@ public class Utlatande {
 
     private Patient patient;
 
-    public Utlatande() {
+    private Syn syn;
 
-    }
+    private HorselBalans horselBalans;
+
+    private Funktionsnersattning funktionsnersattning;
+
+    private HjartKarl hjartKarl;
+
+    private Diabetes diabetes;
+
+    private Neurologi neurologi;
+
+    private Medvetandestorning medvertandestörning;
+
+    private Njurar njurar;
+
+    private Kognitivt kognitivt;
+
+    private SomnVakenhet somnVakenhet;
+
+    private NarkotikaLakemedel narkotikaLakemedel;
+
+    private Psykiskt psykiskt;
+
+    private Utvecklingsstorning utvecklingsstorning;
+
+    private Sjukhusvard sjukhusvard;
+
+    private Medicinering medicinering;
+
+    private Bedomning bedomning;
 
     public String getUtlatandeid() {
         return utlatandeid;
@@ -98,4 +126,131 @@ public class Utlatande {
         this.patient = patient;
     }
 
+    public Syn getSyn() {
+        return syn;
+    }
+
+    public void setSyn(Syn syn) {
+        this.syn = syn;
+    }
+
+    public HorselBalans getHorselBalans() {
+        return horselBalans;
+    }
+
+    public void setHorselBalans(HorselBalans horselBalans) {
+        this.horselBalans = horselBalans;
+    }
+
+    public Funktionsnersattning getFunktionsnersattning() {
+        return funktionsnersattning;
+    }
+
+    public void setFunktionsnersattning(Funktionsnersattning funktionsnersattning) {
+        this.funktionsnersattning = funktionsnersattning;
+    }
+
+    public HjartKarl getHjartKarl() {
+        return hjartKarl;
+    }
+
+    public void setHjartKarl(HjartKarl hjartKarl) {
+        this.hjartKarl = hjartKarl;
+    }
+
+    public Diabetes getDiabetes() {
+        return diabetes;
+    }
+
+    public void setDiabetes(Diabetes diabetes) {
+        this.diabetes = diabetes;
+    }
+
+    public Neurologi getNeurologi() {
+        return neurologi;
+    }
+
+    public void setNeurologi(Neurologi neurologi) {
+        this.neurologi = neurologi;
+    }
+
+    public Medvetandestorning getMedvertandestörning() {
+        return medvertandestörning;
+    }
+
+    public void setMedvertandestörning(Medvetandestorning medvertandestörning) {
+        this.medvertandestörning = medvertandestörning;
+    }
+
+    public Njurar getNjurar() {
+        return njurar;
+    }
+
+    public void setNjurar(Njurar njurar) {
+        this.njurar = njurar;
+    }
+
+    public Kognitivt getKognitivt() {
+        return kognitivt;
+    }
+
+    public void setKognitivt(Kognitivt kognitivt) {
+        this.kognitivt = kognitivt;
+    }
+
+    public SomnVakenhet getSomnVakenhet() {
+        return somnVakenhet;
+    }
+
+    public void setSomnVakenhet(SomnVakenhet somnVakenhet) {
+        this.somnVakenhet = somnVakenhet;
+    }
+
+    public NarkotikaLakemedel getNarkotikaLakemedel() {
+        return narkotikaLakemedel;
+    }
+
+    public void setNarkotikaLakemedel(NarkotikaLakemedel narkotikaLakemedel) {
+        this.narkotikaLakemedel = narkotikaLakemedel;
+    }
+
+    public Psykiskt getPsykiskt() {
+        return psykiskt;
+    }
+
+    public void setPsykiskt(Psykiskt psykiskt) {
+        this.psykiskt = psykiskt;
+    }
+
+    public Utvecklingsstorning getUtvecklingsstorning() {
+        return utvecklingsstorning;
+    }
+
+    public void setUtvecklingsstorning(Utvecklingsstorning utvecklingsstorning) {
+        this.utvecklingsstorning = utvecklingsstorning;
+    }
+
+    public Sjukhusvard getSjukhusvard() {
+        return sjukhusvard;
+    }
+
+    public void setSjukhusvard(Sjukhusvard sjukhusvard) {
+        this.sjukhusvard = sjukhusvard;
+    }
+
+    public Medicinering getMedicinering() {
+        return medicinering;
+    }
+
+    public void setMedicinering(Medicinering medicinering) {
+        this.medicinering = medicinering;
+    }
+
+    public Bedomning getBedomning() {
+        return bedomning;
+    }
+
+    public void setBedomning(Bedomning bedomning) {
+        this.bedomning = bedomning;
+    }
 }
