@@ -18,7 +18,6 @@
  */
 package se.inera.certificate.modules.ts_bas.rest;
 
-import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
 import static se.inera.certificate.modules.ts_bas.utils.ResourceConverterUtils.wrapExternalWithHolder;
 
 import javax.ws.rs.BadRequestException;
@@ -39,6 +38,7 @@ import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande;
 import se.inera.certificate.modules.ts_bas.rest.dto.CertificateContentHolder;
+import se.inera.certificate.modules.ts_bas.utils.ModelAssert;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
 
@@ -151,7 +151,7 @@ public class ModuleApiTest {
             intUtlatande = moduleApi.convertExternalToInternal(wrapExternalWithHolder(extUtlatande));
 
             Utlatande expected = scenario.asInternalMIModel();
-            assertLenientEquals("Error in scenario " + scenario.getName(), expected, intUtlatande);
+            ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, intUtlatande);
         }
     }
 

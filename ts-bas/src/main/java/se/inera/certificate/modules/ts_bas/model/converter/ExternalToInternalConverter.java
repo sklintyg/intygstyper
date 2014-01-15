@@ -58,6 +58,7 @@ import se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.Utvecklingsstorning;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.Vardenhet;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.Vardgivare;
+import se.inera.certificate.modules.ts_bas.model.internal.mi.Vardkontakt;
 import se.inera.certificate.modules.ts_bas.rest.dto.CertificateContentHolder;
 
 /**
@@ -97,7 +98,7 @@ public class ExternalToInternalConverter {
         intUtlatande.setTypAvUtlatande(InternalModelConverterUtils.getValueFromKod(extUtlatande.getTyp()));
         intUtlatande.setSigneringsdatum(extUtlatande.getSigneringsdatum());
         intUtlatande.setSkickatdatum(extUtlatande.getSkickatdatum());
-        intUtlatande.setKommentarer(extUtlatande.getKommentarer());
+        intUtlatande.setKommentar(extUtlatande.getKommentarer().size() == 0 ? null : extUtlatande.getKommentarer().get(0));
 
         HoSPersonal intHoSPersonal = convertToIntHoSPersonal(extUtlatande.getSkapadAv());
         intUtlatande.setSkapadAv(intHoSPersonal);
@@ -105,14 +106,16 @@ public class ExternalToInternalConverter {
         Patient intPatient = convertToIntPatient(extUtlatande.getPatient());
         intUtlatande.setPatient(intPatient);
 
+        intUtlatande.setVardkontakt(convertToIntVardkontakt(extUtlatande.getVardkontakter().get(0)));
+
         // Create internal model-specific objects grouping similar attributes together
         intUtlatande.setSyn(createSyn(extUtlatande));
         intUtlatande.setHorselBalans(createHorselBalans(extUtlatande));
-        intUtlatande.setFunktionsnersattning(createFunktionsnedsattning(extUtlatande));
+        intUtlatande.setFunktionsnedsattning(createFunktionsnedsattning(extUtlatande));
         intUtlatande.setHjartKarl(createHjartKarl(extUtlatande));
         intUtlatande.setDiabetes(createDiabetes(extUtlatande));
         intUtlatande.setNeurologi(createNeurologi(extUtlatande));
-        intUtlatande.setMedvertandestorning(createMedvetandestorning(extUtlatande));
+        intUtlatande.setMedvetandestorning(createMedvetandestorning(extUtlatande));
         intUtlatande.setNjurar(createNjurar(extUtlatande));
         intUtlatande.setKognitivt(createKognitivt(extUtlatande));
         intUtlatande.setSomnVakenhet(createSomnVakenhet(extUtlatande));
@@ -124,6 +127,21 @@ public class ExternalToInternalConverter {
         intUtlatande.setBedomning(createBedomning(extUtlatande));
 
         return intUtlatande;
+    }
+
+    /**
+     * Convert Vardkontakt from external to internal format
+     * 
+     * @param source {@link se.inera.certificate.modules.ts_bas.model.external.Vardkontakt}
+     * @return {@link Vardkontakt}
+     */
+    private Vardkontakt convertToIntVardkontakt(se.inera.certificate.modules.ts_bas.model.external.Vardkontakt source) {
+        Vardkontakt vardkontakt = new Vardkontakt();
+
+        vardkontakt.setIdkontroll(source.getIdkontroll().getCode());
+        vardkontakt.setTyp(source.getVardkontakttyp().getCode());
+
+        return vardkontakt;
     }
 
     /**
@@ -150,6 +168,7 @@ public class ExternalToInternalConverter {
             } else if (CodeConverter.matches(RekommendationsKod.PATIENT_BOR_UNDESOKAS_AV_SPECIALIST,
                     rek.getRekommendationskod())) {
                 bedomning.setLakareSpecialKompetens(rek.getBeskrivning());
+
             }
         }
         return bedomning;
@@ -457,7 +476,10 @@ public class ExternalToInternalConverter {
         }
 
         if (riskStroke != null) {
-            hjartKarl.setBeskrivningRiskfaktorer(riskStroke.getBeskrivning());
+            hjartKarl.setRiskfaktorerStroke(riskStroke.getForekomst());
+            if (riskStroke.getForekomst()) {
+                hjartKarl.setBeskrivningRiskfaktorer(riskStroke.getBeskrivning());
+            }
         }
 
         return hjartKarl;
@@ -547,16 +569,16 @@ public class ExternalToInternalConverter {
             syn.setDiplopi(diplopi.getForekomst());
         }
         if (nattblindhet != null) {
-            syn.setDiplopi(nattblindhet.getForekomst());
+            syn.setNattblindhet(nattblindhet.getForekomst());
         }
         if (nystagmus != null) {
-            syn.setDiplopi(nystagmus.getForekomst());
+            syn.setNystagmus(nystagmus.getForekomst());
         }
         if (progresivSjukdom != null) {
-            syn.setDiplopi(progresivSjukdom.getForekomst());
+            syn.setProgressivOgonsjukdom(progresivSjukdom.getForekomst());
         }
         if (synfaltsdefekter != null) {
-            syn.setDiplopi(synfaltsdefekter.getForekomst());
+            syn.setSynfaltsdefekter(synfaltsdefekter.getForekomst());
         }
 
         // Used to populate Syn with Synskarpa later

@@ -238,6 +238,12 @@
 
   <!-- Diabetes (7.2) -->
   <p:observation>
+    <p:observationskod code="73211009" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
+    <p:forekomst>false</p:forekomst>
+  </p:observation>
+
+  <p:observation>
     <p:observationskod code="E10" codeSystem="1.2.752.116.1.1.1.1.1"
       codeSystemName="ICD-10" />
     <p:forekomst>false</p:forekomst>

@@ -28,7 +28,7 @@ public class Utlatande {
 
     private String typAvUtlatande;
 
-    private List<String> kommentarer;
+    private String kommentar;
 
     private LocalDateTime signeringsdatum;
 
@@ -37,12 +37,14 @@ public class Utlatande {
     private HoSPersonal skapadAv;
 
     private Patient patient;
-
+    
+    private Vardkontakt vardkontakt;
+    
     private Syn syn;
 
     private HorselBalans horselBalans;
 
-    private Funktionsnedsattning funktionsnersattning;
+    private Funktionsnedsattning funktionsnedsattning;
 
     private HjartKarl hjartKarl;
 
@@ -50,7 +52,7 @@ public class Utlatande {
 
     private Neurologi neurologi;
 
-    private Medvetandestorning medvertandestorning;
+    private Medvetandestorning medvetandestorning;
 
     private Njurar njurar;
 
@@ -86,12 +88,12 @@ public class Utlatande {
         this.typAvUtlatande = typAvUtlatande;
     }
 
-    public List<String> getKommentarer() {
-        return kommentarer;
+    public String getKommentar() {
+        return kommentar;
     }
 
-    public void setKommentarer(List<String> kommentarer) {
-        this.kommentarer = kommentarer;
+    public void setKommentar(String kommentar) {
+        this.kommentar = kommentar;
     }
 
     public LocalDateTime getSigneringsdatum() {
@@ -142,12 +144,12 @@ public class Utlatande {
         this.horselBalans = horselBalans;
     }
 
-    public Funktionsnedsattning getFunktionsnersattning() {
-        return funktionsnersattning;
+    public Funktionsnedsattning getFunktionsnedsattning() {
+        return funktionsnedsattning;
     }
 
-    public void setFunktionsnersattning(Funktionsnedsattning funktionsnersattning) {
-        this.funktionsnersattning = funktionsnersattning;
+    public void setFunktionsnedsattning(Funktionsnedsattning funktionsnedsattning) {
+        this.funktionsnedsattning = funktionsnedsattning;
     }
 
     public HjartKarl getHjartKarl() {
@@ -174,12 +176,12 @@ public class Utlatande {
         this.neurologi = neurologi;
     }
 
-    public Medvetandestorning getMedvertandestörning() {
-        return medvertandestorning;
+    public Medvetandestorning getMedvetandestörning() {
+        return medvetandestorning;
     }
 
-    public void setMedvertandestorning(Medvetandestorning medvertandestörning) {
-        this.medvertandestorning = medvertandestörning;
+    public void setMedvetandestorning(Medvetandestorning medvetandestörning) {
+        this.medvetandestorning = medvetandestörning;
     }
 
     public Njurar getNjurar() {
@@ -252,5 +254,13 @@ public class Utlatande {
 
     public void setBedomning(Bedomning bedomning) {
         this.bedomning = bedomning;
+    }
+
+    public Vardkontakt getVardkontakt() {
+        return vardkontakt;
+    }
+
+    public void setVardkontakt(Vardkontakt vardkontakt) {
+        this.vardkontakt = vardkontakt;
     }
 }

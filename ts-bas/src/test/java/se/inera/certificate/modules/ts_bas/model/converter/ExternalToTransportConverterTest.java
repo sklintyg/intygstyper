@@ -18,11 +18,10 @@
  */
 package se.inera.certificate.modules.ts_bas.model.converter;
 
-import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
-
 import org.junit.Before;
 import org.junit.Test;
 
+import se.inera.certificate.modules.ts_bas.utils.ModelAssert;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
 import se.inera.certificate.ts_bas.model.v1.Utlatande;
@@ -44,8 +43,10 @@ public class ExternalToTransportConverterTest {
             Utlatande actual = converter.convert(extUtlatande);
 
             Utlatande expected = scenario.asTransportModel();
-
-            assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);
+            
+            // We need to issue a get in order to create an empty list (and make the test pass)
+            expected.getSkapadAv().getSpecialitets();
+            ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
     }
 }

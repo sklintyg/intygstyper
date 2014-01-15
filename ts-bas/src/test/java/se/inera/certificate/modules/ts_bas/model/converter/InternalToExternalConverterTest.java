@@ -18,13 +18,12 @@
  */
 package se.inera.certificate.modules.ts_bas.model.converter;
 
-import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
+import se.inera.certificate.modules.ts_bas.utils.ModelAssert;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
 
@@ -52,7 +51,7 @@ public class InternalToExternalConverterTest {
             Utlatande actual = converter.convert(intUtlatande);
 
             Utlatande expected = scenario.asExternalModel();
-            assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);
+            ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
         
     }

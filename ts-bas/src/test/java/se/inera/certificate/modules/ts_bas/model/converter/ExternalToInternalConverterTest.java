@@ -18,14 +18,11 @@
  */
 package se.inera.certificate.modules.ts_bas.model.converter;
 
-import static org.junit.Assert.assertEquals;
-import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
-
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import se.inera.certificate.modules.ts_bas.rest.dto.CertificateContentHolder;
+import se.inera.certificate.modules.ts_bas.utils.ModelAssert;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
 
@@ -45,27 +42,14 @@ public class ExternalToInternalConverterTest {
     }
 
     @Test
-    public void testInitialConversion() throws Exception {
-
-        CertificateContentHolder extUtlatande = ScenarioFinder.getExternalScenario("valid-minimal")
-                .asExternalModelWithHolder();
-
-        se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande actual = converter.convert(extUtlatande);
-
-        assertEquals(0.0, actual.getSyn().getSynskarpaHoger().getUtanKorrektion(), 0);
-
-    }
-
-    @Ignore
-    @Test
     public void testConvertUtlatande() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
+        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-minimal")) {
             CertificateContentHolder extUtlatande = scenario.asExternalModelWithHolder();
 
             se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande actual = converter.convert(extUtlatande);
 
             se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande expected = scenario.asInternalMIModel();
-            assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);
+            ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
     }
 }

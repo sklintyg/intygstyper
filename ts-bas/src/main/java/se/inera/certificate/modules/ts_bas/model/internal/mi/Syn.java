@@ -62,34 +62,22 @@ public class Syn {
         this.nystagmus = nystagmus;
     }
 
-    public Synskarpevarden getSynskarpaHoger() {
-        return this.hogerOga;
-    }
-    
     public void setSynskarpaHoger(Double utanKorr, Double medKorr, Boolean kontaktlins) {
         if (hogerOga == null) {
             hogerOga = new Synskarpevarden();
         }
         hogerOga.setUtanKorrektion(utanKorr);
         hogerOga.setMedKorrektion(medKorr != null ? medKorr : null);
-        hogerOga.setKontatlins(kontaktlins);
+        hogerOga.setKontaktlins(kontaktlins);
     }
 
-    public Synskarpevarden getSynskarpaVanster() {
-        return this.vansterOga;
-    }
-    
     public void setSynskarpaVanster(Double utanKorr, Double medKorr, Boolean kontaktlins) {
         if (vansterOga == null) {
             vansterOga = new Synskarpevarden();
         }
         vansterOga.setUtanKorrektion(utanKorr);
         vansterOga.setMedKorrektion(medKorr != null ? medKorr : null);
-        vansterOga.setKontatlins(kontaktlins);
-    }
-    
-    public Synskarpevarden getSynskarpaBinokulart() {
-        return this.binokulart;
+        vansterOga.setKontaktlins(kontaktlins);
     }
     
     public void setSynskarpaBinokulart(Double utanKorr, Double medKorr) {
@@ -98,7 +86,7 @@ public class Syn {
         }
         binokulart.setUtanKorrektion(utanKorr);
         binokulart.setMedKorrektion(medKorr != null ? medKorr : null);
-        binokulart.setKontatlins(null);
+        binokulart.setKontaktlins(null);
     }
 
     public Boolean getKorrektionsglasensStyrka() {
@@ -107,6 +95,30 @@ public class Syn {
 
     public void setKorrektionsglasensStyrka(Boolean korrektionsglasensStyrka) {
         this.korrektionsglasensStyrka = korrektionsglasensStyrka;
+    }
+
+    public Synskarpevarden getHogerOga() {
+        return hogerOga;
+    }
+
+    public void setHogerOga(Synskarpevarden hogerOga) {
+        this.hogerOga = hogerOga;
+    }
+
+    public Synskarpevarden getVansterOga() {
+        return vansterOga;
+    }
+
+    public void setVansterOga(Synskarpevarden vansterOga) {
+        this.vansterOga = vansterOga;
+    }
+
+    public Synskarpevarden getBinokulart() {
+        return binokulart;
+    }
+
+    public void setBinokulart(Synskarpevarden binokulart) {
+        this.binokulart = binokulart;
     }
     
 }

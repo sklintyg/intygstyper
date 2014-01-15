@@ -36,6 +36,7 @@
             "extension": "SE0000000000-1333"
         },
         "namn": "Doktor Thompson",
+        "specialiteter" : [],
         "vardenhet": {
             "id": {
                 "root": "1.2.752.129.2.1.4.1",
@@ -317,24 +318,12 @@
             "forekomst": false
         },
         {
-            "observationskod": {
-                "codeSystem": "1.2.752.116.1.1.1.1.1",
-                "codeSystemName": "ICD-10",
-                "code": "E10"
-            },
-            "forekomst": false
-        },
-        {
-            "observationskod": {
-                "codeSystem": "1.2.752.116.1.1.1.1.1",
-                "codeSystemName": "ICD-10",
-                "code": "E11"
-            },
-            "id": {
-                "root": "1.2.752.129.2.1.2.1",
-                "extension": "diabetes2"
-            },
-            "forekomst": false
+        	"observationskod" : {
+        		"codeSystem" : "1.2.752.116.2.1.1.1",
+        		"codeSystemName" : "SNOMED-CT",
+        		"code" : "73211009"
+        	},
+        	"forekomst" : false
         },
         {
             "observationskod": {
