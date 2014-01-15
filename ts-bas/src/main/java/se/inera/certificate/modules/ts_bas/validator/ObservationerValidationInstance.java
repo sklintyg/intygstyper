@@ -79,6 +79,7 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
         assertKodCountBetween(kodList, OBS_OBS11, 1, 1, "observationer");
         assertKodCountBetween(kodList, OBS_OBS12, 1, 1, "observationer");
         assertKodCountBetween(kodList, OBS_OBS13, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS15, 1, 1, "observationer");
         assertKodCountBetween(kodList, OBS_OBS16, 1, 1, "observationer");
         assertKodCountBetween(kodList, OBS_OBS17, 1, 1, "observationer");
         assertKodCountBetween(kodList, OBS_OBS18, 1, 1, "observationer");
@@ -208,6 +209,16 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
                 assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
                 assertNull(observation.getVarde(), entity + ".varde");
 
+            } else if (observation.getObservationskod().equals(OBS_OBS6)) {
+                assertNotNull(observation.getForekomst(), entity + ".förekomst");
+                
+                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
+                
             } else if (observation.getObservationskod().equals(OBS_OBS7)) {
                 // (Riskfaktor för stroke)
                 if (assertNotNull(observation.getForekomst(), entity + ".förekomst").success()) {
