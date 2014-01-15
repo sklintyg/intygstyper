@@ -160,7 +160,7 @@ public class TransportToExternalConverter {
         rekommendation.setRekommendationskod(IsoTypeConverter.toKod(source.getRekommendationskod()));
 
         if (!source.getVardes().isEmpty()) {
-            rekommendation.setVarde(IsoTypeConverter.toKod(source.getVardes().get(0)));
+            rekommendation.getVarde().addAll(convertListOfKod(source.getVardes()));
         }
 
         return rekommendation;
@@ -389,5 +389,18 @@ public class TransportToExternalConverter {
         patient.setPostort(source.getPostort());
 
         return patient;
+    }
+    
+    /**
+     * Utility method for converting a List of CD to a List of Kod
+     * @param cds List of {@link CD}
+     * @return a List of {@link Kod}
+     */
+    private List<Kod> convertListOfKod(List<CD> cds) {
+        List<Kod> koder = new ArrayList<Kod>();
+        for (CD cd: cds) {
+            koder.add(IsoTypeConverter.toKod(cd));
+        }
+        return koder;
     }
 }

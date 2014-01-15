@@ -50,7 +50,7 @@ public class Utlatande {
 
     private Neurologi neurologi;
 
-    private Medvetandestorning medvertandestörning;
+    private Medvetandestorning medvertandestorning;
 
     private Njurar njurar;
 
@@ -175,11 +175,11 @@ public class Utlatande {
     }
 
     public Medvetandestorning getMedvertandestörning() {
-        return medvertandestörning;
+        return medvertandestorning;
     }
 
-    public void setMedvertandestörning(Medvetandestorning medvertandestörning) {
-        this.medvertandestörning = medvertandestörning;
+    public void setMedvertandestorning(Medvetandestorning medvertandestörning) {
+        this.medvertandestorning = medvertandestörning;
     }
 
     public Njurar getNjurar() {

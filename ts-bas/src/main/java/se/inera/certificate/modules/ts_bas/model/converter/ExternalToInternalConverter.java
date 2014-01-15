@@ -19,7 +19,10 @@
 package se.inera.certificate.modules.ts_bas.model.converter;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -31,17 +34,31 @@ import se.inera.certificate.modules.ts_bas.model.codes.AktivitetKod;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_bas.model.codes.LateralitetsKod;
 import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
+import se.inera.certificate.modules.ts_bas.model.codes.RekommendationVardeKod;
+import se.inera.certificate.modules.ts_bas.model.codes.RekommendationsKod;
 import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_bas.model.external.Observation;
+import se.inera.certificate.modules.ts_bas.model.external.Rekommendation;
+import se.inera.certificate.modules.ts_bas.model.internal.mi.Bedomning;
+import se.inera.certificate.modules.ts_bas.model.internal.mi.BedomningKorkortstyp;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.Diabetes;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.Funktionsnedsattning;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.HjartKarl;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.HoSPersonal;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.HorselBalans;
+import se.inera.certificate.modules.ts_bas.model.internal.mi.Kognitivt;
+import se.inera.certificate.modules.ts_bas.model.internal.mi.Medicinering;
+import se.inera.certificate.modules.ts_bas.model.internal.mi.Medvetandestorning;
+import se.inera.certificate.modules.ts_bas.model.internal.mi.NarkotikaLakemedel;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.Neurologi;
+import se.inera.certificate.modules.ts_bas.model.internal.mi.Njurar;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.Patient;
+import se.inera.certificate.modules.ts_bas.model.internal.mi.Psykiskt;
+import se.inera.certificate.modules.ts_bas.model.internal.mi.Sjukhusvard;
+import se.inera.certificate.modules.ts_bas.model.internal.mi.SomnVakenhet;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.Syn;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande;
+import se.inera.certificate.modules.ts_bas.model.internal.mi.Utvecklingsstorning;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.Vardenhet;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.Vardgivare;
 import se.inera.certificate.modules.ts_bas.rest.dto.CertificateContentHolder;
@@ -98,8 +115,304 @@ public class ExternalToInternalConverter {
         intUtlatande.setHjartKarl(createHjartKarl(extUtlatande));
         intUtlatande.setDiabetes(createDiabetes(extUtlatande));
         intUtlatande.setNeurologi(createNeurologi(extUtlatande));
+        intUtlatande.setMedvertandestorning(createMedvetandestorning(extUtlatande));
+        intUtlatande.setNjurar(createNjurar(extUtlatande));
+        intUtlatande.setKognitivt(createKognitivt(extUtlatande));
+        intUtlatande.setSomnVakenhet(createSomnVakenhet(extUtlatande));
+        intUtlatande.setNarkotikaLakemedel(createNarkotikaLakemedel(extUtlatande));
+        intUtlatande.setPsykiskt(createPsykiskt(extUtlatande));
+        intUtlatande.setUtvecklingsstorning(createUtvecklingsstorning(extUtlatande));
+        intUtlatande.setSjukhusvard(createSjukhusvard(extUtlatande));
+        intUtlatande.setMedicinering(createMedicinering(extUtlatande));
+        intUtlatande.setBedomning(createBedomning(extUtlatande));
 
         return intUtlatande;
+    }
+
+    /**
+     * Create a Bedomning object from a List of Rekommendation[er]
+     * 
+     * @param extUtlatande
+     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @return {@link Bedomning}
+     */
+    private Bedomning createBedomning(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
+        Bedomning bedomning = new Bedomning();
+
+        List<Rekommendation> rekommendationer = extUtlatande.getRekommendationer();
+
+        for (Rekommendation rek : rekommendationer) {
+            if (rek.getRekommendationskod().getCode().equals(RekommendationsKod.PATIENT_UPPFYLLER_KRAV_FOR.getCode())) {
+                
+                if (rek.getVarde().contains(RekommendationVardeKod.INTE_TA_STALLNING)) {
+                    bedomning.setKanInteTaStallning(true);
+                } else {
+                    bedomning.getKorkortstyp().addAll(convertKoderToEnum(rek.getVarde()));
+                }
+
+            } else if (rek.getRekommendationskod().getCode()
+                    .equals(RekommendationsKod.PATIENT_BOR_UNDESOKAS_AV_SPECIALIST.getCode())) {
+                bedomning.setLakareSpecialKompetens(rek.getBeskrivning());
+            } 
+        }
+        return bedomning;
+    }
+
+    // Is there a better way to do this?
+    private Collection<? extends BedomningKorkortstyp> convertKoderToEnum(Collection<Kod> vardeList) {
+
+        Set<BedomningKorkortstyp> theSet = EnumSet.noneOf(BedomningKorkortstyp.class);
+
+        for (Kod kod : vardeList) {
+            if (RekommendationVardeKod.C1.matches(kod)) {
+                theSet.add(BedomningKorkortstyp.C1);
+
+            } else if (RekommendationVardeKod.C1E.matches(kod)) {
+                theSet.add(BedomningKorkortstyp.C1E);
+
+            } else if (RekommendationVardeKod.C.matches(kod)) {
+                theSet.add(BedomningKorkortstyp.C);
+
+            } else if (RekommendationVardeKod.CE.matches(kod)) {
+                theSet.add(BedomningKorkortstyp.CE);
+
+            } else if (RekommendationVardeKod.D1.matches(kod)) {
+                theSet.add(BedomningKorkortstyp.D1);
+
+            } else if (RekommendationVardeKod.D1E.matches(kod)) {
+                theSet.add(BedomningKorkortstyp.D1E);
+
+            } else if (RekommendationVardeKod.D.matches(kod)) {
+                theSet.add(BedomningKorkortstyp.D);
+
+            } else if (RekommendationVardeKod.DE.matches(kod)) {
+                theSet.add(BedomningKorkortstyp.DE);
+
+            } else if (RekommendationVardeKod.TAXI.matches(kod)) {
+                theSet.add(BedomningKorkortstyp.TAXI);
+
+            } else if (RekommendationVardeKod.ANNAT.matches(kod)) {
+                theSet.add(BedomningKorkortstyp.ANNAT);
+            }
+        }
+        return theSet;
+    }
+
+    /**
+     * Create Medicinering object from Observation
+     * 
+     * @param extUtlatande
+     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @return {@link Medicinering}
+     */
+    private Medicinering createMedicinering(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
+        Medicinering medicinering = new Medicinering();
+
+        Observation stadigvarandeMedicinering = getObservationWithKod(CodeConverter
+                .toKod(ObservationsKod.STADIGVARANDE_MEDICINERING));
+
+        if (stadigvarandeMedicinering != null) {
+            medicinering.setStadigvarandeMedicinering(stadigvarandeMedicinering.getForekomst());
+            if (stadigvarandeMedicinering.getForekomst()) {
+                medicinering.setMediciner(stadigvarandeMedicinering.getBeskrivning());
+            }
+        }
+        return medicinering;
+    }
+
+    /**
+     * Create Sjukhusvard object from Aktivitet
+     * 
+     * @param extUtlatande
+     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @return {@link Sjukhusvard}
+     */
+    private Sjukhusvard createSjukhusvard(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
+        Sjukhusvard sjukhusvard = new Sjukhusvard();
+
+        Aktivitet harVistatsSjukhus = getAktivitetWithKod(CodeConverter.toKod(AktivitetKod.VARD_PA_SJUKHUS));
+
+        if (harVistatsSjukhus != null) {
+            sjukhusvard.setSjukhusEllerLakarkontakt(harVistatsSjukhus.getForekomst());
+            if (harVistatsSjukhus.getForekomst()) {
+
+                // Make a nicely formatted string with from partial and tom partial
+                sjukhusvard.setTidpunkt(PartialConverter
+                        .partialToString(harVistatsSjukhus.getAktivitetstid().getFrom())
+                        + " - "
+                        + PartialConverter.partialToString(harVistatsSjukhus.getAktivitetstid().getTom()));
+
+                sjukhusvard.setVardinrattning(harVistatsSjukhus.getPlats());
+                sjukhusvard.setAnledning(harVistatsSjukhus.getBeskrivning());
+            }
+        }
+
+        return sjukhusvard;
+    }
+
+    /**
+     * Create Utvecklingsstorning object from Observationer
+     * 
+     * @param extUtlatande
+     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @return {@link Utvecklingsstorning}
+     */
+    private Utvecklingsstorning createUtvecklingsstorning(
+            se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
+        Utvecklingsstorning utvecklingsstorning = new Utvecklingsstorning();
+
+        Observation psykiskUtvecklingsstorning = getObservationWithKod(CodeConverter
+                .toKod(ObservationsKod.PSYKISK_UTVECKLINGSSTORNING));
+        Observation adhdDampMm = getObservationWithKod(CodeConverter.toKod(ObservationsKod.ADHD_DAMP_MM));
+
+        if (psykiskUtvecklingsstorning != null) {
+            utvecklingsstorning.setPsykiskUtvecklingsstorning(psykiskUtvecklingsstorning.getForekomst());
+        }
+
+        if (adhdDampMm != null) {
+            utvecklingsstorning.setHarSyndrom(adhdDampMm.getForekomst());
+        }
+
+        return utvecklingsstorning;
+    }
+
+    /**
+     * Create Psykiskt object from Observationer
+     * 
+     * @param extUtlatande
+     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @return {@link Psykiskt}
+     */
+    private Psykiskt createPsykiskt(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
+        Psykiskt psykiskt = new Psykiskt();
+
+        Observation psykiskSjukdom = getObservationWithKod(CodeConverter.toKod(ObservationsKod.PSYKISK_SJUKDOM));
+
+        if (psykiskSjukdom != null) {
+            psykiskt.setPsykiskSjukdom(psykiskSjukdom.getForekomst());
+        }
+
+        return psykiskt;
+    }
+
+    /**
+     * Create NarkotikaLakemedel object from Observationer and Aktiviteter
+     * 
+     * @param extUtlatande
+     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @return {@link NarkotikaLakemedel}
+     */
+    private NarkotikaLakemedel createNarkotikaLakemedel(
+            se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
+        NarkotikaLakemedel narkotikaLakemedel = new NarkotikaLakemedel();
+
+        Observation teckenPaMissbruk = getObservationWithKod(CodeConverter.toKod(ObservationsKod.TECKEN_PA_MISSBRUK));
+        Aktivitet vardinsatsMissbruk = getAktivitetWithKod(CodeConverter
+                .toKod(AktivitetKod.VARDINSATS_MISSBRUK_BEROENDE));
+        Aktivitet provtagningMissbruk = getAktivitetWithKod(CodeConverter
+                .toKod(AktivitetKod.PROVTAGNING_ALKOHO_NARKOTIKA));
+        Observation lakemedelsanvandning = getObservationWithKod(CodeConverter
+                .toKod(ObservationsKod.LAKEMEDELSANVANDNING_TRAFIKSAKERHETSRISK));
+
+        if (teckenPaMissbruk != null) {
+            narkotikaLakemedel.setTeckenMissbruk(teckenPaMissbruk.getForekomst());
+        }
+        if (vardinsatsMissbruk != null) {
+            narkotikaLakemedel.setForemalForVardinsats(vardinsatsMissbruk.getForekomst());
+        }
+        if (provtagningMissbruk != null) {
+            narkotikaLakemedel.setProvtagningBehovs(provtagningMissbruk.getForekomst());
+        }
+        if (lakemedelsanvandning != null) {
+            narkotikaLakemedel.setLakarordineratLakemedelsbruk(lakemedelsanvandning.getForekomst());
+            if (lakemedelsanvandning.getForekomst()) {
+                narkotikaLakemedel.setLakemedelOchDos(lakemedelsanvandning.getBeskrivning());
+            }
+        }
+        return narkotikaLakemedel;
+    }
+
+    /**
+     * Create SomnVakenhet object from Observationer
+     * 
+     * @param extUtlatande
+     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @return {@link SomnVakenhet}
+     */
+    private SomnVakenhet createSomnVakenhet(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
+        SomnVakenhet somnVakenhet = new SomnVakenhet();
+
+        Observation somnVakenhetsstorning = getObservationWithKod(CodeConverter
+                .toKod(ObservationsKod.SOMN_VAKENHETSSTORNING));
+
+        if (somnVakenhetsstorning != null) {
+            somnVakenhet.setTeckenSomnstorningar(somnVakenhetsstorning.getForekomst());
+        }
+
+        return somnVakenhet;
+    }
+
+    /**
+     * Create Kognitivt object from Observationer
+     * 
+     * @param extUtlatande
+     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @return {@link Kognitivt}
+     */
+    private Kognitivt createKognitivt(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
+        Kognitivt kognitivt = new Kognitivt();
+
+        Observation sviktandeKognitivFunktion = getObservationWithKod(CodeConverter
+                .toKod(ObservationsKod.SVIKTANDE_KOGNITIV_FUNKTION));
+
+        if (sviktandeKognitivFunktion != null) {
+            kognitivt.setSviktandeKognitivFunktion(sviktandeKognitivFunktion.getForekomst());
+        }
+
+        return kognitivt;
+    }
+
+    /**
+     * Create Njurar object from Observationer
+     * 
+     * @param extUtlatande
+     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @return {@link Njurar}
+     */
+    private Njurar createNjurar(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
+        Njurar njurar = new Njurar();
+
+        Observation nedsattNjurfunktion = getObservationWithKod(CodeConverter
+                .toKod(ObservationsKod.NEDSATT_NJURFUNKTION_TRAFIKSAKERHETSRISK));
+
+        if (nedsattNjurfunktion != null) {
+            njurar.setNedsattNjurfunktion(nedsattNjurfunktion.getForekomst());
+        }
+
+        return njurar;
+    }
+
+    /**
+     * Create Medvetandestorning object from Observationer
+     * 
+     * @param extUtlatande
+     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @return {@link Medvetandestorning}
+     */
+    private Medvetandestorning createMedvetandestorning(
+            se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
+        Medvetandestorning medvetandestorning = new Medvetandestorning();
+
+        Observation harMedvetandestorning = getObservationWithKod(CodeConverter.toKod(ObservationsKod.EPILEPSI));
+
+        if (harMedvetandestorning != null) {
+            medvetandestorning.setMedvetandestorning(harMedvetandestorning.getForekomst());
+            if (harMedvetandestorning.getForekomst()) {
+                medvetandestorning.setBeskrivning(harMedvetandestorning.getBeskrivning());
+            }
+        }
+
+        return medvetandestorning;
     }
 
     /**

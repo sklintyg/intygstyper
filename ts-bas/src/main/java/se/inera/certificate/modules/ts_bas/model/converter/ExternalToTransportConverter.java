@@ -163,10 +163,18 @@ public class ExternalToTransportConverter {
 
         rekommendation.setRekommendationskod(IsoTypeConverter.toCD(source.getRekommendationskod()));
 
-        if (source.getVarde() != null) {
-            rekommendation.getVardes().add(IsoTypeConverter.toCD(source.getVarde()));
+        if (!source.getVarde().isEmpty()) {
+            rekommendation.getVardes().addAll(convertKoderToCDs(source.getVarde()));
         }
         return rekommendation;
+    }
+
+    private Collection<? extends CD> convertKoderToCDs(List<Kod> varde) {
+        List<CD> cds = new ArrayList<CD>();
+        for (Kod kod : varde) {
+            cds.add(IsoTypeConverter.toCD(kod));
+        }
+        return cds;
     }
 
     /**

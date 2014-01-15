@@ -37,7 +37,9 @@ public class RekommendationerValidationInstance extends ExternalValidatorInstanc
             if (rekommendation.getRekommendationskod().equals(REK_REK8)) {
                 // Patienten uppfyller kraven för (REK8)
                 assertNull(rekommendation.getBeskrivning(), entity + ".beskrivning");
-                assertKodInEnum(rekommendation.getVarde(), RekommendationVardeKod.class, entity + ".varde");
+                for (Kod kod : rekommendation.getVarde()) {
+                    assertKodInEnum(kod, RekommendationVardeKod.class, entity + ".varde");
+                }
 
             } else if (rekommendation.getRekommendationskod().equals(REK_REK9)) {
                 // Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i (REK9)
