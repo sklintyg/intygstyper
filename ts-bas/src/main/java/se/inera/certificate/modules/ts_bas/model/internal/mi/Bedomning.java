@@ -1,19 +1,19 @@
 package se.inera.certificate.modules.ts_bas.model.internal.mi;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.EnumSet;
+import java.util.Set;
 
 public class Bedomning {
-    
-    private List<String> korkortstyp;
-    
+
+    private Set<BedomningKorkortstyp> korkortstyp;
+
     private Boolean kanInteTaStallning;
-    
+
     private String lakareSpecialKompetens;
 
-    public List<String> getKorkortstyp() {
+    public Set<BedomningKorkortstyp> getKorkortstyp() {
         if (korkortstyp == null) {
-            korkortstyp = new ArrayList<String>();
+            korkortstyp = EnumSet.noneOf(BedomningKorkortstyp.class);
         }
         return korkortstyp;
     }
@@ -33,7 +33,4 @@ public class Bedomning {
     public void setLakareSpecialKompetens(String lakareSpecialKompetens) {
         this.lakareSpecialKompetens = lakareSpecialKompetens;
     }
-    
-    
-
 }
