@@ -19,10 +19,7 @@
 package se.inera.certificate.modules.ts_bas.model.converter;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.EnumSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -139,63 +136,23 @@ public class ExternalToInternalConverter {
     private Bedomning createBedomning(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
         Bedomning bedomning = new Bedomning();
 
-        List<Rekommendation> rekommendationer = extUtlatande.getRekommendationer();
-
-        for (Rekommendation rek : rekommendationer) {
-            if (rek.getRekommendationskod().getCode().equals(RekommendationsKod.PATIENT_UPPFYLLER_KRAV_FOR.getCode())) {
-                
+        for (Rekommendation rek : extUtlatande.getRekommendationer()) {
+            if (CodeConverter.matches(RekommendationsKod.PATIENT_UPPFYLLER_KRAV_FOR, rek.getRekommendationskod())) {
                 if (rek.getVarde().contains(RekommendationVardeKod.INTE_TA_STALLNING)) {
                     bedomning.setKanInteTaStallning(true);
                 } else {
-                    bedomning.getKorkortstyp().addAll(convertKoderToEnum(rek.getVarde()));
+                    for (Kod varde : rek.getVarde()) {
+                        RekommendationVardeKod vardeKod = CodeConverter.fromCode(varde, RekommendationVardeKod.class);
+                        bedomning.getKorkortstyp().add(BedomningKorkortstyp.valueOf(vardeKod.name()));
+                    }
                 }
 
-            } else if (rek.getRekommendationskod().getCode()
-                    .equals(RekommendationsKod.PATIENT_BOR_UNDESOKAS_AV_SPECIALIST.getCode())) {
+            } else if (CodeConverter.matches(RekommendationsKod.PATIENT_BOR_UNDESOKAS_AV_SPECIALIST,
+                    rek.getRekommendationskod())) {
                 bedomning.setLakareSpecialKompetens(rek.getBeskrivning());
-            } 
-        }
-        return bedomning;
-    }
-
-    // Is there a better way to do this?
-    private Collection<? extends BedomningKorkortstyp> convertKoderToEnum(Collection<Kod> vardeList) {
-
-        Set<BedomningKorkortstyp> theSet = EnumSet.noneOf(BedomningKorkortstyp.class);
-
-        for (Kod kod : vardeList) {
-            if (RekommendationVardeKod.C1.matches(kod)) {
-                theSet.add(BedomningKorkortstyp.C1);
-
-            } else if (RekommendationVardeKod.C1E.matches(kod)) {
-                theSet.add(BedomningKorkortstyp.C1E);
-
-            } else if (RekommendationVardeKod.C.matches(kod)) {
-                theSet.add(BedomningKorkortstyp.C);
-
-            } else if (RekommendationVardeKod.CE.matches(kod)) {
-                theSet.add(BedomningKorkortstyp.CE);
-
-            } else if (RekommendationVardeKod.D1.matches(kod)) {
-                theSet.add(BedomningKorkortstyp.D1);
-
-            } else if (RekommendationVardeKod.D1E.matches(kod)) {
-                theSet.add(BedomningKorkortstyp.D1E);
-
-            } else if (RekommendationVardeKod.D.matches(kod)) {
-                theSet.add(BedomningKorkortstyp.D);
-
-            } else if (RekommendationVardeKod.DE.matches(kod)) {
-                theSet.add(BedomningKorkortstyp.DE);
-
-            } else if (RekommendationVardeKod.TAXI.matches(kod)) {
-                theSet.add(BedomningKorkortstyp.TAXI);
-
-            } else if (RekommendationVardeKod.ANNAT.matches(kod)) {
-                theSet.add(BedomningKorkortstyp.ANNAT);
             }
         }
-        return theSet;
+        return bedomning;
     }
 
     /**
@@ -641,35 +598,29 @@ public class ExternalToInternalConverter {
         boolean vansterKontaktlins = false;
 
         for (Observation o : synskarpa) {
-            if (o.getObservationskod().getCode().equals(ObservationsKod.EJ_KORRIGERAD_SYNSKARPA.getCode())
-                    && o.getLateralitet().getCode().equals(LateralitetsKod.HOGER.getCode())) {
+            if (isObservationAndLateralitet(o, ObservationsKod.EJ_KORRIGERAD_SYNSKARPA, LateralitetsKod.HOGER)) {
                 hogerUtan = o.getVarde().get(0).getQuantity();
 
-            } else if (o.getObservationskod().getCode().equals(ObservationsKod.KORRIGERAD_SYNSKARPA.getCode())
-                    && o.getLateralitet().getCode().equals(LateralitetsKod.HOGER.getCode())) {
+            } else if (isObservationAndLateralitet(o, ObservationsKod.KORRIGERAD_SYNSKARPA, LateralitetsKod.HOGER)) {
                 hogerMed = o.getVarde().get(0).getQuantity();
 
-            } else if (o.getObservationskod().getCode().equals(ObservationsKod.EJ_KORRIGERAD_SYNSKARPA.getCode())
-                    && o.getLateralitet().getCode().equals(LateralitetsKod.VANSTER.getCode())) {
+            } else if (isObservationAndLateralitet(o, ObservationsKod.EJ_KORRIGERAD_SYNSKARPA, LateralitetsKod.VANSTER)) {
                 vansterUtan = o.getVarde().get(0).getQuantity();
 
-            } else if (o.getObservationskod().getCode().equals(ObservationsKod.KORRIGERAD_SYNSKARPA.getCode())
-                    && o.getLateralitet().getCode().equals(LateralitetsKod.VANSTER.getCode())) {
+            } else if (isObservationAndLateralitet(o, ObservationsKod.KORRIGERAD_SYNSKARPA, LateralitetsKod.VANSTER)) {
                 vansterMed = o.getVarde().get(0).getQuantity();
 
-            } else if (o.getObservationskod().getCode().equals(ObservationsKod.EJ_KORRIGERAD_SYNSKARPA.getCode())
-                    && o.getLateralitet().getCode().equals(LateralitetsKod.BINOKULART.getCode())) {
+            } else if (isObservationAndLateralitet(o, ObservationsKod.EJ_KORRIGERAD_SYNSKARPA,
+                    LateralitetsKod.BINOKULART)) {
                 binUtan = o.getVarde().get(0).getQuantity();
 
-            } else if (o.getObservationskod().getCode().equals(ObservationsKod.KORRIGERAD_SYNSKARPA.getCode())
-                    && o.getLateralitet().getCode().equals(LateralitetsKod.BINOKULART.getCode())) {
+            } else if (isObservationAndLateralitet(o, ObservationsKod.KORRIGERAD_SYNSKARPA, LateralitetsKod.BINOKULART)) {
                 binMed = o.getVarde().get(0).getQuantity();
 
-            } else if (o.getObservationskod().getCode().equals(ObservationsKod.KONTAKTLINSER.getCode())
-                    && o.getLateralitet().getCode().equals(LateralitetsKod.HOGER.getCode())) {
+            } else if (isObservationAndLateralitet(o, ObservationsKod.KONTAKTLINSER, LateralitetsKod.HOGER)) {
                 hogerKontaktlins = o.getForekomst();
-            } else if (o.getObservationskod().getCode().equals(ObservationsKod.KONTAKTLINSER.getCode())
-                    && o.getLateralitet().getCode().equals(LateralitetsKod.VANSTER.getCode())) {
+
+            } else if (isObservationAndLateralitet(o, ObservationsKod.KONTAKTLINSER, LateralitetsKod.VANSTER)) {
                 vansterKontaktlins = o.getForekomst();
             }
         }
@@ -768,6 +719,16 @@ public class ExternalToInternalConverter {
         intPatient.setPostort(extPatient.getPostort());
 
         return intPatient;
+    }
+
+    private boolean isObservationAndLateralitet(Observation obs, ObservationsKod observationskod,
+            LateralitetsKod lateralitet) {
+        if (CodeConverter.matches(observationskod, obs.getObservationskod())) {
+            if (CodeConverter.matches(lateralitet, obs.getLateralitet())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
