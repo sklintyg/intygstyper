@@ -12,6 +12,14 @@ public class Syn {
 
     private Boolean nystagmus;
 
+    private Synskarpevarden hogerOga;
+
+    private Synskarpevarden vansterOga;
+
+    private Synskarpevarden binokulart;
+    
+    private Boolean korrektionsglasensStyrka;
+    
     // TODO: Add fields for synundersökning here
 
     public Boolean getSynfaltsdefekter() {
@@ -53,4 +61,52 @@ public class Syn {
     public void setNystagmus(Boolean nystagmus) {
         this.nystagmus = nystagmus;
     }
+
+    public Synskarpevarden getSynskarpaHoger() {
+        return this.hogerOga;
+    }
+    
+    public void setSynskarpaHoger(Double utanKorr, Double medKorr, Boolean kontaktlins) {
+        if (hogerOga == null) {
+            hogerOga = new Synskarpevarden();
+        }
+        hogerOga.setUtanKorrektion(utanKorr);
+        hogerOga.setMedKorrektion(medKorr != null ? medKorr : null);
+        hogerOga.setKontatlins(kontaktlins);
+    }
+
+    public Synskarpevarden getSynskarpaVanster() {
+        return this.vansterOga;
+    }
+    
+    public void setSynskarpaVanster(Double utanKorr, Double medKorr, Boolean kontaktlins) {
+        if (vansterOga == null) {
+            vansterOga = new Synskarpevarden();
+        }
+        vansterOga.setUtanKorrektion(utanKorr);
+        vansterOga.setMedKorrektion(medKorr != null ? medKorr : null);
+        vansterOga.setKontatlins(kontaktlins);
+    }
+    
+    public Synskarpevarden getSynskarpaBinokulart() {
+        return this.binokulart;
+    }
+    
+    public void setSynskarpaBinokulart(Double utanKorr, Double medKorr) {
+        if (binokulart == null) {
+            binokulart = new Synskarpevarden();
+        }
+        binokulart.setUtanKorrektion(utanKorr);
+        binokulart.setMedKorrektion(medKorr != null ? medKorr : null);
+        binokulart.setKontatlins(null);
+    }
+
+    public Boolean getKorrektionsglasensStyrka() {
+        return korrektionsglasensStyrka;
+    }
+
+    public void setKorrektionsglasensStyrka(Boolean korrektionsglasensStyrka) {
+        this.korrektionsglasensStyrka = korrektionsglasensStyrka;
+    }
+    
 }

@@ -42,7 +42,7 @@ public class Utlatande {
 
     private HorselBalans horselBalans;
 
-    private Funktionsnersattning funktionsnersattning;
+    private Funktionsnedsattning funktionsnersattning;
 
     private HjartKarl hjartKarl;
 
@@ -142,11 +142,11 @@ public class Utlatande {
         this.horselBalans = horselBalans;
     }
 
-    public Funktionsnersattning getFunktionsnersattning() {
+    public Funktionsnedsattning getFunktionsnersattning() {
         return funktionsnersattning;
     }
 
-    public void setFunktionsnersattning(Funktionsnersattning funktionsnersattning) {
+    public void setFunktionsnersattning(Funktionsnedsattning funktionsnersattning) {
         this.funktionsnersattning = funktionsnersattning;
     }
 

@@ -18,11 +18,14 @@
  */
 package se.inera.certificate.modules.ts_bas.model.converter;
 
+import static org.junit.Assert.*;
 import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import com.itextpdf.text.log.SysoLogger;
 
 import se.inera.certificate.modules.ts_bas.rest.dto.CertificateContentHolder;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
@@ -41,6 +44,19 @@ public class ExternalToInternalConverterTest {
     @Before
     public void setUp() throws Exception {
         converter = new ExternalToInternalConverter();
+    }
+    
+    @Test
+    public void testInitialConversion() throws Exception {
+        
+        
+        CertificateContentHolder extUtlatande = ScenarioFinder.getExternalScenario("valid-minimal").asExternalModelWithHolder();
+
+        se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande actual = converter.convert(extUtlatande);
+        
+        assertEquals(0.0, actual.getSyn().getSynskarpaHoger().getUtanKorrektion(), 0);
+        
+        
     }
 
     @Ignore
