@@ -31,6 +31,9 @@
     	"typ" : "5880005", 
     	"idkontroll" : "IDK6"
     },
+    "intygAvser" : {
+    	"korkortstyp" : ["C"]
+    },
     "syn" : {
         "synfaltsdefekter" :  false,
         "nattblindhet" : false,

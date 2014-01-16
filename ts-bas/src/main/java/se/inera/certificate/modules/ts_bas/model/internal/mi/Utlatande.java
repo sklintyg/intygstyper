@@ -18,8 +18,6 @@
  */
 package se.inera.certificate.modules.ts_bas.model.internal.mi;
 
-import java.util.List;
-
 import org.joda.time.LocalDateTime;
 
 public class Utlatande {
@@ -39,6 +37,8 @@ public class Utlatande {
     private Patient patient;
     
     private Vardkontakt vardkontakt;
+    
+    private IntygAvser intygAvser;
     
     private Syn syn;
 
@@ -176,12 +176,12 @@ public class Utlatande {
         this.neurologi = neurologi;
     }
 
-    public Medvetandestorning getMedvetandestörning() {
+    public Medvetandestorning getMedvetandestorning() {
         return medvetandestorning;
     }
 
-    public void setMedvetandestorning(Medvetandestorning medvetandestörning) {
-        this.medvetandestorning = medvetandestörning;
+    public void setMedvetandestorning(Medvetandestorning medvetandestorning) {
+        this.medvetandestorning = medvetandestorning;
     }
 
     public Njurar getNjurar() {
@@ -262,5 +262,13 @@ public class Utlatande {
 
     public void setVardkontakt(Vardkontakt vardkontakt) {
         this.vardkontakt = vardkontakt;
+    }
+
+    public IntygAvser getIntygAvser() {
+        return intygAvser;
+    }
+
+    public void setIntygAvser(IntygAvser intygAvser) {
+        this.intygAvser = intygAvser;
     }
 }

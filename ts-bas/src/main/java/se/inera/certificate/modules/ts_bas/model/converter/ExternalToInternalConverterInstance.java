@@ -29,6 +29,7 @@ import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.ts_bas.model.codes.AktivitetKod;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
+import se.inera.certificate.modules.ts_bas.model.codes.IntygAvserKod;
 import se.inera.certificate.modules.ts_bas.model.codes.LateralitetsKod;
 import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_bas.model.codes.RekommendationVardeKod;
@@ -43,6 +44,8 @@ import se.inera.certificate.modules.ts_bas.model.internal.mi.Funktionsnedsattnin
 import se.inera.certificate.modules.ts_bas.model.internal.mi.HjartKarl;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.HoSPersonal;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.HorselBalans;
+import se.inera.certificate.modules.ts_bas.model.internal.mi.IntygAvser;
+import se.inera.certificate.modules.ts_bas.model.internal.mi.IntygAvserKorkortstyp;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.Kognitivt;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.Medicinering;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.Medvetandestorning;
@@ -75,7 +78,7 @@ public class ExternalToInternalConverterInstance {
     private List<Observation> observationer;
 
     private List<Aktivitet> aktiviteter;
-    
+
     public Utlatande convert(CertificateContentHolder certificateContentHolder) throws ConverterException {
         se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande = certificateContentHolder
                 .getCertificateContent();
@@ -98,7 +101,8 @@ public class ExternalToInternalConverterInstance {
         intUtlatande.setTypAvUtlatande(InternalModelConverterUtils.getValueFromKod(extUtlatande.getTyp()));
         intUtlatande.setSigneringsdatum(extUtlatande.getSigneringsdatum());
         intUtlatande.setSkickatdatum(extUtlatande.getSkickatdatum());
-        intUtlatande.setKommentar(extUtlatande.getKommentarer().size() == 0 ? null : extUtlatande.getKommentarer().get(0));
+        intUtlatande.setKommentar(extUtlatande.getKommentarer().size() == 0 ? null : extUtlatande.getKommentarer().get(
+                0));
 
         HoSPersonal intHoSPersonal = convertToIntHoSPersonal(extUtlatande.getSkapadAv());
         intUtlatande.setSkapadAv(intHoSPersonal);
@@ -107,6 +111,8 @@ public class ExternalToInternalConverterInstance {
         intUtlatande.setPatient(intPatient);
 
         intUtlatande.setVardkontakt(convertToIntVardkontakt(extUtlatande.getVardkontakter().get(0)));
+
+        intUtlatande.setIntygAvser(convertToIntIntygAvser(extUtlatande.getIntygAvser()));
 
         // Create internal model-specific objects grouping similar attributes together
         intUtlatande.setSyn(createSyn(extUtlatande));
@@ -130,9 +136,28 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
+     * Convert a List of Kod into an IntygAvser object
+     * 
+     * @param source
+     *            a List of {@link Kod}
+     * @return {@link IntygAvser}
+     */
+    private IntygAvser convertToIntIntygAvser(List<Kod> source) {
+        IntygAvser intygAvser = new IntygAvser();
+
+        for (Kod kod : source) {
+            IntygAvserKod vardeKod = CodeConverter.fromCode(kod, IntygAvserKod.class);
+            intygAvser.getKorkortstyp().add(IntygAvserKorkortstyp.valueOf(vardeKod.name()));
+        }
+
+        return intygAvser;
+    }
+
+    /**
      * Convert Vardkontakt from external to internal format
      * 
-     * @param source {@link se.inera.certificate.modules.ts_bas.model.external.Vardkontakt}
+     * @param source
+     *            {@link se.inera.certificate.modules.ts_bas.model.external.Vardkontakt}
      * @return {@link Vardkontakt}
      */
     private Vardkontakt convertToIntVardkontakt(se.inera.certificate.modules.ts_bas.model.external.Vardkontakt source) {
