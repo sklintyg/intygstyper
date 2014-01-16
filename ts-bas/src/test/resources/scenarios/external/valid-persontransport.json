@@ -133,6 +133,11 @@
                 "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                 "codeSystemName": "kv_rekommendation_intyg",
                 "code": "VAR3"
+            }, 
+            {
+                "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
+                "codeSystemName": "kv_rekommendation_intyg",
+                "code": "VAR9"
             }]
         }
     ],
@@ -147,7 +152,7 @@
                 "root": "1.2.752.129.2.1.2.1",
                 "extension": "3"
             },
-            "forekomst": true
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -276,7 +281,7 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS3"
             },
-            "forekomst": true
+            "forekomst": false
         },
         {
             "observationskod": {

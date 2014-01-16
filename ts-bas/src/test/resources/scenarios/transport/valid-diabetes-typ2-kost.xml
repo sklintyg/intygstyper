@@ -93,7 +93,7 @@
       extension="3" />
     <p:observationskod code="H53.4" codeSystem="1.2.752.116.1.1.1.1.1"
       codeSystemName="ICD-10" />
-    <p:forekomst>true</p:forekomst>
+    <p:forekomst>false</p:forekomst>
   </p:observation>
 
   <!-- Begränsning av seende vid nedsatt belysning -->
@@ -173,11 +173,6 @@
   </p:observation>
 
   <!-- Hörsel och balanssinne (4.1 - 4.2 -->
-  <p:observation>
-    <p:observationskod code="OBS3" codeSystem="to-come"
-      codeSystemName="kv_observationer_intyg" />
-    <p:forekomst>false</p:forekomst>
-  </p:observation>
 
   <p:observation>
     <p:observationskod code="OBS4" codeSystem="to-come"
@@ -221,21 +216,12 @@
     <p:forekomst>true</p:forekomst>
   </p:observation>
 
-  <!-- behandling av diabetes: enbart kost -->
-  <p:observation>
-    <p:observationskod code="170745003" codeSystem="1.2.752.116.2.1.1.1"
-      codeSystemName="SNOMED-CT" />
-    <p:forekomst>false</p:forekomst>
-  </p:observation>
-
   <!-- behandling av diabetes: kost -->
   <p:observation>
     <p:observationskod code="OBS9" codeSystem="to-come"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>true</p:forekomst>
   </p:observation>
-
- 
 
   <!-- Neurologiska sjukdomar (8) -->
   <p:observation>

@@ -172,18 +172,12 @@
   </p:observation>
 
   <!-- Hörsel och balanssinne (4.1 - 4.2 -->
-  <p:observation>
-    <p:observationskod code="OBS3" codeSystem="to-come"
-      codeSystemName="kv_observationer_intyg" />
-    <p:forekomst>false</p:forekomst>
-  </p:observation>
 
   <p:observation>
     <p:observationskod code="OBS4" codeSystem="to-come"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
-
 
   <!-- Hjärt- och kärlsjukdom som innebär en trafiksäkerhetsrisk (OBS6) -->
   <p:observation>

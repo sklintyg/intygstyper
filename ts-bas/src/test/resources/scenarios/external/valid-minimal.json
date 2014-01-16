@@ -264,14 +264,7 @@
         		"code": "7771000"
         	}
         },
-        {
-            "observationskod": {
-                "codeSystem": "to-come",
-                "codeSystemName": "kv_observationer_intyg",
-                "code": "OBS3"
-            },
-            "forekomst": false
-        },
+
         {
             "observationskod": {
                 "codeSystem": "to-come",

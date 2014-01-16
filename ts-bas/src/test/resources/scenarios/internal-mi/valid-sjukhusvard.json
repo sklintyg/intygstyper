@@ -109,7 +109,10 @@
     },
     
     "sjukhusvard" : {
-    	"sjukhusEllerLakarkontakt" : false
+    	"sjukhusEllerLakarkontakt" : true,
+    	"vardinrattning" : "Vårdcentralen i Trollhättan",
+    	"anledning" : "Spontan självantändning",
+    	"tidpunkt" : "2012-12-12"
     },
     
     "medicinering" : {

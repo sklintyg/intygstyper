@@ -32,7 +32,7 @@
     	"idkontroll" : "IDK6"
     },
     "intygAvser" : {
-    	"korkortstyp" : ["C"]
+    	"korkortstyp" : ["C", "TAXI"]
     },
     "syn" : {
         "synfaltsdefekter" :  false,
@@ -56,11 +56,13 @@
     },
     
     "horselBalans" : {
-    	"balansrubbningar" : false
+    	"balansrubbningar" : false,
+    	"svartUppfattaSamtal4Meter" : false
     },
     
     "funktionsnedsattning" : {
-    	"funktionsnedsattning" : false
+    	"funktionsnedsattning" : false,
+    	"otillrackligRorelseformaga" : false
     },
     
     "hjartKarl" : {
@@ -117,7 +119,7 @@
     },
     
     "bedomning" : {
-    	"korkortstyp" : ["C"]
+    	"korkortstyp" : ["C", "TAXI"]
     }
     
 }

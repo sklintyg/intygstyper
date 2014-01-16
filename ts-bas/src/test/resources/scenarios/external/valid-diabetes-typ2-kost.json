@@ -141,7 +141,7 @@
                 "root": "1.2.752.129.2.1.2.1",
                 "extension": "3"
             },
-            "forekomst": true
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -268,14 +268,6 @@
             "observationskod": {
                 "codeSystem": "to-come",
                 "codeSystemName": "kv_observationer_intyg",
-                "code": "OBS3"
-            },
-            "forekomst": false
-        },
-        {
-            "observationskod": {
-                "codeSystem": "to-come",
-                "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS4"
             },
             "forekomst": false
@@ -322,18 +314,7 @@
                 "code": "E11"
             },
             "forekomst": true
-        },
-        
-        {
-            "observationskod": {
-                "codeSystem": "1.2.752.116.2.1.1.1",
-                "codeSystemName": "SNOMED-CT",
-                "code": "170745003"
-            },
-            "forekomst": false
-        },
-        
-        
+        }, 
         
         {
             "observationskod": {
@@ -343,7 +324,6 @@
             },
             "forekomst": true
         },       
-        
         
         {
             "observationskod": {

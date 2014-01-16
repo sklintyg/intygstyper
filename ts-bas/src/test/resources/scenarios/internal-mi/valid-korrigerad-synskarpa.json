@@ -35,23 +35,26 @@
     	"korkortstyp" : ["C"]
     },
     "syn" : {
-        "synfaltsdefekter" :  false,
+        "synfaltsdefekter" :  true,
         "nattblindhet" : false,
         "progressivOgonsjukdom" : false,
         "diplopi" : false,
         "nystagmus" : false,
         "hogerOga" : {
         	"utanKorrektion" : 0.0,
+          	"medKorrektion" : 0.0,
         	"kontaktlins" : false
         },
         
         "vansterOga" : {
         	"utanKorrektion" : 0.0,
+        	"medKorrektion" : 0.0,
         	"kontaktlins" : false
         },
 
         "binokulart" : {
-        	"utanKorrektion" : 0.0
+        	"utanKorrektion" : 0.0,
+          	"medKorrektion" : 0.0
         }
     },
     

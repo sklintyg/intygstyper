@@ -609,7 +609,7 @@ public class ExternalToInternalConverterInstance {
         for (Observation obs : extUtlatande.getObservationer()) {
             Kod kod = obs.getObservationskod();
             if (kod.getCode().equals(ObservationsKod.EJ_KORRIGERAD_SYNSKARPA.getCode())
-                    || (kod.getCode().equals(ObservationsKod.KORRIGERAD_SYNSKARPA.getCode()) && obs.getForekomst())
+                    || kod.getCode().equals(ObservationsKod.KORRIGERAD_SYNSKARPA.getCode())
                     || kod.getCode().equals(ObservationsKod.KONTAKTLINSER.getCode())) {
                 synskarpa.add(obs);
             }

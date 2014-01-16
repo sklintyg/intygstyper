@@ -70,7 +70,9 @@
     },
     
     "diabetes" : {
-    	"harDiabetes" : false
+    	"harDiabetes" : true,
+    	"diabetesTyp" : "E11",
+    	"kost" : true 
     },
     
     "neurologi" : {

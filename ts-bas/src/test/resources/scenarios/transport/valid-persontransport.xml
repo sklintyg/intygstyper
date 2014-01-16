@@ -87,6 +87,8 @@
       codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
     <p:varde code="VAR3" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
+    <p:varde code="VAR9" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+      codeSystemName="kv_rekommendation_intyg" />
   </p:rekommendation>
 
   <!-- Synfunktioner (3.1 - 3.5) -->
@@ -95,7 +97,7 @@
       extension="3" />
     <p:observationskod code="H53.4" codeSystem="1.2.752.116.1.1.1.1.1"
       codeSystemName="ICD-10" />
-    <p:forekomst>true</p:forekomst>
+    <p:forekomst>false</p:forekomst>
   </p:observation>
 
   <!-- Begränsning av seende vid nedsatt belysning -->
@@ -177,7 +179,7 @@
   <p:observation>
     <p:observationskod code="OBS3" codeSystem="to-come"
       codeSystemName="kv_observationer_intyg" />
-    <p:forekomst>true</p:forekomst>
+    <p:forekomst>false</p:forekomst>
   </p:observation>
 
   <p:observation>
