@@ -28,7 +28,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
@@ -43,7 +42,6 @@ import se.inera.certificate.ts_bas.model.v1.EnhetType;
 import se.inera.certificate.ts_bas.model.v1.HosPersonalType;
 import se.inera.certificate.ts_bas.model.v1.ObservationAktivitetRelationType;
 import se.inera.certificate.ts_bas.model.v1.ObservationType;
-import se.inera.certificate.ts_bas.model.v1.PartialDateInterval;
 import se.inera.certificate.ts_bas.model.v1.PatientType;
 import se.inera.certificate.ts_bas.model.v1.RekommendationType;
 import se.inera.certificate.ts_bas.model.v1.Utlatande;
@@ -286,8 +284,8 @@ public class ExternalToTransportConverter {
             aktivitet.setAktivitetsstatus(IsoTypeConverter.toCD(source.getAktivitetsstatus()));
         }
 
-        if (source.getAktivitetstid() != null) {
-            aktivitet.setAktivitetstid(convertPartialDateInterval(source.getAktivitetstid()));
+        if (source.getOstruktureradTid() != null) {
+            aktivitet.setOstruktureradtid(source.getOstruktureradTid());
         }
         if (source.getBeskrivning() != null) {
             aktivitet.setBeskrivning(source.getBeskrivning());
@@ -303,24 +301,6 @@ public class ExternalToTransportConverter {
         }
 
         return aktivitet;
-    }
-
-    /**
-     * Convert PartialInterval to PartialDateInterval
-     * 
-     * @param source
-     *            {@link PartialInterval}
-     * @return {@link PartialDateInterval}
-     */
-    private PartialDateInterval convertPartialDateInterval(PartialInterval source) {
-        if (source == null) {
-            LOG.trace("Source PartialDateInterval was null, could not convert");
-            return null;
-        }
-        PartialDateInterval pdi = new PartialDateInterval();
-        pdi.setFrom(source.getFrom());
-        pdi.setTom(source.getTom());
-        return pdi;
     }
 
     /**

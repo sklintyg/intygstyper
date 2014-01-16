@@ -45,7 +45,7 @@ import se.inera.certificate.modules.ts_bas.model.internal.mi.HjartKarl;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.HoSPersonal;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.HorselBalans;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.IntygAvser;
-import se.inera.certificate.modules.ts_bas.model.internal.mi.IntygAvserKorkortstyp;
+import se.inera.certificate.modules.ts_bas.model.internal.mi.IntygAvserKategori;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.Kognitivt;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.Medicinering;
 import se.inera.certificate.modules.ts_bas.model.internal.mi.Medvetandestorning;
@@ -147,7 +147,7 @@ public class ExternalToInternalConverterInstance {
 
         for (Kod kod : source) {
             IntygAvserKod vardeKod = CodeConverter.fromCode(kod, IntygAvserKod.class);
-            intygAvser.getKorkortstyp().add(IntygAvserKorkortstyp.valueOf(vardeKod.name()));
+            intygAvser.getKorkortstyp().add(IntygAvserKategori.valueOf(vardeKod.name()));
         }
 
         return intygAvser;
@@ -238,11 +238,7 @@ public class ExternalToInternalConverterInstance {
             if (harVistatsSjukhus.getForekomst()) {
 
                 // Make a nicely formatted string with from partial and tom partial
-                sjukhusvard.setTidpunkt(PartialConverter
-                        .partialToString(harVistatsSjukhus.getAktivitetstid().getFrom())
-                        + " - "
-                        + PartialConverter.partialToString(harVistatsSjukhus.getAktivitetstid().getTom()));
-
+                sjukhusvard.setTidpunkt(harVistatsSjukhus.getOstruktureradTid());
                 sjukhusvard.setVardinrattning(harVistatsSjukhus.getPlats());
                 sjukhusvard.setAnledning(harVistatsSjukhus.getBeskrivning());
             }

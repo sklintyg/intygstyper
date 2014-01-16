@@ -112,10 +112,7 @@
                  "codeSystemName": "kv_aktiviteter_intyg",
                  "code": "AKT19"
              },
-             "aktivitetstid" : {
-                 "from" : "2012-12-12",
-                 "tom"  : "2012-12-12"
-             },
+             "ostruktureradTid" : "2012-12-12",
              "beskrivning" : "Spontan självantändning",
              "plats" : "Vårdcentralen i Trollhättan",
              "forekomst" : true
@@ -146,7 +143,7 @@
                 "root": "1.2.752.129.2.1.2.1",
                 "extension": "3"
             },
-            "forekomst": true
+            "forekomst": false
         },
         {
             "observationskod": {
@@ -268,14 +265,6 @@
         		"codeSystemName": "SNOMED-CT",
         		"code": "7771000"
         	}
-        },
-        {
-            "observationskod": {
-                "codeSystem": "to-come",
-                "codeSystemName": "kv_observationer_intyg",
-                "code": "OBS3"
-            },
-            "forekomst": false
         },
         {
             "observationskod": {

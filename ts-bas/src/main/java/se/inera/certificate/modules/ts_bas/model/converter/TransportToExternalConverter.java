@@ -214,9 +214,8 @@ public class TransportToExternalConverter {
 
         aktivitet.setAktivitetskod(IsoTypeConverter.toKod(source.getAktivitetskod()));
 
-        if (source.getAktivitetstid() != null) {
-            aktivitet.setAktivitetstid(PartialConverter.toPartialInterval(source.getAktivitetstid().getFrom()
-                    .toString(), source.getAktivitetstid().getTom().toString()));
+        if (source.getOstruktureradtid() != null) {
+            aktivitet.setOstruktureradTid(source.getOstruktureradtid());
         }
 
         if (source.getBeskrivning() != null) {

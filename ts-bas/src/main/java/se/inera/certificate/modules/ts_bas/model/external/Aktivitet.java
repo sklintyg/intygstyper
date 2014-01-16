@@ -39,6 +39,8 @@ public class Aktivitet extends se.inera.certificate.model.Aktivitet {
     private Kod aktivitetsstatus;
     
     private Boolean forekomst;
+    
+    private String ostruktureradTid;
 
     public Id getId() {
         return id;
@@ -78,5 +80,13 @@ public class Aktivitet extends se.inera.certificate.model.Aktivitet {
 
     public void setForekomst(Boolean forekomst) {
         this.forekomst = forekomst;
+    }
+
+    public String getOstruktureradTid() {
+        return ostruktureradTid;
+    }
+
+    public void setOstruktureradTid(String ostruktureradTid) {
+        this.ostruktureradTid = ostruktureradTid;
     }
 }

@@ -11,11 +11,11 @@ import java.util.Set;
  */
 public class IntygAvser {
 
-    Set<IntygAvserKorkortstyp> korkortstyp;
+    Set<IntygAvserKategori> korkortstyp;
 
-    public Set<IntygAvserKorkortstyp> getKorkortstyp() {
+    public Set<IntygAvserKategori> getKorkortstyp() {
         if (korkortstyp == null) {
-            korkortstyp = EnumSet.noneOf(IntygAvserKorkortstyp.class);
+            korkortstyp = EnumSet.noneOf(IntygAvserKategori.class);
         }
         return korkortstyp;
     }

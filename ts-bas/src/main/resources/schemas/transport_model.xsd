@@ -139,7 +139,7 @@
     <xs:sequence>
       <xs:element name="aktivitetsid" type="iso:II" minOccurs="0"/>
       <xs:element name="aktivitetskod" type="iso:CD"/>
-      <xs:element name="aktivitetstid" type="partialDateInterval"
+      <xs:element name="ostruktureradtid" type="xs:string"
                   minOccurs="0"/>
       <xs:element name="beskrivning" type="xs:string" minOccurs="0"/>
       <xs:element name="aktivitetsstatus" type="iso:CD"

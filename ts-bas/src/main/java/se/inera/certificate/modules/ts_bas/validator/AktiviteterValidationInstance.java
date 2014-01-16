@@ -54,7 +54,7 @@ public class AktiviteterValidationInstance extends ExternalValidatorInstance {
                 assertNotNull(aktivitet.getId(), entity + ".aktivitetsId");
                 assertNull(aktivitet.getForekomst(), entity + ".forekomst");
                 assertNotNull(aktivitet.getMetod(), entity + ".metod");
-                assertNull(aktivitet.getAktivitetstid(), entity + ".aktivitetstid");
+                assertNull(aktivitet.getOstruktureradTid(), entity + ".aktivitetstid");
                 assertNull(aktivitet.getPlats(), entity + ".plats");
                 assertNull(aktivitet.getBeskrivning(), entity + ".beskrivning");
 
@@ -63,7 +63,7 @@ public class AktiviteterValidationInstance extends ExternalValidatorInstance {
                 assertNotNull(aktivitet.getId(), entity + ".aktivitetsId");
                 assertNull(aktivitet.getForekomst(), entity + ".forekomst");
                 assertNull(aktivitet.getMetod(), entity + ".metod");
-                assertNull(aktivitet.getAktivitetstid(), entity + ".aktivitetstid");
+                assertNull(aktivitet.getOstruktureradTid(), entity + ".aktivitetstid");
                 assertNull(aktivitet.getPlats(), entity + ".plats");
                 assertNull(aktivitet.getBeskrivning(), entity + ".beskrivning");
 
@@ -72,7 +72,7 @@ public class AktiviteterValidationInstance extends ExternalValidatorInstance {
                 assertNull(aktivitet.getId(), entity + ".aktivitetsId");
                 assertNotNull(aktivitet.getForekomst(), entity + ".forekomst");
                 assertNull(aktivitet.getMetod(), entity + ".metod");
-                assertNull(aktivitet.getAktivitetstid(), entity + ".aktivitetstid");
+                assertNull(aktivitet.getOstruktureradTid(), entity + ".aktivitetstid");
                 assertNull(aktivitet.getPlats(), entity + ".plats");
                 assertNull(aktivitet.getBeskrivning(), entity + ".beskrivning");
 
@@ -81,7 +81,7 @@ public class AktiviteterValidationInstance extends ExternalValidatorInstance {
                 assertNull(aktivitet.getId(), entity + ".aktivitetsId");
                 assertNotNull(aktivitet.getForekomst(), entity + ".forekomst");
                 assertNull(aktivitet.getMetod(), entity + ".metod");
-                assertNull(aktivitet.getAktivitetstid(), entity + ".aktivitetstid");
+                assertNull(aktivitet.getOstruktureradTid(), entity + ".aktivitetstid");
                 assertNull(aktivitet.getPlats(), entity + ".plats");
                 assertNull(aktivitet.getBeskrivning(), entity + ".beskrivning");
 
@@ -90,7 +90,7 @@ public class AktiviteterValidationInstance extends ExternalValidatorInstance {
                 assertNull(aktivitet.getId(), entity + ".aktivitetsId");
                 assertNotNull(aktivitet.getForekomst(), entity + ".forekomst");
                 assertNull(aktivitet.getMetod(), entity + ".metod");
-                assertNull(aktivitet.getAktivitetstid(), entity + ".aktivitetstid");
+                assertNull(aktivitet.getOstruktureradTid(), entity + ".aktivitetstid");
                 assertNull(aktivitet.getPlats(), entity + ".plats");
                 assertNull(aktivitet.getBeskrivning(), entity + ".beskrivning");
 
@@ -100,7 +100,7 @@ public class AktiviteterValidationInstance extends ExternalValidatorInstance {
                 assertNotNull(aktivitet.getForekomst(), entity + ".forekomst");
 
                 if (aktivitet.getForekomst()) {
-                    assertNotNull(aktivitet.getAktivitetstid(), entity + ".aktivitetstid");
+                    assertNotNull(aktivitet.getOstruktureradTid(), entity + ".aktivitetstid");
                     assertNotNull(aktivitet.getPlats(), entity + ".plats");
                     assertNotNull(aktivitet.getBeskrivning(), entity + ".beskrivning");
                 }

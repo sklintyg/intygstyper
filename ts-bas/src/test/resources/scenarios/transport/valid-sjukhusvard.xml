@@ -75,10 +75,7 @@
   <p:aktivitet>
     <p:aktivitetskod code="AKT19"
       codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a" codeSystemName="kv_aktiviteter_intyg" />
-    <p:aktivitetstid>
-      <p:from>2012-12-12</p:from>
-      <p:tom>2012-12-12</p:tom>
-    </p:aktivitetstid>
+    <p:ostruktureradtid>2012-12-12</p:ostruktureradtid>
     <p:beskrivning>Spontan självantändning</p:beskrivning>
     <p:plats>Vårdcentralen i Trollhättan</p:plats>
     <p:forekomst>true</p:forekomst>
@@ -100,7 +97,7 @@
       extension="3" />
     <p:observationskod code="H53.4" codeSystem="1.2.752.116.1.1.1.1.1"
       codeSystemName="ICD-10" />
-    <p:forekomst>true</p:forekomst>
+    <p:forekomst>false</p:forekomst>
   </p:observation>
 
   <!-- Begränsning av seende vid nedsatt belysning -->
@@ -177,12 +174,8 @@
     <p:lateralitet code="7771000" codeSystem="1.2.752.116.2.1.1.1"
       codeSystemName="SNOMED-CT" />
   </p:observation>
+
   <!-- Hörsel och balanssinne (4.1 - 4.2 -->
-  <p:observation>
-    <p:observationskod code="OBS3" codeSystem="to-come"
-      codeSystemName="kv_observationer_intyg" />
-    <p:forekomst>false</p:forekomst>
-  </p:observation>
 
   <p:observation>
     <p:observationskod code="OBS4" codeSystem="to-come"
