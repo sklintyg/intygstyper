@@ -36,7 +36,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
-import se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande;
+import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.rest.dto.CertificateContentHolder;
 import se.inera.certificate.modules.ts_bas.utils.ModelAssert;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
@@ -134,8 +134,8 @@ public class ModuleApiTest {
     @Ignore
     @Test
     public void testConvertInternalToExternal() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
-            moduleApi.convertInternalToExternal(scenario.asInternalWCModel());
+        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
+            moduleApi.convertInternalToExternal(scenario.asInternalModel());
             assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
         }
     }
@@ -150,7 +150,7 @@ public class ModuleApiTest {
             moduleApi.validate(extUtlatande);
             intUtlatande = moduleApi.convertExternalToInternal(wrapExternalWithHolder(extUtlatande));
 
-            Utlatande expected = scenario.asInternalMIModel();
+            Utlatande expected = scenario.asInternalModel();
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, intUtlatande);
         }
     }

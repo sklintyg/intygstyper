@@ -21,7 +21,7 @@ public class ScenarioFinder {
 
     private static final File EXTERNAL_MODEL_PATH = new File("src/test/resources/scenarios/external");
 
-    private static final File INTERNAL_MODEL_MI_PATH = new File("src/test/resources/scenarios/internal-mi");
+    private static final File INTERNAL_MODEL_PATH = new File("src/test/resources/scenarios/internal");
 
     private static final File INTERNAL_MODEL_WC_PATH = new File("src/test/resources/scenarios/internal-wc");
 
@@ -29,7 +29,7 @@ public class ScenarioFinder {
 
     private static final String EXTERNAL_MODEL_EXT = ".json";
 
-    private static final String INTERNAL_MODEL_MI_EXT = ".json";
+    private static final String INTERNAL_MODEL_EXT = ".json";
 
     private static final String INTERNAL_MODEL_WC_EXT = ".json";
 
@@ -68,8 +68,8 @@ public class ScenarioFinder {
      * @throws ScenarioNotFoundException
      *             If no scenarios could be found.
      */
-    public static List<Scenario> getInternalMIScenarios(String scenarioWithWildcards) throws ScenarioNotFoundException {
-        return getScenarios(scenarioWithWildcards + INTERNAL_MODEL_MI_EXT, INTERNAL_MODEL_MI_PATH, "internal MI");
+    public static List<Scenario> getInternalScenarios(String scenarioWithWildcards) throws ScenarioNotFoundException {
+        return getScenarios(scenarioWithWildcards + INTERNAL_MODEL_EXT, INTERNAL_MODEL_PATH, "internal");
     }
 
     /**
@@ -135,8 +135,8 @@ public class ScenarioFinder {
      * @throws ScenarioNotFoundException
      *             If no scenario could be found.
      */
-    public static Scenario getInternalMIScenario(String filename) throws ScenarioNotFoundException {
-        return getScenario(filename + INTERNAL_MODEL_MI_EXT, INTERNAL_MODEL_MI_PATH, "internal MI");
+    public static Scenario getInternalScenario(String filename) throws ScenarioNotFoundException {
+        return getScenario(filename + INTERNAL_MODEL_EXT, INTERNAL_MODEL_PATH, "internal ");
     }
 
     /**
@@ -223,27 +223,15 @@ public class ScenarioFinder {
          * {@inheritDoc}
          */
         @Override
-        public se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande asInternalMIModel()
+        public se.inera.certificate.modules.ts_bas.model.internal.Utlatande asInternalModel()
                 throws ScenarioNotFoundException {
             try {
-                return ResourceConverterUtils.toInternalMI(getInternalMIModelFor(scenarioFile));
+                return ResourceConverterUtils.toInternal(getInternalModelFor(scenarioFile));
             } catch (IOException e) {
-                throw new ScenarioNotFoundException(scenarioFile.getName(), "internal MI", e);
+                throw new ScenarioNotFoundException(scenarioFile.getName(), "internal", e);
             }
         }
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public se.inera.certificate.modules.ts_bas.model.internal.wc.Utlatande asInternalWCModel()
-                throws ScenarioNotFoundException {
-            try {
-                return ResourceConverterUtils.toInternalWC(getInternalWCModelFor(scenarioFile));
-            } catch (IOException e) {
-                throw new ScenarioNotFoundException(scenarioFile.getName(), "internal WC", e);
-            }
-        }
     }
 
     private static File getTransportModelFor(File otherModel) {
@@ -256,13 +244,8 @@ public class ScenarioFinder {
         return new File(EXTERNAL_MODEL_PATH, filenameWithoutExt + EXTERNAL_MODEL_EXT);
     }
 
-    private static File getInternalMIModelFor(File otherModel) {
+    private static File getInternalModelFor(File otherModel) {
         String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());
-        return new File(INTERNAL_MODEL_MI_PATH, filenameWithoutExt + INTERNAL_MODEL_MI_EXT);
-    }
-
-    private static File getInternalWCModelFor(File otherModel) {
-        String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());
-        return new File(INTERNAL_MODEL_WC_PATH, filenameWithoutExt + INTERNAL_MODEL_WC_EXT);
+        return new File(INTERNAL_MODEL_PATH, filenameWithoutExt + INTERNAL_MODEL_EXT);
     }
 }

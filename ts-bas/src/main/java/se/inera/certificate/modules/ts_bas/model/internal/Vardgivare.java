@@ -16,21 +16,32 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.ts_bas.model.converter;
+package se.inera.certificate.modules.ts_bas.model.internal;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+public class Vardgivare {
 
-import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
+    private String vardgivarid;
 
-public class InternalToExternalConverter {
+    private String vardgivarnamn;
 
-    private static final Logger LOG = LoggerFactory.getLogger(InternalToExternalConverter.class);
+    public Vardgivare() {
 
-    public Utlatande convert(
-            se.inera.certificate.modules.ts_bas.model.internal.Utlatande source) throws ConverterException {
-        // TODO: Implement
-        LOG.trace("Converting internal model to external");
-        return null;
     }
+
+    public String getVardgivarid() {
+        return vardgivarid;
+    }
+
+    public void setVardgivarid(String vardgivarid) {
+        this.vardgivarid = vardgivarid;
+    }
+
+    public String getVardgivarnamn() {
+        return vardgivarnamn;
+    }
+
+    public void setVardgivarnamn(String vardgivarNamn) {
+        this.vardgivarnamn = vardgivarNamn;
+    }
+
 }

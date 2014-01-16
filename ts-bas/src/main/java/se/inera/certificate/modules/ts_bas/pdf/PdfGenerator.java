@@ -21,7 +21,7 @@ package se.inera.certificate.modules.ts_bas.pdf;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande;
+import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
@@ -57,7 +57,7 @@ public class PdfGenerator {
      * Method for filling out the fields of a pdf with data from the internal model
      * 
      * @param utlatande
-     *            {@link se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande} containing data for populating
+     *            {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande} containing data for populating
      *            the pdf
      * @param fields
      *            The fields of the pdf

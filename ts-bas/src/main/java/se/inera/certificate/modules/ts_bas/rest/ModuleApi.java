@@ -100,7 +100,7 @@ public interface ModuleApi {
     @Path("/internal")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande convertExternalToInternal(
+    se.inera.certificate.modules.ts_bas.model.internal.Utlatande convertExternalToInternal(
             CertificateContentHolder certificateContentHolder);
 
     /**
@@ -116,7 +116,7 @@ public interface ModuleApi {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     se.inera.certificate.modules.ts_bas.model.external.Utlatande convertInternalToExternal(
-            se.inera.certificate.modules.ts_bas.model.internal.wc.Utlatande internalModel);
+            se.inera.certificate.modules.ts_bas.model.internal.Utlatande internalModel);
 
     /**
      * Creates a new editable model for use in WebCert. The model is pre populated using data contained in the

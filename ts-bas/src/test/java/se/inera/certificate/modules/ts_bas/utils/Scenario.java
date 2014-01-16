@@ -57,14 +57,5 @@ public interface Scenario {
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
      */
-    se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande asInternalMIModel() throws ScenarioNotFoundException;
-
-    /**
-     * Returns the scenario as a internal WebCert model.
-     * 
-     * @return The scenario as a internal WebCert model.
-     * @throws ScenarioNotFoundException
-     *             if the scenario wasn't found.
-     */
-    se.inera.certificate.modules.ts_bas.model.internal.wc.Utlatande asInternalWCModel() throws ScenarioNotFoundException;
+    se.inera.certificate.modules.ts_bas.model.internal.Utlatande asInternalModel() throws ScenarioNotFoundException;
 }

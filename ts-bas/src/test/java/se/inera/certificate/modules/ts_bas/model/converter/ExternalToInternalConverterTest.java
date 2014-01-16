@@ -46,9 +46,9 @@ public class ExternalToInternalConverterTest {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid*")) {
             CertificateContentHolder extUtlatande = scenario.asExternalModelWithHolder();
 
-            se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande actual = converter.convert(extUtlatande);
+            se.inera.certificate.modules.ts_bas.model.internal.Utlatande actual = converter.convert(extUtlatande);
 
-            se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande expected = scenario.asInternalMIModel();
+            se.inera.certificate.modules.ts_bas.model.internal.Utlatande expected = scenario.asInternalModel();
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
     }

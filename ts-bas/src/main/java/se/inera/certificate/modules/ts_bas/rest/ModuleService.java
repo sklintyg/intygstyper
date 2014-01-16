@@ -132,7 +132,7 @@ public class ModuleService implements ModuleApi {
     @Override
     public byte[] pdf(CertificateContentHolder certificateContentHolder) {
         try {
-            se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande internalUtlatande = externalToInternalConverter
+            se.inera.certificate.modules.ts_bas.model.internal.Utlatande internalUtlatande = externalToInternalConverter
                     .convert(certificateContentHolder);
 
             httpResponse.addHeader("Content-Disposition",
@@ -154,7 +154,7 @@ public class ModuleService implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande convertExternalToInternal(
+    public se.inera.certificate.modules.ts_bas.model.internal.Utlatande convertExternalToInternal(
             CertificateContentHolder certificateContentHolder) {
         try {
             return externalToInternalConverter.convert(certificateContentHolder);
@@ -170,7 +170,7 @@ public class ModuleService implements ModuleApi {
      */
     @Override
     public se.inera.certificate.modules.ts_bas.model.external.Utlatande convertInternalToExternal(
-            se.inera.certificate.modules.ts_bas.model.internal.wc.Utlatande internalModel) {
+            se.inera.certificate.modules.ts_bas.model.internal.Utlatande internalModel) {
         try {
             return internalToExternalConverter.convert(internalModel);
         } catch (ConverterException e) {

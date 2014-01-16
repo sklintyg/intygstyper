@@ -45,9 +45,9 @@ public class ResourceConverterUtils {
         return result;
     }
 
-    public static se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande toInternalMI(File resource)
+    public static se.inera.certificate.modules.ts_bas.model.internal.Utlatande toInternal(File resource)
             throws IOException {
-        return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande.class);
+        return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.ts_bas.model.internal.Utlatande.class);
     }
 
     public static se.inera.certificate.modules.ts_bas.model.internal.wc.Utlatande toInternalWC(File resource)

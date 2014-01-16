@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.model.internal.mi;
+package se.inera.certificate.modules.ts_bas.model.internal;
 
 public class Vardkontakt {
     

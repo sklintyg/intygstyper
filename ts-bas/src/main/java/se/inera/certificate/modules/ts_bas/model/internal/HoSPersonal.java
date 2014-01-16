@@ -16,32 +16,52 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.ts_bas.model.internal.mi;
+package se.inera.certificate.modules.ts_bas.model.internal;
 
-public class Vardgivare {
+public class HoSPersonal {
 
-    private String vardgivarid;
+    private String personid;
 
-    private String vardgivarnamn;
+    private String fullstandigtNamn;
 
-    public Vardgivare() {
+    private String befattning;
+
+    private Vardenhet vardenhet;
+
+    public HoSPersonal() {
 
     }
 
-    public String getVardgivarid() {
-        return vardgivarid;
+    public String getPersonid() {
+        return personid;
     }
 
-    public void setVardgivarid(String vardgivarid) {
-        this.vardgivarid = vardgivarid;
+    public void setPersonid(String personid) {
+        this.personid = personid;
     }
 
-    public String getVardgivarnamn() {
-        return vardgivarnamn;
+    public String getFullstandigtNamn() {
+        return fullstandigtNamn;
     }
 
-    public void setVardgivarnamn(String vardgivarNamn) {
-        this.vardgivarnamn = vardgivarNamn;
+    public void setFullstandigtNamn(String fullstandigtNamn) {
+        this.fullstandigtNamn = fullstandigtNamn;
+    }
+
+    public String getBefattning() {
+        return befattning;
+    }
+
+    public void setBefattning(String befattning) {
+        this.befattning = befattning;
+    }
+
+    public Vardenhet getVardenhet() {
+        return vardenhet;
+    }
+
+    public void setVardenhet(Vardenhet vardenhet) {
+        this.vardenhet = vardenhet;
     }
 
 }

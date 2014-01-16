@@ -46,7 +46,7 @@ public class InternalToExternalConverterTest {
     @Test
     public void testConvertUtlatandeFromInternalToExternal() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
-            se.inera.certificate.modules.ts_bas.model.internal.wc.Utlatande intUtlatande = scenario.asInternalWCModel();
+            se.inera.certificate.modules.ts_bas.model.internal.Utlatande intUtlatande = scenario.asInternalModel();
 
             Utlatande actual = converter.convert(intUtlatande);
 

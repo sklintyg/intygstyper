@@ -1,6 +1,6 @@
 package se.inera.certificate.modules.ts_bas.model.converter;
 
-import se.inera.certificate.modules.ts_bas.model.internal.mi.Utlatande;
+import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.rest.dto.CertificateContentHolder;
 
 public class ExternalToInternalConverter {
