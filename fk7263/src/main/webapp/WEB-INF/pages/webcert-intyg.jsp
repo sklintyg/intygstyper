@@ -66,8 +66,7 @@
 
   <div class="container-fluid">
 	
-	  <div id="wcHeader" wc-header user="WC_CONTEXT" default-active="index"> <!-- v0.5. v1.0: unhandled-qa -->
-      </div>
+	  <div id="wcHeader" wc-header user="WC_CONTEXT" default-active="unhandled-qa"></div>
 
 		<noscript>
 		  <h1>
