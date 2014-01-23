@@ -20,7 +20,7 @@ public class Synskarpevarden {
         this.utanKorrektion = utanKorrektion;
     }
 
-    public double getMedKorrektion() {
+    public Double getMedKorrektion() {
         return medKorrektion;
     }
 

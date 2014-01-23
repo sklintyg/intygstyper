@@ -295,14 +295,6 @@
             "observationskod": {
                 "codeSystem": "to-come",
                 "codeSystemName": "kv_observationer_intyg",
-                "code": "OBS9"
-            },
-            "forekomst": false
-        },
-        {
-            "observationskod": {
-                "codeSystem": "to-come",
-                "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS8"
             },
             "forekomst": false
@@ -314,26 +306,6 @@
         		"code" : "73211009"
         	},
         	"forekomst" : false
-        },
-        {
-            "observationskod": {
-                "codeSystem": "1.2.752.116.1.1.1.1.1",
-                "codeSystemName": "ICD-10",
-                "code": "E10"
-            },
-            "forekomst": false
-        },
-        {
-            "observationskod": {
-                "codeSystem": "1.2.752.116.1.1.1.1.1",
-                "codeSystemName": "ICD-10",
-                "code": "E11"
-            },
-            "id": {
-                "root": "1.2.752.129.2.1.2.1",
-                "extension": "diabetes2"
-            },
-            "forekomst": false
         },
         {
             "observationskod": {

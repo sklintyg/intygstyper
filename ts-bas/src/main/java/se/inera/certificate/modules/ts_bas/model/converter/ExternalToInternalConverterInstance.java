@@ -67,7 +67,6 @@ import se.inera.certificate.modules.ts_bas.rest.dto.CertificateContentHolder;
 /**
  * Converter for converting the external format to the internal view format.
  * 
- * 
  * @author Erik
  * 
  */
@@ -237,7 +236,6 @@ public class ExternalToInternalConverterInstance {
             sjukhusvard.setSjukhusEllerLakarkontakt(harVistatsSjukhus.getForekomst());
             if (harVistatsSjukhus.getForekomst()) {
 
-                // Make a nicely formatted string with from partial and tom partial
                 sjukhusvard.setTidpunkt(harVistatsSjukhus.getOstruktureradTid());
                 sjukhusvard.setVardinrattning(harVistatsSjukhus.getPlats());
                 sjukhusvard.setAnledning(harVistatsSjukhus.getBeskrivning());
@@ -575,6 +573,7 @@ public class ExternalToInternalConverterInstance {
         // Find the Syn-related Aktivitet
         Aktivitet plus8Korretionsgrader = getAktivitetWithKod(CodeConverter
                 .toKod(AktivitetKod.UNDERSOKNING_PLUS8_KORREKTIONSGRAD));
+
         if (plus8Korretionsgrader != null) {
             syn.setKorrektionsglasensStyrka(true);
         }

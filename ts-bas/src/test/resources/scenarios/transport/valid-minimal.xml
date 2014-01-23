@@ -194,12 +194,6 @@
   </p:observation>
 
   <p:observation>
-    <p:observationskod code="OBS9" codeSystem="to-come"
-      codeSystemName="kv_observationer_intyg" />
-    <p:forekomst>false</p:forekomst>
-  </p:observation>
-
-  <p:observation>
     <p:observationskod code="OBS8" codeSystem="to-come"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
@@ -212,20 +206,6 @@
     <p:forekomst>false</p:forekomst>
   </p:observation>
   
-  <p:observation>
-    <p:observationskod code="E10" codeSystem="1.2.752.116.1.1.1.1.1"
-      codeSystemName="ICD-10" />
-    <p:forekomst>false</p:forekomst>
-  </p:observation>
-
-  <p:observation>
-    <p:observationsid root="1.2.752.129.2.1.2.1"
-      extension="diabetes2" />
-    <p:observationskod code="E11" codeSystem="1.2.752.116.1.1.1.1.1"
-      codeSystemName="ICD-10" />
-    <p:forekomst>false</p:forekomst>
-  </p:observation>
-
   <!-- Neurologiska sjukdomar (8) -->
   <p:observation>
     <p:observationskod code="407624006" codeSystem="1.2.752.116.2.1.1.1"

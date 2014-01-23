@@ -19,7 +19,6 @@
 package se.inera.certificate.modules.ts_bas.model.converter;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
@@ -42,15 +41,15 @@ public class InternalToExternalConverterTest {
         this.converter = new InternalToExternalConverter();
     }
 
-    @Ignore
     @Test
     public void testConvertUtlatandeFromInternalToExternal() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
+        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
             se.inera.certificate.modules.ts_bas.model.internal.Utlatande intUtlatande = scenario.asInternalModel();
 
             Utlatande actual = converter.convert(intUtlatande);
 
             Utlatande expected = scenario.asExternalModel();
+
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
         
