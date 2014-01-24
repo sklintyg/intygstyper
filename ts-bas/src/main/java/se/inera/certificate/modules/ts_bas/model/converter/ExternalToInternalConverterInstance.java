@@ -180,7 +180,7 @@ public class ExternalToInternalConverterInstance {
 
         for (Rekommendation rek : extUtlatande.getRekommendationer()) {
             if (CodeConverter.matches(RekommendationsKod.PATIENT_UPPFYLLER_KRAV_FOR, rek.getRekommendationskod())) {
-                if (rek.getVarde().contains(RekommendationVardeKod.INTE_TA_STALLNING)) {
+                if (rek.getVarde().contains(CodeConverter.toKod(RekommendationVardeKod.INTE_TA_STALLNING))) {
                     bedomning.setKanInteTaStallning(true);
                 } else {
                     for (Kod varde : rek.getVarde()) {
