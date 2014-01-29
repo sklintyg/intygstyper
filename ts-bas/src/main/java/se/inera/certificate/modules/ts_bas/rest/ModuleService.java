@@ -183,7 +183,7 @@ public class ModuleService implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public se.inera.certificate.modules.ts_bas.model.internal.wc.Utlatande createNewInternal(
+    public se.inera.certificate.modules.ts_bas.model.internal.Utlatande createNewInternal(
             CreateNewDraftCertificateHolder draftCertificateHolder) {
         try {
             return webcertModelFactory.createNewWebcertDraft(draftCertificateHolder);

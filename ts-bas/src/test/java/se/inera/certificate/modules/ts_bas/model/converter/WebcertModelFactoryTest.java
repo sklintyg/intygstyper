@@ -24,7 +24,6 @@ import static org.junit.Assert.assertNotNull;
 import java.io.IOException;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
@@ -43,13 +42,12 @@ public class WebcertModelFactoryTest {
         factory = new WebcertModelFactory();
     }
 
-    @Ignore
     @Test
     public void testCreateEditableModel() throws JsonParseException, JsonMappingException, IOException {
         CreateNewDraftCertificateHolder draftCertHolder = new ObjectMapper().readValue(new ClassPathResource(
                 "webcert-model-factory-request.json").getFile(), CreateNewDraftCertificateHolder.class);
 
-        se.inera.certificate.modules.ts_bas.model.internal.wc.Utlatande utlatande = null;
+        se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande = null;
 
         try {
             utlatande = factory.createNewWebcertDraft(draftCertHolder);

@@ -129,7 +129,7 @@ public interface ModuleApi {
     @Path("/new")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    se.inera.certificate.modules.ts_bas.model.internal.wc.Utlatande createNewInternal(
+    se.inera.certificate.modules.ts_bas.model.internal.Utlatande createNewInternal(
             CreateNewDraftCertificateHolder draftCertificateHolder);
 
 }
