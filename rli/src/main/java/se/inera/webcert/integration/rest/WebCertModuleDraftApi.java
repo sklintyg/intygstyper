@@ -46,17 +46,22 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 public interface WebCertModuleDraftApi {
 
     /**
-     * Returns a list of all certificates
+     * Returns a list of all certificates.
+     * <p>
+     * NOTE: This method is only here for mocking purposes.
      * 
      * @return a JSON object
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Deprecated
     Object getDraftCertificateList();
 
     /**
      * Creates an empty JSON object for a draft certificate. The type of the draft certificate to be created is
      * identified by certificateType.
+     * <p>
+     * NOTE: This method is only here for mocking purposes.
      * 
      * @param draftInfo
      *            The type of draft certificate to produce etc
@@ -69,6 +74,7 @@ public interface WebCertModuleDraftApi {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Deprecated
     Object createDraftCertificate(CreateDraftCertificateHolder draftInfo) throws JsonParseException,
             JsonMappingException, IOException, JAXBException;
 
