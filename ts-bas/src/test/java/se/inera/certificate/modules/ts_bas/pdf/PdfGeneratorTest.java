@@ -25,7 +25,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.joda.time.LocalDateTime;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
@@ -38,21 +37,10 @@ public class PdfGeneratorTest {
     public PdfGeneratorTest() {
         pdfGen = new PdfGenerator();
     }
-    
-    @Ignore
-    @Test
-    public void testGeneratePdfPatientIsSick() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-sjuk-?")) {
-            byte[] pdf = pdfGen.generatePDF(scenario.asInternalModel());
-            assertNotNull("Error in scenario " + scenario.getName(), pdf);
-            writePdfToFile(pdf);
-        }
-    }
 
-    @Ignore
     @Test
-    public void testGeneratePdfPatientIsPregnant() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-gravid-?")) {
+    public void testGeneratePdf() throws Exception {
+        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
             byte[] pdf = pdfGen.generatePDF(scenario.asInternalModel());
             assertNotNull("Error in scenario " + scenario.getName(), pdf);
             writePdfToFile(pdf);
@@ -65,8 +53,7 @@ public class PdfGeneratorTest {
             return;
         }
 
-        File file = new File(dir + "/RLI_intyg_" + LocalDateTime.now().toString("yyyyMMdd_HHmm") + pdf.hashCode()
-                + ".pdf");
+        File file = new File(dir + "TS-bas_" + LocalDateTime.now().toString("yyyyMMdd_HHmm") + pdf.hashCode() + ".pdf");
         FileOutputStream fop = new FileOutputStream(file);
 
         file.createNewFile();
