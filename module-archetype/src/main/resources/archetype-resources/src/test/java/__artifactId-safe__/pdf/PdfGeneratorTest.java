@@ -41,31 +41,15 @@ public class PdfGeneratorTest {
         pdfGen = new PdfGenerator();
     }
 
-    @Test
-    public void testGeneratePdfPatientIsSick() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getInternalMIScenarios("valid-sjuk-?")) {
-            byte[] pdf = pdfGen.generatePDF(scenario.asInternalMIModel());
-            assertNotNull("Error in scenario " + scenario.getName(), pdf);
-            writePdfToFile(pdf);
-        }
-    }
-
-    @Test
-    public void testGeneratePdfPatientIsPregnant() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getInternalMIScenarios("valid-gravid-?")) {
-            byte[] pdf = pdfGen.generatePDF(scenario.asInternalMIModel());
-            assertNotNull("Error in scenario " + scenario.getName(), pdf);
-            writePdfToFile(pdf);
-        }
-    }
-
+    //TODO: Implement tests here
+    
     private void writePdfToFile(byte[] pdf) throws IOException {
         String dir = System.getProperty("pdfOutput.dir");
         if (dir == null) {
             return;
         }
 
-        File file = new File(dir + "/RLI_intyg_" + LocalDateTime.now().toString("yyyyMMdd_HHmm") + pdf.hashCode()
+        File file = new File(dir + "/${artifactId-safe}" + "_intyg_" + LocalDateTime.now().toString("yyyyMMdd_HHmm") + pdf.hashCode()
                 + ".pdf");
         FileOutputStream fop = new FileOutputStream(file);
 

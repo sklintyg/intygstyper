@@ -41,11 +41,6 @@ angular.module('controllers.rli.ViewCertCtrl').controller('ViewCertCtrl', [ '$sc
 
     console.log("Loading certificate " + $scope.MODULE_CONFIG.CERT_ID_PARAMETER);
     
-//    http.get('http://localhost:8088/m/rli/api/view/utlatande/' + $scope.MODULE_CONFIG.CERT_ID_PARAMETER).then(function(res) {
-//		$scope.cert = res.data;
-//		$scope.doneLoading = true;
-//	});
-    
     certService.getCertificate($scope.MODULE_CONFIG.CERT_ID_PARAMETER, function(result) {
         $scope.doneLoading = true;
         if (result != null) {

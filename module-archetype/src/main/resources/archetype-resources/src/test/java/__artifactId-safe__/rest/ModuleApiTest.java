@@ -32,6 +32,7 @@ import junit.framework.Assert;
 
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.junit.Test;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -59,6 +60,7 @@ public class ModuleApiTest {
     @Autowired
     private CustomObjectMapper objectMapper;
 
+    @Ignore
     @Test
     public void testUnmarshallScenarios() throws Exception {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
@@ -67,6 +69,7 @@ public class ModuleApiTest {
         }
     }
 
+    @Ignore
     @Test(expected = BadRequestException.class)
     public void testUnmarshallBroken() throws Exception {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("invalid-*")) {
@@ -74,6 +77,7 @@ public class ModuleApiTest {
         }
     }
 
+    @Ignore
     @Test
     public void testMarshall() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
@@ -83,6 +87,7 @@ public class ModuleApiTest {
 
     }
 
+    @Ignore
     @Test
     public void testValidate() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
@@ -91,6 +96,7 @@ public class ModuleApiTest {
         }
     }
 
+    @Ignore
     @Test
     public void testValidateWithErrors() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {
@@ -105,6 +111,7 @@ public class ModuleApiTest {
         }
     }
 
+    @Ignore
     @Test
     public void testPdf() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
@@ -119,6 +126,7 @@ public class ModuleApiTest {
         }
     }
 
+    @Ignore
     @Test
     public void testConvertExternalToInternal() throws Exception {
         CertificateContentHolder holder = new CertificateContentHolder();
@@ -130,6 +138,7 @@ public class ModuleApiTest {
         }
     }
 
+    @Ignore
     @Test
     public void testConvertInternalToExternal() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
@@ -138,6 +147,7 @@ public class ModuleApiTest {
         }
     }
 
+    @Ignore
     @Test
     public void testRegisterCertificateRoudtrip() throws Exception {
         ${package}.${artifactId-safe}.model.external.Utlatande extUtlatande;
