@@ -33,6 +33,14 @@ import se.inera.certificate.modules.ts_bas.rest.dto.CreateNewDraftCertificateHol
  */
 public class WebcertModelFactory {
 
+    /**
+     * Create a new TS-bas draft pre-populated with the attached data
+     * 
+     * @param newDraftData
+     *            {@link CreateNewDraftCertificateHolder}
+     * @return {@link Utlatande} or throws a ConverterException if something unforeseen happens
+     * @throws ConverterException
+     */
     public Utlatande createNewWebcertDraft(CreateNewDraftCertificateHolder newDraftData) throws ConverterException {
 
         Utlatande utlatande = new Utlatande();
@@ -62,9 +70,11 @@ public class WebcertModelFactory {
         patient.setEfternamn(patientInfo.getEfternamn());
         patient.setFullstandigtNamn(patientInfo.getFullstandigtNamn());
         patient.setPersonid(patientInfo.getId().getExtension());
-        patient.setPostadress(patientInfo.getPostadress());
-        patient.setPostnummer(patientInfo.getPostnummer());
-        patient.setPostort(patientInfo.getPostort());
+        
+        // TODO: Address information needs to be sorted out at a later time
+        //patient.setPostadress(patientInfo.getPostadress());
+        //patient.setPostnummer(patientInfo.getPostnummer());
+        //patient.setPostort(patientInfo.getPostort());
 
         return patient;
     }
