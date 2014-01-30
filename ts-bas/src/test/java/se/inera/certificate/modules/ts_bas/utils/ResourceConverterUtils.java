@@ -49,9 +49,4 @@ public class ResourceConverterUtils {
             throws IOException {
         return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.ts_bas.model.internal.Utlatande.class);
     }
-
-    public static se.inera.certificate.modules.ts_bas.model.internal.wc.Utlatande toInternalWC(File resource)
-            throws IOException {
-        return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.ts_bas.model.internal.wc.Utlatande.class);
-    }
 }
