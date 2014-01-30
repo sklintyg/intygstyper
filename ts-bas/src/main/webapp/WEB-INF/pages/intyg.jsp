@@ -47,10 +47,9 @@
      **/
     var MODULE_CONFIG = {
         MI_COMMON_API_CONTEXT_PATH : '/moduleapi/certificate/',
-        MODULE_CONTEXT_PATH : '<c:out value="${pageContext.request.contextPath}"/>',
+        MODULE_CONTEXT_PATH : '/m/ts-bas',
         CERT_ID_PARAMETER : '<c:out value="${id}"/>',
-        PRINCIPAL_NAME : '<%=request.getHeader("X-Username")%>', // How do we get the username? cookie?
-        PROXY_PREFIX : '/m/ts-bas' //maybe from serverside config?
+        PRINCIPAL_NAME : '<%=request.getHeader("X-Username")%>'
     }
 </script>
 </head>
@@ -88,7 +87,7 @@
   <%-- Dependencies to common (3rd party) components loaded from MI web app running at "/" context--%>
   <script type="text/javascript" src="/js/vendor/angular/1.1.5/angular.js"></script>
   <script type="text/javascript" src="/js/vendor/angular/1.1.5/i18n/angular-locale_sv-se.js"></script>
-  <script type="text/javascript" src="/js/vendor/ui-bootstrap/0.3.0/ui-bootstrap-tpls-0.3.0.js"></script>
+  <script type="text/javascript" src="/js/vendor/ui-bootstrap/0.7.0/ui-bootstrap-tpls-0.7.0.js"></script>
 
   <%-- Dependencies to common components loaded from MI web app running at "/" context--%>
   <script type="text/javascript" src="/js/modules/message-module.js"></script>

@@ -37,5 +37,4 @@ public class PageController {
         LOG.debug("visa-intyg " + id);
         return new ModelAndView("intyg", "id", id);
     }
-
 }

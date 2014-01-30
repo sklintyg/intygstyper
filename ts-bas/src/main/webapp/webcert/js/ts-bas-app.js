@@ -18,31 +18,33 @@
  */
 'use strict';
 
-/* App Module */
+/*
+ * App Module
+ */
 /*
  * Cant seem to inject rootscope in .config, so for routing parameters, we use
  * the global JS config object for now
  */
-var RLIApp = angular.module('RLIEditCertApp', [ 'controllers.rli.webcert', 'services.webcertService', 'modules.messages', 'directives.mi' ]).config(
-        [ '$routeProvider', function($routeProvider) {
-            $routeProvider.when('/edit/:certId', {
-                templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/edit-cert.html',
-                controller : 'EditCertCtrl'
-            }).when('/new/:certId', {
-                templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/new-cert.html',
-                controller : 'NewCertCtrl'
-            }).when('/list', {
-            	templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/list-cert.html',
-            	controller : 'ListCertCtrl'
-            }).otherwise({
-                redirectTo : '/list'
-            });
-        } ]);
+angular.module('TSBASViewCertApp', [ 'ui.bootstrap', 'wc.ts-bas.controllers', 'wc.ts-bas.directives', 'wc.ts-bas.services', 'modules.messages', 'wc.common',
+        'wc.utils' ]);
+angular.module('TSBASViewCertApp').config([ '$routeProvider', '$httpProvider', 'http403ResponseInterceptorProvider', function($routeProvider, $httpProvider, http403ResponseInterceptorProvider) {
+    $routeProvider.when('/edit', {
+        templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/edit-cert.html',
+        controller : 'EditCertCtrl'
+    }).when('/view', {
+        templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/view-cert.html',
+        controller : 'ViewCertCtrl'
+    }).otherwise({
+        redirectTo : '/view'
+    });
+} ]);
 
-RLIApp.run([ '$rootScope', 'messageService', function($rootScope, messageService) {
+angular.module('TSBASViewCertApp').run([ '$rootScope', 'messageService', function($rootScope, messageService) {
     $rootScope.lang = 'sv';
     $rootScope.DEFAULT_LANG = 'sv';
     $rootScope.MODULE_CONFIG = MODULE_CONFIG;
+    // Add WC user context info
+    $rootScope.WC_CONTEXT = WC_CONTEXT;
     messageService.addResources(commonMessageResources);
-    messageService.addResources(rliMessages);
+    messageService.addResources(tsBasMessages);
 } ]);
