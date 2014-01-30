@@ -46,7 +46,7 @@
 
 	<logger name="org.apache.cxf" level="error" />
 
-	<logger name="se.inera.certificate.modules.ts-bas" level="error" />
+	<logger name="se.inera.certificate.modules.ts_bas" level="error" />
 
 	<root>
 		<level value="error" />

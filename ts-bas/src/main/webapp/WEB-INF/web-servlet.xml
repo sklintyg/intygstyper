@@ -30,7 +30,7 @@
   <mvc:default-servlet-handler />
 
   <context:annotation-config />
-  <context:component-scan base-package="se.inera.certificate.modules.ts-bas.intyg.controller" />
+  <context:component-scan base-package="se.inera.certificate.modules.ts_bas.intyg.controller" />
 
   <beans>
     <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">

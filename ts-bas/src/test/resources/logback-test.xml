@@ -50,7 +50,7 @@
     <appender-ref ref="FILE2"/>
   </logger>
 
-  <logger name="se.inera.certificate.modules.ts-bas" level="info" />
+  <logger name="se.inera.certificate.modules.ts_bas" level="info" />
 
   <root level="debug">
     <appender-ref ref="FILE" />
