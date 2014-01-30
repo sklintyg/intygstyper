@@ -53,7 +53,7 @@ public class PdfGeneratorTest {
             return;
         }
 
-        File file = new File(dir + "TS-bas_" + LocalDateTime.now().toString("yyyyMMdd_HHmm") + pdf.hashCode() + ".pdf");
+        File file = new File(dir + "/TS-bas_" + LocalDateTime.now().toString("yyyyMMdd_HHmm") + pdf.hashCode() + ".pdf");
         FileOutputStream fop = new FileOutputStream(file);
 
         file.createNewFile();
