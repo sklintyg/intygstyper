@@ -38,7 +38,7 @@
 
 	<jaxrs:server address="http://localhost:8880/${artifactId}">
 		<jaxrs:serviceBeans>
-			<bean class="${package}.${artifactId}.rest.RliModuleService" />
+			<bean class="${package}.${artifactId-safe}.rest.ModuleService" />
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
 			<ref bean="jacksonJsonProvider" />
@@ -47,7 +47,7 @@
 	</jaxrs:server>
 
 	<jaxrs:client id="${artifactId}Module" address="http://localhost:8880/${artifactId}"
-		serviceClass="${package}.${artifactId}.rest.RliModuleApi">
+		serviceClass="${package}.${artifactId-safe}.rest.ModuleApi">
 		<jaxrs:providers>
 			<ref bean="jacksonJsonProvider" />
 			<ref bean="jaxbProvider" />

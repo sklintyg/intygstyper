@@ -53,7 +53,7 @@
     <appender-ref ref="FILE2"/>
   </logger>
 
-  <logger name="${package}.${artifactId}" level="info" />
+  <logger name="${package}.${artifactId-safe}" level="info" />
 
   <root level="debug">
     <appender-ref ref="FILE" />

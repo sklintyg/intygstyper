@@ -49,7 +49,7 @@
 
 	<logger name="org.apache.cxf" level="error" />
 
-	<logger name="${package}.${artifactId}" level="error" />
+	<logger name="${package}.${artifactId-safe}" level="error" />
 
 	<root>
 		<level value="error" />

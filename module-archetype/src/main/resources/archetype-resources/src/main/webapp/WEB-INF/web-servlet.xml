@@ -33,7 +33,7 @@
   <mvc:default-servlet-handler />
 
   <context:annotation-config />
-  <context:component-scan base-package="${package}.${artifactId}.intyg.controller" />
+  <context:component-scan base-package="${package}.${artifactId-safe}.intyg.controller" />
 
   <beans>
     <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
