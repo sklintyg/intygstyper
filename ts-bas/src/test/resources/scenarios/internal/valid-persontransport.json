@@ -32,7 +32,7 @@
     	"idkontroll" : "IDK6"
     },
     "intygAvser" : {
-    	"korkortstyp" : ["C", "TAXI"]
+        "korkortstyp" : {"C1" : false, "C1E" : false, "C" : true, "CE" : false, "D1" : false, "D1E" : false, "D" : false, "DE" : false, "TAXI" : true}
     },
     "syn" : {
         "synfaltsdefekter" :  false,
@@ -119,7 +119,7 @@
     },
     
     "bedomning" : {
-    	"korkortstyp" : ["C", "TAXI"]
+        "korkortstyp" : {"C1" : false, "C1E" : false, "C" : true, "CE" : false, "D1" : false, "D1E" : false, "D" : false, "DE" : false, "TAXI" : true, "ANNAT" : false}
     }
     
 }

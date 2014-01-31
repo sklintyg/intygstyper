@@ -3,9 +3,17 @@ package se.inera.certificate.modules.ts_bas.model.internal;
 import java.util.EnumSet;
 import java.util.Set;
 
+import se.inera.certificate.modules.ts_bas.json.AbstractEnumSetDeserializer;
+import se.inera.certificate.modules.ts_bas.json.AbstractEnumSetSerializer;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 public class Bedomning {
 
-    private Set<BedomningKorkortstyp> korkortstyp;
+    @JsonSerialize(using = BedomningKorkortstypEnumSetSerializer.class)
+    @JsonDeserialize(using = BedomningKorkortstypEnumSetDeserializer.class)
+    private EnumSet<BedomningKorkortstyp> korkortstyp;
 
     private Boolean kanInteTaStallning;
 
@@ -32,5 +40,18 @@ public class Bedomning {
 
     public void setLakareSpecialKompetens(String lakareSpecialKompetens) {
         this.lakareSpecialKompetens = lakareSpecialKompetens;
+    }
+
+    public static class BedomningKorkortstypEnumSetSerializer extends AbstractEnumSetSerializer<BedomningKorkortstyp> {
+        protected BedomningKorkortstypEnumSetSerializer() {
+            super(BedomningKorkortstyp.class);
+        }
+    }
+
+    public static class BedomningKorkortstypEnumSetDeserializer extends
+            AbstractEnumSetDeserializer<BedomningKorkortstyp> {
+        protected BedomningKorkortstypEnumSetDeserializer() {
+            super(BedomningKorkortstyp.class);
+        }
     }
 }
