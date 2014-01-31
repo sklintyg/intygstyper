@@ -104,7 +104,6 @@ public class ModuleApiTest {
         }
     }
 
-    @Ignore
     @Test
     public void testPdf() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
@@ -119,7 +118,6 @@ public class ModuleApiTest {
         }
     }
 
-    @Ignore
     @Test
     public void testConvertExternalToInternal() throws Exception {
         CertificateContentHolder holder = new CertificateContentHolder();
@@ -131,7 +129,6 @@ public class ModuleApiTest {
         }
     }
 
-    @Ignore
     @Test
     public void testConvertInternalToExternal() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
@@ -140,7 +137,6 @@ public class ModuleApiTest {
         }
     }
 
-    @Ignore
     @Test
     public void testRegisterCertificateRoudtrip() throws Exception {
         se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande;

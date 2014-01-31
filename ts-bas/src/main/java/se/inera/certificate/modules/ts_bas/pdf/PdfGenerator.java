@@ -176,11 +176,16 @@ public class PdfGenerator {
     private static final CheckField ST_LAKARE_CHECK = new CheckField("Falt_96");
     private static final CheckField AT_LAKARE_CHECK = new CheckField("Falt_97");
 
+    private static final String DATEFORMAT_FOR_FILENAMES = "yyMMdd";
+    
     public String generatePdfFilename(Utlatande utlatande) {
-        // TODO: Implement
-        return null;
-    }
+        String personId = utlatande.getPatient().getPersonid();
+        String certificateSignatureDate = utlatande.getSigneringsdatum().toString(DATEFORMAT_FOR_FILENAMES);
 
+        return String.format("lakarutlatande_%s_-%s.pdf", personId, certificateSignatureDate);
+    }
+    
+    
     public byte[] generatePDF(Utlatande utlatande) throws PdfGeneratorException {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
