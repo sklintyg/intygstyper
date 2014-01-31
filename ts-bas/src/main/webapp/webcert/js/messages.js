@@ -19,9 +19,11 @@
 'use strict';
 var tsBasMessages = {
     "sv": {
-        "button.send": "Skicka",
-        "button.cancel": "Avbryt",
-        "button.goback": "Tillbaka",
+      "ts.label.certtitle" : "Läkarintyg Transportstyrelsen Bas",
+      "ts.label.intygavser" : "Intyget avser",
+      "ts.label.identitet" : "Identiteten är styrkt genom",
+      "ts.label.synfunktioner" : "1. Synfunktioner",
+      "ts.label.ovrigkommentar" : "16. Övrig kommentar"
     },
     "en": {
         "view.label.pagetitle": "Show Certificate"
