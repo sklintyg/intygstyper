@@ -23,7 +23,23 @@ var tsBasMessages = {
       "ts.label.intygavser" : "Intyget avser",
       "ts.label.identitet" : "Identiteten är styrkt genom",
       "ts.label.synfunktioner" : "1. Synfunktioner",
-      "ts.label.ovrigkommentar" : "16. Övrig kommentar"
+      "ts.label.horselbalans" : "2. Hörsel och balanssinne",
+      "ts.label.funktionsnedsattning" : "3. Rörelseorganens funktioner",
+      "ts.label.hjartkarl" : "4. Hjärt- och kärlsjukdomar",
+      "ts.label.diabetes" : "5. Diabetes",
+      "ts.label.neurologi" : "6. Neurologiska sjukdomar",
+      "ts.label.medvetandestorning" : "7. Epilepsi, epileptiskt anfall och annan medvetandestörning",
+      "ts.label.njurar" : "8. Njursjukdomar",
+      "ts.label.kognitivt" : "9. Demens och andra kognitiva störningar",
+      "ts.label.somnvakenhet" : "10. Sömn- och vakenhetsstörningar",
+      "ts.label.narkotikalakemedel" : "11. Alkohol, narkotika och läkemedel",
+      "ts.label.psykiskt" : "12. Psykiska sjukdomar och störningar",
+      "ts.label.utvecklingsstorning" : "13. ADHD, autismspektrumtillstånd och likartade tillstånd samt psykisk utvecklingsstörning",
+      "ts.label.sjukhusvard" : "14. Sjukhusvård",
+      "ts.label.medicinering" : "15. Övrig medicinering",
+      "ts.label.ovrigkommentar" : "16. Övrig kommentar",
+      "ts.label.bedomning" : "Bedömning",
+      "ts.label.unit" : "Vårdenhet"
     },
     "en": {
         "view.label.pagetitle": "Show Certificate"

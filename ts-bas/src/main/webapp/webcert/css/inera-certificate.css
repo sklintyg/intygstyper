@@ -166,6 +166,10 @@ span.help {
 	border-radius: 8px 8px 8px 8px;	
 }
 
+.cert-body .alert-info {
+    margin: 0 20px 20px 0;
+}
+
 .body-row label {
 	max-width: 600px;
   vertical-align: text-top;
@@ -218,6 +222,11 @@ span.help {
 	padding: 10px 20px 0 20px;
 	color: #008391;
 	font-size: 15px;
+}
+
+.body-row h4 {
+    font-size: 14px;
+    padding-bottom: 5px;
 }
 
 .body-row .cert-field-blank {
@@ -418,7 +427,7 @@ input[datepicker-popup] {
 }
 
 .header-wrapper {
-	max-height: 110px;
+/*	max-height: 110px; does commenting out this break anything? */
 	overflow: hidden;
 }
 
@@ -447,3 +456,20 @@ input[datepicker-popup] {
   margin-top: 0;
 }
 
+.table .table-form {
+    background-color: transparent;
+}
+
+.table-form td, .table-form th {
+    padding: 0 5px 5px 0;
+    text-align: left;
+    vertical-align: top;
+}
+
+.table-form-radio td:last-child {
+    width:100%;
+}
+
+input[type=text].small-decimal {
+    width: 20px;
+}

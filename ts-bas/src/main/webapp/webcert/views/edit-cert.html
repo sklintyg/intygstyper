@@ -46,52 +46,523 @@
     </div>
 </div><!-- top end -->
 
-<div class="edit-form" ng-class="{'collapsed' : widgetState.collapsedHeader}">
+<div class="edit-form" ng-class="{'collapsed' : widgetState.collapsedHeader}"> 
 
-<div class="alert alert-error" ng-show="widgetState.showComplete" style="margin-right: 20px">
-    <h3>Följande fält behöver kompletteras:</h3>
-    Fält 2 - Kod saknas
-</div>
-
-<div id="certificate" class="row-fluid certificate">
-<div class="span12 cert-body">
-
-<div wc-field field-label="ts.label.intygavser">
-    <p>Detta intyg ska användas vid förlängd giltighet av högre behörighet, ansökan om körkortstillstånd för grupp II och III och vid ansökan om taxiförarlegitimation.</p>
-    <p>Intyget kan också användas när Transportstyrelsen i andra fall begärt ett läkarintyg. Markera då endast i rutan Annat nedan.</p>
-
-    <div class="control-group form-inline" ng-repeat="(k,v) in cert.intygAvser.korkortstyp">
-        <input id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox" ng-model="v"> <label for="typcheck{{$index}}">{{k}}</label>
+    <div class="alert alert-error" ng-show="widgetState.showComplete" style="margin-right: 20px">
+        <h3>Följande fält behöver kompletteras:</h3>
+        Fält 2 - Kod saknas
     </div>
-</div>
 
-<div class="alert alert-info">
-    Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget ska utfärdas i enlighet med vad som sägs i 17 kap. och får inte vara äldre än två månader när det inkommer till Transportstyrelsen. Se www.transportstyrelsen.se.      Därefter ”Väg” och ”Trafikmedicin”.
-</div>
+    <div id="certificate" class="row-fluid certificate">
+        <div class="span12 cert-body">
 
-<div wc-field field-label="ts.label.synfunktioner">
-    <div>
-        Ja Nej
-    </div>
-    <div class="row-fluid">
-        <div class="span2">
-            <input id="synfaltYes" name="synfaltYes" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter">  <input id="synfaltNo" name="synfaltNo" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter">
+            <div wc-field field-label="ts.label.intygavser">
+                <p>Detta intyg ska användas vid förlängd giltighet av högre behörighet, ansökan om körkortstillstånd för grupp II och III och vid ansökan om taxiförarlegitimation.</p>
+                <p>Intyget kan också användas när Transportstyrelsen i andra fall begärt ett läkarintyg. Markera då endast i rutan Annat nedan.</p>
+
+                <div class="control-group" ng-repeat="typ in cert.intygAvser.korkortstyp track by $index">
+                    <label><input id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox" ng-model="typ.selected"> {{typ.type}}</label>
+                </div>
+            </div>
+
+            <div wc-field field-label="ts.label.identitet">
+                <div class="control-group form-inline" ng-repeat="(k,v) in form.identity">
+                    <label><input name="identity{{$index}}" type="radio" value="{{v}}" ng-model="cert.vardkontakt.idkontroll"> {{k}}</label>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget ska utfärdas i enlighet med vad som sägs i 17 kap. och får inte vara äldre än två månader när det inkommer till Transportstyrelsen. Se <a href="http://www.transportstyrelsen.se" target="_blank">www.transportstyrelsen.se</a>. Därefter "Väg" och "Trafikmedicin".
+            </div>
+
+            <!-- 1. Syn -->
+            <div wc-field field-label="ts.label.synfunktioner">
+                <table class="table table-form">
+                    <tr>
+                        <th><span message key="common.yes"></span></th>
+                        <th><span message key="common.no"></span></th>
+                        <th class="maxwidth"></th>
+                    </tr>
+                    <tr>
+                        <td><input id="synay" name="synay" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="synan" name="synan" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>a) Finns tecken på synfältsdefekter vid undersökning enligt Donders konfrontationsmetod?</td>
+                    </tr>
+                    <tr>
+                        <td><input id="synby" name="synby" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="synbn" name="synbn" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>b) Framkommer anamnestiska uppgifter om begränsning av seendet vid nedsatt belysning?</td>
+                    </tr>
+                    <tr>
+                        <td><input id="syncy" name="syncy" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="syncn" name="syncn" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>
+                            <p>c) Har patienten någon progressiv ögonsjukdom?</p>
+                            <div class="alert alert-info">
+                                Om någon av frågorna a-c besvaras med ja eller om det bedöms sannolikt att synfältsdefekter föreligger krävs läkarintyg av ögonspecialist.
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input id="syndy" name="syndy" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="syndn" name="syndn" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>d) Framkommer dubbelseende vid prövning av ögats rörlighet (prövningen ska göras i de åtta huvudmeridianerna)?</td>
+                    </tr>
+                    <tr>
+                        <td><input id="syney" name="syney" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="synen" name="synen" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>e) Förekommer nystagmus?</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><p>f) Värden för synskärpa</p>
+                            <p>
+                                Alla bokstäver ska kunna läsas på den rad som anger synskärpa. Är synskärpan sämre än 0,1 ska den anges som 0,0
+                            </p>
+                            <div class="alert alert-info">
+                                OBS! Uppgifterna om synskärpa och korrektion kan grundas på tidigare utförd undersökning av bland annat legitimerad optiker. Uppgifterna ska då ingå som underlag vid läkarens samlade bedömning.
+                            </div>
+
+                            <table class="table table-form">
+                                <tr>
+                                    <th></th>
+                                    <th>Utan korrektion</th>
+                                    <th>Med korrektion</th>
+                                    <th>Kontaktlinser</th>
+                                </tr>
+                                <tr>
+                                    <td>Höger öga</td>
+                                    <td><input type="text" class="small-decimal"></td>
+                                    <td><input type="text" class="small-decimal"></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>Vänster öga</td>
+                                    <td><input type="text" class="small-decimal"></td>
+                                    <td><input type="text" class="small-decimal"></td>
+                                    <td><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td>Binokulärt</td>
+                                    <td><input type="text" class="small-decimal"></td>
+                                    <td><input type="text" class="small-decimal"></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+
+                            <h4>Korrektionsglasens styrka</h4>
+                            <label><input name="dioptrier" type="checkbox"> Högsta styrka i något av glasen överskrider 8 dioptrier</label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div wc-field field-label="ts.label.horselbalans">
+                <table class="table table-form">
+                    <tr>
+                        <th><span message key="common.yes"></span></th>
+                        <th><span message key="common.no"></span></th>
+                        <th class="maxwidth"></th>
+                    </tr>
+                    <tr>
+                        <td><input id="horselbalansay" name="horselbalansay" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="horselbalansan" name="horselbalansan" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>a) Har patienten överraskande anfall av balansrubbningar eller yrsel?</td>
+                    </tr>
+                    <tr>
+                        <td><input id="horselbalansby" name="horselbalansby" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="horselbalansbn" name="horselbalansbn" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>b) Har patienten svårt att uppfatta vanlig samtalsstämma på fyra meters avstånd (hörapparat får användas)?</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div wc-field field-label="ts.label.funktionsnedsattning">
+                <table class="table table-form">
+                    <tr>
+                        <th><span message key="common.yes"></span></th>
+                        <th><span message key="common.no"></span></th>
+                        <th class="maxwidth"></th>
+                    </tr>
+                    <tr>
+                        <td><input id="funktionsnedsattningay" name="funktionsnedsattningay" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="funktionsnedsattningan" name="funktionsnedsattningan" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>a) Har patienten någon sjukdom eller funktionsnedsättning som påverkar rörligheten och som medför att fordon inte kan köras på ett trafiksäkert sätt?
+                            <div>
+                                <p>Ange vilken typ av nedsättning eller sjukdom:</p>
+                                <textarea></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input id="funktionsnedsattningby" name="funktionsnedsattningby" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="funktionsnedsattningbn" name="funktionsnedsattningbn" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>b) Är rörelseförmågan otillräcklig för att kunna hjälpa passagerare in och ut ur fordonet samt med bilbälte?</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div wc-field field-label="ts.label.hjartkarl">
+                <table class="table table-form">
+                    <tr>
+                        <th><span message key="common.yes"></span></th>
+                        <th><span message key="common.no"></span></th>
+                        <th class="maxwidth"></th>
+                    </tr>
+                    <tr>
+                        <td><input id="hjartkarlay" name="hjartkarlay" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="hjartkarlan" name="hjartkarlan" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>a) Föreligger hjärt- eller kärlsjukdom som kan medföra en påtaglig risk för att hjärnans funktioner akut försämras eller som i övrigt innebär en trafiksäkerhetsrisk?</td>
+                    </tr>
+                    <tr>
+                        <td><input id="hjartkarlby" name="hjartkarlby" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="hjartkarlbn" name="hjartkarlbn" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>b) Finns tecken på hjärnskada efter trauma, stroke eller annan sjukdom i centrala nervsystemet?</td>
+                    </tr>
+                    <tr>
+                        <td><input id="hjartkarlcy" name="hjartkarlcy" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="hjartkarlcn" name="hjartkarlcn" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><p>c) Föreligger viktiga riskfaktorer för stroke (tidigare stroke eller TIA, förhöjt blodtryck, förmaksflimmer eller kärlmissbildning)?</p>
+                            <div>
+                                <p>Vilken typ av sjukdom?</p>
+                                <textarea></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div wc-field field-label="ts.label.diabetes">
+                <table class="table table-form">
+                    <tr>
+                        <th><span message key="common.yes"></span></th>
+                        <th><span message key="common.no"></span></th>
+                        <th class="maxwidth"></th>
+                    </tr>
+                    <tr>
+                        <td><input id="diabetesay" name="diabetesay" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="diabetesan" name="diabetesan" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>
+                            <p>Har patienten diabetes?</p>
+                            <p>Vilken typ?
+                                <label><input name="diabetestype1" type="radio" value="TYPE1" ng-model="cert.syn.synfaltsdefekter"> Typ 1</label>
+                                <label><input name="diabetestype2" type="radio" value="TYPE2" ng-model="cert.syn.synfaltsdefekter"> Typ 2</label>
+                            </p>
+                            <p>Ange behandling:
+                                <label><input name="diabetestreat1" type="checkbox" ng-model="cert.syn.synfaltsdefekter"> Kost</label>
+                                <label><input name="diabetestreat2" type="checkbox" ng-model="cert.syn.synfaltsdefekter"> Tabletter</label>
+                                <label><input name="diabetestreat3" type="checkbox" ng-model="cert.syn.synfaltsdefekter"> Insulin</label>
+                            </p>
+                            <div class="alert alert-info">
+                                Har patienten tablett- eller insulinbehandlad diabetes krävs ett läkarintyg gällande sjukdomen.
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div wc-field field-label="ts.label.neurologi">
+                <table class="table table-form">
+                    <thead>
+                    <tr>
+                        <th><span message key="common.yes"></span></th>
+                        <th><span message key="common.no"></span></th>
+                        <th class="maxwidth"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input id="neurologiay" name="diabetesay" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="neurologian" name="diabetesan" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>
+                            <p>Finns tecken på neurologisk sjukdom?</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div wc-field field-label="ts.label.medvetandestorning">
+                <table class="table table-form">
+                    <tr>
+                        <th><span message key="common.yes"></span></th>
+                        <th><span message key="common.no"></span></th>
+                        <th class="maxwidth"></th>
+                    </tr>
+                    <tr>
+                        <td><input id="medvetandestorningay" name="medvetandestorningay" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="medvetandestorningan" name="medvetandestorningan" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>
+                            <p>Har eller har patienten haft epilepsi, epileptiskt anfall eller annan medvetandestörning?</p>
+                            <p>Om det är frågan om annan medvetandestörning, ange när den inträffade och orsak:</p>
+                            <textarea></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div wc-field field-label="ts.label.njurar">
+                <table class="table table-form">
+                    <tr>
+                        <th><span message key="common.yes"></span></th>
+                        <th><span message key="common.no"></span></th>
+                        <th class="maxwidth"></th>
+                    </tr>
+                    <tr>
+                        <td><input id="njuraray" name="njuraray" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="njuraran" name="njuraran" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>
+                            Föreligger allvarligt nedsatt njurfunktion som kan innebära en trafiksäkerhetsrisk?
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div wc-field field-label="ts.label.kognitivt">
+                <table class="table table-form">
+                    <tr>
+                        <th><span message key="common.yes"></span></th>
+                        <th><span message key="common.no"></span></th>
+                        <th class="maxwidth"></th>
+                    </tr>
+                    <tr>
+                        <td><input id="kognitivtay" name="kognitivtay" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="kognitivtan" name="kognitivtan" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>
+                            Finns tecken på sviktande kognitiv funktion?
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div wc-field field-label="ts.label.somnvakenhet">
+                <table class="table table-form">
+                    <tr>
+                        <th><span message key="common.yes"></span></th>
+                        <th><span message key="common.no"></span></th>
+                        <th class="maxwidth"></th>
+                    </tr>
+                    <tr>
+                        <td><input name="somnvakenhetay" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input name="somnvakenhetan" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>
+                            Finns tecken på, eller anamnestiska uppgifter som talar för sömn- eller vakenhetsstörning?
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div wc-field field-label="ts.label.narkotikalakemedel">
+                <table class="table table-form">
+                    <tr>
+                        <th><span message key="common.yes"></span></th>
+                        <th><span message key="common.no"></span></th>
+                        <th class="maxwidth"></th>
+                    </tr>
+                    <tr>
+                        <td><input name="narkotikalakemedelay" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input name="narkotikalakemedelan" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>
+                            a) Finns journaluppgifter, anamnestiska uppgifter, resultat av laboratorieprover eller andra tecken på missbruk eller beroende av alkohol, narkotika eller läkemedel?
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input name="narkotikalakemedelby" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input name="narkotikalakemedelbn" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>
+                            b) Har patienten vid något tillfälle varit föremål för vårdinsatser för missbruk eller beroende av alkohol, narkotika eller läkemedel?
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input name="narkotikalakemedelb2y" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input name="narkotikalakemedelb2n" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>
+                            <p>Behövs det provtagning avseende aktuellt bruk av alkohol eller narkotika?</p>
+                            <div class="alert alert-info">
+                                Om provtagning görs ska resultatet redovisas separat.
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input name="narkotikalakemedelcy" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input name="narkotikalakemedelcn" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>
+                            <p>c) Pågår regelbundet läkarordinerat bruk av läkemedel som kan innebära en trafiksäkerhetsrisk?</p>
+                            <p>Ange läkemedel och ordinerad dos:</p>
+                            <textarea></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div wc-field field-label="ts.label.psykiskt">
+                <table class="table table-form">
+                    <tr>
+                        <th><span message key="common.yes"></span></th>
+                        <th><span message key="common.no"></span></th>
+                        <th class="maxwidth"></th>
+                    </tr>
+                    <tr>
+                        <td><input name="narkotikalakemedelay" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input name="narkotikalakemedelan" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>
+                            Har eller har patienten haft psykisk sjukdom eller störning, till exempel schizofreni, annan psykos eller bipolär (manodepressiv) sjukdom?
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div wc-field field-label="ts.label.utvecklingsstorning">
+                <table class="table table-form">
+                    <tr>
+                        <th><span message key="common.yes"></span></th>
+                        <th><span message key="common.no"></span></th>
+                        <th class="maxwidth"></th>
+                    </tr>
+                    <tr>
+                        <td><input name="utvecklingsstorningay" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input name="utvecklingsstorningan" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>
+                            a) Har patienten någon psykisk utvecklingsstörning?
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input name="utvecklingsstorningby" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input name="utvecklingsstorningbn" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>
+                            b) Har patienten till exempel ADHD, ADD, DAMP, Aspergers syndrom eller Tourettes syndrom?
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div wc-field field-label="ts.label.sjukhusvard">
+                <table class="table table-form">
+                    <tr>
+                        <th><span message key="common.yes"></span></th>
+                        <th><span message key="common.no"></span></th>
+                        <th class="maxwidth"></th>
+                    </tr>
+                    <tr>
+                        <td><input name="sjukhusvarday" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input name="sjukhusvardan" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>
+                            <p>Har patienten vårdats på sjukhus eller haft kontakt med läkare med anledning av punkterna 1-13?</p>
+
+                            <table>
+                                <tr>
+                                    <td>Om frågan besvaras med ja, när?</td>
+                                    <td><input type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td>Vårdinrättningens namn och klinik/er:</td>
+                                    <td><input type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td>För vad?</td>
+                                    <td><input type="text"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div wc-field field-label="ts.label.medicinering">
+                <table class="table table-form">
+                    <tr>
+                        <th><span message key="common.yes"></span></th>
+                        <th><span message key="common.no"></span></th>
+                        <th class="maxwidth"></th>
+                    </tr>
+                    <tr>
+                        <td><input name="medicineringay" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input name="medicineringan" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td>
+                            Har patienten någon stadigvarande medicinering?
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div wc-field field-label="ts.label.ovrigkommentar">
+                <p>Övriga kommentarer som är relevant ur trafiksäkerhetssynpunkt.</p>
+                <textarea id="kommentar" name="kommentar" rows='5' ng-model="cert.kommentar" maxlength="500"></textarea> <!-- ng-change="inputlimit for IE"-->
+            </div>
+
+            <div wc-field field-label="ts.label.bedomning">
+                <p>Patienten uppfyller kraven enligt Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2) för:</p>
+
+                <div>
+                    <label><input name="behorighetnagon" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"> Någon av följande behörigheter</label>
+                    <div class="control-group indent" ng-repeat="typ in cert.bedomning.korkortstyp track by $index">
+                        <label><input id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox" ng-model="typ.selected"> {{typ.type}}</label>
+                    </div>
+                </div>
+                <div>
+                    <label><input name="behorighetinte" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"> Kan inte ta ställning</label>
+                </div>
+
+                <p>Om någon av frågorna har besvarats med ja, ska de krav på ytterligare underlag som framgår av föreskrifterna beaktas.</p>
+
+                <p>Har patienten tablett- eller insulinbehandlad diabetes krävs ett läkarintyg gällande sjukdomen.</p>
+
+                <p>Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i:</p>
+                <textarea name="specialist" rows='5' ng-model="cert.kommentar" maxlength="500"></textarea>
+            </div>
+
+            <div class="body-row clearfix">
+                <h3 class="title">
+                    <span message key="ts.label.unit"></span><span class="help">?</span>
+                </h3>
+                <div class="text">
+                    <label class="control-label">VårdEnhetA (0123456789012), IFV Testdata</label>
+
+                    <div class="form-horizontal">
+                        <div class="control-group">
+                            <label class="control-label">Postadress</label>
+                            <div class="controls">
+                                <input type="text" id="clinicInfo.postalAddress" name="clinicInfo.postalAddress" value="Agatan 12">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Postnummer</label>
+                            <div class="controls">
+                                <input type="text" id="clinicInfo.postalCode" name="clinicInfo.postalCode" value="12345">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Postort</label>
+                            <div class="controls">
+                                <input type="text" id="clinicInfo.postalCity" name="clinicInfo.postalCity" value="Teststad">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Telefonnummer</label>
+                            <div class="controls">
+                                <input type="text" id="clinicInfo.phone" name="clinicInfo.phone" value="023-2234324">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Epost</label>
+                            <div class="controls">
+                                <input type="text" id="clinicInfo.email" name="clinicInfo.email" value="mats.ekhammar@callistaenterprise.se">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
-        <div class="span10">
-            a) Finns tecken på synfältsdefekter vid undersökning enligt Donders konfrontationsmetod?
-        </div>
+        <!-- cert body -->
+
     </div>
-</div>
+    <!-- certificate -->
 
-<div wc-field field-label="ts.label.ovrigkommentar">
-    <p>Övriga kommentarer som är relvatan ur trafiksäkerhetssynpunkt.</p>
-    <textarea id="kommentar" name="kommentar" rows='5' ng-model="cert.kommentar" maxlength="500"></textarea> <!-- ng-change="inputlimit for IE"-->
-</div>
+    <p>Specialistkompetens i ?</p>
 
-</div>
-<!-- cert body -->
-
-</div>
-<!-- certificate -->
+    <button class="btn btn-success">Signera intyget och skicka direkt till Transportstyrelsen</button>
 
 </div>

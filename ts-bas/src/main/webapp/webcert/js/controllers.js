@@ -26,6 +26,17 @@ angular.module('wc.ts-bas.controllers').controller('EditCertCtrl', [ '$scope', '
   $scope.doneLoading = true;
   $scope.displayLoader = false;
 
+  $scope.form = {
+    "identity" : {
+      "ID-kort" : "ID_KORT",
+      "Företagskort eller tjänstekort" : "FORETAG_ELLER_TJANSTEKORT",
+      "Körkort" : "KORKORT",
+      "Personlig kännedom" : "PERS_KANNEDOM",
+      "Försäkran enligt 18 kap. 4§" : "FORSAKRAN_KAP18",
+      "Pass" : "PASS"
+    }
+  };
+
   var dummycert =
   {
     "utlatandeid": "987654321",
@@ -58,10 +69,20 @@ angular.module('wc.ts-bas.controllers').controller('EditCertCtrl', [ '$scope', '
   },
     "vardkontakt" : {
     "typ" : "5880005",
-        "idkontroll" : "IDK6"
+    "idkontroll" : "KORKORT"
   },
     "intygAvser" : {
-    "korkortstyp" : {"C":true}
+    "korkortstyp" : [
+      {type:"C1", selected: false},
+      {type:"C1E", selected: false},
+      {type:"C", selected: true},
+      {type:"CE", selected: false},
+      {type:"D1", selected: false},
+      {type:"D1E", selected: false},
+      {type:"D", selected: false},
+      {type:"DE", selected: false},
+      {type:"TAXI", selected: false}
+    ]
   },
     "syn" : {
     "synfaltsdefekter" :  false,
@@ -91,7 +112,6 @@ angular.module('wc.ts-bas.controllers').controller('EditCertCtrl', [ '$scope', '
     "funktionsnedsattning" : {
     "funktionsnedsattning" : false
   },
-
     "hjartKarl" : {
     "hjartKarlSjukdom" : false,
         "hjarnskadaEfterTrauma" : false,
@@ -146,7 +166,18 @@ angular.module('wc.ts-bas.controllers').controller('EditCertCtrl', [ '$scope', '
   },
 
     "bedomning" : {
-    "korkortstyp" : ["C"]
+      "korkortstyp" : [
+        {type:"C1", selected: false},
+        {type:"C1E", selected: false},
+        {type:"C", selected: true},
+        {type:"CE", selected: false},
+        {type:"D1", selected: false},
+        {type:"D1E", selected: false},
+        {type:"D", selected: false},
+        {type:"DE", selected: false},
+        {type:"TAXI", selected: false},
+        {type:"ANNAT", selected: false}
+      ]
   }
 
   }
