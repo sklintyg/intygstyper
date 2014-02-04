@@ -264,6 +264,10 @@
               <value>${project.build.directory}/catalina.base</value>
             </systemProperty>            
             <systemProperty>
+              <name>certificate.config.dir</name>
+              <value>${certificate.config.dir}</value>
+            </systemProperty>
+            <systemProperty>
               <name>logback.configurationFile</name>
               <value>${certificate.config.dir}/logback.xml</value>
             </systemProperty>
