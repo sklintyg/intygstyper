@@ -39,7 +39,7 @@
 <link rel="stylesheet" href="/css/bootstrap/2.3.2/bootstrap.css">
 <link rel="stylesheet" href="/css/bootstrap-responsive-modified.css">
 <link rel="stylesheet" href="/css/inera-webcert.css">
-<link rel="stylesheet" href="<c:url context="/m/ts-bas" value="/webcert/css/inera-certificate.css"/>">
+<link rel="stylesheet" href="/css/inera-certificate.css">
 
 <SCRIPT LANGUAGE="VBScript">
     Function ControlExists(objectID)
