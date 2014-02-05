@@ -55,10 +55,10 @@ var fk7263Messages = {
         "view.label.date" : "Datum",
         "view.label.contactinfo" : "Namnförtydligande, mottagningens adress och telefon",
 
-        "edit.label.treatments" : "Åtgärder",
+        "view.label.treatments" : "Åtgärder",
         "edit.label.recommendations" : "Rekommendationer till Försäkringskassan",
         "edit.label.fkcontact" : "Kontakt",
-        "edit.label.unitaddress" : "Vårdenhetens adress",
+        "view.label.unitaddress" : "Vårdenhetens adress",
 
         "vardkontakt.undersokning" : "Min undersökning av patienten den ",
         "vardkontakt.telefonkontakt" : "Min telefonkontakt med patienten den ",
