@@ -82,7 +82,7 @@
     
     "diabetes" : {
     	"harDiabetes" : true,
-    	"diabetesTyp" : "E11",
+    	"diabetesTyp" : "DIABETES_TYP_2",
     	"kost" : true 
     },
     

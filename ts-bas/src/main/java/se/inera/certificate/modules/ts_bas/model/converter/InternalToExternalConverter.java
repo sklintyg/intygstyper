@@ -351,11 +351,7 @@ public class InternalToExternalConverter {
 
         // Diabetes typ
         if (source.getDiabetes().getDiabetesTyp() != null) {
-            if (source.getDiabetes().getDiabetesTyp().equals("E10")) {
-                observationer.add(createBasicObservation(ObservationsKod.DIABETES_TYP_1, true));
-            } else if (source.getDiabetes().getDiabetesTyp().equals("E11")) {
-                observationer.add(createBasicObservation(ObservationsKod.DIABETES_TYP_2, true));
-            }
+                observationer.add(createBasicObservation(ObservationsKod.valueOf(source.getDiabetes().getDiabetesTyp()), true));
         }
 
         // Diabetes behandlingar

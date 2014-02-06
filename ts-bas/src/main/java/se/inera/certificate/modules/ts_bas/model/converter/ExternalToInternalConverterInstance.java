@@ -454,9 +454,9 @@ public class ExternalToInternalConverterInstance {
             diabetes.setHarDiabetes(harDiabetes.getForekomst());
             if (harDiabetes.getForekomst()) {
                 if (diabetesTyp1 != null) {
-                    diabetes.setDiabetesTyp(diabetesTyp1.getObservationskod().getCode());
+                    diabetes.setDiabetesTyp(CodeConverter.getInternalNameFromKod(diabetesTyp1.getObservationskod(), ObservationsKod.class));
                 } else if (diabetesTyp2 != null) {
-                    diabetes.setDiabetesTyp(diabetesTyp2.getObservationskod().getCode());
+                    diabetes.setDiabetesTyp(CodeConverter.getInternalNameFromKod(diabetesTyp2.getObservationskod(), ObservationsKod.class));
                     if (insulin != null) {
                         diabetes.setInsulin(insulin.getForekomst());
                     }
