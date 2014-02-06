@@ -331,6 +331,7 @@ public class TransportToExternalConverter {
         skapadAv.setId(IsoTypeConverter.toId(source.getPersonalId()));
         skapadAv.setNamn(source.getFullstandigtNamn());
         skapadAv.setVardenhet(convertVardenhet(source.getEnhet()));
+        skapadAv.getSpecialiteter().addAll(convertCDtoKod(source.getSpecialitets()));
 
         return skapadAv;
     }

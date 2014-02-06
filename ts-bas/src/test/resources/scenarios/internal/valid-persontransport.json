@@ -5,6 +5,7 @@
     "skapadAv": {
         "personid": "SE0000000000-1333",
         "fullstandigtNamn": "Doktor Thompson",
+        "specialiteter" : ["SPECIALITET"],
         "vardenhet": {
             "enhetsid": "SE0000000000-1337",
             "enhetsnamn": "Vårdenhet Väst",

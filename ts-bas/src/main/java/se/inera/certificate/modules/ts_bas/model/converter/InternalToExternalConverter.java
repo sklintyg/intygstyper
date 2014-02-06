@@ -601,10 +601,22 @@ public class InternalToExternalConverter {
         hosPersonal.setId(new Id(HSpersonalKod.HSA_ID.getCodeSystem(), source.getPersonid()));
         hosPersonal.setNamn(source.getFullstandigtNamn());
         hosPersonal.setVardenhet(convertToExtVardenhet(source.getVardenhet()));
+        
         // TODO: IMPORTANT! change when specialiteter is implemented in internal model
+        hosPersonal.getSpecialiteter().addAll(ConvertSpecialitetStringToCode(source.getSpecialiteter()));
+        
         return hosPersonal;
     }
 
+    private Collection<? extends Kod> ConvertSpecialitetStringToCode(List<String> specialiteter) {
+        List<Kod> koder = new ArrayList<Kod>();
+        for (String spec : specialiteter) {
+            koder.add(CodeConverter.toKod(SpecialitetKod.valueOf(spec)));
+        }
+        
+        return koder;
+    }
+    
     /**
      * Convert from internal to external Vardenhet
      * 

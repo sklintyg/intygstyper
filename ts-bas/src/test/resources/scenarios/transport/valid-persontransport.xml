@@ -40,6 +40,7 @@
         <p:vardgivarnamn>Vårdgivarnamn</p:vardgivarnamn>
       </p:vardgivare>
     </p:enhet>
+    <p:specialitet code="SPEC" codeSystem="coming_soon" codeSystemName="kv_intyg_specialitet"/>
   </p:skapadAv>
 
   <p:vardkontakt>

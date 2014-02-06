@@ -732,11 +732,20 @@ public class ExternalToInternalConverterInstance {
         intHoSPersonal.setPersonid(InternalModelConverterUtils.getExtensionFromId(extHoSPersonal.getId()));
         intHoSPersonal.setFullstandigtNamn(extHoSPersonal.getNamn());
         intHoSPersonal.setBefattning(extHoSPersonal.getBefattning());
+        intHoSPersonal.getSpecialiteter().addAll(ConvertToInternalSpecialitet(extHoSPersonal.getSpecialiteter()));
 
         Vardenhet intVardenhet = convertToIntVardenhet(extHoSPersonal.getVardenhet());
         intHoSPersonal.setVardenhet(intVardenhet);
 
         return intHoSPersonal;
+    }
+
+    private Collection<? extends String> ConvertToInternalSpecialitet(List<Kod> specialiteter) {
+        List<String> intSpecialiteter = new ArrayList<>();
+        for (Kod kod : specialiteter) {
+            intSpecialiteter.add(CodeConverter.getInternalNameFromKod(kod, SpecialitetKod.class));
+        }
+        return intSpecialiteter;
     }
 
     private Patient convertToIntPatient(se.inera.certificate.model.Patient extPatient) throws ConverterException {
