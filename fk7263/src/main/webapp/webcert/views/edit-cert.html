@@ -26,6 +26,7 @@
   </div>
 </div><!-- top end -->
 
+<!-- FK 7263 -->
 <div class="edit-form" ng-class="{'collapsed' : widgetState.collapsedHeader}">
 
   <div class="alert alert-error" ng-show="widgetState.showComplete" style="margin-right: 20px">
@@ -43,43 +44,21 @@
 
 			<div wc-field field-label="view.label.basedon" field-number="4b" field-help-text="helpTooltip" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
                 <div class="control-group form-inline">
-                    <input type="checkbox" id="informationBasedOn.examination"
-                        name="informationBasedOn.examination" class="inline"
-                        ng-model="basedOnState.check.undersokningAvPatienten" ng-change="autoEnterDate('undersokningAvPatienten')"/>
-                    <label
-                        for="informationBasedOn.examination" class="inline"
-                        style="min-width: 250px">Min undersökning av patienten</label>
-                       <span wc-date-picker-field target-model="cert.undersokningAvPatienten" on-change="basedOnState.check.undersokningAvPatienten = true" dom-id="undersokningAvPatienten-date"></span>
+                    <label class="checkbox" style="min-width: 250px"><input type="checkbox" name="informationBasedOn.examination" class="inline" ng-model="basedOnState.check.undersokningAvPatienten" ng-change="autoEnterDate('undersokningAvPatienten')"/> Min undersökning av patienten</label>
+                    <span wc-date-picker-field target-model="cert.undersokningAvPatienten" on-change="basedOnState.check.undersokningAvPatienten = true" dom-id="undersokningAvPatienten-date"></span>
+                </div>
+                <div class="control-group form-inline">
+                    <label class="checkbox" style="min-width: 250px"><input type="checkbox" name="informationBasedOn.phoneContact" ng-model="basedOnState.check.telefonkontaktMedPatienten" ng-change="autoEnterDate('telefonkontaktMedPatienten')" /> Min telefonkontakt med patienten</label>
+                    <span wc-date-picker-field target-model="cert.telefonkontaktMedPatienten" on-change="basedOnState.check.telefonkontaktMedPatienten = true" dom-id="telefonkontaktMedPatienten-date"></span>
+                </div>
+                <div class="control-group form-inline">
+                    <label class="checkbox" style="min-width: 250px"><input type="checkbox" name="informationBasedOn.journal" ng-model="basedOnState.check.journaluppgifter" ng-change="autoEnterDate('journaluppgifter')"/> Journaluppgifter</label>
+                    <span wc-date-picker-field target-model="cert.journaluppgifter" on-change="basedOnState.check.journaluppgifter = true" dom-id="journaluppgifter-date"></span>
                 </div>
 
                 <div class="control-group form-inline">
-                    <input type="checkbox" id="informationBasedOn.phoneContact"
-                        name="informationBasedOn.phoneContact"
-                        ng-model="basedOnState.check.telefonkontaktMedPatienten" ng-change="autoEnterDate('telefonkontaktMedPatienten')" />
-                    <label
-                        for="informationBasedOn.phoneContact" class="checkbox"
-                        style="min-width: 250px">Min telefonkontakt med patienten</label>
-                       <span wc-date-picker-field target-model="cert.telefonkontaktMedPatienten" on-change="basedOnState.check.telefonkontaktMedPatienten = true" dom-id="telefonkontaktMedPatienten-date"></span>
-                </div>
-
-                <div class="control-group form-inline">
-                    <input type="checkbox" id="informationBasedOn.journal"
-                        name="informationBasedOn.journal"
-                        ng-model="basedOnState.check.journaluppgifter" ng-change="autoEnterDate('journaluppgifter')"/>
-                    <label
-                        for="informationBasedOn.journal" class="checkbox"
-                        style="min-width: 250px">Journaluppgifter</label>
-                       <span wc-date-picker-field target-model="cert.journaluppgifter" on-change="basedOnState.check.journaluppgifter = true" dom-id="journaluppgifter-date"></span>
-                </div>
-
-                <div class="control-group form-inline">
-                    <input type="checkbox" id="informationBasedOn.other"
-                        name="informationBasedOn.other"
-                        ng-model="basedOnState.check.annanReferens" ng-change="autoEnterDate('annanReferens')"/>
-                    <label
-                        for="informationBasedOn.other" class="checkbox"
-                        style="min-width: 250px">Annat</label>
-                       <span wc-date-picker-field target-model="cert.annanReferens" on-change="basedOnState.check.annanReferens = true" dom-id="annanReferens-date"></span>
+                    <label class="checkbox" style="min-width: 250px"><input type="checkbox" name="informationBasedOn.other" ng-model="basedOnState.check.annanReferens" ng-change="autoEnterDate('annanReferens')"/> Annat</label>
+                    <span wc-date-picker-field target-model="cert.annanReferens" on-change="basedOnState.check.annanReferens = true" dom-id="annanReferens-date"></span>
                 </div>
 
                 <div class="otherText indent" ng-if="basedOnState.check.annanReferens">
@@ -169,8 +148,7 @@
                 <div class="control-group form-inline">
                     <label class="control-label"><span message key="view.label.patientworkcapacity"></span></label>
                     <div class="controls form-inline">
-                        <input id="work1" type="radio" id="basedOnWork"	name="basedOnWork" value="CURRENT" ng-model="cert.basedOnWork" checked="checked" class="control-element">
-                        <label for="work1">Nuvarande arbete</label><span class="help">?</span>
+                        <label class="radio"><input type="radio" name="basedOnWork" value="CURRENT" ng-model="cert.basedOnWork" checked="checked"> Nuvarande arbete</label><span class="help">?</span>
                         <div class="indent" ng-if="cert.basedOnWork == 'CURRENT'">
                             <label for="currentWork">Ange aktuella arbetsuppgifter</label>
                             <div class="controls">
@@ -183,12 +161,10 @@
                     </div>
                 </div>
                 <div class="control-group form-inline">
-                    <input id="work2" type="radio" name="basedOnWork" group="group1" value="UNEMPLOYMENT" ng-model="cert.basedOnWork" class="control-element">
-                    <label for="work2" class="">Arbetslöshet - att utföra arbete på den reguljära arbetsmarknaden</label><span class="help">?</span>
+                    <label class="radio"><input type="radio" name="basedOnWork" group="group1" value="UNEMPLOYMENT" ng-model="cert.basedOnWork"> Arbetslöshet - att utföra arbete på den reguljära arbetsmarknaden</label><span class="help">?</span>
                 </div>
                 <div class="control-group form-inline">
-                    <input id="work3" type="radio" name="basedOnWork" group="group1" value="PARENTAL_LEAVE" ng-model="cert.basedOnWork" class="control-element">
-                    <label for="work3" class="">Föräldraledighet med föräldrapenning - att vårda sitt barn</label><span class="help">?</span>
+                    <label class="radio"><input type="radio" name="basedOnWork" group="group1" value="PARENTAL_LEAVE" ng-model="cert.basedOnWork"> Föräldraledighet med föräldrapenning - att vårda sitt barn</label><span class="help">?</span>
                 </div>
 			</div>
 
@@ -204,8 +180,7 @@
 
                 <!-- 25% -->
                 <div class="control-group form-inline">
-                    <input type="checkbox" id="capacityForWork.work25" name="capacityForWork.work25" ng-model="workState.check25"/>
-                    <label for="capacityForWork.work25" class="checkbox">25% nedsatt arbetsförmåga från</label>
+                    <label class="checkbox" style="min-width: 250px"><input type="checkbox" name="capacityForWork.work25" ng-model="workState.check25"/> 25% nedsatt arbetsförmåga från</label>
                     <span wc-date-picker-field target-model="cert.nedsattMed25.start" on-change="updateTotalCertDays()" dom-id="nedsattMed25-start-date"></span>
                     <span>till</span>
                     <span wc-date-picker-field target-model="cert.nedsattMed25.end" on-change="updateTotalCertDays()" dom-id="nedsattMed25-end-date"></span>
@@ -221,9 +196,8 @@
 
                 <!-- 50% -->
                 <div class="control-group form-inline">
-                    <input type="checkbox" id="capacityForWork.work50" name="capacityForWork.work50" ng-model="workState.check50" />
-                    <label for="capacityForWork.work50" class="checkbox">50% nedsatt arbetsförmåga från</label>
-                     <span wc-date-picker-field target-model="cert.nedsattMed50.start" on-change="updateTotalCertDays()" dom-id="nedsattMed50-start-date"></span>
+                    <label class="checkbox" style="min-width: 250px"><input type="checkbox" name="capacityForWork.work50" ng-model="workState.check50" /> 50% nedsatt arbetsförmåga från</label>
+                    <span wc-date-picker-field target-model="cert.nedsattMed50.start" on-change="updateTotalCertDays()" dom-id="nedsattMed50-start-date"></span>
                     <span>till</span>
                     <span wc-date-picker-field target-model="cert.nedsattMed50.end" on-change="updateTotalCertDays()" dom-id="nedsattMed50-end-date"></span>
                     <div class="indent pad10" ng-if="workState.check50">
@@ -233,14 +207,13 @@
                                     Arbetstidsförläggning (frivilligt) <input type="text"	ng-model="cert.otherData.workingHours50" id="capacityForWork.rec50LongerWorkingHours" name="capacityForWork.rec50LongerWorkingHours" value=""
                                         class='otherInformation' ng-change="limitOtherField('workingHours50')">
                       <span class="counter">Tecken kvar:  {{inputLimits.ovrigt - getTotalOvrigtLength()}}</span>
-                        <div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
+                      <div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
                     </div>
                 </div>
 
                 <!-- 75% -->
                 <div class="control-group form-inline">
-                    <input type="checkbox" id="capacityForWork.work75" name="capacityForWork.work75" ng-model="workState.check75" />
-                    <label for="capacityForWork.work75" class="checkbox">75% nedsatt arbetsförmåga från</label>
+                    <label class="checkbox" style="min-width: 250px"><input type="checkbox" name="capacityForWork.work75" ng-model="workState.check75" /> 75% nedsatt arbetsförmåga från</label>
                     <span wc-date-picker-field target-model="cert.nedsattMed75.start" on-change="updateTotalCertDays()" dom-id="nedsattMed75-start-date"></span>
                     <span>till</span>
                     <span wc-date-picker-field target-model="cert.nedsattMed75.end" on-change="updateTotalCertDays()" dom-id="nedsattMed75-end-date"></span>
@@ -259,8 +232,7 @@
 
                 <!-- 100% -->
                 <div class="control-group form-inline">
-                    <input type="checkbox" id="capacityForWork.workFull" name="capacityForWork.workFull" ng-model="workState.check100" />
-                    <label for="capacityForWork.workFull" class="checkbox">Helt	nedsatt arbetsförmåga från</label>
+                    <label class="checkbox" style="min-width: 250px"><input type="checkbox" name="capacityForWork.workFull" ng-model="workState.check100" /> Helt nedsatt arbetsförmåga från</label>
                     <span wc-date-picker-field target-model="cert.nedsattMed100.start" on-change="updateTotalCertDays()" dom-id="nedsattMed100-start-date"></span>
                     <span>till</span>
                     <span wc-date-picker-field target-model="cert.nedsattMed100.end" on-change="updateTotalCertDays()" dom-id="nedsattMed100-end-date"></span>
@@ -286,23 +258,19 @@
                     title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
                 <div class="form-inline">
                     <div class="control-group">
-                        <input type="radio" id="capacityForWork1" name="capacityForWork.forecast" value="YES"	ng-model="cert.prognosis" checked="checked">
-                        <label for="capacityForWork1">Ja</label>
+                        <label class="radio"><input type="radio" name="capacityForWork.forecast" value="YES" ng-model="cert.prognosis" checked="checked"> Ja</label>
                     </div>
 
                     <div class="control-group">
-                        <input type="radio" id="capacityForWork2" name="capacityForWork.forecast" value="PARTLY" ng-model="cert.prognosis">
-                        <label for="capacityForWork2">Delvis</label>
+                        <label class="radio"><input type="radio" id="capacityForWork2" name="capacityForWork.forecast" value="PARTLY" ng-model="cert.prognosis"> Delvis</label>
                     </div>
 
                     <div class="control-group">
-                        <input type="radio"	id="capacityForWork3" name="capacityForWork.forecast" value="NO" ng-model="cert.prognosis">
-                        <label for="capacityForWork3">Nej</label>
+                        <label class="radio"><input type="radio"	id="capacityForWork3" name="capacityForWork.forecast" value="NO" ng-model="cert.prognosis"> Nej</label>
                     </div>
 
                     <div class="control-group">
-                        <input type="radio" id="capacityForWork4" name="capacityForWork.forecast" value="UNKNOWN" ng-model="cert.prognosis">
-                        <label for="capacityForWork4">Går ej att bedöma</label>
+                        <label class="radio"><input type="radio" id="capacityForWork4" name="capacityForWork.forecast" value="UNKNOWN" ng-model="cert.prognosis"> Går ej att bedöma</label>
                         <div class="indent" ng-show="cert.prognosis == 'UNKNOWN'">
                             Förtydligande: <input type="text"	ng-model="cert.otherData.prognosisClarification" id="capacityForWork.forecastText"	name="capacityForWork.forecastText" value=""
                                         class='otherInformation' ng-change="limitOtherField('prognosisClarification')"> Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}
@@ -332,61 +300,52 @@
             <!-- Rekommendationer -->
 			<div wc-field field-label="view.label.recommendations" field-number="6a, 7, 11" field-help-text="helpTooltip" class="form-inline">
                 <div class="control-group">
-					<label><input type="checkbox" name="recommendationsToFk.travel" ng-model="cert.ressattTillArbeteAktuellt"> Resor till och från arbetet med annat färdmedel än normalt kan göra det möjligt för patienten att återgå i arbete</label> <span class="help">?</span>
+					<label class="checkbox"><input type="checkbox" name="recommendationsToFk.travel" ng-model="cert.ressattTillArbeteAktuellt"> Resor till och från arbetet med annat färdmedel än normalt kan göra det möjligt för patienten att återgå i arbete</label> <span class="help">?</span>
 				</div>
                 <div class="control-group">
-					<label><input type="checkbox" name="recommendationsToFk.contactAf" ng-model="cert.rekommendationKontaktArbetsformedlingen"> Patienten bör komma i kontakt med arbetsförmedlingen</label> <span class="help">?</span>
+					<label class="checkbox"><input type="checkbox" name="recommendationsToFk.contactAf" ng-model="cert.rekommendationKontaktArbetsformedlingen"> Patienten bör komma i kontakt med arbetsförmedlingen</label> <span class="help">?</span>
                 </div>
                 <div class="control-group">
-				    <label><input type="checkbox" name="recommendationsToFk.contactCompanyCare" ng-model="cert.rekommendationKontaktForetagshalsovarden"> Patienten bör	komma i kontakt med företagshälsovården</label> <span class="help">?</span>
+				    <label class="checkbox"><input type="checkbox" name="recommendationsToFk.contactCompanyCare" ng-model="cert.rekommendationKontaktForetagshalsovarden"> Patienten bör	komma i kontakt med företagshälsovården</label> <span class="help">?</span>
                 </div>
                 <div class="control-group">
-					<label><input type="checkbox" name="recommendationsToFk.other" ng-model="cert.rekommendationOvrigtCheck" /> Övrigt (ange vad)</label>
+					<label class="checkbox"><input type="checkbox" name="recommendationsToFk.other" ng-model="cert.rekommendationOvrigtCheck" /> Övrigt (ange vad)</label>
   				    <div class="indent" ng-if="cert.rekommendationOvrigtCheck || (cert.rekommendationOvrigt && cert.rekommendationOvrigt != '')">
   				        <input type="text" id="recommendationsToFk.otherText" name="recommendationsToFk.otherText" value="" class='maxwidth' ng-model="cert.rekommendationOvrigt">
   				    </div>
                 </div>
 
-                <div class="control-group">
-  					<label class="control-label">Är arbetslivsinriktad rehabilitering	aktuell?</label><span class="help">?</span>
-                </div>
+    			<h4 class="inline-block">Är arbetslivsinriktad rehabilitering aktuell?</h4><span class="help">?</span>
 
                 <!-- Rehab -->
                 <!-- YES -->
                 <div class="control-group">
-	   				<input type="radio" id="recommendationsToFk" name="recommendationsToFk.reabInQuestion" value="YES" ng-model="cert.rehab" class="control-element">
-	   				<label for="recommendationsToFk">Ja</label>
+	   				<label class="radio"><input type="radio" name="recommendationsToFk.reabInQuestion" value="YES" ng-model="cert.rehab"> Ja</label>
 					<div class="indent" ng-show="cert.rehab == 'YES'">
-						<input id="rehabNow1" type="radio" name="recommendationsToFk.rehabNow" value="NOW" ng-model="cert.rehabNow" checked>
-						<label for="rehabNow1">Omgående</label><br>
-								
-						<input id="rehabNow2" type="radio" name="recommendationsToFk.rehabNow" value="LATER" ng-model="cert.rehabNow">
-                        <label for="rehabNow2">Senare, med start</label>
+						<label class="radio"><input type="radio" name="recommendationsToFk.rehabNow" value="NOW" ng-model="cert.rehabNow" checked> Omgående</label><br>
+                        <label class="radio"><input type="radio" name="recommendationsToFk.rehabNow" value="LATER" ng-model="cert.rehabNow"> Senare, med start</label>
                         <span wc-date-picker-field target-model="cert.otherData.rehabWhen" dom-id="cert-otherData-rehabWhen-date"></span>
-              
 						<div class="info-transfer" style="white-space: nowrap">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
 					</div>
                 </div>
           
                 <!-- NO -->
                 <div class="control-group">
-					<input type="radio" id="recommendationsToFk2" name="recommendationsToFk.reabInQuestion" group="group3" value="NO" ng-model="cert.rehab" checked="checked"	class="control-element">
-	                <label for="recommendationsToFk2">Nej</label>
+	                <label class="radio"><input type="radio" name="recommendationsToFk.reabInQuestion" group="group3" value="NO" ng-model="cert.rehab" checked="checked"> Nej</label>
                 </div>
 					
                 <!-- UNKNOWN -->
                 <div class="control-group">
-				    <input type="radio" id="recommendationsToFk3"	name="recommendationsToFk.reabInQuestion" group="group3" value="UNKNOWN" ng-model="cert.rehab" class="control-element">
-	                <label for="recommendationsToFk3">Går ej att bestämma</label>
+	                <label class="radio"><input type="radio" name="recommendationsToFk.reabInQuestion" group="group3" value="UNKNOWN" ng-model="cert.rehab"> Går ej att bestämma</label>
                 </div>
 			</div>
 
 			<div wc-field field-label="edit.label.fkcontact" field-number="12" field-help-text="helpTooltip">
-                <label class="checkbox"><input type="checkbox" id="contactWithFkRequested" name="contactWithFkRequested" ng-model="cert.kontaktMedFk" /> Kontakt önskas med	Försäkringskassan</label>
+                <label class="checkbox"><input type="checkbox" name="contactWithFkRequested" ng-model="cert.kontaktMedFk" /> Kontakt önskas med	Försäkringskassan</label>
 			</div>
 
 			<div wc-field field-label="view.label.otherinformation" field-number="13" field-help-text="helpTooltip">
-                <textarea id="otherInformation" name="otherInformation" rows='10'	class='otherInformation' ng-model="cert.kommentar" ng-change="limitOtherField('kommentar')"></textarea>
+                <textarea name="otherInformation" rows='10'	class='otherInformation' ng-model="cert.kommentar" ng-change="limitOtherField('kommentar')"></textarea>
                 <div class="counter">Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}</div>
 			</div>
 
@@ -436,29 +395,25 @@
 	<h2>Signera och skicka</h2>
 	<div class="form-inline">
     <div class="control-group">
-      <input id="send1" name="send" type="radio" checked>
-      <label for="send1">Patienten vill ha intyget elektroniskt, och själv skicka det till Försäkringskassan via Mina intyg</label>
+      <label class="radio"><input name="send" type="radio" checked> Patienten vill ha intyget elektroniskt, och själv skicka det till Försäkringskassan via Mina intyg</label>
     </div>
     <div class="control-group">
-      <input id="send2" name="send" type="radio">
-      <label for="send2">Patienten vill att intyget skickas elektroniskt direkt till Föräkringskassan</label>
+      <label class="radio"><input name="send" type="radio"> Patienten vill att intyget skickas elektroniskt direkt till Föräkringskassan</label>
     </div>
     <div class="control-group">
-      <input id="send3" name="send" type="radio">
-      <label for="send3">Patienten vill ha intyget på papper och skickar det själv till Försäkringskassan</label>
+      <label class="radio"><input name="send" type="radio"> Patienten vill ha intyget på papper och skickar det själv till Försäkringskassan</label>
     </div>
 	</div>
 	<div class="row-fluid">
-    <div class="span5">
-			<div class="alert alert-warning">
-		    Observera att läkarintyget inte ska skickas till Försäkringkassan under patientens sjuklöneperiod, det vill säga de 14 första dagarna med sjukfrånvaro.
-			</div>
-      <div class="control-group">
-          <input id="consent" name="consent" type="checkbox"> <label for="consent">Patienten samtycker till att läkarintyget skickas direkt till Försäkringskassan</label>
-
-          <button class="btn btn-success">Signera intyget och skicka direkt till Försäkringskassan</button>
-          <button class="btn btn-success">Signera intyget utan att skicka till Försäkringskassan</button>
-      </div>
-    </div>
+        <div class="span5">
+            <div class="alert alert-warning">
+                Observera att läkarintyget inte ska skickas till Försäkringkassan under patientens sjuklöneperiod, det vill säga de 14 första dagarna med sjukfrånvaro.
+            </div>
+            <div class="control-group">
+              <label class="checkbox"><input id="consent" name="consent" type="checkbox"> Patienten samtycker till att läkarintyget skickas direkt till Försäkringskassan</label>
+              <p><button class="btn btn-success">Signera intyget och skicka direkt till Försäkringskassan</button></p>
+              <p><button class="btn btn-success">Signera intyget utan att skicka till Försäkringskassan</button></p>
+            </div>
+        </div>
 	</div>
 </div>
