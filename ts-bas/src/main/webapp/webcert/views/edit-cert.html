@@ -62,13 +62,13 @@
                 <p>Intyget kan också användas när Transportstyrelsen i andra fall begärt ett läkarintyg. Markera då endast i rutan Annat nedan.</p>
 
                 <div class="control-group" ng-repeat="typ in cert.intygAvser.korkortstyp track by $index">
-                    <label><input id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox" ng-model="typ.selected"> {{typ.type}}</label>
+                    <label class="checkbox"><input id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox" ng-model="typ.selected"> {{typ.type}}</label>
                 </div>
             </div>
 
             <div wc-field field-label="ts.label.identitet">
                 <div class="control-group form-inline" ng-repeat="(k,v) in form.identity">
-                    <label><input name="identity{{$index}}" type="radio" value="{{v}}" ng-model="cert.vardkontakt.idkontroll"> {{k}}</label>
+                    <label class="radio"><input name="identity{{$index}}" type="radio" value="{{v}}" ng-model="cert.vardkontakt.idkontroll"> {{k}}</label>
                 </div>
             </div>
 
@@ -153,7 +153,7 @@
                             </table>
 
                             <h4>Korrektionsglasens styrka</h4>
-                            <label><input name="dioptrier" type="checkbox"> Högsta styrka i något av glasen överskrider 8 dioptrier</label>
+                            <label class="checkbox"><input name="dioptrier" type="checkbox"> Högsta styrka i något av glasen överskrider 8 dioptrier</label>
                         </td>
                     </tr>
                 </table>
@@ -247,13 +247,13 @@
                         <td>
                             <p>Har patienten diabetes?</p>
                             <p>Vilken typ?
-                                <label><input name="diabetestype1" type="radio" value="TYPE1" ng-model="cert.syn.synfaltsdefekter"> Typ 1</label>
-                                <label><input name="diabetestype2" type="radio" value="TYPE2" ng-model="cert.syn.synfaltsdefekter"> Typ 2</label>
+                                <label class="radio"><input name="diabetestype1" type="radio" value="TYPE1" ng-model="cert.syn.synfaltsdefekter"> Typ 1</label>
+                                <label class="radio"><input name="diabetestype2" type="radio" value="TYPE2" ng-model="cert.syn.synfaltsdefekter"> Typ 2</label>
                             </p>
                             <p>Ange behandling:
-                                <label><input name="diabetestreat1" type="checkbox" ng-model="cert.syn.synfaltsdefekter"> Kost</label>
-                                <label><input name="diabetestreat2" type="checkbox" ng-model="cert.syn.synfaltsdefekter"> Tabletter</label>
-                                <label><input name="diabetestreat3" type="checkbox" ng-model="cert.syn.synfaltsdefekter"> Insulin</label>
+                                <label class="checkbox"><input name="diabetestreat1" type="checkbox" ng-model="cert.syn.synfaltsdefekter"> Kost</label>
+                                <label class="checkbox"><input name="diabetestreat2" type="checkbox" ng-model="cert.syn.synfaltsdefekter"> Tabletter</label>
+                                <label class="checkbox"><input name="diabetestreat3" type="checkbox" ng-model="cert.syn.synfaltsdefekter"> Insulin</label>
                             </p>
                             <div class="alert alert-info">
                                 Har patienten tablett- eller insulinbehandlad diabetes krävs ett läkarintyg gällande sjukdomen.
@@ -496,13 +496,13 @@
                 <p>Patienten uppfyller kraven enligt Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2) för:</p>
 
                 <div>
-                    <label><input name="behorighetnagon" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"> Någon av följande behörigheter</label>
+                    <label class="radio"><input name="behorighetnagon" type="radio" value="YES" ng-model="cert.syn.synfaltsdefekter"> Någon av följande behörigheter</label>
                     <div class="control-group indent" ng-repeat="typ in cert.bedomning.korkortstyp track by $index">
-                        <label><input id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox" ng-model="typ.selected"> {{typ.type}}</label>
+                        <label class="checkbox"><input id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox" ng-model="typ.selected"> {{typ.type}}</label>
                     </div>
                 </div>
                 <div>
-                    <label><input name="behorighetinte" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"> Kan inte ta ställning</label>
+                    <label class="radio"><input name="behorighetinte" type="radio" value="NO" ng-model="cert.syn.synfaltsdefekter"> Kan inte ta ställning</label>
                 </div>
 
                 <p>Om någon av frågorna har besvarats med ja, ska de krav på ytterligare underlag som framgår av föreskrifterna beaktas.</p>
