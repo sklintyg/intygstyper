@@ -34,6 +34,7 @@ import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.ts_bas.model.codes.AktivitetKod;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_bas.model.codes.HSpersonalKod;
+import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_bas.model.codes.IntygAvserKod;
 import se.inera.certificate.modules.ts_bas.model.codes.Kodverk;
 import se.inera.certificate.modules.ts_bas.model.codes.LateralitetsKod;
@@ -41,6 +42,7 @@ import se.inera.certificate.modules.ts_bas.model.codes.MetodKod;
 import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_bas.model.codes.RekommendationVardeKod;
 import se.inera.certificate.modules.ts_bas.model.codes.RekommendationsKod;
+import se.inera.certificate.modules.ts_bas.model.codes.SpecialitetKod;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.codes.VardkontakttypKod;
 import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
@@ -141,9 +143,7 @@ public class InternalToExternalConverter {
 
     // TODO: There might be a better way to do this..
     private Kod createIdKontrollKod(String code) {
-        Kod kod = new Kod(Kodverk.ID_KONTROLL.getCodeSystem(), Kodverk.ID_KONTROLL.getCodeSystemName(),
-                Kodverk.ID_KONTROLL.getCodeSystemVersion(), code);
-        return kod;
+        return CodeConverter.toKod(IdKontrollKod.valueOf(code));
     }
 
     /**
@@ -602,7 +602,6 @@ public class InternalToExternalConverter {
         hosPersonal.setNamn(source.getFullstandigtNamn());
         hosPersonal.setVardenhet(convertToExtVardenhet(source.getVardenhet()));
         // TODO: IMPORTANT! change when specialiteter is implemented in internal model
-        hosPersonal.getSpecialiteter();
         return hosPersonal;
     }
 

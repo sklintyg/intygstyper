@@ -64,7 +64,7 @@ public class ModuleApiTest {
             assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
         }
     }
-    
+
     @Ignore
     @Test(expected = BadRequestException.class)
     public void testUnmarshallBroken() throws Exception {
@@ -72,7 +72,7 @@ public class ModuleApiTest {
             moduleApi.unmarshall(scenario.asTransportModel());
         }
     }
-    
+
     @Test
     public void testMarshall() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
@@ -81,7 +81,7 @@ public class ModuleApiTest {
         }
 
     }
-    
+
     @Test
     public void testValidate() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
@@ -132,8 +132,15 @@ public class ModuleApiTest {
     @Test
     public void testConvertInternalToExternal() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
-            moduleApi.convertInternalToExternal(scenario.asInternalModel());
+
+            se.inera.certificate.modules.ts_bas.model.external.Utlatande actual = moduleApi
+                    .convertInternalToExternal(scenario.asInternalModel());
+
             assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
+
+            se.inera.certificate.modules.ts_bas.model.external.Utlatande expected = scenario.asExternalModel();
+
+            ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
     }
 

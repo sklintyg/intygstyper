@@ -42,7 +42,6 @@
             "extension": "SE0000000000-1333"
         },
         "namn": "Doktor Thompson",
-        "specialiteter" : [],
         "vardenhet": {
             "id": {
                 "root": "1.2.752.129.2.1.4.1",

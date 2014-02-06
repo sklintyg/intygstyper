@@ -19,21 +19,24 @@
 package se.inera.certificate.modules.ts_bas.model.converter;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.ts_bas.model.codes.AktivitetKod;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
+import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_bas.model.codes.IntygAvserKod;
 import se.inera.certificate.modules.ts_bas.model.codes.LateralitetsKod;
 import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_bas.model.codes.RekommendationVardeKod;
 import se.inera.certificate.modules.ts_bas.model.codes.RekommendationsKod;
+import se.inera.certificate.modules.ts_bas.model.codes.SpecialitetKod;
+import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_bas.model.external.Observation;
 import se.inera.certificate.modules.ts_bas.model.external.Rekommendation;
@@ -162,7 +165,7 @@ public class ExternalToInternalConverterInstance {
     private Vardkontakt convertToIntVardkontakt(se.inera.certificate.modules.ts_bas.model.external.Vardkontakt source) {
         Vardkontakt vardkontakt = new Vardkontakt();
 
-        vardkontakt.setIdkontroll(source.getIdkontroll().getCode());
+        vardkontakt.setIdkontroll(CodeConverter.getInternalNameFromKod(source.getIdkontroll(), IdKontrollKod.class));
         vardkontakt.setTyp(source.getVardkontakttyp().getCode());
 
         return vardkontakt;
