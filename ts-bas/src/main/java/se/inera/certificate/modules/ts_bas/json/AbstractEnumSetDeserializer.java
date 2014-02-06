@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 /**
  * Helper class that instructs Jackson to parse JSON like below to {@link EnumSet}:
  * <p>
- * <code>{ENUM1 : true, ENUM2 : false, ENUM3 : false}</code>
+ * <code>[{type: "ENUM1", selected : true}, {type: "ENUM2", selected : false}, {type: "ENUM3", selected : false}]</code>
  * <p>
  * for a EnumSet containing <code>ENUM1</code> out of an enum with the enum values <code>ENUM1</code>,
  * <code>ENUM2</code> and <code>ENUM3</code>
@@ -55,11 +55,22 @@ public abstract class AbstractEnumSetDeserializer<E extends Enum<E>> extends Jso
             JsonProcessingException {
         EnumSet<E> enumSet = EnumSet.noneOf(enumType);
 
-        while (jp.nextToken() != JsonToken.END_OBJECT) {
-            String name = jp.getCurrentName();
-            jp.nextToken();
-            if (jp.getBooleanValue()) {
-                enumSet.add(enums.get(name));
+        while (jp.nextToken() != JsonToken.END_ARRAY) {
+            String enumName = null;
+            Boolean enumIsSet = null;
+            while (jp.nextToken() != JsonToken.END_OBJECT) {
+                String field = jp.getCurrentName();
+                jp.nextToken();
+                if (field.equals("type")) {
+                    enumName = jp.getValueAsString();
+                } else if (field.equals("selected")) {
+                    enumIsSet = jp.getValueAsBoolean();
+                }
+            }
+            if (enumName != null && enumIsSet != null) {
+                if (enumIsSet) {
+                    enumSet.add(enums.get(enumName));
+                }
             }
         }
 
