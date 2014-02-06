@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 /**
  * Helper class that instructs Jackson to parse {@link EnumSet}s to JSON like:
  * <p>
- * <code>{ENUM1 : true, ENUM2 : false, ENUM3 : false}</code>
+ * <code>[{type: "ENUM1", selected : true}, {type: "ENUM2", selected : false}, {type: "ENUM3", selected : false}]</code>
  * <p>
  * for a EnumSet containing <code>ENUM1</code> out of an enum with the enum values <code>ENUM1</code>,
  * <code>ENUM2</code> and <code>ENUM3</code>
@@ -46,10 +46,14 @@ public class AbstractEnumSetSerializer<E extends Enum<E>> extends JsonSerializer
     @Override
     public void serialize(EnumSet<E> enumSet, JsonGenerator jgen, SerializerProvider provider) throws IOException,
             JsonProcessingException {
-        jgen.writeStartObject();
+
+        jgen.writeStartArray();
         for (E enumValue : enumType.getEnumConstants()) {
-            jgen.writeBooleanField(enumValue.name(), enumSet.contains(enumValue));
+            jgen.writeStartObject();
+            jgen.writeStringField("type", enumValue.name());
+            jgen.writeBooleanField("selected", enumSet.contains(enumValue));
+            jgen.writeEndObject();
         }
-        jgen.writeEndObject();
+        jgen.writeEndArray();
     }
 }

@@ -59,7 +59,8 @@ public class EnumSetSerializerDeserializerTest {
         }
     }
 
-    public static final String JSON_STRING = "{\"field\":{\"ONE\":%s,\"TWO\":%s,\"THREE\":%s}}";
+//    public static final String JSON_STRING = "{\"field\":{\"ONE\":%s,\"TWO\":%s,\"THREE\":%s}}";
+    public static final String JSON_STRING = "{\"field\":[{\"type\":\"ONE\",\"selected\":%s},{\"type\":\"TWO\",\"selected\":%s},{\"type\":\"THREE\",\"selected\":%s}]}";
 
     @Test
     public void testEnumSetSerializer() throws Exception {
