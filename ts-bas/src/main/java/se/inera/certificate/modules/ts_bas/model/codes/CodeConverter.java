@@ -85,7 +85,7 @@ public final class CodeConverter {
             }
         }
 
-        throw new RuntimeException(String.format("Found no valid enum for code '%s' of type '%s'", kod,
+        throw new RuntimeException(String.format("Found no valid enum for code '%s' of type '%s'", kod.getCode(),
                 type.getSimpleName()));
     }
 
@@ -120,4 +120,19 @@ public final class CodeConverter {
 
         return true;
     }
+
+    public static String getInternalNameFromKod(Kod kod, Class<? extends CodeSystem> type) {
+        return fromCode(kod, type).toString();
+    }
+
+
+
+    /**
+     * Given a Kod, returns the corresponding internal enum constant name for that code from the CodeSystem representing
+     * it.
+     * 
+     * @param kod
+     *            {@link Kod}
+     * @return a String with the Enum constant
+     */
 }

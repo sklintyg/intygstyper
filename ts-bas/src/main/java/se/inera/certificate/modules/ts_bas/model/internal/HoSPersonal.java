@@ -18,6 +18,9 @@
  */
 package se.inera.certificate.modules.ts_bas.model.internal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HoSPersonal {
 
     private String personid;
@@ -26,10 +29,19 @@ public class HoSPersonal {
 
     private String befattning;
 
+    private List<String> specialiteter;
+
     private Vardenhet vardenhet;
 
     public HoSPersonal() {
 
+    }
+
+    public List<String> getSpecialiteter() {
+        if (specialiteter == null) {
+            specialiteter = new ArrayList<String>();
+        }
+        return specialiteter;
     }
 
     public String getPersonid() {

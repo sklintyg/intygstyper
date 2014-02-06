@@ -5,6 +5,7 @@
     "skapadAv": {
         "personid": "SE0000000000-1333",
         "fullstandigtNamn": "Doktor Thompson",
+        "specialiteter" : ["SPECIALITET"],
         "vardenhet": {
             "enhetsid": "SE0000000000-1337",
             "enhetsnamn": "Vårdenhet Väst",
@@ -29,7 +30,7 @@
     },
     "vardkontakt" : {
     	"typ" : "5880005", 
-    	"idkontroll" : "IDK6"
+    	"idkontroll" : "PASS"
     },
     "intygAvser" : {
         "korkortstyp" : {"C1" : false, "C1E" : false, "C" : true, "CE" : false, "D1" : false, "D1E" : false, "D" : false, "DE" : false, "TAXI" : false}

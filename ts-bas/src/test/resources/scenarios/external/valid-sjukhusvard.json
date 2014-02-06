@@ -36,7 +36,13 @@
             "extension": "SE0000000000-1333"
         },
         "namn": "Doktor Thompson",
-        "specialiteter" : [],
+        "specialiteter" : [ 
+                         {
+                       	  "code" : "SPEC",
+                       	  "codeSystem" : "coming_soon",
+                       	  "codeSystemName" : "kv_intyg_specialitet"
+                         }
+                         ],
         "vardenhet": {
             "id": {
                 "root": "1.2.752.129.2.1.4.1",
