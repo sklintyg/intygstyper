@@ -32,7 +32,9 @@ import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.ts_bas.model.codes.AktivitetKod;
+import se.inera.certificate.modules.ts_bas.model.codes.BefattningKod;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
+import se.inera.certificate.modules.ts_bas.model.codes.CodeSystem;
 import se.inera.certificate.modules.ts_bas.model.codes.HSpersonalKod;
 import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_bas.model.codes.IntygAvserKod;
@@ -351,7 +353,8 @@ public class InternalToExternalConverter {
 
         // Diabetes typ
         if (source.getDiabetes().getDiabetesTyp() != null) {
-                observationer.add(createBasicObservation(ObservationsKod.valueOf(source.getDiabetes().getDiabetesTyp()), true));
+            observationer.add(createBasicObservation(ObservationsKod.valueOf(source.getDiabetes().getDiabetesTyp()),
+                    true));
         }
 
         // Diabetes behandlingar
@@ -593,26 +596,35 @@ public class InternalToExternalConverter {
      */
     private HosPersonal convertToExtHosPersonal(HoSPersonal source) {
         HosPersonal hosPersonal = new HosPersonal();
-        hosPersonal.setBefattning(source.getBefattning());
         hosPersonal.setId(new Id(HSpersonalKod.HSA_ID.getCodeSystem(), source.getPersonid()));
         hosPersonal.setNamn(source.getFullstandigtNamn());
         hosPersonal.setVardenhet(convertToExtVardenhet(source.getVardenhet()));
-        
-        // TODO: IMPORTANT! change when specialiteter is implemented in internal model
-        hosPersonal.getSpecialiteter().addAll(ConvertSpecialitetStringToCode(source.getSpecialiteter()));
-        
+
+        hosPersonal.getBefattningar().addAll(convertBefattningStringToCode(source.getBefattningar()));
+        hosPersonal.getSpecialiteter().addAll(convertSpecialitetStringToCode(source.getSpecialiteter()));
+
         return hosPersonal;
     }
 
-    private Collection<? extends Kod> ConvertSpecialitetStringToCode(List<String> specialiteter) {
+    // TODO: Make this generic
+    private Collection<Kod> convertBefattningStringToCode(List<String> stringKoder) {
+        List<Kod> koder = new ArrayList<Kod>();
+        for (String stringKod : stringKoder) {
+            koder.add(CodeConverter.toKod(BefattningKod.valueOf(stringKod)));
+        }
+        return koder;
+    }
+
+    // TODO: Make this generic
+    private Collection<Kod> convertSpecialitetStringToCode(List<String> specialiteter) {
         List<Kod> koder = new ArrayList<Kod>();
         for (String spec : specialiteter) {
             koder.add(CodeConverter.toKod(SpecialitetKod.valueOf(spec)));
         }
-        
+
         return koder;
     }
-    
+
     /**
      * Convert from internal to external Vardenhet
      * 

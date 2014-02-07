@@ -17,7 +17,8 @@
                 "vardgivarid": "SE0000000000-HAHAHHSAA",
                 "vardgivarnamn": "Vårdgivarnamn"
             }
-        }
+        },
+        "befattningar" : []
     },
     "patient": {
         "personid": "19121212-1212",

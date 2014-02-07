@@ -49,6 +49,7 @@ public class ExternalToInternalConverterTest {
             se.inera.certificate.modules.ts_bas.model.internal.Utlatande actual = converter.convert(extUtlatande);
 
             se.inera.certificate.modules.ts_bas.model.internal.Utlatande expected = scenario.asInternalModel();
+
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
     }

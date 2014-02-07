@@ -60,7 +60,8 @@
                 },
                 "namn": "Vårdgivarnamn"
             }
-        }
+        },
+        "befattningar" : []
     },
     "vardkontakter": [
           {

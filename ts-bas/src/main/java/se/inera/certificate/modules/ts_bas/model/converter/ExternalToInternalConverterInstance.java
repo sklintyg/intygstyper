@@ -28,7 +28,9 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.ts_bas.model.codes.AktivitetKod;
+import se.inera.certificate.modules.ts_bas.model.codes.BefattningKod;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
+import se.inera.certificate.modules.ts_bas.model.codes.CodeSystem;
 import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_bas.model.codes.IntygAvserKod;
 import se.inera.certificate.modules.ts_bas.model.codes.LateralitetsKod;
@@ -731,8 +733,9 @@ public class ExternalToInternalConverterInstance {
 
         intHoSPersonal.setPersonid(InternalModelConverterUtils.getExtensionFromId(extHoSPersonal.getId()));
         intHoSPersonal.setFullstandigtNamn(extHoSPersonal.getNamn());
-        intHoSPersonal.setBefattning(extHoSPersonal.getBefattning());
-        intHoSPersonal.getSpecialiteter().addAll(ConvertToInternalSpecialitet(extHoSPersonal.getSpecialiteter()));
+       
+        intHoSPersonal.getBefattningar().addAll(convertKodToString(extHoSPersonal.getBefattningar(), BefattningKod.class));
+        intHoSPersonal.getSpecialiteter().addAll(convertKodToString(extHoSPersonal.getSpecialiteter(), SpecialitetKod.class));
 
         Vardenhet intVardenhet = convertToIntVardenhet(extHoSPersonal.getVardenhet());
         intHoSPersonal.setVardenhet(intVardenhet);
@@ -740,12 +743,12 @@ public class ExternalToInternalConverterInstance {
         return intHoSPersonal;
     }
 
-    private Collection<? extends String> ConvertToInternalSpecialitet(List<Kod> specialiteter) {
-        List<String> intSpecialiteter = new ArrayList<>();
-        for (Kod kod : specialiteter) {
-            intSpecialiteter.add(CodeConverter.getInternalNameFromKod(kod, SpecialitetKod.class));
+    private Collection<String> convertKodToString(List<Kod> koder, Class<? extends CodeSystem> type) {
+        List<String> intKoder = new ArrayList<>();
+        for (Kod kod : koder) {
+            intKoder.add(CodeConverter.getInternalNameFromKod(kod, type));
         }
-        return intSpecialiteter;
+        return intKoder;
     }
 
     private Patient convertToIntPatient(se.inera.certificate.model.Patient extPatient) throws ConverterException {

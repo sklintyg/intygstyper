@@ -140,6 +140,10 @@ public class ModuleApiTest {
 
             se.inera.certificate.modules.ts_bas.model.external.Utlatande expected = scenario.asExternalModel();
 
+            // We need to issue a get in order to create an empty list (and make the test pass)
+            actual.getSkapadAv().getBefattningar();
+            actual.getSkapadAv().getSpecialiteter();
+            
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
     }
@@ -154,6 +158,11 @@ public class ModuleApiTest {
             intUtlatande = moduleApi.convertExternalToInternal(wrapExternalWithHolder(extUtlatande));
 
             Utlatande expected = scenario.asInternalModel();
+            
+            // We need to issue a get in order to create an empty list (and make the test pass)
+            intUtlatande.getSkapadAv().getBefattningar();
+            intUtlatande.getSkapadAv().getSpecialiteter();
+
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, intUtlatande);
         }
     }
