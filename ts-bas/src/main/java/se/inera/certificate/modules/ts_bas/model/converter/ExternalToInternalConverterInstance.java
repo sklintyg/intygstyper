@@ -746,7 +746,7 @@ public class ExternalToInternalConverterInstance {
     private Collection<String> convertKodToString(List<Kod> koder, Class<? extends CodeSystem> type) {
         List<String> intKoder = new ArrayList<>();
         for (Kod kod : koder) {
-            intKoder.add(CodeConverter.getInternalNameFromKod(kod, type));
+            intKoder.add(CodeConverter.fromCode(kod, type).toString());
         }
         return intKoder;
     }
