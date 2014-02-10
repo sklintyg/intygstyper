@@ -32,11 +32,12 @@ import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.ts_bas.model.codes.AktivitetKod;
+import se.inera.certificate.modules.ts_bas.model.codes.BefattningKod;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
+import se.inera.certificate.modules.ts_bas.model.codes.CodeSystem;
 import se.inera.certificate.modules.ts_bas.model.codes.HSpersonalKod;
 import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_bas.model.codes.IntygAvserKod;
-import se.inera.certificate.modules.ts_bas.model.codes.Kodverk;
 import se.inera.certificate.modules.ts_bas.model.codes.LateralitetsKod;
 import se.inera.certificate.modules.ts_bas.model.codes.MetodKod;
 import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
@@ -153,7 +154,7 @@ public class InternalToExternalConverter {
      *            {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande}
      * @return List of {@link Kod}
      */
-    private Collection<? extends Kod> buildIntygAvser(
+    private Collection<Kod> buildIntygAvser(
             se.inera.certificate.modules.ts_bas.model.internal.Utlatande source) {
 
         List<Kod> intygetAvser = new ArrayList<Kod>();
@@ -170,7 +171,7 @@ public class InternalToExternalConverter {
      *            {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande}
      * @return a List of {@link ObservationAktivitetRelation}
      */
-    private Collection<? extends ObservationAktivitetRelation> buildObsAktRelationer(
+    private Collection<ObservationAktivitetRelation> buildObsAktRelationer(
             se.inera.certificate.modules.ts_bas.model.internal.Utlatande source) {
         List<ObservationAktivitetRelation> relationer = new ArrayList<ObservationAktivitetRelation>();
 
@@ -194,7 +195,7 @@ public class InternalToExternalConverter {
      *            {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande}
      * @return a List of {@link Rekommendation}
      */
-    private Collection<? extends Rekommendation> buildRekommendationer(
+    private Collection<Rekommendation> buildRekommendationer(
             se.inera.certificate.modules.ts_bas.model.internal.Utlatande source) {
         List<Rekommendation> rekommendationer = new ArrayList<Rekommendation>();
 
@@ -236,7 +237,7 @@ public class InternalToExternalConverter {
      *            {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande}
      * @return a List of {@link Observation}
      */
-    private Collection<? extends Observation> buildObservationer(
+    private Collection<Observation> buildObservationer(
             se.inera.certificate.modules.ts_bas.model.internal.Utlatande source) {
         List<Observation> observationer = new ArrayList<Observation>();
 
@@ -351,11 +352,8 @@ public class InternalToExternalConverter {
 
         // Diabetes typ
         if (source.getDiabetes().getDiabetesTyp() != null) {
-            if (source.getDiabetes().getDiabetesTyp().equals("E10")) {
-                observationer.add(createBasicObservation(ObservationsKod.DIABETES_TYP_1, true));
-            } else if (source.getDiabetes().getDiabetesTyp().equals("E11")) {
-                observationer.add(createBasicObservation(ObservationsKod.DIABETES_TYP_2, true));
-            }
+            observationer.add(createBasicObservation(ObservationsKod.valueOf(source.getDiabetes().getDiabetesTyp()),
+                    true));
         }
 
         // Diabetes behandlingar
@@ -521,7 +519,7 @@ public class InternalToExternalConverter {
      *            {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande}
      * @return List of {@link Aktivitet}
      */
-    private Collection<? extends Aktivitet> buildAktiviteter(
+    private Collection<Aktivitet> buildAktiviteter(
             se.inera.certificate.modules.ts_bas.model.internal.Utlatande source) {
         List<Aktivitet> aktiviteter = new ArrayList<Aktivitet>();
 
@@ -597,26 +595,36 @@ public class InternalToExternalConverter {
      */
     private HosPersonal convertToExtHosPersonal(HoSPersonal source) {
         HosPersonal hosPersonal = new HosPersonal();
-        hosPersonal.setBefattning(source.getBefattning());
         hosPersonal.setId(new Id(HSpersonalKod.HSA_ID.getCodeSystem(), source.getPersonid()));
         hosPersonal.setNamn(source.getFullstandigtNamn());
         hosPersonal.setVardenhet(convertToExtVardenhet(source.getVardenhet()));
-        
-        // TODO: IMPORTANT! change when specialiteter is implemented in internal model
-        hosPersonal.getSpecialiteter().addAll(ConvertSpecialitetStringToCode(source.getSpecialiteter()));
-        
+        hosPersonal.getBefattningar().addAll(convertStringToCode(BefattningKod.class, source.getBefattningar()));
+        hosPersonal.getSpecialiteter().addAll(convertStringToCode(SpecialitetKod.class, source.getSpecialiteter()));
+
         return hosPersonal;
     }
 
-    private Collection<? extends Kod> ConvertSpecialitetStringToCode(List<String> specialiteter) {
-        List<Kod> koder = new ArrayList<Kod>();
-        for (String spec : specialiteter) {
-            koder.add(CodeConverter.toKod(SpecialitetKod.valueOf(spec)));
+    /**
+     * Convert a String-representation (i.e the name of the enum constant representing that particular Kod) to a Kod
+     * object
+     * 
+     * @param type
+     *            the code enum (must extend {@link CodeSystem})
+     * @param strings
+     *            a list of Strings with the names of enum constants to convert
+     * @return a list of {@link Kod}
+     */
+    private <E extends CodeSystem> Collection<Kod> convertStringToCode(Class<E> type, List<String> strings) {
+        List<Kod> koder = new ArrayList<>();
+        for (E enumValue : type.getEnumConstants()) {
+            if (strings.contains(enumValue.toString())) {
+                koder.add(CodeConverter.toKod(enumValue));
+            }
         }
-        
+
         return koder;
     }
-    
+
     /**
      * Convert from internal to external Vardenhet
      * 

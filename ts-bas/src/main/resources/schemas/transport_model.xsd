@@ -191,7 +191,7 @@
         </xs:annotation>
       </xs:element>
       <!-- Skyddad identitet -->
-      <xs:element name="befattning" type="xs:string" minOccurs="0"/>
+      <xs:element name="befattning" type="iso:CD" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="enhet" type="enhetType"/>
       <xs:element name="specialitet" type="iso:CD" minOccurs="0" maxOccurs="unbounded"/>
 

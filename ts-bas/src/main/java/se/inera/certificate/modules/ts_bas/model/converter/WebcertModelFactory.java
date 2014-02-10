@@ -18,9 +18,17 @@
  */
 package se.inera.certificate.modules.ts_bas.model.converter;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 
-import se.inera.certificate.model.HosPersonal;
+import se.inera.certificate.model.Kod;
+import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
+import se.inera.certificate.modules.ts_bas.model.codes.BefattningKod;
+import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
+import se.inera.certificate.modules.ts_bas.model.codes.CodeSystem;
 import se.inera.certificate.modules.ts_bas.model.internal.HoSPersonal;
 import se.inera.certificate.modules.ts_bas.model.internal.Patient;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
@@ -94,12 +102,21 @@ public class WebcertModelFactory {
         hosPersonal.setFullstandigtNamn(hosPersType.getNamn());
 
         if (hosPersType.getBefattning() != null) {
-            hosPersonal.setBefattning(hosPersType.getBefattning());
+            hosPersonal.getBefattningar().addAll(convertKodToString(hosPersType.getBefattningar(), BefattningKod.class));
+            
         }
 
         hosPersonal.setVardenhet(convertVardenhetToEdit(hosPersType.getVardenhet()));
 
         return hosPersonal;
+    }
+
+    private Collection<String> convertKodToString(List<Kod> specialiteter, Class<? extends CodeSystem> type) {
+        List<String> intSpecialiteter = new ArrayList<>();
+        for (Kod kod : specialiteter) {
+            intSpecialiteter.add(CodeConverter.getInternalNameFromKod(kod, type));
+        }
+        return intSpecialiteter;
     }
 
     private Vardenhet convertVardenhetToEdit(se.inera.certificate.model.Vardenhet enhet) {

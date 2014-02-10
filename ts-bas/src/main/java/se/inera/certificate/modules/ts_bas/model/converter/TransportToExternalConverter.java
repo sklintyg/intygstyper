@@ -31,6 +31,7 @@ import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
+import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_bas.model.external.Observation;
@@ -327,7 +328,7 @@ public class TransportToExternalConverter {
      */
     private HosPersonal convertHosPersonal(HosPersonalType source) {
         HosPersonal skapadAv = new HosPersonal();
-        skapadAv.setBefattning(source.getBefattning());
+        skapadAv.getBefattningar().addAll(convertCDtoKod(source.getBefattnings()));
         skapadAv.setId(IsoTypeConverter.toId(source.getPersonalId()));
         skapadAv.setNamn(source.getFullstandigtNamn());
         skapadAv.setVardenhet(convertVardenhet(source.getEnhet()));

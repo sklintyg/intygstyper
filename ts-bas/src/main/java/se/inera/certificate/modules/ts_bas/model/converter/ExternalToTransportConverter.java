@@ -346,7 +346,7 @@ public class ExternalToTransportConverter {
      */
     private HosPersonalType convertHosPersonal(HosPersonal source) {
         HosPersonalType hosPersonal = new HosPersonalType();
-        hosPersonal.setBefattning(source.getBefattning());
+        hosPersonal.getBefattnings().addAll(convertKodToCD(source.getBefattningar()));
         hosPersonal.setEnhet(convertVardenhet(source.getVardenhet()));
         hosPersonal.setFullstandigtNamn(source.getNamn());
         hosPersonal.setPersonalId(IsoTypeConverter.toHsaId(source.getId()));
