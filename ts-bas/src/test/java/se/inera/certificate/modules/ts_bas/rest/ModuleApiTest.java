@@ -27,7 +27,6 @@ import javax.ws.rs.core.Response.Status;
 import junit.framework.Assert;
 
 import org.apache.cxf.jaxrs.client.WebClient;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +64,6 @@ public class ModuleApiTest {
         }
     }
 
-    @Ignore
     @Test(expected = BadRequestException.class)
     public void testUnmarshallBroken() throws Exception {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("invalid-*")) {
