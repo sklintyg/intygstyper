@@ -29,8 +29,7 @@ public enum BilagaKod implements CodeSystem {
     
     private static String codeSystemName = "kv_bilaga";
 
-    // TODO: Change to correct OID when available
-    private static String codeSystem = "???";
+    private static String codeSystem = "80595600-7477-4a6c-baeb-d2439e86b8bc";
 
     private static String codeSystemVersion = null;
 

@@ -78,9 +78,9 @@ public enum RekommendationVardeKod implements CodeSystem {
     
     TRAKTOR("VAR18", "Traktor");
     
-    private static String codeSystemName = "kv_rekommendation_intyg";
+    private static String codeSystemName = "kv_värde";
 
-    private static String codeSystem = "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459";
+    private static String codeSystem = "e889fa20-1dee-4f79-8b37-03853e75a9f8";
 
     private static String codeSystemVersion = null;
 

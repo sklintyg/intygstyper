@@ -30,7 +30,7 @@ public enum MetodKod implements CodeSystem {
 
     private static String codeSystemName = "kv_metod";
 
-    private static String codeSystem = "????";
+    private static String codeSystem = "b0c078c6-512a-42a5-ab42-a3380f369ac3";
 
     private static String codeSystemVersion = null;
 

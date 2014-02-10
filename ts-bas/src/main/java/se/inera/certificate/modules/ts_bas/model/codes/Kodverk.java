@@ -11,8 +11,7 @@ public enum Kodverk {
     // TODO: Change to correct OID when this is available 
     OBSERVATIONER("to-come", "kv_observationer_intyg", null),
 
-    // TODO: Change to correct OID when this is available 
-    ID_KONTROLL("???", "kv_id_kontroll", null);
+    ID_KONTROLL("e7cc8f30-a353-4c42-b17a-a189b6876647", "kv_id_kontroll", null);
 
     private Kodverk(String codeSystem, String codeSystemName, String codeSystemVersion) {
         this.codeSystem = codeSystem;

@@ -338,7 +338,6 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
                     }
                 }
                 assertNull(observation.getId(), entity + ".observationsid");
-                assertNull(observation.getBeskrivning(), entity + ".beskrivning");
                 assertNull(observation.getLateralitet(), entity + ".lateralitet");
                 assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
                 assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");

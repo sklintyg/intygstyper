@@ -456,19 +456,22 @@ public class ExternalToInternalConverterInstance {
             diabetes.setHarDiabetes(harDiabetes.getForekomst());
             if (harDiabetes.getForekomst()) {
                 if (diabetesTyp1 != null) {
-                    diabetes.setDiabetesTyp(CodeConverter.getInternalNameFromKod(diabetesTyp1.getObservationskod(), ObservationsKod.class));
+                    diabetes.setDiabetesTyp(CodeConverter.getInternalNameFromKod(diabetesTyp1.getObservationskod(),
+                            ObservationsKod.class));
                 } else if (diabetesTyp2 != null) {
-                    diabetes.setDiabetesTyp(CodeConverter.getInternalNameFromKod(diabetesTyp2.getObservationskod(), ObservationsKod.class));
-                    if (insulin != null) {
-                        diabetes.setInsulin(insulin.getForekomst());
-                    }
-                    if (tabletter != null) {
-                        diabetes.setTabletter(tabletter.getForekomst());
-                    }
-                    if (kost != null) {
-                        diabetes.setKost(kost.getForekomst());
-                    }
+                    diabetes.setDiabetesTyp(CodeConverter.getInternalNameFromKod(diabetesTyp2.getObservationskod(),
+                            ObservationsKod.class));
                 }
+                if (insulin != null) {
+                    diabetes.setInsulin(insulin.getForekomst());
+                }
+                if (tabletter != null) {
+                    diabetes.setTabletter(tabletter.getForekomst());
+                }
+                if (kost != null) {
+                    diabetes.setKost(kost.getForekomst());
+                }
+
             }
         }
 
@@ -733,9 +736,11 @@ public class ExternalToInternalConverterInstance {
 
         intHoSPersonal.setPersonid(InternalModelConverterUtils.getExtensionFromId(extHoSPersonal.getId()));
         intHoSPersonal.setFullstandigtNamn(extHoSPersonal.getNamn());
-       
-        intHoSPersonal.getBefattningar().addAll(convertKodToString(extHoSPersonal.getBefattningar(), BefattningKod.class));
-        intHoSPersonal.getSpecialiteter().addAll(convertKodToString(extHoSPersonal.getSpecialiteter(), SpecialitetKod.class));
+
+        intHoSPersonal.getBefattningar().addAll(
+                convertKodToString(extHoSPersonal.getBefattningar(), BefattningKod.class));
+        intHoSPersonal.getSpecialiteter().addAll(
+                convertKodToString(extHoSPersonal.getSpecialiteter(), SpecialitetKod.class));
 
         Vardenhet intVardenhet = convertToIntVardenhet(extHoSPersonal.getVardenhet());
         intHoSPersonal.setVardenhet(intVardenhet);

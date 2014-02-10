@@ -556,12 +556,14 @@ public class InternalToExternalConverter {
             Aktivitet korrektion8dioptrier = new Aktivitet();
             korrektion8dioptrier.setAktivitetskod(CodeConverter.toKod(AktivitetKod.UNDERSOKNING_PLUS8_KORREKTIONSGRAD));
             korrektion8dioptrier.setForekomst(source.getSyn().getKorrektionsglasensStyrka());
+            aktiviteter.add(korrektion8dioptrier);
         }
 
         if (source.getNarkotikaLakemedel().getProvtagningBehovs() != null) {
             Aktivitet provtagningNark = new Aktivitet();
             provtagningNark.setAktivitetskod(CodeConverter.toKod(AktivitetKod.PROVTAGNING_ALKOHO_NARKOTIKA));
             provtagningNark.setForekomst(source.getNarkotikaLakemedel().getProvtagningBehovs());
+            aktiviteter.add(provtagningNark);
         }
 
         return aktiviteter;
