@@ -40,6 +40,7 @@
 <link rel="stylesheet" href="/css/bootstrap-responsive-modified.css">
 <link rel="stylesheet" href="/css/inera-webcert.css">
 <link rel="stylesheet" href="/css/inera-certificate.css">
+<link rel="stylesheet" href="<c:url context="/m/ts-bas" value="/webcert/css/ts-bas.css"/>">
 
 <script type="text/javascript" src="/usercontext.jsp"></script>
   

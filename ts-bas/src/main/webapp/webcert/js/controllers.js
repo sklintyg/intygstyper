@@ -34,8 +34,24 @@ angular.module('wc.ts-bas.controllers').controller('EditCertCtrl', [ '$scope', '
       "Personlig kännedom" : "PERS_KANNEDOM",
       "Försäkran enligt 18 kap. 4§" : "FORSAKRAN_KAP18",
       "Pass" : "PASS"
-    }
+    },
+    "korkortd" : false,
+    "behorighet" : true
   };
+
+  $scope.$watch('cert.intygAvser.korkortstyp', function(newValue, oldValue){
+    $scope.form.korkortd = false;
+    for(var i = 4; i<$scope.cert.intygAvser.korkortstyp.length; i++){
+      if(newValue[i].selected){
+        $scope.form.korkortd = true;
+        break;
+      }
+    }
+
+    angular.forEach($scope.cert.intygAvser.korkortstyp, function(value, key){
+
+    })
+  }, true);
 
   var dummycert =
   {
