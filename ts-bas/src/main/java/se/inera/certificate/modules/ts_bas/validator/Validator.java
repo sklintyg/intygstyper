@@ -21,8 +21,11 @@ package se.inera.certificate.modules.ts_bas.validator;
 import java.util.List;
 
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
+import se.inera.certificate.modules.ts_bas.rest.dto.ValidateDraftResponseHolder;
+import se.inera.certificate.modules.ts_bas.validator.external.ExternalValidatorInstance;
+import se.inera.certificate.modules.ts_bas.validator.internal.InternalValidatorInstance;
 
-public class ExternalValidator {
+public class Validator {
 
     /**
      * Validates an external Utlatande.
@@ -31,8 +34,21 @@ public class ExternalValidator {
      *            se.inera.certificate.modules.ts_bas.model.external.Utlatande
      * @return List of validation errors, or an empty string if validated correctly
      */
-    public List<String> validate(Utlatande utlatande) {
+    public List<String> validateExternal(Utlatande utlatande) {
         ExternalValidatorInstance instance = new ExternalValidatorInstance();
+        return instance.validate(utlatande);
+    }
+
+    /**
+     * Validates an external Utlatande.
+     * 
+     * @param utlatande
+     *            se.inera.certificate.modules.ts_bas.model.external.Utlatande
+     * @return List of validation errors, or an empty string if validated correctly
+     */
+    public ValidateDraftResponseHolder validateInternal(
+            se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande) {
+        InternalValidatorInstance instance = new InternalValidatorInstance();
         return instance.validate(utlatande);
     }
 }

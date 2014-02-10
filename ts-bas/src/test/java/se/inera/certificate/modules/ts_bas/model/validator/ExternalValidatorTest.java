@@ -29,22 +29,22 @@ import org.junit.Test;
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
-import se.inera.certificate.modules.ts_bas.validator.ExternalValidator;
+import se.inera.certificate.modules.ts_bas.validator.Validator;
 
 public class ExternalValidatorTest {
 
-    private ExternalValidator validator;
+    private Validator validator;
 
     @Before
     public void setUp() throws Exception {
-        validator = new ExternalValidator();
+        validator = new Validator();
     }
 
     @Test
     public void testValidate() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             Utlatande utlatande = scenario.asExternalModel();
-            List<String> validationErrors = validator.validate(utlatande);
+            List<String> validationErrors = validator.validateExternal(utlatande);
 
             assertTrue("Error in scenario " + scenario.getName() + "\n" + StringUtils.join(validationErrors, ", "),
                     validationErrors.isEmpty());
@@ -54,7 +54,7 @@ public class ExternalValidatorTest {
     @Test
     public void testValidateWithErrors() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {
-            List<String> validationErrors = validator.validate(scenario.asExternalModel());
+            List<String> validationErrors = validator.validateExternal(scenario.asExternalModel());
 
             assertTrue("Error in scenario " + scenario.getName() + "\n" + StringUtils.join(validationErrors, ", "),
                     !validationErrors.isEmpty());

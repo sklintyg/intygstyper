@@ -28,8 +28,8 @@
   <bean id="externalToTransportConverter"
     class="se.inera.certificate.modules.ts_bas.model.converter.ExternalToTransportConverter" />
 
-  <bean id="externalValidator"
-    class="se.inera.certificate.modules.ts_bas.validator.ExternalValidator" />
+  <bean id="validator"
+    class="se.inera.certificate.modules.ts_bas.validator.Validator" />
 
   <bean id="externalToInternalConverter"
     class="se.inera.certificate.modules.ts_bas.model.converter.ExternalToInternalConverter" />

@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.validator;
+package se.inera.certificate.modules.ts_bas.validator.external;
 
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;

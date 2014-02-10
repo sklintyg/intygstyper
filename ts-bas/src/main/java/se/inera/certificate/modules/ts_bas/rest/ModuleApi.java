@@ -28,6 +28,7 @@ import javax.ws.rs.core.MediaType;
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
 import se.inera.certificate.modules.ts_bas.rest.dto.CertificateContentHolder;
 import se.inera.certificate.modules.ts_bas.rest.dto.CreateNewDraftCertificateHolder;
+import se.inera.certificate.modules.ts_bas.rest.dto.ValidateDraftResponseHolder;
 
 @Path("")
 public interface ModuleApi {
@@ -73,6 +74,19 @@ public interface ModuleApi {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     String validate(Utlatande utlatande);
+
+    /**
+     * Validates the internal model. The status (complete, incomplete) and a list of validation errors is returned.
+     * 
+     * @param externalModel
+     *            The external model to validate.
+     * @return
+     */
+    @POST
+    @Path("/valid-draft")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    ValidateDraftResponseHolder validateDraft(se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande);
 
     /**
      * Generates a PDF from the external model.

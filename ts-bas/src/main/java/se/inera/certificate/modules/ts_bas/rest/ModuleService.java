@@ -44,7 +44,8 @@ import se.inera.certificate.modules.ts_bas.pdf.PdfGenerator;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.ts_bas.rest.dto.CertificateContentHolder;
 import se.inera.certificate.modules.ts_bas.rest.dto.CreateNewDraftCertificateHolder;
-import se.inera.certificate.modules.ts_bas.validator.ExternalValidator;
+import se.inera.certificate.modules.ts_bas.rest.dto.ValidateDraftResponseHolder;
+import se.inera.certificate.modules.ts_bas.validator.Validator;
 
 /**
  * The contract between the certificate module and the generic components (Intygstjänsten and Mina-Intyg).
@@ -62,7 +63,7 @@ public class ModuleService implements ModuleApi {
     private ExternalToTransportConverter externalToTransportConverter;
 
     @Autowired
-    private ExternalValidator externalValidator;
+    private Validator validator;
 
     @Autowired
     private ExternalToInternalConverter externalToInternalConverter;
@@ -115,7 +116,7 @@ public class ModuleService implements ModuleApi {
      */
     @Override
     public String validate(Utlatande utlatande) {
-        List<String> validationErrors = externalValidator.validate(utlatande);
+        List<String> validationErrors = validator.validateExternal(utlatande);
 
         if (validationErrors.isEmpty()) {
             return null;
@@ -124,6 +125,11 @@ public class ModuleService implements ModuleApi {
             String response = Strings.join(",", validationErrors);
             throw new WebApplicationException(Response.status(Status.BAD_REQUEST).entity(response).build());
         }
+    }
+
+    @Override
+    public ValidateDraftResponseHolder validateDraft(se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande) {
+        return validator.validateInternal(utlatande);
     }
 
     /**
