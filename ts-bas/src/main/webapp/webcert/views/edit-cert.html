@@ -519,7 +519,7 @@
                 <p data-ng-show="cert.diabetes.tabletter || cert.diabetes.insulin">Har patienten tablett- eller insulinbehandlad diabetes krävs ett läkarintyg gällande sjukdomen.</p>
 
                 <p>Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i:</p>
-                <textarea name="specialist" rows='5' ng-model="cert.kommentar" maxlength="500"></textarea>
+                <textarea name="specialist" rows='5' ng-model="cert.bedomning.lakareSpecialKompetens" maxlength="500"></textarea>
             </div>
 
             <div class="body-row clearfix">
@@ -571,7 +571,10 @@
     </div>
     <!-- certificate -->
 
-    <p>Specialistkompetens i ?</p>
+    <p>Specialistkompetens i:</p>
+    <div data-ng-repeat="spec in cert.skapadAv.specialiteter">
+        {{spec}}
+    </div>
 
     <button class="btn btn-success">Signera intyget och skicka direkt till Transportstyrelsen</button>
 
