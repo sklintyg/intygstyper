@@ -15,11 +15,18 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class EnumSetSerializerDeserializerTest {
 
+    /**
+     * A simple enum for testing
+     */
     public static enum TestEnum {
         ONE, TWO, THREE
     };
 
+    /**
+     * A simple test class with an <code>EnumSet</code> of the <code>TestEnum</code>.
+     */
     public static class TestClass {
+
         @JsonSerialize(using = EnumSetSerializer.class)
         @JsonDeserialize(using = EnumSetDeserializer.class)
         private final EnumSet<TestEnum> field;
@@ -36,6 +43,7 @@ public class EnumSetSerializerDeserializerTest {
             field = EnumSet.of(value, values);
         }
 
+        // Implementing equals for easy test assertion.
         @Override
         public boolean equals(Object obj) {
             if (this == obj)
@@ -53,15 +61,25 @@ public class EnumSetSerializerDeserializerTest {
             return true;
         }
 
+        // Implementing toString for a meaningful assertion message.
         @Override
         public String toString() {
             return field.toString();
         }
     }
 
-//    public static final String JSON_STRING = "{\"field\":{\"ONE\":%s,\"TWO\":%s,\"THREE\":%s}}";
+    /**
+     * The expected JSON syntax.
+     * <p>
+     * <code>{"field":[{"type":"ONE","selected":true},{"type":"TWO","selected":false},...]}</code>
+     */
     public static final String JSON_STRING = "{\"field\":[{\"type\":\"ONE\",\"selected\":%s},{\"type\":\"TWO\",\"selected\":%s},{\"type\":\"THREE\",\"selected\":%s}]}";
 
+    /**
+     * Test that EnumSets are serialized as expected.
+     * 
+     * @throws Exception
+     */
     @Test
     public void testEnumSetSerializer() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
@@ -99,6 +117,11 @@ public class EnumSetSerializerDeserializerTest {
         }
     }
 
+    /**
+     * Test that EnumSets are deserialized as expected.
+     * 
+     * @throws Exception
+     */
     @Test
     public void testEnumSetDeserializer() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
