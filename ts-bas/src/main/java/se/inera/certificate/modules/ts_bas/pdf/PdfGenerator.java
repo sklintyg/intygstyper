@@ -373,7 +373,7 @@ public class PdfGenerator {
     private void populateMedicinering(Medicinering medicinering, AcroFields fields) throws IOException,
             DocumentException {
         STADIGVARANDE_MEDICINERING.setField(fields, medicinering.getStadigvarandeMedicinering());
-        STADIGVARANDE_MEDICINERING_BESKRIVNING.setField(fields, medicinering.getMediciner());
+        STADIGVARANDE_MEDICINERING_BESKRIVNING.setField(fields, medicinering.getBeskrivning());
     }
 
     private void populateOvrigt(String kommentar, AcroFields fields) throws IOException, DocumentException {

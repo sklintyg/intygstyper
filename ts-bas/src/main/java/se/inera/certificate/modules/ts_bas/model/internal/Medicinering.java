@@ -4,7 +4,7 @@ public class Medicinering {
     
     private Boolean stadigvarandeMedicinering;
     
-    private String mediciner;
+    private String beskrivning;
 
     public Boolean getStadigvarandeMedicinering() {
         return stadigvarandeMedicinering;
@@ -14,12 +14,12 @@ public class Medicinering {
         this.stadigvarandeMedicinering = stadigvarandeMedicinering;
     }
 
-    public String getMediciner() {
-        return mediciner;
+    public String getBeskrivning() {
+        return beskrivning;
     }
 
-    public void setMediciner(String mediciner) {
-        this.mediciner = mediciner;
+    public void setBeskrivning(String beskrivning) {
+        this.beskrivning = beskrivning;
     }
     
     

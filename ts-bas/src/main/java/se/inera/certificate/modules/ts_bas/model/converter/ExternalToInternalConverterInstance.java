@@ -219,7 +219,7 @@ public class ExternalToInternalConverterInstance {
         if (stadigvarandeMedicinering != null) {
             medicinering.setStadigvarandeMedicinering(stadigvarandeMedicinering.getForekomst());
             if (stadigvarandeMedicinering.getForekomst()) {
-                medicinering.setMediciner(stadigvarandeMedicinering.getBeskrivning());
+                medicinering.setBeskrivning(stadigvarandeMedicinering.getBeskrivning());
             }
         }
         return medicinering;

@@ -143,7 +143,8 @@
     },
     
     "medicinering" : {
-    	"stadigvarandeMedicinering" : true
+    	"stadigvarandeMedicinering" : true,
+    	"beskrivning" : "Alvedon"
     },
     
     "bedomning" : {
@@ -158,7 +159,8 @@
             {"type": "DE", "selected": false},
             {"type": "TAXI", "selected": false},
             {"type": "ANNAT", "selected": false}
-        ]
+        ],
+        "lakareSpecialKompetens" : "Spektralanalys"
     }
     
 }
