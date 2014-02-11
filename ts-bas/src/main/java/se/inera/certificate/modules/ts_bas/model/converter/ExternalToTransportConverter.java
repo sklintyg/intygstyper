@@ -69,6 +69,9 @@ public class ExternalToTransportConverter {
         Utlatande utlatande = new Utlatande();
         utlatande.setPatient(convertPatient(source.getPatient()));
         utlatande.setSigneringsdatum(source.getSigneringsdatum());
+        if (!source.getKommentarer().isEmpty()) {    
+            utlatande.getKommentars().addAll(source.getKommentarer());
+        }
         utlatande.setSkapadAv(convertHosPersonal(source.getSkapadAv()));
         utlatande.setSkickatdatum(source.getSkickatdatum());
         utlatande.setTypAvUtlatande(IsoTypeConverter.toUtlatandeTyp(source.getTyp()));
