@@ -76,6 +76,9 @@ public class TransportToExternalConverter {
         utlatande.setTyp(IsoTypeConverter.toKod(source.getTypAvUtlatande()));
         utlatande.setPatient(convertPatient(source.getPatient()));
         utlatande.setSigneringsdatum(source.getSigneringsdatum());
+        if (!source.getKommentars().isEmpty()) {
+            utlatande.getKommentarer().addAll(source.getKommentars());
+        }
         utlatande.setSkapadAv(convertHosPersonal(source.getSkapadAv()));
         utlatande.setSkickatdatum(source.getSkickatdatum());
         utlatande.getIntygAvser().addAll(convertCDtoKod(source.getIntygAvsers()));
