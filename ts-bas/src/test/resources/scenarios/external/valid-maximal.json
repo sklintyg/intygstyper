@@ -158,6 +158,15 @@
                 "codeSystemName": "kv_värde",
                 "code": "VAR3"
             }]
+        },
+        
+        {
+            "rekommendationskod": {
+                "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
+                "codeSystemName": "kv_rekommendation_intyg",
+                "code": "REK9"
+            },
+        	"beskrivning" : "Spektralanalys"
         }
     ],
     "observationer": [
@@ -509,7 +518,8 @@
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS18"
             },
-            "forekomst": true
+            "forekomst": true,
+            "beskrivning" : "Alvedon"
         }
     ],
     "observationAktivitetRelationer" : [

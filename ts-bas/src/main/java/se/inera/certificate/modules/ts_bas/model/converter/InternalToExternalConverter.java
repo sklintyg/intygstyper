@@ -332,7 +332,7 @@ public class InternalToExternalConverter {
 
         // Stadigvarande medicinering
         observationer.add(createObservationWithBeskrivning(ObservationsKod.STADIGVARANDE_MEDICINERING, source
-                .getMedicinering().getStadigvarandeMedicinering(), source.getMedicinering().getMediciner()));
+                .getMedicinering().getStadigvarandeMedicinering(), source.getMedicinering().getBeskrivning()));
 
         // END MANDATORY OBSERVATIONs
 
