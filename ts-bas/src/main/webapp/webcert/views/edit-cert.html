@@ -90,13 +90,13 @@
                         <td>a) Finns tecken på synfältsdefekter vid undersökning enligt Donders konfrontationsmetod?</td>
                     </tr>
                     <tr>
-                        <td><input id="synby" name="synby" type="radio" ng-value="true" ng-model="cert.syn.synfaltsdefekter"></td>
-                        <td><input id="synbn" name="synbn" type="radio" ng-value="false" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="synby" name="synby" type="radio" ng-value="true" ng-model="cert.syn.nattblindhet"></td>
+                        <td><input id="synbn" name="synbn" type="radio" ng-value="false" ng-model="cert.syn.nattblindhet"></td>
                         <td>b) Framkommer anamnestiska uppgifter om begränsning av seendet vid nedsatt belysning?</td>
                     </tr>
                     <tr>
-                        <td><input id="syncy" name="syncy" type="radio" ng-value="true" ng-model="cert.syn.synfaltsdefekter"></td>
-                        <td><input id="syncn" name="syncn" type="radio" ng-value="false" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="syncy" name="syncy" type="radio" ng-value="true" ng-model="cert.syn.progressivOgonsjukdom"></td>
+                        <td><input id="syncn" name="syncn" type="radio" ng-value="false" ng-model="cert.syn.progressivOgonsjukdom"></td>
                         <td>
                             <p>c) Har patienten någon progressiv ögonsjukdom?</p>
                             <div class="alert alert-info">
@@ -105,13 +105,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><input id="syndy" name="syndy" type="radio" ng-value="true" ng-model="cert.syn.synfaltsdefekter"></td>
-                        <td><input id="syndn" name="syndn" type="radio" ng-value="false" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="syndy" name="syndy" type="radio" ng-value="true" ng-model="cert.syn.diplopi"></td>
+                        <td><input id="syndn" name="syndn" type="radio" ng-value="false" ng-model="cert.syn.diplopi"></td>
                         <td>d) Framkommer dubbelseende vid prövning av ögats rörlighet (prövningen ska göras i de åtta huvudmeridianerna)?</td>
                     </tr>
                     <tr>
-                        <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.synfaltsdefekter"></td>
-                        <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
+                        <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
                         <td>e) Förekommer nystagmus?</td>
                     </tr>
                     <tr>
@@ -134,26 +134,26 @@
                                 </tr>
                                 <tr>
                                     <td>Höger öga</td>
-                                    <td><input type="text" class="small-decimal"></td>
-                                    <td><input type="text" class="small-decimal"></td>
-                                    <td><input type="checkbox"></td>
+                                    <td><input type="text" class="small-decimal" ng-model="cert.syn.hogerOga.utanKorrektion"></td>
+                                    <td><input type="text" class="small-decimal" ng-model="cert.syn.hogerOga.medKorrektion"></td>
+                                    <td><input type="checkbox" ng-model="cert.syn.hogerOga.kontaktlins"></td>
                                 </tr>
                                 <tr>
                                     <td>Vänster öga</td>
-                                    <td><input type="text" class="small-decimal"></td>
-                                    <td><input type="text" class="small-decimal"></td>
-                                    <td><input type="checkbox"></td>
+                                    <td><input type="text" class="small-decimal" ng-model="cert.syn.vansterOga.utanKorrektion"></td>
+                                    <td><input type="text" class="small-decimal" ng-model="cert.syn.vansterOga.medKorrektion"></td>
+                                    <td><input type="checkbox" ng-model="cert.syn.vansterOga.kontaktlins"></td>
                                 </tr>
                                 <tr>
                                     <td>Binokulärt</td>
-                                    <td><input type="text" class="small-decimal"></td>
-                                    <td><input type="text" class="small-decimal"></td>
+                                    <td><input type="text" class="small-decimal" ng-model="cert.syn.binokulart.utanKorrektion"></td>
+                                    <td><input type="text" class="small-decimal" ng-model="cert.syn.binokulart.medKorrektion"></td>
                                     <td></td>
                                 </tr>
                             </table>
 
                             <h4>Korrektionsglasens styrka</h4>
-                            <label class="checkbox"><input name="dioptrier" type="checkbox"> Högsta styrka i något av glasen överskrider 8 dioptrier</label>
+                            <label class="checkbox"><input name="dioptrier" type="checkbox" ng-model="cert.syn.korrektionsglasensStyrka"> Högsta styrka i något av glasen överskrider 8 dioptrier</label>
                         </td>
                     </tr>
                 </table>
@@ -168,13 +168,13 @@
                         <th class="maxwidth"></th>
                     </tr>
                     <tr>
-                        <td><input id="horselbalansay" name="horselbalansay" type="radio" ng-value="true" ng-model="cert.syn.synfaltsdefekter"></td>
-                        <td><input id="horselbalansan" name="horselbalansan" type="radio" ng-value="false" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="horselbalansay" name="horselbalansay" type="radio" ng-value="true" ng-model="cert.horselBalans.balansrubbningar"></td>
+                        <td><input id="horselbalansan" name="horselbalansan" type="radio" ng-value="false" ng-model="cert.horselBalans.balansrubbningar"></td>
                         <td>a) Har patienten överraskande anfall av balansrubbningar eller yrsel?</td>
                     </tr>
                     <tr ng-show="form.korkortd">
-                        <td><input id="horselbalansby" name="horselbalansby" type="radio" ng-value="true" ng-model="cert.syn.synfaltsdefekter"></td>
-                        <td><input id="horselbalansbn" name="horselbalansbn" type="radio" ng-value="false" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="horselbalansby" name="horselbalansby" type="radio" ng-value="true" ng-model="cert.horselBalans.svartUppfattaSamtal4Meter"></td>
+                        <td><input id="horselbalansbn" name="horselbalansbn" type="radio" ng-value="false" ng-model="cert.horselBalans.svartUppfattaSamtal4Meter"></td>
                         <td>b) Har patienten svårt att uppfatta vanlig samtalsstämma på fyra meters avstånd (hörapparat får användas)?</td>
                     </tr>
                 </table>
@@ -194,13 +194,13 @@
                         <td><p>a) Har patienten någon sjukdom eller funktionsnedsättning som påverkar rörligheten och som medför att fordon inte kan köras på ett trafiksäkert sätt?</p>
                             <div data-ng-show="cert.funktionsnedsattning.funktionsnedsattning">
                                 <p>Ange vilken typ av nedsättning eller sjukdom:</p>
-                                <textarea></textarea>
+                                <textarea data-ng-model="cert.funktionsnedsattning.beskrivning"></textarea>
                             </div>
                         </td>
                     </tr>
                     <tr ng-show="form.korkortd">
-                        <td><input id="funktionsnedsattningby" name="funktionsnedsattningby" type="radio" ng-value="true" ng-model="cert.syn.synfaltsdefekter"></td>
-                        <td><input id="funktionsnedsattningbn" name="funktionsnedsattningbn" type="radio" ng-value="false" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="funktionsnedsattningby" name="funktionsnedsattningby" type="radio" ng-value="true" ng-model="cert.funktionsnedsattning.otillrackligRorelseformaga"></td>
+                        <td><input id="funktionsnedsattningbn" name="funktionsnedsattningbn" type="radio" ng-value="false" ng-model="cert.funktionsnedsattning.otillrackligRorelseformaga"></td>
                         <td>b) Är rörelseförmågan otillräcklig för att kunna hjälpa passagerare in och ut ur fordonet samt med bilbälte?</td>
                     </tr>
                 </table>
@@ -214,13 +214,13 @@
                         <th class="maxwidth"></th>
                     </tr>
                     <tr>
-                        <td><input id="hjartkarlay" name="hjartkarlay" type="radio" ng-value="true" ng-model="cert.syn.synfaltsdefekter"></td>
-                        <td><input id="hjartkarlan" name="hjartkarlan" type="radio" ng-value="false" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="hjartkarlay" name="hjartkarlay" type="radio" ng-value="true" ng-model="cert.hjartkarl.hjartKarlSjukdom"></td>
+                        <td><input id="hjartkarlan" name="hjartkarlan" type="radio" ng-value="false" ng-model="cert.hjartkarl.hjartKarlSjukdom"></td>
                         <td>a) Föreligger hjärt- eller kärlsjukdom som kan medföra en påtaglig risk för att hjärnans funktioner akut försämras eller som i övrigt innebär en trafiksäkerhetsrisk?</td>
                     </tr>
                     <tr>
-                        <td><input id="hjartkarlby" name="hjartkarlby" type="radio" ng-value="true" ng-model="cert.syn.synfaltsdefekter"></td>
-                        <td><input id="hjartkarlbn" name="hjartkarlbn" type="radio" ng-value="false" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="hjartkarlby" name="hjartkarlby" type="radio" ng-value="true" ng-model="cert.hjartkarl.hjarnskadaEfterTrauma"></td>
+                        <td><input id="hjartkarlbn" name="hjartkarlbn" type="radio" ng-value="false" ng-model="cert.hjartkarl.hjarnskadaEfterTrauma"></td>
                         <td>b) Finns tecken på hjärnskada efter trauma, stroke eller annan sjukdom i centrala nervsystemet?</td>
                     </tr>
                     <tr>
@@ -229,7 +229,7 @@
                         <td><p>c) Föreligger viktiga riskfaktorer för stroke (tidigare stroke eller TIA, förhöjt blodtryck, förmaksflimmer eller kärlmissbildning)?</p>
                             <div ng-show="cert.hjartKarl.riskfaktorerStroke">
                                 <p>Vilken typ av sjukdom?</p>
-                                <textarea></textarea>
+                                <textarea data-ng-model="cert.hjartKarl.beskrivningRiskfaktorer"></textarea>
                             </div>
                         </td>
                     </tr>
@@ -279,8 +279,8 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td><input id="neurologiay" name="diabetesay" type="radio" ng-value="true" ng-model="cert.syn.synfaltsdefekter"></td>
-                        <td><input id="neurologian" name="diabetesan" type="radio" ng-value="false" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="neurologiay" name="diabetesay" type="radio" ng-value="true" ng-model="cert.neurologi.neurologiskSjukdom"></td>
+                        <td><input id="neurologian" name="diabetesan" type="radio" ng-value="false" ng-model="cert.neurologi.neurologiskSjukdom"></td>
                         <td>
                             <p>Finns tecken på neurologisk sjukdom?</p>
                         </td>
@@ -303,7 +303,7 @@
                             <p>Har eller har patienten haft epilepsi, epileptiskt anfall eller annan medvetandestörning?</p>
                             <div data-ng-show="cert.medvetandestorning.medvetandestorning">
                                 <p>Om det är frågan om annan medvetandestörning, ange när den inträffade och orsak:</p>
-                                <textarea></textarea>
+                                <textarea data-ng-model="cert.medvetandestorning.beskrivning"></textarea>
                             </div>
                         </td>
                     </tr>
@@ -318,8 +318,8 @@
                         <th class="maxwidth"></th>
                     </tr>
                     <tr>
-                        <td><input id="njuraray" name="njuraray" type="radio" ng-value="true" ng-model="cert.syn.synfaltsdefekter"></td>
-                        <td><input id="njuraran" name="njuraran" type="radio" ng-value="false" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="njuraray" name="njuraray" type="radio" ng-value="true" ng-model="cert.njurar.nedsattNjurfunktion"></td>
+                        <td><input id="njuraran" name="njuraran" type="radio" ng-value="false" ng-model="cert.njurar.nedsattNjurfunktion"></td>
                         <td>
                             Föreligger allvarligt nedsatt njurfunktion som kan innebära en trafiksäkerhetsrisk?
                         </td>
@@ -335,8 +335,8 @@
                         <th class="maxwidth"></th>
                     </tr>
                     <tr>
-                        <td><input id="kognitivtay" name="kognitivtay" type="radio" ng-value="true" ng-model="cert.syn.synfaltsdefekter"></td>
-                        <td><input id="kognitivtan" name="kognitivtan" type="radio" ng-value="false" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input id="kognitivtay" name="kognitivtay" type="radio" ng-value="true" ng-model="cert.kognitivt.sviktandeKognitivFunktion"></td>
+                        <td><input id="kognitivtan" name="kognitivtan" type="radio" ng-value="false" ng-model="cert.kognitivt.sviktandeKognitivFunktion"></td>
                         <td>
                             Finns tecken på sviktande kognitiv funktion?
                         </td>
@@ -352,8 +352,8 @@
                         <th class="maxwidth"></th>
                     </tr>
                     <tr>
-                        <td><input name="somnvakenhetay" type="radio" ng-value="true" ng-model="cert.syn.synfaltsdefekter"></td>
-                        <td><input name="somnvakenhetan" type="radio" ng-value="false" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input name="somnvakenhetay" type="radio" ng-value="true" ng-model="cert.somnVakenhet.teckenSomnstorningar"></td>
+                        <td><input name="somnvakenhetan" type="radio" ng-value="false" ng-model="cert.somnVakenhet.teckenSomnstorningar"></td>
                         <td>
                             Finns tecken på, eller anamnestiska uppgifter som talar för sömn- eller vakenhetsstörning?
                         </td>
@@ -398,7 +398,7 @@
                         <td>
                             <p>c) Pågår regelbundet läkarordinerat bruk av läkemedel som kan innebära en trafiksäkerhetsrisk?</p>
                             <p>Ange läkemedel och ordinerad dos:</p>
-                            <textarea></textarea>
+                            <textarea data-ng-model="cert.narkotikaLakemedel.lakemedelOchDos"></textarea>
                         </td>
                     </tr>
                 </table>
@@ -412,8 +412,8 @@
                         <th class="maxwidth"></th>
                     </tr>
                     <tr>
-                        <td><input name="narkotikalakemedelay" type="radio" ng-value="true" ng-model="cert.syn.synfaltsdefekter"></td>
-                        <td><input name="narkotikalakemedelan" type="radio" ng-value="false" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input name="psykisktay" type="radio" ng-value="true" ng-model="cert.psykiskt.psykiskSjukdom"></td>
+                        <td><input name="psykisktan" type="radio" ng-value="false" ng-model="cert.psykiskt.psykiskSjukdom"></td>
                         <td>
                             Har eller har patienten haft psykisk sjukdom eller störning, till exempel schizofreni, annan psykos eller bipolär (manodepressiv) sjukdom?
                         </td>
@@ -429,15 +429,15 @@
                         <th class="maxwidth"></th>
                     </tr>
                     <tr>
-                        <td><input name="utvecklingsstorningay" type="radio" ng-value="true" ng-model="cert.syn.synfaltsdefekter"></td>
-                        <td><input name="utvecklingsstorningan" type="radio" ng-value="false" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input name="utvecklingsstorningay" type="radio" ng-value="true" ng-model="cert.utvecklingsstorning.psykiskUtvecklingsstorning"></td>
+                        <td><input name="utvecklingsstorningan" type="radio" ng-value="false" ng-model="cert.utvecklingsstorning.psykiskUtvecklingsstorning"></td>
                         <td>
                             a) Har patienten någon psykisk utvecklingsstörning?
                         </td>
                     </tr>
                     <tr>
-                        <td><input name="utvecklingsstorningby" type="radio" ng-value="true" ng-model="cert.syn.synfaltsdefekter"></td>
-                        <td><input name="utvecklingsstorningbn" type="radio" ng-value="false" ng-model="cert.syn.synfaltsdefekter"></td>
+                        <td><input name="utvecklingsstorningby" type="radio" ng-value="true" ng-model="cert.utvecklingsstorning.harSyndrom"></td>
+                        <td><input name="utvecklingsstorningbn" type="radio" ng-value="false" ng-model="cert.utvecklingsstorning.harSyndrom"></td>
                         <td>
                             b) Har patienten till exempel ADHD, ADD, DAMP, Aspergers syndrom eller Tourettes syndrom?
                         </td>
@@ -461,15 +461,15 @@
                             <table data-ng-show="cert.sjukhusvard.sjukhusEllerLakarkontakt">
                                 <tr>
                                     <td>Om frågan besvaras med ja, när?</td>
-                                    <td><input type="text"></td>
+                                    <td><input type="text" data-ng-model="cert.sjukhusvard.tidpunkt"></td>
                                 </tr>
                                 <tr>
                                     <td>Vårdinrättningens namn och klinik/er:</td>
-                                    <td><input type="text"></td>
+                                    <td><input type="text" data-ng-model="cert.sjukhusvard.vardinrattning"></td>
                                 </tr>
                                 <tr>
                                     <td>För vad?</td>
-                                    <td><input type="text"></td>
+                                    <td><input type="text" data-ng-model="cert.sjukhusvard.anledning"></td>
                                 </tr>
                             </table>
                         </td>
@@ -491,7 +491,7 @@
                             <p>Har patienten någon stadigvarande medicinering?</p>
                             <div data-ng-show="cert.medicinering.stadigvarandeMedicinering">
                                 <p>Vilken eller vilka mediciner?</p>
-                                <textarea></textarea>
+                                <textarea data-ng-model="cert.medicinering.beskrivning"></textarea>
                             </div>
                         </td>
                     </tr>
