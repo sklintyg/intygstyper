@@ -159,7 +159,7 @@
         },
         {
             "observationskod": {
-                "codeSystem": "to-come",
+                "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS1"
             },
@@ -167,7 +167,7 @@
         },
         {
             "observationskod": {
-                "codeSystem": "to-come",
+                "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS2"
             },
@@ -273,7 +273,7 @@
 
         {
             "observationskod": {
-                "codeSystem": "to-come",
+                "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS4"
             },
@@ -282,7 +282,7 @@
 
         {
             "observationskod": {
-                "codeSystem": "to-come",
+                "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS6"
             },
@@ -291,7 +291,7 @@
 
         {
             "observationskod": {
-                "codeSystem": "to-come",
+                "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS7"
             },
@@ -299,7 +299,7 @@
         },
         {
             "observationskod": {
-                "codeSystem": "to-come",
+                "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS9"
             },
@@ -307,7 +307,7 @@
         },
         {
             "observationskod": {
-                "codeSystem": "to-come",
+                "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS8"
             },
@@ -340,7 +340,7 @@
         },
         {
             "observationskod": {
-                "codeSystem": "to-come",
+                "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS10"
             },
@@ -348,7 +348,7 @@
         },
         {
             "observationskod": {
-                "codeSystem": "to-come",
+                "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS11"
             },
@@ -356,7 +356,7 @@
         },
         {
             "observationskod": {
-                "codeSystem": "to-come",
+                "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS12"
             },
@@ -364,7 +364,7 @@
         },
         {
             "observationskod": {
-                "codeSystem": "to-come",
+                "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS13"
             },
@@ -373,7 +373,7 @@
         
         {
             "observationskod": {
-                "codeSystem": "to-come",
+                "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS15"
             },
@@ -381,7 +381,7 @@
         },
         {
             "observationskod": {
-                "codeSystem": "to-come",
+                "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS16"
             },
@@ -397,7 +397,7 @@
         },
         {
             "observationskod": {
-                "codeSystem": "to-come",
+                "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS17"
             },
@@ -405,7 +405,7 @@
         },
         {
             "observationskod": {
-                "codeSystem": "to-come",
+                "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS18"
             },
