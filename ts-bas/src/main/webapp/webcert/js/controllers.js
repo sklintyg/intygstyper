@@ -56,145 +56,168 @@ angular.module('wc.ts-bas.controllers').controller('EditCertCtrl', [ '$scope', '
   var dummycert =
   {
     "utlatandeid": "987654321",
-      "typAvUtlatande": "TSTRK1007 (U06, V06)",
-      "signeringsdatum": "2013-08-12T15:57:00.000",
-      "skapadAv": {
-    "personid": "SE0000000000-1333",
-        "fullstandigtNamn": "Doktor Thompson",
-        "vardenhet": {
-      "enhetsid": "SE0000000000-1337",
-          "enhetsnamn": "Vårdenhet Väst",
-          "postadress": "Enhetsvägen 12",
-          "postnummer": "54321",
-          "postort": "Tumba",
-          "telefonnummer": "08-1337",
-          "vardgivare": {
-        "vardgivarid": "SE0000000000-HAHAHHSAA",
-            "vardgivarnamn": "Vårdgivarnamn"
-      }
-    }
-  },
+    "typAvUtlatande": "TSTRK1007 (U06, V06)",
+    "signeringsdatum": "2013-08-12T15:57:00.000",
+    "kommentar" : "Här kommer en övrig kommentar",
+    "skapadAv": {
+      "personid": "SE0000000000-1333",
+      "fullstandigtNamn": "Doktor Thompson",
+      "specialiteter" : ["SPECIALITET"],
+      "vardenhet": {
+        "enhetsid": "SE0000000000-1337",
+        "enhetsnamn": "Vårdenhet Väst",
+        "postadress": "Enhetsvägen 12",
+        "postnummer": "54321",
+        "postort": "Tumba",
+        "telefonnummer": "08-1337",
+        "vardgivare": {
+          "vardgivarid": "SE0000000000-HAHAHHSAA",
+          "vardgivarnamn": "Vårdgivarnamn"
+        }
+      },
+      "befattningar" : []
+    },
     "patient": {
-    "personid": "19121212-1212",
-        "fullstandigtNamn": "Johnny Appleseed",
-        "fornamn": "Johnny",
-        "efternamn": "Appleseed",
-        "postadress": "Testvägen 12",
-        "postnummer": "123456",
-        "postort": "Testort"
-  },
+      "personid": "19121212-1212",
+      "fullstandigtNamn": "Herr Dundersjuk",
+      "fornamn": "Herr",
+      "efternamn": "Dundersjuk",
+      "postadress": "Testvägen 12",
+      "postnummer": "123456",
+      "postort": "Testort"
+    },
     "vardkontakt" : {
-    "typ" : "5880005",
-    "idkontroll" : "KORKORT"
-  },
+      "typ" : "5880005",
+      "idkontroll" : "PASS"
+    },
     "intygAvser" : {
-    "korkortstyp" : [
-      {type:"C1", selected: false},
-      {type:"C1E", selected: false},
-      {type:"C", selected: true},
-      {type:"CE", selected: false},
-      {type:"D1", selected: false},
-      {type:"D1E", selected: false},
-      {type:"D", selected: false},
-      {type:"DE", selected: false},
-      {type:"TAXI", selected: false}
-    ]
-  },
+      "korkortstyp" : [
+        {"type": "C1", "selected": false},
+        {"type": "C1E", "selected": false},
+        {"type": "C", "selected": true},
+        {"type": "CE", "selected": false},
+        {"type": "D1", "selected": false},
+        {"type": "D1E", "selected": false},
+        {"type": "D", "selected": false},
+        {"type": "DE", "selected": false},
+        {"type": "TAXI", "selected": false}
+      ]
+    },
     "syn" : {
-    "synfaltsdefekter" :  false,
-        "nattblindhet" : false,
-        "progressivOgonsjukdom" : false,
-        "diplopi" : false,
-        "nystagmus" : false,
-        "hogerOga" : {
-      "utanKorrektion" : 0.0,
-          "kontaktlins" : false
-    },
+      "synfaltsdefekter" :  true,
+      "nattblindhet" : true,
+      "progressivOgonsjukdom" : true,
+      "diplopi" : true,
+      "nystagmus" : true,
+      "hogerOga" : {
+        "utanKorrektion" : 0.0,
+        "medKorrektion" : 0.0,
+        "kontaktlins" : true
+      },
 
-    "vansterOga" : {
-      "utanKorrektion" : 0.0,
-          "kontaktlins" : false
-    },
+      "vansterOga" : {
+        "utanKorrektion" : 0.0,
+        "medKorrektion" : 0.0,
+        "kontaktlins" : true
+      },
 
-    "binokulart" : {
-      "utanKorrektion" : 0.0
-    }
-  },
+      "binokulart" : {
+        "utanKorrektion" : 0.0,
+        "medKorrektion" : 0.0
+      },
+      "korrektionsglasensStyrka" : true
+    },
 
     "horselBalans" : {
-    "balansrubbningar" : false
-  },
+      "balansrubbningar" : true,
+      "svartUppfattaSamtal4Meter" : true
+    },
 
     "funktionsnedsattning" : {
-    "funktionsnedsattning" : false
-  },
+      "funktionsnedsattning" : true,
+      "otillrackligRorelseformaga" : true,
+      "beskrivning" : "Spik i foten"
+
+    },
+
     "hjartKarl" : {
-    "hjartKarlSjukdom" : false,
-        "hjarnskadaEfterTrauma" : false,
-        "riskfaktorerStroke" : false
-  },
+      "hjartKarlSjukdom" : true,
+      "hjarnskadaEfterTrauma" : true,
+      "riskfaktorerStroke" : true,
+      "beskrivningRiskfaktorer" : "Förkärlek för Elivsmackor"
+    },
 
     "diabetes" : {
-    "harDiabetes" : false
-  },
+      "harDiabetes" : true,
+      "diabetesTyp" : "DIABETES_TYP_1",
+      "kost" : true
+    },
 
     "neurologi" : {
-    "neurologiskSjukdom" : false
-  },
+      "neurologiskSjukdom" : true
+    },
 
     "medvetandestorning" : {
-    "medvetandestorning" : false
-  },
+      "medvetandestorning" : true,
+      "beskrivning" : "Beskrivning"
+    },
 
     "njurar" : {
-    "nedsattNjurfunktion" : false
-  },
+      "nedsattNjurfunktion" : true
+    },
 
     "kognitivt" : {
-    "sviktandeKognitivFunktion" : false
-  },
+      "sviktandeKognitivFunktion" : true
+    },
 
     "somnVakenhet" : {
-    "teckenSomnstorningar" : false
-  },
+      "teckenSomnstorningar" : true
+    },
 
     "narkotikaLakemedel" : {
-    "teckenMissbruk" : false,
-        "foremalForVardinsats" : false,
-        "lakarordineratLakemedelsbruk" : false
-  },
+      "teckenMissbruk" : true,
+      "foremalForVardinsats" : true,
+      "lakarordineratLakemedelsbruk" : true,
+      "lakemedelOchDos" : "Läkemedel och dos",
+      "provtagningBehovs" : true
+    },
 
     "psykiskt" : {
-    "psykiskSjukdom" : false
-  },
+      "psykiskSjukdom" : true
+    },
 
     "utvecklingsstorning" : {
-    "psykiskUtvecklingsstorning" : false,
-        "harSyndrom" : false
-  },
+      "psykiskUtvecklingsstorning" : true,
+      "harSyndrom" : true
+    },
 
     "sjukhusvard" : {
-    "sjukhusEllerLakarkontakt" : false
-  },
+      "sjukhusEllerLakarkontakt" : true,
+      "tidpunkt" : "20 Januari",
+      "vardinrattning" : "Vårdcentralen",
+      "anledning" : "Akut lungsot"
+    },
 
     "medicinering" : {
-    "stadigvarandeMedicinering" : false
-  },
+      "stadigvarandeMedicinering" : true,
+      "beskrivning" : "Alvedon"
+    },
 
     "bedomning" : {
       "korkortstyp" : [
-        {type:"C1", selected: false},
-        {type:"C1E", selected: false},
-        {type:"C", selected: true},
-        {type:"CE", selected: false},
-        {type:"D1", selected: false},
-        {type:"D1E", selected: false},
-        {type:"D", selected: false},
-        {type:"DE", selected: false},
-        {type:"TAXI", selected: false},
-        {type:"ANNAT", selected: false}
-      ]
-  }
+        {"type": "C1", "selected": false},
+        {"type": "C1E", "selected": false},
+        {"type": "C", "selected": true},
+        {"type": "CE", "selected": false},
+        {"type": "D1", "selected": false},
+        {"type": "D1E", "selected": false},
+        {"type": "D", "selected": false},
+        {"type": "DE", "selected": false},
+        {"type": "TAXI", "selected": false},
+        {"type": "ANNAT", "selected": false}
+      ],
+      "lakareSpecialKompetens" : "Spektralanalys"
+    }
 
   }
 

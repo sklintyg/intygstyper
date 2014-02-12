@@ -32,7 +32,7 @@
         <a class="backlink-icon" href="/web/dashboard#/create" title="Tillbaka till Skriv intyg"></a>
         <h1 style="display: inline-block; margin-right: 20px;"><span message key="ts.label.certtitle"></span></h1>
         <div class="inline-block">
-            <label class="control-label">{{cert.patientNamn || "Per Persson"}} - {{cert.patientPersonnummer || "19361123-5678"}}</label>
+            <label class="control-label">{{cert.patient.fullstandigtNamn}} - {{cert.patient.personid}}</label>
         </div>
         <div class="control-group buttonbar">
             <button class="btn btn-info">Spara</button>
@@ -77,8 +77,9 @@
             </div>
 
             <!-- 1. Syn -->
-            <div wc-field field-label="ts.label.synfunktioner">
+            <div wc-field field-label="ts.label.synfunktioner" class="field-error">
                 <table class="table table-form">
+                    <tr><td colspan="3"><div class="alert alert-error">Välj något på 1a, 1b och 1c</div></td></tr>
                     <tr>
                         <th><span message key="common.yes"></span></th>
                         <th><span message key="common.no"></span></th>
@@ -527,37 +528,37 @@
                     <span message key="ts.label.unit"></span><span class="help">?</span>
                 </h3>
                 <div class="text">
-                    <label class="control-label">VårdEnhetA (0123456789012), IFV Testdata</label>
+                    <label class="control-label">{{cert.skapadAv.vardenhet.enhetsnamn}} ({{cert.skapadAv.vardenhet.enhetsid}}), {{cert.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</label>
 
                     <div class="form-horizontal">
                         <div class="control-group">
                             <label class="control-label">Postadress</label>
                             <div class="controls">
-                                <input type="text" id="clinicInfo.postalAddress" name="clinicInfo.postalAddress" value="Agatan 12">
+                                <input type="text" id="clinicInfo.postalAddress" name="clinicInfo.postalAddress" ng-model="cert.skapadAv.vardenhet.postadress">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label">Postnummer</label>
                             <div class="controls">
-                                <input type="text" id="clinicInfo.postalCode" name="clinicInfo.postalCode" value="12345">
+                                <input type="text" id="clinicInfo.postalCode" name="clinicInfo.postalCode" ng-model="cert.skapadAv.vardenhet.postnummer">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label">Postort</label>
                             <div class="controls">
-                                <input type="text" id="clinicInfo.postalCity" name="clinicInfo.postalCity" value="Teststad">
+                                <input type="text" id="clinicInfo.postalCity" name="clinicInfo.postalCity" ng-model="cert.skapadAv.vardenhet.postort">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label">Telefonnummer</label>
                             <div class="controls">
-                                <input type="text" id="clinicInfo.phone" name="clinicInfo.phone" value="023-2234324">
+                                <input type="text" id="clinicInfo.phone" name="clinicInfo.phone" ng-model="cert.skapadAv.vardenhet.telefonnummer">
                             </div>
                         </div>
-                        <div class="control-group">
+                        <div class="control-group" ng-if="false">
                             <label class="control-label">Epost</label>
                             <div class="controls">
-                                <input type="text" id="clinicInfo.email" name="clinicInfo.email" value="mats.ekhammar@callistaenterprise.se">
+                                <input type="text" id="clinicInfo.email" name="clinicInfo.email" ng-model="mats.ekhammar@callistaenterprise.se">
                             </div>
                         </div>
                     </div>
@@ -572,7 +573,7 @@
     <!-- certificate -->
 
     <p>Specialistkompetens i:</p>
-    <div data-ng-repeat="spec in cert.skapadAv.specialiteter">
+    <div ng-repeat="spec in cert.skapadAv.specialiteter">
         {{spec}}
     </div>
 
