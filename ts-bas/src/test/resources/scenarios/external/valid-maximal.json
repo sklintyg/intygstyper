@@ -64,7 +64,12 @@
                 "namn": "Vårdgivarnamn"
             }
         },
-        "befattningar" : []
+        "befattningar" : [{
+        	"code" : "203010",
+        	"codeSystem" : "1.2.752.129.2.2.1.4",
+        	"codeSystemName" : "Befattning HSA",
+        	"codeSystemVersion" : "3.1"
+        }]
     },
     "vardkontakter": [
 	      {
@@ -416,7 +421,7 @@
         	"observationskod" : {
         		"codeSystem" : "1.2.752.116.1.1.1.1.1",
         		"codeSystemName" : "ICD-10",
-        		"code" : "E10"
+        		"code" : "E11"
         	},
         	"forekomst" : true
         },

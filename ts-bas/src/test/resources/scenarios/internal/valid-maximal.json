@@ -19,7 +19,7 @@
                 "vardgivarnamn": "Vårdgivarnamn"
             }
         },
-        "befattningar" : []
+        "befattningar" : ["STLAKARE"]
     },
     "patient": {
         "personid": "19121212-1212",
@@ -93,7 +93,7 @@
     
     "diabetes" : {
     	"harDiabetes" : true,
-    	"diabetesTyp" : "DIABETES_TYP_1",
+    	"diabetesTyp" : "DIABETES_TYP_2",
     	"kost" : true
     },
     
