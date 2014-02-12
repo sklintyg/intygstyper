@@ -229,10 +229,15 @@ public class ExternalValidatorInstance {
 
             Id obsId = relation.getObservationsid();
             Observation obs = observationInstance.getObservationWithId(obsId);
-            assertNotNull(obs, String.format("observation %s in %s", obsId.getExtension(), element));
+            if (assertNotNull(obs, String.format("observation %s in %s", obsId.getExtension(), element)).failed()) {
+                break;
+            }
+
             Id aktId = relation.getAktivitetsid();
             Aktivitet akt = aktivitetInstance.getAktivitetWithId(aktId);
-            assertNotNull(akt, String.format("aktivitet %s in %s", aktId.getExtension(), element));
+            if (assertNotNull(akt, String.format("aktivitet %s in %s", aktId.getExtension(), element)).failed()) {
+                break;
+            }
 
             if (obs.getObservationskod().equals(CodeConverter.toKod(ObservationsKod.SYNFALTSDEFEKTER))) {
                 if (!akt.getAktivitetskod().equals(CodeConverter.toKod(AktivitetKod.SYNFALTSUNDERSOKNING))) {
