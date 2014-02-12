@@ -8,8 +8,7 @@ import se.inera.certificate.ts_bas.model.v1.Utlatande;
  * <ul>
  * <li>Transport model
  * <li>Export model (with and without a {@link CertificateContentHolder})
- * <li>Internal model used by Mina Intyg
- * <li>Internal model used by WebCert
+ * <li>Internal model
  * </ul>
  * 
  * @see ScenarioFinder

@@ -28,7 +28,6 @@ public class InternalValidatorInstance {
 
     public InternalValidatorInstance() {
         validationResponse = new ValidateDraftResponseHolder();
-        validationResponse.setStatus(ValidationStatus.COMPLETE);
     }
 
     /**
@@ -52,8 +51,17 @@ public class InternalValidatorInstance {
         validateMedicinering(utlatande.getMedicinering());
         validateMedvetandestorning(utlatande.getMedvetandestorning());
         validateSyn(utlatande.getSyn());
+        
+        validationResponse.setStatus(getValidationStatus());
 
         return validationResponse;
+    }
+
+    private ValidationStatus getValidationStatus() {
+        if (validationResponse.getValidationErrors().isEmpty()) {
+            return ValidationStatus.COMPLETE;
+        }
+        return ValidationStatus.INCOMPLETE;
     }
 
     private void validateBedomning(final Bedomning bedomning) {
@@ -151,7 +159,6 @@ public class InternalValidatorInstance {
         validationMesssage.setField(field);
         validationMesssage.setMessage(msg);
 
-        validationResponse.setStatus(ValidationStatus.INCOMPLETE);
         validationResponse.addErrorMessage(validationMesssage);
     }
 }

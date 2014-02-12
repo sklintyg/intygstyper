@@ -8,8 +8,7 @@ public enum Kodverk {
 
     AKTIVITETER("8040b4d1-67dc-42e1-a938-de5374e9526a", "kv_aktiviteter_intyg", null),
 
-    // TODO: Change to correct OID when this is available 
-    OBSERVATIONER("to-come", "kv_observationer_intyg", null),
+    OBSERVATIONER("335d4bed-7e1d-4f81-ae7d-b39b266ef1a3", "kv_observationer_intyg", null),
 
     ID_KONTROLL("e7cc8f30-a353-4c42-b17a-a189b6876647", "kv_id_kontroll", null);
 

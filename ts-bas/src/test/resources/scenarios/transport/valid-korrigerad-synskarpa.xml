@@ -105,13 +105,13 @@
   </p:observation>
 
   <p:observation>
-    <p:observationskod code="OBS1" codeSystem="to-come"
+    <p:observationskod code="OBS1" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
   <p:observation>
-    <p:observationskod code="OBS2" codeSystem="to-come"
+    <p:observationskod code="OBS2" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
@@ -199,7 +199,7 @@
 
   <!-- Hörsel och balanssinne (4.1 - 4.2 -->
   <p:observation>
-    <p:observationskod code="OBS4" codeSystem="to-come"
+    <p:observationskod code="OBS4" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
@@ -207,20 +207,20 @@
 
   <!-- Hjärt- och kärlsjukdom som innebär en trafiksäkerhetsrisk (OBS6) -->
   <p:observation>
-    <p:observationskod code="OBS6" codeSystem="to-come"
+    <p:observationskod code="OBS6" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
   <!-- Hjärt och kärlsjukdomar (6.1 - 6.3) -->
   <p:observation>
-    <p:observationskod code="OBS7" codeSystem="to-come"
+    <p:observationskod code="OBS7" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
   <p:observation>
-    <p:observationskod code="OBS8" codeSystem="to-come"
+    <p:observationskod code="OBS8" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
@@ -248,28 +248,28 @@
 
   <!-- Njursjukdomar (10) -->
   <p:observation>
-    <p:observationskod code="OBS10" codeSystem="to-come"
+    <p:observationskod code="OBS10" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
   <!-- Demens och kognitiva störningar (11) -->
   <p:observation>
-    <p:observationskod code="OBS11" codeSystem="to-come"
+    <p:observationskod code="OBS11" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
   <!-- Sömn- och vakenhetsstörningar (12) -->
   <p:observation>
-    <p:observationskod code="OBS12" codeSystem="to-come"
+    <p:observationskod code="OBS12" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
   <!-- Alkohol, narkotika och läkemedel (13.1 - 13.2) -->
   <p:observation>
-    <p:observationskod code="OBS13" codeSystem="to-come"
+    <p:observationskod code="OBS13" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
@@ -277,14 +277,14 @@
   <!-- Regelbundet läkarordinerat bruk av läkemedel som kan innebära en trafiksäkerhetsrisk 
     (OBS15) -->
   <p:observation>
-    <p:observationskod code="OBS15" codeSystem="to-come"
+    <p:observationskod code="OBS15" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
   <!-- Psykisk sjukdom eller störning (14) -->
   <p:observation>
-    <p:observationskod code="OBS16" codeSystem="to-come"
+    <p:observationskod code="OBS16" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
@@ -298,14 +298,14 @@
 
   <!-- ADHD DAMP (15.2) -->
   <p:observation>
-    <p:observationskod code="OBS17" codeSystem="to-come"
+    <p:observationskod code="OBS17" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
   <!-- Stadigvarande medicinering (17.1) -->
   <p:observation>
-    <p:observationskod code="OBS18" codeSystem="to-come"
+    <p:observationskod code="OBS18" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
