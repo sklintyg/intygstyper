@@ -191,7 +191,7 @@ public class InternalValidatorInstance {
     /**
      * Check if there are validation errors
      * 
-     * @return {@link Validation.COMPLETE} if there are no errors, and {@link Validation.INCOMPLETE} otherwise
+     * @return {@link ValidationStatus.COMPLETE} if there are no errors, and {@link ValidationStatus.INCOMPLETE} otherwise
      */
     private ValidationStatus getValidationStatus() {
         if (validationResponse.getValidationErrors().isEmpty()) {
