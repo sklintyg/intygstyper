@@ -39,6 +39,8 @@ angular.module('wc.ts-bas.controllers').controller('EditCertCtrl', [ '$scope', '
     "behorighet" : true
   };
 
+  $scope.testerror = false;
+
   $scope.$watch('cert.intygAvser.korkortstyp', function(newValue, oldValue){
     $scope.form.korkortd = false;
     for(var i = 4; i<$scope.cert.intygAvser.korkortstyp.length; i++){
