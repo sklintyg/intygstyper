@@ -21,7 +21,9 @@ package se.inera.certificate.modules.ts_bas.pdf;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
+import se.inera.certificate.modules.ts_bas.model.codes.BefattningKod;
 import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_bas.model.internal.Bedomning;
@@ -59,7 +61,7 @@ public class PdfGenerator {
     private static final StringField INVANARE_ADRESS_FALT2 = new StringField("Falt__1");
     private static final StringField INVANARE_ADRESS_FALT3 = new StringField("Falt__2");
     private static final StringField INVANARE_PERSONNUMMER = new StringField("Falt__3");
-    
+
     private static final CheckGroupField<IntygAvserKategori> INTYG_AVSER;
     static {
         INTYG_AVSER = new CheckGroupField<IntygAvserKategori>();
@@ -177,15 +179,14 @@ public class PdfGenerator {
     private static final CheckField AT_LAKARE_CHECK = new CheckField("Falt_97");
 
     private static final String DATEFORMAT_FOR_FILENAMES = "yyMMdd";
-    
+
     public String generatePdfFilename(Utlatande utlatande) {
         String personId = utlatande.getPatient().getPersonid();
         String certificateSignatureDate = utlatande.getSigneringsdatum().toString(DATEFORMAT_FOR_FILENAMES);
 
         return String.format("lakarutlatande_%s_-%s.pdf", personId, certificateSignatureDate);
     }
-    
-    
+
     public byte[] generatePDF(Utlatande utlatande) throws PdfGeneratorException {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -254,17 +255,17 @@ public class PdfGenerator {
     }
 
     private void populateIdkontroll(Vardkontakt vardkontakt, AcroFields fields) throws IOException, DocumentException {
-        if (vardkontakt.getIdkontroll().equals(IdKontrollKod.ID_KORT.getCode())) {
+        if (vardkontakt.getIdkontroll().equals(IdKontrollKod.ID_KORT.name())) {
             ID_KONTROLL_IDKORT.setField(fields, true);
-        } else if (vardkontakt.getIdkontroll().equals(IdKontrollKod.FORETAG_ELLER_TJANSTEKORT.getCode())) {
+        } else if (vardkontakt.getIdkontroll().equals(IdKontrollKod.FORETAG_ELLER_TJANSTEKORT.name())) {
             ID_KONTROLL_FORETAG_TJANSTEKORT.setField(fields, true);
-        } else if (vardkontakt.getIdkontroll().equals(IdKontrollKod.KORKORT.getCode())) {
+        } else if (vardkontakt.getIdkontroll().equals(IdKontrollKod.KORKORT.name())) {
             ID_KONTROLL_SVENSKT_KORKORT.setField(fields, true);
-        } else if (vardkontakt.getIdkontroll().equals(IdKontrollKod.PERS_KANNEDOM.getCode())) {
+        } else if (vardkontakt.getIdkontroll().equals(IdKontrollKod.PERS_KANNEDOM.name())) {
             ID_KONTROLL_PERSONLIG_KANNEDOM.setField(fields, true);
-        } else if (vardkontakt.getIdkontroll().equals(IdKontrollKod.FORSAKRAN_KAP18.getCode())) {
+        } else if (vardkontakt.getIdkontroll().equals(IdKontrollKod.FORSAKRAN_KAP18.name())) {
             ID_KONTROLL_FORSAKRAN.setField(fields, true);
-        } else if (vardkontakt.getIdkontroll().equals(IdKontrollKod.PASS.getCode())) {
+        } else if (vardkontakt.getIdkontroll().equals(IdKontrollKod.PASS.name())) {
             ID_KONTROLL_PASS.setField(fields, true);
         }
     }
@@ -310,9 +311,9 @@ public class PdfGenerator {
     private void populateDiabetes(Diabetes diabetes, AcroFields fields) throws IOException, DocumentException {
         HAR_DIABETES.setField(fields, diabetes.getHarDiabetes());
         if (diabetes.getDiabetesTyp() != null) {
-            if (diabetes.getDiabetesTyp().equals(ObservationsKod.DIABETES_TYP_1.getCode())) {
+            if (diabetes.getDiabetesTyp().equals(ObservationsKod.DIABETES_TYP_1.name())) {
                 DIABETES_TYP_1.setField(fields, true);
-            } else if (diabetes.getDiabetesTyp().equals(ObservationsKod.DIABETES_TYP_2.getCode())) {
+            } else if (diabetes.getDiabetesTyp().equals(ObservationsKod.DIABETES_TYP_2.name())) {
                 DIABETES_TYP_2.setField(fields, true);
             }
         }
@@ -397,6 +398,18 @@ public class PdfGenerator {
         ADRESS_OCH_ORT.setField(fields, adressOrt);
         TELEFON.setField(fields, vardenhet.getTelefonnummer());
         NAMNFORTYDLIGANDE.setField(fields, utlatande.getSkapadAv().getFullstandigtNamn());
+
+        List<String> specialiteter = utlatande.getSkapadAv().getSpecialiteter();
+        if (specialiteter.size() > 0) {
+            SPECIALISTKOMPETENS_CHECK.setField(fields, true);
+            // TODO: If 'Specialist i allmänmedicin' chose that one.
+            // TODO: Build text for 'beskrivning'
+            SPECIALISTKOMPETENS_BESKRVNING.setField(fields, "implement");
+        }
+
+        List<String> befattningar = utlatande.getSkapadAv().getBefattningar();
+        ST_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.STLAKARE.name()));
+        AT_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.LAKARE_EJ_LEG_AT.name()));
     }
 
     private static class CheckField {
