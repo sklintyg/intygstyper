@@ -1,5 +1,6 @@
 package se.inera.certificate.modules.ts_bas.validator.internal;
 
+import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_bas.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_bas.model.internal.Diabetes;
 import se.inera.certificate.modules.ts_bas.model.internal.Funktionsnedsattning;
@@ -10,6 +11,8 @@ import se.inera.certificate.modules.ts_bas.model.internal.IntygAvser;
 import se.inera.certificate.modules.ts_bas.model.internal.Kognitivt;
 import se.inera.certificate.modules.ts_bas.model.internal.Medicinering;
 import se.inera.certificate.modules.ts_bas.model.internal.Medvetandestorning;
+import se.inera.certificate.modules.ts_bas.model.internal.NarkotikaLakemedel;
+import se.inera.certificate.modules.ts_bas.model.internal.Sjukhusvard;
 import se.inera.certificate.modules.ts_bas.model.internal.Syn;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.rest.dto.ValidateDraftResponseHolder;
@@ -51,17 +54,19 @@ public class InternalValidatorInstance {
         validateMedicinering(utlatande.getMedicinering());
         validateMedvetandestorning(utlatande.getMedvetandestorning());
         validateSyn(utlatande.getSyn());
-        
+        validateNarkotikaLakemedel(utlatande.getNarkotikaLakemedel());
+        validateSjukhusvard(utlatande.getSjukhusvard());
         validationResponse.setStatus(getValidationStatus());
 
         return validationResponse;
     }
 
-    private ValidationStatus getValidationStatus() {
-        if (validationResponse.getValidationErrors().isEmpty()) {
-            return ValidationStatus.COMPLETE;
+    private void validateSjukhusvard(Sjukhusvard sjukhusvard) {
+        if (sjukhusvard.getSjukhusEllerLakarkontakt()) {
+            assertDescriptionNotEmpty(sjukhusvard.getAnledning(), "sjukhusvard.anledning", "Error");
+            assertDescriptionNotEmpty(sjukhusvard.getTidpunkt(), "sjukhusvard.tidpunkt", "Error");
+            assertDescriptionNotEmpty(sjukhusvard.getVardinrattning(), "sjukhusvard.vardinrattning", "Error");
         }
-        return ValidationStatus.INCOMPLETE;
     }
 
     private void validateBedomning(final Bedomning bedomning) {
@@ -70,18 +75,30 @@ public class InternalValidatorInstance {
     }
 
     private void validateDiabetes(final Diabetes diabetes) {
-        // TODO Auto-generated method stub
+        if (diabetes.getHarDiabetes()) {
+            if (diabetes.getDiabetesTyp() == null) {
+                addValidationError("diabetes.diabetesTyp", "No diabetestyp!");
 
+            } else if (diabetes.getDiabetesTyp().equals(ObservationsKod.DIABETES_TYP_2.name())) {
+                if (diabetes.getInsulin() == null && diabetes.getKost() == null && diabetes.getTabletter() == null) {
+                    addValidationError("diabetes.diabetesTyp", "Minst en behandling måste anges");
+                }
+            }
+        }
     }
 
     private void validateFunktionsnedsattning(final Funktionsnedsattning funktionsnedsattning) {
-        // TODO Auto-generated method stub
-
+        if (funktionsnedsattning.getFunktionsnedsattning()) {
+            assertDescriptionNotEmpty(funktionsnedsattning.getBeskrivning(), "funktionsnedsattning.beskrivning",
+                    "Error");
+        }
     }
 
     private void validateHjartKarl(final HjartKarl hjartKarl) {
-        // TODO Auto-generated method stub
-
+        if (hjartKarl.getRiskfaktorerStroke()) {
+            assertDescriptionNotEmpty(hjartKarl.getBeskrivningRiskfaktorer(), "hjartKarl.beskrivningRiskfaktorer",
+                    "Error");
+        }
     }
 
     private void validateHorselBalans(final HorselBalans horselBalans) {
@@ -105,13 +122,22 @@ public class InternalValidatorInstance {
     }
 
     private void validateMedicinering(final Medicinering medicinering) {
-        // TODO Auto-generated method stub
+        if (medicinering.getStadigvarandeMedicinering()) {
+            assertDescriptionNotEmpty(medicinering.getBeskrivning(), "medicinering.beskrivning", "error");
+        }
+    }
 
+    private void validateNarkotikaLakemedel(final NarkotikaLakemedel narkotikaLakemedel) {
+        if (narkotikaLakemedel.getLakarordineratLakemedelsbruk()) {
+            assertDescriptionNotEmpty(narkotikaLakemedel.getLakemedelOchDos(), "narkotikaLakemedel.getLakemedelOchDos",
+                    "Error");
+        }
     }
 
     private void validateMedvetandestorning(final Medvetandestorning medvetandestorning) {
-        // TODO Auto-generated method stub
-
+        if (medvetandestorning.getMedvetandestorning()) {
+            assertDescriptionNotEmpty(medvetandestorning.getBeskrivning(), "medvetandestorning.beskrivning", "Error");
+        }
     }
 
     private void validateSyn(final Syn syn) {
@@ -144,6 +170,34 @@ public class InternalValidatorInstance {
                 addValidationError("binokulart.medKorrektion", "ErrorCode");
             }
         }
+    }
+
+    /**
+     * Check for null or empty String, if so add a validation error for field with errorCode
+     * 
+     * @param beskrivning
+     *            the String to check
+     * @param field
+     *            the target field in the model
+     * @param errorCode
+     *            the errorCode to log in validation errors
+     */
+    private void assertDescriptionNotEmpty(String beskrivning, String field, String errorCode) {
+        if (beskrivning == null || beskrivning.isEmpty()) {
+            addValidationError(field, errorCode);
+        }
+    }
+
+    /**
+     * Check if there are validation errors
+     * 
+     * @return {@link Validation.COMPLETE} if there are no errors, and {@link Validation.INCOMPLETE} otherwise
+     */
+    private ValidationStatus getValidationStatus() {
+        if (validationResponse.getValidationErrors().isEmpty()) {
+            return ValidationStatus.COMPLETE;
+        }
+        return ValidationStatus.INCOMPLETE;
     }
 
     /**

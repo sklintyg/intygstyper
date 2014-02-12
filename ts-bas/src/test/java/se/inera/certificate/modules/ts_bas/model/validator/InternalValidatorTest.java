@@ -47,10 +47,15 @@ public class InternalValidatorTest {
             Utlatande utlatande = scenario.asInternalModel();
             ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
 
-            assertEquals(ValidationStatus.COMPLETE, validationResponse.getStatus());
-            
-            assertTrue("Error in scenario " + scenario.getName() + "\n" + StringUtils.join(validationResponse.getValidationErrors(), ", "),
-                    validationResponse.getValidationErrors().isEmpty());
+            assertEquals(
+                    "Error in scenario " + scenario.getName() + "\n"
+                            + StringUtils.join(validationResponse.getValidationErrors(), ", "),
+                    ValidationStatus.COMPLETE, validationResponse.getStatus());
+
+            assertTrue(
+                    "Error in scenario " + scenario.getName() + "\n"
+                            + StringUtils.join(validationResponse.getValidationErrors(), ", "), validationResponse
+                            .getValidationErrors().isEmpty());
 
         }
     }
@@ -58,11 +63,45 @@ public class InternalValidatorTest {
     @Test
     public void testValidateWithErrors() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("invalid-*")) {
-            
+
             Utlatande utlatande = scenario.asInternalModel();
             ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
-            
+
             assertEquals(ValidationStatus.INCOMPLETE, validationResponse.getStatus());
         }
+    }
+
+    @Test
+    public void testInvalidDiabetesTyp2MissingBehandling() throws Exception {
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-diabetes-typ2-missing-behandling")
+                .asInternalModel();
+        ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
+
+        assertTrue("Expecting one error!", validationResponse.getValidationErrors().size() == 1);
+
+        assertEquals("diabetes.diabetesTyp", validationResponse.getValidationErrors().get(0).getField());
+
+        assertEquals("Minst en behandling måste anges", validationResponse.getValidationErrors().get(0).getMessage());
+    }
+
+    @Test
+    public void testInvalidSynskarpa() throws Exception {
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-korrigerad-synskarpa").asInternalModel();
+        ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
+
+        assertTrue("Expected one and only one error", validationResponse.getValidationErrors().size() == 1);
+        assertEquals("vansterOga.utanKorrektion", validationResponse.getValidationErrors().get(0).getField());
+        assertEquals("ErrorCode", validationResponse.getValidationErrors().get(0).getMessage());
+    }
+
+    @Test
+    public void testFunktionshinderBeskrivningMissing() throws Exception {
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-funktionshinder-beskrivning-missing")
+                .asInternalModel();
+        ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
+
+        assertTrue("Expected one and only one error", validationResponse.getValidationErrors().size() == 1);
+        assertEquals("funktionsnedsattning.beskrivning", validationResponse.getValidationErrors().get(0).getField());
+        assertEquals("Error", validationResponse.getValidationErrors().get(0).getMessage());
     }
 }

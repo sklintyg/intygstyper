@@ -47,26 +47,23 @@
         ]
     },
     "syn" : {
-        "synfaltsdefekter" :  true,
+        "synfaltsdefekter" :  false,
         "nattblindhet" : false,
         "progressivOgonsjukdom" : false,
         "diplopi" : false,
         "nystagmus" : false,
         "hogerOga" : {
         	"utanKorrektion" : 0.0,
-          	"medKorrektion" : 0.0,
         	"kontaktlins" : false
         },
         
         "vansterOga" : {
-        	"utanKorrektion" : 2.5,
-        	"medKorrektion" : 0.0,
+        	"utanKorrektion" : 0.0,
         	"kontaktlins" : false
         },
 
         "binokulart" : {
-        	"utanKorrektion" : 0.0,
-          	"medKorrektion" : 0.0
+        	"utanKorrektion" : 0.0
         }
     },
     
@@ -85,7 +82,8 @@
     },
     
     "diabetes" : {
-    	"harDiabetes" : false
+    	"harDiabetes" : true,
+    	"diabetesTyp" : "DIABETES_TYP_2"
     },
     
     "neurologi" : {
