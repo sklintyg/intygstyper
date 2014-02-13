@@ -195,7 +195,9 @@
                         <td><p>a) Har patienten någon sjukdom eller funktionsnedsättning som påverkar rörligheten och som medför att fordon inte kan köras på ett trafiksäkert sätt?</p>
                             <div data-ng-show="cert.funktionsnedsattning.funktionsnedsattning">
                                 <p>Ange vilken typ av nedsättning eller sjukdom:</p>
-                                <textarea data-ng-model="cert.funktionsnedsattning.beskrivning"></textarea>
+                                <textarea id="funktionsnedsattning" name="funktionsnedsattning"	rows='5' wc-maxlength maxlength="{{inputLimits.funktionsnedsattning}}"
+                                          ng-model="cert.funktionsnedsattning.beskrivning"></textarea>
+                                {{cert.funktionsnedsattning.beskrivning}}
                             </div>
                         </td>
                     </tr>

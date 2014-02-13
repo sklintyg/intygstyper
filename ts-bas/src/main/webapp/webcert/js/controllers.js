@@ -41,6 +41,15 @@ angular.module('wc.ts-bas.controllers').controller('EditCertCtrl', [ '$scope', '
 
   $scope.testerror = false;
 
+  // Input limit handling
+  $scope.inputLimits = {
+    funktionsnedsattning: 10
+  };
+
+  $scope.limitFieldLength = function(field){
+    $scope.cert[field] = $scope.cert[field].substr(0,$scope.inputLimits[field]);
+  }
+
   $scope.$watch('cert.intygAvser.korkortstyp', function(newValue, oldValue){
     $scope.form.korkortd = false;
     for(var i = 4; i<$scope.cert.intygAvser.korkortstyp.length; i++){
