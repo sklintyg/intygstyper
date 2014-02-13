@@ -52,7 +52,7 @@ public class InternalValidatorTest {
             assertEquals(
                     "Error in scenario " + scenario.getName() + "\n"
                             + StringUtils.join(validationResponse.getValidationErrors(), ", "),
-                    ValidationStatus.COMPLETE, validationResponse.getStatus());
+                    ValidationStatus.VALID, validationResponse.getStatus());
 
             assertTrue(
                     "Error in scenario " + scenario.getName() + "\n"
@@ -69,7 +69,7 @@ public class InternalValidatorTest {
             Utlatande utlatande = scenario.asInternalModel();
             ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
 
-            assertEquals(ValidationStatus.INCOMPLETE, validationResponse.getStatus());
+            assertEquals(ValidationStatus.INVALID, validationResponse.getStatus());
         }
     }
 

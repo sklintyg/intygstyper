@@ -199,9 +199,9 @@ public class InternalValidatorInstance {
      */
     private ValidationStatus getValidationStatus() {
         if (validationResponse.getValidationErrors().isEmpty()) {
-            return ValidationStatus.COMPLETE;
+            return ValidationStatus.VALID;
         }
-        return ValidationStatus.INCOMPLETE;
+        return ValidationStatus.INVALID;
     }
 
     /**

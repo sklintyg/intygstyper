@@ -35,6 +35,7 @@ import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.model.internal.Vardenhet;
 import se.inera.certificate.modules.ts_bas.model.internal.Vardgivare;
 import se.inera.certificate.modules.ts_bas.rest.dto.CreateNewDraftCertificateHolder;
+import se.inera.certificate.modules.ts_bas.rest.dto.HoSPerson;
 
 /**
  * Factory for creating a editable model.
@@ -62,7 +63,7 @@ public class WebcertModelFactory {
         return utlatande;
     }
 
-    private void populateWithPatientInfo(Utlatande utlatande, se.inera.certificate.model.Patient patient)
+    private void populateWithPatientInfo(Utlatande utlatande, se.inera.certificate.modules.ts_bas.rest.dto.Patient patient)
             throws ConverterException {
 
         if (patient == null) {
@@ -72,12 +73,12 @@ public class WebcertModelFactory {
         utlatande.setPatient(convertPatientToEdit(patient));
     }
 
-    private Patient convertPatientToEdit(se.inera.certificate.model.Patient patientInfo) {
+    private Patient convertPatientToEdit(se.inera.certificate.modules.ts_bas.rest.dto.Patient patientInfo) {
         Patient patient = new Patient();
-        patient.setFornamn(StringUtils.join(patientInfo.getFornamn(), " "));
-        patient.setEfternamn(patientInfo.getEfternamn());
-        patient.setFullstandigtNamn(patientInfo.getFullstandigtNamn());
-        patient.setPersonid(patientInfo.getId().getExtension());
+        patient.setFornamn(patientInfo.getForNamn());
+        patient.setEfternamn(patientInfo.getEfterNamn());
+        patient.setFullstandigtNamn(StringUtils.join(patientInfo.getForNamn()," ", patientInfo.getEfterNamn()));
+        patient.setPersonid(patientInfo.getPersonNummer());
         
         // TODO: Address information needs to be sorted out at a later time
         //patient.setPostadress(patientInfo.getPostadress());
@@ -87,7 +88,7 @@ public class WebcertModelFactory {
         return patient;
     }
 
-    private void populateWithSkapadAv(Utlatande utlatande, HosPersonal skapadAv) throws ConverterException {
+    private void populateWithSkapadAv(Utlatande utlatande, HoSPerson skapadAv) throws ConverterException {
         if (skapadAv == null) {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");
         }
@@ -95,18 +96,16 @@ public class WebcertModelFactory {
         utlatande.setSkapadAv(convertHosPersonalToEdit(skapadAv));
     }
 
-    private HoSPersonal convertHosPersonalToEdit(HosPersonal hosPersType) {
+    private HoSPersonal convertHosPersonalToEdit(HoSPerson hosPers) {
         HoSPersonal hosPersonal = new HoSPersonal();
 
-        hosPersonal.setPersonid(hosPersType.getId().getExtension());
-        hosPersonal.setFullstandigtNamn(hosPersType.getNamn());
+        hosPersonal.setPersonid(hosPers.getHsaId());
+        hosPersonal.setFullstandigtNamn(hosPers.getNamn());
 
-        if (hosPersType.getBefattning() != null) {
-            hosPersonal.getBefattningar().addAll(convertKodToString(hosPersType.getBefattningar(), BefattningKod.class));
+        if (hosPers.getBefattning() != null) {
+            hosPersonal.getBefattningar().add(hosPers.getBefattning());
             
         }
-
-        hosPersonal.setVardenhet(convertVardenhetToEdit(hosPersType.getVardenhet()));
 
         return hosPersonal;
     }

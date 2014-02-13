@@ -18,14 +18,11 @@
  */
 package se.inera.certificate.modules.ts_bas.rest.dto;
 
-import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
-import se.inera.certificate.model.Patient;
-
 public class CreateNewDraftCertificateHolder {
 
     private String certificateId;
 
-    private HosPersonal skapadAv;
+    private HoSPerson skapadAv;
 
     private Patient patientInfo;
 
@@ -37,11 +34,11 @@ public class CreateNewDraftCertificateHolder {
         this.certificateId = certificateId;
     }
 
-    public HosPersonal getSkapadAv() {
+    public HoSPerson getSkapadAv() {
         return skapadAv;
     }
 
-    public void setSkapadAv(HosPersonal skapadAv) {
+    public void setSkapadAv(HoSPerson skapadAv) {
         this.skapadAv = skapadAv;
     }
 
