@@ -15,8 +15,8 @@
       <label class="control-label">{{cert.patientNamn || "Per Persson"}} - {{cert.patientPersonnummer || "19361123-5678"}}</label>
     </div>
     <div class="control-group buttonbar">
-      <button class="btn btn-info">Spara</button>
-      <button class="btn btn-secondary">Ta bort utkast</button>
+      <button class="btn btn-info" ng-click="save()">Spara</button>
+      <button class="btn btn-secondary" ng-click="discard()">Ta bort utkast</button>
       <button class="btn btn-secondary" ng-if="!widgetState.showComplete" ng-click="toggleShowComplete()">Visa vad som behöver kompletteras</button>
       <button class="btn btn-secondary" ng-if="widgetState.showComplete" ng-click="toggleShowComplete()">Dölj vad som behöver kompletteras</button>
     </div>
@@ -33,7 +33,7 @@
 	  <h3>Följande fält behöver kompletteras:</h3>
 	  Fält 2 - Kod saknas
 	</div>
-	
+
 	<div id="certificate" class="row-fluid certificate">
 		<div class="span12 cert-body">
 
@@ -328,12 +328,12 @@
 						<div class="info-transfer" style="white-space: nowrap">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
 					</div>
                 </div>
-          
+
                 <!-- NO -->
                 <div class="control-group">
 	                <label class="radio"><input type="radio" name="recommendationsToFk.reabInQuestion" group="group3" value="NO" ng-model="cert.rehab" checked="checked"> Nej</label>
                 </div>
-					
+
                 <!-- UNKNOWN -->
                 <div class="control-group">
 	                <label class="radio"><input type="radio" name="recommendationsToFk.reabInQuestion" group="group3" value="UNKNOWN" ng-model="cert.rehab"> Går ej att bestämma</label>
@@ -391,7 +391,7 @@
 
 	</div>
 	<!-- certificate -->
-	
+
 	<h2>Signera och skicka</h2>
 	<div class="form-inline">
     <div class="control-group">

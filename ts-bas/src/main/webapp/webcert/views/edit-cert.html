@@ -35,8 +35,8 @@
             <label class="control-label">{{cert.patient.fullstandigtNamn}} - {{cert.patient.personid}}</label>
         </div>
         <div class="control-group buttonbar">
-            <button class="btn btn-info">Spara</button>
-            <button class="btn btn-secondary">Ta bort utkast</button>
+            <button class="btn btn-info" ng-click="save()">Spara</button>
+            <button class="btn btn-secondary" ng-click="discard()">Ta bort utkast</button>
             <button class="btn btn-secondary" ng-if="!widgetState.showComplete" ng-click="toggleShowComplete()">Visa vad som behöver kompletteras</button>
             <button class="btn btn-secondary" ng-if="widgetState.showComplete" ng-click="toggleShowComplete()">Dölj vad som behöver kompletteras</button>
         </div>

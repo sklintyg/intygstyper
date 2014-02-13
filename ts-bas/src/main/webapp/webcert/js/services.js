@@ -1,6 +1,66 @@
 'use strict';
 
-/* 
- * WC View Certificate Services 
- */
-angular.module('wc.ts-bas.services', []);
+/* Services */
+var services = angular.module('wc.ts-bas.services', []);
+
+services.factory('certificateService', [ '$http', '$log',
+    function ($http, $log) {
+
+        /**
+         * Get a certificate draft with the specified id from the server.
+         */
+        function _getDraft (id, onSuccess, onError) {
+            $log.debug('_getDraft id: ' + id);
+            var restPath = '/moduleapi/intyg/draft/' + id;
+            $http.get(restPath).
+                success(function (data) {
+                    $log.debug('_getDraft data: ' + data);
+                    onSuccess(data);
+                }).
+                error(function (data, status) {
+                    $log.error('error ' + status);
+                    onError(data);
+                });
+        }
+
+        /**
+         * Saves a certificate draft to the server.
+         */
+        function _saveDraft (id, cert, onSuccess, onError) {
+            $log.debug('_saveDraft id: ' + id);
+            var restPath = '/moduleapi/intyg/draft/' + id;
+            $http.put(restPath, cert).
+                success(function (data) {
+                    $log.debug('_saveDraft data: ' + data);
+                    onSuccess(data);
+                }).
+                error(function (data, status) {
+                    $log.error('error ' + status);
+                    onError(data);
+                });
+        }
+
+        /**
+         * Discards a certificate draft and removes it from the server.
+         */
+        function _discardDraft (id, onSuccess, onError) {
+            $log.debug('_discardDraft id: ' + id);
+            var restPath = '/moduleapi/intyg/draft/' + id;
+            $http.delete(restPath).
+                success(function (data) {
+                    $log.debug('_discardDraft data: ' + data);
+                    onSuccess(data);
+                }).
+                error(function (data, status) {
+                    $log.error('error ' + status);
+                    onError(data);
+                });
+        }
+
+        // Return public API for the service
+        return {
+            getDraft : _getDraft,
+            saveDraft : _saveDraft,
+            discardDraft : _discardDraft
+        };
+    }]);
