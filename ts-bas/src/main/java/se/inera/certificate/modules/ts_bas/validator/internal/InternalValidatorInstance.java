@@ -70,8 +70,9 @@ public class InternalValidatorInstance {
     }
 
     private void validateBedomning(final Bedomning bedomning) {
-        // TODO Auto-generated method stub
-
+        if (bedomning.getKanInteTaStallning() == null && bedomning.getKorkortstyp().isEmpty()) {
+            addValidationError("bedomning", "NULL or empty");
+        }
     }
 
     private void validateDiabetes(final Diabetes diabetes) {
@@ -102,23 +103,25 @@ public class InternalValidatorInstance {
     }
 
     private void validateHorselBalans(final HorselBalans horselBalans) {
-        // TODO Auto-generated method stub
-
+        if (horselBalans.getBalansrubbningar() == null) {
+            addValidationError("horselBalans.balansrubbningar", "NULL");
+        }
     }
 
     private void validateHoSPersonal(final HoSPersonal skapadAv) {
-        // TODO Auto-generated method stub
-
+        // TODO: validate something here?
     }
 
     private void validateIntygAvser(final IntygAvser intygAvser) {
-        // TODO Auto-generated method stub
-
+        if (intygAvser.getKorkortstyp().isEmpty()) {
+            addValidationError("intygAvser", "At least one should be present");
+        }
     }
 
     private void validateKognitivt(final Kognitivt kognitivt) {
-        // TODO Auto-generated method stub
-
+        if (kognitivt.getSviktandeKognitivFunktion() == null) {
+            addValidationError("kognitivt.sviktandeKognitivFunktion", "NULL");
+        }
     }
 
     private void validateMedicinering(final Medicinering medicinering) {
@@ -191,7 +194,8 @@ public class InternalValidatorInstance {
     /**
      * Check if there are validation errors
      * 
-     * @return {@link ValidationStatus.COMPLETE} if there are no errors, and {@link ValidationStatus.INCOMPLETE} otherwise
+     * @return {@link ValidationStatus.COMPLETE} if there are no errors, and {@link ValidationStatus.INCOMPLETE}
+     *         otherwise
      */
     private ValidationStatus getValidationStatus() {
         if (validationResponse.getValidationErrors().isEmpty()) {
