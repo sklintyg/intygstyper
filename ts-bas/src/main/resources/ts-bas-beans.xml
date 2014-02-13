@@ -34,11 +34,12 @@
   <bean id="externalToInternalConverter"
     class="se.inera.certificate.modules.ts_bas.model.converter.ExternalToInternalConverter" />
 
-<bean id="internalToExternalConverter"
+  <bean id="internalToExternalConverter"
     class="se.inera.certificate.modules.ts_bas.model.converter.InternalToExternalConverter" />
 
-
-  <bean id="pdfGenerator" class="se.inera.certificate.modules.ts_bas.pdf.PdfGenerator" />
+  <bean id="pdfGenerator" class="se.inera.certificate.modules.ts_bas.pdf.PdfGenerator">
+    <constructor-arg value="true" />
+  </bean>
 
   <bean id="webcertModelFactory"
     class="se.inera.certificate.modules.ts_bas.model.converter.WebcertModelFactory" />
