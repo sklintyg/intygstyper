@@ -180,6 +180,12 @@ public class PdfGenerator {
 
     private static final String DATEFORMAT_FOR_FILENAMES = "yyMMdd";
 
+    private final boolean formFlattening;
+
+    public PdfGenerator(boolean formFlattening) {
+        this.formFlattening = formFlattening;
+    }
+
     public String generatePdfFilename(Utlatande utlatande) {
         String personId = utlatande.getPatient().getPersonid();
         String certificateSignatureDate = utlatande.getSigneringsdatum().toString(DATEFORMAT_FOR_FILENAMES);
@@ -193,7 +199,7 @@ public class PdfGenerator {
 
             PdfReader pdfReader = new PdfReader("pdf/TSTRK1007U06V06.pdf");
             PdfStamper pdfStamper = new PdfStamper(pdfReader, outputStream);
-            pdfStamper.setFormFlattening(true);
+            pdfStamper.setFormFlattening(formFlattening);
             AcroFields fields = pdfStamper.getAcroFields();
             populatePdfFields(utlatande, fields);
 
