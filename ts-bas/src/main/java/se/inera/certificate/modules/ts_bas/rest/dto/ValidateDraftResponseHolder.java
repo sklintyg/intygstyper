@@ -4,22 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ValidateDraftResponseHolder {
-    
+
     private ValidationStatus status;
-    
+
     private List<ValidationMessage> validationErrors;
-    
+
     public ValidateDraftResponseHolder() {
         this.validationErrors = new ArrayList<>();
     }
-    
+
     public void addErrorMessage(ValidationMessage msg) {
-        validationErrors.add(msg);
+        this.validationErrors.add(msg);
+    }
+
+    public boolean hasErrorMessages() {
+        return !(this.validationErrors.isEmpty());
     }
     
     public List<ValidationMessage> getValidationErrors() {
         return validationErrors;
-        
     }
 
     public ValidationStatus getStatus() {

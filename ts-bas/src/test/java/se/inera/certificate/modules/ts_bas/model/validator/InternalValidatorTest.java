@@ -89,7 +89,7 @@ public class InternalValidatorTest {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-korrigerad-synskarpa").asInternalModel();
         ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
 
-        assertEquals("vansterOga.utanKorrektion", getSingleElement(validationResponse.getValidationErrors()).getField());
+        assertEquals("syn.vansterOga.utanKorrektion", getSingleElement(validationResponse.getValidationErrors()).getField());
         assertEquals("ErrorCode", getSingleElement(validationResponse.getValidationErrors()).getMessage());
     }
 
