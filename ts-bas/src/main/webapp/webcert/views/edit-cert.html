@@ -463,15 +463,15 @@
                             <table data-ng-show="cert.sjukhusvard.sjukhusEllerLakarkontakt">
                                 <tr>
                                     <td>Om frågan besvaras med ja, när?</td>
-                                    <td><input type="text" data-ng-model="cert.sjukhusvard.tidpunkt" wc-maxlength maxlength="{{inputLimits.sjukhusvardtidpunkt}}"></td>
+                                    <td><input name="tidpunkt" type="text" data-ng-model="cert.sjukhusvard.tidpunkt" wc-maxlength maxlength="{{inputLimits.sjukhusvardtidpunkt}}"></td>
                                 </tr>
                                 <tr>
                                     <td>Vårdinrättningens namn och klinik/er:</td>
-                                    <td><input type="text" data-ng-model="cert.sjukhusvard.vardinrattning" wc-maxlength maxlength="{{inputLimits.sjukhusvardvardinrattning}}"></td>
+                                    <td><input name="vardinrattning" type="text" data-ng-model="cert.sjukhusvard.vardinrattning" wc-maxlength maxlength="{{inputLimits.sjukhusvardvardinrattning}}"></td>
                                 </tr>
                                 <tr>
                                     <td>För vad?</td>
-                                    <td><input type="text" data-ng-model="cert.sjukhusvard.anledning" wc-maxlength maxlength="{{inputLimits.sjukhusvardanledning}}"></td>
+                                    <td><input name="anledning" type="text" data-ng-model="cert.sjukhusvard.anledning" wc-maxlength maxlength="{{inputLimits.sjukhusvardanledning}}"></td>
                                 </tr>
                             </table>
                         </td>

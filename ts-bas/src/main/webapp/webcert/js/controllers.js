@@ -24,28 +24,30 @@ controllers.controller('EditCertCtrl', [ '$scope', 'certificateService',
 
         $scope.testerror = false;
 
-  // Input limit handling
-  $scope.inputLimits = {
-    funktionsnedsattning: 180,
-    beskrivningRiskfaktorer: 180,
-    medvetandestorning: 180,
-    lakemedelOchDos: 180,
-    medicinering: 180,
-    kommentar: 500,
-    lakareSpecialKompetens: 270,
-    sjukhusvardtidpunkt: 49,
-    sjukhusvardvardinrattning: 45,
-    sjukhusvardanledning: 63
-  };
+        // Input limit handling
+        $scope.inputLimits = {
+          'funktionsnedsattning': 180,
+          'beskrivningRiskfaktorer': 180,
+          'medvetandestorning': 180,
+          'lakemedelOchDos': 180,
+          'medicinering': 180,
+          'kommentar': 500,
+          'lakareSpecialKompetens': 270,
+          'sjukhusvardtidpunkt': 49,
+          'sjukhusvardvardinrattning': 45,
+          'sjukhusvardanledning': 63
+        };
 
-  $scope.$watch('cert.intygAvser.korkortstyp', function(newValue, oldValue){
-    $scope.form.korkortd = false;
-    for(var i = 4; i<$scope.cert.intygAvser.korkortstyp.length; i++){
-      if(newValue[i].selected){
-        $scope.form.korkortd = true;
-        break;
-      }
-    }
+        $scope.$watch('cert.intygAvser.korkortstyp', function(newValue, oldValue){
+          if(!$scope.cert || !$scope.cert.intygAvser || !$scope.cert.intygAvser.korkortstyp) return;
+          $scope.form.korkortd = false;
+          for(var i = 4; i < $scope.cert.intygAvser.korkortstyp.length; i++){
+            if(newValue[i].selected){
+              $scope.form.korkortd = true;
+              break;
+            }
+          }
+        });
 
         var dummycert = {
             "utlatandeid" : "987654321",
@@ -222,7 +224,7 @@ controllers.controller('EditCertCtrl', [ '$scope', 'certificateService',
                 // TODO: set the cert from the data.
             }, function (errorData) {
                 // TODO: Show error message.
-            });
+        });
 
         /**
          * Action to save the certificate draft to the server.
