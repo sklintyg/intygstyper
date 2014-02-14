@@ -20,8 +20,6 @@ public class IntygAvser {
     @JsonSerialize(using = IntygAvserEnumSetSerializer.class)
     @JsonDeserialize(using = IntygAvserEnumSetDeserializer.class)
     EnumSet<IntygAvserKategori> korkortstyp;
-
-    private Boolean annat;
     
     public Set<IntygAvserKategori> getKorkortstyp() {
         if (korkortstyp == null) {
@@ -42,11 +40,4 @@ public class IntygAvser {
         }
     }
 
-    public Boolean getAnnat() {
-        return annat;
-    }
-
-    public void setAnnat(Boolean annat) {
-        this.annat = annat;
-    }
 }
