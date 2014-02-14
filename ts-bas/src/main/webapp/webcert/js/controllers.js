@@ -43,12 +43,17 @@ angular.module('wc.ts-bas.controllers').controller('EditCertCtrl', [ '$scope', '
 
   // Input limit handling
   $scope.inputLimits = {
-    funktionsnedsattning: 10
+    funktionsnedsattning: 180,
+    beskrivningRiskfaktorer: 180,
+    medvetandestorning: 180,
+    lakemedelOchDos: 180,
+    medicinering: 180,
+    kommentar: 500,
+    lakareSpecialKompetens: 270,
+    sjukhusvardtidpunkt: 49,
+    sjukhusvardvardinrattning: 45,
+    sjukhusvardanledning: 63
   };
-
-  $scope.limitFieldLength = function(field){
-    $scope.cert[field] = $scope.cert[field].substr(0,$scope.inputLimits[field]);
-  }
 
   $scope.$watch('cert.intygAvser.korkortstyp', function(newValue, oldValue){
     $scope.form.korkortd = false;
@@ -148,7 +153,6 @@ angular.module('wc.ts-bas.controllers').controller('EditCertCtrl', [ '$scope', '
       "funktionsnedsattning" : true,
       "otillrackligRorelseformaga" : true,
       "beskrivning" : "Spik i foten"
-
     },
 
     "hjartKarl" : {

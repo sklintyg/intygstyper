@@ -197,7 +197,6 @@
                                 <p>Ange vilken typ av nedsättning eller sjukdom:</p>
                                 <textarea id="funktionsnedsattning" name="funktionsnedsattning"	rows='5' wc-maxlength maxlength="{{inputLimits.funktionsnedsattning}}"
                                           ng-model="cert.funktionsnedsattning.beskrivning"></textarea>
-                                {{cert.funktionsnedsattning.beskrivning}}
                             </div>
                         </td>
                     </tr>
@@ -232,7 +231,7 @@
                         <td><p>c) Föreligger viktiga riskfaktorer för stroke (tidigare stroke eller TIA, förhöjt blodtryck, förmaksflimmer eller kärlmissbildning)?</p>
                             <div ng-show="cert.hjartKarl.riskfaktorerStroke">
                                 <p>Vilken typ av sjukdom?</p>
-                                <textarea data-ng-model="cert.hjartKarl.beskrivningRiskfaktorer"></textarea>
+                                <textarea ng-model="cert.hjartKarl.beskrivningRiskfaktorer" wc-maxlength maxlength="{{inputLimits.beskrivningRiskfaktorer}}"></textarea>
                             </div>
                         </td>
                     </tr>
@@ -306,7 +305,7 @@
                             <p>Har eller har patienten haft epilepsi, epileptiskt anfall eller annan medvetandestörning?</p>
                             <div data-ng-show="cert.medvetandestorning.medvetandestorning">
                                 <p>Om det är frågan om annan medvetandestörning, ange när den inträffade och orsak:</p>
-                                <textarea data-ng-model="cert.medvetandestorning.beskrivning"></textarea>
+                                <textarea data-ng-model="cert.medvetandestorning.beskrivning" wc-maxlength maxlength="{{inputLimits.medvetandestorning}}"></textarea>
                             </div>
                         </td>
                     </tr>
@@ -401,7 +400,7 @@
                         <td>
                             <p>c) Pågår regelbundet läkarordinerat bruk av läkemedel som kan innebära en trafiksäkerhetsrisk?</p>
                             <p>Ange läkemedel och ordinerad dos:</p>
-                            <textarea data-ng-model="cert.narkotikaLakemedel.lakemedelOchDos"></textarea>
+                            <textarea data-ng-model="cert.narkotikaLakemedel.lakemedelOchDos" wc-maxlength maxlength="{{inputLimits.lakemedelOchDos}}"></textarea>
                         </td>
                     </tr>
                 </table>
@@ -464,15 +463,15 @@
                             <table data-ng-show="cert.sjukhusvard.sjukhusEllerLakarkontakt">
                                 <tr>
                                     <td>Om frågan besvaras med ja, när?</td>
-                                    <td><input type="text" data-ng-model="cert.sjukhusvard.tidpunkt"></td>
+                                    <td><input type="text" data-ng-model="cert.sjukhusvard.tidpunkt" wc-maxlength maxlength="{{inputLimits.sjukhusvardtidpunkt}}"></td>
                                 </tr>
                                 <tr>
                                     <td>Vårdinrättningens namn och klinik/er:</td>
-                                    <td><input type="text" data-ng-model="cert.sjukhusvard.vardinrattning"></td>
+                                    <td><input type="text" data-ng-model="cert.sjukhusvard.vardinrattning" wc-maxlength maxlength="{{inputLimits.sjukhusvardvardinrattning}}"></td>
                                 </tr>
                                 <tr>
                                     <td>För vad?</td>
-                                    <td><input type="text" data-ng-model="cert.sjukhusvard.anledning"></td>
+                                    <td><input type="text" data-ng-model="cert.sjukhusvard.anledning" wc-maxlength maxlength="{{inputLimits.sjukhusvardanledning}}"></td>
                                 </tr>
                             </table>
                         </td>
@@ -494,7 +493,7 @@
                             <p>Har patienten någon stadigvarande medicinering?</p>
                             <div data-ng-show="cert.medicinering.stadigvarandeMedicinering">
                                 <p>Vilken eller vilka mediciner?</p>
-                                <textarea data-ng-model="cert.medicinering.beskrivning"></textarea>
+                                <textarea data-ng-model="cert.medicinering.beskrivning" wc-maxlength maxlength="{{inputLimits.medicinering}}"></textarea>
                             </div>
                         </td>
                     </tr>
@@ -503,7 +502,7 @@
 
             <div wc-field field-label="ts.label.ovrigkommentar">
                 <p>Övriga kommentarer som är relevant ur trafiksäkerhetssynpunkt.</p>
-                <textarea id="kommentar" name="kommentar" rows='5' ng-model="cert.kommentar" maxlength="500"></textarea> <!-- ng-change="inputlimit for IE"-->
+                <textarea id="kommentar" name="kommentar" rows='5' ng-model="cert.kommentar" wc-maxlength maxlength="{{inputLimits.kommentar}}"></textarea> <!-- ng-change="inputlimit for IE"-->
             </div>
 
             <div wc-field field-label="ts.label.bedomning">
@@ -522,7 +521,7 @@
                 <p data-ng-show="cert.diabetes.tabletter || cert.diabetes.insulin">Har patienten tablett- eller insulinbehandlad diabetes krävs ett läkarintyg gällande sjukdomen.</p>
 
                 <p>Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i:</p>
-                <textarea name="specialist" rows='5' ng-model="cert.bedomning.lakareSpecialKompetens" maxlength="500"></textarea>
+                <textarea name="specialist" rows='5' ng-model="cert.bedomning.lakareSpecialKompetens" wc-maxlength maxlength="{{inputLimits.lakareSpecialKompetens}}"></textarea>
             </div>
 
             <div class="body-row clearfix">
