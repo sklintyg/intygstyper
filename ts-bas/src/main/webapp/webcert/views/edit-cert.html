@@ -73,13 +73,13 @@
                 <p>Intyget kan också användas när Transportstyrelsen i andra fall begärt ett läkarintyg. Markera då endast i rutan Annat nedan.</p>
 
                 <div class="control-group clearfix">
-                    <label class="checkbox checkbox-columns span3" ng-repeat="typ in cert.intygAvser.korkortstyp track by $index"><input id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox" ng-model="typ.selected"> {{typ.type}}</label>
+                    <label class="checkbox checkbox-columns span3" ng-repeat="typ in cert.intygAvser.korkortstyp track by $index"><input id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox" ng-model="typ.selected"> <span message key="ts.label.korkort.{{typ.type}}"></span></label>
                 </div>
             </div>
 
             <div wc-field field-label="ts.label.identitet">
                 <div class="control-group clearfix">
-                    <label class="radio checkbox-columns span4" ng-repeat="(k,v) in form.identity"><input name="identity{{$index}}" type="radio" value="{{v}}" ng-model="cert.vardkontakt.idkontroll"> <span message key="ts.label.korkort.{{k}}"></span></label>
+                    <label class="radio checkbox-columns span4" ng-repeat="(k,v) in form.identity"><input name="identity{{$index}}" type="radio" value="{{v}}" ng-model="cert.vardkontakt.idkontroll"> {{k}}</label>
                 </div>
             </div>
 
@@ -630,7 +630,7 @@
                 <div class="control-group">
                     <label class="radio"><input name="behorighetnagon" type="radio" ng-value="true" ng-model="form.behorighet"> Någon av följande behörigheter</label>
                     <div class="control-group clearfix indent" data-ng-show="form.behorighet">
-                        <label class="checkbox checkbox-columns span3" ng-repeat="typ in cert.bedomning.korkortstyp track by $index"><input id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox" ng-model="typ.selected"> {{typ.type}}</label>
+                        <label class="checkbox checkbox-columns span3" ng-repeat="typ in cert.bedomning.korkortstyp track by $index"><input id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox" ng-model="typ.selected"> <span message key="ts.label.korkort.{{typ.type}}"></span></label>
                     </div>
                     <label class="radio"><input name="behorighetinte" type="radio" ng-value="false" ng-model="form.behorighet"> Kan inte ta ställning</label>
                 </div>
