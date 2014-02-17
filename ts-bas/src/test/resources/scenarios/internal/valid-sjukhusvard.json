@@ -43,7 +43,8 @@
             {"type": "D1E", "selected": false},
             {"type": "D", "selected": false},
             {"type": "DE", "selected": false},
-            {"type": "TAXI", "selected": false}
+            {"type": "TAXI", "selected": false},
+            {"type": "ANNAT", "selected": false}
         ]
     },
     "syn" : {
