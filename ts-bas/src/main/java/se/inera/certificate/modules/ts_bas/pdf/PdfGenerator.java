@@ -167,16 +167,16 @@ public class PdfGenerator {
 
     private static final StringField BEDOMNING_BOR_UNDERSOKAS_SPECIALIST = new StringField("FaltDiv6");
 
-    private static final StringField INTYGSDATUM = new StringField("Falt__78");
-    private static final StringField VARDINRATTNINGENS_NAMN = new StringField("Falt__79");
-    private static final StringField ADRESS_OCH_ORT = new StringField("Falt__80");
-    private static final StringField TELEFON = new StringField("Falt__81");
-    private static final StringField NAMNFORTYDLIGANDE = new StringField("Falt__82");
+    private static final StringField INTYGSDATUM = new StringField("Falt__82");
+    private static final StringField VARDINRATTNINGENS_NAMN = new StringField("Falt__83");
+    private static final StringField ADRESS_OCH_ORT = new StringField("Falt__87");
+    private static final StringField TELEFON = new StringField("Falt__88");
+    private static final StringField NAMNFORTYDLIGANDE = new StringField("Falt__90");
 
-    private static final CheckField SPECIALISTKOMPETENS_CHECK = new CheckField("Falt_95");
-    private static final StringField SPECIALISTKOMPETENS_BESKRVNING = new StringField("Falt_98");
-    private static final CheckField ST_LAKARE_CHECK = new CheckField("Falt_96");
-    private static final CheckField AT_LAKARE_CHECK = new CheckField("Falt_97");
+    private static final CheckField SPECIALISTKOMPETENS_CHECK = new CheckField("Falt_91");
+    private static final StringField SPECIALISTKOMPETENS_BESKRVNING = new StringField("Falt_92");
+    private static final CheckField ST_LAKARE_CHECK = new CheckField("Falt_93");
+    private static final CheckField AT_LAKARE_CHECK = new CheckField("Falt_94");
 
     private static final String DATEFORMAT_FOR_FILENAMES = "yyMMdd";
 
