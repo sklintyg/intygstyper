@@ -1,6 +1,9 @@
 package se.inera.certificate.modules.ts_bas.pdf.xpath;
 
-public interface XPathExpressions {
+/**
+ * Defines xPath expressions and templates used to create all expressions needed by Transportstyrelsen.
+ */
+public class XPathExpressions {
 
     public static final StringXPathExpression INVANARE_ADRESS_FALT1_XPATH = new StringXPathExpression(
             "concat(p:utlatande/p:patient/p:fornamn, ' ', p:utlatande/p:patient/p:efternamn)");
@@ -14,52 +17,45 @@ public interface XPathExpressions {
     public static final StringXPathExpression INVANARE_PERSONNUMMER_XPATH = new StringXPathExpression(
             "translate(p:utlatande/p:patient/p:person-id/@extension, '-', '')");
 
-    public static final BooleanXPathExpression INTYG_AVSER_C1_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:intygAvser/@code = 'IAV1'");
+    public static final String INTYG_AVSER_TEMPLATE = "p:utlatande/p:intygAvser/@code = '%s'";
 
-    public static final BooleanXPathExpression INTYG_AVSER_C1E_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:intygAvser/@code = 'IAV2'");
+    public static final String AKTIVITET_FOREKOMST_TEMPLATE = "p:utlatande/p:aktivitet/p:forekomst[parent::p:aktivitet/p:aktivitetskod/@code='%s'] = 'true'";
 
-    public static final BooleanXPathExpression INTYG_AVSER_C_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:intygAvser/@code = 'IAV3'");
+    public static final String ID_KONTROLL_TEMPLATE = "p:utlatande/p:vardkontakt/p:idKontroll/@code = '%s'";
 
-    public static final BooleanXPathExpression INTYG_AVSER_CE_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:intygAvser/@code = 'IAV4'");
+    public static final String OBSERVATION_FOREKOMST_TEMPLATE = "p:utlatande/p:observation/p:forekomst[parent::p:observation/p:observationskod/@code='%s'] = 'true'";
 
-    public static final BooleanXPathExpression INTYG_AVSER_D1_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:intygAvser/@code = 'IAV5'");
+    public static final String OBSERVATION_VARDE_INT_CODE_LATERALITET = "substring-before(p:utlatande/p:observation/p:varde[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p:lateralitet/@code='%s')]/@value, '.')";
 
-    public static final BooleanXPathExpression INTYG_AVSER_D1E_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:intygAvser/@code = 'IAV6'");
+    public static final String OBSERVATION_VARDE_DEC_CODE_LATERALITET = "substring-after(p:utlatande/p:observation/p:varde[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p:lateralitet/@code='%s')]/@value, '.')";
 
-    public static final BooleanXPathExpression INTYG_AVSER_D_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:intygAvser/@code = 'IAV7'");
+    public static final String OBSERVATION_FOREKOMST_CODE_LATERALITET = "p:utlatande/p:observation/p:forekomst[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p:lateralitet/@code='%s')]='true'";
 
-    public static final BooleanXPathExpression INTYG_AVSER_DE_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:intygAvser/@code = 'IAV8'");
+    /**
+     * Creates a {@link BooleanXPathExpression} from a string template and arguments.
+     * 
+     * @param template
+     *            The string template to use.
+     * @param args
+     *            The additional arguments to inject in the template.
+     * 
+     * @return A boolean xPath expression.
+     */
+    public static BooleanXPathExpression booleanXPath(String template, Object... args) {
+        return new BooleanXPathExpression(String.format(template, args));
+    }
 
-    public static final BooleanXPathExpression INTYG_AVSER_TAXI_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:intygAvser/@code = 'IAV9'");
-
-    public static final BooleanXPathExpression FALT_61_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:aktivitet/p:forekomst[parent::p:aktivitet/p:aktivitetskod/@code='AKT19'] = 'true'");
-
-    public static final BooleanXPathExpression ID_KONTROLL_IDKORT_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:vardkontakt/p:idKontroll/@code = 'IDK1'");
-
-    public static final BooleanXPathExpression ID_KONTROLL_FORETAG_TJANSTEKORT_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:vardkontakt/p:idKontroll/@code = 'IDK2'");
-
-    public static final BooleanXPathExpression ID_KONTROLL_SVENSKT_KORKORT_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:vardkontakt/p:idKontroll/@code = 'IDK3'");
-
-    public static final BooleanXPathExpression ID_KONTROLL_PERSONLIG_KANNEDOM_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:vardkontakt/p:idKontroll/@code = 'IDK4'");
-
-    public static final BooleanXPathExpression ID_KONTROLL_FORSAKRAN_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:vardkontakt/p:idKontroll/@code = 'IDK5'");
-
-    public static final BooleanXPathExpression ID_KONTROLL_PASS_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:vardkontakt/p:idKontroll/@code = 'IDK6'");
-
+    /**
+     * Creates a {@link StringXPathExpression} from a string template and arguments.
+     * 
+     * @param template
+     *            The string template to use.
+     * @param args
+     *            The additional arguments to inject in the template.
+     * 
+     * @return A string xPath expression.
+     */
+    public static StringXPathExpression stringXPath(String template, Object... args) {
+        return new StringXPathExpression(String.format(template, args));
+    }
 }
