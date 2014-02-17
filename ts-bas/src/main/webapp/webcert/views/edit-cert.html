@@ -55,7 +55,7 @@
         <h3>Följande fält behöver kompletteras:</h3>
         <ul>
           <li ng-repeat="message in validationMessages">
-            <span message key="validation.{{message.field}}.{{message.message}}"></span></li>
+            <span message key="{{message.message}}"></span></li>
         </ul>
     </div>
 
@@ -63,7 +63,13 @@
         <div class="span12 cert-body">
 
             <div wc-field field-label="ts.label.intygavser">
-                <p>Detta intyg ska användas vid förlängd giltighet av högre behörighet, ansökan om körkortstillstånd för grupp II och III och vid ansökan om taxiförarlegitimation.</p>
+              <div class="alert alert-error" ng-if="validationMessagesGrouped.intygavser">
+                <ul>
+                  <li ng-repeat="message in validationMessagesGrouped.intygavser"><span message key="{{message.message}}"></span></li>
+                </ul>
+              </div>
+
+              <p>Detta intyg ska användas vid förlängd giltighet av högre behörighet, ansökan om körkortstillstånd för grupp II och III och vid ansökan om taxiförarlegitimation.</p>
                 <p>Intyget kan också användas när Transportstyrelsen i andra fall begärt ett läkarintyg. Markera då endast i rutan Annat nedan.</p>
 
                 <div class="control-group clearfix">
@@ -85,12 +91,13 @@
             <div wc-field field-label="ts.label.synfunktioner" field-has-errors="testerror" ng-form name="synForm">
 
                 <table class="table table-form">
-                    <tr ng-if="validationMessagesGrouped.syn"><td colspan="3"><div class="alert alert-error">
-                      <!--<img class="error-icon" src="/img/error.png">-->
-                      <ul>
-                        <li ng-repeat="message in validationMessagesGrouped.syn"><span message key="validation.{{message.field}}.{{message.message}}"></span></li></li>
-                      </ul>
-                    </div></td></tr>
+                    <tr ng-if="validationMessagesGrouped.syn">
+                      <td colspan="3"><div class="alert alert-error">
+                        <ul>
+                          <li ng-repeat="message in validationMessagesGrouped.syn"><span message key="{{message.message}}"></span></li>
+                        </ul>
+                      </div></td>
+                    </tr>
                     <tr>
                         <th><span message key="common.yes"></span></th>
                         <th><span message key="common.no"></span></th>
@@ -173,7 +180,15 @@
 
             <!-- 2 -->
             <div wc-field field-label="ts.label.horselbalans">
+
                 <table class="table table-form">
+                    <tr ng-if="validationMessagesGrouped.horselbalans">
+                      <td colspan="3"><div class="alert alert-error">
+                        <ul>
+                          <li ng-repeat="message in validationMessagesGrouped.horselbalans"><span message key="{{message.message}}"></span></li>
+                        </ul>
+                      </div></td>
+                    </tr>
                     <tr>
                         <th><span message key="common.yes"></span></th>
                         <th><span message key="common.no"></span></th>
@@ -182,7 +197,6 @@
                     <tr>
                         <td><input id="horselbalansay" name="horselbalansay" type="radio" ng-value="true" ng-model="cert.horselBalans.balansrubbningar"></td>
                         <td><input id="horselbalansan" name="horselbalansan" type="radio" ng-value="false" ng-model="cert.horselBalans.balansrubbningar"></td>
-                        <td>a) Har patienten överraskande anfall av balansrubbningar eller yrsel?</td>
                         <td>a) Har patienten överraskande anfall av balansrubbningar eller yrsel?</td>
                     </tr>
                     <tr ng-show="form.korkortd">
@@ -196,12 +210,13 @@
             <!-- 3 -->
             <div wc-field field-label="ts.label.funktionsnedsattning">
                 <table class="table table-form">
-                    <tr ng-if="validationMessagesGrouped.funktionsnedsattning"><td colspan="3"><div class="alert alert-error">
-                      <!--<img class="error-icon" src="/img/error.png">-->
-                      <ul>
-                        <li ng-repeat="message in validationMessagesGrouped.funktionsnedsattning"><span message key="validation.{{message.field}}.{{message.message}}"></span></li>
-                      </ul>
-                    </div></td></tr>
+                    <tr ng-if="validationMessagesGrouped.funktionsnedsattning">
+                      <td colspan="3"><div class="alert alert-error">
+                        <ul>
+                          <li ng-repeat="message in validationMessagesGrouped.funktionsnedsattning"><span message key="{{message.message}}"></span></li>
+                        </ul>
+                      </div></td>
+                    </tr>
                     <tr>
                         <th><span message key="common.yes"></span></th>
                         <th><span message key="common.no"></span></th>
@@ -228,7 +243,14 @@
 
             <div wc-field field-label="ts.label.hjartkarl">
                 <table class="table table-form">
-                    <tr>
+                  <tr ng-if="validationMessagesGrouped.hjartkarl">
+                    <td colspan="3"><div class="alert alert-error">
+                      <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.hjartkarl"><span message key="{{message.message}}"></span></li>
+                      </ul>
+                    </div></td>
+                  </tr>
+                  <tr>
                         <th><span message key="common.yes"></span></th>
                         <th><span message key="common.no"></span></th>
                         <th class="maxwidth"></th>
@@ -258,6 +280,13 @@
 
             <div wc-field field-label="ts.label.diabetes">
                 <table class="table table-form">
+                    <tr ng-if="validationMessagesGrouped.diabetes">
+                      <td colspan="3"><div class="alert alert-error">
+                        <ul>
+                          <li ng-repeat="message in validationMessagesGrouped.diabetes"><span message key="{{message.message}}"></span></li>
+                        </ul>
+                      </div></td>
+                    </tr>
                     <tr>
                         <th><span message key="common.yes"></span></th>
                         <th><span message key="common.no"></span></th>
@@ -290,14 +319,18 @@
 
             <div wc-field field-label="ts.label.neurologi">
                 <table class="table table-form">
-                    <thead>
-                    <tr>
+                  <tr ng-if="validationMessagesGrouped.neurologi">
+                    <td colspan="3"><div class="alert alert-error">
+                      <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.neurologi"><span message key="{{message.message}}"></span></li>
+                      </ul>
+                    </div></td>
+                  </tr>
+                  <tr>
                         <th><span message key="common.yes"></span></th>
                         <th><span message key="common.no"></span></th>
                         <th class="maxwidth"></th>
                     </tr>
-                    </thead>
-                    <tbody>
                     <tr>
                         <td><input id="neurologiay" name="diabetesay" type="radio" ng-value="true" ng-model="cert.neurologi.neurologiskSjukdom"></td>
                         <td><input id="neurologian" name="diabetesan" type="radio" ng-value="false" ng-model="cert.neurologi.neurologiskSjukdom"></td>
@@ -305,13 +338,19 @@
                             <p>Finns tecken på neurologisk sjukdom?</p>
                         </td>
                     </tr>
-                    </tbody>
                 </table>
             </div>
 
             <div wc-field field-label="ts.label.medvetandestorning">
                 <table class="table table-form">
-                    <tr>
+                  <tr ng-if="validationMessagesGrouped.medvetandestorning">
+                    <td colspan="3"><div class="alert alert-error">
+                      <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.medvetandestorning"><span message key="{{message.message}}"></span></li>
+                      </ul>
+                    </div></td>
+                  </tr>
+                  <tr>
                         <th><span message key="common.yes"></span></th>
                         <th><span message key="common.no"></span></th>
                         <th class="maxwidth"></th>
@@ -332,6 +371,13 @@
 
             <div wc-field field-label="ts.label.njurar">
                 <table class="table table-form">
+                  <tr ng-if="validationMessagesGrouped.njurar">
+                    <td colspan="3"><div class="alert alert-error">
+                      <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.njurar"><span message key="{{message.message}}"></span></li>
+                      </ul>
+                    </div></td>
+                  </tr>
                     <tr>
                         <th><span message key="common.yes"></span></th>
                         <th><span message key="common.no"></span></th>
@@ -349,7 +395,14 @@
 
             <div wc-field field-label="ts.label.kognitivt">
                 <table class="table table-form">
-                    <tr>
+                  <tr ng-if="validationMessagesGrouped.kognitivt">
+                    <td colspan="3"><div class="alert alert-error">
+                      <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.kognitivt"><span message key="{{message.message}}"></span></li>
+                      </ul>
+                    </div></td>
+                  </tr>
+                  <tr>
                         <th><span message key="common.yes"></span></th>
                         <th><span message key="common.no"></span></th>
                         <th class="maxwidth"></th>
@@ -366,7 +419,14 @@
 
             <div wc-field field-label="ts.label.somnvakenhet">
                 <table class="table table-form">
-                    <tr>
+                  <tr ng-if="validationMessagesGrouped.somnvakenhet">
+                    <td colspan="3"><div class="alert alert-error">
+                      <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.somnvakenhet"><span message key="{{message.message}}"></span></li>
+                      </ul>
+                    </div></td>
+                  </tr>
+                  <tr>
                         <th><span message key="common.yes"></span></th>
                         <th><span message key="common.no"></span></th>
                         <th class="maxwidth"></th>
@@ -383,7 +443,14 @@
 
             <div wc-field field-label="ts.label.narkotikalakemedel">
                 <table class="table table-form">
-                    <tr>
+                  <tr ng-if="validationMessagesGrouped.narkotikalakemedel">
+                    <td colspan="3"><div class="alert alert-error">
+                      <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.narkotikalakemedel"><span message key="{{message.message}}"></span></li>
+                      </ul>
+                    </div></td>
+                  </tr>
+                  <tr>
                         <th><span message key="common.yes"></span></th>
                         <th><span message key="common.no"></span></th>
                         <th class="maxwidth"></th>
@@ -426,7 +493,14 @@
 
             <div wc-field field-label="ts.label.psykiskt">
                 <table class="table table-form">
-                    <tr>
+                  <tr ng-if="validationMessagesGrouped.psykiskt">
+                    <td colspan="3"><div class="alert alert-error">
+                      <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.psykiskt"><span message key="{{message.message}}"></span></li>
+                      </ul>
+                    </div></td>
+                  </tr>
+                  <tr>
                         <th><span message key="common.yes"></span></th>
                         <th><span message key="common.no"></span></th>
                         <th class="maxwidth"></th>
@@ -443,7 +517,14 @@
 
             <div wc-field field-label="ts.label.utvecklingsstorning">
                 <table class="table table-form">
-                    <tr>
+                  <tr ng-if="validationMessagesGrouped.utvecklingsstorning">
+                    <td colspan="3"><div class="alert alert-error">
+                      <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.utvecklingsstorning"><span message key="{{message.message}}"></span></li>
+                      </ul>
+                    </div></td>
+                  </tr>
+                  <tr>
                         <th><span message key="common.yes"></span></th>
                         <th><span message key="common.no"></span></th>
                         <th class="maxwidth"></th>
@@ -467,7 +548,14 @@
 
             <div wc-field field-label="ts.label.sjukhusvard">
                 <table class="table table-form">
-                    <tr>
+                  <tr ng-if="validationMessagesGrouped.sjukhusvard">
+                    <td colspan="3"><div class="alert alert-error">
+                      <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.sjukhusvard"><span message key="{{message.message}}"></span></li>
+                      </ul>
+                    </div></td>
+                  </tr>
+                  <tr>
                         <th><span message key="common.yes"></span></th>
                         <th><span message key="common.no"></span></th>
                         <th class="maxwidth"></th>
@@ -499,7 +587,14 @@
 
             <div wc-field field-label="ts.label.medicinering">
                 <table class="table table-form">
-                    <tr>
+                  <tr ng-if="validationMessagesGrouped.medicinering">
+                    <td colspan="3"><div class="alert alert-error">
+                      <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.medicinering"><span message key="{{message.message}}"></span></li>
+                      </ul>
+                    </div></td>
+                  </tr>
+                  <tr>
                         <th><span message key="common.yes"></span></th>
                         <th><span message key="common.no"></span></th>
                         <th class="maxwidth"></th>
@@ -524,6 +619,12 @@
             </div>
 
             <div wc-field field-label="ts.label.bedomning">
+              <div class="alert alert-error" ng-if="validationMessagesGrouped.bedomning">
+                <ul>
+                  <li ng-repeat="message in validationMessagesGrouped.bedomning"><span message key="{{message.message}}"></span></li>
+                </ul>
+              </div>
+
                 <p>Patienten uppfyller kraven enligt Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2) för:</p>
 
                 <div class="control-group">

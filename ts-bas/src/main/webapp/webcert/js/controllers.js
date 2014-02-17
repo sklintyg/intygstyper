@@ -269,7 +269,7 @@ controllers.controller('EditCertCtrl', [ '$scope', '$location', '$anchorScroll',
                             var parts = field.split(".");
                             var section;
                             if (parts.length > 0) {
-                                section = parts[0];
+                                section = parts[0].toLowerCase();
 
                                 if ($scope.validationMessagesGrouped[section]) {
                                     $scope.validationMessagesGrouped[section].push(message);
