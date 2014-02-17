@@ -47,7 +47,8 @@ public class WebcertModelFactory {
      * 
      * @param newDraftData
      *            {@link CreateNewDraftCertificateHolder}
-     * @return {@link Utlatande} or throws a ConverterException if something unforeseen happens
+     * @return {@link Utlatande} or throws a ConverterException if something
+     *         unforeseen happens
      * @throws ConverterException
      */
     public Utlatande createNewWebcertDraft(CreateNewDraftCertificateHolder newDraftData) throws ConverterException {
@@ -63,8 +64,8 @@ public class WebcertModelFactory {
         return utlatande;
     }
 
-    private void populateWithPatientInfo(Utlatande utlatande, se.inera.certificate.modules.ts_bas.rest.dto.Patient patient)
-            throws ConverterException {
+    private void populateWithPatientInfo(Utlatande utlatande,
+            se.inera.certificate.modules.ts_bas.rest.dto.Patient patient) throws ConverterException {
 
         if (patient == null) {
             throw new ConverterException("Got null while trying to populateWithPatientInfo");
@@ -77,13 +78,13 @@ public class WebcertModelFactory {
         Patient patient = new Patient();
         patient.setFornamn(patientInfo.getForNamn());
         patient.setEfternamn(patientInfo.getEfterNamn());
-        patient.setFullstandigtNamn(StringUtils.join(patientInfo.getForNamn()," ", patientInfo.getEfterNamn()));
+        patient.setFullstandigtNamn(StringUtils.join(patientInfo.getForNamn(), " ", patientInfo.getEfterNamn()));
         patient.setPersonid(patientInfo.getPersonNummer());
-        
+
         // TODO: Address information needs to be sorted out at a later time
-        //patient.setPostadress(patientInfo.getPostadress());
-        //patient.setPostnummer(patientInfo.getPostnummer());
-        //patient.setPostort(patientInfo.getPostort());
+        // patient.setPostadress(patientInfo.getPostadress());
+        // patient.setPostnummer(patientInfo.getPostnummer());
+        // patient.setPostort(patientInfo.getPostort());
 
         return patient;
     }
@@ -104,10 +105,36 @@ public class WebcertModelFactory {
 
         if (hosPers.getBefattning() != null) {
             hosPersonal.getBefattningar().add(hosPers.getBefattning());
-            
+
+        }
+
+        if (hosPers.getVardenhet() != null) {
+            Vardenhet vardenhet = convertVardenhetToEdit(hosPers.getVardenhet());
+            hosPersonal.setVardenhet(vardenhet);
         }
 
         return hosPersonal;
+    }
+
+    private Vardenhet convertVardenhetToEdit(se.inera.certificate.modules.ts_bas.rest.dto.Vardenhet vardenhetDto) {
+
+        Vardenhet vardenhet = new Vardenhet();
+        vardenhet.setEnhetsid(vardenhetDto.getHsaId());
+        vardenhet.setEnhetsnamn(vardenhetDto.getNamn());
+        vardenhet.setVardgivare(convertVardgivareToEdit(vardenhetDto.getVardgivare()));
+        
+        // TODO Populate with the address of the Vardenhet
+
+        return vardenhet;
+    }
+
+    private Vardgivare convertVardgivareToEdit(se.inera.certificate.modules.ts_bas.rest.dto.Vardgivare vardgivareDto) {
+
+        Vardgivare vardgivare = new Vardgivare();
+        vardgivare.setVardgivarid(vardgivareDto.getHsaId());
+        vardgivare.setVardgivarnamn(vardgivareDto.getNamn());
+
+        return vardgivare;
     }
 
     private Collection<String> convertKodToString(List<Kod> specialiteter, Class<? extends CodeSystem> type) {
