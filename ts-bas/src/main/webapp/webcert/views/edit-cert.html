@@ -68,7 +68,7 @@
 
             <div wc-field field-label="ts.label.identitet">
                 <div class="control-group clearfix">
-                    <label class="radio checkbox-columns span4" ng-repeat="(k,v) in form.identity"><input name="identity{{$index}}" type="radio" value="{{v}}" ng-model="cert.vardkontakt.idkontroll"> {{k}}</label>
+                    <label class="radio checkbox-columns span4" ng-repeat="(k,v) in form.identity"><input name="identity{{$index}}" type="radio" value="{{v}}" ng-model="cert.vardkontakt.idkontroll"> <span message key="ts.label.korkort.{{k}}"></span></label>
                 </div>
             </div>
 

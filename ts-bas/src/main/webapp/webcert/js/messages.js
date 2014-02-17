@@ -40,7 +40,18 @@ var tsBasMessages = {
       "ts.label.ovrigkommentar" : "16. Övrig kommentar",
       "ts.label.bedomning" : "Bedömning",
       "ts.label.unit" : "Vårdenhet",
-      
+
+      "ts.label.korkort.c1" : "C1",
+      "ts.label.korkort.c1e" : "C1E",
+      "ts.label.korkort.c" : "C",
+      "ts.label.korkort.ce" : "CE",
+      "ts.label.korkort.d1" : "D1",
+      "ts.label.korkort.d1e" : "D1E",
+      "ts.label.korkort.d" : "D",
+      "ts.label.korkort.de" : "DE",
+      "ts.label.korkort.taxi" : "Taxi",
+      "ts.label.korkort.annat" : "Annat",
+
       "ts.validation.utlatande.missing" : "Utlatande saknas",
  
       "ts.validation.sjukhusvard.missing" : "Sjukhusvård saknas",
