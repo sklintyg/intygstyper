@@ -114,27 +114,29 @@ public class ExternalToInternalConverterInstance {
         Patient intPatient = convertToIntPatient(extUtlatande.getPatient());
         intUtlatande.setPatient(intPatient);
 
-        intUtlatande.setVardkontakt(convertToIntVardkontakt(extUtlatande.getVardkontakter().get(0)));
+        setVardkontakt(getSingleElement(extUtlatande.getVardkontakter()), intUtlatande);
 
-        intUtlatande.setIntygAvser(convertToIntIntygAvser(extUtlatande.getIntygAvser()));
+        setIntygAvser(extUtlatande.getIntygAvser(), intUtlatande);
+
+        setBedomning(extUtlatande.getRekommendationer(), intUtlatande);
 
         // Create internal model-specific objects grouping similar attributes together
-        intUtlatande.setSyn(createSyn(extUtlatande));
-        intUtlatande.setHorselBalans(createHorselBalans(extUtlatande));
-        intUtlatande.setFunktionsnedsattning(createFunktionsnedsattning(extUtlatande));
-        intUtlatande.setHjartKarl(createHjartKarl(extUtlatande));
-        intUtlatande.setDiabetes(createDiabetes(extUtlatande));
-        intUtlatande.setNeurologi(createNeurologi(extUtlatande));
-        intUtlatande.setMedvetandestorning(createMedvetandestorning(extUtlatande));
-        intUtlatande.setNjurar(createNjurar(extUtlatande));
-        intUtlatande.setKognitivt(createKognitivt(extUtlatande));
-        intUtlatande.setSomnVakenhet(createSomnVakenhet(extUtlatande));
-        intUtlatande.setNarkotikaLakemedel(createNarkotikaLakemedel(extUtlatande));
-        intUtlatande.setPsykiskt(createPsykiskt(extUtlatande));
-        intUtlatande.setUtvecklingsstorning(createUtvecklingsstorning(extUtlatande));
-        intUtlatande.setSjukhusvard(createSjukhusvard(extUtlatande));
-        intUtlatande.setMedicinering(createMedicinering(extUtlatande));
-        intUtlatande.setBedomning(createBedomning(extUtlatande));
+        setSyn(extUtlatande, intUtlatande);
+
+        setHorselBalans(extUtlatande, intUtlatande);
+        setFunktionsnedsattning(extUtlatande, intUtlatande);
+        setHjartKarl(extUtlatande, intUtlatande);
+        setDiabetes(extUtlatande, intUtlatande);
+        setNeurologi(extUtlatande, intUtlatande);
+        setMedvetandestorning(extUtlatande, intUtlatande);
+        setNjurar(extUtlatande, intUtlatande);
+        setKognitivt(extUtlatande, intUtlatande);
+        setSomnVakenhet(extUtlatande, intUtlatande);
+        setNarkotikaLakemedel(extUtlatande, intUtlatande);
+        setPsykiskt(extUtlatande, intUtlatande);
+        setUtvecklingsstorning(extUtlatande, intUtlatande);
+        setSjukhusvard(extUtlatande, intUtlatande);
+        setMedicinering(extUtlatande, intUtlatande);
 
         return intUtlatande;
     }
@@ -144,17 +146,16 @@ public class ExternalToInternalConverterInstance {
      * 
      * @param source
      *            a List of {@link Kod}
-     * @return {@link IntygAvser}
+     * @param intUtlatande
+     *            {@link Utlatande}
      */
-    private IntygAvser convertToIntIntygAvser(List<Kod> source) {
-        IntygAvser intygAvser = new IntygAvser();
+    private void setIntygAvser(List<Kod> intygAvser, Utlatande intUtlatande) {
+        IntygAvser internalIntygAvser = intUtlatande.getIntygAvser();
 
-        for (Kod kod : source) {
+        for (Kod kod : intygAvser) {
             IntygAvserKod vardeKod = CodeConverter.fromCode(kod, IntygAvserKod.class);
-            intygAvser.getKorkortstyp().add(IntygAvserKategori.valueOf(vardeKod.name()));
+            internalIntygAvser.getKorkortstyp().add(IntygAvserKategori.valueOf(vardeKod.name()));
         }
-
-        return intygAvser;
     }
 
     /**
@@ -162,28 +163,22 @@ public class ExternalToInternalConverterInstance {
      * 
      * @param source
      *            {@link se.inera.certificate.modules.ts_bas.model.external.Vardkontakt}
-     * @return {@link Vardkontakt}
+     * @param intUtlatande
+     *            {@link Utlatande}
      */
-    private Vardkontakt convertToIntVardkontakt(se.inera.certificate.modules.ts_bas.model.external.Vardkontakt source) {
-        Vardkontakt vardkontakt = new Vardkontakt();
+    private void setVardkontakt(se.inera.certificate.modules.ts_bas.model.external.Vardkontakt source,
+            Utlatande intUtlatande) {
+        Vardkontakt vardkontakt = intUtlatande.getVardkontakt();
 
         vardkontakt.setIdkontroll(CodeConverter.getInternalNameFromKod(source.getIdkontroll(), IdKontrollKod.class));
         vardkontakt.setTyp(source.getVardkontakttyp().getCode());
 
-        return vardkontakt;
     }
 
-    /**
-     * Create a Bedomning object from a List of Rekommendation[er]
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @return {@link Bedomning}
-     */
-    private Bedomning createBedomning(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
-        Bedomning bedomning = new Bedomning();
+    private void setBedomning(List<Rekommendation> rekommendationer, Utlatande intUtlatande) {
+        Bedomning bedomning = intUtlatande.getBedomning();
 
-        for (Rekommendation rek : extUtlatande.getRekommendationer()) {
+        for (Rekommendation rek : rekommendationer) {
             if (CodeConverter.matches(RekommendationsKod.PATIENT_UPPFYLLER_KRAV_FOR, rek.getRekommendationskod())) {
                 if (rek.getVarde().contains(CodeConverter.toKod(RekommendationVardeKod.INTE_TA_STALLNING))) {
                     bedomning.setKanInteTaStallning(true);
@@ -200,7 +195,6 @@ public class ExternalToInternalConverterInstance {
 
             }
         }
-        return bedomning;
     }
 
     /**
@@ -208,10 +202,12 @@ public class ExternalToInternalConverterInstance {
      * 
      * @param extUtlatande
      *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @return {@link Medicinering}
+     * @param intUtlatande
+     *            {@link Utlatande}
      */
-    private Medicinering createMedicinering(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
-        Medicinering medicinering = new Medicinering();
+    private void setMedicinering(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
+            Utlatande intUtlatande) {
+        Medicinering medicinering = intUtlatande.getMedicinering();
 
         Observation stadigvarandeMedicinering = getObservationWithKod(CodeConverter
                 .toKod(ObservationsKod.STADIGVARANDE_MEDICINERING));
@@ -222,7 +218,6 @@ public class ExternalToInternalConverterInstance {
                 medicinering.setBeskrivning(stadigvarandeMedicinering.getBeskrivning());
             }
         }
-        return medicinering;
     }
 
     /**
@@ -230,10 +225,12 @@ public class ExternalToInternalConverterInstance {
      * 
      * @param extUtlatande
      *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @return {@link Sjukhusvard}
+     * @param intUtlatande
+     *            {@link Utlatande}
      */
-    private Sjukhusvard createSjukhusvard(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
-        Sjukhusvard sjukhusvard = new Sjukhusvard();
+    private void setSjukhusvard(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
+            Utlatande intUtlatande) {
+        Sjukhusvard sjukhusvard = intUtlatande.getSjukhusvard();
 
         Aktivitet harVistatsSjukhus = getAktivitetWithKod(CodeConverter.toKod(AktivitetKod.VARD_PA_SJUKHUS));
 
@@ -246,8 +243,6 @@ public class ExternalToInternalConverterInstance {
                 sjukhusvard.setAnledning(harVistatsSjukhus.getBeskrivning());
             }
         }
-
-        return sjukhusvard;
     }
 
     /**
@@ -255,11 +250,12 @@ public class ExternalToInternalConverterInstance {
      * 
      * @param extUtlatande
      *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @return {@link Utvecklingsstorning}
+     * @param intUtlatande
+     *            {@link Utlatande}
      */
-    private Utvecklingsstorning createUtvecklingsstorning(
-            se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
-        Utvecklingsstorning utvecklingsstorning = new Utvecklingsstorning();
+    private void setUtvecklingsstorning(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
+            Utlatande intUtlatande) {
+        Utvecklingsstorning utvecklingsstorning = intUtlatande.getUtvecklingsstorning();
 
         Observation psykiskUtvecklingsstorning = getObservationWithKod(CodeConverter
                 .toKod(ObservationsKod.PSYKISK_UTVECKLINGSSTORNING));
@@ -272,8 +268,6 @@ public class ExternalToInternalConverterInstance {
         if (adhdDampMm != null) {
             utvecklingsstorning.setHarSyndrom(adhdDampMm.getForekomst());
         }
-
-        return utvecklingsstorning;
     }
 
     /**
@@ -281,18 +275,18 @@ public class ExternalToInternalConverterInstance {
      * 
      * @param extUtlatande
      *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @return {@link Psykiskt}
+     * @param intUtlatande
+     *            {@link Utlatande}
      */
-    private Psykiskt createPsykiskt(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
-        Psykiskt psykiskt = new Psykiskt();
+    private void setPsykiskt(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
+            Utlatande intUtlatande) {
+        Psykiskt psykiskt = intUtlatande.getPsykiskt();
 
         Observation psykiskSjukdom = getObservationWithKod(CodeConverter.toKod(ObservationsKod.PSYKISK_SJUKDOM));
 
         if (psykiskSjukdom != null) {
             psykiskt.setPsykiskSjukdom(psykiskSjukdom.getForekomst());
         }
-
-        return psykiskt;
     }
 
     /**
@@ -300,11 +294,12 @@ public class ExternalToInternalConverterInstance {
      * 
      * @param extUtlatande
      *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @return {@link NarkotikaLakemedel}
+     * @param intUtlatande
+     *            {@link Utlatande}
      */
-    private NarkotikaLakemedel createNarkotikaLakemedel(
-            se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
-        NarkotikaLakemedel narkotikaLakemedel = new NarkotikaLakemedel();
+    private void setNarkotikaLakemedel(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
+            Utlatande intUtlatande) {
+        NarkotikaLakemedel narkotikaLakemedel = intUtlatande.getNarkotikaLakemedel();
 
         Observation teckenPaMissbruk = getObservationWithKod(CodeConverter.toKod(ObservationsKod.TECKEN_PA_MISSBRUK));
         Aktivitet vardinsatsMissbruk = getAktivitetWithKod(CodeConverter
@@ -329,7 +324,6 @@ public class ExternalToInternalConverterInstance {
                 narkotikaLakemedel.setLakemedelOchDos(lakemedelsanvandning.getBeskrivning());
             }
         }
-        return narkotikaLakemedel;
     }
 
     /**
@@ -337,10 +331,12 @@ public class ExternalToInternalConverterInstance {
      * 
      * @param extUtlatande
      *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @return {@link SomnVakenhet}
+     * @param intUtlatande
+     *            {@link Utlatande}
      */
-    private SomnVakenhet createSomnVakenhet(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
-        SomnVakenhet somnVakenhet = new SomnVakenhet();
+    private void setSomnVakenhet(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
+            Utlatande intUtlatande) {
+        SomnVakenhet somnVakenhet = intUtlatande.getSomnVakenhet();
 
         Observation somnVakenhetsstorning = getObservationWithKod(CodeConverter
                 .toKod(ObservationsKod.SOMN_VAKENHETSSTORNING));
@@ -348,8 +344,6 @@ public class ExternalToInternalConverterInstance {
         if (somnVakenhetsstorning != null) {
             somnVakenhet.setTeckenSomnstorningar(somnVakenhetsstorning.getForekomst());
         }
-
-        return somnVakenhet;
     }
 
     /**
@@ -357,10 +351,12 @@ public class ExternalToInternalConverterInstance {
      * 
      * @param extUtlatande
      *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @return {@link Kognitivt}
+     * @param intUtlatande
+     *            {@link Utlatande}
      */
-    private Kognitivt createKognitivt(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
-        Kognitivt kognitivt = new Kognitivt();
+    private void setKognitivt(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
+            Utlatande intUtlatande) {
+        Kognitivt kognitivt = intUtlatande.getKognitivt();
 
         Observation sviktandeKognitivFunktion = getObservationWithKod(CodeConverter
                 .toKod(ObservationsKod.SVIKTANDE_KOGNITIV_FUNKTION));
@@ -368,8 +364,6 @@ public class ExternalToInternalConverterInstance {
         if (sviktandeKognitivFunktion != null) {
             kognitivt.setSviktandeKognitivFunktion(sviktandeKognitivFunktion.getForekomst());
         }
-
-        return kognitivt;
     }
 
     /**
@@ -377,10 +371,13 @@ public class ExternalToInternalConverterInstance {
      * 
      * @param extUtlatande
      *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @return {@link Njurar}
+     * 
+     * @param intUtlatande
+     *            {@link Utlatande}
      */
-    private Njurar createNjurar(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
-        Njurar njurar = new Njurar();
+    private void setNjurar(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
+            Utlatande intUtlatande) {
+        Njurar njurar = intUtlatande.getNjurar();
 
         Observation nedsattNjurfunktion = getObservationWithKod(CodeConverter
                 .toKod(ObservationsKod.NEDSATT_NJURFUNKTION_TRAFIKSAKERHETSRISK));
@@ -388,8 +385,6 @@ public class ExternalToInternalConverterInstance {
         if (nedsattNjurfunktion != null) {
             njurar.setNedsattNjurfunktion(nedsattNjurfunktion.getForekomst());
         }
-
-        return njurar;
     }
 
     /**
@@ -397,11 +392,12 @@ public class ExternalToInternalConverterInstance {
      * 
      * @param extUtlatande
      *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @return {@link Medvetandestorning}
+     * @param intUtlatande
+     *            {@link Utlatande}
      */
-    private Medvetandestorning createMedvetandestorning(
-            se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
-        Medvetandestorning medvetandestorning = new Medvetandestorning();
+    private void setMedvetandestorning(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
+            Utlatande intUtlatande) {
+        Medvetandestorning medvetandestorning = intUtlatande.getMedvetandestorning();
 
         Observation harMedvetandestorning = getObservationWithKod(CodeConverter.toKod(ObservationsKod.EPILEPSI));
 
@@ -412,7 +408,6 @@ public class ExternalToInternalConverterInstance {
             }
         }
 
-        return medvetandestorning;
     }
 
     /**
@@ -420,10 +415,12 @@ public class ExternalToInternalConverterInstance {
      * 
      * @param extUtlatande
      *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @return {@link Neurologi} object
+     * @param intUtlatande
+     *            {@link Utlatande}
      */
-    private Neurologi createNeurologi(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
-        Neurologi neurologi = new Neurologi();
+    private void setNeurologi(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
+            Utlatande intUtlatande) {
+        Neurologi neurologi = intUtlatande.getNeurologi();
 
         Observation neuroSjukdom = getObservationWithKod(CodeConverter
                 .toKod(ObservationsKod.TECKEN_PA_NEUROLOGISK_SJUKDOM));
@@ -431,8 +428,6 @@ public class ExternalToInternalConverterInstance {
         if (neuroSjukdom != null) {
             neurologi.setNeurologiskSjukdom(neuroSjukdom.getForekomst());
         }
-
-        return neurologi;
     }
 
     /**
@@ -440,10 +435,12 @@ public class ExternalToInternalConverterInstance {
      * 
      * @param extUtlatande
      *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @return {@link Diabetes} object
+     * @param intUtlatande
+     *            {@link Utlatande}
      */
-    private Diabetes createDiabetes(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
-        Diabetes diabetes = new Diabetes();
+    private void setDiabetes(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
+            Utlatande intUtlatande) {
+        Diabetes diabetes = intUtlatande.getDiabetes();
 
         Observation harDiabetes = getObservationWithKod(CodeConverter.toKod(ObservationsKod.HAR_DIABETES));
         Observation diabetesTyp1 = getObservationWithKod(CodeConverter.toKod(ObservationsKod.DIABETES_TYP_1));
@@ -474,8 +471,6 @@ public class ExternalToInternalConverterInstance {
 
             }
         }
-
-        return diabetes;
     }
 
     /**
@@ -483,10 +478,12 @@ public class ExternalToInternalConverterInstance {
      * 
      * @param extUtlatande
      *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @return {@link HjartKarl}
+     * @param intUtlatande
+     *            {@link Utlatande}
      */
-    private HjartKarl createHjartKarl(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
-        HjartKarl hjartKarl = new HjartKarl();
+    private void setHjartKarl(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
+            Utlatande intUtlatande) {
+        HjartKarl hjartKarl = intUtlatande.getHjartKarl();
 
         Observation hjartKarlSjukdom = getObservationWithKod(CodeConverter
                 .toKod(ObservationsKod.HJART_KARLSJUKDOM_TRAFIKSAKERHETSRISK));
@@ -508,8 +505,6 @@ public class ExternalToInternalConverterInstance {
                 hjartKarl.setBeskrivningRiskfaktorer(riskStroke.getBeskrivning());
             }
         }
-
-        return hjartKarl;
     }
 
     /**
@@ -517,12 +512,13 @@ public class ExternalToInternalConverterInstance {
      * 
      * @param extUtlatande
      *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @return {@link Funktionsnedsattning}
+     * @param intUtlatande
+     *            {@link Utlatande}
      */
-    private Funktionsnedsattning createFunktionsnedsattning(
-            se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
+    private void setFunktionsnedsattning(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
+            Utlatande intUtlatande) {
 
-        Funktionsnedsattning funktionsnedsattning = new Funktionsnedsattning();
+        Funktionsnedsattning funktionsnedsattning = intUtlatande.getFunktionsnedsattning();
 
         Observation framforaFordon = getObservationWithKod(CodeConverter
                 .toKod(ObservationsKod.FORSAMRAD_RORLIGHET_FRAMFORA_FORDON));
@@ -539,8 +535,6 @@ public class ExternalToInternalConverterInstance {
         if (hjalpaPassagerare != null) {
             funktionsnedsattning.setOtillrackligRorelseformaga(hjalpaPassagerare.getForekomst());
         }
-
-        return funktionsnedsattning;
     }
 
     /**
@@ -548,10 +542,12 @@ public class ExternalToInternalConverterInstance {
      * 
      * @param extUtlatande
      *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @return {@link HorselBalans}
+     * @param intUtlatande
+     *            {@link Utlatande}
      */
-    private HorselBalans createHorselBalans(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
-        HorselBalans horselBalans = new HorselBalans();
+    private void setHorselBalans(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
+            Utlatande intUtlatande) {
+        HorselBalans horselBalans = intUtlatande.getHorselBalans();
 
         Observation balansrubbning = getObservationWithKod(CodeConverter
                 .toKod(ObservationsKod.ANFALL_BALANSRUBBNING_YRSEL));
@@ -563,8 +559,6 @@ public class ExternalToInternalConverterInstance {
         if (samtal4M != null) {
             horselBalans.setSvartUppfattaSamtal4Meter(samtal4M.getForekomst());
         }
-
-        return horselBalans;
     }
 
     /**
@@ -573,10 +567,14 @@ public class ExternalToInternalConverterInstance {
      * 
      * @param extUtlatande
      *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * 
+     * @param intUtlatande
+     *            {@link Utlatande}
      */
-    private Syn createSyn(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) {
+    private void setSyn(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
+            Utlatande intUtlatande) {
 
-        Syn syn = new Syn();
+        Syn syn = intUtlatande.getSyn();
 
         // Find the Syn-related Aktivitet
         Aktivitet plus8Korretionsgrader = getAktivitetWithKod(CodeConverter
@@ -623,8 +621,6 @@ public class ExternalToInternalConverterInstance {
         }
 
         populateWithSynskarpa(syn, synskarpa);
-
-        return syn;
     }
 
     /**
@@ -825,6 +821,20 @@ public class ExternalToInternalConverterInstance {
         }
 
         return null;
+    }
+
+    /**
+     * Get a single object from a collection, return null if collection contains more than one object.
+     * 
+     * @param collection
+     *            The collection
+     * @return an object
+     */
+    private <T> T getSingleElement(Collection<T> collection) {
+        if (collection.size() != 1) {
+            return null;
+        }
+        return collection.iterator().next();
     }
 
 }
