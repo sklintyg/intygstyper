@@ -80,8 +80,6 @@ public class InternalValidatorTest {
         ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
 
         assertEquals("diabetes.diabetesTyp", getSingleElement(validationResponse.getValidationErrors()).getField());
-        assertEquals("Minst en behandling måste anges", getSingleElement(validationResponse.getValidationErrors())
-                .getMessage());
     }
 
     @Test
@@ -90,7 +88,6 @@ public class InternalValidatorTest {
         ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
 
         assertEquals("syn.vansterOga.utanKorrektion", getSingleElement(validationResponse.getValidationErrors()).getField());
-        assertEquals("ErrorCode", getSingleElement(validationResponse.getValidationErrors()).getMessage());
     }
 
     @Test
@@ -101,7 +98,6 @@ public class InternalValidatorTest {
 
         assertEquals("funktionsnedsattning.beskrivning", getSingleElement(validationResponse.getValidationErrors())
                 .getField());
-        assertEquals("Error", getSingleElement(validationResponse.getValidationErrors()).getMessage());
     }
     
     /**
