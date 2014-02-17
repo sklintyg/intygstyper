@@ -3,11 +3,32 @@
 /* Controllers */
 var controllers = angular.module('wc.ts-bas.controllers', []);
 
-controllers.controller('EditCertCtrl', [ '$scope', 'certificateService',
-    function ($scope, certificateService) {
+controllers.controller('EditCertCtrl', [ '$scope', '$location', '$anchorScroll', 'certificateService',
+    function ($scope, $location, $anchorScroll, certificateService) {
         $scope.cert = {};
-        $scope.doneLoading = true;
-        $scope.displayLoader = false;
+
+        $scope.messages = [];
+        $scope.isComplete = false;
+
+        // init state
+        $scope.widgetState = {
+            doneLoading : false,
+            hasError : false,
+            showComplete : false,
+            collapsedHeader : false
+        };
+
+        $scope.toggleShowComplete = function () {
+            $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
+            if ($scope.widgetState.showComplete) {
+
+                var old = $location.hash();
+                $location.hash('top');
+                $anchorScroll();
+                //reset to old to keep any additional routing logic from kicking in
+                $location.hash(old);
+            }
+        };
 
         $scope.form = {
             'identity' : {
@@ -26,27 +47,27 @@ controllers.controller('EditCertCtrl', [ '$scope', 'certificateService',
 
         // Input limit handling
         $scope.inputLimits = {
-          'funktionsnedsattning': 180,
-          'beskrivningRiskfaktorer': 180,
-          'medvetandestorning': 180,
-          'lakemedelOchDos': 180,
-          'medicinering': 180,
-          'kommentar': 500,
-          'lakareSpecialKompetens': 270,
-          'sjukhusvardtidpunkt': 49,
-          'sjukhusvardvardinrattning': 45,
-          'sjukhusvardanledning': 63
+            'funktionsnedsattning' : 180,
+            'beskrivningRiskfaktorer' : 180,
+            'medvetandestorning' : 180,
+            'lakemedelOchDos' : 180,
+            'medicinering' : 180,
+            'kommentar' : 500,
+            'lakareSpecialKompetens' : 270,
+            'sjukhusvardtidpunkt' : 49,
+            'sjukhusvardvardinrattning' : 45,
+            'sjukhusvardanledning' : 63
         };
 
-        $scope.$watch('cert.intygAvser.korkortstyp', function(newValue, oldValue){
-          if(!$scope.cert || !$scope.cert.intygAvser || !$scope.cert.intygAvser.korkortstyp) return;
-          $scope.form.korkortd = false;
-          for(var i = 4; i < $scope.cert.intygAvser.korkortstyp.length; i++){
-            if(newValue[i].selected){
-              $scope.form.korkortd = true;
-              break;
+        $scope.$watch('cert.intygAvser.korkortstyp', function (newValue, oldValue) {
+            if (!$scope.cert || !$scope.cert.intygAvser || !$scope.cert.intygAvser.korkortstyp) return;
+            $scope.form.korkortd = false;
+            for (var i = 4; i < $scope.cert.intygAvser.korkortstyp.length; i++) {
+                if (newValue[i].selected) {
+                    $scope.form.korkortd = true;
+                    break;
+                }
             }
-          }
         });
 
         var dummycert = {
@@ -221,10 +242,9 @@ controllers.controller('EditCertCtrl', [ '$scope', 'certificateService',
         certificateService.getDraft($scope.MODULE_CONFIG.CERT_ID_PARAMETER,
             function (data) {
                 $scope.cert = data.content;
-                // TODO: set the cert from the data.
             }, function (errorData) {
                 // TODO: Show error message.
-        });
+            });
 
         /**
          * Action to save the certificate draft to the server.
@@ -232,7 +252,33 @@ controllers.controller('EditCertCtrl', [ '$scope', 'certificateService',
         $scope.save = function () {
             certificateService.saveDraft($scope.MODULE_CONFIG.CERT_ID_PARAMETER, $scope.cert,
                 function (data) {
-                    // TODO: Convert validation messages.
+
+                    $scope.certForm.$setPristine();
+
+                    $scope.validationMessagesGrouped = {};
+                    $scope.validationMessages = [];
+
+                    if (data.status === 'COMPLETE') {
+                        $scope.isComplete = true;
+                    } else {
+                        $scope.isComplete = false;
+                        $scope.validationMessages = data.messages;
+
+                        angular.forEach(data.messages, function (message) {
+                            var field = message.field;
+                            var parts = field.split(".");
+                            var section;
+                            if (parts.length > 0) {
+                                section = parts[0].toLowerCase();
+
+                                if ($scope.validationMessagesGrouped[section]) {
+                                    $scope.validationMessagesGrouped[section].push(message);
+                                } else {
+                                    $scope.validationMessagesGrouped[section] = [message];
+                                }
+                            }
+                        });
+                    }
                 },
                 function (errorData) {
                     // TODO: Show error message.
