@@ -332,8 +332,8 @@
                         <th class="maxwidth"></th>
                     </tr>
                     <tr>
-                        <td><input id="neurologiay" name="diabetesay" type="radio" ng-value="true" ng-model="cert.neurologi.neurologiskSjukdom"></td>
-                        <td><input id="neurologian" name="diabetesan" type="radio" ng-value="false" ng-model="cert.neurologi.neurologiskSjukdom"></td>
+                        <td><input id="neurologiay" name="neurologiay" type="radio" ng-value="true" ng-model="cert.neurologi.neurologiskSjukdom"></td>
+                        <td><input id="neurologian" name="neurologian" type="radio" ng-value="false" ng-model="cert.neurologi.neurologiskSjukdom"></td>
                         <td>
                             <p>Finns tecken på neurologisk sjukdom?</p>
                         </td>
@@ -697,6 +697,6 @@
         {{spec}}
     </div>
 
-    <button class="btn btn-success">Signera intyget och skicka direkt till Transportstyrelsen</button>
+    <button class="btn btn-success" ng-disabled="!isComplete">Signera intyget och skicka direkt till Transportstyrelsen</button>
   </form>
 </div>
