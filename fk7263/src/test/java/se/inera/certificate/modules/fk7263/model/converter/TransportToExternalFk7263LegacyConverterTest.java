@@ -71,21 +71,6 @@ public class TransportToExternalFk7263LegacyConverterTest {
 	}
 
     @Test
-    public void testInvalidPnrGetsCorrected() throws JAXBException, IOException, JSONException {
-        
-        JAXBElement<Lakarutlatande> utlatandeElement = unmarshaller.unmarshal(new StreamSource(new ClassPathResource(
-                "TransportToExternalFk7263LegacyConverterTest/legacy-minimalt-fk7263-ofullstandigt-pnr-transport.xml").getInputStream()), Lakarutlatande.class);
-
-        Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter.convert(utlatandeElement.getValue());
-        
-        // serialize utlatande to JSON and compare with expected JSON
-        JsonNode tree = objectMapper.valueToTree(externalModel);
-        JsonNode expectedTree = objectMapper.readTree(new ClassPathResource("TransportToExternalFk7263LegacyConverterTest/legacy-minimalt-fk7263-external.json").getInputStream());
-
-        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
-    }
-
-    @Test
 	public void testConversionWithMinimalCertificate() throws JAXBException,
 			IOException, JSONException {
 
