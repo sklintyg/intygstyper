@@ -1,15 +1,16 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
-
 import static se.inera.certificate.model.util.Iterables.addAll;
 import static se.inera.certificate.model.util.Iterables.addExisting;
 import static se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder.DIAGNOS;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.BedomtTillstandType;
@@ -415,8 +416,6 @@ public final class TransportToExternalFk7263LegacyConverter {
         return hosPersonal;
     }
 
-    private static final String PERSON_NUMBER_WITHOUT_DASH_REGEX = "[0-9]{12}";
-
     /**
      * Creates and converts basic patient info
      * 
@@ -432,16 +431,6 @@ public final class TransportToExternalFk7263LegacyConverter {
         Fk7263Patient patient = new Fk7263Patient();
         if (source.getPersonId() != null) {
             patient.setId(IsoTypeConverter.toId(source.getPersonId()));
-            // If the personNumber is missing the separating dash, simply insert it.
-            // This is a temporary fix, since the schema currently allows any format
-            String personNumber = patient.getId().getExtension();
-            if (personNumber.length() == 12 && Pattern.matches(PERSON_NUMBER_WITHOUT_DASH_REGEX, personNumber)) {
-                patient.getId().setExtension(personNumber.substring(0, 8) + "-" + personNumber.substring(8));
-                LOGGER.warn(LogMarkers.VALIDATION,
-                        "Validation failed for intyg " + lakarutlatande.getLakarutlatandeId() + " issued by "
-                                + lakarutlatande.getSkapadAvHosPersonal().getEnhet().getEnhetsId().getExtension()
-                                + ": Person-id is lacking a separating dash - corrected.");
-            }
         }
         // we only have fullstandigt namn available in the legacy jaxb
         patient.setEfternamn(source.getFullstandigtNamn());
