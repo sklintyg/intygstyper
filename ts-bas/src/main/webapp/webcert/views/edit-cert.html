@@ -37,21 +37,26 @@
         <div class="control-group buttonbar">
             <button class="btn btn-info" ng-click="save()">Spara</button>
             <button class="btn btn-secondary" ng-click="discard()">Ta bort utkast</button>
-            <button class="btn btn-secondary" ng-if="!widgetState.showComplete" ng-click="toggleShowComplete()">Visa vad som behöver kompletteras</button>
-            <button class="btn btn-secondary" ng-if="widgetState.showComplete" ng-click="toggleShowComplete()">Dölj vad som behöver kompletteras</button>
+            <button class="btn btn-secondary" ng-if="!widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">Visa vad som behöver kompletteras</button>
+            <button class="btn btn-secondary" ng-if="widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">Dölj vad som behöver kompletteras</button>
         </div>
-        <div class="">
-            <strong>Status:</strong> Intyget är sparat.
-        </div>
+        <div ng-show="certForm.$pristine && isComplete"><strong>Status:</strong> Intyget är sparat.</div>
+        <div ng-show="certForm.$pristine && !isComplete"><strong>Status:</strong> Intyget är sparat, men inte komplett</div>
+        <div ng-show="certForm.$dirty"><strong>Status:</strong> Intyget är <strong>inte</strong> sparat.</div>
     </div>
 </div><!-- top end -->
 
 <!-- TS-BAS -->
 <div class="edit-form" ng-class="{'collapsed' : widgetState.collapsedHeader}">
 
-    <div class="alert alert-error" ng-show="widgetState.showComplete" style="margin-right: 20px">
+  <form name="certForm" novalidate autocomplete="off">
+
+    <div class="alert alert-error" ng-show="widgetState.showComplete && !isComplete" style="margin-right: 20px">
         <h3>Följande fält behöver kompletteras:</h3>
-        Fält 2 - Kod saknas
+        <ul>
+          <li ng-repeat="message in validationMessages">
+            <span message key="validation.{{message.field}}.{{message.message}}"></span></li>
+        </ul>
     </div>
 
     <div id="certificate" class="row-fluid certificate">
@@ -77,9 +82,15 @@
             </div>
 
             <!-- 1. Syn -->
-            <div wc-field field-label="ts.label.synfunktioner" field-has-errors="testerror">
+            <div wc-field field-label="ts.label.synfunktioner" field-has-errors="testerror" ng-form name="synForm">
+
                 <table class="table table-form">
-                    <tr><td colspan="3"><div class="alert alert-error"><img class="error-icon" src="/img/error.png">Välj något på 1a, 1b och 1c</div></td></tr>
+                    <tr ng-if="validationMessagesGrouped.syn"><td colspan="3"><div class="alert alert-error">
+                      <!--<img class="error-icon" src="/img/error.png">-->
+                      <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.syn"><span message key="validation.{{message.field}}.{{message.message}}"></span></li></li>
+                      </ul>
+                    </div></td></tr>
                     <tr>
                         <th><span message key="common.yes"></span></th>
                         <th><span message key="common.no"></span></th>
@@ -172,6 +183,7 @@
                         <td><input id="horselbalansay" name="horselbalansay" type="radio" ng-value="true" ng-model="cert.horselBalans.balansrubbningar"></td>
                         <td><input id="horselbalansan" name="horselbalansan" type="radio" ng-value="false" ng-model="cert.horselBalans.balansrubbningar"></td>
                         <td>a) Har patienten överraskande anfall av balansrubbningar eller yrsel?</td>
+                        <td>a) Har patienten överraskande anfall av balansrubbningar eller yrsel?</td>
                     </tr>
                     <tr ng-show="form.korkortd">
                         <td><input id="horselbalansby" name="horselbalansby" type="radio" ng-value="true" ng-model="cert.horselBalans.svartUppfattaSamtal4Meter"></td>
@@ -184,6 +196,12 @@
             <!-- 3 -->
             <div wc-field field-label="ts.label.funktionsnedsattning">
                 <table class="table table-form">
+                    <tr ng-if="validationMessagesGrouped.funktionsnedsattning"><td colspan="3"><div class="alert alert-error">
+                      <!--<img class="error-icon" src="/img/error.png">-->
+                      <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.funktionsnedsattning"><span message key="validation.{{message.field}}.{{message.message}}"></span></li>
+                      </ul>
+                    </div></td></tr>
                     <tr>
                         <th><span message key="common.yes"></span></th>
                         <th><span message key="common.no"></span></th>
@@ -579,5 +597,5 @@
     </div>
 
     <button class="btn btn-success">Signera intyget och skicka direkt till Transportstyrelsen</button>
-
+  </form>
 </div>

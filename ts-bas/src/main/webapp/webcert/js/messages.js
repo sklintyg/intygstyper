@@ -18,30 +18,44 @@
  */
 'use strict';
 var tsBasMessages = {
-    "sv": {
-      "ts.label.certtitle" : "Läkarintyg Transportstyrelsen Bas",
-      "ts.label.intygavser" : "Intyget avser",
-      "ts.label.identitet" : "Identiteten är styrkt genom",
-      "ts.label.synfunktioner" : "1. Synfunktioner",
-      "ts.label.horselbalans" : "2. Hörsel och balanssinne",
-      "ts.label.funktionsnedsattning" : "3. Rörelseorganens funktioner",
-      "ts.label.hjartkarl" : "4. Hjärt- och kärlsjukdomar",
-      "ts.label.diabetes" : "5. Diabetes",
-      "ts.label.neurologi" : "6. Neurologiska sjukdomar",
-      "ts.label.medvetandestorning" : "7. Epilepsi, epileptiskt anfall och annan medvetandestörning",
-      "ts.label.njurar" : "8. Njursjukdomar",
-      "ts.label.kognitivt" : "9. Demens och andra kognitiva störningar",
-      "ts.label.somnvakenhet" : "10. Sömn- och vakenhetsstörningar",
-      "ts.label.narkotikalakemedel" : "11. Alkohol, narkotika och läkemedel",
-      "ts.label.psykiskt" : "12. Psykiska sjukdomar och störningar",
-      "ts.label.utvecklingsstorning" : "13. ADHD, autismspektrumtillstånd och likartade tillstånd samt psykisk utvecklingsstörning",
-      "ts.label.sjukhusvard" : "14. Sjukhusvård",
-      "ts.label.medicinering" : "15. Övrig medicinering",
-      "ts.label.ovrigkommentar" : "16. Övrig kommentar",
-      "ts.label.bedomning" : "Bedömning",
-      "ts.label.unit" : "Vårdenhet"
+    "sv" : {
+        "ts.label.certtitle" : "Läkarintyg Transportstyrelsen Bas",
+        "ts.label.intygavser" : "Intyget avser",
+        "ts.label.identitet" : "Identiteten är styrkt genom",
+        "ts.label.synfunktioner" : "1. Synfunktioner",
+        "ts.label.horselbalans" : "2. Hörsel och balanssinne",
+        "ts.label.funktionsnedsattning" : "3. Rörelseorganens funktioner",
+        "ts.label.hjartkarl" : "4. Hjärt- och kärlsjukdomar",
+        "ts.label.diabetes" : "5. Diabetes",
+        "ts.label.neurologi" : "6. Neurologiska sjukdomar",
+        "ts.label.medvetandestorning" : "7. Epilepsi, epileptiskt anfall och annan medvetandestörning",
+        "ts.label.njurar" : "8. Njursjukdomar",
+        "ts.label.kognitivt" : "9. Demens och andra kognitiva störningar",
+        "ts.label.somnvakenhet" : "10. Sömn- och vakenhetsstörningar",
+        "ts.label.narkotikalakemedel" : "11. Alkohol, narkotika och läkemedel",
+        "ts.label.psykiskt" : "12. Psykiska sjukdomar och störningar",
+        "ts.label.utvecklingsstorning" : "13. ADHD, autismspektrumtillstånd och likartade tillstånd samt psykisk utvecklingsstörning",
+        "ts.label.sjukhusvard" : "14. Sjukhusvård",
+        "ts.label.medicinering" : "15. Övrig medicinering",
+        "ts.label.ovrigkommentar" : "16. Övrig kommentar",
+        "ts.label.bedomning" : "Bedömning",
+        "ts.label.unit" : "Vårdenhet",
+
+        "validation.bedomning.missing" : "validation.bedomning.Missing",
+        "validation.diabetes.missing" : "validation.diabetes.Missing",
+        "validation.funktionsnedsattning.beskrivning.error" : "validation.funktionsnedsattning.beskrivning.Error",
+        "validation.hjartkarl.missing" : "validation.hjartkarl.Missing",
+        "validation.intygavser.missing" : "validation.intygavser.Missing",
+        "validation.kognitivt.missing" : "validation.kognitivt.Missing",
+        "validation.medicinering.missing" : "validation.medicinering.Missing",
+        "validation.medvetandestorning.missing" : "validation.medvetandestorning.Missing",
+        "validation.syn.hogeroga.missing" : "validation.syn.hogeroga.Missing",
+        "validation.syn.vansteroga.missing" : "validation.syn.vansteroga.Missing",
+        "validation.syn.binokulart.missing" : "validation.syn.binokulart.Missing",
+        "validation.narkotikalakemedel.missing" : "validation.narkotikalakemedel.Missing",
+        "validation.sjukhusvard.missing" : "validation.sjukhusvard.Missing"
     },
-    "en": {
-        "view.label.pagetitle": "Show Certificate"
+    "en" : {
+        "view.label.pagetitle" : "Show Certificate"
     }
 };
