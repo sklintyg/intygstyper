@@ -10,6 +10,8 @@ public class HoSPerson {
     private String forskrivarkod;
     
     private String befattning;
+    
+    private Vardenhet vardenhet;
         
     public HoSPerson() {
 
@@ -45,6 +47,14 @@ public class HoSPerson {
 
     public void setBefattning(String befattning) {
         this.befattning = befattning;
+    }
+
+    public Vardenhet getVardenhet() {
+        return vardenhet;
+    }
+
+    public void setVardenhet(Vardenhet vardenhet) {
+        this.vardenhet = vardenhet;
     }
 
 }

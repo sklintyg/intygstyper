@@ -2,12 +2,8 @@ package se.inera.certificate.modules.ts_bas.pdf;
 
 import static org.junit.Assert.assertNotNull;
 
-import java.util.Iterator;
-
-import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.namespace.NamespaceContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -17,11 +13,14 @@ import javax.xml.xpath.XPathFactory;
 import junit.framework.Assert;
 
 import org.junit.Test;
+import org.springframework.util.xml.SimpleNamespaceContext;
 import org.w3c.dom.Node;
 
 import se.inera.certificate.modules.ts_bas.pdf.xpath.TransportToPDFMapping;
+import se.inera.certificate.modules.ts_bas.pdf.xpath.XPathEvaluator;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
+import se.inera.certificate.modules.ts_bas.utils.ScenarioNotFoundException;
 import se.inera.certificate.ts_bas.model.v1.Utlatande;
 
 import com.itextpdf.text.pdf.AcroFields;
@@ -35,6 +34,17 @@ public class PdfGeneratorWithXPathCheckTest {
         pdfGen = new PdfGenerator(false);
     }
 
+    /**
+     * Transportstryrelsen needs a set of xPath expressions that can extract the data saved in the PDF from the
+     * transport model. This test validates both that:
+     * <ul>
+     * <li>The PDF was correctly generated.
+     * <li>The xPath expressions are correct.
+     * </ul>
+     * 
+     * @throws Exception
+     *             if an error uccurred.
+     */
     @Test
     public void testGeneratePdfAndValidateFieldsWithXPath() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
@@ -46,15 +56,13 @@ public class PdfGeneratorWithXPathCheckTest {
             PdfReader pdfReader = new PdfReader(pdf);
             AcroFields fields = pdfReader.getAcroFields();
 
-            // Create an XPath engine and load the transport model for the engine to operate on
-            XPath xPath = XPathFactory.newInstance().newXPath();
-            xPath.setNamespaceContext(new DOMNamespaceResolver());
-            Node document = generateDocumentFor(scenario.asTransportModel());
+            // Create an xPath evaluator that operates on the transport model.
+            XPathEvaluator xPath = createXPathEvaluator(scenario.asTransportModel());
 
             // Assert that all defined mappings match
             for (TransportToPDFMapping mapping : TransportToPDFMapping.values()) {
                 Object pdfValue = getField(fields, mapping.getField());
-                Object xPathValue = mapping.getxPath().evaluate(xPath, document);
+                Object xPathValue = xPath.evaluate(mapping.getxPath());
                 String message = String.format("Scenario: %s, Name: %s, Field: %s - ", scenario.getName(),
                         mapping.name(), mapping.getField());
                 Assert.assertEquals(message, xPathValue, pdfValue);
@@ -66,14 +74,28 @@ public class PdfGeneratorWithXPathCheckTest {
 
     private Object getField(AcroFields fields, String fieldName) {
         switch (fields.getFieldType(fieldName)) {
+        case AcroFields.FIELD_TYPE_CHECKBOX:
+            return fields.getField(fieldName).equals("On");
+
         case AcroFields.FIELD_TYPE_TEXT:
             return fields.getField(fieldName);
 
-        case AcroFields.FIELD_TYPE_CHECKBOX:
-            return fields.getField(fieldName).equals("On");
+        case AcroFields.FIELD_TYPE_NONE:
+            throw new IllegalStateException("Field " + fieldName + " was not found.");
         }
 
-        return null;
+        throw new IllegalStateException("Unexpected field type: " + fields.getFieldType(fieldName));
+    }
+
+    private XPathEvaluator createXPathEvaluator(Utlatande transportModel) throws ParserConfigurationException,
+            JAXBException, ScenarioNotFoundException {
+        XPath xPath = XPathFactory.newInstance().newXPath();
+        SimpleNamespaceContext namespaces = new SimpleNamespaceContext();
+        namespaces.bindNamespaceUri("p", "urn:riv:clinicalprocess:healthcond:certificate:1");
+        xPath.setNamespaceContext(namespaces);
+        Node document = generateDocumentFor(transportModel);
+
+        return new XPathEvaluator(xPath, document);
     }
 
     private Node generateDocumentFor(Utlatande transportModel) throws ParserConfigurationException, JAXBException {
@@ -85,23 +107,5 @@ public class PdfGeneratorWithXPathCheckTest {
         context.createMarshaller().marshal(transportModel, node);
 
         return node;
-    }
-
-    private static class DOMNamespaceResolver implements NamespaceContext {
-
-        public String getNamespaceURI(String prefix) {
-            if (prefix.equals("p")) {
-                return "urn:riv:clinicalprocess:healthcond:certificate:1";
-            }
-            return XMLConstants.NULL_NS_URI;
-        }
-
-        public String getPrefix(String namespaceURI) {
-            throw new UnsupportedOperationException();
-        }
-
-        public Iterator<String> getPrefixes(String namespaceURI) {
-            throw new UnsupportedOperationException();
-        }
     }
 }

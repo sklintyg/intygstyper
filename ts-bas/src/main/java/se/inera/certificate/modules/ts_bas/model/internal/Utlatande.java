@@ -35,11 +35,11 @@ public class Utlatande {
     private HoSPersonal skapadAv;
 
     private Patient patient;
-    
+
     private Vardkontakt vardkontakt;
-    
+
     private IntygAvser intygAvser;
-    
+
     private Syn syn;
 
     private HorselBalans horselBalans;
@@ -129,146 +129,130 @@ public class Utlatande {
     }
 
     public Syn getSyn() {
+        if (syn == null) {
+            syn = new Syn();
+        }
         return syn;
     }
 
-    public void setSyn(Syn syn) {
-        this.syn = syn;
-    }
-
     public HorselBalans getHorselBalans() {
+        if (horselBalans == null) {
+            horselBalans = new HorselBalans();
+        }
         return horselBalans;
     }
 
-    public void setHorselBalans(HorselBalans horselBalans) {
-        this.horselBalans = horselBalans;
-    }
-
     public Funktionsnedsattning getFunktionsnedsattning() {
+        if (funktionsnedsattning == null) {
+            funktionsnedsattning = new Funktionsnedsattning();
+        }
         return funktionsnedsattning;
     }
 
-    public void setFunktionsnedsattning(Funktionsnedsattning funktionsnedsattning) {
-        this.funktionsnedsattning = funktionsnedsattning;
-    }
-
     public HjartKarl getHjartKarl() {
+        if (hjartKarl == null) {
+            hjartKarl = new HjartKarl();
+        }
         return hjartKarl;
     }
 
-    public void setHjartKarl(HjartKarl hjartKarl) {
-        this.hjartKarl = hjartKarl;
-    }
-
     public Diabetes getDiabetes() {
+        if (diabetes == null) {
+            diabetes = new Diabetes();
+        }
         return diabetes;
     }
 
-    public void setDiabetes(Diabetes diabetes) {
-        this.diabetes = diabetes;
-    }
-
     public Neurologi getNeurologi() {
+        if (neurologi == null) {
+            neurologi = new Neurologi();
+        }
         return neurologi;
     }
 
-    public void setNeurologi(Neurologi neurologi) {
-        this.neurologi = neurologi;
-    }
-
     public Medvetandestorning getMedvetandestorning() {
+        if (medvetandestorning == null) {
+            medvetandestorning = new Medvetandestorning();
+        }
         return medvetandestorning;
     }
 
-    public void setMedvetandestorning(Medvetandestorning medvetandestorning) {
-        this.medvetandestorning = medvetandestorning;
-    }
-
     public Njurar getNjurar() {
+        if (njurar == null) {
+            njurar = new Njurar();
+        }
         return njurar;
     }
 
-    public void setNjurar(Njurar njurar) {
-        this.njurar = njurar;
-    }
-
     public Kognitivt getKognitivt() {
+        if (kognitivt == null) {
+            kognitivt = new Kognitivt();
+        }
         return kognitivt;
     }
 
-    public void setKognitivt(Kognitivt kognitivt) {
-        this.kognitivt = kognitivt;
-    }
-
     public SomnVakenhet getSomnVakenhet() {
+        if (somnVakenhet == null) {
+            somnVakenhet = new SomnVakenhet();
+        }
         return somnVakenhet;
     }
 
-    public void setSomnVakenhet(SomnVakenhet somnVakenhet) {
-        this.somnVakenhet = somnVakenhet;
-    }
-
     public NarkotikaLakemedel getNarkotikaLakemedel() {
+        if (narkotikaLakemedel == null) {
+            narkotikaLakemedel = new NarkotikaLakemedel();
+        }
         return narkotikaLakemedel;
     }
 
-    public void setNarkotikaLakemedel(NarkotikaLakemedel narkotikaLakemedel) {
-        this.narkotikaLakemedel = narkotikaLakemedel;
-    }
-
     public Psykiskt getPsykiskt() {
+        if (psykiskt == null) {
+            psykiskt = new Psykiskt();           
+        }
         return psykiskt;
     }
 
-    public void setPsykiskt(Psykiskt psykiskt) {
-        this.psykiskt = psykiskt;
-    }
-
     public Utvecklingsstorning getUtvecklingsstorning() {
+        if (utvecklingsstorning == null) {
+            utvecklingsstorning = new Utvecklingsstorning();
+        }
         return utvecklingsstorning;
     }
 
-    public void setUtvecklingsstorning(Utvecklingsstorning utvecklingsstorning) {
-        this.utvecklingsstorning = utvecklingsstorning;
-    }
-
     public Sjukhusvard getSjukhusvard() {
+        if (sjukhusvard == null) {
+            sjukhusvard = new Sjukhusvard();
+        }
         return sjukhusvard;
     }
 
-    public void setSjukhusvard(Sjukhusvard sjukhusvard) {
-        this.sjukhusvard = sjukhusvard;
-    }
-
     public Medicinering getMedicinering() {
+        if (medicinering == null) {
+            medicinering = new Medicinering();
+        }
         return medicinering;
     }
 
-    public void setMedicinering(Medicinering medicinering) {
-        this.medicinering = medicinering;
-    }
-
     public Bedomning getBedomning() {
+        if (bedomning == null) {
+            bedomning = new Bedomning();
+        }
         return bedomning;
     }
 
-    public void setBedomning(Bedomning bedomning) {
-        this.bedomning = bedomning;
-    }
-
     public Vardkontakt getVardkontakt() {
+        if (vardkontakt == null) {
+            vardkontakt = new Vardkontakt();
+        }
         return vardkontakt;
     }
 
-    public void setVardkontakt(Vardkontakt vardkontakt) {
-        this.vardkontakt = vardkontakt;
-    }
 
     public IntygAvser getIntygAvser() {
+        if (intygAvser == null) {
+            intygAvser = new IntygAvser();
+        }
         return intygAvser;
     }
 
-    public void setIntygAvser(IntygAvser intygAvser) {
-        this.intygAvser = intygAvser;
-    }
 }
