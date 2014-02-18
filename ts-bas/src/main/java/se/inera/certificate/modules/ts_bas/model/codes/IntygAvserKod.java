@@ -34,27 +34,7 @@ public enum IntygAvserKod implements CodeSystem {
     TAXI("IAV9", "Taxi"),
 
     /** Intyget avser inget av ovanstående (ANNAT) */
-    ANNAT("IAV10", "Intyget avser inget av ovanstående"),
-    
-    /** med tungt släpfordon (AM) */
-    AM("IAV11", "Moped klass I"),
-
-    /** Lätt motorcykel (A1) */
-    A1("IAV12", "Lätt motorcykel"),
-
-    /** Mellanstor motorcykel (A2) */
-    A2("IAV13", "Mellanstor motorcykel"),
-
-    /** Motorcykel (A) */
-    A("IAV14", "Motorcykel"),
-
-    /** Personbil och lätt lastbil (B) */
-    B("IAV15", "Personbil och lätt lastbil"),
-
-    /** Personbil och lätt lastbil med tungt släpfordon (BE) */
-    BE("IAV16", "Personbil och lätt lastbil med tungt släpfordon"),
-    
-    TRAKTOR("IAV17", "Traktor");
+    ANNAT("IAV10", "Intyget avser inget av ovanstående");
 
     /** Körkortsbehörigheter av högre typ */
     public static final EnumSet<IntygAvserKod> HOGRE_KORKORTSBEHORIGHET = EnumSet.of(C1, C1E, C, CE, D1, D1E, D, DE,

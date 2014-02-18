@@ -56,28 +56,8 @@ public enum RekommendationVardeKod implements CodeSystem {
     ANNAT("VAR10", "Intyget avser inget av ovanstående"),
     
     /** Kan inte ta ställning */
-    INTE_TA_STALLNING("VAR11", "Kan inte ta ställning"),
-    
-    /** med tungt släpfordon (AM) */
-    AM("VAR12", "Moped klass I"),
+    INTE_TA_STALLNING("VAR11", "Kan inte ta ställning");
 
-    /** Lätt motorcykel (A1) */
-    A1("VAR13", "Lätt motorcykel"),
-
-    /** Mellanstor motorcykel (A2) */
-    A2("VAR14", "Mellanstor motorcykel"),
-
-    /** Motorcykel (A) */
-    A("VAR15", "Motorcykel"),
-
-    /** Personbil och lätt lastbil (B) */
-    B("VAR16", "Personbil och lätt lastbil"),
-
-    /** Personbil och lätt lastbil med tungt släpfordon (BE) */
-    BE("VAR17", "Personbil och lätt lastbil med tungt släpfordon"),
-    
-    TRAKTOR("VAR18", "Traktor");
-    
     private static String codeSystemName = "kv_värde";
 
     private static String codeSystem = "e889fa20-1dee-4f79-8b37-03853e75a9f8";

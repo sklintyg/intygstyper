@@ -561,7 +561,7 @@ public class InternalToExternalConverter {
 
         if (source.getNarkotikaLakemedel().getProvtagningBehovs() != null) {
             Aktivitet provtagningNark = new Aktivitet();
-            provtagningNark.setAktivitetskod(CodeConverter.toKod(AktivitetKod.PROVTAGNING_ALKOHO_NARKOTIKA));
+            provtagningNark.setAktivitetskod(CodeConverter.toKod(AktivitetKod.PROVTAGNING_ALKOHOL_NARKOTIKA));
             provtagningNark.setForekomst(source.getNarkotikaLakemedel().getProvtagningBehovs());
             aktiviteter.add(provtagningNark);
         }

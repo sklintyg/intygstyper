@@ -305,7 +305,7 @@ public class ExternalToInternalConverterInstance {
         Aktivitet vardinsatsMissbruk = getAktivitetWithKod(CodeConverter
                 .toKod(AktivitetKod.VARDINSATS_MISSBRUK_BEROENDE));
         Aktivitet provtagningMissbruk = getAktivitetWithKod(CodeConverter
-                .toKod(AktivitetKod.PROVTAGNING_ALKOHO_NARKOTIKA));
+                .toKod(AktivitetKod.PROVTAGNING_ALKOHOL_NARKOTIKA));
         Observation lakemedelsanvandning = getObservationWithKod(CodeConverter
                 .toKod(ObservationsKod.LAKEMEDELSANVANDNING_TRAFIKSAKERHETSRISK));
 

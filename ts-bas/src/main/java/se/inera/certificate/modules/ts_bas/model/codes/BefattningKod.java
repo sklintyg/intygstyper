@@ -30,7 +30,7 @@ public enum BefattningKod implements CodeSystem {
     SKOLLAKARE("201012","Skolläkare"),
     FORETAGSLAKARE("201013","Företagsläkare"),
     SPECIALISTLAKARE("202010","Specialistläkare"),
-    STLAKARE("203010","Legitimerad läkare under specialiseringstjänstgöring (STläkare)"),
+    ST_LAKARE("203010","Legitimerad läkare under specialiseringstjänstgöring (STläkare)"),
     LAKARE_ANNAN("203090","Legitimerad läkare under till exempel vikariat"),
     LAKARE_EJ_LEG_AT("204010","Ej legitimerad läkare under allmäntjänstgöring (AT-läkare)"),
     LAKARE_EJ_LEG_ANNAN("204090","Ej legitimerad läkare under till exempel vikariat eller provtjänstgöring");

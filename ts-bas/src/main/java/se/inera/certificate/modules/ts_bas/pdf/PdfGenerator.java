@@ -414,7 +414,7 @@ public class PdfGenerator {
         }
 
         List<String> befattningar = utlatande.getSkapadAv().getBefattningar();
-        ST_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.STLAKARE.name()));
+        ST_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.ST_LAKARE.name()));
         AT_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.LAKARE_EJ_LEG_AT.name()));
     }
 
