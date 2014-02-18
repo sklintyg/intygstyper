@@ -5,12 +5,12 @@
 		"namn":"Doktor Alban"
 	},
 	"patientInfo":{
-		"personNummer":	"19121212-1212",
-		"forNamn": "johnny",
-		"efterNamn":"appleseed",
-		"postAdress":"Testvägen 12",
-		"postNummer":"1337",
-		"postOrt":"Huddinge"
+		"personnummer":	"19121212-1212",
+		"fornamn": "johnny",
+		"efternamn":"appleseed",
+		"postadress":"Testvägen 12",
+		"postnummer":"1337",
+		"postort":"Huddinge"
 	}
 }
 

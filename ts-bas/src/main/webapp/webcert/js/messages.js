@@ -108,7 +108,7 @@ var tsBasMessages = {
 
       "ts.validation.syn.binokulart.missing" : "Binokulära synfunktioner saknas",
       "ts.validation.syn.binokulart.utankorrektion.missing" : "Binokulärt utan korrektion saknas",
-      "ts.validation.syn.binokulart.medlorrektion.out-of-bounds" : "Korrektionsvärdet måste ligga i intervallet 0.0 till 2.0"
+      "ts.validation.syn.binokulart.medkorrektion.out-of-bounds" : "Korrektionsvärdet måste ligga i intervallet 0.0 till 2.0"
 
     },
     "en": {
