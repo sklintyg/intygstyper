@@ -22,7 +22,7 @@ public class CreateNewDraftCertificateHolder {
 
     private String certificateId;
 
-    private HoSPerson skapadAv;
+    private HoSPersonal skapadAv;
 
     private Patient patientInfo;
 
@@ -34,11 +34,11 @@ public class CreateNewDraftCertificateHolder {
         this.certificateId = certificateId;
     }
 
-    public HoSPerson getSkapadAv() {
+    public HoSPersonal getSkapadAv() {
         return skapadAv;
     }
 
-    public void setSkapadAv(HoSPerson skapadAv) {
+    public void setSkapadAv(HoSPersonal skapadAv) {
         this.skapadAv = skapadAv;
     }
 

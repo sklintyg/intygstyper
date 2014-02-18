@@ -35,7 +35,6 @@ import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.model.internal.Vardenhet;
 import se.inera.certificate.modules.ts_bas.model.internal.Vardgivare;
 import se.inera.certificate.modules.ts_bas.rest.dto.CreateNewDraftCertificateHolder;
-import se.inera.certificate.modules.ts_bas.rest.dto.HoSPerson;
 
 /**
  * Factory for creating a editable model.
@@ -47,8 +46,7 @@ public class WebcertModelFactory {
      * 
      * @param newDraftData
      *            {@link CreateNewDraftCertificateHolder}
-     * @return {@link Utlatande} or throws a ConverterException if something
-     *         unforeseen happens
+     * @return {@link Utlatande} or throws a ConverterException if something unforeseen happens
      * @throws ConverterException
      */
     public Utlatande createNewWebcertDraft(CreateNewDraftCertificateHolder newDraftData) throws ConverterException {
@@ -76,10 +74,10 @@ public class WebcertModelFactory {
 
     private Patient convertPatientToEdit(se.inera.certificate.modules.ts_bas.rest.dto.Patient patientInfo) {
         Patient patient = new Patient();
-        patient.setFornamn(patientInfo.getForNamn());
-        patient.setEfternamn(patientInfo.getEfterNamn());
-        patient.setFullstandigtNamn(StringUtils.join(patientInfo.getForNamn(), " ", patientInfo.getEfterNamn()));
-        patient.setPersonid(patientInfo.getPersonNummer());
+        patient.setFornamn(patientInfo.getFornamn());
+        patient.setEfternamn(patientInfo.getEfternamn());
+        patient.setFullstandigtNamn(StringUtils.join(patientInfo.getFornamn(), " ", patientInfo.getEfternamn()));
+        patient.setPersonid(patientInfo.getPersonnummer());
 
         // TODO: Address information needs to be sorted out at a later time
         // patient.setPostadress(patientInfo.getPostadress());
@@ -89,7 +87,8 @@ public class WebcertModelFactory {
         return patient;
     }
 
-    private void populateWithSkapadAv(Utlatande utlatande, HoSPerson skapadAv) throws ConverterException {
+    private void populateWithSkapadAv(Utlatande utlatande,
+            se.inera.certificate.modules.ts_bas.rest.dto.HoSPersonal skapadAv) throws ConverterException {
         if (skapadAv == null) {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");
         }
@@ -97,7 +96,7 @@ public class WebcertModelFactory {
         utlatande.setSkapadAv(convertHosPersonalToEdit(skapadAv));
     }
 
-    private HoSPersonal convertHosPersonalToEdit(HoSPerson hosPers) {
+    private HoSPersonal convertHosPersonalToEdit(se.inera.certificate.modules.ts_bas.rest.dto.HoSPersonal hosPers) {
         HoSPersonal hosPersonal = new HoSPersonal();
 
         hosPersonal.setPersonid(hosPers.getHsaId());
@@ -122,7 +121,7 @@ public class WebcertModelFactory {
         vardenhet.setEnhetsid(vardenhetDto.getHsaId());
         vardenhet.setEnhetsnamn(vardenhetDto.getNamn());
         vardenhet.setVardgivare(convertVardgivareToEdit(vardenhetDto.getVardgivare()));
-        
+
         // TODO Populate with the address of the Vardenhet
 
         return vardenhet;

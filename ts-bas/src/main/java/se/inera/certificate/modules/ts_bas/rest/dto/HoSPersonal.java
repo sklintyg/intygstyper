@@ -1,7 +1,7 @@
 package se.inera.certificate.modules.ts_bas.rest.dto;
 
 
-public class HoSPerson {
+public class HoSPersonal {
 
     private String hsaId;
     
@@ -13,7 +13,7 @@ public class HoSPerson {
     
     private Vardenhet vardenhet;
         
-    public HoSPerson() {
+    public HoSPersonal() {
 
     }
 
