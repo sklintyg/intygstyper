@@ -91,7 +91,7 @@ public class InternalValidatorInstance {
             addValidationError("vardkontakt", "ts.validation.vardkontakt.missing");
             return;
         }
-        if (vardkontakt.getIdkontroll() == null){
+        if (vardkontakt.getIdkontroll() == null) {
             addValidationError("identitet", "ts.validation.identitet.missing");
         }
     }
@@ -351,11 +351,14 @@ public class InternalValidatorInstance {
         }
 
         if (syn.getHogerOga() == null) {
-            addValidationError("syn.hogerOga", "ts.validation.syn.hogerOga.missing");
+            addValidationError("syn.hogerOga", "ts.validation.syn.hogeroga.missing");
         } else {
+            if (syn.getHogerOga().getUtanKorrektion() == null) {
+                addValidationError("syn.hogerOga.utanKorrektion", "ts.validation.syn.hogeroga.utanKorrektion.missing");
 
-            if (syn.getHogerOga().getUtanKorrektion() < 0.0 || syn.getHogerOga().getUtanKorrektion() > 2.0) {
-                addValidationError("syn.hogerOga.utanKorrektion", "ts.validation.syn.hogerOga.utanKorrektion.missing");
+            } else if (syn.getHogerOga().getUtanKorrektion() < 0.0 || syn.getHogerOga().getUtanKorrektion() > 2.0) {
+                addValidationError("syn.hogerOga.utanKorrektion",
+                        "ts.validation.syn.hogeroga.utankorrektion.out-of-bounds");
             }
 
             if (syn.getHogerOga().getMedKorrektion() != null) {
@@ -367,18 +370,21 @@ public class InternalValidatorInstance {
         }
 
         if (syn.getVansterOga() == null) {
-            addValidationError("syn.vansterOga", "ts.validation.syn.vansterOga.missing");
+            addValidationError("syn.vansterOga", "ts.validation.syn.vansteroga.missing");
         } else {
-
-            if (syn.getVansterOga().getUtanKorrektion() < 0.0 || syn.getVansterOga().getUtanKorrektion() > 2.0) {
+            if (syn.getVansterOga().getUtanKorrektion() == null) {
                 addValidationError("syn.vansterOga.utanKorrektion",
-                        "ts.validation.syn.vansterOga.utanKorrektion.missing");
+                        "ts.validation.syn.vansteroga.utankorrektion.missing");
+
+            } else if (syn.getVansterOga().getUtanKorrektion() < 0.0 || syn.getVansterOga().getUtanKorrektion() > 2.0) {
+                addValidationError("syn.vansterOga.utanKorrektion",
+                        "ts.validation.syn.vansteroga.utankorrektion.missing");
             }
 
             if (syn.getVansterOga().getMedKorrektion() != null) {
                 if (syn.getVansterOga().getMedKorrektion() < 0.0 || syn.getVansterOga().getMedKorrektion() > 2.0) {
                     addValidationError("syn.vansterOga.medKorrektion",
-                            "ts.validation.syn.vansterOga.medKorrektion.out-of-bounds");
+                            "ts.validation.syn.vansteroga.medkorrektion.out-of-bounds");
                 }
             }
         }
@@ -386,16 +392,18 @@ public class InternalValidatorInstance {
         if (syn.getBinokulart() == null) {
             addValidationError("syn.binokulart", "ts.validation.syn.binokulart.missing");
         } else {
-
-            if (syn.getBinokulart().getUtanKorrektion() < 0.0 || syn.getBinokulart().getUtanKorrektion() > 2.0) {
+            if (syn.getBinokulart().getUtanKorrektion() == null) {
+                addValidationError("syn.binokulart.utanKorrektion", "ts.validation.syn.binokulart.utankorrektion.missing");
+                
+            } else if (syn.getBinokulart().getUtanKorrektion() < 0.0 || syn.getBinokulart().getUtanKorrektion() > 2.0) {
                 addValidationError("syn.binokulart.utanKorrektion",
-                        "ts.validation.syn.binokulart.utanKorrektion.missing");
+                        "ts.validation.syn.binokulart.utankorrektion.out-of-bounds");
             }
 
             if (syn.getBinokulart().getMedKorrektion() != null) {
                 if (syn.getBinokulart().getMedKorrektion() < 0.0 || syn.getBinokulart().getMedKorrektion() > 2.0) {
                     addValidationError("syn.binokulart.medKorrektion",
-                            "ts.validation.syn.binokulart.medKorrektion.out-of-bounds");
+                            "ts.validation.syn.binokulart.medkorrektion.out-of-bounds");
                 }
             }
         }

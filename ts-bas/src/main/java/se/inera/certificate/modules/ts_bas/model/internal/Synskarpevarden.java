@@ -12,7 +12,7 @@ public class Synskarpevarden {
     Double medKorrektion;
     Boolean kontaktlins;
 
-    public double getUtanKorrektion() {
+    public Double getUtanKorrektion() {
         return utanKorrektion;
     }
 
