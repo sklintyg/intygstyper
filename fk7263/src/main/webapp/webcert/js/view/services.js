@@ -11,7 +11,7 @@ services.factory('certificateService', [ '$http', '$log',
          */
         function _getCertificate (id, onSuccess, onError) {
             $log.debug('_getCertificate id:' + id);
-            var restPath = '/moduleapi/intyg/' + id;
+            var restPath = '/moduleapi/intyg/signed/' + id;
             $http.get(restPath).success(function (data) {
                 $log.debug('_getCertificate data:' + data);
                 onSuccess(data);

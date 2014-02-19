@@ -536,11 +536,13 @@ controllers.controller('ViewCertCtrl', [ '$scope', '$log', '$timeout', 'certific
         certificateService.getCertificate($scope.MODULE_CONFIG.CERT_ID_PARAMETER, function (result) {
             $log.debug('Got getCertificate data:' + result);
             $scope.widgetState.doneLoading = true;
-            if (result != null) {
+            if (result != null && result != '') {
                 $scope.cert = result.certificateContent;
 
                 $scope.certProperties.sentToFK = isSentToFK(result.certificateContentMeta.statuses);
                 $scope.certProperties.isRevoked = isRevoked(result.certificateContentMeta.statuses);
+            } else {
+              $scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';
             }
         }, function (errorData) {
             // show error view
