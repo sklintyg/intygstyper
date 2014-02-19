@@ -1,0 +1,344 @@
+<!--
+
+    Copyright (C) 2013 Inera AB (http://www.inera.se)
+
+    This file is part of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules).
+
+    Inera Certificate Modules is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    Inera Certificate Modules is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<div class="row-fluid">
+  <div>
+    <!-- Content -->
+    <div class="row-fluid">
+      <div class="span7">
+        <h1>
+       	  Mockup for input in Webcert
+        </h1>
+      </div>
+    </div>
+    <section id="certificate" class="certificate">
+
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="cert">
+            <div class="cert-body">
+              <form name="ts-diabetesForm">
+
+		<div class="row-fluid">
+		  <input class="btn" style="margin:10px;"
+			 type="button" value="Spara utlåtande" id="submit" name="submit" ng-click="saveCert()" />
+
+		  <input class="btn" style="margin:10px;"
+			 type="button" value="Ta bort utkast" id="delete" name="delete" ng-click="deleteDraft()" />
+		  
+		  <a href="#/list"><input class="btn" style="margin:10px;"
+					  type="button" value="Visa lista" id="submit" name="submit" ng-click="saveCert()"/> </a>
+		</div> 
+
+		<label><input type="checkbox" ng-model="showJsonView"/> Visa JSON-debugger</label>
+		
+	  <!-- Loading spinner: visibility defined by $scope.doneLoading  -->
+	  <div ng-hide="doneLoading" style="text-align: center; padding: 20px;">
+	    <img src="/img/ajax-loader.gif" style="text-align: center;" />
+	    <p style="text-align: center; color: #64ABC0; margin-top: 20px;">
+	      <strong><message key="view.message.certificateloading" /></strong>
+	    </p>
+	  </div>
+
+	  <!-- Loading spinner: visibility defined by $scope.doneLoading  -->
+	  <div ng-show="displayLoader" style="text-align: center; padding: 20px;">
+	    <img src="/img/ajax-loader.gif" style="text-align: center;" />
+	    <p style="text-align: center; color: #64ABC0; margin-top: 20px;">
+	      <strong><message key="view.message.certificatesaving" /></strong>
+	    </p>
+	  </div>
+	  
+		<div id="wrapper_content" ng-show="doneLoading">
+			<div class="body-row" ng-show="showJsonView">           
+			  <pre>
+			    {{cert | json}}
+			  </pre>
+          	</div>	  
+			
+			<div class="body-row">
+			  <span ng-show="ts-diabetesForm.patient_fornamn.$error.required || ts-diabetesForm.patient_efternamn.$error.required || ts-diabetesForm.patient_id.$error.required"
+				style="color:red; font-weight:bold; margin-left:10px;">
+			    Information saknas
+			  </span>
+			  
+			  <span class="title">Om patienten:</span> 
+			  <div id="left-col" style="position:absolute; left:0;">
+			    <span class="text" style="display:block; padding:10px;">Förnamn:</span>
+			    <span class="text" style="display:block; padding:10px;">Mellannamn:</span>
+			    <span class="text" style="display:block; padding:10px;">Efternamn:</span>
+			    <span class="text" style="display:block; padding:10px;">Personnummer:</span>
+			  </div>
+			  
+			  <div id="right-col" style="position:relative; left:300px; top:0px; width:60%; padding:10px;">
+			    <input type="text" required style="display:block;" name="patient_fornamn" ng-model="cert.patient.fornamn">
+			    <input type="text" style="display:block;" name="patient_mellannamn" ng-model="cert.patient.mellannamn">
+			    <input type="text" required style="display:block;" name="patient_efternamn" ng-model="cert.patient.efternamn">
+			    <input type="text" required style="display:block;" name="patient_id" ng-model="cert.patient.id"/>
+		          </div>
+			  
+			</div>
+	
+			
+			<div class="body-row">
+			  <span ng-show="ts-diabetesForm.arrangemang_plats.$error.required || ts-diabetesForm.arrangeman_datum.$error.required || ts-diabetesForm.arrangemang_bokningsdatum.$error.required"
+			   style="color:red; font-weight:bold; margin-left:10px;">
+			    Information saknas
+			  </span>
+	
+	
+			  <span class="title">Information om resa</span> 
+	
+			  <div style="margin:10px">
+			    <div id="left-col" style="position:absolute; left:0;">
+			      <span class="text" style="display:block; padding:10px;">Avbeställing avser resa till:</span>
+			      <span class="text" style="display:block; padding:10px;">Avresedatum för resan:</span>
+			      <span class="text" style="display:block; padding:10px;">Bokningsnummer:</span>
+			      <span class="text" style="display:block; padding:10px;">Inbokningsdatum:</span>
+			      <span class="text" style="display:block; padding:10px;">Avbeställningsdatum:</span>
+			    </div>
+			    
+			    <div id="right-col" style="position:relative; left:300px; top:0px;">
+			      <input type="text" style="display:block;" name="arrangemang_plats" ng-model="cert.arrangemang.plats" required>
+			      <input type="text" style="display:block;" name="arrangemang_datum" ng-model="cert.arrangemang.arrangemangsdatum" required>
+			      <input type="text" style="display:block;" name="arrangemang_referens" ng-model="cert.arrangemang.bokningsreferens">
+			      <input type="text" style="display:block;" name="arrangemang_bokningsdatum" ng-model="cert.arrangemang.bokningsdatum" required/>
+			      <input type="text" style="display:block;" name="arrangemang_bokningsdatum" ng-model="cert.arrangemang.avbestallningsdatum"/>
+			    </div>
+			  </div>		      		    		    				  				  
+			</div><!--body-row -->
+			
+			<div class="body-row">
+			  <span ng-show="!cert.rekommendation.sjukdomskannedom"
+				style="color:red; font-weight:bold; margin-left:10px;">
+			    Information saknas
+			  </span>
+	
+			  <span class="title">Om den aktuella sjukdomen:</span>
+	
+			  <div style="margin:10px">
+			    <div id="left-col" style="position:absolute; left:0;">
+			      
+			    </div>
+			    
+			    <div id="right-col" style="position:relative; left:300px; top:0px; width:60%">
+			      <fieldset>
+				<input style="display:inline; margin-bottom:10px;" type="radio" name="SJK1"
+				       ng-model="cert.rekommendation.sjukdomskannedom" value="SJK1" ng-required="!ts-diabetesForm.SJK2 && !ts-diabetesForm.SJK3 && !ts-diabetesForm.SJK4">
+					Sjukdomen/komplikationen var okänd vid bokningstillfälllet.<br/>
+	
+				
+				<span style="display:block; margin-left:0px; margin-top:10px;">
+				  	Patientens sjukdom/komplikation är kronisk,
+				  	var känd vid bokningstillfället och utgjorde då inget hinder för resan.
+				  	Tillståndet för nu förvärrats på ett sätt som vid bokningstillfället<br/>
+				</span>
+	
+				<!-- div for hidden modifying options to above-->
+	
+				<div style="position:relative; width:100%;">
+	
+				  <!-- Only show if show_opts -->
+	
+				  <div style="margin-left:40px;">
+				    <input style="padding-bottom: 10px; margin:10px; " type="radio" name="SJK2" 
+					  ng-model="cert.rekommendation.sjukdomskannedom" value="SJK2" ng-required="!ts-diabetesForm.SJK1 && !ts-diabetesForm.SJK3 && !ts-diabetesForm.SJK4">
+				    ej var möjligt att förutse.<br/>
+				  </div>
+	
+				  <!-- Only show if show_opts -->
+	
+				  <div style="margin-left:40px;">
+				    <input style="padding-bottom: 10px; margin:10px;" type="radio" name="SJK3" 
+					   ng-model="cert.rekommendation.sjukdomskannedom" value="SJK3" ng-required="!ts-diabetesForm.SJK1 && !ts-diabetesForm.SJK2 && !ts-diabetesForm.SJK4">
+				    var möjlig att förutse.<br/>
+				  </div>
+				</div><!-- end hidden-->
+	
+				<input style="display:inline;" type="radio" name="SJK4" ng-model="cert.rekommendation.sjukdomskannedom"
+				 value="SJK4" ng-required="!ts-diabetesForm.SJK1 && !ts-diabetesForm.SJK2 && !ts-diabetesForm.SJK3">
+				Inget av ovanstående är lämpligt. Ange annat:<br/>			
+				
+				<div style="margin-left:20px;" ng-show="cert.rekommendation.sjukdomskannedom =='SJK4'">
+				  <textarea ng-model="cert.rekommendation.beskrivning" rows="5"  style="resize:none; margin-top:10px; width:100%;">
+				  </textarea>
+				</div>
+			      </fieldset>
+			    </div>
+			  </div>	
+			</div><!-- body-row-->
+			
+			<div class="body-row">
+			  <span class="title">Plats och datum för första undersökning:</span>
+			  <div id="left-col" style="position:absolute; left:0;">
+			    
+			  </div>
+			  
+			  <div id="right-col" style="position:relative; left:300px; top:0px;">
+			    <fieldset style="margin-left:10px;">
+			      <input style="padding-bottom: 10px;" type="radio"
+				     ng-model="cert.undersokning.komplikationStyrkt" value="AV_HOS_PERSONAL">
+			      <span style="margin-left:10px;"> Det finns styrkt att diagnosen finns sedan: </span> <br/>
+			      <input style="padding-bottom: 10px;" type="radio"
+				     ng-model="cert.undersokning.komplikationStyrkt" value="AV_PATIENT">
+			      <span style="margin-left:10px;"> Patienten uppger att diagnosen finns sedan: </span> <br/>
+			      <div style="margin-top:10px;">
+			      
+				<input type="text" ng-model="cert.undersokning.forstaUndersokningsdatum" placeholder="Datum"/>
+				<input type="text" ng-model="cert.undersokning.forstaUndersokningsplats" placeholder="Plats"/><br/>
+			      </div>
+			    </fieldset>
+			  </div>
+			  
+			</div><!-- body-row-->
+	
+			<div class="body-row">
+			  <span ng-show="ts-diabetesForm.undersokningsplats.$error.required || ts-diabetesForm.undersokningsdatum.$error.required"
+			   style="color:red; font-weight:bold; margin-left:10px;">
+			    Information saknas
+			  </span>
+			  <span class="title">Plats och datum för den undersökning som ligger till grund för detta utlåtande:</span>
+	
+			  <div id="left-col" style="position:absolute; left:0;">
+			    
+			  </div>
+			  
+			  <div id="right-col" style="position:relative; left:300px; top:0px;">
+			    <fieldset>
+			      <div style="padding:10px;">
+				<input type="date" ng-model="cert.undersokning.undersokningsdatum" name="undersokningsdatum" placeholder="Datum" required/>
+				<input type="text" ng-model="cert.undersokning.undersokningsplats" name="undersokningsplats" placeholder="Plats" required/><br/>
+			      </div>
+			    </fieldset>
+			  </div>
+			  
+			</div><!-- body-row-->
+			<div class="body-row" ng-show="complicationType == 'sjuk'">
+	
+			  <span ng-show="!cert.rekommendation.rekommendationskod"
+				style="color:red; font-weight:bold; margin-left:10px;">
+			    Information saknas
+			  </span>
+					  
+			  <span class="title">Rekommendation:</span> 
+	
+			  <div id="left-col" style="position:absolute; left:0;">
+			    
+			  </div>
+			  
+			  <div id="right-col" style="position:relative; left:300px; top:0px; width:60%;">
+			    <fieldset style="margin-left:10px;">
+			      <input style="display:inline;" type="radio" name="patient_sjuk_1"
+				     ng-model="cert.rekommendation.rekommendationskod"  value="REK1"/>
+			      <label style="display:block; margin-left:25px; margin-top:-20px;">
+				Jag avråder uttryckligen från resa, då patientens/resenärens tillstånd innebär, att sådan ej kan genomföras utan men.</label>
+			      <input style="display:inline;" type="radio" name="patient_sjuk_2"
+				     ng-model="cert.rekommendation.rekommendationskod" value="REK2"/>
+			      <label style="display:block; margin-left:25px; margin-top:-20px;">
+				Jag avråder ej från resa. Patientens = resenärens tillstånd utgör inget hinder för resa.</label>	      
+			    </fieldset>
+			    
+		          </div>
+			  
+			</div>
+			
+			
+			<div class="body-row" ng-show="complicationType == 'gravid'">
+			  <span class="title">Rekommendation:</span> 
+			  <div id="left-col" style="position:absolute; left:0;">
+			    <span style="display:block; margin:10px;">Barnet beräknas födas:</span>
+			    
+			  </div>
+			  
+			  <div id="right-col" style="position:relative; left:300px; top:0px; width:60%;">
+			    <fieldset style="margin:10px;">
+			      
+			      <input style="display:block;" type="text" name="fodseldatum" ng-model="cert.undersokning.graviditet.beraknatforlossningsdatum"/>
+			      
+			      <input style="display:inline;" type="radio" name="patient_sjuk_check_1"
+				     ng-model="cert.rekommendation.rekommendationskod"  value="REK3"/>
+			      <label style="display:block; margin-left:25px; margin-top:-20px;">
+				Jag avråder uttryckligen från resa. Komplikationer i graviditeten har uppkommit efter bokning av resan, vilka innebär hinder för resa.</label>
+			      <input style="display:inline;" type="radio" name="patient_sjuk_check_1"
+				     ng-model="cert.rekommendation.rekommendationskod" value="REK4"/>
+			      <label style="display:block; margin-left:25px; margin-top:-20px;">
+				Jag avråder ej från resa. Graviditeten utgör inget medicinskt hinder för resa.</label>
+			    </fieldset>
+		          </div>
+			  
+			</div>
+			
+			<div class="body-row">
+			  <span class="title">Övriga upplysningar:</span> 
+			  <div id="left-col" style="position:absolute; left:0;">
+			    
+			  </div>
+			  
+			  <div id="right-col" style="position:relative; left:300px; top:0px; width:60%;">
+			    <div style="margin:10px;">
+			      <textarea ng-model="cert.kommentarer" style="resize:none; width:100%;">
+			      </textarea>
+			    </div>
+		          </div>
+			  
+			</div>
+	
+			<div class="body-row">
+			  <span class="title">Om vårdenheten:</span> 
+			  <div id="left-col" style="position:absolute; left:0;">
+	
+			  </div>
+			  
+			  <div id="right-col" style="position:relative; left:300px; top:0px; width:60%;">
+			    <div style="margin:10px;">
+			      <div style="position:relative;left:0; top:0;">
+				<span style="padding-bottom: 10px; display:block; font-weight:bold;">Enhetsnamn:</span>
+				<span style="padding-bottom: 10px; display:block; font-weight:bold;">Postadress:</span>
+				<span style="padding-bottom: 10px; display:block; font-weight:bold;">Postort:</span>
+				<span style="padding-bottom: 10px; display:block; font-weight:bold;">Postnummer:</span>
+				<span style="padding-bottom: 10px; display:block; font-weight:bold;">Telefon:</span>
+				<span style="padding-bottom: 10px; display:block; font-weight:bold;">Epost:</span>
+			      </div>
+			      
+			      <div style="position:absolute; left: 150px; top:0px;">
+				<span style="padding-bottom: 10px; display:block;">{{cert.skapadAv.vardenhet.enhetsnamn}}</span>
+				<span style="padding-bottom: 10px; display:block;">{{cert.skapadAv.vardenhet.postadress}}</span>
+				<span style="padding-bottom: 10px; display:block;">{{cert.skapadAv.vardenhet.postort}}</span>
+				<span style="padding-bottom: 10px; display:block;">{{cert.skapadAv.vardenhet.postnummer}}</span>
+				<span style="padding-bottom: 10px; display:block;">{{cert.skapadAv.vardenhet.telefonnummer}}</span>
+				<span style="padding-bottom: 10px; display:block;">{{cert.skapadAv.vardenhet.epost}}</span>
+			      </div>		      	              
+			    </div>
+		          </div>
+			  
+			</div>
+	
+		
+			<!-- end of rows-->
+			</div>
+	      </form>
+            </div> <!-- end of cert-body-->
+            
+	  </div><!-- end of cert-->
+	</div>
+      </div>
+    </section>
+    
+  </div>
+</div>

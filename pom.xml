@@ -35,6 +35,7 @@
     <module>module-archetype</module>
     <module>specifications</module>
     <module>ts-bas</module>
+    <module>ts-diabetes</module>
   </modules>
 
   <properties>
