@@ -78,6 +78,11 @@
             </div>
 
             <div wc-field field-label="ts.label.identitet">
+            	<div class="alert alert-error" ng-if="validationMessagesGrouped.identitet">
+                	<ul>
+                  		<li ng-repeat="message in validationMessagesGrouped.identitet"><span message key="{{message.message}}"></span></li>
+                	</ul>
+             	</div>
                 <div class="control-group clearfix">
                     <label class="radio checkbox-columns span4" ng-repeat="(k,v) in form.identity"><input name="identity{{$index}}" type="radio" value="{{v}}" ng-model="cert.vardkontakt.idkontroll"> {{k}}</label>
                 </div>

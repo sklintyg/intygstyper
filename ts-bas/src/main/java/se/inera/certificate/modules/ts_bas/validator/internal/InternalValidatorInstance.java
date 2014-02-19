@@ -15,9 +15,15 @@ import se.inera.certificate.modules.ts_bas.model.internal.Kognitivt;
 import se.inera.certificate.modules.ts_bas.model.internal.Medicinering;
 import se.inera.certificate.modules.ts_bas.model.internal.Medvetandestorning;
 import se.inera.certificate.modules.ts_bas.model.internal.NarkotikaLakemedel;
+import se.inera.certificate.modules.ts_bas.model.internal.Neurologi;
+import se.inera.certificate.modules.ts_bas.model.internal.Njurar;
+import se.inera.certificate.modules.ts_bas.model.internal.Psykiskt;
 import se.inera.certificate.modules.ts_bas.model.internal.Sjukhusvard;
+import se.inera.certificate.modules.ts_bas.model.internal.SomnVakenhet;
 import se.inera.certificate.modules.ts_bas.model.internal.Syn;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
+import se.inera.certificate.modules.ts_bas.model.internal.Utvecklingsstorning;
+import se.inera.certificate.modules.ts_bas.model.internal.Vardkontakt;
 import se.inera.certificate.modules.ts_bas.rest.dto.ValidateDraftResponseHolder;
 import se.inera.certificate.modules.ts_bas.rest.dto.ValidationMessage;
 import se.inera.certificate.modules.ts_bas.rest.dto.ValidationStatus;
@@ -59,17 +65,92 @@ public class InternalValidatorInstance {
         validateHjartKarl(utlatande.getHjartKarl());
         validateHorselBalans(utlatande.getHorselBalans());
         validateHoSPersonal(utlatande.getSkapadAv());
+
         validateIntygAvser(utlatande.getIntygAvser());
+        validateIdentitetStyrkt(utlatande.getVardkontakt());
+
         validateKognitivt(utlatande.getKognitivt());
         validateMedicinering(utlatande.getMedicinering());
         validateMedvetandestorning(utlatande.getMedvetandestorning());
         validateSyn(utlatande.getSyn());
         validateNarkotikaLakemedel(utlatande.getNarkotikaLakemedel());
         validateSjukhusvard(utlatande.getSjukhusvard());
+        validateNeurologi(utlatande.getNeurologi());
+        validateNjurar(utlatande.getNjurar());
+        validateSomnVakenhet(utlatande.getSomnVakenhet());
+        validatePsykiskt(utlatande.getPsykiskt());
+        validateUtvecklingsstorning(utlatande.getUtvecklingsstorning());
 
         validationResponse.setStatus(getValidationStatus());
 
         return validationResponse;
+    }
+
+    private void validateIdentitetStyrkt(Vardkontakt vardkontakt) {
+        if (vardkontakt == null) {
+            addValidationError("vardkontakt", "ts.validation.vardkontakt.missing");
+            return;
+        }
+        if (vardkontakt.getIdkontroll() == null){
+            addValidationError("identitet", "ts.validation.identitet.missing");
+        }
+    }
+
+    private void validateUtvecklingsstorning(Utvecklingsstorning utvecklingsstorning) {
+        if (utvecklingsstorning == null) {
+            addValidationError("utvecklingsstorning", "ts.validation.utvecklingsstorning.missing");
+            return;
+        }
+        if (utvecklingsstorning.getHarSyndrom() == null) {
+            addValidationError("utvecklingsstorning.harSyndrom", "ts.validation.utvecklingsstorning.harsyndrom.missing");
+        }
+        if (utvecklingsstorning.getPsykiskUtvecklingsstorning() == null) {
+            addValidationError("utvecklingsstorning.psykiskUtvecklingsstorning",
+                    "ts.validation.utvecklingsstorning.psykiskutvecklingsstorning.missing");
+        }
+
+    }
+
+    private void validatePsykiskt(Psykiskt psykiskt) {
+        if (psykiskt == null) {
+            addValidationError("psykiskt", "ts.validation.psykiskt.missing");
+            return;
+        }
+
+        if (psykiskt.getPsykiskSjukdom() == null) {
+            addValidationError("psykiskt", "ts.validation.psykiskt.psykisksjukdom.missing");
+        }
+    }
+
+    private void validateSomnVakenhet(SomnVakenhet somnVakenhet) {
+        if (somnVakenhet == null) {
+            addValidationError("somnVakenhet", "ts.validation.somnvakenhet.missing");
+            return;
+        }
+        if (somnVakenhet.getTeckenSomnstorningar() == null) {
+            addValidationError("somnVakenhet.teckenSomnstorningar",
+                    "ts.validation.somnvakenhet.teckensomnstorningar.missing");
+        }
+    }
+
+    private void validateNjurar(Njurar njurar) {
+        if (njurar == null) {
+            addValidationError("njurar", "ts.validation.njurar.missing");
+            return;
+        }
+        if (njurar.getNedsattNjurfunktion() == null) {
+            addValidationError("njurar.nedsattNjurfunktion", "ts.validation.njurar.nedsattnjurfunktion.missing");
+        }
+    }
+
+    private void validateNeurologi(Neurologi neurologi) {
+        if (neurologi == null) {
+            addValidationError("neurologi", "ts.validation.neurologi.missing");
+            return;
+        }
+        if (neurologi.getNeurologiskSjukdom() == null) {
+            addValidationError("neurologi.neurologiskSjukdom", "ts.validation.neurologi.neurologisksjukdom.missing");
+        }
     }
 
     private void validateSjukhusvard(Sjukhusvard sjukhusvard) {
@@ -84,8 +165,8 @@ public class InternalValidatorInstance {
                     "ts.validation.sjukhusvard.sjukhusEllerLakarkontakt.missing");
             return;
 
-        } 
-        
+        }
+
         if (sjukhusvard.getSjukhusEllerLakarkontakt()) {
             assertDescriptionNotEmpty(sjukhusvard.getAnledning(), "sjukhusvard.anledning",
                     "ts.validation.sjukhusvard.anledning.missing");
@@ -120,11 +201,10 @@ public class InternalValidatorInstance {
             return;
         }
         if (diabetes.getHarDiabetes()) {
-        
-    
+
             if (diabetes.getDiabetesTyp() == null) {
                 addValidationError("diabetes.diabetesTyp", "ts.validation.diabetes.diabetesTyp.missing");
-    
+
             } else if (diabetes.getDiabetesTyp().equals(ObservationsKod.DIABETES_TYP_2.name())) {
                 if (diabetes.getInsulin() == null && diabetes.getKost() == null && diabetes.getTabletter() == null) {
                     addValidationError("diabetes.diabetesTyp", "ts.validation.diabetes.diabetesTyp.must-choose-one");
@@ -204,7 +284,8 @@ public class InternalValidatorInstance {
         }
 
         if (kognitivt.getSviktandeKognitivFunktion() == null) {
-            addValidationError("kognitivt.sviktandeKognitivFunktion", "ts.validation.kognitivt.sviktandeKognitivFunktion.missing");
+            addValidationError("kognitivt.sviktandeKognitivFunktion",
+                    "ts.validation.kognitivt.sviktandeKognitivFunktion.missing");
         }
     }
 
@@ -216,11 +297,13 @@ public class InternalValidatorInstance {
         }
 
         if (medicinering.getStadigvarandeMedicinering() == null) {
-            addValidationError("medicinering.stadigvarandeMedicinering", "ts.validation.medicinering.stadigvarandeMedicinering.missing");
+            addValidationError("medicinering.stadigvarandeMedicinering",
+                    "ts.validation.medicinering.stadigvarandeMedicinering.missing");
             return;
 
         } else if (medicinering.getStadigvarandeMedicinering()) {
-            assertDescriptionNotEmpty(medicinering.getBeskrivning(), "medicinering.beskrivning", "ts.validation.medicinering.beskrivning.missing");
+            assertDescriptionNotEmpty(medicinering.getBeskrivning(), "medicinering.beskrivning",
+                    "ts.validation.medicinering.beskrivning.missing");
         }
     }
 
@@ -232,7 +315,8 @@ public class InternalValidatorInstance {
         }
 
         if (narkotikaLakemedel.getLakarordineratLakemedelsbruk() == null) {
-            addValidationError("narkotikaLakemedel", "ts.validation.narkotikaLakemedel.lakarordineratLakemedelsbruk.missing");
+            addValidationError("narkotikaLakemedel",
+                    "ts.validation.narkotikaLakemedel.lakarordineratLakemedelsbruk.missing");
             return;
 
         } else if (narkotikaLakemedel.getLakarordineratLakemedelsbruk()) {
@@ -249,11 +333,13 @@ public class InternalValidatorInstance {
         }
 
         if (medvetandestorning.getMedvetandestorning() == null) {
-            addValidationError("medvetandestorning.medvetandestorning", "ts.validation.medvetandestorning.medvetandestorning.missing");
+            addValidationError("medvetandestorning.medvetandestorning",
+                    "ts.validation.medvetandestorning.medvetandestorning.missing");
             return;
 
         } else if (medvetandestorning.getMedvetandestorning()) {
-            assertDescriptionNotEmpty(medvetandestorning.getBeskrivning(), "medvetandestorning.beskrivning", "ts.validation.medvetandestorning.beskrivning.missing");
+            assertDescriptionNotEmpty(medvetandestorning.getBeskrivning(), "medvetandestorning.beskrivning",
+                    "ts.validation.medvetandestorning.beskrivning.missing");
         }
     }
 
@@ -274,7 +360,8 @@ public class InternalValidatorInstance {
 
             if (syn.getHogerOga().getMedKorrektion() != null) {
                 if (syn.getHogerOga().getMedKorrektion() < 0.0 || syn.getHogerOga().getMedKorrektion() > 2.0) {
-                    addValidationError("syn.hogerOga.medKorrektion", "ts.validation.syn.hogerOga.medKorrektion.out-of-bounds");
+                    addValidationError("syn.hogerOga.medKorrektion",
+                            "ts.validation.syn.hogerOga.medKorrektion.out-of-bounds");
                 }
             }
         }
@@ -284,12 +371,14 @@ public class InternalValidatorInstance {
         } else {
 
             if (syn.getVansterOga().getUtanKorrektion() < 0.0 || syn.getVansterOga().getUtanKorrektion() > 2.0) {
-                addValidationError("syn.vansterOga.utanKorrektion", "ts.validation.syn.vansterOga.utanKorrektion.missing");
+                addValidationError("syn.vansterOga.utanKorrektion",
+                        "ts.validation.syn.vansterOga.utanKorrektion.missing");
             }
 
             if (syn.getVansterOga().getMedKorrektion() != null) {
                 if (syn.getVansterOga().getMedKorrektion() < 0.0 || syn.getVansterOga().getMedKorrektion() > 2.0) {
-                    addValidationError("syn.vansterOga.medKorrektion", "ts.validation.syn.vansterOga.medKorrektion.out-of-bounds");
+                    addValidationError("syn.vansterOga.medKorrektion",
+                            "ts.validation.syn.vansterOga.medKorrektion.out-of-bounds");
                 }
             }
         }
@@ -299,12 +388,14 @@ public class InternalValidatorInstance {
         } else {
 
             if (syn.getBinokulart().getUtanKorrektion() < 0.0 || syn.getBinokulart().getUtanKorrektion() > 2.0) {
-                addValidationError("syn.binokulart.utanKorrektion", "ts.validation.syn.binokulart.utanKorrektion.missing");
+                addValidationError("syn.binokulart.utanKorrektion",
+                        "ts.validation.syn.binokulart.utanKorrektion.missing");
             }
 
             if (syn.getBinokulart().getMedKorrektion() != null) {
                 if (syn.getBinokulart().getMedKorrektion() < 0.0 || syn.getBinokulart().getMedKorrektion() > 2.0) {
-                    addValidationError("syn.binokulart.medKorrektion", "ts.validation.syn.binokulart.medKorrektion.out-of-bounds");
+                    addValidationError("syn.binokulart.medKorrektion",
+                            "ts.validation.syn.binokulart.medKorrektion.out-of-bounds");
                 }
             }
         }
