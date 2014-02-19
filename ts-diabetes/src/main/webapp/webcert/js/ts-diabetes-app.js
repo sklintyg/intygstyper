@@ -23,7 +23,7 @@
  * Cant seem to inject rootscope in .config, so for routing parameters, we use
  * the global JS config object for now
  */
-var RLIApp = angular.module('RLIEditCertApp', [ 'controllers.rli.webcert', 'services.webcertService', 'modules.messages', 'directives.mi' ]).config(
+var RLIApp = angular.module('ts-diabetes-app', [ 'controllers.ts-diabetes.webcert', 'services.webcertService', 'modules.messages', 'directives.mi' ]).config(
         [ '$routeProvider', function($routeProvider) {
             $routeProvider.when('/edit/:certId', {
                 templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/edit-cert.html',

@@ -19,8 +19,8 @@
 'use strict';
 
 /* Controllers */
-angular.module('controllers.rli.webcert', []);
-angular.module('controllers.rli.webcert').controller('NewCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', 'webcertService', '$routeParams' , function NewCertCtrl($scope, $filter, $location, $rootScope, webcertService, $routeParams) {
+angular.module('controllers.ts-diabetes.webcert', []);
+angular.module('controllers.ts-diabetes.webcert').controller('NewCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', 'webcertService', '$routeParams' , function NewCertCtrl($scope, $filter, $location, $rootScope, webcertService, $routeParams) {
     $scope.cert = {};
     $scope.doneLoading = false;
    
@@ -61,7 +61,7 @@ angular.module('controllers.rli.webcert').controller('NewCertCtrl', [ '$scope', 
 }]);
 
 
-angular.module('controllers.rli.webcert').controller('ListCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', 'webcertService', '$routeParams', function ListCertCtrl($scope, $filter, $location, $rootScope, webcertService, $routeParams) {
+angular.module('controllers.ts-diabetes.webcert').controller('ListCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', 'webcertService', '$routeParams', function ListCertCtrl($scope, $filter, $location, $rootScope, webcertService, $routeParams) {
 	$scope.initial_params = {};
 	$scope.doneLoading = true;
 	
@@ -163,7 +163,7 @@ angular.module('controllers.rli.webcert').controller('ListCertCtrl', [ '$scope',
 	
 }]);
 
-angular.module('controllers.rli.webcert').controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', 'webcertService', '$routeParams', function EditCertCtrl($scope, $filter, $location, $rootScope, webcertService, $routeParams) {
+angular.module('controllers.ts-diabetes.webcert').controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', 'webcertService', '$routeParams', function EditCertCtrl($scope, $filter, $location, $rootScope, webcertService, $routeParams) {
     $scope.cert = {};
     $scope.doneLoading = false;
     $scope.displayLoader = false;
