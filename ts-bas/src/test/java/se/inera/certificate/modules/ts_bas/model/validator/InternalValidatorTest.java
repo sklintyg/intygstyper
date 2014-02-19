@@ -100,6 +100,16 @@ public class InternalValidatorTest {
                 .getField());
     }
     
+    @Test
+    public void testIdentitetMissing() throws Exception {
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-missing-identitet")
+                .asInternalModel();
+        ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
+
+        assertEquals("identitet", getSingleElement(validationResponse.getValidationErrors())
+                .getField());
+    }
+    
     /**
      * Utility method for getting a single element from a collection
      * 
