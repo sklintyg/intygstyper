@@ -64,6 +64,7 @@ public class InternalValidatorInstance {
         validateFunktionsnedsattning(utlatande.getFunktionsnedsattning());
         validateHjartKarl(utlatande.getHjartKarl());
         validateHorselBalans(utlatande.getHorselBalans());
+
         validateHoSPersonal(utlatande.getSkapadAv());
 
         validateIntygAvser(utlatande.getIntygAvser());
@@ -261,7 +262,19 @@ public class InternalValidatorInstance {
     }
 
     private void validateHoSPersonal(final HoSPersonal skapadAv) {
-        // TODO: validate something here?
+        if (skapadAv == null) {
+            LOG.debug("No HoSPersonal found");
+            return;
+        }
+        assertDescriptionNotEmpty(skapadAv.getVardenhet().getPostadress(), "vardenhet.postadress",
+                "ts.validation.vardenhet.postadress.missing");
+        assertDescriptionNotEmpty(skapadAv.getVardenhet().getPostnummer(), "vardenhet.postnummer",
+                "ts.validation.vardenhet.postnummer.missing");
+        assertDescriptionNotEmpty(skapadAv.getVardenhet().getPostort(), "vardenhet.postort",
+                "ts.validation.vardenhet.postort.missing");
+        assertDescriptionNotEmpty(skapadAv.getVardenhet().getTelefonnummer(), "vardenhet.telefonnummer",
+                "ts.validation.vardenhet.telefonnummer.missing");
+        
     }
 
     private void validateIntygAvser(final IntygAvser intygAvser) {
@@ -393,8 +406,9 @@ public class InternalValidatorInstance {
             addValidationError("syn.binokulart", "ts.validation.syn.binokulart.missing");
         } else {
             if (syn.getBinokulart().getUtanKorrektion() == null) {
-                addValidationError("syn.binokulart.utanKorrektion", "ts.validation.syn.binokulart.utankorrektion.missing");
-                
+                addValidationError("syn.binokulart.utanKorrektion",
+                        "ts.validation.syn.binokulart.utankorrektion.missing");
+
             } else if (syn.getBinokulart().getUtanKorrektion() < 0.0 || syn.getBinokulart().getUtanKorrektion() > 2.0) {
                 addValidationError("syn.binokulart.utanKorrektion",
                         "ts.validation.syn.binokulart.utankorrektion.out-of-bounds");

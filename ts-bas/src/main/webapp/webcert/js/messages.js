@@ -53,6 +53,11 @@ var tsBasMessages = {
 		"ts.label.korkort.annat" : "Annat",
 
 		"ts.validation.utlatande.missing" : "Utlatande saknas",
+		
+		"ts.validation.vardenhet.postadress.missing" : "Kunde inte hämta postadress för vårdenheten från HSA, måste ifyllas manuellt",
+		"ts.validation.vardenhet.postnummer.missing" : "Kunde inte hämta postnummer för vårdenheten från HSA, måste ifyllas manuellt",
+		"ts.validation.vardenhet.postort.missing" : "Kunde inte hämta postort för vårdenheten från HSA, måste ifyllas manuellt",
+		"ts.validation.vardenhet.telefonnummer.missing" : "Kunde inte hämta telefonnummer för vårdenheten från HSA, måste ifyllas manuellt",
 
 		"ts.validation.sjukhusvard.missing" : "Sjukhusvård saknas",
 		"ts.validation.sjukhusvard.sjukhusellerlakarkontakt.missing" : "Sjukhus eller läkarkontakt saknas",

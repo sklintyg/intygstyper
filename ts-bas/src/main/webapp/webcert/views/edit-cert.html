@@ -652,7 +652,13 @@
                 <h3 class="title">
                     <span message key="ts.label.unit"></span><span class="help">?</span>
                 </h3>
+	   
                 <div class="text">
+                    <div class="alert alert-error" ng-if="validationMessagesGrouped.vardenhet">
+		                <ul>
+		                  <li ng-repeat="message in validationMessagesGrouped.vardenhet"><span message key="{{message.message}}"></span></li>
+		                </ul>
+	              	</div>
                     <label class="control-label">{{cert.skapadAv.vardenhet.enhetsnamn}} ({{cert.skapadAv.vardenhet.enhetsid}}), {{cert.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</label>
 
                     <div class="form-horizontal">
