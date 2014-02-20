@@ -36,6 +36,8 @@ import se.inera.certificate.modules.ts_bas.rest.dto.ValidationStatus;
  */
 public class InternalValidatorInstance {
 
+    private static final String POSTNUMMER_FORMAT = "\\d{3}\\s?\\d{2}";
+
     private static Logger LOG = LoggerFactory.getLogger(InternalValidatorInstance.class);
 
     private ValidateDraftResponseHolder validationResponse;
@@ -268,8 +270,13 @@ public class InternalValidatorInstance {
         }
         assertDescriptionNotEmpty(skapadAv.getVardenhet().getPostadress(), "vardenhet.postadress",
                 "ts.validation.vardenhet.postadress.missing");
-        assertDescriptionNotEmpty(skapadAv.getVardenhet().getPostnummer(), "vardenhet.postnummer",
-                "ts.validation.vardenhet.postnummer.missing");
+        if (assertDescriptionNotEmpty(skapadAv.getVardenhet().getPostnummer(), "vardenhet.postnummer",
+                "ts.validation.vardenhet.postnummer.missing").success()) {
+            if (!skapadAv.getVardenhet().getPostnummer().matches(POSTNUMMER_FORMAT)) {
+                addValidationError("vardenhet.postnummer", "ts.validation.vardenhet.postnummer.incorrect-format");
+            }
+        }
+        
         assertDescriptionNotEmpty(skapadAv.getVardenhet().getPostort(), "vardenhet.postort",
                 "ts.validation.vardenhet.postort.missing");
         assertDescriptionNotEmpty(skapadAv.getVardenhet().getTelefonnummer(), "vardenhet.telefonnummer",
@@ -433,11 +440,13 @@ public class InternalValidatorInstance {
      * @param errorCode
      *            the errorCode to log in validation errors
      */
-    private void assertDescriptionNotEmpty(String beskrivning, String field, String errorCode) {
+    private AssertionResult assertDescriptionNotEmpty(String beskrivning, String field, String errorCode) {
         if (beskrivning == null || beskrivning.isEmpty()) {
             addValidationError(field, errorCode);
             LOG.debug(field + " " + errorCode);
+            return AssertionResult.FAILURE;
         }
+        return AssertionResult.SUCCESS;
     }
 
     /**
@@ -461,5 +470,28 @@ public class InternalValidatorInstance {
     private void addValidationError(String field, String msg) {
         validationResponse.addErrorMessage(new ValidationMessage(field, msg));
         LOG.debug(field + " " + msg);
+    }
+    
+    /**
+     * Since the validator assertions doesn't throw exceptions on assertion failure, they instead return an assertion
+     * result. This might be used to implement conditional logic based on if an assertion {@link #failed()} or was
+     * {@link #success()}ful.
+     */
+    protected static enum AssertionResult {
+        SUCCESS(true), FAILURE(false);
+
+        private AssertionResult(boolean assertSuccessfull) {
+            this.assertSuccessful = assertSuccessfull;
+        }
+
+        private final boolean assertSuccessful;
+
+        public boolean failed() {
+            return !assertSuccessful;
+        }
+
+        public boolean success() {
+            return assertSuccessful;
+        }
     }
 }
