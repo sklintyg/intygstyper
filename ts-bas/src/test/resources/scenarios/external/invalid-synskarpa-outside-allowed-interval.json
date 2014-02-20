@@ -342,14 +342,6 @@
             "observationskod": {
                 "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
                 "codeSystemName": "kv_observationer_intyg",
-                "code": "OBS10"
-            },
-            "forekomst": false
-        },
-        {
-            "observationskod": {
-                "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
-                "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS11"
             },
             "forekomst": false
@@ -367,6 +359,14 @@
                 "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
                 "codeSystemName": "kv_observationer_intyg",
                 "code": "OBS13"
+            },
+            "forekomst": false
+        },
+        {
+            "observationskod": {
+                "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
+                "codeSystemName": "kv_observationer_intyg",
+                "code": "OBS14"
             },
             "forekomst": false
         },

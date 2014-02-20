@@ -6,7 +6,7 @@ import static se.inera.certificate.modules.ts_bas.model.codes.Kodverk.SNOMED_CT;
 import se.inera.certificate.model.Kod;
 
 public enum ObservationsKod implements CodeSystem {
-    
+
     /** Synfältsdefekter (H53.4) */
     SYNFALTSDEFEKTER("H53.4", "Synfältsdefekter", ICD_10),
 
@@ -30,7 +30,7 @@ public enum ObservationsKod implements CodeSystem {
 
     /** Synskärpa, med glasögon (408333000) */
     SYNSKARPA_GLASOGON("408333000", "Synskärpa, med glasögon", SNOMED_CT),
-    
+
     /** Kontaktlinser (285049007) */
     KONTAKTLINSER("285049007", "Kontaktlinser", SNOMED_CT),
 
@@ -75,7 +75,7 @@ public enum ObservationsKod implements CodeSystem {
 
     /** Har diabetes? (73211009) */
     HAR_DIABETES("73211009", "Har diabetes", SNOMED_CT),
-            
+
     /** Diabetes mellitus typ 1 (E10) */
     DIABETES_TYP_1("E10", "Diabetes mellitus typ 1", ICD_10),
 
@@ -84,7 +84,7 @@ public enum ObservationsKod implements CodeSystem {
 
     /** Diabetiker på Kostbehandling (OBS9) */
     DIABETIKER_KOSTBEHANDLING("OBS9", "Diabetiker på kostbehandling", OBSERVATIONER),
-    
+
     /** Diabetiker på tablettbehandling (170746002) */
     DIABETIKER_TABLETTBEHANDLING("170746002", "Diabetiker på tablettbehandling", SNOMED_CT),
 
@@ -100,22 +100,18 @@ public enum ObservationsKod implements CodeSystem {
     /** Epilepsi, ospecificerad (G40.9) */
     EPILEPSI("G40.9", "Epilepsi, ospecificerad", ICD_10),
 
-    /** Nedsatt njurfunktion som kan innebära trafiksäkerhetsrisk (OBS10) */
-    NEDSATT_NJURFUNKTION_TRAFIKSAKERHETSRISK("OBS10", "Nedsatt njurfunktion som kan innebära trafiksäkerhetsrisk",
+    /** Nedsatt njurfunktion som kan innebära trafiksäkerhetsrisk (OBS11) */
+    NEDSATT_NJURFUNKTION_TRAFIKSAKERHETSRISK("OBS11", "Nedsatt njurfunktion som kan innebära trafiksäkerhetsrisk",
             OBSERVATIONER),
 
-    /** Tecken på sviktande kognitiv funktion (OBS11) */
-    SVIKTANDE_KOGNITIV_FUNKTION("OBS11", "Tecken på sviktande kognitiv funktion", OBSERVATIONER),
+    /** Tecken på sviktande kognitiv funktion (OBS12) */
+    SVIKTANDE_KOGNITIV_FUNKTION("OBS12", "Tecken på sviktande kognitiv funktion", OBSERVATIONER),
 
-    /** Tecken på sömn- eller vakenhetsstörning (OBS12) */
-    SOMN_VAKENHETSSTORNING("OBS12", "Tecken på sömn- eller vakenhetsstörning", OBSERVATIONER),
+    /** Tecken på sömn- eller vakenhetsstörning (OBS13) */
+    SOMN_VAKENHETSSTORNING("OBS13", "Tecken på sömn- eller vakenhetsstörning", OBSERVATIONER),
 
-    /** Tecken på missbruk av alkohol, narkotika eller läkemedel (OBS13) */
-    TECKEN_PA_MISSBRUK("OBS13", "Tecken på missbruk av alkohol, narkotika eller läkemedel", OBSERVATIONER),
-
-    /** Behov av provtagning avseende aktuellt bruk av alkohol eller narkotika (OBS14) */
-    BEHOV_AV_PROVTAGNING_MISSBRUK("OBS14", "Behov av provtagning avseende aktuellt bruk av alkohol eller narkotika",
-            OBSERVATIONER),
+    /** Tecken på missbruk av alkohol, narkotika eller läkemedel (OBS14) */
+    TECKEN_PA_MISSBRUK("OBS14", "Tecken på missbruk av alkohol, narkotika eller läkemedel", OBSERVATIONER),
 
     /** Regelbundet läkarordinerat bruk av läkemedel som kan innebära en trafiksäkerhetsrisk (OBS15) */
     LAKEMEDELSANVANDNING_TRAFIKSAKERHETSRISK("OBS15",

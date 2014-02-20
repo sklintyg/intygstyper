@@ -223,28 +223,28 @@
 
   <!-- Njursjukdomar (10) -->
   <p:observation>
-    <p:observationskod code="OBS10" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
+    <p:observationskod code="OBS11" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
   <!-- Demens och kognitiva störningar (11) -->
   <p:observation>
-    <p:observationskod code="OBS11" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
+    <p:observationskod code="OBS12" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
   <!-- Sömn- och vakenhetsstörningar (12) -->
   <p:observation>
-    <p:observationskod code="OBS12" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
+    <p:observationskod code="OBS13" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
 
   <!-- Alkohol, narkotika och läkemedel (13.1 - 13.2) -->
   <p:observation>
-    <p:observationskod code="OBS13" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
+    <p:observationskod code="OBS14" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
