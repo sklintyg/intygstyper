@@ -18,17 +18,8 @@
  */
 package se.inera.certificate.modules.ts_bas.model.converter;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
-import se.inera.certificate.modules.ts_bas.model.codes.BefattningKod;
-import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
-import se.inera.certificate.modules.ts_bas.model.codes.CodeSystem;
 import se.inera.certificate.modules.ts_bas.model.internal.HoSPersonal;
 import se.inera.certificate.modules.ts_bas.model.internal.Patient;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
@@ -123,6 +114,10 @@ public class WebcertModelFactory {
         vardenhet.setVardgivare(convertVardgivareToEdit(vardenhetDto.getVardgivare()));
 
         // TODO Populate with the address of the Vardenhet
+        vardenhet.setPostadress(vardenhetDto.getPostadress());
+        vardenhet.setPostort(vardenhetDto.getPostort());
+        vardenhet.setPostnummer(vardenhetDto.getPostnummer());
+        vardenhet.setTelefonnummer(vardenhetDto.getTelefonnummer());
 
         return vardenhet;
     }
@@ -136,35 +131,4 @@ public class WebcertModelFactory {
         return vardgivare;
     }
 
-    private Collection<String> convertKodToString(List<Kod> specialiteter, Class<? extends CodeSystem> type) {
-        List<String> intSpecialiteter = new ArrayList<>();
-        for (Kod kod : specialiteter) {
-            intSpecialiteter.add(CodeConverter.getInternalNameFromKod(kod, type));
-        }
-        return intSpecialiteter;
-    }
-
-    private Vardenhet convertVardenhetToEdit(se.inera.certificate.model.Vardenhet enhet) {
-        if (enhet == null) {
-            return null;
-        }
-        Vardenhet vardenhet = new Vardenhet();
-        vardenhet.setEnhetsid(enhet.getId().getExtension());
-        vardenhet.setEnhetsnamn(enhet.getNamn());
-        vardenhet.setEpost(enhet.getEpost());
-        vardenhet.setPostadress(enhet.getPostadress());
-        vardenhet.setPostort(enhet.getPostort());
-        vardenhet.setPostnummer(enhet.getPostnummer());
-        vardenhet.setTelefonnummer(enhet.getTelefonnummer());
-        vardenhet.setVardgivare(convertVardgivareType(enhet.getVardgivare()));
-
-        return vardenhet;
-    }
-
-    private Vardgivare convertVardgivareType(se.inera.certificate.model.Vardgivare source) {
-        Vardgivare vardgivare = new Vardgivare();
-        vardgivare.setVardgivarid(source.getId().getExtension());
-        vardgivare.setVardgivarnamn(source.getNamn());
-        return vardgivare;
-    }
 }
