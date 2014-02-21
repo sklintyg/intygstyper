@@ -74,7 +74,7 @@
             </ul>
           </div>
 
-          <p>Information om Transportstyrelsens föreskrifter finns under länken Väg och sedan länken Trafikmedicin på <a href="http://www.transportstyrelsen.se" target="_blank">www.transportstyrelsen.se</a>.</p>
+          <p>Information om Transportstyrelsens föreskrifter finns under länken Väg och sedan länken Trafikmedicin på <a href="http://www.transportstyrelsen.se" target="_blank">www.transportstyrelsen.se <img src="/img/link_icon.png"></a>.</p>
 
           <div class="control-group clearfix">
             <label class="checkbox checkbox-columns span3" ng-repeat="typ in cert.intygAvser.korkortstyp track by $index"><input id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox" ng-model="typ.selected"> <span message key="ts.label.korkort.{{typ.type}}"></span></label>
@@ -95,26 +95,29 @@
         </div>
 
         <div class="alert alert-info">
-          Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget ska utfärdas i enlighet med vad som sägs i 17 kap. och får inte vara äldre än två månader när det inkommer till Transportstyrelsen. Se <a href="http://www.transportstyrelsen.se" target="_blank">www.transportstyrelsen.se</a>. Därefter "Väg" och "Trafikmedicin".
+          Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget ska utfärdas i enlighet med vad som sägs i 17 kap. och får inte vara äldre än två månader när det inkommer till Transportstyrelsen. Se <a href="http://www.transportstyrelsen.se" target="_blank">www.transportstyrelsen.se <img src="/img/link_icon.png"></a>. Därefter "Väg" och "Trafikmedicin".
         </div>
 
         <!-- 1. Allmänt -->
         <div wc-field field-label="ts.label.allmant">
-          <div class="">
+          <div class="control-group">
             <label for="diabetesyear"> Vilket år ställdes diagnosen diabetes?</label>
             <div class="controls">
               <input id="diabetesyear" type="text" maxlength="4" />
             </div>
           </div>
-          <p>Patienten har diabetes:
+          <div class="control-group">
+            Patienten har diabetes:
             <label class="radio"><input name="diabetestype1" type="radio" value="E11" ng-model="cert.diabetes.diabetesTyp">Typ 1</label>
             <label class="radio"><input name="diabetestype2" type="radio" value="E12" ng-model="cert.diabetes.diabetesTyp">Typ 2</label>
-          </p>
-          Behandling:
-          <label class="checkbox"><input name="diabetestreat1" type="checkbox" ng-model="cert.diabetes.kost"> Kost</label>
-          <label class="checkbox"><input name="diabetestreat2" type="checkbox" ng-model="cert.diabetes.tabletter"> Tabletter</label>
-          <label class="checkbox"><input name="diabetestreat3" type="checkbox" ng-model="cert.diabetes.insulin"> Insulin</label>
-          <div class="">
+          </div>
+          <div class="control-group">
+            Behandling:
+            <label class="checkbox"><input name="diabetestreat1" type="checkbox" ng-model="cert.diabetes.kost"> Kost</label>
+            <label class="checkbox"><input name="diabetestreat2" type="checkbox" ng-model="cert.diabetes.tabletter"> Tabletter</label>
+            <label class="checkbox"><input name="diabetestreat3" type="checkbox" ng-model="cert.diabetes.insulin"> Insulin</label>
+          </div>
+          <div class="control-group">
             <label for="diabetesyear"> Annan behandling, vilken? (ej obligatorisk)</label>
             <div class="controls">
               <input id="diabetesyear" type="text" ng-model="cert.allmant" wc-maxlength maxlength="53" />
@@ -151,7 +154,7 @@
               <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
               <td>
                 <p>d) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under det senaste året?</p>
-                <label for="diabetesyear"> Vilket år ställdes diagnosen diabetes?</label>
+                <label for="diabetesyear"> Hur många sådana episoder?</label>
                 <div class="controls">
                   <input id="diabetesyear" type="text" ng-model="cert.syn.nystagmus" wc-maxlength maxlength="46" />
                 </div>
@@ -161,11 +164,26 @@
               <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
               <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
               <td><p>e) Har patienten haft allvarlig hypoglykemi i trafiken under det senaste året?</p>
-                <label for="diabetesyear"> Vilket år ställdes diagnosen diabetes?</label>
+                <label for="diabetesyear"> Hur många sådana episoder och när inträffade de?</label>
                 <div class="controls">
                   <input id="diabetesyear" type="text" ng-model="cert.syn.nystagmus" wc-maxlength maxlength="40" />
                 </div>
               </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td><h5 class="inline-heading">För innehav av behörigheterna C1, C1E, C, CE, D1, D1E, D, DE och taxiförarlegitimation ska även fråga f-g besvaras</h5></td>
+            </tr>
+            <tr>
+              <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
+              <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
+              <td>f) Genomför patienten egenkontroller av blodsocker?</td>
+            </tr>
+            <tr>
+              <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
+              <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
+              <td>g) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under vaken tid det senaste året?</td>
             </tr>
           </table>
         </div>
@@ -184,7 +202,7 @@
             <tr>
               <td></td>
               <td></td>
-              <td><h5 class="inline-heading">Alternativ 1</h5></td>
+              <td><h5>Alternativ 1</h5></td>
             </tr>
             <tr>
               <td></td>
@@ -277,7 +295,7 @@
               <td></td>
               <td>
                 <p>Patienten uppfyller kraven enligt 6 kap. i Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Föreskrivna krav på läkarens specialistkompetens vid diabetessjukdom anges i 17 kap.
-                   Se <a href="http://www.transportstyrelsen.se" target="_blank">www.transportstyrelsen.se</a>. Därefter "Väg" och "Trafikmedicin".</p>
+                   Se <a href="http://www.transportstyrelsen.se" target="_blank">www.transportstyrelsen.se <img src="/img/link_icon.png"></a>. Därefter "Väg" och "Trafikmedicin".</p>
 
                 <div class="control-group">
                   <label class="radio"><input name="behorighetnagon" type="radio" ng-value="true" ng-model="form.behorighet"> Någon av följande behörigheter</label>
