@@ -74,6 +74,7 @@ public class PdfGenerator {
         INTYG_AVSER.addField(IntygAvserKategori.D, "Falt_16");
         INTYG_AVSER.addField(IntygAvserKategori.DE, "Falt_17");
         INTYG_AVSER.addField(IntygAvserKategori.TAXI, "Falt_18");
+        INTYG_AVSER.addField(IntygAvserKategori.ANNAT, "Falt_19");
     }
 
     private static final CheckField ID_KONTROLL_IDKORT = new CheckField("Falt_66");
@@ -157,13 +158,13 @@ public class PdfGenerator {
         BEDOMNING.addField(BedomningKorkortstyp.C, "Falt_73");
         BEDOMNING.addField(BedomningKorkortstyp.CE, "Falt_74");
         BEDOMNING.addField(BedomningKorkortstyp.D1, "Falt_75");
-        BEDOMNING.addField(BedomningKorkortstyp.D1E, "Falt_75:1");
-        BEDOMNING.addField(BedomningKorkortstyp.D, "Falt_75:2");
-        BEDOMNING.addField(BedomningKorkortstyp.DE, "Falt_75:3");
-        BEDOMNING.addField(BedomningKorkortstyp.TAXI, "Falt_75:4");
-        BEDOMNING.addField(BedomningKorkortstyp.ANNAT, "Falt_77");
+        BEDOMNING.addField(BedomningKorkortstyp.D1E, "Falt_76");
+        BEDOMNING.addField(BedomningKorkortstyp.D, "Falt_77");
+        BEDOMNING.addField(BedomningKorkortstyp.DE, "Falt_78");
+        BEDOMNING.addField(BedomningKorkortstyp.TAXI, "Falt_79");
+        BEDOMNING.addField(BedomningKorkortstyp.ANNAT, "Falt_81");
     }
-    private static final CheckField BEDOMNING_INTE_TA_STALLNING = new CheckField("Falt_76");
+    private static final CheckField BEDOMNING_INTE_TA_STALLNING = new CheckField("Falt_80");
 
     private static final StringField BEDOMNING_BOR_UNDERSOKAS_SPECIALIST = new StringField("FaltDiv6");
 
