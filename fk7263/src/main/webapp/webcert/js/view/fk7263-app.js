@@ -3,7 +3,7 @@
 /*
  * App Module
  */
-angular.module('FK7263ViewCertApp', [ 'ui.bootstrap', 'wc.fk7263.controllers', 'wc.fk7263.directives', 'wc.fk7263.services', 'wc.fragasvarmodule', 'modules.messages', 'wc.common',
+angular.module('FK7263ViewCertApp', [ 'ui.bootstrap', 'ngRoute', 'ngSanitize', 'wc.fk7263.controllers', 'wc.fk7263.directives', 'wc.fk7263.services', 'wc.fragasvarmodule', 'modules.messages', 'wc.common',
         'wc.utils', 'wc.common.fragasvarmodule' ]);
 angular.module('FK7263ViewCertApp').config([ '$routeProvider', '$httpProvider', 'http403ResponseInterceptorProvider', function($routeProvider, $httpProvider, http403ResponseInterceptorProvider) {
     $routeProvider.when('/edit', {

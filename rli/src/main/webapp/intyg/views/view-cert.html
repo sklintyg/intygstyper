@@ -59,7 +59,7 @@
         <p>
           <message key="view.label.pagedescription" />
         </p>
-        <form id="view-as-pdf" action="/moduleapi/certificate/{{cert.utlatandeid}}/pdf" method="get" target="_blank">
+        <form id="view-as-pdf" action="{{'/moduleapi/certificate/' + cert.utlatandeid + '/pdf'}}" method="get" target="_blank">
           <p class="btn-row">
             <button type="button" ng-click="open()" class="btn btn-success">
               <message key="button.send" />
@@ -127,10 +127,10 @@
                   <span class="tag"><message key="view.label.issuer" /></span> <span id="caregiver">{{cert.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</span>
                 </div>
               </div>
-             
+
             </div>
             <div class="cert-body">
-              
+
 				  <div class="body-row">
 	              	<h3>Information om den avbeställda resan</h3>
 	                <span class="title">Bokningsnummer</span> <span id="travel-booking-ref" class="text">{{cert.arrangemang.bokningsreferens}}</span><br/>
@@ -139,7 +139,7 @@
 	                <span class="title">Datum för avresa</span> <span id="travel-departure-date" class="text">{{cert.arrangemang.arrangemangsdatum}}</span><br/>
 	                <span class="title">Datum då resan avbeställdes</span> <span id="travel-cancel-date" class="text">{{cert.arrangemang.avbestallningsdatum | date:'longDate'}}</span>
 	              </div>
-	              
+
 	              <div class="body-row" ng-switch on="cert.rekommendation.rekommendationskod">
 					<h3>Läkares rekommendation</h3>
 	              	<span class="title">Rekommendation</span>
@@ -149,27 +149,27 @@
 	                <span ng-switch-when="REK4" class="text">Jag avråder ej från resa. Graviditeten utgör inget medicinskt hinder för resa.</span>
 	                <span ng-switch-when="REK5" class="text">Resenären, som är nära anhörig till patienten, bör ej genomföra resan. Detta emedan patientens tillstånd är allvarligt.</span>
 	                <span ng-switch-when="REK6" class="text">Resenären, som är nära anhörig till patienten, bör ej genomföra resan. Detta emedan patientens tillstånd föranleder speciell omvårdnad genom resenärens försorg.</span>
-	                <span ng-switch-when="REK7" class="text">Jag avråder ej från resa. Patientens = anhörig till resenären, tillstånd utgör inget hinder för resenären att resa.</span>	                
+	                <span ng-switch-when="REK7" class="text">Jag avråder ej från resa. Patientens = anhörig till resenären, tillstånd utgör inget hinder för resenären att resa.</span>
 	              </div>
-	              
+
 	              <div class="body-row" ng-show="cert.undersokning.orsakforavbokning == 'RESENAR_GRAVID'">
 	              	<h3>Förlossningsdetaljer</h3>
 	              	<span class="title">Beräknat födelsedatum</span>
 	              	<span class="text">Barnet beräknas födas {{cert.undersokning.graviditet.beraknatForlossningsdatum}}</span>
-	              	
+
 	              </div>
-	              
+
 	              <div class="body-row">
 	              	<h3>Om den akutella sjukdomen/komplikationen</h3>
 			<div ng-show="cert.undersokning.forstaUndersokningsdatum">
 	                  <span class="title">Datum för första undersökning</span> <span id="examination-first-date" class="text">{{cert.undersokning.forstaUndersokningsdatum | date:'longDate'}}</span><br/></div>
 			<div ng-show="cert.undersoking.forstaUndersokningsplats">
 	                  <span class="title">Plats för första undersökning</span> <span id="examination-first-place" class="text">{{cert.undersokning.forstaUndersokningsplats}}</span>
-			</div><br/>             
+			</div><br/>
 	                <span class="title">Datum för undersökning</span> <span id="examination-date" class="text">{{cert.undersokning.undersokningsdatum | date:'longDate'}}</span><br/>
 	                <span class="title">Plats för undersökning</span> <span id="examination-place" class="text">{{cert.undersokning.utforsVid.enhetsnamn}}</span>
 	              </div>
-	              
+
 	              <div class="body-row" ng-show="cert.rekommendation.sjukdomskannedom != 'SJK4'" ng-switch on="cert.rekommendation.sjukdomskannedom">
 	              	<h3>Sjukdomskännedom</h3>
 	              	<span class="title">Beskrivning</span>
@@ -177,13 +177,13 @@
 	                <span ng-switch-when="SJK2" class="text">Patientens sjukdom/komplikation är kronisk, var känd vid inbokningstillfället och utgjorde då inget hinder för resan. Tillståndet har nu förvärrats på ett sätt som vid bokningstillfället ej var möjligt att förutse</span>
 	                <span ng-switch-when="SJK3" class="text">Patientens sjukdom/komplikation är kronisk, var känd vid inbokningstillfället och utgjorde då inget hinder för resan. Tillståndet har nu förvärrats på ett sätt som vid bokningstillfället var möjligt att förutse</span>
 	              </div>
-	              
+
 	              <div class="body-row" ng-show="cert.rekommendation.sjukdomskannedom == 'SJK4'">
 	              	<h3>Sjukdomskännedom</h3>
 	              	<span class="title">Beskrivning</span>
 	              	<span class="text">{{cert.rekommendation.beskrivning}}</span>
-	              </div> 
-	              
+	              </div>
+
 	              <div class="body-row">
 	              	<h3>Utfärdare</h3>
 	              	<span class="title">Läkare</span> <span id="physician-name-id" class="text">{{cert.skapadAv.fullstandigtNamn}} ({{cert.skapadAv.personid}})</span><br/>

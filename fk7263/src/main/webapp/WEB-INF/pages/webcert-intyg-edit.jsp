@@ -42,7 +42,7 @@
 <link rel="stylesheet" href="<c:url context="/m/fk7263" value="/webcert/css/inera-certificate.css"/>">
 
 <script type="text/javascript" src="/usercontext.jsp"></script>
-  
+
 <script type="text/javascript">
     /**
      Global JS config/constants for this app, to be used by scripts
@@ -59,15 +59,15 @@
 
   <a id="top"></a>
   <div class="container-fluid">
-	  
+
     <div class="row-fluid">
       <div class="span12 webcert-col webcert-col-single" ng-controller="EditCertCtrl">
-	
+
 			  <noscript>
 			    <h1>
 			      <span><spring:message code="error.noscript.title" /></span>
 			    </h1>
-			    
+
 			    <div class="alert alert-error">
 			      <spring:message code="error.noscript.text" />
 			    </div>
@@ -77,12 +77,14 @@
 			  <div id="view" ng-view></div>
 	    </div>
 	  </div>
-	</div>				  
-    
+	</div>
+
   <%-- Dependencies to common (3rd party) components loaded from web app running at "/" context--%>
-  <script type="text/javascript" src="/js/vendor/angular/1.1.5/angular.js"></script>
-  <script type="text/javascript" src="/js/vendor/angular/1.1.5/i18n/angular-locale_sv-se.js"></script>
-  <script type="text/javascript" src="/js/vendor/ui-bootstrap/0.7.0/ui-bootstrap-tpls-0.7.0.js"></script>
+  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/js/vendor/angular/1.2.13/angular.js"/>"></script>
+  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/js/vendor/angular/1.2.13/angular-route.min.js"/>"></script>
+  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/js/vendor/angular/1.2.13/angular-sanitize.min.js"/>"></script>
+  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/js/vendor/angular/1.2.13/i18n/angular-locale_sv-se.js"/>"></script>
+  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/js/vendor/ui-bootstrap/0.7.0/ui-bootstrap-tpls-0.7.0.js"/>"></script>
 
   <%-- Dependencies to common components loaded from web app running at "/" context--%>
   <script type="text/javascript" src="/js/common/wc-message-module.js"></script>

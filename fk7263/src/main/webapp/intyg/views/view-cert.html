@@ -16,7 +16,7 @@
         <p>
           <div message key="view.label.pagedescription"></div>
         </p>
-        <form id="view-as-pdf" action="/moduleapi/certificate/{{cert.id}}/pdf" method="get" target="_blank">
+        <form id="view-as-pdf" action="{{'/moduleapi/certificate/' + cert.id + '/pdf'}}" method="get" target="_blank">
           <p class="btn-row">
             <button id="sendCertificateBtn" type="button" ng-click="send()" class="btn btn-success">
               <span message key="view.button.sendToFK"></span>
