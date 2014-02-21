@@ -18,327 +18,363 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<div class="row-fluid">
-  <div>
-    <!-- Content -->
-    <div class="row-fluid">
-      <div class="span7">
-        <h1>
-       	  Mockup for input in Webcert
-        </h1>
+<div class="header-fix-top">
+  <div class="header-wrapper" ng-hide="widgetState.collapsedHeader" ng-animate="'menucollapse'">
+    <div id="wcHeader" wc-header user="WC_CONTEXT" default-active="index">
+    </div>
+  </div>
+  <div class="header-fix-panel">
+    <div class="header-fix-top-expand">
+      <div class="header-fix-top-expand-wrapper">
+        <button class="btn btn-link" ng-click="toggleHeader()"><span ng-if="widgetState.collapsedHeader">Visa</span><span ng-if="!widgetState.collapsedHeader">Dölj</span> meny</button>
       </div>
     </div>
-    <section id="certificate" class="certificate">
+    <a class="backlink-icon" href="/web/dashboard#/create" title="Tillbaka till Skriv intyg"></a>
 
-      <div class="row-fluid">
-        <div class="span12">
-          <div class="cert">
-            <div class="cert-body">
-              <form name="ts-diabetesForm">
+    <h1 style="display: inline-block; margin-right: 20px;"><span message key="ts.label.certtitle"></span></h1>
 
-		<div class="row-fluid">
-		  <input class="btn" style="margin:10px;"
-			 type="button" value="Spara utlåtande" id="submit" name="submit" ng-click="saveCert()" />
-
-		  <input class="btn" style="margin:10px;"
-			 type="button" value="Ta bort utkast" id="delete" name="delete" ng-click="deleteDraft()" />
-		  
-		  <a href="#/list"><input class="btn" style="margin:10px;"
-					  type="button" value="Visa lista" id="submit" name="submit" ng-click="saveCert()"/> </a>
-		</div> 
-
-		<label><input type="checkbox" ng-model="showJsonView"/> Visa JSON-debugger</label>
-		
-	  <!-- Loading spinner: visibility defined by $scope.doneLoading  -->
-	  <div ng-hide="doneLoading" style="text-align: center; padding: 20px;">
-	    <img src="/img/ajax-loader.gif" style="text-align: center;" />
-	    <p style="text-align: center; color: #64ABC0; margin-top: 20px;">
-	      <strong><message key="view.message.certificateloading" /></strong>
-	    </p>
-	  </div>
-
-	  <!-- Loading spinner: visibility defined by $scope.doneLoading  -->
-	  <div ng-show="displayLoader" style="text-align: center; padding: 20px;">
-	    <img src="/img/ajax-loader.gif" style="text-align: center;" />
-	    <p style="text-align: center; color: #64ABC0; margin-top: 20px;">
-	      <strong><message key="view.message.certificatesaving" /></strong>
-	    </p>
-	  </div>
-	  
-		<div id="wrapper_content" ng-show="doneLoading">
-			<div class="body-row" ng-show="showJsonView">           
-			  <pre>
-			    {{cert | json}}
-			  </pre>
-          	</div>	  
-			
-			<div class="body-row">
-			  <span ng-show="ts-diabetesForm.patient_fornamn.$error.required || ts-diabetesForm.patient_efternamn.$error.required || ts-diabetesForm.patient_id.$error.required"
-				style="color:red; font-weight:bold; margin-left:10px;">
-			    Information saknas
-			  </span>
-			  
-			  <span class="title">Om patienten:</span> 
-			  <div id="left-col" style="position:absolute; left:0;">
-			    <span class="text" style="display:block; padding:10px;">Förnamn:</span>
-			    <span class="text" style="display:block; padding:10px;">Mellannamn:</span>
-			    <span class="text" style="display:block; padding:10px;">Efternamn:</span>
-			    <span class="text" style="display:block; padding:10px;">Personnummer:</span>
-			  </div>
-			  
-			  <div id="right-col" style="position:relative; left:300px; top:0px; width:60%; padding:10px;">
-			    <input type="text" required style="display:block;" name="patient_fornamn" ng-model="cert.patient.fornamn">
-			    <input type="text" style="display:block;" name="patient_mellannamn" ng-model="cert.patient.mellannamn">
-			    <input type="text" required style="display:block;" name="patient_efternamn" ng-model="cert.patient.efternamn">
-			    <input type="text" required style="display:block;" name="patient_id" ng-model="cert.patient.id"/>
-		          </div>
-			  
-			</div>
-	
-			
-			<div class="body-row">
-			  <span ng-show="ts-diabetesForm.arrangemang_plats.$error.required || ts-diabetesForm.arrangeman_datum.$error.required || ts-diabetesForm.arrangemang_bokningsdatum.$error.required"
-			   style="color:red; font-weight:bold; margin-left:10px;">
-			    Information saknas
-			  </span>
-	
-	
-			  <span class="title">Information om resa</span> 
-	
-			  <div style="margin:10px">
-			    <div id="left-col" style="position:absolute; left:0;">
-			      <span class="text" style="display:block; padding:10px;">Avbeställing avser resa till:</span>
-			      <span class="text" style="display:block; padding:10px;">Avresedatum för resan:</span>
-			      <span class="text" style="display:block; padding:10px;">Bokningsnummer:</span>
-			      <span class="text" style="display:block; padding:10px;">Inbokningsdatum:</span>
-			      <span class="text" style="display:block; padding:10px;">Avbeställningsdatum:</span>
-			    </div>
-			    
-			    <div id="right-col" style="position:relative; left:300px; top:0px;">
-			      <input type="text" style="display:block;" name="arrangemang_plats" ng-model="cert.arrangemang.plats" required>
-			      <input type="text" style="display:block;" name="arrangemang_datum" ng-model="cert.arrangemang.arrangemangsdatum" required>
-			      <input type="text" style="display:block;" name="arrangemang_referens" ng-model="cert.arrangemang.bokningsreferens">
-			      <input type="text" style="display:block;" name="arrangemang_bokningsdatum" ng-model="cert.arrangemang.bokningsdatum" required/>
-			      <input type="text" style="display:block;" name="arrangemang_bokningsdatum" ng-model="cert.arrangemang.avbestallningsdatum"/>
-			    </div>
-			  </div>		      		    		    				  				  
-			</div><!--body-row -->
-			
-			<div class="body-row">
-			  <span ng-show="!cert.rekommendation.sjukdomskannedom"
-				style="color:red; font-weight:bold; margin-left:10px;">
-			    Information saknas
-			  </span>
-	
-			  <span class="title">Om den aktuella sjukdomen:</span>
-	
-			  <div style="margin:10px">
-			    <div id="left-col" style="position:absolute; left:0;">
-			      
-			    </div>
-			    
-			    <div id="right-col" style="position:relative; left:300px; top:0px; width:60%">
-			      <fieldset>
-				<input style="display:inline; margin-bottom:10px;" type="radio" name="SJK1"
-				       ng-model="cert.rekommendation.sjukdomskannedom" value="SJK1" ng-required="!ts-diabetesForm.SJK2 && !ts-diabetesForm.SJK3 && !ts-diabetesForm.SJK4">
-					Sjukdomen/komplikationen var okänd vid bokningstillfälllet.<br/>
-	
-				
-				<span style="display:block; margin-left:0px; margin-top:10px;">
-				  	Patientens sjukdom/komplikation är kronisk,
-				  	var känd vid bokningstillfället och utgjorde då inget hinder för resan.
-				  	Tillståndet för nu förvärrats på ett sätt som vid bokningstillfället<br/>
-				</span>
-	
-				<!-- div for hidden modifying options to above-->
-	
-				<div style="position:relative; width:100%;">
-	
-				  <!-- Only show if show_opts -->
-	
-				  <div style="margin-left:40px;">
-				    <input style="padding-bottom: 10px; margin:10px; " type="radio" name="SJK2" 
-					  ng-model="cert.rekommendation.sjukdomskannedom" value="SJK2" ng-required="!ts-diabetesForm.SJK1 && !ts-diabetesForm.SJK3 && !ts-diabetesForm.SJK4">
-				    ej var möjligt att förutse.<br/>
-				  </div>
-	
-				  <!-- Only show if show_opts -->
-	
-				  <div style="margin-left:40px;">
-				    <input style="padding-bottom: 10px; margin:10px;" type="radio" name="SJK3" 
-					   ng-model="cert.rekommendation.sjukdomskannedom" value="SJK3" ng-required="!ts-diabetesForm.SJK1 && !ts-diabetesForm.SJK2 && !ts-diabetesForm.SJK4">
-				    var möjlig att förutse.<br/>
-				  </div>
-				</div><!-- end hidden-->
-	
-				<input style="display:inline;" type="radio" name="SJK4" ng-model="cert.rekommendation.sjukdomskannedom"
-				 value="SJK4" ng-required="!ts-diabetesForm.SJK1 && !ts-diabetesForm.SJK2 && !ts-diabetesForm.SJK3">
-				Inget av ovanstående är lämpligt. Ange annat:<br/>			
-				
-				<div style="margin-left:20px;" ng-show="cert.rekommendation.sjukdomskannedom =='SJK4'">
-				  <textarea ng-model="cert.rekommendation.beskrivning" rows="5"  style="resize:none; margin-top:10px; width:100%;">
-				  </textarea>
-				</div>
-			      </fieldset>
-			    </div>
-			  </div>	
-			</div><!-- body-row-->
-			
-			<div class="body-row">
-			  <span class="title">Plats och datum för första undersökning:</span>
-			  <div id="left-col" style="position:absolute; left:0;">
-			    
-			  </div>
-			  
-			  <div id="right-col" style="position:relative; left:300px; top:0px;">
-			    <fieldset style="margin-left:10px;">
-			      <input style="padding-bottom: 10px;" type="radio"
-				     ng-model="cert.undersokning.komplikationStyrkt" value="AV_HOS_PERSONAL">
-			      <span style="margin-left:10px;"> Det finns styrkt att diagnosen finns sedan: </span> <br/>
-			      <input style="padding-bottom: 10px;" type="radio"
-				     ng-model="cert.undersokning.komplikationStyrkt" value="AV_PATIENT">
-			      <span style="margin-left:10px;"> Patienten uppger att diagnosen finns sedan: </span> <br/>
-			      <div style="margin-top:10px;">
-			      
-				<input type="text" ng-model="cert.undersokning.forstaUndersokningsdatum" placeholder="Datum"/>
-				<input type="text" ng-model="cert.undersokning.forstaUndersokningsplats" placeholder="Plats"/><br/>
-			      </div>
-			    </fieldset>
-			  </div>
-			  
-			</div><!-- body-row-->
-	
-			<div class="body-row">
-			  <span ng-show="ts-diabetesForm.undersokningsplats.$error.required || ts-diabetesForm.undersokningsdatum.$error.required"
-			   style="color:red; font-weight:bold; margin-left:10px;">
-			    Information saknas
-			  </span>
-			  <span class="title">Plats och datum för den undersökning som ligger till grund för detta utlåtande:</span>
-	
-			  <div id="left-col" style="position:absolute; left:0;">
-			    
-			  </div>
-			  
-			  <div id="right-col" style="position:relative; left:300px; top:0px;">
-			    <fieldset>
-			      <div style="padding:10px;">
-				<input type="date" ng-model="cert.undersokning.undersokningsdatum" name="undersokningsdatum" placeholder="Datum" required/>
-				<input type="text" ng-model="cert.undersokning.undersokningsplats" name="undersokningsplats" placeholder="Plats" required/><br/>
-			      </div>
-			    </fieldset>
-			  </div>
-			  
-			</div><!-- body-row-->
-			<div class="body-row" ng-show="complicationType == 'sjuk'">
-	
-			  <span ng-show="!cert.rekommendation.rekommendationskod"
-				style="color:red; font-weight:bold; margin-left:10px;">
-			    Information saknas
-			  </span>
-					  
-			  <span class="title">Rekommendation:</span> 
-	
-			  <div id="left-col" style="position:absolute; left:0;">
-			    
-			  </div>
-			  
-			  <div id="right-col" style="position:relative; left:300px; top:0px; width:60%;">
-			    <fieldset style="margin-left:10px;">
-			      <input style="display:inline;" type="radio" name="patient_sjuk_1"
-				     ng-model="cert.rekommendation.rekommendationskod"  value="REK1"/>
-			      <label style="display:block; margin-left:25px; margin-top:-20px;">
-				Jag avråder uttryckligen från resa, då patientens/resenärens tillstånd innebär, att sådan ej kan genomföras utan men.</label>
-			      <input style="display:inline;" type="radio" name="patient_sjuk_2"
-				     ng-model="cert.rekommendation.rekommendationskod" value="REK2"/>
-			      <label style="display:block; margin-left:25px; margin-top:-20px;">
-				Jag avråder ej från resa. Patientens = resenärens tillstånd utgör inget hinder för resa.</label>	      
-			    </fieldset>
-			    
-		          </div>
-			  
-			</div>
-			
-			
-			<div class="body-row" ng-show="complicationType == 'gravid'">
-			  <span class="title">Rekommendation:</span> 
-			  <div id="left-col" style="position:absolute; left:0;">
-			    <span style="display:block; margin:10px;">Barnet beräknas födas:</span>
-			    
-			  </div>
-			  
-			  <div id="right-col" style="position:relative; left:300px; top:0px; width:60%;">
-			    <fieldset style="margin:10px;">
-			      
-			      <input style="display:block;" type="text" name="fodseldatum" ng-model="cert.undersokning.graviditet.beraknatforlossningsdatum"/>
-			      
-			      <input style="display:inline;" type="radio" name="patient_sjuk_check_1"
-				     ng-model="cert.rekommendation.rekommendationskod"  value="REK3"/>
-			      <label style="display:block; margin-left:25px; margin-top:-20px;">
-				Jag avråder uttryckligen från resa. Komplikationer i graviditeten har uppkommit efter bokning av resan, vilka innebär hinder för resa.</label>
-			      <input style="display:inline;" type="radio" name="patient_sjuk_check_1"
-				     ng-model="cert.rekommendation.rekommendationskod" value="REK4"/>
-			      <label style="display:block; margin-left:25px; margin-top:-20px;">
-				Jag avråder ej från resa. Graviditeten utgör inget medicinskt hinder för resa.</label>
-			    </fieldset>
-		          </div>
-			  
-			</div>
-			
-			<div class="body-row">
-			  <span class="title">Övriga upplysningar:</span> 
-			  <div id="left-col" style="position:absolute; left:0;">
-			    
-			  </div>
-			  
-			  <div id="right-col" style="position:relative; left:300px; top:0px; width:60%;">
-			    <div style="margin:10px;">
-			      <textarea ng-model="cert.kommentarer" style="resize:none; width:100%;">
-			      </textarea>
-			    </div>
-		          </div>
-			  
-			</div>
-	
-			<div class="body-row">
-			  <span class="title">Om vårdenheten:</span> 
-			  <div id="left-col" style="position:absolute; left:0;">
-	
-			  </div>
-			  
-			  <div id="right-col" style="position:relative; left:300px; top:0px; width:60%;">
-			    <div style="margin:10px;">
-			      <div style="position:relative;left:0; top:0;">
-				<span style="padding-bottom: 10px; display:block; font-weight:bold;">Enhetsnamn:</span>
-				<span style="padding-bottom: 10px; display:block; font-weight:bold;">Postadress:</span>
-				<span style="padding-bottom: 10px; display:block; font-weight:bold;">Postort:</span>
-				<span style="padding-bottom: 10px; display:block; font-weight:bold;">Postnummer:</span>
-				<span style="padding-bottom: 10px; display:block; font-weight:bold;">Telefon:</span>
-				<span style="padding-bottom: 10px; display:block; font-weight:bold;">Epost:</span>
-			      </div>
-			      
-			      <div style="position:absolute; left: 150px; top:0px;">
-				<span style="padding-bottom: 10px; display:block;">{{cert.skapadAv.vardenhet.enhetsnamn}}</span>
-				<span style="padding-bottom: 10px; display:block;">{{cert.skapadAv.vardenhet.postadress}}</span>
-				<span style="padding-bottom: 10px; display:block;">{{cert.skapadAv.vardenhet.postort}}</span>
-				<span style="padding-bottom: 10px; display:block;">{{cert.skapadAv.vardenhet.postnummer}}</span>
-				<span style="padding-bottom: 10px; display:block;">{{cert.skapadAv.vardenhet.telefonnummer}}</span>
-				<span style="padding-bottom: 10px; display:block;">{{cert.skapadAv.vardenhet.epost}}</span>
-			      </div>		      	              
-			    </div>
-		          </div>
-			  
-			</div>
-	
-		
-			<!-- end of rows-->
-			</div>
-	      </form>
-            </div> <!-- end of cert-body-->
-            
-	  </div><!-- end of cert-->
-	</div>
-      </div>
-    </section>
-    
+    <div class="inline-block">
+      <label class="control-label">{{cert.patient.fullstandigtNamn}} - {{cert.patient.personid}}</label>
+    </div>
+    <div class="control-group buttonbar">
+      <button class="btn btn-info" ng-click="save()">Spara</button>
+      <button class="btn btn-secondary" ng-click="discard()">Ta bort utkast</button>
+      <button class="btn btn-secondary" ng-if="!widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">Visa vad som behöver kompletteras
+      </button>
+      <button class="btn btn-secondary" ng-if="widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">
+        Dölj vad som behöver kompletteras
+      </button>
+    </div>
+    <div ng-show="certForm.$pristine && isComplete"><strong>Status:</strong> Intyget är sparat.</div>
+    <div ng-show="certForm.$pristine && !isComplete"><strong>Status:</strong> Intyget är sparat, men inte komplett</div>
+    <div ng-show="certForm.$dirty"><strong>Status:</strong> Intyget är <strong>inte</strong> sparat.</div>
   </div>
+</div><!-- top end -->
+
+<!-- TS-BAS -->
+<div class="edit-form" ng-class="{'collapsed' : widgetState.collapsedHeader}">
+
+  <form name="certForm" novalidate autocomplete="off">
+
+    <div class="alert alert-error" ng-show="widgetState.showComplete && !isComplete" style="margin-right: 20px">
+      <h3>Följande fält behöver kompletteras:</h3>
+      <ul>
+        <li ng-repeat="message in validationMessages"><span message key="{{message.message}}"></span></li>
+      </ul>
+    </div>
+
+    <div id="certificate" class="row-fluid certificate">
+      <div class="span12 cert-body">
+
+        <div wc-field field-label="ts.label.intygavser">
+          <div class="alert alert-error" ng-if="validationMessagesGrouped.intygavser">
+            <ul>
+              <li ng-repeat="message in validationMessagesGrouped.intygavser"><span message key="{{message.message}}"></span>
+              </li>
+            </ul>
+          </div>
+
+          <p>Information om Transportstyrelsens föreskrifter finns under länken Väg och sedan länken Trafikmedicin på <a href="http://www.transportstyrelsen.se" target="_blank">www.transportstyrelsen.se</a>.</p>
+
+          <div class="control-group clearfix">
+            <label class="checkbox checkbox-columns span3" ng-repeat="typ in cert.intygAvser.korkortstyp track by $index"><input id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox" ng-model="typ.selected"> <span message key="ts.label.korkort.{{typ.type}}"></span></label>
+          </div>
+        </div>
+
+        <div wc-field field-label="ts.label.identitet">
+          <div class="alert alert-error" ng-if="validationMessagesGrouped.identitet">
+            <ul>
+              <li ng-repeat="message in validationMessagesGrouped.identitet"><span message key="{{message.message}}"></span>
+              </li>
+            </ul>
+          </div>
+          <div class="control-group clearfix">
+            <label class="radio checkbox-columns span4" ng-repeat="(k,v) in form.identity"><input name="identity{{$index}}" type="radio" value="{{v}}" ng-model="cert.vardkontakt.idkontroll">
+              {{k}}</label>
+          </div>
+        </div>
+
+        <div class="alert alert-info">
+          Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget ska utfärdas i enlighet med vad som sägs i 17 kap. och får inte vara äldre än två månader när det inkommer till Transportstyrelsen. Se <a href="http://www.transportstyrelsen.se" target="_blank">www.transportstyrelsen.se</a>. Därefter "Väg" och "Trafikmedicin".
+        </div>
+
+        <!-- 1. Allmänt -->
+        <div wc-field field-label="ts.label.allmant">
+          <div class="">
+            <label for="diabetesyear"> Vilket år ställdes diagnosen diabetes?</label>
+            <div class="controls">
+              <input id="diabetesyear" type="text" maxlength="4" />
+            </div>
+          </div>
+          <p>Patienten har diabetes:
+            <label class="radio"><input name="diabetestype1" type="radio" value="E11" ng-model="cert.diabetes.diabetesTyp">Typ 1</label>
+            <label class="radio"><input name="diabetestype2" type="radio" value="E12" ng-model="cert.diabetes.diabetesTyp">Typ 2</label>
+          </p>
+          Behandling:
+          <label class="checkbox"><input name="diabetestreat1" type="checkbox" ng-model="cert.diabetes.kost"> Kost</label>
+          <label class="checkbox"><input name="diabetestreat2" type="checkbox" ng-model="cert.diabetes.tabletter"> Tabletter</label>
+          <label class="checkbox"><input name="diabetestreat3" type="checkbox" ng-model="cert.diabetes.insulin"> Insulin</label>
+          <div class="">
+            <label for="diabetesyear"> Annan behandling, vilken? (ej obligatorisk)</label>
+            <div class="controls">
+              <input id="diabetesyear" type="text" ng-model="cert.allmant" wc-maxlength maxlength="53" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Hypoglykemier (lågt blodsocker)-->
+        <div wc-field field-label="ts.label.hypoglykemier">
+          <table class="table table-form">
+            <tr>
+              <th><span message key="common.yes"></span></th>
+              <th><span message key="common.no"></span></th>
+              <th class="maxwidth"></th>
+            </tr>
+            <tr>
+              <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
+              <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
+              <td>a) Har patienten kunskap om lämpliga åtgärder vid hypoglykemi?</td>
+            </tr>
+            <tr>
+              <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
+              <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
+              <td><p>b) Förekommer hypoglykemier med tecken på nedsatt hjärnfunktion (neuroglukopena symptom) som bedöms kunna innebära en trafiksäkerhetsrisk?</p>
+                <p>(Om nej behöver c-e inte besvaras)</p></td>
+            </tr>
+            <tr>
+              <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
+              <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
+              <td>c) Saknar patienten förmåga att känna varningstecken på hypoglykemi ("unawareness")?</td>
+            </tr>
+            <tr>
+              <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
+              <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
+              <td>
+                <p>d) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under det senaste året?</p>
+                <label for="diabetesyear"> Vilket år ställdes diagnosen diabetes?</label>
+                <div class="controls">
+                  <input id="diabetesyear" type="text" ng-model="cert.syn.nystagmus" wc-maxlength maxlength="46" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
+              <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
+              <td><p>e) Har patienten haft allvarlig hypoglykemi i trafiken under det senaste året?</p>
+                <label for="diabetesyear"> Vilket år ställdes diagnosen diabetes?</label>
+                <div class="controls">
+                  <input id="diabetesyear" type="text" ng-model="cert.syn.nystagmus" wc-maxlength maxlength="40" />
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- 3. Synintyg -->
+        <div wc-field field-label="ts.label.synfunktioner" field-has-errors="testerror" ng-form name="synForm">
+
+          <table class="table table-form">
+            <tr ng-if="validationMessagesGrouped.syn">
+              <td colspan="3"><div class="alert alert-error">
+                <ul>
+                  <li ng-repeat="message in validationMessagesGrouped.syn"><span message key="{{message.message}}"></span></li>
+                </ul>
+              </div></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td><h5 class="inline-heading">Alternativ 1</h5></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>Vid synnedsättningar av betydelse för innehavet krävs ögonläkarintyg. Detta gäller vid proliferativ retinopati, genomgången laserbehandling av retinopati, signifikant makulaödem eller vid annan ögonsjukdom samt om ögonbottenfoto saknas.</td>
+            </tr>
+            <tr>
+              <th><span message key="common.yes"></span></th>
+              <th><span message key="common.no"></span></th>
+              <th class="maxwidth"></th>
+            </tr>
+            <tr>
+              <td><input id="synby" name="synby" type="radio" ng-value="true" ng-model="cert.syn.nattblindhet"></td>
+              <td><input id="synbn" name="synbn" type="radio" ng-value="false" ng-model="cert.syn.nattblindhet"></td>
+              <td>a. Ögonläkarintyg kommer att skickas in separat</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td><h5 class="inline-heading">Alternativ 2: (frågorna b-d besvaras)</h5></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>Om ögonläkarintyg inte krävs kan behandlande specialistkompetent läkare med god kännedom om patientens sjukdom här avge intyg om synfunktionen.</td>
+            </tr>
+            <tr>
+              <td><input id="syncy" name="syncy" type="radio" ng-value="true" ng-model="cert.syn.progressivOgonsjukdom"></td>
+              <td><input id="syncn" name="syncn" type="radio" ng-value="false" ng-model="cert.syn.progressivOgonsjukdom"></td>
+              <td>
+                <p>b. Är synfältsprövning enligt Donders konfrontationsmetod utan anmärkning?</p>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>
+                <p>c. Synskärpa (alla bokstäver ska kunna läsas på den rad som anger synskärpan. Är synskärpan sämre än 0,1 ska den anges som 0,0).</p>
+                <p>
+                  Uppgifterna om synskärpa med och utan korrektion kan grundas på aktuellt intyg av bl.a. legitimerad optiker eller den som är anställd hos optiker. Alternativt kan kopia av sådant intyg bifogas. Uppgifter från ögonbottenfoto kan också användas.
+                </p>
+
+                <table class="table table-form">
+                  <tr>
+                    <th></th>
+                    <th>Utan korrektion</th>
+                    <th>Med korrektion</th>
+                    <th>Kontaktlinser</th>
+                  </tr>
+                  <tr>
+                    <td>Höger öga</td>
+                    <td><input type="text" class="small-decimal" ng-model="cert.syn.hogerOga.utanKorrektion"></td>
+                    <td><input type="text" class="small-decimal" ng-model="cert.syn.hogerOga.medKorrektion"></td>
+                    <td><input type="checkbox" ng-model="cert.syn.hogerOga.kontaktlins"></td>
+                  </tr>
+                  <tr>
+                    <td>Vänster öga</td>
+                    <td><input type="text" class="small-decimal" ng-model="cert.syn.vansterOga.utanKorrektion"></td>
+                    <td><input type="text" class="small-decimal" ng-model="cert.syn.vansterOga.medKorrektion"></td>
+                    <td><input type="checkbox" ng-model="cert.syn.vansterOga.kontaktlins"></td>
+                  </tr>
+                  <tr>
+                    <td>Binokulärt</td>
+                    <td><input type="text" class="small-decimal" ng-model="cert.syn.binokulart.utanKorrektion"></td>
+                    <td><input type="text" class="small-decimal" ng-model="cert.syn.binokulart.medKorrektion"></td>
+                    <td></td>
+                  </tr>
+                </table>
+
+            </tr>
+            <tr>
+              <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
+              <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
+              <td>d) Förekommer dubbelseende?</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- 4. Bedömning -->
+        <div wc-field field-label="ts.label.bedomning">
+          <div class="alert alert-error" ng-if="validationMessagesGrouped.bedomning">
+            <ul>
+              <li ng-repeat="message in validationMessagesGrouped.bedomning"><span message key="{{message.message}}"></span></li>
+            </ul>
+          </div>
+
+          <table class="table table-form">
+            <tr>
+              <td></td>
+              <td></td>
+              <td>
+                <p>Patienten uppfyller kraven enligt 6 kap. i Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Föreskrivna krav på läkarens specialistkompetens vid diabetessjukdom anges i 17 kap.
+                   Se <a href="http://www.transportstyrelsen.se" target="_blank">www.transportstyrelsen.se</a>. Därefter "Väg" och "Trafikmedicin".</p>
+
+                <div class="control-group">
+                  <label class="radio"><input name="behorighetnagon" type="radio" ng-value="true" ng-model="form.behorighet"> Någon av följande behörigheter</label>
+                  <div class="control-group clearfix indent" data-ng-show="form.behorighet">
+                    <label class="checkbox checkbox-columns span3" ng-repeat="typ in cert.bedomning.korkortstyp track by $index"><input id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox" ng-model="typ.selected"> <span message key="ts.label.korkort.{{typ.type}}"></span></label>
+                  </div>
+                  <label class="radio"><input name="behorighetinte" type="radio" ng-value="false" ng-model="form.behorighet"> Kan inte ta ställning</label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th><span message key="common.yes"></span></th>
+              <th><span message key="common.no"></span></th>
+              <th class="maxwidth"></th>
+            </tr>
+            <tr>
+              <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
+              <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
+              <td>Om patienten söker behörighet C1, C1E, C, CE, D1, D1E, D, DE eller Taxi, är han eller hon lämplig att inneha sådan behörighet med hänsyn till de körningar och arbetsformer som är aktuella vid sådant innehav? (Se 6 kap. 16 §)</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Övriga upplysningar -->
+        <div wc-field>
+          <h5>Övriga upplysningar och kommentarer</h5>
+          <textarea ng-model="cert.kommentar" wc-maxlength maxlength="10"></textarea>
+        </div>
+
+        <!-- Specialistkompetens -->
+        <div wc-field>
+          <h5>Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i:</h5>
+          <textarea name="specialist" rows='5' ng-model="cert.bedomning.lakareSpecialKompetens" wc-maxlength maxlength="{{inputLimits.lakareSpecialKompetens}}"></textarea>
+        </div>
+
+        <div class="body-row clearfix">
+          <h3 class="title">
+            <span message key="ts.label.unit"></span><span class="help">?</span>
+          </h3>
+
+          <div class="text">
+            <div class="alert alert-error" ng-if="validationMessagesGrouped.vardenhet">
+              <ul>
+                <li ng-repeat="message in validationMessagesGrouped.vardenhet"><span message key="{{message.message}}"></span></li>
+              </ul>
+            </div>
+            <label class="control-label">{{cert.skapadAv.vardenhet.enhetsnamn}} ({{cert.skapadAv.vardenhet.enhetsid}}), {{cert.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</label>
+
+            <div class="form-horizontal">
+              <div class="control-group">
+                <label class="control-label">Postadress</label>
+                <div class="controls">
+                  <input type="text" id="clinicInfo.postalAddress" name="clinicInfo.postalAddress" ng-model="cert.skapadAv.vardenhet.postadress">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Postnummer</label>
+                <div class="controls">
+                  <input type="text" id="clinicInfo.postalCode" name="clinicInfo.postalCode" ng-model="cert.skapadAv.vardenhet.postnummer">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Postort</label>
+                <div class="controls">
+                  <input type="text" id="clinicInfo.postalCity" name="clinicInfo.postalCity" ng-model="cert.skapadAv.vardenhet.postort">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Telefonnummer</label>
+                <div class="controls">
+                  <input type="text" id="clinicInfo.phone" name="clinicInfo.phone" ng-model="cert.skapadAv.vardenhet.telefonnummer">
+                </div>
+              </div>
+              <div class="control-group" ng-if="false">
+                <label class="control-label">Epost</label>
+                <div class="controls">
+                  <input type="text" id="clinicInfo.email" name="clinicInfo.email" ng-model="mats.ekhammar@callistaenterprise.se">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- cert body -->
+
+    </div>
+    <!-- certificate -->
+
+    <p>Specialistkompetens i:</p>
+
+    <div ng-repeat="spec in cert.skapadAv.specialiteter">
+      {{spec}}
+    </div>
+
+    <button class="btn btn-success" ng-disabled="!isComplete">Signera intyget och skicka direkt till
+      Transportstyrelsen
+    </button>
+  </form>
 </div>

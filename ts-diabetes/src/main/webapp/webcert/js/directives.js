@@ -20,7 +20,10 @@
 
 /* Directives */
 /* Used for textarea capable of displaying and inputting json */
-angular.module('RLIEditCertApp').directive('jsonText', function() {
+
+var directives = angular.module('wc.ts-diabetes.directives', []);
+
+directives.directive('jsonText', function() {
     return {
         restrict: 'A',
         require: 'ngModel',
@@ -39,3 +42,4 @@ angular.module('RLIEditCertApp').directive('jsonText', function() {
         }
     };
 });
+

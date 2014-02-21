@@ -23,26 +23,22 @@
  * Cant seem to inject rootscope in .config, so for routing parameters, we use
  * the global JS config object for now
  */
-var RLIApp = angular.module('ts-diabetes-app', [ 'controllers.ts-diabetes.webcert', 'services.webcertService', 'modules.messages', 'directives.mi' ]).config(
+var TSDiabetesApp = angular.module('TSDiabetesCertApp', [ 'wc.ts-diabetes.controllers', 'wc.ts-diabetes.directives', 'wc.ts-diabetes.services', 'modules.messages', 'wc.common', 'wc.utils' ]).config(
         [ '$routeProvider', function($routeProvider) {
-            $routeProvider.when('/edit/:certId', {
-                templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/edit-cert.html',
-                controller : 'EditCertCtrl'
-            }).when('/new/:certId', {
-                templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/new-cert.html',
-                controller : 'NewCertCtrl'
-            }).when('/list', {
-            	templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/list-cert.html',
-            	controller : 'ListCertCtrl'
-            }).otherwise({
-                redirectTo : '/list'
+            $routeProvider.when('/edit', {
+                templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/edit-cert.html'
+               // controller : 'EditCertCtrl'
+           // }).otherwise({
+             //   redirectTo : '/'
             });
         } ]);
 
-RLIApp.run([ '$rootScope', 'messageService', function($rootScope, messageService) {
+TSDiabetesApp.run([ '$rootScope', 'messageService', function($rootScope, messageService) {
     $rootScope.lang = 'sv';
     $rootScope.DEFAULT_LANG = 'sv';
     $rootScope.MODULE_CONFIG = MODULE_CONFIG;
+    // Add WC user context info
+    $rootScope.WC_CONTEXT = WC_CONTEXT;
     messageService.addResources(commonMessageResources);
-    messageService.addResources(rliMessages);
+    messageService.addResources(tsDiabetesMessages);
 } ]);

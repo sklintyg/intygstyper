@@ -19,8 +19,8 @@
 'use strict';
 
 /* Controllers */
-angular.module('controllers.ts-diabetes.webcert', []);
-angular.module('controllers.ts-diabetes.webcert').controller('NewCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', 'webcertService', '$routeParams' , function NewCertCtrl($scope, $filter, $location, $rootScope, webcertService, $routeParams) {
+var controllers = angular.module('wc.ts-diabetes.controllers', []);
+controllers.controller('NewCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', 'webcertService', '$routeParams' , function NewCertCtrl($scope, $filter, $location, $rootScope, webcertService, $routeParams) {
     $scope.cert = {};
     $scope.doneLoading = false;
    
@@ -61,7 +61,7 @@ angular.module('controllers.ts-diabetes.webcert').controller('NewCertCtrl', [ '$
 }]);
 
 
-angular.module('controllers.ts-diabetes.webcert').controller('ListCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', 'webcertService', '$routeParams', function ListCertCtrl($scope, $filter, $location, $rootScope, webcertService, $routeParams) {
+controllers.controller('ListCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', 'webcertService', '$routeParams', function ListCertCtrl($scope, $filter, $location, $rootScope, webcertService, $routeParams) {
 	$scope.initial_params = {};
 	$scope.doneLoading = true;
 	
@@ -163,8 +163,56 @@ angular.module('controllers.ts-diabetes.webcert').controller('ListCertCtrl', [ '
 	
 }]);
 
-angular.module('controllers.ts-diabetes.webcert').controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', 'webcertService', '$routeParams', function EditCertCtrl($scope, $filter, $location, $rootScope, webcertService, $routeParams) {
-    $scope.cert = {};
+controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', 'webcertService', '$routeParams', function EditCertCtrl($scope, $filter, $location, $rootScope, webcertService, $routeParams) {
+    $scope.cert = {
+      "utlatandeid": "987654321",
+      "typAvUtlatande": "TSTRK1031 (U06, V02)",
+      "signeringsdatum": "2013-08-12T15:57:00.000",
+      "skapadAv": {
+        "personid": "SE0000000000-1333",
+        "fullstandigtNamn": "Doktor Thompson",
+        "vardenhet": {
+          "enhetsid": "SE0000000000-1337",
+          "enhetsnamn": "Vårdenhet Väst",
+          "postadress": "Enhetsvägen 12",
+          "postnummer": "54321",
+          "postort": "Tumba",
+          "telefonnummer": "08-1337",
+          "vardgivare": {
+            "vardgivarid": "SE0000000000-HAHAHHSAA",
+            "vardgivarnamn": "Vårdgivarnamn"
+          }
+        }
+      },
+      "patient": {
+        "personid": "19121212-1212",
+        "fullstandigtNamn": "Johnny Appleseed",
+        "fornamn": "Johnny",
+        "efternamn": "Appleseed",
+        "postadress": "Testvägen 12",
+        "postnummer": "123456",
+        "postort": "Testort"
+      },
+      "vardkontakt" : {
+        "typ" : "5880005",
+        "idkontroll" : "IDK6"
+      },
+      "intygAvser" : {
+        "korkortstyp" : ["C"]
+      },
+      "diabetes" : {
+        "diabetestyp" : "E11"
+      },
+      "hypoglykemier" : {
+        "kunskapOmAtgarder" : false,
+        "teckenNedsattHjarnfunktion" : false
+      },
+
+      "bedomning" : {
+        "korkortstyp" : ["C"]
+      }
+
+    };
     $scope.doneLoading = false;
     $scope.displayLoader = false;
 
@@ -172,7 +220,7 @@ angular.module('controllers.ts-diabetes.webcert').controller('EditCertCtrl', [ '
 	 * Gets cert draft using certId specified in $routeParams, redirect to /list
 	 * if no corresponding draft is found
 	 */
-    webcertService.getDraft($routeParams.certId, function(result){
+/*    webcertService.getDraft($routeParams.certId, function(result){
          if (result != null) {
              $scope.cert = result;
          } else {
@@ -180,7 +228,7 @@ angular.module('controllers.ts-diabetes.webcert').controller('EditCertCtrl', [ '
          }
          $scope.doneLoading = true;
     });
-    
+  */
     /*
 	 * Delete current draft and redirect to /list
 	 */
