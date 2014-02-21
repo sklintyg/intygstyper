@@ -84,8 +84,7 @@
         <div wc-field field-label="ts.label.identitet">
           <div class="alert alert-error" ng-if="validationMessagesGrouped.identitet">
             <ul>
-              <li ng-repeat="message in validationMessagesGrouped.identitet"><span message key="{{message.message}}"></span>
-              </li>
+              <li ng-repeat="message in validationMessagesGrouped.identitet"><span message key="{{message.message}}"></span></li>
             </ul>
           </div>
           <div class="control-group clearfix">
@@ -139,17 +138,17 @@
               <td>a) Har patienten kunskap om lämpliga åtgärder vid hypoglykemi?</td>
             </tr>
             <tr>
-              <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
-              <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
+              <td><input id="hypoby" name="hypoby" type="radio" ng-value="true" ng-model="cert.hypoglykemier.teckenNedsattHjarnfunktion"></td>
+              <td><input id="hypobn" name="hypobn" type="radio" ng-value="false" ng-model="cert.hypoglykemier.teckenNedsattHjarnfunktion"></td>
               <td><p>b) Förekommer hypoglykemier med tecken på nedsatt hjärnfunktion (neuroglukopena symptom) som bedöms kunna innebära en trafiksäkerhetsrisk?</p>
                 <p>(Om nej behöver c-e inte besvaras)</p></td>
             </tr>
-            <tr>
+            <tr data-ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
               <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
               <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
               <td>c) Saknar patienten förmåga att känna varningstecken på hypoglykemi ("unawareness")?</td>
             </tr>
-            <tr>
+            <tr data-ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
               <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
               <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
               <td>
@@ -160,7 +159,7 @@
                 </div>
               </td>
             </tr>
-            <tr>
+            <tr data-ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
               <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
               <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
               <td><p>e) Har patienten haft allvarlig hypoglykemi i trafiken under det senaste året?</p>
@@ -170,17 +169,17 @@
                 </div>
               </td>
             </tr>
-            <tr>
+            <tr data-ng-show="form.korkortannat">
               <td></td>
               <td></td>
               <td><h5 class="inline-heading">För innehav av behörigheterna C1, C1E, C, CE, D1, D1E, D, DE och taxiförarlegitimation ska även fråga f-g besvaras</h5></td>
             </tr>
-            <tr>
+            <tr data-ng-show="form.korkortannat">
               <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
               <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
               <td>f) Genomför patienten egenkontroller av blodsocker?</td>
             </tr>
-            <tr>
+            <tr data-ng-show="form.korkortannat">
               <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
               <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
               <td>g) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under vaken tid det senaste året?</td>

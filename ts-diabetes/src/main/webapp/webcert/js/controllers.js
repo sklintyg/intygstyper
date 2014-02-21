@@ -164,24 +164,47 @@ controllers.controller('ListCertCtrl', [ '$scope', '$filter', '$location', '$roo
 }]);
 
 controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', 'webcertService', '$routeParams', function EditCertCtrl($scope, $filter, $location, $rootScope, webcertService, $routeParams) {
-    $scope.cert = {
-      "utlatandeid": "987654321",
-      "typAvUtlatande": "TSTRK1031 (U06, V02)",
-      "signeringsdatum": "2013-08-12T15:57:00.000",
-      "skapadAv": {
-        "personid": "SE0000000000-1333",
-        "fullstandigtNamn": "Doktor Thompson",
-        "vardenhet": {
-          "enhetsid": "SE0000000000-1337",
-          "enhetsnamn": "Vårdenhet Väst",
-          "postadress": "Enhetsvägen 12",
-          "postnummer": "54321",
-          "postort": "Tumba",
-          "telefonnummer": "08-1337",
-          "vardgivare": {
-            "vardgivarid": "SE0000000000-HAHAHHSAA",
-            "vardgivarnamn": "Vårdgivarnamn"
-          }
+  $scope.form = {
+    'identity' : {
+      'ID-kort' : 'ID_KORT',
+      'Företagskort eller tjänstekort' : 'FORETAG_ELLER_TJANSTEKORT',
+      'Körkort' : 'KORKORT',
+      'Personlig kännedom' : 'PERS_KANNEDOM',
+      'Försäkran enligt 18 kap. 4§' : 'FORSAKRAN_KAP18',
+      'Pass' : 'PASS'
+    },
+    'korkortannat' : false,
+    'behorighet' : true
+  };
+
+  $scope.$watch('cert.intygAvser.korkortstyp', function (newValue, oldValue) {
+    if (!$scope.cert || !$scope.cert.intygAvser || !$scope.cert.intygAvser.korkortstyp) return;
+    $scope.form.korkortannat = false;
+    for (var i = 0; i < $scope.cert.intygAvser.korkortstyp.length; i++) {
+      if (newValue[i].type == "ANNAT") {
+        $scope.form.korkortannat = newValue[i].selected;
+        break;
+      }
+    }
+  }, true);
+
+  $scope.cert = {
+    "utlatandeid": "987654321",
+    "typAvUtlatande": "TSTRK1031 (U06, V02)",
+    "signeringsdatum": "2013-08-12T15:57:00.000",
+    "skapadAv": {
+      "personid": "SE0000000000-1333",
+      "fullstandigtNamn": "Doktor Thompson",
+      "vardenhet": {
+        "enhetsid": "SE0000000000-1337",
+        "enhetsnamn": "Vårdenhet Väst",
+        "postadress": "Enhetsvägen 12",
+        "postnummer": "54321",
+        "postort": "Tumba",
+        "telefonnummer": "08-1337",
+        "vardgivare": {
+          "vardgivarid": "SE0000000000-HAHAHHSAA",
+          "vardgivarnamn": "Vårdgivarnamn"
         }
       },
       "patient": {
