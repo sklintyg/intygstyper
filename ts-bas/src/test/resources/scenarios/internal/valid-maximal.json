@@ -36,15 +36,16 @@
     },
     "intygAvser" : {
         "korkortstyp" : [
-            {"type": "C1", "selected": false},
-            {"type": "C1E", "selected": false},
+            {"type": "C1", "selected": true},
+            {"type": "C1E", "selected": true},
             {"type": "C", "selected": true},
-            {"type": "CE", "selected": false},
-            {"type": "D1", "selected": false},
-            {"type": "D1E", "selected": false},
-            {"type": "D", "selected": false},
-            {"type": "DE", "selected": false},
-            {"type": "TAXI", "selected": false}
+            {"type": "CE", "selected": true},
+            {"type": "D1", "selected": true},
+            {"type": "D1E", "selected": true},
+            {"type": "D", "selected": true},
+            {"type": "DE", "selected": true},
+            {"type": "TAXI", "selected": true},
+            {"type": "ANNAT", "selected": true}
         ]
     },
     "syn" : {
@@ -149,16 +150,16 @@
     
     "bedomning" : {
         "korkortstyp" : [
-            {"type": "C1", "selected": false},
-            {"type": "C1E", "selected": false},
+            {"type": "C1", "selected": true},
+            {"type": "C1E", "selected": true},
             {"type": "C", "selected": true},
-            {"type": "CE", "selected": false},
-            {"type": "D1", "selected": false},
-            {"type": "D1E", "selected": false},
-            {"type": "D", "selected": false},
-            {"type": "DE", "selected": false},
-            {"type": "TAXI", "selected": false},
-            {"type": "ANNAT", "selected": false}
+            {"type": "CE", "selected": true},
+            {"type": "D1", "selected": true},
+            {"type": "D1E", "selected": true},
+            {"type": "D", "selected": true},
+            {"type": "DE", "selected": true},
+            {"type": "TAXI", "selected": true},
+            {"type": "ANNAT", "selected": true}
         ],
         "lakareSpecialKompetens" : "Spektralanalys"
     }
