@@ -104,7 +104,7 @@
     <p:observationskod code="E11" codeSystem="1.2.752.116.1.1.1.1.1"
       codeSystemName="ICD-10" />
     <p:forekomst>true</p:forekomst>
-    <p:observationstid>2012</p:observationstid>
+    <p:observationstidPartialdate>2012</p:observationstidPartialdate>
   </p:observation>
 
   <!-- Behandlingar -->
@@ -124,7 +124,7 @@
     <p:observationskod code="170747006" codeSystem="1.2.752.116.2.1.1.1"
       codeSystemName="SNOMED-CT" />
     <p:forekomst>true</p:forekomst>
-    <p:observationstid>2012</p:observationstid>
+    <p:observationstidPartialdate>2012</p:observationstidPartialdate>
   </p:observation>
 
   <p:observation>
@@ -170,7 +170,7 @@
     <p:observationskod code="OBS24" codeSystem="to-come"
       codeSystemName="kv_observationer_intyg" />
     <p:forekomst>true</p:forekomst>
-    <p:observationstid>2012-12-12</p:observationstid>
+    <p:observationstidDate>2012-12-12</p:observationstidDate>
   </p:observation>
 
   <!-- Syn -->

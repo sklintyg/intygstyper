@@ -1,5 +1,8 @@
 package se.inera.certificate.modules.ts_diabetes.model.external;
 
+import org.joda.time.LocalDate;
+import org.joda.time.Partial;
+
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 
@@ -13,6 +16,10 @@ public class Observation extends se.inera.certificate.model.Observation {
     private Kod lateralitet;
     
     private String ostruktureradTid;
+    
+    private LocalDate observationstidDate;
+
+    private Partial observationstidPartialDate;
 
 
     public Kod getLateralitet() {
@@ -45,5 +52,21 @@ public class Observation extends se.inera.certificate.model.Observation {
 
     public void setOstruktureradTid(String ostruktureradTid) {
         this.ostruktureradTid = ostruktureradTid;
+    }
+
+    public LocalDate getObservationstidDate() {
+        return observationstidDate;
+    }
+
+    public void setObservationstidDate(LocalDate observationstidDate) {
+        this.observationstidDate = observationstidDate;
+    }
+
+    public Partial getObservationstidPartialDate() {
+        return observationstidPartialDate;
+    }
+
+    public void setObservationstidPartialDate(Partial observationstidPartialDate) {
+        this.observationstidPartialDate = observationstidPartialDate;
     }
 }

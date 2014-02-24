@@ -175,7 +175,9 @@
       <xs:element name="varde" type="iso:PQ" minOccurs="0" />
       <xs:element name="beskrivning" type="xs:string"
         minOccurs="0" />
-      <xs:element name="observationstid" type="partialDate"
+      <xs:element name="observationstidDate" type="date"
+        minOccurs="0" maxOccurs="1" />
+      <xs:element name="observationstidPartialdate" type="partialDate"
         minOccurs="0" maxOccurs="1" />
       <xs:any namespace="##other" processContents="lax"
         minOccurs="0" maxOccurs="unbounded" />

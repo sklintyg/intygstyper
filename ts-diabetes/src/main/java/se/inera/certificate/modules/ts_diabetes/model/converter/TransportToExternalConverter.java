@@ -323,8 +323,13 @@ public class TransportToExternalConverter {
             observation.getVarde().add(IsoTypeConverter.toPhysicalQuantity(source.getVarde()));
         }
         
-        if (source.getObservationstid() != null) {
-            observation.setOstruktureradTid(source.getObservationstid().toString());
+        if (source.getObservationstidPartialdate() != null) {
+            observation.setObservationstidPartialDate(source.getObservationstidPartialdate());
+        }
+        
+        
+        if (source.getObservationstidDate() != null) {
+            observation.setObservationstidDate(source.getObservationstidDate());
         }
 
         return observation;

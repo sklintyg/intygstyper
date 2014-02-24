@@ -175,7 +175,7 @@ public class ExternalToInternalConverterInstance {
             hypo.setAllvarligForekomstVakenTid(allvarligHypoglykemiVaken.getForekomst());
 
             if (allvarligHypoglykemiVaken.getForekomst()) {
-                hypo.setAllvarligForekomstVakenTidObservationstid(allvarligHypoglykemiVaken.getOstruktureradTid());
+                hypo.setAllvarligForekomstVakenTidObservationstid(allvarligHypoglykemiVaken.getObservationstidDate().toString());
             }
         }
         
@@ -282,21 +282,25 @@ public class ExternalToInternalConverterInstance {
         if (diabetesTyp1 != null) {
             if (diabetesTyp1.getForekomst()) {
                 diabetes.setDiabetestyp("E10");
-                diabetes.setObservationsperiod(diabetesTyp1.getOstruktureradTid());
+                if (diabetesTyp2.getObservationstidPartialDate() != null) {
+                    diabetes.setObservationsperiod(diabetesTyp1.getObservationstidPartialDate().toString());
+                }
             }
         }
 
         if (diabetesTyp2 != null) {
             if (diabetesTyp2.getForekomst()) {
                 diabetes.setDiabetestyp("E11");
-                diabetes.setObservationsperiod(diabetesTyp2.getOstruktureradTid());
+                if (diabetesTyp2.getObservationstidPartialDate() != null) {
+                    diabetes.setObservationsperiod(diabetesTyp2.getObservationstidPartialDate().toString());
+                }
             }
         }
         
         if (insulin != null) {
             diabetes.setInsulin(insulin.getForekomst());
             if (insulin.getForekomst()) {
-                diabetes.setInsulinBehandlingsperiod(insulin.getOstruktureradTid());
+                diabetes.setInsulinBehandlingsperiod(insulin.getObservationstidPartialDate().toString());
             }
         }
 

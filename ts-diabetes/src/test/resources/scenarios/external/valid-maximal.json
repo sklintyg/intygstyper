@@ -152,7 +152,7 @@
                 "codeSystemName": "ICD-10",
                 "code": "E11"
             },
-            "ostruktureradTid" : "2012",
+            "observationstidPartialDate" : "2012",
             "forekomst": true
         },
         {
@@ -180,7 +180,7 @@
                 "code": "170747006"
             },
             "forekomst": true,
-            "ostruktureradTid" : "2012"
+            "observationstidPartialDate" : "2012"
         },
         
         {
@@ -246,7 +246,7 @@
         		"code": "OBS24"
         	},
         	"forekomst": true,
-        	"ostruktureradTid" : "2012-12-12"
+        	"observationstidDate" : "2012-12-12" 
         },
         
         
