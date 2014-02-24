@@ -18,18 +18,37 @@
  */
 package se.inera.certificate.modules.ts_diabetes.model.internal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HoSPersonal {
 
     private String personid;
 
     private String fullstandigtNamn;
 
-    private String befattning;
+    private List<String> befattningar;
+
+    private List<String> specialiteter;
 
     private Vardenhet vardenhet;
 
     public HoSPersonal() {
 
+    }
+
+    public List<String> getSpecialiteter() {
+        if (specialiteter == null) {
+            specialiteter = new ArrayList<String>();
+        }
+        return specialiteter;
+    }
+
+    public List<String> getBefattningar() {
+        if (befattningar == null) {
+            befattningar = new ArrayList<String>();
+        }
+        return befattningar;
     }
 
     public String getPersonid() {
@@ -46,14 +65,6 @@ public class HoSPersonal {
 
     public void setFullstandigtNamn(String fullstandigtNamn) {
         this.fullstandigtNamn = fullstandigtNamn;
-    }
-
-    public String getBefattning() {
-        return befattning;
-    }
-
-    public void setBefattning(String befattning) {
-        this.befattning = befattning;
     }
 
     public Vardenhet getVardenhet() {

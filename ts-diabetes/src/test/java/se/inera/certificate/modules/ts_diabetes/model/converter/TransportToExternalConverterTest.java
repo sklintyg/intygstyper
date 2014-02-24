@@ -50,6 +50,8 @@ public class TransportToExternalConverterTest {
             se.inera.certificate.ts_diabetes.model.v1.Utlatande utlatande = scenario.asTransportModel();
 
             Utlatande actual = converter.convert(utlatande);
+            // We need to issue a get in order to create an empty list (and make the test pass)
+            actual.getSkapadAv().getBefattningar();
 
             Utlatande expected = scenario.asExternalModel();
             assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);

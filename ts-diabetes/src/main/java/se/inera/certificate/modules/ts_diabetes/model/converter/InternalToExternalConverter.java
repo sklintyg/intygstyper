@@ -33,8 +33,10 @@ import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.ts_diabetes.model.codes.AktivitetKod;
+import se.inera.certificate.modules.ts_diabetes.model.codes.BefattningKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.BilagaKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
+import se.inera.certificate.modules.ts_diabetes.model.codes.CodeSystem;
 import se.inera.certificate.modules.ts_diabetes.model.codes.HSpersonalKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IntygAvserKod;
@@ -543,13 +545,34 @@ public class InternalToExternalConverter {
      */
     private HosPersonal convertToExtHosPersonal(HoSPersonal source) {
         HosPersonal hosPersonal = new HosPersonal();
-        hosPersonal.setBefattning(source.getBefattning());
+        hosPersonal.getBefattningar().addAll(convertStringToCode(BefattningKod.class, source.getBefattningar()));
         hosPersonal.setId(new Id(HSpersonalKod.HSA_ID.getCodeSystem(), source.getPersonid()));
         hosPersonal.setNamn(source.getFullstandigtNamn());
         hosPersonal.setVardenhet(convertToExtVardenhet(source.getVardenhet()));
         // TODO: IMPORTANT! change when specialiteter is implemented in internal model
         hosPersonal.getSpecialiteter();
         return hosPersonal;
+    }
+
+    /**
+     * Convert a String-representation (i.e the name of the enum constant representing that particular Kod) to a Kod
+     * object
+     * 
+     * @param type
+     *            the code enum (must extend {@link CodeSystem})
+     * @param strings
+     *            a list of Strings with the names of enum constants to convert
+     * @return a list of {@link Kod}
+     */
+    private <E extends CodeSystem> Collection<Kod> convertStringToCode(Class<E> type, List<String> strings) {
+        List<Kod> koder = new ArrayList<>();
+        for (E enumValue : type.getEnumConstants()) {
+            if (strings.contains(enumValue.toString())) {
+                koder.add(CodeConverter.toKod(enumValue));
+            }
+        }
+
+        return koder;
     }
 
     /**

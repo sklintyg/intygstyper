@@ -37,6 +37,7 @@
         },
         "namn": "Doktor Thompson",
         "specialiteter" : [],
+        "befattningar" : [],
         "vardenhet": {
             "id": {
                 "root": "1.2.752.129.2.1.4.1",

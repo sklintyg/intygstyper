@@ -19,23 +19,27 @@
 package se.inera.certificate.modules.ts_diabetes.model.converter;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.AktivitetKod;
+import se.inera.certificate.modules.ts_diabetes.model.codes.BefattningKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
+import se.inera.certificate.modules.ts_diabetes.model.codes.CodeSystem;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IntygAvserKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.LateralitetsKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.RekommendationVardeKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.RekommendationsKod;
+import se.inera.certificate.modules.ts_diabetes.model.codes.SpecialitetKod;
 import se.inera.certificate.modules.ts_diabetes.model.external.Aktivitet;
+import se.inera.certificate.modules.ts_diabetes.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.external.Observation;
 import se.inera.certificate.modules.ts_diabetes.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
@@ -484,7 +488,11 @@ public class ExternalToInternalConverterInstance {
 
         intHoSPersonal.setPersonid(InternalModelConverterUtils.getExtensionFromId(extHoSPersonal.getId()));
         intHoSPersonal.setFullstandigtNamn(extHoSPersonal.getNamn());
-        intHoSPersonal.setBefattning(extHoSPersonal.getBefattning());
+
+        intHoSPersonal.getBefattningar().addAll(
+                convertKodToString(extHoSPersonal.getBefattningar(), BefattningKod.class));
+        intHoSPersonal.getSpecialiteter().addAll(
+                convertKodToString(extHoSPersonal.getSpecialiteter(), SpecialitetKod.class));
 
         Vardenhet intVardenhet = convertToIntVardenhet(extHoSPersonal.getVardenhet());
         intHoSPersonal.setVardenhet(intVardenhet);
@@ -527,6 +535,14 @@ public class ExternalToInternalConverterInstance {
             }
         }
         return false;
+    }
+
+    private Collection<String> convertKodToString(List<Kod> koder, Class<? extends CodeSystem> type) {
+        List<String> intKoder = new ArrayList<>();
+        for (Kod kod : koder) {
+            intKoder.add(CodeConverter.fromCode(kod, type).toString());
+        }
+        return intKoder;
     }
 
     /**
