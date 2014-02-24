@@ -30,15 +30,15 @@ import org.junit.Test;
 import se.inera.certificate.modules.ts_diabetes.model.external.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
 import se.inera.certificate.modules.ts_diabetes.utils.ScenarioFinder;
-import se.inera.certificate.modules.ts_diabetes.validator.ExternalValidator;
+import se.inera.certificate.modules.ts_diabetes.validator.Validator;
 
 public class ExternalValidatorTest {
 
-    private ExternalValidator validator;
+    private Validator validator;
 
     @Before
     public void setUp() throws Exception {
-        validator = new ExternalValidator();
+        validator = new Validator();
     }
     
     @Ignore
@@ -46,7 +46,7 @@ public class ExternalValidatorTest {
     public void testValidate() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             Utlatande utlatande = scenario.asExternalModel();
-            List<String> validationErrors = validator.validate(utlatande);
+            List<String> validationErrors = validator.validateExternal(utlatande);
 
             assertTrue("Error in scenario " + scenario.getName() + "\n" + StringUtils.join(validationErrors, ", "),
                     validationErrors.isEmpty());
@@ -56,7 +56,7 @@ public class ExternalValidatorTest {
     @Ignore
     @Test
     public void testValidateWithErrors() throws Exception {
-        List<String> validationErrors = validator.validate(ScenarioFinder.getExternalScenario("invalid-sjuk-1")
+        List<String> validationErrors = validator.validateExternal(ScenarioFinder.getExternalScenario("invalid-sjuk-1")
                 .asExternalModel());
 
         assertTrue(!validationErrors.isEmpty());

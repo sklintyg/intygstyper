@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.model.util.Strings;
+import se.inera.certificate.modules.ts_diabetes.rest.dto.ValidateDraftResponseHolder;
 import se.inera.certificate.modules.ts_diabetes.model.converter.ConverterException;
 import se.inera.certificate.modules.ts_diabetes.model.converter.ExternalToInternalConverter;
 import se.inera.certificate.modules.ts_diabetes.model.converter.ExternalToTransportConverter;
@@ -44,7 +45,7 @@ import se.inera.certificate.modules.ts_diabetes.pdf.PdfGenerator;
 import se.inera.certificate.modules.ts_diabetes.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.ts_diabetes.rest.dto.CertificateContentHolder;
 import se.inera.certificate.modules.ts_diabetes.rest.dto.CreateNewDraftCertificateHolder;
-import se.inera.certificate.modules.ts_diabetes.validator.ExternalValidator;
+import se.inera.certificate.modules.ts_diabetes.validator.Validator;
 
 /**
  * The contract between the certificate module and the generic components (Intygstjänsten and Mina-Intyg).
@@ -62,7 +63,7 @@ public class ModuleService implements ModuleApi {
     private ExternalToTransportConverter externalToTransportConverter;
 
     @Autowired
-    private ExternalValidator externalValidator;
+    private Validator validator;
 
     @Autowired
     private ExternalToInternalConverter externalToInternalConverter;
@@ -115,7 +116,7 @@ public class ModuleService implements ModuleApi {
      */
     @Override
     public String validate(Utlatande utlatande) {
-        List<String> validationErrors = externalValidator.validate(utlatande);
+        List<String> validationErrors = validator.validateExternal(utlatande);
 
         if (validationErrors.isEmpty()) {
             return null;
@@ -150,6 +151,11 @@ public class ModuleService implements ModuleApi {
         }
     }
 
+    @Override
+    public ValidateDraftResponseHolder validateDraft(se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande utlatande) {
+        return validator.validateInternal(utlatande);
+    }
+    
     /**
      * {@inheritDoc}
      */

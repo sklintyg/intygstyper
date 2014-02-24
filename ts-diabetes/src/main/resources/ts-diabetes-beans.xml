@@ -28,8 +28,8 @@
   <bean id="externalToTransportConverter"
     class="se.inera.certificate.modules.ts_diabetes.model.converter.ExternalToTransportConverter" />
 
-  <bean id="externalValidator"
-    class="se.inera.certificate.modules.ts_diabetes.validator.ExternalValidator" />
+  <bean id="validator"
+    class="se.inera.certificate.modules.ts_diabetes.validator.Validator" />
 
   <bean id="externalToInternalConverter"
     class="se.inera.certificate.modules.ts_diabetes.model.converter.ExternalToInternalConverter" />
