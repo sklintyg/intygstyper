@@ -126,6 +126,8 @@ public class ExternalToInternalConverterInstance {
         Observation kunskap = getObservationWithKod(CodeConverter.toKod(ObservationsKod.KUNSKAP_ATGARD_HYPOGLYKEMI));
         Observation teckenNedsattHjarnfunktion = getObservationWithKod(CodeConverter
                 .toKod(ObservationsKod.HYPOGLYKEMIER_MED_TECKEN_PA_NEDSATT_HJARNFUNKTION));
+        
+        Aktivitet blodsocker = getAktivitetWithKod(CodeConverter.toKod(AktivitetKod.EGENOVERVAKNING_BLODGLUKOS));
 
         // Mandatory observations, check for null, if not proceed and set corresponding booleans
         if (kunskap == null) {
@@ -156,6 +158,7 @@ public class ExternalToInternalConverterInstance {
         // Förekomst av allvarlig hypoglykemi under det senaste året
         if (allvarligHypoglykemi != null) {
             hypo.setAllvarligForekomst(allvarligHypoglykemi.getForekomst());
+            hypo.setAllvarligForekomstBeskrivning(allvarligHypoglykemi.getBeskrivning());
         }
 
         // Förekomst av allvarlig hypoglykemi i trafiken under senaste året
@@ -172,8 +175,12 @@ public class ExternalToInternalConverterInstance {
             hypo.setAllvarligForekomstVakenTid(allvarligHypoglykemiVaken.getForekomst());
 
             if (allvarligHypoglykemiVaken.getForekomst()) {
-                hypo.setAllvarligForekomstVakenTidBeskrivning(allvarligHypoglykemiVaken.getBeskrivning());
+                hypo.setAllvarligForekomstVakenTidObservationstid(allvarligHypoglykemiVaken.getOstruktureradTid());
             }
+        }
+        
+        if (blodsocker != null) {
+            hypo.setEgenkontrollBlodsocker(blodsocker.getForekomst());
         }
         return hypo;
     }
@@ -224,6 +231,7 @@ public class ExternalToInternalConverterInstance {
         Bedomning bedomning = new Bedomning();
 
         for (Rekommendation rek : extUtlatande.getRekommendationer()) {
+            
             if (CodeConverter.matches(RekommendationsKod.PATIENT_UPPFYLLER_KRAV_FOR, rek.getRekommendationskod())) {
                 if (rek.getVarde().contains(CodeConverter.toKod(RekommendationVardeKod.INTE_TA_STALLNING))) {
                     bedomning.setKanInteTaStallning(true);
@@ -234,7 +242,12 @@ public class ExternalToInternalConverterInstance {
                     }
                 }
 
+            } else if(CodeConverter.matches(RekommendationsKod.LAMPLIGHET_INNEHA_BEHORIGHET_TILL_KORNINGAR_OCH_ARBETSFORMER,
+                    rek.getRekommendationskod())) {
+                bedomning.setLamplighetInnehaBehorighet(rek.getBoolean_varde());
+            
             } else if (CodeConverter.matches(RekommendationsKod.PATIENT_BOR_UNDESOKAS_AV_SPECIALIST,
+            
                     rek.getRekommendationskod())) {
                 bedomning.setLakareSpecialKompetens(rek.getBeskrivning());
 
@@ -269,19 +282,21 @@ public class ExternalToInternalConverterInstance {
         if (diabetesTyp1 != null) {
             if (diabetesTyp1.getForekomst()) {
                 diabetes.setDiabetestyp("E10");
+                diabetes.setObservationsperiod(diabetesTyp1.getOstruktureradTid());
             }
         }
 
         if (diabetesTyp2 != null) {
             if (diabetesTyp2.getForekomst()) {
                 diabetes.setDiabetestyp("E11");
+                diabetes.setObservationsperiod(diabetesTyp2.getOstruktureradTid());
             }
         }
-
+        
         if (insulin != null) {
             diabetes.setInsulin(insulin.getForekomst());
             if (insulin.getForekomst()) {
-                diabetes.setInsulinBehandlingsperiod(insulin.getBeskrivning());
+                diabetes.setInsulinBehandlingsperiod(insulin.getOstruktureradTid());
             }
         }
 
@@ -296,7 +311,7 @@ public class ExternalToInternalConverterInstance {
         if (annan != null) {
             diabetes.setAnnanBehandling(annan.getForekomst());
             if (annan.getForekomst()) {
-                diabetes.setAnnanBehandlingBeskrivning(insulin.getBeskrivning());
+                diabetes.setAnnanBehandlingBeskrivning(annan.getBeskrivning());
             }
         }
 
@@ -314,21 +329,20 @@ public class ExternalToInternalConverterInstance {
 
         Syn syn = new Syn();
 
-        // TODO: Do these really need to exist in the internal model?!
         Aktivitet synfaltsprovning = getAktivitetWithKod(CodeConverter.toKod(AktivitetKod.SYNFALTSUNDERSOKNING));
         Aktivitet provningOgatsRorlighet = getAktivitetWithKod(CodeConverter
                 .toKod(AktivitetKod.PROVNING_AV_OGATS_RORLIGHET));
+        
         if (synfaltsprovning != null) {
-            // Set something here
+            syn.setSynfaltsprovning(true);
         }
 
         if (provningOgatsRorlighet != null) {
-            // Set something here
+            syn.setProvningOgatsRorlighet(true);
         }
 
-        // Use information from Utlatande->Bilaga to populate syn->SeparatOgonlakarintyg
         if (extUtlatande.getBilaga() != null) {
-            syn.setSeparatOgonlakarintyg(extUtlatande.getBilaga());
+            syn.setSeparatOgonlakarintyg(true);
         }
 
         // Handle Syn related Observationer

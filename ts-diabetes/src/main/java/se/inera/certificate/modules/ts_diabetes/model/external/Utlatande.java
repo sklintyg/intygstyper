@@ -65,7 +65,7 @@ public class Utlatande {
 
     private List<Status> status;
     
-    private Boolean bilaga;
+    private Bilaga bilaga;
 
     public Id getId() {
         return id;
@@ -171,11 +171,11 @@ public class Utlatande {
         return this.status;
     }
 
-    public Boolean getBilaga() {
+    public Bilaga getBilaga() {
         return bilaga;
     }
 
-    public void setBilaga(Boolean bilaga) {
+    public void setBilaga(Bilaga bilaga) {
         this.bilaga = bilaga;
     }
 }

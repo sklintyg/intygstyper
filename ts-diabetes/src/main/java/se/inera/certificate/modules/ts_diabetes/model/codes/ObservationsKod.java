@@ -38,7 +38,7 @@ public enum ObservationsKod implements CodeSystem {
     DIABETIKER_INSULINBEHANDLING("170747006", "Diabetiker på insulinbehandling", SNOMED_CT),
 
     /** Diabetiker på annan behandling (OBS10) */
-    DIABETIKER_ANNAN_BEHANDLING("OBS10", "Diabetiker på annan behandling", SNOMED_CT),
+    DIABETIKER_ANNAN_BEHANDLING("OBS10", "Diabetiker på annan behandling", OBSERVATIONER),
 
     /** Patienten har kunskap om lämpliga åtgärder vid hypoglykemi (OBS19) */
     KUNSKAP_ATGARD_HYPOGLYKEMI("OBS19", "Patienten har kunskap om lämpliga åtgärder vid hypoglykemi", OBSERVATIONER),
@@ -53,7 +53,7 @@ public enum ObservationsKod implements CodeSystem {
     ALLVARLIG_HYPOGLYKEMI("OBS22", "Förekomst av allvarlig hypoglykemi under det senaste året", OBSERVATIONER),
 
     /** Förekomst av allvarlig hypoglykemi i trafiken under det senaste året (OBS23) */
-    ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN("OBS22", "Förekomst av allvarlig hypoglykemi i trafiken under det senaste året",
+    ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN("OBS23", "Förekomst av allvarlig hypoglykemi i trafiken under det senaste året",
             OBSERVATIONER),
 
     /** Förekomst av allvarlig hypoglykemi under vaken tid det senaste året (OBS24) */

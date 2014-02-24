@@ -37,14 +37,16 @@
       <xs:element name="skapadAv" type="hosPersonalType" />
 
       <xs:element name="vardkontakt" type="vardkontaktType" />
-      <xs:element name="aktivitet" type="aktivitetType" minOccurs="0"
-        maxOccurs="unbounded" />
+      <xs:element name="aktivitet" type="aktivitetType"
+        minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="rekommendation" type="rekommendationType"
-        maxOccurs="2" />
+        minOccurs="1" maxOccurs="3" />
       <xs:element name="observation" type="observationType"
         maxOccurs="unbounded" />
       <xs:element name="observationAktivitetRelation" type="observationAktivitetRelationType"
         minOccurs="0" maxOccurs="unbounded" />
+        
+      <xs:element name="bilaga" type="bilagaType" minOccurs="1" maxOccurs="1"/>  
 
 
       <xs:any namespace="##other" processContents="lax"
@@ -173,6 +175,8 @@
       <xs:element name="varde" type="iso:PQ" minOccurs="0" />
       <xs:element name="beskrivning" type="xs:string"
         minOccurs="0" />
+      <xs:element name="observationstid" type="partialDate"
+        minOccurs="0" maxOccurs="1" />
       <xs:any namespace="##other" processContents="lax"
         minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
@@ -185,9 +189,17 @@
         minOccurs="0" />
       <xs:element name="varde" type="iso:CD" minOccurs="0"
         maxOccurs="10" />
-
+      <xs:element name="boolean_varde" type="xs:boolean"
+        minOccurs="0" />
       <xs:any namespace="##other" processContents="lax"
         minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="bilagaType">
+    <xs:sequence>
+      <xs:element name="bilagekod" type="iso:CD"/>
+      <xs:element name="forekomst" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
 
@@ -209,9 +221,11 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="befattning" type="xs:string" minOccurs="0"/>
-      <xs:element name="enhet" type="enhetType"/>
-      <xs:element name="specialitet" type="iso:CD" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="befattning" type="xs:string"
+        minOccurs="0" />
+      <xs:element name="enhet" type="enhetType" />
+      <xs:element name="specialitet" type="iso:CD" minOccurs="0"
+        maxOccurs="unbounded" />
 
       <xs:any namespace="##other" processContents="lax"
         minOccurs="0" maxOccurs="unbounded" />

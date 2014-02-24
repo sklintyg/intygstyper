@@ -80,5 +80,10 @@
 
   <!-- ObservationAktivitetRelation begin -->
   <!-- ObservationAktivitetRelation ends -->
+  
+  <p:bilaga>
+    <p:bilagekod/>
+    <p:forekomst>false</p:forekomst>
+  </p:bilaga>
 
 </p:utlatande>

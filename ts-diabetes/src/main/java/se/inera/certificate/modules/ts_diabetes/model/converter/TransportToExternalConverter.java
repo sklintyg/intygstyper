@@ -32,6 +32,7 @@ import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.ts_diabetes.model.external.Aktivitet;
+import se.inera.certificate.modules.ts_diabetes.model.external.Bilaga;
 import se.inera.certificate.modules.ts_diabetes.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.external.Observation;
 import se.inera.certificate.modules.ts_diabetes.model.external.ObservationAktivitetRelation;
@@ -39,6 +40,7 @@ import se.inera.certificate.modules.ts_diabetes.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_diabetes.model.external.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.model.external.Vardkontakt;
 import se.inera.certificate.ts_diabetes.model.v1.AktivitetType;
+import se.inera.certificate.ts_diabetes.model.v1.BilagaType;
 import se.inera.certificate.ts_diabetes.model.v1.EnhetType;
 import se.inera.certificate.ts_diabetes.model.v1.HosPersonalType;
 import se.inera.certificate.ts_diabetes.model.v1.ObservationAktivitetRelationType;
@@ -84,7 +86,24 @@ public class TransportToExternalConverter {
         utlatande.getVardkontakter().add(convertVardkontakt(source.getVardkontakt()));
         utlatande.getObservationAktivitetRelationer().addAll(
                 convertObservationAktivitetRelationer(source.getObservationAktivitetRelations()));
+        
+        utlatande.setBilaga(convertToExtBilaga(source.getBilaga()));
+        
         return utlatande;
+    }
+
+    private Bilaga convertToExtBilaga(BilagaType source) throws ConverterException {
+        if (source == null) {
+            throw new ConverterException("Missing bilaga");
+        }
+        Bilaga extBilaga = new Bilaga();
+        
+        if (source.isForekomst()) {
+            extBilaga.setBilagetyp(IsoTypeConverter.toKod(source.getBilagekod()));
+        }
+        
+        extBilaga.setForekomst(source.isForekomst());
+        return extBilaga;
     }
 
     /**
@@ -120,7 +139,7 @@ public class TransportToExternalConverter {
         ObservationAktivitetRelation converted = new ObservationAktivitetRelation();
         converted.setAktivitetsid(IsoTypeConverter.toId(source.getAktivitetsid()));
         converted.setObservationsid(IsoTypeConverter.toId(source.getObservationsid()));
-
+        
         return converted;
     }
 
@@ -161,8 +180,12 @@ public class TransportToExternalConverter {
 
         if (!source.getVardes().isEmpty()) {
             rekommendation.getVarde().addAll(convertListOfKod(source.getVardes()));
+        }        
+        
+        if (source.isBooleanVarde() != null) {
+            rekommendation.setBoolean_varde(source.isBooleanVarde());
         }
-
+        
         return rekommendation;
     }
 
@@ -298,6 +321,10 @@ public class TransportToExternalConverter {
 
         if (source.getVarde() != null) {
             observation.getVarde().add(IsoTypeConverter.toPhysicalQuantity(source.getVarde()));
+        }
+        
+        if (source.getObservationstid() != null) {
+            observation.setOstruktureradTid(source.getObservationstid().toString());
         }
 
         return observation;

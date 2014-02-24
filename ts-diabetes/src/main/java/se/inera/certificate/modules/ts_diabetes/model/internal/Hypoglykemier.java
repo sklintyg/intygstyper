@@ -17,7 +17,7 @@ public class Hypoglykemier {
     
     private Boolean allvarligForekomstVakenTid;
    
-    private String allvarligForekomstVakenTidBeskrivning;
+    private String allvarligForekomstVakenTidObservationstid;
     
     private Boolean egenkontrollBlodsocker;
 
@@ -85,12 +85,12 @@ public class Hypoglykemier {
         this.allvarligForekomstVakenTid = allvarligForekomstVakenTid;
     }
 
-    public String getAllvarligForekomstVakenTidBeskrivning() {
-        return allvarligForekomstVakenTidBeskrivning;
+    public String getAllvarligForekomstVakenTidObservationstid() {
+        return allvarligForekomstVakenTidObservationstid;
     }
 
-    public void setAllvarligForekomstVakenTidBeskrivning(String allvarligForekomstVakenTidBeskrivning) {
-        this.allvarligForekomstVakenTidBeskrivning = allvarligForekomstVakenTidBeskrivning;
+    public void setAllvarligForekomstVakenTidObservationstid(String allvarligForekomstVakenTidObservationstid) {
+        this.allvarligForekomstVakenTidObservationstid = allvarligForekomstVakenTidObservationstid;
     }
 
     public Boolean getEgenkontrollBlodsocker() {

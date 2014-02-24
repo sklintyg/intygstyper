@@ -32,7 +32,7 @@ public enum RekommendationsKod implements CodeSystem {
      * Lämplighet att inneha behörighet med hänsyn till de körningar och arbetsformer som är aktuella vid sådant innehav
      * (REK10)
      */
-    LAMPLIGHET_INNEHA_BEHORIGHET_TILL_KORNINGAR_OCH_ARBETSFORMER("OBS10",
+    LAMPLIGHET_INNEHA_BEHORIGHET_TILL_KORNINGAR_OCH_ARBETSFORMER("REK10",
             "Lämplighet att inneha behörighet med hänsyn till de körningar och arbetsformer som är aktuella vid sådant innehav");
 
     private static String codeSystemName = "kv_rekommendation_intyg";

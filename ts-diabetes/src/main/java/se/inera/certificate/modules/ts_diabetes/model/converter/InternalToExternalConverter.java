@@ -22,18 +22,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.ts_diabetes.model.codes.AktivitetKod;
+import se.inera.certificate.modules.ts_diabetes.model.codes.BilagaKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_diabetes.model.codes.HSpersonalKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IntygAvserKod;
@@ -45,19 +44,18 @@ import se.inera.certificate.modules.ts_diabetes.model.codes.RekommendationVardeK
 import se.inera.certificate.modules.ts_diabetes.model.codes.RekommendationsKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.VardkontakttypKod;
-import se.inera.certificate.modules.ts_diabetes.model.converter.ConverterException;
-import se.inera.certificate.modules.ts_diabetes.model.converter.InternalToExternalConverter;
 import se.inera.certificate.modules.ts_diabetes.model.external.Aktivitet;
+import se.inera.certificate.modules.ts_diabetes.model.external.Bilaga;
 import se.inera.certificate.modules.ts_diabetes.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.external.Observation;
 import se.inera.certificate.modules.ts_diabetes.model.external.ObservationAktivitetRelation;
 import se.inera.certificate.modules.ts_diabetes.model.external.Rekommendation;
+import se.inera.certificate.modules.ts_diabetes.model.external.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.model.external.Vardkontakt;
 import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
 import se.inera.certificate.modules.ts_diabetes.model.internal.HoSPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvserKategori;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
-import se.inera.certificate.modules.ts_diabetes.model.external.Utlatande;
 
 public class InternalToExternalConverter {
 
@@ -68,7 +66,7 @@ public class InternalToExternalConverter {
     // Since these IDs are only unique inside a given Utlatande, they are hereby fixed to following values
     private static final Id SYNFALTSPROVNING_ID = new Id("1.2.752.129.2.1.2.1", "1");
     private static final Id OGATS_RORLIGHET_ID = new Id("1.2.752.129.2.1.2.1", "2");
-    private static final Id TECKEN_SYNFALTSDEFEKTER_ID = new Id("1.2.752.129.2.1.2.1", "3");
+    private static final Id UTAN_ANMARKNING_ID = new Id("1.2.752.129.2.1.2.1", "3");
     private static final Id DIPLOPI_ID = new Id("1.2.752.129.2.1.2.1", "4");
 
     /**
@@ -103,15 +101,31 @@ public class InternalToExternalConverter {
         if (source.getKommentar() != null) {
             utlatande.getKommentarer().add(source.getKommentar());
         }
+        
+        //Since Aktiviteter are dependent on there being a Syn object present...
+        if (source.getSyn() != null) {
+            utlatande.getAktiviteter().addAll(buildAktiviteter(source));
+            utlatande.getObservationAktivitetRelationer().addAll(buildObsAktRelationer(source));
+            if (source.getSyn().getSeparatOgonlakarintyg()) {
+                utlatande.setBilaga(createBilaga());
+            }
+        }
 
-        utlatande.getAktiviteter().addAll(buildAktiviteter(source));
         utlatande.getObservationer().addAll(buildObservationer(source));
         utlatande.getRekommendationer().addAll(buildRekommendationer(source));
-        utlatande.getObservationAktivitetRelationer().addAll(buildObsAktRelationer(source));
+        
         utlatande.getIntygAvser().addAll(buildIntygAvser(source));
         utlatande.getVardkontakter().addAll(buildVardkontakt(source));
 
         return utlatande;
+    }
+
+    //Since there's only one type of bilaga at this time...
+    private Bilaga createBilaga() {
+        Bilaga bilaga = new Bilaga();
+        bilaga.setBilagetyp(CodeConverter.toKod(BilagaKod.OGONLAKARINTYG));
+        bilaga.setForekomst(true);
+        return bilaga;
     }
 
     /**
@@ -168,10 +182,10 @@ public class InternalToExternalConverter {
     private Collection<? extends ObservationAktivitetRelation> buildObsAktRelationer(
             se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande source) {
         List<ObservationAktivitetRelation> relationer = new ArrayList<ObservationAktivitetRelation>();
-
+        
         ObservationAktivitetRelation obsAkt1 = new ObservationAktivitetRelation();
         obsAkt1.setAktivitetsid(SYNFALTSPROVNING_ID);
-        obsAkt1.setObservationsid(TECKEN_SYNFALTSDEFEKTER_ID);
+        obsAkt1.setObservationsid(UTAN_ANMARKNING_ID);
         relationer.add(obsAkt1);
 
         ObservationAktivitetRelation obsAkt2 = new ObservationAktivitetRelation();
@@ -219,6 +233,15 @@ public class InternalToExternalConverter {
                 rekommendationer.add(specialist);
             }
         }
+
+        if (source.getBedomning().getLamplighetInnehaBehorighet() != null) {
+            Rekommendation lamplighet = new Rekommendation();
+            lamplighet.setRekommendationskod(CodeConverter
+                    .toKod(RekommendationsKod.LAMPLIGHET_INNEHA_BEHORIGHET_TILL_KORNINGAR_OCH_ARBETSFORMER));
+            lamplighet.setBoolean_varde(source.getBedomning().getLamplighetInnehaBehorighet());
+            rekommendationer.add(lamplighet);
+        }
+
         return rekommendationer;
     }
 
@@ -232,11 +255,6 @@ public class InternalToExternalConverter {
     private Collection<? extends Observation> buildObservationer(
             se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande source) {
         List<Observation> observationer = new ArrayList<Observation>();
-
-        // Syn-related observations
-        if (source.getSyn() != null) {
-            observationer.addAll(createSynRelatedObservations(source.getSyn()));
-        }
 
         // Create Diabetes
         if (source.getDiabetes().getDiabetestyp() != null) {
@@ -252,8 +270,11 @@ public class InternalToExternalConverter {
 
         // Diabetes behandlingar
         if (source.getDiabetes().getInsulin() != null) {
-            observationer.add(createObservationWithTimeperiod(ObservationsKod.DIABETIKER_INSULINBEHANDLING, source
-                    .getDiabetes().getInsulin(), source.getDiabetes().getInsulinBehandlingsperiod()));
+            Observation insulin = new Observation();
+            insulin.setObservationskod(CodeConverter.toKod(ObservationsKod.DIABETIKER_INSULINBEHANDLING));
+            insulin.setForekomst(source.getDiabetes().getInsulin());
+            insulin.setOstruktureradTid(source.getDiabetes().getInsulinBehandlingsperiod());
+            observationer.add(insulin);
         }
 
         if (source.getDiabetes().getEndastKost() != null) {
@@ -268,7 +289,7 @@ public class InternalToExternalConverter {
 
         if (source.getDiabetes().getAnnanBehandling() != null) {
             observationer.add(createObservationWithBeskrivning(ObservationsKod.DIABETIKER_ANNAN_BEHANDLING, source
-                    .getDiabetes().getTabletter(), source.getDiabetes().getAnnanBehandlingBeskrivning()));
+                    .getDiabetes().getAnnanBehandling(), source.getDiabetes().getAnnanBehandlingBeskrivning()));
         }
 
         // Hypoglykemi observationer
@@ -292,17 +313,26 @@ public class InternalToExternalConverter {
                     .getHypoglykemier().getAllvarligForekomst(), source.getHypoglykemier()
                     .getAllvarligForekomstBeskrivning()));
         }
-        
+
         if (source.getHypoglykemier().getAllvarligForekomstTrafiken() != null) {
             observationer.add(createObservationWithBeskrivning(ObservationsKod.ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN, source
                     .getHypoglykemier().getAllvarligForekomstTrafiken(), source.getHypoglykemier()
                     .getAllvarligForekomstTrafikBeskrivning()));
         }
-        
+
         if (source.getHypoglykemier().getAllvarligForekomstVakenTid() != null) {
-            observationer.add(createObservationWithBeskrivning(ObservationsKod.ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND, source
-                    .getHypoglykemier().getAllvarligForekomstVakenTid(), source.getHypoglykemier()
-                    .getAllvarligForekomstVakenTidBeskrivning()));
+            Observation hypoglykemiVakenTid = new Observation();
+            hypoglykemiVakenTid.setObservationskod(CodeConverter
+                    .toKod(ObservationsKod.ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND));
+            hypoglykemiVakenTid.setForekomst(source.getHypoglykemier().getAllvarligForekomstVakenTid());
+            hypoglykemiVakenTid.setOstruktureradTid(source.getHypoglykemier()
+                    .getAllvarligForekomstVakenTidObservationstid());
+            observationer.add(hypoglykemiVakenTid);
+        }
+
+        // Syn-related observations
+        if (source.getSyn() != null) {
+            observationer.addAll(createSynRelatedObservations(source.getSyn()));
         }
 
         return observationer;
@@ -321,6 +351,15 @@ public class InternalToExternalConverter {
 
         // Dubbelseende(diplopi)
         obs.add(createObservationWithId(ObservationsKod.DIPLOPI, syn.getDiplopi(), DIPLOPI_ID));
+
+        // Utan anmärkning?
+        if (syn.getSynfaltsprovningUtanAnmarkning() != null) {
+            Observation utanAnmarkning = new Observation();
+            utanAnmarkning.setObservationskod(CodeConverter.toKod(ObservationsKod.SYNFALTSPROVNING_UTAN_ANMARKNING));
+            utanAnmarkning.setForekomst(syn.getSynfaltsprovningUtanAnmarkning());
+            utanAnmarkning.setId(UTAN_ANMARKNING_ID);
+            obs.add(utanAnmarkning);
+        }
 
         // Create mandatory observations without corrective aid
         Observation hogerUtan = new Observation();
@@ -383,10 +422,9 @@ public class InternalToExternalConverter {
     private Observation createObservationWithTimeperiod(ObservationsKod kod, boolean forekomst,
             String observationsperiod) {
         Observation observation = new Observation();
-        Partial year = PartialConverter.stringToPartial(observationsperiod);
         observation.setObservationskod(CodeConverter.toKod(kod));
         observation.setForekomst(forekomst);
-        observation.setObservationsperiod(new PartialInterval(year, year));
+        observation.setOstruktureradTid(observationsperiod);
 
         return observation;
     }
@@ -425,7 +463,6 @@ public class InternalToExternalConverter {
     private Observation createObservationWithId(ObservationsKod obsKod, Boolean forekomst, Id id) {
         Observation obs = new Observation();
 
-        // TODO: Find out what this id root should be
         obs.setId(id);
         obs.setObservationskod(CodeConverter.toKod(obsKod));
         obs.setForekomst(forekomst);
