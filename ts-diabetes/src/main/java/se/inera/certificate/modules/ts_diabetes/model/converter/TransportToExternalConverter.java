@@ -87,9 +87,9 @@ public class TransportToExternalConverter {
         utlatande.getVardkontakter().add(convertVardkontakt(source.getVardkontakt()));
         utlatande.getObservationAktivitetRelationer().addAll(
                 convertObservationAktivitetRelationer(source.getObservationAktivitetRelations()));
-        
+
         utlatande.setBilaga(convertToExtBilaga(source.getBilaga()));
-        
+
         return utlatande;
     }
 
@@ -98,12 +98,9 @@ public class TransportToExternalConverter {
             throw new ConverterException("Missing bilaga");
         }
         Bilaga extBilaga = new Bilaga();
-        
-        if (source.isForekomst()) {
-            extBilaga.setBilagetyp(IsoTypeConverter.toKod(source.getBilagekod()));
-        }
-        
+        extBilaga.setBilagetyp(IsoTypeConverter.toKod(source.getBilagekod()));
         extBilaga.setForekomst(source.isForekomst());
+
         return extBilaga;
     }
 
@@ -140,7 +137,7 @@ public class TransportToExternalConverter {
         ObservationAktivitetRelation converted = new ObservationAktivitetRelation();
         converted.setAktivitetsid(IsoTypeConverter.toId(source.getAktivitetsid()));
         converted.setObservationsid(IsoTypeConverter.toId(source.getObservationsid()));
-        
+
         return converted;
     }
 
@@ -181,12 +178,12 @@ public class TransportToExternalConverter {
 
         if (!source.getVardes().isEmpty()) {
             rekommendation.getVarde().addAll(convertListOfKod(source.getVardes()));
-        }        
-        
+        }
+
         if (source.isBooleanVarde() != null) {
             rekommendation.setBoolean_varde(source.isBooleanVarde());
         }
-        
+
         return rekommendation;
     }
 
@@ -422,15 +419,17 @@ public class TransportToExternalConverter {
 
         return patient;
     }
-    
+
     /**
      * Utility method for converting a List of CD to a List of Kod
-     * @param cds List of {@link CD}
+     * 
+     * @param cds
+     *            List of {@link CD}
      * @return a List of {@link Kod}
      */
     private List<Kod> convertListOfKod(List<CD> cds) {
         List<Kod> koder = new ArrayList<Kod>();
-        for (CD cd: cds) {
+        for (CD cd : cds) {
             koder.add(IsoTypeConverter.toKod(cd));
         }
         return koder;

@@ -47,6 +47,8 @@ public class InternalToExternalConverterTest {
             se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande intUtlatande = scenario.asInternalModel();
 
             Utlatande actual = converter.convert(intUtlatande);
+            // We need to issue a get in order to create an empty list (and make the test pass)
+            actual.getAktiviteter();
 
             Utlatande expected = scenario.asExternalModel();
             

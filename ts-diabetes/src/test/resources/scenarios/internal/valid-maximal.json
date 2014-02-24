@@ -59,7 +59,7 @@
     	"egenkontrollBlodsocker" : true
     },
     "syn" : {
-    	"separatOgonlakarintyg" : true,
+    	"separatOgonlakarintyg" : false,
     	"synfaltsprovningUtanAnmarkning" : false,
     	"hoger" : {
            	"utanKorrektion" : 0.0,

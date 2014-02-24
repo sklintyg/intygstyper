@@ -41,7 +41,9 @@
     	"kunskapOmAtgarder" : false,
     	"teckenNedsattHjarnfunktion" : false
     },
-    
+    "syn" : {
+        "separatOgonlakarintyg" : true
+    },
     "bedomning" : {
     	"korkortstyp" : ["C"]
     }

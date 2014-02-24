@@ -78,7 +78,7 @@
             "codeSystemName": "kv_bilaga",
             "code": "BIL1"
     	},
-    	"forekomst" : true
+    	"forekomst" : false
     },
     "aktiviteter" : [
         {

@@ -35,18 +35,18 @@ public class Utlatande {
     private HoSPersonal skapadAv;
 
     private Patient patient;
-    
-    private Bedomning bedomning;
-    
-    private Diabetes diabetes;
-    
-    private Hypoglykemier hypoglykemier;
-    
-    private IntygAvser intygAvser;
-    
-    private Syn syn;
-    
+
     private Vardkontakt vardkontakt;
+
+    private IntygAvser intygAvser;
+
+    private Diabetes diabetes;
+
+    private Hypoglykemier hypoglykemier;
+
+    private Syn syn;
+
+    private Bedomning bedomning;
 
     public Utlatande() {
 
@@ -116,46 +116,6 @@ public class Utlatande {
         this.kommentar = kommentar;
     }
 
-    public Bedomning getBedomning() {
-        return bedomning;
-    }
-
-    public void setBedomning(Bedomning bedomning) {
-        this.bedomning = bedomning;
-    }
-
-    public Diabetes getDiabetes() {
-        return diabetes;
-    }
-
-    public void setDiabetes(Diabetes diabetes) {
-        this.diabetes = diabetes;
-    }
-
-    public Hypoglykemier getHypoglykemier() {
-        return hypoglykemier;
-    }
-
-    public void setHypoglykemier(Hypoglykemier hypoglykemier) {
-        this.hypoglykemier = hypoglykemier;
-    }
-
-    public IntygAvser getIntygAvser() {
-        return intygAvser;
-    }
-
-    public void setIntygAvser(IntygAvser intygAvser) {
-        this.intygAvser = intygAvser;
-    }
-
-    public Syn getSyn() {
-        return syn;
-    }
-
-    public void setSyn(Syn syn) {
-        this.syn = syn;
-    }
-
     public Vardkontakt getVardkontakt() {
         return vardkontakt;
     }
@@ -164,4 +124,38 @@ public class Utlatande {
         this.vardkontakt = vardkontakt;
     }
 
+    public IntygAvser getIntygAvser() {
+        if (intygAvser == null) {
+            intygAvser = new IntygAvser();
+        }
+        return intygAvser;
+    }
+
+    public Diabetes getDiabetes() {
+        if (diabetes == null) {
+            diabetes = new Diabetes();
+        }
+        return diabetes;
+    }
+
+    public Hypoglykemier getHypoglykemier() {
+        if (hypoglykemier == null) {
+            hypoglykemier = new Hypoglykemier();
+        }
+        return hypoglykemier;
+    }
+
+    public Syn getSyn() {
+        if (syn == null) {
+            syn = new Syn();
+        }
+        return syn;
+    }
+
+    public Bedomning getBedomning() {
+        if (bedomning == null) {
+            bedomning = new Bedomning();
+        }
+        return bedomning;
+    }
 }

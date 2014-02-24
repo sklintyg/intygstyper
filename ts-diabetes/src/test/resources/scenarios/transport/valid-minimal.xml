@@ -82,8 +82,9 @@
   <!-- ObservationAktivitetRelation ends -->
   
   <p:bilaga>
-    <p:bilagekod/>
-    <p:forekomst>false</p:forekomst>
+    <p:bilagekod code="BIL1" codeSystem="???"
+      codeSystemName="kv_bilaga" />
+    <p:forekomst>true</p:forekomst>  
   </p:bilaga>
 
 </p:utlatande>

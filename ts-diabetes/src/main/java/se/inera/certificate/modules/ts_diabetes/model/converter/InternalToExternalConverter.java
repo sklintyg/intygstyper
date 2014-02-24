@@ -106,13 +106,12 @@ public class InternalToExternalConverter {
         }
 
         // Since Aktiviteter are dependent on there being a Syn object present...
-        if (source.getSyn() != null) {
+        if (!source.getSyn().getSeparatOgonlakarintyg()) {
             utlatande.getAktiviteter().addAll(buildAktiviteter(source));
             utlatande.getObservationAktivitetRelationer().addAll(buildObsAktRelationer(source));
-            if (source.getSyn().getSeparatOgonlakarintyg()) {
-                utlatande.setBilaga(createBilaga());
-            }
         }
+
+        utlatande.setBilaga(createBilaga(source.getSyn().getSeparatOgonlakarintyg()));
 
         utlatande.getObservationer().addAll(buildObservationer(source));
         utlatande.getRekommendationer().addAll(buildRekommendationer(source));
@@ -124,10 +123,10 @@ public class InternalToExternalConverter {
     }
 
     // Since there's only one type of bilaga at this time...
-    private Bilaga createBilaga() {
+    private Bilaga createBilaga(Boolean forekomst) {
         Bilaga bilaga = new Bilaga();
         bilaga.setBilagetyp(CodeConverter.toKod(BilagaKod.OGONLAKARINTYG));
-        bilaga.setForekomst(true);
+        bilaga.setForekomst(forekomst);
         return bilaga;
     }
 
@@ -361,7 +360,9 @@ public class InternalToExternalConverter {
         List<Observation> obs = new ArrayList<Observation>();
 
         // Dubbelseende(diplopi)
-        obs.add(createObservationWithId(ObservationsKod.DIPLOPI, syn.getDiplopi(), DIPLOPI_ID));
+        if (syn.getDiplopi() != null) {
+            obs.add(createObservationWithId(ObservationsKod.DIPLOPI, syn.getDiplopi(), DIPLOPI_ID));
+        }
 
         // Utan anmärkning?
         if (syn.getSynfaltsprovningUtanAnmarkning() != null) {
@@ -372,43 +373,46 @@ public class InternalToExternalConverter {
             obs.add(utanAnmarkning);
         }
 
-        // Create mandatory observations without corrective aid
-        Observation hogerUtan = new Observation();
-        Observation vansterUtan = new Observation();
-        Observation binokulartUtan = new Observation();
+        if (syn.getHoger() != null) {
+            Observation hogerUtan = new Observation();
+            hogerUtan.setObservationskod(CodeConverter.toKod(ObservationsKod.EJ_KORRIGERAD_SYNSKARPA));
+            hogerUtan.setLateralitet(CodeConverter.toKod(LateralitetsKod.HOGER));
+            hogerUtan.getVarde().add(new PhysicalQuantity(syn.getHoger().getUtanKorrektion(), null));
+            obs.add(hogerUtan);
+        }
 
-        hogerUtan.setObservationskod(CodeConverter.toKod(ObservationsKod.EJ_KORRIGERAD_SYNSKARPA));
-        hogerUtan.setLateralitet(CodeConverter.toKod(LateralitetsKod.HOGER));
-        hogerUtan.getVarde().add(new PhysicalQuantity(syn.getHoger().getUtanKorrektion(), null));
+        if (syn.getVanster() != null) {
+            Observation vansterUtan = new Observation();
+            vansterUtan.setObservationskod(CodeConverter.toKod(ObservationsKod.EJ_KORRIGERAD_SYNSKARPA));
+            vansterUtan.setLateralitet(CodeConverter.toKod(LateralitetsKod.VANSTER));
+            vansterUtan.getVarde().add(new PhysicalQuantity(syn.getVanster().getUtanKorrektion(), null));
+            obs.add(vansterUtan);
+        }
 
-        vansterUtan.setObservationskod(CodeConverter.toKod(ObservationsKod.EJ_KORRIGERAD_SYNSKARPA));
-        vansterUtan.setLateralitet(CodeConverter.toKod(LateralitetsKod.VANSTER));
-        vansterUtan.getVarde().add(new PhysicalQuantity(syn.getVanster().getUtanKorrektion(), null));
-
-        binokulartUtan.setObservationskod(CodeConverter.toKod(ObservationsKod.EJ_KORRIGERAD_SYNSKARPA));
-        binokulartUtan.setLateralitet(CodeConverter.toKod(LateralitetsKod.BINOKULART));
-        binokulartUtan.getVarde().add(new PhysicalQuantity(syn.getBinokulart().getUtanKorrektion(), null));
-
-        obs.add(hogerUtan);
-        obs.add(vansterUtan);
-        obs.add(binokulartUtan);
+        if (syn.getBinokulart() != null) {
+            Observation binokulartUtan = new Observation();
+            binokulartUtan.setObservationskod(CodeConverter.toKod(ObservationsKod.EJ_KORRIGERAD_SYNSKARPA));
+            binokulartUtan.setLateralitet(CodeConverter.toKod(LateralitetsKod.BINOKULART));
+            binokulartUtan.getVarde().add(new PhysicalQuantity(syn.getBinokulart().getUtanKorrektion(), null));
+            obs.add(binokulartUtan);
+        }
 
         // Create optional corrected observations
-        if (syn.getHoger().getMedKorrektion() != null) {
+        if (syn.getHoger() != null && syn.getHoger().getMedKorrektion() != null) {
             Observation hogerMed = new Observation();
             hogerMed.setObservationskod(CodeConverter.toKod(ObservationsKod.KORRIGERAD_SYNSKARPA));
             hogerMed.setLateralitet(CodeConverter.toKod(LateralitetsKod.HOGER));
             hogerMed.getVarde().add(new PhysicalQuantity(syn.getHoger().getMedKorrektion(), null));
             obs.add(hogerMed);
         }
-        if (syn.getVanster().getMedKorrektion() != null) {
+        if (syn.getVanster() != null && syn.getVanster().getMedKorrektion() != null) {
             Observation vansterMed = new Observation();
             vansterMed.setObservationskod(CodeConverter.toKod(ObservationsKod.KORRIGERAD_SYNSKARPA));
             vansterMed.setLateralitet(CodeConverter.toKod(LateralitetsKod.VANSTER));
             vansterMed.getVarde().add(new PhysicalQuantity(syn.getVanster().getMedKorrektion(), null));
             obs.add(vansterMed);
         }
-        if (syn.getBinokulart().getMedKorrektion() != null) {
+        if (syn.getBinokulart() != null && syn.getBinokulart().getMedKorrektion() != null) {
             Observation binokulartMed = new Observation();
             binokulartMed.setObservationskod(CodeConverter.toKod(ObservationsKod.KORRIGERAD_SYNSKARPA));
             binokulartMed.setLateralitet(CodeConverter.toKod(LateralitetsKod.BINOKULART));
@@ -488,24 +492,22 @@ public class InternalToExternalConverter {
 
         // Create Aktivitet[er]
 
-        // If there is a Syn-object create related Aktiviteter
-        if (source.getSyn() != null) {
-            // Synfältsprövning
-            if (source.getSyn().getProvningOgatsRorlighet()) {
-                Aktivitet synprovning = new Aktivitet();
-                synprovning.setAktivitetskod(CodeConverter.toKod(AktivitetKod.SYNFALTSUNDERSOKNING));
-                synprovning.setMetod(CodeConverter.toKod(MetodKod.DONDERS_KONFRONTATIONSMETOD));
-                synprovning.setId(SYNFALTSPROVNING_ID);
-                aktiviteter.add(synprovning);
-            }
-            // Prövning av ögats rörlighet
-            if (source.getSyn().getSynfaltsprovning() != null) {
-                Aktivitet ogatsRorlighet = new Aktivitet();
-                ogatsRorlighet.setId(OGATS_RORLIGHET_ID);
-                ogatsRorlighet.setAktivitetskod(CodeConverter.toKod(AktivitetKod.PROVNING_AV_OGATS_RORLIGHET));
-                aktiviteter.add(ogatsRorlighet);
-            }
+        // Synfältsprövning
+        if (source.getSyn().getSynfaltsprovning() != null) {
+            Aktivitet synprovning = new Aktivitet();
+            synprovning.setAktivitetskod(CodeConverter.toKod(AktivitetKod.SYNFALTSUNDERSOKNING));
+            synprovning.setMetod(CodeConverter.toKod(MetodKod.DONDERS_KONFRONTATIONSMETOD));
+            synprovning.setId(SYNFALTSPROVNING_ID);
+            aktiviteter.add(synprovning);
         }
+        // Prövning av ögats rörlighet
+        if (source.getSyn().getProvningOgatsRorlighet() != null) {
+            Aktivitet ogatsRorlighet = new Aktivitet();
+            ogatsRorlighet.setId(OGATS_RORLIGHET_ID);
+            ogatsRorlighet.setAktivitetskod(CodeConverter.toKod(AktivitetKod.PROVNING_AV_OGATS_RORLIGHET));
+            aktiviteter.add(ogatsRorlighet);
+        }
+
         // Egenkontroll av blodsocker
         if (source.getHypoglykemier().getEgenkontrollBlodsocker() != null) {
             Aktivitet egenkontrollBlodsocker = new Aktivitet();
@@ -607,6 +609,10 @@ public class InternalToExternalConverter {
         vardgivare.setId(new Id(HSpersonalKod.HSA_ID.getCodeSystem(), source.getVardgivarid()));
         vardgivare.setNamn(source.getVardgivarnamn());
         return vardgivare;
+    }
+
+    private boolean isTrue(Boolean bool) {
+        return bool != null && bool;
     }
 
 }

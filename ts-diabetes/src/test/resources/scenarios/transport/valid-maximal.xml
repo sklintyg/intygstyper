@@ -267,7 +267,7 @@
   <p:bilaga>
     <p:bilagekod code="BIL1" codeSystem="???"
       codeSystemName="kv_bilaga" />
-    <p:forekomst>true</p:forekomst>  
+    <p:forekomst>false</p:forekomst>  
   </p:bilaga>
   
 </p:utlatande>

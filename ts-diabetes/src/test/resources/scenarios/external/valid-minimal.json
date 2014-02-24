@@ -71,6 +71,15 @@
 	        }
 	      }
       ],
+    "bilaga" : {
+    	"bilagetyp" : {
+            "codeSystem": "???",
+            "codeSystemName": "kv_bilaga",
+            "code": "BIL1"
+    	},
+    	"forekomst" : true
+    },
+    "aktiviteter": [],
     "rekommendationer": [
         {
             "rekommendationskod": {

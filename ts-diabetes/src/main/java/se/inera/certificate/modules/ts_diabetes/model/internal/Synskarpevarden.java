@@ -11,7 +11,7 @@ public class Synskarpevarden {
     Double utanKorrektion;
     Double medKorrektion;
 
-    public double getUtanKorrektion() {
+    public Double getUtanKorrektion() {
         return utanKorrektion;
     }
 
