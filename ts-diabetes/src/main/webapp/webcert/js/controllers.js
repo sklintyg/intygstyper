@@ -222,7 +222,17 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
       "idkontroll" : "IDK6"
     },
     "intygAvser" : {
-      "korkortstyp" : ["C"]
+      "korkortstyp" : [
+        {"type" : "C1", "selected" : false},
+        {"type" : "C1E", "selected" : false},
+        {"type" : "C", "selected" : true},
+        {"type" : "CE", "selected" : false},
+        {"type" : "D1", "selected" : false},
+        {"type" : "D1E", "selected" : false},
+        {"type" : "D", "selected" : false},
+        {"type" : "DE", "selected" : false},
+        {"type" : "TAXI", "selected" : false}
+      ]
     },
     "diabetes" : {
       "diabetestyp" : "E11"
@@ -233,7 +243,17 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
     },
 
     "bedomning" : {
-      "korkortstyp" : ["C"]
+      "korkortstyp" : [ 
+        {"type" : "C1", "selected" : false},
+        {"type" : "C1E", "selected" : false},
+        {"type" : "C", "selected" : true},
+        {"type" : "CE", "selected" : false},
+        {"type" : "D1", "selected" : false},
+        {"type" : "D1E", "selected" : false},
+        {"type" : "D", "selected" : false},
+        {"type" : "DE", "selected" : false},
+        {"type" : "TAXI", "selected" : false}
+      ]
     }
 
     };
@@ -274,4 +294,4 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
             $location.path("/list");
     	});
 	};
-}]);
+}]
