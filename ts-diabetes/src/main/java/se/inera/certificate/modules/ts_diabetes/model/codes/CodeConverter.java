@@ -21,6 +21,7 @@ package se.inera.certificate.modules.ts_diabetes.model.codes;
 import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.modules.ts_diabetes.model.codes.CodeSystem;
 
 /**
  * Util for converting an enum implementing CodeSystem to a Kod object.
@@ -119,5 +120,17 @@ public final class CodeConverter {
             return false;
 
         return true;
+    }
+    
+    /**
+     * Given a Kod and its CodeSystem, returns the corresponding internal enum constant name for that code from the
+     * CodeSystem representing it.
+     * 
+     * @param kod
+     *            {@link Kod}
+     * @return a String with the Enum constant
+     */
+    public static String getInternalNameFromKod(Kod kod, Class<? extends CodeSystem> type) {
+        return fromCode(kod, type).toString();
     }
 }

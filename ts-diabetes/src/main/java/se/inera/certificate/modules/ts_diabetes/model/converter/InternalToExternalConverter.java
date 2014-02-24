@@ -261,12 +261,8 @@ public class InternalToExternalConverter {
         if (source.getDiabetes().getDiabetestyp() != null) {
             Observation diabetes = new Observation();
 
-            if (source.getDiabetes().getDiabetestyp().equals("E10")) {
-                diabetes.setObservationskod(CodeConverter.toKod(ObservationsKod.DIABETES_TYP_1));
-
-            } else if (source.getDiabetes().getDiabetestyp().equals("E11")) {
-                diabetes.setObservationskod(CodeConverter.toKod(ObservationsKod.DIABETES_TYP_2));
-            }
+            diabetes.setObservationskod(CodeConverter.toKod(ObservationsKod.valueOf(source.getDiabetes().getDiabetestyp())));
+            
             diabetes.setForekomst(true);
             diabetes.setObservationstidPartialDate(PartialConverter.stringToPartial(source.getDiabetes()
                     .getObservationsperiod()));

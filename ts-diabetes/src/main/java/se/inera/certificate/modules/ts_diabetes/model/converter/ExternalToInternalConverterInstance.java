@@ -126,7 +126,7 @@ public class ExternalToInternalConverterInstance {
         Observation kunskap = getObservationWithKod(CodeConverter.toKod(ObservationsKod.KUNSKAP_ATGARD_HYPOGLYKEMI));
         Observation teckenNedsattHjarnfunktion = getObservationWithKod(CodeConverter
                 .toKod(ObservationsKod.HYPOGLYKEMIER_MED_TECKEN_PA_NEDSATT_HJARNFUNKTION));
-        
+
         Aktivitet blodsocker = getAktivitetWithKod(CodeConverter.toKod(AktivitetKod.EGENOVERVAKNING_BLODGLUKOS));
 
         // Mandatory observations, check for null, if not proceed and set corresponding booleans
@@ -175,10 +175,11 @@ public class ExternalToInternalConverterInstance {
             hypo.setAllvarligForekomstVakenTid(allvarligHypoglykemiVaken.getForekomst());
 
             if (allvarligHypoglykemiVaken.getForekomst()) {
-                hypo.setAllvarligForekomstVakenTidObservationstid(allvarligHypoglykemiVaken.getObservationstidDate().toString());
+                hypo.setAllvarligForekomstVakenTidObservationstid(allvarligHypoglykemiVaken.getObservationstidDate()
+                        .toString());
             }
         }
-        
+
         if (blodsocker != null) {
             hypo.setEgenkontrollBlodsocker(blodsocker.getForekomst());
         }
@@ -231,7 +232,7 @@ public class ExternalToInternalConverterInstance {
         Bedomning bedomning = new Bedomning();
 
         for (Rekommendation rek : extUtlatande.getRekommendationer()) {
-            
+
             if (CodeConverter.matches(RekommendationsKod.PATIENT_UPPFYLLER_KRAV_FOR, rek.getRekommendationskod())) {
                 if (rek.getVarde().contains(CodeConverter.toKod(RekommendationVardeKod.INTE_TA_STALLNING))) {
                     bedomning.setKanInteTaStallning(true);
@@ -242,13 +243,14 @@ public class ExternalToInternalConverterInstance {
                     }
                 }
 
-            } else if(CodeConverter.matches(RekommendationsKod.LAMPLIGHET_INNEHA_BEHORIGHET_TILL_KORNINGAR_OCH_ARBETSFORMER,
+            } else if (CodeConverter.matches(
+                    RekommendationsKod.LAMPLIGHET_INNEHA_BEHORIGHET_TILL_KORNINGAR_OCH_ARBETSFORMER,
                     rek.getRekommendationskod())) {
                 bedomning.setLamplighetInnehaBehorighet(rek.getBoolean_varde());
-            
+
             } else if (CodeConverter.matches(RekommendationsKod.PATIENT_BOR_UNDESOKAS_AV_SPECIALIST,
-            
-                    rek.getRekommendationskod())) {
+
+            rek.getRekommendationskod())) {
                 bedomning.setLakareSpecialKompetens(rek.getBeskrivning());
 
             }
@@ -281,8 +283,9 @@ public class ExternalToInternalConverterInstance {
 
         if (diabetesTyp1 != null) {
             if (diabetesTyp1.getForekomst()) {
-                diabetes.setDiabetestyp("E10");
-                if (diabetesTyp2.getObservationstidPartialDate() != null) {
+                diabetes.setDiabetestyp(CodeConverter.getInternalNameFromKod(diabetesTyp1.getObservationskod(),
+                        ObservationsKod.class));
+                if (diabetesTyp1.getObservationstidPartialDate() != null) {
                     diabetes.setObservationsperiod(diabetesTyp1.getObservationstidPartialDate().toString());
                 }
             }
@@ -290,13 +293,14 @@ public class ExternalToInternalConverterInstance {
 
         if (diabetesTyp2 != null) {
             if (diabetesTyp2.getForekomst()) {
-                diabetes.setDiabetestyp("E11");
+                diabetes.setDiabetestyp(CodeConverter.getInternalNameFromKod(diabetesTyp2.getObservationskod(),
+                        ObservationsKod.class));
                 if (diabetesTyp2.getObservationstidPartialDate() != null) {
                     diabetes.setObservationsperiod(diabetesTyp2.getObservationstidPartialDate().toString());
                 }
             }
         }
-        
+
         if (insulin != null) {
             diabetes.setInsulin(insulin.getForekomst());
             if (insulin.getForekomst()) {
@@ -336,7 +340,7 @@ public class ExternalToInternalConverterInstance {
         Aktivitet synfaltsprovning = getAktivitetWithKod(CodeConverter.toKod(AktivitetKod.SYNFALTSUNDERSOKNING));
         Aktivitet provningOgatsRorlighet = getAktivitetWithKod(CodeConverter
                 .toKod(AktivitetKod.PROVNING_AV_OGATS_RORLIGHET));
-        
+
         if (synfaltsprovning != null) {
             syn.setSynfaltsprovning(true);
         }

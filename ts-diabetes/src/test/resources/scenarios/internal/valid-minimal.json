@@ -35,7 +35,7 @@
     	"korkortstyp" : ["C"]
     },
     "diabetes" : {
-    	"diabetestyp" : "E11"
+    	"diabetestyp" : "DIABETES_TYP_2"
     },
     "hypoglykemier" : {
     	"kunskapOmAtgarder" : false,
