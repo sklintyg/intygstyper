@@ -61,11 +61,14 @@ public class PdfGeneratorWithXPathCheckTest {
 
             // Assert that all defined mappings match
             for (TransportToPDFMapping mapping : TransportToPDFMapping.values()) {
-                Object pdfValue = getField(fields, mapping.getField());
-                Object xPathValue = xPath.evaluate(mapping.getxPath());
-                String message = String.format("Scenario: %s, Name: %s, Field: %s - ", scenario.getName(),
-                        mapping.name(), mapping.getField());
-                Assert.assertEquals(message, xPathValue, pdfValue);
+                // Only check mappings that maps to a field
+                if (mapping.getField() != null) {
+                    Object pdfValue = getField(fields, mapping.getField());
+                    Object xPathValue = xPath.evaluate(mapping.getxPath());
+                    String message = String.format("Scenario: %s, Name: %s, Field: %s - ", scenario.getName(),
+                            mapping.name(), mapping.getField());
+                    Assert.assertEquals(message, xPathValue, pdfValue);
+                }
             }
 
             pdfReader.close();

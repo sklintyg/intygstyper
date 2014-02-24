@@ -49,6 +49,9 @@
       <xs:element name="observationAktivitetRelation" type="observationAktivitetRelationType"
                   minOccurs="0" maxOccurs="unbounded" />
 
+      <xs:element name="utgava" type="xs:string" />
+      <xs:element name="version" type="xs:string" />
+
       <xs:any namespace="##other" processContents="lax" minOccurs="0"
               maxOccurs="unbounded"/>
     </xs:sequence>

@@ -31,6 +31,8 @@ import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
+import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
+import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_bas.model.external.Observation;
@@ -72,7 +74,17 @@ public class TransportToExternalConverter {
         }
         Utlatande utlatande = new Utlatande();
         utlatande.setId(IsoTypeConverter.toId(source.getUtlatandeId()));
-        utlatande.setTyp(IsoTypeConverter.toKod(source.getTypAvUtlatande()));
+
+        // Validate and set Typ
+        Kod typAvUtlatande = IsoTypeConverter.toKod(source.getTypAvUtlatande());
+        UtlatandeKod utlatandeKod = CodeConverter.fromCode(typAvUtlatande, UtlatandeKod.class);
+        try {
+            utlatandeKod.assertVersion(source.getUtgava(), source.getVersion());
+        } catch (IllegalArgumentException e) {
+            throw new ConverterException(e.getMessage());
+        }
+        utlatande.setTyp(typAvUtlatande);
+
         utlatande.setPatient(convertPatient(source.getPatient()));
         utlatande.setSigneringsdatum(source.getSigneringsdatum());
         if (!source.getKommentars().isEmpty()) {
@@ -392,15 +404,17 @@ public class TransportToExternalConverter {
 
         return patient;
     }
-    
+
     /**
      * Utility method for converting a List of CD to a List of Kod
-     * @param cds List of {@link CD}
+     * 
+     * @param cds
+     *            List of {@link CD}
      * @return a List of {@link Kod}
      */
     private List<Kod> convertListOfKod(List<CD> cds) {
         List<Kod> koder = new ArrayList<Kod>();
-        for (CD cd: cds) {
+        for (CD cd : cds) {
             koder.add(IsoTypeConverter.toKod(cd));
         }
         return koder;

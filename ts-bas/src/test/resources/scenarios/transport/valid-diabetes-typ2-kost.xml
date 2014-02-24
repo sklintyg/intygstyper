@@ -312,5 +312,7 @@
     <p:aktivitetsid root="1.2.752.129.2.1.2.1" extension="2" />
   </p:observationAktivitetRelation>
 
+  <p:utgava>06</p:utgava>
+  <p:version>06</p:version>
 
 </p:utlatande>

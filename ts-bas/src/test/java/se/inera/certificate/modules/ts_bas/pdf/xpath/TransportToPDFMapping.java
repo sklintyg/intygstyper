@@ -9,6 +9,12 @@ import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.*;
 public enum TransportToPDFMapping {
 
     /** */
+    TS_UTGAVA(null, TS_UTGAVA_XPATH),
+
+    /** */
+    TS_VERSION(null, TS_VERSION_XPATH),
+
+    /** */
     INVANARE_ADRESS_FALT1("Falt", INVANARE_ADRESS_FALT1_XPATH),
 
     /** */

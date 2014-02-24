@@ -31,6 +31,8 @@ import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
+import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
+import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_bas.model.external.Observation;
@@ -69,12 +71,15 @@ public class ExternalToTransportConverter {
         Utlatande utlatande = new Utlatande();
         utlatande.setPatient(convertPatient(source.getPatient()));
         utlatande.setSigneringsdatum(source.getSigneringsdatum());
-        if (!source.getKommentarer().isEmpty()) {    
+        if (!source.getKommentarer().isEmpty()) {
             utlatande.getKommentars().addAll(source.getKommentarer());
         }
         utlatande.setSkapadAv(convertHosPersonal(source.getSkapadAv()));
         utlatande.setSkickatdatum(source.getSkickatdatum());
         utlatande.setTypAvUtlatande(IsoTypeConverter.toUtlatandeTyp(source.getTyp()));
+        UtlatandeKod utlatandeKod = CodeConverter.fromCode(source.getTyp(), UtlatandeKod.class);
+        utlatande.setUtgava(utlatandeKod.getTsUtgava());
+        utlatande.setVersion(utlatandeKod.getTsVersion());
         utlatande.setUtlatandeId(IsoTypeConverter.toUtlatandeId(source.getId()));
 
         // Just make sure getVardkontakter() doesn't return an empty list before getting an index..

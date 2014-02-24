@@ -5,6 +5,10 @@ package se.inera.certificate.modules.ts_bas.pdf.xpath;
  */
 public class XPathExpressions {
 
+    public static final StringXPathExpression TS_UTGAVA_XPATH = new StringXPathExpression("p:utlatande/p:utgava");
+
+    public static final StringXPathExpression TS_VERSION_XPATH = new StringXPathExpression("p:utlatande/p:version");
+
     public static final StringXPathExpression INVANARE_ADRESS_FALT1_XPATH = new StringXPathExpression(
             "concat(p:utlatande/p:patient/p:fornamn, ' ', p:utlatande/p:patient/p:efternamn)");
 
