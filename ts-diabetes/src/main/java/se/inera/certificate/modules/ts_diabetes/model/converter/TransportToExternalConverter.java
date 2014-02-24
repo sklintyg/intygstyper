@@ -75,6 +75,7 @@ public class TransportToExternalConverter {
         Utlatande utlatande = new Utlatande();
         utlatande.setId(IsoTypeConverter.toId(source.getUtlatandeId()));
         utlatande.setTyp(IsoTypeConverter.toKod(source.getTypAvUtlatande()));
+        utlatande.getKommentarer().addAll(source.getKommentars());
         utlatande.setPatient(convertPatient(source.getPatient()));
         utlatande.setSigneringsdatum(source.getSigneringsdatum());
         utlatande.setSkapadAv(convertHosPersonal(source.getSkapadAv()));
