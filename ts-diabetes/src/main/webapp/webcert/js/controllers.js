@@ -206,34 +206,35 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
           "vardgivarid": "SE0000000000-HAHAHHSAA",
           "vardgivarnamn": "Vårdgivarnamn"
         }
-      },
-      "patient": {
-        "personid": "19121212-1212",
-        "fullstandigtNamn": "Johnny Appleseed",
-        "fornamn": "Johnny",
-        "efternamn": "Appleseed",
-        "postadress": "Testvägen 12",
-        "postnummer": "123456",
-        "postort": "Testort"
-      },
-      "vardkontakt" : {
-        "typ" : "5880005",
-        "idkontroll" : "IDK6"
-      },
-      "intygAvser" : {
-        "korkortstyp" : ["C"]
-      },
-      "diabetes" : {
-        "diabetestyp" : "E11"
-      },
-      "hypoglykemier" : {
-        "kunskapOmAtgarder" : false,
-        "teckenNedsattHjarnfunktion" : false
-      },
-
-      "bedomning" : {
-        "korkortstyp" : ["C"]
       }
+    },
+    "patient": {
+      "personid": "19121212-1212",
+      "fullstandigtNamn": "Johnny Appleseed",
+      "fornamn": "Johnny",
+      "efternamn": "Appleseed",
+      "postadress": "Testvägen 12",
+      "postnummer": "123456",
+      "postort": "Testort"
+    },
+    "vardkontakt" : {
+      "typ" : "5880005",
+      "idkontroll" : "IDK6"
+    },
+    "intygAvser" : {
+      "korkortstyp" : ["C"]
+    },
+    "diabetes" : {
+      "diabetestyp" : "E11"
+    },
+    "hypoglykemier" : {
+      "kunskapOmAtgarder" : false,
+      "teckenNedsattHjarnfunktion" : false
+    },
+
+    "bedomning" : {
+      "korkortstyp" : ["C"]
+    }
 
     };
     $scope.doneLoading = false;
@@ -274,4 +275,3 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
     	});
 	};
 }]);
-
