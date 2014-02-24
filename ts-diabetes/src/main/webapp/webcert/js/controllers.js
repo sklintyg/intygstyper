@@ -243,7 +243,7 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
     },
 
     "bedomning" : {
-      "korkortstyp" : [ 
+      "korkortstyp" : [
         {"type" : "C1", "selected" : false},
         {"type" : "C1E", "selected" : false},
         {"type" : "C", "selected" : true},
@@ -294,4 +294,4 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
             $location.path("/list");
     	});
 	};
-}]
+}]);
