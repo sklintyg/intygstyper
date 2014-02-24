@@ -303,10 +303,10 @@
                             <p>Har patienten diabetes?</p>
                             <div data-ng-show="cert.diabetes.harDiabetes">
                                 <p>Vilken typ?
-                                    <label class="radio"><input name="diabetestype1" type="radio" value="E11" ng-model="cert.diabetes.diabetesTyp">Typ 1</label>
-                                    <label class="radio"><input name="diabetestype2" type="radio" value="E12" ng-model="cert.diabetes.diabetesTyp">Typ 2</label>
+                                    <label class="radio"><input name="diabetestype1" type="radio" value="DIABETES_TYP_1" ng-model="cert.diabetes.diabetesTyp">Typ 1</label>
+                                    <label class="radio"><input name="diabetestype2" type="radio" value="DIABETES_TYP_2" ng-model="cert.diabetes.diabetesTyp">Typ 2</label>
                                 </p>
-                                <div data-ng-show="cert.diabetes.diabetesTyp == 'E12'">
+                                <div data-ng-show="cert.diabetes.diabetesTyp == 'DIABETES_TYP_2'">
                                     Ange behandling:
                                     <label class="checkbox"><input name="diabetestreat1" type="checkbox" ng-model="cert.diabetes.kost"> Kost</label>
                                     <label class="checkbox"><input name="diabetestreat2" type="checkbox" ng-model="cert.diabetes.tabletter"> Tabletter</label>
