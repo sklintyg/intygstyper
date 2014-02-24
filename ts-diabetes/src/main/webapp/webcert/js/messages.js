@@ -19,9 +19,26 @@
 'use strict';
 var tsDiabetesMessages = {
     "sv": {
+      "ts.label.empty" : "",
       "ts.label.certtitle" : "Läkarintyg Transportstyrelsen Diabetes",
       "ts.label.intygavser" : "Intyget avser",
       "ts.label.identitet" : "Identiteten är styrkt genom",
+      "ts.label.allmant" : "1. Allmänt",
+      "ts.label.hypoglykemier" : "2. Hypoglykemier (lågt blodsocker)",
+      "ts.label.synintyg" : "3. Synfunktioner",
+      "ts.label.bedomning" : "4. Bedömning",
+      "ts.label.unit" : "Vårdenhet",
+	  
+      "ts.label.korkort.c1" : "C1",
+      "ts.label.korkort.c1e" : "C1E",
+      "ts.label.korkort.c" : "C",
+      "ts.label.korkort.ce" : "CE",
+      "ts.label.korkort.d1" : "D1",
+      "ts.label.korkort.d1e" : "D1E",
+      "ts.label.korkort.d" : "D",
+      "ts.label.korkort.de" : "DE",
+      "ts.label.korkort.taxi" : "Taxi",
+      "ts.label.korkort.annat" : "Annat",
 
     	"view.label.certtitle": "Läkarintyg vid avbeställd resa",
       "view.label.pagetitle": "Granska och skicka",

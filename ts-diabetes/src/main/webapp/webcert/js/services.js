@@ -3,7 +3,7 @@
 /* Services */
 var services = angular.module('wc.ts-diabetes.services', []);
 
-services.factory('certificateService', [ '$http', '$log',
+services.factory('webcertService', [ '$http', '$log',
     function ($http, $log) {
 
         /**

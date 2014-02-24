@@ -26,8 +26,8 @@
 var TSDiabetesApp = angular.module('TSDiabetesCertApp', [ 'wc.ts-diabetes.controllers', 'wc.ts-diabetes.directives', 'wc.ts-diabetes.services', 'modules.messages', 'wc.common', 'wc.utils' ]).config(
         [ '$routeProvider', function($routeProvider) {
             $routeProvider.when('/edit', {
-                templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/edit-cert.html'
-               // controller : 'EditCertCtrl'
+                templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/edit-cert.html',
+				controller : 'EditCertCtrl'
            // }).otherwise({
              //   redirectTo : '/'
             });

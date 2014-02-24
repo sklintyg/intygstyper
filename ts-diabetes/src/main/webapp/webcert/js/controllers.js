@@ -163,7 +163,7 @@ controllers.controller('ListCertCtrl', [ '$scope', '$filter', '$location', '$roo
 	
 }]);
 
-controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', 'webcertService', '$routeParams', function EditCertCtrl($scope, $filter, $location, $rootScope, webcertService, $routeParams) {
+controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$rootScope', '$routeParams', function EditCertCtrl($scope, $filter, $location, $rootScope, webcertService, $routeParams) {
   $scope.form = {
     'identity' : {
       'ID-kort' : 'ID_KORT',
@@ -173,16 +173,16 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
       'Försäkran enligt 18 kap. 4§' : 'FORSAKRAN_KAP18',
       'Pass' : 'PASS'
     },
-    'korkortannat' : false,
+    'korkorttypselected' : false,
     'behorighet' : true
   };
 
   $scope.$watch('cert.intygAvser.korkortstyp', function (newValue, oldValue) {
     if (!$scope.cert || !$scope.cert.intygAvser || !$scope.cert.intygAvser.korkortstyp) return;
-    $scope.form.korkortannat = false;
+    $scope.form.korkorttypselected = false;
     for (var i = 0; i < $scope.cert.intygAvser.korkortstyp.length; i++) {
-      if (newValue[i].type == "ANNAT") {
-        $scope.form.korkortannat = newValue[i].selected;
+      if (newValue[i].type != "ANNAT" && newValue[i].selected) {
+        $scope.form.korkorttypselected = true;
         break;
       }
     }
@@ -219,7 +219,7 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
     },
     "vardkontakt" : {
       "typ" : "5880005",
-      "idkontroll" : "IDK6"
+      "idkontroll" : "PASS"
     },
     "intygAvser" : {
       "korkortstyp" : [
@@ -231,7 +231,8 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
         {"type" : "D1E", "selected" : false},
         {"type" : "D", "selected" : false},
         {"type" : "DE", "selected" : false},
-        {"type" : "TAXI", "selected" : false}
+        {"type" : "TAXI", "selected" : false},
+		{"type" : "ANNAT", "selected" : false}
       ]
     },
     "diabetes" : {
@@ -252,7 +253,8 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
         {"type" : "D1E", "selected" : false},
         {"type" : "D", "selected" : false},
         {"type" : "DE", "selected" : false},
-        {"type" : "TAXI", "selected" : false}
+        {"type" : "TAXI", "selected" : false},
+		{"type" : "ANNAT", "selected" : false}
       ]
     }
 
@@ -295,3 +297,4 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
     	});
 	};
 }]);
+
