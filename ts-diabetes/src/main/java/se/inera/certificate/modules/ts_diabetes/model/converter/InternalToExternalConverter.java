@@ -36,8 +36,8 @@ import se.inera.certificate.modules.ts_diabetes.model.codes.AktivitetKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.BilagaKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_diabetes.model.codes.HSpersonalKod;
+import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IntygAvserKod;
-import se.inera.certificate.modules.ts_diabetes.model.codes.Kodverk;
 import se.inera.certificate.modules.ts_diabetes.model.codes.LateralitetsKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.MetodKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.ObservationsKod;
@@ -141,7 +141,9 @@ public class InternalToExternalConverter {
 
         List<Vardkontakt> vardkontakter = new ArrayList<Vardkontakt>();
         Vardkontakt vardkontakt = new Vardkontakt();
+        
         vardkontakt.setIdkontroll(createIdKontrollKod(source.getVardkontakt().getIdkontroll()));
+        
         vardkontakt.setVardkontakttyp(CodeConverter.toKod(VardkontakttypKod.MIN_UNDERSOKNING));
         vardkontakter.add(vardkontakt);
 
@@ -150,11 +152,9 @@ public class InternalToExternalConverter {
 
     // TODO: There might be a better way to do this..
     private Kod createIdKontrollKod(String code) {
-        Kod kod = new Kod(Kodverk.ID_KONTROLL.getCodeSystem(), Kodverk.ID_KONTROLL.getCodeSystemName(),
-                Kodverk.ID_KONTROLL.getCodeSystemVersion(), code);
-
-        return kod;
+        return CodeConverter.toKod(IdKontrollKod.valueOf(code));
     }
+
 
     /**
      * Creates a List of {@link Kod}[er] concerning what type of permissions this Utlatande concerns

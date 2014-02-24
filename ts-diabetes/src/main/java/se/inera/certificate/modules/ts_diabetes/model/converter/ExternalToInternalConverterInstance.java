@@ -29,6 +29,7 @@ import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.AktivitetKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
+import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IntygAvserKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.LateralitetsKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.ObservationsKod;
@@ -215,7 +216,7 @@ public class ExternalToInternalConverterInstance {
             se.inera.certificate.modules.ts_diabetes.model.external.Vardkontakt source) {
         Vardkontakt vardkontakt = new Vardkontakt();
 
-        vardkontakt.setIdkontroll(source.getIdkontroll().getCode());
+        vardkontakt.setIdkontroll(CodeConverter.getInternalNameFromKod(source.getIdkontroll(), IdKontrollKod.class));
         vardkontakt.setTyp(source.getVardkontakttyp().getCode());
 
         return vardkontakt;

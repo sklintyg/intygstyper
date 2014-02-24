@@ -29,7 +29,7 @@
     },
     "vardkontakt" : {
     	"typ" : "5880005", 
-    	"idkontroll" : "IDK6"
+    	"idkontroll" : "PASS"
     },
     "intygAvser" : {
     	"korkortstyp" : ["C"]
