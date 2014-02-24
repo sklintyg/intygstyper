@@ -35,17 +35,25 @@ public class PdfGeneratorTest {
     private PdfGenerator pdfGen;
 
     public PdfGeneratorTest() {
-        pdfGen = new PdfGenerator();
+        pdfGen = new PdfGenerator(true);
     }
 
-    private void writePdfToFile(byte[] pdf) throws IOException {
+    @Test
+    public void testGeneratePdf() throws Exception {
+        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
+            byte[] pdf = pdfGen.generatePDF(scenario.asInternalModel());
+            assertNotNull("Error in scenario " + scenario.getName(), pdf);
+            writePdfToFile(pdf, scenario);
+        }
+    }
+
+    private void writePdfToFile(byte[] pdf, Scenario scenario) throws IOException {
         String dir = System.getProperty("pdfOutput.dir");
         if (dir == null) {
             return;
         }
 
-        File file = new File(dir + "/TS_diabetes_intyg_" + LocalDateTime.now().toString("yyyyMMdd_HHmm") + pdf.hashCode()
-                + ".pdf");
+        File file = new File(String.format("%s/%s_%s.pdf", dir, scenario.getName(), LocalDateTime.now().toString("yyyyMMdd_HHmm")));
         FileOutputStream fop = new FileOutputStream(file);
 
         file.createNewFile();

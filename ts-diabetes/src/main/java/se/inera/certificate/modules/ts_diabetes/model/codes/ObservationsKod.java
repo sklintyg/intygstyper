@@ -25,9 +25,6 @@ public enum ObservationsKod implements CodeSystem {
     /** Diabetes mellitus typ 2 (E11) */
     DIABETES_TYP_2("E11", "Diabetes mellitus typ 2", ICD_10),
 
-    /** Diabetiker på Kostbehandling (OBS9) */
-    DIABETIKER_KOSTBEHANDLING("OBS9", "Diabetiker på kostbehandling", OBSERVATIONER),
-
     /** Diabetiker på tablettbehandling (170746002) */
     DIABETIKER_TABLETTBEHANDLING("170746002", "Diabetiker på tablettbehandling", SNOMED_CT),
 

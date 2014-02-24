@@ -20,8 +20,22 @@ package se.inera.certificate.modules.ts_diabetes.pdf;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 
+import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
+import se.inera.certificate.modules.ts_diabetes.model.codes.ObservationsKod;
+import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
+import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
+import se.inera.certificate.modules.ts_diabetes.model.internal.Diabetes;
+import se.inera.certificate.modules.ts_diabetes.model.internal.Hypoglykemier;
+import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvser;
+import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvserKategori;
+import se.inera.certificate.modules.ts_diabetes.model.internal.Patient;
+import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
+import se.inera.certificate.modules.ts_diabetes.model.internal.Vardenhet;
+import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
@@ -30,20 +44,133 @@ import com.itextpdf.text.pdf.PdfStamper;
 
 public class PdfGenerator {
 
+    private static final StringField INVANARE_ADRESS_FALT1 = new StringField("Falt__1");
+    private static final StringField INVANARE_ADRESS_FALT2 = new StringField("Falt__2");
+    private static final StringField INVANARE_ADRESS_FALT3 = new StringField("Falt__3");
+    private static final StringField INVANARE_PERSONNUMMER = new StringField("Falt__4#0");
+
+    private static final CheckGroupField<IntygAvserKategori> INTYG_AVSER;
+    static {
+        INTYG_AVSER = new CheckGroupField<IntygAvserKategori>();
+        INTYG_AVSER.addField(IntygAvserKategori.AM, "Falt_4");
+        INTYG_AVSER.addField(IntygAvserKategori.A, "Falt_5");
+        INTYG_AVSER.addField(IntygAvserKategori.A1, "Falt_6");
+        INTYG_AVSER.addField(IntygAvserKategori.A2, "Falt_7");
+        INTYG_AVSER.addField(IntygAvserKategori.A, "Falt_8");
+        INTYG_AVSER.addField(IntygAvserKategori.B, "Falt_9");
+        INTYG_AVSER.addField(IntygAvserKategori.BE, "Falt_10");
+        INTYG_AVSER.addField(IntygAvserKategori.TRAKTOR, "Falt_11");
+        INTYG_AVSER.addField(IntygAvserKategori.C1E, "Falt_12");
+        INTYG_AVSER.addField(IntygAvserKategori.C, "Falt_13");
+        INTYG_AVSER.addField(IntygAvserKategori.CE, "Falt_14");
+        INTYG_AVSER.addField(IntygAvserKategori.D1, "Falt_15");
+        INTYG_AVSER.addField(IntygAvserKategori.D1E, "Falt_16");
+        INTYG_AVSER.addField(IntygAvserKategori.D, "Falt_17");
+        INTYG_AVSER.addField(IntygAvserKategori.DE, "Falt_18");
+        INTYG_AVSER.addField(IntygAvserKategori.TAXI, "Falt_19");
+    }
+
+    private static final CheckField ID_KONTROLL_IDKORT = new CheckField("Falt_20");
+    private static final CheckField ID_KONTROLL_FORETAG_TJANSTEKORT = new CheckField("Falt_21");
+    private static final CheckField ID_KONTROLL_SVENSKT_KORKORT = new CheckField("Falt_22");
+    private static final CheckField ID_KONTROLL_PERSONLIG_KANNEDOM = new CheckField("Falt_23");
+    private static final CheckField ID_KONTROLL_FORSAKRAN = new CheckField("Falt_24");
+    private static final CheckField ID_KONTROLL_PASS = new CheckField("Falt_25");
+
+    private static final StringField DIABETES_AR_FOR_DIAGNOS = new StringField("");
+    private static final CheckField DIABETES_TYP_1 = new CheckField("");
+    private static final CheckField DIABETES_TYP_2 = new CheckField("");
+
+    private static final CheckField DIABETIKER_ENBART_KOST = new CheckField("");
+    private static final CheckField DIABETIKER_TABLETTBEHANDLING = new CheckField("");
+    private static final CheckField DIABETIKER_INSULINBEHANDLING = new CheckField("");
+    private static final StringField DIABETIKER_INSULINBEHANDLING_SEDAN = new StringField("");
+    private static final StringField DIABETIKER_ANNAN_BEHANDLING = new StringField("");
+
+    private static final YesNoField KUNSKAP_ATGARD_HYPOGLYKEMI = new YesNoField("", "");
+    private static final YesNoField HYPOGLYKEMIER_MED_TECKEN_PA_NEDSATT_HJARNFUNKTION = new YesNoField("", "");
+    private static final YesNoField SAKNAR_FORMAGA_KANNA_HYPOGLYKEMI = new YesNoField("", "");
+    private static final YesNoField ALLVARLIG_HYPOGLYKEMI = new YesNoField("", "");
+    private static final StringField ALLVARLIG_HYPOGLYKEMI_ANTAL = new StringField("");
+    private static final YesNoField ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN = new YesNoField("", "");
+    private static final StringField ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN_BESKRIVNING = new StringField("");
+
+    private static final YesNoField EGENOVERVAKNING_BLODGLUKOS = new YesNoField("", "");
+    private static final YesNoField ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND = new YesNoField("", "");
+    private static final StringField ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND_DATUM = new StringField("");
+
+    private static final YesNoField OGONLAKARINTYG = new YesNoField("", "");
+    private static final YesNoField SYNFALTSUNDERSOKNING = new YesNoField("", "");
+    private static final DecimalField EJ_KORRIGERAD_SYNSKARPA_HOGER = new DecimalField("", "");
+    private static final DecimalField EJ_KORRIGERAD_SYNSKARPA_VANSTER = new DecimalField("", "");
+    private static final DecimalField EJ_KORRIGERAD_SYNSKARPA_BINOKULART = new DecimalField("", "");
+    private static final DecimalField KORRIGERAD_SYNSKARPA_HOGER = new DecimalField("", "");
+    private static final DecimalField KORRIGERAD_SYNSKARPA_VANSTER = new DecimalField("", "");
+    private static final DecimalField KORRIGERAD_SYNSKARPA_BINOKULART = new DecimalField("", "");
+    private static final YesNoField DIPLOPI = new YesNoField("Falt_202", "Falt_203");
+
+    private static final CheckGroupField<BedomningKorkortstyp> BEDOMNING;
+    static {
+        BEDOMNING = new CheckGroupField<BedomningKorkortstyp>();
+        BEDOMNING.addField(BedomningKorkortstyp.AM, "");
+        BEDOMNING.addField(BedomningKorkortstyp.A1, "");
+        BEDOMNING.addField(BedomningKorkortstyp.A2, "");
+        BEDOMNING.addField(BedomningKorkortstyp.A, "");
+        BEDOMNING.addField(BedomningKorkortstyp.B, "");
+        BEDOMNING.addField(BedomningKorkortstyp.BE, "");
+        BEDOMNING.addField(BedomningKorkortstyp.TRAKTOR, "");
+        BEDOMNING.addField(BedomningKorkortstyp.C1, "");
+        BEDOMNING.addField(BedomningKorkortstyp.C1E, "");
+        BEDOMNING.addField(BedomningKorkortstyp.C, "");
+        BEDOMNING.addField(BedomningKorkortstyp.CE, "");
+        BEDOMNING.addField(BedomningKorkortstyp.D1, "");
+        BEDOMNING.addField(BedomningKorkortstyp.D1E, "");
+        BEDOMNING.addField(BedomningKorkortstyp.D, "");
+        BEDOMNING.addField(BedomningKorkortstyp.DE, "");
+        BEDOMNING.addField(BedomningKorkortstyp.TAXI, "");
+    }
+    private static final CheckField BEDOMNING_INTE_TA_STALLNING = new CheckField("");
+
+    private static final YesNoField LAMPLIGHET_INNEHA_BEHORIGHET_TILL_KORNINGAR_OCH_ARBETSFORMER = new YesNoField("",
+            "");
+
+    private static final StringField OVRIG_BESKRIVNING = new StringField("");
+
+    private static final StringField BEDOMNING_BOR_UNDERSOKAS_SPECIALIST = new StringField("FaltDiv6");
+
+    private static final StringField INTYGSDATUM = new StringField("Falt__82");
+    private static final StringField VARDINRATTNINGENS_NAMN = new StringField("Falt__83");
+    private static final StringField ADRESS_OCH_ORT = new StringField("Falt__87");
+    private static final StringField TELEFON = new StringField("Falt__88");
+    private static final StringField NAMNFORTYDLIGANDE = new StringField("Falt__90");
+
+    private static final StringField SPECIALISTKOMPETENS_BESKRVNING = new StringField("Falt_92");
+
+    private static final String DATEFORMAT_FOR_FILENAMES = "yyMMdd";
+
+    private final boolean formFlattening;
+
+    public PdfGenerator(boolean formFlattening) {
+        this.formFlattening = formFlattening;
+    }
+
     public String generatePdfFilename(Utlatande utlatande) {
-        // TODO: Implement
-        return null;
+        String personId = utlatande.getPatient().getPersonid();
+        String certificateSignatureDate = utlatande.getSigneringsdatum().toString(DATEFORMAT_FOR_FILENAMES);
+
+        return String.format("lakarutlatande_%s_-%s.pdf", personId, certificateSignatureDate);
     }
 
     public byte[] generatePDF(Utlatande utlatande) throws PdfGeneratorException {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-            PdfReader pdfReader = new PdfReader("pdf/blankett.pdf");
+            PdfReader pdfReader = new PdfReader("pdf/TSTRK1031U06V02.pdf");
             PdfStamper pdfStamper = new PdfStamper(pdfReader, outputStream);
-            pdfStamper.setFormFlattening(true);
+            pdfStamper.setFormFlattening(formFlattening);
             AcroFields fields = pdfStamper.getAcroFields();
             populatePdfFields(utlatande, fields);
+
             pdfStamper.close();
 
             return outputStream.toByteArray();
@@ -57,14 +184,218 @@ public class PdfGenerator {
      * Method for filling out the fields of a pdf with data from the internal model
      * 
      * @param utlatande
-     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande} containing data for populating
-     *            the pdf
+     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande} containing data for
+     *            populating the pdf
      * @param fields
      *            The fields of the pdf
      * @throws DocumentException
      * @throws IOException
      */
     private void populatePdfFields(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
-        // TODO: Implement
+        populatePatientInfo(utlatande.getPatient(), fields);
+        populateIntygAvser(utlatande.getIntygAvser(), fields);
+        populateIdkontroll(utlatande.getVardkontakt(), fields);
+        populateAllmant(utlatande.getDiabetes(), fields);
+        populateHypoglykemier(utlatande.getHypoglykemier(), fields);
+        populateSynintyg(utlatande.getSyn(), fields);
+        populateBedomning(utlatande.getBedomning(), fields);
+        populateOvrigt(utlatande.getKommentar(), fields);
+        populateAvslut(utlatande, fields);
+    }
+
+    private void populatePatientInfo(Patient patient, AcroFields fields) throws IOException, DocumentException {
+        INVANARE_ADRESS_FALT1.setField(fields, patient.getFullstandigtNamn());
+        INVANARE_ADRESS_FALT2.setField(fields, patient.getPostadress());
+        INVANARE_ADRESS_FALT3.setField(fields, patient.getPostnummer() + " " + patient.getPostort());
+        INVANARE_PERSONNUMMER.setField(fields, patient.getPersonid().replace("-", ""));
+    }
+
+    private void populateIntygAvser(IntygAvser intygAvser, AcroFields fields) throws IOException, DocumentException {
+        for (IntygAvserKategori kategori : intygAvser.getKorkortstyp()) {
+            INTYG_AVSER.setField(fields, kategori);
+        }
+    }
+
+    private void populateIdkontroll(Vardkontakt vardkontakt, AcroFields fields) throws IOException, DocumentException {
+        if (vardkontakt.getIdkontroll().equals(IdKontrollKod.ID_KORT.name())) {
+            ID_KONTROLL_IDKORT.setField(fields, true);
+        } else if (vardkontakt.getIdkontroll().equals(IdKontrollKod.FORETAG_ELLER_TJANSTEKORT.name())) {
+            ID_KONTROLL_FORETAG_TJANSTEKORT.setField(fields, true);
+        } else if (vardkontakt.getIdkontroll().equals(IdKontrollKod.KORKORT.name())) {
+            ID_KONTROLL_SVENSKT_KORKORT.setField(fields, true);
+        } else if (vardkontakt.getIdkontroll().equals(IdKontrollKod.PERS_KANNEDOM.name())) {
+            ID_KONTROLL_PERSONLIG_KANNEDOM.setField(fields, true);
+        } else if (vardkontakt.getIdkontroll().equals(IdKontrollKod.FORSAKRAN_KAP18.name())) {
+            ID_KONTROLL_FORSAKRAN.setField(fields, true);
+        } else if (vardkontakt.getIdkontroll().equals(IdKontrollKod.PASS.name())) {
+            ID_KONTROLL_PASS.setField(fields, true);
+        }
+    }
+
+    private void populateAllmant(Diabetes diabetes, AcroFields fields) throws IOException, DocumentException {
+        DIABETES_AR_FOR_DIAGNOS.setField(fields, diabetes.getObservationsperiod());
+        if (diabetes.getDiabetestyp() != null) {
+            if (diabetes.getDiabetestyp().equals(ObservationsKod.DIABETES_TYP_1.name())) {
+                DIABETES_TYP_1.setField(fields, true);
+            } else if (diabetes.getDiabetestyp().equals(ObservationsKod.DIABETES_TYP_2.name())) {
+                DIABETES_TYP_2.setField(fields, true);
+            }
+        }
+        DIABETIKER_ENBART_KOST.setField(fields, diabetes.getEndastKost());
+        DIABETIKER_TABLETTBEHANDLING.setField(fields, diabetes.getTabletter());
+        DIABETIKER_INSULINBEHANDLING.setField(fields, diabetes.getInsulin());
+        DIABETIKER_INSULINBEHANDLING_SEDAN.setField(fields, diabetes.getInsulinBehandlingsperiod());
+        DIABETIKER_ANNAN_BEHANDLING.setField(fields, diabetes.getAnnanBehandlingBeskrivning());
+    }
+
+    private void populateHypoglykemier(Hypoglykemier hypoglykemier, AcroFields fields) throws IOException,
+            DocumentException {
+        KUNSKAP_ATGARD_HYPOGLYKEMI.setField(fields, hypoglykemier.getKunskapOmAtgarder());
+        HYPOGLYKEMIER_MED_TECKEN_PA_NEDSATT_HJARNFUNKTION.setField(fields,
+                hypoglykemier.getTeckenNedsattHjarnfunktion());
+        SAKNAR_FORMAGA_KANNA_HYPOGLYKEMI.setField(fields, hypoglykemier.getSaknarFormagaKannaVarningstecken());
+        ALLVARLIG_HYPOGLYKEMI.setField(fields, hypoglykemier.getAllvarligForekomst());
+        ALLVARLIG_HYPOGLYKEMI_ANTAL.setField(fields, hypoglykemier.getAllvarligForekomstBeskrivning());
+        ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN.setField(fields, hypoglykemier.getAllvarligForekomstTrafiken());
+        ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN_BESKRIVNING.setField(fields,
+                hypoglykemier.getAllvarligForekomstTrafikBeskrivning());
+        EGENOVERVAKNING_BLODGLUKOS.setField(fields, hypoglykemier.getEgenkontrollBlodsocker());
+        ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND.setField(fields, hypoglykemier.getAllvarligForekomstVakenTid());
+        ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND_DATUM.setField(fields,
+                hypoglykemier.getAllvarligForekomstVakenTidObservationstid());
+    }
+
+    private void populateSynintyg(Syn syn, AcroFields fields) throws IOException, DocumentException {
+        OGONLAKARINTYG.setField(fields, syn.getSeparatOgonlakarintyg());
+        SYNFALTSUNDERSOKNING.setField(fields, syn.getSynfaltsprovningUtanAnmarkning());
+
+        if (syn.getHoger() != null) {
+            EJ_KORRIGERAD_SYNSKARPA_HOGER.setField(fields, syn.getHoger().getUtanKorrektion());
+            KORRIGERAD_SYNSKARPA_HOGER.setField(fields, syn.getHoger().getMedKorrektion());
+        }
+        if (syn.getVanster() != null) {
+            EJ_KORRIGERAD_SYNSKARPA_VANSTER.setField(fields, syn.getVanster().getUtanKorrektion());
+            KORRIGERAD_SYNSKARPA_VANSTER.setField(fields, syn.getVanster().getMedKorrektion());
+        }
+        if (syn.getBinokulart() != null) {
+            EJ_KORRIGERAD_SYNSKARPA_BINOKULART.setField(fields, syn.getBinokulart().getUtanKorrektion());
+            KORRIGERAD_SYNSKARPA_BINOKULART.setField(fields, syn.getBinokulart().getMedKorrektion());
+        }
+
+        DIPLOPI.setField(fields, syn.getDiplopi());
+    }
+
+    private void populateBedomning(Bedomning bedomning, AcroFields fields) throws IOException, DocumentException {
+        for (BedomningKorkortstyp korkortstyp : bedomning.getKorkortstyp()) {
+            BEDOMNING.setField(fields, korkortstyp);
+        }
+        BEDOMNING_INTE_TA_STALLNING.setField(fields, bedomning.getKanInteTaStallning());
+        LAMPLIGHET_INNEHA_BEHORIGHET_TILL_KORNINGAR_OCH_ARBETSFORMER.setField(fields,
+                bedomning.getLamplighetInnehaBehorighet());
+        BEDOMNING_BOR_UNDERSOKAS_SPECIALIST.setField(fields, bedomning.getLakareSpecialKompetens());
+    }
+
+    private void populateOvrigt(String kommentar, AcroFields fields) throws IOException, DocumentException {
+        OVRIG_BESKRIVNING.setField(fields, kommentar);
+    }
+
+    private void populateAvslut(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
+        INTYGSDATUM.setField(fields, utlatande.getSigneringsdatum().toString("yyMMdd"));
+        Vardenhet vardenhet = utlatande.getSkapadAv().getVardenhet();
+        VARDINRATTNINGENS_NAMN.setField(fields, vardenhet.getEnhetsnamn());
+        String adressOrt = String.format("%s, %s %s", vardenhet.getPostadress(), vardenhet.getPostnummer(),
+                vardenhet.getPostort());
+        ADRESS_OCH_ORT.setField(fields, adressOrt);
+        TELEFON.setField(fields, vardenhet.getTelefonnummer());
+        NAMNFORTYDLIGANDE.setField(fields, utlatande.getSkapadAv().getFullstandigtNamn());
+
+        List<String> specialiteter = utlatande.getSkapadAv().getSpecialiteter();
+        if (specialiteter.size() > 0) {
+            // TODO: If 'Specialist i allmänmedicin' chose that one.
+            // TODO: Build text for 'beskrivning'
+            SPECIALISTKOMPETENS_BESKRVNING.setField(fields, "implement");
+        }
+    }
+
+    private static class CheckField {
+        private final String field;
+
+        private CheckField(String field) {
+            this.field = field;
+        }
+
+        public void setField(AcroFields fields, Boolean checkField) throws IOException, DocumentException {
+            if (checkField != null && checkField) {
+                fields.setField(field, "On");
+            }
+        }
+    }
+
+    private static class CheckGroupField<T extends Enum<?>> {
+        private final HashMap<T, String> fieldMap = new HashMap<>();
+
+        public void addField(T code, String field) {
+            fieldMap.put(code, field);
+        }
+
+        public void setField(AcroFields fields, T code) throws IOException, DocumentException {
+            String field = fieldMap.get(code);
+
+            if (field != null) {
+                fields.setField(field, "On");
+            }
+        }
+    }
+
+    private static class YesNoField {
+        private final String yesField;
+
+        private final String noField;
+
+        private YesNoField(String yesField, String noField) {
+            this.yesField = yesField;
+            this.noField = noField;
+        }
+
+        public void setField(AcroFields fields, Boolean setYes) throws IOException, DocumentException {
+            if (setYes != null) {
+                fields.setField(setYes ? yesField : noField, "On");
+            }
+        }
+    }
+
+    private static class DecimalField {
+        private final String integerField;
+
+        private final String decimalField;
+
+        private DecimalField(String integerField, String decimalField) {
+            this.integerField = integerField;
+            this.decimalField = decimalField;
+        }
+
+        public void setField(AcroFields fields, Double value) throws IOException, DocumentException {
+            if (value != null) {
+                long integerPart = Math.round(value);
+                long decimalPart = Math.round((value - integerPart) * 10);
+
+                fields.setField(integerField, String.valueOf(integerPart));
+                fields.setField(decimalField, String.valueOf(decimalPart));
+            }
+        }
+    }
+
+    private static class StringField {
+        private final String field;
+
+        private StringField(String field) {
+            this.field = field;
+        }
+
+        public void setField(AcroFields fields, String value) throws IOException, DocumentException {
+            if (value != null) {
+                fields.setField(field, value);
+            }
+        }
     }
 }
