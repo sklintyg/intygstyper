@@ -189,75 +189,107 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
   }, true);
 
   $scope.cert = {
-    "utlatandeid": "987654321",
-    "typAvUtlatande": "TSTRK1031 (U06, V02)",
-    "signeringsdatum": "2013-08-12T15:57:00.000",
-    "skapadAv": {
-      "personid": "SE0000000000-1333",
-      "fullstandigtNamn": "Doktor Thompson",
-      "vardenhet": {
-        "enhetsid": "SE0000000000-1337",
-        "enhetsnamn": "Vårdenhet Väst",
-        "postadress": "Enhetsvägen 12",
-        "postnummer": "54321",
-        "postort": "Tumba",
-        "telefonnummer": "08-1337",
-        "vardgivare": {
-          "vardgivarid": "SE0000000000-HAHAHHSAA",
-          "vardgivarnamn": "Vårdgivarnamn"
+      "utlatandeid": "987654321",
+      "typAvUtlatande": "TSTRK1031 (U06, V02)",
+      "signeringsdatum": "2013-08-12T15:57:00.000",
+      "skapadAv": {
+        "personid": "SE0000000000-1333",
+        "fullstandigtNamn": "Doktor Thompson",
+        "vardenhet": {
+          "enhetsid": "SE0000000000-1337",
+          "enhetsnamn": "Vårdenhet Väst",
+          "postadress": "Enhetsvägen 12",
+          "postnummer": "54321",
+          "postort": "Tumba",
+          "telefonnummer": "08-1337",
+          "vardgivare": {
+            "vardgivarid": "SE0000000000-HAHAHHSAA",
+            "vardgivarnamn": "Vårdgivarnamn"
+          }
         }
+      },
+      "patient": {
+        "personid": "19121212-1212",
+        "fullstandigtNamn": "Johnny Appleseed",
+        "fornamn": "Johnny",
+        "efternamn": "Appleseed",
+        "postadress": "Testvägen 12",
+        "postnummer": "123456",
+        "postort": "Testort"
+      },
+      "vardkontakt" : {
+        "typ" : "5880005",
+        "idkontroll" : "PASS"
+      },
+      "intygAvser" : {
+        "korkortstyp" : [
+          {"type" : "C1", "selected" : false},
+          {"type" : "C1E", "selected" : false},
+          {"type" : "C", "selected" : true},
+          {"type" : "CE", "selected" : false},
+          {"type" : "D1", "selected" : false},
+          {"type" : "D1E", "selected" : false},
+          {"type" : "D", "selected" : false},
+          {"type" : "DE", "selected" : false},
+          {"type" : "TAXI", "selected" : false}
+        ]
+      },
+      "diabetes" : {
+        "diabetestyp" : "DIABETES_TYP_2",
+        "observationsperiod" : "2012",
+        "endastKost" : true,
+        "tabletter" : true,
+        "insulin" : true,
+        "insulinBehandlingsperiod" : "2012",
+        "annanBehandling" : true,
+        "annanBehandlingBeskrivning" : "Hypnos"
+      },
+      "hypoglykemier" : {
+        "kunskapOmAtgarder" : true,
+        "teckenNedsattHjarnfunktion" : true,
+        "saknarFormagaKannaVarningstecken" : true,
+        "allvarligForekomst" : true,
+        "allvarligForekomstBeskrivning" : "Beskrivning",
+        "allvarligForekomstTrafiken" : true,
+        "allvarligForekomstTrafikBeskrivning" : "Beskrivning",
+        "allvarligForekomstVakenTid" : true,
+        "allvarligForekomstVakenTidObservationstid" : "2012-12-12",
+        "egenkontrollBlodsocker" : true
+      },
+      "syn" : {
+        "separatOgonlakarintyg" : true,
+        "synfaltsprovningUtanAnmarkning" : false,
+        "hoger" : {
+          "utanKorrektion" : 0.1,
+          "medKorrektion" : 0.1
+        },
+        "vanster" : {
+          "utanKorrektion" : 0.1,
+          "medKorrektion" : 0.1
+        },
+        "binokulart" : {
+          "utanKorrektion" : 0.1,
+          "medKorrektion" : 0.1
+        },
+        "diplopi" : true,
+        "synfaltsprovning" : true,
+        "provningOgatsRorlighet" : true
+      },
+      "bedomning" : {
+        "korkortstyp" : [
+          {"type" : "C1", "selected" : false},
+          {"type" : "C1E", "selected" : false},
+          {"type" : "C", "selected" : true},
+          {"type" : "CE", "selected" : false},
+          {"type" : "D1", "selected" : false},
+          {"type" : "D1E", "selected" : false},
+          {"type" : "D", "selected" : false},
+          {"type" : "DE", "selected" : false},
+          {"type" : "TAXI", "selected" : false}
+        ],
+        "lakareSpecialKompetens" : "Kronologisk bastuberedning",
+        "lamplighetInnehaBehorighet" : true
       }
-    },
-    "patient": {
-      "personid": "19121212-1212",
-      "fullstandigtNamn": "Johnny Appleseed",
-      "fornamn": "Johnny",
-      "efternamn": "Appleseed",
-      "postadress": "Testvägen 12",
-      "postnummer": "123456",
-      "postort": "Testort"
-    },
-    "vardkontakt" : {
-      "typ" : "5880005",
-      "idkontroll" : "PASS"
-    },
-    "intygAvser" : {
-      "korkortstyp" : [
-        {"type" : "C1", "selected" : false},
-        {"type" : "C1E", "selected" : false},
-        {"type" : "C", "selected" : true},
-        {"type" : "CE", "selected" : false},
-        {"type" : "D1", "selected" : false},
-        {"type" : "D1E", "selected" : false},
-        {"type" : "D", "selected" : false},
-        {"type" : "DE", "selected" : false},
-        {"type" : "TAXI", "selected" : false},
-		{"type" : "ANNAT", "selected" : false}
-      ]
-    },
-    "diabetes" : {
-      "diabetestyp" : "E11"
-    },
-    "hypoglykemier" : {
-      "kunskapOmAtgarder" : false,
-      "teckenNedsattHjarnfunktion" : false
-    },
-
-    "bedomning" : {
-      "korkortstyp" : [
-        {"type" : "C1", "selected" : false},
-        {"type" : "C1E", "selected" : false},
-        {"type" : "C", "selected" : true},
-        {"type" : "CE", "selected" : false},
-        {"type" : "D1", "selected" : false},
-        {"type" : "D1E", "selected" : false},
-        {"type" : "D", "selected" : false},
-        {"type" : "DE", "selected" : false},
-        {"type" : "TAXI", "selected" : false},
-		{"type" : "ANNAT", "selected" : false}
-      ]
-    }
-
     };
     $scope.doneLoading = false;
     $scope.displayLoader = false;
@@ -285,16 +317,16 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
     	});
     };
     
-    /*
-	 * Saves the draft by making a saveDraft call to webcertService
-	 */
-    $scope.saveCert = function () {
-    	$scope.displayLoader = true;
-    	console.log("Making save call to REST");
-    	webcertService.saveDraft($scope.cert.utlatandeid, angular.toJson($scope.cert), function(){
-    		console.log("Call completed");
-            $location.path("/list");
-    	});
+  /*
+   * Saves the draft by making a saveDraft call to webcertService
+   */
+  $scope.saveCert = function () {
+    $scope.displayLoader = true;
+    console.log("Making save call to REST");
+    webcertService.saveDraft($scope.cert.utlatandeid, angular.toJson($scope.cert), function(){
+      console.log("Call completed");
+          $location.path("/list");
+    });
 	};
 }]);
 

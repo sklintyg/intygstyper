@@ -51,7 +51,7 @@
   </div>
 </div><!-- top end -->
 
-<!-- TS-BAS -->
+<!-- TS-DIABETES -->
 <div class="edit-form" ng-class="{'collapsed' : widgetState.collapsedHeader}">
 
   <form name="certForm" novalidate autocomplete="off">
@@ -102,24 +102,30 @@
           <div class="control-group">
             <label for="diabetesyear"> Vilket år ställdes diagnosen diabetes?</label>
             <div class="controls">
-              <input id="diabetesyear" type="text" maxlength="4" />
+              <input id="diabetesyear" type="text" maxlength="4" ng-model="cert.diabetes.observationsperiod" />
             </div>
           </div>
           <div class="control-group">
-            Patienten har diabetes:
-            <label class="radio"><input name="diabetestype1" type="radio" value="E11" ng-model="cert.diabetes.diabetesTyp">Typ 1</label>
-            <label class="radio"><input name="diabetestype2" type="radio" value="E12" ng-model="cert.diabetes.diabetesTyp">Typ 2</label>
+            Patienten har diabetes: {{cert.diabetes.diabetesTyp}}
+            <label class="radio"><input name="diabetestype1" type="radio" value="DIABETES_TYP_1" ng-model="cert.diabetes.diabetestyp">Typ 1</label>
+            <label class="radio"><input name="diabetestype2" type="radio" value="DIABETES_TYP_2" ng-model="cert.diabetes.diabetestyp">Typ 2</label>
           </div>
           <div class="control-group">
             Behandling:
-            <label class="checkbox"><input name="diabetestreat1" type="checkbox" ng-model="cert.diabetes.kost"> Kost</label>
+            <label class="checkbox"><input name="diabetestreat1" type="checkbox" ng-model="cert.diabetes.endastKost"> Kost</label>
             <label class="checkbox"><input name="diabetestreat2" type="checkbox" ng-model="cert.diabetes.tabletter"> Tabletter</label>
             <label class="checkbox"><input name="diabetestreat3" type="checkbox" ng-model="cert.diabetes.insulin"> Insulin</label>
+            <div class="control-group" data-ng-show="cert.diabetes.insulin">
+              <label for="insulinBehandlingsperiod"> Insulin sedan år</label>
+              <div class="controls">
+                <input id="insulinBehandlingsperiod" name="insulinBehandlingsperiod" type="text" ng-model="cert.diabetes.insulinBehandlingsperiod" wc-maxlength maxlength="53" />
+              </div>
+            </div>
           </div>
           <div class="control-group">
-            <label for="diabetesyear"> Annan behandling, vilken? (ej obligatorisk)</label>
+            <label for="annanBehandlingBeskrivning"> Annan behandling, vilken? (ej obligatorisk)</label>
             <div class="controls">
-              <input id="diabetesyear" type="text" ng-model="cert.allmant" wc-maxlength maxlength="53" />
+              <input id="annanBehandlingBeskrivning" name="annanBehandlingBeskrivning" type="text" ng-model="cert.diabetes.annanBehandlingBeskrivning" wc-maxlength maxlength="53" />
             </div>
           </div>
         </div>
@@ -133,8 +139,8 @@
               <th class="maxwidth"></th>
             </tr>
             <tr>
-              <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
-              <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
+              <td><input id="hypoay" name="hypoay" type="radio" ng-value="true" ng-model="cert.hypoglykemier.kunskapOmAtgarder"></td>
+              <td><input id="hypoan" name="hypoan" type="radio" ng-value="false" ng-model="cert.hypoglykemier.kunskapOmAtgarder"></td>
               <td>a) Har patienten kunskap om lämpliga åtgärder vid hypoglykemi?</td>
             </tr>
             <tr>
@@ -144,28 +150,28 @@
                 <p>(Om nej behöver c-e inte besvaras)</p></td>
             </tr>
             <tr data-ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
-              <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
-              <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
+              <td><input id="hypocy" name="hypocy" type="radio" ng-value="true" ng-model="cert.hypoglykemier.saknarFormagaKannaVarningstecken"></td>
+              <td><input id="hypocn" name="hypocn" type="radio" ng-value="false" ng-model="cert.hypoglykemier.saknarFormagaKannaVarningstecken"></td>
               <td>c) Saknar patienten förmåga att känna varningstecken på hypoglykemi ("unawareness")?</td>
             </tr>
             <tr data-ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
-              <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
-              <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
+              <td><input id="hypody" name="hypody" type="radio" ng-value="true" ng-model="cert.hypoglykemier.allvarligForekomst"></td>
+              <td><input id="hypodn" name="hypodn" type="radio" ng-value="false" ng-model="cert.hypoglykemier.allvarligForekomst"></td>
               <td>
                 <p>d) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under det senaste året?</p>
-                <label for="diabetesyear"> Hur många sådana episoder?</label>
+                <label for="allvarligForekomstBeskrivning"> Hur många sådana episoder?</label>
                 <div class="controls">
-                  <input id="diabetesyear" type="text" ng-model="cert.syn.nystagmus" wc-maxlength maxlength="46" />
+                  <input id="allvarligForekomstBeskrivning" name="allvarligForekomstBeskrivning" type="text" ng-model="cert.hypoglykemier.allvarligForekomstBeskrivning" wc-maxlength maxlength="46" />
                 </div>
               </td>
             </tr>
             <tr data-ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
-              <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
-              <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
+              <td><input id="hypoey" name="hypoey" type="radio" ng-value="true" ng-model="cert.hypoglykemier.allvarligForekomstTrafiken"></td>
+              <td><input id="hypoen" name="hypoen" type="radio" ng-value="false" ng-model="cert.hypoglykemier.allvarligForekomstTrafiken"></td>
               <td><p>e) Har patienten haft allvarlig hypoglykemi i trafiken under det senaste året?</p>
-                <label for="diabetesyear"> Hur många sådana episoder och när inträffade de?</label>
+                <label for="allvarligForekomstTrafikBeskrivning"> Hur många sådana episoder och när inträffade de?</label>
                 <div class="controls">
-                  <input id="diabetesyear" type="text" ng-model="cert.syn.nystagmus" wc-maxlength maxlength="40" />
+                  <input id="allvarligForekomstTrafikBeskrivning" name="allvarligForekomstTrafikBeskrivning" type="text" ng-model="cert.hypoglykemier.allvarligForekomstTrafikBeskrivning" wc-maxlength maxlength="40" />
                 </div>
               </td>
             </tr>
@@ -175,19 +181,19 @@
               <td><h5 class="inline-heading">För innehav av behörigheterna C1, C1E, C, CE, D1, D1E, D, DE och taxiförarlegitimation ska även fråga f-g besvaras</h5></td>
             </tr>
             <tr data-ng-show="form.korkorttypselected">
-              <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
-              <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
+              <td><input id="hypofy" name="hypofy" type="radio" ng-value="true" ng-model="cert.hypoglykemier.egenkontrollBlodsocker"></td>
+              <td><input id="hypofn" name="hypofn" type="radio" ng-value="false" ng-model="cert.hypoglykemier.egenkontrollBlodsocker"></td>
               <td>f) Genomför patienten egenkontroller av blodsocker?</td>
             </tr>
             <tr data-ng-show="form.korkorttypselected">
-              <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
-              <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
+              <td><input id="hypogy" name="hypogy" type="radio" ng-value="true" ng-model="cert.hypoglykemier.allvarligForekomstVakenTid"></td>
+              <td><input id="hypogn" name="hypogn" type="radio" ng-value="false" ng-model="cert.hypoglykemier.allvarligForekomstVakenTid"></td>
               <td>
                 <p>g) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under vaken tid det senaste året?</p>
-                <div class="control-group indent" data-ng-show="cert.hypoglykemier.allvarlig">
+                <div class="control-group indent" data-ng-show="cert.hypoglykemier.allvarligForekomstVakenTid">
                   <label class="control-label">När?</label>
                   <div class="controls">
-                    <input type="text">
+                    <input type="text" data-ng-model="cert.hypoglykemier.allvarligForekomstVakenTidObservationstid">
                     <div>(Fyll i ååååmmdd)</div>
                   </div>
                 </div>
@@ -223,28 +229,28 @@
               <th class="maxwidth"></th>
             </tr>
             <tr>
-              <td><input id="synby" name="synby" type="radio" ng-value="true" ng-model="cert.syn.nattblindhet"></td>
-              <td><input id="synbn" name="synbn" type="radio" ng-value="false" ng-model="cert.syn.nattblindhet"></td>
+              <td><input id="synay" name="synay" type="radio" ng-value="true" ng-model="cert.syn.separatOgonlakarintyg"></td>
+              <td><input id="synan" name="synan" type="radio" ng-value="false" ng-model="cert.syn.separatOgonlakarintyg"></td>
               <td>a. Ögonläkarintyg kommer att skickas in separat</td>
             </tr>
-            <tr>
+            <tr data-ng-show="cert.syn.separatOgonlakarintyg">
               <td></td>
               <td></td>
               <td><h5 class="inline-heading">Alternativ 2: (frågorna b-d besvaras)</h5></td>
             </tr>
-            <tr>
+            <tr data-ng-show="cert.syn.separatOgonlakarintyg">
               <td></td>
               <td></td>
               <td>Om ögonläkarintyg inte krävs kan behandlande specialistkompetent läkare med god kännedom om patientens sjukdom här avge intyg om synfunktionen.</td>
             </tr>
-            <tr>
-              <td><input id="syncy" name="syncy" type="radio" ng-value="true" ng-model="cert.syn.progressivOgonsjukdom"></td>
-              <td><input id="syncn" name="syncn" type="radio" ng-value="false" ng-model="cert.syn.progressivOgonsjukdom"></td>
+            <tr data-ng-show="cert.syn.separatOgonlakarintyg">
+              <td><input id="synby" name="synby" type="radio" ng-value="true" ng-model="cert.syn.synfaltsprovningUtanAnmarkning"></td>
+              <td><input id="synbn" name="synbn" type="radio" ng-value="false" ng-model="cert.syn.synfaltsprovningUtanAnmarkning"></td>
               <td>
                 <p>b. Är synfältsprövning enligt Donders konfrontationsmetod utan anmärkning?</p>
               </td>
             </tr>
-            <tr>
+            <tr data-ng-show="cert.syn.separatOgonlakarintyg">
               <td></td>
               <td></td>
               <td>
@@ -258,32 +264,27 @@
                     <th></th>
                     <th>Utan korrektion</th>
                     <th>Med korrektion</th>
-                    <th>Kontaktlinser</th>
                   </tr>
                   <tr>
                     <td>Höger öga</td>
-                    <td><input type="text" class="small-decimal" ng-model="cert.syn.hogerOga.utanKorrektion"></td>
-                    <td><input type="text" class="small-decimal" ng-model="cert.syn.hogerOga.medKorrektion"></td>
-                    <td><input type="checkbox" ng-model="cert.syn.hogerOga.kontaktlins"></td>
+                    <td><input type="text" class="small-decimal" ng-model="cert.syn.hoger.utanKorrektion"></td>
+                    <td><input type="text" class="small-decimal" ng-model="cert.syn.hoger.medKorrektion"></td>
                   </tr>
                   <tr>
                     <td>Vänster öga</td>
-                    <td><input type="text" class="small-decimal" ng-model="cert.syn.vansterOga.utanKorrektion"></td>
-                    <td><input type="text" class="small-decimal" ng-model="cert.syn.vansterOga.medKorrektion"></td>
-                    <td><input type="checkbox" ng-model="cert.syn.vansterOga.kontaktlins"></td>
+                    <td><input type="text" class="small-decimal" ng-model="cert.syn.vanster.utanKorrektion"></td>
+                    <td><input type="text" class="small-decimal" ng-model="cert.syn.vanster.medKorrektion"></td>
                   </tr>
                   <tr>
                     <td>Binokulärt</td>
                     <td><input type="text" class="small-decimal" ng-model="cert.syn.binokulart.utanKorrektion"></td>
                     <td><input type="text" class="small-decimal" ng-model="cert.syn.binokulart.medKorrektion"></td>
-                    <td></td>
                   </tr>
                 </table>
-
             </tr>
-            <tr>
-              <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
-              <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
+            <tr data-ng-show="cert.syn.separatOgonlakarintyg">
+              <td><input id="syndy" name="syndy" type="radio" ng-value="true" ng-model="cert.syn.diplopi"></td>
+              <td><input id="syndn" name="syndn" type="radio" ng-value="false" ng-model="cert.syn.diplopi"></td>
               <td>d) Förekommer dubbelseende?</td>
             </tr>
           </table>
@@ -320,8 +321,8 @@
               <th class="maxwidth"></th>
             </tr>
             <tr>
-              <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
-              <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
+              <td><input id="bedomningy" name="bedomningy" type="radio" ng-value="true" ng-model="cert.bedomning.lamplighetInnehaBehorighet"></td>
+              <td><input id="bedomningn" name="bedomningn" type="radio" ng-value="false" ng-model="cert.bedomning.lamplighetInnehaBehorighet"></td>
               <td>Om patienten söker behörighet C1, C1E, C, CE, D1, D1E, D, DE eller Taxi, är han eller hon lämplig att inneha sådan behörighet med hänsyn till de körningar och arbetsformer som är aktuella vid sådant innehav? (Se 6 kap. 16 §)</td>
             </tr>
           </table>
@@ -330,13 +331,13 @@
         <!-- Övriga upplysningar -->
         <div wc-field field-label="ts.label.empty">
           <h5>Övriga upplysningar och kommentarer</h5>
-          <textarea ng-model="cert.kommentar" wc-maxlength maxlength="10"></textarea>
+          <textarea ng-model="cert.kommentar" wc-maxlength maxlength="189"></textarea>
         </div>
 
         <!-- Specialistkompetens -->
         <div wc-field field-label="ts.label.empty">
           <h5>Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i:</h5>
-          <textarea name="specialist" rows='5' ng-model="cert.bedomning.lakareSpecialKompetens" wc-maxlength maxlength="{{inputLimits.lakareSpecialKompetens}}"></textarea>
+          <textarea name="specialist" rows='5' ng-model="cert.bedomning.lakareSpecialKompetens" wc-maxlength maxlength="71"></textarea>
         </div>
 
         <div class="body-row clearfix">
