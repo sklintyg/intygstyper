@@ -37,7 +37,9 @@
 <bean id="internalToExternalConverter"
     class="se.inera.certificate.modules.ts_diabetes.model.converter.InternalToExternalConverter" />
 
-  <bean id="pdfGenerator" class="se.inera.certificate.modules.ts_diabetes.pdf.PdfGenerator" />
+  <bean id="pdfGenerator" class="se.inera.certificate.modules.ts_diabetes.pdf.PdfGenerator">
+    <constructor-arg value="true" />
+  </bean>
 
   <bean id="webcertModelFactory"
     class="se.inera.certificate.modules.ts_diabetes.model.converter.WebcertModelFactory" />
