@@ -21,7 +21,7 @@ package se.inera.certificate.modules.ts_diabetes.model.converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.modules.ts_diabetes.model.internal.wc.Utlatande;
+import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.rest.dto.CreateNewDraftCertificateHolder;
 
 /**
@@ -31,7 +31,7 @@ public class WebcertModelFactory {
 
     private static final Logger LOG = LoggerFactory.getLogger(WebcertModelFactory.class);
 
-    public Utlatande createNewWebcertDraft(CreateNewDraftCertificateHolder newDraftData) throws ConverterException {
+    public Utlatande createNewDraft(CreateNewDraftCertificateHolder newDraftData) throws ConverterException {
         // TODO: Implement
         LOG.trace("Creating new internal model for draft");
         return null;

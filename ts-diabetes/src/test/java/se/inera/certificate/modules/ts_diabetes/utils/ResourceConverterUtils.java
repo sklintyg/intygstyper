@@ -50,8 +50,8 @@ public class ResourceConverterUtils {
         return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande.class);
     }
 
-    public static se.inera.certificate.modules.ts_diabetes.model.internal.wc.Utlatande toInternalWC(File resource)
+    public static se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande toInternalWC(File resource)
             throws IOException {
-        return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.ts_diabetes.model.internal.wc.Utlatande.class);
+        return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande.class);
     }
 }

@@ -49,10 +49,10 @@ public class WebcertModelFactoryTest {
         CreateNewDraftCertificateHolder draftCertHolder = new ObjectMapper().readValue(new ClassPathResource(
                 "webcert-model-factory-request.json").getFile(), CreateNewDraftCertificateHolder.class);
 
-        se.inera.certificate.modules.ts_diabetes.model.internal.wc.Utlatande utlatande = null;
+        se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande utlatande = null;
 
         try {
-            utlatande = factory.createNewWebcertDraft(draftCertHolder);
+            utlatande = factory.createNewDraft(draftCertHolder);
         } catch (ConverterException e) {
             e.printStackTrace();
         }

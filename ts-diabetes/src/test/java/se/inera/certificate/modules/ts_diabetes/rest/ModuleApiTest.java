@@ -138,7 +138,7 @@ public class ModuleApiTest {
     @Ignore
     @Test
     public void testConvertInternalToExternal() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
+        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
             moduleApi.convertInternalToExternal(scenario.asInternalModel());
             assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
         }

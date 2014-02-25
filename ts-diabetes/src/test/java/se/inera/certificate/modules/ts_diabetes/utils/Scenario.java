@@ -59,12 +59,4 @@ public interface Scenario {
      */
     se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande asInternalModel() throws ScenarioNotFoundException;
 
-    /**
-     * Returns the scenario as a internal WebCert model.
-     * 
-     * @return The scenario as a internal WebCert model.
-     * @throws ScenarioNotFoundException
-     *             if the scenario wasn't found.
-     */
-    se.inera.certificate.modules.ts_diabetes.model.internal.wc.Utlatande asInternalWCModel() throws ScenarioNotFoundException;
 }

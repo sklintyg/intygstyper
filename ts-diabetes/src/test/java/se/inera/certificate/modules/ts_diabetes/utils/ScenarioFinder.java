@@ -23,15 +23,11 @@ public class ScenarioFinder {
 
     private static final File INTERNAL_MODEL_PATH = new File("src/test/resources/scenarios/internal");
 
-    private static final File INTERNAL_MODEL_WC_PATH = new File("src/test/resources/scenarios/internal-wc");
-
     private static final String TRANSPORT_MODEL_EXT = ".xml";
 
     private static final String EXTERNAL_MODEL_EXT = ".json";
 
     private static final String INTERNAL_MODEL_EXT = ".json";
-
-    private static final String INTERNAL_MODEL_WC_EXT = ".json";
 
     /**
      * Finds the specified transport scenarios that matches the wildcard string.
@@ -70,19 +66,6 @@ public class ScenarioFinder {
      */
     public static List<Scenario> getInternalScenarios(String scenarioWithWildcards) throws ScenarioNotFoundException {
         return getScenarios(scenarioWithWildcards + INTERNAL_MODEL_EXT, INTERNAL_MODEL_PATH, "internal");
-    }
-
-    /**
-     * Finds the specified inernal WebCert scenarios that matches the wildcard string.
-     * 
-     * @param scenarioWithWildcards
-     *            A wildcard string matching scenarios. '*' and '?' can be used.
-     * @return A list of matching internal WebCert scenarios.
-     * @throws ScenarioNotFoundException
-     *             If no scenarios could be found.
-     */
-    public static List<Scenario> getInternalWCScenarios(String scenarioWithWildcards) throws ScenarioNotFoundException {
-        return getScenarios(scenarioWithWildcards + INTERNAL_MODEL_WC_EXT, INTERNAL_MODEL_WC_PATH, "internal WC");
     }
 
     public static List<Scenario> getScenarios(String scenarioWithWildcards, File scenarioPath, String model)
@@ -137,19 +120,6 @@ public class ScenarioFinder {
      */
     public static Scenario getInternalScenario(String filename) throws ScenarioNotFoundException {
         return getScenario(filename + INTERNAL_MODEL_EXT, INTERNAL_MODEL_PATH, "internal");
-    }
-
-    /**
-     * Finds the specified internal WebCert scenario matching the name.
-     * 
-     * @param filename
-     *            A name matching a scenario.
-     * @return A matching internal WebCert scenario.
-     * @throws ScenarioNotFoundException
-     *             If no scenario could be found.
-     */
-    public static Scenario getInternalWCScenario(String filename) throws ScenarioNotFoundException {
-        return getScenario(filename + INTERNAL_MODEL_WC_EXT, INTERNAL_MODEL_WC_PATH, "internal WC");
     }
 
     private static Scenario getScenario(String filename, File scenarioPath, String model)
@@ -231,19 +201,7 @@ public class ScenarioFinder {
                 throw new ScenarioNotFoundException(scenarioFile.getName(), "internal MI", e);
             }
         }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public se.inera.certificate.modules.ts_diabetes.model.internal.wc.Utlatande asInternalWCModel()
-                throws ScenarioNotFoundException {
-            try {
-                return ResourceConverterUtils.toInternalWC(getInternalWCModelFor(scenarioFile));
-            } catch (IOException e) {
-                throw new ScenarioNotFoundException(scenarioFile.getName(), "internal WC", e);
-            }
-        }
+    
     }
 
     private static File getTransportModelFor(File otherModel) {
@@ -260,9 +218,5 @@ public class ScenarioFinder {
         String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());
         return new File(INTERNAL_MODEL_PATH, filenameWithoutExt + INTERNAL_MODEL_EXT);
     }
-
-    private static File getInternalWCModelFor(File otherModel) {
-        String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());
-        return new File(INTERNAL_MODEL_WC_PATH, filenameWithoutExt + INTERNAL_MODEL_WC_EXT);
-    }
+  
 }

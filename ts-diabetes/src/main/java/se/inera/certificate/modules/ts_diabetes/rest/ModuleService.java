@@ -189,10 +189,10 @@ public class ModuleService implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public se.inera.certificate.modules.ts_diabetes.model.internal.wc.Utlatande createNewInternal(
+    public se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande createNewInternal(
             CreateNewDraftCertificateHolder draftCertificateHolder) {
         try {
-            return webcertModelFactory.createNewWebcertDraft(draftCertificateHolder);
+            return webcertModelFactory.createNewDraft(draftCertificateHolder);
 
         } catch (ConverterException e) {
             LOG.error("Could not create a new internal Webcert model", e);
