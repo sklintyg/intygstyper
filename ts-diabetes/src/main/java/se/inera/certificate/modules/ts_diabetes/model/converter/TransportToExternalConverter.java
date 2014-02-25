@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
@@ -321,13 +322,15 @@ public class TransportToExternalConverter {
             observation.getVarde().add(IsoTypeConverter.toPhysicalQuantity(source.getVarde()));
         }
         
-        if (source.getObservationstidPartialdate() != null) {
-            observation.setObservationstidPartialDate(source.getObservationstidPartialdate());
+        if (source.getObservationsperiod() != null) {
+            PartialInterval partialInterval = new PartialInterval();
+            partialInterval.setFrom(source.getObservationsperiod().getFrom());
+            observation.setObservationsperiod(partialInterval);
         }
         
         
-        if (source.getObservationstidDate() != null) {
-            observation.setObservationstidDate(source.getObservationstidDate());
+        if (source.getObservationstid() != null) {
+            observation.setObservationstid(source.getObservationstid());
         }
 
         return observation;
@@ -357,7 +360,7 @@ public class TransportToExternalConverter {
      */
     private HosPersonal convertHosPersonal(HosPersonalType source) {
         HosPersonal skapadAv = new HosPersonal();
-        skapadAv.setBefattning(source.getBefattning());
+        skapadAv.getBefattningar().addAll(convertCDtoKod(source.getBefattnings()));
         skapadAv.setId(IsoTypeConverter.toId(source.getPersonalId()));
         skapadAv.setNamn(source.getFullstandigtNamn());
         skapadAv.setVardenhet(convertVardenhet(source.getEnhet()));

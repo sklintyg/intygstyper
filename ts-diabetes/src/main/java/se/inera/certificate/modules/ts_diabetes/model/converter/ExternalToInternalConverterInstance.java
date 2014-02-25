@@ -181,7 +181,7 @@ public class ExternalToInternalConverterInstance {
 
             if (allvarligHypoglykemiVaken.getForekomst()) {
                 hypoglykemier.setAllvarligForekomstVakenTidObservationstid(allvarligHypoglykemiVaken
-                        .getObservationstidDate().toString());
+                        .getObservationstid().toString());
             }
         }
 
@@ -290,8 +290,8 @@ public class ExternalToInternalConverterInstance {
             if (diabetesTyp1.getForekomst()) {
                 diabetes.setDiabetestyp(CodeConverter.getInternalNameFromKod(diabetesTyp1.getObservationskod(),
                         ObservationsKod.class));
-                if (diabetesTyp1.getObservationstidPartialDate() != null) {
-                    diabetes.setObservationsperiod(diabetesTyp1.getObservationstidPartialDate().toString());
+                if (diabetesTyp1.getObservationsperiod() != null) {
+                    diabetes.setObservationsperiod(diabetesTyp1.getObservationsperiod().getFrom().toString());
                 }
             }
         }
@@ -300,8 +300,8 @@ public class ExternalToInternalConverterInstance {
             if (diabetesTyp2.getForekomst()) {
                 diabetes.setDiabetestyp(CodeConverter.getInternalNameFromKod(diabetesTyp2.getObservationskod(),
                         ObservationsKod.class));
-                if (diabetesTyp2.getObservationstidPartialDate() != null) {
-                    diabetes.setObservationsperiod(diabetesTyp2.getObservationstidPartialDate().toString());
+                if (diabetesTyp2.getObservationsperiod() != null) {
+                    diabetes.setObservationsperiod(diabetesTyp2.getObservationsperiod().getFrom().toString());
                 }
             }
         }
@@ -309,7 +309,7 @@ public class ExternalToInternalConverterInstance {
         if (insulin != null) {
             diabetes.setInsulin(insulin.getForekomst());
             if (insulin.getForekomst()) {
-                diabetes.setInsulinBehandlingsperiod(insulin.getObservationstidPartialDate().toString());
+                diabetes.setInsulinBehandlingsperiod(insulin.getObservationsperiod().getFrom().toString());
             }
         }
 

@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Vardenhet;
@@ -263,11 +264,14 @@ public class InternalToExternalConverter {
             Observation diabetes = new Observation();
 
             diabetes.setObservationskod(CodeConverter.toKod(ObservationsKod.valueOf(source.getDiabetes().getDiabetestyp())));
-            
             diabetes.setForekomst(true);
-            diabetes.setObservationstidPartialDate(PartialConverter.stringToPartial(source.getDiabetes()
-                    .getObservationsperiod()));
 
+            //We are only interested in from, hence tom is set to null
+            if (source.getDiabetes().getObservationsperiod() != null) {
+                diabetes.setObservationsperiod(new PartialInterval(PartialConverter.stringToPartial(source.getDiabetes()
+                    .getObservationsperiod()), null));
+            }
+            
             observationer.add(diabetes);
         }
 
@@ -276,8 +280,13 @@ public class InternalToExternalConverter {
             Observation insulin = new Observation();
             insulin.setObservationskod(CodeConverter.toKod(ObservationsKod.DIABETIKER_INSULINBEHANDLING));
             insulin.setForekomst(source.getDiabetes().getInsulin());
-            insulin.setObservationstidPartialDate(PartialConverter.stringToPartial(source.getDiabetes()
-                    .getInsulinBehandlingsperiod()));
+            
+            //We are only interested in from, hence tom is set to null
+            if (source.getDiabetes().getInsulinBehandlingsperiod() != null) {
+                insulin.setObservationsperiod(new PartialInterval(PartialConverter.stringToPartial(source.getDiabetes()
+                    .getInsulinBehandlingsperiod()), null));
+            }
+            
             observationer.add(insulin);
         }
 
@@ -330,7 +339,7 @@ public class InternalToExternalConverter {
                     .toKod(ObservationsKod.ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND));
             hypoglykemiVakenTid.setForekomst(source.getHypoglykemier().getAllvarligForekomstVakenTid());
 
-            hypoglykemiVakenTid.setObservationstidDate(createLocalDateFromString(source.getHypoglykemier()
+            hypoglykemiVakenTid.setObservationstid(createLocalDateFromString(source.getHypoglykemier()
                     .getAllvarligForekomstVakenTidObservationstid()));
 
             observationer.add(hypoglykemiVakenTid);

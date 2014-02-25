@@ -28,6 +28,7 @@ import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_diabetes.model.codes.HSpersonalKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.CodeSystem;
 import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
+import se.inera.certificate.modules.ts_diabetes.model.external.Bilaga;
 import se.inera.certificate.modules.ts_diabetes.model.external.Utlatande;
 import se.inera.certificate.validate.IdValidator;
 import se.inera.certificate.validate.SimpleIdValidatorBuilder;
@@ -54,10 +55,12 @@ public class ExternalValidatorInstance {
     public List<String> validate(Utlatande utlatande) {
         validateUtlatande(utlatande);
         validatePatient(utlatande.getPatient());
-        // TODO: Add more validation methods
-
+        validateBilaga(utlatande.getBilaga());
+        
         return validationErrors;
     }
+
+  
 
     /**
      * Validates that required attributes connected with the actual class Utlatande are present
@@ -68,6 +71,10 @@ public class ExternalValidatorInstance {
         assertNotNull(utlatande.getSigneringsdatum(), "signeringsdatum");
     }
 
+    private void validateBilaga(Bilaga bilaga) {
+        assertNotNull(bilaga, "No bilaga found");
+    }
+    
     /**
      * Make sure Utlatande contains 1 Patient
      */

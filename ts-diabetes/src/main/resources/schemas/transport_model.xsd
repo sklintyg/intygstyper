@@ -45,8 +45,11 @@
         maxOccurs="unbounded" />
       <xs:element name="observationAktivitetRelation" type="observationAktivitetRelationType"
         minOccurs="0" maxOccurs="unbounded" />
-        
-      <xs:element name="bilaga" type="bilagaType" minOccurs="1" maxOccurs="1"/>  
+
+      <xs:element name="bilaga" type="bilagaType" minOccurs="1"
+        maxOccurs="1" />
+      <xs:element name="utgava" type="xs:string" />
+      <xs:element name="version" type="xs:string" />
 
 
       <xs:any namespace="##other" processContents="lax"
@@ -175,9 +178,9 @@
       <xs:element name="varde" type="iso:PQ" minOccurs="0" />
       <xs:element name="beskrivning" type="xs:string"
         minOccurs="0" />
-      <xs:element name="observationstidDate" type="date"
+      <xs:element name="observationstid" type="date"
         minOccurs="0" maxOccurs="1" />
-      <xs:element name="observationstidPartialdate" type="partialDate"
+      <xs:element name="observationsperiod" type="partialDateInterval"
         minOccurs="0" maxOccurs="1" />
       <xs:any namespace="##other" processContents="lax"
         minOccurs="0" maxOccurs="unbounded" />
@@ -197,10 +200,10 @@
         minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
-  
+
   <xs:complexType name="bilagaType">
     <xs:sequence>
-      <xs:element name="bilagekod" type="iso:CD"/>
+      <xs:element name="bilagekod" type="iso:CD" />
       <xs:element name="forekomst" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
@@ -223,8 +226,9 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="befattning" type="xs:string"
-        minOccurs="0" />
+      <xs:element name="befattning" type="iso:CD"
+        minOccurs="0" maxOccurs="unbounded" />
+        
       <xs:element name="enhet" type="enhetType" />
       <xs:element name="specialitet" type="iso:CD" minOccurs="0"
         maxOccurs="unbounded" />

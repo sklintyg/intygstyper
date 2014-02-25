@@ -306,7 +306,9 @@
                 "codeSystemName": "ICD-10",
                 "code": "E11"
             },
-            "observationstidPartialDate" : "2012",
+            "observationsperiod" : {
+            	"from" : "2012"
+            },
             "forekomst": true
         },
         {
@@ -332,7 +334,9 @@
                 "code": "170747006"
             },
             "forekomst": true,
-            "observationstidPartialDate" : "2012"
+            "observationsperiod" : {
+            	"from" : "2012"
+            }
         },
         {
             "observationskod": {
@@ -392,7 +396,7 @@
                 "code": "OBS24"
             },
             "forekomst": true,
-            "observationstidDate" : "2012-12-12" 
+            "observationstid" : "2012-12-12" 
         },
         {
             "observationskod": {
