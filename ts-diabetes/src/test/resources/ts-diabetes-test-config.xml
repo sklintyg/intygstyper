@@ -35,7 +35,7 @@
 
 	<jaxrs:server address="http://localhost:8880/ts-diabetes">
 		<jaxrs:serviceBeans>
-			<bean class="se.inera.certificate.modules.ts-diabetes.rest.ModuleService" />
+			<bean class="se.inera.certificate.modules.ts_diabetes.rest.ModuleService" />
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
 			<ref bean="jacksonJsonProvider" />
@@ -44,7 +44,7 @@
 	</jaxrs:server>
 
 	<jaxrs:client id="ts-diabetesModule" address="http://localhost:8880/ts-diabetes"
-		serviceClass="se.inera.certificate.modules.ts-diabetes.rest.ModuleApi">
+		serviceClass="se.inera.certificate.modules.ts_diabetes.rest.ModuleApi">
 		<jaxrs:providers>
 			<ref bean="jacksonJsonProvider" />
 			<ref bean="jaxbProvider" />

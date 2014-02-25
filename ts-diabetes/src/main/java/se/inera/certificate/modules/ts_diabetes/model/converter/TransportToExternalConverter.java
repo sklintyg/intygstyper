@@ -80,7 +80,6 @@ public class TransportToExternalConverter {
         Utlatande utlatande = new Utlatande();
         utlatande.setId(IsoTypeConverter.toId(source.getUtlatandeId()));
         
-        //utlatande.setTyp(IsoTypeConverter.toKod(source.getTypAvUtlatande()));
         // Validate and set Typ
         Kod typAvUtlatande = IsoTypeConverter.toKod(source.getTypAvUtlatande());
         UtlatandeKod utlatandeKod = CodeConverter.fromCode(typAvUtlatande, UtlatandeKod.class);
@@ -99,7 +98,11 @@ public class TransportToExternalConverter {
         utlatande.getIntygAvser().addAll(convertCDtoKod(source.getIntygAvsers()));
         utlatande.getObservationer().addAll(convertObservationer(source.getObservations()));
         utlatande.getRekommendationer().addAll(convertRekommendationer(source.getRekommendations()));
-        utlatande.getAktiviteter().addAll(convertAktiviteter(source.getAktivitets()));
+        
+        if (source.getAktivitets() != null) {
+            utlatande.getAktiviteter().addAll(convertAktiviteter(source.getAktivitets()));
+        }
+        
         utlatande.getVardkontakter().add(convertVardkontakt(source.getVardkontakt()));
         utlatande.getObservationAktivitetRelationer().addAll(
                 convertObservationAktivitetRelationer(source.getObservationAktivitetRelations()));
@@ -227,10 +230,6 @@ public class TransportToExternalConverter {
      * @throws ConverterException
      */
     private Collection<? extends Aktivitet> convertAktiviteter(List<AktivitetType> source) throws ConverterException {
-        if (source == null) {
-            throw new ConverterException("No aktiviteter found, conversion stopped");
-        }
-
         List<Aktivitet> aktiviteter = new ArrayList<Aktivitet>();
         for (AktivitetType akt : source) {
             aktiviteter.add(convertAktivitet(akt));
@@ -372,8 +371,12 @@ public class TransportToExternalConverter {
      * @param source
      *            {@link HosPersonalType}
      * @return {@link HosPersonal}
+     * @throws ConverterException 
      */
-    private HosPersonal convertHosPersonal(HosPersonalType source) {
+    private HosPersonal convertHosPersonal(HosPersonalType source) throws ConverterException {
+        if (source == null) {
+            throw new ConverterException("HosPersonal missing");
+        }
         HosPersonal skapadAv = new HosPersonal();
         skapadAv.getBefattningar().addAll(convertCDtoKod(source.getBefattnings()));
         skapadAv.setId(IsoTypeConverter.toId(source.getPersonalId()));
@@ -390,8 +393,13 @@ public class TransportToExternalConverter {
      * @param source
      *            {@link EnhetType}
      * @return {@link Vardenhet}
+     * @throws ConverterException 
      */
-    private Vardenhet convertVardenhet(EnhetType source) {
+    private Vardenhet convertVardenhet(EnhetType source) throws ConverterException {
+        if (source == null) {
+            throw new ConverterException("Vardenhet missing");
+        }
+        
         Vardenhet vardenhet = new Vardenhet();
         vardenhet.setId(IsoTypeConverter.toId(source.getEnhetsId()));
         vardenhet.setNamn(source.getEnhetsnamn());
@@ -410,8 +418,12 @@ public class TransportToExternalConverter {
      * @param source
      *            {@link VardgivareType}
      * @return {@link Vardgivare}
+     * @throws ConverterException 
      */
-    private Vardgivare convertVardgivare(VardgivareType source) {
+    private Vardgivare convertVardgivare(VardgivareType source) throws ConverterException {
+        if (source == null) {
+            throw new ConverterException("Vardgivare missing");
+        }
         Vardgivare vardgivare = new Vardgivare();
         vardgivare.setId(IsoTypeConverter.toId(source.getVardgivareId()));
         vardgivare.setNamn(source.getVardgivarnamn());
@@ -425,8 +437,12 @@ public class TransportToExternalConverter {
      * @param source
      *            {@link PatientType}
      * @return {@link Patient}
+     * @throws ConverterException 
      */
-    private Patient convertPatient(PatientType source) {
+    private Patient convertPatient(PatientType source) throws ConverterException {
+        if (source == null) {
+            throw new ConverterException("Missing patient");
+        }
         Patient patient = new Patient();
         patient.setEfternamn(source.getEfternamn());
         patient.getFornamn().addAll(source.getFornamns());
