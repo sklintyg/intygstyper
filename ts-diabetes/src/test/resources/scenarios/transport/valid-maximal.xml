@@ -336,4 +336,7 @@
     <p:forekomst>false</p:forekomst>
   </p:bilaga>
 
+  <p:utgava>06</p:utgava>
+  <p:version>02</p:version>
+
 </p:utlatande>

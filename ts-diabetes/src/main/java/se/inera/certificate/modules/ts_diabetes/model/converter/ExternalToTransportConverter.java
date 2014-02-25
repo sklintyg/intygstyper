@@ -70,8 +70,8 @@ public class ExternalToTransportConverter {
         utlatande.setSkickatdatum(source.getSkickatdatum());
         utlatande.setTypAvUtlatande(IsoTypeConverter.toUtlatandeTyp(source.getTyp()));
         UtlatandeKod utlatandeKod = CodeConverter.fromCode(source.getTyp(), UtlatandeKod.class);
-        //utlatande.setUtgava(utlatandeKod.getTsUtgava());
-        //utlatande.setVersion(utlatandeKod.getTsVersion());
+        utlatande.setUtgava(utlatandeKod.getTsUtgava());
+        utlatande.setVersion(utlatandeKod.getTsVersion());
         utlatande.setUtlatandeId(IsoTypeConverter.toUtlatandeId(source.getId()));
 
         // Just make sure getVardkontakter() doesn't return an empty list before getting an index..

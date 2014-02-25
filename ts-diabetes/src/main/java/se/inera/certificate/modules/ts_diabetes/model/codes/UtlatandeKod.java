@@ -19,6 +19,7 @@
 package se.inera.certificate.modules.ts_diabetes.model.codes;
 
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
 
 /**
  * Represents the code used by this module to define the Utlåtandetyp.
@@ -26,10 +27,7 @@ import se.inera.certificate.model.Kod;
 public enum UtlatandeKod implements CodeSystem {
 
     // TODO: Create specific Code representing module
-    TS_BAS("TSTRK1007 (U06, V06)",
-            "Läkarintyg- avseende högre körkortsbehörigheter eller taxiförarlegitimation- på begäran från Transportstyrelsen"),
-    
-    TS_DIABETES("TSTRK1031 (U06, V02)", "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.");
+    TS_DIABETES("TSTRK1031 (U06, V02)", "06", "02", "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.");
 
     private static String codeSystemName = "kv_utlåtandetyp_intyg";
 
@@ -39,10 +37,16 @@ public enum UtlatandeKod implements CodeSystem {
 
     private String code;
 
+    private final String tsUtgava;
+
+    private final String tsVersion;
+
     private String description;
 
-    private UtlatandeKod(String code, String desc) {
+    private UtlatandeKod(String code, String tsUtgava, String tsVersion, String desc) {
         this.code = code;
+        this.tsUtgava = tsUtgava;
+        this.tsVersion = tsVersion;
         this.description = desc;
     }
 
@@ -69,8 +73,35 @@ public enum UtlatandeKod implements CodeSystem {
         return codeSystemVersion;
     }
 
+    public String getTsUtgava() {
+        return tsUtgava;
+    }
+
+    public String getTsVersion() {
+        return tsVersion;
+    }
+
     @Override
     public boolean matches(Kod kod) {
         return CodeConverter.matches(this, kod);
+    }
+
+    public void assertVersion(String tsUtgava, String tsVersion) {
+        if (!this.tsUtgava.equals(tsUtgava)) {
+            throw new IllegalArgumentException("TS utgava doesn't match " + this.name());
+        }
+        if (!this.tsVersion.equals(tsVersion)) {
+            throw new IllegalArgumentException("TS version doesn't match " + this.name());
+        }
+    }
+
+    public static UtlatandeKod getVersionFromTSParams(String tsUtgava, String tsVersion) {
+        for (UtlatandeKod utlatandeKod : values()) {
+            if (utlatandeKod.tsUtgava.equals(tsUtgava) && utlatandeKod.tsVersion.equals(tsVersion)) {
+                return utlatandeKod;
+            }
+        }
+
+        return null;
     }
 }

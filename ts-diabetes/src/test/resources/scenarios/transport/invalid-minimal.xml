@@ -66,5 +66,7 @@
   </p:observationAktivitetRelation>
   <!--  ObservationAktivitetRelation ends -->
   
-
+  <p:utgava>06</p:utgava>
+  <p:version>02</p:version>
+  
 </p:utlatande>

@@ -32,6 +32,10 @@ import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
+import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
+import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
+import se.inera.certificate.modules.ts_diabetes.model.converter.ConverterException;
+import se.inera.certificate.modules.ts_diabetes.model.converter.IsoTypeConverter;
 import se.inera.certificate.modules.ts_diabetes.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_diabetes.model.external.Bilaga;
 import se.inera.certificate.modules.ts_diabetes.model.external.HosPersonal;
@@ -75,7 +79,18 @@ public class TransportToExternalConverter {
         }
         Utlatande utlatande = new Utlatande();
         utlatande.setId(IsoTypeConverter.toId(source.getUtlatandeId()));
-        utlatande.setTyp(IsoTypeConverter.toKod(source.getTypAvUtlatande()));
+        
+        //utlatande.setTyp(IsoTypeConverter.toKod(source.getTypAvUtlatande()));
+        // Validate and set Typ
+        Kod typAvUtlatande = IsoTypeConverter.toKod(source.getTypAvUtlatande());
+        UtlatandeKod utlatandeKod = CodeConverter.fromCode(typAvUtlatande, UtlatandeKod.class);
+        try {
+            utlatandeKod.assertVersion(source.getUtgava(), source.getVersion());
+        } catch (IllegalArgumentException e) {
+            throw new ConverterException(e.getMessage());
+        }
+        
+        utlatande.setTyp(typAvUtlatande);
         utlatande.getKommentarer().addAll(source.getKommentars());
         utlatande.setPatient(convertPatient(source.getPatient()));
         utlatande.setSigneringsdatum(source.getSigneringsdatum());
