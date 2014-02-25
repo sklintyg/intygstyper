@@ -77,74 +77,74 @@ public class PdfGenerator {
     private static final CheckField ID_KONTROLL_FORSAKRAN = new CheckField("Falt_24");
     private static final CheckField ID_KONTROLL_PASS = new CheckField("Falt_25");
 
-    private static final StringField DIABETES_AR_FOR_DIAGNOS = new StringField("");
-    private static final CheckField DIABETES_TYP_1 = new CheckField("");
-    private static final CheckField DIABETES_TYP_2 = new CheckField("");
+    private static final StringField DIABETES_AR_FOR_DIAGNOS = new StringField("Falt__31");
+    private static final CheckField DIABETES_TYP_1 = new CheckField("Falt_32");
+    private static final CheckField DIABETES_TYP_2 = new CheckField("Falt_33");
 
-    private static final CheckField DIABETIKER_ENBART_KOST = new CheckField("");
-    private static final CheckField DIABETIKER_TABLETTBEHANDLING = new CheckField("");
-    private static final CheckField DIABETIKER_INSULINBEHANDLING = new CheckField("");
-    private static final StringField DIABETIKER_INSULINBEHANDLING_SEDAN = new StringField("");
-    private static final StringField DIABETIKER_ANNAN_BEHANDLING = new StringField("");
+    private static final CheckField DIABETIKER_ENBART_KOST = new CheckField("Falt_34");
+    private static final CheckField DIABETIKER_TABLETTBEHANDLING = new CheckField("Falt_35");
+    private static final CheckField DIABETIKER_INSULINBEHANDLING = new CheckField("Falt_36");
+    private static final StringField DIABETIKER_INSULINBEHANDLING_SEDAN = new StringField("Falt_37");
+    private static final StringField DIABETIKER_ANNAN_BEHANDLING = new StringField("Falt__39");
 
-    private static final YesNoField KUNSKAP_ATGARD_HYPOGLYKEMI = new YesNoField("", "");
-    private static final YesNoField HYPOGLYKEMIER_MED_TECKEN_PA_NEDSATT_HJARNFUNKTION = new YesNoField("", "");
-    private static final YesNoField SAKNAR_FORMAGA_KANNA_HYPOGLYKEMI = new YesNoField("", "");
-    private static final YesNoField ALLVARLIG_HYPOGLYKEMI = new YesNoField("", "");
-    private static final StringField ALLVARLIG_HYPOGLYKEMI_ANTAL = new StringField("");
-    private static final YesNoField ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN = new YesNoField("", "");
-    private static final StringField ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN_BESKRIVNING = new StringField("");
+    private static final YesNoField KUNSKAP_ATGARD_HYPOGLYKEMI = new YesNoField("Falt_40", "Falt_41");
+    private static final YesNoField HYPOGLYKEMIER_MED_TECKEN_PA_NEDSATT_HJARNFUNKTION = new YesNoField("Falt_44", "Falt_45");
+    private static final YesNoField SAKNAR_FORMAGA_KANNA_HYPOGLYKEMI = new YesNoField("Falt_48", "Falt_49");
+    private static final YesNoField ALLVARLIG_HYPOGLYKEMI = new YesNoField("Falt_27", "Falt_28");
+    private static final StringField ALLVARLIG_HYPOGLYKEMI_ANTAL = new StringField("Falt__50");
+    private static final YesNoField ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN = new YesNoField("Falt_51", "Falt_52");
+    private static final StringField ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN_BESKRIVNING = new StringField("Falt__501");
 
-    private static final YesNoField EGENOVERVAKNING_BLODGLUKOS = new YesNoField("", "");
-    private static final YesNoField ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND = new YesNoField("", "");
-    private static final StringField ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND_DATUM = new StringField("");
+    private static final YesNoField EGENOVERVAKNING_BLODGLUKOS = new YesNoField("Falt_53", "Falt_54");
+    private static final YesNoField ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND = new YesNoField("Falt_55", "Falt_56");
+    private static final StringField ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND_DATUM = new StringField("Falt__61");
 
-    private static final YesNoField OGONLAKARINTYG = new YesNoField("", "");
-    private static final YesNoField SYNFALTSUNDERSOKNING = new YesNoField("", "");
-    private static final DecimalField EJ_KORRIGERAD_SYNSKARPA_HOGER = new DecimalField("", "");
-    private static final DecimalField EJ_KORRIGERAD_SYNSKARPA_VANSTER = new DecimalField("", "");
-    private static final DecimalField EJ_KORRIGERAD_SYNSKARPA_BINOKULART = new DecimalField("", "");
-    private static final DecimalField KORRIGERAD_SYNSKARPA_HOGER = new DecimalField("", "");
-    private static final DecimalField KORRIGERAD_SYNSKARPA_VANSTER = new DecimalField("", "");
-    private static final DecimalField KORRIGERAD_SYNSKARPA_BINOKULART = new DecimalField("", "");
-    private static final YesNoField DIPLOPI = new YesNoField("Falt_202", "Falt_203");
+    private static final YesNoField OGONLAKARINTYG = new YesNoField("Falt_62", "Falt_63");
+    private static final YesNoField SYNFALTSUNDERSOKNING = new YesNoField("Falt_64", "Falt_65");
+    private static final DecimalField EJ_KORRIGERAD_SYNSKARPA_HOGER = new DecimalField("Falt__66", "Falt__67");
+    private static final DecimalField EJ_KORRIGERAD_SYNSKARPA_VANSTER = new DecimalField("Falt__70", "Falt__71");
+    private static final DecimalField EJ_KORRIGERAD_SYNSKARPA_BINOKULART = new DecimalField("Falt__74", "Falt__75");
+    private static final DecimalField KORRIGERAD_SYNSKARPA_HOGER = new DecimalField("Falt__68", "Falt__69");
+    private static final DecimalField KORRIGERAD_SYNSKARPA_VANSTER = new DecimalField("Falt__72", "Falt__73");
+    private static final DecimalField KORRIGERAD_SYNSKARPA_BINOKULART = new DecimalField("Falt__76", "Falt__77");
+    private static final YesNoField DIPLOPI = new YesNoField("Falt_78", "Falt_79");
 
     private static final CheckGroupField<BedomningKorkortstyp> BEDOMNING;
     static {
         BEDOMNING = new CheckGroupField<BedomningKorkortstyp>();
-        BEDOMNING.addField(BedomningKorkortstyp.AM, "");
-        BEDOMNING.addField(BedomningKorkortstyp.A1, "");
-        BEDOMNING.addField(BedomningKorkortstyp.A2, "");
-        BEDOMNING.addField(BedomningKorkortstyp.A, "");
-        BEDOMNING.addField(BedomningKorkortstyp.B, "");
-        BEDOMNING.addField(BedomningKorkortstyp.BE, "");
-        BEDOMNING.addField(BedomningKorkortstyp.TRAKTOR, "");
-        BEDOMNING.addField(BedomningKorkortstyp.C1, "");
-        BEDOMNING.addField(BedomningKorkortstyp.C1E, "");
-        BEDOMNING.addField(BedomningKorkortstyp.C, "");
-        BEDOMNING.addField(BedomningKorkortstyp.CE, "");
-        BEDOMNING.addField(BedomningKorkortstyp.D1, "");
-        BEDOMNING.addField(BedomningKorkortstyp.D1E, "");
-        BEDOMNING.addField(BedomningKorkortstyp.D, "");
-        BEDOMNING.addField(BedomningKorkortstyp.DE, "");
-        BEDOMNING.addField(BedomningKorkortstyp.TAXI, "");
+        BEDOMNING.addField(BedomningKorkortstyp.AM, "Falt_108");
+        BEDOMNING.addField(BedomningKorkortstyp.A1, "Falt_81");
+        BEDOMNING.addField(BedomningKorkortstyp.A2, "Falt_107");
+        BEDOMNING.addField(BedomningKorkortstyp.A, "Falt_82");
+        BEDOMNING.addField(BedomningKorkortstyp.B, "Falt_83");
+        BEDOMNING.addField(BedomningKorkortstyp.BE, "Falt_84");
+        BEDOMNING.addField(BedomningKorkortstyp.TRAKTOR, "Falt_85");
+        BEDOMNING.addField(BedomningKorkortstyp.C1, "Falt_80");
+        BEDOMNING.addField(BedomningKorkortstyp.C1E, "Falt_109");
+        BEDOMNING.addField(BedomningKorkortstyp.C, "Falt_86");
+        BEDOMNING.addField(BedomningKorkortstyp.CE, "Falt_87");
+        BEDOMNING.addField(BedomningKorkortstyp.D1, "Falt_110");
+        BEDOMNING.addField(BedomningKorkortstyp.D1E, "Falt_111");
+        BEDOMNING.addField(BedomningKorkortstyp.D, "Falt_88");
+        BEDOMNING.addField(BedomningKorkortstyp.DE, "Falt_89");
+        BEDOMNING.addField(BedomningKorkortstyp.TAXI, "Falt_90");
     }
-    private static final CheckField BEDOMNING_INTE_TA_STALLNING = new CheckField("");
+    private static final CheckField BEDOMNING_INTE_TA_STALLNING = new CheckField("Falt_91");
 
-    private static final YesNoField LAMPLIGHET_INNEHA_BEHORIGHET_TILL_KORNINGAR_OCH_ARBETSFORMER = new YesNoField("",
-            "");
+    private static final YesNoField LAMPLIGHET_INNEHA_BEHORIGHET_TILL_KORNINGAR_OCH_ARBETSFORMER = new YesNoField("Falt_92",
+            "Falt_93");
 
-    private static final StringField OVRIG_BESKRIVNING = new StringField("");
+    private static final StringField OVRIG_BESKRIVNING = new StringField("FaltDiv6");
 
-    private static final StringField BEDOMNING_BOR_UNDERSOKAS_SPECIALIST = new StringField("FaltDiv6");
+    private static final StringField BEDOMNING_BOR_UNDERSOKAS_SPECIALIST = new StringField("Falt__94");
 
-    private static final StringField INTYGSDATUM = new StringField("Falt__82");
-    private static final StringField VARDINRATTNINGENS_NAMN = new StringField("Falt__83");
-    private static final StringField ADRESS_OCH_ORT = new StringField("Falt__87");
-    private static final StringField TELEFON = new StringField("Falt__88");
-    private static final StringField NAMNFORTYDLIGANDE = new StringField("Falt__90");
+    private static final StringField INTYGSDATUM = new StringField("Falt__95");
+    private static final StringField VARDINRATTNINGENS_NAMN = new StringField("Falt__96");
+    private static final StringField ADRESS_OCH_ORT = new StringField("Falt__97");
+    private static final StringField TELEFON = new StringField("Falt__98");
+    private static final StringField NAMNFORTYDLIGANDE = new StringField("Falt__101");
 
-    private static final StringField SPECIALISTKOMPETENS_BESKRVNING = new StringField("Falt_92");
+    private static final StringField SPECIALISTKOMPETENS_BESKRVNING = new StringField("Falt_102");
 
     private static final String DATEFORMAT_FOR_FILENAMES = "yyMMdd";
 
