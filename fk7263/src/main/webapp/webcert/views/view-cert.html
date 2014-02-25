@@ -101,7 +101,7 @@
 
                   <!-- Frågan -->
                   <div class="panel-container">
-                    <div class="qa-block" ng-class="{'qa-block-handled' : qa.status == 'ANSWERED', 'qa-block-fk' : (qa.frageStallare | lowercase) == 'fk'}">
+                    <div class="qa-block" ng-class="{'qa-block-handled' : qa.status == 'ANSWERED', 'qa-block-fk' : (qa.frageStallare | lowercase) == 'fk', 'qa-block-wc' : (qa.frageStallare | lowercase) == 'wc'}">
                       <div class="qa-block-head clearfix">
                         <div class="pull-left">
                           Från: <span class="qa-sender" ng-switch="qa.frageStallare | lowercase"> <span id="fraga-vard-aktor-namn-{{qa.internReferens}}" ng-switch-when="wc">{{qa.vardAktorNamn}}</span>
@@ -129,7 +129,7 @@
 
                   <!-- Svarsdelen -->
                   <div class="panel-container">
-                    <div class="qa-block" ng-class="{'qa-block-fk' : (qa.frageStallare | lowercase) == 'wc'}" ng-if="qa.status == 'ANSWERED'">
+                    <div class="qa-block" ng-class="{'qa-block-fk' : (qa.frageStallare | lowercase) == 'wc', 'qa-block-wc' : (qa.frageStallare | lowercase) == 'fk'}" ng-if="qa.status == 'ANSWERED'">
                       <!-- frågan är redan BESVARAD -->
                       <div class="qa-block-head clearfix">
                         <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
@@ -154,7 +154,7 @@
                     <label class="control-label" ng-show="!qa.answerDisabled && !certProperties.isRevoked">Svar</label>
                     <div class="controls">
                       <div class="alert alert-info" ng-show="qa.answerDisabled && qa.answerDisabledReason">{{qa.answerDisabledReason}}</div>
-                      <textarea rows="5" class="span9" ng-model="qa.svarsText" id="answerText-{{qa.internReferens}}" ng-show="!qa.answerDisabled && !certProperties.isRevoked"></textarea>
+                      <textarea rows="5" class="span9 qa-block-wc" ng-model="qa.svarsText" id="answerText-{{qa.internReferens}}" ng-show="!qa.answerDisabled && !certProperties.isRevoked"></textarea>
                       <div>
                         <!-- error message occuring when inteacting with server for this FragaSvar-->
                         <div id="{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey" class="alert alert-error">
@@ -216,7 +216,7 @@
 
                 <!-- Frågan -->
                 <div class="panel-container">
-                  <div class="qa-block qa-block-handled" ng-class="{'qa-block-fk' : (qa.frageStallare | lowercase) == 'fk'}">
+                  <div class="qa-block qa-block-handled" ng-class="{'qa-block-fk' : (qa.frageStallare | lowercase) == 'fk', 'qa-block-wc' : (qa.frageStallare | lowercase) == 'wc'}">
                     <div class="qa-block-head clearfix">
                       <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
                         Från: <span class="qa-sender" id="fraga-vard-aktor-namn-{{qa.internReferens}}" ng-switch-when="wc">{{qa.vardAktorNamn}}</span> <span ng-switch-default message
@@ -243,7 +243,7 @@
                 <!-- Svarsdelen -->
 
                 <div class="panel-container">
-                  <div class="qa-block qa-block-handled" ng-class="{'qa-block-fk' : (qa.frageStallare | lowercase) == 'wc'}" ng-if="qa.svarsText">
+                  <div class="qa-block qa-block-handled" ng-class="{'qa-block-fk' : (qa.frageStallare | lowercase) == 'fk','qa-block-wc' : (qa.frageStallare | lowercase) == 'wc'}" ng-if="qa.svarsText">
                     <!-- frågan har en svarstext -->
                     <div class="qa-block-head clearfix">
                       <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
