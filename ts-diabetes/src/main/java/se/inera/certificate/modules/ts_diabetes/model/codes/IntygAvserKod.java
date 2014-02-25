@@ -33,9 +33,6 @@ public enum IntygAvserKod implements CodeSystem {
     /** Taxi (TAXI) */
     TAXI("IAV9", "Taxi"),
 
-    /** Intyget avser inget av ovanstående (ANNAT) */
-    ANNAT("IAV10", "Intyget avser inget av ovanstående"),
-    
     /** med tungt släpfordon (AM) */
     AM("IAV11", "Moped klass I"),
 
@@ -53,7 +50,7 @@ public enum IntygAvserKod implements CodeSystem {
 
     /** Personbil och lätt lastbil med tungt släpfordon (BE) */
     BE("IAV16", "Personbil och lätt lastbil med tungt släpfordon"),
-    
+
     TRAKTOR("IAV17", "Traktor");
 
     /** Körkortsbehörigheter av högre typ */

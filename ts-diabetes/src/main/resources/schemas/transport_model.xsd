@@ -190,7 +190,7 @@
       <xs:element name="beskrivning" type="xs:string"
         minOccurs="0" />
       <xs:element name="varde" type="iso:CD" minOccurs="0"
-        maxOccurs="10" />
+        maxOccurs="16" />
       <xs:element name="boolean_varde" type="xs:boolean"
         minOccurs="0" />
       <xs:any namespace="##other" processContents="lax"

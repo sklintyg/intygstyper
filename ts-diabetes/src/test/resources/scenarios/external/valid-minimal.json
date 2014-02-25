@@ -58,26 +58,26 @@
         }
     },
     "vardkontakter": [
-	      {
-	        "vardkontakttyp": {
-	            "codeSystem": "1.2.752.116.2.1.1.1",
-	            "codeSystemName": "SNOMED-CT",
-	            "code": "5880005"
-	        },
-	        "idkontroll": {
-	            "codeSystem": "???",
-	            "codeSystemName": "kv_id_kontroll",
-	            "code": "IDK6"
-	        }
-	      }
+          {
+            "vardkontakttyp": {
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "5880005"
+            },
+            "idkontroll": {
+                "codeSystem": "???",
+                "codeSystemName": "kv_id_kontroll",
+                "code": "IDK6"
+            }
+          }
       ],
     "bilaga" : {
-    	"bilagetyp" : {
+        "bilagetyp" : {
             "codeSystem": "???",
             "codeSystemName": "kv_bilaga",
             "code": "BIL1"
-    	},
-    	"forekomst" : true
+        },
+        "forekomst" : true
     },
     "aktiviteter": [],
     "rekommendationer": [
@@ -103,7 +103,6 @@
             },
             "forekomst": true
         }, 
-        
         {
             "observationskod": {
                 "codeSystem": "to-come",

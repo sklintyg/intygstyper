@@ -28,24 +28,27 @@
         "postort": "Testort"
     },
     "vardkontakt" : {
-    	"typ" : "5880005", 
-    	"idkontroll" : "PASS"
+        "typ" : "5880005", 
+        "idkontroll" : "PASS"
     },
     "intygAvser" : {
-    	"korkortstyp" : ["C"]
+        "korkortstyp" : [
+            {"type": "C", "selected": true}
+        ]
     },
     "diabetes" : {
-    	"diabetestyp" : "DIABETES_TYP_2"
+        "diabetestyp" : "DIABETES_TYP_2"
     },
     "hypoglykemier" : {
-    	"kunskapOmAtgarder" : false,
-    	"teckenNedsattHjarnfunktion" : false
+        "kunskapOmAtgarder" : false,
+        "teckenNedsattHjarnfunktion" : false
     },
     "syn" : {
         "separatOgonlakarintyg" : true
     },
     "bedomning" : {
-    	"korkortstyp" : ["C"]
+        "korkortstyp" : [
+            {"type": "C", "selected": true}
+        ]
     }
-    
 }

@@ -12,13 +12,27 @@
 
   <p:signeringsdatum>2013-08-12T15:57:00</p:signeringsdatum>
 
-  <p:intygAvser code="IAV3" codeSystem="todo"
-    codeSystemName="kv_intygavser_intyg" />
+  <p:intygAvser code="IAV1" codeSystem="todo" codeSystemName="kv_intygavser_intyg" />
+  <p:intygAvser code="IAV2" codeSystem="todo" codeSystemName="kv_intygavser_intyg" />
+  <p:intygAvser code="IAV3" codeSystem="todo" codeSystemName="kv_intygavser_intyg" />
+  <p:intygAvser code="IAV4" codeSystem="todo" codeSystemName="kv_intygavser_intyg" />
+  <p:intygAvser code="IAV5" codeSystem="todo" codeSystemName="kv_intygavser_intyg" />
+  <p:intygAvser code="IAV6" codeSystem="todo" codeSystemName="kv_intygavser_intyg" />
+  <p:intygAvser code="IAV7" codeSystem="todo" codeSystemName="kv_intygavser_intyg" />
+  <p:intygAvser code="IAV8" codeSystem="todo" codeSystemName="kv_intygavser_intyg" />
+  <p:intygAvser code="IAV9" codeSystem="todo" codeSystemName="kv_intygavser_intyg" />
+  <p:intygAvser code="IAV11" codeSystem="todo" codeSystemName="kv_intygavser_intyg" />
+  <p:intygAvser code="IAV12" codeSystem="todo" codeSystemName="kv_intygavser_intyg" />
+  <p:intygAvser code="IAV13" codeSystem="todo" codeSystemName="kv_intygavser_intyg" />
+  <p:intygAvser code="IAV14" codeSystem="todo" codeSystemName="kv_intygavser_intyg" />
+  <p:intygAvser code="IAV15" codeSystem="todo" codeSystemName="kv_intygavser_intyg" />
+  <p:intygAvser code="IAV16" codeSystem="todo" codeSystemName="kv_intygavser_intyg" />
+  <p:intygAvser code="IAV17" codeSystem="todo" codeSystemName="kv_intygavser_intyg" />
 
   <p:patient>
     <p:person-id extension="19121212-1212" root="1.2.752.129.2.1.3.1" />
-    <p:fornamn>Johnny</p:fornamn>
-    <p:efternamn>Appleseed</p:efternamn>
+    <p:fornamn>Herr</p:fornamn>
+    <p:efternamn>Dundersjuk</p:efternamn>
     <p:postadress>Testvägen 12</p:postadress>
     <p:postnummer>123456</p:postnummer>
     <p:postort>Testort</p:postort>
@@ -80,8 +94,22 @@
   <p:rekommendation>
     <p:rekommendationskod code="REK8"
       codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
-    <p:varde code="VAR3" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
-      codeSystemName="kv_rekommendation_intyg" />
+    <p:varde code="VAR1" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
+    <p:varde code="VAR2" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
+    <p:varde code="VAR3" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
+    <p:varde code="VAR4" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
+    <p:varde code="VAR5" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
+    <p:varde code="VAR6" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
+    <p:varde code="VAR7" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
+    <p:varde code="VAR8" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
+    <p:varde code="VAR9" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
+    <p:varde code="VAR12" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
+    <p:varde code="VAR13" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
+    <p:varde code="VAR14" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
+    <p:varde code="VAR15" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
+    <p:varde code="VAR16" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
+    <p:varde code="VAR17" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
+    <p:varde code="VAR18" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
   </p:rekommendation>
 
   <!-- Specialistkompetens inom.. -->

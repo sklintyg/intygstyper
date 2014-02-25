@@ -3,16 +3,24 @@ package se.inera.certificate.modules.ts_diabetes.model.internal;
 import java.util.EnumSet;
 import java.util.Set;
 
+import se.inera.certificate.modules.ts_diabetes.json.AbstractEnumSetDeserializer;
+import se.inera.certificate.modules.ts_diabetes.json.AbstractEnumSetSerializer;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 public class Bedomning {
 
-    private Set<BedomningKorkortstyp> korkortstyp;
+    @JsonSerialize(using = BedomningKorkortstypEnumSetSerializer.class)
+    @JsonDeserialize(using = BedomningKorkortstypEnumSetDeserializer.class)
+    private EnumSet<BedomningKorkortstyp> korkortstyp;
 
     private Boolean kanInteTaStallning;
 
     private String lakareSpecialKompetens;
-    
+
     private Boolean lamplighetInnehaBehorighet;
-    
+
     private String kommentarer;
 
     public Set<BedomningKorkortstyp> getKorkortstyp() {
@@ -52,5 +60,18 @@ public class Bedomning {
 
     public void setKommentarer(String kommentarer) {
         this.kommentarer = kommentarer;
+    }
+
+    public static class BedomningKorkortstypEnumSetSerializer extends AbstractEnumSetSerializer<BedomningKorkortstyp> {
+        protected BedomningKorkortstypEnumSetSerializer() {
+            super(BedomningKorkortstyp.class);
+        }
+    }
+
+    public static class BedomningKorkortstypEnumSetDeserializer extends
+            AbstractEnumSetDeserializer<BedomningKorkortstyp> {
+        protected BedomningKorkortstypEnumSetDeserializer() {
+            super(BedomningKorkortstyp.class);
+        }
     }
 }

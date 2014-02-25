@@ -14,7 +14,82 @@
         {
             "codeSystem": "todo",
             "codeSystemName": "kv_intygavser_intyg",
+            "code": "IAV1"
+        },
+        {
+            "codeSystem": "todo",
+            "codeSystemName": "kv_intygavser_intyg",
+            "code": "IAV2"
+        },
+        {
+            "codeSystem": "todo",
+            "codeSystemName": "kv_intygavser_intyg",
             "code": "IAV3"
+        },
+        {
+            "codeSystem": "todo",
+            "codeSystemName": "kv_intygavser_intyg",
+            "code": "IAV4"
+        },
+        {
+            "codeSystem": "todo",
+            "codeSystemName": "kv_intygavser_intyg",
+            "code": "IAV5"
+        },
+        {
+            "codeSystem": "todo",
+            "codeSystemName": "kv_intygavser_intyg",
+            "code": "IAV6"
+        },
+        {
+            "codeSystem": "todo",
+            "codeSystemName": "kv_intygavser_intyg",
+            "code": "IAV7"
+        },
+        {
+            "codeSystem": "todo",
+            "codeSystemName": "kv_intygavser_intyg",
+            "code": "IAV8"
+        },
+        {
+            "codeSystem": "todo",
+            "codeSystemName": "kv_intygavser_intyg",
+            "code": "IAV9"
+        },
+        {
+            "codeSystem": "todo",
+            "codeSystemName": "kv_intygavser_intyg",
+            "code": "IAV11"
+        },
+        {
+            "codeSystem": "todo",
+            "codeSystemName": "kv_intygavser_intyg",
+            "code": "IAV12"
+        },
+        {
+            "codeSystem": "todo",
+            "codeSystemName": "kv_intygavser_intyg",
+            "code": "IAV13"
+        },
+        {
+            "codeSystem": "todo",
+            "codeSystemName": "kv_intygavser_intyg",
+            "code": "IAV14"
+        },
+        {
+            "codeSystem": "todo",
+            "codeSystemName": "kv_intygavser_intyg",
+            "code": "IAV15"
+        },
+        {
+            "codeSystem": "todo",
+            "codeSystemName": "kv_intygavser_intyg",
+            "code": "IAV16"
+        },
+        {
+            "codeSystem": "todo",
+            "codeSystemName": "kv_intygavser_intyg",
+            "code": "IAV17"
         }
     ],
     "patient": {
@@ -23,9 +98,9 @@
             "extension": "19121212-1212"
         },
         "fornamn": [
-            "Johnny"
+            "Herr"
         ],
-        "efternamn": "Appleseed",
+        "efternamn": "Dundersjuk",
         "postadress": "Testvägen 12",
         "postnummer": "123456",
         "postort": "Testort",
@@ -59,35 +134,35 @@
         }
     },
     "vardkontakter": [
-	      {
-	        "vardkontakttyp": {
-	            "codeSystem": "1.2.752.116.2.1.1.1",
-	            "codeSystemName": "SNOMED-CT",
-	            "code": "5880005"
-	        },
-	        "idkontroll": {
-	            "codeSystem": "???",
-	            "codeSystemName": "kv_id_kontroll",
-	            "code": "IDK6"
-	        }
-	      }
+          {
+            "vardkontakttyp": {
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "5880005"
+            },
+            "idkontroll": {
+                "codeSystem": "???",
+                "codeSystemName": "kv_id_kontroll",
+                "code": "IDK6"
+            }
+          }
       ],
     "bilaga" : {
-    	"bilagetyp" : {
+        "bilagetyp" : {
             "codeSystem": "???",
             "codeSystemName": "kv_bilaga",
             "code": "BIL1"
-    	},
-    	"forekomst" : false
+        },
+        "forekomst" : false
     },
     "aktiviteter" : [
         {
-        	"aktivitetskod" : {
-        		"code" : "308113006",
-        		"codeSystem" : "1.2.752.116.2.1.1.1",
-        		"codeSystemName" : "SNOMED-CT"
-        	},
-        	"forekomst" : true 
+            "aktivitetskod" : {
+                "code" : "308113006",
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT"
+            },
+            "forekomst" : true 
         },
         {
             "aktivitetskod": {
@@ -96,13 +171,13 @@
                 "code": "86944008"
             },
             "id" : {
-        		"root" : "1.2.752.129.2.1.2.1",
-        		"extension" : "1"
-        	},
+                "root" : "1.2.752.129.2.1.2.1",
+                "extension" : "1"
+            },
             "metod" : {
-            	"code" : "MET1",
-            	"codeSystem" : "b0c078c6-512a-42a5-ab42-a3380f369ac3",
-            	"codeSystemName" : "kv_metod"
+                "code" : "MET1",
+                "codeSystem" : "b0c078c6-512a-42a5-ab42-a3380f369ac3",
+                "codeSystemName" : "kv_metod"
             }
         },
         {
@@ -111,10 +186,10 @@
                 "codeSystemName": "kv_aktiviteter_intyg",
                 "code": "AKT18"
             },
-           	"id" : {
-        		"root" : "1.2.752.129.2.1.2.1",
-        		"extension" : "2"
-        	}
+            "id" : {
+                "root" : "1.2.752.129.2.1.2.1",
+                "extension" : "2"
+            }
         }
       ],  
     "rekommendationer": [
@@ -124,11 +199,88 @@
                 "codeSystemName": "kv_rekommendation_intyg",
                 "code": "REK8"
             },
-            "varde": [{
-                "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
-                "codeSystemName": "kv_rekommendation_intyg",
-                "code": "VAR3"
-            }]
+            "varde": [
+                {
+                    "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
+                    "codeSystemName": "kv_rekommendation_intyg",
+                    "code": "VAR1"
+                },
+                {
+                    "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
+                    "codeSystemName": "kv_rekommendation_intyg",
+                    "code": "VAR2"
+                },
+                {
+                    "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
+                    "codeSystemName": "kv_rekommendation_intyg",
+                    "code": "VAR3"
+                },
+                {
+                    "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
+                    "codeSystemName": "kv_rekommendation_intyg",
+                    "code": "VAR4"
+                },
+                {
+                    "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
+                    "codeSystemName": "kv_rekommendation_intyg",
+                    "code": "VAR5"
+                },
+                {
+                    "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
+                    "codeSystemName": "kv_rekommendation_intyg",
+                    "code": "VAR6"
+                },
+                {
+                    "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
+                    "codeSystemName": "kv_rekommendation_intyg",
+                    "code": "VAR7"
+                },
+                {
+                    "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
+                    "codeSystemName": "kv_rekommendation_intyg",
+                    "code": "VAR8"
+                },
+                {
+                    "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
+                    "codeSystemName": "kv_rekommendation_intyg",
+                    "code": "VAR9"
+                },
+                {
+                    "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
+                    "codeSystemName": "kv_rekommendation_intyg",
+                    "code": "VAR12"
+                },
+                {
+                    "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
+                    "codeSystemName": "kv_rekommendation_intyg",
+                    "code": "VAR13"
+                },
+                {
+                    "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
+                    "codeSystemName": "kv_rekommendation_intyg",
+                    "code": "VAR14"
+                },
+                {
+                    "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
+                    "codeSystemName": "kv_rekommendation_intyg",
+                    "code": "VAR15"
+                },
+                {
+                    "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
+                    "codeSystemName": "kv_rekommendation_intyg",
+                    "code": "VAR16"
+                },
+                {
+                    "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
+                    "codeSystemName": "kv_rekommendation_intyg",
+                    "code": "VAR17"
+                },
+                {
+                    "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
+                    "codeSystemName": "kv_rekommendation_intyg",
+                    "code": "VAR18"
+                }
+            ]
         },
         {
             "rekommendationskod": {
@@ -165,7 +317,6 @@
             },
             "forekomst": true
         },
-        
         {
             "observationskod": {
                 "codeSystem": "1.2.752.116.2.1.1.1",
@@ -174,7 +325,6 @@
             },
             "forekomst": true
         },
-        
         {
             "observationskod": {
                 "codeSystem": "1.2.752.116.2.1.1.1",
@@ -184,17 +334,15 @@
             "forekomst": true,
             "observationstidPartialDate" : "2012"
         },
-        
         {
-        	"observationskod": {
-        		"codeSystem": "to-come",
-        		"codeSystemName": "kv_observationer_intyg",
-        		"code": "OBS10"
-        	},
-        	"forekomst": true,
-        	"beskrivning" : "Hypnos"
+            "observationskod": {
+                "codeSystem": "to-come",
+                "codeSystemName": "kv_observationer_intyg",
+                "code": "OBS10"
+            },
+            "forekomst": true,
+            "beskrivning" : "Hypnos"
         },
-        
         {
             "observationskod": {
                 "codeSystem": "to-come",
@@ -211,60 +359,53 @@
             },
             "forekomst": true
         },
-        
         {
-        	"observationskod": {
-        		"codeSystem": "to-come",
-        		"codeSystemName": "kv_observationer_intyg",
-        		"code": "OBS21"
-        	},
-        	"forekomst": true
-        },
-        
-        {
-        	"observationskod": {
-        		"codeSystem": "to-come",
-        		"codeSystemName": "kv_observationer_intyg",
-        		"code": "OBS22"
-        	},
-        	"forekomst": true,
-        	"beskrivning" : "Beskrivning"
-        },
-        
-        {
-        	"observationskod": {
-        		"codeSystem": "to-come",
-        		"codeSystemName": "kv_observationer_intyg",
-        		"code": "OBS23"
-        	},
-        	"forekomst": true,
-        	"beskrivning" : "Beskrivning"
-        },
-        
-        {
-        	"observationskod": {
-        		"codeSystem": "to-come",
-        		"codeSystemName": "kv_observationer_intyg",
-        		"code": "OBS24"
-        	},
-        	"forekomst": true,
-        	"observationstidDate" : "2012-12-12" 
-        },
-        
-        
-        {
-        	"observationskod": {
-        		"codeSystem": "to-come",
-        		"codeSystemName": "kv_observationer_intyg",
-        		"code": "OBS25"
-        	},
-        	"id" : {
-	    		"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "3"
+            "observationskod": {
+                "codeSystem": "to-come",
+                "codeSystemName": "kv_observationer_intyg",
+                "code": "OBS21"
             },
-        	"forekomst": false
+            "forekomst": true
         },
-        
+        {
+            "observationskod": {
+                "codeSystem": "to-come",
+                "codeSystemName": "kv_observationer_intyg",
+                "code": "OBS22"
+            },
+            "forekomst": true,
+            "beskrivning" : "Beskrivning"
+        },
+        {
+            "observationskod": {
+                "codeSystem": "to-come",
+                "codeSystemName": "kv_observationer_intyg",
+                "code": "OBS23"
+            },
+            "forekomst": true,
+            "beskrivning" : "Beskrivning"
+        },
+        {
+            "observationskod": {
+                "codeSystem": "to-come",
+                "codeSystemName": "kv_observationer_intyg",
+                "code": "OBS24"
+            },
+            "forekomst": true,
+            "observationstidDate" : "2012-12-12" 
+        },
+        {
+            "observationskod": {
+                "codeSystem": "to-come",
+                "codeSystemName": "kv_observationer_intyg",
+                "code": "OBS25"
+            },
+            "id" : {
+                "root" : "1.2.752.129.2.1.2.1",
+                "extension" : "3"
+            },
+            "forekomst": false
+        },
         {
             "observationskod": {
                 "codeSystem": "1.2.752.116.2.1.1.1",
@@ -316,8 +457,6 @@
                 "code": "51440002"
             }
         },
-        
-
         {
             "observationskod": {
                 "codeSystem": "1.2.752.116.2.1.1.1",
@@ -369,16 +508,15 @@
                 "code": "51440002"
             }
         },
-        
         {
             "observationskod" : {
-            	"codeSystem": "1.2.752.116.1.1.1.1.1",
+                "codeSystem": "1.2.752.116.1.1.1.1.1",
                 "codeSystemName": "ICD-10",
                 "code": "H53.2"
             },
-        	"id" : {
-	    		"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "4"
+            "id" : {
+                "root" : "1.2.752.129.2.1.2.1",
+                "extension" : "4"
             },
             "forekomst" : true
         }
@@ -386,24 +524,24 @@
     ],
     "observationAktivitetRelationer" : [
         {
-        	"observationsid" : {
-	    		"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "3"
+            "observationsid" : {
+                "root" : "1.2.752.129.2.1.2.1",
+                "extension" : "3"
             },
             "aktivitetsid" : {
-	        	"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "1"
-        	}  
-      	},
-      	{
-      		"observationsid" : {
-	    		"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "4"
+                "root" : "1.2.752.129.2.1.2.1",
+                "extension" : "1"
+            }  
+        },
+        {
+            "observationsid" : {
+                "root" : "1.2.752.129.2.1.2.1",
+                "extension" : "4"
             },
-	        "aktivitetsid" : {
-	        	"root" : "1.2.752.129.2.1.2.1",
-	            "extension" : "2"
-	        }  
+            "aktivitetsid" : {
+                "root" : "1.2.752.129.2.1.2.1",
+                "extension" : "2"
+            }  
         }
      ]
 }

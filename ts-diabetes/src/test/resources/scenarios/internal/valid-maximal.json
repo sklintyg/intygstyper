@@ -21,69 +21,99 @@
     },
     "patient": {
         "personid": "19121212-1212",
-        "fullstandigtNamn": "Johnny Appleseed",
-        "fornamn": "Johnny",
-        "efternamn": "Appleseed",
+        "fullstandigtNamn": "Herr Dundersjuk",
+        "fornamn": "Herr",
+        "efternamn": "Dundersjuk",
         "postadress": "Testvägen 12",
         "postnummer": "123456",
         "postort": "Testort"
     },
     "vardkontakt" : {
-    	"typ" : "5880005", 
-    	"idkontroll" : "PASS"
+        "typ" : "5880005", 
+        "idkontroll" : "PASS"
     },
     "intygAvser" : {
-    	"korkortstyp" : ["C"]
+        "korkortstyp" : [
+            {"type": "AM", "selected": true},
+            {"type": "A1", "selected": true},
+            {"type": "A2", "selected": true},
+            {"type": "A", "selected": true},
+            {"type": "B", "selected": true},
+            {"type": "BE", "selected": true},
+            {"type": "TRAKTOR", "selected": true},
+            {"type": "C1", "selected": true},
+            {"type": "C1E", "selected": true},
+            {"type": "C", "selected": true},
+            {"type": "CE", "selected": true},
+            {"type": "D1", "selected": true},
+            {"type": "D1E", "selected": true},
+            {"type": "D", "selected": true},
+            {"type": "DE", "selected": true},
+            {"type": "TAXI", "selected": true}
+        ]
     },
     "diabetes" : {
-    	"diabetestyp" : "DIABETES_TYP_2",
-    	"observationsperiod" : "2012",
-    	"endastKost" : true,
-    	"tabletter" : true,
-    	"insulin" : true,
-    	"insulinBehandlingsperiod" : "2012",
-    	"annanBehandling" : true,
-    	"annanBehandlingBeskrivning" : "Hypnos"
-    		
+        "diabetestyp" : "DIABETES_TYP_2",
+        "observationsperiod" : "2012",
+        "endastKost" : true,
+        "tabletter" : true,
+        "insulin" : true,
+        "insulinBehandlingsperiod" : "2012",
+        "annanBehandling" : true,
+        "annanBehandlingBeskrivning" : "Hypnos"
     },
     "hypoglykemier" : {
-    	"kunskapOmAtgarder" : true,
-    	"teckenNedsattHjarnfunktion" : true,
-    	"saknarFormagaKannaVarningstecken" : true, 
-    	"allvarligForekomst" : true,
-    	"allvarligForekomstBeskrivning" : "Beskrivning",
-    	"allvarligForekomstTrafiken" : true, 
-    	"allvarligForekomstTrafikBeskrivning" : "Beskrivning",
-    	"allvarligForekomstVakenTid" : true,
-    	"allvarligForekomstVakenTidObservationstid" : "2012-12-12",
-    	"egenkontrollBlodsocker" : true
+        "kunskapOmAtgarder" : true,
+        "teckenNedsattHjarnfunktion" : true,
+        "saknarFormagaKannaVarningstecken" : true, 
+        "allvarligForekomst" : true,
+        "allvarligForekomstBeskrivning" : "Beskrivning",
+        "allvarligForekomstTrafiken" : true, 
+        "allvarligForekomstTrafikBeskrivning" : "Beskrivning",
+        "allvarligForekomstVakenTid" : true,
+        "allvarligForekomstVakenTidObservationstid" : "2012-12-12",
+        "egenkontrollBlodsocker" : true
     },
     "syn" : {
-    	"separatOgonlakarintyg" : false,
-    	"synfaltsprovningUtanAnmarkning" : false,
-    	"hoger" : {
-           	"utanKorrektion" : 0.0,
-           	"medKorrektion" : 0.0
-    	},
+        "separatOgonlakarintyg" : false,
+        "synfaltsprovningUtanAnmarkning" : false,
+        "hoger" : {
+            "utanKorrektion" : 0.0,
+            "medKorrektion" : 0.0
+        },
            
-       "vanster" : {
-           	"utanKorrektion" : 0.0,
-           	"medKorrektion" : 0.0
-       	},
-       "binokulart" : {
-           	"utanKorrektion" : 0.0,
-           	"medKorrektion" : 0.0
-       	},
-       	"diplopi" : true,
-       	"synfaltsprovning" : true,
-       	"provningOgatsRorlighet" : true
+        "vanster" : {
+            "utanKorrektion" : 0.0,
+            "medKorrektion" : 0.0
+        },
+        "binokulart" : {
+            "utanKorrektion" : 0.0,
+            "medKorrektion" : 0.0
+        },
+        "diplopi" : true,
+        "synfaltsprovning" : true,
+        "provningOgatsRorlighet" : true
     },
-    
     "bedomning" : {
-    	"korkortstyp" : ["C"],
-    	"lakareSpecialKompetens" : "Kronologisk bastuberedning",
-    	"lamplighetInnehaBehorighet" : true
-    
+        "korkortstyp" : [
+            {"type": "AM", "selected": true},
+            {"type": "A1", "selected": true},
+            {"type": "A2", "selected": true},
+            {"type": "A", "selected": true},
+            {"type": "B", "selected": true},
+            {"type": "BE", "selected": true},
+            {"type": "TRAKTOR", "selected": true},
+            {"type": "C1", "selected": true},
+            {"type": "C1E", "selected": true},
+            {"type": "C", "selected": true},
+            {"type": "CE", "selected": true},
+            {"type": "D1", "selected": true},
+            {"type": "D1E", "selected": true},
+            {"type": "D", "selected": true},
+            {"type": "DE", "selected": true},
+            {"type": "TAXI", "selected": true}
+        ],
+        "lakareSpecialKompetens" : "Kronologisk bastuberedning",
+        "lamplighetInnehaBehorighet" : true
     }
-    
 }

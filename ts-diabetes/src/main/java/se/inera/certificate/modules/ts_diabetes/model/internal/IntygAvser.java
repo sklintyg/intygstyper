@@ -3,10 +3,17 @@ package se.inera.certificate.modules.ts_diabetes.model.internal;
 import java.util.EnumSet;
 import java.util.Set;
 
-import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvserKategori;
+import se.inera.certificate.modules.ts_diabetes.json.AbstractEnumSetDeserializer;
+import se.inera.certificate.modules.ts_diabetes.json.AbstractEnumSetSerializer;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class IntygAvser {
-    Set<IntygAvserKategori> korkortstyp;
+
+    @JsonSerialize(using = IntygAvserEnumSetSerializer.class)
+    @JsonDeserialize(using = IntygAvserEnumSetDeserializer.class)
+    EnumSet<IntygAvserKategori> korkortstyp;
 
     public Set<IntygAvserKategori> getKorkortstyp() {
         if (korkortstyp == null) {
@@ -15,4 +22,15 @@ public class IntygAvser {
         return korkortstyp;
     }
 
+    public static class IntygAvserEnumSetSerializer extends AbstractEnumSetSerializer<IntygAvserKategori> {
+        protected IntygAvserEnumSetSerializer() {
+            super(IntygAvserKategori.class);
+        }
+    }
+
+    public static class IntygAvserEnumSetDeserializer extends AbstractEnumSetDeserializer<IntygAvserKategori> {
+        protected IntygAvserEnumSetDeserializer() {
+            super(IntygAvserKategori.class);
+        }
+    }
 }
