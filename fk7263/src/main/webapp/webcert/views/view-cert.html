@@ -52,8 +52,6 @@
           <!--  Fragasvar formular end -->
 
 
-
-
           <!-- error message -->
           <div id="qa-list-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey" class="alert alert-error">
             <span message key="{{widgetState.activeErrorMessageKey}}"></span>
@@ -297,7 +295,7 @@
     <div wc-spinner label="info.loadingcertificate" show-spinner="!widgetState.doneLoading" show-content="widgetState.doneLoading">
 
       <!-- error message -->
-      <div id="cert-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey" class="alert alert-error">
+      <div id="cert-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey" class="alert alert-error alert-column">
         <span message key="{{widgetState.activeErrorMessageKey}}"></span>
       </div>
       <div ng-show="!widgetState.activeErrorMessageKey">
@@ -313,7 +311,7 @@
         </div>
 
 
-        <div class="alert alert-info" ng-if="!certProperties.isRevoked" style="margin-right: 20px; max-width: 530px;">
+        <div class="alert alert-info alert-column" ng-if="!certProperties.isRevoked">
           <strong>Status:</strong> <span ng-if="certProperties.sentToFK" id="certificate-is-sent-to-fk-message-text">Intyget är signerat och skickat till Försäkringskassan.</span> <span
             ng-if="!certProperties.sentToFK" id="certificate-is-sent-to-it-message-text">Intyget är signerat och skickat till Intygstjänsten.</span>
         </div>
