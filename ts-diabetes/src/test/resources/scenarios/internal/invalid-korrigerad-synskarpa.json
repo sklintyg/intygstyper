@@ -32,15 +32,41 @@
     	"idkontroll" : "PASS"
     },
     "intygAvser" : {
-    	"korkortstyp" : ["C"]
+    	"korkortstyp" : [
+    	                 {"type": "C", "selected": true}
+    	                 ]
     },
     "diabetes" : {
     	"diabetestyp" : "DIABETES_TYP_2"
     },
     "hypoglykemier" : {
+    	"kunskapOmAtgarder" : false,
+    	"teckenNedsattHjarnfunktion" : false
+    },
+    "syn" : {
+        "separatOgonlakarintyg" : false,
+    	"synfaltsprovningUtanAnmarkning" : false,
+    	"hoger" : {
+           	"utanKorrektion" : 0.0,
+           	"medKorrektion" : 0.0
+    	},
+           
+       "vanster" : {
+           	"utanKorrektion" : 0.0,
+           	"medKorrektion" : 2.1
+       	},
+       "binokulart" : {
+           	"utanKorrektion" : 0.0,
+           	"medKorrektion" : 0.0
+       	},
+       	"diplopi" : true,
+       	"synfaltsprovning" : true,
+       	"provningOgatsRorlighet" : true
     },
     "bedomning" : {
-    	"korkortstyp" : ["C"]
+    	"korkortstyp" : [
+    	                 {"type": "C", "selected": true}
+    	                 ]
     }
     
 }

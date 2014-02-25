@@ -1,12 +1,11 @@
 package se.inera.certificate.modules.ts_diabetes.validator.internal;
 
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.modules.ts_diabetes.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Diabetes;
 import se.inera.certificate.modules.ts_diabetes.model.internal.HoSPersonal;
@@ -192,35 +191,35 @@ public class InternalValidatorInstance {
         if (syn.getHoger() != null) {
 
             if (syn.getHoger().getUtanKorrektion() == null) {
-                addValidationError("syn.hogerOga.utanKorrektion", "ts.validation.syn.hogeroga.utanKorrektion.missing");
+                addValidationError("syn.hoger.utanKorrektion", "ts.validation.syn.hoger.utanKorrektion.missing");
 
             } else if (syn.getHoger().getUtanKorrektion() < 0.0 || syn.getHoger().getUtanKorrektion() > 2.0) {
-                addValidationError("syn.hogerOga.utanKorrektion",
-                        "ts.validation.syn.hogeroga.utankorrektion.out-of-bounds");
+                addValidationError("syn.hoger.utanKorrektion",
+                        "ts.validation.syn.hoger.utankorrektion.out-of-bounds");
             }
 
             if (syn.getHoger().getMedKorrektion() != null) {
                 if (syn.getHoger().getMedKorrektion() < 0.0 || syn.getHoger().getMedKorrektion() > 2.0) {
-                    addValidationError("syn.hogerOga.medKorrektion",
-                            "ts.validation.syn.hogerOga.medKorrektion.out-of-bounds");
+                    addValidationError("syn.hoger.medKorrektion",
+                            "ts.validation.syn.hoger.medKorrektion.out-of-bounds");
                 }
             }
         }
 
         if (syn.getVanster() != null) {
             if (syn.getVanster().getUtanKorrektion() == null) {
-                addValidationError("syn.vansterOga.utanKorrektion",
-                        "ts.validation.syn.vansteroga.utankorrektion.missing");
+                addValidationError("syn.vanster.utanKorrektion",
+                        "ts.validation.syn.vanster.utankorrektion.missing");
 
             } else if (syn.getVanster().getUtanKorrektion() < 0.0 || syn.getVanster().getUtanKorrektion() > 2.0) {
-                addValidationError("syn.vansterOga.utanKorrektion",
-                        "ts.validation.syn.vansteroga.utankorrektion.missing");
+                addValidationError("syn.vanster.utanKorrektion",
+                        "ts.validation.syn.vanster.utankorrektion.missing");
             }
 
             if (syn.getVanster().getMedKorrektion() != null) {
                 if (syn.getVanster().getMedKorrektion() < 0.0 || syn.getVanster().getMedKorrektion() > 2.0) {
-                    addValidationError("syn.vansterOga.medKorrektion",
-                            "ts.validation.syn.vansteroga.medkorrektion.out-of-bounds");
+                    addValidationError("syn.vanster.medKorrektion",
+                            "ts.validation.syn.vanster.medkorrektion.out-of-bounds");
                 }
             }
         }

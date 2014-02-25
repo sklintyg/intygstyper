@@ -32,7 +32,9 @@
     	"idkontroll" : "PASS"
     },
     "intygAvser" : {
-    	"korkortstyp" : ["C"]
+    	"korkortstyp" : [
+    	                 {"type": "C", "selected": true}
+    	                 ]
     },
     "hypoglykemier" : {
     	"kunskapOmAtgarder" : false,
@@ -40,7 +42,9 @@
     },
     
     "bedomning" : {
-    	"korkortstyp" : ["C"]
+    	"korkortstyp" : [
+    	                 {"type": "C", "selected": true}
+    	                 ]
     }
     
 }

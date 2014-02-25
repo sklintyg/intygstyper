@@ -39,13 +39,12 @@
     "diabetes" : {
     	"diabetestyp" : "DIABETES_TYP_2"
     },
-    "hypoglykemier" : {
-    	"kunskapOmAtgarder" : false,
-    	"teckenNedsattHjarnfunktion" : false,
-    	"allvarligForekomstVakenTid" : true,
-    	"allvarligForekomstVakenTidObservationstid" : "2000-01"
+    "syn" : {
+        "separatOgonlakarintyg" : true
     },
-    
+    "hypoglykemier" : {
+    	"teckenNedsattHjarnfunktion" : false
+    },
     "bedomning" : {
     	"korkortstyp" : [
     	                 {"type": "C", "selected": true}
