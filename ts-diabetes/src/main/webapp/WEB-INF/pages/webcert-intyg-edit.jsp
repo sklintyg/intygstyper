@@ -40,7 +40,8 @@
     <link rel="stylesheet" href="/css/bootstrap-responsive-modified.css">
     <link rel="stylesheet" href="/css/inera-webcert.css">
     <link rel="stylesheet" href="/css/inera-certificate.css">
-    <%--link rel="stylesheet" href="<c:url context="/m/ts-diabetes" value="/webcert/css/ts-diabetes.css"/>"--%>
+    <link rel="stylesheet" href="<c:url context="/m/ts-diabetes" value="/webcert/css/ts-diabetes.css"/>">
+    
 
     <script type="text/javascript" src="/usercontext.jsp"></script>
 
@@ -97,7 +98,6 @@
     <script type="text/javascript" src="<c:url value="/webcert/js/controllers.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/webcert/js/services.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/webcert/js/messages.js"/>"></script>
-    <script type="text/javascript" src="<c:url value="/webcert-mock/js/modules/webcert-service.js"/>"></script>
 
   </body>
 </html>

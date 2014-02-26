@@ -99,6 +99,11 @@
 
         <!-- 1. Allmänt -->
         <div wc-field field-label="ts.label.allmant">
+          <div class="alert alert-error" ng-if="validationMessagesGrouped.diabetes">
+            <ul>
+              <li ng-repeat="message in validationMessagesGrouped.diabetes"><span message key="{{message.message}}"></span></li>
+            </ul>
+          </div>
           <div class="control-group">
             <label for="diabetesyear"> Vilket år ställdes diagnosen diabetes?</label>
             <div class="controls">
@@ -132,6 +137,11 @@
 
         <!-- 2. Hypoglykemier (lågt blodsocker)-->
         <div wc-field field-label="ts.label.hypoglykemier">
+          <div class="alert alert-error" ng-if="validationMessagesGrouped.hypoglykemier">
+            <ul>
+              <li ng-repeat="message in validationMessagesGrouped.hypoglykemier"><span message key="{{message.message}}"></span></li>
+            </ul>
+          </div>        
           <table class="table table-form">
             <tr>
               <th><span message key="common.yes"></span></th>
@@ -233,24 +243,24 @@
               <td><input id="synan" name="synan" type="radio" ng-value="false" ng-model="cert.syn.separatOgonlakarintyg"></td>
               <td>a. Ögonläkarintyg kommer att skickas in separat</td>
             </tr>
-            <tr data-ng-show="cert.syn.separatOgonlakarintyg">
+            <tr data-ng-hide="cert.syn.separatOgonlakarintyg">
               <td></td>
               <td></td>
               <td><h5 class="inline-heading">Alternativ 2: (frågorna b-d besvaras)</h5></td>
             </tr>
-            <tr data-ng-show="cert.syn.separatOgonlakarintyg">
+            <tr data-ng-hide="cert.syn.separatOgonlakarintyg">
               <td></td>
               <td></td>
               <td>Om ögonläkarintyg inte krävs kan behandlande specialistkompetent läkare med god kännedom om patientens sjukdom här avge intyg om synfunktionen.</td>
             </tr>
-            <tr data-ng-show="cert.syn.separatOgonlakarintyg">
+            <tr data-ng-hide="cert.syn.separatOgonlakarintyg">
               <td><input id="synby" name="synby" type="radio" ng-value="true" ng-model="cert.syn.synfaltsprovningUtanAnmarkning"></td>
               <td><input id="synbn" name="synbn" type="radio" ng-value="false" ng-model="cert.syn.synfaltsprovningUtanAnmarkning"></td>
               <td>
                 <p>b. Är synfältsprövning enligt Donders konfrontationsmetod utan anmärkning?</p>
               </td>
             </tr>
-            <tr data-ng-show="cert.syn.separatOgonlakarintyg">
+            <tr data-ng-hide="cert.syn.separatOgonlakarintyg">
               <td></td>
               <td></td>
               <td>
@@ -282,7 +292,7 @@
                   </tr>
                 </table>
             </tr>
-            <tr data-ng-show="cert.syn.separatOgonlakarintyg">
+            <tr data-ng-hide="cert.syn.separatOgonlakarintyg">
               <td><input id="syndy" name="syndy" type="radio" ng-value="true" ng-model="cert.syn.diplopi"></td>
               <td><input id="syndn" name="syndn" type="radio" ng-value="false" ng-model="cert.syn.diplopi"></td>
               <td>d) Förekommer dubbelseende?</td>

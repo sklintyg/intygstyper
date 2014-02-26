@@ -200,6 +200,10 @@ public class InternalValidatorInstance {
         if (syn == null) {
             return;
         }
+        
+        if (syn.getSeparatOgonlakarintyg() == null) {
+            addValidationError("syn.separatOgonlakarintyg", "ts.validation.syn.separat-ogonlakarintyg.missing");
+        }
 
         if (syn.getHoger() != null) {
 
