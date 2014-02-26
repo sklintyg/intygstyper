@@ -47,19 +47,19 @@ public class PdfGenerator {
     private static final StringField INVANARE_ADRESS_FALT1 = new StringField("Falt__1");
     private static final StringField INVANARE_ADRESS_FALT2 = new StringField("Falt__2");
     private static final StringField INVANARE_ADRESS_FALT3 = new StringField("Falt__3");
-    private static final StringField INVANARE_PERSONNUMMER = new StringField("Falt__4#0");
+    private static final StringField INVANARE_PERSONNUMMER = new StringField("Falt__4");
 
     private static final CheckGroupField<IntygAvserKategori> INTYG_AVSER;
     static {
         INTYG_AVSER = new CheckGroupField<IntygAvserKategori>();
         INTYG_AVSER.addField(IntygAvserKategori.AM, "Falt_4");
-        INTYG_AVSER.addField(IntygAvserKategori.A, "Falt_5");
-        INTYG_AVSER.addField(IntygAvserKategori.A1, "Falt_6");
-        INTYG_AVSER.addField(IntygAvserKategori.A2, "Falt_7");
-        INTYG_AVSER.addField(IntygAvserKategori.A, "Falt_8");
-        INTYG_AVSER.addField(IntygAvserKategori.B, "Falt_9");
-        INTYG_AVSER.addField(IntygAvserKategori.BE, "Falt_10");
-        INTYG_AVSER.addField(IntygAvserKategori.TRAKTOR, "Falt_11");
+        INTYG_AVSER.addField(IntygAvserKategori.A1, "Falt_5");
+        INTYG_AVSER.addField(IntygAvserKategori.A2, "Falt_6");
+        INTYG_AVSER.addField(IntygAvserKategori.A, "Falt_7");
+        INTYG_AVSER.addField(IntygAvserKategori.B, "Falt_8");
+        INTYG_AVSER.addField(IntygAvserKategori.BE, "Falt_9");
+        INTYG_AVSER.addField(IntygAvserKategori.TRAKTOR, "Falt_10");
+        INTYG_AVSER.addField(IntygAvserKategori.C1, "Falt_11");
         INTYG_AVSER.addField(IntygAvserKategori.C1E, "Falt_12");
         INTYG_AVSER.addField(IntygAvserKategori.C, "Falt_13");
         INTYG_AVSER.addField(IntygAvserKategori.CE, "Falt_14");
@@ -84,6 +84,7 @@ public class PdfGenerator {
     private static final CheckField DIABETIKER_ENBART_KOST = new CheckField("Falt_34");
     private static final CheckField DIABETIKER_TABLETTBEHANDLING = new CheckField("Falt_35");
     private static final CheckField DIABETIKER_INSULINBEHANDLING = new CheckField("Falt_36");
+    private static final CheckField DIABETIKER_INSULINBEHANDLING_SEDAN_CHECK = new CheckField("Falt_37");
     private static final StringField DIABETIKER_INSULINBEHANDLING_SEDAN = new StringField("Falt__38");
     private static final StringField DIABETIKER_ANNAN_BEHANDLING = new StringField("Falt__39");
 
@@ -245,6 +246,7 @@ public class PdfGenerator {
         DIABETIKER_ENBART_KOST.setField(fields, diabetes.getEndastKost());
         DIABETIKER_TABLETTBEHANDLING.setField(fields, diabetes.getTabletter());
         DIABETIKER_INSULINBEHANDLING.setField(fields, diabetes.getInsulin());
+        DIABETIKER_INSULINBEHANDLING_SEDAN_CHECK.setField(fields, diabetes.getInsulin());
         DIABETIKER_INSULINBEHANDLING_SEDAN.setField(fields, diabetes.getInsulinBehandlingsperiod());
         DIABETIKER_ANNAN_BEHANDLING.setField(fields, diabetes.getAnnanBehandlingBeskrivning());
     }

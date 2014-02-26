@@ -11,6 +11,7 @@ import static se.inera.certificate.modules.ts_diabetes.pdf.xpath.XPathExpression
 import static se.inera.certificate.modules.ts_diabetes.pdf.xpath.XPathExpressions.INVANARE_ADRESS_FALT1_XPATH;
 import static se.inera.certificate.modules.ts_diabetes.pdf.xpath.XPathExpressions.INVANARE_ADRESS_FALT2_XPATH;
 import static se.inera.certificate.modules.ts_diabetes.pdf.xpath.XPathExpressions.INVANARE_ADRESS_FALT3_XPATH;
+import static se.inera.certificate.modules.ts_diabetes.pdf.xpath.XPathExpressions.INVANARE_PERSONNUMMER_XPATH;
 import static se.inera.certificate.modules.ts_diabetes.pdf.xpath.XPathExpressions.NAMNFORTYDLIGANDE_XPATH;
 import static se.inera.certificate.modules.ts_diabetes.pdf.xpath.XPathExpressions.OBSERVATION_BESKRIVNING_TEMPLATE;
 import static se.inera.certificate.modules.ts_diabetes.pdf.xpath.XPathExpressions.OBSERVATION_BILAGA_TEMPLATE;
@@ -51,13 +52,13 @@ public enum TransportToPDFMapping {
     INVANARE_ADRESS_FALT3("Falt__3", INVANARE_ADRESS_FALT3_XPATH),
 
     /** */
-    // INVANARE_PERSONNUMMER("Falt__4#0", INVANARE_PERSONNUMMER_XPATH),
+    INVANARE_PERSONNUMMER("Falt__4", INVANARE_PERSONNUMMER_XPATH),
 
     /** */
     INTYG_AVSER_AM("Falt_4", booleanXPath(INTYG_AVSER_TEMPLATE, "IAV11")),
 
     /** */
-    // INTYG_AVSER_A1("Falt_5", booleanXPath(INTYG_AVSER_TEMPLATE, "IAV12")),
+    INTYG_AVSER_A1("Falt_5", booleanXPath(INTYG_AVSER_TEMPLATE, "IAV12")),
 
     /** */
     INTYG_AVSER_A2("Falt_6", booleanXPath(INTYG_AVSER_TEMPLATE, "IAV13")),
@@ -138,7 +139,8 @@ public enum TransportToPDFMapping {
     DIABETIKER_INSULINBEHANDLING("Falt_36", booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "170747006", "true")),
 
     /** */
-    // DIABETIKER_INSULINBEHANDLING_SEDAN("Falt_37", booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "170747006", "true")),
+    DIABETIKER_INSULINBEHANDLING_SEDAN_CHECK("Falt_37", booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "170747006",
+            "true")),
 
     /** */
     DIABETIKER_INSULINBEHANDLING_SEDAN("Falt__38", DIABETIKER_INSULINBEHANDLING_SEDAN_XPATH),
@@ -206,10 +208,10 @@ public enum TransportToPDFMapping {
     OGONLAKARINTYG_NO("Falt_63", booleanXPath(OBSERVATION_BILAGA_TEMPLATE, "BIL1", "false")),
 
     /** */
-    // SYNFALTSUNDERSOKNING_YES("Falt_64", booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS25", "true")),
+    SYNFALTSUNDERSOKNING_YES("Falt_64", booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS25", "true")),
 
     /** */
-    // SYNFALTSUNDERSOKNING_NO("Falt_65", booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS25", "false")),
+    SYNFALTSUNDERSOKNING_NO("Falt_65", booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS25", "false")),
 
     /** */
     EJ_KORRIGERAD_SYNSKARPA_HOGER_INT("Falt__66", stringXPath(OBSERVATION_VARDE_INT_CODE_LATERALITET, "420050001",
