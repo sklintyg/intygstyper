@@ -13,7 +13,7 @@
         {
             "codeSystem": "todo",
             "codeSystemName": "kv_intygavser_intyg",
-            "code": "IAV3"
+            "code": "IAV12"
         }
     ],
     "patient": {
@@ -90,7 +90,7 @@
             "varde": [{
                 "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                 "codeSystemName": "kv_rekommendation_intyg",
-                "code": "VAR3"
+                "code": "VAR13"
             }]
         }
     ],

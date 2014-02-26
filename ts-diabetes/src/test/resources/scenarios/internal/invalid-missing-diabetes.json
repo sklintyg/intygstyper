@@ -33,7 +33,7 @@
     },
     "intygAvser" : {
     	"korkortstyp" : [
-    	                 {"type": "C", "selected": true}
+    	                 {"type": "A1", "selected": true}
     	                 ]
     },
     "hypoglykemier" : {
@@ -43,7 +43,7 @@
     
     "bedomning" : {
     	"korkortstyp" : [
-    	                 {"type": "C", "selected": true}
+    	                 {"type": "A1", "selected": true}
     	                 ]
     }
     

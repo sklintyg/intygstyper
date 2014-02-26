@@ -32,6 +32,8 @@ public class InternalValidatorInstance {
 
     private ValidateDraftResponseHolder validationResponse;
 
+    protected ValidationContext context;
+
     public InternalValidatorInstance() {
         validationResponse = new ValidateDraftResponseHolder();
     }
@@ -46,6 +48,8 @@ public class InternalValidatorInstance {
      */
     public ValidateDraftResponseHolder validate(Utlatande utlatande) {
 
+        context = new ValidationContext(utlatande);
+
         if (utlatande == null) {
             addValidationError("utlatande", "ts.validation.utlatande.missing");
             return validationResponse;
@@ -53,14 +57,10 @@ public class InternalValidatorInstance {
 
         validateBedomning(utlatande.getBedomning());
         validateDiabetes(utlatande.getDiabetes());
-
         validateHoSPersonal(utlatande.getSkapadAv());
-
         validateIntygAvser(utlatande.getIntygAvser());
         validateIdentitetStyrkt(utlatande.getVardkontakt());
-
         validateSyn(utlatande.getSyn());
-
         validateHypoglykemi(utlatande.getHypoglykemier());
 
         validationResponse.setStatus(getValidationStatus());
@@ -88,7 +88,7 @@ public class InternalValidatorInstance {
             if (hypoglykemier.getAllvarligForekomst()) {
                 assertDescriptionNotEmpty(hypoglykemier.getAllvarligForekomstBeskrivning(),
                         "hypoglykemier.allvarligForekomstBeskrivning",
-                        "ts.validation.hypoglykemier.allvarlig-glykemi.beskrivning.missing");
+                        "ts.validation.hypoglykemier.allvarlig-forekomst.beskrivning.missing");
             }
         }
 
@@ -96,7 +96,7 @@ public class InternalValidatorInstance {
             if (hypoglykemier.getAllvarligForekomstTrafiken()) {
                 assertDescriptionNotEmpty(hypoglykemier.getAllvarligForekomstTrafikBeskrivning(),
                         "hypoglykemier.allvarligForekomstTrafikBeskrivning",
-                        "ts.validation.hypoglykemier.allvarlig-glykemi-trafiken.beskrivning.missing");
+                        "ts.validation.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning.missing");
             }
         }
 
@@ -104,19 +104,32 @@ public class InternalValidatorInstance {
             if (hypoglykemier.getAllvarligForekomstVakenTid()) {
                 if (hypoglykemier.getAllvarligForekomstVakenTidObservationstid() == null) {
                     addValidationError("hypoglykemier.allvarligForekomstVakenTidObservationstid",
-                            "ts.validation.hypoglykemier.allvarlig-glykemi-vaken-tid.observationstid.missing");
+                            "ts.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.missing");
 
                 } else if (!isValidDate(hypoglykemier.getAllvarligForekomstVakenTidObservationstid(), "yyyy-mm-dd")) {
                     addValidationError("hypoglykemier.allvarligForekomstVakenTidObservationstid",
-                            "ts.validation.hypoglykemier.allvarlig-glykemi-vaken-tid.observationstid.incorrect-date");
+                            "ts.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.incorrect-date");
                 }
             }
         }
+
+        if (context.isHogreBehorighetContext()) {
+            if (hypoglykemier.getEgenkontrollBlodsocker() == null) {
+                addValidationError("hypoglykemier.egenkontrollBlodsocker",
+                        "ts.validation.hypoglykemier.egenkontroll-blodsocker.missing");
+            }
+            
+            if (hypoglykemier.getAllvarligForekomstVakenTid() == null) {
+                addValidationError("hypoglykemier.allvarligForekomstVakenTid",
+                        "ts.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.missing");
+            }
+        }
+
     }
 
     private void validateIdentitetStyrkt(Vardkontakt vardkontakt) {
         if (vardkontakt == null) {
-            addValidationError("vardkontakt", "ts.validation.vardkontakt.missing");
+            addValidationError("identitet", "ts.validation.vardkontakt.missing");
             return;
         }
         if (vardkontakt.getIdkontroll() == null) {
@@ -194,26 +207,22 @@ public class InternalValidatorInstance {
                 addValidationError("syn.hoger.utanKorrektion", "ts.validation.syn.hoger.utanKorrektion.missing");
 
             } else if (syn.getHoger().getUtanKorrektion() < 0.0 || syn.getHoger().getUtanKorrektion() > 2.0) {
-                addValidationError("syn.hoger.utanKorrektion",
-                        "ts.validation.syn.hoger.utankorrektion.out-of-bounds");
+                addValidationError("syn.hoger.utanKorrektion", "ts.validation.syn.hoger.utankorrektion.out-of-bounds");
             }
 
             if (syn.getHoger().getMedKorrektion() != null) {
                 if (syn.getHoger().getMedKorrektion() < 0.0 || syn.getHoger().getMedKorrektion() > 2.0) {
-                    addValidationError("syn.hoger.medKorrektion",
-                            "ts.validation.syn.hoger.medKorrektion.out-of-bounds");
+                    addValidationError("syn.hoger.medKorrektion", "ts.validation.syn.hoger.medKorrektion.out-of-bounds");
                 }
             }
         }
 
         if (syn.getVanster() != null) {
             if (syn.getVanster().getUtanKorrektion() == null) {
-                addValidationError("syn.vanster.utanKorrektion",
-                        "ts.validation.syn.vanster.utankorrektion.missing");
+                addValidationError("syn.vanster.utanKorrektion", "ts.validation.syn.vanster.utankorrektion.missing");
 
             } else if (syn.getVanster().getUtanKorrektion() < 0.0 || syn.getVanster().getUtanKorrektion() > 2.0) {
-                addValidationError("syn.vanster.utanKorrektion",
-                        "ts.validation.syn.vanster.utankorrektion.missing");
+                addValidationError("syn.vanster.utanKorrektion", "ts.validation.syn.vanster.utankorrektion.missing");
             }
 
             if (syn.getVanster().getMedKorrektion() != null) {
@@ -242,7 +251,7 @@ public class InternalValidatorInstance {
             }
         }
     }
-    
+
     /**
      * Make sure a string representing a date conforms to the desired format
      * 

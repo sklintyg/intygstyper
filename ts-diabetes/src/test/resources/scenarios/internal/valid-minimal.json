@@ -33,7 +33,7 @@
     },
     "intygAvser" : {
         "korkortstyp" : [
-            {"type": "C", "selected": true}
+            {"type": "A1", "selected": true}
         ]
     },
     "diabetes" : {
@@ -48,7 +48,7 @@
     },
     "bedomning" : {
         "korkortstyp" : [
-            {"type": "C", "selected": true}
+            {"type": "A1", "selected": true}
         ]
     }
 }
