@@ -34,9 +34,9 @@
 	<!--Daily rolling file appender -->
 	<appender name="FILE"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${symbol_dollar}{catalina.home}/logs/${artifactId}-module.log</file>
+		<file>${symbol_dollar}{catalina.base}/logs/${artifactId}-module.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${symbol_dollar}{catalina.home}/logs/${artifactId}-module.%d{yyyy-MM-dd}.log
+			<fileNamePattern>${symbol_dollar}{catalina.base}/logs/${artifactId}-module.%d{yyyy-MM-dd}.log
 			</fileNamePattern>
 		</rollingPolicy>
 		<encoder>
