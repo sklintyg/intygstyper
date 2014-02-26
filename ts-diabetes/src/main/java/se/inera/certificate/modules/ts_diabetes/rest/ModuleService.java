@@ -192,7 +192,7 @@ public class ModuleService implements ModuleApi {
     public se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande createNewInternal(
             CreateNewDraftCertificateHolder draftCertificateHolder) {
         try {
-            return webcertModelFactory.createNewDraft(draftCertificateHolder);
+            return webcertModelFactory.createNewWebcertDraft(draftCertificateHolder);
 
         } catch (ConverterException e) {
             LOG.error("Could not create a new internal Webcert model", e);

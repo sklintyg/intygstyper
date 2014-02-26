@@ -18,10 +18,15 @@
  */
 package se.inera.certificate.modules.ts_diabetes.model.converter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import se.inera.certificate.modules.ts_diabetes.model.internal.HoSPersonal;
+import se.inera.certificate.modules.ts_diabetes.model.internal.Patient;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
+import se.inera.certificate.modules.ts_diabetes.model.internal.Vardenhet;
+import se.inera.certificate.modules.ts_diabetes.model.internal.Vardgivare;
 import se.inera.certificate.modules.ts_diabetes.rest.dto.CreateNewDraftCertificateHolder;
 
 /**
@@ -31,9 +36,102 @@ public class WebcertModelFactory {
 
     private static final Logger LOG = LoggerFactory.getLogger(WebcertModelFactory.class);
 
-    public Utlatande createNewDraft(CreateNewDraftCertificateHolder newDraftData) throws ConverterException {
-        // TODO: Implement
-        LOG.trace("Creating new internal model for draft");
-        return null;
+    /**
+     * Create a new TS-bas draft pre-populated with the attached data
+     * 
+     * @param newDraftData
+     *            {@link CreateNewDraftCertificateHolder}
+     * @return {@link Utlatande} or throws a ConverterException if something unforeseen happens
+     * @throws ConverterException
+     */
+    public Utlatande createNewWebcertDraft(CreateNewDraftCertificateHolder newDraftData) throws ConverterException {
+
+        LOG.trace("Creating draft with id {}", newDraftData.getCertificateId());
+
+        Utlatande utlatande = new Utlatande();
+        utlatande.setUtlatandeid(newDraftData.getCertificateId());
+        populateWithSkapadAv(utlatande, newDraftData.getSkapadAv());
+        populateWithPatientInfo(utlatande, newDraftData.getPatientInfo());
+
+        return utlatande;
+    }
+
+    private void populateWithPatientInfo(Utlatande utlatande,
+            se.inera.certificate.modules.ts_diabetes.rest.dto.Patient patient) throws ConverterException {
+
+        if (patient == null) {
+            throw new ConverterException("Got null while trying to populateWithPatientInfo");
+        }
+
+        utlatande.setPatient(convertPatientToEdit(patient));
+    }
+
+    private Patient convertPatientToEdit(se.inera.certificate.modules.ts_diabetes.rest.dto.Patient patientInfo) {
+        Patient patient = new Patient();
+        patient.setFornamn(patientInfo.getFornamn());
+        patient.setEfternamn(patientInfo.getEfternamn());
+        patient.setFullstandigtNamn(StringUtils.join(patientInfo.getFornamn(), " ", patientInfo.getEfternamn()));
+        patient.setPersonid(patientInfo.getPersonnummer());
+
+        // TODO: Address information needs to be sorted out at a later time
+        // patient.setPostadress(patientInfo.getPostadress());
+        // patient.setPostnummer(patientInfo.getPostnummer());
+        // patient.setPostort(patientInfo.getPostort());
+
+        return patient;
+    }
+
+    private void populateWithSkapadAv(Utlatande utlatande,
+            se.inera.certificate.modules.ts_diabetes.rest.dto.HoSPersonal skapadAv) throws ConverterException {
+        if (skapadAv == null) {
+            throw new ConverterException("Got null while trying to populateWithSkapadAv");
+        }
+
+        utlatande.setSkapadAv(convertHosPersonalToEdit(skapadAv));
+    }
+
+    private HoSPersonal convertHosPersonalToEdit(se.inera.certificate.modules.ts_diabetes.rest.dto.HoSPersonal hosPers) {
+        HoSPersonal hosPersonal = new HoSPersonal();
+
+        hosPersonal.setPersonid(hosPers.getHsaId());
+        hosPersonal.setFullstandigtNamn(hosPers.getNamn());
+
+        if (hosPers.getBefattning() != null) {
+            hosPersonal.getBefattningar().add(hosPers.getBefattning());
+
+        }
+
+        if (hosPers.getVardenhet() != null) {
+            Vardenhet vardenhet = convertVardenhetToEdit(hosPers.getVardenhet());
+            hosPersonal.setVardenhet(vardenhet);
+        }
+
+        return hosPersonal;
+    }
+
+    private Vardenhet convertVardenhetToEdit(se.inera.certificate.modules.ts_diabetes.rest.dto.Vardenhet vardenhetDto) {
+
+        Vardenhet vardenhet = new Vardenhet();
+        vardenhet.setEnhetsid(vardenhetDto.getHsaId());
+        vardenhet.setEnhetsnamn(vardenhetDto.getNamn());
+        vardenhet.setVardgivare(convertVardgivareToEdit(vardenhetDto.getVardgivare()));
+
+        // TODO Populate with the address of the Vardenhet
+        vardenhet.setPostadress(vardenhetDto.getPostadress());
+        vardenhet.setPostort(vardenhetDto.getPostort());
+        vardenhet.setPostnummer(vardenhetDto.getPostnummer());
+        vardenhet.setTelefonnummer(vardenhetDto.getTelefonnummer());
+
+        return vardenhet;
+    }
+
+    private Vardgivare convertVardgivareToEdit(
+            se.inera.certificate.modules.ts_diabetes.rest.dto.Vardgivare vardgivareDto) {
+
+        Vardgivare vardgivare = new Vardgivare();
+        vardgivare.setVardgivarid(vardgivareDto.getHsaId());
+        vardgivare.setVardgivarnamn(vardgivareDto.getNamn());
+
+        return vardgivare;
     }
 }

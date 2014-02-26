@@ -18,14 +18,11 @@
  */
 package se.inera.certificate.modules.ts_diabetes.rest.dto;
 
-import se.inera.certificate.model.HosPersonal;
-import se.inera.certificate.model.Patient;
-
 public class CreateNewDraftCertificateHolder {
 
     private String certificateId;
 
-    private HosPersonal skapadAv;
+    private HoSPersonal skapadAv;
 
     private Patient patientInfo;
 
@@ -37,11 +34,11 @@ public class CreateNewDraftCertificateHolder {
         this.certificateId = certificateId;
     }
 
-    public HosPersonal getSkapadAv() {
+    public HoSPersonal getSkapadAv() {
         return skapadAv;
     }
 
-    public void setSkapadAv(HosPersonal skapadAv) {
+    public void setSkapadAv(HoSPersonal skapadAv) {
         this.skapadAv = skapadAv;
     }
 

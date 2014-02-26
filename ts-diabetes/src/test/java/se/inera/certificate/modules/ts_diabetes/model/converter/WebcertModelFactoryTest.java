@@ -52,7 +52,7 @@ public class WebcertModelFactoryTest {
         se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande utlatande = null;
 
         try {
-            utlatande = factory.createNewDraft(draftCertHolder);
+            utlatande = factory.createNewWebcertDraft(draftCertHolder);
         } catch (ConverterException e) {
             e.printStackTrace();
         }
