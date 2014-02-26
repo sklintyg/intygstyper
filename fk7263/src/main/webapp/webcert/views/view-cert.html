@@ -24,16 +24,16 @@
 
 
           <div ng-show="widgetState.newQuestionOpen">
+            <div class="control-group">
+              <label class="control-label">Fråga</label>
+              <div class="controls">
+                <textarea rows="5" class="span9" ng-model="newQuestion.frageText" focus-me="focusQuestion" id="newQuestionText"></textarea>
+              </div>
+            </div>
             <div class="control-group" id="newQuestionForm">
               <label class="control-label">Ämne</label>
               <div class="controls">
                 <select id="new-question-topic" ng-model="newQuestion.chosenTopic" ng-options="c.label for c in newQuestion.topics"></select>
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label">Fråga</label>
-              <div class="controls">
-                <textarea rows="5" class="span9" ng-model="newQuestion.frageText" id="newQuestionText"></textarea>
               </div>
             </div>
 
