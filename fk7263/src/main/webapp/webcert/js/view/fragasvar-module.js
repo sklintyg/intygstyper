@@ -130,7 +130,8 @@ angular
                                 doneLoading : false,
                                 activeErrorMessageKey : null,
                                 newQuestionOpen : false,
-                                sentMessage : false
+                                sentMessage : false,
+                                focusQuestion : false
                             }
 
                             // Request loading of QA's for this certificate
@@ -184,6 +185,7 @@ angular
                                 $scope.initQuestionForm();
                                 // hide sent message
                                 $scope.widgetState.sentMessage = false;
+                              $scope.widgetState.focusQuestion = true;
                             }
 
                             /**
