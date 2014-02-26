@@ -45,7 +45,9 @@
     	"allvarligForekomstVakenTid" : true,
     	"allvarligForekomstVakenTidObservationstid" : "2000-01"
     },
-    
+    "syn" : {
+        "separatOgonlakarintyg" : true
+    },
     "bedomning" : {
     	"korkortstyp" : [
     	                 {"type": "A1", "selected": true}

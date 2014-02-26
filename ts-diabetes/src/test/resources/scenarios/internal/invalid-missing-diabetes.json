@@ -40,7 +40,9 @@
     	"kunskapOmAtgarder" : false,
     	"teckenNedsattHjarnfunktion" : false
     },
-    
+    "syn" : {
+        "separatOgonlakarintyg" : true
+    },
     "bedomning" : {
     	"korkortstyp" : [
     	                 {"type": "A1", "selected": true}
