@@ -162,7 +162,7 @@ public class ExternalToTransportConverter {
         rekommendation.setRekommendationskod(IsoTypeConverter.toCD(source.getRekommendationskod()));
 
         if (!source.getVarde().isEmpty()) {
-            rekommendation.getVardes().addAll(convertKoderToCDs(source.getVarde()));
+            rekommendation.getKorkortsbehorighets().addAll(convertKoderToCDs(source.getVarde()));
         }
         return rekommendation;
     }

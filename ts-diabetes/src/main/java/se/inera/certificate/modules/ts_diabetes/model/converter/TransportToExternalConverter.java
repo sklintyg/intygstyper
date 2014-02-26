@@ -195,12 +195,12 @@ public class TransportToExternalConverter {
 
         rekommendation.setRekommendationskod(IsoTypeConverter.toKod(source.getRekommendationskod()));
 
-        if (!source.getVardes().isEmpty()) {
-            rekommendation.getVarde().addAll(convertListOfKod(source.getVardes()));
+        if (!source.getKorkortsbehorighets().isEmpty()) {
+            rekommendation.getVarde().addAll(convertListOfKod(source.getKorkortsbehorighets()));
         }
 
-        if (source.isBooleanVarde() != null) {
-            rekommendation.setBoolean_varde(source.isBooleanVarde());
+        if (source.isVarde() != null) {
+            rekommendation.setBoolean_varde(source.isVarde());
         }
 
         return rekommendation;

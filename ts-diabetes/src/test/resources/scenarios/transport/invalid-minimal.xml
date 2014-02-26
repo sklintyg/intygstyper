@@ -33,7 +33,7 @@
   <p:rekommendation>
     <p:rekommendationskod code="REK8"
       codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
-    <p:varde code="VAR1" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+    <p:korkortsbehorighet code="VAR1" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
   </p:rekommendation>
   <!-- Rekommendation end -->
@@ -51,7 +51,7 @@
   <!-- Observationer ends -->
   
   <p:bilaga>
-    <p:bilagekod code="BIL1" codeSystem="???" codeSystemName="kv_bilaga"/>
+    <p:bilagetyp code="BIL1" codeSystem="???" codeSystemName="kv_bilaga"/>
     <p:forekomst>true</p:forekomst>
   </p:bilaga>
   

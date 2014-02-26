@@ -20,8 +20,8 @@ import static se.inera.certificate.modules.ts_diabetes.pdf.xpath.XPathExpression
 import static se.inera.certificate.modules.ts_diabetes.pdf.xpath.XPathExpressions.OBSERVATION_VARDE_INT_CODE_LATERALITET;
 import static se.inera.certificate.modules.ts_diabetes.pdf.xpath.XPathExpressions.OVRIG_BESKRIVNING_XPATH;
 import static se.inera.certificate.modules.ts_diabetes.pdf.xpath.XPathExpressions.REKOMMENDATION_BESKRIVNING_TEMPLATE;
-import static se.inera.certificate.modules.ts_diabetes.pdf.xpath.XPathExpressions.REKOMMENDATION_BOOL_VARDE_TEMPLATE;
 import static se.inera.certificate.modules.ts_diabetes.pdf.xpath.XPathExpressions.REKOMMENDATION_VARDE_TEMPLATE;
+import static se.inera.certificate.modules.ts_diabetes.pdf.xpath.XPathExpressions.REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE;
 import static se.inera.certificate.modules.ts_diabetes.pdf.xpath.XPathExpressions.SPECIALISTKOMPETENS_BESKRVNING_XPATH;
 import static se.inera.certificate.modules.ts_diabetes.pdf.xpath.XPathExpressions.TELEFON_XPATH;
 import static se.inera.certificate.modules.ts_diabetes.pdf.xpath.XPathExpressions.TS_UTGAVA_XPATH;
@@ -268,63 +268,63 @@ public enum TransportToPDFMapping {
     DIPLOPI_NO("Falt_79", booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "H53.2", "false")),
 
     /** */
-    BEDOMNING_AM("Falt_108", booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, "VAR12")),
+    BEDOMNING_AM("Falt_108", booleanXPath(REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE, "VAR12")),
 
     /** */
-    BEDOMNING_A1("Falt_81", booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, "VAR13")),
+    BEDOMNING_A1("Falt_81", booleanXPath(REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE, "VAR13")),
 
     /** */
-    BEDOMNING_A2("Falt_107", booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, "VAR14")),
+    BEDOMNING_A2("Falt_107", booleanXPath(REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE, "VAR14")),
 
     /** */
-    BEDOMNING_A("Falt_82", booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, "VAR15")),
+    BEDOMNING_A("Falt_82", booleanXPath(REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE, "VAR15")),
 
     /** */
-    BEDOMNING_B("Falt_83", booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, "VAR16")),
+    BEDOMNING_B("Falt_83", booleanXPath(REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE, "VAR16")),
 
     /** */
-    BEDOMNING_BE("Falt_84", booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, "VAR17")),
+    BEDOMNING_BE("Falt_84", booleanXPath(REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE, "VAR17")),
 
     /** */
-    BEDOMNING_TRAKTOR("Falt_85", booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, "VAR18")),
+    BEDOMNING_TRAKTOR("Falt_85", booleanXPath(REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE, "VAR18")),
 
     /** */
-    BEDOMNING_C1("Falt_80", booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, "VAR1")),
+    BEDOMNING_C1("Falt_80", booleanXPath(REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE, "VAR1")),
 
     /** */
-    BEDOMNING_C1E("Falt_109", booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, "VAR2")),
+    BEDOMNING_C1E("Falt_109", booleanXPath(REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE, "VAR2")),
 
     /** */
-    BEDOMNING_C("Falt_86", booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, "VAR3")),
+    BEDOMNING_C("Falt_86", booleanXPath(REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE, "VAR3")),
 
     /** */
-    BEDOMNING_CE("Falt_87", booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, "VAR4")),
+    BEDOMNING_CE("Falt_87", booleanXPath(REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE, "VAR4")),
 
     /** */
-    BEDOMNING_D1("Falt_110", booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, "VAR5")),
+    BEDOMNING_D1("Falt_110", booleanXPath(REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE, "VAR5")),
 
     /** */
-    BEDOMNING_D1E("Falt_111", booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, "VAR6")),
+    BEDOMNING_D1E("Falt_111", booleanXPath(REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE, "VAR6")),
 
     /** */
-    BEDOMNING_D("Falt_88", booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, "VAR7")),
+    BEDOMNING_D("Falt_88", booleanXPath(REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE, "VAR7")),
 
     /** */
-    BEDOMNING_DE("Falt_89", booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, "VAR8")),
+    BEDOMNING_DE("Falt_89", booleanXPath(REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE, "VAR8")),
 
     /** */
-    BEDOMNING_TAXI("Falt_90", booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, "VAR9")),
+    BEDOMNING_TAXI("Falt_90", booleanXPath(REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE, "VAR9")),
 
     /** */
-    BEDOMNING_INTE_TA_STALLNING("Falt_91", booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, "VAR11")),
+    BEDOMNING_INTE_TA_STALLNING("Falt_91", booleanXPath(REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE, "VAR11")),
 
     /** */
     LAMPLIGHET_INNEHA_BEHORIGHET_TILL_KORNINGAR_OCH_ARBETSFORMER_YES("Falt_92", booleanXPath(
-            REKOMMENDATION_BOOL_VARDE_TEMPLATE, "REK10", "true")),
+            REKOMMENDATION_VARDE_TEMPLATE, "REK10", "true")),
 
     /** */
     LAMPLIGHET_INNEHA_BEHORIGHET_TILL_KORNINGAR_OCH_ARBETSFORMER_NO("Falt_93", booleanXPath(
-            REKOMMENDATION_BOOL_VARDE_TEMPLATE, "REK10", "false")),
+            REKOMMENDATION_VARDE_TEMPLATE, "REK10", "false")),
 
     /** */
     OVRIG_BESKRIVNING("FaltDiv6", OVRIG_BESKRIVNING_XPATH),
