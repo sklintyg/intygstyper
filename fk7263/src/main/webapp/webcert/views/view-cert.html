@@ -83,8 +83,7 @@
                           Åtgärd: <strong><span message key="qa.measure.{{qa.measureResKey}}"></span></strong>
                         </p>
                         <div class="form-inline">
-                          <input id="mark-as-forwarded-{{qa.internReferens}}" type="checkbox" ng-disabled="qa.forwardInProgress" ng-model="qa.vidarebefordrad" ng-change="onVidareBefordradChange(qa)" />
-                          <label for="mark-as-forwarded-{{qa.internReferens}}">Vidarebefordrad</label> <span ng-if="qa.forwardInProgress"> <img src="/img/ajax-loader-kit-16x16.gif">
+                          <label for="mark-as-forwarded-{{qa.internReferens}}"><input id="mark-as-forwarded-{{qa.internReferens}}" type="checkbox" ng-disabled="qa.forwardInProgress" ng-model="qa.vidarebefordrad" ng-change="onVidareBefordradChange(qa)" /> Vidarebefordrad</label> <span ng-if="qa.forwardInProgress"> <img src="/img/ajax-loader-kit-16x16.gif">
                           </span>
                         </div>
                       </div>
@@ -243,7 +242,7 @@
                 <!-- Svarsdelen -->
 
                 <div class="panel-container">
-                  <div class="qa-block qa-block-handled" ng-class="{'qa-block-fk' : (qa.frageStallare | lowercase) == 'fk','qa-block-wc' : (qa.frageStallare | lowercase) == 'wc'}" ng-if="qa.svarsText">
+                  <div class="qa-block qa-block-handled" ng-class="{'qa-block-fk' : (qa.frageStallare | lowercase) == 'wc','qa-block-wc' : (qa.frageStallare | lowercase) == 'fk'}" ng-if="qa.svarsText">
                     <!-- frågan har en svarstext -->
                     <div class="qa-block-head clearfix">
                       <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
