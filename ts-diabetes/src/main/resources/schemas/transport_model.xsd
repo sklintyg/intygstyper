@@ -203,7 +203,7 @@
 
   <xs:complexType name="bilagaType">
     <xs:sequence>
-      <xs:element name="bilagekod" type="iso:CD" />
+      <xs:element name="bilagetyp" type="iso:CD"/>
       <xs:element name="forekomst" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>

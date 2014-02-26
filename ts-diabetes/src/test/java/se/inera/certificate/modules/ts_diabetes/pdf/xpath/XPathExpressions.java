@@ -39,23 +39,21 @@ public class XPathExpressions {
     public static final StringXPathExpression NAMNFORTYDLIGANDE_XPATH = new StringXPathExpression(
             "/p:utlatande/p:skapadAv/p:fullstandigtNamn");
 
-    public static final BooleanXPathExpression SPECIALISTKOMPETENS_CHECK_XPATH = new BooleanXPathExpression(
-            "/p:utlatande/p:skapadAv/p:specialitet/@code");
-
     public static final StringXPathExpression SPECIALISTKOMPETENS_BESKRVNING_XPATH = new StringXPathExpression(
             "/p:utlatande/p:skapadAv/p:specialitet/@code");
 
-    public static final BooleanXPathExpression ST_LAKARE_CHECK_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:skapadAv/p:befattning/@code='203010'");
+    public static final StringXPathExpression DIABETES_AR_FOR_DIAGNOS_XPATH = new StringXPathExpression(
+            "p:utlatande/p:observation/p:observationsperiod[(parent::p:observation/p:observationskod/@code='E10' or parent::p:observation/p:observationskod/@code='E11') and (parent::p:observation/p:forekomst = 'true')]/p:from");
 
-    public static final BooleanXPathExpression AT_LAKARE_CHECK_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:skapadAv/p:befattning/@code='204010'");
+    public static final StringXPathExpression DIABETIKER_INSULINBEHANDLING_SEDAN_XPATH = new StringXPathExpression(
+            "p:utlatande/p:observation/p:observationsperiod[(parent::p:observation/p:observationskod/@code='170747006') and (parent::p:observation/p:forekomst = 'true')]/p:from");
+
+    public static final StringXPathExpression ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND_DATUM_XPATH = new StringXPathExpression(
+            "translate(p:utlatande/p:observation/p:observationstid[parent::p:observation/p:observationskod/@code='OBS24'], '-', '')");
 
     public static final String INTYG_AVSER_TEMPLATE = "p:utlatande/p:intygAvser/@code = '%s'";
 
     public static final String AKTIVITET_FOREKOMST_TEMPLATE = "p:utlatande/p:aktivitet/p:forekomst[parent::p:aktivitet/p:aktivitetskod/@code='%s'] = '%s'";
-
-    public static final String AKTIVITET_BESKRIVNING_TEMPLATE = "p:utlatande/p:aktivitet/p:beskrivning[(parent::p:aktivitet/p:aktivitetskod/@code='%s')]";
 
     public static final String ID_KONTROLL_TEMPLATE = "p:utlatande/p:vardkontakt/p:idKontroll/@code = '%s'";
 
@@ -65,11 +63,13 @@ public class XPathExpressions {
 
     public static final String OBSERVATION_VARDE_DEC_CODE_LATERALITET = "substring-after(p:utlatande/p:observation/p:varde[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p:lateralitet/@code='%s')]/@value, '.')";
 
-    public static final String OBSERVATION_FOREKOMST_CODE_LATERALITET = "p:utlatande/p:observation/p:forekomst[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p:lateralitet/@code='%s')]='true'";
+    public static final String OBSERVATION_BESKRIVNING_TEMPLATE = "p:utlatande/p:observation/p:beskrivning[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p:forekomst = 'true')]";
 
-    public static final String OBSERVATION_BESKRIVNING_TEMPLATE = "p:utlatande/p:observation/p:beskrivning[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p:forekomst = 'true')] ";
+    public static final String OBSERVATION_BILAGA_TEMPLATE = "p:utlatande/p:bilaga/p:forekomst[parent::p:bilaga/p:bilagetyp/@code='%s']='%s'";
 
     public static final String REKOMMENDATION_VARDE_TEMPLATE = "p:utlatande/p:rekommendation/p:varde/@code = '%s'";
+
+    public static final String REKOMMENDATION_BOOL_VARDE_TEMPLATE = "p:utlatande/p:rekommendation/p:boolean_varde[parent::p:rekommendation/p:rekommendationskod/@code='%s']='%s'";
 
     public static final String REKOMMENDATION_BESKRIVNING_TEMPLATE = "p:utlatande/p:rekommendation/p:beskrivning[parent::p:rekommendation/p:rekommendationskod/@code='%s']";
 

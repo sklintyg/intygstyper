@@ -117,7 +117,7 @@ public class TransportToExternalConverter {
             throw new ConverterException("Missing bilaga");
         }
         Bilaga extBilaga = new Bilaga();
-        extBilaga.setBilagetyp(IsoTypeConverter.toKod(source.getBilagekod()));
+        extBilaga.setBilagetyp(IsoTypeConverter.toKod(source.getBilagetyp()));
         extBilaga.setForekomst(source.isForekomst());
 
         return extBilaga;

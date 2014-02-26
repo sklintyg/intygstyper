@@ -84,11 +84,12 @@ public class PdfGenerator {
     private static final CheckField DIABETIKER_ENBART_KOST = new CheckField("Falt_34");
     private static final CheckField DIABETIKER_TABLETTBEHANDLING = new CheckField("Falt_35");
     private static final CheckField DIABETIKER_INSULINBEHANDLING = new CheckField("Falt_36");
-    private static final StringField DIABETIKER_INSULINBEHANDLING_SEDAN = new StringField("Falt_37");
+    private static final StringField DIABETIKER_INSULINBEHANDLING_SEDAN = new StringField("Falt__38");
     private static final StringField DIABETIKER_ANNAN_BEHANDLING = new StringField("Falt__39");
 
     private static final YesNoField KUNSKAP_ATGARD_HYPOGLYKEMI = new YesNoField("Falt_40", "Falt_41");
-    private static final YesNoField HYPOGLYKEMIER_MED_TECKEN_PA_NEDSATT_HJARNFUNKTION = new YesNoField("Falt_44", "Falt_45");
+    private static final YesNoField HYPOGLYKEMIER_MED_TECKEN_PA_NEDSATT_HJARNFUNKTION = new YesNoField("Falt_44",
+            "Falt_45");
     private static final YesNoField SAKNAR_FORMAGA_KANNA_HYPOGLYKEMI = new YesNoField("Falt_48", "Falt_49");
     private static final YesNoField ALLVARLIG_HYPOGLYKEMI = new YesNoField("Falt_27", "Falt_28");
     private static final StringField ALLVARLIG_HYPOGLYKEMI_ANTAL = new StringField("Falt__50");
@@ -131,8 +132,8 @@ public class PdfGenerator {
     }
     private static final CheckField BEDOMNING_INTE_TA_STALLNING = new CheckField("Falt_91");
 
-    private static final YesNoField LAMPLIGHET_INNEHA_BEHORIGHET_TILL_KORNINGAR_OCH_ARBETSFORMER = new YesNoField("Falt_92",
-            "Falt_93");
+    private static final YesNoField LAMPLIGHET_INNEHA_BEHORIGHET_TILL_KORNINGAR_OCH_ARBETSFORMER = new YesNoField(
+            "Falt_92", "Falt_93");
 
     private static final StringField OVRIG_BESKRIVNING = new StringField("FaltDiv6");
 
@@ -261,8 +262,10 @@ public class PdfGenerator {
                 hypoglykemier.getAllvarligForekomstTrafikBeskrivning());
         EGENOVERVAKNING_BLODGLUKOS.setField(fields, hypoglykemier.getEgenkontrollBlodsocker());
         ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND.setField(fields, hypoglykemier.getAllvarligForekomstVakenTid());
-        ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND_DATUM.setField(fields,
-                hypoglykemier.getAllvarligForekomstVakenTidObservationstid());
+        if (hypoglykemier.getAllvarligForekomstVakenTidObservationstid() != null) {
+            ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND_DATUM.setField(fields, hypoglykemier
+                    .getAllvarligForekomstVakenTidObservationstid().replace("-", ""));
+        }
     }
 
     private void populateSynintyg(Syn syn, AcroFields fields) throws IOException, DocumentException {
