@@ -344,16 +344,18 @@ public class ExternalToInternalConverterInstance {
         Aktivitet provningOgatsRorlighet = getAktivitetWithKod(CodeConverter
                 .toKod(AktivitetKod.PROVNING_AV_OGATS_RORLIGHET));
 
+        syn.setSeparatOgonlakarintyg(extUtlatande.getBilaga().getForekomst());
+        if (syn.getSeparatOgonlakarintyg()) {
+            // Ignore the rest of 'Synintyg' when 'separatOgonlakarintyg = true'
+            return;
+        }
+
         if (synfaltsprovning != null) {
             syn.setSynfaltsprovning(true);
         }
 
         if (provningOgatsRorlighet != null) {
             syn.setProvningOgatsRorlighet(true);
-        }
-
-        if (extUtlatande.getBilaga() != null) {
-            syn.setSeparatOgonlakarintyg(true);
         }
 
         // Handle Syn related Observationer

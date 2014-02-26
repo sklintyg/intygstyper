@@ -94,7 +94,6 @@
       codeSystemName="SNOMED-CT" />
     <p:metod code="MET1" codeSystem="b0c078c6-512a-42a5-ab42-a3380f369ac3"
       codeSystemName="kv_metod" />
-    <p:forekomst>true</p:forekomst>
   </p:aktivitet>
 
   <!-- Prövning av ögats rörlighet -->

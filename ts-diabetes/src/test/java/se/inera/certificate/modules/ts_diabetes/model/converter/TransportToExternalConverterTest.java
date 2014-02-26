@@ -18,12 +18,11 @@
  */
 package se.inera.certificate.modules.ts_diabetes.model.converter;
 
-import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import se.inera.certificate.modules.ts_diabetes.model.external.Utlatande;
+import se.inera.certificate.modules.ts_diabetes.utils.ModelAssert;
 import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
 import se.inera.certificate.modules.ts_diabetes.utils.ScenarioFinder;
 
@@ -50,11 +49,12 @@ public class TransportToExternalConverterTest {
             se.inera.certificate.ts_diabetes.model.v1.Utlatande utlatande = scenario.asTransportModel();
 
             Utlatande actual = converter.convert(utlatande);
-            // We need to issue a get in order to create an empty list (and make the test pass)
-            actual.getSkapadAv().getBefattningar();
 
             Utlatande expected = scenario.asExternalModel();
-            assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);
+            // We need to issue a get in order to create an empty list (and make the test pass)
+            expected.getKommentarer();
+            expected.getObservationAktivitetRelationer();
+            ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
     }
 }

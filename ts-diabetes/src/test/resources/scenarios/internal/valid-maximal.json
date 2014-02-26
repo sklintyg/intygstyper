@@ -76,7 +76,7 @@
     },
     "syn" : {
         "separatOgonlakarintyg" : false,
-        "synfaltsprovningUtanAnmarkning" : false,
+        "synfaltsprovningUtanAnmarkning" : true,
         "hoger" : {
             "utanKorrektion" : 0.0,
             "medKorrektion" : 0.0

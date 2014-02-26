@@ -408,7 +408,7 @@
                 "root" : "1.2.752.129.2.1.2.1",
                 "extension" : "3"
             },
-            "forekomst": false
+            "forekomst": true
         },
         {
             "observationskod": {
