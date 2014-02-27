@@ -41,6 +41,8 @@ public class InternalValidatorInstance {
     private static Logger LOG = LoggerFactory.getLogger(InternalValidatorInstance.class);
 
     private ValidateDraftResponseHolder validationResponse;
+    
+    private ValidationContext context;
 
     public InternalValidatorInstance() {
         validationResponse = new ValidateDraftResponseHolder();
@@ -60,6 +62,8 @@ public class InternalValidatorInstance {
             addValidationError("utlatande", "ts.validation.utlatande.missing");
             return validationResponse;
         }
+        
+        context = new ValidationContext(utlatande);
 
         validateBedomning(utlatande.getBedomning());
         validateDiabetes(utlatande.getDiabetes());
@@ -83,6 +87,7 @@ public class InternalValidatorInstance {
         validateSomnVakenhet(utlatande.getSomnVakenhet());
         validatePsykiskt(utlatande.getPsykiskt());
         validateUtvecklingsstorning(utlatande.getUtvecklingsstorning());
+        
 
         validationResponse.setStatus(getValidationStatus());
 
@@ -232,6 +237,12 @@ public class InternalValidatorInstance {
             assertDescriptionNotEmpty(funktionsnedsattning.getBeskrivning(), "funktionsnedsattning.beskrivning",
                     "ts.validation.funktionsnedsattning.beskrivning.missing");
         }
+        
+        if (context.isPersontransportContext()) {
+            if (funktionsnedsattning.getOtillrackligRorelseformaga() == null) {
+                addValidationError("funktionsnedsattning.otillrackligRorelseformaga","ts.validation.funktionsnedsattning.otillrackligrorelseformaga.missing");
+            }
+        }
     }
 
     private void validateHjartKarl(final HjartKarl hjartKarl) {
@@ -240,14 +251,21 @@ public class InternalValidatorInstance {
             addValidationError("hjartKarl", "ts.validation.hjartKarl.missing");
             return;
         }
+        
+        if (hjartKarl.getHjartKarlSjukdom() == null) {
+            addValidationError("hjartKarl.hjartKarlSjukdom", "ts.validation.hjartkarl.hjartkarlsjukdom.missing");
+        }
+        
+        if (hjartKarl.getHjarnskadaEfterTrauma() == null) {
+            addValidationError("hjartKarl.hjarnskadaEfterTrauma", "ts.validation.hjartkarl.hjarnskadaeftertrauma.missing");
+        }
 
         if (hjartKarl.getRiskfaktorerStroke() == null) {
-            addValidationError("hjartKarl.getRiskfaktorerStroke", "ts.validation.hjartKarl.riskfaktorerStroke.missing");
-            return;
+            addValidationError("hjartKarl.riskfaktorerStroke", "ts.validation.hjartkarl.riskfaktorerStroke.missing");
 
         } else if (hjartKarl.getRiskfaktorerStroke()) {
             assertDescriptionNotEmpty(hjartKarl.getBeskrivningRiskfaktorer(), "hjartKarl.beskrivningRiskfaktorer",
-                    "ts.validation.hjartKarl.beskrivningRiskfaktorer.missing");
+                    "ts.validation.hjartkarl.beskrivningriskfaktorer.missing");
         }
     }
 
@@ -260,6 +278,12 @@ public class InternalValidatorInstance {
 
         if (horselBalans.getBalansrubbningar() == null) {
             addValidationError("horselBalans.balansrubbningar", "ts.validation.horselBalans.balansrubbningar.missing");
+        }
+        
+        if (context.isPersontransportContext()) {
+            if (horselBalans.getSvartUppfattaSamtal4Meter() == null) {
+                addValidationError("horselBalans.svartUpfattaSamtal4Meter", "ts.validation.horselbalans.uppfattasamtal4meter.missing");
+            }
         }
     }
 

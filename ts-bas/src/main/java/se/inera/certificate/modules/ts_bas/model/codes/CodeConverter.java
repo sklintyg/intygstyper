@@ -121,18 +121,15 @@ public final class CodeConverter {
         return true;
     }
 
-    public static String getInternalNameFromKod(Kod kod, Class<? extends CodeSystem> type) {
-        return fromCode(kod, type).toString();
-    }
-
-
-
     /**
-     * Given a Kod, returns the corresponding internal enum constant name for that code from the CodeSystem representing
-     * it.
+     * Given a Kod and its CodeSystem, returns the corresponding internal enum constant name for that code from the
+     * CodeSystem representing it.
      * 
      * @param kod
      *            {@link Kod}
      * @return a String with the Enum constant
      */
+    public static String getInternalNameFromKod(Kod kod, Class<? extends CodeSystem> type) {
+        return fromCode(kod, type).toString();
+    }
 }

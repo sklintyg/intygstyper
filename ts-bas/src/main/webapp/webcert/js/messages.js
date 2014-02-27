@@ -77,13 +77,17 @@ var tsBasMessages = {
 		"ts.validation.funktionsnedsattning.missing" : "Funktionsnedsättning saknas",
 		"ts.validation.funktionsnedsattning.funktionsnedsattning.missing" : "Funktionsnedsättning saknas",
 		"ts.validation.funktionsnedsattning.beskrivning.missing" : "Beskrivning av funktionsnedsättning saknas",
+		"ts.validation.funktionsnedsattning.otillrackligrorelseformaga.missing" : "För innehav av behörighet D1, D1E, D, DE eller Taxi måste rörelseförmaga att hjälpa passagerar anges",
 
 		"ts.validation.hjartkarl.missing" : "Hjärt- och kärlsjukdomar saknas",
+		"ts.validation.hjartkarl.hjartkarlsjukdom.missing" : "Hjärt- och kärlsjukdom som kan medföra en påtaglig risk för ... måste anges",
+		"ts.validation.hjartkarl.hjarnskadaeftertrauma.missing" : "Hjärnskada efter trauma måste anges",
 		"ts.validation.hjartkarl.riskfaktorerstroke.missing" : "Riskfaktorer för stroke saknas",
 		"ts.validation.hjartkarl.beskrivningriskfaktorer.missing" : "Beskrivning av riskfaktorer för stroke saknas",
 
 		"ts.validation.horselbalans.missing" : "Hörsel och balanssinne saknas",
 		"ts.validation.horselbalans.balansrubbningar.missing" : "Balansrubbningar saknas",
+		"ts.validation.horselbalans.uppfattasamtal4meter.missing" : "Svårt att uppfatta samtal på fyra meters avstånd måste anges för innehav av behörigheterna D1, D1E, D, DE eller Taxi",
 
 		"ts.validation.intygavser.missing" : "Intyget avser körkortsbehörighet saknas",
 		"ts.validation.intygavser.must-choose-one" : "Minst en körkortsbehörighet, eller Annat måste väljas",
