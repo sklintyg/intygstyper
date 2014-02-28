@@ -13,12 +13,11 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.inera.certificate.modules</groupId>
   <artifactId>certificates</artifactId>
-  <version>1.2-SNAPSHOT</version>
+  <version>0.5.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Inera Certificate Modules</name>
   <scm>
     <connection>scm:git:https://code.google.com/p/inera-certificate-modules/</connection>
-    <tag>HEAD</tag>
   </scm>
   <distributionManagement>
     <repository>
@@ -31,10 +30,7 @@
 
   <modules>
     <module>fk7263</module>
-    <module>rli</module>
-    <module>module-archetype</module>
     <module>specifications</module>
-    <module>ts-bas</module>
   </modules>
 
   <properties>
