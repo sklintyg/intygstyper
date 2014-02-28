@@ -1,15 +1,15 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import java.util.List;
-
 import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 
-import org.apache.cxf.common.util.StringUtils;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
+
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
-import se.inera.certificate.modules.fk7263.rest.dto.ValidateDraftResponseHolder;
 
 /**
  * Validates a fk7263 certificate's specific rules that's not covered by schema validation or external validation.

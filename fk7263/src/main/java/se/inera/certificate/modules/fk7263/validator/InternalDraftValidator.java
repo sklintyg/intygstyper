@@ -2,7 +2,7 @@ package se.inera.certificate.modules.fk7263.validator;
 
 import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 
-import org.apache.cxf.common.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
