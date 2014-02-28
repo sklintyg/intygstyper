@@ -38,12 +38,13 @@ angular.module('TSBASViewCertApp').config([ '$routeProvider', '$httpProvider', '
     });
 } ]);
 
-angular.module('TSBASViewCertApp').run([ '$rootScope', 'messageService', function($rootScope, messageService) {
+angular.module('TSBASViewCertApp').run([ '$rootScope', 'messageService','User', function($rootScope, messageService, User) {
     $rootScope.lang = 'sv';
     $rootScope.DEFAULT_LANG = 'sv';
     $rootScope.MODULE_CONFIG = MODULE_CONFIG;
+
     // Add WC user context info
-    $rootScope.WC_CONTEXT = WC_CONTEXT;
+    User.setUserContext(WC_CONTEXT);
     messageService.addResources(commonMessageResources);
     messageService.addResources(tsBasMessages);
 } ]);

@@ -37,12 +37,13 @@ angular.module('FK7263ViewCertApp').constant('datepickerPopupConfig', {
     clearText : "Rensa"
 });
 
-angular.module('FK7263ViewCertApp').run([ '$rootScope', 'messageService', function($rootScope, messageService) {
+angular.module('FK7263ViewCertApp').run([ '$rootScope', 'messageService', 'User', function($rootScope, messageService, User) {
     $rootScope.lang = 'sv';
     $rootScope.DEFAULT_LANG = 'sv';
     $rootScope.MODULE_CONFIG = MODULE_CONFIG;
+
     // Add WC user context info
-    $rootScope.WC_CONTEXT = WC_CONTEXT;
+    User.setUserContext(WC_CONTEXT);
     messageService.addResources(commonMessageResources);
     messageService.addResources(fk7263Messages);
 } ]);

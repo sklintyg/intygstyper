@@ -38,7 +38,7 @@ TSDiabetesApp.run([ '$rootScope', 'messageService', function($rootScope, message
     $rootScope.DEFAULT_LANG = 'sv';
     $rootScope.MODULE_CONFIG = MODULE_CONFIG;
     // Add WC user context info
-    $rootScope.WC_CONTEXT = WC_CONTEXT;
+    User.setUserContext(WC_CONTEXT);
     messageService.addResources(commonMessageResources);
     messageService.addResources(tsDiabetesMessages);
 } ]);
