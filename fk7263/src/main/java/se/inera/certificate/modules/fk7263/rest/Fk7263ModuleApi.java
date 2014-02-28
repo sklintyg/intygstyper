@@ -6,13 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -58,7 +51,7 @@ import com.itextpdf.text.DocumentException;
 /**
  * @author andreaskaltenbach, marced
  */
-public class Fk7263ModuleApi {
+public class Fk7263ModuleApi implements ModuleApi {
     
     @Autowired
     private WebcertModelFactory webcertModelFactory;
@@ -100,18 +93,13 @@ public class Fk7263ModuleApi {
     }
 
     /**
+     * {@inheritDoc}
+     * 
+     * <p>
      * Unmmarshalls transport format xml into fitting JaxB Object tree and perform schema validation. If no schema
      * validation errors are found, next validation step is external model format transformation and validation Last
      * step is to validate internal format specific rules.
-     * 
-     * 
-     * @param transportXml
-     * @return
      */
-    @POST
-    @Path("/unmarshall")
-    @Consumes(MediaType.APPLICATION_XML)
-    @Produces(MediaType.APPLICATION_JSON)
     public Response unmarshall(String transportXml) {
 
         Object jaxbObject = unmarshallTransportXML(transportXml);
@@ -263,11 +251,10 @@ public class Fk7263ModuleApi {
         }
     }
 
-    @POST
-    @Path("/marshall")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_XML)
-    public Response marshall(@HeaderParam("X-Schema-Version") String version, Fk7263Utlatande externalModel) {
+    /**
+     * {@inheritDoc}
+     */
+    public Response marshall(String version, Fk7263Utlatande externalModel) {
 
         if (REGISTER_MEDICAL_CERTIFICATE_VERSION.equals(version)) {
             RegisterMedicalCertificate registerMedicalCertificateJaxb = ExternalToTransportFk7263LegacyConverter
@@ -284,10 +271,9 @@ public class Fk7263ModuleApi {
                 .entity("FK7263 module does not support version " + version).build();
     }
 
-    @POST
-    @Path("/valid")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
+    /**
+     * {@inheritDoc}
+     */
     public Response validate(Fk7263Utlatande utlatande) {
         Fk7263Intyg internalModel = null;
         // validate external properties first
@@ -307,16 +293,8 @@ public class Fk7263ModuleApi {
     }
     
     /**
-     * Validates the internal model. The status (complete, incomplete) and a list of validation errors is returned.
-     * 
-     * @param externalModel
-     *            The external model to validate.
-     * @return
+     * {@inheritDoc}
      */
-    @POST
-    @Path("/valid-draft")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public ValidateDraftResponseHolder validateDraft(se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg utlatande) {
         return internalDraftValidator.validateDraft(utlatande);
     }
@@ -327,17 +305,8 @@ public class Fk7263ModuleApi {
     }
 
     /**
-     * The signature of this method must be compatible with the specified "interface" in
-     * se.inera.certificate.integration.rest.ModuleRestApi Jackson will try to satisfy the signature of this method once
-     * it's been resolved, so the real contract is actually the json structure.
-     * 
-     * @param contentHolder
-     * @return
+     * {@inheritDoc}
      */
-    @POST
-    @Path("/pdf")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces("application/pdf")
     public Response pdf(Fk7263CertificateContentHolder contentHolder) {
         // create the internal model that pdf generator expects
         Fk7263Intyg intyg = toInternal(contentHolder.getCertificateContent());
@@ -358,10 +327,9 @@ public class Fk7263ModuleApi {
                 .getFrom().toString(DATE_FORMAT), intyg.getGiltighet().getTom().toString(DATE_FORMAT));
     }
 
-    @PUT
-    @Path("/internal")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    /**
+     * {@inheritDoc}
+     */
     public Response convertExternalToInternal(Fk7263CertificateContentHolder contentHolder) {
 
         Fk7263Intyg internal = toInternal(contentHolder.getCertificateContent());
@@ -370,25 +338,16 @@ public class Fk7263ModuleApi {
         return Response.ok(internal).build();
     }
 
-    @PUT
-    @Path("/external")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response convertInternalToExternal(Object utlatande) {
+    /**
+     * {@inheritDoc}
+     */
+    public Response convertInternalToExternal(Fk7263Intyg utlatande) {
         return Response.ok(utlatande).build();
     }
 
     /**
-     * Creates a new editable model for use in WebCert. The model is pre populated using data contained in the
-     * CreateNewDraftCertificateHolder parameter.
-     * 
-     * @param draftCertificateHolder
-     * @return
+     * {@inheritDoc}
      */
-    @POST
-    @Path("/new")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg createNewInternal(
             CreateNewDraftCertificateHolder draftCertificateHolder) {
         try {
@@ -399,5 +358,4 @@ public class Fk7263ModuleApi {
             throw new BadRequestException(e);
         }
     }
-
 }

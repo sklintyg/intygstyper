@@ -22,7 +22,7 @@ import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
  */
 public class Fk7263ModuleApiTest {
 
-    private Fk7263ModuleApi fk7263ModuleApi = new Fk7263ModuleApi();
+    private ModuleApi fk7263ModuleApi = new Fk7263ModuleApi();
 
     @Test
     public void testSchemaValidationDuringUnmarshall() throws IOException {
