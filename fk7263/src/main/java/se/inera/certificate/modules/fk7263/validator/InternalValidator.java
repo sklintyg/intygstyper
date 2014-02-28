@@ -9,6 +9,7 @@ import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.rest.dto.ValidateDraftResponseHolder;
 
 /**
  * Validates a fk7263 certificate's specific rules that's not covered by schema validation or external validation.
@@ -35,7 +36,7 @@ public class InternalValidator extends AbstractValidator {
 
         return validationErrors;
     }
-
+    
     private void validateDiagnose() {
 
         // Fält 2 - Medicinskt tillstånd kod - mandatory if not smittskydd

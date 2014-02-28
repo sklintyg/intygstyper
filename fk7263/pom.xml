@@ -27,7 +27,11 @@
   <packaging>war</packaging>
 
   <dependencies>
-
+  
+    <dependency>
+      <groupId>se.inera.certificate</groupId>
+      <artifactId>module-api</artifactId>
+    </dependency>
     <dependency>
       <groupId>se.inera.certificate</groupId>
       <artifactId>integration-util</artifactId>
@@ -156,6 +160,11 @@
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.1</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

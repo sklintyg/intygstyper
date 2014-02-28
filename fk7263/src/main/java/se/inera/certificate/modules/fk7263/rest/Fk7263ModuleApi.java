@@ -5,6 +5,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -25,6 +26,7 @@ import javax.xml.validation.Validator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.xml.sax.SAXException;
 
@@ -32,16 +34,21 @@ import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.La
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
 import se.inera.certificate.fk7263.model.v1.Utlatande;
 import se.inera.certificate.model.util.Strings;
+import se.inera.certificate.modules.fk7263.model.converter.ConverterException;
 import se.inera.certificate.modules.fk7263.model.converter.ExternalToInternalConverter;
 import se.inera.certificate.modules.fk7263.model.converter.ExternalToTransportConverter;
 import se.inera.certificate.modules.fk7263.model.converter.ExternalToTransportFk7263LegacyConverter;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToExternalConverter;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToExternalFk7263LegacyConverter;
+import se.inera.certificate.modules.fk7263.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263CertificateContentHolder;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
+import se.inera.certificate.modules.fk7263.rest.dto.CreateNewDraftCertificateHolder;
+import se.inera.certificate.modules.fk7263.rest.dto.ValidateDraftResponseHolder;
 import se.inera.certificate.modules.fk7263.validator.ExternalValidator;
+import se.inera.certificate.modules.fk7263.validator.InternalDraftValidator;
 import se.inera.certificate.modules.fk7263.validator.InternalValidator;
 import se.inera.certificate.modules.fk7263.validator.ProgrammaticLegacyTransportSchemaValidator;
 import se.inera.certificate.validate.ValidationException;
@@ -52,7 +59,13 @@ import com.itextpdf.text.DocumentException;
  * @author andreaskaltenbach, marced
  */
 public class Fk7263ModuleApi {
-
+    
+    @Autowired
+    private WebcertModelFactory webcertModelFactory;
+    
+    @Autowired
+    private InternalDraftValidator internalDraftValidator;
+    
     private static final Logger LOG = LoggerFactory.getLogger(Fk7263ModuleApi.class);
 
     private static final String DATE_FORMAT = "yyyyMMdd";
@@ -87,9 +100,9 @@ public class Fk7263ModuleApi {
     }
 
     /**
-     * Unmmarshalls transport format xml into fitting JaxB Object tree and perform schema validation.
-     * If no schema validation errors are found, next validation step is external model format transformation and validation 
-     * Last step is to validate internal format specific rules.
+     * Unmmarshalls transport format xml into fitting JaxB Object tree and perform schema validation. If no schema
+     * validation errors are found, next validation step is external model format transformation and validation Last
+     * step is to validate internal format specific rules.
      * 
      * 
      * @param transportXml
@@ -292,6 +305,22 @@ public class Fk7263ModuleApi {
             return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
         }
     }
+    
+    /**
+     * Validates the internal model. The status (complete, incomplete) and a list of validation errors is returned.
+     * 
+     * @param externalModel
+     *            The external model to validate.
+     * @return
+     */
+    @POST
+    @Path("/valid-draft")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public ValidateDraftResponseHolder validateDraft(se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg utlatande) {
+        return internalDraftValidator.validateDraft(utlatande);
+    }
+    
 
     private Fk7263Intyg toInternal(Fk7263Utlatande external) {
         return new ExternalToInternalConverter(external).convert();
@@ -324,6 +353,11 @@ public class Fk7263ModuleApi {
         }
     }
 
+    protected String pdfFileName(Fk7263Intyg intyg) {
+        return String.format("lakarutlatande_%s_%s-%s.pdf", intyg.getPatientPersonnummer(), intyg.getGiltighet()
+                .getFrom().toString(DATE_FORMAT), intyg.getGiltighet().getTom().toString(DATE_FORMAT));
+    }
+
     @PUT
     @Path("/internal")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -344,8 +378,26 @@ public class Fk7263ModuleApi {
         return Response.ok(utlatande).build();
     }
 
-    protected String pdfFileName(Fk7263Intyg intyg) {
-        return String.format("lakarutlatande_%s_%s-%s.pdf", intyg.getPatientPersonnummer(), intyg.getGiltighet()
-                .getFrom().toString(DATE_FORMAT), intyg.getGiltighet().getTom().toString(DATE_FORMAT));
+    /**
+     * Creates a new editable model for use in WebCert. The model is pre populated using data contained in the
+     * CreateNewDraftCertificateHolder parameter.
+     * 
+     * @param draftCertificateHolder
+     * @return
+     */
+    @POST
+    @Path("/new")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg createNewInternal(
+            CreateNewDraftCertificateHolder draftCertificateHolder) {
+        try {
+            return webcertModelFactory.createNewWebcertDraft(draftCertificateHolder);
+
+        } catch (ConverterException e) {
+            LOG.error("Could not create a new internal Webcert model", e);
+            throw new BadRequestException(e);
+        }
     }
+
 }

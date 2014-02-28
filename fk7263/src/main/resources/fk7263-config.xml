@@ -19,6 +19,8 @@
         http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
         http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 
+  <import resource="fk7263-beans.xml"/>
+
   <context:annotation-config />
 
   <beans profile="dev">
