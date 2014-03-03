@@ -8,8 +8,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.ServerErrorException;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -103,7 +106,7 @@ public class Fk7263ModuleApi implements ModuleApi {
      * validation errors are found, next validation step is external model format transformation and validation Last
      * step is to validate internal format specific rules.
      */
-    public Response unmarshall(String transportXml) {
+    public Fk7263Utlatande unmarshall(String transportXml) {
 
         Object jaxbObject = unmarshallTransportXML(transportXml);
         Fk7263Utlatande externalModel = null;
@@ -141,12 +144,12 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
 
         if (validationErrors.isEmpty()) {
-            return Response.ok(externalModel).build();
+            return externalModel;
         } else {
 
             String response = responseBody(extractCertificateId(jaxbObject), extractEnhetsId(jaxbObject),
                     Strings.join(",", validationErrors));
-            return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
+            throw new WebApplicationException(Response.status(Status.BAD_REQUEST).entity(response).build());
         }
     }
 
@@ -261,27 +264,26 @@ public class Fk7263ModuleApi implements ModuleApi {
     /**
      * {@inheritDoc}
      */
-    public Response marshall(String version, Fk7263Utlatande externalModel) {
-
+    public Object marshall(String version, Fk7263Utlatande externalModel) {
         if (REGISTER_MEDICAL_CERTIFICATE_VERSION.equals(version)) {
             RegisterMedicalCertificate registerMedicalCertificateJaxb = ExternalToTransportFk7263LegacyConverter
                     .getJaxbObject(externalModel);
-            return Response.ok(registerMedicalCertificateJaxb).build();
+            return registerMedicalCertificateJaxb;
         }
 
         if (UTLATANDE_VERSION.equals(version)) {
             Utlatande utlatande = new ExternalToTransportConverter(externalModel).convert();
-            return Response.ok(utlatande).build();
+            return utlatande;
         }
 
-        return Response.status(Response.Status.NOT_IMPLEMENTED)
-                .entity("FK7263 module does not support version " + version).build();
+        String response = "FK7263 module does not support version " + version;
+        throw new WebApplicationException(Response.status(Status.NOT_IMPLEMENTED).entity(response).build());
     }
 
     /**
      * {@inheritDoc}
      */
-    public Response validate(Fk7263Utlatande utlatande) {
+    public String validate(Fk7263Utlatande utlatande) {
         Fk7263Intyg internalModel = null;
         // validate external properties first
         List<String> validationErrors = new ProgrammaticLegacyTransportSchemaValidator(utlatande).validate();
@@ -296,10 +298,10 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
 
         if (validationErrors.isEmpty()) {
-            return Response.ok().build();
+            return null;
         } else {
             String response = Strings.join(",", validationErrors);
-            return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
+            throw new WebApplicationException(Response.status(Status.BAD_REQUEST).entity(response).build());
         }
     }
 
@@ -338,22 +340,24 @@ public class Fk7263ModuleApi implements ModuleApi {
     /**
      * {@inheritDoc}
      */
-    public Response convertExternalToInternal(Fk7263CertificateContentHolder contentHolder) {
+    public Fk7263Intyg convertExternalToInternal(Fk7263CertificateContentHolder contentHolder) {
         try {
             Fk7263Intyg internal = toInternal(contentHolder.getCertificateContent());
             internal.setStatus(contentHolder.getCertificateContentMeta().getStatuses());
-            return Response.ok(internal).build();
+
+            return internal;
 
         } catch (ConverterException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            LOG.error("Could not convert external model to internal model", e);
+            throw new BadRequestException(e);
         }
     }
 
     /**
      * {@inheritDoc}
      */
-    public Response convertInternalToExternal(Fk7263Intyg utlatande) {
-        return Response.ok(utlatande).build();
+    public Fk7263Utlatande convertInternalToExternal(Fk7263Intyg utlatande) {
+        throw new ServerErrorException(Status.NOT_IMPLEMENTED);
     }
 
     /**

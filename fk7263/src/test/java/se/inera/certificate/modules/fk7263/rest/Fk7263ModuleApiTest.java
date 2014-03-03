@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.io.FileUtils;
@@ -28,12 +29,17 @@ public class Fk7263ModuleApiTest {
     public void testSchemaValidationDuringUnmarshall() throws IOException {
         String utlatande = FileUtils
                 .readFileToString(new ClassPathResource("Fk7263ModuleApiTest/utlatande_invalid.xml").getFile());
-        Response response = fk7263ModuleApi.unmarshall(utlatande);
+        try {
+            fk7263ModuleApi.unmarshall(utlatande);
 
-        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
-        assertTrue(response.getEntity().toString().contains("Validation failed for intyg"));
-        assertTrue(response.getEntity().toString().contains("123456"));
-        assertTrue(response.getEntity().toString().contains("cvc-minLength-valid"));
+        } catch (WebApplicationException e) {
+            Response response = e.getResponse();
+
+            assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+            assertTrue(response.getEntity().toString().contains("Validation failed for intyg"));
+            assertTrue(response.getEntity().toString().contains("123456"));
+            assertTrue(response.getEntity().toString().contains("cvc-minLength-valid"));
+        }
     }
 
     @Test
@@ -41,10 +47,9 @@ public class Fk7263ModuleApiTest {
         Fk7263Utlatande utlatande = new CustomObjectMapper().readValue(new ClassPathResource(
                 "Fk7263ModuleApiTest/utlatande.json").getFile(), Fk7263Utlatande.class);
 
-        Response response = fk7263ModuleApi.marshall("1.0", utlatande);
-        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+        Object transport = fk7263ModuleApi.marshall("1.0", utlatande);
 
-        assertEquals(RegisterMedicalCertificate.class, response.getEntity().getClass());
+        assertEquals(RegisterMedicalCertificate.class, transport.getClass());
     }
 
     @Test
@@ -52,10 +57,9 @@ public class Fk7263ModuleApiTest {
         Fk7263Utlatande utlatande = new CustomObjectMapper().readValue(new ClassPathResource(
                 "Fk7263ModuleApiTest/utlatande.json").getFile(), Fk7263Utlatande.class);
 
-        Response response = fk7263ModuleApi.marshall("2.0", utlatande);
-        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+        Object transport = fk7263ModuleApi.marshall("2.0", utlatande);
 
-        assertEquals(Utlatande.class, response.getEntity().getClass());
+        assertEquals(Utlatande.class, transport.getClass());
     }
 
     @Test
@@ -63,8 +67,13 @@ public class Fk7263ModuleApiTest {
         Fk7263Utlatande utlatande = new CustomObjectMapper().readValue(new ClassPathResource(
                 "Fk7263ModuleApiTest/utlatande.json").getFile(), Fk7263Utlatande.class);
 
-        Response response = fk7263ModuleApi.marshall(null, utlatande);
-        assertEquals(Response.Status.NOT_IMPLEMENTED.getStatusCode(), response.getStatus());
+        try {
+            fk7263ModuleApi.marshall(null, utlatande);
+        } catch (WebApplicationException e) {
+            Response response = e.getResponse();
+
+            assertEquals(Response.Status.NOT_IMPLEMENTED.getStatusCode(), response.getStatus());
+        }
     }
 
     @Test

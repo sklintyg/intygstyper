@@ -7,7 +7,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import se.inera.certificate.modules.fk7263.model.external.Fk7263CertificateContentHolder;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
@@ -29,7 +28,7 @@ public interface ModuleApi {
     @Path("/unmarshall")
     @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_JSON)
-    Response unmarshall(String transportXml);
+    Fk7263Utlatande unmarshall(String transportXml);
 
     /**
      * Handles conversion from the external JSON model to the transport model (XML).
@@ -45,7 +44,7 @@ public interface ModuleApi {
     @Path("/marshall")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_XML)
-    Response marshall(@HeaderParam("X-Schema-Version") String version, Fk7263Utlatande externalModel);
+    Object marshall(@HeaderParam("X-Schema-Version") String version, Fk7263Utlatande externalModel);
 
     /**
      * Validates the external model. If the validation succeeds, a empty result will be returned. If the validation
@@ -59,7 +58,7 @@ public interface ModuleApi {
     @Path("/valid")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    Response validate(Fk7263Utlatande externalModel);
+    String validate(Fk7263Utlatande externalModel);
 
     /**
      * Validates the internal model. The status (complete, incomplete) and a list of validation errors is returned.
@@ -101,7 +100,7 @@ public interface ModuleApi {
     @Path("/internal")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Response convertExternalToInternal(Fk7263CertificateContentHolder externalModel);
+    Fk7263Intyg convertExternalToInternal(Fk7263CertificateContentHolder externalModel);
 
     /**
      * Handles conversion from the internal model to the external model.
@@ -115,7 +114,7 @@ public interface ModuleApi {
     @Path("/external")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Response convertInternalToExternal(Fk7263Intyg internalModel);
+    Fk7263Utlatande convertInternalToExternal(Fk7263Intyg internalModel);
 
     /**
      * Creates a new editable model for use in WebCert. The model is pre populated using data contained in the
