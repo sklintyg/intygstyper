@@ -23,7 +23,7 @@
  * Cant seem to inject rootscope in .config, so for routing parameters, we use
  * the global JS config object for now
  */
-var TSDiabetesApp = angular.module('TSDiabetesCertApp', [ 'wc.ts-diabetes.controllers', 'wc.ts-diabetes.directives', 'wc.ts-diabetes.services', 'modules.messages', 'wc.common', 'wc.utils' ]).config(
+var TSDiabetesApp = angular.module('TSDiabetesCertApp', [ 'ui.bootstrap', 'wc.ts-diabetes.controllers', 'wc.ts-diabetes.directives', 'wc.ts-diabetes.services', 'modules.messages', 'wc.common', 'wc.utils' ]).config(
         [ '$routeProvider', function($routeProvider) {
             $routeProvider.when('/edit', {
                 templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/edit-cert.html',
@@ -33,7 +33,7 @@ var TSDiabetesApp = angular.module('TSDiabetesCertApp', [ 'wc.ts-diabetes.contro
             });
         } ]);
 
-TSDiabetesApp.run([ '$rootScope', 'messageService', function($rootScope, messageService) {
+TSDiabetesApp.run([ '$rootScope', 'messageService', 'User', function($rootScope, messageService, User) {
     $rootScope.lang = 'sv';
     $rootScope.DEFAULT_LANG = 'sv';
     $rootScope.MODULE_CONFIG = MODULE_CONFIG;
