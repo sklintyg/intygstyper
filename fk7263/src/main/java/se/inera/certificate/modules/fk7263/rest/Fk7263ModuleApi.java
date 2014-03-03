@@ -1,7 +1,5 @@
 package se.inera.certificate.modules.fk7263.rest;
 
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,21 +11,10 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.xml.sax.SAXException;
 
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
@@ -60,8 +47,6 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(Fk7263ModuleApi.class);
 
-    private static JAXBContext jaxbContext;
-
     @Autowired
     private WebcertModelFactory webcertModelFactory;
 
@@ -71,32 +56,8 @@ public class Fk7263ModuleApi implements ModuleApi {
     @Context
     private HttpServletResponse httpResponse;
 
-    // Create JAXB context for the transport format(s) this module can handle
-    static {
-        try {
-            jaxbContext = JAXBContext.newInstance(Utlatande.class, RegisterMedicalCertificate.class);
-        } catch (JAXBException e) {
-            throw new RuntimeException("Failed to create JAXB context", e);
-        }
-    }
-
-    private static Schema utlatandeSchema;
-
     private static final String REGISTER_MEDICAL_CERTIFICATE_VERSION = "1.0";
     private static final String UTLATANDE_VERSION = "2.0";
-
-    // create schema for validation
-    static {
-        try {
-            Source utlatandeSchemaFile = new StreamSource(new ClassPathResource("/schemas/fk7263_model.xsd").getFile());
-            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            utlatandeSchema = schemaFactory.newSchema(utlatandeSchemaFile);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to read schema file", e);
-        } catch (SAXException e) {
-            throw new RuntimeException("Failed to create schema from XSD file", e);
-        }
-    }
 
     /**
      * {@inheritDoc}
@@ -108,7 +69,7 @@ public class Fk7263ModuleApi implements ModuleApi {
      */
     public Fk7263Utlatande unmarshall(String transportXml) {
 
-        Object jaxbObject = unmarshallTransportXML(transportXml);
+        Object jaxbObject = TransportXmlUtils.unmarshallTransportXML(transportXml);
         Fk7263Utlatande externalModel = null;
         List<String> validationErrors = new ArrayList<String>();
 
@@ -118,8 +79,7 @@ public class Fk7263ModuleApi implements ModuleApi {
             validationErrors.addAll(new ProgrammaticLegacyTransportSchemaValidator(externalModel).validate());
         } else if (jaxbObject instanceof Utlatande) {
             try {
-                Validator validator = utlatandeSchema.newValidator();
-                validateSchema(validator, transportXml);
+                TransportXmlUtils.validateSchema(transportXml);
                 externalModel = convertTransportJaxbToModel(jaxbObject);
             } catch (ValidationException ex) {
                 validationErrors.add(ex.getMessage());
@@ -207,18 +167,6 @@ public class Fk7263ModuleApi implements ModuleApi {
         return sb.toString();
     }
 
-    private void validateSchema(Validator validator, String xml) {
-
-        try {
-            validator.validate(new StreamSource(new StringReader(xml)));
-        } catch (SAXException e) {
-            throw new ValidationException(e.getMessage());
-        } catch (IOException e) {
-            LOG.error("Failed to validate message against schema", e);
-            throw new RuntimeException("Failed to validate message against schema", e);
-        }
-    }
-
     /**
      * Converts different types of transportJaxb object to the external module model format.
      * 
@@ -227,37 +175,15 @@ public class Fk7263ModuleApi implements ModuleApi {
      */
     private Fk7263Utlatande convertTransportJaxbToModel(Object jaxbObject) {
         if (jaxbObject instanceof Utlatande) {
-            return convertToModel((Utlatande) jaxbObject);
+            LOG.debug("Converting {}  to externalModuleFormat", jaxbObject.getClass().getCanonicalName());
+            return TransportToExternalConverter.convert((Utlatande) jaxbObject);
+
         } else if (jaxbObject instanceof RegisterMedicalCertificate) {
-            return convertToModel(((RegisterMedicalCertificate) jaxbObject).getLakarutlatande());
+            LOG.debug("Converting {} to externalModuleFormat", jaxbObject.getClass().getCanonicalName());
+            return TransportToExternalFk7263LegacyConverter.convert((Lakarutlatande) jaxbObject);
+
         } else {
             throw new RuntimeException("Cannot convert transport format");
-        }
-    }
-
-    private Fk7263Utlatande convertToModel(Lakarutlatande legacyUtlatande) {
-        LOG.debug("Converting {} to externalModuleFormat", legacyUtlatande.getClass().getCanonicalName());
-        return TransportToExternalFk7263LegacyConverter.convert(legacyUtlatande);
-    }
-
-    private Fk7263Utlatande convertToModel(Utlatande genericUtlatande) {
-        LOG.debug("Converting {}  to externalModuleFormat", genericUtlatande.getClass().getCanonicalName());
-        return TransportToExternalConverter.convert(genericUtlatande);
-    }
-
-    /**
-     * Unmarshal xml string into jaxb
-     * 
-     * @param transportXml
-     * @return jaxbObject if unmarshalling was successful
-     */
-    private Object unmarshallTransportXML(String transportXml) {
-        try {
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            return unmarshaller.unmarshal(new StringReader(transportXml));
-        } catch (JAXBException e) {
-            LOG.error("Failed to unmarshal transportXml", e);
-            throw new RuntimeException(e);
         }
     }
 
