@@ -64,15 +64,23 @@ controllers.controller('EditCertCtrl', [ '$scope', '$location','$anchorScroll', 
 
   $scope.$watch('cert.intygAvser.korkortstyp', function (newValue, oldValue) {
     if (!$scope.cert || !$scope.cert.intygAvser || !$scope.cert.intygAvser.korkortstyp) return;
-    $scope.form.korkorttypselected = false;
+    $scope.form.korkorttyphigher = false;
     for (var i = 0; i < $scope.cert.intygAvser.korkortstyp.length; i++) {
-      if (newValue[i].type != "ANNAT" && newValue[i].selected) {
-        $scope.form.korkorttypselected = true;
-        break;
+      if (newValue[i].selected) {
+        var type = newValue[i].type;
+        if (['C1', 'C1E', 'C', 'CE', 'D1', 'D1E', 'D', 'DE', 'TAXI'].indexOf(type) != -1) {
+          $scope.form.korkorttyphigher = true;
+          break;
+        }
       }
     }
   }, true);
   
+  $scope.$watch('form.behorighet', function (newValue, oldValue) {
+    if (!$scope.cert || !$scope.cert.bedomning ) return;
+    $scope.cert.bedomning.kanInteTaStallning = !newValue;
+  }, true);
+
   $scope.testerror = false;
 
   var dummycert = {

@@ -65,6 +65,7 @@ var tsDiabetesMessages = {
 
 		"ts.validation.bedomning.missing" : "Bedömning saknas",
 		"ts.validation.bedomning.must-choose-one" : "En körkortstyp eller Kan inte ta ställning måste väljas",
+		"ts.validation.bedomning.lamplighetInnehaBehorighet.missing" : "Ställning behöver tas till om patienten är lämpad för högre körkortsbehörighet",
 
 		"ts.validation.diabetes.missing" : "Diabetes saknas",
 		"ts.validation.diabetes.diabetestyp.missing" : "Diabetestyp måste anges",

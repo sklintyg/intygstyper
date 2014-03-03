@@ -144,8 +144,15 @@ public class InternalValidatorInstance {
             return;
         }
 
-        if (bedomning.getKanInteTaStallning() == null && bedomning.getKorkortstyp().isEmpty()) {
+        if (isFalse(bedomning.getKanInteTaStallning()) && bedomning.getKorkortstyp().isEmpty()) {
             addValidationError("bedomning", "ts.validation.bedomning.must-choose-one");
+        }
+
+        if (context.isHogreBehorighetContext()) {
+            if (bedomning.getLamplighetInnehaBehorighet() == null) {
+                addValidationError("bedomning.lamplighetInnehaBehorighet",
+                        "ts.validation.bedomning.lamplighetInnehaBehorighet.missing");
+            }
         }
     }
 
@@ -166,8 +173,8 @@ public class InternalValidatorInstance {
 
         boolean annanBehandling = diabetes.getAnnanBehandlingBeskrivning() != null
                 && !diabetes.getAnnanBehandlingBeskrivning().isEmpty();
-        if (!(safeBool(diabetes.getEndastKost()) || safeBool(diabetes.getTabletter())
-                || safeBool(diabetes.getInsulin()) || annanBehandling)) {
+        if (!(isTrue(diabetes.getEndastKost()) || isTrue(diabetes.getTabletter())
+                || isTrue(diabetes.getInsulin()) || annanBehandling)) {
             addValidationError("diabetes", "ts.validation.diabetes.behandling.missing");
         }
     }
@@ -285,8 +292,12 @@ public class InternalValidatorInstance {
         return true;
     }
 
-    private boolean safeBool(Boolean bool) {
+    private boolean isTrue(Boolean bool) {
         return bool != null && bool;
+    }
+
+    private boolean isFalse(Boolean bool) {
+        return  bool != null && !bool;
     }
 
     /**

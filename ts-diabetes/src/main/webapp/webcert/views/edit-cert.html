@@ -185,17 +185,17 @@
                 </div>
               </td>
             </tr>
-            <tr data-ng-show="form.korkorttypselected">
+            <tr data-ng-show="form.korkorttyphigher">
               <td></td>
               <td></td>
               <td><h5 class="inline-heading">För innehav av behörigheterna C1, C1E, C, CE, D1, D1E, D, DE och taxiförarlegitimation ska även fråga f-g besvaras</h5></td>
             </tr>
-            <tr data-ng-show="form.korkorttypselected">
+            <tr data-ng-show="form.korkorttyphigher">
               <td><input id="hypofy" name="hypofy" type="radio" ng-value="true" ng-model="cert.hypoglykemier.egenkontrollBlodsocker"></td>
               <td><input id="hypofn" name="hypofn" type="radio" ng-value="false" ng-model="cert.hypoglykemier.egenkontrollBlodsocker"></td>
               <td>f) Genomför patienten egenkontroller av blodsocker?</td>
             </tr>
-            <tr data-ng-show="form.korkorttypselected">
+            <tr data-ng-show="form.korkorttyphigher">
               <td><input id="hypogy" name="hypogy" type="radio" ng-value="true" ng-model="cert.hypoglykemier.allvarligForekomstVakenTid"></td>
               <td><input id="hypogn" name="hypogn" type="radio" ng-value="false" ng-model="cert.hypoglykemier.allvarligForekomstVakenTid"></td>
               <td>
@@ -325,12 +325,12 @@
                 </div>
               </td>
             </tr>
-            <tr>
+            <tr data-ng-show="form.korkorttyphigher">
               <th><span message key="common.yes"></span></th>
               <th><span message key="common.no"></span></th>
               <th class="maxwidth"></th>
             </tr>
-            <tr>
+            <tr data-ng-show="form.korkorttyphigher">
               <td><input id="bedomningy" name="bedomningy" type="radio" ng-value="true" ng-model="cert.bedomning.lamplighetInnehaBehorighet"></td>
               <td><input id="bedomningn" name="bedomningn" type="radio" ng-value="false" ng-model="cert.bedomning.lamplighetInnehaBehorighet"></td>
               <td>Om patienten söker behörighet C1, C1E, C, CE, D1, D1E, D, DE eller Taxi, är han eller hon lämplig att inneha sådan behörighet med hänsyn till de körningar och arbetsformer som är aktuella vid sådant innehav? (Se 6 kap. 16 §)</td>
