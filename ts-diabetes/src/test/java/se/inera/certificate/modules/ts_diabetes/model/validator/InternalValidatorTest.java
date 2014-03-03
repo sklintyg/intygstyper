@@ -95,8 +95,7 @@ public class InternalValidatorTest {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-missing-diabetes").asInternalModel();
         ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
 
-        assertEquals("diabetes.diabetesTyp",
-                getSingleElement(validationResponse.getValidationErrors()).getField());
+        assertEquals(3, validationResponse.getValidationErrors().size());
     }
     
     @Test

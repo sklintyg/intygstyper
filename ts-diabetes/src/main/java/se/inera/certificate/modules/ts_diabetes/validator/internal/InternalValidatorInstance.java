@@ -158,7 +158,17 @@ public class InternalValidatorInstance {
 
         if (diabetes.getDiabetestyp() == null) {
             addValidationError("diabetes.diabetesTyp", "ts.validation.diabetes.diabetesTyp.missing");
+        }
 
+        if (diabetes.getObservationsperiod() == null) {
+            addValidationError("diabetes.observationsperiod", "ts.validation.diabetes.observationsperiod.missing");
+        }
+
+        boolean annanBehandling = diabetes.getAnnanBehandlingBeskrivning() != null
+                && !diabetes.getAnnanBehandlingBeskrivning().isEmpty();
+        if (!(safeBool(diabetes.getEndastKost()) || safeBool(diabetes.getTabletter())
+                || safeBool(diabetes.getInsulin()) || annanBehandling)) {
+            addValidationError("diabetes", "ts.validation.diabetes.behandling.missing");
         }
     }
 
@@ -273,6 +283,10 @@ public class InternalValidatorInstance {
             return false;
         }
         return true;
+    }
+
+    private boolean safeBool(Boolean bool) {
+        return bool != null && bool;
     }
 
     /**

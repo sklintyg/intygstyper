@@ -37,7 +37,7 @@ var tsDiabetesMessages = {
 		"ts.label.korkort.a" : "A",
 		"ts.label.korkort.b" : "B",
 		"ts.label.korkort.be" : "BE",
-		"ts.label.korkort.traktor" : "TRAKTOR",
+		"ts.label.korkort.traktor" : "Traktor",
 		"ts.label.korkort.c1" : "C1",
 		"ts.label.korkort.c1e" : "C1E",
 		"ts.label.korkort.c" : "C",
@@ -68,6 +68,8 @@ var tsDiabetesMessages = {
 
 		"ts.validation.diabetes.missing" : "Diabetes saknas",
 		"ts.validation.diabetes.diabetestyp.missing" : "Diabetestyp måste anges",
+		"ts.validation.diabetes.observationsperiod.missing" : "År då diabetesdiagnos ställdes måste anges",
+		"ts.validation.diabetes.behandling.missing" : "Minst en behandling måste väljas",
 
 		"ts.validation.intygavser.missing" : "Intyget avser körkortsbehörighet saknas",
 		"ts.validation.intygavser.must-choose-one" : "Minst en körkortsbehörighet, eller Annat måste väljas",

@@ -64,6 +64,15 @@
   <p:observation>
    <p:observationskod code="E11" codeSystem="1.2.752.116.1.1.1.1.1" codeSystemName="ICD-10" />
     <p:forekomst>true</p:forekomst>
+    <p:observationsperiod>
+      <p:from>2012</p:from>
+    </p:observationsperiod>
+  </p:observation>
+  
+  <p:observation>
+    <p:observationskod code="170745003" codeSystem="1.2.752.116.2.1.1.1"
+      codeSystemName="SNOMED-CT" />
+    <p:forekomst>true</p:forekomst>
   </p:observation>
   
   <p:observation>

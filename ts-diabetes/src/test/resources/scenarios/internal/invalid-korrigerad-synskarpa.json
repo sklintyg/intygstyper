@@ -37,7 +37,9 @@
     	                 ]
     },
     "diabetes" : {
-    	"diabetestyp" : "DIABETES_TYP_2"
+    	"observationsperiod" : "2012",
+    	"diabetestyp" : "DIABETES_TYP_2",
+    	"endastKost" : true
     },
     "hypoglykemier" : {
     	"kunskapOmAtgarder" : false,

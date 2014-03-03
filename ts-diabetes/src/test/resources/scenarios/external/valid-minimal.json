@@ -101,8 +101,19 @@
                 "codeSystemName": "ICD-10",
                 "code": "E11"
             },
+            "observationsperiod" : {
+            	"from" : "2012"
+            },
             "forekomst": true
-        }, 
+        },
+        {
+            "observationskod": {
+                "codeSystem": "1.2.752.116.2.1.1.1",
+                "codeSystemName": "SNOMED-CT",
+                "code": "170745003"
+            },
+            "forekomst": true
+        },
         {
             "observationskod": {
                 "codeSystem": "to-come",
