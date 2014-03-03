@@ -126,7 +126,10 @@ public class PdfGenerator {
     private static final String SIGN_NAME = "form1[0].subform[1].flt_NamnfortydligandeMottagningsadrTel_flt15[0]";
 
     private static final String DOCTORCODE_AND_WORKPLACE = "form1[0].subform[1].flt_ForskrivarkodOchArbetsplatskod_flt17[0]";
+
     public static final String PDF_TEMPLATE = "pdf/RFV7263_009_J_003_statisk.pdf";
+
+    private static final String DATE_FORMAT = "yyyyMMdd";
 
     private Fk7263Intyg intyg;
     private ByteArrayOutputStream outputStream;
@@ -134,24 +137,34 @@ public class PdfGenerator {
     private PdfStamper pdfStamper;
     private AcroFields fields;
 
-    public PdfGenerator(Fk7263Intyg intyg) throws IOException, DocumentException {
+    public PdfGenerator(Fk7263Intyg intyg) throws PdfGeneratorException {
         this(intyg, true);
     }
 
-    public PdfGenerator(Fk7263Intyg intyg, boolean flatten) throws IOException, DocumentException {
-        this.intyg = intyg;
+    public PdfGenerator(Fk7263Intyg intyg, boolean flatten) throws PdfGeneratorException {
+        try {
+            this.intyg = intyg;
 
-        outputStream = new ByteArrayOutputStream();
+            outputStream = new ByteArrayOutputStream();
 
-        pdfReader = new PdfReader(PDF_TEMPLATE);
-        pdfStamper = new PdfStamper(pdfReader, this.outputStream);
-        fields = pdfStamper.getAcroFields();
+            pdfReader = new PdfReader(PDF_TEMPLATE);
+            pdfStamper = new PdfStamper(pdfReader, this.outputStream);
+            fields = pdfStamper.getAcroFields();
 
-        generatePdf();
+            generatePdf();
 
-        pdfStamper.setFormFlattening(flatten);
+            pdfStamper.setFormFlattening(flatten);
 
-        pdfStamper.close();
+            pdfStamper.close();
+
+        } catch (Exception e) {
+            throw new PdfGeneratorException(e);
+        }
+    }
+
+    public String generatePdfFilename() {
+        return String.format("lakarutlatande_%s_%s-%s.pdf", intyg.getPatientPersonnummer(), intyg.getGiltighet()
+                .getFrom().toString(DATE_FORMAT), intyg.getGiltighet().getTom().toString(DATE_FORMAT));
     }
 
     public byte[] getBytes() {

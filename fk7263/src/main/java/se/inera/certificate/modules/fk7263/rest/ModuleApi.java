@@ -87,7 +87,7 @@ public interface ModuleApi {
     @Path("/pdf")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces("application/pdf")
-    Response pdf(Fk7263CertificateContentHolder externalModel);
+    byte[] pdf(Fk7263CertificateContentHolder externalModel);
 
     /**
      * Handles conversion from the external model to the internal model.

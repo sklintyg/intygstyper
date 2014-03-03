@@ -5,7 +5,10 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -38,6 +41,7 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263CertificateConte
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
+import se.inera.certificate.modules.fk7263.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.fk7263.rest.dto.CreateNewDraftCertificateHolder;
 import se.inera.certificate.modules.fk7263.rest.dto.ValidateDraftResponseHolder;
 import se.inera.certificate.modules.fk7263.validator.ExternalValidator;
@@ -46,24 +50,23 @@ import se.inera.certificate.modules.fk7263.validator.InternalValidator;
 import se.inera.certificate.modules.fk7263.validator.ProgrammaticLegacyTransportSchemaValidator;
 import se.inera.certificate.validate.ValidationException;
 
-import com.itextpdf.text.DocumentException;
-
 /**
  * @author andreaskaltenbach, marced
  */
 public class Fk7263ModuleApi implements ModuleApi {
-    
-    @Autowired
-    private WebcertModelFactory webcertModelFactory;
-    
-    @Autowired
-    private InternalDraftValidator internalDraftValidator;
-    
+
     private static final Logger LOG = LoggerFactory.getLogger(Fk7263ModuleApi.class);
 
-    private static final String DATE_FORMAT = "yyyyMMdd";
-
     private static JAXBContext jaxbContext;
+
+    @Autowired
+    private WebcertModelFactory webcertModelFactory;
+
+    @Autowired
+    private InternalDraftValidator internalDraftValidator;
+
+    @Context
+    private HttpServletResponse httpResponse;
 
     // Create JAXB context for the transport format(s) this module can handle
     static {
@@ -129,8 +132,12 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
         // If no validation errors so far, continue with internal validation...
         if (validationErrors.isEmpty()) {
-            Fk7263Intyg internalModel = toInternal(externalModel);
-            validationErrors.addAll((new InternalValidator(internalModel).validate()));
+            try {
+                Fk7263Intyg internalModel = toInternal(externalModel);
+                validationErrors.addAll((new InternalValidator(internalModel).validate()));
+            } catch (ConverterException e) {
+                validationErrors.add("Failed to convert utlatande to internal model");
+            }
         }
 
         if (validationErrors.isEmpty()) {
@@ -280,8 +287,12 @@ public class Fk7263ModuleApi implements ModuleApi {
         List<String> validationErrors = new ProgrammaticLegacyTransportSchemaValidator(utlatande).validate();
         if (validationErrors.isEmpty()) {
             // passed first level validation, now validate business logic with internal model validation
-            internalModel = toInternal(utlatande);
-            validationErrors.addAll((new InternalValidator(internalModel).validate()));
+            try {
+                internalModel = toInternal(utlatande);
+                validationErrors.addAll((new InternalValidator(internalModel).validate()));
+            } catch (ConverterException e) {
+                validationErrors.add("Failed to convert utlatande to internal model");
+            }
         }
 
         if (validationErrors.isEmpty()) {
@@ -291,51 +302,51 @@ public class Fk7263ModuleApi implements ModuleApi {
             return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
-    public ValidateDraftResponseHolder validateDraft(se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg utlatande) {
+    public ValidateDraftResponseHolder validateDraft(
+            se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg utlatande) {
         return internalDraftValidator.validateDraft(utlatande);
     }
-    
 
-    private Fk7263Intyg toInternal(Fk7263Utlatande external) {
+    private Fk7263Intyg toInternal(Fk7263Utlatande external) throws ConverterException {
         return new ExternalToInternalConverter(external).convert();
     }
 
     /**
      * {@inheritDoc}
      */
-    public Response pdf(Fk7263CertificateContentHolder contentHolder) {
-        // create the internal model that pdf generator expects
-        Fk7263Intyg intyg = toInternal(contentHolder.getCertificateContent());
+    public byte[] pdf(Fk7263CertificateContentHolder contentHolder) {
         try {
-            byte[] generatedPdf = new PdfGenerator(intyg).getBytes();
-            return Response.ok(generatedPdf).header("Content-Disposition", "filename=" + pdfFileName(intyg)).build();
-        } catch (IOException e) {
-            LOG.error("Failed to generate PDF for certificate #" + intyg.getId(), e);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        } catch (DocumentException e) {
-            LOG.error("Failed to generate PDF for certificate #" + intyg.getId(), e);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+            Fk7263Intyg intyg = toInternal(contentHolder.getCertificateContent());
+            PdfGenerator pdfGenerator = new PdfGenerator(intyg);
+            httpResponse.addHeader("Content-Disposition", "filename=" + pdfGenerator.generatePdfFilename());
+            return pdfGenerator.getBytes();
 
-    protected String pdfFileName(Fk7263Intyg intyg) {
-        return String.format("lakarutlatande_%s_%s-%s.pdf", intyg.getPatientPersonnummer(), intyg.getGiltighet()
-                .getFrom().toString(DATE_FORMAT), intyg.getGiltighet().getTom().toString(DATE_FORMAT));
+        } catch (ConverterException e) {
+            LOG.error("Failed to generate PDF - conversion to internal model failed", e);
+            throw new BadRequestException(e);
+
+        } catch (PdfGeneratorException e) {
+            LOG.error("Failed to generate PDF for certificate!", e);
+            throw new InternalServerErrorException(e);
+        }
     }
 
     /**
      * {@inheritDoc}
      */
     public Response convertExternalToInternal(Fk7263CertificateContentHolder contentHolder) {
+        try {
+            Fk7263Intyg internal = toInternal(contentHolder.getCertificateContent());
+            internal.setStatus(contentHolder.getCertificateContentMeta().getStatuses());
+            return Response.ok(internal).build();
 
-        Fk7263Intyg internal = toInternal(contentHolder.getCertificateContent());
-        internal.setStatus(contentHolder.getCertificateContentMeta().getStatuses());
-
-        return Response.ok(internal).build();
+        } catch (ConverterException e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
     }
 
     /**

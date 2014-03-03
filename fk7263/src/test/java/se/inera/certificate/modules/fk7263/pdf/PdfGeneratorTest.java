@@ -34,7 +34,7 @@ public class PdfGeneratorTest {
     }
 
     @Test
-    public void testPdfGeneration() throws IOException, DocumentException {
+    public void testPdfGeneration() throws IOException, PdfGeneratorException {
 
         Fk7263Intyg intyg = new CustomObjectMapper().readValue(fk7263_json, Fk7263Intyg.class);
 
@@ -54,7 +54,7 @@ public class PdfGeneratorTest {
     }
 
     @Test
-    public void pdfGenerationRemovesFormFields() throws IOException, DocumentException {
+    public void pdfGenerationRemovesFormFields() throws IOException, PdfGeneratorException {
         Fk7263Intyg intyg = new CustomObjectMapper().readValue(fk7263_json, Fk7263Intyg.class);
         byte[] generatorResult = new PdfGenerator(intyg).getBytes();
 
@@ -72,7 +72,7 @@ public class PdfGeneratorTest {
      */
     @Ignore
     @Test
-    public void createTestPdf() throws IOException, DocumentException {
+    public void createTestPdf() throws IOException, PdfGeneratorException {
 
         Fk7263Intyg intyg = new CustomObjectMapper().readValue(fk7263_json, Fk7263Intyg.class);
 
