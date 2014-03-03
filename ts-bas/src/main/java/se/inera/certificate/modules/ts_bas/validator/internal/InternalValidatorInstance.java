@@ -253,7 +253,7 @@ public class InternalValidatorInstance {
         }
         
         if (hjartKarl.getHjartKarlSjukdom() == null) {
-            addValidationError("hjartKarl.hjartKarlSjukdom", "ts.validation.hjartkarl.hjartkarlsjukdom.missing");
+            addValidationError("hjartKarl.hjartKarlSjukdom", "ts.validation.hjartKarl.hjartkarlsjukdom.missing");
         }
         
         if (hjartKarl.getHjarnskadaEfterTrauma() == null) {

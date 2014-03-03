@@ -70,7 +70,6 @@
 
               <p>Detta intyg ska användas vid förlängd giltighet av högre behörighet, ansökan om körkortstillstånd för grupp II och III och vid ansökan om taxiförarlegitimation.</p>
                 <p>Intyget kan också användas när Transportstyrelsen i andra fall begärt ett läkarintyg. Markera då endast i rutan Annat nedan.</p>
-
                 <div class="control-group clearfix">
                     <label class="checkbox checkbox-columns span3" ng-repeat="typ in cert.intygAvser.korkortstyp track by $index"><input id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox" ng-model="typ.selected"> <span message key="ts.label.korkort.{{typ.type}}"></span></label>
                 </div>
@@ -260,13 +259,13 @@
                         <th class="maxwidth"></th>
                     </tr>
                     <tr>
-                        <td><input id="hjartkarlay" name="hjartkarlay" type="radio" ng-value="true" ng-model="cert.hjartkarl.hjartKarlSjukdom"></td>
-                        <td><input id="hjartkarlan" name="hjartkarlan" type="radio" ng-value="false" ng-model="cert.hjartkarl.hjartKarlSjukdom"></td>
+                        <td><input id="hjartkarlay" name="hjartkarlay" type="radio" ng-value="true" ng-model="cert.hjartKarl.hjartKarlSjukdom"></td>
+                        <td><input id="hjartkarlan" name="hjartkarlan" type="radio" ng-value="false" ng-model="cert.hjartKarl.hjartKarlSjukdom"></td>
                         <td>a) Föreligger hjärt- eller kärlsjukdom som kan medföra en påtaglig risk för att hjärnans funktioner akut försämras eller som i övrigt innebär en trafiksäkerhetsrisk?</td>
                     </tr>
                     <tr>
-                        <td><input id="hjartkarlby" name="hjartkarlby" type="radio" ng-value="true" ng-model="cert.hjartkarl.hjarnskadaEfterTrauma"></td>
-                        <td><input id="hjartkarlbn" name="hjartkarlbn" type="radio" ng-value="false" ng-model="cert.hjartkarl.hjarnskadaEfterTrauma"></td>
+                        <td><input id="hjartkarlby" name="hjartkarlby" type="radio" ng-value="true" ng-model="cert.hjartKarl.hjarnskadaEfterTrauma"></td>
+                        <td><input id="hjartkarlbn" name="hjartkarlbn" type="radio" ng-value="false" ng-model="cert.hjartKarl.hjarnskadaEfterTrauma"></td>
                         <td>b) Finns tecken på hjärnskada efter trauma, stroke eller annan sjukdom i centrala nervsystemet?</td>
                     </tr>
                     <tr>

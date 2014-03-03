@@ -68,7 +68,7 @@ controllers.controller('EditCertCtrl', [ '$scope', '$location', '$anchorScroll',
                     break;
                 }
             }
-        });
+        }, true);
 
         var dummycert = {
             "utlatandeid" : "987654321",
