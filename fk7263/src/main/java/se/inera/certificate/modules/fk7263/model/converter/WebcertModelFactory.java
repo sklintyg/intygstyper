@@ -45,6 +45,24 @@ public class WebcertModelFactory {
 
         Fk7263Intyg utlatande = new Fk7263Intyg();
 
+        utlatande.setArbetsformataPrognosGarInteAttBedoma(false);
+        utlatande.setArbetsformataPrognosJa(false);
+        utlatande.setArbetsformataPrognosJaDelvis(false);
+        utlatande.setArbetsformataPrognosNej(false);
+        utlatande.setArbetsloshet(false);
+
+        utlatande.setAvstangningSmittskydd(false);
+        utlatande.setForaldrarledighet(false);
+        utlatande.setKontaktMedFk(false);
+        utlatande.setRehabiliteringAktuell(false);
+        utlatande.setRehabiliteringAktuell(false);
+        utlatande.setRehabiliteringEjAktuell(false);
+        utlatande.setRehabiliteringGarInteAttBedoma(false);
+        utlatande.setRekommendationKontaktArbetsformedlingen(false);
+        utlatande.setRekommendationKontaktForetagshalsovarden(false);
+        utlatande.setRessattTillArbeteAktuellt(false);
+        utlatande.setRessattTillArbeteEjAktuellt(false);
+        
         utlatande.setId(newDraftData.getCertificateId());
 
         populateWithSkapadAv(utlatande, newDraftData.getSkapadAv());

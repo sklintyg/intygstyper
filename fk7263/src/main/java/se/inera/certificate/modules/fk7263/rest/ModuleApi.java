@@ -72,7 +72,7 @@ public interface ModuleApi {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     ValidateDraftResponseHolder validateDraft(
-            se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg externalModel);
+            se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg internalModel);
 
     /**
      * Generates a PDF from the external model.

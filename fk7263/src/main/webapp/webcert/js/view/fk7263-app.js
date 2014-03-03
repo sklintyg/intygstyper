@@ -27,7 +27,7 @@ angular.module('FK7263ViewCertApp').config([ '$routeProvider', '$httpProvider', 
 // Global config of default date picker config (individual attributes can be
 // overridden per directive usage)
 angular.module('FK7263ViewCertApp').constant('datepickerPopupConfig', {
-    dateFormat : "yyyy-MM- dd",
+    dateFormat : "yyyy-MM-dd",
     closeOnDateSelection : true,
     appendToBody : false,
     showWeeks : true,

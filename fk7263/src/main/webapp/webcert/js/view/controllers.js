@@ -23,6 +23,8 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
         // comparison
         // accuracy (using new Date() also sets
         // time)
+        $scope.messages = [];
+        $scope.isComplete = false;
 
         $scope.toggleHeader = function () {
             $scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
@@ -74,17 +76,21 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
         };
 
         $scope.getTotalOvrigtLength = function () {
-            var totalOvrigtLength = $scope.cert.kommentar.length
-                + $scope.cert.otherData.baseradPaAnnat.length
-                + $scope.cert.otherData.workingHours25.length
-                + $scope.cert.otherData.workingHours50.length
-                + $scope.cert.otherData.workingHours75.length
-                + $scope.cert.otherData.workingHours100.length
-                + $scope.cert.otherData.prognosisClarification.length;
-
-            if ($scope.cert.otherData.rehabWhen instanceof Date) {
-                totalOvrigtLength += ($filter('date')($scope.cert.otherData.rehabWhen, 'yyyy-MM-dd')).length;
-            }
+        	 var totalOvrigtLength = getLengthOrZero($scope.cert.kommentar);
+        	
+        	 if ($scope.cert.otherData != undefined) {
+	        	 totalOvrigtLength = getLengthOrZero($scope.cert.otherData.baseradPaAnnat),
+	        	 + getLengthOrZero($scope.cert.otherData.workingHours25),
+	        	 + getLengthOrZero($scope.cert.otherData.workingHours50),
+	        	 + getLengthOrZero($scope.cert.otherData.workingHours75),
+	        	 + getLengthOrZero($scope.cert.otherData.workingHours100),
+	        	 + getLengthOrZero($scope.cert.otherData.prognosisClarification);
+        	 }
+        	if ($scope.cert.otherData != undefined) {
+            	if ($scope.cert.otherData.rehabWhen instanceof Date) {
+            		totalOvrigtLength += ($filter('date')($scope.cert.otherData.rehabWhen, 'yyyy-MM-dd')).length;
+            	}
+        	}
             // NOTE: this date (rehabWhen) will probably
             // need a label and therefore
             // use more than the length of the date when
@@ -94,6 +100,14 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
             // (probably applies to all
             // in cert.otherData)
             return totalOvrigtLength;
+        };
+        
+        function getLengthOrZero (value) {
+        	if (value == undefined) {
+        		return 0;
+        	} else {
+        		return value.length;
+        	}
         };
 
         // Based on handling (4b)
@@ -109,10 +123,17 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
         $scope.autoEnterDate = function (modelName) {
             if ($scope.basedOnState.check[modelName]) {
                 if ($scope.cert[modelName] == "")
-                    $scope.cert[modelName] = $scope.today;
+                    $scope.cert[modelName] = formatDate($scope.today);
             } else {
                 $scope.cert[modelName] = "";
             }
+        };
+        
+        function formatDate(date) {
+        	var dd = date.getDate();
+        	var mm = date.getMonth()+1;
+        	var yyyy = date.getFullYear();
+        	return '' + yyyy + '-' + (mm<=9 ? '0' + mm : mm) + '-' + (dd <= 9 ? '0' + dd : dd);        	
         };
 
         // Diagnose handling (2)
@@ -147,16 +168,18 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
         };
 
         function updateWorkStateDate (checked, model) {
-            if (checked) {
-                if (!isDate(model.start))
-                    model.start = $scope.today;
-                if (!isDate(model.end))
-                    model.end = $scope.today;
-            } else {
-                model.start = "";
-                model.end = "";
-            }
-            $scope.updateTotalCertDays();
+            if (model != undefined) {
+	        	if (checked) {
+	                if (!isDate(model.start))
+	                    model.start = $scope.today;
+	                if (!isDate(model.end))
+	                    model.end = $scope.today;
+	            } else {
+	                model.start = "";
+	                model.end = "";
+	            }
+	            $scope.updateTotalCertDays();
+	        }
         }
 
         $scope.$watch('workState.check25', function (newVal, oldVal) {
@@ -231,11 +254,13 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
 
         // Rekommendationer 6a, 7, 11
         $scope.$watch('cert.rehabNow', function (newVal, oldVal) {
-            if (newVal == 'LATER' && $scope.cert.otherData.rehabWhen == '') {
-                $scope.cert.otherData.rehabWhen = $scope.today;
-            } else if (newVal == 'NOW') {
-                $scope.cert.otherData.rehabWhen = '';
-            }
+        	if ($scope.cert.otherData != undefined) {
+	            if (newVal == 'LATER' && $scope.cert.otherData.rehabWhen == '') {
+	                $scope.cert.otherData.rehabWhen = $scope.today;
+	            } else if (newVal == 'NOW') {
+	                $scope.cert.otherData.rehabWhen = '';
+	            }
+        	}
         });
 
         $scope.$watch('cert.otherData.rehabWhen', function (newVal, oldVal) {
@@ -358,6 +383,32 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
             certificateService.saveDraft($scope.MODULE_CONFIG.CERT_ID_PARAMETER, $scope.cert,
                 function (data) {
                     // TODO: Convert validation messages.
+	            	$scope.certForm.$setPristine();
+	
+	                $scope.validationMessagesGrouped = {};
+	                $scope.validationMessages = [];
+	
+	                if (data.status === 'COMPLETE') {
+	                    $scope.isComplete = true;
+	                } else {
+	                    $scope.isComplete = false;
+	                    $scope.validationMessages = data.messages;
+	
+	                    angular.forEach(data.messages, function (message) {
+	                        var field = message.field;
+	                        var parts = field.split(".");
+	                        var section;
+	                        if (parts.length > 0) {
+	                            section = parts[0].toLowerCase();
+	
+	                            if ($scope.validationMessagesGrouped[section]) {
+	                                $scope.validationMessagesGrouped[section].push(message);
+	                            } else {
+	                                $scope.validationMessagesGrouped[section] = [message];
+	                            }
+	                        }
+	                    });
+	                }
                 },
                 function (errorData) {
                     // TODO: Show error message.
