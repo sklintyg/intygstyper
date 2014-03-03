@@ -343,21 +343,13 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
 
         $scope.cert = {};
 
-        if ($scope.MODULE_CONFIG.CERT_ID_PARAMETER == '12345') {
-            // TODO: Temporary solution.
-            $scope.cert = dummycert;
-        } else {
-
-            // Get the certificate draft from the server.
-            // TODO: Hide the form until the draft has been loaded.
-            certificateService.getDraft($scope.MODULE_CONFIG.CERT_ID_PARAMETER,
-                function (data) {
-                    $scope.cert = dummycert;
-                    // TODO: Set the cert from the data.
-                }, function (errorData) {
-                    // TODO: Show error message.
-                });
-        }
+	    certificateService.getDraft($scope.MODULE_CONFIG.CERT_ID_PARAMETER,
+	        function (data) {
+	            $scope.cert = data.content;
+	            // TODO: Set the cert from the data.
+	        }, function (errorData) {
+	            // TODO: Show error message.
+	        });
 
         /**
          * Action to save the certificate draft to the server.
