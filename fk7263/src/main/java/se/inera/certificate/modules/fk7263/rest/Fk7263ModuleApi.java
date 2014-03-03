@@ -73,42 +73,44 @@ public class Fk7263ModuleApi implements ModuleApi {
         Fk7263Utlatande externalModel = null;
         List<String> validationErrors = new ArrayList<String>();
 
-        // Perform Schema type validation
         if (jaxbObject instanceof RegisterMedicalCertificate) {
-            externalModel = convertTransportJaxbToModel(jaxbObject);
+            // Convert and validate legacy transport model
+            LOG.debug("Converting {} to external model", jaxbObject.getClass().getCanonicalName());
+            externalModel = TransportToExternalFk7263LegacyConverter.convert((Lakarutlatande) jaxbObject);
+
             validationErrors.addAll(new ProgrammaticLegacyTransportSchemaValidator(externalModel).validate());
+
         } else if (jaxbObject instanceof Utlatande) {
+            // Convert and validate utlatande transport model
             try {
                 TransportXmlUtils.validateSchema(transportXml);
-                externalModel = convertTransportJaxbToModel(jaxbObject);
+
+                LOG.debug("Converting {}  to external model", jaxbObject.getClass().getCanonicalName());
+                externalModel = TransportToExternalConverter.convert((Utlatande) jaxbObject);
             } catch (ValidationException ex) {
                 validationErrors.add(ex.getMessage());
             }
+
         } else {
-            LOG.warn("Unsupported XML message: {}", transportXml);
-            throw new RuntimeException("Unsupported XML message: " + transportXml);
+            LOG.error("Unsupported XML message: {}", transportXml);
+            throw new InternalServerErrorException(Response.serverError().entity("Unsupported XML message type")
+                    .build());
         }
 
         // If no validation errors so far, continue with external validation...
         if (validationErrors.isEmpty()) {
-            validationErrors.addAll((new ExternalValidator(externalModel).validate()));
-        }
-        // If no validation errors so far, continue with internal validation...
-        if (validationErrors.isEmpty()) {
-            try {
-                Fk7263Intyg internalModel = toInternal(externalModel);
-                validationErrors.addAll((new InternalValidator(internalModel).validate()));
-            } catch (ConverterException e) {
-                validationErrors.add("Failed to convert utlatande to internal model");
-            }
+            validationErrors.addAll(validateExternal(externalModel));
         }
 
         if (validationErrors.isEmpty()) {
             return externalModel;
-        } else {
 
-            String response = responseBody(extractCertificateId(jaxbObject), extractEnhetsId(jaxbObject),
-                    Strings.join(",", validationErrors));
+        } else {
+            String certificateId = extractCertificateId(jaxbObject);
+            String enhetsId = extractEnhetsId(jaxbObject);
+            String validationString = Strings.join(",", validationErrors);
+            String response = String.format("Validation failed for intyg %s issued by %s: %s", certificateId, enhetsId,
+                    validationString);
             throw new WebApplicationException(Response.status(Status.BAD_REQUEST).entity(response).build());
         }
     }
@@ -155,38 +157,6 @@ public class Fk7263ModuleApi implements ModuleApi {
         return enhetsId;
     }
 
-    private String responseBody(String utlatandeId, String enhetsId, String validationErrors) {
-        StringBuffer sb = new StringBuffer("Validation failed for intyg ");
-        sb.append(utlatandeId);
-        if (enhetsId != null) {
-            sb.append(" issued by ");
-            sb.append(enhetsId);
-        }
-        sb.append(": ");
-        sb.append(validationErrors);
-        return sb.toString();
-    }
-
-    /**
-     * Converts different types of transportJaxb object to the external module model format.
-     * 
-     * @param jaxbObject
-     * @return Fk7263Utlatande
-     */
-    private Fk7263Utlatande convertTransportJaxbToModel(Object jaxbObject) {
-        if (jaxbObject instanceof Utlatande) {
-            LOG.debug("Converting {}  to externalModuleFormat", jaxbObject.getClass().getCanonicalName());
-            return TransportToExternalConverter.convert((Utlatande) jaxbObject);
-
-        } else if (jaxbObject instanceof RegisterMedicalCertificate) {
-            LOG.debug("Converting {} to externalModuleFormat", jaxbObject.getClass().getCanonicalName());
-            return TransportToExternalFk7263LegacyConverter.convert((Lakarutlatande) jaxbObject);
-
-        } else {
-            throw new RuntimeException("Cannot convert transport format");
-        }
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -210,18 +180,7 @@ public class Fk7263ModuleApi implements ModuleApi {
      * {@inheritDoc}
      */
     public String validate(Fk7263Utlatande utlatande) {
-        Fk7263Intyg internalModel = null;
-        // validate external properties first
-        List<String> validationErrors = new ProgrammaticLegacyTransportSchemaValidator(utlatande).validate();
-        if (validationErrors.isEmpty()) {
-            // passed first level validation, now validate business logic with internal model validation
-            try {
-                internalModel = toInternal(utlatande);
-                validationErrors.addAll((new InternalValidator(internalModel).validate()));
-            } catch (ConverterException e) {
-                validationErrors.add("Failed to convert utlatande to internal model");
-            }
-        }
+        List<String> validationErrors = validateExternal(utlatande);
 
         if (validationErrors.isEmpty()) {
             return null;
@@ -229,6 +188,22 @@ public class Fk7263ModuleApi implements ModuleApi {
             String response = Strings.join(",", validationErrors);
             throw new WebApplicationException(Response.status(Status.BAD_REQUEST).entity(response).build());
         }
+    }
+
+    private List<String> validateExternal(Fk7263Utlatande externalModel) {
+        List<String> validationErrors = new ExternalValidator(externalModel).validate();
+
+        // If no validation errors so far, continue with internal validation...
+        if (validationErrors.isEmpty()) {
+            try {
+                Fk7263Intyg internalModel = toInternal(externalModel);
+                validationErrors.addAll((new InternalValidator(internalModel).validate()));
+            } catch (ConverterException e) {
+                validationErrors.add("Failed to convert utlatande to internal model");
+            }
+        }
+
+        return validationErrors;
     }
 
     /**
