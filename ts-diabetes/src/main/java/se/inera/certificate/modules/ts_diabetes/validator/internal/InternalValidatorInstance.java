@@ -92,7 +92,7 @@ public class InternalValidatorInstance {
 
             if (hypoglykemier.getAllvarligForekomst() == null) {
                 addValidationError("hypoglykemier.allvarligForekomst",
-                        "ts.validation.hypoglykemier.allvarligForekomst.missing");
+                        "ts.validation.hypoglykemier.allvarlig-forekomst.missing");
             }
             
             if (hypoglykemier.getAllvarligForekomstTrafiken() == null) {
