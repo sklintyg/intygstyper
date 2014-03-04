@@ -122,7 +122,8 @@ angular
                         'fragaSvarService',
                         'fragaSvarCommonService',
                         'wcDialogService',
-                        function CreateCertCtrl($scope, $rootScope, $log, $timeout, $window, fragaSvarService, fragaSvarCommonService, wcDialogService) {
+                      'User',
+                        function CreateCertCtrl($scope, $rootScope, $log, $timeout, $window, fragaSvarService, fragaSvarCommonService, wcDialogService, User) {
 
                             // init state
                             $scope.qaList = {};
@@ -162,7 +163,7 @@ angular
                                     // answerable
                                     qa.answerDisabled = true;
                                     qa.answerDisabledReason = undefined; // Påminnelser kan inte besvaras men det behöver vi inte säga
-                                } else if (qa.amne == "KOMPLETTERING_AV_LAKARINTYG" && !$rootScope.WC_CONTEXT.lakare) {
+                                } else if (qa.amne == "KOMPLETTERING_AV_LAKARINTYG" && !User.userContext.lakare) {
                                     // RE-005, RE-006
                                     qa.answerDisabled = true;
                                     qa.answerDisabledReason = "Kompletteringar kan endast besvaras av läkare.";
