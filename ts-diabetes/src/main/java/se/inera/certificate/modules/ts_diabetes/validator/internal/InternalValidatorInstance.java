@@ -84,7 +84,24 @@ public class InternalValidatorInstance {
                     "ts.validation.hypoglykemier.tecken-nedsatt-hjarnfunktion.missing");
         }
 
-        if (hypoglykemier.getAllvarligForekomst() != null) {
+        if (isTrue(hypoglykemier.getTeckenNedsattHjarnfunktion())) {
+            if (hypoglykemier.getSaknarFormagaKannaVarningstecken() == null) {
+                addValidationError("hypoglykemier.saknarFormagaKannaVarningstecken",
+                        "ts.validation.hypoglykemier.saknar-formaga-kanna-varningstecken.missing");
+            }
+
+            if (hypoglykemier.getAllvarligForekomst() == null) {
+                addValidationError("hypoglykemier.allvarligForekomst",
+                        "ts.validation.hypoglykemier.allvarligForekomst.missing");
+            }
+            
+            if (hypoglykemier.getAllvarligForekomstTrafiken() == null) {
+                addValidationError("hypoglykemier.allvarligForekomstTrafiken",
+                        "ts.validation.hypoglykemier.allvarlig-forekomst-trafiken.missing");
+            }
+        }
+
+        if (isTrue(hypoglykemier.getAllvarligForekomst())) {
             if (hypoglykemier.getAllvarligForekomst()) {
                 assertDescriptionNotEmpty(hypoglykemier.getAllvarligForekomstBeskrivning(),
                         "hypoglykemier.allvarligForekomstBeskrivning",
@@ -92,7 +109,7 @@ public class InternalValidatorInstance {
             }
         }
 
-        if (hypoglykemier.getAllvarligForekomstTrafiken() != null) {
+        if (isTrue(hypoglykemier.getAllvarligForekomstTrafiken())) {
             if (hypoglykemier.getAllvarligForekomstTrafiken()) {
                 assertDescriptionNotEmpty(hypoglykemier.getAllvarligForekomstTrafikBeskrivning(),
                         "hypoglykemier.allvarligForekomstTrafikBeskrivning",
@@ -100,7 +117,7 @@ public class InternalValidatorInstance {
             }
         }
 
-        if (hypoglykemier.getAllvarligForekomstVakenTid() != null) {
+        if (isTrue(hypoglykemier.getAllvarligForekomstVakenTid())) {
             if (hypoglykemier.getAllvarligForekomstVakenTid()) {
                 if (hypoglykemier.getAllvarligForekomstVakenTidObservationstid() == null) {
                     addValidationError("hypoglykemier.allvarligForekomstVakenTidObservationstid",
@@ -151,7 +168,7 @@ public class InternalValidatorInstance {
         if (context.isHogreBehorighetContext()) {
             if (bedomning.getLamplighetInnehaBehorighet() == null) {
                 addValidationError("bedomning.lamplighetInnehaBehorighet",
-                        "ts.validation.bedomning.lamplighetInnehaBehorighet.missing");
+                        "ts.validation.bedomning.lamplighet-inneha-behorighet.missing");
             }
         }
     }

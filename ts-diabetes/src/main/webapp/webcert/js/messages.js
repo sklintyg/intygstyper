@@ -65,7 +65,7 @@ var tsDiabetesMessages = {
 
 		"ts.validation.bedomning.missing" : "Bedömning saknas",
 		"ts.validation.bedomning.must-choose-one" : "En körkortstyp eller Kan inte ta ställning måste väljas",
-		"ts.validation.bedomning.lamplighetInnehaBehorighet.missing" : "Ställning behöver tas till om patienten är lämpad för högre körkortsbehörighet",
+		"ts.validation.bedomning.lamplighet-inneha-behorighet.missing" : "Ställning behöver tas till om patienten är lämpad för högre körkortsbehörighet",
 
 		"ts.validation.diabetes.missing" : "Diabetes saknas",
 		"ts.validation.diabetes.diabetestyp.missing" : "Diabetestyp måste anges",
@@ -98,6 +98,9 @@ var tsDiabetesMessages = {
 		"ts.validation.hypoglykemier.missing" : "Hypoglykemier saknas",
 		"ts.validation.hypoglykemier.kunskap-om-atgarder.missing" : "Patienten har kunskap om åtgärder vid hypoglykemi saknas",
 		"ts.validation.hypoglykemier.tecken-nedsatt-hjarnfunktion.missing" : "Förekommer hypoglykemier med tecken på nedsatt hjärnfunktion saknas",
+		"ts.validation.hypoglykemier.saknar-formaga-kanna-varningstecken.missing" : "Saknar patienten förmåga att känna varningstecken på hypoglykemi saknas",
+		"ts.validation.hypoglykemier.allvarlig-forekomst-trafiken.missing" : "Har patienten haft allvarlig hypoglykemi i trafiken under det senaste året saknas",
+		"ts.validation.hypoglykemier.allvarlig-forekomst.missing" : "Har patienten haft allvarlig hypoglykemi saknas",
 		"ts.validation.hypoglykemier.allvarlig-forekomst.beskrivning.missing" : "Antal episoder med allvarlig hypoglykemi saknas",
 		"ts.validation.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning.missing" : "Information om episoder med allvarlig hypoglykemi i trafiken saknas",
 		"ts.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.missing" : "Allvarlig hypoglykemi under vaken tid saknas",
