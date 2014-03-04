@@ -87,6 +87,7 @@
 
   <%-- Dependencies to common (3rd party) components loaded from web app running at "/" context--%>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/js/vendor/angular/1.2.13/angular.js"/>"></script>
+  <script type="text/javascript" src="<c:url context="/m/fk7263" value="/js/vendor/angular/1.2.13/angular-cookies.min.js"/>"></script>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/js/vendor/angular/1.2.13/angular-route.min.js"/>"></script>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/js/vendor/angular/1.2.13/angular-sanitize.min.js"/>"></script>
   <script type="text/javascript" src="<c:url context="/m/fk7263" value="/js/vendor/angular/1.2.13/i18n/angular-locale_sv-se.js"/>"></script>
