@@ -35,7 +35,10 @@
 <form name="certForm" novalidate autocomplete="off">
   <div class="alert alert-error" ng-show="widgetState.showComplete" style="margin-right: 20px">
 	  <h3>Följande fält behöver kompletteras:</h3>
-	  Fält 2 - Kod saknas
+	  <ul>
+          <li ng-repeat="message in validationMessages">
+            <span message key="{{message.message}}"></span></li>
+        </ul>
 	</div>
 
 	<div id="certificate" class="row-fluid certificate">

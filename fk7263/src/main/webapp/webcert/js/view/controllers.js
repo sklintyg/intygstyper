@@ -122,8 +122,9 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
 
         $scope.autoEnterDate = function (modelName) {
             if ($scope.basedOnState.check[modelName]) {
-                if ($scope.cert[modelName] == "")
+                if ($scope.cert[modelName] == "" || $scope.cert[modelName] == undefined) {
                     $scope.cert[modelName] = formatDate($scope.today);
+                }
             } else {
                 $scope.cert[modelName] = "";
             }
