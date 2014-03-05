@@ -31,8 +31,6 @@ public class ProgrammaticLegacyTransportSchemaValidator {
 
     private List<String> validationErrors = new ArrayList<>();
 
-    private static final String PERSON_NUMBER_REGEX = "[0-9]{8}[-+][0-9]{4}";
-
     private static final List<String> PATIENT_ID_OIDS = asList("1.2.752.129.2.1.3.1", "1.2.752.129.2.1.3.3");
 
     private static final List<String> ENHET_OID = asList("1.2.752.129.2.1.4.1");
