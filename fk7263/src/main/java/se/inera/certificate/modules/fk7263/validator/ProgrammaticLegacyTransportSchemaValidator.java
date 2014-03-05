@@ -87,7 +87,9 @@ public class ProgrammaticLegacyTransportSchemaValidator {
         Observation huvudDiagnos = externalutlatande.findObservationByKategori(ObservationsKoder.DIAGNOS);
         if (huvudDiagnos == null || huvudDiagnos.getObservationskod() == null
                 || StringUtils.isEmpty(huvudDiagnos.getObservationskod().getCode())) {
-            addValidationError("Field 2: Missing diagnose code");
+            if (!externalutlatande.isAvstangningEnligtSmL()) {
+                addValidationError("Field 2: Missing diagnose code");
+            }
             return;
         }
 

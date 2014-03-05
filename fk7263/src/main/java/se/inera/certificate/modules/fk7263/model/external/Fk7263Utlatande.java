@@ -16,6 +16,7 @@ import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.model.util.Predicate;
+import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
 import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
 
 /**
@@ -233,5 +234,9 @@ public class Fk7263Utlatande {
             }
         }
         return toDate;
-    }  
+    }
+
+    public boolean isAvstangningEnligtSmL() {
+        return getAktivitet(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA) != null;
+    }
 }
