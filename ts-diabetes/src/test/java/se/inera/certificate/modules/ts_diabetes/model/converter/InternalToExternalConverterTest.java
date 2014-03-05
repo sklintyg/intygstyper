@@ -40,7 +40,7 @@ public class InternalToExternalConverterTest {
     public void setUp() throws Exception {
         this.converter = new InternalToExternalConverter();
     }
-    
+
     @Test
     public void testConvertUtlatandeFromInternalToExternal() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
@@ -51,9 +51,9 @@ public class InternalToExternalConverterTest {
             actual.getAktiviteter();
 
             Utlatande expected = scenario.asExternalModel();
-            
+
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
-        
+
     }
 }

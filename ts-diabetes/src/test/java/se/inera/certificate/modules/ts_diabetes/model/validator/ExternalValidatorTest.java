@@ -40,7 +40,7 @@ public class ExternalValidatorTest {
     public void setUp() throws Exception {
         validator = new Validator();
     }
-    
+
     @Ignore
     @Test
     public void testValidate() throws Exception {

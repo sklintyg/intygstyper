@@ -5,7 +5,6 @@ import org.joda.time.LocalDate;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 
-
 public class Observation extends se.inera.certificate.model.Observation {
 
     private Id id;
@@ -13,9 +12,9 @@ public class Observation extends se.inera.certificate.model.Observation {
     private Boolean forekomst;
 
     private Kod lateralitet;
-    
+
     private String ostruktureradTid;
-    
+
     private LocalDate observationstid;
 
     public Kod getLateralitet() {

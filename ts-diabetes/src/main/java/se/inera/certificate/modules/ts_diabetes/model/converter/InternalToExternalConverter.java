@@ -143,9 +143,9 @@ public class InternalToExternalConverter {
 
         List<Vardkontakt> vardkontakter = new ArrayList<Vardkontakt>();
         Vardkontakt vardkontakt = new Vardkontakt();
-        
+
         vardkontakt.setIdkontroll(createIdKontrollKod(source.getVardkontakt().getIdkontroll()));
-        
+
         vardkontakt.setVardkontakttyp(CodeConverter.toKod(VardkontakttypKod.MIN_UNDERSOKNING));
         vardkontakter.add(vardkontakt);
 
@@ -156,7 +156,6 @@ public class InternalToExternalConverter {
     private Kod createIdKontrollKod(String code) {
         return CodeConverter.toKod(IdKontrollKod.valueOf(code));
     }
-
 
     /**
      * Creates a List of {@link Kod}[er] concerning what type of permissions this Utlatande concerns
@@ -263,15 +262,16 @@ public class InternalToExternalConverter {
         if (source.getDiabetes().getDiabetestyp() != null) {
             Observation diabetes = new Observation();
 
-            diabetes.setObservationskod(CodeConverter.toKod(ObservationsKod.valueOf(source.getDiabetes().getDiabetestyp())));
+            diabetes.setObservationskod(CodeConverter.toKod(ObservationsKod.valueOf(source.getDiabetes()
+                    .getDiabetestyp())));
             diabetes.setForekomst(true);
 
-            //We are only interested in from, hence tom is set to null
+            // We are only interested in from, hence tom is set to null
             if (source.getDiabetes().getObservationsperiod() != null) {
-                diabetes.setObservationsperiod(new PartialInterval(PartialConverter.stringToPartial(source.getDiabetes()
-                    .getObservationsperiod()), null));
+                diabetes.setObservationsperiod(new PartialInterval(PartialConverter.stringToPartial(source
+                        .getDiabetes().getObservationsperiod()), null));
             }
-            
+
             observationer.add(diabetes);
         }
 
@@ -280,13 +280,13 @@ public class InternalToExternalConverter {
             Observation insulin = new Observation();
             insulin.setObservationskod(CodeConverter.toKod(ObservationsKod.DIABETIKER_INSULINBEHANDLING));
             insulin.setForekomst(source.getDiabetes().getInsulin());
-            
-            //We are only interested in from, hence tom is set to null
+
+            // We are only interested in from, hence tom is set to null
             if (source.getDiabetes().getInsulinBehandlingsperiod() != null) {
                 insulin.setObservationsperiod(new PartialInterval(PartialConverter.stringToPartial(source.getDiabetes()
-                    .getInsulinBehandlingsperiod()), null));
+                        .getInsulinBehandlingsperiod()), null));
             }
-            
+
             observationer.add(insulin);
         }
 
@@ -619,9 +619,4 @@ public class InternalToExternalConverter {
         vardgivare.setNamn(source.getVardgivarnamn());
         return vardgivare;
     }
-
-    private boolean isTrue(Boolean bool) {
-        return bool != null && bool;
-    }
-
 }

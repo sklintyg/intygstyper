@@ -26,7 +26,6 @@ import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
  */
 public enum UtlatandeKod implements CodeSystem {
 
-    // TODO: Create specific Code representing module
     TS_DIABETES("TSTRK1031 (U06, V02)", "06", "02", "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.");
 
     private static String codeSystemName = "kv_utlåtandetyp_intyg";

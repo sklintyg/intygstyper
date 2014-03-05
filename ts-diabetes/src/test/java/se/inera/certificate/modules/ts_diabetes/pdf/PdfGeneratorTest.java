@@ -53,7 +53,8 @@ public class PdfGeneratorTest {
             return;
         }
 
-        File file = new File(String.format("%s/%s_%s.pdf", dir, scenario.getName(), LocalDateTime.now().toString("yyyyMMdd_HHmm")));
+        File file = new File(String.format("%s/%s_%s.pdf", dir, scenario.getName(),
+                LocalDateTime.now().toString("yyyyMMdd_HHmm")));
         FileOutputStream fop = new FileOutputStream(file);
 
         file.createNewFile();

@@ -44,13 +44,13 @@ public class AktiviteterValidationInstance extends ExternalValidatorInstance {
             if (aktivitet.getAktivitetskod().equals(AKT_86944008)) {
                 // Synfältsprövning (86944008)
                 assertNotNull(aktivitet.getId(), entity + ".aktivitetsId");
-                //assertNull(aktivitet.getForekomst(), entity + ".forekomst");
+                // assertNull(aktivitet.getForekomst(), entity + ".forekomst");
                 assertNotNull(aktivitet.getMetod(), entity + ".metod");
 
             } else if (aktivitet.getAktivitetskod().equals(AKT_AKT18)) {
                 // Prövning av ögats rörlighet (AKT18)
                 assertNotNull(aktivitet.getId(), entity + ".aktivitetsId");
-                //assertNull(aktivitet.getForekomst(), entity + ".forekomst");
+                // assertNull(aktivitet.getForekomst(), entity + ".forekomst");
                 assertNull(aktivitet.getMetod(), entity + ".metod");
 
             }

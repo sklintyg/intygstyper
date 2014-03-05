@@ -121,7 +121,7 @@ public final class CodeConverter {
 
         return true;
     }
-    
+
     /**
      * Given a Kod and its CodeSystem, returns the corresponding internal enum constant name for that code from the
      * CodeSystem representing it.

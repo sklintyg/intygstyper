@@ -40,7 +40,7 @@ public class ExternalToInternalConverterTest {
     public void setUp() throws Exception {
         converter = new ExternalToInternalConverter();
     }
-    
+
     @Test
     public void testConvertUtlatande() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {

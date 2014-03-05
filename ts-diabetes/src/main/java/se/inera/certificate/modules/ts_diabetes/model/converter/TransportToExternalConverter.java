@@ -79,7 +79,7 @@ public class TransportToExternalConverter {
         }
         Utlatande utlatande = new Utlatande();
         utlatande.setId(IsoTypeConverter.toId(source.getUtlatandeId()));
-        
+
         // Validate and set Typ
         Kod typAvUtlatande = IsoTypeConverter.toKod(source.getTypAvUtlatande());
         UtlatandeKod utlatandeKod = CodeConverter.fromCode(typAvUtlatande, UtlatandeKod.class);
@@ -88,7 +88,7 @@ public class TransportToExternalConverter {
         } catch (IllegalArgumentException e) {
             throw new ConverterException(e.getMessage());
         }
-        
+
         utlatande.setTyp(typAvUtlatande);
         utlatande.getKommentarer().addAll(source.getKommentars());
         utlatande.setPatient(convertPatient(source.getPatient()));
@@ -98,11 +98,11 @@ public class TransportToExternalConverter {
         utlatande.getIntygAvser().addAll(convertCDtoKod(source.getIntygAvsers()));
         utlatande.getObservationer().addAll(convertObservationer(source.getObservations()));
         utlatande.getRekommendationer().addAll(convertRekommendationer(source.getRekommendations()));
-        
+
         if (source.getAktivitets() != null) {
             utlatande.getAktiviteter().addAll(convertAktiviteter(source.getAktivitets()));
         }
-        
+
         utlatande.getVardkontakter().add(convertVardkontakt(source.getVardkontakt()));
         utlatande.getObservationAktivitetRelationer().addAll(
                 convertObservationAktivitetRelationer(source.getObservationAktivitetRelations()));
@@ -335,14 +335,13 @@ public class TransportToExternalConverter {
         if (source.getVarde() != null) {
             observation.getVarde().add(IsoTypeConverter.toPhysicalQuantity(source.getVarde()));
         }
-        
+
         if (source.getObservationsperiod() != null) {
             PartialInterval partialInterval = new PartialInterval();
             partialInterval.setFrom(source.getObservationsperiod().getFrom());
             observation.setObservationsperiod(partialInterval);
         }
-        
-        
+
         if (source.getObservationstid() != null) {
             observation.setObservationstid(source.getObservationstid());
         }
@@ -371,7 +370,7 @@ public class TransportToExternalConverter {
      * @param source
      *            {@link HosPersonalType}
      * @return {@link HosPersonal}
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     private HosPersonal convertHosPersonal(HosPersonalType source) throws ConverterException {
         if (source == null) {
@@ -393,13 +392,13 @@ public class TransportToExternalConverter {
      * @param source
      *            {@link EnhetType}
      * @return {@link Vardenhet}
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     private Vardenhet convertVardenhet(EnhetType source) throws ConverterException {
         if (source == null) {
             throw new ConverterException("Vardenhet missing");
         }
-        
+
         Vardenhet vardenhet = new Vardenhet();
         vardenhet.setId(IsoTypeConverter.toId(source.getEnhetsId()));
         vardenhet.setNamn(source.getEnhetsnamn());
@@ -418,7 +417,7 @@ public class TransportToExternalConverter {
      * @param source
      *            {@link VardgivareType}
      * @return {@link Vardgivare}
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     private Vardgivare convertVardgivare(VardgivareType source) throws ConverterException {
         if (source == null) {
@@ -437,7 +436,7 @@ public class TransportToExternalConverter {
      * @param source
      *            {@link PatientType}
      * @return {@link Patient}
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     private Patient convertPatient(PatientType source) throws ConverterException {
         if (source == null) {

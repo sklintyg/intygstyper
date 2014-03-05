@@ -8,7 +8,7 @@ import se.inera.certificate.model.Kod;
 public class Rekommendation extends se.inera.certificate.model.Rekommendation {
 
     private List<Kod> varde;
-    
+
     private Boolean boolean_varde;
 
     public List<Kod> getVarde() {

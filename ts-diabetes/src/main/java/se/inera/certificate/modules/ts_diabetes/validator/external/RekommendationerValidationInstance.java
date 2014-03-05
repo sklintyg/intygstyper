@@ -44,7 +44,7 @@ public class RekommendationerValidationInstance extends ExternalValidatorInstanc
                 // Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i (REK9)
                 assertNotEmpty(rekommendation.getBeskrivning(), entity + ".beskrivning");
                 assertNull(rekommendation.getBoolean_varde(), entity + ".varde");
-                //TODO: determine why assertNull on rekommendation.getVarde throws badRequest.
+                // TODO: determine why assertNull on rekommendation.getVarde throws badRequest.
             }
         }
     }

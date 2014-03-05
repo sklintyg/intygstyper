@@ -201,7 +201,7 @@ public class ScenarioFinder {
                 throw new ScenarioNotFoundException(scenarioFile.getName(), "internal MI", e);
             }
         }
-    
+
     }
 
     private static File getTransportModelFor(File otherModel) {
@@ -218,5 +218,5 @@ public class ScenarioFinder {
         String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());
         return new File(INTERNAL_MODEL_PATH, filenameWithoutExt + INTERNAL_MODEL_EXT);
     }
-  
+
 }

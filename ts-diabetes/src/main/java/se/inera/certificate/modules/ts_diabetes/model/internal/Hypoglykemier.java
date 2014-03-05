@@ -2,23 +2,23 @@ package se.inera.certificate.modules.ts_diabetes.model.internal;
 
 public class Hypoglykemier {
     private Boolean kunskapOmAtgarder;
-    
+
     private Boolean teckenNedsattHjarnfunktion;
-    
+
     private Boolean saknarFormagaKannaVarningstecken;
-    
+
     private Boolean allvarligForekomst;
-    
+
     private String allvarligForekomstBeskrivning;
-    
+
     private Boolean allvarligForekomstTrafiken;
-    
+
     private String allvarligForekomstTrafikBeskrivning;
-    
+
     private Boolean allvarligForekomstVakenTid;
-   
+
     private String allvarligForekomstVakenTidObservationstid;
-    
+
     private Boolean egenkontrollBlodsocker;
 
     public Boolean getKunskapOmAtgarder() {

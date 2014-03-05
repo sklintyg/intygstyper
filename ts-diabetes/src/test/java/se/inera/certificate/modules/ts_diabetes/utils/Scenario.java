@@ -39,7 +39,8 @@ public interface Scenario {
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
      */
-    se.inera.certificate.modules.ts_diabetes.model.external.Utlatande asExternalModel() throws ScenarioNotFoundException;
+    se.inera.certificate.modules.ts_diabetes.model.external.Utlatande asExternalModel()
+            throws ScenarioNotFoundException;
 
     /**
      * Returns the scenario as a external model, wrapped in a {@link CertificateContentHolder}.
@@ -57,6 +58,7 @@ public interface Scenario {
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
      */
-    se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande asInternalModel() throws ScenarioNotFoundException;
+    se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande asInternalModel()
+            throws ScenarioNotFoundException;
 
 }

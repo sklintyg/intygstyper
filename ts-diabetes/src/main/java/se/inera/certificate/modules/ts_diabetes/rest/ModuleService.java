@@ -67,7 +67,7 @@ public class ModuleService implements ModuleApi {
 
     @Autowired
     private ExternalToInternalConverter externalToInternalConverter;
-    
+
     @Autowired
     private InternalToExternalConverter internalToExternalConverter;
 
@@ -152,10 +152,11 @@ public class ModuleService implements ModuleApi {
     }
 
     @Override
-    public ValidateDraftResponseHolder validateDraft(se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande utlatande) {
+    public ValidateDraftResponseHolder validateDraft(
+            se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande utlatande) {
         return validator.validateInternal(utlatande);
     }
-    
+
     /**
      * {@inheritDoc}
      */

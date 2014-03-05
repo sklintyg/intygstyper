@@ -28,7 +28,6 @@ import javax.ws.rs.core.Response.Status;
 import junit.framework.Assert;
 
 import org.apache.cxf.jaxrs.client.WebClient;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +63,7 @@ public class ModuleApiTest {
             assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
         }
     }
-    
+
     @Test(expected = BadRequestException.class)
     public void testUnmarshallBroken() throws Exception {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("invalid-*")) {
@@ -88,7 +87,7 @@ public class ModuleApiTest {
             assertResponseStatus("Error in scenario " + scenario.getName(), Status.NO_CONTENT);
         }
     }
-    
+
     @Test
     public void testValidateWithErrors() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {
@@ -102,7 +101,7 @@ public class ModuleApiTest {
             }
         }
     }
-    
+
     @Test
     public void testPdf() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
@@ -116,7 +115,7 @@ public class ModuleApiTest {
                     contentDisposition.startsWith("filename=lakarutlatande"));
         }
     }
-    
+
     @Test
     public void testConvertExternalToInternal() throws Exception {
         CertificateContentHolder holder = new CertificateContentHolder();
@@ -127,7 +126,7 @@ public class ModuleApiTest {
             assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
         }
     }
-    
+
     @Test
     public void testConvertInternalToExternal() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {

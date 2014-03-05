@@ -20,18 +20,36 @@ package se.inera.certificate.modules.ts_diabetes.model.codes;
 
 import se.inera.certificate.model.Kod;
 import static se.inera.certificate.modules.ts_diabetes.model.codes.Kodverk.ID_KONTROLL;
+
 /**
- * Represents the code used by this module to define id-kontroll,
- * Needs to be updated when proper codes are delivered..
+ * Represents the code used by this module to define id-kontroll, Needs to be updated when proper codes are delivered..
  */
 public enum IdKontrollKod implements CodeSystem {
 
-    ID_KORT ("IDK1", "SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.", ID_KONTROLL),
-    FORETAG_ELLER_TJANSTEKORT ("IDK2","SIS-märkt företagskort eller tjänstekort.", ID_KONTROLL),
-    KORKORT ("IDK3", "Svenskt körkort", ID_KONTROLL),
-    PERS_KANNEDOM ("IDK4", "Personlig kännedom", ID_KONTROLL),
-    FORSAKRAN_KAP18 ("IDK5","Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2)", ID_KONTROLL),
-    PASS ("IDK6","Svenskt EU-pass, annat EU-pass utfärdade från och med 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz fron och med den 1 september 2006.", ID_KONTROLL);
+    /** ID-kort (IDK1) */
+    ID_KORT("IDK1", "SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.",
+            ID_KONTROLL),
+
+    /** SIS-märkt företagskort eller tjänstekort (IDK2) */
+    FORETAG_ELLER_TJANSTEKORT("IDK2", "SIS-märkt företagskort eller tjänstekort.", ID_KONTROLL),
+
+    /** Svenskt körkort (IDK3) */
+    KORKORT("IDK3", "Svenskt körkort", ID_KONTROLL),
+
+    /** Personlig kännedom (IDK4) */
+    PERS_KANNEDOM("IDK4", "Personlig kännedom", ID_KONTROLL),
+
+    /** Försäkran enligt 18 kap §4 (IDK5) */
+    FORSAKRAN_KAP18(
+            "IDK5",
+            "Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2)",
+            ID_KONTROLL),
+
+    /** Pass (IDK6) */
+    PASS(
+            "IDK6",
+            "Svenskt EU-pass, annat EU-pass utfärdade från och med 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz fron och med den 1 september 2006.",
+            ID_KONTROLL);
 
     private final String codeSystemName;
 

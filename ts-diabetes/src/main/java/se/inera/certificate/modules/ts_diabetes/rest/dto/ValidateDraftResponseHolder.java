@@ -20,7 +20,7 @@ public class ValidateDraftResponseHolder {
     public boolean hasErrorMessages() {
         return !(this.validationErrors.isEmpty());
     }
-    
+
     public List<ValidationMessage> getValidationErrors() {
         return validationErrors;
     }

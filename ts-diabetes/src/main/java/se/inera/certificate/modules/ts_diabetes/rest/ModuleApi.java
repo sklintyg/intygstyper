@@ -86,8 +86,8 @@ public interface ModuleApi {
     @Path("/valid-draft")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    ValidateDraftResponseHolder validateDraft(se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande utlatande);
-
+    ValidateDraftResponseHolder validateDraft(
+            se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande utlatande);
 
     /**
      * Generates a PDF from the external model.

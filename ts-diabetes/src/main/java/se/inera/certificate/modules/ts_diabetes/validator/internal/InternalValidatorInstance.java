@@ -94,7 +94,7 @@ public class InternalValidatorInstance {
                 addValidationError("hypoglykemier.allvarligForekomst",
                         "ts.validation.hypoglykemier.allvarlig-forekomst.missing");
             }
-            
+
             if (hypoglykemier.getAllvarligForekomstTrafiken() == null) {
                 addValidationError("hypoglykemier.allvarligForekomstTrafiken",
                         "ts.validation.hypoglykemier.allvarlig-forekomst-trafiken.missing");
@@ -135,7 +135,7 @@ public class InternalValidatorInstance {
                 addValidationError("hypoglykemier.egenkontrollBlodsocker",
                         "ts.validation.hypoglykemier.egenkontroll-blodsocker.missing");
             }
-            
+
             if (hypoglykemier.getAllvarligForekomstVakenTid() == null) {
                 addValidationError("hypoglykemier.allvarligForekomstVakenTid",
                         "ts.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.missing");
@@ -190,8 +190,7 @@ public class InternalValidatorInstance {
 
         boolean annanBehandling = diabetes.getAnnanBehandlingBeskrivning() != null
                 && !diabetes.getAnnanBehandlingBeskrivning().isEmpty();
-        if (!(isTrue(diabetes.getEndastKost()) || isTrue(diabetes.getTabletter())
-                || isTrue(diabetes.getInsulin()) || annanBehandling)) {
+        if (!(isTrue(diabetes.getEndastKost()) || isTrue(diabetes.getTabletter()) || isTrue(diabetes.getInsulin()) || annanBehandling)) {
             addValidationError("diabetes", "ts.validation.diabetes.behandling.missing");
         }
     }
@@ -234,7 +233,7 @@ public class InternalValidatorInstance {
         if (syn == null) {
             return;
         }
-        
+
         if (syn.getSeparatOgonlakarintyg() == null) {
             addValidationError("syn.separatOgonlakarintyg", "ts.validation.syn.separat-ogonlakarintyg.missing");
         }
@@ -314,7 +313,7 @@ public class InternalValidatorInstance {
     }
 
     private boolean isFalse(Boolean bool) {
-        return  bool != null && !bool;
+        return bool != null && !bool;
     }
 
     /**

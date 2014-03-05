@@ -5,21 +5,21 @@ import java.util.List;
 import org.joda.time.LocalDate;
 
 public class IntygItem {
-    
+
     private String id;
-    
+
     private String type;
-    
+
     private LocalDate fromDate;
-    
+
     private LocalDate tomDate;
-    
+
     private List<IntygStatus> statuses;
-    
+
     private LocalDate signedDate;
-    
+
     private String signedBy;
-        
+
     public IntygItem() {
 
     }
@@ -55,7 +55,7 @@ public class IntygItem {
     public void setTomDate(LocalDate tomDate) {
         this.tomDate = tomDate;
     }
-    
+
     public List<IntygStatus> getStatuses() {
         return statuses;
     }
@@ -79,5 +79,5 @@ public class IntygItem {
     public void setSignedBy(String signedBy) {
         this.signedBy = signedBy;
     }
-    
+
 }

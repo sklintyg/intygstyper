@@ -3,19 +3,19 @@ package se.inera.certificate.modules.ts_diabetes.model.internal;
 public class Syn {
 
     private Boolean separatOgonlakarintyg;
-    
+
     private Boolean synfaltsprovningUtanAnmarkning;
-    
+
     private Synskarpevarden hoger;
-    
+
     private Synskarpevarden vanster;
 
     private Synskarpevarden binokulart;
 
     private Boolean diplopi;
-    
+
     private Boolean synfaltsprovning;
-    
+
     private Boolean provningOgatsRorlighet;
 
     public Boolean getSeparatOgonlakarintyg() {
@@ -34,7 +34,6 @@ public class Syn {
         this.synfaltsprovningUtanAnmarkning = synfaltsprovningUtanAnmarkning;
     }
 
-    
     public void setHoger(Double utanKorr, Double medKorr) {
         if (hoger == null) {
             hoger = new Synskarpevarden();
@@ -50,7 +49,7 @@ public class Syn {
         vanster.setUtanKorrektion(utanKorr);
         vanster.setMedKorrektion(medKorr != null ? medKorr : null);
     }
-    
+
     public void setBinokulart(Double utanKorr, Double medKorr) {
         if (binokulart == null) {
             binokulart = new Synskarpevarden();
@@ -58,7 +57,7 @@ public class Syn {
         binokulart.setUtanKorrektion(utanKorr);
         binokulart.setMedKorrektion(medKorr != null ? medKorr : null);
     }
-    
+
     public Synskarpevarden getHoger() {
         return hoger;
     }

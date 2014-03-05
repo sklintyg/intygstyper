@@ -89,7 +89,7 @@ public class InternalValidatorTest {
         assertEquals("hypoglykemier.allvarligForekomstVakenTidObservationstid",
                 getSingleElement(validationResponse.getValidationErrors()).getField());
     }
-    
+
     @Test
     public void testInvalidDiabetesMissing() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-missing-diabetes").asInternalModel();
@@ -97,14 +97,15 @@ public class InternalValidatorTest {
 
         assertEquals(3, validationResponse.getValidationErrors().size());
     }
-    
+
     @Test
     public void testInvalidHypoglykemierMissing() throws Exception {
-        Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-missing-hypoglykemier-kunskap").asInternalModel();
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-missing-hypoglykemier-kunskap")
+                .asInternalModel();
         ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
-        
-        assertEquals("hypoglykemier.kunskapOmAtgarder",
-                getSingleElement(validationResponse.getValidationErrors()).getField());
+
+        assertEquals("hypoglykemier.kunskapOmAtgarder", getSingleElement(validationResponse.getValidationErrors())
+                .getField());
     }
 
     /**

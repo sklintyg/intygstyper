@@ -61,8 +61,7 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
                 assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
                 assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
 
-            }
-                else if (observation.getObservationskod().equals(OBS_420050001)) {
+            } else if (observation.getObservationskod().equals(OBS_420050001)) {
                 assertNotNull(observation.getLateralitet(), entity + ".lateralitet");
                 if (assertNotNull(observation.getVarde(), entity + ".varde").success()) {
                     if (observation.getVarde().get(0).getQuantity() < 0.0
@@ -105,7 +104,7 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
 
         // If the persontransport flag is set, assert required observations are supplied
         if (context.isPersontransportContext()) {
-            //TODO: do stuff here
+            // TODO: do stuff here
 
         }
     }

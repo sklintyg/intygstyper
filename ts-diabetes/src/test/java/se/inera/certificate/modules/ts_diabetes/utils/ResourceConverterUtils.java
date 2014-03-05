@@ -22,7 +22,8 @@ public class ResourceConverterUtils {
 
     public static se.inera.certificate.modules.ts_diabetes.model.external.Utlatande toExternal(File resource)
             throws IOException {
-        return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.ts_diabetes.model.external.Utlatande.class);
+        return OBJECT_MAPPER.readValue(resource,
+                se.inera.certificate.modules.ts_diabetes.model.external.Utlatande.class);
     }
 
     public static CertificateContentHolder toExternalWithHolder(File resource) throws IOException {
@@ -47,11 +48,13 @@ public class ResourceConverterUtils {
 
     public static se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande toInternal(File resource)
             throws IOException {
-        return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande.class);
+        return OBJECT_MAPPER.readValue(resource,
+                se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande.class);
     }
 
     public static se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande toInternalWC(File resource)
             throws IOException {
-        return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande.class);
+        return OBJECT_MAPPER.readValue(resource,
+                se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande.class);
     }
 }

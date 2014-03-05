@@ -42,7 +42,7 @@ public class TransportToExternalConverterTest {
     public void setUp() {
         converter = new TransportToExternalConverter();
     }
-    
+
     @Test
     public void testTransportToExternal() throws Exception {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {

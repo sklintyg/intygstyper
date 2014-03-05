@@ -1,18 +1,17 @@
 package se.inera.certificate.modules.ts_diabetes.rest.dto;
 
-
 public class HoSPersonal {
 
     private String hsaId;
-    
+
     private String namn;
-    
+
     private String forskrivarkod;
-    
+
     private String befattning;
-    
+
     private Vardenhet vardenhet;
-        
+
     public HoSPersonal() {
 
     }
