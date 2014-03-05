@@ -8,7 +8,7 @@
         <div wc-spinner label="info.loading.existing.qa" show-spinner="!widgetState.doneLoading" show-content="widgetState.doneLoading">
 
           <div ng-if="widgetState.sentMessage">
-            <div alert type="'info'" close="dismissProxy()">
+            <div alert type="'info'" close="dismissProxy()" id="question-is-sent-to-fk-message-text">
               <strong>Frågan skickad till Försäkringskassan</strong><br> Vårdenheten får ett mejl när svar har inkommit.
             </div>
           </div>
@@ -18,7 +18,7 @@
               <button class="btn btn-success" ng-click="toggleQuestionForm()" id="askQuestionBtn">Ny fråga till Försäkringskassan</button>
             </div>
           </div>
-          <div ng-if="!certProperties.sentToFK && (qaList.length<1)" class="alert alert-info">
+          <div ng-if="!certProperties.sentToFK && (qaList.length<1)" class="alert alert-info" id="certificate-is-not-sent-to-fk-message-text">
             <strong>Intyget har inte skickats till försäkringskassan</strong><br> Frågor kan därför ej ställas för intyget.
           </div>
 
