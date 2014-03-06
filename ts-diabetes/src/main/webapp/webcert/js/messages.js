@@ -18,12 +18,6 @@
  */
 'use strict';
 
-var sharedMessages = {
-    "sv" : {
-        "ts.helptext.inledande" : "Läkarintyg, diabetes ska användas vid diabetessjukdom. Föreskrivna krav på läkarens specialistkompetens vid diabetessjukdom framgår av 17 kap i Transportstyrelsens föreskrifter (TSFS 2010:125) och allmänna råd om medicinska krav för innehav av körkort m.m."
-    }
-};
-
 var tsDiabetesMessages = {
     "sv" : {
         "ts.label.empty" : "",

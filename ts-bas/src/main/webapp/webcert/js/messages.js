@@ -18,14 +18,9 @@
  */
 'use strict';
 
-var sharedMessages = {
-		"sv" : {
-			"ts.helptext.inledande" : "Läkarintyg, bas ska användas vid förlängd giltighet av högre behörighet från 45 år, ansökan om körkortstillstånd för grupp II och III och vid ansökan om taxiförarlegitimation. Läkarintyg, bas kan även användas när Transportstyrelsen i annat fall begärt ett allmänt läkarintyg avseende lämplighet att inneha körkort. Specialistintyg finns bl. a för alkohol, narkotika, läkemedel, synfunktion, Alkolås m.m. Se: <a href='http://www.transportstyrelsen.se'>www.transportstyrelsen.se</a>. Därefter 'Väg' och 'Trafikmedicin'"
-		}
-};
-
 var tsBasMessages = {
 	"sv" : {
+	    
 		"ts.label.certtitle" : "Läkarintyg Transportstyrelsen Bas",
 		"ts.label.intygavser" : "Intyget avser",
 		"ts.label.identitet" : "Identiteten är styrkt genom",
