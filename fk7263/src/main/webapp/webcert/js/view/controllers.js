@@ -62,35 +62,42 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
             $scope.cert[field] = $scope.cert[field].substr(0, $scope.inputLimits[field]);
         };
 
-        function limitOvrigtLength (val) {
-            var totalOvrigtLength = $scope.getTotalOvrigtLength();
-            if (totalOvrigtLength > $scope.inputLimits.ovrigt) {
-                // Remove characters over limit from current field
-                return val.substr(0, val.length - (totalOvrigtLength - $scope.inputLimits.ovrigt));
-            }
-            return val;
-        }
 
         $scope.limitOtherField = function (field) {
+            function limitOvrigtLength (val) {
+                var totalOvrigtLength = $scope.getTotalOvrigtLength();
+                if (totalOvrigtLength > $scope.inputLimits.ovrigt) {
+                    // Remove characters over limit from current field
+                    return val.substr(0, val.length - (totalOvrigtLength - $scope.inputLimits.ovrigt));
+                }
+                return val;
+            }
             $scope.cert[field] = limitOvrigtLength($scope.cert[field])
         };
 
         $scope.getTotalOvrigtLength = function () {
-        	 var totalOvrigtLength = getLengthOrZero($scope.cert.kommentar);
-        	
-        	 if ($scope.cert.otherData != undefined) {
-	        	 totalOvrigtLength = getLengthOrZero($scope.cert.otherData.baseradPaAnnat),
-	        	 + getLengthOrZero($scope.cert.otherData.workingHours25),
-	        	 + getLengthOrZero($scope.cert.otherData.workingHours50),
-	        	 + getLengthOrZero($scope.cert.otherData.workingHours75),
-	        	 + getLengthOrZero($scope.cert.otherData.workingHours100),
-	        	 + getLengthOrZero($scope.cert.otherData.prognosisClarification);
-        	 }
-        	if ($scope.cert.otherData != undefined) {
-            	if ($scope.cert.otherData.rehabWhen instanceof Date) {
-            		totalOvrigtLength += ($filter('date')($scope.cert.otherData.rehabWhen, 'yyyy-MM-dd')).length;
-            	}
-        	}
+            function getLengthOrZero(value) {
+                if (value == undefined) {
+                    return 0;
+                } else {
+                    return value.length;
+                }
+            };
+            var totalOvrigtLength = getLengthOrZero($scope.cert.kommentar);
+
+            if ($scope.cert.otherData != undefined) {
+                totalOvrigtLength = getLengthOrZero($scope.cert.otherData.baseradPaAnnat),
+                    +getLengthOrZero($scope.cert.otherData.workingHours25),
+                    +getLengthOrZero($scope.cert.otherData.workingHours50),
+                    +getLengthOrZero($scope.cert.otherData.workingHours75),
+                    +getLengthOrZero($scope.cert.otherData.workingHours100),
+                    +getLengthOrZero($scope.cert.otherData.prognosisClarification);
+            }
+            if ($scope.cert.otherData != undefined) {
+                if ($scope.cert.otherData.rehabWhen instanceof Date) {
+                    totalOvrigtLength += ($filter('date')($scope.cert.otherData.rehabWhen, 'yyyy-MM-dd')).length;
+                }
+            }
             // NOTE: this date (rehabWhen) will probably
             // need a label and therefore
             // use more than the length of the date when
@@ -101,14 +108,7 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
             // in cert.otherData)
             return totalOvrigtLength;
         };
-        
-        function getLengthOrZero (value) {
-        	if (value == undefined) {
-        		return 0;
-        	} else {
-        		return value.length;
-        	}
-        };
+
 
         // Based on handling (4b)
         $scope.basedOnState = {
@@ -121,6 +121,12 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
         };
 
         $scope.autoEnterDate = function (modelName) {
+            function formatDate(date) {
+                var dd = date.getDate();
+                var mm = date.getMonth() + 1;
+                var yyyy = date.getFullYear();
+                return '' + yyyy + '-' + (mm <= 9 ? '0' + mm : mm) + '-' + (dd <= 9 ? '0' + dd : dd);
+            };
             if ($scope.basedOnState.check[modelName]) {
                 if ($scope.cert[modelName] == "" || $scope.cert[modelName] == undefined) {
                     $scope.cert[modelName] = formatDate($scope.today);
@@ -129,13 +135,7 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
                 $scope.cert[modelName] = "";
             }
         };
-        
-        function formatDate(date) {
-        	var dd = date.getDate();
-        	var mm = date.getMonth()+1;
-        	var yyyy = date.getFullYear();
-        	return '' + yyyy + '-' + (mm<=9 ? '0' + mm : mm) + '-' + (dd <= 9 ? '0' + dd : dd);        	
-        };
+
 
         // Diagnose handling (2)
         $scope.diagnose_codes = [
@@ -270,103 +270,6 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
             }
         });
 
-        // Default data
-        var dummycert = {
-            // added view data model
-            otherData : {
-                baseradPaAnnat : "",
-                samsjuklighet : false,
-                workingHours25 : "",
-                workingHours50 : "",
-                workingHours75 : "",
-                workingHours100 : "",
-                prognosisClarification : "",
-                rehabWhen : ""
-            },
-            rekommendationOvrigtCheck : false, // 6a,7,11
-            basedOnWork : 'CURRENT', // fält 8a radios.
-            // needs to be
-            // interpreted to states of
-            // nuvarandeArbetsuppgifter,arbetsloshet,foraldrarledighet
-            // on send
-            prognosis : "YES",
-            rehab : 'YES',
-            rehabNow : 'NOW',
-            workTime : '', // fält 8b tjänstgöringstid
-            // original data model
-            "id" : "intyg-1",
-            "giltighet" : {
-                "from" : "2011-01-26",
-                "tom" : "2011-05-31"
-            },
-            "skickatDatum" : "2011-03-23T09:29:15.000",
-            "patientNamn" : "Test Testorsson stubbe",
-            "patientPersonnummer" : "19121212-1212",
-            "avstangningSmittskydd" : false,
-            "diagnosKod" : "S47",
-            "diagnosBeskrivning" : "Medicinskttillstånd: Klämskada på överarm",
-            "sjukdomsforlopp" : "Bedömttillstånd: Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.",
-            "funktionsnedsattning" : "Funktionstillstånd-Kroppsfunktion: Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj- och sträckförmågan är mycket dålig. Smärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket.",
-            "undersokningAvPatienten" : "",
-            "telefonkontaktMedPatienten" : "",
-            "journaluppgifter" : "",
-            "annanReferens" : "",
-            "aktivitetsbegransning" : "Funktionstillstånd-Aktivitet: Patienten bör/kan inte använda armen förrän skadan läkt. Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning.",
-            "rekommendationKontaktArbetsformedlingen" : true,
-            "rekommendationKontaktForetagshalsovarden" : true,
-            "rekommendationOvrigt" : "",
-            "atgardInomSjukvarden" : "Utreds om operation är nödvändig",
-            "annanAtgard" : "Patienten ansvarar för att armen hålls i stillhet",
-            "rehabiliteringAktuell" : false,
-            "rehabiliteringEjAktuell" : false,
-            "rehabiliteringGarInteAttBedoma" : true,
-            "nuvarandeArbetsuppgifter" : "Dirigent. Dirigerar en större orkester på deltid",
-            "arbetsloshet" : true,
-            "foraldrarledighet" : true,
-            "nedsattMed25" : {
-                "start" : "2011-04-01",
-                "end" : "2011-05-31"
-            },
-            "nedsattMed50" : {
-                "start" : "2011-03-07",
-                "end" : "2011-03-31"
-            },
-            "nedsattMed75" : {
-                "start" : "2011-02-14",
-                "end" : "2011-03-06"
-            },
-            "nedsattMed100" : {
-                "start" : "2011-01-26",
-                "end" : "2011-02-13"
-            },
-            "arbetsformagaPrognos" : "Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.",
-            "arbetsformataPrognosJa" : false,
-            "arbetsformataPrognosJaDelvis" : false,
-            "arbetsformataPrognosNej" : false,
-            "arbetsformataPrognosGarInteAttBedoma" : true,
-            "ressattTillArbeteAktuellt" : false,
-            "ressattTillArbeteEjAktuellt" : true,
-            "kontaktMedFk" : true,
-            "kommentar" : "Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling.",
-            "signeringsdatum" : "2011-01-26T00:00:00.000",
-            "vardperson" : {
-                "hsaId" : "Personal HSA-ID",
-                "namn" : "En Läkare",
-                "enhetsId" : "centrum-vast",
-                "arbetsplatsKod" : "123456789011",
-                "enhetsnamn" : "Centrum väst",
-                "postadress" : "Lasarettsvägen 13",
-                "postnummer" : "85150",
-                "postort" : "Sundsvall",
-                "telefonnummer" : "060-1818000",
-                "epost" : "kirmott@vardenhet.se",
-                "vardgivarId" : "VardgivarId",
-                "vardgivarnamn" : "Landstinget Norrland"
-            },
-            "forskrivarkodOchArbetsplatskod" : "123456789011",
-            "namnfortydligandeOchAdress" : "En Läkare\nCentrum väst\nLasarettsvägen 13\n85150 Sundsvall\n060-1818000"
-        };
-
         $scope.cert = {};
 
 	    certificateService.getDraft($scope.MODULE_CONFIG.CERT_ID_PARAMETER,
@@ -428,113 +331,6 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
                     // TODO: Show error message.
                 });
         };
-
-        // Original test data
-        /*
-         * $scope.cert =
-         * {"id":"intyg-1","giltighet":{"from":"2011-01-26","tom":"2011-05-31"},"skickatDatum":"2011-03-23T09:29:15.000","patientNamn":"Test
-         * Testorsson stubbe",
-         * "patientPersonnummer":"19121212-1212","avstangningSmittskydd":false,"diagnosKod":"S47","diagnosBeskrivning":"Medicinskttillstånd:
-         * Klämskada på överarm",
-         * "sjukdomsforlopp":"Bedömttillstånd: Patienten
-         * klämde höger överarm vid olycka i hemmet.
-         * Problemen har pågått en längre tid.",
-         * "funktionsnedsattning":"Funktionstillstånd-Kroppsfunktion:
-         * Kraftigt nedsatt rörlighet i överarmen pga
-         * skadan. Böj- och sträckförmågan är mycket dålig.
-         * Smärtar vid rörelse vilket ger att patienten inte
-         * kan använda armen särkilt mycket.",
-         * "undersokningAvPatienten":"2011-01-26","telefonkontaktMedPatienten":"2011-01-12","journaluppgifter":"2010-01-14","annanReferens":"2010-01-24",
-         * "aktivitetsbegransning":"Funktionstillstånd-Aktivitet:
-         * Patienten bör/kan inte använda armen förrän
-         * skadan läkt. Skadan förvärras vid för tidigt
-         * påtvingad belastning. Patienten kan inte lyfta
-         * armen utan den ska hållas riktad nedåt och i fast
-         * läge så mycket som möjligt under tiden för
-         * läkning.",
-         * "rekommendationKontaktArbetsformedlingen":true,"rekommendationKontaktForetagshalsovarden":true,"rekommendationOvrigt":"När
-         * skadan förbättrats rekommenderas
-         * muskeluppbyggande sjukgymnastik",
-         * "atgardInomSjukvarden":"Utreds om operation är
-         * nödvändig", "annanAtgard":"Patienten ansvarar för
-         * att armen hålls i
-         * stillhet","rehabiliteringAktuell":false,"rehabiliteringEjAktuell":false,"rehabiliteringGarInteAttBedoma":true,
-         * "nuvarandeArbetsuppgifter":"Dirigent. Dirigerar
-         * en större orkester på
-         * deltid","arbetsloshet":true,"foraldrarledighet":true,
-         * "nedsattMed25":{"start":"2011-04-01","end":"2011-05-31"},"nedsattMed50":{"start":"2011-03-07","end":"2011-03-31"},"nedsattMed75":{"start":"2011-02-14","end":"2011-03-06"},"nedsattMed100":{"start":"2011-01-26","end":"2011-02-13"},
-         * "arbetsformagaPrognos":"Arbetsförmåga: Skadan har
-         * förvärrats vid varje tillfälle patienten använt
-         * armen. Måste hållas i total stillhet tills
-         * läkningsprocessen kommit en bit på väg.
-         * Eventuellt kan utredning visa att operation är
-         * nödvändig för att läka skadan.",
-         * "arbetsformataPrognosJa":false,"arbetsformataPrognosJaDelvis":false,"arbetsformataPrognosNej":false,"arbetsformataPrognosGarInteAttBedoma":true,"ressattTillArbeteAktuellt":false,"ressattTillArbeteEjAktuellt":true,"kontaktMedFk":true,
-         * "kommentar":"Prognosen för patienten är god. Han
-         * kommer att kunna återgå till sitt arbete efter
-         * genomförd behandling.",
-         * "signeringsdatum":"2011-01-26T00:00:00.000",
-         * "vardperson":{"hsaId":"Personal
-         * HSA-ID","namn":"Ewa
-         * Sundholm","enhetsId":"centrum-vast","arbetsplatsKod":"123456789011","enhetsnamn":"Centrum
-         * väst","postadress":"Lasarettsvägen
-         * 13","postnummer":"85150","postort":"Sundsvall","telefonnummer":"060-1818000","epost":"kirmott@vardenhet.se","vardgivarId":"VardgivarId","vardgivarnamn":"Landstinget
-         * Norrland"},
-         * "forskrivarkodOchArbetsplatskod":"123456789011","namnfortydligandeOchAdress":"Ewa
-         * Sundholm\nCentrum väst\nLasarettsvägen 13\n85150
-         * Sundsvall\n060-1818000" };
-         */
-
-        // Diagnose test data
-        /*
-         * J44.0 Kroniskt obstruktiv lungsjukdom med akut
-         * nedre luftvägsinfektion K92.2 Gastrointestinal
-         * blödning, ospecificerad R06.0 Dyspné G47.3
-         * Sömnapnésyndrom E11.9 Diabetes mellitus typ 2
-         * utan (uppgift om) komplikationer T81.4 Infektion
-         * efter kirurgiska och medicinska ingrepp som ej
-         * klassificeras annorstädes E10.9 Diabetes mellitus
-         * typ 1 utan (uppgift om) komplikationer J35.0
-         * Kronisk tonsillit M54.5 Lumbago Z03.8F
-         * Observation/utredning för misstänkt diabetes
-         * N81.1 Cystocele hos kvinna M48.5 Kotkompression
-         * som ej klassificeras annorstädes T84.0 Mekanisk
-         * komplikation av inre ledprotes T84.0B Mekanisk
-         * komplikation av inre ledprotes i axelled T84.0C
-         * Mekanisk komplikation av inre ledprotes i armbåge
-         * T84.0D Mekanisk komplikation av inre ledprotes i
-         * handled/hand T84.0F Mekanisk komplikation av inre
-         * ledprotes i höftled T84.0G Mekanisk komplikation
-         * av inre ledprotes i knäled T84.0H Mekanisk
-         * komplikation av inre ledprotes i fotled/fot
-         * T84.0X Mekanisk komplikation av inre ledprotes
-         * med annan eller icke specificerad lokalisation
-         * M54.4 Lumbago med ischias T81.0 Blödning och
-         * hematom som komplikation till kirurgiska och
-         * medicinska ingrepp som ej klassificeras
-         * annorstädes R41.0 Desorientering, ospecificerad
-         * F20.0 Paranoid schizofreni N83.2 Andra och icke
-         * specificerade ovarialcystor S30.0 Kontusion på
-         * nedre delen av ryggen och bäckenet I95.1
-         * Ortostatisk hypotoni J18.0 Bronkopneumoni,
-         * ospecificerad K61.0 Analabscess C90.0 Multipelt
-         * myelom C18.7 Malign tumör i sigmoideum K92.1
-         * Melena N81.2 Inkomplett uterovaginal prolaps
-         * K57.2 Divertikel i tjocktarmen med perforation
-         * och abscess N81.6 Rektocele K62.5 Blödning i anus
-         * och rektum N30.0 Akut cystit I47.2C
-         * Kammartakykardi, torsades des pointes T78.4
-         * Allergi, ospecificerad M35.3 Polymyalgia
-         * rheumatica K56.6 Annan och icke specificerad
-         * obstruktion av tarmen M24.3 Patologisk luxation
-         * och subluxation i led som ej klassificeras
-         * annorstädes R06.5 Munandning och snarkning E10.5
-         * Diabetes mellitus typ 1 med perifera
-         * kärlkomplikationer E10.5A Diabetes mellitus typ 1
-         * med perifer angiopati (utan gangrän) E10.5B
-         * Diabetes mellitus typ 1 med perifer angiopati med
-         * gangrän
-         */
 
     }]);
 
