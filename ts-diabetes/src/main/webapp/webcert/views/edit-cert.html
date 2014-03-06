@@ -66,7 +66,7 @@
     <div id="certificate" class="row-fluid certificate">
       <div class="span12 cert-body">
 
-        <div wc-field field-label="ts.label.intygavser">
+        <div wc-field field-label="ts.label.intygavser" field-help-text="ts.helptext.intyget-avser">
           <div class="alert alert-error" ng-if="validationMessagesGrouped.intygavser">
             <ul>
               <li ng-repeat="message in validationMessagesGrouped.intygavser"><span message key="{{message.message}}"></span>
@@ -81,7 +81,7 @@
           </div>
         </div>
 
-        <div wc-field field-label="ts.label.identitet">
+        <div wc-field field-label="ts.label.identitet" field-help-text="ts.helptext.identitet-styrkt-genom">
           <div class="alert alert-error" ng-if="validationMessagesGrouped.identitet">
             <ul>
               <li ng-repeat="message in validationMessagesGrouped.identitet"><span message key="{{message.message}}"></span></li>
@@ -94,7 +94,7 @@
         </div>
 
         <div class="alert alert-info">
-          Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget ska utfärdas i enlighet med vad som sägs i 17 kap. och får inte vara äldre än två månader när det inkommer till Transportstyrelsen. Se <a href="http://www.transportstyrelsen.se" target="_blank">www.transportstyrelsen.se <img src="/img/link_icon.png"></a>. Därefter "Väg" och "Trafikmedicin".
+        	<span message key="ts.helptext.lakaren-ska-uppmarksamma"/>
         </div>
 
         <!-- 1. Allmänt -->
@@ -272,8 +272,8 @@
                 <table class="table table-form">
                   <tr>
                     <th></th>
-                    <th>Utan korrektion</th>
-                    <th>Med korrektion</th>
+                    <th>Utan korrektion <span wc-enable-tooltip field-help-text="ts.helptext.synfunktioner.utan-korrektion"/></th>
+                    <th>Med korrektion <span wc-enable-tooltip field-help-text="ts.helptext.synfunktioner.med-korrektion"/></th>
                   </tr>
                   <tr>
                     <td>Höger öga</td>
