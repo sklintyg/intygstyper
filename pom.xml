@@ -36,6 +36,7 @@
     <module>specifications</module>
     <module>ts-bas</module>
     <module>ts-diabetes</module>
+    <module>module-support</module>
   </modules>
 
   <properties>
