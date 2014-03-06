@@ -60,22 +60,22 @@
 
     <div id="certificate" class="row-fluid certificate">
         <div class="span12 cert-body">
-
-            <div wc-field field-label="ts.label.intygavser">
+            
+            <div wc-field field-label="ts.label.intygavser" field-help-text="ts.helptext.intyg-avser">
               <div class="alert alert-error" ng-if="validationMessagesGrouped.intygavser">
                 <ul>
                   <li ng-repeat="message in validationMessagesGrouped.intygavser"><span message key="{{message.message}}"></span></li>
                 </ul>
               </div>
 
-              <p>Detta intyg ska användas vid förlängd giltighet av högre behörighet, ansökan om körkortstillstånd för grupp II och III och vid ansökan om taxiförarlegitimation.</p>
+              <p>Detta intyg ska användas vid förlängd giltighet av högre behörighet, ansökan om körkortstillstånd för grupp II och III och vid ansökan om taxiförarlegitimation.<span wc-enable-tooltip field-help-text="ts.helptext.intyg-avser.grupp2-grupp3"></span> </p> 
                 <p>Intyget kan också användas när Transportstyrelsen i andra fall begärt ett läkarintyg. Markera då endast i rutan Annat nedan.</p>
                 <div class="control-group clearfix">
                     <label class="checkbox checkbox-columns span3" ng-repeat="typ in cert.intygAvser.korkortstyp track by $index"><input id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox" ng-model="typ.selected"> <span message key="ts.label.korkort.{{typ.type}}"></span></label>
                 </div>
             </div>
 
-            <div wc-field field-label="ts.label.identitet">
+            <div wc-field field-label="ts.label.identitet" field-help-text="ts.helptext.identitet-styrkt-genom.id-kort">
             	<div class="alert alert-error" ng-if="validationMessagesGrouped.identitet">
                 	<ul>
                   		<li ng-repeat="message in validationMessagesGrouped.identitet"><span message key="{{message.message}}"></span></li>
@@ -87,7 +87,7 @@
             </div>
 
             <div class="alert alert-info">
-                Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget ska utfärdas i enlighet med vad som sägs i 17 kap. och får inte vara äldre än två månader när det inkommer till Transportstyrelsen. Se <a href="http://www.transportstyrelsen.se" target="_blank">www.transportstyrelsen.se</a>. Därefter "Väg" och "Trafikmedicin".
+				<span message key="ts.helptext.lakaren-ska-uppmarksamma"></span>            
             </div>
 
             <!-- 1. Syn -->
@@ -122,7 +122,7 @@
                         <td>
                             <p>c) Har patienten någon progressiv ögonsjukdom?</p>
                             <div class="alert alert-info">
-                                Om någon av frågorna a-c besvaras med ja eller om det bedöms sannolikt att synfältsdefekter föreligger krävs läkarintyg av ögonspecialist.
+                            	<span message key="ts.helptext.synfunktioner.om-nagon-av-a-c"></span>            
                             </div>
                         </td>
                     </tr>
@@ -144,14 +144,14 @@
                                 Alla bokstäver ska kunna läsas på den rad som anger synskärpa. Är synskärpan sämre än 0,1 ska den anges som 0,0
                             </p>
                             <div class="alert alert-info">
-                                OBS! Uppgifterna om synskärpa och korrektion kan grundas på tidigare utförd undersökning av bland annat legitimerad optiker. Uppgifterna ska då ingå som underlag vid läkarens samlade bedömning.
+                            	<span message key="ts.helptext.synfunktioner.synskarpa-kan-grundas-pa-tidigare"></span>
                             </div>
 
                             <table class="table table-form">
                                 <tr>
                                     <th></th>
-                                    <th>Utan korrektion</th>
-                                    <th>Med korrektion</th>
+                                    <th>Utan korrektion <span wc-enable-tooltip field-help-text="ts.helptext.synfunktioner.utan-korrektion"/></th>
+                                    <th>Med korrektion <span wc-enable-tooltip field-help-text="ts.helptext.synfunktioner.med-korrektion"/></th>
                                     <th>Kontaktlinser</th>
                                 </tr>
                                 <tr>
@@ -176,6 +176,10 @@
 
                             <h4>Korrektionsglasens styrka</h4>
                             <label class="checkbox"><input name="dioptrier" type="checkbox" ng-model="cert.syn.korrektionsglasensStyrka"> Högsta styrka i något av glasen överskrider 8 dioptrier</label>
+                            <div class="alert alert-info" ng-show="cert.syn.korrektionsglasensStyrka == true">
+                            	<span message key="ts.helptext.synfunktioner.info-8-dioptrier"></span>
+                            </div>
+                            
                         </td>
                     </tr>
                 </table>
@@ -310,9 +314,11 @@
                                     <label class="checkbox"><input name="diabetestreat1" type="checkbox" ng-model="cert.diabetes.kost"> Kost</label>
                                     <label class="checkbox"><input name="diabetestreat2" type="checkbox" ng-model="cert.diabetes.tabletter"> Tabletter</label>
                                     <label class="checkbox"><input name="diabetestreat3" type="checkbox" ng-model="cert.diabetes.insulin"> Insulin</label>
+                                    
                                     <div class="alert alert-info" data-ng-show="cert.diabetes.tabletter || cert.diabetes.insulin">
-                                        Har patienten tablett- eller insulinbehandlad diabetes krävs ett läkarintyg gällande sjukdomen.
+                                        <span message key="ts.helptext.diabetes.tabletter-eller-insulin"></span>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </td>
@@ -478,7 +484,7 @@
                         <td>
                             <p>Behövs det provtagning avseende aktuellt bruk av alkohol eller narkotika?</p>
                             <div class="alert alert-info" data-ng-show="cert.narkotikaLakemedel.provtagningBehovs">
-                                Om provtagning görs ska resultatet redovisas separat.
+                                <span message key="ts.helptext.alkohol-narkotika.provtagning"/>
                             </div>
                         </td>
                     </tr>

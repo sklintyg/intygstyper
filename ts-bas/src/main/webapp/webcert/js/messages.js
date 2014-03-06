@@ -17,6 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 'use strict';
+
+var sharedMessages = {
+		"sv" : {
+			"ts.helptext.inledande" : "Läkarintyg, bas ska användas vid förlängd giltighet av högre behörighet från 45 år, ansökan om körkortstillstånd för grupp II och III och vid ansökan om taxiförarlegitimation. Läkarintyg, bas kan även användas när Transportstyrelsen i annat fall begärt ett allmänt läkarintyg avseende lämplighet att inneha körkort. Specialistintyg finns bl. a för alkohol, narkotika, läkemedel, synfunktion, Alkolås m.m. Se: <a href='http://www.transportstyrelsen.se'>www.transportstyrelsen.se</a>. Därefter 'Väg' och 'Trafikmedicin'"
+		}
+};
+
 var tsBasMessages = {
 	"sv" : {
 		"ts.label.certtitle" : "Läkarintyg Transportstyrelsen Bas",
@@ -51,7 +58,30 @@ var tsBasMessages = {
 		"ts.label.korkort.de" : "DE",
 		"ts.label.korkort.taxi" : "Taxi",
 		"ts.label.korkort.annat" : "Annat",
+		
+		"ts.helptext.lakaren-ska-uppmarksamma" : "Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget skall utfärdas i enlighet med vad som sägs i 17 kap. och får inte vara äldre än två månader när det inkommer till Transportstyrelsen. Se: <a href='http://www.transportstyrelsen.se'>http://www.transportstyrelsen.se</a>. Därefter 'Väg' och 'Trafikmedicin'.",
+		"ts.helptext.intyg-avser" : "C1 = medeltung lastbil,<br/> C1E = medeltung lastbil och ett eller flera släpfordon oavsett vikt,<br/> C = tung lastbil och enbart ett lätt släpfordon,<br/> CE = tung lastbil och ett eller flera släpfordon oavsett vikt,<br/> D1 = mellanstor buss,<br/> D1E = mellanstor buss och ett eller flera släpfordon oavsett vikt,<br/> D = buss och enbart ett lätt släpfordon,<br/> DE = buss och ett eller flera släpfordon oavsett vikt,<br/> E = tungt släpfordon,<br/> Taxi = taxiförarlegitimation",
+		"ts.helptext.intyg-avser.grupp2-grupp3" : "Grupp II omfattar behörigheterna AM, A1, A2, A, B, BE, C1, C1E, C och CE.<br/> Grupp III omfattar behörigheterna AM, A1, A2, A, B, BE, C1, C1E, C, CE, D1, D1E, D och DE.'",
 
+		"ts.helptext.identitet-styrkt-genom.id-kort" : "ID-kort = SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.",
+		"ts.helptext.identitet-styrkt-genom.foretag-tjanstekort" : "Företagskort eller tjänstekort = SIS-märkt företagskort eller tjänstekort.",
+		"ts.helptext.identitet-styrkt-genom.forsakran" : "Försäkran enligt 18 kap. 4 § = Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2): Identiteten får fastställas genom att en förälder, annan vårdnadshavare, make, maka eller sambo, registrerad partner eller myndigt barn skriftligen försäkrar att lämnade uppgifter om sökandens identitet är riktiga. Den som lämnar en sådan försäkran ska vara närvarande vid identitetskontrollen och kunna styrka sin egen identitet.",
+		"ts.helptext.identitet-styrkt-genom.pass" : "Pass = Svenskt EU-pass, annat EU-pass utfärdade från och med den 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 200",
+		
+		"ts.helptext.synfunktioner.om-nagon-av-a-c" : "Om någon av frågorna a-c besvaras med ja eller om det bedöms sannolikt att synfältsdefekter föreligger krävs läkarintyg av ögonspecialist.",
+		"ts.helptext.synfunktioner.synskarpa-kan-grundas-pa-tidigare" : "OBS! Uppgifterna om synskärpa och korrektion kan grundas på tidigare utförd undersökning av bland annat legitimerad optiker. Uppgifterna ska då ingå som underlag vid läkarens samlade bedömning.",
+		"ts.helptext.synfunktioner.info-8-dioptrier" : "Intyg om korrektionsglasens styrka måste skickas in",
+		"ts.helptext.synfunktioner.8-dioptrier-valt" : "Du har kryssat i frågan om 8 dioptrier – Glöm inte att skicka in Intyg som korrektionsglasens styrka.",
+		"ts.helptext.synfunktioner.utan-korrektion" : "Uppgiften är obligatorisk",
+		"ts.helptext.synfunktioner.med-korrektion" : "Uppgiften är obligatorisk om föreskriven synskärpa endast uppnås med korrektion. Definition av föreskriven synskärpa finns i Transportstyrelsens föreskrifter.",
+		
+		"ts.helptext.diabetes.tabletter-eller-insulin" : "Har patienten tablett- eller insulinbehandlad diabetes krävs ett läkarintyg gällande sjukdomen",
+
+		"ts.helptext.alkohol-narkotika.provtagning" : "Om provtagning görs ska resultatet redovisas separat",
+
+		"ts.helptext.bedomning.info" : "Om någon av frågorna har besvarats med ja, ska de krav på ytterligare underlag som framgår av föreskrifterna beaktas.",
+
+		//Validation messages starting
 		"ts.validation.utlatande.missing" : "Utlatande saknas",
 		
 		"ts.validation.vardenhet.postadress.missing" : "Kunde inte hämta postadress för vårdenheten från HSA, måste ifyllas manuellt",
@@ -139,7 +169,7 @@ var tsBasMessages = {
 		"ts.validation.neurologi.missing" : "Neurologiska sjukdomar saknas",
 		"ts.validation.neurologi.neurologisksjukdom.missing" : "Finns tecken på neurologisk sjukdom måste anges",
 
-		"ts.validation.identitet.missing" : "Identitet styrkt saknas",
+		"ts.validation.identitet.missing" : "Identitet styrkt saknas"
 
 	},
 	"en" : {
