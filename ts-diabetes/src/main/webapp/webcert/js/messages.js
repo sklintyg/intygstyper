@@ -68,10 +68,10 @@ var tsDiabetesMessages = {
         "ts.validation.vardenhet.postort.missing" : "Kunde inte hämta postort för vårdenheten från HSA, måste ifyllas manuellt",
         "ts.validation.vardenhet.telefonnummer.missing" : "Kunde inte hämta telefonnummer för vårdenheten från HSA, måste ifyllas manuellt",
 
-        "ts.validation.sjukhusvard.missing" : "Sjukhusvård saknas",
+        "ts.validation.sjukhusvard.missing" : "Objektet sjukhusvård saknas",
         "ts.validation.sjukhusvard.sjukhusellerlakarkontakt.missing" : "Sjukhus eller läkarkontakt saknas",
-        "ts.validation.sjukhusvard.anledning.missing" : "För vad saknas",
-        "ts.validation.sjukhusvard.tidpunkt.missing" : "Om frågan besvaras med ja, när saknas",
+        "ts.validation.sjukhusvard.anledning.missing" : "Anledning till sjukhusvård saknas",
+        "ts.validation.sjukhusvard.tidpunkt.missing" : "Tidpunkt för sjukhusvård saknas",
         "ts.validation.sjukhusvard.vardinrattning.missing" : "Vårdinrättningens namn och klinik saknas",
 
         "ts.validation.bedomning.missing" : "Bedömning saknas",
