@@ -236,54 +236,66 @@ public class InternalValidatorInstance {
 
         if (syn.getSeparatOgonlakarintyg() == null) {
             addValidationError("syn.separatOgonlakarintyg", "ts.validation.syn.separat-ogonlakarintyg.missing");
-        }
 
-        if (syn.getHoger() != null) {
+        } else if (!syn.getSeparatOgonlakarintyg()) {
 
-            if (syn.getHoger().getUtanKorrektion() == null) {
+            if (syn.getSynfaltsprovningUtanAnmarkning() == null) {
+                addValidationError("syn.provningUtanAnmarkning", "ts.validation.syn.provning-utan-anmarkning.missing");
+            }
+
+            if (syn.getDiplopi() == null) {
+                addValidationError("syn.diplopi", "ts.validation.syn.diplopi.missing");
+            }
+
+            if (syn.getHoger() == null || syn.getHoger().getUtanKorrektion() == null) {
                 addValidationError("syn.hoger.utanKorrektion", "ts.validation.syn.hoger.utanKorrektion.missing");
 
-            } else if (syn.getHoger().getUtanKorrektion() < 0.0 || syn.getHoger().getUtanKorrektion() > 2.0) {
-                addValidationError("syn.hoger.utanKorrektion", "ts.validation.syn.hoger.utankorrektion.out-of-bounds");
-            }
+            } else {
+                if (syn.getHoger().getUtanKorrektion() < 0.0 || syn.getHoger().getUtanKorrektion() > 2.0) {
+                    addValidationError("syn.hoger.utanKorrektion",
+                            "ts.validation.syn.hoger.utankorrektion.out-of-bounds");
+                }
 
-            if (syn.getHoger().getMedKorrektion() != null) {
-                if (syn.getHoger().getMedKorrektion() < 0.0 || syn.getHoger().getMedKorrektion() > 2.0) {
-                    addValidationError("syn.hoger.medKorrektion", "ts.validation.syn.hoger.medKorrektion.out-of-bounds");
+                if (syn.getHoger().getMedKorrektion() != null) {
+                    if (syn.getHoger().getMedKorrektion() < 0.0 || syn.getHoger().getMedKorrektion() > 2.0) {
+                        addValidationError("syn.hoger.medKorrektion",
+                                "ts.validation.syn.hoger.medKorrektion.out-of-bounds");
+                    }
                 }
             }
-        }
 
-        if (syn.getVanster() != null) {
-            if (syn.getVanster().getUtanKorrektion() == null) {
+            if (syn.getVanster() == null || syn.getVanster().getUtanKorrektion() == null) {
                 addValidationError("syn.vanster.utanKorrektion", "ts.validation.syn.vanster.utankorrektion.missing");
 
-            } else if (syn.getVanster().getUtanKorrektion() < 0.0 || syn.getVanster().getUtanKorrektion() > 2.0) {
-                addValidationError("syn.vanster.utanKorrektion", "ts.validation.syn.vanster.utankorrektion.missing");
-            }
+            } else {
 
-            if (syn.getVanster().getMedKorrektion() != null) {
-                if (syn.getVanster().getMedKorrektion() < 0.0 || syn.getVanster().getMedKorrektion() > 2.0) {
-                    addValidationError("syn.vanster.medKorrektion",
-                            "ts.validation.syn.vanster.medkorrektion.out-of-bounds");
+                if (syn.getVanster().getUtanKorrektion() < 0.0 || syn.getVanster().getUtanKorrektion() > 2.0) {
+                    addValidationError("syn.vanster.utanKorrektion", "ts.validation.syn.vanster.utankorrektion.missing");
+                }
+
+                if (syn.getVanster().getMedKorrektion() != null) {
+                    if (syn.getVanster().getMedKorrektion() < 0.0 || syn.getVanster().getMedKorrektion() > 2.0) {
+                        addValidationError("syn.vanster.medKorrektion",
+                                "ts.validation.syn.vanster.medkorrektion.out-of-bounds");
+                    }
                 }
             }
-        }
 
-        if (syn.getBinokulart() != null) {
-            if (syn.getBinokulart().getUtanKorrektion() == null) {
+            if (syn.getBinokulart() == null || syn.getBinokulart().getUtanKorrektion() == null) {
                 addValidationError("syn.binokulart.utanKorrektion",
                         "ts.validation.syn.binokulart.utankorrektion.missing");
 
-            } else if (syn.getBinokulart().getUtanKorrektion() < 0.0 || syn.getBinokulart().getUtanKorrektion() > 2.0) {
-                addValidationError("syn.binokulart.utanKorrektion",
-                        "ts.validation.syn.binokulart.utankorrektion.out-of-bounds");
-            }
+            } else {
+                if (syn.getBinokulart().getUtanKorrektion() < 0.0 || syn.getBinokulart().getUtanKorrektion() > 2.0) {
+                    addValidationError("syn.binokulart.utanKorrektion",
+                            "ts.validation.syn.binokulart.utankorrektion.out-of-bounds");
+                }
 
-            if (syn.getBinokulart().getMedKorrektion() != null) {
-                if (syn.getBinokulart().getMedKorrektion() < 0.0 || syn.getBinokulart().getMedKorrektion() > 2.0) {
-                    addValidationError("syn.binokulart.medKorrektion",
-                            "ts.validation.syn.binokulart.medkorrektion.out-of-bounds");
+                if (syn.getBinokulart().getMedKorrektion() != null) {
+                    if (syn.getBinokulart().getMedKorrektion() < 0.0 || syn.getBinokulart().getMedKorrektion() > 2.0) {
+                        addValidationError("syn.binokulart.medKorrektion",
+                                "ts.validation.syn.binokulart.medkorrektion.out-of-bounds");
+                    }
                 }
             }
         }

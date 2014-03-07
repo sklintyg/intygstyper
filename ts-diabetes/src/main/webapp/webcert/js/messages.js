@@ -87,6 +87,8 @@ var tsDiabetesMessages = {
         "ts.validation.intygavser.must-choose-one" : "Minst en körkortsbehörighet, eller Annat måste väljas",
 
         "ts.validation.syn.missing" : "Synfunktioner saknas",
+        "ts.validation.syn.diplopi.missing" : "Förekommer dubbelseende saknas",
+        "ts.validation.syn.provning-utan-anmarkning.missing" : "Måste anges om synfältsprövning enligt Donders konfrontationsmetod är utan anmärkning",
         "ts.validation.syn.separat-ogonlakarintyg.missing" : "Om ögonläkarintyg bifogas separat eller ej måste anges",
         "ts.validation.syn.hoger.missing" : "Synfunktioner relaterade till höger öga saknas",
         "ts.validation.syn.hoger.utankorrektion.missing" : "Höger öga utan korrektion saknas",
