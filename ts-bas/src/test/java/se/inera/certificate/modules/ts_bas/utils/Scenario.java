@@ -1,6 +1,6 @@
 package se.inera.certificate.modules.ts_bas.utils;
 
-import se.inera.certificate.modules.ts_bas.rest.dto.CertificateContentHolder;
+import se.inera.certificate.integration.rest.dto.CertificateContentHolder;
 import se.inera.certificate.ts_bas.model.v1.Utlatande;
 
 /**
@@ -39,15 +39,6 @@ public interface Scenario {
      *             if the scenario wasn't found.
      */
     se.inera.certificate.modules.ts_bas.model.external.Utlatande asExternalModel() throws ScenarioNotFoundException;
-
-    /**
-     * Returns the scenario as a external model, wrapped in a {@link CertificateContentHolder}.
-     * 
-     * @return The scenario as a wrapped external model.
-     * @throws ScenarioNotFoundException
-     *             if the scenario wasn't found.
-     */
-    CertificateContentHolder asExternalModelWithHolder() throws ScenarioNotFoundException;
 
     /**
      * Returns the scenario as a internal Mina Intyg model.

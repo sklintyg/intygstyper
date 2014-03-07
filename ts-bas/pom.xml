@@ -18,6 +18,10 @@
 
   <dependencies>
     <dependency>
+      <groupId>se.inera.certificate.modules</groupId>
+      <artifactId>module-support</artifactId>
+    </dependency>
+    <dependency>
       <groupId>se.inera.certificate</groupId>
       <artifactId>module-api</artifactId>
     </dependency>

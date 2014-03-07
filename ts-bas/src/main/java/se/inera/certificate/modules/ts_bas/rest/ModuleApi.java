@@ -25,10 +25,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
-import se.inera.certificate.modules.ts_bas.rest.dto.CertificateContentHolder;
-import se.inera.certificate.modules.ts_bas.rest.dto.CreateNewDraftCertificateHolder;
-import se.inera.certificate.modules.ts_bas.rest.dto.ValidateDraftResponseHolder;
 
 @Path("")
 public interface ModuleApi {
@@ -86,7 +85,7 @@ public interface ModuleApi {
     @Path("/valid-draft")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    ValidateDraftResponseHolder validateDraft(se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande);
+    ValidateDraftResponse validateDraft(se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande);
 
     /**
      * Generates a PDF from the external model.
@@ -100,7 +99,7 @@ public interface ModuleApi {
     @Path("/pdf")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces("application/pdf")
-    byte[] pdf(CertificateContentHolder certificateContentHolder);
+    byte[] pdf(Utlatande externalModel);
 
     /**
      * Handles conversion from the external model to the internal model.
@@ -115,7 +114,7 @@ public interface ModuleApi {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     se.inera.certificate.modules.ts_bas.model.internal.Utlatande convertExternalToInternal(
-            CertificateContentHolder certificateContentHolder);
+            Utlatande externalModel);
 
     /**
      * Handles conversion from the internal model to the external model.
@@ -143,7 +142,6 @@ public interface ModuleApi {
     @Path("/new")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    se.inera.certificate.modules.ts_bas.model.internal.Utlatande createNewInternal(
-            CreateNewDraftCertificateHolder draftCertificateHolder);
+    se.inera.certificate.modules.ts_bas.model.internal.Utlatande createNewInternal(CreateNewDraftHolder newDraftData);
 
 }

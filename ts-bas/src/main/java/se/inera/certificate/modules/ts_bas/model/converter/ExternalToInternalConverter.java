@@ -1,12 +1,11 @@
 package se.inera.certificate.modules.ts_bas.model.converter;
 
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_bas.rest.dto.CertificateContentHolder;
 
 public class ExternalToInternalConverter {
 
-    public Utlatande convert(CertificateContentHolder certificateContentHolder) throws ConverterException {
+    public Utlatande convert(se.inera.certificate.modules.ts_bas.model.external.Utlatande externalModel) throws ConverterException {
         ExternalToInternalConverterInstance instance = new ExternalToInternalConverterInstance();
-        return instance.convert(certificateContentHolder);
+        return instance.convert(externalModel);
     }
 }

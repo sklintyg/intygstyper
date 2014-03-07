@@ -20,12 +20,12 @@ package se.inera.certificate.modules.ts_bas.model.converter;
 
 import org.apache.commons.lang3.StringUtils;
 
+import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.ts_bas.model.internal.HoSPersonal;
 import se.inera.certificate.modules.ts_bas.model.internal.Patient;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.model.internal.Vardenhet;
 import se.inera.certificate.modules.ts_bas.model.internal.Vardgivare;
-import se.inera.certificate.modules.ts_bas.rest.dto.CreateNewDraftCertificateHolder;
 
 /**
  * Factory for creating a editable model.
@@ -40,7 +40,7 @@ public class WebcertModelFactory {
      * @return {@link Utlatande} or throws a ConverterException if something unforeseen happens
      * @throws ConverterException
      */
-    public Utlatande createNewWebcertDraft(CreateNewDraftCertificateHolder newDraftData) throws ConverterException {
+    public Utlatande createNewWebcertDraft(CreateNewDraftHolder newDraftData) throws ConverterException {
 
         Utlatande utlatande = new Utlatande();
 
@@ -48,13 +48,13 @@ public class WebcertModelFactory {
 
         populateWithSkapadAv(utlatande, newDraftData.getSkapadAv());
 
-        populateWithPatientInfo(utlatande, newDraftData.getPatientInfo());
+        populateWithPatientInfo(utlatande, newDraftData.getPatient());
 
         return utlatande;
     }
 
     private void populateWithPatientInfo(Utlatande utlatande,
-            se.inera.certificate.modules.ts_bas.rest.dto.Patient patient) throws ConverterException {
+            se.inera.certificate.modules.support.api.dto.Patient patient) throws ConverterException {
 
         if (patient == null) {
             throw new ConverterException("Got null while trying to populateWithPatientInfo");
@@ -63,7 +63,7 @@ public class WebcertModelFactory {
         utlatande.setPatient(convertPatientToEdit(patient));
     }
 
-    private Patient convertPatientToEdit(se.inera.certificate.modules.ts_bas.rest.dto.Patient patientInfo) {
+    private Patient convertPatientToEdit(se.inera.certificate.modules.support.api.dto.Patient patientInfo) {
         Patient patient = new Patient();
         patient.setFornamn(patientInfo.getFornamn());
         patient.setEfternamn(patientInfo.getEfternamn());
@@ -79,7 +79,7 @@ public class WebcertModelFactory {
     }
 
     private void populateWithSkapadAv(Utlatande utlatande,
-            se.inera.certificate.modules.ts_bas.rest.dto.HoSPersonal skapadAv) throws ConverterException {
+            se.inera.certificate.modules.support.api.dto.HoSPersonal skapadAv) throws ConverterException {
         if (skapadAv == null) {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");
         }
@@ -87,7 +87,7 @@ public class WebcertModelFactory {
         utlatande.setSkapadAv(convertHosPersonalToEdit(skapadAv));
     }
 
-    private HoSPersonal convertHosPersonalToEdit(se.inera.certificate.modules.ts_bas.rest.dto.HoSPersonal hosPers) {
+    private HoSPersonal convertHosPersonalToEdit(se.inera.certificate.modules.support.api.dto.HoSPersonal hosPers) {
         HoSPersonal hosPersonal = new HoSPersonal();
 
         hosPersonal.setPersonid(hosPers.getHsaId());
@@ -106,7 +106,7 @@ public class WebcertModelFactory {
         return hosPersonal;
     }
 
-    private Vardenhet convertVardenhetToEdit(se.inera.certificate.modules.ts_bas.rest.dto.Vardenhet vardenhetDto) {
+    private Vardenhet convertVardenhetToEdit(se.inera.certificate.modules.support.api.dto.Vardenhet vardenhetDto) {
 
         Vardenhet vardenhet = new Vardenhet();
         vardenhet.setEnhetsid(vardenhetDto.getHsaId());
@@ -122,7 +122,7 @@ public class WebcertModelFactory {
         return vardenhet;
     }
 
-    private Vardgivare convertVardgivareToEdit(se.inera.certificate.modules.ts_bas.rest.dto.Vardgivare vardgivareDto) {
+    private Vardgivare convertVardgivareToEdit(se.inera.certificate.modules.support.api.dto.Vardgivare vardgivareDto) {
 
         Vardgivare vardgivare = new Vardgivare();
         vardgivare.setVardgivarid(vardgivareDto.getHsaId());

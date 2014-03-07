@@ -1,8 +1,14 @@
 package se.inera.certificate.modules.ts_bas.validator.internal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.certificate.modules.support.api.dto.ValidationMessage;
+import se.inera.certificate.modules.support.api.dto.ValidationStatus;
 import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_bas.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_bas.model.internal.Diabetes;
@@ -24,9 +30,6 @@ import se.inera.certificate.modules.ts_bas.model.internal.Syn;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.model.internal.Utvecklingsstorning;
 import se.inera.certificate.modules.ts_bas.model.internal.Vardkontakt;
-import se.inera.certificate.modules.ts_bas.rest.dto.ValidateDraftResponseHolder;
-import se.inera.certificate.modules.ts_bas.rest.dto.ValidationMessage;
-import se.inera.certificate.modules.ts_bas.rest.dto.ValidationStatus;
 
 /**
  * Class for validating drafts of the internal model
@@ -40,12 +43,12 @@ public class InternalValidatorInstance {
 
     private static Logger LOG = LoggerFactory.getLogger(InternalValidatorInstance.class);
 
-    private ValidateDraftResponseHolder validationResponse;
+    private List<ValidationMessage> validationMessages;
     
     private ValidationContext context;
 
     public InternalValidatorInstance() {
-        validationResponse = new ValidateDraftResponseHolder();
+        validationMessages = new ArrayList<>();
     }
 
     /**
@@ -56,42 +59,41 @@ public class InternalValidatorInstance {
      *            an internal {@link Utlatande}
      * @return a {@link ValidateDraftResponseHolder} with a status and a list of validationErrors
      */
-    public ValidateDraftResponseHolder validate(Utlatande utlatande) {
+    public ValidateDraftResponse validate(Utlatande utlatande) {
 
         if (utlatande == null) {
             addValidationError("utlatande", "ts.validation.utlatande.missing");
-            return validationResponse;
+            
+        } else {
+
+            context = new ValidationContext(utlatande);
+
+            validateBedomning(utlatande.getBedomning());
+            validateDiabetes(utlatande.getDiabetes());
+            validateFunktionsnedsattning(utlatande.getFunktionsnedsattning());
+            validateHjartKarl(utlatande.getHjartKarl());
+            validateHorselBalans(utlatande.getHorselBalans());
+
+            validateHoSPersonal(utlatande.getSkapadAv());
+
+            validateIntygAvser(utlatande.getIntygAvser());
+            validateIdentitetStyrkt(utlatande.getVardkontakt());
+
+            validateKognitivt(utlatande.getKognitivt());
+            validateMedicinering(utlatande.getMedicinering());
+            validateMedvetandestorning(utlatande.getMedvetandestorning());
+            validateSyn(utlatande.getSyn());
+            validateNarkotikaLakemedel(utlatande.getNarkotikaLakemedel());
+            validateSjukhusvard(utlatande.getSjukhusvard());
+            validateNeurologi(utlatande.getNeurologi());
+            validateNjurar(utlatande.getNjurar());
+            validateSomnVakenhet(utlatande.getSomnVakenhet());
+            validatePsykiskt(utlatande.getPsykiskt());
+            validateUtvecklingsstorning(utlatande.getUtvecklingsstorning());
         }
-        
-        context = new ValidationContext(utlatande);
 
-        validateBedomning(utlatande.getBedomning());
-        validateDiabetes(utlatande.getDiabetes());
-        validateFunktionsnedsattning(utlatande.getFunktionsnedsattning());
-        validateHjartKarl(utlatande.getHjartKarl());
-        validateHorselBalans(utlatande.getHorselBalans());
-
-        validateHoSPersonal(utlatande.getSkapadAv());
-
-        validateIntygAvser(utlatande.getIntygAvser());
-        validateIdentitetStyrkt(utlatande.getVardkontakt());
-
-        validateKognitivt(utlatande.getKognitivt());
-        validateMedicinering(utlatande.getMedicinering());
-        validateMedvetandestorning(utlatande.getMedvetandestorning());
-        validateSyn(utlatande.getSyn());
-        validateNarkotikaLakemedel(utlatande.getNarkotikaLakemedel());
-        validateSjukhusvard(utlatande.getSjukhusvard());
-        validateNeurologi(utlatande.getNeurologi());
-        validateNjurar(utlatande.getNjurar());
-        validateSomnVakenhet(utlatande.getSomnVakenhet());
-        validatePsykiskt(utlatande.getPsykiskt());
-        validateUtvecklingsstorning(utlatande.getUtvecklingsstorning());
-        
-
-        validationResponse.setStatus(getValidationStatus());
-
-        return validationResponse;
+        ValidateDraftResponse response = new ValidateDraftResponse(getValidationStatus(), validationMessages);
+        return response;
     }
 
     private void validateIdentitetStyrkt(Vardkontakt vardkontakt) {
@@ -476,11 +478,11 @@ public class InternalValidatorInstance {
     /**
      * Check if there are validation errors
      * 
-     * @return {@link ValidationStatus.COMPLETE} if there are no errors, and {@link ValidationStatus.INCOMPLETE}
+     * @return {@link ValidationStatus.VALID} if there are no errors, and {@link ValidationStatus.INVALID}
      *         otherwise
      */
     private ValidationStatus getValidationStatus() {
-        return (validationResponse.hasErrorMessages()) ? ValidationStatus.INVALID : ValidationStatus.VALID;
+        return (validationMessages.isEmpty()) ? ValidationStatus.VALID : ValidationStatus.INVALID;
     }
 
     /**
@@ -492,7 +494,7 @@ public class InternalValidatorInstance {
      *            a String with an error code for the front end implementation
      */
     private void addValidationError(String field, String msg) {
-        validationResponse.addErrorMessage(new ValidationMessage(field, msg));
+        validationMessages.add(new ValidationMessage(field, msg));
         LOG.debug(field + " " + msg);
     }
     

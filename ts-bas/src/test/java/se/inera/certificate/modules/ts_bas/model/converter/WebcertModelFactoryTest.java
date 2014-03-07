@@ -25,13 +25,15 @@ import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.core.io.ClassPathResource;
 
-import se.inera.certificate.modules.ts_bas.rest.dto.CreateNewDraftCertificateHolder;
+import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.certificate.modules.support.api.dto.HoSPersonal;
+import se.inera.certificate.modules.support.api.dto.Patient;
+import se.inera.certificate.modules.support.api.dto.Vardenhet;
+import se.inera.certificate.modules.support.api.dto.Vardgivare;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class WebcertModelFactoryTest {
 
@@ -44,8 +46,13 @@ public class WebcertModelFactoryTest {
 
     @Test
     public void testCreateEditableModel() throws JsonParseException, JsonMappingException, IOException {
-        CreateNewDraftCertificateHolder draftCertHolder = new ObjectMapper().readValue(new ClassPathResource(
-                "webcert-model-factory-request.json").getFile(), CreateNewDraftCertificateHolder.class);
+        // Programmatically creating a CreateNewDraftHolder
+        Patient patient = new Patient("Johnny", "Appleseed", "19121212-1212", "Testvägen 12", "1337", "Huddinge");
+        Vardgivare vardgivare = new Vardgivare("SE0000000000-HAHAHHSAA", "Vårdgivarnamn");
+        Vardenhet vardenhet = new Vardenhet("SE0000000000-1337", "Vårdenhet Väst", "Enhetsvägen 12", "54321", "Tumba",
+                "08-1337", vardgivare);
+        HoSPersonal skapadAv = new HoSPersonal("19101010-1010", "Doktor Alban", null, null, vardenhet);
+        CreateNewDraftHolder draftCertHolder = new CreateNewDraftHolder("testID", skapadAv, patient);
 
         se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande = null;
 
@@ -60,6 +67,6 @@ public class WebcertModelFactoryTest {
 
         /** Just verify some stuff from the json to make sure all is well.. */
         assertEquals("testID", utlatande.getUtlatandeid());
-        assertEquals("johnny appleseed", utlatande.getPatient().getFullstandigtNamn());
+        assertEquals("Johnny Appleseed", utlatande.getPatient().getFullstandigtNamn());
     }
 }

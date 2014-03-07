@@ -18,8 +18,6 @@
  */
 package se.inera.certificate.modules.ts_bas.rest;
 
-import static se.inera.certificate.modules.ts_bas.utils.ResourceConverterUtils.wrapExternalWithHolder;
-
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -34,9 +32,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_bas.rest.dto.CertificateContentHolder;
 import se.inera.certificate.modules.ts_bas.utils.ModelAssert;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
@@ -105,7 +101,7 @@ public class ModuleApiTest {
     @Test
     public void testPdf() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            CertificateContentHolder holder = scenario.asExternalModelWithHolder();
+            se.inera.certificate.modules.ts_bas.model.external.Utlatande holder = scenario.asExternalModel();
 
             moduleApi.pdf(holder);
 
@@ -118,11 +114,9 @@ public class ModuleApiTest {
 
     @Test
     public void testConvertExternalToInternal() throws Exception {
-        CertificateContentHolder holder = new CertificateContentHolder();
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            holder.setCertificateContent(scenario.asExternalModel());
-            holder.setCertificateContentMeta(new CertificateContentMeta());
-            moduleApi.convertExternalToInternal(holder);
+            se.inera.certificate.modules.ts_bas.model.external.Utlatande externalModel = scenario.asExternalModel();
+            moduleApi.convertExternalToInternal(externalModel);
             assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
         }
     }
@@ -153,7 +147,7 @@ public class ModuleApiTest {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
             extUtlatande = moduleApi.unmarshall(scenario.asTransportModel());
             moduleApi.validate(extUtlatande);
-            intUtlatande = moduleApi.convertExternalToInternal(wrapExternalWithHolder(extUtlatande));
+            intUtlatande = moduleApi.convertExternalToInternal(extUtlatande);
 
             Utlatande expected = scenario.asInternalModel();
             

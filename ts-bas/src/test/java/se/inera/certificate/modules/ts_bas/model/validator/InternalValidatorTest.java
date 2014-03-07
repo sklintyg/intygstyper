@@ -27,9 +27,9 @@ import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
+import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.certificate.modules.support.api.dto.ValidationStatus;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_bas.rest.dto.ValidateDraftResponseHolder;
-import se.inera.certificate.modules.ts_bas.rest.dto.ValidationStatus;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
 import se.inera.certificate.modules.ts_bas.validator.Validator;
@@ -47,7 +47,7 @@ public class InternalValidatorTest {
     public void testValidate() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
             Utlatande utlatande = scenario.asInternalModel();
-            ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
+            ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
             assertEquals(
                     "Error in scenario " + scenario.getName() + "\n"
@@ -67,7 +67,7 @@ public class InternalValidatorTest {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("invalid-*")) {
 
             Utlatande utlatande = scenario.asInternalModel();
-            ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
+            ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
             assertEquals(ValidationStatus.INVALID, validationResponse.getStatus());
         }
@@ -77,7 +77,7 @@ public class InternalValidatorTest {
     public void testInvalidDiabetesTyp2MissingBehandling() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-diabetes-typ2-missing-behandling")
                 .asInternalModel();
-        ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
         assertEquals("diabetes.diabetesTyp", getSingleElement(validationResponse.getValidationErrors()).getField());
     }
@@ -85,7 +85,7 @@ public class InternalValidatorTest {
     @Test
     public void testInvalidSynskarpa() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-korrigerad-synskarpa").asInternalModel();
-        ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
         assertEquals("syn.vansterOga.utanKorrektion", getSingleElement(validationResponse.getValidationErrors()).getField());
     }
@@ -94,7 +94,7 @@ public class InternalValidatorTest {
     public void testFunktionshinderBeskrivningMissing() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-funktionshinder-beskrivning-missing")
                 .asInternalModel();
-        ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
         assertEquals("funktionsnedsattning.beskrivning", getSingleElement(validationResponse.getValidationErrors())
                 .getField());
@@ -104,7 +104,7 @@ public class InternalValidatorTest {
     public void testIdentitetMissing() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-missing-identitet")
                 .asInternalModel();
-        ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
         assertEquals("identitet", getSingleElement(validationResponse.getValidationErrors())
                 .getField());
