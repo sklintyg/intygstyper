@@ -357,9 +357,22 @@ public class InternalValidatorInstance {
             addValidationError("narkotikaLakemedel", "ts.validation.narkotikaLakemedel.missing");
             return;
         }
+        
+        if (narkotikaLakemedel.getTeckenMissbruk() == null) {
+            addValidationError("narkotikaLakemedel.teckenMissbruk", "ts.validation.narkotikaLakemedel.teckenmissbruk.missing");
+            
+        } else if (narkotikaLakemedel.getTeckenMissbruk()) {
+            if (narkotikaLakemedel.getProvtagningBehovs() == null) {
+                addValidationError("narkotikaLakemedel.provtagningBehovs", "ts.validation.narkotikalakemedel.provtagning-behovs.missing");
+            }
+        }
 
+        if (narkotikaLakemedel.getForemalForVardinsats() == null) {
+            addValidationError("narkotikaLakemedel.vardinsats", "ts.validation.narkotikaLakemedel.vardinsats.missing");
+        }
+        
         if (narkotikaLakemedel.getLakarordineratLakemedelsbruk() == null) {
-            addValidationError("narkotikaLakemedel",
+            addValidationError("narkotikaLakemedel.lakarordineratLakemedelsbruk",
                     "ts.validation.narkotikaLakemedel.lakarordineratLakemedelsbruk.missing");
             return;
 
@@ -392,6 +405,26 @@ public class InternalValidatorInstance {
         if (syn == null) {
             addValidationError("syn", "ts.validation.syn.missing");
             return;
+        }
+        
+        if (syn.getSynfaltsdefekter() == null) {
+            addValidationError("syn.teckenSynfaltsdefekter", "ts.validation.syn.tecken-synfaltsdefekter.missing");
+        }
+        
+        if (syn.getNattblindhet() == null) {
+            addValidationError("syn.nattblindhet", "ts.validation.syn.nattblindhet.missing");
+        }
+        
+        if (syn.getProgressivOgonsjukdom() == null) {
+            addValidationError("syn.progressivOgonsjukdom", "ts.validation.syn.progressiv-ogonsjukdom.missing");
+        }
+
+        if (syn.getDiplopi() == null) {
+            addValidationError("syn.diplopi", "ts.validation.syn.diplopi.missing");
+        }
+        
+        if (syn.getNystagmus() == null) {
+            addValidationError("syn.nystagmus", "ts.validation.syn.nystagmus.missing");
         }
 
         if (syn.getHogerOga() == null) {

@@ -493,8 +493,10 @@
                         <td><input name="narkotikalakemedelcn" type="radio" ng-value="false" ng-model="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk"></td>
                         <td>
                             <p>c) Pågår regelbundet läkarordinerat bruk av läkemedel som kan innebära en trafiksäkerhetsrisk?</p>
-                            <p>Ange läkemedel och ordinerad dos:</p>
-                            <textarea data-ng-model="cert.narkotikaLakemedel.lakemedelOchDos" wc-maxlength maxlength="{{inputLimits.lakemedelOchDos}}"></textarea>
+                            <div data-ng-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk == true">
+                            	<p>Ange läkemedel och ordinerad dos:</p>
+                            	<textarea data-ng-model="cert.narkotikaLakemedel.lakemedelOchDos" wc-maxlength maxlength="{{inputLimits.lakemedelOchDos}}"></textarea>
+                            </div>
                         </td>
                     </tr>
                 </table>

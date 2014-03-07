@@ -125,6 +125,9 @@ var tsBasMessages = {
         "ts.validation.medicinering.beskrivning.missing" : "Beskrivning av medicinering saknas",
 
         "ts.validation.narkotikalakemedel.missing" : "Alkohol, narkotika och läkemedel saknas",
+        "ts.validation.narkotikalakemedel.teckenmissbruk.missing" : "Finns journaluppgifter, anamnestiska uppgifter, resultat av laboratorieprover eller andra tecken på missbruk saknas",
+        "ts.validation.narkotikalakemedel.vardinsats.missing" : " Har patienten vid något tillfälle varit föremål för vårdinsatser för missbruk eller beroende av alkohol, narkotika eller läkemedel saknas",
+        "ts.validation.narkotikalakemedel.provtagning-behovs.missing" : "Om tecken på missbruk föreligger måste provtagning avseende aktuellt bruk av alkohol eller narkotika vara angett",
         "ts.validation.narkotikalakemedel.lakarordineratlakemedelsbruk.missing" : "Läkarordinerat läkemedelsbruk saknas",
         "ts.validation.narkotikalakemedel.lakemedelochdos.missing" : "Läkemedel och dos saknas",
 
@@ -133,6 +136,11 @@ var tsBasMessages = {
         "ts.validation.medvetandestorning.beskrivning.missing" : "Beskrivning av annan medvetandestörning saknas",
 
         "ts.validation.syn.missing" : "Synfunktioner saknas",
+        "ts.validation.syn.progressiv-ogonsjukdom.missing" : "Har patienten någon progressiv ögonsjukdom saknas",
+        "ts.validation.syn.tecken-synfaltsdefekter.missing" : "Finns tecken på synfältsdefekter saknas",
+        "ts.validation.syn.nattblindhet.missing" : "Framkommer anamnestiska uppgifter om begränsning av seendet vid nedsatt belysning saknas",
+        "ts.validation.syn.diplopi.missing" : "Framkommer dubbelseende saknas",
+        "ts.validation.syn.nystagmus.missing" : "Förekommer nystagmus saknas",
         "ts.validation.syn.hogeroga.missing" : "Synfunktioner relaterade till höger öga saknas",
         "ts.validation.syn.hogeroga.utankorrektion.missing" : "Höger öga utan korrektion saknas",
         "ts.validation.syn.hogeroga.utankorrektion.out-of-bounds" : "Korrektionsvärdet för höger öga utan korrektion måste ligga i intervallet 0.0 till 2.0",
