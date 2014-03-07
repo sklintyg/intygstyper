@@ -9,7 +9,6 @@
     </parent>
     <artifactId>module-support</artifactId>
     <name>Module Support</name>
-    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     
     <dependencies>
@@ -24,7 +23,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>4.0.2.RELEASE</version>
         </dependency>
     </dependencies>
 </project>

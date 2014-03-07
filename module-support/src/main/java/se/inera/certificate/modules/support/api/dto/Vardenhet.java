@@ -1,79 +1,67 @@
 package se.inera.certificate.modules.support.api.dto;
 
+import static org.springframework.util.Assert.hasText;
+import static org.springframework.util.Assert.notNull;
+
 public class Vardenhet {
 
-    private String hsaId;
+    private final String hsaId;
 
-    private String namn;
+    private final String namn;
 
-    private String postadress;
+    private final String postadress;
 
-    private String postnummer;
+    private final String postnummer;
 
-    private String postort;
+    private final String postort;
 
-    private String telefonnummer;
+    private final String telefonnummer;
 
-    private Vardgivare vardgivare;
+    private final Vardgivare vardgivare;
 
-    public Vardenhet() {
-
+    public Vardenhet(String hsaId, String namn, String postadress, String postnummer, String postort,
+            String telefonnummer, Vardgivare vardgivare) {
+        hasText(hsaId, "'hsaId' must not be empty");
+        hasText(namn, "'namn' must not be empty");
+        hasText(postadress, "'postadress' must not be empty");
+        hasText(postnummer, "'postnummer' must not be empty");
+        hasText(postort, "'postort' must not be empty");
+        hasText(telefonnummer, "'telefonnummer' must not be empty");
+        notNull(vardgivare, "'vardgivare' must not be null");
+        this.hsaId = hsaId;
+        this.namn = namn;
+        this.postadress = postadress;
+        this.postnummer = postnummer;
+        this.postort = postort;
+        this.telefonnummer = telefonnummer;
+        this.vardgivare = vardgivare;
     }
 
     public String getHsaId() {
         return hsaId;
     }
 
-    public void setHsaId(String hsaId) {
-        this.hsaId = hsaId;
-    }
-
     public String getNamn() {
         return namn;
-    }
-
-    public void setNamn(String namn) {
-        this.namn = namn;
     }
 
     public Vardgivare getVardgivare() {
         return vardgivare;
     }
 
-    public void setVardgivare(Vardgivare vardgivare) {
-        this.vardgivare = vardgivare;
-    }
-
     public String getPostadress() {
         return postadress;
-    }
-
-    public void setPostadress(String postadress) {
-        this.postadress = postadress;
     }
 
     public String getPostnummer() {
         return postnummer;
     }
 
-    public void setPostnummer(String postnummer) {
-        this.postnummer = postnummer;
-    }
-
     public String getPostort() {
         return postort;
-    }
-
-    public void setPostort(String postort) {
-        this.postort = postort;
     }
 
     public String getTelefonnummer() {
         return telefonnummer;
     }
-
-    public void setTelefonnummer(String telefonnummer) {
-        this.telefonnummer = telefonnummer;
-    }
-
 }

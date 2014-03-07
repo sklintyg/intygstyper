@@ -1,16 +1,16 @@
 package se.inera.certificate.modules.support.api.dto;
 
+import org.springframework.util.Assert;
+
 public class ValidationMessage {
 
-    private String field;
+    private final String field;
 
-    private String message;
-
-    public ValidationMessage() {
-
-    }
+    private final String message;
 
     public ValidationMessage(String field, String message) {
+        Assert.hasText(field, "'field' must not be empty");
+        Assert.hasText(message, "'message' must not be empty");
         this.field = field;
         this.message = message;
     }
@@ -19,16 +19,8 @@ public class ValidationMessage {
         return field;
     }
 
-    public void setField(String field) {
-        this.field = field;
-    }
-
     public String getMessage() {
         return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     @Override

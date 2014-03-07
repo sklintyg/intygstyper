@@ -18,35 +18,34 @@
  */
 package se.inera.certificate.modules.support.api.dto;
 
+import static org.springframework.util.Assert.notNull;
+
 public class CreateNewDraftHolder {
 
-    private String certificateId;
+    private final String certificateId;
 
-    private HoSPersonal skapadAv;
+    private final HoSPersonal skapadAv;
 
-    private Patient patientInfo;
+    private final Patient patient;
+
+    public CreateNewDraftHolder(String certificateId, HoSPersonal skapadAv, Patient patient) {
+        notNull(certificateId, "'certificateId' must not be null");
+        notNull(skapadAv, "'skapadAv' must not be null");
+        notNull(patient, "'patient' must not be null");
+        this.certificateId = certificateId;
+        this.skapadAv = skapadAv;
+        this.patient = patient;
+    }
 
     public String getCertificateId() {
         return certificateId;
-    }
-
-    public void setCertificateId(String certificateId) {
-        this.certificateId = certificateId;
     }
 
     public HoSPersonal getSkapadAv() {
         return skapadAv;
     }
 
-    public void setSkapadAv(HoSPersonal skapadAv) {
-        this.skapadAv = skapadAv;
-    }
-
-    public Patient getPatientInfo() {
-        return patientInfo;
-    }
-
-    public void setPatientInfo(Patient patientInfo) {
-        this.patientInfo = patientInfo;
+    public Patient getPatient() {
+        return patient;
     }
 }

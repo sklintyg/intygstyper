@@ -1,64 +1,58 @@
 package se.inera.certificate.modules.support.api.dto;
 
+import static org.springframework.util.Assert.hasText;
+
 public class Patient {
 
-    private String fornamn;
+    private final String fornamn;
 
-    private String efternamn;
+    private final String efternamn;
 
-    private String personnummer;
+    private final String personnummer;
 
-    private String postadress;
+    private final String postadress;
 
-    private String postnummer;
+    private final String postnummer;
 
-    private String postort;
+    private final String postort;
+
+    public Patient(String fornamn, String efternamn, String personnummer, String postadress, String postnummer,
+            String postort) {
+        hasText(fornamn, "'fornamn' must not be empty");
+        hasText(efternamn, "'efternamn' must not be empty");
+        hasText(personnummer, "'personnummer' must not be empty");
+        hasText(postadress, "'postadress' must not be empty");
+        hasText(postnummer, "'postnummer' must not be empty");
+        hasText(postort, "'postort' must not be empty");
+        this.fornamn = fornamn;
+        this.efternamn = efternamn;
+        this.personnummer = personnummer;
+        this.postadress = postadress;
+        this.postnummer = postnummer;
+        this.postort = postort;
+    }
 
     public String getFornamn() {
         return fornamn;
-    }
-
-    public void setFornamn(String fornamn) {
-        this.fornamn = fornamn;
     }
 
     public String getEfternamn() {
         return efternamn;
     }
 
-    public void setEfternamn(String efternamn) {
-        this.efternamn = efternamn;
-    }
-
     public String getPersonnummer() {
         return personnummer;
-    }
-
-    public void setPersonnummer(String personnummer) {
-        this.personnummer = personnummer;
     }
 
     public String getPostadress() {
         return postadress;
     }
 
-    public void setPostadress(String postadress) {
-        this.postadress = postadress;
-    }
-
     public String getPostnummer() {
         return postnummer;
     }
 
-    public void setPostnummer(String postnummer) {
-        this.postnummer = postnummer;
-    }
-
     public String getPostort() {
         return postort;
-    }
-
-    public void setPostort(String postort) {
-        this.postort = postort;
     }
 }

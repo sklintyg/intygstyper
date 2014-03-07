@@ -1,20 +1,22 @@
 package se.inera.certificate.modules.support.api.dto;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import org.springframework.util.Assert;
 
 public class ValidateDraftResponse {
 
-    private ValidationStatus status;
+    private final ValidationStatus status;
 
-    private List<ValidationMessage> validationErrors;
+    private final List<ValidationMessage> validationErrors;
 
-    public ValidateDraftResponse() {
-        this.validationErrors = new ArrayList<>();
-    }
-
-    public void addErrorMessage(ValidationMessage msg) {
-        this.validationErrors.add(msg);
+    public ValidateDraftResponse(ValidationStatus status, List<ValidationMessage> validationErrors) {
+        Assert.notNull(status, "'status' must not be null");
+        Assert.notNull(validationErrors, "'validationErrors' must not be null");
+        this.status = status;
+        this.validationErrors = new ArrayList<>(validationErrors);
     }
 
     public boolean hasErrorMessages() {
@@ -22,15 +24,10 @@ public class ValidateDraftResponse {
     }
 
     public List<ValidationMessage> getValidationErrors() {
-        return validationErrors;
+        return Collections.unmodifiableList(validationErrors);
     }
 
     public ValidationStatus getStatus() {
         return status;
     }
-
-    public void setStatus(ValidationStatus status) {
-        this.status = status;
-    }
-
 }

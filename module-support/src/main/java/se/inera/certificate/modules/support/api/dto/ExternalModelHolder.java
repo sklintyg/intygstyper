@@ -18,39 +18,30 @@
  */
 package se.inera.certificate.modules.support.api.dto;
 
-import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
-import se.inera.certificate.model.Utlatande;
+import static org.springframework.util.Assert.notNull;
 
 /**
  * Wrapper class for holding the Utlatande in external format of a certificate as well as metadata about the
  * certificate, such as status
- * 
- * @author marced
  */
 public class ExternalModelHolder {
 
-    private Utlatande utlatande;
+    private final String externalModel;
 
-    private CertificateContentMeta certificateContentMeta;
+    private final CertificateContentMeta certificateContentMeta;
+
+    public ExternalModelHolder(String externalModel, CertificateContentMeta certificateContentMeta) {
+        notNull(externalModel, "'externalModel' must not be null");
+        notNull(certificateContentMeta, "'certificateContentMeta' must not be null");
+        this.externalModel = externalModel;
+        this.certificateContentMeta = certificateContentMeta;
+    }
+
+    public String getExternalModel() {
+        return externalModel;
+    }
 
     public CertificateContentMeta getCertificateContentMeta() {
         return certificateContentMeta;
     }
-
-    public void setCertificateContentMeta(CertificateContentMeta certificateContentMeta) {
-        this.certificateContentMeta = certificateContentMeta;
-    }
-    
-    public Utlatande getCertificateContent() {
-        return utlatande;
-    }
-
-    public <T extends Utlatande> T getCertificateContent(Class<T> type) {
-        return type.cast(utlatande);
-    }
-
-    public void setCertificateContent(Utlatande certificateContent) {
-        this.utlatande = certificateContent;
-    }
-
 }

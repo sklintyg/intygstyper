@@ -1,13 +1,14 @@
 package se.inera.certificate.modules.support.api;
 
-import java.io.InputStream;
-
-import se.inera.certificate.model.Utlatande;
-import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
+import se.inera.certificate.modules.support.api.dto.ExternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
+import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.TransportModelHolder;
+import se.inera.certificate.modules.support.api.dto.TransportModelResponse;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.certificate.modules.support.api.exception.ModuleException;
 
 /**
  * The module API, exposing the methods that all methods needs to implement.
@@ -22,7 +23,7 @@ public interface ModuleApi {
      * 
      * @return An instance of the external model, generated from the transport model.
      */
-    Utlatande unmarshall(TransportModelHolder transportModel);
+    ExternalModelResponse unmarshall(TransportModelHolder transportModel) throws ModuleException;
 
     /**
      * Handles conversion from the external JSON model to the transport model (XML).
@@ -32,7 +33,7 @@ public interface ModuleApi {
      * 
      * @return An instance of the transport model, generated from the external model.
      */
-    InputStream marshall(ExternalModelHolder externalModel);
+    TransportModelResponse marshall(ExternalModelHolder externalModel) throws ModuleException;
 
     /**
      * Validates the external model. If the validation succeeds, a empty result will be returned. If the validation
@@ -42,7 +43,7 @@ public interface ModuleApi {
      *            The external model to validate.
      * @return
      */
-    String validate(ExternalModelHolder externalModel);
+    String validate(ExternalModelHolder externalModel) throws ModuleException;
 
     /**
      * Validates the internal model. The status (complete, incomplete) and a list of validation errors is returned.
@@ -51,7 +52,7 @@ public interface ModuleApi {
      *            The internal model to validate.
      * @return
      */
-    ValidateDraftResponse validateDraft(InternalModelHolder internalModel);
+    ValidateDraftResponse validateDraft(InternalModelHolder internalModel) throws ModuleException;
 
     /**
      * Generates a PDF from the external model.
@@ -61,7 +62,7 @@ public interface ModuleApi {
      * 
      * @return A binary stream containing a PDF template populated with the information of the external model.
      */
-    byte[] pdf(ExternalModelHolder externalModel);
+    byte[] pdf(ExternalModelHolder externalModel) throws ModuleException;
 
     /**
      * Handles conversion from the external model to the internal model.
@@ -71,7 +72,7 @@ public interface ModuleApi {
      * 
      * @return An instance of the internal model, generated from the external model.
      */
-    Object convertExternalToInternal(ExternalModelHolder externalModel);
+    InternalModelResponse convertExternalToInternal(ExternalModelHolder externalModel) throws ModuleException;
 
     /**
      * Handles conversion from the internal model to the external model.
@@ -81,7 +82,7 @@ public interface ModuleApi {
      * 
      * @return An instance of the external model, generated from the internal model.
      */
-    Utlatande convertInternalToExternal(InternalModelHolder internalModel);
+    ExternalModelResponse convertInternalToExternal(InternalModelHolder internalModel) throws ModuleException;
 
     /**
      * Creates a new editable model for use in WebCert. The model is pre populated using data contained in the
@@ -90,5 +91,5 @@ public interface ModuleApi {
      * @param draftCertificateHolder
      * @return
      */
-    Object createNewInternal(CreateNewDraftHolder draftCertificateHolder);
+    InternalModelResponse createNewInternal(CreateNewDraftHolder draftCertificateHolder) throws ModuleException;
 }
