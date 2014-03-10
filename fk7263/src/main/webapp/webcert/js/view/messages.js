@@ -82,6 +82,32 @@ var fk7263Messages = {
 
         "fk7263.helptext.aktuellt-sjukdomsforlopp" : "Beskriv kortfattat sjukdomens utveckling, situation vid undersökningstillfället och förhållanden som påverkar sjukdomsutvecklingen.",
         
+        "fk7263.helptext.funktionsnedsattning" : "Beskriv den angivna sjukdomens påverkan på patientens fysiska respektive psykiska funkitoner och hur denna påverkan observerats vid din och andra proffesioners undersökning och medicinska utredning.",
+
+        "fk7263.helptext.aktivitetsbegransning" : "Ge en tydlig beskrivning av hur sjukdomen begränsar patientens förmåga, liksom av hur omfattande konsekvenserna är. Denna information är den mest centrala för bedömningen av rätten till sjukpenning. Använd enkel svenska som är begriplig för en person utan medicinsk utbildning.",
+
+        "fk7263.helptext.arbete" : "Ange vad du bedömt nedsättningen av arbetsförmågan mot patientens nuvarande arbete, arbetslöshet eller föräldraledighet. Läkarintyget måste alltid innehålla information om detta. Om patienten t.ex. både arbetar och är föräldraledig, kan du förtydliga detta under Övriga upplysningar.",
+        "fk7263.helptext.arbete.nuvarande" : "Om patienten har ett arbete, ska nedsättningen av arbetsförmåga relateras till de arbetsuppgifter patienten har.",
+        "fk7263.helptext.arbete.arbetsloshet" : "Är patienten arbetslös ska bedömningen relateras till förmågan att klara ett arbete på den reguljära arbetsmarknaden.",
+        "fk7263.helptext.arbete.foraldrarledighet" : "Är patienten föräldraledig ska bedömningen relateras till förmågan att ta hand om barnet.",
+
+        "fk7263.helptext.arbetsformaga" : "Ange hur mycket patientens arbetsförmåga bedöms vara nedsatt och för hur lång tid. För att patienten ska få rätt till sjukpenning ska aktivitetsbegränsningen påverka arbetsförmågan med minst 25 %. Gradvis ökad arbetsförmåga kan anges på samma intyg. ",
+        "fk7263.helptext.arbetsformaga.bedoms-langre" : "Om sjukskrivningen omfattar längre tid än den som rekommenderas i det försäkringsmedicinska beslutsstödets specifika rekommendationer, motivera varför. Detta gäller också om patienten vid intygsskrivandet redan varit sjukskriven längre tid än beslutsstödets rekommendationer.",
+        "fk7263.helptext.arbetsformaga.prognos" : "Ange hur du bedömer patientens möjligheter att återgå till sina nuvarande arbetsuppgifter i samma omfattning som före sjukskrivningen. Prognosen avser inte möjligheter till omplacering eller förändrade arbetsuppgifter.",
+
+        "fk7263.helptext.atgarder" : "Ange om patienten är under behandling eller väntar på åtgärder inom vården (t.ex. operationer eller behandlingar) eller någon annanstans. Angivna åtgärder ska vara väsentliga för att patienten ska återfå arbetsförmågan.",
+
+        "fk7263.helptext.rekommendationer" : "Här kan du ge Försäkringskassan underlag för bedömning av patientens behov av samordade åtgärder för rehabilitering. Dina rekommendationer riktar sig också till patienten själv och till patientens arbetsgivare. Försäkringskassan har ett samordningsansvar för rehabiliteringen. Försäkringskassan kan bland annat ta initiativ till möten med patienten och olika aktörer som kan bidra till att patienten snabbare kan återgå i arbete.",
+        "fk7263.helptext.rekommendationer.resor" : "Ange om resor till och från arbetet med annat färdsätt, till exempel taxi eller automatväxlad bil, kan göra att patienten kan arbeta trots sjukdomen. Patienten kan få ersättning för annat färdsätt i tre månader, och i undantagsfall längre.",
+        "fk7263.helptext.rekommendationer.arbetsformedlingen" : "Kontakt med Arbetsförmedlingen rekommenderas om du bedömer att patienten behöver hjälp via Arbetsförmedlingen för att han eller hon ska kunna återgå i arbete.",
+        "fk7263.helptext.rekommendationer.foretagshalsovarden" : "Patientens arbetsgivare kan ha ett avtal om företagshälsovård. Försäkringskassan har ansvar för samordning av aktiviteter för patientens rehabilitering.",
+        "fk7263.helptext.rekommendationer.arbetslivsinriktad-rehabilitering" : "Ange om du bedömer att patienten skulle ha förutsättningar att återvinna arbetsförmågan snabbare med arbetslivsinriktad rehabilitering.",
+
+        "fk7263.helptext.kontakt" : "Ange om du vill att Försäkringskassans handläggare tar kontakt med dig för att diskutera patientens sjukskrivning. Observera att denna ruta i första hand ska användas om intyget ska skrivas ut på papper. Överförs intyget elektroniskt används hellre funktionen för elektronisk ärendekommunikation (efter det att intyget skickats in).",
+
+        "fk7263.helptext.ovrigt" : "Ange här sådan ytterligare information som du bedömer att Försäkringskassan skulle ha nytta av. Observera att vid granskning och utskrift av intyget kommer text som skrivits in i vissa av fritextfälten på andra ställen i intyget också att flyttas hit. ",
+
+        "fk7263.helptext.samtycke" : "Läkarintyget får bara skickas till Försäkringskassan om patienten givit sitt samtycke till det. Genom att kryssa i denna ruta intygar du att du fått patientens samtycke till att skicka intyget elektroniskt till Försäkringskassan. ",
         
         // errors
         "error.could_not_load_cert" : "<strong>Ett tekniskt problem inträffade.</strong>Kunde inte hämta intyget.",
