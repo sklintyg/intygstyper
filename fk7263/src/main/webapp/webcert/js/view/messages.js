@@ -9,6 +9,7 @@ var fk7263Messages = {
         // FK 7263
         "view.label.pagetitle.fk7263" : "Läkarintyg FK 7263",
 
+        //Labels
         "view.label.field" : "Fält",
         "view.label.blank" : "- ej ifyllt",
         "view.label.nedsattning" : "Jag bedömer att arbetsförmåga är",
@@ -69,6 +70,19 @@ var fk7263Messages = {
         "nedsattningsgrad.nedsatt_med_3_4" : "Nedsatt med 3/4",
         "nedsattningsgrad.nedsatt_med_1_2" : "Nedsatt med hälften",
         "nedsattningsgrad.nedsatt_med_1_4" : "Nedsatt med 1/4",
+        
+        //Help texts
+        "fk7263.helptext.intyg-avser" : "Ange vad uppgifterna i intyget baseras på. Flera alternativ kan väljas.",
+        "fk7263.helptext.intyg-avser.annat" : "Detta alternativ kan bl.a. användas för annan proffesions bedömning t.ex. kuratorsanteckningar, sjukgymnastanteckning eller teamkonferens.",
+
+        "fk7263.helptext.diagnos" : "Ange vilken eller vilka sjukdomar som medför nedsättning av arbetsförmågan.",
+        "fk7263.helptext.diagnos.ytterligare" : "Observera att det som skrivs in här kommer vid granskning och utskrift av intyget att flyttas till ett fritextfält (Diagnos) tillsammans med förtydligandet av diagnoser nedan.",
+        "fk7263.helptext.diagnos.fortydligande" : "I intygsblanketten kommer allt som inte skrivs i huvuddiagnosens kodruta att hamna i fritext (fältet Diagnos). I fritextfältet kan du ytterligare kommentera eller förtydliga de angivna diagnoserna eller åtgärderna.",
+        "fk7263.helptext.diagnos.samsjuklighet" : "Om du anser att Försäkringskassan särskilt bör uppmärksammas på att det rör sig om samsjuklighet, dvs. om patienten har flera sjukdomar eller symtom som förstärker och förvärrar patientens tillstånd, kan du ange detta med kryss. Om du sätter ett kryss kommer texten ”Samsjuklighet föreligger” att synas i fritextfältet för diagnos vid granskning och utskrift av intyget.",
+
+        "fk7263.helptext.aktuellt-sjukdomsforlopp" : "Beskriv kortfattat sjukdomens utveckling, situation vid undersökningstillfället och förhållanden som påverkar sjukdomsutvecklingen.",
+        
+        
         // errors
         "error.could_not_load_cert" : "<strong>Ett tekniskt problem inträffade.</strong>Kunde inte hämta intyget.",
         "error.could_not_load_cert_not_auth" : "<strong>Kunde inte hämta intyget eftersom du saknar behörighet.",

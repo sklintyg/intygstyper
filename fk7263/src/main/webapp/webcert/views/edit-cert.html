@@ -49,7 +49,7 @@
                 <label for="smittskydd" class="control-label title-single"><span message key="view.label.smittskydd"></span></label>
             </div>
 
-			<div wc-field field-label="view.label.basedon" field-number="4b" field-help-text="helpTooltip" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
+			<div wc-field field-label="view.label.basedon" field-number="4b" field-help-text="fk7263.helptext.intyg-avser" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
                 <div class="control-group form-inline">
                     <label class="checkbox" style="min-width: 250px"><input type="checkbox" name="informationBasedOn.examination" class="inline" ng-model="basedOnState.check.undersokningAvPatienten" ng-change="autoEnterDate('undersokningAvPatienten')"/> Min undersökning av patienten</label>
                     <span wc-date-picker-field target-model="cert.undersokningAvPatienten" on-change="basedOnState.check.undersokningAvPatienten = true" dom-id="undersokningAvPatienten-date"></span>
@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="control-group form-inline">
-                    <label class="checkbox" style="min-width: 250px"><input type="checkbox" name="informationBasedOn.other" ng-model="basedOnState.check.annanReferens" ng-change="autoEnterDate('annanReferens')"/> Annat</label>
+                    <label class="checkbox" style="min-width: 250px"><input type="checkbox" name="informationBasedOn.other" ng-model="basedOnState.check.annanReferens" ng-change="autoEnterDate('annanReferens')"/> Annat<span wc-enable-tooltip field-help-text="fk7263.helptext.intyg-avser.annat"/> </label>
                     <span wc-date-picker-field target-model="cert.annanReferens" on-change="basedOnState.check.annanReferens = true" dom-id="annanReferens-date"></span>
                 </div>
 
@@ -78,7 +78,7 @@
                 </div>
 			</div>
 
-			<div wc-field field-label="view.label.diagnosis" field-number="2" field-help-text="helpTooltip" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
+			<div wc-field field-label="view.label.diagnosis" field-number="2" field-help-text="fk7263.helptext.diagnos" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
                 <div class="row-fluid control-group">
                     <div class='span3'>
                         <label class="control-label">ICD 10</label>
@@ -104,7 +104,7 @@
                         </div>
                     </div>
                     <div class='span9 unbreakable'>
-                        <label class="control-label inline-block">Ytterligare	diagnoser (frivilligt)</label><span class="help">?</span>
+                        <label class="control-label inline-block">Ytterligare	diagnoser (frivilligt)</label><span wc-enable-tooltip field-help-text="fk7263.helptext.diagnos.ytterligare"></span>
                         <div class="controls">
                             <input type="text" id="diagnose.descriptionOpt1"
                                 name="diagnose.descriptionOpt1" value="" class="block span12">
@@ -116,7 +116,7 @@
 
                 <div class="control-group form-inline">
                     <div>
-                      <label class="control-label">Förtydligande av diagnos/diagnoser</label><span class="help">?</span>
+                      <label class="control-label">Förtydligande av diagnos/diagnoser</label><span wc-enable-tooltip field-help-text="fk7263.helptext.diagnos.fortydligande"></span>
                     </div>
                     <textarea id="diagnose.clarification" name="diagnose.clarification" rows='5'
                       ng-model="cert.diagnosBeskrivning" maxlength="{{inputLimits.diagnosBeskrivning}}" ng-change="limitFieldLength('diagnosBeskrivning')"></textarea>
@@ -127,7 +127,7 @@
 
                 <div class="control-group form-inline">
                     <input type="checkbox" id="diagnose.multipleDiagnoses" name="diagnose.multipleDiagnoses" ng-model="cert.otherData.samsjuklighet" />
-                    <label for="diagnose.multipleDiagnoses">Samsjuklighet föreligger</label><span class="help">?</span>
+                    <label for="diagnose.multipleDiagnoses">Samsjuklighet föreligger</label><span wc-enable-tooltip field-help-text="fk7263.helptext.diagnos.samsjuklighet"></span>
                 </div>
 			</div>
 
