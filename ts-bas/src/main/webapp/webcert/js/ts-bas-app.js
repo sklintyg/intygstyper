@@ -25,7 +25,7 @@
  * Cant seem to inject rootscope in .config, so for routing parameters, we use
  * the global JS config object for now
  */
-angular.module('TSBASViewCertApp', [ 'ui.bootstrap', 'wc.ts-bas.controllers', 'wc.ts-bas.directives', 'wc.ts-bas.services', 'modules.messages', 'wc.common', 'wc.utils' ]);
+angular.module('TSBASViewCertApp', [ 'ui.bootstrap', 'ngCookies', 'wc.ts-bas.controllers', 'wc.ts-bas.directives', 'wc.ts-bas.services', 'modules.messages', 'wc.common', 'wc.utils' ]);
 angular.module('TSBASViewCertApp').config([ '$routeProvider', '$httpProvider', 'http403ResponseInterceptorProvider', function($routeProvider, $httpProvider, http403ResponseInterceptorProvider) {
     $routeProvider.when('/edit', {
         templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/edit-cert.html',
