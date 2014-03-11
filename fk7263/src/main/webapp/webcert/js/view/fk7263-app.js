@@ -6,10 +6,7 @@
 angular.module('FK7263ViewCertApp', [ 'ui.bootstrap', 'ngCookies', 'ngRoute', 'ngSanitize', 'wc.fk7263.controllers', 'wc.fk7263.directives', 'wc.fk7263.services', 'wc.fragasvarmodule', 'modules.messages', 'wc.common',
         'wc.utils', 'wc.common.fragasvarmodule' ]);
 angular.module('FK7263ViewCertApp').config([ '$routeProvider', '$httpProvider', 'http403ResponseInterceptorProvider', function($routeProvider, $httpProvider, http403ResponseInterceptorProvider) {
-    $routeProvider.when('/edit', {
-        templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/edit-cert.html',
-        controller : 'EditCertCtrl'
-    }).when('/view', {
+    $routeProvider.when('/view', {
         templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH + '/webcert/views/view-cert.html',
         controller : 'ViewCertCtrl'
     }).otherwise({
