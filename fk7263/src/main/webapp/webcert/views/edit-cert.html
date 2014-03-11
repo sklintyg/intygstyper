@@ -49,7 +49,7 @@
                 <label for="smittskydd" class="control-label title-single"><span message key="view.label.smittskydd"></span></label>
             </div>
 
-			<div wc-field field-label="view.label.basedon" field-number="4b" field-help-text="fk7263.helptext.intyg-avser" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
+			<div wc-field field-label="view.label.basedon" field-number="4b" field-help-text="fk7263.helptext.intyg-baserat-pa" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
                 <div class="control-group form-inline">
                     <label class="checkbox" style="min-width: 250px"><input type="checkbox" name="informationBasedOn.examination" class="inline" ng-model="basedOnState.check.undersokningAvPatienten" ng-change="autoEnterDate('undersokningAvPatienten')"/> Min undersökning av patienten</label>
                     <span wc-date-picker-field target-model="cert.undersokningAvPatienten" on-change="basedOnState.check.undersokningAvPatienten = true" dom-id="undersokningAvPatienten-date"></span>
@@ -64,15 +64,14 @@
                 </div>
 
                 <div class="control-group form-inline">
-                    <label class="checkbox" style="min-width: 250px"><input type="checkbox" name="informationBasedOn.other" ng-model="basedOnState.check.annanReferens" ng-change="autoEnterDate('annanReferens')"/> Annat<span wc-enable-tooltip field-help-text="fk7263.helptext.intyg-avser.annat"/> </label>
+                    <label class="checkbox" style="min-width: 250px"><input type="checkbox" name="informationBasedOn.other" ng-model="basedOnState.check.annanReferens" ng-change="autoEnterDate('annanReferens')"/> Annat<span wc-enable-tooltip field-help-text="fk7263.helptext.intyg-baserat-pa.annat"/> </label>
                     <span wc-date-picker-field target-model="cert.annanReferens" on-change="basedOnState.check.annanReferens = true" dom-id="annanReferens-date"></span>
                 </div>
-
                 <div class="otherText indent" ng-if="basedOnState.check.annanReferens">
                     <span>Ange vad:</span><br />
-                    <textarea id="informationBasedOn.otherText"	name="informationBasedOn.otherText" rows='2' class='otherInformation' ng-model="cert.otherData.baseradPaAnnat" ng-change="limitOtherField('baseradPaAnnat)"></textarea>
+                    <textarea id="informationBasedOn.otherText"	name="informationBasedOn.otherText" rows='2' class='otherInformation' ng-model="cert.otherData.baseradPaAnnat" ng-change="limitOtherField('baseradPaAnnat')"></textarea>
                     <div class="counter">
-                      Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}
+                      Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}  
                     </div>
                     <div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
                 </div>
@@ -151,11 +150,11 @@
 			</div>
 
             <!-- Arbete -->
-			<div wc-field field-label="view.label.work" field-number="8a" field-help-text="fk7263.helptext.arbete" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
+			<div wc-field field-label="view.label.work" field-number="8a" field-help-text="fk7263.helptext.sysselsattning" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
                 <div class="control-group form-inline">
                     <label class="control-label"><span message key="view.label.patientworkcapacity"></span></label>
                     <div class="controls form-inline">
-                        <label class="radio"><input type="radio" name="basedOnWork" value="CURRENT" ng-model="cert.basedOnWork" checked="checked"> Nuvarande arbete</label><span wc-enable-tooltip field-help-text="fk7263.helptext.arbete.nuvarande"></span>
+                        <label class="radio"><input type="radio" name="basedOnWork" value="CURRENT" ng-model="cert.basedOnWork" checked="checked"> Nuvarande arbete</label><span wc-enable-tooltip field-help-text="fk7263.helptext.sysselsattning.nuvarande"></span>
                         <div class="indent" ng-if="cert.basedOnWork == 'CURRENT'">
                             <label for="currentWork">Ange aktuella arbetsuppgifter</label>
                             <div class="controls">
@@ -168,10 +167,10 @@
                     </div>
                 </div>
                 <div class="control-group form-inline">
-                    <label class="radio"><input type="radio" name="basedOnWork" group="group1" value="UNEMPLOYMENT" ng-model="cert.basedOnWork"> Arbetslöshet - att utföra arbete på den reguljära arbetsmarknaden</label><span wc-enable-tooltip field-help-text="fk7263.helptext.arbete.arbetsloshet"></span>
+                    <label class="radio"><input type="radio" name="basedOnWork" group="group1" value="UNEMPLOYMENT" ng-model="cert.basedOnWork"> Arbetslöshet - att utföra arbete på den reguljära arbetsmarknaden</label><span wc-enable-tooltip field-help-text="fk7263.helptext.sysselsattning.arbetsloshet"></span>
                 </div>
                 <div class="control-group form-inline">
-                    <label class="radio"><input type="radio" name="basedOnWork" group="group1" value="PARENTAL_LEAVE" ng-model="cert.basedOnWork"> Föräldraledighet med föräldrapenning - att vårda sitt barn</label><span wc-enable-tooltip field-help-text="fk7263.helptext.arbete.foraldrarledighet"></span>
+                    <label class="radio"><input type="radio" name="basedOnWork" group="group1" value="PARENTAL_LEAVE" ng-model="cert.basedOnWork"> Föräldraledighet med föräldrapenning - att vårda sitt barn</label><span wc-enable-tooltip field-help-text="fk7263.helptext.sysselsattning.foraldrarledighet"></span>
                 </div>
 			</div>
 
@@ -279,9 +278,9 @@
                     <div class="control-group">
                         <label class="radio"><input type="radio" id="capacityForWork4" name="capacityForWork.forecast" value="UNKNOWN" ng-model="cert.prognosis"> Går ej att bedöma</label>
                         <div class="indent" ng-show="cert.prognosis == 'UNKNOWN'">
-                            Förtydligande: <input type="text"	ng-model="cert.otherData.prognosisClarification" id="capacityForWork.forecastText"	name="capacityForWork.forecastText" value=""
+                            Förtydligande: <input type="text" ng-model="cert.otherData.prognosisClarification" id="capacityForWork.forecastText"	name="capacityForWork.forecastText" value=""
                                         class='otherInformation' ng-change="limitOtherField('prognosisClarification')"> Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}
-                            <div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett.</div>
+                            <div class="info-transfer">Informationen överförs till "Övriga upplysningar" i Försäkringskassans blankett. </div>
                         </div>
                     </div>
                 </div>

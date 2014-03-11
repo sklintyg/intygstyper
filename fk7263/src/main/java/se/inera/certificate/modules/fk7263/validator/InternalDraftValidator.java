@@ -27,10 +27,9 @@ public class InternalDraftValidator {
 
     public ValidateDraftResponseHolder validateDraft(Fk7263Intyg utlatande) {
         this.utlatande = utlatande;
-        
+
         validateDiagnose();
         validateFunktionsnedsattning();
-        validateRehabilitering();
         validateArbetsformaga();
         validatePrognos();
         validateRessatt();
@@ -45,15 +44,15 @@ public class InternalDraftValidator {
         // Fält 13 - Upplysningar - optional
         // If field 4 annat satt or field 10 går ej att bedömma is set then
         // field 13 should contain data.
-        boolean hasKommentar = !isNullOrEmpty(utlatande.getKommentar());
-
-        LocalDate annat = utlatande.getAnnanReferens();
-
-        boolean garEjAttBedomma = utlatande.isArbetsformataPrognosGarInteAttBedoma();
-
-        if ((annat != null || garEjAttBedomma) && !hasKommentar) {
-            addValidationError("Field 13", "Field should contain data as field 4 or fields 10 are checked.");
+        if (utlatande.getAnnanReferens() != null && isNullOrEmpty(utlatande.getAnnanReferensBeskrivning())) {
+            addValidationError("Field 4", "fk7263.validation.intyg-baserat-pa.annat.beskrivning.missing");
         }
+
+        if ((utlatande.getPrognosis() != null && utlatande.getPrognosis().equals("UNKNOWN"))
+                && isNullOrEmpty(utlatande.getArbetsformagaPrognosGarInteAttBedomBeskrivning())) {
+            addValidationError("Field 10", "fk7263.validation.prognos.gar-ej-att-bedomma.beskrivning.missing");
+        }
+
     }
 
     private void validateRessatt() {
@@ -76,12 +75,13 @@ public class InternalDraftValidator {
     }
 
     private void validateArbetsformaga() {
-        // Fält 8a - arbetsformoga - sysselsattning - applies of not smittskydd is set
+        // Fält 8a - arbetsformoga - sysselsattning - applies of not smittskydd
+        // is set
         if (!utlatande.isAvstangningSmittskydd()) {
             boolean hasArbetsuppgifts = !StringUtils.isEmpty(utlatande.getNuvarandeArbetsuppgifter());
 
             if (!hasArbetsuppgifts && !utlatande.isArbetsloshet() && !utlatande.isForaldrarledighet()) {
-                addValidationError("Field 8a", "At least 1 sysselsattning must be set");
+                addValidationError("Field 8a", "fk7263.validation.sysselsattning.missing");
             }
         }
 
@@ -90,36 +90,31 @@ public class InternalDraftValidator {
                 utlatande.getNedsattMed50(), utlatande.getNedsattMed25());
     }
 
-    private void validateRehabilitering() {
-        // Fält 7 - 3 optional checkboxes (but exclusive!)
-        if (!hasMaxOneTruth(utlatande.isRehabiliteringAktuell(), utlatande.isRehabiliteringEjAktuell(),
-                utlatande.isRehabiliteringGarInteAttBedoma())) {
-            addValidationError("Field 7", "Only one rehabilitering field can be checked!");
-        }
-    }
-
     private void validateFunktionsnedsattning() {
         // Fält 4 - vänster Check that we got a funktionsnedsattning element
         String funktionsnedsattning = utlatande.getFunktionsnedsattning();
         if (!utlatande.isAvstangningSmittskydd() && (funktionsnedsattning == null)) {
-            addValidationError("Field 4", "No funktionsnedsattning element found!");
+            addValidationError("Field 4", "fk7263.validation.funktionsnedsattning.missing");
             return;
         }
 
-        // Fält 4 - höger Check that we at least got one field set if not smittskydd
+        // Fält 4 - höger Check that we at least got one field set regarding
+        // what the certificate is based on if not smittskydd
         if (!utlatande.isAvstangningSmittskydd()) {
+
             if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
                     && utlatande.getJournaluppgifter() == null && utlatande.getAnnanReferens() == null) {
-                addValidationError("Field 4", "At least 1 vardkontakt or referens element must be set!");
+                addValidationError("Field 4", "fk7263.validation.intyg-baserat-pa.missing");
                 return;
             }
+
         }
     }
 
     private void validateDiagnose() {
         // Fält 2 - Medicinskt tillstånd kod - mandatory if not smittskydd
         if (!utlatande.isAvstangningSmittskydd() && isNullOrEmpty(utlatande.getDiagnosKod())) {
-            addValidationError("Field 2", "No tillstandskod in medicinsktTillstand found!");
+            addValidationError("Field 2", "fk7263.validation.diagnos.missing");
         }
 
         // Fält 3 - always optional regardless of smittskydd
@@ -174,7 +169,7 @@ public class InternalDraftValidator {
      */
     protected boolean validateIntervals(String fieldId, LocalDateInterval... intervals) {
         if (intervals == null || allNulls(intervals)) {
-            addValidationError(fieldId, "At least 1 interval must be filled");
+            addValidationError(fieldId, "fk7263.validation.arbetsformaga.choose-at-least-one");
             return false;
         }
 
@@ -194,7 +189,8 @@ public class InternalDraftValidator {
                                     + ", tom " + intervals[j].getTom());
                             return false;
                         }
-                        // Overlap OR abuts(one intervals tom day== another's from day) is considered invalid
+                        // Overlap OR abuts(one intervals tom day== another's
+                        // from day) is considered invalid
                         if (oneInterval.overlaps(anotherInterval) || oneInterval.abuts(anotherInterval)) {
                             addValidationError(fieldId, "Overlapping date intervals (" + oneInterval.toString()
                                     + " vs " + anotherInterval.toString() + ")");

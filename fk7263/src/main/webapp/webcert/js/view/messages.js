@@ -72,8 +72,8 @@ var fk7263Messages = {
         "nedsattningsgrad.nedsatt_med_1_4" : "Nedsatt med 1/4",
         
         //Help texts
-        "fk7263.helptext.intyg-avser" : "Ange vad uppgifterna i intyget baseras på. Flera alternativ kan väljas.",
-        "fk7263.helptext.intyg-avser.annat" : "Detta alternativ kan bl.a. användas för annan proffesions bedömning t.ex. kuratorsanteckningar, sjukgymnastanteckning eller teamkonferens.",
+        "fk7263.helptext.intyg-baserat-pa" : "Ange vad uppgifterna i intyget baseras på. Flera alternativ kan väljas.",
+        "fk7263.helptext.intyg-baserat-pa.annat" : "Detta alternativ kan bl.a. användas för annan proffesions bedömning t.ex. kuratorsanteckningar, sjukgymnastanteckning eller teamkonferens.",
 
         "fk7263.helptext.diagnos" : "Ange vilken eller vilka sjukdomar som medför nedsättning av arbetsförmågan.",
         "fk7263.helptext.diagnos.ytterligare" : "Observera att det som skrivs in här kommer vid granskning och utskrift av intyget att flyttas till ett fritextfält (Diagnos) tillsammans med förtydligandet av diagnoser nedan.",
@@ -86,10 +86,10 @@ var fk7263Messages = {
 
         "fk7263.helptext.aktivitetsbegransning" : "Ge en tydlig beskrivning av hur sjukdomen begränsar patientens förmåga, liksom av hur omfattande konsekvenserna är. Denna information är den mest centrala för bedömningen av rätten till sjukpenning. Använd enkel svenska som är begriplig för en person utan medicinsk utbildning.",
 
-        "fk7263.helptext.arbete" : "Ange vad du bedömt nedsättningen av arbetsförmågan mot patientens nuvarande arbete, arbetslöshet eller föräldraledighet. Läkarintyget måste alltid innehålla information om detta. Om patienten t.ex. både arbetar och är föräldraledig, kan du förtydliga detta under Övriga upplysningar.",
-        "fk7263.helptext.arbete.nuvarande" : "Om patienten har ett arbete, ska nedsättningen av arbetsförmåga relateras till de arbetsuppgifter patienten har.",
-        "fk7263.helptext.arbete.arbetsloshet" : "Är patienten arbetslös ska bedömningen relateras till förmågan att klara ett arbete på den reguljära arbetsmarknaden.",
-        "fk7263.helptext.arbete.foraldrarledighet" : "Är patienten föräldraledig ska bedömningen relateras till förmågan att ta hand om barnet.",
+        "fk7263.helptext.sysselsattning" : "Ange vad du bedömt nedsättningen av arbetsförmågan mot patientens nuvarande arbete, arbetslöshet eller föräldraledighet. Läkarintyget måste alltid innehålla information om detta. Om patienten t.ex. både arbetar och är föräldraledig, kan du förtydliga detta under Övriga upplysningar.",
+        "fk7263.helptext.sysselsattning.nuvarande" : "Om patienten har ett arbete, ska nedsättningen av arbetsförmåga relateras till de arbetsuppgifter patienten har.",
+        "fk7263.helptext.sysselsattning.arbetsloshet" : "Är patienten arbetslös ska bedömningen relateras till förmågan att klara ett arbete på den reguljära arbetsmarknaden.",
+        "fk7263.helptext.sysselsattning.foraldrarledighet" : "Är patienten föräldraledig ska bedömningen relateras till förmågan att ta hand om barnet.",
 
         "fk7263.helptext.arbetsformaga" : "Ange hur mycket patientens arbetsförmåga bedöms vara nedsatt och för hur lång tid. För att patienten ska få rätt till sjukpenning ska aktivitetsbegränsningen påverka arbetsförmågan med minst 25 %. Gradvis ökad arbetsförmåga kan anges på samma intyg. ",
         "fk7263.helptext.arbetsformaga.bedoms-langre" : "Om sjukskrivningen omfattar längre tid än den som rekommenderas i det försäkringsmedicinska beslutsstödets specifika rekommendationer, motivera varför. Detta gäller också om patienten vid intygsskrivandet redan varit sjukskriven längre tid än beslutsstödets rekommendationer.",
@@ -108,6 +108,21 @@ var fk7263Messages = {
         "fk7263.helptext.ovrigt" : "Ange här sådan ytterligare information som du bedömer att Försäkringskassan skulle ha nytta av. Observera att vid granskning och utskrift av intyget kommer text som skrivits in i vissa av fritextfälten på andra ställen i intyget också att flyttas hit. ",
 
         "fk7263.helptext.samtycke" : "Läkarintyget får bara skickas till Försäkringskassan om patienten givit sitt samtycke till det. Genom att kryssa i denna ruta intygar du att du fått patientens samtycke till att skicka intyget elektroniskt till Försäkringskassan. ",
+        
+        //Validation messages
+        "fk7263.validation.diagnos.missing" : "ICD-10 kod saknas på huvuddiagnosen. (Fält 2)",
+
+        "fk7263.validation.intyg-baserat-pa.missing" : "Välj minst ett alternativ som uppgifterna i intyget baseras på. (Fält 4b)",
+        "fk7263.validation.intyg-baserat-pa.annat.beskrivning.missing" : "Fritextfältet som hör till alternativet Annat under 'Uppgifterna i intyget baseras på' måste fyllas i. (Fält 4)",
+        
+        "fk7263.validation.funktionsnedsattning.missing" : "Fältet med funktionsnedsättning måste fyllas i. (Fält 4)",
+
+        "fk7263.validation.sysselsattning.missing" : "	Aktuella arbetsuppgifter som hör till alternativet Nuvarande arbete under 'Arbete' måste fyllas i. (Fält 8a)",
+
+        "fk7263.validation.arbetsformaga.choose-at-least-one" : "Välj minst ett alternativ för arbetsförmåga. (Fält 8b)",
+        "fk7263.validation.arbetsformaga.overlapping" : "Välj minst ett alternativ för arbetsförmåga. (Fält 8b)",
+        
+        "fk7263.validation.prognos.gar-ej-att-bedomma.beskrivning.missing" : "Fritextfältet som hör till alternativet Går ej att bedöma, förtydligande under 'Prognos - kommer patienten att få tillbaka sin arbetsförmåga i nuvarande arbete' måste fyllas i. (Fält 10)",
         
         // errors
         "error.could_not_load_cert" : "<strong>Ett tekniskt problem inträffade.</strong>Kunde inte hämta intyget.",
