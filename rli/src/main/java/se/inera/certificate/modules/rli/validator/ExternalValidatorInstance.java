@@ -21,14 +21,9 @@ package se.inera.certificate.modules.rli.validator;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Observation;
-import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Rekommendation;
-import se.inera.certificate.model.Utforarroll;
-import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
 import se.inera.certificate.modules.rli.model.codes.ArrangemangsKod;
 import se.inera.certificate.modules.rli.model.codes.BefattningsKod;
@@ -42,7 +37,12 @@ import se.inera.certificate.modules.rli.model.codes.UtforarrollKod;
 import se.inera.certificate.modules.rli.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
+import se.inera.certificate.modules.rli.model.external.HosPersonal;
+import se.inera.certificate.modules.rli.model.external.Observation;
+import se.inera.certificate.modules.rli.model.external.Patient;
+import se.inera.certificate.modules.rli.model.external.Utforarroll;
 import se.inera.certificate.modules.rli.model.external.Utlatande;
+import se.inera.certificate.modules.rli.model.external.Vardenhet;
 import se.inera.certificate.validate.IdValidator;
 import se.inera.certificate.validate.SimpleIdValidatorBuilder;
 

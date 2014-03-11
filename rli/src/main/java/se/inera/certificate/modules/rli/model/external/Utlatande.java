@@ -21,13 +21,6 @@ package se.inera.certificate.modules.rli.model.external;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.LocalDateTime;
-
-import se.inera.certificate.model.HosPersonal;
-import se.inera.certificate.model.Id;
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Observation;
-import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Rekommendation;
 import se.inera.certificate.model.Status;
@@ -43,17 +36,7 @@ import se.inera.certificate.model.Vardkontakt;
  * 
  * @author Gustav Norbäcker, R2M
  */
-public class Utlatande {
-
-    private Id id;
-
-    private Kod typ;
-
-    private List<String> kommentarer;
-
-    private LocalDateTime signeringsdatum;
-
-    private LocalDateTime skickatdatum;
+public class Utlatande extends se.inera.certificate.model.Utlatande {
 
     private Patient patient;
 
@@ -63,57 +46,19 @@ public class Utlatande {
 
     private List<Vardkontakt> vardkontakter;
 
-    private List<Referens> referenser;
-
     private List<Aktivitet> aktiviteter;
+
+    private List<Observation> observationer;
 
     private List<Rekommendation> rekommendationer;
 
-    private List<Observation> observationer;
+    private List<Referens> referenser;
 
     private List<Status> status;
 
     private Arrangemang arrangemang;
 
-    public Id getId() {
-        return id;
-    }
-
-    public void setId(Id id) {
-        this.id = id;
-    }
-
-    public Kod getTyp() {
-        return typ;
-    }
-
-    public void setTyp(Kod typ) {
-        this.typ = typ;
-    }
-
-    public List<String> getKommentarer() {
-        if (kommentarer == null) {
-            kommentarer = new ArrayList<String>();
-        }
-        return this.kommentarer;
-    }
-
-    public LocalDateTime getSigneringsdatum() {
-        return signeringsdatum;
-    }
-
-    public void setSigneringsdatum(LocalDateTime signeringsdatum) {
-        this.signeringsdatum = signeringsdatum;
-    }
-
-    public LocalDateTime getSkickatdatum() {
-        return skickatdatum;
-    }
-
-    public void setSkickatdatum(LocalDateTime skickatdatum) {
-        this.skickatdatum = skickatdatum;
-    }
-
+    @Override
     public Patient getPatient() {
         return patient;
     }
@@ -122,6 +67,7 @@ public class Utlatande {
         this.patient = patient;
     }
 
+    @Override
     public HosPersonal getSkapadAv() {
         return skapadAv;
     }
@@ -137,6 +83,7 @@ public class Utlatande {
         return this.harDeltagandeHosPersonal;
     }
 
+    @Override
     public List<Vardkontakt> getVardkontakter() {
         if (vardkontakter == null) {
             vardkontakter = new ArrayList<Vardkontakt>();
@@ -144,6 +91,7 @@ public class Utlatande {
         return this.vardkontakter;
     }
 
+    @Override
     public List<Referens> getReferenser() {
         if (referenser == null) {
             referenser = new ArrayList<Referens>();
@@ -151,6 +99,7 @@ public class Utlatande {
         return this.referenser;
     }
 
+    @Override
     public List<Aktivitet> getAktiviteter() {
         if (aktiviteter == null) {
             aktiviteter = new ArrayList<Aktivitet>();
@@ -158,6 +107,7 @@ public class Utlatande {
         return this.aktiviteter;
     }
 
+    @Override
     public List<Rekommendation> getRekommendationer() {
         if (rekommendationer == null) {
             rekommendationer = new ArrayList<Rekommendation>();
@@ -165,6 +115,7 @@ public class Utlatande {
         return this.rekommendationer;
     }
 
+    @Override
     public List<Observation> getObservationer() {
         if (observationer == null) {
             observationer = new ArrayList<Observation>();

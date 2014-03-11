@@ -1,14 +1,15 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
+import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toId;
+import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toKod;
+import iso.v21090.dt.v1.PQ;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toId;
-import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toKod;
-
-import iso.v21090.dt.v1.PQ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import se.inera.certificate.fk7263.model.v1.AktivitetType;
 import se.inera.certificate.fk7263.model.v1.ArbetsuppgiftType;
 import se.inera.certificate.fk7263.model.v1.EnhetType;
@@ -21,20 +22,20 @@ import se.inera.certificate.fk7263.model.v1.SysselsattningType;
 import se.inera.certificate.fk7263.model.v1.VardgivareType;
 import se.inera.certificate.fk7263.model.v1.VardkontaktType;
 import se.inera.certificate.model.Arbetsuppgift;
-import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.PhysicalQuantity;
-import se.inera.certificate.model.Prognos;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
-import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263HosPersonal;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Prognos;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Vardenhet;
 
 /**
  * @author marced
@@ -129,19 +130,19 @@ public final class TransportToExternalConverter {
         return vardes;
     }
 
-    private static List<Prognos> convertPrognoser(List<PrognosType> source) {
-        List<Prognos> prognoser = new ArrayList<>();
+    private static List<Fk7263Prognos> convertPrognoser(List<PrognosType> source) {
+        List<Fk7263Prognos> prognoser = new ArrayList<>();
         for (PrognosType prognosType : source) {
             prognoser.add(convert(prognosType));
         }
         return prognoser;
     }
 
-    private static Prognos convert(PrognosType source) {
+    private static Fk7263Prognos convert(PrognosType source) {
         if (source == null)
             return null;
 
-        Prognos prognos = new Prognos();
+        Fk7263Prognos prognos = new Fk7263Prognos();
         prognos.setPrognoskod(IsoTypeConverter.toKod(source.getPrognoskod()));
         prognos.setBeskrivning(source.getBeskrivning());
         return prognos;
@@ -206,9 +207,9 @@ public final class TransportToExternalConverter {
         return aktivitet;
     }
 
-    private static HosPersonal convert(HosPersonalType source) {
+    private static Fk7263HosPersonal convert(HosPersonalType source) {
 
-        HosPersonal hosPersonal = new HosPersonal();
+        Fk7263HosPersonal hosPersonal = new Fk7263HosPersonal();
         hosPersonal.setId(IsoTypeConverter.toId(source.getPersonalId()));
         hosPersonal.setNamn(source.getFullstandigtNamn());
         hosPersonal.setForskrivarkod(source.getForskrivarkod());
@@ -248,9 +249,9 @@ public final class TransportToExternalConverter {
         return patient;
     }
 
-    private static Vardenhet convert(EnhetType source) {
+    private static Fk7263Vardenhet convert(EnhetType source) {
 
-        Vardenhet vardenhet = new Vardenhet();
+        Fk7263Vardenhet vardenhet = new Fk7263Vardenhet();
         vardenhet.setId(IsoTypeConverter.toId(source.getEnhetsId()));
         vardenhet.setNamn(source.getEnhetsnamn());
         vardenhet.setArbetsplatskod(toId(source.getArbetsplatskod()));

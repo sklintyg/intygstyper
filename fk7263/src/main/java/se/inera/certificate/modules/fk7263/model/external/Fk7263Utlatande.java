@@ -7,7 +7,6 @@ import static se.inera.certificate.model.util.Iterables.find;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.LocalDateInterval;
@@ -33,7 +32,7 @@ public class Fk7263Utlatande {
 
     private Fk7263Patient patient;
 
-    private HosPersonal skapadAv;
+    private Fk7263HosPersonal skapadAv;
 
     private List<Fk7263Aktivitet> aktiviteter = new ArrayList<>();
 
@@ -82,11 +81,11 @@ public class Fk7263Utlatande {
         this.patient = patient;
     }
 
-    public HosPersonal getSkapadAv() {
+    public Fk7263HosPersonal getSkapadAv() {
         return skapadAv;
     }
 
-    public void setSkapadAv(HosPersonal skapadAv) {
+    public void setSkapadAv(Fk7263HosPersonal skapadAv) {
         this.skapadAv = skapadAv;
     }
 

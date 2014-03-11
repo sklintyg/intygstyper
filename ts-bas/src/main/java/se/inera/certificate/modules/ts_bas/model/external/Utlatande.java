@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Status;
 
 /**
@@ -39,6 +40,8 @@ import se.inera.certificate.model.Status;
 public class Utlatande extends se.inera.certificate.model.Utlatande {
 
     private List<Kod> intygAvser;
+
+    private Patient patient;
 
     private HosPersonal skapadAv;
 
@@ -59,6 +62,15 @@ public class Utlatande extends se.inera.certificate.model.Utlatande {
             intygAvser = new ArrayList<Kod>();
         }
         return intygAvser;
+    }
+
+    @Override
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 
     public HosPersonal getSkapadAv() {

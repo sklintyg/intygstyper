@@ -31,16 +31,16 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Observation;
-import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.PatientRelation;
 import se.inera.certificate.model.Rekommendation;
-import se.inera.certificate.model.Utforarroll;
-import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
+import se.inera.certificate.modules.rli.model.external.HosPersonal;
+import se.inera.certificate.modules.rli.model.external.Observation;
+import se.inera.certificate.modules.rli.model.external.Patient;
+import se.inera.certificate.modules.rli.model.external.Utforarroll;
+import se.inera.certificate.modules.rli.model.external.Vardenhet;
 import se.inera.certificate.rli.model.ext.v1.Arrangemang;
 import se.inera.certificate.rli.model.v1.AktivitetType;
 import se.inera.certificate.rli.model.v1.EnhetType;
@@ -313,7 +313,7 @@ public class ExternalToTransportConverter {
         return patientType;
     }
 
-    private List<PatientRelationType> convertPatientRelations(List<PatientRelation> source) {
+    private List<PatientRelationType> convertPatientRelations(List<? extends PatientRelation> source) {
         LOG.trace("Starting convert in convertPatientRelations");
         if (source == null) {
             LOG.trace("PatientRelation was null, could not convert");

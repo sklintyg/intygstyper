@@ -18,6 +18,9 @@
  */
 package se.inera.certificate.modules.rli.model.external;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The aktivitet used by RLI. This class is a copy of the common external model (defined in se.inera.certificate.model),
  * extending with:
@@ -29,7 +32,28 @@ package se.inera.certificate.modules.rli.model.external;
  */
 public class Aktivitet extends se.inera.certificate.model.Aktivitet {
 
+    private List<Utforarroll> beskrivsAv;
+
+    private Vardenhet utforsVid;
+
     private String plats;
+
+    @Override
+    public List<Utforarroll> getBeskrivsAv() {
+        if (beskrivsAv == null) {
+            beskrivsAv = new ArrayList<>();
+        }
+        return beskrivsAv;
+    }
+
+    @Override
+    public Vardenhet getUtforsVid() {
+        return utforsVid;
+    }
+
+    public void setUtforsVid(Vardenhet utforsVid) {
+        this.utforsVid = utforsVid;
+    }
 
     public String getPlats() {
         return plats;

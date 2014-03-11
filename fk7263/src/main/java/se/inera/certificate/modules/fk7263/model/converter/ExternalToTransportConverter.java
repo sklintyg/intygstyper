@@ -1,15 +1,15 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import static se.inera.certificate.model.util.Iterables.addAll;
 import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toHsaId;
 import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toUtlatandeId;
 import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toUtlatandeTyp;
-
 import iso.v21090.dt.v1.PQ;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import se.inera.certificate.fk7263.model.v1.AktivitetType;
 import se.inera.certificate.fk7263.model.v1.ArbetsuppgiftType;
 import se.inera.certificate.fk7263.model.v1.DateInterval;
@@ -26,7 +26,6 @@ import se.inera.certificate.fk7263.model.v1.VardkontaktType;
 import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.PhysicalQuantity;
-import se.inera.certificate.model.Prognos;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardenhet;
@@ -36,6 +35,7 @@ import se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Prognos;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
 public final class ExternalToTransportConverter {
@@ -162,15 +162,15 @@ public final class ExternalToTransportConverter {
         return pq;
     }
 
-    private Collection<PrognosType> convertPrognoser(Collection<Prognos> source) {
+    private Collection<PrognosType> convertPrognoser(Collection<Fk7263Prognos> source) {
         List<PrognosType> prognosTypes = new ArrayList<>();
-        for (Prognos prognos : source) {
+        for (Fk7263Prognos prognos : source) {
             prognosTypes.add(convert(prognos));
         }
         return prognosTypes;
     }
 
-    private PrognosType convert(Prognos source) {
+    private PrognosType convert(Fk7263Prognos source) {
         if (source == null)
             return null;
 
