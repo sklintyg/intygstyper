@@ -37,6 +37,8 @@ public class Fk7263Intyg {
     private LocalDate telefonkontaktMedPatienten;
     private LocalDate journaluppgifter;
     private LocalDate annanReferens;
+    
+    private String annanReferensBeskrivning;
 
     private String aktivitetsbegransning;
 
@@ -67,6 +69,10 @@ public class Fk7263Intyg {
     private boolean arbetsformataPrognosNej;
     private boolean arbetsformataPrognosGarInteAttBedoma;
 
+    private String prognosis;
+    
+    private String arbetsformagaPrognosGarInteAttBedomBeskrivning;
+
     private boolean ressattTillArbeteAktuellt;
     private boolean ressattTillArbeteEjAktuellt;
 
@@ -79,7 +85,7 @@ public class Fk7263Intyg {
     private LocalDateTime signeringsdatum;
 
     private Vardperson vardperson;
-
+    
     public boolean isAvstangningSmittskydd() {
         return avstangningSmittskydd;
     }
@@ -431,4 +437,29 @@ public class Fk7263Intyg {
     public void setGiltighet(LocalDateInterval giltighet) {
         this.giltighet = giltighet;
     }
+
+	public String getArbetsformagaPrognosGarInteAttBedomBeskrivning() {
+		return arbetsformagaPrognosGarInteAttBedomBeskrivning;
+	}
+
+	public void setArbetsformagaPrognosGarInteAttBedomBeskrivning(
+			String arbetsformagaPrognosGarInteAttBedomBeskrivning) {
+		this.arbetsformagaPrognosGarInteAttBedomBeskrivning = arbetsformagaPrognosGarInteAttBedomBeskrivning;
+	}
+
+	public String getPrognosis() {
+		return prognosis;
+	}
+
+	public void setPrognosis(String prognosis) {
+		this.prognosis = prognosis;
+	}
+
+	public String getAnnanReferensBeskrivning() {
+		return annanReferensBeskrivning;
+	}
+
+	public void setAnnanReferensBeskrivning(String annanReferensBeskrivning) {
+		this.annanReferensBeskrivning = annanReferensBeskrivning;
+	}
 }
