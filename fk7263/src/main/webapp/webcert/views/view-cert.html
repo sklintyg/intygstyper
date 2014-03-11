@@ -1,62 +1,69 @@
 <div class="row-fluid webcert-multicol" id="viewCertAndQA">
 
+  <!-- Left column -->
   <div class="span6 webcert-col webcert-col-primary" ng-controller="QACtrl">
     <div class="row-fluid">
       <div class="span12 qa-column">
+
         <a class="backlink-icon" href="/web/dashboard#/qa-unhandled" title="Tillbaka till Fråga och Svar"></a>
         <h1 class="backlink-heading">Fråga &amp; Svar</h1>
+
         <div wc-spinner label="info.loading.existing.qa" show-spinner="!widgetState.doneLoading" show-content="widgetState.doneLoading">
 
-          <div ng-if="widgetState.sentMessage">
-            <div alert type="'info'" close="dismissProxy()" id="question-is-sent-to-fk-message-text">
-              <strong>Frågan skickad till Försäkringskassan</strong><br> Vårdenheten får ett mejl när svar har inkommit.
-            </div>
-          </div>
+          <div class="webcert-bottom-padding-section">
 
-          <div ng-show="!certProperties.isRevoked && !widgetState.newQuestionOpen &&  (certProperties.sentToFK || qaList.length>0)">
-            <div class="control-group">
-              <button class="btn btn-success" ng-click="toggleQuestionForm()" id="askQuestionBtn">Ny fråga till Försäkringskassan</button>
-            </div>
-          </div>
-          <div ng-if="!certProperties.sentToFK && (qaList.length<1)" class="alert alert-info" id="certificate-is-not-sent-to-fk-message-text">
-            <strong>Intyget har inte skickats till försäkringskassan</strong><br> Frågor kan därför ej ställas för intyget.
-          </div>
-
-
-          <div ng-show="widgetState.newQuestionOpen">
-            <div class="control-group">
-              <label class="control-label">Fråga</label>
-              <div class="controls">
-                <textarea rows="5" class="span9" ng-model="newQuestion.frageText" focus-me="widgetState.focusQuestion" id="newQuestionText"></textarea>
+            <!-- Question button -->
+            <div ng-show="!certProperties.isRevoked && !widgetState.newQuestionOpen &&  (certProperties.sentToFK || qaList.length>0)">
+              <div class="control-group">
+                <button class="btn btn-success" ng-click="toggleQuestionForm()" id="askQuestionBtn">Ny fråga till Försäkringskassan</button>
               </div>
             </div>
-            <div class="control-group" id="newQuestionForm">
-              <label class="control-label">Ämne</label>
-              <div class="controls">
-                <select id="new-question-topic" ng-model="newQuestion.chosenTopic" ng-options="c.label for c in newQuestion.topics"></select>
+            <div ng-if="!certProperties.sentToFK && (qaList.length<1)" class="alert alert-info" id="certificate-is-not-sent-to-fk-message-text">
+              <strong>Intyget har inte skickats till försäkringskassan</strong><br> Frågor kan därför ej ställas för intyget.
+            </div>
+
+            <!-- New question form -->
+            <div ng-show="widgetState.newQuestionOpen">
+              <div class="control-group">
+                <label class="control-label">Fråga</label>
+                <div class="controls">
+                  <textarea rows="5" class="span9" ng-model="newQuestion.frageText" focus-me="widgetState.focusQuestion" id="newQuestionText"></textarea>
+                </div>
+              </div>
+              <div class="control-group" id="newQuestionForm">
+                <label class="control-label">Ämne</label>
+                <div class="controls">
+                  <select id="new-question-topic" ng-model="newQuestion.chosenTopic" ng-options="c.label for c in newQuestion.topics"></select>
+                </div>
+              </div>
+
+              <!-- error message occuring when inteacting with server for this FragaSvar-->
+              <div id="newQuestion-load-error" ng-show="newQuestion.activeErrorMessageKey" class="alert alert-error">
+                <span message key="error.{{newQuestion.activeErrorMessageKey}}"></span>
+              </div>
+
+              <!-- Form button group -->
+              <div class="control-group">
+                <button class="btn btn-success" ng-click="sendQuestion(newQuestion)" ng-disabled="!questionValidForSubmit(newQuestion)" title="{{newQuestion.sendButtonToolTip}}" id="sendQuestionBtn">
+                  <img src="/img/loader-small-green.gif" ng-show="newQuestion.updateInProgress"> Skicka till Försäkringskassan
+                </button>
+                <button class="btn btn-secondary" ng-click="toggleQuestionForm()" id="cancelQuestionBtn">Avbryt fråga</button>
+              </div>
+            </div>
+            <!--  Fragasvar formular end -->
+
+            <!-- question sent message -->
+            <div ng-if="widgetState.sentMessage">
+              <div alert type="'info'" close="dismissProxy()" id="question-is-sent-to-fk-message-text">
+                <strong>Frågan skickad till Försäkringskassan</strong><br> Vårdenheten får ett mejl när svar har inkommit.
               </div>
             </div>
 
-            <!-- error message occuring when inteacting with server for this FragaSvar-->
-            <div id="newQuestion-load-error" ng-show="newQuestion.activeErrorMessageKey" class="alert alert-error">
-              <span message key="error.{{newQuestion.activeErrorMessageKey}}"></span>
-            </div>
-
-            <div class="control-group">
-              <button class="btn btn-success" ng-click="sendQuestion(newQuestion)" ng-disabled="!questionValidForSubmit(newQuestion)" title="{{newQuestion.sendButtonToolTip}}" id="sendQuestionBtn">
-                <img src="/img/loader-small-green.gif" ng-show="newQuestion.updateInProgress"> Skicka till Försäkringskassan
-              </button>
-              <button class="btn btn-secondary" ng-click="toggleQuestionForm()" id="cancelQuestionBtn">Avbryt fråga</button>
+            <!-- error message -->
+            <div id="qa-list-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey" class="alert alert-error">
+              <span message key="{{widgetState.activeErrorMessageKey}}"></span>
             </div>
           </div>
-          <!--  Fragasvar formular end -->
-
-
-          <!-- error message -->
-          <div id="qa-list-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey" class="alert alert-error">
-            <span message key="{{widgetState.activeErrorMessageKey}}"></span>
-          </div>
-
 
           <div class="webcert-col-section" ng-show="(qaList | filter:openIssuesFilter).length > 0" id="unhandledQACol">
             <h2 class="col-head">Ohanterade frågor</h2>
