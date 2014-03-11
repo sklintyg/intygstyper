@@ -211,6 +211,7 @@ public class Fk7263ModuleApi implements ModuleApi {
      */
     public ValidateDraftResponseHolder validateDraft(
             se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg utlatande) {
+    	internalDraftValidator = new InternalDraftValidator();
         return internalDraftValidator.validateDraft(utlatande);
     }
 
