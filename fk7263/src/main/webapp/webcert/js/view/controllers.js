@@ -57,11 +57,33 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
             ovrigt : 420
             // 420 = combined field 13 (and dependencies) limit
         };
+        
+        // Watch Fält 4b -> Annat and update backend model when view changes.
+        $scope.$watchCollection('[cert.otherData.baseradPaAnnat, basedOnState.check.annanReferens]', function() {
+        	if ($scope.cert.otherData != undefined) { 
+        		if (!$scope.cert.otherData.baseradPaAnnat || $scope.cert.otherData.baseradPaAnnat == "" || !$scope.basedOnState.check.annanReferens){
+        			$scope.cert.annanReferensBeskrivning = null;
+        			return;
+        		}
+        		$scope.cert.annanReferensBeskrivning = $scope.cert.otherData.baseradPaAnnat;
+        	}
+        });
+        
+        
+        // Watch Fält 10 -> Går ej att bedöma and update backend model when view changes.
+        $scope.$watchCollection('[cert.otherData.prognosisClarification, cert.prognosis]', function() {
+        	if ($scope.cert.otherData != undefined) { 
+        		if (!$scope.cert.otherData.prognosisClarification || $scope.cert.otherData.prognosisClarification == "" || $scope.cert.prognosis != "UNKNOWN") {
+        			$scope.cert.arbetsformagaPrognosGarInteAttBedomBeskrivning = null;
+        			return;
+        		}
+        		$scope.cert.arbetsformagaPrognosGarInteAttBedomBeskrivning = $scope.cert.otherData.prognosisClarification;
+        	}
+        });
 
         $scope.limitFieldLength = function (field) {
             $scope.cert[field] = $scope.cert[field].substr(0, $scope.inputLimits[field]);
         };
-
 
         $scope.limitOtherField = function (field) {
             function limitOvrigtLength (val) {
@@ -166,9 +188,9 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
             if (model != undefined) {
 	        	if (checked) {
 	                if (!isDate(model.start))
-	                    model.start = $scope.today;
+	                    model.start = ($filter('date')($scope.today, 'yyyy-MM-dd'));
 	                if (!isDate(model.end))
-	                    model.end = $scope.today;
+	                    model.end = ($filter('date')($scope.today, 'yyyy-MM-dd'));
 	            } else {
 	                model.start = "";
 	                model.end = "";
