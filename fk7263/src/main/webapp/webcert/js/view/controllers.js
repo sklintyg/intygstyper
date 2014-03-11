@@ -121,15 +121,9 @@ controllers.controller('EditCertCtrl', [ '$scope', '$filter', '$location', '$roo
         };
 
         $scope.autoEnterDate = function (modelName) {
-            function formatDate(date) {
-                var dd = date.getDate();
-                var mm = date.getMonth() + 1;
-                var yyyy = date.getFullYear();
-                return '' + yyyy + '-' + (mm <= 9 ? '0' + mm : mm) + '-' + (dd <= 9 ? '0' + dd : dd);
-            };
             if ($scope.basedOnState.check[modelName]) {
                 if ($scope.cert[modelName] == "" || $scope.cert[modelName] == undefined) {
-                    $scope.cert[modelName] = formatDate($scope.today);
+                    $scope.cert[modelName] = $filter('date')($scope.today, "yyyy-MM-dd");
                 }
             } else {
                 $scope.cert[modelName] = "";
