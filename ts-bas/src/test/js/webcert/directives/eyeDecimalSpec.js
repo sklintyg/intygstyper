@@ -27,23 +27,27 @@ describe(
             // valid inputs
 			it('should pass with a valid decimal number with format "n,n"', function() {
 				$scope.form.test.$setViewValue('1');
-				expect($scope.model.test).toEqual('1,0');
+				expect($scope.model.test).toEqual(1.0);
 			});
 			it('should pass with a valid decimal number with format "n,"', function() {
 				$scope.form.test.$setViewValue("1,");
-				expect($scope.model.test).toEqual('1,0');
+				expect($scope.model.test).toEqual(1.0);
 			});
 			it('should pass with a valid decimal number with format "n."', function() {
 				$scope.form.test.$setViewValue('1.');
-				expect($scope.model.test).toEqual('1,0');
+				expect($scope.model.test).toEqual(1.0);
 			});
 			it('should pass with a valid decimal number with format ","', function() {
 				$scope.form.test.$setViewValue(',');
-				expect($scope.model.test).toEqual('0,0');
+				expect($scope.model.test).toEqual(0.0);
 			});
 			it('should pass with a valid decimal number with format ",1"', function() {
 				$scope.form.test.$setViewValue(',1');
-				expect($scope.model.test).toEqual('0,1');
+				expect($scope.model.test).toEqual(0.1);
+			});
+			it('should pass with a valid decimal number with format "145"', function() {
+				$scope.form.test.$setViewValue('145');
+				expect($scope.model.test).toEqual(1.4);
 			});
 
 			// invalid formats resulting in null

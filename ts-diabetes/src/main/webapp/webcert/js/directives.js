@@ -93,12 +93,11 @@ directives.directive('eyeDecimal', function() {
                             valForView = "0," + value[1];
                         } else if (value[1] === ',') {
                             valForView = value;
-                        } else if (value[2] === ',') {
+                        } else {
                             valForView = value[0] + ',' + value[1];
                         }
                     }
-
-                    valForModel = valForView;
+                    valForModel = Number(valForView[0] + '.' + valForView[2]);
                 }
 
                 // console.log("format(" + value + ") -> V(" + valForView + "), M(" + valForModel + ")");
