@@ -20,11 +20,9 @@ package se.inera.certificate.modules.ts_bas.rest;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -34,6 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.certificate.modules.support.api.dto.PdfResponse;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.ts_bas.model.converter.ConverterException;
 import se.inera.certificate.modules.ts_bas.model.converter.ExternalToInternalConverter;
@@ -75,12 +74,6 @@ public class ModuleService implements ModuleApi {
 
     @Autowired
     private WebcertModelFactory webcertModelFactory;
-
-    @Context
-    private HttpServletResponse httpResponse;
-
-    // @HeaderParam("X-Schema-Version")
-    // private String SchemaVersion;
 
     /**
      * {@inheritDoc}
@@ -135,15 +128,13 @@ public class ModuleService implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public byte[] pdf(Utlatande externalModel) {
+    public PdfResponse pdf(Utlatande externalModel) {
         try {
             se.inera.certificate.modules.ts_bas.model.internal.Utlatande internalUtlatande = externalToInternalConverter
                     .convert(externalModel);
 
-            httpResponse.addHeader("Content-Disposition",
-                    "filename=" + pdfGenerator.generatePdfFilename(internalUtlatande));
-
-            return pdfGenerator.generatePDF(internalUtlatande);
+            return new PdfResponse(pdfGenerator.generatePDF(internalUtlatande),
+                    pdfGenerator.generatePdfFilename(internalUtlatande));
 
         } catch (ConverterException e) {
             LOG.error("Failed to generate PDF - conversion to internal model failed", e);

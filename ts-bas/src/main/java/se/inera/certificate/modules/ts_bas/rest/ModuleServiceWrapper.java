@@ -5,9 +5,13 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Collections;
 
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.ValidationException;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
@@ -15,9 +19,11 @@ import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
+import se.inera.certificate.modules.support.api.dto.PdfResponse;
 import se.inera.certificate.modules.support.api.dto.TransportModelHolder;
 import se.inera.certificate.modules.support.api.dto.TransportModelResponse;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.certificate.modules.support.api.exception.ModuleConverterException;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
@@ -27,50 +33,82 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ModuleServiceWrapper implements ModuleApi {
 
-    private ModuleService service;
+    @Autowired
+    private ModuleService moduleService;
 
+    @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
     private JAXBContext jaxbContext;
 
     @Override
     public ExternalModelResponse unmarshall(TransportModelHolder transportModel) throws ModuleException {
-        return toExternalModelResponse(service.unmarshall(getTransport(transportModel)));
+        try {
+            return toExternalModelResponse(moduleService.unmarshall(getTransport(transportModel)));
+
+        } catch (WebApplicationException e) {
+            if (e.getResponse().getStatus() == Response.Status.BAD_REQUEST.getStatusCode()) {
+                throw new ModuleConverterException("Could not convert transport model to external model", e);
+            }
+            throw new ModuleSystemException(e);
+        }
     }
 
     @Override
     public TransportModelResponse marshall(ExternalModelHolder externalModel) throws ModuleException {
-        return toTransportModelResponse(service.marshall(getExternal(externalModel)));
+        try {
+            return toTransportModelResponse(moduleService.marshall(getExternal(externalModel)));
+
+        } catch (WebApplicationException e) {
+            if (e.getResponse().getStatus() == Response.Status.BAD_REQUEST.getStatusCode()) {
+                throw new ModuleConverterException("Could not convert external model to transport model", e);
+            }
+            throw new ModuleSystemException(e);
+        }
     }
 
     @Override
     public String validate(ExternalModelHolder externalModel) throws ModuleException {
-        return service.validate(getExternal(externalModel));
+        try {
+            return moduleService.validate(getExternal(externalModel));
+
+        } catch (WebApplicationException e) {
+            if (e.getResponse().getStatus() == Response.Status.BAD_REQUEST.getStatusCode()) {
+                throw new ModuleValidationException(Collections.singletonList(e.getResponse().getEntity().toString()));
+            }
+            throw new ModuleSystemException(e);
+        }
     }
 
     @Override
     public ValidateDraftResponse validateDraft(InternalModelHolder internalModel) throws ModuleException {
-        return service.validateDraft(getInternal(internalModel));
+        try {
+            return moduleService.validateDraft(getInternal(internalModel));
+
+        } catch (WebApplicationException e) {
+            throw new ModuleSystemException(e);
+        }
     }
 
     @Override
-    public byte[] pdf(ExternalModelHolder externalModel) throws ModuleException {
-        return service.pdf(getExternal(externalModel));
+    public PdfResponse pdf(ExternalModelHolder externalModel) throws ModuleException {
+        return moduleService.pdf(getExternal(externalModel));
     }
 
     @Override
     public InternalModelResponse convertExternalToInternal(ExternalModelHolder externalModel) throws ModuleException {
-        return toInteralModelResponse(service.convertExternalToInternal(getExternal(externalModel)));
+        return toInteralModelResponse(moduleService.convertExternalToInternal(getExternal(externalModel)));
     }
 
     @Override
     public ExternalModelResponse convertInternalToExternal(InternalModelHolder internalModel) throws ModuleException {
-        return toExternalModelResponse(service.convertInternalToExternal(getInternal(internalModel)));
+        return toExternalModelResponse(moduleService.convertInternalToExternal(getInternal(internalModel)));
     }
 
     @Override
     public InternalModelResponse createNewInternal(CreateNewDraftHolder draftCertificateHolder) throws ModuleException {
-        return toInteralModelResponse(service.createNewInternal(draftCertificateHolder));
+        return toInteralModelResponse(moduleService.createNewInternal(draftCertificateHolder));
     }
 
     private se.inera.certificate.ts_bas.model.v1.Utlatande getTransport(TransportModelHolder transportModel)

@@ -338,9 +338,16 @@ public class TransportToExternalConverter {
      * 
      * @param source
      *            {@link HosPersonalType}
+     * 
      * @return {@link HosPersonal}
+     * 
+     * @throws ConverterException
      */
-    private HosPersonal convertHosPersonal(HosPersonalType source) {
+    private HosPersonal convertHosPersonal(HosPersonalType source) throws ConverterException {
+        if (source == null) {
+            throw new ConverterException("HosPersonal was null, cannot convert");
+        }
+
         HosPersonal skapadAv = new HosPersonal();
         skapadAv.getBefattningar().addAll(convertCDtoKod(source.getBefattnings()));
         skapadAv.setId(IsoTypeConverter.toId(source.getPersonalId()));

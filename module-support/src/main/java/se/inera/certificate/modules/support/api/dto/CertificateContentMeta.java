@@ -1,7 +1,6 @@
 package se.inera.certificate.modules.support.api.dto;
 
 import static org.springframework.util.Assert.hasText;
-import static org.springframework.util.Assert.notNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,15 +30,16 @@ public class CertificateContentMeta {
         hasText(id, "'id' must not be empty");
         hasText(type, "'type' must not be empty");
         hasText(patientId, "'patientId' must not be empty");
-        notNull(fromDate, "'fromDate' must not be null");
-        notNull(tomDate, "'tomDate' must not be null");
-        notNull(statuses, "'statuses' must not be null");
         this.id = id;
         this.type = type;
         this.patientId = patientId;
         this.fromDate = fromDate;
         this.tomDate = tomDate;
-        this.statuses = new ArrayList<>(statuses);
+        if (statuses != null) {
+            this.statuses = new ArrayList<>(statuses);
+        } else {
+            this.statuses = Collections.emptyList();
+        }
     }
 
     public LocalDate getFromDate() {

@@ -5,6 +5,7 @@ import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
+import se.inera.certificate.modules.support.api.dto.PdfResponse;
 import se.inera.certificate.modules.support.api.dto.TransportModelHolder;
 import se.inera.certificate.modules.support.api.dto.TransportModelResponse;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
@@ -62,7 +63,7 @@ public interface ModuleApi {
      * 
      * @return A binary stream containing a PDF template populated with the information of the external model.
      */
-    byte[] pdf(ExternalModelHolder externalModel) throws ModuleException;
+    PdfResponse pdf(ExternalModelHolder externalModel) throws ModuleException;
 
     /**
      * Handles conversion from the external model to the internal model.

@@ -26,18 +26,8 @@
   <bean id="objectMapper"
     class="se.inera.certificate.integration.json.CustomObjectMapper" />
 
-  <bean id="jacksonJsonProvider"
-    class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">
-    <property name="mapper" ref="objectMapper" />
+  <bean id="jaxbContext" class="javax.xml.bind.JAXBContext" factory-method="newInstance">
+    <constructor-arg type="java.lang.String" value="iso.v21090.dt.v1:se.inera.certificate.ts_bas.model.v1" />
   </bean>
-
-  <bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
-    <property name="schemaLocations" ref="theSchemas" />
-  </bean>
-
-  <util:list id="theSchemas">
-    <value>classpath:schemas/core_components/iso_dt_subset_1.0.xsd</value>
-    <value>classpath:schemas/transport_model.xsd</value>
-  </util:list>
 
 </beans>
