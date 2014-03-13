@@ -6,7 +6,6 @@ import se.inera.certificate.modules.support.api.ModuleApi;
 /**
  * Defines the contract for modules so they can be discovered by an application.
  */
-@Component
 public interface ModuleEntryPoint {
 
     /**
