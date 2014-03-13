@@ -48,4 +48,7 @@
   <bean id="webcertModelFactory"
     class="se.inera.certificate.modules.ts_bas.model.converter.WebcertModelFactory" />
 
+  <bean id="tsBasEntryPoint"
+    class="se.inera.certificate.modules.ts_bas.support.TsBasEntryPoint" />
+
 </beans>
