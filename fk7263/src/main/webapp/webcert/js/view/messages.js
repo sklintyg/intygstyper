@@ -81,7 +81,7 @@ var fk7263Messages = {
         "error.authorization_problem" : "<strong>Du har inte behörighet att utföra funktionen, kontakta supporten för mer information.</strong>",
         "error.data_not_found" : "<strong>Intyget kunde inte hittas i intygstjänsten.</strong><br> Intyget kunde inte hämtas.",
         "fragasvar.answer.is.sent" : "<strong>Frågan har besvarats</strong><br> Frågan visas under rubriken 'hanterade frågor'.",
-        "fragasvar.marked.as.ohanterad" : "<strong>Frågan är nu markerad som ohanterad</strong><br> Den visas nu under 'Ohanterade frågor' längre upp på sidan.",
+        "fragasvar.marked.as.ohanterad" : "<strong>Frågan är nu markerad som ej hanterad</strong><br> Frågan visas under rubriken 'ej hanterade frågor'.",
         "fragasvar.marked.as.hanterad" : "<strong>Frågan har markerats som hanterad</strong><br> Frågan visas under rubriken 'hanterade frågor'."
 
     },
