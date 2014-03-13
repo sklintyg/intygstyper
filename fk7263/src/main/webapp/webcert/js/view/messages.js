@@ -80,9 +80,9 @@ var fk7263Messages = {
         "error.unknown_internal_problem" : "<strong>Ett tekniskt problem inträffade</strong><br> Försök igen och kontakta supporten om problemet kvarstår.",
         "error.authorization_problem" : "<strong>Du har inte behörighet att utföra funktionen, kontakta supporten för mer information.</strong>",
         "error.data_not_found" : "<strong>Intyget kunde inte hittas i intygstjänsten.</strong><br> Intyget kunde inte hämtas.",
-        "fragasvar.answer.is.sent" : "<strong>Svaret har skickats till Försäkringskassan</strong><br> Frågan är nu markerad som hanterad och visas nu under 'Hanterade frågor' längre ner på sidan.",
+        "fragasvar.answer.is.sent" : "<strong>Frågan har besvarats</strong><br> Frågan visas under rubriken 'hanterade frågor'.",
         "fragasvar.marked.as.ohanterad" : "<strong>Frågan är nu markerad som ohanterad</strong><br> Den visas nu under 'Ohanterade frågor' längre upp på sidan.",
-        "fragasvar.marked.as.hanterad" : "<strong>Frågan är nu markerad som hanterad</strong><br> Den visas nu under 'Hanterade frågor' längre ner på sidan."
+        "fragasvar.marked.as.hanterad" : "<strong>Frågan har markerats som hanterad</strong><br> Frågan visas under rubriken 'hanterade frågor'."
 
     },
     "en" : {

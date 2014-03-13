@@ -6,7 +6,7 @@
       <div class="span12 qa-column">
 
         <a class="backlink-icon" href="/web/dashboard#/qa-unhandled" title="Tillbaka till Fråga och Svar"></a>
-        <h1 class="backlink-heading">Fråga &amp; Svar</h1>
+        <h1 class="backlink-heading">Fråga och svar</h1>
 
         <div wc-spinner label="info.loading.existing.qa" show-spinner="!widgetState.doneLoading" show-content="widgetState.doneLoading">
 
@@ -19,7 +19,7 @@
               </div>
             </div>
             <div ng-if="!certProperties.sentToFK && (qaList.length<1)" class="alert alert-info" id="certificate-is-not-sent-to-fk-message-text">
-              <strong>Intyget har inte skickats till försäkringskassan</strong><br> Frågor kan därför ej ställas för intyget.
+              <strong>Intyget är inte skickat till försäkringskassan</strong><br> Det går därför inte att ställa frågor om intyget.
             </div>
 
             <!-- New question form -->
@@ -55,7 +55,7 @@
             <!-- question sent message -->
             <div ng-if="widgetState.sentMessage">
               <div alert type="'info'" close="dismissProxy()" id="question-is-sent-to-fk-message-text">
-                <strong>Frågan skickad till Försäkringskassan</strong><br> Vårdenheten får ett mejl när svar har inkommit.
+                <strong>Frågan skickad till Försäkringskassan</strong><br> Vårdenheten kontaktas via mejl när svar har inkommit.
               </div>
             </div>
 
@@ -66,7 +66,7 @@
           </div>
 
           <div class="webcert-col-section" ng-show="(qaList | filter:openIssuesFilter).length > 0" id="unhandledQACol">
-            <h2 class="col-head">Ohanterade frågor</h2>
+            <h2 class="col-head">Ej hanterade frågor</h2>
             <div ng-repeat="qa in qaList | filter:openIssuesFilter | orderBy:'senasteHandelseDatum':true">
               <div ng-if="qa.proxyMessage">
                 <div alert type="'info'" close="dismissProxy(qa)">
@@ -99,7 +99,7 @@
                       <!--  status header -->
                       <button class="btn pull-right" ng-class="{'btn-info': !qa.vidarebefordrad, 'btn-secondary' : qa.vidarebefordrad}"
                               id="forwardBtn-{{qa.internReferens}}"
-                              title="Skicka ett mejl med direktlänk till denna fråga för att till exempel meddela ansvarig läkare att åtgärd behöver vidtas." ng-click="openMailDialog(qa)">
+                              title="Skicka ett mejl med länk till intyget för att informera den som ska hantera ärendet." ng-click="openMailDialog(qa)">
                         <img ng-if="!qa.vidarebefordrad" src="/img/mail.png"> <img ng-if="qa.vidarebefordrad" src="/img/mail_dark.png">
                       </button>
                     </div>
@@ -171,7 +171,7 @@
                           <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Skicka svar
                         </button>
                         <button class="btn btn-secondary" ng-click="updateAsHandled(qa)" id="markAsHandledFkOriginBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress"
-                          title="Om du markerar frågan som hanterad kommer den inte längre visas som ohanterad på enhetens översikt över obehandlade frågor.">
+                          title="Om du markerar frågan som hanterad kommer den inte längre visas i enhetens översikt över ej hanterade frågor.">
                           <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera som hanterad
                         </button>
                       </div>
@@ -185,7 +185,7 @@
                     </div>
                     <div class="controls">
                       <button class="btn btn-secondary" ng-click="updateAsHandled(qa)" id="markAsHandledWcOriginBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress"
-                        title="Om du markerar frågan som hanterad kommer den inte längre visas som ohanterad på enhetens översikt över obehandlade frågor.">
+                        title="Om du markerar frågan som hanterad kommer den inte längre visas i enhetens översikt över ej hanterade frågor.">
                         <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera som hanterad
                       </button>
                     </div>
@@ -272,8 +272,9 @@
                 <div class="control-group">
                   <!--  Oavsett hur frågan stänged skall man kunna 'öppna' den igen -->
                   <div class="controls" ng-hide="qa.frageStallare!='WC' && qa.svarsText">
-                    <button class="btn btn-secondary" ng-click="updateAsUnHandled(qa)" id="markAsUnhandledBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress">
-                      <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera som ohanterad
+                    <button class="btn btn-secondary" ng-click="updateAsUnHandled(qa)" id="markAsUnhandledBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress"
+                            title="Om du markerar frågan som ej hanterad kommer den att visas i enhetens översikt över ej hanterade frågor.">
+                      <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera som ej hanterad
                     </button>
                   </div>
                 </div>
