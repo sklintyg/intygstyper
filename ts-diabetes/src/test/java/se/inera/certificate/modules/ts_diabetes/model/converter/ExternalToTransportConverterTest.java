@@ -19,7 +19,6 @@
 package se.inera.certificate.modules.ts_diabetes.model.converter;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import se.inera.certificate.modules.ts_diabetes.utils.ModelAssert;
@@ -36,7 +35,6 @@ public class ExternalToTransportConverterTest {
         converter = new ExternalToTransportConverter();
     }
 
-    @Ignore
     @Test
     public void testConvertUtlatande() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
@@ -45,6 +43,11 @@ public class ExternalToTransportConverterTest {
             Utlatande actual = converter.convert(extUtlatande);
 
             Utlatande expected = scenario.asTransportModel();
+            // We need to issue a get in order to create an empty list (and make the test pass)
+            expected.getSkapadAv().getSpecialitets();
+            expected.getSkapadAv().getBefattnings();
+            expected.getObservationAktivitetRelations();
+            expected.getAktivitets();
 
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }

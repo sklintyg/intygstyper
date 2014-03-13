@@ -31,26 +31,27 @@ import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
-import se.inera.certificate.modules.ts_diabetes.model.external.ObservationAktivitetRelation;
-import se.inera.certificate.modules.ts_diabetes.model.external.Rekommendation;
-import se.inera.certificate.modules.ts_diabetes.model.external.Observation;
-import se.inera.certificate.modules.ts_diabetes.model.converter.ConverterException;
-import se.inera.certificate.modules.ts_diabetes.model.external.Aktivitet;
-import se.inera.certificate.modules.ts_diabetes.model.external.Vardkontakt;
 import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
-import se.inera.certificate.modules.ts_diabetes.model.converter.IsoTypeConverter;
+import se.inera.certificate.modules.ts_diabetes.model.external.Aktivitet;
+import se.inera.certificate.modules.ts_diabetes.model.external.Bilaga;
 import se.inera.certificate.modules.ts_diabetes.model.external.HosPersonal;
-import se.inera.certificate.ts_diabetes.model.v1.EnhetType;
-import se.inera.certificate.ts_diabetes.model.v1.VardgivareType;
-import se.inera.certificate.ts_diabetes.model.v1.ObservationAktivitetRelationType;
-import se.inera.certificate.ts_diabetes.model.v1.RekommendationType;
-import se.inera.certificate.ts_diabetes.model.v1.ObservationType;
+import se.inera.certificate.modules.ts_diabetes.model.external.Observation;
+import se.inera.certificate.modules.ts_diabetes.model.external.ObservationAktivitetRelation;
+import se.inera.certificate.modules.ts_diabetes.model.external.Rekommendation;
+import se.inera.certificate.modules.ts_diabetes.model.external.Vardkontakt;
 import se.inera.certificate.ts_diabetes.model.v1.AktivitetType;
-import se.inera.certificate.ts_diabetes.model.v1.VardkontaktType;
+import se.inera.certificate.ts_diabetes.model.v1.BilagaType;
+import se.inera.certificate.ts_diabetes.model.v1.EnhetType;
 import se.inera.certificate.ts_diabetes.model.v1.HosPersonalType;
+import se.inera.certificate.ts_diabetes.model.v1.ObservationAktivitetRelationType;
+import se.inera.certificate.ts_diabetes.model.v1.ObservationType;
+import se.inera.certificate.ts_diabetes.model.v1.PartialDateInterval;
 import se.inera.certificate.ts_diabetes.model.v1.PatientType;
+import se.inera.certificate.ts_diabetes.model.v1.RekommendationType;
 import se.inera.certificate.ts_diabetes.model.v1.Utlatande;
+import se.inera.certificate.ts_diabetes.model.v1.VardgivareType;
+import se.inera.certificate.ts_diabetes.model.v1.VardkontaktType;
 
 public class ExternalToTransportConverter {
 
@@ -85,6 +86,7 @@ public class ExternalToTransportConverter {
         utlatande.getRekommendations().addAll(convertRekommendationer(source.getRekommendationer()));
         utlatande.getObservationAktivitetRelations().addAll(
                 convertObservationAktivitetRelationer(source.getObservationAktivitetRelationer()));
+        utlatande.setBilaga(convertBilaga(source.getBilaga()));
 
         return utlatande;
     }
@@ -164,6 +166,8 @@ public class ExternalToTransportConverter {
         if (!source.getVarde().isEmpty()) {
             rekommendation.getKorkortsbehorighets().addAll(convertKoderToCDs(source.getVarde()));
         }
+        rekommendation.setVarde(source.getBoolean_varde());
+
         return rekommendation;
     }
 
@@ -232,6 +236,12 @@ public class ExternalToTransportConverter {
 
         if (!source.getVarde().isEmpty()) {
             observation.setVarde(IsoTypeConverter.toPQ(source.getVarde().get(0)));
+        }
+        if (source.getObservationstid() != null) {
+            observation.setObservationstid(source.getObservationstid());
+        }
+        if (source.getObservationsperiod() != null) {
+            observation.setObservationsperiod(convertPartialDateInterval(source.getObservationsperiod()));
         }
 
         return observation;
@@ -397,11 +407,30 @@ public class ExternalToTransportConverter {
         return vardkontakt;
     }
 
+    private BilagaType convertBilaga(Bilaga source) {
+        BilagaType bilaga = new BilagaType();
+        bilaga.setBilagetyp(IsoTypeConverter.toCD(source.getBilagetyp()));
+        bilaga.setForekomst(source.getForekomst());
+
+        return bilaga;
+    }
+
     private Collection<? extends CD> convertKoderToCDs(List<Kod> varde) {
         List<CD> cds = new ArrayList<CD>();
         for (Kod kod : varde) {
             cds.add(IsoTypeConverter.toCD(kod));
         }
         return cds;
+    }
+
+    private PartialDateInterval convertPartialDateInterval(se.inera.certificate.model.PartialInterval source) {
+        if (source == null) {
+            LOG.trace("Source PartialDateInterval was null, could not convert");
+            return null;
+        }
+        PartialDateInterval pdi = new PartialDateInterval();
+        pdi.setFrom(source.getFrom());
+        pdi.setTom(source.getTom());
+        return pdi;
     }
 }
