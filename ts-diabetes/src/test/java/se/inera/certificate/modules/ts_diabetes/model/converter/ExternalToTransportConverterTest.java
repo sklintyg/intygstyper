@@ -18,12 +18,20 @@
  */
 package se.inera.certificate.modules.ts_diabetes.model.converter;
 
+import iso.v21090.dt.v1.CD;
+
+import java.util.ArrayList;
+
+import javax.xml.bind.JAXBException;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.BeanUtils;
 
 import se.inera.certificate.modules.ts_diabetes.utils.ModelAssert;
 import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
 import se.inera.certificate.modules.ts_diabetes.utils.ScenarioFinder;
+import se.inera.certificate.ts_diabetes.model.v1.RekommendationType;
 import se.inera.certificate.ts_diabetes.model.v1.Utlatande;
 
 public class ExternalToTransportConverterTest {
@@ -48,8 +56,33 @@ public class ExternalToTransportConverterTest {
             expected.getSkapadAv().getBefattnings();
             expected.getObservationAktivitetRelations();
             expected.getAktivitets();
+            for (RekommendationType rekommendation : actual.getRekommendations()) {
+                rekommendation.getVardes();
+            }
+
+            resolveJAXBAnyTypes(expected);
 
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
+        }
+    }
+
+    /**
+     * Since JAXB has some trouble with xsd:anyType we have to manually convert some DOM elements into the correct java
+     * types.
+     * 
+     * @param utlatande
+     *            The utlatande to fix.
+     * 
+     * @throws JAXBException
+     */
+    protected void resolveJAXBAnyTypes(Utlatande utlatande) throws JAXBException {
+        for (RekommendationType rekommendation : utlatande.getRekommendations()) {
+            ArrayList<Object> newVardes = new ArrayList<>();
+            for (Object varde : rekommendation.getVardes()) {
+                newVardes.add(JAXBUtils.resolveAnyType(varde, Boolean.class, CD.class));
+            }
+            rekommendation.getVardes().clear();
+            rekommendation.getVardes().addAll(newVardes);
         }
     }
 }

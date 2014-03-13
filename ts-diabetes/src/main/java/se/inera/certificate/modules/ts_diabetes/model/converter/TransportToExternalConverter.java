@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.xml.bind.JAXBException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,8 +36,6 @@ import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
-import se.inera.certificate.modules.ts_diabetes.model.converter.ConverterException;
-import se.inera.certificate.modules.ts_diabetes.model.converter.IsoTypeConverter;
 import se.inera.certificate.modules.ts_diabetes.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_diabetes.model.external.Bilaga;
 import se.inera.certificate.modules.ts_diabetes.model.external.HosPersonal;
@@ -186,8 +186,10 @@ public class TransportToExternalConverter {
      * @param source
      *            {@link RekommendationType}
      * @return {@link Rekommendation}
+     * 
+     * @throws ConverterException 
      */
-    private Rekommendation convertRekommendation(RekommendationType source) {
+    private Rekommendation convertRekommendation(RekommendationType source) throws ConverterException {
         Rekommendation rekommendation = new Rekommendation();
         if (source.getBeskrivning() != null) {
             rekommendation.setBeskrivning(source.getBeskrivning());
@@ -195,12 +197,18 @@ public class TransportToExternalConverter {
 
         rekommendation.setRekommendationskod(IsoTypeConverter.toKod(source.getRekommendationskod()));
 
-        if (!source.getKorkortsbehorighets().isEmpty()) {
-            rekommendation.getVarde().addAll(convertListOfKod(source.getKorkortsbehorighets()));
-        }
+        try {
+            for (Object varde : source.getVardes()) {
+                Object vardeObject = JAXBUtils.resolveAnyType(varde, Boolean.class, CD.class);
+                if (vardeObject instanceof CD) {
+                    rekommendation.getVarde().add(IsoTypeConverter.toKod((CD) vardeObject));
+                } else if (vardeObject instanceof Boolean) {
+                    rekommendation.getVarde().add(vardeObject);
+                }
+            }
 
-        if (source.isVarde() != null) {
-            rekommendation.setBoolean_varde(source.isVarde());
+        } catch (JAXBException e) {
+            throw new ConverterException("Could not convert DOM element to object type", e);
         }
 
         return rekommendation;

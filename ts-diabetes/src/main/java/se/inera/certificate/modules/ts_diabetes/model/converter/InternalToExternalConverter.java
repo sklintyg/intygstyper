@@ -240,7 +240,7 @@ public class InternalToExternalConverter {
             Rekommendation lamplighet = new Rekommendation();
             lamplighet.setRekommendationskod(CodeConverter
                     .toKod(RekommendationsKod.LAMPLIGHET_INNEHA_BEHORIGHET_TILL_KORNINGAR_OCH_ARBETSFORMER));
-            lamplighet.setBoolean_varde(source.getBedomning().getLamplighetInnehaBehorighet());
+            lamplighet.getVarde().add(source.getBedomning().getLamplighetInnehaBehorighet());
             rekommendationer.add(lamplighet);
         }
 

@@ -192,10 +192,8 @@
       <xs:element name="rekommendationskod" type="iso:CD" />
       <xs:element name="beskrivning" type="xs:string"
         minOccurs="0" />
-      <xs:element name="korkortsbehorighet" type="iso:CD" minOccurs="0"
-        maxOccurs="16" />
-      <xs:element name="varde" type="xs:boolean"
-        minOccurs="0" />
+      <xs:element name="varde" type="xs:anyType"
+        minOccurs="0" maxOccurs="16" />
       <xs:any namespace="##other" processContents="lax"
         minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>

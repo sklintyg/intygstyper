@@ -54,7 +54,7 @@
   <p:rekommendation>
     <p:rekommendationskod code="REK8"
       codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
-    <p:korkortsbehorighet code="VAR13" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+    <p:varde code="VAR13" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
   </p:rekommendation>
   <!-- Rekommendation end -->

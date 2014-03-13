@@ -67,7 +67,7 @@ public class XPathExpressions {
 
     public static final String OBSERVATION_BILAGA_TEMPLATE = "p:utlatande/p:bilaga/p:forekomst[parent::p:bilaga/p:bilagetyp/@code='%s']='%s'";
 
-    public static final String REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE = "p:utlatande/p:rekommendation/p:korkortsbehorighet/@code = '%s'";
+    public static final String REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE = "p:utlatande/p:rekommendation/p:varde/@code = '%s'";
 
     public static final String REKOMMENDATION_VARDE_TEMPLATE = "p:utlatande/p:rekommendation/p:varde[parent::p:rekommendation/p:rekommendationskod/@code='%s']='%s'";
 

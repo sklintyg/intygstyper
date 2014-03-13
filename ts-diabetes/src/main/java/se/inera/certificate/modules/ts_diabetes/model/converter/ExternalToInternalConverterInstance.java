@@ -242,16 +242,25 @@ public class ExternalToInternalConverterInstance {
                 if (rek.getVarde().contains(CodeConverter.toKod(RekommendationVardeKod.INTE_TA_STALLNING))) {
                     bedomning.setKanInteTaStallning(true);
                 } else {
-                    for (Kod varde : rek.getVarde()) {
-                        RekommendationVardeKod vardeKod = CodeConverter.fromCode(varde, RekommendationVardeKod.class);
-                        bedomning.getKorkortstyp().add(BedomningKorkortstyp.valueOf(vardeKod.name()));
+                    for (Object varde : rek.getVarde()) {
+                        if (varde instanceof Kod) {
+                            RekommendationVardeKod vardeKod = CodeConverter.fromCode((Kod) varde,
+                                    RekommendationVardeKod.class);
+                            bedomning.getKorkortstyp().add(BedomningKorkortstyp.valueOf(vardeKod.name()));
+                        }
                     }
                 }
 
             } else if (CodeConverter.matches(
                     RekommendationsKod.LAMPLIGHET_INNEHA_BEHORIGHET_TILL_KORNINGAR_OCH_ARBETSFORMER,
                     rek.getRekommendationskod())) {
-                bedomning.setLamplighetInnehaBehorighet(rek.getBoolean_varde());
+                Boolean lamplighetInnehaBehorighet = null;
+                for (Object varde : rek.getVarde()) {
+                    if (varde instanceof Boolean) {
+                        lamplighetInnehaBehorighet = (Boolean) varde;
+                    }
+                }
+                bedomning.setLamplighetInnehaBehorighet(lamplighetInnehaBehorighet);
 
             } else if (CodeConverter.matches(RekommendationsKod.PATIENT_BOR_UNDESOKAS_AV_SPECIALIST,
 

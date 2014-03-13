@@ -81,6 +81,7 @@
                 "code": "REK8"
             },
             "varde": [{
+                "@class": "se.inera.certificate.model.Kod",
                 "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                 "codeSystemName": "kv_rekommendation_intyg",
                 "code": "VAR13"

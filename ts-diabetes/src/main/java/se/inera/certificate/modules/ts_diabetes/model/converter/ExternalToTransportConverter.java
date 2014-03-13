@@ -163,10 +163,13 @@ public class ExternalToTransportConverter {
 
         rekommendation.setRekommendationskod(IsoTypeConverter.toCD(source.getRekommendationskod()));
 
-        if (!source.getVarde().isEmpty()) {
-            rekommendation.getKorkortsbehorighets().addAll(convertKoderToCDs(source.getVarde()));
+        for (Object varde : source.getVarde()) {
+            if (varde instanceof Kod) {
+                rekommendation.getVardes().add(IsoTypeConverter.toCD((Kod) varde));
+            } else if (varde instanceof Boolean) {
+                rekommendation.getVardes().add(varde);
+            }
         }
-        rekommendation.setVarde(source.getBoolean_varde());
 
         return rekommendation;
     }

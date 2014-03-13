@@ -109,37 +109,37 @@
   <p:rekommendation>
     <p:rekommendationskod code="REK8"
       codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
-    <p:korkortsbehorighet code="VAR1" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+    <p:varde code="VAR1" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
-    <p:korkortsbehorighet code="VAR2" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+    <p:varde code="VAR2" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
-    <p:korkortsbehorighet code="VAR3" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+    <p:varde code="VAR3" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
-    <p:korkortsbehorighet code="VAR4" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+    <p:varde code="VAR4" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
-    <p:korkortsbehorighet code="VAR5" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+    <p:varde code="VAR5" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
-    <p:korkortsbehorighet code="VAR6" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+    <p:varde code="VAR6" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
-    <p:korkortsbehorighet code="VAR7" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+    <p:varde code="VAR7" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
-    <p:korkortsbehorighet code="VAR8" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+    <p:varde code="VAR8" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
-    <p:korkortsbehorighet code="VAR9" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+    <p:varde code="VAR9" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
-    <p:korkortsbehorighet code="VAR12" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+    <p:varde code="VAR12" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
-    <p:korkortsbehorighet code="VAR13" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+    <p:varde code="VAR13" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
-    <p:korkortsbehorighet code="VAR14" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+    <p:varde code="VAR14" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
-    <p:korkortsbehorighet code="VAR15" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+    <p:varde code="VAR15" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
-    <p:korkortsbehorighet code="VAR16" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+    <p:varde code="VAR16" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
-    <p:korkortsbehorighet code="VAR17" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+    <p:varde code="VAR17" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
-    <p:korkortsbehorighet code="VAR18" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+    <p:varde code="VAR18" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
   </p:rekommendation>
 

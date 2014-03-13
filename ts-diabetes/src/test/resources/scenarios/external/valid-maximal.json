@@ -201,81 +201,97 @@
             },
             "varde": [
                 {
+                    "@class": "se.inera.certificate.model.Kod",
                     "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                     "codeSystemName": "kv_rekommendation_intyg",
                     "code": "VAR1"
                 },
                 {
+                    "@class": "se.inera.certificate.model.Kod",
                     "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                     "codeSystemName": "kv_rekommendation_intyg",
                     "code": "VAR2"
                 },
                 {
+                    "@class": "se.inera.certificate.model.Kod",
                     "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                     "codeSystemName": "kv_rekommendation_intyg",
                     "code": "VAR3"
                 },
                 {
+                    "@class": "se.inera.certificate.model.Kod",
                     "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                     "codeSystemName": "kv_rekommendation_intyg",
                     "code": "VAR4"
                 },
                 {
+                    "@class": "se.inera.certificate.model.Kod",
                     "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                     "codeSystemName": "kv_rekommendation_intyg",
                     "code": "VAR5"
                 },
                 {
+                    "@class": "se.inera.certificate.model.Kod",
                     "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                     "codeSystemName": "kv_rekommendation_intyg",
                     "code": "VAR6"
                 },
                 {
+                    "@class": "se.inera.certificate.model.Kod",
                     "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                     "codeSystemName": "kv_rekommendation_intyg",
                     "code": "VAR7"
                 },
                 {
+                    "@class": "se.inera.certificate.model.Kod",
                     "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                     "codeSystemName": "kv_rekommendation_intyg",
                     "code": "VAR8"
                 },
                 {
+                    "@class": "se.inera.certificate.model.Kod",
                     "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                     "codeSystemName": "kv_rekommendation_intyg",
                     "code": "VAR9"
                 },
                 {
+                    "@class": "se.inera.certificate.model.Kod",
                     "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                     "codeSystemName": "kv_rekommendation_intyg",
                     "code": "VAR12"
                 },
                 {
+                    "@class": "se.inera.certificate.model.Kod",
                     "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                     "codeSystemName": "kv_rekommendation_intyg",
                     "code": "VAR13"
                 },
                 {
+                    "@class": "se.inera.certificate.model.Kod",
                     "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                     "codeSystemName": "kv_rekommendation_intyg",
                     "code": "VAR14"
                 },
                 {
+                    "@class": "se.inera.certificate.model.Kod",
                     "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                     "codeSystemName": "kv_rekommendation_intyg",
                     "code": "VAR15"
                 },
                 {
+                    "@class": "se.inera.certificate.model.Kod",
                     "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                     "codeSystemName": "kv_rekommendation_intyg",
                     "code": "VAR16"
                 },
                 {
+                    "@class": "se.inera.certificate.model.Kod",
                     "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                     "codeSystemName": "kv_rekommendation_intyg",
                     "code": "VAR17"
                 },
                 {
+                    "@class": "se.inera.certificate.model.Kod",
                     "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                     "codeSystemName": "kv_rekommendation_intyg",
                     "code": "VAR18"
@@ -296,7 +312,9 @@
                 "codeSystemName": "kv_rekommendation_intyg",
                 "code": "REK10"
             },
-            "boolean_varde" : true
+            "varde" : [
+                true
+            ]
         }
     ],
     "observationer": [

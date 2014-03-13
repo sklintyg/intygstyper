@@ -37,13 +37,19 @@ public class RekommendationerValidationInstance extends ExternalValidatorInstanc
             if (rekommendation.getRekommendationskod().equals(REK_REK8)) {
                 // Patienten uppfyller kraven för (REK8)
                 assertNull(rekommendation.getBeskrivning(), entity + ".beskrivning");
-                for (Kod kod : rekommendation.getVarde()) {
-                    assertKodInEnum(kod, RekommendationVardeKod.class, entity + ".varde");
+                for (Object varde : rekommendation.getVarde()) {
+                    if (varde instanceof Kod) {
+                        assertKodInEnum((Kod)varde, RekommendationVardeKod.class, entity + ".varde");
+                    } else {
+                        validationError(entity + ".varde must be of type Kod");
+                    }
                 }
             } else if (rekommendation.getRekommendationskod().equals(REK_REK9)) {
                 // Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i (REK9)
                 assertNotEmpty(rekommendation.getBeskrivning(), entity + ".beskrivning");
-                assertNull(rekommendation.getBoolean_varde(), entity + ".varde");
+                if (!rekommendation.getVarde().isEmpty()) {
+                    validationError(entity + ".varde must be empty");
+                }
                 // TODO: determine why assertNull on rekommendation.getVarde throws badRequest.
             }
         }
