@@ -9,11 +9,7 @@ import se.inera.certificate.modules.ts_bas.rest.ModuleServiceWrapper;
 public class TsBasEntryPoint implements ModuleEntryPoint {
 
     @Autowired
-    private final ModuleServiceWrapper moduleServiceWrapper;
-
-    public TsBasEntryPoint() {
-        this.moduleServiceWrapper = new ModuleServiceWrapper();
-    }
+    private ModuleServiceWrapper moduleServiceWrapper;
 
     @Override
     public String getModuleName() {
