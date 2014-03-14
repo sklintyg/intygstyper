@@ -1,12 +1,13 @@
 package se.inera.certificate.modules.fk7263.pdf;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.joda.time.LocalDateTime;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -14,6 +15,8 @@ import org.springframework.core.io.ClassPathResource;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.utils.Scenario;
+import se.inera.certificate.modules.fk7263.utils.ScenarioFinder;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
@@ -70,25 +73,29 @@ public class PdfGeneratorTest {
      * @throws IOException
      * @throws DocumentException
      */
-    @Ignore
     @Test
-    public void createTestPdf() throws IOException, PdfGeneratorException {
-
-        Fk7263Intyg intyg = new CustomObjectMapper().readValue(fk7263_json, Fk7263Intyg.class);
-
-        // generate PDF
-        byte[] generatorResult = new PdfGenerator(intyg, false).getBytes();
-
-        File newTestPdf = new File("utlatande.pdf");
-        boolean created = newTestPdf.createNewFile();
-        if (created) {
-            FileOutputStream out = new FileOutputStream(newTestPdf);
-            out.write(generatorResult);
-            out.close();
-        } else {
-            fail();
+    public void testGeneratePdf() throws Exception {
+        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
+            byte[] pdf = new PdfGenerator(scenario.asInternalModel()).getBytes();
+            assertNotNull("Error in scenario " + scenario.getName(), pdf);
+            writePdfToFile(pdf, scenario);
+        }
+    }
+    
+    private void writePdfToFile(byte[] pdf, Scenario scenario) throws IOException {
+        String dir = System.getProperty("pdfOutput.dir");
+        if (dir == null) {
+            return;
         }
 
+        File file = new File(String.format("%s/%s_%s.pdf", dir, scenario.getName(), LocalDateTime.now().toString("yyyyMMdd_HHmm")));
+        FileOutputStream fop = new FileOutputStream(file);
+
+        file.createNewFile();
+
+        fop.write(pdf);
+        fop.flush();
+        fop.close();
     }
 
     private AcroFields readExpectedFields() throws IOException {
