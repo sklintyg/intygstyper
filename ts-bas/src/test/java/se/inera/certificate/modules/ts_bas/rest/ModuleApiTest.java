@@ -31,7 +31,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import se.inera.certificate.modules.support.api.dto.CertificateContentMeta;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
@@ -179,11 +178,7 @@ public class ModuleApiTest {
 
     private ExternalModelHolder createExternalHolder(
             se.inera.certificate.modules.ts_bas.model.external.Utlatande externalModel) throws JsonProcessingException {
-        String id = externalModel.getId().getExtension();
-        String type = externalModel.getTyp().getCode();
-        String patientId = externalModel.getPatient().getId().getExtension();
-        return new ExternalModelHolder(mapper.writeValueAsString(externalModel), new CertificateContentMeta(id, type,
-                patientId, null, null, null));
+        return new ExternalModelHolder(mapper.writeValueAsString(externalModel));
     }
 
     private InternalModelHolder createInternalHolder(Utlatande internalModel) throws JsonProcessingException {

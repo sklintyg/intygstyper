@@ -21,27 +21,18 @@ package se.inera.certificate.modules.support.api.dto;
 import static org.springframework.util.Assert.notNull;
 
 /**
- * Wrapper class for holding the Utlatande in external format of a certificate as well as metadata about the
- * certificate, such as status
+ * Wrapper class for holding the Utlatande in external format of a certificate
  */
 public class ExternalModelHolder {
 
     private final String externalModel;
 
-    private final CertificateContentMeta certificateContentMeta;
-
-    public ExternalModelHolder(String externalModel, CertificateContentMeta certificateContentMeta) {
+    public ExternalModelHolder(String externalModel) {
         notNull(externalModel, "'externalModel' must not be null");
-        notNull(certificateContentMeta, "'certificateContentMeta' must not be null");
         this.externalModel = externalModel;
-        this.certificateContentMeta = certificateContentMeta;
     }
 
     public String getExternalModel() {
         return externalModel;
-    }
-
-    public CertificateContentMeta getCertificateContentMeta() {
-        return certificateContentMeta;
     }
 }
