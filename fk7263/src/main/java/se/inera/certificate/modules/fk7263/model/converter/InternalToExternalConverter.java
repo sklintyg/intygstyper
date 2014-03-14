@@ -3,7 +3,6 @@ package se.inera.certificate.modules.fk7263.model.converter;
 import static se.inera.certificate.modules.fk7263.model.codes.Kodverk.ICD_10;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -59,9 +58,13 @@ public class InternalToExternalConverter {
      * @param source
      *            {@link Fk7263Intyg}
      * @return {@link se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande}
+     * @throws ConverterException 
      */
-    public se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande convert(Fk7263Intyg source) {
+    public se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande convert(Fk7263Intyg source) throws ConverterException {
         LOG.trace("Starting conversion from internalToExternal");
+        if (source == null) {
+            throw new ConverterException("Internal intyg was null");
+        }
         intUtlatande = source;
 
         se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande utlatande = new se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande();

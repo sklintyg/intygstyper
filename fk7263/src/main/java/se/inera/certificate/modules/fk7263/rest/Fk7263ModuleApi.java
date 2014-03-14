@@ -24,6 +24,7 @@ import se.inera.certificate.modules.fk7263.model.converter.ConverterException;
 import se.inera.certificate.modules.fk7263.model.converter.ExternalToInternalConverter;
 import se.inera.certificate.modules.fk7263.model.converter.ExternalToTransportConverter;
 import se.inera.certificate.modules.fk7263.model.converter.ExternalToTransportFk7263LegacyConverter;
+import se.inera.certificate.modules.fk7263.model.converter.InternalToExternalConverter;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToExternalConverter;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToExternalFk7263LegacyConverter;
 import se.inera.certificate.modules.fk7263.model.converter.WebcertModelFactory;
@@ -52,6 +53,9 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Autowired
     private InternalDraftValidator internalDraftValidator;
+    
+    @Autowired
+    private InternalToExternalConverter internalToExternalConverter;
 
     @Context
     private HttpServletResponse httpResponse;
@@ -259,7 +263,12 @@ public class Fk7263ModuleApi implements ModuleApi {
      * {@inheritDoc}
      */
     public Fk7263Utlatande convertInternalToExternal(Fk7263Intyg utlatande) {
-        throw new ServerErrorException(Status.NOT_IMPLEMENTED);
+        try {
+            return internalToExternalConverter.convert(utlatande);
+        } catch (ConverterException e) {
+            LOG.error("Could not convert external model to internal model", e);
+            throw new BadRequestException(e);
+        }
     }
 
     /**

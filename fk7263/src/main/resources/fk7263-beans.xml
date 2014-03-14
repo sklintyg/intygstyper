@@ -24,7 +24,11 @@
 
   <bean id="webcertModelFactory"
     class="se.inera.certificate.modules.fk7263.model.converter.WebcertModelFactory" />
+    
   <bean id="internalDraftValidator"  
     class="se.inera.certificate.modules.fk7263.validator.InternalDraftValidator" />
+  
+  <bean id="internalToExternalConverter"
+    class="se.inera.certificate.modules.fk7263.model.converter.InternalToExternalConverter" />
 
 </beans>
