@@ -9,11 +9,21 @@ import se.inera.certificate.modules.support.api.ModuleApi;
 public interface ModuleEntryPoint {
 
     /**
-     * Returns the unique name of the module. The name should only contain the a-z, 0-9 and '_' characters.
+     * Returns the unique id for the module. The id should only contain the a-z, 0-9 and '_' characters.
      * 
-     * @return A unique module name.
+     * @return A unique module id.
+     */
+    String getModuleId();
+
+    /**
+     * Returns the friendly name of the module, suitable for display in the GUI.
      */
     String getModuleName();
+
+    /**
+     * Returns description for the module, suitable for display in the GUI.
+     */
+    String getModuleDescription();
 
     /**
      * Returns the module specific implementation of the module API.

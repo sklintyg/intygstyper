@@ -12,8 +12,19 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
     private ModuleServiceWrapper moduleServiceWrapper;
 
     @Override
-    public String getModuleName() {
+    public String getModuleId() {
         return "ts-bas";
+    }
+
+    @Override
+    public String getModuleName() {
+        return "Läkarintyg FK 7263";
+    }
+
+    @Override
+    public String getModuleDescription() {
+        // TODO
+        return "Läkarintyg FK 7263";
     }
 
     @Override
