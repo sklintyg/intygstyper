@@ -1,6 +1,5 @@
 package se.inera.certificate.modules.support;
 
-import org.springframework.stereotype.Component;
 import se.inera.certificate.modules.support.api.ModuleApi;
 
 /**
