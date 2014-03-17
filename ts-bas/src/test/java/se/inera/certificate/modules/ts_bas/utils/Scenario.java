@@ -1,6 +1,5 @@
 package se.inera.certificate.modules.ts_bas.utils;
 
-import se.inera.certificate.integration.rest.dto.CertificateContentHolder;
 import se.inera.certificate.ts_bas.model.v1.Utlatande;
 
 /**
