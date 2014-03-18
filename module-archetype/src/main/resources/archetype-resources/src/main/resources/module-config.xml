@@ -28,9 +28,8 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-  <import resource="${artifactId}-beans.xml" />
-  <import resource="${artifactId}-model-config.xml" />
-  <import resource="${artifactId}-integration-config.xml" />
+  <import resource="module-beans.xml" />
+  <import resource="module-model-config.xml" />
 
   <context:annotation-config />
 

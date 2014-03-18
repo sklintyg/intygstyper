@@ -28,6 +28,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.joda.time.LocalDateTime;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import ${package}.${artifactId-safe}.utils.Scenario;
@@ -38,19 +39,26 @@ public class PdfGeneratorTest {
     private PdfGenerator pdfGen;
 
     public PdfGeneratorTest() {
-        pdfGen = new PdfGenerator();
+        pdfGen = new PdfGenerator(true);
     }
 
-    //TODO: Implement tests here
-    
-    private void writePdfToFile(byte[] pdf) throws IOException {
+    @Ignore
+    @Test
+    public void testGeneratePdf() throws Exception {
+        for (Scenario scenario : ScenarioFinder.getInternalMIScenarios("valid-*")) {
+            byte[] pdf = pdfGen.generatePDF(scenario.asInternalMIModel());
+            assertNotNull("Error in scenario " + scenario.getName(), pdf);
+            writePdfToFile(pdf, scenario);
+        }
+    }
+
+    private void writePdfToFile(byte[] pdf, Scenario scenario) throws IOException {
         String dir = System.getProperty("pdfOutput.dir");
         if (dir == null) {
             return;
         }
 
-        File file = new File(dir + "/${artifactId-safe}" + "_intyg_" + LocalDateTime.now().toString("yyyyMMdd_HHmm") + pdf.hashCode()
-                + ".pdf");
+        File file = new File(String.format("%s/%s_%s.pdf", dir, scenario.getName(), LocalDateTime.now().toString("yyyyMMdd_HHmm")));
         FileOutputStream fop = new FileOutputStream(file);
 
         file.createNewFile();

@@ -21,97 +21,16 @@
  */
 package ${package}.${artifactId-safe}.model.external;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.joda.time.LocalDateTime;
-
-import se.inera.certificate.model.Id;
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Status;
 import se.inera.certificate.model.HosPersonal;
-import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Patient;
-import se.inera.certificate.model.Referens;
-import se.inera.certificate.model.Rekommendation;
-import se.inera.certificate.model.Vardkontakt;
 
-/**
- * The utlåtande used by RLI. This class is a copy of the common external model (defined in se.inera.certificate.model),
- * extending with:
- * <ul>
- * <li> {@link Aktivitet}
- * </ul>
- */
-public class Utlatande {
-
-    private Id id;
-
-    private Kod typ;
-
-    private List<String> kommentarer;
-
-    private LocalDateTime signeringsdatum;
-
-    private LocalDateTime skickatdatum;
+public class Utlatande extends se.inera.certificate.model.Utlatande {
 
     private Patient patient;
 
     private HosPersonal skapadAv;
 
-    private List<HosPersonal> harDeltagandeHosPersonal;
-
-    private List<Vardkontakt> vardkontakter;
-
-    private List<Referens> referenser;
-
-    private List<Aktivitet> aktiviteter;
-
-    private List<Rekommendation> rekommendationer;
-
-    private List<Observation> observationer;
-
-    private List<Status> status;
-
-    public Id getId() {
-        return id;
-    }
-
-    public void setId(Id id) {
-        this.id = id;
-    }
-
-    public Kod getTyp() {
-        return typ;
-    }
-
-    public void setTyp(Kod typ) {
-        this.typ = typ;
-    }
-
-    public List<String> getKommentarer() {
-        if (kommentarer == null) {
-            kommentarer = new ArrayList<String>();
-        }
-        return this.kommentarer;
-    }
-
-    public LocalDateTime getSigneringsdatum() {
-        return signeringsdatum;
-    }
-
-    public void setSigneringsdatum(LocalDateTime signeringsdatum) {
-        this.signeringsdatum = signeringsdatum;
-    }
-
-    public LocalDateTime getSkickatdatum() {
-        return skickatdatum;
-    }
-
-    public void setSkickatdatum(LocalDateTime skickatdatum) {
-        this.skickatdatum = skickatdatum;
-    }
-
+    @Override
     public Patient getPatient() {
         return patient;
     }
@@ -120,60 +39,12 @@ public class Utlatande {
         this.patient = patient;
     }
 
+    @Override
     public HosPersonal getSkapadAv() {
         return skapadAv;
     }
 
     public void setSkapadAv(HosPersonal skapadAv) {
         this.skapadAv = skapadAv;
-    }
-
-    public List<HosPersonal> getHarDeltagandeHosPersonal() {
-        if (harDeltagandeHosPersonal == null) {
-            harDeltagandeHosPersonal = new ArrayList<HosPersonal>();
-        }
-        return this.harDeltagandeHosPersonal;
-    }
-
-    public List<Vardkontakt> getVardkontakter() {
-        if (vardkontakter == null) {
-            vardkontakter = new ArrayList<Vardkontakt>();
-        }
-        return this.vardkontakter;
-    }
-
-    public List<Referens> getReferenser() {
-        if (referenser == null) {
-            referenser = new ArrayList<Referens>();
-        }
-        return this.referenser;
-    }
-
-    public List<Aktivitet> getAktiviteter() {
-        if (aktiviteter == null) {
-            aktiviteter = new ArrayList<Aktivitet>();
-        }
-        return this.aktiviteter;
-    }
-
-    public List<Rekommendation> getRekommendationer() {
-        if (rekommendationer == null) {
-            rekommendationer = new ArrayList<Rekommendation>();
-        }
-        return this.rekommendationer;
-    }
-
-    public List<Observation> getObservationer() {
-        if (observationer == null) {
-            observationer = new ArrayList<Observation>();
-        }
-        return this.observationer;
-    }
-
-    public List<Status> getStatus() {
-        if (status == null) {
-            status = new ArrayList<Status>();
-        }
-        return this.status;
     }
 }

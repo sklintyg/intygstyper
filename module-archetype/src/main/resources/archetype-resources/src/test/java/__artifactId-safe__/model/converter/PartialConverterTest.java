@@ -28,12 +28,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class PartialConverterTest {
 
-    @Ignore
     @Test
     public void testPartialToStringWithYear() {
 
@@ -44,8 +42,7 @@ public class PartialConverterTest {
         assertNotNull(partialAsString);
         assertEquals("2013", partialAsString);
     }
-    
-    @Ignore
+
     @Test
     public void testPartialToStringWithYearAndMonth1() {
 
@@ -57,7 +54,6 @@ public class PartialConverterTest {
         assertEquals("2013-03", partialAsString);
     }
 
-    @Ignore
     @Test
     public void testPartialToStringWithYearAndMonth2() {
 
@@ -69,7 +65,6 @@ public class PartialConverterTest {
         assertEquals("2013-12", partialAsString);
     }
 
-    @Ignore
     @Test
     public void testPartialToStringWithYearAndMonthAndDay1() {
 
@@ -82,7 +77,6 @@ public class PartialConverterTest {
         assertEquals("2013-04-05", partialAsString);
     }
 
-    @Ignore
     @Test
     public void testPartialToStringWithYearAndMonthAndDay2() {
 
@@ -95,7 +89,6 @@ public class PartialConverterTest {
         assertEquals("2008-12-11", partialAsString);
     }
 
-    @Ignore
     @Test
     public void testStringToPartialWithNullAndEmptyString() {
 
@@ -111,7 +104,6 @@ public class PartialConverterTest {
         assertNull(partial);
     }
 
-    @Ignore
     @Test(expected = IllegalArgumentException.class)
     public void testStringToPartialWithGarbage() {
 
@@ -119,7 +111,6 @@ public class PartialConverterTest {
 
     }
 
-    @Ignore
     @Test
     public void testStringToPartialWithYear() {
 
@@ -131,7 +122,6 @@ public class PartialConverterTest {
         assertTrue("Year should be supported", partial.isSupported(DateTimeFieldType.year()));
     }
 
-    @Ignore
     @Test
     public void testStringToPartialWithYearAndMonth() {
 
@@ -144,7 +134,6 @@ public class PartialConverterTest {
         assertTrue("Month should be supported", partial.isSupported(DateTimeFieldType.monthOfYear()));
     }
 
-    @Ignore
     @Test
     public void testStringToPartialWithYearAndMonthAndDay() {
 
@@ -158,7 +147,6 @@ public class PartialConverterTest {
         assertTrue("Month should be supported", partial.isSupported(DateTimeFieldType.dayOfMonth()));
     }
 
-    @Ignore
     @Test
     public void testRoundTripWithYear() {
 
@@ -174,7 +162,6 @@ public class PartialConverterTest {
         assertEquals("In and out does not match", inputDateStr, outputDateStr);
     }
 
-    @Ignore
     @Test
     public void testRoundTripWithYearMonth() {
 
@@ -190,7 +177,6 @@ public class PartialConverterTest {
         assertEquals("In and out does not match", inputDateStr, outputDateStr);
     }
 
-    @Ignore
     @Test
     public void testRoundTripWithYearMonthDay() {
 
@@ -205,5 +191,4 @@ public class PartialConverterTest {
         assertNotNull(outputDateStr);
         assertEquals("In and out does not match", inputDateStr, outputDateStr);
     }
-
 }

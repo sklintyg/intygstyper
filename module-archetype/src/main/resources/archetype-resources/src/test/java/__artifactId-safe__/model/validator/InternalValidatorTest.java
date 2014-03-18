@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 /**
  * Copyright (C) 2013 Inera AB (http://www.inera.se)
  *
@@ -21,21 +18,22 @@
  */
 package ${package}.${artifactId-safe}.model.validator;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
-import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import ${package}.${artifactId-safe}.model.external.Utlatande;
+import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.certificate.modules.support.api.dto.ValidationStatus;
+import ${package}.${artifactId-safe}.model.internal.wc.Utlatande;
 import ${package}.${artifactId-safe}.utils.Scenario;
 import ${package}.${artifactId-safe}.utils.ScenarioFinder;
 import ${package}.${artifactId-safe}.validator.Validator;
 
-public class ExternalValidatorTest {
+public class InternalValidatorTest {
 
     private Validator validator;
 
@@ -47,23 +45,31 @@ public class ExternalValidatorTest {
     @Ignore
     @Test
     public void testValidate() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            Utlatande utlatande = scenario.asExternalModel();
-            List<String> validationErrors = validator.validateExternal(utlatande);
+        for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
+            Utlatande utlatande = scenario.asInternalWCModel();
+            ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
-            assertTrue("Error in scenario " + scenario.getName() + "${symbol_escape}n" + StringUtils.join(validationErrors, ", "),
-                    validationErrors.isEmpty());
+            assertEquals(
+                    "Error in scenario " + scenario.getName() + "${symbol_escape}n"
+                            + StringUtils.join(validationResponse.getValidationErrors(), ", "),
+                    ValidationStatus.VALID, validationResponse.getStatus());
+
+            assertTrue(
+                    "Error in scenario " + scenario.getName() + "${symbol_escape}n"
+                            + StringUtils.join(validationResponse.getValidationErrors(), ", "), validationResponse
+                            .getValidationErrors().isEmpty());
         }
     }
 
     @Ignore
     @Test
     public void testValidateWithErrors() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {
-            List<String> validationErrors = validator.validateExternal(scenario.asExternalModel());
+        for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("invalid-*")) {
 
-            assertTrue("Error in scenario " + scenario.getName() + "${symbol_escape}n" + StringUtils.join(validationErrors, ", "),
-                    !validationErrors.isEmpty());
+            Utlatande utlatande = scenario.asInternalWCModel();
+            ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+
+            assertEquals(ValidationStatus.INVALID, validationResponse.getStatus());
         }
     }
 }

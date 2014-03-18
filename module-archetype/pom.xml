@@ -44,4 +44,7 @@
       <url>dav:https://repository-callistasoftware.forge.cloudbees.com/release</url>
     </repository>
   </distributionManagement>
+  <description>För att skapa en ny intygsmodul:
+1. Ställ dig i den mapp där den nya maven-modulen ska skapas
+2. Kör 'mvn archetype:generate -DarchetypeGroupId=se.inera.certificate.modules -DarchetypeArtifactId=module-archetype -DarchetypeVersion=1.2-SNAPSHOT -DinteractiveMode=false -DartifactId=&lt;&lt;modul-namn&gt;&gt; -DgroupId=se.inera.certificate.modules'</description>
 </project>

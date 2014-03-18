@@ -22,19 +22,13 @@
 
 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
-  xmlns:cxf="http://cxf.apache.org/core" xmlns:util="http://www.springframework.org/schema/util"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:cxf="http://cxf.apache.org/core" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-  <jaxrs:server address="/">
-    <jaxrs:serviceBeans>
-      <bean class="${package}.${artifactId-safe}.rest.ModuleService" />
-    </jaxrs:serviceBeans>
-    <jaxrs:providers>
-      <ref bean="jacksonJsonProvider" />
-      <ref bean="jaxbProvider" />
-    </jaxrs:providers>
-  </jaxrs:server>
+	<import resource="module-beans.xml" />
+	<import resource="module-model-config.xml" />
+
 
 </beans>

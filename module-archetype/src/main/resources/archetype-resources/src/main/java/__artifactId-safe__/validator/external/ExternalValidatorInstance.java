@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ${package}.${artifactId-safe}.validator;
+package ${package}.${artifactId-safe}.validator.external;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,7 +123,7 @@ public class ExternalValidatorInstance {
     }
 
     private AssertionResult assertKodInEnum(Kod kod, Class<? extends CodeSystem> expectedEnum, String element) {
-        if (assertNotNull(kod, element).success()) {
+        if (assertNotNull(kod, element).succeeded()) {
             try {
                 CodeConverter.fromCode(kod, expectedEnum);
                 return AssertionResult.SUCCESS;
@@ -135,7 +135,7 @@ public class ExternalValidatorInstance {
     }
 
     private void assertValidPersonId(Id id, String element) {
-        if (assertNotNull(id, element).success()) {
+        if (assertNotNull(id, element).succeeded()) {
             if (!id.getRoot().equals("1.2.752.129.2.1.3.1") && !id.getRoot().equals("1.2.752.129.2.1.3.3")) {
                 validationError(element + " should be a personnummer or samordningsnummer");
             }
@@ -144,7 +144,7 @@ public class ExternalValidatorInstance {
     }
 
     private void assertValidHsaId(Id id, String element) {
-        if (assertNotNull(id, element).success()) {
+        if (assertNotNull(id, element).succeeded()) {
             if (!id.getRoot().equals(HSpersonalKod.HSA_ID.getCode())) {
                 validationError(element + " should be an HSA-ID with root: " + HSpersonalKod.HSA_ID.getCode());
             }
@@ -154,8 +154,8 @@ public class ExternalValidatorInstance {
 
     /**
      * Since the validator assertions doesn't throw exceptions on assertion failure, they instead return an assertion
-     * result. This might be used to implement conditional logic based on if an assertion {@link ${symbol_pound}failed()} or was
-     * {@link ${symbol_pound}success()}ful.
+     * result. This might be used to implement conditional logic based on if an assertion {@link ${symbol_pound}failed()} or
+     * {@link ${symbol_pound}succeeded()}.
      */
     private static enum AssertionResult {
         SUCCESS(true), FAILURE(false);
@@ -170,7 +170,7 @@ public class ExternalValidatorInstance {
             return !assertSuccessful;
         }
 
-        public boolean success() {
+        public boolean succeeded() {
             return assertSuccessful;
         }
     }

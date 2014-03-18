@@ -23,9 +23,12 @@ package ${package}.${artifactId-safe}.validator;
 
 import java.util.List;
 
+import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import ${package}.${artifactId-safe}.model.external.Utlatande;
+import ${package}.${artifactId-safe}.validator.external.ExternalValidatorInstance;
+import ${package}.${artifactId-safe}.validator.internal.InternalValidatorInstance;
 
-public class ExternalValidator {
+public class Validator {
 
     /**
      * Validates an external Utlatande.
@@ -34,8 +37,21 @@ public class ExternalValidator {
      *            ${package}.${artifactId-safe}.model.external.Utlatande
      * @return List of validation errors, or an empty string if validated correctly
      */
-    public List<String> validate(Utlatande utlatande) {
+    public List<String> validateExternal(Utlatande utlatande) {
         ExternalValidatorInstance instance = new ExternalValidatorInstance();
+        return instance.validate(utlatande);
+    }
+
+    /**
+     * Validates an external Utlatande.
+     * 
+     * @param utlatande
+     *            ${package}.${artifactId-safe}.model.external.Utlatande
+     * @return List of validation errors, or an empty string if validated correctly
+     */
+    public ValidateDraftResponse validateInternal(
+            ${package}.${artifactId-safe}.model.internal.wc.Utlatande utlatande) {
+        InternalValidatorInstance instance = new InternalValidatorInstance();
         return instance.validate(utlatande);
     }
 }

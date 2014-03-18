@@ -37,9 +37,6 @@ import se.inera.certificate.model.PartialInterval;
 
 /**
  * Utility for converting a joda-time Partial to String and vice versa.
- * 
- * @author Niklas Pettersson, R2M
- * 
  */
 public final class PartialConverter {
 

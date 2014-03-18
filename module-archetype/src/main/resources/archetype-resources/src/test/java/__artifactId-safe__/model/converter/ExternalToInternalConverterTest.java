@@ -27,15 +27,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.Ignore;
 
-import ${package}.${artifactId-safe}.rest.dto.CertificateContentHolder;
+import ${package}.${artifactId-safe}.model.external.Utlatande;
+import ${package}.${artifactId-safe}.utils.ModelAssert;
 import ${package}.${artifactId-safe}.utils.Scenario;
 import ${package}.${artifactId-safe}.utils.ScenarioFinder;
 
 /**
- * Unit test for the ExternalToInteralConverter. This test is Spring configured.
- * 
- * @author Niklas Pettersson, R2M
- * 
+ * Unit test for the ExternalToInteralConverter.
  */
 public class ExternalToInternalConverterTest {
 
@@ -50,12 +48,12 @@ public class ExternalToInternalConverterTest {
     @Test
     public void testConvertUtlatande() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            CertificateContentHolder extUtlatande = scenario.asExternalModelWithHolder();
+            Utlatande extUtlatande = scenario.asExternalModel();
 
             ${package}.${artifactId-safe}.model.internal.mi.Utlatande actual = converter.convert(extUtlatande);
 
             ${package}.${artifactId-safe}.model.internal.mi.Utlatande expected = scenario.asInternalMIModel();
-            assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);
+            ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
     }
 }

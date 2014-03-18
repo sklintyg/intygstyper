@@ -24,8 +24,8 @@ package ${package}.${artifactId-safe}.model.converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import ${package}.${artifactId-safe}.model.internal.wc.Utlatande;
-import ${package}.${artifactId-safe}.rest.dto.CreateNewDraftCertificateHolder;
 
 /**
  * Factory for creating a editable model.
@@ -34,7 +34,7 @@ public class WebcertModelFactory {
 
     private static final Logger LOG = LoggerFactory.getLogger(WebcertModelFactory.class);
 
-    public Utlatande createNewWebcertDraft(CreateNewDraftCertificateHolder newDraftData) throws ConverterException {
+    public Utlatande createNewWebcertDraft(CreateNewDraftHolder newDraftData) throws ConverterException {
         // TODO: Implement
         LOG.trace("Creating new internal model for draft");
         return null;
