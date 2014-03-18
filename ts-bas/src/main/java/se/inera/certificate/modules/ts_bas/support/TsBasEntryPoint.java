@@ -23,6 +23,6 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
 
     @Override
     public String getModuleScriptPath() {
-        return "/js/module";
+        return "/webcert/js/module";
     }
 }
