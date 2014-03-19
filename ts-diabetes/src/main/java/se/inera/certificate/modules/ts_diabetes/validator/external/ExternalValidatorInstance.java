@@ -94,7 +94,7 @@ public class ExternalValidatorInstance {
      * 
      */
     private void validateBilaga(Bilaga bilaga) {
-        assertNotNull(bilaga, "No bilaga found");
+        assertNotNull(bilaga, "Bilaga");
     }
 
     /**

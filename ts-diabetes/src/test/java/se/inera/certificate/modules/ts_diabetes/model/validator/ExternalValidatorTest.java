@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import se.inera.certificate.modules.ts_diabetes.model.external.Utlatande;
@@ -41,7 +40,6 @@ public class ExternalValidatorTest {
         validator = new Validator();
     }
 
-    @Ignore
     @Test
     public void testValidate() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
@@ -53,12 +51,13 @@ public class ExternalValidatorTest {
         }
     }
 
-    @Ignore
     @Test
     public void testValidateWithErrors() throws Exception {
-        List<String> validationErrors = validator.validateExternal(ScenarioFinder.getExternalScenario("invalid-sjuk-1")
-                .asExternalModel());
+        for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {
+            List<String> validationErrors = validator.validateExternal(scenario.asExternalModel());
 
-        assertTrue(!validationErrors.isEmpty());
+            assertTrue("Expected error in scenario " + scenario.getName() + "\n" + StringUtils.join(validationErrors, ", "),
+                    !validationErrors.isEmpty());
+        }
     }
 }

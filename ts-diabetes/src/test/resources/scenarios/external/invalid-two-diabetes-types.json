@@ -71,8 +71,24 @@
             }
           }
       ],
-
-    "aktiviteter": [],
+	  "bilaga" : {
+	      "bilagetyp" : {
+	          "codeSystem": "80595600-7477-4a6c-baeb-d2439e86b8bc",
+	          "codeSystemName": "kv_bilaga",
+	          "code": "BIL1"
+	      },
+	      "forekomst" : false
+	  },
+    "aktiviteter": [
+         {
+             "aktivitetskod" : {
+                 "code" : "308113006",
+                 "codeSystem" : "1.2.752.116.2.1.1.1",
+                 "codeSystemName" : "SNOMED-CT"
+             },
+             "forekomst" : false          
+         }
+     ],
     "rekommendationer": [
         {
             "rekommendationskod": {
@@ -84,9 +100,10 @@
                 "@class": "se.inera.certificate.model.Kod",
                 "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                 "codeSystemName": "kv_rekommendation_intyg",
-                "code": "VAR13"
+                "code": "VAR9"
             }]
         }
+
     ],
     "observationer": [
          {
@@ -94,6 +111,14 @@
                 "codeSystem": "1.2.752.116.1.1.1.1.1",
                 "codeSystemName": "ICD-10",
                 "code": "E10"
+            },
+            "forekomst": true
+        }, 
+        {
+            "observationskod": {
+                "codeSystem": "1.2.752.116.1.1.1.1.1",
+                "codeSystemName": "ICD-10",
+                "code": "E11"
             },
             "forekomst": true
         }, 
@@ -112,6 +137,15 @@
                 "code": "OBS20"
             },
             "forekomst": false
+        },
+        {
+            "observationskod": {
+                "codeSystem": "to-come",
+                "codeSystemName": "kv_observationer_intyg",
+                "code": "OBS24"
+            },
+            "forekomst": true,
+            "observationstid" : "2012-12-12" 
         }
     ]
 }

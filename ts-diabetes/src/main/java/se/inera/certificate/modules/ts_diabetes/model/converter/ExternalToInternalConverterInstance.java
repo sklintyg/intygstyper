@@ -411,6 +411,10 @@ public class ExternalToInternalConverterInstance {
         Double vansterMed = null;
         Double binUtan = null;
         Double binMed = null;
+        
+        syn.setHoger(null);
+        syn.setVanster(null);
+        syn.setBinokulart(null);
 
         for (Observation o : synskarpa) {
             if (isObservationAndLateralitet(o, ObservationsKod.EJ_KORRIGERAD_SYNSKARPA, LateralitetsKod.HOGER)) {
@@ -434,10 +438,15 @@ public class ExternalToInternalConverterInstance {
 
             }
         }
-
-        syn.setHoger(hogerUtan, hogerMed);
-        syn.setVanster(vansterUtan, vansterMed);
-        syn.setBinokulart(binUtan, binMed);
+        if (hogerUtan != null || hogerMed != null) {
+            syn.setHoger(hogerUtan, hogerMed);
+        } 
+        if (vansterUtan != null || vansterMed != null) {
+            syn.setVanster(vansterUtan, vansterMed);
+        }
+        if (binUtan != null || binMed != null) {
+            syn.setBinokulart(binUtan, binMed);
+        }
 
     }
 

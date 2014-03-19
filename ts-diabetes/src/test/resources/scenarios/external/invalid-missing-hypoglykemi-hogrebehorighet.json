@@ -13,7 +13,7 @@
         {
             "codeSystem": "24c41b8d-258a-46bf-a08a-b90738b28770",
             "codeSystemName": "kv_intyget_avser",
-            "code": "IAV12"
+            "code": "IAV1"
         }
     ],
     "patient": {
@@ -71,8 +71,24 @@
             }
           }
       ],
-
-    "aktiviteter": [],
+	  "bilaga" : {
+	      "bilagetyp" : {
+	          "codeSystem": "80595600-7477-4a6c-baeb-d2439e86b8bc",
+	          "codeSystemName": "kv_bilaga",
+	          "code": "BIL1"
+	      },
+	      "forekomst" : false
+	  },
+    "aktiviteter": [
+         {
+             "aktivitetskod" : {
+                 "code" : "308113006",
+                 "codeSystem" : "1.2.752.116.2.1.1.1",
+                 "codeSystemName" : "SNOMED-CT"
+             },
+             "forekomst" : false          
+         }
+     ],
     "rekommendationer": [
         {
             "rekommendationskod": {
@@ -84,9 +100,20 @@
                 "@class": "se.inera.certificate.model.Kod",
                 "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
                 "codeSystemName": "kv_rekommendation_intyg",
-                "code": "VAR13"
+                "code": "VAR9"
             }]
+        },
+        {
+            "rekommendationskod": {
+                "codeSystem": "5a931b99-bda8-4f1e-8a6d-6f8a3f40a459",
+                "codeSystemName": "kv_rekommendation_intyg",
+                "code": "REK10"
+            },
+            "varde" : [
+                true
+            ]
         }
+
     ],
     "observationer": [
          {

@@ -14,6 +14,17 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
     private static final Kod OBS_170745003 = CodeConverter.toKod(ObservationsKod.DIABETIKER_ENBART_KOST);
     private static final Kod OBS_170746006 = CodeConverter.toKod(ObservationsKod.DIABETIKER_INSULINBEHANDLING);
     private static final Kod OBS_170746002 = CodeConverter.toKod(ObservationsKod.DIABETIKER_TABLETTBEHANDLING);
+    private static final Kod OBS_OBS10 = CodeConverter.toKod(ObservationsKod.DIABETIKER_ANNAN_BEHANDLING);
+
+    private static final Kod OBS_OBS19 = CodeConverter.toKod(ObservationsKod.KUNSKAP_ATGARD_HYPOGLYKEMI);
+    private static final Kod OBS_OBS20 = CodeConverter.toKod(ObservationsKod.HYPOGLYKEMIER_MED_TECKEN_PA_NEDSATT_HJARNFUNKTION);
+    private static final Kod OBS_OBS21 = CodeConverter.toKod(ObservationsKod.SAKNAR_FORMAGA_KANNA_HYPOGLYKEMI);
+    private static final Kod OBS_OBS22 = CodeConverter.toKod(ObservationsKod.ALLVARLIG_HYPOGLYKEMI);
+    private static final Kod OBS_OBS23 = CodeConverter.toKod(ObservationsKod.ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN);
+    private static final Kod OBS_OBS24 = CodeConverter.toKod(ObservationsKod.ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND);
+    
+    private static final Kod OBS_OBS25 = CodeConverter.toKod(ObservationsKod.SYNFALTSPROVNING_UTAN_ANMARKNING);
+    
     private static final Kod OBS_420050001 = CodeConverter.toKod(ObservationsKod.EJ_KORRIGERAD_SYNSKARPA);
     private static final Kod OBS_397535007 = CodeConverter.toKod(ObservationsKod.KORRIGERAD_SYNSKARPA);
 
@@ -36,13 +47,30 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
     public void validateObservationer() {
 
         Iterable<Kod> kodList = new ObservationerIterable(observationer);
+        
+        //Diabetestyper
+        assertKodCountBetween(kodList, OBS_E10, 0, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_E11, 0, 1, "observationer");
 
-        assertKodCountBetween(kodList, OBS_H53_2, 0, 1, "observationer");
+        //Diabetesbehandlingar
+        assertKodCountBetween(kodList, OBS_170745003, 0, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_170746006, 0, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_170746002, 0, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS10, 0, 1, "observationer");
+        
+        //Hypoglykemi
+        assertKodCountBetween(kodList, OBS_OBS19, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS20, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS21, 0, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS22, 0, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS23, 0, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS24, 0, 1, "observationer");
 
+        //Syns
+        assertKodCountBetween(kodList, OBS_OBS25, 0, 1, "observationer");
         assertKodCountBetween(kodList, OBS_397535007, 0, 3, "observationer");
         assertKodCountBetween(kodList, OBS_420050001, 0, 3, "observationer");
-
-        // TODO: Count all other observations here
+        assertKodCountBetween(kodList, OBS_H53_2, 0, 1, "observationer");
 
         for (Observation observation : observationer) {
             String entity = "Observation " + getDisplayCode(observation.getObservationskod());
@@ -103,9 +131,13 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
         }
 
         // If the persontransport flag is set, assert required observations are supplied
-        if (context.isPersontransportContext()) {
-            // TODO: do stuff here
-
+        if (context.isHogrePersontransportContext()) {
+            Observation hypoglykemiVakenTid = getObservationWithKod(OBS_OBS24);
+            
+            if (hypoglykemiVakenTid == null) {
+                validationError("Observation OBS24 must be present when intygAvser contains any of [C1, C1E, C, CE, D1, D1E, D, DE or TAXI]");
+            }
+            
         }
     }
 

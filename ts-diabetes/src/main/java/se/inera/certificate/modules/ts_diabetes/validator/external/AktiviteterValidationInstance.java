@@ -13,6 +13,7 @@ public class AktiviteterValidationInstance extends ExternalValidatorInstance {
 
     private static final Kod AKT_86944008 = CodeConverter.toKod(AktivitetKod.SYNFALTSUNDERSOKNING);
     private static final Kod AKT_AKT18 = CodeConverter.toKod(AktivitetKod.PROVNING_AV_OGATS_RORLIGHET);
+    private static final Kod AKT_308113006 = CodeConverter.toKod(AktivitetKod.EGENOVERVAKNING_BLODGLUKOS);
 
     private final List<Aktivitet> aktiviteter;
 
@@ -34,6 +35,7 @@ public class AktiviteterValidationInstance extends ExternalValidatorInstance {
         Iterable<Kod> kodList = new AktiviteterIterable(aktiviteter);
         assertKodCountBetween(kodList, AKT_86944008, 0, 1, "aktiviteter");
         assertKodCountBetween(kodList, AKT_AKT18, 0, 1, "aktiviteter");
+        assertKodCountBetween(kodList, AKT_308113006, 0, 1, "aktiviteter");
 
         // Check that each defined aktivitet is valid in itself
         for (Aktivitet aktivitet : aktiviteter) {
@@ -55,6 +57,15 @@ public class AktiviteterValidationInstance extends ExternalValidatorInstance {
 
             }
         }
+
+        if (context.isHogrePersontransportContext()) {
+            Aktivitet egenkontrollBlodsocker = getAktivitetWithKod(AKT_308113006);
+
+            if (egenkontrollBlodsocker == null) {
+                validationError("Aktivitet AKT_308113006 (Egenkontroll av blodsocker) must be present when intygAvser contains any of [C1, C1E, C, CE, D1, D1E, D, DE or TAXI]");
+            }
+        }
+
     }
 
     /**

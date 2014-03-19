@@ -60,10 +60,9 @@ public enum IntygAvserKod implements CodeSystem {
     /** Körkortsbehörigheter som innefattar persontransport */
     public static final EnumSet<IntygAvserKod> PERSONTRANSPORT = EnumSet.of(D1, D1E, D, DE, TAXI);
 
-    private static String codeSystemName = "kv_intygavser_intyg";
+    private static String codeSystemName = "kv_intyget_avser";
 
-    // TODO: Change to correct OID when available
-    private static String codeSystem = "todo";
+    private static String codeSystem = "24c41b8d-258a-46bf-a08a-b90738b28770";
 
     private static String codeSystemVersion = null;
 

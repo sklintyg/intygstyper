@@ -11,6 +11,9 @@ public class ValidationContext {
 
     private final Utlatande utlatande;
 
+    private static final Object DIABETES_TYP_1 = CodeConverter.toKod(ObservationsKod.DIABETES_TYP_1);
+    private static final Object DIABETES_TYP_2 = CodeConverter.toKod(ObservationsKod.DIABETES_TYP_2);
+
     public ValidationContext(Utlatande utlatande) {
         this.utlatande = utlatande;
     }
@@ -19,13 +22,23 @@ public class ValidationContext {
         for (Observation observation : utlatande.getObservationer()) {
             Kod observationskod = observation.getObservationskod();
             if (observationskod != null
-                    && (observationskod.equals(ObservationsKod.DIABETES_TYP_1) || observationskod
-                            .equals(ObservationsKod.DIABETES_TYP_2))) {
+                    && (observationskod.equals(DIABETES_TYP_1) || observationskod.equals(DIABETES_TYP_2))) {
                 if (observation.getForekomst() != null) {
                     return observation.getForekomst();
                 }
             }
         }
+        return false;
+    }
+
+    public boolean isHogrePersontransportContext() {
+        for (Kod intygAvser : utlatande.getIntygAvser()) {
+            IntygAvserKod intygAvserEnum = CodeConverter.fromCode(intygAvser, IntygAvserKod.class);
+            if (intygAvserEnum != null && IntygAvserKod.HOGRE_KORKORTSBEHORIGHET.contains(intygAvserEnum)) {
+                return true;
+            }
+        }
+
         return false;
     }
 

@@ -43,8 +43,8 @@
   <p:vardkontakt>
     <p:vardkontakttyp code="5880005" codeSystem="1.2.752.116.2.1.1.1"
       codeSystemName="SNOMED-CT" />
-    <p:idKontroll code="IDK6"
-      codeSystem="e7cc8f30-a353-4c42-b17a-a189b6876647" codeSystemName="kv_id_kontroll" />
+    <p:idKontroll code="IDK6" codeSystem="e7cc8f30-a353-4c42-b17a-a189b6876647"
+      codeSystemName="kv_id_kontroll" />
   </p:vardkontakt>
 
   <!-- AKTIVITETER -->
@@ -54,51 +54,49 @@
   <p:rekommendation>
     <p:rekommendationskod code="REK8"
       codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
-    <p:varde code="VAR13" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
+    <p:varde code="VAR12" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
       codeSystemName="kv_rekommendation_intyg" />
   </p:rekommendation>
   <!-- Rekommendation end -->
 
   <!-- Observationer begins -->
-
+  
   <p:observation>
-    <p:observationskod code="E11" codeSystem="1.2.752.116.1.1.1.1.1"
-      codeSystemName="ICD-10" />
+   <p:observationskod code="E11" codeSystem="1.2.752.116.1.1.1.1.1" codeSystemName="ICD-10" />
     <p:forekomst>true</p:forekomst>
     <p:observationsperiod>
       <p:from>2012</p:from>
     </p:observationsperiod>
   </p:observation>
-
+  
   <p:observation>
     <p:observationskod code="170745003" codeSystem="1.2.752.116.2.1.1.1"
       codeSystemName="SNOMED-CT" />
     <p:forekomst>true</p:forekomst>
   </p:observation>
-
+  
   <p:observation>
-    <p:observationskod code="OBS19"
-      codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3" codeSystemName="kv_observationer_intyg" />
+   <p:observationskod code="OBS19" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3" codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
-
+  
   <p:observation>
-    <p:observationskod code="OBS20"
-      codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3" codeSystemName="kv_observationer_intyg" />
+   <p:observationskod code="OBS20" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
+      codeSystemName="kv_observationer_intyg" />
     <p:forekomst>false</p:forekomst>
   </p:observation>
   <!-- Observationer ends -->
 
   <!-- ObservationAktivitetRelation begin -->
   <!-- ObservationAktivitetRelation ends -->
-
+  
   <p:bilaga>
     <p:bilagetyp code="BIL1" codeSystem="80595600-7477-4a6c-baeb-d2439e86b8bc"
       codeSystemName="kv_bilaga" />
-    <p:forekomst>true</p:forekomst>
+    <p:forekomst>true</p:forekomst>  
   </p:bilaga>
-
+  
   <p:utgava>06</p:utgava>
   <p:version>02</p:version>
-
+  
 </p:utlatande>
