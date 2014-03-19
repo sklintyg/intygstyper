@@ -31,6 +31,13 @@ public class ValidationContext {
         return false;
     }
 
+    public boolean isSeparatOgonlakarintyg() {
+        if (utlatande.getBilaga() != null && utlatande.getBilaga().getForekomst() != null) {
+            return utlatande.getBilaga().getForekomst();
+        }
+        return false;
+    }
+
     public boolean isHogrePersontransportContext() {
         for (Kod intygAvser : utlatande.getIntygAvser()) {
             IntygAvserKod intygAvserEnum = CodeConverter.fromCode(intygAvser, IntygAvserKod.class);

@@ -106,6 +106,24 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
 
             }
         }
+        
+        // Check syn-related stuff when separatOgonlakarintyg is NOT set
+        if (!context.isSeparatOgonlakarintyg()) {
+            Observation utanAnmarkning = getObservationWithKod(OBS_OBS25);
+            Observation utanKorrektion = getObservationWithKod(OBS_397535007);
+            Observation diplopi = getObservationWithKod(OBS_H53_2);
+            
+            if (utanAnmarkning == null) {
+                validationError("Observation OBS25 (Synfältsprövning utan anmärkning) must be present when no Bilaga is set");
+            }
+            
+            if (utanKorrektion == null) {
+                validationError("Observation 397535007 (Synskärpa utan korrektion) must be present when no Bilaga is set");
+            }
+            if (diplopi == null) {
+                validationError("Observation H53.2 (Dubbelseende) must be present when no Bilaga is set");
+            }
+        }
 
         // If the diabetes flag is set, assert that an observation of the type of diabetes is supplied
         if (context.isDiabetesContext()) {
