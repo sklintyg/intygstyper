@@ -18,6 +18,10 @@ controllers.controller('EditCertCtrl', [ '$scope', '$location', '$anchorScroll',
             collapsedHeader : false
         };
 
+        $scope.toggleHeader = function () {
+            $scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
+        };
+
         $scope.toggleShowComplete = function () {
             $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
             if ($scope.widgetState.showComplete) {

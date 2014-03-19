@@ -24,20 +24,24 @@ var controllers = angular.module('wc.ts-diabetes.controllers', []);
 controllers.controller('EditCertCtrl', [ '$scope', '$location','$anchorScroll', 'webcertService',
     function EditCertCtrl($scope, $location, $anchorScroll, webcertService) {
 	
-	$scope.cert = {};
+        $scope.cert = {};
 
-    $scope.messages = [];
-    $scope.isComplete = false;
+        $scope.messages = [];
+        $scope.isComplete = false;
 
-    // init state
-    $scope.widgetState = {
-        doneLoading : false,
-        hasError : false,
-        showComplete : false,
-        collapsedHeader : false
-    };
+        // init state
+        $scope.widgetState = {
+            doneLoading : false,
+            hasError : false,
+            showComplete : false,
+            collapsedHeader : false
+        };
 
-    $scope.toggleShowComplete = function () {
+        $scope.toggleHeader = function () {
+            $scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
+        };
+
+        $scope.toggleShowComplete = function () {
         $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
         if ($scope.widgetState.showComplete) {
 
