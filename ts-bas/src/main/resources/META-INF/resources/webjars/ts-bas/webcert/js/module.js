@@ -12,10 +12,6 @@ define([
 
     module.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
-            when('/ts-bas/test', {
-                templateUrl : '/web/webjars/ts-bas/webcert/views/test.html',
-                controller : 'ts-bas.TestCtrl'
-            }).
             when('/ts-bas/edit/:certificateId', {
                 templateUrl : '/web/webjars/ts-bas/webcert/views/edit-cert.html',
                 controller : 'ts-bas.EditCertCtrl'
@@ -25,6 +21,14 @@ define([
                 controller : 'ts-bas.ViewCertCtrl'
             });
     }]);
+
+    // Inject language resources
+    // TODO: This only works since we always load webcert before the module, when the messageService
+    // is moved to a commons project, make sure this is loaded for this module as well.
+    module.run(['messageService',
+        function (messageService) {
+            messageService.addResources(messages);
+        }]);
 
     return moduleName;
 });
