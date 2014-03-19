@@ -2,8 +2,8 @@ define([
 ], function () {
     'use strict';
 
-    return ['$scope', '$location', '$anchorScroll', 'ts-bas.certificateService',
-        function ($scope, $location, $anchorScroll, certificateService) {
+    return ['$scope', '$location', '$anchorScroll', 'ts-bas.certificateService', '$routeParams',
+        function ($scope, $location, $anchorScroll, certificateService, $routeParams) {
             $scope.cert = {};
 
             $scope.messages = [];
@@ -238,7 +238,7 @@ define([
 
             // Get the certificate draft from the server.
             // TODO: Hide the form until the draft has been loaded.
-            certificateService.getDraft($scope.MODULE_CONFIG.CERT_ID_PARAMETER,
+            certificateService.getDraft($routeParams.certificateId,
                 function (data) {
                     $scope.cert = data.content;
                 }, function (errorData) {
@@ -249,7 +249,7 @@ define([
              * Action to save the certificate draft to the server.
              */
             $scope.save = function () {
-                certificateService.saveDraft($scope.MODULE_CONFIG.CERT_ID_PARAMETER, $scope.cert,
+                certificateService.saveDraft($routeParams.certificateId, $scope.cert,
                     function (data) {
 
                         $scope.certForm.$setPristine();
@@ -288,7 +288,7 @@ define([
              * Action to discard the certificate draft and return to WebCert again.
              */
             $scope.discard = function () {
-                certificateService.discardDraft($scope.MODULE_CONFIG.CERT_ID_PARAMETER,
+                certificateService.discardDraft($routeParams.certificateId,
                     function (data) {
                         // TODO: Redirect back to start page.
                     },
