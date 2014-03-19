@@ -18,13 +18,13 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
 
     @Override
     public String getModuleName() {
-        return "Läkarintyg FK 7263";
+        return "Transportstyrelsens läkarintyg, bas";
     }
 
     @Override
     public String getModuleDescription() {
         // TODO
-        return "Läkarintyg FK 7263";
+        return "Läkarintyg - avseende högre körkortsberhörigheter eller taxiförarlegitimation - på begäran från Transportstyrelsen";
     }
 
     @Override
