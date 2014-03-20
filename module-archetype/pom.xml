@@ -4,7 +4,7 @@
 
   <groupId>se.inera.certificate.modules</groupId>
   <artifactId>module-archetype</artifactId>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.3-SNAPSHOT</version>
   <packaging>maven-archetype</packaging>
 
   <name>Module arechetype</name>
@@ -46,5 +46,5 @@
   </distributionManagement>
   <description>För att skapa en ny intygsmodul:
 1. Ställ dig i den mapp där den nya maven-modulen ska skapas
-2. Kör 'mvn archetype:generate -DarchetypeGroupId=se.inera.certificate.modules -DarchetypeArtifactId=module-archetype -DarchetypeVersion=1.2-SNAPSHOT -DinteractiveMode=false -DartifactId=&lt;&lt;modul-namn&gt;&gt; -DgroupId=se.inera.certificate.modules'</description>
+2. Kör 'mvn archetype:generate -DarchetypeGroupId=se.inera.certificate.modules -DarchetypeArtifactId=module-archetype -DarchetypeVersion=1.3-SNAPSHOT -DinteractiveMode=false -DartifactId=&lt;&lt;modul-namn&gt;&gt; -DgroupId=se.inera.certificate.modules'</description>
 </project>

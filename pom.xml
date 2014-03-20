@@ -13,7 +13,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.inera.certificate.modules</groupId>
   <artifactId>certificates</artifactId>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.3-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Inera Certificate Modules</name>
   <scm>
@@ -48,7 +48,7 @@
     <slf4j.version>1.6.4</slf4j.version>
     <logback.version>1.0.0</logback.version>
     <mvkintegration.version>1.2-SNAPSHOT</mvkintegration.version>
-    <inera.certificate.version>1.2-SNAPSHOT</inera.certificate.version>
+    <inera.certificate.version>1.3-SNAPSHOT</inera.certificate.version>
     <checkstyle.basedir>${project.basedir}</checkstyle.basedir>
     <aspectj.version>1.7.1</aspectj.version>
     <jackson.version>2.1.1</jackson.version>
@@ -215,14 +215,14 @@
                 <artifactItem>
                   <groupId>se.inera.certificate-web</groupId>
                   <artifactId>citizen-web</artifactId>
-                  <version>1.2-SNAPSHOT</version>
+                  <version>1.3-SNAPSHOT</version>
                   <type>war</type>
                   <outputDirectory>${project.build.directory}/citizen-web.war</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>se.inera.certificate</groupId>
                   <artifactId>web</artifactId>
-                  <version>1.2-SNAPSHOT</version>
+                  <version>1.3-SNAPSHOT</version>
                   <type>war</type>
                   <outputDirectory>${project.build.directory}/web.war</outputDirectory>
                 </artifactItem>
