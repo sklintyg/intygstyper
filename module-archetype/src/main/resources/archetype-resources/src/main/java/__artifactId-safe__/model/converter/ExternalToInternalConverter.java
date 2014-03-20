@@ -25,20 +25,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ${package}.${artifactId-safe}.model.internal.mi.Utlatande;
-import ${package}.${artifactId-safe}.rest.dto.CertificateContentHolder;
 
 /**
  * Converter for converting the external format to the internal view format.
- * 
- * 
- * @author Niklas Pettersson, R2M
- * 
  */
 public class ExternalToInternalConverter {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExternalToInternalConverter.class);
 
-    public Utlatande convert(CertificateContentHolder certificateContentHolder)
+    public Utlatande convert(${package}.${artifactId-safe}.model.external.Utlatande externalModel)
             throws ConverterException {
         // TODO: Implement
         LOG.trace("Converting external model to internal");

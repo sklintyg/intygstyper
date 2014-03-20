@@ -9,15 +9,17 @@
 
   <artifactId>${artifactId}</artifactId>
 
-  <groupId>${groupId}</groupId>
   <name>&lt;namn på intyg&gt;</name>
   <properties>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
   </properties>
-  <packaging>war</packaging>
   <version>${version}</version>
 
   <dependencies>
+    <dependency>
+      <groupId>se.inera.certificate.modules</groupId>
+      <artifactId>module-support</artifactId>
+    </dependency>
     <dependency>
       <groupId>se.inera.certificate</groupId>
       <artifactId>module-api</artifactId>

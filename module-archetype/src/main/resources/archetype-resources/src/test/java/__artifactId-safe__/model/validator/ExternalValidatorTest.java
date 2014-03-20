@@ -33,15 +33,15 @@ import org.junit.Test;
 import ${package}.${artifactId-safe}.model.external.Utlatande;
 import ${package}.${artifactId-safe}.utils.Scenario;
 import ${package}.${artifactId-safe}.utils.ScenarioFinder;
-import ${package}.${artifactId-safe}.validator.ExternalValidator;
+import ${package}.${artifactId-safe}.validator.Validator;
 
 public class ExternalValidatorTest {
 
-    private ExternalValidator validator;
+    private Validator validator;
 
     @Before
     public void setUp() throws Exception {
-        validator = new ExternalValidator();
+        validator = new Validator();
     }
 
     @Ignore
@@ -49,7 +49,7 @@ public class ExternalValidatorTest {
     public void testValidate() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             Utlatande utlatande = scenario.asExternalModel();
-            List<String> validationErrors = validator.validate(utlatande);
+            List<String> validationErrors = validator.validateExternal(utlatande);
 
             assertTrue("Error in scenario " + scenario.getName() + "${symbol_escape}n" + StringUtils.join(validationErrors, ", "),
                     validationErrors.isEmpty());
@@ -59,9 +59,11 @@ public class ExternalValidatorTest {
     @Ignore
     @Test
     public void testValidateWithErrors() throws Exception {
-        List<String> validationErrors = validator.validate(ScenarioFinder.getExternalScenario("invalid-sjuk-1")
-                .asExternalModel());
+        for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {
+            List<String> validationErrors = validator.validateExternal(scenario.asExternalModel());
 
-        assertTrue(!validationErrors.isEmpty());
+            assertTrue("Error in scenario " + scenario.getName() + "${symbol_escape}n" + StringUtils.join(validationErrors, ", "),
+                    !validationErrors.isEmpty());
+        }
     }
 }

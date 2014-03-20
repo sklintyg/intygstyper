@@ -36,6 +36,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.model.util.Strings;
+import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.certificate.modules.support.api.dto.PdfResponse;
 import ${package}.${artifactId-safe}.model.converter.ConverterException;
 import ${package}.${artifactId-safe}.model.converter.ExternalToInternalConverter;
 import ${package}.${artifactId-safe}.model.converter.ExternalToTransportConverter;
@@ -45,9 +47,7 @@ import ${package}.${artifactId-safe}.model.converter.WebcertModelFactory;
 import ${package}.${artifactId-safe}.model.external.Utlatande;
 import ${package}.${artifactId-safe}.pdf.PdfGenerator;
 import ${package}.${artifactId-safe}.pdf.PdfGeneratorException;
-import ${package}.${artifactId-safe}.rest.dto.CertificateContentHolder;
-import ${package}.${artifactId-safe}.rest.dto.CreateNewDraftCertificateHolder;
-import ${package}.${artifactId-safe}.validator.ExternalValidator;
+import ${package}.${artifactId-safe}.validator.Validator;
 
 /**
  * The contract between the certificate module and the generic components (Intygstjänsten and Mina-Intyg).
@@ -65,7 +65,7 @@ public class ModuleService implements ModuleApi {
     private ExternalToTransportConverter externalToTransportConverter;
 
     @Autowired
-    private ExternalValidator externalValidator;
+    private Validator validator;
 
     @Autowired
     private ExternalToInternalConverter externalToInternalConverter;
@@ -118,7 +118,7 @@ public class ModuleService implements ModuleApi {
      */
     @Override
     public String validate(Utlatande utlatande) {
-        List<String> validationErrors = externalValidator.validate(utlatande);
+        List<String> validationErrors = validator.validateExternal(utlatande);
 
         if (validationErrors.isEmpty()) {
             return null;
@@ -133,15 +133,13 @@ public class ModuleService implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public byte[] pdf(CertificateContentHolder certificateContentHolder) {
+    public PdfResponse pdf(Utlatande externalModel) {
         try {
             ${package}.${artifactId-safe}.model.internal.mi.Utlatande internalUtlatande = externalToInternalConverter
-                    .convert(certificateContentHolder);
+                    .convert(externalModel);
 
-            httpResponse.addHeader("Content-Disposition",
-                    "filename=" + pdfGenerator.generatePdfFilename(internalUtlatande));
-
-            return pdfGenerator.generatePDF(internalUtlatande);
+            return new PdfResponse(pdfGenerator.generatePDF(internalUtlatande),
+                    pdfGenerator.generatePdfFilename(internalUtlatande));
 
         } catch (ConverterException e) {
             LOG.error("Failed to generate PDF - conversion to internal model failed", e);
@@ -158,9 +156,9 @@ public class ModuleService implements ModuleApi {
      */
     @Override
     public ${package}.${artifactId-safe}.model.internal.mi.Utlatande convertExternalToInternal(
-            CertificateContentHolder certificateContentHolder) {
+            Utlatande externalModel) {
         try {
-            return externalToInternalConverter.convert(certificateContentHolder);
+            return externalToInternalConverter.convert(externalModel);
 
         } catch (ConverterException e) {
             LOG.error("Could not convert external model to internal model", e);
@@ -187,7 +185,7 @@ public class ModuleService implements ModuleApi {
      */
     @Override
     public ${package}.${artifactId-safe}.model.internal.wc.Utlatande createNewInternal(
-            CreateNewDraftCertificateHolder draftCertificateHolder) {
+            CreateNewDraftHolder draftCertificateHolder) {
         try {
             return webcertModelFactory.createNewWebcertDraft(draftCertificateHolder);
 

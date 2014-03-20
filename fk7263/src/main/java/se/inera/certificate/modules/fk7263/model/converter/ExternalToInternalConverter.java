@@ -2,10 +2,8 @@ package se.inera.certificate.modules.fk7263.model.converter;
 
 import java.util.List;
 
-import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.PhysicalQuantity;
-import se.inera.certificate.model.Prognos;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardenhet;
@@ -18,8 +16,10 @@ import se.inera.certificate.modules.fk7263.model.codes.Referenstypkoder;
 import se.inera.certificate.modules.fk7263.model.codes.Sysselsattningskoder;
 import se.inera.certificate.modules.fk7263.model.codes.Vardkontakttypkoder;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263HosPersonal;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Prognos;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
@@ -63,7 +63,7 @@ public class ExternalToInternalConverter {
     }
 
     private void convertSkapasAv() {
-        HosPersonal personal = source.getSkapadAv();
+        Fk7263HosPersonal personal = source.getSkapadAv();
         Vardperson vardperson = new Vardperson();
         if (personal != null) {
             if (personal.getId() != null) {
@@ -142,11 +142,11 @@ public class ExternalToInternalConverter {
 
     }
 
-    private void convertPrognoser(List<Prognos> prognoser) {
+    private void convertPrognoser(List<Fk7263Prognos> prognoser) {
         if (!prognoser.isEmpty()) {
             intyg.setArbetsformagaPrognos(prognoser.get(0).getBeskrivning());
 
-            for (Prognos prognos : prognoser) {
+            for (Fk7263Prognos prognos : prognoser) {
                 if (Prognoskoder.ATERSTALLAS_HELT.equals(prognos.getPrognoskod())) {
                     intyg.setArbetsformataPrognosJa(true);
                 } else if (Prognoskoder.ATERSTALLAS_DELVIS.equals(prognos.getPrognoskod())) {

@@ -38,8 +38,8 @@ import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_bas.model.codes.RekommendationVardeKod;
 import se.inera.certificate.modules.ts_bas.model.codes.RekommendationsKod;
 import se.inera.certificate.modules.ts_bas.model.codes.SpecialitetKod;
-import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
+import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_bas.model.external.Observation;
 import se.inera.certificate.modules.ts_bas.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_bas.model.internal.Bedomning;
@@ -67,7 +67,6 @@ import se.inera.certificate.modules.ts_bas.model.internal.Utvecklingsstorning;
 import se.inera.certificate.modules.ts_bas.model.internal.Vardenhet;
 import se.inera.certificate.modules.ts_bas.model.internal.Vardgivare;
 import se.inera.certificate.modules.ts_bas.model.internal.Vardkontakt;
-import se.inera.certificate.modules.ts_bas.rest.dto.CertificateContentHolder;
 
 /**
  * Converter for converting the external format to the internal view format.
@@ -83,11 +82,8 @@ public class ExternalToInternalConverterInstance {
 
     private List<Aktivitet> aktiviteter;
 
-    public Utlatande convert(CertificateContentHolder certificateContentHolder) throws ConverterException {
-        se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande = certificateContentHolder
-                .getCertificateContent();
-
-        Utlatande intUtlatande = convertUtlatandeFromExternalToInternal(extUtlatande);
+    public Utlatande convert(se.inera.certificate.modules.ts_bas.model.external.Utlatande externalModel) throws ConverterException {
+        Utlatande intUtlatande = convertUtlatandeFromExternalToInternal(externalModel);
         LOG.trace("Converting external model to internal");
         return intUtlatande;
     }

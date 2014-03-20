@@ -6,7 +6,6 @@ import java.util.List;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.PhysicalQuantity;
-import se.inera.certificate.model.Prognos;
 import se.inera.certificate.model.Utforarroll;
 
 /**
@@ -18,7 +17,7 @@ public class Fk7263Observation {
     private Kod observationskod;
     private LocalDateInterval observationsperiod;
     private String beskrivning;
-    private List<Prognos> prognoser;
+    private List<Fk7263Prognos> prognoser;
     private List<PhysicalQuantity> varde;
     private Utforarroll utforsAv;
 
@@ -54,7 +53,7 @@ public class Fk7263Observation {
         this.beskrivning = beskrivning;
     }
 
-    public List<Prognos> getPrognoser() {
+    public List<Fk7263Prognos> getPrognoser() {
         if (prognoser == null) {
             prognoser = new ArrayList<>();
         }

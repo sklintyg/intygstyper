@@ -7,7 +7,6 @@ import static se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder.
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,15 +21,12 @@ import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.HosPerson
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.VardgivareType;
 import se.inera.certificate.logging.LogMarkers;
 import se.inera.certificate.model.Arbetsuppgift;
-import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.PhysicalQuantity;
-import se.inera.certificate.model.Prognos;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
-import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
@@ -41,9 +37,12 @@ import se.inera.certificate.modules.fk7263.model.codes.Sysselsattningskoder;
 import se.inera.certificate.modules.fk7263.model.codes.Vardkontakttypkoder;
 import se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263HosPersonal;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Prognos;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Vardenhet;
 
 /**
  * Converts se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande Jaxb structure to
@@ -301,9 +300,9 @@ public final class TransportToExternalFk7263LegacyConverter {
 
     private static List<Fk7263Observation> convert(ArbetsformagaType source) {
 
-        Prognos prognos = null;
+        Fk7263Prognos prognos = null;
         if (source.getPrognosangivelse() != null) {
-            prognos = new Prognos();
+            prognos = new Fk7263Prognos();
             switch (source.getPrognosangivelse()) {
             case ATERSTALLAS_DELVIS:
                 prognos.setPrognoskod(Prognoskoder.ATERSTALLAS_DELVIS);
@@ -402,11 +401,11 @@ public final class TransportToExternalFk7263LegacyConverter {
         return observation;
     }
 
-    private static HosPersonal convert(HosPersonalType source) {
+    private static Fk7263HosPersonal convert(HosPersonalType source) {
         if (source == null) {
             return null;
         }
-        HosPersonal hosPersonal = new HosPersonal();
+        Fk7263HosPersonal hosPersonal = new Fk7263HosPersonal();
         hosPersonal.setId(IsoTypeConverter.toId(source.getPersonalId()));
         hosPersonal.setNamn(source.getFullstandigtNamn());
         hosPersonal.setForskrivarkod(source.getForskrivarkod());
@@ -437,11 +436,11 @@ public final class TransportToExternalFk7263LegacyConverter {
         return patient;
     }
 
-    private static Vardenhet convert(EnhetType source) {
+    private static Fk7263Vardenhet convert(EnhetType source) {
         if (source == null) {
             return null;
         }
-        Vardenhet vardenhet = new Vardenhet();
+        Fk7263Vardenhet vardenhet = new Fk7263Vardenhet();
         vardenhet.setId(IsoTypeConverter.toId(source.getEnhetsId()));
         vardenhet.setNamn(source.getEnhetsnamn());
         vardenhet.setArbetsplatskod(IsoTypeConverter.toId(source.getArbetsplatskod()));

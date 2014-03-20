@@ -18,8 +18,8 @@
  */
 package se.inera.webcert.integration.rest.dto;
 
-import se.inera.certificate.model.HosPersonal;
-import se.inera.certificate.model.Patient;
+import se.inera.certificate.modules.rli.model.external.HosPersonal;
+import se.inera.certificate.modules.rli.model.external.Patient;
 
 public class CreateDraftCertificateHolder {
 

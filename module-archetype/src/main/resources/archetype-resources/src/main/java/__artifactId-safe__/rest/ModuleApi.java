@@ -28,9 +28,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.certificate.modules.support.api.dto.PdfResponse;
 import ${package}.${artifactId-safe}.model.external.Utlatande;
-import ${package}.${artifactId-safe}.rest.dto.CertificateContentHolder;
-import ${package}.${artifactId-safe}.rest.dto.CreateNewDraftCertificateHolder;
 
 @Path("")
 public interface ModuleApi {
@@ -89,7 +89,7 @@ public interface ModuleApi {
     @Path("/pdf")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces("application/pdf")
-    byte[] pdf(CertificateContentHolder certificateContentHolder);
+    PdfResponse pdf(Utlatande externalModel);
 
     /**
      * Handles conversion from the external model to the internal model.
@@ -104,7 +104,7 @@ public interface ModuleApi {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     ${package}.${artifactId-safe}.model.internal.mi.Utlatande convertExternalToInternal(
-            CertificateContentHolder certificateContentHolder);
+            Utlatande externalModel);
 
     /**
      * Handles conversion from the internal model to the external model.
@@ -133,6 +133,6 @@ public interface ModuleApi {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     ${package}.${artifactId-safe}.model.internal.wc.Utlatande createNewInternal(
-            CreateNewDraftCertificateHolder draftCertificateHolder);
+            CreateNewDraftHolder draftCertificateHolder);
 
 }

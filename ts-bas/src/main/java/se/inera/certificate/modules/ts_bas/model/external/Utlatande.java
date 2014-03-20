@@ -21,31 +21,23 @@ package se.inera.certificate.modules.ts_bas.model.external;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.LocalDateTime;
-
-import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Status;
 
 /**
- * The utlåtande used by ts-bas. This class is a copy of the common external model (defined in
- * se.inera.certificate.model), extending with:
+ * The utlåtande used by ts-bas. This class extends the common external model with:
  * <ul>
- * <li> {@link #intygAvser}
+ * <li> new field - {@link #intygAvser}
+ * <li> sub class of {@link HoSPersonal} (specialiteter, befattningar)
+ * <li> sub class of {@link Aktivitet} (id, plats, metod, aktivitetsstatus, forekomst, ostruktureradTid)
+ * <li> sub class of {@link Vardkontakt} (idkontroll)
+ * <li> sub class of {@link Rekommendation} (varde)
+ * <li> sub class of {@link Observation} (id, forekomst, lateralitet)
+ * <li> new field - {@link #observationAktivitetRelation}
  * </ul>
  */
-public class Utlatande {
-
-    private Id id;
-
-    private Kod typ;
-
-    private List<String> kommentarer;
-
-    private LocalDateTime signeringsdatum;
-
-    private LocalDateTime skickatdatum;
+public class Utlatande extends se.inera.certificate.model.Utlatande {
 
     private List<Kod> intygAvser;
 
@@ -65,45 +57,6 @@ public class Utlatande {
 
     private List<Status> status;
 
-    public Id getId() {
-        return id;
-    }
-
-    public void setId(Id id) {
-        this.id = id;
-    }
-
-    public Kod getTyp() {
-        return typ;
-    }
-
-    public void setTyp(Kod typ) {
-        this.typ = typ;
-    }
-
-    public List<String> getKommentarer() {
-        if (kommentarer == null) {
-            kommentarer = new ArrayList<String>();
-        }
-        return this.kommentarer;
-    }
-
-    public LocalDateTime getSigneringsdatum() {
-        return signeringsdatum;
-    }
-
-    public void setSigneringsdatum(LocalDateTime signeringsdatum) {
-        this.signeringsdatum = signeringsdatum;
-    }
-
-    public LocalDateTime getSkickatdatum() {
-        return skickatdatum;
-    }
-
-    public void setSkickatdatum(LocalDateTime skickatdatum) {
-        this.skickatdatum = skickatdatum;
-    }
-
     public List<Kod> getIntygAvser() {
         if (intygAvser == null) {
             intygAvser = new ArrayList<Kod>();
@@ -111,6 +64,7 @@ public class Utlatande {
         return intygAvser;
     }
 
+    @Override
     public Patient getPatient() {
         return patient;
     }

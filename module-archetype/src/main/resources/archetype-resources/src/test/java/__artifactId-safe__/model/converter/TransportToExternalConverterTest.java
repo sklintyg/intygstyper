@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.junit.Ignore;
 
 import ${package}.${artifactId-safe}.model.external.Utlatande;
+import ${package}.${artifactId-safe}.utils.ModelAssert;
 import ${package}.${artifactId-safe}.utils.Scenario;
 import ${package}.${artifactId-safe}.utils.ScenarioFinder;
 
@@ -57,7 +58,7 @@ public class TransportToExternalConverterTest {
             Utlatande actual = converter.convert(utlatande);
 
             Utlatande expected = scenario.asExternalModel();
-            assertLenientEquals("Error in scenario " + scenario.getName(), expected, actual);
+            ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
     }
 }

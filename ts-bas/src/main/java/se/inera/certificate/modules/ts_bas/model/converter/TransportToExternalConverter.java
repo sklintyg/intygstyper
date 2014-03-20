@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
-import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
@@ -39,6 +38,7 @@ import se.inera.certificate.modules.ts_bas.model.external.Observation;
 import se.inera.certificate.modules.ts_bas.model.external.ObservationAktivitetRelation;
 import se.inera.certificate.modules.ts_bas.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
+import se.inera.certificate.modules.ts_bas.model.external.Vardenhet;
 import se.inera.certificate.modules.ts_bas.model.external.Vardkontakt;
 import se.inera.certificate.ts_bas.model.v1.AktivitetType;
 import se.inera.certificate.ts_bas.model.v1.EnhetType;
@@ -338,9 +338,16 @@ public class TransportToExternalConverter {
      * 
      * @param source
      *            {@link HosPersonalType}
+     * 
      * @return {@link HosPersonal}
+     * 
+     * @throws ConverterException
      */
-    private HosPersonal convertHosPersonal(HosPersonalType source) {
+    private HosPersonal convertHosPersonal(HosPersonalType source) throws ConverterException {
+        if (source == null) {
+            throw new ConverterException("HosPersonal was null, cannot convert");
+        }
+
         HosPersonal skapadAv = new HosPersonal();
         skapadAv.getBefattningar().addAll(convertCDtoKod(source.getBefattnings()));
         skapadAv.setId(IsoTypeConverter.toId(source.getPersonalId()));

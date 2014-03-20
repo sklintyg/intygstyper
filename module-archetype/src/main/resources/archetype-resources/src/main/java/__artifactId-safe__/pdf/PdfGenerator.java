@@ -33,9 +33,19 @@ import com.itextpdf.text.pdf.PdfStamper;
 
 public class PdfGenerator {
 
+    private static final String DATEFORMAT_FOR_FILENAMES = "yyMMdd";
+
+    private final boolean formFlattening;
+
+    public PdfGenerator(boolean formFlattening) {
+        this.formFlattening = formFlattening;
+    }
+
     public String generatePdfFilename(Utlatande utlatande) {
-        // TODO: Implement
-        return null;
+        String personId = utlatande.getPatient().getPersonid();
+        String certificateSignatureDate = utlatande.getSigneringsdatum().toString(DATEFORMAT_FOR_FILENAMES);
+
+        return String.format("lakarutlatande_%s_-%s.pdf", personId, certificateSignatureDate);
     }
 
     public byte[] generatePDF(Utlatande utlatande) throws PdfGeneratorException {
@@ -44,7 +54,7 @@ public class PdfGenerator {
 
             PdfReader pdfReader = new PdfReader("pdf/blankett.pdf");
             PdfStamper pdfStamper = new PdfStamper(pdfReader, outputStream);
-            pdfStamper.setFormFlattening(true);
+            pdfStamper.setFormFlattening(formFlattening);
             AcroFields fields = pdfStamper.getAcroFields();
             populatePdfFields(utlatande, fields);
             pdfStamper.close();

@@ -3,7 +3,7 @@
 #set( $symbol_escape = '\' )
 package ${package}.${artifactId-safe}.utils;
 
-import ${package}.${artifactId-safe}.rest.dto.CertificateContentHolder;
+import se.inera.certificate.integration.rest.dto.CertificateContentHolder;
 import se.inera.certificate.${artifactId-safe}.model.v1.Utlatande;
 
 /**
@@ -43,15 +43,6 @@ public interface Scenario {
      *             if the scenario wasn't found.
      */
     ${package}.${artifactId-safe}.model.external.Utlatande asExternalModel() throws ScenarioNotFoundException;
-
-    /**
-     * Returns the scenario as a external model, wrapped in a {@link CertificateContentHolder}.
-     * 
-     * @return The scenario as a wrapped external model.
-     * @throws ScenarioNotFoundException
-     *             if the scenario wasn't found.
-     */
-    CertificateContentHolder asExternalModelWithHolder() throws ScenarioNotFoundException;
 
     /**
      * Returns the scenario as a internal Mina Intyg model.

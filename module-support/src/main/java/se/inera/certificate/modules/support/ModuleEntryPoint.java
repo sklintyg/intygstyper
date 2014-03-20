@@ -1,0 +1,40 @@
+package se.inera.certificate.modules.support;
+
+import se.inera.certificate.modules.support.api.ModuleApi;
+
+/**
+ * Defines the contract for modules so they can be discovered by an application.
+ */
+public interface ModuleEntryPoint {
+
+    /**
+     * Returns the unique id for the module. The id should only contain the a-z, 0-9 and '_' characters.
+     * 
+     * @return A unique module id.
+     */
+    String getModuleId();
+
+    /**
+     * Returns the friendly name of the module, suitable for display in the GUI.
+     */
+    String getModuleName();
+
+    /**
+     * Returns description for the module, suitable for display in the GUI.
+     */
+    String getModuleDescription();
+
+    /**
+     * Returns the module specific implementation of the module API.
+     * 
+     * @return A module API implementation.
+     */
+    ModuleApi getModuleApi();
+
+    /**
+     * Returns the module script path.
+     * 
+     * @return The module script path.
+     */
+    String getModuleScriptPath();
+}

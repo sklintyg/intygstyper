@@ -20,11 +20,9 @@ package se.inera.certificate.modules.ts_bas.rest;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -33,6 +31,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.model.util.Strings;
+import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.certificate.modules.support.api.dto.PdfResponse;
+import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.ts_bas.model.converter.ConverterException;
 import se.inera.certificate.modules.ts_bas.model.converter.ExternalToInternalConverter;
 import se.inera.certificate.modules.ts_bas.model.converter.ExternalToTransportConverter;
@@ -42,9 +43,6 @@ import se.inera.certificate.modules.ts_bas.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGenerator;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGeneratorException;
-import se.inera.certificate.modules.ts_bas.rest.dto.CertificateContentHolder;
-import se.inera.certificate.modules.ts_bas.rest.dto.CreateNewDraftCertificateHolder;
-import se.inera.certificate.modules.ts_bas.rest.dto.ValidateDraftResponseHolder;
 import se.inera.certificate.modules.ts_bas.validator.Validator;
 
 /**
@@ -76,12 +74,6 @@ public class ModuleService implements ModuleApi {
 
     @Autowired
     private WebcertModelFactory webcertModelFactory;
-
-    @Context
-    private HttpServletResponse httpResponse;
-
-    // @HeaderParam("X-Schema-Version")
-    // private String SchemaVersion;
 
     /**
      * {@inheritDoc}
@@ -128,7 +120,7 @@ public class ModuleService implements ModuleApi {
     }
 
     @Override
-    public ValidateDraftResponseHolder validateDraft(se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande) {
+    public ValidateDraftResponse validateDraft(se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande) {
         return validator.validateInternal(utlatande);
     }
 
@@ -136,15 +128,13 @@ public class ModuleService implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public byte[] pdf(CertificateContentHolder certificateContentHolder) {
+    public PdfResponse pdf(Utlatande externalModel) {
         try {
             se.inera.certificate.modules.ts_bas.model.internal.Utlatande internalUtlatande = externalToInternalConverter
-                    .convert(certificateContentHolder);
+                    .convert(externalModel);
 
-            httpResponse.addHeader("Content-Disposition",
-                    "filename=" + pdfGenerator.generatePdfFilename(internalUtlatande));
-
-            return pdfGenerator.generatePDF(internalUtlatande);
+            return new PdfResponse(pdfGenerator.generatePDF(internalUtlatande),
+                    pdfGenerator.generatePdfFilename(internalUtlatande));
 
         } catch (ConverterException e) {
             LOG.error("Failed to generate PDF - conversion to internal model failed", e);
@@ -161,9 +151,9 @@ public class ModuleService implements ModuleApi {
      */
     @Override
     public se.inera.certificate.modules.ts_bas.model.internal.Utlatande convertExternalToInternal(
-            CertificateContentHolder certificateContentHolder) {
+            Utlatande externalModel) {
         try {
-            return externalToInternalConverter.convert(certificateContentHolder);
+            return externalToInternalConverter.convert(externalModel);
 
         } catch (ConverterException e) {
             LOG.error("Could not convert external model to internal model", e);
@@ -190,9 +180,9 @@ public class ModuleService implements ModuleApi {
      */
     @Override
     public se.inera.certificate.modules.ts_bas.model.internal.Utlatande createNewInternal(
-            CreateNewDraftCertificateHolder draftCertificateHolder) {
+            CreateNewDraftHolder newDraftData) {
         try {
-            return webcertModelFactory.createNewWebcertDraft(draftCertificateHolder);
+            return webcertModelFactory.createNewWebcertDraft(newDraftData);
 
         } catch (ConverterException e) {
             LOG.error("Could not create a new internal Webcert model", e);

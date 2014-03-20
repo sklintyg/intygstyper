@@ -15,7 +15,6 @@ import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.PhysicalQuantity;
-import se.inera.certificate.model.Prognos;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardenhet;
@@ -28,8 +27,11 @@ import se.inera.certificate.modules.fk7263.model.codes.Referenstypkoder;
 import se.inera.certificate.modules.fk7263.model.codes.Sysselsattningskoder;
 import se.inera.certificate.modules.fk7263.model.codes.Vardkontakttypkoder;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263HosPersonal;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Prognos;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Vardenhet;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
 
@@ -231,7 +233,7 @@ public class InternalToExternalConverter {
      *            {@link PhysicalQuantity}
      * @return {@link Fk7263Observation}
      */
-    private Fk7263Observation buildArbetsformageObservation(Kod kod, LocalDateInterval period, Prognos prognos,
+    private Fk7263Observation buildArbetsformageObservation(Kod kod, LocalDateInterval period, Fk7263Prognos prognos,
             PhysicalQuantity varde) {
         Fk7263Observation obs = new Fk7263Observation();
 
@@ -252,8 +254,8 @@ public class InternalToExternalConverter {
      * 
      * @return {@link Prognos}
      */
-    private Prognos buildPrognos() {
-        Prognos prognos = new Prognos();
+    private Fk7263Prognos buildPrognos() {
+        Fk7263Prognos prognos = new Fk7263Prognos();
         Kod kod = getCorrespondingPrognosKod();
         if (kod == null) {
             LOG.trace("Got null while building prognos");
@@ -412,9 +414,9 @@ public class InternalToExternalConverter {
      * 
      * @return {@link HosPersonal}
      */
-    private HosPersonal buildExternalHosPersonal() {
+    private Fk7263HosPersonal buildExternalHosPersonal() {
         Vardperson intVardperson = intUtlatande.getVardperson();
-        HosPersonal hosPersonal = new HosPersonal();
+        Fk7263HosPersonal hosPersonal = new Fk7263HosPersonal();
 
         hosPersonal.setNamn(intVardperson.getNamn());
         hosPersonal.setForskrivarkod(intVardperson.getForskrivarKod());
@@ -431,8 +433,8 @@ public class InternalToExternalConverter {
      *            source of Vardenhet information
      * @return {@link Vardenhet}
      */
-    private Vardenhet buildExternalVardenhet(Vardperson intVardperson) {
-        Vardenhet vardenhet = new Vardenhet();
+    private Fk7263Vardenhet buildExternalVardenhet(Vardperson intVardperson) {
+        Fk7263Vardenhet vardenhet = new Fk7263Vardenhet();
         vardenhet.setArbetsplatskod(new Id(ARBETSPLATSKOD_ROOT, intVardperson.getArbetsplatsKod()));
         vardenhet.setEpost(intVardperson.getEpost());
         vardenhet.setId(new Id(HSA_ID_ROOT, intVardperson.getEnhetsId()));

@@ -22,6 +22,10 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+  <bean id="moduleServiceWrapper" class="se.inera.certificate.modules.ts_bas.rest.ModuleServiceWrapper" />
+
+  <bean id="moduleService" class="se.inera.certificate.modules.ts_bas.rest.ModuleService" />
+
   <bean id="transportToExternalConverter"
     class="se.inera.certificate.modules.ts_bas.model.converter.TransportToExternalConverter" />
 
@@ -43,5 +47,8 @@
 
   <bean id="webcertModelFactory"
     class="se.inera.certificate.modules.ts_bas.model.converter.WebcertModelFactory" />
+
+  <bean id="tsBasEntryPoint"
+    class="se.inera.certificate.modules.ts_bas.support.TsBasEntryPoint" />
 
 </beans>
