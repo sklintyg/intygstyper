@@ -38,6 +38,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.PdfResponse;
+import se.inera.certificate.modules.support.api.ModuleApi;
 import ${package}.${artifactId-safe}.model.converter.ConverterException;
 import ${package}.${artifactId-safe}.model.converter.ExternalToInternalConverter;
 import ${package}.${artifactId-safe}.model.converter.ExternalToTransportConverter;
