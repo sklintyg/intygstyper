@@ -13,11 +13,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.inera.certificate.modules</groupId>
   <artifactId>certificates</artifactId>
-  <version>0.5.1-SNAPSHOT</version>
+  <version>WC-0.5-RC1</version>
   <packaging>pom</packaging>
   <name>Inera Certificate Modules</name>
   <scm>
     <connection>scm:git:https://code.google.com/p/inera-certificate-modules/</connection>
+    <tag>certificates-WC-0.5-RC1</tag>
   </scm>
   <distributionManagement>
     <repository>
@@ -169,7 +170,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore/>
+                    <ignore />
                   </action>
                 </pluginExecution>
               </pluginExecutions>

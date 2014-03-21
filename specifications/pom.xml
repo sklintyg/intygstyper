@@ -5,7 +5,7 @@
   <parent>
     <groupId>se.inera.certificate.modules</groupId>
     <artifactId>certificates</artifactId>
-    <version>0.5.1-SNAPSHOT</version>
+    <version>WC-0.5-RC1</version>
   </parent>
   <artifactId>specifications</artifactId>
   <packaging>jar</packaging>
