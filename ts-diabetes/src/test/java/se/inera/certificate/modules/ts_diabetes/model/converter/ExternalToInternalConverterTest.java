@@ -21,7 +21,7 @@ package se.inera.certificate.modules.ts_diabetes.model.converter;
 import org.junit.Before;
 import org.junit.Test;
 
-import se.inera.certificate.modules.ts_diabetes.rest.dto.CertificateContentHolder;
+import se.inera.certificate.modules.ts_diabetes.model.external.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.utils.ModelAssert;
 import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
 import se.inera.certificate.modules.ts_diabetes.utils.ScenarioFinder;
@@ -44,7 +44,7 @@ public class ExternalToInternalConverterTest {
     @Test
     public void testConvertUtlatande() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            CertificateContentHolder extUtlatande = scenario.asExternalModelWithHolder();
+            Utlatande extUtlatande = scenario.asExternalModel();
 
             se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande actual = converter.convert(extUtlatande);
 

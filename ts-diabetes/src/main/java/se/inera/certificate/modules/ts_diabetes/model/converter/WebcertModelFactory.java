@@ -22,12 +22,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.ts_diabetes.model.internal.HoSPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Patient;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardenhet;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardgivare;
-import se.inera.certificate.modules.ts_diabetes.rest.dto.CreateNewDraftCertificateHolder;
 
 /**
  * Factory for creating a editable model.
@@ -44,20 +44,20 @@ public class WebcertModelFactory {
      * @return {@link Utlatande} or throws a ConverterException if something unforeseen happens
      * @throws ConverterException
      */
-    public Utlatande createNewWebcertDraft(CreateNewDraftCertificateHolder newDraftData) throws ConverterException {
+    public Utlatande createNewWebcertDraft(CreateNewDraftHolder newDraftData) throws ConverterException {
 
         LOG.trace("Creating draft with id {}", newDraftData.getCertificateId());
 
         Utlatande utlatande = new Utlatande();
         utlatande.setUtlatandeid(newDraftData.getCertificateId());
         populateWithSkapadAv(utlatande, newDraftData.getSkapadAv());
-        populateWithPatientInfo(utlatande, newDraftData.getPatientInfo());
+        populateWithPatientInfo(utlatande, newDraftData.getPatient());
 
         return utlatande;
     }
 
     private void populateWithPatientInfo(Utlatande utlatande,
-            se.inera.certificate.modules.ts_diabetes.rest.dto.Patient patient) throws ConverterException {
+            se.inera.certificate.modules.support.api.dto.Patient patient) throws ConverterException {
 
         if (patient == null) {
             throw new ConverterException("Got null while trying to populateWithPatientInfo");
@@ -66,7 +66,7 @@ public class WebcertModelFactory {
         utlatande.setPatient(convertPatientToEdit(patient));
     }
 
-    private Patient convertPatientToEdit(se.inera.certificate.modules.ts_diabetes.rest.dto.Patient patientInfo) {
+    private Patient convertPatientToEdit(se.inera.certificate.modules.support.api.dto.Patient patientInfo) {
         Patient patient = new Patient();
         patient.setFornamn(patientInfo.getFornamn());
         patient.setEfternamn(patientInfo.getEfternamn());
@@ -82,7 +82,7 @@ public class WebcertModelFactory {
     }
 
     private void populateWithSkapadAv(Utlatande utlatande,
-            se.inera.certificate.modules.ts_diabetes.rest.dto.HoSPersonal skapadAv) throws ConverterException {
+            se.inera.certificate.modules.support.api.dto.HoSPersonal skapadAv) throws ConverterException {
         if (skapadAv == null) {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");
         }
@@ -90,7 +90,7 @@ public class WebcertModelFactory {
         utlatande.setSkapadAv(convertHosPersonalToEdit(skapadAv));
     }
 
-    private HoSPersonal convertHosPersonalToEdit(se.inera.certificate.modules.ts_diabetes.rest.dto.HoSPersonal hosPers) {
+    private HoSPersonal convertHosPersonalToEdit(se.inera.certificate.modules.support.api.dto.HoSPersonal hosPers) {
         HoSPersonal hosPersonal = new HoSPersonal();
 
         hosPersonal.setPersonid(hosPers.getHsaId());
@@ -109,7 +109,7 @@ public class WebcertModelFactory {
         return hosPersonal;
     }
 
-    private Vardenhet convertVardenhetToEdit(se.inera.certificate.modules.ts_diabetes.rest.dto.Vardenhet vardenhetDto) {
+    private Vardenhet convertVardenhetToEdit(se.inera.certificate.modules.support.api.dto.Vardenhet vardenhetDto) {
 
         Vardenhet vardenhet = new Vardenhet();
         vardenhet.setEnhetsid(vardenhetDto.getHsaId());
@@ -126,7 +126,7 @@ public class WebcertModelFactory {
     }
 
     private Vardgivare convertVardgivareToEdit(
-            se.inera.certificate.modules.ts_diabetes.rest.dto.Vardgivare vardgivareDto) {
+            se.inera.certificate.modules.support.api.dto.Vardgivare vardgivareDto) {
 
         Vardgivare vardgivare = new Vardgivare();
         vardgivare.setVardgivarid(vardgivareDto.getHsaId());

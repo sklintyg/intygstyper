@@ -64,9 +64,11 @@ public class ExternalToTransportConverter {
         Utlatande utlatande = new Utlatande();
         utlatande.setPatient(convertPatient(source.getPatient()));
         utlatande.setSigneringsdatum(source.getSigneringsdatum());
+        
         if (!source.getKommentarer().isEmpty()) {
             utlatande.getKommentars().addAll(source.getKommentarer());
         }
+
         utlatande.setSkapadAv(convertHosPersonal(source.getSkapadAv()));
         utlatande.setSkickatdatum(source.getSkickatdatum());
         utlatande.setTypAvUtlatande(IsoTypeConverter.toUtlatandeTyp(source.getTyp()));
@@ -416,14 +418,6 @@ public class ExternalToTransportConverter {
         bilaga.setForekomst(source.getForekomst());
 
         return bilaga;
-    }
-
-    private Collection<? extends CD> convertKoderToCDs(List<Kod> varde) {
-        List<CD> cds = new ArrayList<CD>();
-        for (Kod kod : varde) {
-            cds.add(IsoTypeConverter.toCD(kod));
-        }
-        return cds;
     }
 
     private PartialDateInterval convertPartialDateInterval(se.inera.certificate.model.PartialInterval source) {

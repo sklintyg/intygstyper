@@ -26,29 +26,5 @@
 
 	<import resource="ts-diabetes-beans.xml" />
 	<import resource="ts-diabetes-model-config.xml" />
-
-	<cxf:bus>
-		<cxf:features>
-			<cxf:logging />
-		</cxf:features>
-	</cxf:bus>
-
-	<jaxrs:server address="http://localhost:8880/ts-diabetes">
-		<jaxrs:serviceBeans>
-			<bean class="se.inera.certificate.modules.ts_diabetes.rest.ModuleService" />
-		</jaxrs:serviceBeans>
-		<jaxrs:providers>
-			<ref bean="jacksonJsonProvider" />
-			<ref bean="jaxbProvider" />
-		</jaxrs:providers>
-	</jaxrs:server>
-
-	<jaxrs:client id="ts-diabetesModule" address="http://localhost:8880/ts-diabetes"
-		serviceClass="se.inera.certificate.modules.ts_diabetes.rest.ModuleApi">
-		<jaxrs:providers>
-			<ref bean="jacksonJsonProvider" />
-			<ref bean="jaxbProvider" />
-		</jaxrs:providers>
-	</jaxrs:client>
-
+	
 </beans>

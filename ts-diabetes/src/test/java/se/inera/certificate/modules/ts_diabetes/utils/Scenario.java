@@ -1,6 +1,5 @@
 package se.inera.certificate.modules.ts_diabetes.utils;
 
-import se.inera.certificate.modules.ts_diabetes.rest.dto.CertificateContentHolder;
 import se.inera.certificate.ts_diabetes.model.v1.Utlatande;
 
 /**
@@ -41,15 +40,6 @@ public interface Scenario {
      */
     se.inera.certificate.modules.ts_diabetes.model.external.Utlatande asExternalModel()
             throws ScenarioNotFoundException;
-
-    /**
-     * Returns the scenario as a external model, wrapped in a {@link CertificateContentHolder}.
-     * 
-     * @return The scenario as a wrapped external model.
-     * @throws ScenarioNotFoundException
-     *             if the scenario wasn't found.
-     */
-    CertificateContentHolder asExternalModelWithHolder() throws ScenarioNotFoundException;
 
     /**
      * Returns the scenario as a internal Mina Intyg model.

@@ -26,7 +26,6 @@ import javax.xml.bind.JAXBException;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.BeanUtils;
 
 import se.inera.certificate.modules.ts_diabetes.utils.ModelAssert;
 import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
@@ -49,7 +48,7 @@ public class ExternalToTransportConverterTest {
             se.inera.certificate.modules.ts_diabetes.model.external.Utlatande extUtlatande = scenario.asExternalModel();
 
             Utlatande actual = converter.convert(extUtlatande);
-
+                    
             Utlatande expected = scenario.asTransportModel();
             // We need to issue a get in order to create an empty list (and make the test pass)
             expected.getSkapadAv().getSpecialitets();

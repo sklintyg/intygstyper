@@ -1,47 +1,37 @@
-<!--
-
-    Copyright (C) 2013 Inera AB (http://www.inera.se)
-
-    This file is part of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules).
-
-    Inera Certificate Modules is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
-
-    Inera Certificate Modules is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
--->
+<!-- Copyright (C) 2013 Inera AB (http://www.inera.se) This file is part 
+  of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules). 
+  Inera Certificate Modules is free software: you can redistribute it and/or 
+  modify it under the terms of the GNU Affero General Public License as published 
+  by the Free Software Foundation, either version 3 of the License, or (at 
+  your option) any later version. Inera Certificate Modules is distributed 
+  in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even 
+  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+  See the GNU Affero General Public License for more details. You should have 
+  received a copy of the GNU Affero General Public License along with this 
+  program. If not, see <http://www.gnu.org/licenses/>. -->
 <beans xmlns="http://www.springframework.org/schema/beans"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <bean id="transportToExternalConverter"
-    class="se.inera.certificate.modules.ts_diabetes.model.converter.TransportToExternalConverter" />
+  <bean class="se.inera.certificate.modules.ts_diabetes.rest.ModuleService" />
 
-  <bean id="externalToTransportConverter"
-    class="se.inera.certificate.modules.ts_diabetes.model.converter.ExternalToTransportConverter" />
+  <bean class="se.inera.certificate.modules.ts_diabetes.model.converter.TransportToExternalConverter" />
 
-  <bean id="validator"
-    class="se.inera.certificate.modules.ts_diabetes.validator.Validator" />
+  <bean class="se.inera.certificate.modules.ts_diabetes.model.converter.ExternalToTransportConverter" />
 
-  <bean id="externalToInternalConverter"
-    class="se.inera.certificate.modules.ts_diabetes.model.converter.ExternalToInternalConverter" />
+  <bean class="se.inera.certificate.modules.ts_diabetes.validator.Validator" />
 
-<bean id="internalToExternalConverter"
-    class="se.inera.certificate.modules.ts_diabetes.model.converter.InternalToExternalConverter" />
+  <bean class="se.inera.certificate.modules.ts_diabetes.model.converter.ExternalToInternalConverter" />
 
-  <bean id="pdfGenerator" class="se.inera.certificate.modules.ts_diabetes.pdf.PdfGenerator">
+  <bean class="se.inera.certificate.modules.ts_diabetes.model.converter.InternalToExternalConverter" />
+
+  <bean class="se.inera.certificate.modules.ts_diabetes.pdf.PdfGenerator">
     <constructor-arg value="true" />
   </bean>
 
-  <bean id="webcertModelFactory"
-    class="se.inera.certificate.modules.ts_diabetes.model.converter.WebcertModelFactory" />
+  <bean class="se.inera.certificate.modules.ts_diabetes.model.converter.WebcertModelFactory" />
+
+  <bean id="tsDiabetesEntryPoint"
+    class="se.inera.certificate.modules.ts_diabetes.support.TsDiabetesEntryPoint" />
 
 </beans>

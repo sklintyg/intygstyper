@@ -1,11 +1,16 @@
 package se.inera.certificate.modules.ts_diabetes.validator.internal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.certificate.modules.support.api.dto.ValidationMessage;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Diabetes;
 import se.inera.certificate.modules.ts_diabetes.model.internal.HoSPersonal;
@@ -14,9 +19,6 @@ import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvser;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
-import se.inera.certificate.modules.ts_diabetes.rest.dto.ValidateDraftResponseHolder;
-import se.inera.certificate.modules.ts_diabetes.rest.dto.ValidationMessage;
-import se.inera.certificate.modules.ts_diabetes.rest.dto.ValidationStatus;
 
 /**
  * Class for validating drafts of the internal model
@@ -30,12 +32,12 @@ public class InternalValidatorInstance {
 
     private static Logger LOG = LoggerFactory.getLogger(InternalValidatorInstance.class);
 
-    private ValidateDraftResponseHolder validationResponse;
+    private List<ValidationMessage> validationMessages;
 
     protected ValidationContext context;
 
     public InternalValidatorInstance() {
-        validationResponse = new ValidateDraftResponseHolder();
+        validationMessages = new ArrayList<>();
     }
 
     /**
@@ -46,26 +48,26 @@ public class InternalValidatorInstance {
      *            an internal {@link Utlatande}
      * @return a {@link ValidateDraftResponseHolder} with a status and a list of validationErrors
      */
-    public ValidateDraftResponseHolder validate(Utlatande utlatande) {
-
-        context = new ValidationContext(utlatande);
+    public ValidateDraftResponse validate(Utlatande utlatande) {
 
         if (utlatande == null) {
             addValidationError("utlatande", "ts.validation.utlatande.missing");
-            return validationResponse;
+
+        } else {
+
+            context = new ValidationContext(utlatande);
+            validateBedomning(utlatande.getBedomning());
+            validateDiabetes(utlatande.getDiabetes());
+            validateHoSPersonal(utlatande.getSkapadAv());
+            validateIntygAvser(utlatande.getIntygAvser());
+            validateIdentitetStyrkt(utlatande.getVardkontakt());
+            validateSyn(utlatande.getSyn());
+            validateHypoglykemi(utlatande.getHypoglykemier());
         }
 
-        validateBedomning(utlatande.getBedomning());
-        validateDiabetes(utlatande.getDiabetes());
-        validateHoSPersonal(utlatande.getSkapadAv());
-        validateIntygAvser(utlatande.getIntygAvser());
-        validateIdentitetStyrkt(utlatande.getVardkontakt());
-        validateSyn(utlatande.getSyn());
-        validateHypoglykemi(utlatande.getHypoglykemier());
+        ValidateDraftResponse response = new ValidateDraftResponse(getValidationStatus(), validationMessages);
 
-        validationResponse.setStatus(getValidationStatus());
-
-        return validationResponse;
+        return response;
     }
 
     private void validateHypoglykemi(Hypoglykemier hypoglykemier) {
@@ -353,8 +355,9 @@ public class InternalValidatorInstance {
      * @return {@link ValidationStatus.COMPLETE} if there are no errors, and {@link ValidationStatus.INCOMPLETE}
      *         otherwise
      */
-    private ValidationStatus getValidationStatus() {
-        return (validationResponse.hasErrorMessages()) ? ValidationStatus.INVALID : ValidationStatus.VALID;
+    private se.inera.certificate.modules.support.api.dto.ValidationStatus getValidationStatus() {
+        return (validationMessages.isEmpty()) ? se.inera.certificate.modules.support.api.dto.ValidationStatus.VALID
+                : se.inera.certificate.modules.support.api.dto.ValidationStatus.INVALID;
     }
 
     /**
@@ -366,7 +369,7 @@ public class InternalValidatorInstance {
      *            a String with an error code for the front end implementation
      */
     private void addValidationError(String field, String msg) {
-        validationResponse.addErrorMessage(new ValidationMessage(field, msg));
+        validationMessages.add(new ValidationMessage(field, msg));
         LOG.debug(field + " " + msg);
     }
 

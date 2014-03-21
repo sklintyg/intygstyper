@@ -1,12 +1,11 @@
 package se.inera.certificate.modules.ts_diabetes.model.converter;
 
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_diabetes.rest.dto.CertificateContentHolder;
 
 public class ExternalToInternalConverter {
 
-    public Utlatande convert(CertificateContentHolder certificateContentHolder) throws ConverterException {
+    public Utlatande convert(se.inera.certificate.modules.ts_diabetes.model.external.Utlatande externalModel) throws ConverterException {
         ExternalToInternalConverterInstance instance = new ExternalToInternalConverterInstance();
-        return instance.convert(certificateContentHolder);
+        return instance.convert(externalModel);
     }
 }

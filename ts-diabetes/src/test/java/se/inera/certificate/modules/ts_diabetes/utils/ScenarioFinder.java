@@ -9,7 +9,6 @@ import java.util.List;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 
-import se.inera.certificate.modules.ts_diabetes.rest.dto.CertificateContentHolder;
 import se.inera.certificate.ts_diabetes.model.v1.Utlatande;
 
 /**
@@ -172,18 +171,6 @@ public class ScenarioFinder {
                 throws ScenarioNotFoundException {
             try {
                 return ResourceConverterUtils.toExternal(getExternalModelFor(scenarioFile));
-            } catch (IOException e) {
-                throw new ScenarioNotFoundException(scenarioFile.getName(), "external", e);
-            }
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public CertificateContentHolder asExternalModelWithHolder() throws ScenarioNotFoundException {
-            try {
-                return ResourceConverterUtils.toExternalWithHolder(getExternalModelFor(scenarioFile));
             } catch (IOException e) {
                 throw new ScenarioNotFoundException(scenarioFile.getName(), "external", e);
             }

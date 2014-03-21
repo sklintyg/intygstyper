@@ -187,7 +187,7 @@ public class TransportToExternalConverter {
      *            {@link RekommendationType}
      * @return {@link Rekommendation}
      * 
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     private Rekommendation convertRekommendation(RekommendationType source) throws ConverterException {
         Rekommendation rekommendation = new Rekommendation();
@@ -461,18 +461,4 @@ public class TransportToExternalConverter {
         return patient;
     }
 
-    /**
-     * Utility method for converting a List of CD to a List of Kod
-     * 
-     * @param cds
-     *            List of {@link CD}
-     * @return a List of {@link Kod}
-     */
-    private List<Kod> convertListOfKod(List<CD> cds) {
-        List<Kod> koder = new ArrayList<Kod>();
-        for (CD cd : cds) {
-            koder.add(IsoTypeConverter.toKod(cd));
-        }
-        return koder;
-    }
 }

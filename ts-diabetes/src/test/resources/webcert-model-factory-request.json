@@ -1,0 +1,16 @@
+{
+	"certificateId":"testID",
+	"skapadAv":{
+		"hsaId" : "19101010-1010",
+		"namn":"Doktor Alban"
+	},
+	"patientInfo":{
+		"personnummer":	"19121212-1212",
+		"fornamn": "johnny",
+		"efternamn":"appleseed",
+		"postadress":"Testvägen 12",
+		"postnummer":"1337",
+		"postort":"Huddinge"
+	}
+}
+

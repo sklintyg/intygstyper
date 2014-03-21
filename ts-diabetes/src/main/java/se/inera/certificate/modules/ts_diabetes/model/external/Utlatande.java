@@ -21,9 +21,6 @@ package se.inera.certificate.modules.ts_diabetes.model.external;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.LocalDateTime;
-
-import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Status;
@@ -35,17 +32,7 @@ import se.inera.certificate.model.Status;
  * <li> {@link #intygAvser}
  * </ul>
  */
-public class Utlatande {
-
-    private Id id;
-
-    private Kod typ;
-
-    private List<String> kommentarer;
-
-    private LocalDateTime signeringsdatum;
-
-    private LocalDateTime skickatdatum;
+public class Utlatande extends se.inera.certificate.model.Utlatande{
 
     private List<Kod> intygAvser;
 
@@ -66,45 +53,6 @@ public class Utlatande {
     private List<Status> status;
 
     private Bilaga bilaga;
-
-    public Id getId() {
-        return id;
-    }
-
-    public void setId(Id id) {
-        this.id = id;
-    }
-
-    public Kod getTyp() {
-        return typ;
-    }
-
-    public void setTyp(Kod typ) {
-        this.typ = typ;
-    }
-
-    public List<String> getKommentarer() {
-        if (kommentarer == null) {
-            kommentarer = new ArrayList<String>();
-        }
-        return this.kommentarer;
-    }
-
-    public LocalDateTime getSigneringsdatum() {
-        return signeringsdatum;
-    }
-
-    public void setSigneringsdatum(LocalDateTime signeringsdatum) {
-        this.signeringsdatum = signeringsdatum;
-    }
-
-    public LocalDateTime getSkickatdatum() {
-        return skickatdatum;
-    }
-
-    public void setSkickatdatum(LocalDateTime skickatdatum) {
-        this.skickatdatum = skickatdatum;
-    }
 
     public List<Kod> getIntygAvser() {
         if (intygAvser == null) {

@@ -27,9 +27,9 @@ import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
+import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_diabetes.rest.dto.ValidateDraftResponseHolder;
-import se.inera.certificate.modules.ts_diabetes.rest.dto.ValidationStatus;
+import se.inera.certificate.modules.support.api.dto.ValidationStatus;
 import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
 import se.inera.certificate.modules.ts_diabetes.utils.ScenarioFinder;
 import se.inera.certificate.modules.ts_diabetes.validator.Validator;
@@ -47,7 +47,7 @@ public class InternalValidatorTest {
     public void testValidate() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
             Utlatande utlatande = scenario.asInternalModel();
-            ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
+            ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
             assertEquals(
                     "Error in scenario " + scenario.getName() + "\n"
@@ -67,7 +67,7 @@ public class InternalValidatorTest {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("invalid-*")) {
 
             Utlatande utlatande = scenario.asInternalModel();
-            ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
+            ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
             assertEquals(ValidationStatus.INVALID, validationResponse.getStatus());
         }
@@ -76,7 +76,7 @@ public class InternalValidatorTest {
     @Test
     public void testInvalidSynskarpa() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-korrigerad-synskarpa").asInternalModel();
-        ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
         assertEquals("syn.vanster.medKorrektion", getSingleElement(validationResponse.getValidationErrors()).getField());
     }
@@ -84,7 +84,7 @@ public class InternalValidatorTest {
     @Test
     public void testInvalidDateFormatHypoglykemi() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-date-format-hypoglykemi").asInternalModel();
-        ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
         assertEquals("hypoglykemier.allvarligForekomstVakenTidObservationstid",
                 getSingleElement(validationResponse.getValidationErrors()).getField());
@@ -93,7 +93,7 @@ public class InternalValidatorTest {
     @Test
     public void testInvalidDiabetesMissing() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-missing-diabetes").asInternalModel();
-        ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
         assertEquals(3, validationResponse.getValidationErrors().size());
     }
@@ -102,7 +102,7 @@ public class InternalValidatorTest {
     public void testInvalidHypoglykemierMissing() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-missing-hypoglykemier-kunskap")
                 .asInternalModel();
-        ValidateDraftResponseHolder validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
         assertEquals("hypoglykemier.kunskapOmAtgarder", getSingleElement(validationResponse.getValidationErrors())
                 .getField());

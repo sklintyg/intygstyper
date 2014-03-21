@@ -55,7 +55,6 @@ import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardenhet;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardgivare;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
-import se.inera.certificate.modules.ts_diabetes.rest.dto.CertificateContentHolder;
 
 /**
  * Converter for converting the external format to the internal view format.
@@ -71,11 +70,8 @@ public class ExternalToInternalConverterInstance {
 
     private List<Aktivitet> aktiviteter;
 
-    public Utlatande convert(CertificateContentHolder certificateContentHolder) throws ConverterException {
-        se.inera.certificate.modules.ts_diabetes.model.external.Utlatande extUtlatande = certificateContentHolder
-                .getCertificateContent();
-
-        Utlatande intUtlatande = convertUtlatandeFromExternalToInternal(extUtlatande);
+    public Utlatande convert(se.inera.certificate.modules.ts_diabetes.model.external.Utlatande externalModel) throws ConverterException {
+        Utlatande intUtlatande = convertUtlatandeFromExternalToInternal(externalModel);
         LOG.trace("Converting external model to internal");
         return intUtlatande;
     }
