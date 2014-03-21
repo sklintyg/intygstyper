@@ -30,7 +30,7 @@
     <dependency>
       <groupId>se.inera.certificate</groupId>
       <artifactId>certificate-specifications</artifactId>
-      <version>1.2-SNAPSHOT</version>
+      <version>${inera.certificate.version}</version>
     </dependency>
 
     <dependency>
