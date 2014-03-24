@@ -18,8 +18,6 @@
  */
 package se.inera.certificate.modules.ts_bas.model.converter;
 
-import iso.v21090.dt.v1.CD;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -39,6 +37,7 @@ import se.inera.certificate.modules.ts_bas.model.external.Observation;
 import se.inera.certificate.modules.ts_bas.model.external.ObservationAktivitetRelation;
 import se.inera.certificate.modules.ts_bas.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_bas.model.external.Vardkontakt;
+import se.inera.certificate.ts_bas.iso.v21090.dt.v1.CD;
 import se.inera.certificate.ts_bas.model.v1.AktivitetType;
 import se.inera.certificate.ts_bas.model.v1.EnhetType;
 import se.inera.certificate.ts_bas.model.v1.HosPersonalType;
