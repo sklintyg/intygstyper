@@ -34,6 +34,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.TransportModelHolder;

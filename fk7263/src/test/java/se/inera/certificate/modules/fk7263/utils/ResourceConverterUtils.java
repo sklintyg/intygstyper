@@ -5,10 +5,10 @@ import java.io.IOException;
 
 import javax.xml.bind.JAXB;
 
-import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
-import se.inera.certificate.modules.fk7263.rest.dto.CertificateContentHolder;
 import se.inera.certificate.fk7263.model.v1.Utlatande;
+import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.certificate.integration.module.dto.CertificateContentMeta;
+import se.inera.certificate.modules.fk7263.rest.dto.CertificateContentHolder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

@@ -18,7 +18,7 @@
  */
 package se.inera.certificate.modules.fk7263.rest.dto;
 
-import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
+import se.inera.certificate.integration.module.dto.CertificateContentMeta;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
 /**
