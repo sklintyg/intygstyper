@@ -50,7 +50,7 @@ public class WebcertModelFactoryTest {
         Patient patient = new Patient("Johnny", "Appleseed", "19121212-1212", "Testvägen 12", "1337", "Huddinge");
         Vardgivare vardgivare = new Vardgivare("SE0000000000-HAHAHHSAA", "Vårdgivarnamn");
         Vardenhet vardenhet = new Vardenhet("SE0000000000-1337", "Vårdenhet Väst", "Enhetsvägen 12", "54321", "Tumba",
-                "08-1337", vardgivare);
+                "08-1337", null, vardgivare);
         HoSPersonal skapadAv = new HoSPersonal("19101010-1010", "Doktor Alban", null, null, vardenhet);
         CreateNewDraftHolder draftCertHolder = new CreateNewDraftHolder("testID", skapadAv, patient);
 

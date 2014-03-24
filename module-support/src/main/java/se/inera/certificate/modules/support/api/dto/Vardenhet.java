@@ -17,10 +17,13 @@ public class Vardenhet {
 
     private final String telefonnummer;
 
+    private final String epost;
+
     private final Vardgivare vardgivare;
+   
 
     public Vardenhet(String hsaId, String namn, String postadress, String postnummer, String postort,
-            String telefonnummer, Vardgivare vardgivare) {
+            String telefonnummer, String epost, Vardgivare vardgivare) {
         hasText(hsaId, "'hsaId' must not be empty");
         hasText(namn, "'namn' must not be empty");
         // TODO: these properties must be provided from HSA
@@ -35,6 +38,7 @@ public class Vardenhet {
         this.postnummer = postnummer;
         this.postort = postort;
         this.telefonnummer = telefonnummer;
+        this.epost = epost;
         this.vardgivare = vardgivare;
     }
 
@@ -64,5 +68,9 @@ public class Vardenhet {
 
     public String getTelefonnummer() {
         return telefonnummer;
+    }
+
+    public String getEpost() {
+        return epost;
     }
 }
