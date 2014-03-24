@@ -18,6 +18,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
+
+<a id="top"></a>
+<div class="container-fluid">
+<div class="row-fluid">
+<div class="span12 webcert-col webcert-col-single">
+
 <div class="header-fix-top">
     <div class="header-wrapper" ng-hide="widgetState.collapsedHeader" ng-animate="'menucollapse'">
         <div id="wcHeader" wc-header default-active="index"></div>
@@ -25,695 +31,908 @@
     <div class="header-fix-panel">
         <div class="header-fix-top-expand">
             <div class="header-fix-top-expand-wrapper">
-                <button class="btn btn-link" ng-click="toggleHeader()"><span ng-if="widgetState.collapsedHeader">Visa</span><span ng-if="!widgetState.collapsedHeader">Dölj</span> meny</button>
+                <button class="btn btn-link" ng-click="toggleHeader()"><span
+                        ng-if="widgetState.collapsedHeader">Visa</span><span
+                        ng-if="!widgetState.collapsedHeader">Dölj</span> meny
+                </button>
             </div>
         </div>
         <a class="backlink-icon" href="/web/dashboard#/create" title="Tillbaka till Skriv intyg"></a>
+
         <h1 style="display: inline-block; margin-right: 20px;"><span message key="ts.label.certtitle"></span></h1>
+
         <div class="inline-block">
             <label class="control-label">{{cert.patient.fullstandigtNamn}} - {{cert.patient.personid}}</label>
         </div>
         <div class="control-group buttonbar">
             <button class="btn btn-info" ng-click="save()">Spara</button>
             <button class="btn btn-secondary" ng-click="discard()">Ta bort utkast</button>
-            <button class="btn btn-secondary" ng-if="!widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">Visa vad som behöver kompletteras</button>
-            <button class="btn btn-secondary" ng-if="widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">Dölj vad som behöver kompletteras</button>
+            <button class="btn btn-secondary" ng-if="!widgetState.showComplete && !isComplete"
+                    ng-click="toggleShowComplete()">Visa vad som behöver kompletteras
+            </button>
+            <button class="btn btn-secondary" ng-if="widgetState.showComplete && !isComplete"
+                    ng-click="toggleShowComplete()">Dölj vad som behöver kompletteras
+            </button>
         </div>
         <div ng-show="certForm.$pristine && isComplete"><strong>Status:</strong> Intyget är sparat.</div>
-        <div ng-show="certForm.$pristine && !isComplete"><strong>Status:</strong> Intyget är sparat, men inte komplett</div>
+        <div ng-show="certForm.$pristine && !isComplete"><strong>Status:</strong> Intyget är sparat, men inte komplett
+        </div>
         <div ng-show="certForm.$dirty"><strong>Status:</strong> Intyget är <strong>inte</strong> sparat.</div>
     </div>
-</div><!-- top end -->
+</div>
+<!-- top end -->
 
 <!-- TS-BAS -->
 <div class="edit-form" ng-class="{'collapsed' : widgetState.collapsedHeader}">
 
-  <form name="certForm" novalidate autocomplete="off">
+<form name="certForm" novalidate autocomplete="off">
 
-    <div class="alert alert-error" ng-show="widgetState.showComplete && !isComplete" style="margin-right: 20px">
-        <h3>Följande fält behöver kompletteras:</h3>
-        <ul>
-          <li ng-repeat="message in validationMessages">
+<div class="alert alert-error" ng-show="widgetState.showComplete && !isComplete" style="margin-right: 20px">
+    <h3>Följande fält behöver kompletteras:</h3>
+    <ul>
+        <li ng-repeat="message in validationMessages">
             <span message key="{{message.message}}"></span></li>
+    </ul>
+</div>
+
+<div id="certificate" class="row-fluid certificate">
+<div class="span12 cert-body">
+
+<div wc-field field-label="ts.label.intygavser" field-help-text="ts.helptext.intyg-avser">
+    <div class="alert alert-error" ng-if="validationMessagesGrouped.intygavser">
+        <ul>
+            <li ng-repeat="message in validationMessagesGrouped.intygavser"><span message
+                                                                                  key="{{message.message}}"></span></li>
         </ul>
     </div>
 
-    <div id="certificate" class="row-fluid certificate">
-        <div class="span12 cert-body">
-            
-            <div wc-field field-label="ts.label.intygavser" field-help-text="ts.helptext.intyg-avser">
-              <div class="alert alert-error" ng-if="validationMessagesGrouped.intygavser">
-                <ul>
-                  <li ng-repeat="message in validationMessagesGrouped.intygavser"><span message key="{{message.message}}"></span></li>
-                </ul>
-              </div>
+    <p>Detta intyg ska användas vid förlängd giltighet av högre behörighet, ansökan om körkortstillstånd för grupp II
+        och III och vid ansökan om taxiförarlegitimation.<span wc-enable-tooltip
+                                                               field-help-text="ts.helptext.intyg-avser.grupp2-grupp3"></span>
+    </p>
 
-              <p>Detta intyg ska användas vid förlängd giltighet av högre behörighet, ansökan om körkortstillstånd för grupp II och III och vid ansökan om taxiförarlegitimation.<span wc-enable-tooltip field-help-text="ts.helptext.intyg-avser.grupp2-grupp3"></span> </p> 
-                <p>Intyget kan också användas när Transportstyrelsen i andra fall begärt ett läkarintyg. Markera då endast i rutan Annat nedan.</p>
-                <div class="control-group clearfix">
-                    <label class="checkbox checkbox-columns span2" ng-repeat="typ in cert.intygAvser.korkortstyp track by $index"><input id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox" ng-model="typ.selected"> <span message key="ts.label.korkort.{{typ.type}}"></span></label>
-                </div>
-            </div>
+    <p>Intyget kan också användas när Transportstyrelsen i andra fall begärt ett läkarintyg. Markera då endast i rutan
+        Annat nedan.</p>
 
-            <div wc-field field-label="ts.label.identitet" field-help-text="ts.helptext.identitet-styrkt-genom.id-kort">
-            	<div class="alert alert-error" ng-if="validationMessagesGrouped.identitet">
-                	<ul>
-                  		<li ng-repeat="message in validationMessagesGrouped.identitet"><span message key="{{message.message}}"></span></li>
-                	</ul>
-             	</div>
-                <div class="control-group clearfix">
-                    <label class="radio checkbox-columns span6" ng-repeat="(k,v) in form.identity"><input name="identity{{$index}}" type="radio" value="{{v}}" ng-model="cert.vardkontakt.idkontroll"> {{k}}</label>
-                </div>
-            </div>
-
-            <div class="alert alert-info">
-				<span message key="ts.helptext.lakaren-ska-uppmarksamma"></span>            
-            </div>
-
-            <!-- 1. Syn -->
-            <div wc-field field-label="ts.label.synfunktioner" field-has-errors="testerror" ng-form name="synForm">
-
-                <table class="table table-form">
-                    <tr ng-if="validationMessagesGrouped.syn">
-                      <td colspan="3"><div class="alert alert-error">
-                        <ul>
-                          <li ng-repeat="message in validationMessagesGrouped.syn"><span message key="{{message.message}}"></span></li>
-                        </ul>
-                      </div></td>
-                    </tr>
-                    <tr>
-                        <th><span message key="common.yes"></span></th>
-                        <th><span message key="common.no"></span></th>
-                        <th class="maxwidth"></th>
-                    </tr>
-                    <tr>
-                        <td><input id="synay" name="synay" type="radio" ng-value="true" ng-model="cert.syn.synfaltsdefekter"></td>
-                        <td><input id="synan" name="synan" type="radio" ng-value="false" ng-model="cert.syn.synfaltsdefekter"></td>
-                        <td>a) Finns tecken på synfältsdefekter vid undersökning enligt Donders konfrontationsmetod?</td>
-                    </tr>
-                    <tr>
-                        <td><input id="synby" name="synby" type="radio" ng-value="true" ng-model="cert.syn.nattblindhet"></td>
-                        <td><input id="synbn" name="synbn" type="radio" ng-value="false" ng-model="cert.syn.nattblindhet"></td>
-                        <td>b) Framkommer anamnestiska uppgifter om begränsning av seendet vid nedsatt belysning?</td>
-                    </tr>
-                    <tr>
-                        <td><input id="syncy" name="syncy" type="radio" ng-value="true" ng-model="cert.syn.progressivOgonsjukdom"></td>
-                        <td><input id="syncn" name="syncn" type="radio" ng-value="false" ng-model="cert.syn.progressivOgonsjukdom"></td>
-                        <td>
-                            <p>c) Har patienten någon progressiv ögonsjukdom?</p>
-                            <div class="alert alert-info">
-                            	<span message key="ts.helptext.synfunktioner.om-nagon-av-a-c"></span>            
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input id="syndy" name="syndy" type="radio" ng-value="true" ng-model="cert.syn.diplopi"></td>
-                        <td><input id="syndn" name="syndn" type="radio" ng-value="false" ng-model="cert.syn.diplopi"></td>
-                        <td>d) Framkommer dubbelseende vid prövning av ögats rörlighet (prövningen ska göras i de åtta huvudmeridianerna)?</td>
-                    </tr>
-                    <tr>
-                        <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
-                        <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
-                        <td>e) Förekommer nystagmus?</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td><p>f) Värden för synskärpa</p>
-                            <p>
-                                Alla bokstäver ska kunna läsas på den rad som anger synskärpa. Är synskärpan sämre än 0,1 ska den anges som 0,0
-                            </p>
-                            <div class="alert alert-info">
-                            	<span message key="ts.helptext.synfunktioner.synskarpa-kan-grundas-pa-tidigare"></span>
-                            </div>
-
-                            <table class="table table-form">
-                                <tr>
-                                    <th></th>
-                                    <th>Utan korrektion <span wc-enable-tooltip field-help-text="ts.helptext.synfunktioner.utan-korrektion"/></th>
-                                    <th>Med korrektion <span wc-enable-tooltip field-help-text="ts.helptext.synfunktioner.med-korrektion"/></th>
-                                    <th>Kontaktlinser</th>
-                                </tr>
-                                <tr>
-                                    <td>Höger öga</td>
-                                    <td><input type="text" class="small-decimal" eye-decimal ng-model="cert.syn.hogerOga.utanKorrektion"></td>
-                                    <td><input type="text" class="small-decimal" eye-decimal ng-model="cert.syn.hogerOga.medKorrektion"></td>
-                                    <td><input type="checkbox" ng-model="cert.syn.hogerOga.kontaktlins"></td>
-                                </tr>
-                                <tr>
-                                    <td>Vänster öga</td>
-                                    <td><input type="text" class="small-decimal" eye-decimal ng-model="cert.syn.vansterOga.utanKorrektion"></td>
-                                    <td><input type="text" class="small-decimal" eye-decimal ng-model="cert.syn.vansterOga.medKorrektion"></td>
-                                    <td><input type="checkbox" ng-model="cert.syn.vansterOga.kontaktlins"></td>
-                                </tr>
-                                <tr>
-                                    <td>Binokulärt</td>
-                                    <td><input type="text" class="small-decimal" eye-decimal ng-model="cert.syn.binokulart.utanKorrektion"></td>
-                                    <td><input type="text" class="small-decimal" eye-decimal ng-model="cert.syn.binokulart.medKorrektion"></td>
-                                    <td></td>
-                                </tr>
-                            </table>
-
-                            <h4>Korrektionsglasens styrka</h4>
-                            <label class="checkbox"><input name="dioptrier" type="checkbox" ng-model="cert.syn.korrektionsglasensStyrka"> Högsta styrka i något av glasen överskrider 8 dioptrier</label>
-                            <div class="alert alert-info" ng-show="cert.syn.korrektionsglasensStyrka == true">
-                            	<span message key="ts.helptext.synfunktioner.info-8-dioptrier"></span>
-                            </div>
-                            
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- 2 -->
-            <div wc-field field-label="ts.label.horselbalans">
-
-                <table class="table table-form">
-                    <tr ng-if="validationMessagesGrouped.horselbalans">
-                      <td colspan="3"><div class="alert alert-error">
-                        <ul>
-                          <li ng-repeat="message in validationMessagesGrouped.horselbalans"><span message key="{{message.message}}"></span></li>
-                        </ul>
-                      </div></td>
-                    </tr>
-                    <tr>
-                        <th><span message key="common.yes"></span></th>
-                        <th><span message key="common.no"></span></th>
-                        <th class="maxwidth"></th>
-                    </tr>
-                    <tr>
-                        <td><input id="horselbalansay" name="horselbalansay" type="radio" ng-value="true" ng-model="cert.horselBalans.balansrubbningar"></td>
-                        <td><input id="horselbalansan" name="horselbalansan" type="radio" ng-value="false" ng-model="cert.horselBalans.balansrubbningar"></td>
-                        <td>a) Har patienten överraskande anfall av balansrubbningar eller yrsel?</td>
-                    </tr>
-                    <tr ng-show="form.korkortd">
-                        <td><input id="horselbalansby" name="horselbalansby" type="radio" ng-value="true" ng-model="cert.horselBalans.svartUppfattaSamtal4Meter"></td>
-                        <td><input id="horselbalansbn" name="horselbalansbn" type="radio" ng-value="false" ng-model="cert.horselBalans.svartUppfattaSamtal4Meter"></td>
-                        <td>b) Har patienten svårt att uppfatta vanlig samtalsstämma på fyra meters avstånd (hörapparat får användas)?</td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- 3 -->
-            <div wc-field field-label="ts.label.funktionsnedsattning">
-                <table class="table table-form">
-                    <tr ng-if="validationMessagesGrouped.funktionsnedsattning">
-                      <td colspan="3"><div class="alert alert-error">
-                        <ul>
-                          <li ng-repeat="message in validationMessagesGrouped.funktionsnedsattning"><span message key="{{message.message}}"></span></li>
-                        </ul>
-                      </div></td>
-                    </tr>
-                    <tr>
-                        <th><span message key="common.yes"></span></th>
-                        <th><span message key="common.no"></span></th>
-                        <th class="maxwidth"></th>
-                    </tr>
-                    <tr>
-                        <td><input id="funktionsnedsattningay" name="funktionsnedsattningay" type="radio" ng-value="true" ng-model="cert.funktionsnedsattning.funktionsnedsattning"></td>
-                        <td><input id="funktionsnedsattningan" name="funktionsnedsattningan" type="radio" ng-value="false" ng-model="cert.funktionsnedsattning.funktionsnedsattning"></td>
-                        <td><p>a) Har patienten någon sjukdom eller funktionsnedsättning som påverkar rörligheten och som medför att fordon inte kan köras på ett trafiksäkert sätt?</p>
-                            <div data-ng-show="cert.funktionsnedsattning.funktionsnedsattning">
-                                <p>Ange vilken typ av nedsättning eller sjukdom:</p>
-                                <textarea id="funktionsnedsattning" name="funktionsnedsattning"	rows='5' wc-maxlength maxlength="{{inputLimits.funktionsnedsattning}}"
-                                          ng-model="cert.funktionsnedsattning.beskrivning"></textarea>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr ng-show="form.korkortd">
-                        <td><input id="funktionsnedsattningby" name="funktionsnedsattningby" type="radio" ng-value="true" ng-model="cert.funktionsnedsattning.otillrackligRorelseformaga"></td>
-                        <td><input id="funktionsnedsattningbn" name="funktionsnedsattningbn" type="radio" ng-value="false" ng-model="cert.funktionsnedsattning.otillrackligRorelseformaga"></td>
-                        <td>b) Är rörelseförmågan otillräcklig för att kunna hjälpa passagerare in och ut ur fordonet samt med bilbälte?</td>
-                    </tr>
-                </table>
-            </div>
-
-            <div wc-field field-label="ts.label.hjartkarl">
-                <table class="table table-form">
-                  <tr ng-if="validationMessagesGrouped.hjartkarl">
-                    <td colspan="3"><div class="alert alert-error">
-                      <ul>
-                        <li ng-repeat="message in validationMessagesGrouped.hjartkarl"><span message key="{{message.message}}"></span></li>
-                      </ul>
-                    </div></td>
-                  </tr>
-                  <tr>
-                        <th><span message key="common.yes"></span></th>
-                        <th><span message key="common.no"></span></th>
-                        <th class="maxwidth"></th>
-                    </tr>
-                    <tr>
-                        <td><input id="hjartkarlay" name="hjartkarlay" type="radio" ng-value="true" ng-model="cert.hjartKarl.hjartKarlSjukdom"></td>
-                        <td><input id="hjartkarlan" name="hjartkarlan" type="radio" ng-value="false" ng-model="cert.hjartKarl.hjartKarlSjukdom"></td>
-                        <td>a) Föreligger hjärt- eller kärlsjukdom som kan medföra en påtaglig risk för att hjärnans funktioner akut försämras eller som i övrigt innebär en trafiksäkerhetsrisk?</td>
-                    </tr>
-                    <tr>
-                        <td><input id="hjartkarlby" name="hjartkarlby" type="radio" ng-value="true" ng-model="cert.hjartKarl.hjarnskadaEfterTrauma"></td>
-                        <td><input id="hjartkarlbn" name="hjartkarlbn" type="radio" ng-value="false" ng-model="cert.hjartKarl.hjarnskadaEfterTrauma"></td>
-                        <td>b) Finns tecken på hjärnskada efter trauma, stroke eller annan sjukdom i centrala nervsystemet?</td>
-                    </tr>
-                    <tr>
-                        <td><input id="hjartkarlcy" name="hjartkarlcy" type="radio" ng-value="true" ng-model="cert.hjartKarl.riskfaktorerStroke"></td>
-                        <td><input id="hjartkarlcn" name="hjartkarlcn" type="radio" ng-value="false" ng-model="cert.hjartKarl.riskfaktorerStroke"></td>
-                        <td><p>c) Föreligger viktiga riskfaktorer för stroke (tidigare stroke eller TIA, förhöjt blodtryck, förmaksflimmer eller kärlmissbildning)?</p>
-                            <div ng-show="cert.hjartKarl.riskfaktorerStroke">
-                                <p>Vilken typ av sjukdom?</p>
-                                <textarea ng-model="cert.hjartKarl.beskrivningRiskfaktorer" wc-maxlength maxlength="{{inputLimits.beskrivningRiskfaktorer}}"></textarea>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div wc-field field-label="ts.label.diabetes">
-                <table class="table table-form">
-                    <tr ng-if="validationMessagesGrouped.diabetes">
-                      <td colspan="3"><div class="alert alert-error">
-                        <ul>
-                          <li ng-repeat="message in validationMessagesGrouped.diabetes"><span message key="{{message.message}}"></span></li>
-                        </ul>
-                      </div></td>
-                    </tr>
-                    <tr>
-                        <th><span message key="common.yes"></span></th>
-                        <th><span message key="common.no"></span></th>
-                        <th class="maxwidth"></th>
-                    </tr>
-                    <tr>
-                        <td><input id="diabetesay" name="diabetesay" type="radio" ng-value="true" ng-model="cert.diabetes.harDiabetes"></td>
-                        <td><input id="diabetesan" name="diabetesan" type="radio" ng-value="false" ng-model="cert.diabetes.harDiabetes"></td>
-                        <td>
-                            <p>Har patienten diabetes?</p>
-                            <div data-ng-show="cert.diabetes.harDiabetes">
-                                <p>Vilken typ?
-                                    <label class="radio"><input name="diabetestype1" type="radio" value="DIABETES_TYP_1" ng-model="cert.diabetes.diabetesTyp">Typ 1</label>
-                                    <label class="radio"><input name="diabetestype2" type="radio" value="DIABETES_TYP_2" ng-model="cert.diabetes.diabetesTyp">Typ 2</label>
-                                </p>
-                                <div data-ng-show="cert.diabetes.diabetesTyp == 'DIABETES_TYP_2'">
-                                    Ange behandling:
-                                    <label class="checkbox"><input name="diabetestreat1" type="checkbox" ng-model="cert.diabetes.kost"> Kost</label>
-                                    <label class="checkbox"><input name="diabetestreat2" type="checkbox" ng-model="cert.diabetes.tabletter"> Tabletter</label>
-                                    <label class="checkbox"><input name="diabetestreat3" type="checkbox" ng-model="cert.diabetes.insulin"> Insulin</label>
-                                    
-                                    <div class="alert alert-info" data-ng-show="cert.diabetes.tabletter || cert.diabetes.insulin">
-                                        <span message key="ts.helptext.diabetes.tabletter-eller-insulin"></span>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div wc-field field-label="ts.label.neurologi">
-                <table class="table table-form">
-                  <tr ng-if="validationMessagesGrouped.neurologi">
-                    <td colspan="3"><div class="alert alert-error">
-                      <ul>
-                        <li ng-repeat="message in validationMessagesGrouped.neurologi"><span message key="{{message.message}}"></span></li>
-                      </ul>
-                    </div></td>
-                  </tr>
-                  <tr>
-                        <th><span message key="common.yes"></span></th>
-                        <th><span message key="common.no"></span></th>
-                        <th class="maxwidth"></th>
-                    </tr>
-                    <tr>
-                        <td><input id="neurologiay" name="neurologiay" type="radio" ng-value="true" ng-model="cert.neurologi.neurologiskSjukdom"></td>
-                        <td><input id="neurologian" name="neurologian" type="radio" ng-value="false" ng-model="cert.neurologi.neurologiskSjukdom"></td>
-                        <td>
-                            <p>Finns tecken på neurologisk sjukdom?</p>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div wc-field field-label="ts.label.medvetandestorning">
-                <table class="table table-form">
-                  <tr ng-if="validationMessagesGrouped.medvetandestorning">
-                    <td colspan="3"><div class="alert alert-error">
-                      <ul>
-                        <li ng-repeat="message in validationMessagesGrouped.medvetandestorning"><span message key="{{message.message}}"></span></li>
-                      </ul>
-                    </div></td>
-                  </tr>
-                  <tr>
-                        <th><span message key="common.yes"></span></th>
-                        <th><span message key="common.no"></span></th>
-                        <th class="maxwidth"></th>
-                    </tr>
-                    <tr>
-                        <td><input id="medvetandestorningay" name="medvetandestorningay" type="radio" ng-value="true" ng-model="cert.medvetandestorning.medvetandestorning"></td>
-                        <td><input id="medvetandestorningan" name="medvetandestorningan" type="radio" ng-value="false" ng-model="cert.medvetandestorning.medvetandestorning"></td>
-                        <td>
-                            <p>Har eller har patienten haft epilepsi, epileptiskt anfall eller annan medvetandestörning?</p>
-                            <div data-ng-show="cert.medvetandestorning.medvetandestorning">
-                                <p>Om det är frågan om annan medvetandestörning, ange när den inträffade och orsak:</p>
-                                <textarea data-ng-model="cert.medvetandestorning.beskrivning" wc-maxlength maxlength="{{inputLimits.medvetandestorning}}"></textarea>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div wc-field field-label="ts.label.njurar">
-                <table class="table table-form">
-                  <tr ng-if="validationMessagesGrouped.njurar">
-                    <td colspan="3"><div class="alert alert-error">
-                      <ul>
-                        <li ng-repeat="message in validationMessagesGrouped.njurar"><span message key="{{message.message}}"></span></li>
-                      </ul>
-                    </div></td>
-                  </tr>
-                    <tr>
-                        <th><span message key="common.yes"></span></th>
-                        <th><span message key="common.no"></span></th>
-                        <th class="maxwidth"></th>
-                    </tr>
-                    <tr>
-                        <td><input id="njuraray" name="njuraray" type="radio" ng-value="true" ng-model="cert.njurar.nedsattNjurfunktion"></td>
-                        <td><input id="njuraran" name="njuraran" type="radio" ng-value="false" ng-model="cert.njurar.nedsattNjurfunktion"></td>
-                        <td>
-                            Föreligger allvarligt nedsatt njurfunktion som kan innebära en trafiksäkerhetsrisk?
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div wc-field field-label="ts.label.kognitivt">
-                <table class="table table-form">
-                  <tr ng-if="validationMessagesGrouped.kognitivt">
-                    <td colspan="3"><div class="alert alert-error">
-                      <ul>
-                        <li ng-repeat="message in validationMessagesGrouped.kognitivt"><span message key="{{message.message}}"></span></li>
-                      </ul>
-                    </div></td>
-                  </tr>
-                  <tr>
-                        <th><span message key="common.yes"></span></th>
-                        <th><span message key="common.no"></span></th>
-                        <th class="maxwidth"></th>
-                    </tr>
-                    <tr>
-                        <td><input id="kognitivtay" name="kognitivtay" type="radio" ng-value="true" ng-model="cert.kognitivt.sviktandeKognitivFunktion"></td>
-                        <td><input id="kognitivtan" name="kognitivtan" type="radio" ng-value="false" ng-model="cert.kognitivt.sviktandeKognitivFunktion"></td>
-                        <td>
-                            Finns tecken på sviktande kognitiv funktion?
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div wc-field field-label="ts.label.somnvakenhet">
-                <table class="table table-form">
-                  <tr ng-if="validationMessagesGrouped.somnvakenhet">
-                    <td colspan="3"><div class="alert alert-error">
-                      <ul>
-                        <li ng-repeat="message in validationMessagesGrouped.somnvakenhet"><span message key="{{message.message}}"></span></li>
-                      </ul>
-                    </div></td>
-                  </tr>
-                  <tr>
-                        <th><span message key="common.yes"></span></th>
-                        <th><span message key="common.no"></span></th>
-                        <th class="maxwidth"></th>
-                    </tr>
-                    <tr>
-                        <td><input name="somnvakenhetay" type="radio" ng-value="true" ng-model="cert.somnVakenhet.teckenSomnstorningar"></td>
-                        <td><input name="somnvakenhetan" type="radio" ng-value="false" ng-model="cert.somnVakenhet.teckenSomnstorningar"></td>
-                        <td>
-                            Finns tecken på, eller anamnestiska uppgifter som talar för sömn- eller vakenhetsstörning?
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div wc-field field-label="ts.label.narkotikalakemedel">
-                <table class="table table-form">
-                  <tr ng-if="validationMessagesGrouped.narkotikalakemedel">
-                    <td colspan="3"><div class="alert alert-error">
-                      <ul>
-                        <li ng-repeat="message in validationMessagesGrouped.narkotikalakemedel"><span message key="{{message.message}}"></span></li>
-                      </ul>
-                    </div></td>
-                  </tr>
-                  <tr>
-                        <th><span message key="common.yes"></span></th>
-                        <th><span message key="common.no"></span></th>
-                        <th class="maxwidth"></th>
-                    </tr>
-                    <tr>
-                        <td><input name="narkotikalakemedelay" type="radio" ng-value="true" ng-model="cert.narkotikaLakemedel.teckenMissbruk"></td>
-                        <td><input name="narkotikalakemedelan" type="radio" ng-value="false" ng-model="cert.narkotikaLakemedel.teckenMissbruk"></td>
-                        <td>
-                            a) Finns journaluppgifter, anamnestiska uppgifter, resultat av laboratorieprover eller andra tecken på missbruk eller beroende av alkohol, narkotika eller läkemedel?
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input name="narkotikalakemedelby" type="radio" ng-value="true" ng-model="cert.narkotikaLakemedel.foremalForVardinsats"></td>
-                        <td><input name="narkotikalakemedelbn" type="radio" ng-value="false" ng-model="cert.narkotikaLakemedel.foremalForVardinsats"></td>
-                        <td>
-                            b) Har patienten vid något tillfälle varit föremål för vårdinsatser för missbruk eller beroende av alkohol, narkotika eller läkemedel?
-                        </td>
-                    </tr>
-                    <tr data-ng-show="cert.narkotikaLakemedel.teckenMissbruk || cert.narkotikaLakemedel.foremalForVardinsats">
-                        <td><input name="narkotikalakemedelb2y" type="radio" ng-value="true" ng-model="cert.narkotikaLakemedel.provtagningBehovs"></td>
-                        <td><input name="narkotikalakemedelb2n" type="radio" ng-value="false" ng-model="cert.narkotikaLakemedel.provtagningBehovs"></td>
-                        <td>
-                            <p>Behövs det provtagning avseende aktuellt bruk av alkohol eller narkotika?</p>
-                            <div class="alert alert-info" data-ng-show="cert.narkotikaLakemedel.provtagningBehovs">
-                                <span message key="ts.helptext.alkohol-narkotika.provtagning"/>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input name="narkotikalakemedelcy" type="radio" ng-value="true" ng-model="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk"></td>
-                        <td><input name="narkotikalakemedelcn" type="radio" ng-value="false" ng-model="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk"></td>
-                        <td>
-                            <p>c) Pågår regelbundet läkarordinerat bruk av läkemedel som kan innebära en trafiksäkerhetsrisk?</p>
-                            <div data-ng-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk == true">
-                            	<p>Ange läkemedel och ordinerad dos:</p>
-                            	<textarea data-ng-model="cert.narkotikaLakemedel.lakemedelOchDos" wc-maxlength maxlength="{{inputLimits.lakemedelOchDos}}"></textarea>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div wc-field field-label="ts.label.psykiskt">
-                <table class="table table-form">
-                  <tr ng-if="validationMessagesGrouped.psykiskt">
-                    <td colspan="3"><div class="alert alert-error">
-                      <ul>
-                        <li ng-repeat="message in validationMessagesGrouped.psykiskt"><span message key="{{message.message}}"></span></li>
-                      </ul>
-                    </div></td>
-                  </tr>
-                  <tr>
-                        <th><span message key="common.yes"></span></th>
-                        <th><span message key="common.no"></span></th>
-                        <th class="maxwidth"></th>
-                    </tr>
-                    <tr>
-                        <td><input name="psykisktay" type="radio" ng-value="true" ng-model="cert.psykiskt.psykiskSjukdom"></td>
-                        <td><input name="psykisktan" type="radio" ng-value="false" ng-model="cert.psykiskt.psykiskSjukdom"></td>
-                        <td>
-                            Har eller har patienten haft psykisk sjukdom eller störning, till exempel schizofreni, annan psykos eller bipolär (manodepressiv) sjukdom?
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div wc-field field-label="ts.label.utvecklingsstorning">
-                <table class="table table-form">
-                  <tr ng-if="validationMessagesGrouped.utvecklingsstorning">
-                    <td colspan="3"><div class="alert alert-error">
-                      <ul>
-                        <li ng-repeat="message in validationMessagesGrouped.utvecklingsstorning"><span message key="{{message.message}}"></span></li>
-                      </ul>
-                    </div></td>
-                  </tr>
-                  <tr>
-                        <th><span message key="common.yes"></span></th>
-                        <th><span message key="common.no"></span></th>
-                        <th class="maxwidth"></th>
-                    </tr>
-                    <tr>
-                        <td><input name="utvecklingsstorningay" type="radio" ng-value="true" ng-model="cert.utvecklingsstorning.psykiskUtvecklingsstorning"></td>
-                        <td><input name="utvecklingsstorningan" type="radio" ng-value="false" ng-model="cert.utvecklingsstorning.psykiskUtvecklingsstorning"></td>
-                        <td>
-                            a) Har patienten någon psykisk utvecklingsstörning?
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input name="utvecklingsstorningby" type="radio" ng-value="true" ng-model="cert.utvecklingsstorning.harSyndrom"></td>
-                        <td><input name="utvecklingsstorningbn" type="radio" ng-value="false" ng-model="cert.utvecklingsstorning.harSyndrom"></td>
-                        <td>
-                            b) Har patienten till exempel ADHD, ADD, DAMP, Aspergers syndrom eller Tourettes syndrom?
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div wc-field field-label="ts.label.sjukhusvard">
-                <table class="table table-form">
-                  <tr ng-if="validationMessagesGrouped.sjukhusvard">
-                    <td colspan="3"><div class="alert alert-error">
-                      <ul>
-                        <li ng-repeat="message in validationMessagesGrouped.sjukhusvard"><span message key="{{message.message}}"></span></li>
-                      </ul>
-                    </div></td>
-                  </tr>
-                  <tr>
-                        <th><span message key="common.yes"></span></th>
-                        <th><span message key="common.no"></span></th>
-                        <th class="maxwidth"></th>
-                    </tr>
-                    <tr>
-                        <td><input name="sjukhusvarday" type="radio" ng-value="true" ng-model="cert.sjukhusvard.sjukhusEllerLakarkontakt"></td>
-                        <td><input name="sjukhusvardan" type="radio" ng-value="false" ng-model="cert.sjukhusvard.sjukhusEllerLakarkontakt"></td>
-                        <td>
-                            <p>Har patienten vårdats på sjukhus eller haft kontakt med läkare med anledning av punkterna 1-13?</p>
-
-                            <table data-ng-show="cert.sjukhusvard.sjukhusEllerLakarkontakt">
-                                <tr>
-                                    <td>Om frågan besvaras med ja, när?</td>
-                                    <td><input name="tidpunkt" type="text" data-ng-model="cert.sjukhusvard.tidpunkt" wc-maxlength maxlength="{{inputLimits.sjukhusvardtidpunkt}}"></td>
-                                </tr>
-                                <tr>
-                                    <td>Vårdinrättningens namn och klinik/er:</td>
-                                    <td><input name="vardinrattning" type="text" data-ng-model="cert.sjukhusvard.vardinrattning" wc-maxlength maxlength="{{inputLimits.sjukhusvardvardinrattning}}"></td>
-                                </tr>
-                                <tr>
-                                    <td>För vad?</td>
-                                    <td><input name="anledning" type="text" data-ng-model="cert.sjukhusvard.anledning" wc-maxlength maxlength="{{inputLimits.sjukhusvardanledning}}"></td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div wc-field field-label="ts.label.medicinering">
-                <table class="table table-form">
-                  <tr ng-if="validationMessagesGrouped.medicinering">
-                    <td colspan="3"><div class="alert alert-error">
-                      <ul>
-                        <li ng-repeat="message in validationMessagesGrouped.medicinering"><span message key="{{message.message}}"></span></li>
-                      </ul>
-                    </div></td>
-                  </tr>
-                  <tr>
-                        <th><span message key="common.yes"></span></th>
-                        <th><span message key="common.no"></span></th>
-                        <th class="maxwidth"></th>
-                    </tr>
-                    <tr>
-                        <td><input name="medicineringay" type="radio" ng-value="true" ng-model="cert.medicinering.stadigvarandeMedicinering"></td>
-                        <td><input name="medicineringan" type="radio" ng-value="false" ng-model="cert.medicinering.stadigvarandeMedicinering"></td>
-                        <td>
-                            <p>Har patienten någon stadigvarande medicinering?</p>
-                            <div data-ng-show="cert.medicinering.stadigvarandeMedicinering">
-                                <p>Vilken eller vilka mediciner?</p>
-                                <textarea data-ng-model="cert.medicinering.beskrivning" wc-maxlength maxlength="{{inputLimits.medicinering}}"></textarea>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div wc-field field-label="ts.label.ovrigkommentar">
-                <p>Övriga kommentarer som är relevant ur trafiksäkerhetssynpunkt.</p>
-                <textarea id="kommentar" name="kommentar" rows='5' ng-model="cert.kommentar" wc-maxlength maxlength="{{inputLimits.kommentar}}"></textarea> <!-- ng-change="inputlimit for IE"-->
-            </div>
-
-            <div wc-field field-label="ts.label.bedomning">
-              <div class="alert alert-error" ng-if="validationMessagesGrouped.bedomning">
-                <ul>
-                  <li ng-repeat="message in validationMessagesGrouped.bedomning"><span message key="{{message.message}}"></span></li>
-                </ul>
-              </div>
-
-                <p>Patienten uppfyller kraven enligt Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2) för:</p>
-
-                <div class="control-group">
-                    <label class="radio"><input name="behorighetnagon" type="radio" ng-value="true" ng-model="form.behorighet"> Någon av följande behörigheter</label>
-                    <div class="control-group clearfix indent" data-ng-show="form.behorighet">
-                        <label class="checkbox checkbox-columns span2" ng-repeat="typ in cert.bedomning.korkortstyp track by $index"><input id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox" ng-model="typ.selected"> <span message key="ts.label.korkort.{{typ.type}}"></span></label>
-                    </div>
-                    <label class="radio"><input name="behorighetinte" type="radio" ng-value="false" ng-model="form.behorighet"> Kan inte ta ställning</label>
-                </div>
-
-                <p>Om någon av frågorna har besvarats med ja, ska de krav på ytterligare underlag som framgår av föreskrifterna beaktas.</p>
-
-                <p data-ng-show="cert.diabetes.tabletter || cert.diabetes.insulin">Har patienten tablett- eller insulinbehandlad diabetes krävs ett läkarintyg gällande sjukdomen.</p>
-
-                <p>Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i:</p>
-                <textarea name="specialist" rows='5' ng-model="cert.bedomning.lakareSpecialKompetens" wc-maxlength maxlength="{{inputLimits.lakareSpecialKompetens}}"></textarea>
-            </div>
-
-            <div class="body-row clearfix">
-                <h3 class="title">
-                    <span message key="ts.label.unit"></span>
-                </h3>
-	   
-                <div class="text">
-                    <div class="alert alert-error" ng-if="validationMessagesGrouped.vardenhet">
-		                <ul>
-		                  <li ng-repeat="message in validationMessagesGrouped.vardenhet"><span message key="{{message.message}}"></span></li>
-		                </ul>
-	              	</div>
-                    <label class="control-label">{{cert.skapadAv.vardenhet.enhetsnamn}} ({{cert.skapadAv.vardenhet.enhetsid}}), {{cert.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</label>
-
-                    <div class="form-horizontal">
-                        <div class="control-group">
-                            <label class="control-label">Postadress</label>
-                            <div class="controls">
-                                <input type="text" id="clinicInfo.postalAddress" name="clinicInfo.postalAddress" ng-model="cert.skapadAv.vardenhet.postadress">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Postnummer</label>
-                            <div class="controls">
-                                <input type="text" id="clinicInfo.postalCode" name="clinicInfo.postalCode" ng-model="cert.skapadAv.vardenhet.postnummer">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Postort</label>
-                            <div class="controls">
-                                <input type="text" id="clinicInfo.postalCity" name="clinicInfo.postalCity" ng-model="cert.skapadAv.vardenhet.postort">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Telefonnummer</label>
-                            <div class="controls">
-                                <input type="text" id="clinicInfo.phone" name="clinicInfo.phone" ng-model="cert.skapadAv.vardenhet.telefonnummer">
-                            </div>
-                        </div>
-                        <div class="control-group" ng-if="false">
-                            <label class="control-label">Epost</label>
-                            <div class="controls">
-                                <input type="text" id="clinicInfo.email" name="clinicInfo.email" ng-model="mats.ekhammar@callistaenterprise.se">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-        <!-- cert body -->
-
+    <div class="control-group clearfix">
+        <label class="checkbox checkbox-columns span2"
+               ng-repeat="typ in cert.intygAvser.korkortstyp track by $index"><input id="typcheck{{$index}}"
+                                                                                     name="typcheck{{$index}}"
+                                                                                     type="checkbox"
+                                                                                     ng-model="typ.selected"> <span
+                message key="ts.label.korkort.{{typ.type}}"></span></label>
     </div>
-    <!-- certificate -->
-
-    <p>Specialistkompetens i:</p>
-    <div ng-repeat="spec in cert.skapadAv.specialiteter">
-        {{spec}}
-    </div>
-
-    <button class="btn btn-success" ng-disabled="!isComplete">Signera intyget och skicka direkt till Transportstyrelsen</button>
-  </form>
 </div>
+
+<div wc-field field-label="ts.label.identitet" field-help-text="ts.helptext.identitet-styrkt-genom.id-kort">
+    <div class="alert alert-error" ng-if="validationMessagesGrouped.identitet">
+        <ul>
+            <li ng-repeat="message in validationMessagesGrouped.identitet"><span message
+                                                                                 key="{{message.message}}"></span></li>
+        </ul>
+    </div>
+    <div class="control-group clearfix">
+        <label class="radio checkbox-columns span6" ng-repeat="(k,v) in form.identity"><input name="identity{{$index}}"
+                                                                                              type="radio" value="{{v}}"
+                                                                                              ng-model="cert.vardkontakt.idkontroll">
+            {{k}}</label>
+    </div>
+</div>
+
+<div class="alert alert-info">
+    <span message key="ts.helptext.lakaren-ska-uppmarksamma"></span>
+</div>
+
+<!-- 1. Syn -->
+<div wc-field field-label="ts.label.synfunktioner" field-has-errors="testerror" ng-form name="synForm">
+
+    <table class="table table-form">
+        <tr ng-if="validationMessagesGrouped.syn">
+            <td colspan="3">
+                <div class="alert alert-error">
+                    <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.syn"><span message
+                                                                                       key="{{message.message}}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th><span message key="common.yes"></span></th>
+            <th><span message key="common.no"></span></th>
+            <th class="maxwidth"></th>
+        </tr>
+        <tr>
+            <td><input id="synay" name="synay" type="radio" ng-value="true" ng-model="cert.syn.synfaltsdefekter"></td>
+            <td><input id="synan" name="synan" type="radio" ng-value="false" ng-model="cert.syn.synfaltsdefekter"></td>
+            <td>a) Finns tecken på synfältsdefekter vid undersökning enligt Donders konfrontationsmetod?</td>
+        </tr>
+        <tr>
+            <td><input id="synby" name="synby" type="radio" ng-value="true" ng-model="cert.syn.nattblindhet"></td>
+            <td><input id="synbn" name="synbn" type="radio" ng-value="false" ng-model="cert.syn.nattblindhet"></td>
+            <td>b) Framkommer anamnestiska uppgifter om begränsning av seendet vid nedsatt belysning?</td>
+        </tr>
+        <tr>
+            <td><input id="syncy" name="syncy" type="radio" ng-value="true" ng-model="cert.syn.progressivOgonsjukdom">
+            </td>
+            <td><input id="syncn" name="syncn" type="radio" ng-value="false" ng-model="cert.syn.progressivOgonsjukdom">
+            </td>
+            <td>
+                <p>c) Har patienten någon progressiv ögonsjukdom?</p>
+
+                <div class="alert alert-info">
+                    <span message key="ts.helptext.synfunktioner.om-nagon-av-a-c"></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><input id="syndy" name="syndy" type="radio" ng-value="true" ng-model="cert.syn.diplopi"></td>
+            <td><input id="syndn" name="syndn" type="radio" ng-value="false" ng-model="cert.syn.diplopi"></td>
+            <td>d) Framkommer dubbelseende vid prövning av ögats rörlighet (prövningen ska göras i de åtta
+                huvudmeridianerna)?
+            </td>
+        </tr>
+        <tr>
+            <td><input id="syney" name="syney" type="radio" ng-value="true" ng-model="cert.syn.nystagmus"></td>
+            <td><input id="synen" name="synen" type="radio" ng-value="false" ng-model="cert.syn.nystagmus"></td>
+            <td>e) Förekommer nystagmus?</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><p>f) Värden för synskärpa</p>
+
+                <p>
+                    Alla bokstäver ska kunna läsas på den rad som anger synskärpa. Är synskärpan sämre än 0,1 ska den
+                    anges som 0,0
+                </p>
+
+                <div class="alert alert-info">
+                    <span message key="ts.helptext.synfunktioner.synskarpa-kan-grundas-pa-tidigare"></span>
+                </div>
+
+                <table class="table table-form">
+                    <tr>
+                        <th></th>
+                        <th>Utan korrektion <span wc-enable-tooltip
+                                                  field-help-text="ts.helptext.synfunktioner.utan-korrektion"/></th>
+                        <th>Med korrektion <span wc-enable-tooltip
+                                                 field-help-text="ts.helptext.synfunktioner.med-korrektion"/></th>
+                        <th>Kontaktlinser</th>
+                    </tr>
+                    <tr>
+                        <td>Höger öga</td>
+                        <td><input type="text" class="small-decimal" eye-decimal
+                                   ng-model="cert.syn.hogerOga.utanKorrektion"></td>
+                        <td><input type="text" class="small-decimal" eye-decimal
+                                   ng-model="cert.syn.hogerOga.medKorrektion"></td>
+                        <td><input type="checkbox" ng-model="cert.syn.hogerOga.kontaktlins"></td>
+                    </tr>
+                    <tr>
+                        <td>Vänster öga</td>
+                        <td><input type="text" class="small-decimal" eye-decimal
+                                   ng-model="cert.syn.vansterOga.utanKorrektion"></td>
+                        <td><input type="text" class="small-decimal" eye-decimal
+                                   ng-model="cert.syn.vansterOga.medKorrektion"></td>
+                        <td><input type="checkbox" ng-model="cert.syn.vansterOga.kontaktlins"></td>
+                    </tr>
+                    <tr>
+                        <td>Binokulärt</td>
+                        <td><input type="text" class="small-decimal" eye-decimal
+                                   ng-model="cert.syn.binokulart.utanKorrektion"></td>
+                        <td><input type="text" class="small-decimal" eye-decimal
+                                   ng-model="cert.syn.binokulart.medKorrektion"></td>
+                        <td></td>
+                    </tr>
+                </table>
+
+                <h4>Korrektionsglasens styrka</h4>
+                <label class="checkbox"><input name="dioptrier" type="checkbox"
+                                               ng-model="cert.syn.korrektionsglasensStyrka"> Högsta styrka i något av
+                    glasen överskrider 8 dioptrier</label>
+
+                <div class="alert alert-info" ng-show="cert.syn.korrektionsglasensStyrka == true">
+                    <span message key="ts.helptext.synfunktioner.info-8-dioptrier"></span>
+                </div>
+
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- 2 -->
+<div wc-field field-label="ts.label.horselbalans">
+
+    <table class="table table-form">
+        <tr ng-if="validationMessagesGrouped.horselbalans">
+            <td colspan="3">
+                <div class="alert alert-error">
+                    <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.horselbalans"><span message
+                                                                                                key="{{message.message}}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th><span message key="common.yes"></span></th>
+            <th><span message key="common.no"></span></th>
+            <th class="maxwidth"></th>
+        </tr>
+        <tr>
+            <td><input id="horselbalansay" name="horselbalansay" type="radio" ng-value="true"
+                       ng-model="cert.horselBalans.balansrubbningar"></td>
+            <td><input id="horselbalansan" name="horselbalansan" type="radio" ng-value="false"
+                       ng-model="cert.horselBalans.balansrubbningar"></td>
+            <td>a) Har patienten överraskande anfall av balansrubbningar eller yrsel?</td>
+        </tr>
+        <tr ng-show="form.korkortd">
+            <td><input id="horselbalansby" name="horselbalansby" type="radio" ng-value="true"
+                       ng-model="cert.horselBalans.svartUppfattaSamtal4Meter"></td>
+            <td><input id="horselbalansbn" name="horselbalansbn" type="radio" ng-value="false"
+                       ng-model="cert.horselBalans.svartUppfattaSamtal4Meter"></td>
+            <td>b) Har patienten svårt att uppfatta vanlig samtalsstämma på fyra meters avstånd (hörapparat får
+                användas)?
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- 3 -->
+<div wc-field field-label="ts.label.funktionsnedsattning">
+    <table class="table table-form">
+        <tr ng-if="validationMessagesGrouped.funktionsnedsattning">
+            <td colspan="3">
+                <div class="alert alert-error">
+                    <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.funktionsnedsattning"><span message
+                                                                                                        key="{{message.message}}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th><span message key="common.yes"></span></th>
+            <th><span message key="common.no"></span></th>
+            <th class="maxwidth"></th>
+        </tr>
+        <tr>
+            <td><input id="funktionsnedsattningay" name="funktionsnedsattningay" type="radio" ng-value="true"
+                       ng-model="cert.funktionsnedsattning.funktionsnedsattning"></td>
+            <td><input id="funktionsnedsattningan" name="funktionsnedsattningan" type="radio" ng-value="false"
+                       ng-model="cert.funktionsnedsattning.funktionsnedsattning"></td>
+            <td><p>a) Har patienten någon sjukdom eller funktionsnedsättning som påverkar rörligheten och som medför att
+                fordon inte kan köras på ett trafiksäkert sätt?</p>
+
+                <div data-ng-show="cert.funktionsnedsattning.funktionsnedsattning">
+                    <p>Ange vilken typ av nedsättning eller sjukdom:</p>
+                    <textarea id="funktionsnedsattning" name="funktionsnedsattning" rows='5' wc-maxlength
+                              maxlength="{{inputLimits.funktionsnedsattning}}"
+                              ng-model="cert.funktionsnedsattning.beskrivning"></textarea>
+                </div>
+            </td>
+        </tr>
+        <tr ng-show="form.korkortd">
+            <td><input id="funktionsnedsattningby" name="funktionsnedsattningby" type="radio" ng-value="true"
+                       ng-model="cert.funktionsnedsattning.otillrackligRorelseformaga"></td>
+            <td><input id="funktionsnedsattningbn" name="funktionsnedsattningbn" type="radio" ng-value="false"
+                       ng-model="cert.funktionsnedsattning.otillrackligRorelseformaga"></td>
+            <td>b) Är rörelseförmågan otillräcklig för att kunna hjälpa passagerare in och ut ur fordonet samt med
+                bilbälte?
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div wc-field field-label="ts.label.hjartkarl">
+    <table class="table table-form">
+        <tr ng-if="validationMessagesGrouped.hjartkarl">
+            <td colspan="3">
+                <div class="alert alert-error">
+                    <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.hjartkarl"><span message
+                                                                                             key="{{message.message}}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th><span message key="common.yes"></span></th>
+            <th><span message key="common.no"></span></th>
+            <th class="maxwidth"></th>
+        </tr>
+        <tr>
+            <td><input id="hjartkarlay" name="hjartkarlay" type="radio" ng-value="true"
+                       ng-model="cert.hjartKarl.hjartKarlSjukdom"></td>
+            <td><input id="hjartkarlan" name="hjartkarlan" type="radio" ng-value="false"
+                       ng-model="cert.hjartKarl.hjartKarlSjukdom"></td>
+            <td>a) Föreligger hjärt- eller kärlsjukdom som kan medföra en påtaglig risk för att hjärnans funktioner akut
+                försämras eller som i övrigt innebär en trafiksäkerhetsrisk?
+            </td>
+        </tr>
+        <tr>
+            <td><input id="hjartkarlby" name="hjartkarlby" type="radio" ng-value="true"
+                       ng-model="cert.hjartKarl.hjarnskadaEfterTrauma"></td>
+            <td><input id="hjartkarlbn" name="hjartkarlbn" type="radio" ng-value="false"
+                       ng-model="cert.hjartKarl.hjarnskadaEfterTrauma"></td>
+            <td>b) Finns tecken på hjärnskada efter trauma, stroke eller annan sjukdom i centrala nervsystemet?</td>
+        </tr>
+        <tr>
+            <td><input id="hjartkarlcy" name="hjartkarlcy" type="radio" ng-value="true"
+                       ng-model="cert.hjartKarl.riskfaktorerStroke"></td>
+            <td><input id="hjartkarlcn" name="hjartkarlcn" type="radio" ng-value="false"
+                       ng-model="cert.hjartKarl.riskfaktorerStroke"></td>
+            <td><p>c) Föreligger viktiga riskfaktorer för stroke (tidigare stroke eller TIA, förhöjt blodtryck,
+                förmaksflimmer eller kärlmissbildning)?</p>
+
+                <div ng-show="cert.hjartKarl.riskfaktorerStroke">
+                    <p>Vilken typ av sjukdom?</p>
+                    <textarea ng-model="cert.hjartKarl.beskrivningRiskfaktorer" wc-maxlength
+                              maxlength="{{inputLimits.beskrivningRiskfaktorer}}"></textarea>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div wc-field field-label="ts.label.diabetes">
+    <table class="table table-form">
+        <tr ng-if="validationMessagesGrouped.diabetes">
+            <td colspan="3">
+                <div class="alert alert-error">
+                    <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.diabetes"><span message
+                                                                                            key="{{message.message}}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th><span message key="common.yes"></span></th>
+            <th><span message key="common.no"></span></th>
+            <th class="maxwidth"></th>
+        </tr>
+        <tr>
+            <td><input id="diabetesay" name="diabetesay" type="radio" ng-value="true"
+                       ng-model="cert.diabetes.harDiabetes"></td>
+            <td><input id="diabetesan" name="diabetesan" type="radio" ng-value="false"
+                       ng-model="cert.diabetes.harDiabetes"></td>
+            <td>
+                <p>Har patienten diabetes?</p>
+
+                <div data-ng-show="cert.diabetes.harDiabetes">
+                    <p>Vilken typ?
+                        <label class="radio"><input name="diabetestype1" type="radio" value="DIABETES_TYP_1"
+                                                    ng-model="cert.diabetes.diabetesTyp">Typ 1</label>
+                        <label class="radio"><input name="diabetestype2" type="radio" value="DIABETES_TYP_2"
+                                                    ng-model="cert.diabetes.diabetesTyp">Typ 2</label>
+                    </p>
+
+                    <div data-ng-show="cert.diabetes.diabetesTyp == 'DIABETES_TYP_2'">
+                        Ange behandling:
+                        <label class="checkbox"><input name="diabetestreat1" type="checkbox"
+                                                       ng-model="cert.diabetes.kost"> Kost</label>
+                        <label class="checkbox"><input name="diabetestreat2" type="checkbox"
+                                                       ng-model="cert.diabetes.tabletter"> Tabletter</label>
+                        <label class="checkbox"><input name="diabetestreat3" type="checkbox"
+                                                       ng-model="cert.diabetes.insulin"> Insulin</label>
+
+                        <div class="alert alert-info" data-ng-show="cert.diabetes.tabletter || cert.diabetes.insulin">
+                            <span message key="ts.helptext.diabetes.tabletter-eller-insulin"></span>
+                        </div>
+
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div wc-field field-label="ts.label.neurologi">
+    <table class="table table-form">
+        <tr ng-if="validationMessagesGrouped.neurologi">
+            <td colspan="3">
+                <div class="alert alert-error">
+                    <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.neurologi"><span message
+                                                                                             key="{{message.message}}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th><span message key="common.yes"></span></th>
+            <th><span message key="common.no"></span></th>
+            <th class="maxwidth"></th>
+        </tr>
+        <tr>
+            <td><input id="neurologiay" name="neurologiay" type="radio" ng-value="true"
+                       ng-model="cert.neurologi.neurologiskSjukdom"></td>
+            <td><input id="neurologian" name="neurologian" type="radio" ng-value="false"
+                       ng-model="cert.neurologi.neurologiskSjukdom"></td>
+            <td>
+                <p>Finns tecken på neurologisk sjukdom?</p>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div wc-field field-label="ts.label.medvetandestorning">
+    <table class="table table-form">
+        <tr ng-if="validationMessagesGrouped.medvetandestorning">
+            <td colspan="3">
+                <div class="alert alert-error">
+                    <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.medvetandestorning"><span message
+                                                                                                      key="{{message.message}}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th><span message key="common.yes"></span></th>
+            <th><span message key="common.no"></span></th>
+            <th class="maxwidth"></th>
+        </tr>
+        <tr>
+            <td><input id="medvetandestorningay" name="medvetandestorningay" type="radio" ng-value="true"
+                       ng-model="cert.medvetandestorning.medvetandestorning"></td>
+            <td><input id="medvetandestorningan" name="medvetandestorningan" type="radio" ng-value="false"
+                       ng-model="cert.medvetandestorning.medvetandestorning"></td>
+            <td>
+                <p>Har eller har patienten haft epilepsi, epileptiskt anfall eller annan medvetandestörning?</p>
+
+                <div data-ng-show="cert.medvetandestorning.medvetandestorning">
+                    <p>Om det är frågan om annan medvetandestörning, ange när den inträffade och orsak:</p>
+                    <textarea data-ng-model="cert.medvetandestorning.beskrivning" wc-maxlength
+                              maxlength="{{inputLimits.medvetandestorning}}"></textarea>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div wc-field field-label="ts.label.njurar">
+    <table class="table table-form">
+        <tr ng-if="validationMessagesGrouped.njurar">
+            <td colspan="3">
+                <div class="alert alert-error">
+                    <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.njurar"><span message
+                                                                                          key="{{message.message}}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th><span message key="common.yes"></span></th>
+            <th><span message key="common.no"></span></th>
+            <th class="maxwidth"></th>
+        </tr>
+        <tr>
+            <td><input id="njuraray" name="njuraray" type="radio" ng-value="true"
+                       ng-model="cert.njurar.nedsattNjurfunktion"></td>
+            <td><input id="njuraran" name="njuraran" type="radio" ng-value="false"
+                       ng-model="cert.njurar.nedsattNjurfunktion"></td>
+            <td>
+                Föreligger allvarligt nedsatt njurfunktion som kan innebära en trafiksäkerhetsrisk?
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div wc-field field-label="ts.label.kognitivt">
+    <table class="table table-form">
+        <tr ng-if="validationMessagesGrouped.kognitivt">
+            <td colspan="3">
+                <div class="alert alert-error">
+                    <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.kognitivt"><span message
+                                                                                             key="{{message.message}}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th><span message key="common.yes"></span></th>
+            <th><span message key="common.no"></span></th>
+            <th class="maxwidth"></th>
+        </tr>
+        <tr>
+            <td><input id="kognitivtay" name="kognitivtay" type="radio" ng-value="true"
+                       ng-model="cert.kognitivt.sviktandeKognitivFunktion"></td>
+            <td><input id="kognitivtan" name="kognitivtan" type="radio" ng-value="false"
+                       ng-model="cert.kognitivt.sviktandeKognitivFunktion"></td>
+            <td>
+                Finns tecken på sviktande kognitiv funktion?
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div wc-field field-label="ts.label.somnvakenhet">
+    <table class="table table-form">
+        <tr ng-if="validationMessagesGrouped.somnvakenhet">
+            <td colspan="3">
+                <div class="alert alert-error">
+                    <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.somnvakenhet"><span message
+                                                                                                key="{{message.message}}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th><span message key="common.yes"></span></th>
+            <th><span message key="common.no"></span></th>
+            <th class="maxwidth"></th>
+        </tr>
+        <tr>
+            <td><input name="somnvakenhetay" type="radio" ng-value="true"
+                       ng-model="cert.somnVakenhet.teckenSomnstorningar"></td>
+            <td><input name="somnvakenhetan" type="radio" ng-value="false"
+                       ng-model="cert.somnVakenhet.teckenSomnstorningar"></td>
+            <td>
+                Finns tecken på, eller anamnestiska uppgifter som talar för sömn- eller vakenhetsstörning?
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div wc-field field-label="ts.label.narkotikalakemedel">
+    <table class="table table-form">
+        <tr ng-if="validationMessagesGrouped.narkotikalakemedel">
+            <td colspan="3">
+                <div class="alert alert-error">
+                    <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.narkotikalakemedel"><span message
+                                                                                                      key="{{message.message}}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th><span message key="common.yes"></span></th>
+            <th><span message key="common.no"></span></th>
+            <th class="maxwidth"></th>
+        </tr>
+        <tr>
+            <td><input name="narkotikalakemedelay" type="radio" ng-value="true"
+                       ng-model="cert.narkotikaLakemedel.teckenMissbruk"></td>
+            <td><input name="narkotikalakemedelan" type="radio" ng-value="false"
+                       ng-model="cert.narkotikaLakemedel.teckenMissbruk"></td>
+            <td>
+                a) Finns journaluppgifter, anamnestiska uppgifter, resultat av laboratorieprover eller andra tecken på
+                missbruk eller beroende av alkohol, narkotika eller läkemedel?
+            </td>
+        </tr>
+        <tr>
+            <td><input name="narkotikalakemedelby" type="radio" ng-value="true"
+                       ng-model="cert.narkotikaLakemedel.foremalForVardinsats"></td>
+            <td><input name="narkotikalakemedelbn" type="radio" ng-value="false"
+                       ng-model="cert.narkotikaLakemedel.foremalForVardinsats"></td>
+            <td>
+                b) Har patienten vid något tillfälle varit föremål för vårdinsatser för missbruk eller beroende av
+                alkohol, narkotika eller läkemedel?
+            </td>
+        </tr>
+        <tr data-ng-show="cert.narkotikaLakemedel.teckenMissbruk || cert.narkotikaLakemedel.foremalForVardinsats">
+            <td><input name="narkotikalakemedelb2y" type="radio" ng-value="true"
+                       ng-model="cert.narkotikaLakemedel.provtagningBehovs"></td>
+            <td><input name="narkotikalakemedelb2n" type="radio" ng-value="false"
+                       ng-model="cert.narkotikaLakemedel.provtagningBehovs"></td>
+            <td>
+                <p>Behövs det provtagning avseende aktuellt bruk av alkohol eller narkotika?</p>
+
+                <div class="alert alert-info" data-ng-show="cert.narkotikaLakemedel.provtagningBehovs">
+                    <span message key="ts.helptext.alkohol-narkotika.provtagning"/>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><input name="narkotikalakemedelcy" type="radio" ng-value="true"
+                       ng-model="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk"></td>
+            <td><input name="narkotikalakemedelcn" type="radio" ng-value="false"
+                       ng-model="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk"></td>
+            <td>
+                <p>c) Pågår regelbundet läkarordinerat bruk av läkemedel som kan innebära en trafiksäkerhetsrisk?</p>
+
+                <div data-ng-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk == true">
+                    <p>Ange läkemedel och ordinerad dos:</p>
+                    <textarea data-ng-model="cert.narkotikaLakemedel.lakemedelOchDos" wc-maxlength
+                              maxlength="{{inputLimits.lakemedelOchDos}}"></textarea>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div wc-field field-label="ts.label.psykiskt">
+    <table class="table table-form">
+        <tr ng-if="validationMessagesGrouped.psykiskt">
+            <td colspan="3">
+                <div class="alert alert-error">
+                    <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.psykiskt"><span message
+                                                                                            key="{{message.message}}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th><span message key="common.yes"></span></th>
+            <th><span message key="common.no"></span></th>
+            <th class="maxwidth"></th>
+        </tr>
+        <tr>
+            <td><input name="psykisktay" type="radio" ng-value="true" ng-model="cert.psykiskt.psykiskSjukdom"></td>
+            <td><input name="psykisktan" type="radio" ng-value="false" ng-model="cert.psykiskt.psykiskSjukdom"></td>
+            <td>
+                Har eller har patienten haft psykisk sjukdom eller störning, till exempel schizofreni, annan psykos
+                eller bipolär (manodepressiv) sjukdom?
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div wc-field field-label="ts.label.utvecklingsstorning">
+    <table class="table table-form">
+        <tr ng-if="validationMessagesGrouped.utvecklingsstorning">
+            <td colspan="3">
+                <div class="alert alert-error">
+                    <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.utvecklingsstorning"><span message
+                                                                                                       key="{{message.message}}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th><span message key="common.yes"></span></th>
+            <th><span message key="common.no"></span></th>
+            <th class="maxwidth"></th>
+        </tr>
+        <tr>
+            <td><input name="utvecklingsstorningay" type="radio" ng-value="true"
+                       ng-model="cert.utvecklingsstorning.psykiskUtvecklingsstorning"></td>
+            <td><input name="utvecklingsstorningan" type="radio" ng-value="false"
+                       ng-model="cert.utvecklingsstorning.psykiskUtvecklingsstorning"></td>
+            <td>
+                a) Har patienten någon psykisk utvecklingsstörning?
+            </td>
+        </tr>
+        <tr>
+            <td><input name="utvecklingsstorningby" type="radio" ng-value="true"
+                       ng-model="cert.utvecklingsstorning.harSyndrom"></td>
+            <td><input name="utvecklingsstorningbn" type="radio" ng-value="false"
+                       ng-model="cert.utvecklingsstorning.harSyndrom"></td>
+            <td>
+                b) Har patienten till exempel ADHD, ADD, DAMP, Aspergers syndrom eller Tourettes syndrom?
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div wc-field field-label="ts.label.sjukhusvard">
+    <table class="table table-form">
+        <tr ng-if="validationMessagesGrouped.sjukhusvard">
+            <td colspan="3">
+                <div class="alert alert-error">
+                    <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.sjukhusvard"><span message
+                                                                                               key="{{message.message}}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th><span message key="common.yes"></span></th>
+            <th><span message key="common.no"></span></th>
+            <th class="maxwidth"></th>
+        </tr>
+        <tr>
+            <td><input name="sjukhusvarday" type="radio" ng-value="true"
+                       ng-model="cert.sjukhusvard.sjukhusEllerLakarkontakt"></td>
+            <td><input name="sjukhusvardan" type="radio" ng-value="false"
+                       ng-model="cert.sjukhusvard.sjukhusEllerLakarkontakt"></td>
+            <td>
+                <p>Har patienten vårdats på sjukhus eller haft kontakt med läkare med anledning av punkterna 1-13?</p>
+
+                <table data-ng-show="cert.sjukhusvard.sjukhusEllerLakarkontakt">
+                    <tr>
+                        <td>Om frågan besvaras med ja, när?</td>
+                        <td><input name="tidpunkt" type="text" data-ng-model="cert.sjukhusvard.tidpunkt" wc-maxlength
+                                   maxlength="{{inputLimits.sjukhusvardtidpunkt}}"></td>
+                    </tr>
+                    <tr>
+                        <td>Vårdinrättningens namn och klinik/er:</td>
+                        <td><input name="vardinrattning" type="text" data-ng-model="cert.sjukhusvard.vardinrattning"
+                                   wc-maxlength maxlength="{{inputLimits.sjukhusvardvardinrattning}}"></td>
+                    </tr>
+                    <tr>
+                        <td>För vad?</td>
+                        <td><input name="anledning" type="text" data-ng-model="cert.sjukhusvard.anledning" wc-maxlength
+                                   maxlength="{{inputLimits.sjukhusvardanledning}}"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div wc-field field-label="ts.label.medicinering">
+    <table class="table table-form">
+        <tr ng-if="validationMessagesGrouped.medicinering">
+            <td colspan="3">
+                <div class="alert alert-error">
+                    <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.medicinering"><span message
+                                                                                                key="{{message.message}}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th><span message key="common.yes"></span></th>
+            <th><span message key="common.no"></span></th>
+            <th class="maxwidth"></th>
+        </tr>
+        <tr>
+            <td><input name="medicineringay" type="radio" ng-value="true"
+                       ng-model="cert.medicinering.stadigvarandeMedicinering"></td>
+            <td><input name="medicineringan" type="radio" ng-value="false"
+                       ng-model="cert.medicinering.stadigvarandeMedicinering"></td>
+            <td>
+                <p>Har patienten någon stadigvarande medicinering?</p>
+
+                <div data-ng-show="cert.medicinering.stadigvarandeMedicinering">
+                    <p>Vilken eller vilka mediciner?</p>
+                    <textarea data-ng-model="cert.medicinering.beskrivning" wc-maxlength
+                              maxlength="{{inputLimits.medicinering}}"></textarea>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div wc-field field-label="ts.label.ovrigkommentar">
+    <p>Övriga kommentarer som är relevant ur trafiksäkerhetssynpunkt.</p>
+    <textarea id="kommentar" name="kommentar" rows='5' ng-model="cert.kommentar" wc-maxlength
+              maxlength="{{inputLimits.kommentar}}"></textarea> <!-- ng-change="inputlimit for IE"-->
+</div>
+
+<div wc-field field-label="ts.label.bedomning">
+    <div class="alert alert-error" ng-if="validationMessagesGrouped.bedomning">
+        <ul>
+            <li ng-repeat="message in validationMessagesGrouped.bedomning"><span message
+                                                                                 key="{{message.message}}"></span></li>
+        </ul>
+    </div>
+
+    <p>Patienten uppfyller kraven enligt Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för
+        innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2) för:</p>
+
+    <div class="control-group">
+        <label class="radio"><input name="behorighetnagon" type="radio" ng-value="true" ng-model="form.behorighet">
+            Någon av följande behörigheter</label>
+
+        <div class="control-group clearfix indent" data-ng-show="form.behorighet">
+            <label class="checkbox checkbox-columns span2"
+                   ng-repeat="typ in cert.bedomning.korkortstyp track by $index"><input id="korkortstyp{{$index}}"
+                                                                                        name="korkortstyp{{$index}}"
+                                                                                        type="checkbox"
+                                                                                        ng-model="typ.selected"> <span
+                    message key="ts.label.korkort.{{typ.type}}"></span></label>
+        </div>
+        <label class="radio"><input name="behorighetinte" type="radio" ng-value="false" ng-model="form.behorighet"> Kan
+            inte ta ställning</label>
+    </div>
+
+    <p>Om någon av frågorna har besvarats med ja, ska de krav på ytterligare underlag som framgår av föreskrifterna
+        beaktas.</p>
+
+    <p data-ng-show="cert.diabetes.tabletter || cert.diabetes.insulin">Har patienten tablett- eller insulinbehandlad
+        diabetes krävs ett läkarintyg gällande sjukdomen.</p>
+
+    <p>Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i:</p>
+    <textarea name="specialist" rows='5' ng-model="cert.bedomning.lakareSpecialKompetens" wc-maxlength
+              maxlength="{{inputLimits.lakareSpecialKompetens}}"></textarea>
+</div>
+
+<div class="body-row clearfix">
+    <h3 class="title">
+        <span message key="ts.label.unit"></span>
+    </h3>
+
+    <div class="text">
+        <div class="alert alert-error" ng-if="validationMessagesGrouped.vardenhet">
+            <ul>
+                <li ng-repeat="message in validationMessagesGrouped.vardenhet"><span message
+                                                                                     key="{{message.message}}"></span>
+                </li>
+            </ul>
+        </div>
+        <label class="control-label">{{cert.skapadAv.vardenhet.enhetsnamn}} ({{cert.skapadAv.vardenhet.enhetsid}}),
+            {{cert.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</label>
+
+        <div class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label">Postadress</label>
+
+                <div class="controls">
+                    <input type="text" id="clinicInfo.postalAddress" name="clinicInfo.postalAddress"
+                           ng-model="cert.skapadAv.vardenhet.postadress">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Postnummer</label>
+
+                <div class="controls">
+                    <input type="text" id="clinicInfo.postalCode" name="clinicInfo.postalCode"
+                           ng-model="cert.skapadAv.vardenhet.postnummer">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Postort</label>
+
+                <div class="controls">
+                    <input type="text" id="clinicInfo.postalCity" name="clinicInfo.postalCity"
+                           ng-model="cert.skapadAv.vardenhet.postort">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Telefonnummer</label>
+
+                <div class="controls">
+                    <input type="text" id="clinicInfo.phone" name="clinicInfo.phone"
+                           ng-model="cert.skapadAv.vardenhet.telefonnummer">
+                </div>
+            </div>
+            <div class="control-group" ng-if="false">
+                <label class="control-label">Epost</label>
+
+                <div class="controls">
+                    <input type="text" id="clinicInfo.email" name="clinicInfo.email"
+                           ng-model="mats.ekhammar@callistaenterprise.se">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+<!-- cert body -->
+
+</div>
+<!-- certificate -->
+
+<p>Specialistkompetens i:</p>
+
+<div ng-repeat="spec in cert.skapadAv.specialiteter">
+    {{spec}}
+</div>
+
+<button class="btn btn-success" ng-disabled="!isComplete">Signera intyget och skicka direkt till Transportstyrelsen
+</button>
+</form>
+</div>
+
+</div> <!-- span12 webcert-col-single -->
+</div> <!-- row -->
+</div> <!-- container -->
