@@ -38,12 +38,13 @@ package se.inera.certificate.modules.rli.validator;
 import java.util.List;
 
 import se.inera.certificate.modules.rli.model.external.Utlatande;
+import se.inera.certificate.modules.rli.validator.external.ExternalValidatorInstance;
 
 /**
  * @author erik
  * 
  */
-public class ExternalValidator {
+public class Validator {
 
     /**
      * Validates an external Utlatande.
@@ -52,7 +53,7 @@ public class ExternalValidator {
      *            se.inera.certificate.modules.rli.model.external.Utlatande
      * @return List of validation errors, or an empty string if validated correctly
      */
-    public List<String> validate(Utlatande utlatande) {
+    public List<String> validateExternal(Utlatande utlatande) {
         ExternalValidatorInstance instance = new ExternalValidatorInstance();
         return instance.validate(utlatande);
     }

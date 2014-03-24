@@ -18,7 +18,6 @@
  */
 package se.inera.certificate.modules.rli.model.converter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -26,8 +25,6 @@ import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
-import se.inera.certificate.integration.rest.dto.CertificateStatus;
 import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
 import se.inera.certificate.modules.rli.model.codes.ArrangemangsKod;
@@ -46,13 +43,11 @@ import se.inera.certificate.modules.rli.model.internal.mi.KomplikationStyrkt;
 import se.inera.certificate.modules.rli.model.internal.mi.OrsakAvbokning;
 import se.inera.certificate.modules.rli.model.internal.mi.Patient;
 import se.inera.certificate.modules.rli.model.internal.mi.Rekommendation;
-import se.inera.certificate.modules.rli.model.internal.mi.Status;
 import se.inera.certificate.modules.rli.model.internal.mi.Undersokning;
 import se.inera.certificate.modules.rli.model.internal.mi.Utforare;
 import se.inera.certificate.modules.rli.model.internal.mi.Utlatande;
 import se.inera.certificate.modules.rli.model.internal.mi.Vardenhet;
 import se.inera.certificate.modules.rli.model.internal.mi.Vardgivare;
-import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
 
 /**
  * Converter for converting the external format to the internal view format.
@@ -65,20 +60,11 @@ public class ExternalToInternalConverter {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExternalToInternalConverter.class);
 
-    public Utlatande convert(CertificateContentHolder certificateContentHolder)
+    public Utlatande convert(se.inera.certificate.modules.rli.model.external.Utlatande externalUtlatande)
             throws ConverterException {
-        se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande = certificateContentHolder
-                .getCertificateContent();
-        Utlatande intUtlatande = convertUtlatandeFromExternalToInternal(extUtlatande);
-        decorateWithStatusInfo(intUtlatande, certificateContentHolder.getCertificateContentMeta());
+        Utlatande intUtlatande = convertUtlatandeFromExternalToInternal(externalUtlatande);
+        LOG.trace("Converting external model to internal");
         return intUtlatande;
-    }
-
-    private void decorateWithStatusInfo(Utlatande intUtlatande, CertificateContentMeta certificateContentMeta) {
-        List<CertificateStatus> certStatuses = certificateContentMeta.getStatuses();
-
-        List<Status> intStatuses = convertToIntStatuses(certStatuses);
-        intUtlatande.setStatus(intStatuses);
     }
 
     private Utlatande convertUtlatandeFromExternalToInternal(
@@ -111,7 +97,8 @@ public class ExternalToInternalConverter {
         return intUtlatande;
     }
 
-    private Vardenhet convertToIntVardenhet(se.inera.certificate.model.Vardenhet extVardenhet) throws ConverterException {
+    private Vardenhet convertToIntVardenhet(se.inera.certificate.model.Vardenhet extVardenhet)
+            throws ConverterException {
 
         LOG.trace("Converting vardenhet");
 
@@ -135,7 +122,8 @@ public class ExternalToInternalConverter {
         return intVardenhet;
     }
 
-    private Vardgivare convertToIntVardgivare(se.inera.certificate.model.Vardgivare extVardgivare) throws ConverterException {
+    private Vardgivare convertToIntVardgivare(se.inera.certificate.model.Vardgivare extVardgivare)
+            throws ConverterException {
 
         LOG.trace("Converting vardgivare");
 
@@ -169,30 +157,6 @@ public class ExternalToInternalConverter {
         intHoSPersonal.setVardenhet(intVardenhet);
 
         return intHoSPersonal;
-    }
-
-    private List<Status> convertToIntStatuses(List<CertificateStatus> certStatuses) {
-
-        List<Status> intStatuses = new ArrayList<Status>();
-
-        if (certStatuses == null || certStatuses.isEmpty()) {
-            LOG.trace("No statuses found to convert");
-            return intStatuses;
-        }
-
-        LOG.trace("Converting {} statuses to internal", certStatuses.size());
-
-        Status intStatus;
-
-        for (CertificateStatus extStatus : certStatuses) {
-            intStatus = new Status();
-            intStatus.setType(extStatus.getType());
-            intStatus.setTimestamp(extStatus.getTimestamp());
-            intStatus.setTarget(extStatus.getTarget());
-            intStatuses.add(intStatus);
-        }
-
-        return intStatuses;
     }
 
     private Patient convertToIntPatient(se.inera.certificate.model.Patient extPatient) throws ConverterException {

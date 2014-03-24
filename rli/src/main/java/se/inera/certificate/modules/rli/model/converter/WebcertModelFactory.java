@@ -21,14 +21,11 @@ package se.inera.certificate.modules.rli.model.converter;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDate;
 
-import se.inera.certificate.model.HosPersonal;
-import se.inera.certificate.modules.rli.model.internal.wc.HoSPersonal;
-import se.inera.certificate.modules.rli.model.internal.wc.Patient;
 import se.inera.certificate.modules.rli.model.internal.wc.Undersokning;
 import se.inera.certificate.modules.rli.model.internal.wc.Utlatande;
 import se.inera.certificate.modules.rli.model.internal.wc.Vardenhet;
 import se.inera.certificate.modules.rli.model.internal.wc.Vardgivare;
-import se.inera.certificate.modules.rli.rest.dto.CreateNewDraftCertificateHolder;
+import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 
 /**
  * Factory for creating a editable model.
@@ -38,7 +35,7 @@ import se.inera.certificate.modules.rli.rest.dto.CreateNewDraftCertificateHolder
  */
 public class WebcertModelFactory {
 
-    public Utlatande createNewWebcertDraft(CreateNewDraftCertificateHolder newDraftData) throws ConverterException {
+    public Utlatande createNewWebcertDraft(CreateNewDraftHolder newDraftData) throws ConverterException {
 
         Utlatande utlatande = new Utlatande();
 
@@ -46,15 +43,15 @@ public class WebcertModelFactory {
 
         populateWithSkapadAv(utlatande, newDraftData.getSkapadAv());
 
-        populateWithPatientInfo(utlatande, newDraftData.getPatientInfo());
+        populateWithPatientInfo(utlatande, newDraftData.getPatient());
 
         populateWithAktivitetKliniskUndersokning(utlatande, newDraftData.getSkapadAv().getVardenhet());
 
         return utlatande;
     }
 
-    private void populateWithPatientInfo(Utlatande utlatande, se.inera.certificate.model.Patient patient)
-            throws ConverterException {
+    private void populateWithPatientInfo(Utlatande utlatande,
+            se.inera.certificate.modules.support.api.dto.Patient patient) throws ConverterException {
 
         if (patient == null) {
             throw new ConverterException("Got null while trying to populateWithPatientInfo");
@@ -63,12 +60,13 @@ public class WebcertModelFactory {
         utlatande.setPatient(convertPatientToEdit(patient));
     }
 
-    private Patient convertPatientToEdit(se.inera.certificate.model.Patient patientInfo) {
-        Patient patient = new Patient();
+    private se.inera.certificate.modules.rli.model.internal.wc.Patient convertPatientToEdit(
+            se.inera.certificate.modules.support.api.dto.Patient patientInfo) {
+        se.inera.certificate.modules.rli.model.internal.wc.Patient patient = new se.inera.certificate.modules.rli.model.internal.wc.Patient();
         patient.setFornamn(StringUtils.join(patientInfo.getFornamn(), " "));
         patient.setEfternamn(patientInfo.getEfternamn());
-        patient.setFullstandigtNamn(patientInfo.getFullstandigtNamn());
-        patient.setPersonid(patientInfo.getId().getExtension());
+        patient.setFullstandigtNamn(StringUtils.join(patient.getFornamn(), patient.getEfternamn()));
+        patient.setPersonid(patientInfo.getPersonnummer());
         patient.setPostadress(patientInfo.getPostadress());
         patient.setPostnummer(patientInfo.getPostnummer());
         patient.setPostort(patientInfo.getPostort());
@@ -77,7 +75,7 @@ public class WebcertModelFactory {
     }
 
     private void populateWithAktivitetKliniskUndersokning(Utlatande utlatande,
-            se.inera.certificate.model.Vardenhet vardenhet) throws ConverterException {
+            se.inera.certificate.modules.support.api.dto.Vardenhet vardenhet) throws ConverterException {
 
         if (vardenhet == null) {
             throw new ConverterException("Got null while trying to convert Vardenhet");
@@ -95,7 +93,8 @@ public class WebcertModelFactory {
         return undersokning;
     }
 
-    private void populateWithSkapadAv(Utlatande utlatande, HosPersonal skapadAv) throws ConverterException {
+    private void populateWithSkapadAv(Utlatande utlatande,
+            se.inera.certificate.modules.support.api.dto.HoSPersonal skapadAv) throws ConverterException {
         if (skapadAv == null) {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");
         }
@@ -103,10 +102,12 @@ public class WebcertModelFactory {
         utlatande.setSkapadAv(convertHosPersonalToEdit(skapadAv));
     }
 
-    private HoSPersonal convertHosPersonalToEdit(HosPersonal hosPersType) {
-        HoSPersonal hosPersonal = new HoSPersonal();
+    private se.inera.certificate.modules.rli.model.internal.wc.HoSPersonal convertHosPersonalToEdit(
+            se.inera.certificate.modules.support.api.dto.HoSPersonal hosPersType) {
 
-        hosPersonal.setPersonid(hosPersType.getId().getExtension());
+        se.inera.certificate.modules.rli.model.internal.wc.HoSPersonal hosPersonal = new se.inera.certificate.modules.rli.model.internal.wc.HoSPersonal();
+
+        hosPersonal.setPersonid(hosPersType.getHsaId());
         hosPersonal.setFullstandigtNamn(hosPersType.getNamn());
 
         if (hosPersType.getBefattning() != null) {
@@ -118,12 +119,12 @@ public class WebcertModelFactory {
         return hosPersonal;
     }
 
-    private Vardenhet convertVardenhetToEdit(se.inera.certificate.model.Vardenhet enhet) {
+    private Vardenhet convertVardenhetToEdit(se.inera.certificate.modules.support.api.dto.Vardenhet enhet) {
         if (enhet == null) {
             return null;
         }
         Vardenhet vardenhet = new Vardenhet();
-        vardenhet.setEnhetsid(enhet.getId().getExtension());
+        vardenhet.setEnhetsid(enhet.getHsaId());
         vardenhet.setEnhetsnamn(enhet.getNamn());
         vardenhet.setEpost(enhet.getEpost());
         vardenhet.setPostadress(enhet.getPostadress());
@@ -135,9 +136,9 @@ public class WebcertModelFactory {
         return vardenhet;
     }
 
-    private Vardgivare convertVardgivareType(se.inera.certificate.model.Vardgivare source) {
+    private Vardgivare convertVardgivareType(se.inera.certificate.modules.support.api.dto.Vardgivare source) {
         Vardgivare vardgivare = new Vardgivare();
-        vardgivare.setVardgivarid(source.getId().getExtension());
+        vardgivare.setVardgivarid(source.getHsaId());
         vardgivare.setVardgivarnamn(source.getNamn());
         return vardgivare;
     }

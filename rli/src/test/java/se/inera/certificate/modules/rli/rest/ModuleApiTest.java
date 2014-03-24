@@ -19,15 +19,14 @@
 package se.inera.certificate.modules.rli.rest;
 
 import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
-import static se.inera.certificate.modules.rli.utils.ResourceConverterUtils.wrapExternalWithHolder;
 
-import javax.ws.rs.BadRequestException;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
+import java.io.StringWriter;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 
 import junit.framework.Assert;
 
-import org.apache.cxf.jaxrs.client.WebClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +34,18 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.integration.rest.dto.CertificateContentMeta;
 import se.inera.certificate.modules.rli.model.internal.mi.Utlatande;
-import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
 import se.inera.certificate.modules.rli.utils.Scenario;
 import se.inera.certificate.modules.rli.utils.ScenarioFinder;
+import se.inera.certificate.modules.support.api.ModuleApi;
+import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
+import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
+import se.inera.certificate.modules.support.api.dto.TransportModelHolder;
+import se.inera.certificate.modules.support.api.exception.ModuleException;
+import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Sets up an actual HTTP server and client to test the {@link ModuleApi} service. This is the place to verify that
@@ -49,9 +55,14 @@ import se.inera.certificate.modules.rli.utils.ScenarioFinder;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ModuleApiTest {
 
-    /** An HTTP client proxy wired to the test HTTP server. */
     @Autowired
-    private ModuleApi rliModule;
+    private se.inera.certificate.modules.support.api.ModuleApi moduleApi;
+
+    @Autowired
+    private JAXBContext jaxbContext;
+
+    @Autowired
+    private ObjectMapper mapper;
 
     @Autowired
     private CustomObjectMapper objectMapper;
@@ -59,23 +70,21 @@ public class ModuleApiTest {
     @Test
     public void testUnmarshallScenarios() throws Exception {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
-            rliModule.unmarshall(scenario.asTransportModel());
-            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
+            moduleApi.unmarshall(createTransportHolder(scenario.asTransportModel()));
         }
     }
 
-    @Test(expected = BadRequestException.class)
+    @Test(expected = ModuleException.class)
     public void testUnmarshallBroken() throws Exception {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("invalid-*")) {
-            rliModule.unmarshall(scenario.asTransportModel());
+            moduleApi.unmarshall(createTransportHolder(scenario.asTransportModel()));
         }
     }
 
     @Test
     public void testMarshall() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            rliModule.marshall(scenario.asExternalModel());
-            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
+            moduleApi.marshall(createExternalHolder(scenario.asExternalModel()));
         }
 
     }
@@ -83,8 +92,7 @@ public class ModuleApiTest {
     @Test
     public void testValidate() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            rliModule.validate(scenario.asExternalModel());
-            assertResponseStatus("Error in scenario " + scenario.getName(), Status.NO_CONTENT);
+            moduleApi.validate(createExternalHolder(scenario.asExternalModel()));
         }
     }
 
@@ -92,12 +100,11 @@ public class ModuleApiTest {
     public void testValidateWithErrors() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {
             try {
-                rliModule.validate(scenario.asExternalModel());
-                Assert.fail("Expected BadRequestException, running scenario " + scenario.getName());
+                moduleApi.validate(createExternalHolder(scenario.asExternalModel()));
+                Assert.fail("Expected ModuleValidationException, running scenario " + scenario.getName());
 
-            } catch (BadRequestException e) {
-                Assert.assertFalse("Error in scenario " + scenario.getName(), e.getResponse().getEntity().toString()
-                        .isEmpty());
+            } catch (ModuleValidationException e) {
+                Assert.assertFalse("Error in scenario " + scenario.getName(), e.getValidationEntries().isEmpty());
             }
         }
     }
@@ -105,33 +112,24 @@ public class ModuleApiTest {
     @Test
     public void testPdf() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            CertificateContentHolder holder = scenario.asExternalModelWithHolder();
+            ExternalModelHolder holder = createExternalHolder(scenario.asExternalModel());
 
-            rliModule.pdf(holder);
+            moduleApi.pdf(holder);
 
-            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
-            String contentDisposition = getClientResponse().getHeaderString("Content-Disposition");
-            Assert.assertTrue("Error in scenario " + scenario.getName(),
-                    contentDisposition.startsWith("filename=lakarutlatande"));
         }
     }
 
     @Test
     public void testConvertExternalToInternal() throws Exception {
-        CertificateContentHolder holder = new CertificateContentHolder();
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            holder.setCertificateContent(scenario.asExternalModel());
-            holder.setCertificateContentMeta(new CertificateContentMeta());
-            rliModule.convertExternalToInternal(holder);
-            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
+            moduleApi.convertExternalToInternal(createExternalHolder(scenario.asExternalModel()));
         }
     }
 
     @Test
     public void testConvertInternalToExternal() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
-            rliModule.convertInternalToExternal(scenario.asInternalWCModel());
-            assertResponseStatus("Error in scenario " + scenario.getName(), Status.OK);
+            moduleApi.convertInternalToExternal(createInternalWcHolder(scenario.asInternalWCModel()));
         }
     }
 
@@ -140,20 +138,34 @@ public class ModuleApiTest {
         se.inera.certificate.modules.rli.model.external.Utlatande extUtlatande;
         Utlatande intUtlatande;
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
-            extUtlatande = rliModule.unmarshall(scenario.asTransportModel());
-            rliModule.validate(extUtlatande);
-            intUtlatande = rliModule.convertExternalToInternal(wrapExternalWithHolder(extUtlatande));
+            extUtlatande = (se.inera.certificate.modules.rli.model.external.Utlatande) moduleApi.unmarshall(
+                    createTransportHolder(scenario.asTransportModel())).getExternalModel();
+
+            moduleApi.validate(createExternalHolder(extUtlatande));
+            String intUtlatandeString = moduleApi.convertExternalToInternal(createExternalHolder(extUtlatande))
+                    .getInternalModel();
+            intUtlatande = mapper.readValue(intUtlatandeString, Utlatande.class);
 
             Utlatande expected = scenario.asInternalMIModel();
             assertLenientEquals("Error in scenario " + scenario.getName(), expected, intUtlatande);
         }
     }
 
-    private void assertResponseStatus(String message, Status status) {
-        Assert.assertEquals(message, status.getStatusCode(), getClientResponse().getStatus());
+    private TransportModelHolder createTransportHolder(se.inera.certificate.rli.model.v1.Utlatande transportModel)
+            throws JAXBException {
+        StringWriter writer = new StringWriter();
+        jaxbContext.createMarshaller().marshal(transportModel, writer);
+        return new TransportModelHolder(writer.toString());
     }
 
-    private Response getClientResponse() {
-        return WebClient.client(rliModule).getResponse();
+    private ExternalModelHolder createExternalHolder(
+            se.inera.certificate.modules.rli.model.external.Utlatande externalModel) throws JsonProcessingException {
+        return new ExternalModelHolder(mapper.writeValueAsString(externalModel));
     }
+
+    private InternalModelHolder createInternalWcHolder(
+            se.inera.certificate.modules.rli.model.internal.wc.Utlatande internalModel) throws JsonProcessingException {
+        return new InternalModelHolder(mapper.writeValueAsString(internalModel));
+    }
+
 }

@@ -54,8 +54,8 @@ public class InternalToExternalConverter {
 
     private static final String PERS_ID_ROOT = "1.2.752.129.2.1.3.1";
 
-    public Utlatande convert(
-            se.inera.certificate.modules.rli.model.internal.wc.Utlatande source) throws ConverterException {
+    public Utlatande convert(se.inera.certificate.modules.rli.model.internal.wc.Utlatande source)
+            throws ConverterException {
 
         LOG.debug("Converting Utlatande '{}' from internal to external", source.getUtlatandeid());
 
@@ -133,57 +133,6 @@ public class InternalToExternalConverter {
         List<Aktivitet> aktiviteter = new ArrayList<Aktivitet>();
         buildAktiviteter(aktiviteter, source);
         return aktiviteter;
-    }
-
-    /**
-     * Create necessary Aktiviteter for a pregnant person.
-     * 
-     * @param aktiviteter
-     *            ArrayList of Aktiviteter
-     * @param undersokning
-     *            se.inera.certificate.modules.rli.model.internal.Undersokning
-     * @throws ConverterException
-     */
-    private void buildAktiviteterGravid(List<Aktivitet> aktiviteter, Undersokning undersokning)
-            throws ConverterException {
-
-        /** Create first Aktivitet */
-        Aktivitet akt1 = new Aktivitet();
-        akt1.setAktivitetskod(CodeConverter.toKod(AktivitetsKod.FORSTA_UNDERSOKNING));
-
-        String undersokningsDatum = undersokning.getForstaUndersokningsdatum();
-        if (undersokningsDatum != null) {
-            akt1.setAktivitetstid(PartialConverter.toPartialInterval(undersokningsDatum, undersokningsDatum));
-        }
-
-        if (undersokning.getForstaUndersokningsplats() != null) {
-            akt1.setPlats(undersokning.getForstaUndersokningsplats());
-        }
-
-        aktiviteter.add(akt1);
-
-        /** Create second Aktivitet */
-        String undersokningsDatum2 = undersokning.getUndersokningsdatum();
-
-        if (undersokningsDatum2 == null) {
-            throw new ConverterException("Mandatory date in KLINISK_UNDERSOKNING missing, aborting");
-        }
-
-        Aktivitet akt2 = new Aktivitet();
-
-        akt2.setAktivitetskod(CodeConverter.toKod(AktivitetsKod.KLINISK_UNDERSOKNING));
-
-        akt2.setAktivitetstid(PartialConverter.toPartialInterval(undersokningsDatum2, undersokningsDatum2));
-
-        /** Determine what kind of location to add for second Aktivitet */
-        // TODO: This should always be UtforsVid no?
-
-        if (undersokning.getUtforsVid() != null) {
-            akt1.setUtforsVid(buildVardenhet(undersokning.getUtforsVid()));
-            akt1.getBeskrivsAv().add(buildBeskrivsAv(undersokning));
-        }
-        aktiviteter.add(akt2);
-
     }
 
     /**

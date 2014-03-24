@@ -27,7 +27,6 @@
 
   <import resource="rli-beans.xml" />
   <import resource="rli-model-config.xml" />
-  <import resource="rli-integration-config.xml" />
 
   <context:annotation-config />
 

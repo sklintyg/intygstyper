@@ -9,16 +9,16 @@
   </parent>
 
   <artifactId>rli</artifactId>
+  
   <name>Intyg vid avbeställning av resa</name>
   <properties>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
   </properties>
-  <packaging>war</packaging>
 
   <dependencies>
     <dependency>
-      <groupId>se.inera.certificate</groupId>
-      <artifactId>module-api</artifactId>
+      <groupId>se.inera.certificate.modules</groupId>
+      <artifactId>module-support</artifactId>
     </dependency>
     <dependency>
       <groupId>se.inera.certificate</groupId>
@@ -144,6 +144,11 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
       <version>3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

@@ -23,7 +23,7 @@ import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import se.inera.certificate.modules.rli.rest.dto.CertificateContentHolder;
+import se.inera.certificate.modules.rli.model.external.Utlatande;
 import se.inera.certificate.modules.rli.utils.Scenario;
 import se.inera.certificate.modules.rli.utils.ScenarioFinder;
 
@@ -45,7 +45,7 @@ public class ExternalToInternalConverterTest {
     @Test
     public void testConvertUtlatande() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            CertificateContentHolder extUtlatande = scenario.asExternalModelWithHolder();
+            Utlatande extUtlatande = scenario.asExternalModel();
 
             se.inera.certificate.modules.rli.model.internal.mi.Utlatande actual = converter.convert(extUtlatande);
 
