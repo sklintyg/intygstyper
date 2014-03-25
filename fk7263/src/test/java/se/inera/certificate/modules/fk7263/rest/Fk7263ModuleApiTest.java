@@ -43,6 +43,22 @@ public class Fk7263ModuleApiTest {
     }
 
     @Test
+    public void testUnmarshallLegacyTransport() throws Exception {
+        String legacyLakarutlatande = FileUtils
+                .readFileToString(new ClassPathResource("Fk7263ModuleApiTest/registerMedicalCertificate.xml").getFile());
+
+        fk7263ModuleApi.unmarshall(legacyLakarutlatande);
+    }
+
+    @Test
+    public void testUnmarshallUtlatande() throws Exception {
+        String utlatande = FileUtils
+                .readFileToString(new ClassPathResource("Fk7263ModuleApiTest/utlatande.xml").getFile());
+
+        fk7263ModuleApi.unmarshall(utlatande);
+    }
+
+    @Test
     public void testMarshallWithVersion_1_0() throws IOException {
         Fk7263Utlatande utlatande = new CustomObjectMapper().readValue(new ClassPathResource(
                 "Fk7263ModuleApiTest/utlatande.json").getFile(), Fk7263Utlatande.class);
