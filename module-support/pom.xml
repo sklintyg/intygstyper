@@ -10,6 +10,9 @@
     <artifactId>module-support</artifactId>
     <name>Module Support</name>
     <packaging>jar</packaging>
+    <properties>
+      <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
+    </properties>
     
     <dependencies>
       <dependency>
