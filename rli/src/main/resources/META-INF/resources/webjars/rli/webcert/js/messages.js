@@ -33,11 +33,7 @@ define([
             // Validation messages
             "rli.validation.utlatande.missing" : "Utlatande saknas",
 
-            "rli.validation.vardenhet.postadress.missing" : "Kunde inte hämta postadress för vårdenheten från HSA, måste ifyllas manuellt",
-            "rli.validation.vardenhet.postnummer.missing" : "Kunde inte hämta postnummer för vårdenheten från HSA, måste ifyllas manuellt",
-            "rli.validation.vardenhet.postnummer.incorrect-format" : "Postnummer måste anges i formatet XXX XX eller XXXXX (exempelvis 123 45)",
-            "rli.validation.vardenhet.postort.missing" : "Kunde inte hämta postort för vårdenheten från HSA, måste ifyllas manuellt",
-            "rli.validation.vardenhet.telefonnummer.missing" : "Kunde inte hämta telefonnummer för vårdenheten från HSA, måste ifyllas manuellt"
+            "rli.validation.vardenhet.namn.missing" : "Namn för vårdenhet måste anges"
         },
         "en" : {
             "view.label.pagetitle" : "Show Certificate"
