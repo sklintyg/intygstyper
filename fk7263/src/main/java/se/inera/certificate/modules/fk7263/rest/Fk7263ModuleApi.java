@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
-import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -80,7 +79,8 @@ public class Fk7263ModuleApi implements ModuleApi {
         if (jaxbObject instanceof RegisterMedicalCertificate) {
             // Convert and validate legacy transport model
             LOG.debug("Converting {} to external model", jaxbObject.getClass().getCanonicalName());
-            externalModel = TransportToExternalFk7263LegacyConverter.convert((Lakarutlatande) jaxbObject);
+            Lakarutlatande utlatande = ((RegisterMedicalCertificate)jaxbObject).getLakarutlatande();
+            externalModel = TransportToExternalFk7263LegacyConverter.convert(utlatande);
 
             validationErrors.addAll(new ProgrammaticLegacyTransportSchemaValidator(externalModel).validate());
 
