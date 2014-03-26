@@ -21,6 +21,8 @@ package se.inera.certificate.modules.ts_diabetes.model.external;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.LocalDate;
+
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Status;
@@ -32,7 +34,7 @@ import se.inera.certificate.model.Status;
  * <li> {@link #intygAvser}
  * </ul>
  */
-public class Utlatande extends se.inera.certificate.model.Utlatande{
+public class Utlatande extends se.inera.certificate.model.Utlatande {
 
     private List<Kod> intygAvser;
 
@@ -125,5 +127,17 @@ public class Utlatande extends se.inera.certificate.model.Utlatande{
 
     public void setBilaga(Bilaga bilaga) {
         this.bilaga = bilaga;
+    }
+
+    @Override
+    public LocalDate getValidToDate() {
+        // TODO So far, this intyg does not have a validToDate
+        return null;
+    }
+
+    @Override
+    public LocalDate getValidFromDate() {
+        // TODO So far, this intyg does not have a validFromDate
+        return null;
     }
 }

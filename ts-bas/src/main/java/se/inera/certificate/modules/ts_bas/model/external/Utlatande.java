@@ -21,6 +21,8 @@ package se.inera.certificate.modules.ts_bas.model.external;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.LocalDate;
+
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Status;
@@ -121,5 +123,17 @@ public class Utlatande extends se.inera.certificate.model.Utlatande {
             status = new ArrayList<Status>();
         }
         return this.status;
+    }
+
+    @Override
+    public LocalDate getValidToDate() {
+        // TODO So far, this intyg does not have a validToDate
+        return null;
+    }
+
+    @Override
+    public LocalDate getValidFromDate() {
+        // TODO So far, this intyg does not have a validFromDate
+        return null;
     }
 }

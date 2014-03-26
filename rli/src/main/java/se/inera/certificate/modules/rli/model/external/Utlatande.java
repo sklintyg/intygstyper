@@ -21,6 +21,8 @@ package se.inera.certificate.modules.rli.model.external;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.LocalDate;
+
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Rekommendation;
 import se.inera.certificate.model.Status;
@@ -136,5 +138,17 @@ public class Utlatande extends se.inera.certificate.model.Utlatande {
 
     public void setArrangemang(Arrangemang arrangemang) {
         this.arrangemang = arrangemang;
+    }
+
+    @Override
+    public LocalDate getValidToDate() {
+        // TODO So far, this intyg does not have a validToDate
+        return null;
+    }
+
+    @Override
+    public LocalDate getValidFromDate() {
+        // TODO So far, this intyg does not have a validFromDateb
+        return null;
     }
 }
