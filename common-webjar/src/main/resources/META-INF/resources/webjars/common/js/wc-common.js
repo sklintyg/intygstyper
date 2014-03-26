@@ -50,7 +50,7 @@ define([
         }
     } ]);
 
-    common.directive("wcHeader", ['$rootScope', '$location', '$modal', '$window', '$cookieStore', 'statService', 'User', function ($rootScope, $location, $modal, $window, $cookieStore, statService, User) {
+    common.directive("wcHeader", ['$rootScope', '$location', '$modal', '$window', '$cookieStore', 'statService', 'User', 'messageService', function ($rootScope, $location, $modal, $window, $cookieStore, statService, User, messageService) {
 
         return {
             restrict: "A",
@@ -82,7 +82,7 @@ define([
                     },
                     {
                         link: '/web/dashboard#/unsigned',
-                        label: 'Osignerade intyg',
+                        label: messageService.getProperty('dashboard.unsigned.title'),
                         requires_doctor: false,
                         statNumberId: "stat-unitstat-unsigned-certs-count",
                         getStat: function () {
