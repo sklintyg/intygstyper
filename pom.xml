@@ -37,6 +37,7 @@
     <module>ts-bas</module>
     <module>ts-diabetes</module>
     <module>module-support</module>
+      <module>common-webjar</module>
   </modules>
 
   <properties>
