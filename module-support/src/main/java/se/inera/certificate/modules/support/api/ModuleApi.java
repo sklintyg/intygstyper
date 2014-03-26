@@ -8,6 +8,7 @@ import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.PdfResponse;
 import se.inera.certificate.modules.support.api.dto.TransportModelHolder;
 import se.inera.certificate.modules.support.api.dto.TransportModelResponse;
+import se.inera.certificate.modules.support.api.dto.TransportModelVersion;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 
@@ -31,10 +32,13 @@ public interface ModuleApi {
      * 
      * @param externalModel
      *            The external model to convert.
+     * @param version
+     *            The expected version of the transport model.
      * 
      * @return An instance of the transport model, generated from the external model.
      */
-    TransportModelResponse marshall(ExternalModelHolder externalModel) throws ModuleException;
+    TransportModelResponse marshall(ExternalModelHolder externalModel, TransportModelVersion version)
+            throws ModuleException;
 
     /**
      * Validates the external model. If the validation succeeds, a empty result will be returned. If the validation

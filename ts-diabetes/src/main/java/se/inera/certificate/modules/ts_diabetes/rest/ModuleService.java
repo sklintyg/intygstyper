@@ -41,11 +41,13 @@ import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.PdfResponse;
 import se.inera.certificate.modules.support.api.dto.TransportModelHolder;
 import se.inera.certificate.modules.support.api.dto.TransportModelResponse;
+import se.inera.certificate.modules.support.api.dto.TransportModelVersion;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.exception.ModuleConverterException;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
+import se.inera.certificate.modules.support.api.exception.ModuleVersionUnsupportedException;
 import se.inera.certificate.modules.ts_diabetes.model.converter.ConverterException;
 import se.inera.certificate.modules.ts_diabetes.model.converter.ExternalToInternalConverter;
 import se.inera.certificate.modules.ts_diabetes.model.converter.ExternalToTransportConverter;
@@ -116,7 +118,13 @@ public class ModuleService implements se.inera.certificate.modules.support.api.M
      * @throws ModuleException
      */
     @Override
-    public TransportModelResponse marshall(ExternalModelHolder externalModel) throws ModuleException {
+    public TransportModelResponse marshall(ExternalModelHolder externalModel, TransportModelVersion version)
+            throws ModuleException {
+        if (!version.equals(TransportModelVersion.UTLATANDE_V1)) {
+            throw new ModuleVersionUnsupportedException("ts-diabetes does not support transport model version "
+                    + version);
+        }
+
         try {
             return toTransportModelResponse(externalToTransportConverter.convert(getExternal(externalModel)));
 

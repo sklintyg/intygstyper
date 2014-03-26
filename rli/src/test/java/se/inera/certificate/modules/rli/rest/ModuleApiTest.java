@@ -19,6 +19,7 @@
 package se.inera.certificate.modules.rli.rest;
 
 import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
+import static se.inera.certificate.modules.support.api.dto.TransportModelVersion.UTLATANDE_V1;
 
 import java.io.StringWriter;
 
@@ -84,7 +85,7 @@ public class ModuleApiTest {
     @Test
     public void testMarshall() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            moduleApi.marshall(createExternalHolder(scenario.asExternalModel()));
+            moduleApi.marshall(createExternalHolder(scenario.asExternalModel()), UTLATANDE_V1);
         }
 
     }

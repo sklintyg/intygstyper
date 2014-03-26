@@ -18,6 +18,8 @@
  */
 package se.inera.certificate.modules.ts_bas.rest;
 
+import static se.inera.certificate.modules.support.api.dto.TransportModelVersion.UTLATANDE_V1;
+
 import java.io.StringWriter;
 
 import javax.xml.bind.JAXBContext;
@@ -83,7 +85,7 @@ public class ModuleApiTest {
     @Test
     public void testMarshall() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            moduleApi.marshall(createExternalHolder(scenario.asExternalModel()));
+            moduleApi.marshall(createExternalHolder(scenario.asExternalModel()), UTLATANDE_V1);
         }
 
     }
