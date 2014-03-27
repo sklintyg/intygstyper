@@ -209,21 +209,21 @@
                 <artifactItem>
                   <groupId>se.inera.certificate-web</groupId>
                   <artifactId>citizen-web</artifactId>
-                  <version>1.2-SNAPSHOT</version>
+                  <version>${inera.certificate.version}</version>
                   <type>war</type>
                   <outputDirectory>${project.build.directory}/citizen-web.war</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>se.inera.certificate</groupId>
                   <artifactId>web</artifactId>
-                  <version>1.2-SNAPSHOT</version>
+                  <version>${inera.certificate.version}</version>
                   <type>war</type>
                   <outputDirectory>${project.build.directory}/web.war</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>se.inera.webcert</groupId>
                   <artifactId>webcert</artifactId>
-                  <version>0.5.1-SNAPSHOT</version>
+                  <version>0.5-RC1</version>
                   <type>war</type>
                   <outputDirectory>${project.build.directory}/webcert.war</outputDirectory>
                 </artifactItem>
