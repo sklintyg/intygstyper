@@ -22,8 +22,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
-import se.inera.certificate.modules.fk7263.rest.dto.CreateNewDraftCertificateHolder;
-import se.inera.certificate.modules.fk7263.rest.dto.HoSPersonal;
+import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.certificate.modules.support.api.dto.Patient;
 
 /**
  * Factory for creating a editable model.
@@ -34,10 +34,10 @@ public class WebcertModelFactory {
      * 
      * @param newDraftData
      *            {@link CreateNewDraftCertificateHolder}
-     * @return {@link Utlatande} or throws a ConverterException if something unforeseen happens
+     * @return {@link Fk7263Intyg} or throws a ConverterException if something unforeseen happens
      * @throws ConverterException
      */
-    public Fk7263Intyg createNewWebcertDraft(CreateNewDraftCertificateHolder newDraftData) throws ConverterException {
+    public Fk7263Intyg createNewWebcertDraft(CreateNewDraftHolder newDraftData) throws ConverterException {
 
         if (newDraftData.getCertificateId() == null) {
             throw new ConverterException("No certificateID found");
@@ -67,13 +67,13 @@ public class WebcertModelFactory {
 
         populateWithSkapadAv(utlatande, newDraftData.getSkapadAv());
 
-        populateWithPatientInfo(utlatande, newDraftData.getPatientInfo());
+        populateWithPatientInfo(utlatande, newDraftData.getPatient());
 
         return utlatande;
     }
 
     private void populateWithPatientInfo(Fk7263Intyg utlatande,
-            se.inera.certificate.modules.fk7263.rest.dto.Patient patient) throws ConverterException {
+            Patient patient) throws ConverterException {
 
         if (patient == null) {
             throw new ConverterException("Got null while trying to populateWithPatientInfo");
@@ -84,33 +84,33 @@ public class WebcertModelFactory {
     }
 
     private void populateWithSkapadAv(Fk7263Intyg utlatande,
-            se.inera.certificate.modules.fk7263.rest.dto.HoSPersonal skapadAv) throws ConverterException {
-        if (skapadAv == null) {
+            se.inera.certificate.modules.support.api.dto.HoSPersonal hoSPersonal) throws ConverterException {
+        if (hoSPersonal == null) {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");
         }
 
-        utlatande.setVardperson(convertHosPersonalToEdit(skapadAv));
+        utlatande.setVardperson(convertHosPersonalToEdit(hoSPersonal));
     }
 
-    private Vardperson convertHosPersonalToEdit(HoSPersonal skapadAv) throws ConverterException {
+    private Vardperson convertHosPersonalToEdit(se.inera.certificate.modules.support.api.dto.HoSPersonal hoSPersonal) throws ConverterException {
         Vardperson vardperson = new Vardperson();
-        vardperson.setNamn(skapadAv.getNamn());
-        vardperson.setHsaId(skapadAv.getHsaId());
-        vardperson.setForskrivarKod(skapadAv.getForskrivarkod());
+        vardperson.setNamn(hoSPersonal.getNamn());
+        vardperson.setHsaId(hoSPersonal.getHsaId());
+        vardperson.setForskrivarKod(hoSPersonal.getForskrivarkod());
 
-        if (skapadAv.getVardenhet() != null) {
-            vardperson.setEnhetsId(skapadAv.getVardenhet().getHsaId());
-            vardperson.setEnhetsnamn(skapadAv.getVardenhet().getNamn());
+        if (hoSPersonal.getVardenhet() != null) {
+            vardperson.setEnhetsId(hoSPersonal.getVardenhet().getHsaId());
+            vardperson.setEnhetsnamn(hoSPersonal.getVardenhet().getNamn());
 
-            vardperson.setPostadress(skapadAv.getVardenhet().getPostadress());
-            vardperson.setPostnummer(skapadAv.getVardenhet().getPostnummer());
-            vardperson.setPostort(skapadAv.getVardenhet().getPostort());
-            vardperson.setTelefonnummer(skapadAv.getVardenhet().getTelefonnummer());
+            vardperson.setPostadress(hoSPersonal.getVardenhet().getPostadress());
+            vardperson.setPostnummer(hoSPersonal.getVardenhet().getPostnummer());
+            vardperson.setPostort(hoSPersonal.getVardenhet().getPostort());
+            vardperson.setTelefonnummer(hoSPersonal.getVardenhet().getTelefonnummer());
         }
 
-        if (skapadAv.getVardenhet() != null && skapadAv.getVardenhet().getVardgivare() != null) {
-            vardperson.setVardgivarId(skapadAv.getVardenhet().getVardgivare().getHsaId());
-            vardperson.setVardgivarnamn(skapadAv.getVardenhet().getVardgivare().getNamn());
+        if (hoSPersonal.getVardenhet() != null && hoSPersonal.getVardenhet().getVardgivare() != null) {
+            vardperson.setVardgivarId(hoSPersonal.getVardenhet().getVardgivare().getHsaId());
+            vardperson.setVardgivarnamn(hoSPersonal.getVardenhet().getVardgivare().getNamn());
         }
 
         return vardperson;

@@ -2,6 +2,9 @@ package se.inera.certificate.modules.fk7263.validator;
 
 import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -10,22 +13,22 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
-import se.inera.certificate.modules.fk7263.rest.dto.ValidateDraftResponseHolder;
-import se.inera.certificate.modules.fk7263.rest.dto.ValidationMessage;
-import se.inera.certificate.modules.fk7263.rest.dto.ValidationStatus;
+import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.certificate.modules.support.api.dto.ValidationMessage;
+import se.inera.certificate.modules.support.api.dto.ValidationStatus;
 
 public class InternalDraftValidator {
     private static Logger LOG = LoggerFactory.getLogger(InternalDraftValidator.class);
 
-    private ValidateDraftResponseHolder validationResponse;
-
     private Fk7263Intyg utlatande;
+    
+    private List<ValidationMessage> validationMessages;
 
     public InternalDraftValidator() {
-        validationResponse = new ValidateDraftResponseHolder();
+        validationMessages = new ArrayList<>();
     }
 
-    public ValidateDraftResponseHolder validateDraft(Fk7263Intyg utlatande) {
+    public ValidateDraftResponse validateDraft(Fk7263Intyg utlatande) {
         this.utlatande = utlatande;
 
         validateDiagnose();
@@ -35,9 +38,7 @@ public class InternalDraftValidator {
         validateRessatt();
         validateKommentar();
 
-        validationResponse.setStatus(getValidationStatus());
-
-        return validationResponse;
+        return new ValidateDraftResponse(getValidationStatus(), validationMessages);
     }
 
     private void validateKommentar() {
@@ -127,7 +128,8 @@ public class InternalDraftValidator {
      *         otherwise
      */
     private ValidationStatus getValidationStatus() {
-        return (validationResponse.hasErrorMessages()) ? ValidationStatus.INVALID : ValidationStatus.VALID;
+        return (validationMessages.isEmpty()) ? se.inera.certificate.modules.support.api.dto.ValidationStatus.VALID
+                : se.inera.certificate.modules.support.api.dto.ValidationStatus.INVALID;
     }
 
     /**
@@ -139,7 +141,7 @@ public class InternalDraftValidator {
      *            a String with an error code for the front end implementation
      */
     private void addValidationError(String field, String msg) {
-        validationResponse.addErrorMessage(new ValidationMessage(field, msg));
+        validationMessages.add(new ValidationMessage(field, msg));
         LOG.debug(field + " " + msg);
     }
 

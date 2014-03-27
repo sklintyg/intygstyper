@@ -7,6 +7,7 @@ import iso.v21090.dt.v1.PQ;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +24,7 @@ import se.inera.certificate.fk7263.model.v1.VardgivareType;
 import se.inera.certificate.fk7263.model.v1.VardkontaktType;
 import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.LocalDateInterval;
+import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
@@ -42,7 +44,7 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Vardenhet;
  */
 public final class TransportToExternalConverter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TransportToExternalConverter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TransportToExternalConverter.class);
 
     private TransportToExternalConverter() {
     }
@@ -52,7 +54,9 @@ public final class TransportToExternalConverter {
      */
     public static Fk7263Utlatande convert(se.inera.certificate.fk7263.model.v1.Utlatande source) {
         Fk7263Utlatande fk7263utlatande = new Fk7263Utlatande();
-
+        
+        LOG.trace("Starting conversion from Transport to External");
+        
         fk7263utlatande.setId(toId(source.getUtlatandeId()));
         fk7263utlatande.setTyp(toKod(source.getTypAvUtlatande()));
         fk7263utlatande.getKommentarer().addAll(source.getKommentars());
@@ -108,8 +112,8 @@ public final class TransportToExternalConverter {
         observation.setObservationskod(IsoTypeConverter.toKod(source.getObservationskod()));
 
         if (source.getObservationsperiod() != null) {
-            LocalDateInterval observationsPeriod = new LocalDateInterval(source.getObservationsperiod().getFrom(), source
-                    .getObservationsperiod().getTom());
+            PartialInterval observationsPeriod = new PartialInterval(new Partial(source.getObservationsperiod()
+                    .getFrom()), new Partial(source.getObservationsperiod().getTom()));
             observation.setObservationsperiod(observationsPeriod);
         }
 

@@ -28,12 +28,15 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
  */
 public class ExternalToTransportConverterTest {
 
+    private ExternalToTransportConverter converter = new ExternalToTransportConverter();
+
     @Test
     public void testConversion() throws JAXBException, IOException, SAXException {
 
-        Fk7263Utlatande fk7263Utlatande = new CustomObjectMapper().readValue(new ClassPathResource("ExternalToTransportConverterTest/utlatande.json").getFile(), Fk7263Utlatande.class);
+        Fk7263Utlatande fk7263Utlatande = new CustomObjectMapper().readValue(new ClassPathResource(
+                "ExternalToTransportConverterTest/utlatande.json").getFile(), Fk7263Utlatande.class);
 
-        Utlatande utlatande = new ExternalToTransportConverter(fk7263Utlatande).convert();
+        Utlatande utlatande = converter.convert(fk7263Utlatande);
 
         // read utlatandeType from file
         File xmlFile = new ClassPathResource("ExternalToTransportConverterTest/utlatande.xml").getFile();
@@ -54,7 +57,8 @@ public class ExternalToTransportConverterTest {
     private class NamespacePrefixNameIgnoringListener implements DifferenceListener {
         public int differenceFound(Difference difference) {
             if (NAMESPACE_PREFIX_ID == difference.getId()) {
-                // differences in namespace prefix IDs are ok (eg. 'ns1' vs 'ns2'), as long as the namespace URI is the same
+                // differences in namespace prefix IDs are ok (eg. 'ns1' vs 'ns2'), as long as the namespace URI is the
+                // same
                 return RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
             } else {
                 return RETURN_ACCEPT_DIFFERENCE;

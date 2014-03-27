@@ -7,6 +7,8 @@ import static org.junit.Assert.assertEquals;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.xml.sax.SAXException;
@@ -19,13 +21,20 @@ import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
  */
 public class ExternalToInternalConverterTest {
 
+    ExternalToInternalConverter externalToInternalConverter;
+
+    @Before
+    public void setUp() throws Exception {
+        externalToInternalConverter = new ExternalToInternalConverter();
+    }
+
     @Test
-    public void testConversion() throws JAXBException, IOException, SAXException {
+    public void testConversion() throws JAXBException, IOException, SAXException, ConverterException {
 
         Fk7263Utlatande fk7263Utlatande = new CustomObjectMapper().readValue(new ClassPathResource(
                 "ExternalToInternalConverterTest/utlatande_external.json").getFile(), Fk7263Utlatande.class);
 
-        Fk7263Intyg internal = new ExternalToInternalConverter(fk7263Utlatande).convert();
+        Fk7263Intyg internal = externalToInternalConverter.convert(fk7263Utlatande);
 
         // serialize utlatande to JSON and compare with expected JSON
         ObjectMapper objectMapper = new CustomObjectMapper();

@@ -1,34 +1,25 @@
 package se.inera.certificate.modules.fk7263.model.external;
 
+import static se.inera.certificate.model.util.Iterables.find;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import static se.inera.certificate.model.util.Iterables.find;
-
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import se.inera.certificate.model.Id;
+
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.Referens;
+import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.model.util.Predicate;
 import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
+import se.inera.certificate.modules.fk7263.model.converter.DateTimeConverter;
 
 /**
  * @author marced
  */
-public class Fk7263Utlatande {
-
-    private Id id;
-
-    private Kod typ;
-
-    private List<String> kommentarer = new ArrayList<>();
-
-    private LocalDateTime signeringsdatum;
-
-    private LocalDateTime skickatdatum;
+public class Fk7263Utlatande extends Utlatande {
 
     private Fk7263Patient patient;
 
@@ -41,37 +32,6 @@ public class Fk7263Utlatande {
     private List<Vardkontakt> vardkontakter = new ArrayList<>();
 
     private List<Referens> referenser = new ArrayList<>();
-
-    public Id getId() {
-        return id;
-    }
-
-    public void setId(Id id) {
-        this.id = id;
-    }
-
-    public Kod getTyp() {
-        return typ;
-    }
-
-    public void setTyp(Kod typ) {
-        this.typ = typ;
-    }
-
-    public List<String> getKommentarer() {
-        if (kommentarer == null) {
-            kommentarer = new ArrayList<>();
-        }
-        return kommentarer;
-    }
-
-    public LocalDateTime getSigneringsdatum() {
-        return signeringsdatum;
-    }
-
-    public void setSigneringsdatum(LocalDateTime signeringsdatum) {
-        this.signeringsdatum = signeringsdatum;
-    }
 
     public Fk7263Patient getPatient() {
         return patient;
@@ -115,14 +75,6 @@ public class Fk7263Utlatande {
             referenser = new ArrayList<>();
         }
         return referenser;
-    }
-
-    public LocalDateTime getSkickatdatum() {
-        return skickatdatum;
-    }
-
-    public void setSkickatdatum(LocalDateTime skickatdatum) {
-        this.skickatdatum = skickatdatum;
     }
 
     public List<Fk7263Observation> getObservationsByKod(Kod observationsKod) {
@@ -198,16 +150,20 @@ public class Fk7263Utlatande {
     }
 
     /**
-     * Certificate specific implementation of when a valid from date is.
-     * Iterate through all From dates and return the earliest (non-null) date.
+     * Certificate specific implementation of when a valid from date is. Iterate through all From dates and return the
+     * earliest (non-null) date.
+     * 
      * @return
      */
+    @Override
     public LocalDate getValidFromDate() {
         List<Fk7263Observation> nedsattningar = getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
         LocalDate fromDate = null;
 
         for (Fk7263Observation nedsattning : nedsattningar) {
-            LocalDateInterval nextObservationsperiod = nedsattning.getObservationsperiod();
+            LocalDateInterval nextObservationsperiod = DateTimeConverter.toLocalDateInterval(nedsattning
+                    .getObservationsperiod());
+
             if (nextObservationsperiod != null) {
                 if (fromDate == null || fromDate.isAfter(nextObservationsperiod.getFrom())) {
                     fromDate = nextObservationsperiod.getFrom();
@@ -218,8 +174,8 @@ public class Fk7263Utlatande {
     }
 
     /**
-     * Certificate specific implementation of when a valid from date is.
-     * Iterate through all Tom dates and return the latest (non-null) date.
+     * Certificate specific implementation of when a valid from date is. Iterate through all Tom dates and return the
+     * latest (non-null) date.
      * 
      * @return
      */
@@ -228,7 +184,9 @@ public class Fk7263Utlatande {
         LocalDate toDate = null;
 
         for (Fk7263Observation nedsattning : nedsattningar) {
-            LocalDateInterval nextObservationsperiod = nedsattning.getObservationsperiod();
+            LocalDateInterval nextObservationsperiod = DateTimeConverter.toLocalDateInterval(nedsattning
+                    .getObservationsperiod());
+
             if (nextObservationsperiod != null) {
                 if (toDate == null || toDate.isBefore(nextObservationsperiod.getFrom())) {
                     toDate = nextObservationsperiod.getTom();

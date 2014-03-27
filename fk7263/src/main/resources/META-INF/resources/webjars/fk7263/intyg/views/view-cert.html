@@ -1,0 +1,258 @@
+<div class="row-fluid">
+
+  <div id="backnav" class="row-fluid">
+    <a class="backlink" href="/web/start"> <span message key="button.goback"></span>
+    </a>
+  </div>
+
+  <div mi-spinner label="view.message.certificateloading" show-spinner="!doneLoading" show-content="doneLoading">
+
+    <!-- Content -->
+    <div class="row-fluid">
+      <div class="span7">
+        <h1 ng-focus="pagefocus" tabindex="-1">
+          <span message key="view.label.pagetitle"></span>
+        </h1>
+        <p>
+          <div message key="view.label.pagedescription"></div>
+        </p>
+        <form id="view-as-pdf" action="/moduleapi/certificate/{{cert.id}}/pdf" method="get" target="_blank">
+          <p class="btn-row">
+            <button id="sendCertificateBtn" type="button" ng-click="send()" class="btn btn-success">
+              <span message key="view.button.sendToFK"></span>
+            </button>
+            <button id="downloadprint" type="submit" class="btn btn-inverse">
+              <span message key="button.downloadprint"></span>
+            </button>
+          </p>
+        </form>
+      </div>
+      <div class="span5 eventbox">
+        <h2>
+          <span message key="view.label.latestevent"></span>
+        </h2>
+        <!--  Show if no events to show -->
+        <p ng-show="cert.filteredStatuses.length<1">
+          <span message key="view.label.latestevent.noevents"></span></a>
+        </p>
+
+        <!-- Show first status in list if any viable status exist-->
+        <p id="lastest-certificate-event" ng-show="cert.filteredStatuses.length>0">
+          {{cert.filteredStatuses[0].timestamp | date:'shortDate'}} <span message key="fk7263.status.{{cert.filteredStatuses[0].type}}"></span> <span message
+            key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span>
+        </p>
+        <!-- Show if more than 1 viable status exists -->
+        <p ng-show="cert.filteredStatuses.length>1">
+          <a class="statusHistoryLink" href ng-click="showStatusHistory()"><span message key="view.label.latestevent.showall"></span></a>
+        </p>
+      </div>
+    </div>
+    <div id="certificate" class="certificate">
+      <span class="hide" id="certId" title="{{cert.id}}"></span>&nbsp;<span class="hide" id="certType" title="fk7263"></span>
+
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="cert">
+            <div class="cert-titlebar">
+              <img class="cert-icon" alt="" ng-src="{{cert.typ_image}}" />
+
+              <div class="row-fluid">
+                <div class="span6">
+                  <h2 class="cert-title">
+                    <span message key="certificatetypes.FK7263.commonname"></span> <span class="cert-titlebar-type"><span message key="certificatetypes.fk7263.typename"></span></span>
+                  </h2>
+                </div>
+                <div class="span6 issue">
+                  <span><span message key="view.label.issued"></span></span> <span class="cert-titlebar-value">{{cert.signeringsdatum | date:'longDate'}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="cert-header">
+              <div class="row-fluid">
+                <div class="span6 header-row">
+                  <h3 class="tag">
+                    <span message key="view.label.patientname"></span>
+                  </h3>
+                  <span id="patient-name">{{cert.patientNamn}}</span>
+                </div>
+                <div class="span6">
+                  <h3 class="tag">
+                    <span message key="view.label.nedsattning"></span>
+                  </h3>
+
+                  <div ng-show="nedsattMed25 != null">
+                    <span message key="nedsattningsgrad.nedsatt_med_1_4"></span> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed25.start |
+                      date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed25.end | date:'longDate'}} </span>
+                  </div>
+
+                  <div ng-show="cert.nedsattMed50 != null">
+                    <span message key="nedsattningsgrad.nedsatt_med_1_2"></span><br> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed50.start
+                      | date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed50.end | date:'longDate'}} </span>
+                  </div>
+
+                  <div ng-show="cert.nedsattMed75 != null">
+                    <span message key="nedsattningsgrad.nedsatt_med_3_4"></span> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed75.start |
+                      date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed75.end | date:'longDate'}} </span>
+                  </div>
+
+                  <div ng-show="cert.nedsattMed100 != null">
+                    <span message key="nedsattningsgrad.helt_nedsatt"></span><br> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed100.start |
+                      date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed100.end | date:'longDate'}} </span>
+                  </div>
+
+
+                </div>
+              </div>
+
+              <div class="row-fluid">
+                <div class="span6 header-row">
+                  <h3 class="tag">
+                    <span message key="view.label.civicnumber"></span>
+                  </h3>
+                  <span id="patient-crn">{{cert.patientPersonnummer}}</span>
+                </div>
+                <div class="span6"></div>
+              </div>
+              <div class="row-fluid">
+                <div class="span6 header-row">
+                  <h3 class="tag">
+                    <span message key="view.label.unit"></span>
+                  </h3>
+                  <span id="careunit">{{cert.vardperson.enhetsnamn}}</span>
+                </div>
+                <div class="span6">
+                  <h3 class="tag">
+                    <span message key="view.label.issuer"></span>
+                  </h3>
+                  <span id="caregiver">{{cert.vardperson.vardgivarnamn}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="table-bottom"></div>
+
+            <div class="cert-body">
+
+              <div mi-field field-label="view.label.smittskydd" filled="true">
+                <span ng-show="cert.avstangningSmittskydd"> <span message key="view.label.yes"></span></span> <span ng-show="!cert.avstangningSmittskydd"> <span message key="view.label.no"></span>
+                </span>
+              </div>
+
+
+              <div mi-field field-label="view.label.diagnosis" filled="cert.diagnosBeskrivning">
+                {{cert.diagnosBeskrivning}} (<span class="tag"><span message key="view.label.diagnosisCode"></span></span> {{cert.diagnosKod}})
+              </div>
+
+              <div mi-field field-label="view.label.progressofdesease" filled="cert.sjukdomsforlopp!=null">{{cert.sjukdomsforlopp}}</div>
+
+              <div mi-field field-label="view.label.disabilities" filled="cert.funktionsnedsattning!=null">{{cert.funktionsnedsattning}}</div>
+
+              <div mi-field field-label="view.label.basedon" filled="cert.undersokningAvPatienten!=null || telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null">
+                <ul>
+                  <li ng-show="cert.undersokningAvPatienten!=null"><span message key="vardkontakt.undersokning"></span>{{cert.undersokningAvPatienten | date:'longDate' }}</li>
+                  <li ng-show="cert.telefonkontaktMedPatienten!=null"><span message key="vardkontakt.telefonkontakt"></span>{{cert.telefonkontaktMedPatienten | date:'longDate' }}</li>
+                  <li ng-show="cert.journaluppgifter!=null"><span message key="referens.journal"></span>{{cert.journaluppgifter | date:'longDate' }}</li>
+
+
+                  <li ng-show="cert.annanReferens!=null">
+                    <!-- Annat --> <span message key="referens.annat"> </span>{{cert.annanReferens | date:'longDate' }}
+                    <div>
+                      <span class="tag" message key="view.label.reference.to.field13"></span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div mi-field field-label="view.label.limitation" filled="cert.aktivitetsbegransning!=null">{{cert.aktivitetsbegransning}}</div>
+
+              <div mi-field field-label="view.label.recommendations"
+                filled="cert.rekommendationKontaktArbetsformedlingen|| cert.rekommendationKontaktForetagshalsovarden || cert.rekommendationOvrigt!=null">
+                <ul>
+                  <li ng-show="cert.rekommendationKontaktArbetsformedlingen"><span message key="view.label.recommendations.contact.jobcenter"></span></li>
+                  <li ng-show="cert.rekommendationKontaktForetagshalsovarden"><span message key="view.label.recommendations.contact.healthdepartment"></span></li>
+                  <li ng-show="cert.rekommendationOvrigt != null"><span message key="view.label.recommendations.contact.other"></span> {{cert.rekommenderarOvrigt.beskrivning}}</li>
+                </ul>
+              </div>
+
+              <div mi-field field-label="view.label.plannedtreatment" filled="cert.atgardInomSjukvarden||cert.annanAtgard">
+                <ul>
+                  <li ng-show="cert.atgardInomSjukvarden != null"><span message key="view.label.plannedtreatment.healthcare"></span> {{cert.atgardInomSjukvarden}}</li>
+                  <li ng-show="cert.annanAtgard != null"><span message key="view.label.plannedtreatment.other"></span> {{cert.annanAtgard}}</li>
+                </ul>
+              </div>
+
+              <div mi-field field-label="view.label.workrehab" filled="cert.rehabiliteringAktuell||cert.rehabiliteringEjAktuell||cert.rehabiliteringGarInteAttBedoma">
+                <span ng-show="cert.rehabiliteringAktuell"> <span message key="view.label.yes"></span></span> <span ng-show="cert.rehabiliteringEjAktuell"> <span message key="view.label.no"></span>
+                </span> <span ng-show="cert.rehabiliteringGarInteAttBedoma"> <span message key="view.label.unjudgeable"></span></span>
+              </div>
+
+              <div mi-field field-label="view.label.patientworkcapacity" filled="cert.nuvarandeArbetsuppgifter||cert.arbetsloshet||cert.foraldrarledighet">
+                <ul>
+                  <li ng-show="cert.nuvarandeArbetsuppgifter"><span message key="view.label.patientworkcapacity.currentwork"></span> {{cert.nuvarandeArbetsuppgifter}}</li>
+                  <li ng-show="cert.arbetsloshet"><span message key="view.label.patientworkcapacity.unemployed"></span></li>
+                  <li ng-show="cert.foraldrarledighet"><span message key="view.label.patientworkcapacity.parentalleave"></span></li>
+                </ul>
+              </div>
+
+              <div mi-field field-label="view.label.patientworkcapacityjudgement" filled="cert.arbetsformagaPrognos!=null">{{cert.arbetsformagaPrognos}}</div>
+
+              <div mi-field field-label="view.label.prognosis"
+                filled="cert.arbetsformataPrognosJa || cert.arbetsformataPrognosJaDelvis||cert.arbetsformataPrognosNej||cert.arbetsformataPrognosGarInteAttBedoma">
+
+                <span ng-show="cert.arbetsformataPrognosJa"><span message key="view.label.yes"></span></span> <span ng-show="cert.arbetsformataPrognosJaDelvis"><span message
+                  key="view.label.partialyes"></span></span> <span ng-show="cert.arbetsformataPrognosNej"><span message key="view.label.no"></span></span> <span
+                  ng-show="cert.arbetsformataPrognosGarInteAttBedoma"><span message key="view.label.unjudgeable"></span><br> <span class="tag"><span message key="view.label.comment"></span></span>
+                  <span class="tag" message key="view.label.reference.to.field13"></span> </span>
+              </div>
+
+              <div mi-field field-label="view.label.othertransport" filled="cert.ressattTillArbeteAktuellt || cert.ressattTillArbeteEjAktuellt">
+                <span ng-show="cert.ressattTillArbeteAktuellt"> <span message key="view.label.yes"></span></span> <span ng-show="cert.ressattTillArbeteEjAktuellt"> <span message
+                  key="view.label.no"></span></span>
+              </div>
+
+              <div mi-field field-label="view.label.fkcontact" filled="true">
+                <span ng-show="cert.kontaktMedFk"> <span message key="view.label.yes"></span></span> <span ng-show="!cert.kontaktMedFk"> <span message key="view.label.no"></span>
+                </span>
+              </div>
+
+              <div mi-field field-label="view.label.otherinformation" filled="cert.kommentar">
+                <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
+                <div class="tag" ng-show="cert.kommentar!=null">{{cert.kommentar}}</div>
+              </div>
+
+              <div mi-field field-label="view.label.workcodes" filled="cert.forskrivarkodOchArbetsplatskod">
+                <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
+                <div>{{cert.forskrivarkodOchArbetsplatskod}}</div>
+              </div>
+
+              <div class="row-fluid">
+                <div class="span7">
+                  <div class="infobox">
+                    <h3>
+                      <span message key="view.label.confirmedby"></span>
+                    </h3>
+                    <h4>
+                      <span message key="view.label.date"></span>
+                    </h4>
+                    <p>{{cert.signeringsdatum | date:'longDate'}}</p>
+                    <h4>
+                      <span message key="view.label.contactinfo"></span>
+                    </h4>
+                    <p>
+                      <span class="text">{{cert.vardperson.namn}}</span><br /> <span class="text">{{cert.vardperson.enhetsnamn}}</span><br /> <span class="text">{{cert.vardperson.postadress}}</span><br />
+                      <span class="text">{{cert.vardperson.postnummer}} {{cert.vardperson.postort}}</span><br /> <span class="text">{{cert.vardperson.telefonnummer}}</span><br />
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!-- cert-body -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- eof spinner -->
+</div>

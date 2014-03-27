@@ -238,7 +238,7 @@ public class InternalToExternalConverter {
         Fk7263Observation obs = new Fk7263Observation();
 
         obs.setObservationskod(kod);
-        obs.setObservationsperiod(period);
+        obs.setObservationsperiod(DateTimeConverter.toPartialInterval(period));
 
         if (prognos != null) {
             obs.getPrognoser().add(prognos);

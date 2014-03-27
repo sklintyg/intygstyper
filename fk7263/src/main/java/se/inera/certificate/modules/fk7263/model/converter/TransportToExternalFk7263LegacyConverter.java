@@ -370,7 +370,7 @@ public final class TransportToExternalFk7263LegacyConverter {
         if (source.getVaraktighetTom() != null) {
             observationsperiod.setTom(source.getVaraktighetTom());
         }
-        nedsattning.setObservationsperiod(observationsperiod);
+        nedsattning.setObservationsperiod(DateTimeConverter.toPartialInterval(observationsperiod));
 
         return nedsattning;
     }
