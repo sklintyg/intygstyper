@@ -16,68 +16,68 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
- a.backlink-icon {
-	display: block;
-	width: 24px;
-	height: 24px;
-	background: transparent url(/img/tillbaka.png) center left no-repeat;
-	float: left;
-	margin: 2px 20px 0 0;
+
+a.backlink-icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background: transparent url(/img/tillbaka.png) center left no-repeat;
+    float: left;
+    margin: 2px 20px 0 0;
 }
 
 a:hover.backlink-icon {
-  background:transparent url(/img/tillbaka_hoover.png) center left no-repeat;
+    background: transparent url(/img/tillbaka_hoover.png) center left no-repeat;
 }
 
 .body-row a {
-	color: #008391;
+    color: #008391;
 }
 
 .header-fix-top {
-	position:fixed;
-	width: 100%;
-	left: 0;
-	top: 0;
-	z-index: 500;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 500;
 }
 
 .header-fix-top-expand {
-  position: relative;
-  top: -20px;
-  right: 30px;
+    position: relative;
+    top: -20px;
+    right: 30px;
 }
 
 .header-fix-top-expand-wrapper {
-  position: absolute;
-  right: 0;
-  top: 0;
-  background-color: #74777F;
-  text-align: center;
-  -webkit-border-radius: 0 0 5px 5px;
-  -moz-border-radius: 0 0 5px 5px;
-  -ms-border-radius: 0 0 5px 5px;
-  border-radius: 0 0 5px 5px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: #74777F;
+    text-align: center;
+    -webkit-border-radius: 0 0 5px 5px;
+    -moz-border-radius: 0 0 5px 5px;
+    -ms-border-radius: 0 0 5px 5px;
+    border-radius: 0 0 5px 5px;
 }
 
-.header-fix-top-expand-wrapper .btn-link,.header-fix-top-expand-wrapper .btn-link:hover {
-	color: #fff;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.75);
+.header-fix-top-expand-wrapper .btn-link, .header-fix-top-expand-wrapper .btn-link:hover {
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.75);
 }
 
 .header-fix-top h1 {
-	margin: 0 20px 0 0;
-	line-height: 29px;
+    margin: 0 20px 0 0;
+    line-height: 29px;
 }
 
 .header-fix-panel {
-	padding: 20px 0 10px 30px;
-	border-bottom: 1px solid #999;
-	background-color: #fff;
-	-ms-box-shadow: 0 -5px 25px #323232;
-	-webkit-box-shadow: 0 -5px 25px #323232;
-	-moz-box-shadow: 0 -5px 25px #323232;
-	box-shadow: 0 -5px 25px #323232;
+    padding: 20px 0 10px 30px;
+    border-bottom: 1px solid #999;
+    background-color: #fff;
+    -ms-box-shadow: 0 -5px 25px #323232;
+    -webkit-box-shadow: 0 -5px 25px #323232;
+    -moz-box-shadow: 0 -5px 25px #323232;
+    box-shadow: 0 -5px 25px #323232;
 }
 
 /*
@@ -89,68 +89,70 @@ span.help {
 }*/
 
 .help {
-  background-color: #008391;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  border-radius: 50%;
-  color: #fff;
-  padding: 1px 5px 1px 5px;
-  margin-left: 10px; 
-  font-size: 14px;
-  font-weight: bold;
+    background-color: #008391;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+    color: #fff;
+    padding: 1px 5px 1px 5px;
+    margin-left: 10px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .help:hover {
-	background-color: #28b4c4;
-	cursor: pointer;
+    background-color: #28b4c4;
+    cursor: pointer;
 }
 
 .counter {
-	font-style: italic;
-	font-size: 11px;
+    font-style: italic;
+    font-size: 11px;
 }
 
 .info-transfer {
-	font-size: 12px;
-	color: #777;
+    font-size: 12px;
+    color: #777;
 }
 
 .edit-form {
-  margin-top: 250px; 
-  max-width: 800px
+    margin-top: 250px;
+    max-width: 800px
 }
 
 .collapsed {
-  margin-top: 150px;
+    margin-top: 150px;
 }
 
 .alert-block {
-	display: inline-block;
+    display: inline-block;
 }
 
 .webcert-multicol .certificate {
-  max-width: 600px;
+    max-width: 600px;
 }
 
 .certificate {
-	max-width: 800px;
+    max-width: 800px;
 }
 
 .revoked-certificate {
-  color: #aaaaaa;
+    color: #aaaaaa;
 }
-.revoked-certificate div.infobox, .revoked-certificate div.infobox h3, .revoked-certificate div.infobox h4{
+
+.revoked-certificate div.infobox, .revoked-certificate div.infobox h3, .revoked-certificate div.infobox h4 {
     background-color: #e5e5e5;
     color: #aaaaaa;
 }
+
 .revoked-certificate .cert-body .body-row .title, .revoked-certificate .body-row h4.cert-field-number {
- color: #aaaaaa;
+    color: #aaaaaa;
 }
 
 .revoked-certificate .qa-block, .revoked-certificate .qa-block-head {
- background-color: #f5f5f5;	
-  color: #aaaaaa;
+    background-color: #f5f5f5;
+    color: #aaaaaa;
 }
 
 .cert-body {
@@ -158,12 +160,12 @@ span.help {
 }
 
 .cert-body div.body-row {
-	margin: 0 30px 25px 0;
-/*	background-color: #e5e5e5;
-	border: 1px solid #d8d8d8;*/
-	-webkit-border-radius: 8px 8px 8px 8px;
-	-moz-border-radius: 8px 8px 8px 8px;
-	border-radius: 8px 8px 8px 8px;	
+    margin: 0 30px 25px 0;
+    /*	background-color: #e5e5e5;
+        border: 1px solid #d8d8d8;*/
+    -webkit-border-radius: 8px 8px 8px 8px;
+    -moz-border-radius: 8px 8px 8px 8px;
+    border-radius: 8px 8px 8px 8px;
 }
 
 .cert-body .alert-info {
@@ -171,8 +173,8 @@ span.help {
 }
 
 .body-row label {
-	max-width: 600px;
-  vertical-align: text-top;
+    max-width: 600px;
+    vertical-align: text-top;
 }
 
 .body-row .checkbox {
@@ -192,59 +194,58 @@ span.help {
 }
 
 .cert-body div.body-row-single {
-	padding-left: 20px;
+    padding-left: 20px;
     background-color: #e5e5e5;
     border: 1px solid #d8d8d8;
 }
 
 .cert-body .body-row .title {
-	margin: 0;
-	color: #008391;
-	font-size: 16px;
-	font-weight: bold;
-	display: block;
-	/*padding: 10px 20px;*/
+    margin: 0;
+    color: #008391;
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    /*padding: 10px 20px;*/
     padding-bottom: 5px;
     -webkit-border-radius: 4px 4px 4px 4px;
     -moz-border-radius: 4px 4px 4px 4px;
     border-radius: 4px 4px 4px 4px;
-/*  border-bottom: 1px solid #d8d8d8;*/
+    /*  border-bottom: 1px solid #d8d8d8;*/
 }
 
 .cert-body .body-row .title-single {
-  background: none;
-  -webkit-border-radius: 0 0 0 0;
-  -moz-border-radius: 0 0 0 0;
-  border-radius: 0 0 0 0;
-  border: 0;
-  display: inline-block;
-  padding: 10px 10px;
-  vertical-align: middle;
-  margin: 0; 
+    background: none;
+    -webkit-border-radius: 0 0 0 0;
+    -moz-border-radius: 0 0 0 0;
+    border-radius: 0 0 0 0;
+    border: 0;
+    display: inline-block;
+    padding: 10px 10px;
+    vertical-align: middle;
+    margin: 0;
 }
 
-
 .cert-body .body-row .text {
-  display: block;
-  padding: 20px 40px;
-  background-color: #e5e5e5;
-  -webkit-border-radius: 4px 4px 4px 4px;
-  -moz-border-radius: 4px 4px 4px 4px;
-  border-radius: 4px 4px 4px 4px;
+    display: block;
+    padding: 20px 40px 15px 40px;
+    background-color: #e5e5e5;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    border-radius: 4px 4px 4px 4px;
 }
 
 .cert-body .body-row .unfilled {
-  color: #888;
-  -webkit-border-radius: 4px 4px 4px 4px;
-  -moz-border-radius: 4px 4px 4px 4px;
-  border-radius: 4px 4px 4px 4px;
+    color: #888;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    border-radius: 4px 4px 4px 4px;
 }
 
 .body-row h4.cert-field-number {
-	float: right;
-	/*padding: 10px 20px 0 20px;*/
-	color: #008391;
-	font-size: 15px;
+    float: right;
+    /*padding: 10px 20px 0 20px;*/
+    color: #008391;
+    font-size: 15px;
 }
 
 .body-row-single h4.cert-field-number {
@@ -257,7 +258,7 @@ span.help {
 }
 
 .body-row .cert-field-blank {
-  color: #008391;
+    color: #008391;
 }
 
 div.infobox {
@@ -283,202 +284,207 @@ div.infobox h4 {
 }
 
 .indent {
-	padding-left: 20px !important;
+    padding-left: 20px !important;
 }
 
 .block {
-  display: block !important;
+    display: block !important;
 }
 
 .inline-block {
-	display: inline-block !important;
+    display: inline-block !important;
 }
 
 .maxwidth {
-	width: 100% !important;
+    width: 100% !important;
 }
 
 input[datepicker-popup] {
-	width: 80px;
+    width: 80px;
 }
 
 .qa-column {
-	max-width: 600px;
-	padding-right: 20px;
+    max-width: 600px;
+    padding-right: 20px;
 }
 
-.panel-container { /* IE8 doesn't understand margin-bottom on elements added by scripting so place this around and use padding instead */
-  padding-bottom: 20px;	
+.panel-container {
+    /* IE8 doesn't understand margin-bottom on elements added by scripting so place this around and use padding instead */
+    padding-bottom: 20px;
 }
 
 .qa-panel {
-  background-color: #eaeaea;
-  -webkit-border-radius: 8px 8px 8px 8px;
-  -moz-border-radius: 8px 8px 8px 8px;
-  border-radius: 8px 8px 8px 8px;
-  padding: 20px;
-  max-width: 600px;
+    background-color: #eaeaea;
+    -webkit-border-radius: 8px 8px 8px 8px;
+    -moz-border-radius: 8px 8px 8px 8px;
+    border-radius: 8px 8px 8px 8px;
+    padding: 20px;
+    max-width: 600px;
 }
 
 .qa-panel p, .qa-panel label {
-	margin-bottom: 5px;
-	font-size: 13px;
+    margin-bottom: 5px;
+    font-size: 13px;
 }
 
 .qa-panel .control-group {
-	margin: 0;
+    margin: 0;
 }
 
 .qa-panel h3 {
-  font-size: 13px;
-  margin: 0;
-  padding: 0 0 5px 0;
-  font-weight: normal;
+    font-size: 13px;
+    margin: 0;
+    padding: 0 0 5px 0;
+    font-weight: normal;
 }
 
 .qa-block {
-  background-color: #fff;
-  border: 1px solid #d8d8d8;
-  -webkit-border-radius: 8px 8px 8px 8px;
-  -moz-border-radius: 8px 8px 8px 8px;
-  border-radius: 8px 8px 8px 8px; 
+    background-color: #fff;
+    border: 1px solid #d8d8d8;
+    -webkit-border-radius: 8px 8px 8px 8px;
+    -moz-border-radius: 8px 8px 8px 8px;
+    border-radius: 8px 8px 8px 8px;
 }
 
 .qa-block-fk {
-  margin-left: 20px;
+    margin-left: 20px;
 }
 
 .qa-block-wc {
-  margin-right: 20px;
+    margin-right: 20px;
 }
 
 .qa-block-handled {
-  background-color: #f5f5f5;
+    background-color: #f5f5f5;
 }
 
 .qa-block-head {
-  margin: 0;
-  color: #000;
-  font-size: 13px;
-  display: block;
-  padding: 10px 20px;
-  border-bottom: 1px solid #d8d8d8;
-  -webkit-border-radius: 8px 8px 0 0;
-  -moz-border-radius: 8px 8px 0 0;
-  border-radius: 8px 8px 0 0;
+    margin: 0;
+    color: #000;
+    font-size: 13px;
+    display: block;
+    padding: 10px 20px;
+    border-bottom: 1px solid #d8d8d8;
+    -webkit-border-radius: 8px 8px 0 0;
+    -moz-border-radius: 8px 8px 0 0;
+    border-radius: 8px 8px 0 0;
 }
 
 .qa-block-head h3 {
-  font-size: 13px;
-  margin: 0;
-  font-weight: normal;
+    font-size: 13px;
+    margin: 0;
+    font-weight: normal;
 }
 
 .qa-block-body {
-  display: block;
-  padding: 20px 20px;
+    display: block;
+    padding: 20px 20px;
 }
 
 .qa-sender, .qa-date {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .pad10 {
-	padding: 10px;
+    padding: 10px;
 }
 
 /* ng-animate animations */
 
 .fade-hide, .fade-show {
 
-  -webkit-transition:all cubic-bezier(0.350, 0.560, 0.650, 0.840) 0.5s;
-  -moz-transition:all cubic-bezier(0.350, 0.560, 0.650, 0.840) 0.5s;
-  -o-transition:all cubic-bezier(0.350, 0.560, 0.650, 0.840) 0.5s;
-  transition:all cubic-bezier(0.350, 0.560, 0.650, 0.840) 0.5s;
-  
-/*  -webkit-transition:all linear 0.5s;
-  -moz-transition:all linear 0.5s;
-  -o-transition:all linear 0.5s;
-  transition:all linear 0.5s;*/
-  position: relative;
+    -webkit-transition: all cubic-bezier(0.350, 0.560, 0.650, 0.840) 0.5s;
+    -moz-transition: all cubic-bezier(0.350, 0.560, 0.650, 0.840) 0.5s;
+    -o-transition: all cubic-bezier(0.350, 0.560, 0.650, 0.840) 0.5s;
+    transition: all cubic-bezier(0.350, 0.560, 0.650, 0.840) 0.5s;
+
+    /*  -webkit-transition:all linear 0.5s;
+      -moz-transition:all linear 0.5s;
+      -o-transition:all linear 0.5s;
+      transition:all linear 0.5s;*/
+    position: relative;
 }
 
 .fade-hide {
-  opacity:1;
-  max-width: 800px;
-  left: 0;
+    opacity: 1;
+    max-width: 800px;
+    left: 0;
 }
+
 .fade-hide.fade-hide-active {
-  opacity:0;
-  max-width: 500px;
-  left: 100px;
+    opacity: 0;
+    max-width: 500px;
+    left: 100px;
 }
 
 .fade-show {
-	opacity:0;
-	max-width: 500px;
-  left: 100px;
+    opacity: 0;
+    max-width: 500px;
+    left: 100px;
 }
+
 .fade-show.fade-show-active {
-	opacity:1;
-	max-width: 800px;
-	left: 0;
+    opacity: 1;
+    max-width: 800px;
+    left: 0;
 }
 
 .collapse-hide, .collapse-show {
-  -webkit-transition:all ease-out 0.5s;
-  -moz-transition:all ease-out 0.5s;
-  -o-transition:all ease-out 0.5s;
-  transition:all ease-out 0.5s;
-  position: relative;
+    -webkit-transition: all ease-out 0.5s;
+    -moz-transition: all ease-out 0.5s;
+    -o-transition: all ease-out 0.5s;
+    transition: all ease-out 0.5s;
+    position: relative;
 }
 
 .collapse-hide {
-  opacity:1;
-  max-height: 800px;
+    opacity: 1;
+    max-height: 800px;
 }
+
 .collapse-hide.collapse-hide-active {
-  opacity:0.5;
-  max-height: 0px;
+    opacity: 0.5;
+    max-height: 0px;
 }
 
 .collapse-show {
-  opacity:0;
-  max-height: 0px;
+    opacity: 0;
+    max-height: 0px;
 }
+
 .collapse-show.collapse-show-active {
-  opacity:0.5;
-  max-height: 800px;
+    opacity: 0.5;
+    max-height: 800px;
 }
 
 .header-wrapper {
-/*	max-height: 110px; does commenting out this break anything? */
-	overflow: hidden;
+    /*	max-height: 110px; does commenting out this break anything? */
+    overflow: hidden;
 }
 
 .menucollapse-hide, .menucollapse-show {
-  -webkit-transition:all ease-out 0.3s;
-  -moz-transition:all ease-out 0.3s;
-  -o-transition:all ease-out 0.3s;
-  transition:all ease-out 0.3s;
-  position: relative;
-  margin-top: 0;
+    -webkit-transition: all ease-out 0.3s;
+    -moz-transition: all ease-out 0.3s;
+    -o-transition: all ease-out 0.3s;
+    transition: all ease-out 0.3s;
+    position: relative;
+    margin-top: 0;
 }
 
 .menucollapse-hide {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 .menucollapse-hide.menucollapse-hide-active {
-  margin-top: -100px;
+    margin-top: -100px;
 }
 
 .menucollapse-show {
-  margin-top: -100px;
+    margin-top: -100px;
 }
 
 .menucollapse-show.menucollapse-show-active {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 .table .table-form {
@@ -492,7 +498,7 @@ input[datepicker-popup] {
 }
 
 .table-form-radio td:last-child {
-    width:100%;
+    width: 100%;
 }
 
 .table-form td > input[type=radio] {
