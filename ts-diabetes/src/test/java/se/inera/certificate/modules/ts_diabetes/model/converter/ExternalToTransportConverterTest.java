@@ -18,8 +18,6 @@
  */
 package se.inera.certificate.modules.ts_diabetes.model.converter;
 
-import iso.v21090.dt.v1.CD;
-
 import java.util.ArrayList;
 
 import javax.xml.bind.JAXBException;
@@ -30,6 +28,7 @@ import org.junit.Test;
 import se.inera.certificate.modules.ts_diabetes.utils.ModelAssert;
 import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
 import se.inera.certificate.modules.ts_diabetes.utils.ScenarioFinder;
+import se.inera.certificate.ts_diabetes.iso.v21090.dt.v1.CD;
 import se.inera.certificate.ts_diabetes.model.v1.RekommendationType;
 import se.inera.certificate.ts_diabetes.model.v1.Utlatande;
 

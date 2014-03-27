@@ -18,8 +18,6 @@
  */
 package se.inera.certificate.modules.ts_diabetes.model.converter;
 
-import iso.v21090.dt.v1.CD;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -44,6 +42,7 @@ import se.inera.certificate.modules.ts_diabetes.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_diabetes.model.external.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.model.external.Vardenhet;
 import se.inera.certificate.modules.ts_diabetes.model.external.Vardkontakt;
+import se.inera.certificate.ts_diabetes.iso.v21090.dt.v1.CD;
 import se.inera.certificate.ts_diabetes.model.v1.AktivitetType;
 import se.inera.certificate.ts_diabetes.model.v1.BilagaType;
 import se.inera.certificate.ts_diabetes.model.v1.EnhetType;

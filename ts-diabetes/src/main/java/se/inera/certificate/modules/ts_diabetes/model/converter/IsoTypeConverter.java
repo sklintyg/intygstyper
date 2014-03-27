@@ -18,12 +18,12 @@
  */
 package se.inera.certificate.modules.ts_diabetes.model.converter;
 
-import iso.v21090.dt.v1.CD;
-import iso.v21090.dt.v1.II;
-import iso.v21090.dt.v1.PQ;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.PhysicalQuantity;
+import se.inera.certificate.ts_diabetes.iso.v21090.dt.v1.CD;
+import se.inera.certificate.ts_diabetes.iso.v21090.dt.v1.II;
+import se.inera.certificate.ts_diabetes.iso.v21090.dt.v1.PQ;
 import se.inera.certificate.ts_diabetes.model.v1.ArbetsplatsKod;
 import se.inera.certificate.ts_diabetes.model.v1.HsaId;
 import se.inera.certificate.ts_diabetes.model.v1.PersonId;
