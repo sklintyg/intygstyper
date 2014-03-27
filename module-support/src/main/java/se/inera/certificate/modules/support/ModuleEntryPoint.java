@@ -25,6 +25,14 @@ public interface ModuleEntryPoint {
     String getModuleDescription();
 
     /**
+     * Returns the logical address of the default receiver of this module, or <code>null</code> if no default receiver
+     * is specified.
+     * 
+     * @return The logical address of the default receiver or <code>null</code> if none is specified.
+     */
+    String getDefaultRecieverLogicalAddress();
+
+    /**
      * Returns the module specific implementation of the module API.
      * 
      * @return A module API implementation.

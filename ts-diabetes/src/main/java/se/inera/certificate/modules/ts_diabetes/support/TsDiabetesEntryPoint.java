@@ -23,8 +23,12 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
 
     @Override
     public String getModuleDescription() {
-        // TODO
         return "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.";
+    }
+
+    @Override
+    public String getDefaultRecieverLogicalAddress() {
+        return null;
     }
 
     @Override

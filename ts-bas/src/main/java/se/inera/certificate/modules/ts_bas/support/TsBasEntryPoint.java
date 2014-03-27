@@ -28,6 +28,11 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
     }
 
     @Override
+    public String getDefaultRecieverLogicalAddress() {
+        return null;
+    }
+
+    @Override
     public ModuleApi getModuleApi() {
         return moduleServiceWrapper;
     }
