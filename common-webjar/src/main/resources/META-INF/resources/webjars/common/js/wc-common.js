@@ -182,7 +182,8 @@ define([
                                     // Remove stored cookie for selected filter. We want to choose a new filter after choosing another unit to work on
                                     $cookieStore.remove("enhetsId");
                                     // We updated the user context on the server. Reload page for changes to show.
-                                    $window.location.reload();
+                                    $location.path("/");
+                                    $modalInstance.close();
                                 }, function () {
                                     // TODO: better error handling
                                     $scope.error = true;
