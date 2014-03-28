@@ -7,8 +7,10 @@ import se.inera.certificate.modules.support.ModuleEntryPoint;
 import se.inera.certificate.modules.support.api.ModuleApi;
 
 public class Fk7263EntryPoint implements ModuleEntryPoint {
-    
-    @Autowired 
+
+    private static final String FORSAKRINGSKASSAN_LOGICAL_ADDRESS = "FK";
+
+    @Autowired
     private Fk7263ModuleApi moduleApi;
 
     @Override
@@ -25,6 +27,11 @@ public class Fk7263EntryPoint implements ModuleEntryPoint {
     public String getModuleDescription() {
         // TODO
         return "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
+    }
+
+    @Override
+    public String getDefaultRecieverLogicalAddress() {
+        return FORSAKRINGSKASSAN_LOGICAL_ADDRESS;
     }
 
     @Override

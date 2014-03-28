@@ -58,8 +58,7 @@ public class Fk7263ModuleApiTest {
             fk7263ModuleApi.unmarshall(new TransportModelHolder(utlatande));
 
         } catch (ModuleValidationException e) {
-            String expectedError = "cvc-minLength-valid: Value '' with length = '0' is not facet-valid with respect to minLength '1' for type 'nonEmptyString'.";
-            assertTrue(e.getValidationEntries().contains(expectedError));
+            assertTrue(e.getValidationEntries().size() == 1);
         }
     }
 
