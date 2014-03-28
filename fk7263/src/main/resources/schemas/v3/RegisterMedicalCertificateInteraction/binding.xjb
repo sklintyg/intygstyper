@@ -6,7 +6,7 @@
 
   <jxb:bindings schemaLocation="../../core_components/iso_dt_subset_1.0.xsd" node="/xs:schema">
     <jxb:schemaBindings>
-      <jxb:package name="iso.v21090.dt.v1"/>
+      <jxb:package name="se.inera.certificate.fk7263.iso.v21090.dt.v1"/>
     </jxb:schemaBindings>
   </jxb:bindings>
 

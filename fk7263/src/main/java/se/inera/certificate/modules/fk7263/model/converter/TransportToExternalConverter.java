@@ -2,7 +2,6 @@ package se.inera.certificate.modules.fk7263.model.converter;
 
 import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toId;
 import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toKod;
-import iso.v21090.dt.v1.PQ;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +10,7 @@ import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import se.inera.certificate.fk7263.iso.v21090.dt.v1.PQ;
 import se.inera.certificate.fk7263.model.v1.AktivitetType;
 import se.inera.certificate.fk7263.model.v1.ArbetsuppgiftType;
 import se.inera.certificate.fk7263.model.v1.EnhetType;
