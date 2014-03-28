@@ -7,6 +7,5 @@ define([], function() {
 				window.scrollTo(0, element[0].offsetTop - 100)
 			}
 		});
-	}]
-	
+	}];
 });
