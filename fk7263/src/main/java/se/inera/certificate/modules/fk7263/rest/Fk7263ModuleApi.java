@@ -8,15 +8,13 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
@@ -53,6 +51,7 @@ import se.inera.certificate.modules.support.api.exception.ModuleConverterExcepti
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
+import se.inera.certificate.modules.support.api.exception.ModuleVersionUnsupportedException;
 import se.inera.certificate.validate.ValidationException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -80,9 +79,11 @@ public class Fk7263ModuleApi implements ModuleApi {
     private InternalToExternalConverter internalToExternalConverter;
 
     @Autowired
+    @Qualifier("fk7263-objectMapper")
     private ObjectMapper objectMapper;
 
     @Autowired
+    @Qualifier("fk7263-jaxbContext")
     private JAXBContext jaxbContext;
 
     /**
@@ -212,8 +213,7 @@ public class Fk7263ModuleApi implements ModuleApi {
             return toTransportModelResponse(utlatande);
         }
 
-        String response = "FK7263 module does not support version " + version;
-        throw new WebApplicationException(Response.status(Status.NOT_IMPLEMENTED).entity(response).build());
+        throw new ModuleVersionUnsupportedException("FK7263 does not support transport model version " + version);
     }
 
     /**

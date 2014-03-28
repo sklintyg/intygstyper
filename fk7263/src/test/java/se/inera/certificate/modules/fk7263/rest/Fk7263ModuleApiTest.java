@@ -1,15 +1,14 @@
 package se.inera.certificate.modules.fk7263.rest;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static se.inera.certificate.modules.support.api.dto.TransportModelVersion.LEGACY_LAKARUTLATANDE;
 import static se.inera.certificate.modules.support.api.dto.TransportModelVersion.UTLATANDE_V1;
 
 import java.io.IOException;
 
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBContext;
+
+import junit.framework.Assert;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
@@ -26,6 +25,7 @@ import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.TransportModelHolder;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
+import se.inera.certificate.modules.support.api.exception.ModuleVersionUnsupportedException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -105,10 +105,9 @@ public class Fk7263ModuleApiTest {
 
         try {
             fk7263ModuleApi.marshall(createExternalHolder(utlatande), null);
-        } catch (WebApplicationException e) {
-            Response response = e.getResponse();
+            Assert.fail("Expected ModuleVersionUnsupportedException");
 
-            assertEquals(Response.Status.NOT_IMPLEMENTED.getStatusCode(), response.getStatus());
+        } catch (ModuleVersionUnsupportedException ignore) {
         }
     }
 

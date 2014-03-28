@@ -46,9 +46,12 @@ public class TransportXmlUtils {
     // Create schema for validation
     static {
         try {
-            Source utlatandeSchemaFile = new StreamSource(new ClassPathResource("/schemas/fk7263_model.xsd").getFile());
+            Source isoSchemaFile = new StreamSource(
+                    new ClassPathResource("/schemas/core_components/iso_dt_subset_1.0.xsd").getInputStream());
+            Source utlatandeSchemaFile = new StreamSource(
+                    new ClassPathResource("/schemas/fk7263_model.xsd").getInputStream());
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            utlatandeSchema = schemaFactory.newSchema(utlatandeSchemaFile);
+            utlatandeSchema = schemaFactory.newSchema(new Source[] { isoSchemaFile, utlatandeSchemaFile });
         } catch (IOException e) {
             throw new RuntimeException("Failed to read schema file", e);
         } catch (SAXException e) {
