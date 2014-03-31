@@ -330,6 +330,7 @@ button.btn-link-minimal {
     -ms-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
     -o-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    z-index: 1;
 }
 
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-submenu:hover > a, .dropdown-submenu:focus > a {
