@@ -178,10 +178,12 @@ define([
 
                             $scope.selectVardenhet = function (enhet) {
                                 $scope.error = false;
-                                User.setValdVardenhet(enhet, function () {
+                                User.setValdVardenhet(enhet, function (data) {
                                     // Remove stored cookie for selected filter. We want to choose a new filter after choosing another unit to work on
                                     $cookieStore.remove("enhetsId");
-                                    // We updated the user context on the server. Reload page for changes to show.
+
+
+                                    // We updated the user context. Reroute to start page so as not to end up on a page we aren't welcome anymore.
                                     $location.path("/");
                                     $modalInstance.close();
                                 }, function () {
@@ -365,9 +367,14 @@ define([
 
                     var payload = vardenhet;
 
+                    var self = this;
                     var restPath = '/api/user/changeunit';
                     $http.post(restPath, payload).success(function (data) {
                         $log.debug('got callback data: ' + data);
+
+                        // Update user context
+                        self.setUserContext(data);
+
                         // TODO: do additional checks and error handling on returned context (data)
                         onSuccess(data);
                     }).error(function (data, status) {
