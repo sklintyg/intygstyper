@@ -137,7 +137,7 @@ define([
                         return "/logout";
                     }
                     else {
-                        return "/saml/logout";
+                        return "/saml/logout/";
                     }
                 }
 
