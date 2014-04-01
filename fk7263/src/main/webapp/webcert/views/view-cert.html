@@ -1,478 +1,644 @@
 <div class="row-fluid webcert-multicol" id="viewCertAndQA">
 
-  <!-- Left column -->
-  <div class="span6 webcert-col webcert-col-primary" ng-controller="QACtrl">
-    <div class="row-fluid">
-      <div class="span12 qa-column">
+<!-- Left column -->
+<div class="span6 webcert-col webcert-col-primary" ng-controller="QACtrl">
+<div class="row-fluid">
+<div class="span12 qa-column">
 
-        <a class="backlink-icon" href="/web/dashboard#/qa-unhandled" title="Tillbaka till Fråga och Svar"></a>
-        <h1 class="backlink-heading">Fråga och svar</h1>
+<a class="backlink-icon" href="/web/dashboard#/qa-unhandled" title="Tillbaka till Fråga och Svar"></a>
 
-        <div wc-spinner label="info.loading.existing.qa" show-spinner="!widgetState.doneLoading" show-content="widgetState.doneLoading">
+<h1 class="backlink-heading">Fråga och svar</h1>
 
-          <div class="webcert-bottom-padding-section">
+<div wc-spinner label="info.loading.existing.qa" show-spinner="!widgetState.doneLoading"
+     show-content="widgetState.doneLoading">
 
-            <!-- Question button -->
-            <div ng-show="!certProperties.isRevoked && !widgetState.newQuestionOpen &&  (certProperties.sentToFK || qaList.length>0)">
-              <div class="control-group">
-                <button class="btn btn-success" ng-click="toggleQuestionForm()" id="askQuestionBtn">Ny fråga till Försäkringskassan</button>
-              </div>
-            </div>
-            <div ng-if="!certProperties.sentToFK && (qaList.length<1)" class="alert alert-info" id="certificate-is-not-sent-to-fk-message-text">
-              <strong>Intyget är inte skickat till försäkringskassan</strong><br> Det går därför inte att ställa frågor om intyget.
-            </div>
+    <div class="webcert-bottom-padding-section">
 
-            <!-- New question form -->
-            <div ng-show="widgetState.newQuestionOpen">
-              <div class="control-group">
-                <label class="control-label">Fråga</label>
-                <div class="controls">
-                  <textarea rows="5" class="span9" ng-model="newQuestion.frageText" focus-me="widgetState.focusQuestion" id="newQuestionText"></textarea>
-                </div>
-              </div>
-              <div class="control-group" id="newQuestionForm">
-                <label class="control-label">Ämne</label>
-                <div class="controls">
-                  <select id="new-question-topic" ng-model="newQuestion.chosenTopic" ng-options="c.label for c in newQuestion.topics"></select>
-                </div>
-              </div>
-
-              <!-- error message occuring when inteacting with server for this FragaSvar-->
-              <div id="newQuestion-load-error" ng-show="newQuestion.activeErrorMessageKey" class="alert alert-error">
-                <span message key="error.{{newQuestion.activeErrorMessageKey}}"></span>
-              </div>
-
-              <!-- Form button group -->
-              <div class="control-group">
-                <button class="btn btn-success" ng-click="sendQuestion(newQuestion)" ng-disabled="!questionValidForSubmit(newQuestion)" title="{{newQuestion.sendButtonToolTip}}" id="sendQuestionBtn">
-                  <img src="/img/loader-small-green.gif" ng-show="newQuestion.updateInProgress"> Skicka till Försäkringskassan
+        <!-- Question button -->
+        <div ng-show="!certProperties.isRevoked && !widgetState.newQuestionOpen &&  (certProperties.sentToFK || qaList.length>0)">
+            <div class="control-group">
+                <button class="btn btn-success" ng-click="toggleQuestionForm()" id="askQuestionBtn">Ny fråga till
+                    Försäkringskassan
                 </button>
-                <button class="btn btn-secondary" ng-click="toggleQuestionForm()" id="cancelQuestionBtn">Avbryt fråga</button>
-              </div>
             </div>
-            <!--  Fragasvar formular end -->
+        </div>
+        <div ng-if="certProperties.sentToFK === false && (qaList.length<1)" class="alert alert-info"
+             id="certificate-is-not-sent-to-fk-message-text">
+            <strong>Intyget är inte skickat till försäkringskassan</strong><br> Det går därför inte att ställa frågor om
+            intyget.
+        </div>
+        <div ng-if="certProperties.sentToFK === undefined && (qaList.length<1)" class="alert alert-info"
+             id="certificate-is-not-available">
+            <strong>Det finns inga frågor och svar.</strong>
+        </div>
 
-            <!-- question sent message -->
-            <div ng-if="widgetState.sentMessage">
-              <div alert type="'info'" close="dismissProxy()" id="question-is-sent-to-fk-message-text">
-                <strong>Frågan skickad till Försäkringskassan</strong><br> Vårdenheten kontaktas via mejl när svar har inkommit.
-              </div>
-            </div>
+        <!-- New question form -->
+        <div ng-show="widgetState.newQuestionOpen">
+            <div class="control-group">
+                <label class="control-label">Fråga</label>
 
-            <!-- error message -->
-            <div id="qa-list-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey" class="alert alert-error">
-              <span message key="{{widgetState.activeErrorMessageKey}}"></span>
-            </div>
-          </div>
-
-          <div class="webcert-col-section" ng-show="(qaList | filter:openIssuesFilter).length > 0" id="unhandledQACol">
-            <h2 class="col-head">Ej hanterade frågor</h2>
-            <div ng-repeat="qa in qaList | filter:openIssuesFilter | orderBy:'senasteHandelseDatum':true">
-              <div ng-if="qa.proxyMessage">
-                <div alert type="'info'" close="dismissProxy(qa)">
-                  <span message key="{{qa.proxyMessage}}"></span>
+                <div class="controls">
+                    <textarea rows="5" class="span9" ng-model="newQuestion.frageText"
+                              focus-me="widgetState.focusQuestion" id="newQuestionText"></textarea>
                 </div>
-              </div>
+            </div>
+            <div class="control-group" id="newQuestionForm">
+                <label class="control-label">Ämne</label>
 
-              <div ng-class="{'panel-container': true, 'revoked-certificate' : certProperties.isRevoked}">
+                <div class="controls">
+                    <select id="new-question-topic" ng-model="newQuestion.chosenTopic"
+                            ng-options="c.label for c in newQuestion.topics"></select>
+                </div>
+            </div>
 
-                <div class="qa-panel" id="qaunhandled-{{qa.internReferens}}" ng-show="!qa.proxyMessage" ng-animate="'collapse'">
+            <!-- error message occuring when inteacting with server for this FragaSvar-->
+            <div id="newQuestion-load-error" ng-show="newQuestion.activeErrorMessageKey" class="alert alert-error">
+                <span message key="error.{{newQuestion.activeErrorMessageKey}}"></span>
+            </div>
 
-                  <div class="row-fluid">
-                    <div class="span9">
-                      <div class="status-header">
-                        <h3 class="inline-block">
-                          Ämne: <strong><span message key="qa.amne.{{qa.amne | lowercase}}"></span></strong><span id="fkMeddelandeRubrik-{{qa.internReferens}}" ng-show="qa.meddelandeRubrik"> - {{qa.meddelandeRubrik}}</span>
-                        </h3>
-                        <p>
-                          Åtgärd: <strong><span message key="qa.measure.{{qa.measureResKey}}"></span></strong>
-                        </p>
-                        <div class="form-inline">
-                          <input id="mark-as-forwarded-{{qa.internReferens}}" type="checkbox" ng-disabled="qa.forwardInProgress" ng-model="qa.vidarebefordrad" ng-change="onVidareBefordradChange(qa)" />
-                          <label for="mark-as-forwarded-{{qa.internReferens}}">Vidarebefordrad</label> <span ng-if="qa.forwardInProgress"> <img src="/img/ajax-loader-kit-16x16.gif">
+            <!-- Form button group -->
+            <div class="control-group">
+                <button class="btn btn-success" ng-click="sendQuestion(newQuestion)"
+                        ng-disabled="!questionValidForSubmit(newQuestion)" title="{{newQuestion.sendButtonToolTip}}"
+                        id="sendQuestionBtn">
+                    <img src="/img/loader-small-green.gif" ng-show="newQuestion.updateInProgress"> Skicka till
+                    Försäkringskassan
+                </button>
+                <button class="btn btn-secondary" ng-click="toggleQuestionForm()" id="cancelQuestionBtn">Avbryt fråga
+                </button>
+            </div>
+        </div>
+        <!--  Fragasvar formular end -->
+
+        <!-- question sent message -->
+        <div ng-if="widgetState.sentMessage">
+            <div alert type="'info'" close="dismissProxy()" id="question-is-sent-to-fk-message-text">
+                <strong>Frågan skickad till Försäkringskassan</strong><br> Vårdenheten kontaktas via mejl när svar har
+                inkommit.
+            </div>
+        </div>
+
+        <!-- error message -->
+        <div id="qa-list-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey"
+             class="alert alert-error">
+            <span message key="{{widgetState.activeErrorMessageKey}}"></span>
+        </div>
+    </div>
+
+    <div class="webcert-col-section" ng-show="(qaList | filter:openIssuesFilter).length > 0" id="unhandledQACol">
+        <h2 class="col-head">Ej hanterade frågor</h2>
+
+        <div ng-repeat="qa in qaList | filter:openIssuesFilter | orderBy:'senasteHandelseDatum':true">
+            <div ng-if="qa.proxyMessage">
+                <div alert type="'info'" close="dismissProxy(qa)">
+                    <span message key="{{qa.proxyMessage}}"></span>
+                </div>
+            </div>
+
+            <div ng-class="{'panel-container': true, 'revoked-certificate' : certProperties.isRevoked}">
+
+                <div class="qa-panel" id="qaunhandled-{{qa.internReferens}}" ng-show="!qa.proxyMessage"
+                     ng-animate="'collapse'">
+
+                    <div class="row-fluid">
+                        <div class="span9">
+                            <div class="status-header">
+                                <h3 class="inline-block">
+                                    Ämne: <strong><span message
+                                                        key="qa.amne.{{qa.amne | lowercase}}"></span></strong><span
+                                        id="fkMeddelandeRubrik-{{qa.internReferens}}" ng-show="qa.meddelandeRubrik"> - {{qa.meddelandeRubrik}}</span>
+                                </h3>
+
+                                <p>
+                                    Åtgärd: <strong><span message key="qa.measure.{{qa.measureResKey}}"></span></strong>
+                                </p>
+
+                                <div class="form-inline">
+                                    <input id="mark-as-forwarded-{{qa.internReferens}}" type="checkbox"
+                                           ng-disabled="qa.forwardInProgress" ng-model="qa.vidarebefordrad"
+                                           ng-change="onVidareBefordradChange(qa)"/>
+                                    <label for="mark-as-forwarded-{{qa.internReferens}}">Vidarebefordrad</label> <span
+                                        ng-if="qa.forwardInProgress"> <img src="/img/ajax-loader-kit-16x16.gif">
                           </span>
-                        </div>
-                      </div>
-                      </div>
-
-                    <div class="span3">
-                      <!--  status header -->
-                      <button class="btn pull-right" ng-class="{'btn-info': !qa.vidarebefordrad, 'btn-secondary' : qa.vidarebefordrad}"
-                              id="forwardBtn-{{qa.internReferens}}"
-                              title="Skicka ett mejl med länk till intyget för att informera den som ska hantera ärendet." ng-click="openMailDialog(qa)">
-                        <img ng-if="!qa.vidarebefordrad" src="/img/mail.png"> <img ng-if="qa.vidarebefordrad" src="/img/mail_dark.png">
-                      </button>
-                    </div>
-                  </div>
-
-                  <!-- Frågan -->
-                  <div class="panel-container">
-                    <div class="qa-block" ng-class="{'qa-block-handled' : qa.status == 'ANSWERED', 'qa-block-fk' : (qa.frageStallare | lowercase) == 'fk'}">
-                      <div class="qa-block-head clearfix">
-                        <div class="pull-left">
-                          Från: <span class="qa-sender" ng-switch="qa.frageStallare | lowercase"> <span id="fraga-vard-aktor-namn-{{qa.internReferens}}" ng-switch-when="wc">{{qa.vardAktorNamn}}</span>
-                            <span ng-switch-default message key="qa.fragestallare.{{qa.frageStallare | lowercase}}"></span>
-                          </span>
-                            <div id="fkKontakter-{{qa.internReferens}}" ng-repeat="kontakt in qa.externaKontakter">
-                                {{kontakt}}<br/>
+                                </div>
                             </div>
                         </div>
-                        <!-- Fraga fran fk eller wc? -->
-                        <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
-                          <span ng-switch-when="wc">Skickat: </span> <span ng-switch-default>Mottaget: </span> <span class="qa-date" id="qa-skickaddatum-{{qa.internReferens}}">{{qa.frageSkickadDatum | date:'shortDate'}}</span>
-                        </div>
-                      </div>
 
-                      <div class="qa-block-body" id="qa-fragetext-{{qa.internReferens}}">{{qa.frageText}}</div>
-                      <div class="qa-block-body" id="fkKompletteringar-{{qa.internReferens}}" ng-repeat="komplettering in qa.kompletteringar">
-                        <strong><span>{{komplettering.falt}}</span></strong>
-                        <div>
-                          <span>{{komplettering.text}}</span>
+                        <div class="span3">
+                            <!--  status header -->
+                            <button class="btn pull-right"
+                                    ng-class="{'btn-info': !qa.vidarebefordrad, 'btn-secondary' : qa.vidarebefordrad}"
+                                    id="forwardBtn-{{qa.internReferens}}"
+                                    title="Skicka ett mejl med länk till intyget för att informera den som ska hantera ärendet."
+                                    ng-click="openMailDialog(qa)">
+                                <img ng-if="!qa.vidarebefordrad" src="/img/mail.png"> <img ng-if="qa.vidarebefordrad"
+                                                                                           src="/img/mail_dark.png">
+                            </button>
                         </div>
-                      </div>
                     </div>
-                  </div>
 
-                  <!-- Svarsdelen -->
-                  <div class="panel-container">
-                    <div class="qa-block" ng-class="{'qa-block-fk' : (qa.frageStallare | lowercase) == 'wc'}" ng-if="qa.status == 'ANSWERED'">
-                      <!-- frågan är redan BESVARAD -->
-                      <div class="qa-block-head clearfix">
-                        <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
-
-                          <span ng-switch-when="wc"> <!--  Frågaställaren var Vårdenheten - svaret måste kommit från FK --> Från: <span class="qa-sender" message key="qa.fragestallare.fk"></span>
-                          </span> <span ng-switch-default> <!--  Frågaställaren var inte Vårdenheten - svaret måste alltså kommit från Vårdenheten --> Från: <span
-                            id="svar-vard-aktor-namn-{{qa.internReferens}}" class="qa-sender">{{qa.vardAktorNamn}}</span>
+                    <!-- Frågan -->
+                    <div class="panel-container">
+                        <div class="qa-block"
+                             ng-class="{'qa-block-handled' : qa.status == 'ANSWERED', 'qa-block-fk' : (qa.frageStallare | lowercase) == 'fk'}">
+                            <div class="qa-block-head clearfix">
+                                <div class="pull-left">
+                                    Från: <span class="qa-sender" ng-switch="qa.frageStallare | lowercase"> <span
+                                        id="fraga-vard-aktor-namn-{{qa.internReferens}}" ng-switch-when="wc">{{qa.vardAktorNamn}}</span>
+                            <span ng-switch-default message
+                                  key="qa.fragestallare.{{qa.frageStallare | lowercase}}"></span>
                           </span>
 
-                        </div>
-                        <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
-                          <!-- motsatt villkor mot frågan -->
-                          <span ng-switch-when="wc">Mottaget: </span> <span ng-switch-default>Skickat: </span> <span class="qa-date">{{qa.svarSkickadDatum | date:'shortDate'}}</span>
-                        </div>
-                      </div>
-                      <div id="{{qa.internReferens}}-svarsText" class="qa-block-body">{{qa.svarsText}}</div>
-                    </div>
-                  </div>
+                                    <div id="fkKontakter-{{qa.internReferens}}"
+                                         ng-repeat="kontakt in qa.externaKontakter">
+                                        {{kontakt}}<br/>
+                                    </div>
+                                </div>
+                                <!-- Fraga fran fk eller wc? -->
+                                <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
+                                    <span ng-switch-when="wc">Skickat: </span> <span ng-switch-default>Mottaget: </span>
+                                    <span class="qa-date" id="qa-skickaddatum-{{qa.internReferens}}">{{qa.frageSkickadDatum | date:'shortDate'}}</span>
+                                </div>
+                            </div>
 
-                  <div class="control-group" ng-if="qa.status == 'PENDING_INTERNAL_ACTION'">
-                    <!--  VÄNTAR på svar från Vårdenheten, men skall kunna klarmarkeras ändå?-->
-                    <label class="control-label" ng-show="!qa.answerDisabled && !certProperties.isRevoked">Svar</label>
-                    <div class="controls">
-                      <div class="alert alert-info" ng-show="qa.answerDisabled && qa.answerDisabledReason">{{qa.answerDisabledReason}}</div>
-                      <textarea rows="5" class="span9" ng-model="qa.svarsText" id="answerText-{{qa.internReferens}}" ng-show="!qa.answerDisabled && !certProperties.isRevoked"></textarea>
-                      <div>
-                        <!-- error message occuring when inteacting with server for this FragaSvar-->
-                        <div id="{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey" class="alert alert-error">
-                          <span message key="error.{{qa.activeErrorMessageKey}}"></span>
+                            <div class="qa-block-body" id="qa-fragetext-{{qa.internReferens}}">{{qa.frageText}}</div>
+                            <div class="qa-block-body" id="fkKompletteringar-{{qa.internReferens}}"
+                                 ng-repeat="komplettering in qa.kompletteringar">
+                                <strong><span>{{komplettering.falt}}</span></strong>
+
+                                <div>
+                                    <span>{{komplettering.text}}</span>
+                                </div>
+                            </div>
                         </div>
-                        <button class="btn btn-success" ng-click="sendAnswer(qa)" ng-disabled="!qa.svarsText || qa.updateInProgress" ng-show="!qa.answerDisabled && !certProperties.isRevoked"
-                          id="sendAnswerBtn-{{qa.internReferens}}">
-                          <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Skicka svar
-                        </button>
-                        <button class="btn btn-secondary" ng-click="updateAsHandled(qa)" id="markAsHandledFkOriginBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress"
-                          title="Om du markerar frågan som hanterad kommer den inte längre visas i enhetens översikt över ej hanterade frågor.">
-                          <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera som hanterad
-                        </button>
-                      </div>
                     </div>
-                  </div>
-                  <div class="control-group" ng-if="qa.status == 'PENDING_EXTERNAL_ACTION' || qa.status == 'ANSWERED'">
-                    <!--  fått svar eller väntar på svar från FK, skall kunna klarmarkera manuellt ändå -->
-                    <!-- error message occuring when inteacting with server for this FragaSvar-->
-                    <div id="{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey" class="alert alert-error">
-                      <span message key="error.{{qa.activeErrorMessageKey}}"></span>
+
+                    <!-- Svarsdelen -->
+                    <div class="panel-container">
+                        <div class="qa-block" ng-class="{'qa-block-fk' : (qa.frageStallare | lowercase) == 'wc'}"
+                             ng-if="qa.status == 'ANSWERED'">
+                            <!-- frågan är redan BESVARAD -->
+                            <div class="qa-block-head clearfix">
+                                <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
+
+                          <span ng-switch-when="wc"> <!--  Frågaställaren var Vårdenheten - svaret måste kommit från FK --> Från: <span
+                                  class="qa-sender" message key="qa.fragestallare.fk"></span>
+                          </span> <span ng-switch-default> <!--  Frågaställaren var inte Vårdenheten - svaret måste alltså kommit från Vårdenheten --> Från: <span
+                                        id="svar-vard-aktor-namn-{{qa.internReferens}}" class="qa-sender">{{qa.vardAktorNamn}}</span>
+                          </span>
+
+                                </div>
+                                <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
+                                    <!-- motsatt villkor mot frågan -->
+                                    <span ng-switch-when="wc">Mottaget: </span> <span ng-switch-default>Skickat: </span>
+                                    <span class="qa-date">{{qa.svarSkickadDatum | date:'shortDate'}}</span>
+                                </div>
+                            </div>
+                            <div id="{{qa.internReferens}}-svarsText" class="qa-block-body">{{qa.svarsText}}</div>
+                        </div>
                     </div>
-                    <div class="controls">
-                      <button class="btn btn-secondary" ng-click="updateAsHandled(qa)" id="markAsHandledWcOriginBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress"
-                        title="Om du markerar frågan som hanterad kommer den inte längre visas i enhetens översikt över ej hanterade frågor.">
-                        <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera som hanterad
-                      </button>
+
+                    <div class="control-group" ng-if="qa.status == 'PENDING_INTERNAL_ACTION'">
+                        <!--  VÄNTAR på svar från Vårdenheten, men skall kunna klarmarkeras ändå?-->
+                        <label class="control-label"
+                               ng-show="!qa.answerDisabled && !certProperties.isRevoked">Svar</label>
+
+                        <div class="controls">
+                            <div class="alert alert-info" ng-show="qa.answerDisabled && qa.answerDisabledReason">
+                                {{qa.answerDisabledReason}}
+                            </div>
+                            <textarea rows="5" class="span9" ng-model="qa.svarsText"
+                                      id="answerText-{{qa.internReferens}}"
+                                      ng-show="!qa.answerDisabled && !certProperties.isRevoked"></textarea>
+
+                            <div>
+                                <!-- error message occuring when inteacting with server for this FragaSvar-->
+                                <div id="{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey"
+                                     class="alert alert-error">
+                                    <span message key="error.{{qa.activeErrorMessageKey}}"></span>
+                                </div>
+                                <button class="btn btn-success" ng-click="sendAnswer(qa)"
+                                        ng-disabled="!qa.svarsText || qa.updateInProgress"
+                                        ng-show="!qa.answerDisabled && !certProperties.isRevoked"
+                                        id="sendAnswerBtn-{{qa.internReferens}}">
+                                    <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Skicka svar
+                                </button>
+                                <button class="btn btn-secondary" ng-click="updateAsHandled(qa)"
+                                        id="markAsHandledFkOriginBtn-{{qa.internReferens}}"
+                                        ng-disabled="qa.updateHandledStateInProgress"
+                                        title="Om du markerar frågan som hanterad kommer den inte längre visas i enhetens översikt över ej hanterade frågor.">
+                                    <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera
+                                    som hanterad
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                  </div>
+                    <div class="control-group"
+                         ng-if="qa.status == 'PENDING_EXTERNAL_ACTION' || qa.status == 'ANSWERED'">
+                        <!--  fått svar eller väntar på svar från FK, skall kunna klarmarkera manuellt ändå -->
+                        <!-- error message occuring when inteacting with server for this FragaSvar-->
+                        <div id="{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey"
+                             class="alert alert-error">
+                            <span message key="error.{{qa.activeErrorMessageKey}}"></span>
+                        </div>
+                        <div class="controls">
+                            <button class="btn btn-secondary" ng-click="updateAsHandled(qa)"
+                                    id="markAsHandledWcOriginBtn-{{qa.internReferens}}"
+                                    ng-disabled="qa.updateHandledStateInProgress"
+                                    title="Om du markerar frågan som hanterad kommer den inte längre visas i enhetens översikt över ej hanterade frågor.">
+                                <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera som
+                                hanterad
+                            </button>
+                        </div>
+                    </div>
 
                 </div>
                 <!-- qa panel -->
-              </div>
-              <!-- qa panel container -->
             </div>
-          </div>
+            <!-- qa panel container -->
+        </div>
+    </div>
 
+</div>
+
+<!-- ------------------------- HANTERADE FRÅGOR --------------------------------------------- -->
+
+<div class="webcert-col-section" ng-show="(qaList | filter:closedIssuesFilter).length > 0">
+    <h2 class="col-head">Hanterade frågor</h2>
+
+    <div ng-repeat="qa in qaList | filter:closedIssuesFilter | orderBy:'senasteHandelseDatum':true">
+
+        <div ng-if="qa.proxyMessage">
+            <div alert type="'info'" close="dismissProxy(qa)">
+                <span message key="{{qa.proxyMessage}}"></span>
+            </div>
         </div>
 
-        <!-- ------------------------- HANTERADE FRÅGOR --------------------------------------------- -->
-
-        <div class="webcert-col-section" ng-show="(qaList | filter:closedIssuesFilter).length > 0">
-          <h2 class="col-head">Hanterade frågor</h2>
-          <div ng-repeat="qa in qaList | filter:closedIssuesFilter | orderBy:'senasteHandelseDatum':true">
-
-            <div ng-if="qa.proxyMessage">
-              <div alert type="'info'" close="dismissProxy(qa)">
-                <span message key="{{qa.proxyMessage}}"></span>
-              </div>
-            </div>
-
-            <div class="panel-container" ng-class="{'panel-container': true, 'revoked-certificate' : certProperties.isRevoked}">
-              <div class="qa-panel" id="qahandled-{{qa.internReferens}}" ng-show="!qa.proxyMessage" ng-animate="'collapse'">
+        <div class="panel-container"
+             ng-class="{'panel-container': true, 'revoked-certificate' : certProperties.isRevoked}">
+            <div class="qa-panel" id="qahandled-{{qa.internReferens}}" ng-show="!qa.proxyMessage"
+                 ng-animate="'collapse'">
 
                 <!--  status header: hanterade har bara status closed, så vi kan inte visa så mycket mer info, ev skulle vi kunna visa "stängd utan att svar fanns"  -->
                 <h3>
-                  Ämne: <strong><span message key="qa.amne.{{qa.amne | lowercase}}"></span></strong><span ng-show="qa.meddelandeRubrik"> - {{qa.meddelandeRubrik}}</span>
+                    Ämne: <strong><span message key="qa.amne.{{qa.amne | lowercase}}"></span></strong><span
+                        ng-show="qa.meddelandeRubrik"> - {{qa.meddelandeRubrik}}</span>
                 </h3>
 
                 <!-- Frågan -->
                 <div class="panel-container">
-                  <div class="qa-block qa-block-handled" ng-class="{'qa-block-fk' : (qa.frageStallare | lowercase) == 'fk'}">
-                    <div class="qa-block-head clearfix">
-                      <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
-                        Från: <span class="qa-sender" id="fraga-vard-aktor-namn-{{qa.internReferens}}" ng-switch-when="wc">{{qa.vardAktorNamn}}</span> <span ng-switch-default message
-                          key="qa.fragestallare.{{qa.frageStallare | lowercase}}"></span>
-                        <div ng-repeat="kontakt in qa.externaKontakter">
-                          {{kontakt}}<br />
+                    <div class="qa-block qa-block-handled"
+                         ng-class="{'qa-block-fk' : (qa.frageStallare | lowercase) == 'fk'}">
+                        <div class="qa-block-head clearfix">
+                            <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
+                                Från: <span class="qa-sender" id="fraga-vard-aktor-namn-{{qa.internReferens}}"
+                                            ng-switch-when="wc">{{qa.vardAktorNamn}}</span> <span ng-switch-default
+                                                                                                  message
+                                                                                                  key="qa.fragestallare.{{qa.frageStallare | lowercase}}"></span>
+
+                                <div ng-repeat="kontakt in qa.externaKontakter">
+                                    {{kontakt}}<br/>
+                                </div>
+                            </div>
+                            <!-- Fraga fran fk eller wc? -->
+                            <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
+                                <span ng-switch-when="wc">Skickat: </span> <span ng-switch-default>Mottaget: </span>
+                                <span class="qa-date">{{qa.frageSkickadDatum | date:'shortDate'}}</span>
+                            </div>
                         </div>
-                      </div>
-                      <!-- Fraga fran fk eller wc? -->
-                      <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
-                        <span ng-switch-when="wc">Skickat: </span> <span ng-switch-default>Mottaget: </span> <span class="qa-date">{{qa.frageSkickadDatum | date:'shortDate'}}</span>
-                      </div>
+                        <div class="qa-block-body">{{qa.frageText}}</div>
+                        <div class="qa-block-body" ng-repeat="komplettering in qa.kompletteringar">
+                            <strong><span>{{komplettering.falt}}</span></strong>
+
+                            <div>
+                                <span>{{komplettering.text}}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="qa-block-body">{{qa.frageText}}</div>
-                    <div class="qa-block-body" ng-repeat="komplettering in qa.kompletteringar">
-                      <strong><span>{{komplettering.falt}}</span></strong>
-                      <div>
-                        <span>{{komplettering.text}}</span>
-                      </div>
-                    </div>
-                  </div>
                 </div>
 
                 <!-- Svarsdelen -->
 
                 <div class="panel-container">
-                  <div class="qa-block qa-block-handled" ng-class="{'qa-block-fk' : (qa.frageStallare | lowercase) == 'wc'}" ng-if="qa.svarsText">
-                    <!-- frågan har en svarstext -->
-                    <div class="qa-block-head clearfix">
-                      <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
-                        Från: <span class="qa-sender" ng-switch-when="wc"><span message key="qa.fragestallare.{{qa.frageStallare | lowercase}}"></span></span> <span
-                          id="svar-vard-aktor-namn-{{qa.internReferens}}" ng-switch-default>{{qa.vardAktorNamn}}</span>
-                      </div>
-                      <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
-                        <!-- motsatt villkor mot frågan -->
-                        <span ng-switch-when="wc">Mottaget: </span> <span ng-switch-default>Skickat: </span> <span class="qa-date">{{qa.svarSkickadDatum | date:'shortDate'}}</span>
-                      </div>
+                    <div class="qa-block qa-block-handled"
+                         ng-class="{'qa-block-fk' : (qa.frageStallare | lowercase) == 'wc'}" ng-if="qa.svarsText">
+                        <!-- frågan har en svarstext -->
+                        <div class="qa-block-head clearfix">
+                            <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
+                                Från: <span class="qa-sender" ng-switch-when="wc"><span message
+                                                                                        key="qa.fragestallare.{{qa.frageStallare | lowercase}}"></span></span> <span
+                                    id="svar-vard-aktor-namn-{{qa.internReferens}}" ng-switch-default>{{qa.vardAktorNamn}}</span>
+                            </div>
+                            <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
+                                <!-- motsatt villkor mot frågan -->
+                                <span ng-switch-when="wc">Mottaget: </span> <span ng-switch-default>Skickat: </span>
+                                <span class="qa-date">{{qa.svarSkickadDatum | date:'shortDate'}}</span>
+                            </div>
+                        </div>
+                        <div class="qa-block-body" id="qaHandledSvarstext-{{qa.internReferens}}">{{qa.svarsText}}</div>
                     </div>
-                    <div class="qa-block-body" id="qaHandledSvarstext-{{qa.internReferens}}">{{qa.svarsText}}</div>
-                  </div>
                 </div>
 
                 <!-- error message occuring when inteacting with server for this FragaSvar-->
-                <div id="{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey" class="alert alert-error">
-                  <span message key="error.{{qa.activeErrorMessageKey}}"></span>
+                <div id="{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey"
+                     class="alert alert-error">
+                    <span message key="error.{{qa.activeErrorMessageKey}}"></span>
                 </div>
                 <div class="control-group">
-                  <!--  Oavsett hur frågan stänged skall man kunna 'öppna' den igen -->
-                  <div class="controls" ng-hide="qa.frageStallare!='WC' && qa.svarsText">
-                    <button class="btn btn-secondary" ng-click="updateAsUnHandled(qa)" id="markAsUnhandledBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress"
-                            title="Om du markerar frågan som ej hanterad kommer den att visas i enhetens översikt över ej hanterade frågor.">
-                      <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera som ej hanterad
-                    </button>
-                  </div>
+                    <!--  Oavsett hur frågan stänged skall man kunna 'öppna' den igen -->
+                    <div class="controls" ng-hide="qa.frageStallare!='WC' && qa.svarsText">
+                        <button class="btn btn-secondary" ng-click="updateAsUnHandled(qa)"
+                                id="markAsUnhandledBtn-{{qa.internReferens}}"
+                                ng-disabled="qa.updateHandledStateInProgress"
+                                title="Om du markerar frågan som ej hanterad kommer den att visas i enhetens översikt över ej hanterade frågor.">
+                            <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera som ej
+                            hanterad
+                        </button>
+                    </div>
                 </div>
 
-              </div>
-              <!-- qa panel -->
             </div>
-            <!-- qa panel container -->
-          </div>
+            <!-- qa panel -->
         </div>
-        <!--  end ng-repeat -->
-
-      </div>
-      <!--  end spinner -->
-
+        <!-- qa panel container -->
     </div>
-  </div>
-  <!-- Certificate Left side end -->
+</div>
+<!--  end ng-repeat -->
 
-  <!-- Right side -->
-  <div class="span6 webcert-col-secondary">
+</div>
+<!--  end spinner -->
+
+</div>
+</div>
+<!-- Certificate Left side end -->
+
+<!-- Right side -->
+<div class="span6 webcert-col-secondary">
     <div class="webcert-col-shadow"></div>
 
     <h2 class="col-head">
-      <span message key="view.label.pagetitle.fk7263"></span>
+        <span message key="view.label.pagetitle.fk7263"></span>
     </h2>
-    <div wc-spinner label="info.loadingcertificate" show-spinner="!widgetState.doneLoading" show-content="widgetState.doneLoading">
 
-      <!-- error message -->
-      <div id="cert-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey" class="alert alert-error alert-column">
-        <span message key="{{widgetState.activeErrorMessageKey}}"></span>
-      </div>
-      <div ng-show="!widgetState.activeErrorMessageKey">
-        <div class="control-group buttonbar">
-          <label class="control-label">{{cert.patientNamn}} - {{cert.patientPersonnummer}}</label>
-          <form id="view-as-pdf" action="{{'/moduleapi/intyg/' + cert.id + '/pdf'}}" method="get" target="_blank">
-            <p class="btn-row">
-              <!--<button class="btn btn-info">Kopiera intyg</button>-->
-              <button id="downloadprint" type="submit" class="btn btn-info">Skriv ut</button>
-              <!--<button class="btn btn-inverse">Rätta intyg</button>-->
-            </p>
-          </form>
+    <div wc-spinner label="info.loadingcertificate" show-spinner="!widgetState.doneLoading"
+         show-content="widgetState.doneLoading">
+
+        <!-- error message -->
+        <div id="cert-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey"
+             class="alert alert-error alert-column">
+            <span message key="{{widgetState.activeErrorMessageKey}}"></span>
         </div>
+        <div ng-show="!widgetState.activeErrorMessageKey">
+            <div class="control-group buttonbar">
+                <label class="control-label">{{cert.patientNamn}} - {{cert.patientPersonnummer}}</label>
 
-
-        <div class="alert alert-info alert-column" ng-if="!certProperties.isRevoked">
-          <strong>Status:</strong> <span ng-if="certProperties.sentToFK" id="certificate-is-sent-to-fk-message-text">Intyget är signerat och skickat till Försäkringskassan.</span> <span
-            ng-if="!certProperties.sentToFK" id="certificate-is-sent-to-it-message-text">Intyget är signerat och skickat till Intygstjänsten.</span>
-        </div>
-        <div ng-if="certProperties.isRevoked" id="certificate-is-revoked-message-text" class="alert alert-warning" style="margin-right: 20px; max-width: 530px;">Detta intyg är rättat</div>
-
-        <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : certProperties.isRevoked}">
-          <div class="row-fluid">
-            <div class="span12">
-              <div class="cert-body">
-
-                <div wc-cert-field field-number="1" field-label="view.label.smittskydd" filled="true">
-                  <span ng-show="cert.avstangningSmittskydd" id="field1yes"> <span message key="view.label.yes"></span></span> <span ng-show="!cert.avstangningSmittskydd" id="field1no"> <span message key="view.label.no"></span>
-                  </span>
-                </div>
-
-                <div wc-cert-field field-number="2" field-label="view.label.diagnosis" filled="cert.diagnosBeskrivning" id="field2">
-                  {{cert.diagnosBeskrivning}} (<span class="tag"><span message key="view.label.diagnosisCode"></span></span> {{cert.diagnosKod}})
-                </div>
-
-                <div wc-cert-field field-number="3" field-label="view.label.progressofdisease" filled="cert.sjukdomsforlopp!=null" id="field3">{{cert.sjukdomsforlopp}}</div>
-
-                <div wc-cert-field field-number="4" field-label="view.label.disabilities" filled="cert.funktionsnedsattning!=null" id="field4">{{cert.funktionsnedsattning}}</div>
-
-                <div wc-cert-field field-number="4b" field-label="view.label.basedon" id="field4b"
-                  filled="cert.undersokningAvPatienten!=null || telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null">
-                  <ul>
-                    <li ng-show="cert.undersokningAvPatienten!=null"><span message key="vardkontakt.undersokning"></span>{{cert.undersokningAvPatienten | date:'longDate' }}</li>
-                    <li ng-show="cert.telefonkontaktMedPatienten!=null"><span message key="vardkontakt.telefonkontakt"></span>{{cert.telefonkontaktMedPatienten | date:'longDate' }}</li>
-                    <li ng-show="cert.journaluppgifter!=null"><span message key="referens.journal"></span>{{cert.journaluppgifter | date:'longDate' }}</li>
-
-
-                    <li ng-show="cert.annanReferens!=null">
-                      <!-- Annat --> <span message key="referens.annat"> </span>{{cert.annanReferens | date:'longDate' }}
-                      <div>
-                        <span class="tag" message key="view.label.reference.to.field13"></span>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-
-                <div wc-cert-field field-number="5" field-label="view.label.limitation" filled="cert.aktivitetsbegransning!=null" id="field5">{{cert.aktivitetsbegransning}}</div>
-
-                <div wc-cert-field field-number="6a" field-label="view.label.recommendations" id="field6a"
-                  filled="cert.rekommendationKontaktArbetsformedlingen|| cert.rekommendationKontaktForetagshalsovarden || cert.rekommendationOvrigt!=null">
-                  <ul>
-                    <li ng-show="cert.rekommendationKontaktArbetsformedlingen"><span message key="view.label.recommendations.contact.jobcenter"></span></li>
-                    <li ng-show="cert.rekommendationKontaktForetagshalsovarden"><span message key="view.label.recommendations.contact.healthdepartment"></span></li>
-                    <li ng-show="cert.rekommendationOvrigt != null"><span message key="view.label.recommendations.contact.other"></span> {{cert.rekommenderarOvrigt.beskrivning}}</li>
-                  </ul>
-                </div>
-
-                <div wc-cert-field field-number="6b" field-label="view.label.plannedtreatment" filled="cert.atgardInomSjukvarden||cert.annanAtgard" id="field6b">
-                  <ul>
-                    <li ng-show="cert.atgardInomSjukvarden != null"><span message key="view.label.plannedtreatment.healthcare"></span> {{cert.atgardInomSjukvarden}}</li>
-                    <li ng-show="cert.annanAtgard != null"><span message key="view.label.plannedtreatment.other"></span> {{cert.annanAtgard}}</li>
-                  </ul>
-                </div>
-
-                <div wc-cert-field field-number="7" field-label="view.label.workrehab" filled="cert.rehabiliteringAktuell||cert.rehabiliteringEjAktuell||cert.rehabiliteringGarInteAttBedoma" id="field7">
-                  <span ng-show="cert.rehabiliteringAktuell"> <span message key="view.label.yes"></span></span> <span ng-show="cert.rehabiliteringEjAktuell"> <span message key="view.label.no"></span>
-                  </span> <span ng-show="cert.rehabiliteringGarInteAttBedoma"> <span message key="view.label.unjudgeable"></span></span>
-                </div>
-
-                <div wc-cert-field field-number="8a" field-label="view.label.patientworkcapacity" filled="cert.nuvarandeArbetsuppgifter||cert.arbetsloshet||cert.foraldrarledighet" id="field8">
-                  <ul>
-                    <li ng-show="cert.nuvarandeArbetsuppgifter"><span message key="view.label.patientworkcapacity.currentwork"></span> {{cert.nuvarandeArbetsuppgifter}}</li>
-                    <li ng-show="cert.arbetsloshet"><span message key="view.label.patientworkcapacity.unemployed"></span></li>
-                    <li ng-show="cert.foraldrarledighet"><span message key="view.label.patientworkcapacity.parentalleave"></span></li>
-                  </ul>
-                </div>
-
-                <div wc-cert-field field-number="8b" field-label="view.label.nedsattning" filled="cert.nedsattMed25||cert.nedsattMed50||cert.nedsattMed75||cert.nedsattMed100" id="field8b">
-
-                  <div ng-show="cert.nedsattMed25 != null">
-                    <strong><span message key="nedsattningsgrad.nedsatt_med_1_4"></span></strong><br> Från och med {{cert.nedsattMed25.from | date:'longDate'}}&ndash; längst till och med
-                    {{cert.nedsattMed25.tom | date:'longDate'}}
-                  </div>
-
-                  <div ng-show="cert.nedsattMed50 != null">
-                    <strong><span message key="nedsattningsgrad.nedsatt_med_1_2"></span></strong><br> Från och med {{cert.nedsattMed50.from | date:'longDate'}}&ndash; längst till och med
-                    {{cert.nedsattMed50.tom | date:'longDate'}}
-                  </div>
-
-                  <div ng-show="cert.nedsattMed75 != null">
-                    <strong><span message key="nedsattningsgrad.nedsatt_med_3_4"></span></strong><br> Från och med {{cert.nedsattMed75.from | date:'longDate'}}&ndash; längst till och med
-                    {{cert.nedsattMed75.tom | date:'longDate'}}
-                  </div>
-
-                  <div ng-show="cert.nedsattMed100 != null">
-                    <strong><span message key="nedsattningsgrad.helt_nedsatt"></span></strong><br> Från och med {{cert.nedsattMed100.from | date:'longDate'}}&ndash; längst till och med
-                    {{cert.nedsattMed100.tom | date:'longDate'}}
-                  </div>
-
-                </div>
-
-                <div wc-cert-field field-number="9" field-label="view.label.patientworkcapacityjudgement" filled="cert.arbetsformagaPrognos!=null" id="field9">{{cert.arbetsformagaPrognos}}</div>
-
-                <div wc-cert-field field-number="10" field-label="view.label.prognosis"
-                  filled="cert.arbetsformataPrognosJa || cert.arbetsformataPrognosJaDelvis||cert.arbetsformataPrognosNej||cert.arbetsformataPrognosGarInteAttBedoma" id="field10">
-
-                  <span ng-show="cert.arbetsformataPrognosJa"><span message key="view.label.yes"></span></span> <span ng-show="cert.arbetsformataPrognosJaDelvis"><span message
-                    key="view.label.partialyes"></span></span> <span ng-show="cert.arbetsformataPrognosNej"><span message key="view.label.no"></span></span> <span
-                    ng-show="cert.arbetsformataPrognosGarInteAttBedoma"><span message key="view.label.unjudgeable"></span><br> <span class="tag"><span message
-                      key="view.label.comment"></span></span> <span class="tag" message key="view.label.reference.to.field13"></span> </span>
-                </div>
-
-                <div wc-cert-field field-number="11" field-label="view.label.othertransport" filled="cert.ressattTillArbeteAktuellt || cert.ressattTillArbeteEjAktuellt" id="field11">
-                  <span ng-show="cert.ressattTillArbeteAktuellt"> <span message key="view.label.yes"></span></span> <span ng-show="cert.ressattTillArbeteEjAktuellt"> <span message
-                    key="view.label.no"></span></span>
-                </div>
-
-                <div wc-cert-field field-number="12" field-label="view.label.fkcontact" filled="true" id="field12">
-                  <span ng-show="cert.kontaktMedFk"> <span message key="view.label.yes"></span></span> <span ng-show="!cert.kontaktMedFk"> <span message key="view.label.no"></span>
-                  </span>
-                </div>
-
-                <div wc-cert-field field-number="13" field-label="view.label.otherinformation" filled="cert.kommentar" id="field13">
-                  <div class="tag">{{cert.kommentar}}</div>
-                </div>
-
-                <div wc-cert-field field-label="view.label.workcodes" field-number="17" filled="cert.forskrivarkodOchArbetsplatskod" id="field17">
-                  <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
-                  <div>{{cert.forskrivarkodOchArbetsplatskod}}</div>
-                </div>
-
-                <div class="infobox">
-                  <h3>
-                    <span message key="view.label.confirmedby"></span>
-                  </h3>
-                  <h4>
-                    <span message key="view.label.date"></span>
-                  </h4>
-                  <p>{{cert.signeringsdatum | date:'longDate'}}</p>
-                  <h4>
-                    <span message key="view.label.contactinfo"></span>
-                  </h4>
-                  <p>
-                    <span class="text" id="vardperson_namn">{{cert.vardperson.namn}}</span><br> <span class="text" id="vardperson_enhetsnamn">{{cert.vardperson.enhetsnamn}}</span><br> <span class="text">{{cert.vardperson.postadress}}</span><br>
-                    <span class="text">{{cert.vardperson.postnummer}} {{cert.vardperson.postort}}</span><br> <span class="text">{{cert.vardperson.telefonnummer}}</span><br>
-                  </p>
-                </div>
-
-              </div>
-              <!-- cert body -->
+                <form id="view-as-pdf" action="{{'/moduleapi/intyg/' + cert.id + '/pdf'}}" method="get" target="_blank">
+                    <p class="btn-row">
+                        <!--<button class="btn btn-info">Kopiera intyg</button>-->
+                        <button id="downloadprint" type="submit" class="btn btn-info">Skriv ut</button>
+                        <!--<button class="btn btn-inverse">Rätta intyg</button>-->
+                    </p>
+                </form>
             </div>
-          </div>
+
+
+            <div class="alert alert-info alert-column" ng-if="!certProperties.isRevoked">
+                <strong>Status:</strong> <span ng-if="certProperties.sentToFK"
+                                               id="certificate-is-sent-to-fk-message-text">Intyget är signerat och skickat till Försäkringskassan.</span> <span
+                    ng-if="!certProperties.sentToFK" id="certificate-is-sent-to-it-message-text">Intyget är signerat och skickat till Intygstjänsten.</span>
+            </div>
+            <div ng-if="certProperties.isRevoked" id="certificate-is-revoked-message-text" class="alert alert-warning"
+                 style="margin-right: 20px; max-width: 530px;">Detta intyg är rättat
+            </div>
+
+            <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : certProperties.isRevoked}">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="cert-body">
+
+                            <div wc-cert-field field-number="1" field-label="view.label.smittskydd" filled="true">
+                                <span ng-show="cert.avstangningSmittskydd" id="field1yes"> <span message
+                                                                                                 key="view.label.yes"></span></span> <span
+                                    ng-show="!cert.avstangningSmittskydd" id="field1no"> <span message
+                                                                                               key="view.label.no"></span>
+                  </span>
+                            </div>
+
+                            <div wc-cert-field field-number="2" field-label="view.label.diagnosis"
+                                 filled="cert.diagnosBeskrivning" id="field2">
+                                {{cert.diagnosBeskrivning}} (<span class="tag"><span message
+                                                                                     key="view.label.diagnosisCode"></span></span>
+                                {{cert.diagnosKod}})
+                            </div>
+
+                            <div wc-cert-field field-number="3" field-label="view.label.progressofdisease"
+                                 filled="cert.sjukdomsforlopp!=null" id="field3">{{cert.sjukdomsforlopp}}
+                            </div>
+
+                            <div wc-cert-field field-number="4" field-label="view.label.disabilities"
+                                 filled="cert.funktionsnedsattning!=null" id="field4">{{cert.funktionsnedsattning}}
+                            </div>
+
+                            <div wc-cert-field field-number="4b" field-label="view.label.basedon" id="field4b"
+                                 filled="cert.undersokningAvPatienten!=null || telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null">
+                                <ul>
+                                    <li ng-show="cert.undersokningAvPatienten!=null"><span message
+                                                                                           key="vardkontakt.undersokning"></span>{{cert.undersokningAvPatienten
+                                        | date:'longDate' }}
+                                    </li>
+                                    <li ng-show="cert.telefonkontaktMedPatienten!=null"><span message
+                                                                                              key="vardkontakt.telefonkontakt"></span>{{cert.telefonkontaktMedPatienten
+                                        | date:'longDate' }}
+                                    </li>
+                                    <li ng-show="cert.journaluppgifter!=null"><span message
+                                                                                    key="referens.journal"></span>{{cert.journaluppgifter
+                                        | date:'longDate' }}
+                                    </li>
+
+
+                                    <li ng-show="cert.annanReferens!=null">
+                                        <!-- Annat --> <span message key="referens.annat"> </span>{{cert.annanReferens |
+                                        date:'longDate' }}
+                                        <div>
+                                            <span class="tag" message key="view.label.reference.to.field13"></span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div wc-cert-field field-number="5" field-label="view.label.limitation"
+                                 filled="cert.aktivitetsbegransning!=null" id="field5">{{cert.aktivitetsbegransning}}
+                            </div>
+
+                            <div wc-cert-field field-number="6a" field-label="view.label.recommendations" id="field6a"
+                                 filled="cert.rekommendationKontaktArbetsformedlingen|| cert.rekommendationKontaktForetagshalsovarden || cert.rekommendationOvrigt!=null">
+                                <ul>
+                                    <li ng-show="cert.rekommendationKontaktArbetsformedlingen"><span message
+                                                                                                     key="view.label.recommendations.contact.jobcenter"></span>
+                                    </li>
+                                    <li ng-show="cert.rekommendationKontaktForetagshalsovarden"><span message
+                                                                                                      key="view.label.recommendations.contact.healthdepartment"></span>
+                                    </li>
+                                    <li ng-show="cert.rekommendationOvrigt != null"><span message
+                                                                                          key="view.label.recommendations.contact.other"></span>
+                                        {{cert.rekommenderarOvrigt.beskrivning}}
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div wc-cert-field field-number="6b" field-label="view.label.plannedtreatment"
+                                 filled="cert.atgardInomSjukvarden||cert.annanAtgard" id="field6b">
+                                <ul>
+                                    <li ng-show="cert.atgardInomSjukvarden != null"><span message
+                                                                                          key="view.label.plannedtreatment.healthcare"></span>
+                                        {{cert.atgardInomSjukvarden}}
+                                    </li>
+                                    <li ng-show="cert.annanAtgard != null"><span message
+                                                                                 key="view.label.plannedtreatment.other"></span>
+                                        {{cert.annanAtgard}}
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div wc-cert-field field-number="7" field-label="view.label.workrehab"
+                                 filled="cert.rehabiliteringAktuell||cert.rehabiliteringEjAktuell||cert.rehabiliteringGarInteAttBedoma"
+                                 id="field7">
+                                <span ng-show="cert.rehabiliteringAktuell"> <span message
+                                                                                  key="view.label.yes"></span></span> <span
+                                    ng-show="cert.rehabiliteringEjAktuell"> <span message key="view.label.no"></span>
+                  </span> <span ng-show="cert.rehabiliteringGarInteAttBedoma"> <span message
+                                                                                     key="view.label.unjudgeable"></span></span>
+                            </div>
+
+                            <div wc-cert-field field-number="8a" field-label="view.label.patientworkcapacity"
+                                 filled="cert.nuvarandeArbetsuppgifter||cert.arbetsloshet||cert.foraldrarledighet"
+                                 id="field8">
+                                <ul>
+                                    <li ng-show="cert.nuvarandeArbetsuppgifter"><span message
+                                                                                      key="view.label.patientworkcapacity.currentwork"></span>
+                                        {{cert.nuvarandeArbetsuppgifter}}
+                                    </li>
+                                    <li ng-show="cert.arbetsloshet"><span message
+                                                                          key="view.label.patientworkcapacity.unemployed"></span>
+                                    </li>
+                                    <li ng-show="cert.foraldrarledighet"><span message
+                                                                               key="view.label.patientworkcapacity.parentalleave"></span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div wc-cert-field field-number="8b" field-label="view.label.nedsattning"
+                                 filled="cert.nedsattMed25||cert.nedsattMed50||cert.nedsattMed75||cert.nedsattMed100"
+                                 id="field8b">
+
+                                <div ng-show="cert.nedsattMed25 != null">
+                                    <strong><span message key="nedsattningsgrad.nedsatt_med_1_4"></span></strong><br>
+                                    Från och med {{cert.nedsattMed25.from | date:'longDate'}}&ndash; längst till och med
+                                    {{cert.nedsattMed25.tom | date:'longDate'}}
+                                </div>
+
+                                <div ng-show="cert.nedsattMed50 != null">
+                                    <strong><span message key="nedsattningsgrad.nedsatt_med_1_2"></span></strong><br>
+                                    Från och med {{cert.nedsattMed50.from | date:'longDate'}}&ndash; längst till och med
+                                    {{cert.nedsattMed50.tom | date:'longDate'}}
+                                </div>
+
+                                <div ng-show="cert.nedsattMed75 != null">
+                                    <strong><span message key="nedsattningsgrad.nedsatt_med_3_4"></span></strong><br>
+                                    Från och med {{cert.nedsattMed75.from | date:'longDate'}}&ndash; längst till och med
+                                    {{cert.nedsattMed75.tom | date:'longDate'}}
+                                </div>
+
+                                <div ng-show="cert.nedsattMed100 != null">
+                                    <strong><span message key="nedsattningsgrad.helt_nedsatt"></span></strong><br> Från
+                                    och med {{cert.nedsattMed100.from | date:'longDate'}}&ndash; längst till och med
+                                    {{cert.nedsattMed100.tom | date:'longDate'}}
+                                </div>
+
+                            </div>
+
+                            <div wc-cert-field field-number="9" field-label="view.label.patientworkcapacityjudgement"
+                                 filled="cert.arbetsformagaPrognos!=null" id="field9">{{cert.arbetsformagaPrognos}}
+                            </div>
+
+                            <div wc-cert-field field-number="10" field-label="view.label.prognosis"
+                                 filled="cert.arbetsformataPrognosJa || cert.arbetsformataPrognosJaDelvis||cert.arbetsformataPrognosNej||cert.arbetsformataPrognosGarInteAttBedoma"
+                                 id="field10">
+
+                                <span ng-show="cert.arbetsformataPrognosJa"><span message
+                                                                                  key="view.label.yes"></span></span> <span
+                                    ng-show="cert.arbetsformataPrognosJaDelvis"><span message
+                                                                                      key="view.label.partialyes"></span></span>
+                                <span ng-show="cert.arbetsformataPrognosNej"><span message
+                                                                                   key="view.label.no"></span></span> <span
+                                    ng-show="cert.arbetsformataPrognosGarInteAttBedoma"><span message
+                                                                                              key="view.label.unjudgeable"></span><br> <span
+                                    class="tag"><span message
+                                                      key="view.label.comment"></span></span> <span class="tag" message
+                                                                                                    key="view.label.reference.to.field13"></span> </span>
+                            </div>
+
+                            <div wc-cert-field field-number="11" field-label="view.label.othertransport"
+                                 filled="cert.ressattTillArbeteAktuellt || cert.ressattTillArbeteEjAktuellt"
+                                 id="field11">
+                                <span ng-show="cert.ressattTillArbeteAktuellt"> <span message
+                                                                                      key="view.label.yes"></span></span> <span
+                                    ng-show="cert.ressattTillArbeteEjAktuellt"> <span message
+                                                                                      key="view.label.no"></span></span>
+                            </div>
+
+                            <div wc-cert-field field-number="12" field-label="view.label.fkcontact" filled="true"
+                                 id="field12">
+                                <span ng-show="cert.kontaktMedFk"> <span message
+                                                                         key="view.label.yes"></span></span> <span
+                                    ng-show="!cert.kontaktMedFk"> <span message key="view.label.no"></span>
+                  </span>
+                            </div>
+
+                            <div wc-cert-field field-number="13" field-label="view.label.otherinformation"
+                                 filled="cert.kommentar" id="field13">
+                                <div class="tag">{{cert.kommentar}}</div>
+                            </div>
+
+                            <div wc-cert-field field-label="view.label.workcodes" field-number="17"
+                                 filled="cert.forskrivarkodOchArbetsplatskod" id="field17">
+                                <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
+                                <div>{{cert.forskrivarkodOchArbetsplatskod}}</div>
+                            </div>
+
+                            <div class="infobox">
+                                <h3>
+                                    <span message key="view.label.confirmedby"></span>
+                                </h3>
+                                <h4>
+                                    <span message key="view.label.date"></span>
+                                </h4>
+
+                                <p>{{cert.signeringsdatum | date:'longDate'}}</p>
+                                <h4>
+                                    <span message key="view.label.contactinfo"></span>
+                                </h4>
+
+                                <p>
+                                    <span class="text" id="vardperson_namn">{{cert.vardperson.namn}}</span><br> <span
+                                        class="text"
+                                        id="vardperson_enhetsnamn">{{cert.vardperson.enhetsnamn}}</span><br> <span
+                                        class="text">{{cert.vardperson.postadress}}</span><br>
+                                    <span class="text">{{cert.vardperson.postnummer}} {{cert.vardperson.postort}}</span><br>
+                                    <span class="text">{{cert.vardperson.telefonnummer}}</span><br>
+                                </p>
+                            </div>
+
+                        </div>
+                        <!-- cert body -->
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <!-- entire cert -->
+        <!-- entire cert -->
     </div>
     <!--  spinner end -->
-  </div>
+</div>
 
 </div>
 <!-- Right side end -->

@@ -14,7 +14,7 @@ angular.module('wc.fk7263.controllers').controller('ViewCertCtrl', [ '$scope', '
         activeErrorMessageKey : null,
     }
     $scope.certProperties = {
-        sentToFK : false
+        sentToFK : undefined
     }
     $scope.cert = {};
     $scope.cert.filledAlways = true;
