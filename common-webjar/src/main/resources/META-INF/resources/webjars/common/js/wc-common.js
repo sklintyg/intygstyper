@@ -21,6 +21,7 @@ define([
          */
         function _refreshStat() {
             $log.debug("_getStat");
+            _stopPolling();
             $http.get('/moduleapi/stat/').success(function (data) {
                 $log.debug("_getStat success - data:" + data);
                 $rootScope.$broadcast('wc-stat-update', data);
@@ -64,7 +65,7 @@ define([
                 $scope.user = User;
                 $scope.statService = statService;
                 $scope.statService.startPolling();
-                $scope.stat = {fragaSvarValdEnhet: 0, fragaSvarAndraEnheter: 0, vardgivare: []};
+                $scope.stat = {fragaSvarValdEnhet: 0, fragaSvarAndraEnheter: 0, intygValdEnhet: 0, intygAndraEnheter: 0, vardgivare: []};
 
                 $scope.$on("wc-stat-update", function (event, message) {
                     $scope.stat = message;
@@ -86,7 +87,7 @@ define([
                         requires_doctor: false,
                         statNumberId: "stat-unitstat-unsigned-certs-count",
                         getStat: function () {
-                            return $scope.stat.osigneradeIntyg || ""
+                            return $scope.stat.intygValdEnhet || ""
                         }
                     },
                     {
@@ -152,7 +153,7 @@ define([
                             '<tr>' +
                             '<th style="width: 50%">{{vg.namn}}</th>' +
                             '<th>Ej hanterade frågor och svar</th>' +
-                            '<th>Osignerade intyg</th>' +
+                            '<th>Ej signerade intyg</th>' +
                             '</tr>' +
                             '<tr ng-repeat="enhet in vg.vardenheter">' +
                             '<td>' +
@@ -208,7 +209,7 @@ define([
                 + '<span class="headerbox-logo pull-left"><a href="/web/start"><img alt="Till startsidan" src="/img/webcert_logo.png"/></a></span>'
                 + '<span class="headerbox-date pull-left">'
                 + '<span class="location">{{today | date:"shortDate"}} - {{user.userContext.valdVardgivare.namn}} - {{user.userContext.valdVardenhet.namn}}</span><br>'
-                + '<span class="otherLocations" ng-show="stat.fragaSvarAndraEnheter > 0"><span style="font-weight:bold">{{stat.fragaSvarAndraEnheter}}</span> ej hanterade frågor/svar på andra vårdenheter.</span> <a class="otherLocations" ng-href="#changedialog" ng-show="user.userContext.totaltAntalVardenheter > 1" data-ng-click="openChangeCareUnitDialog()">Byt vårdenhet</a>'
+                + '<span class="otherLocations" ng-show="(stat.intygAndraEnheter+stat.fragaSvarAndraEnheter) > 0"><span style="font-weight:bold">{{stat.intygAndraEnheter+stat.fragaSvarAndraEnheter}}</span> ej hanterade frågor och osignerade intyg på andra vårdenheter.</span> <a class="otherLocations" ng-href="#changedialog" ng-show="user.userContext.totaltAntalVardenheter > 1" data-ng-click="openChangeCareUnitDialog()">Byt vårdenhet</a>'
                 + '</span>'
                 + '</div>'
                 + '<div class="headerbox-user pull-right">'
