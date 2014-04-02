@@ -13,12 +13,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.inera.certificate.modules</groupId>
   <artifactId>certificates</artifactId>
-  <version>WC-0.5-RC2-SNAPSHOT</version>
+  <version>WC-0.5-RC2</version>
   <packaging>pom</packaging>
   <name>Inera Certificate Modules</name>
   <scm>
     <connection>scm:git:https://code.google.com/p/inera-certificate-modules/</connection>
-    <tag>HEAD</tag>
+    <tag>certificates-WC-0.5-RC2</tag>
   </scm>
   <distributionManagement>
     <repository>
