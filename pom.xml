@@ -13,12 +13,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.inera.certificate.modules</groupId>
   <artifactId>certificates</artifactId>
-  <version>1.2-RC2</version>
+  <version>1.2-RC3-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Inera Certificate Modules</name>
   <scm>
     <connection>scm:git:https://code.google.com/p/inera-certificate-modules/</connection>
-    <tag>certificates-1.2-RC2</tag>
+    <tag>HEAD</tag>
   </scm>
   <distributionManagement>
     <repository>
@@ -268,17 +268,17 @@
       <dependency>
         <groupId>se.inera.certificate</groupId>
         <artifactId>module-api</artifactId>
-        <version>1.2-RC2</version>
+        <version>1.2-RC3-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>se.inera.certificate</groupId>
         <artifactId>integration-util</artifactId>
-        <version>1.2-RC2</version>
+        <version>1.2-RC3-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>se.inera.certificate</groupId>
         <artifactId>model</artifactId>
-        <version>1.2-RC2</version>
+        <version>1.2-RC3-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
