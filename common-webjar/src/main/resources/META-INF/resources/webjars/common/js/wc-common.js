@@ -77,7 +77,9 @@ define([
                         label: 'Frågor och svar',
                         requires_doctor: false,
                         statNumberId: "stat-unitstat-unhandled-question-count",
+                        statTooltip: "not set",
                         getStat: function () {
+                            this.statTooltip = "Vårdenheten har " + $scope.stat.fragaSvarValdEnhet + " ej hanterade frågor och svar.";
                             return $scope.stat.fragaSvarValdEnhet || ""
                         }
                     },
@@ -86,7 +88,9 @@ define([
                         label: messageService.getProperty('dashboard.unsigned.title'),
                         requires_doctor: false,
                         statNumberId: "stat-unitstat-unsigned-certs-count",
+                        statTooltip: "not set",
                         getStat: function () {
+                            this.statTooltip = "Vårdenheten har " + $scope.stat.intygValdEnhet + " ej signerade intyg.";
                             return $scope.stat.intygValdEnhet || ""
                         }
                     },
@@ -239,7 +243,7 @@ define([
                 + '<li ng-class="{active: isActive(menu.link)}" ng-repeat="menu in menuDefs">'
                 + '<a ng-href="{{menu.link}}" ng-show="(menu.requires_doctor && isDoctor) || !menu.requires_doctor">{{menu.label}}'
                 + '<span id="{{menu.statNumberId}}" ng-if="menu.getStat()>0" class="stat-circle stat-circle-active"'
-                + 'title="Vårdenheten har {{menu.getStat()}} ej hanterade frågor och svar.">{{menu.getStat()}}</span></a>'
+                + 'title="{{menu.statTooltip}}">{{menu.getStat()}}</span></a>'
                 + '</li>'
                 + '</ul>'
                 + '</div><!-- /.nav-collapse -->'
