@@ -37,6 +37,11 @@ public class RliEntryPoint implements ModuleEntryPoint {
     }
 
     @Override
+    public String getModuleCssPath() {
+        return "/webcert/css/rli.css";
+    }
+
+    @Override
     public String getModuleScriptPath() {
         return "/webcert/js/module";
     }

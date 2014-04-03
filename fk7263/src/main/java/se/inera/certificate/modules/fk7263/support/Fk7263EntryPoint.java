@@ -40,6 +40,11 @@ public class Fk7263EntryPoint implements ModuleEntryPoint {
     }
 
     @Override
+    public String getModuleCssPath() {
+        return "/webcert/css/fk7263.css";
+    }
+
+    @Override
     public String getModuleScriptPath() {
         return "/webcert/js/module";
     }

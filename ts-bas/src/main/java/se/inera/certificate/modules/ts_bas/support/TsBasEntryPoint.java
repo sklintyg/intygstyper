@@ -38,6 +38,11 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
     }
 
     @Override
+    public String getModuleCssPath() {
+        return "/webcert/css/ts-bas.css";
+    }
+
+    @Override
     public String getModuleScriptPath() {
         return "/webcert/js/module";
     }

@@ -37,6 +37,11 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
     }
 
     @Override
+    public String getModuleCssPath() {
+        return "/webcert/css/ts-diabetes.css";
+    }
+
+    @Override
     public String getModuleScriptPath() {
         return "/webcert/js/module";
     }
