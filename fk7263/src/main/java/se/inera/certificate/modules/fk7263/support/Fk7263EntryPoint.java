@@ -3,6 +3,7 @@ package se.inera.certificate.modules.fk7263.support;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.modules.fk7263.rest.Fk7263ModuleApi;
+import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.ModuleEntryPoint;
 import se.inera.certificate.modules.support.api.ModuleApi;
 
@@ -40,12 +41,26 @@ public class Fk7263EntryPoint implements ModuleEntryPoint {
     }
 
     @Override
-    public String getModuleCssPath() {
-        return "/webcert/css/fk7263.css";
+    public String getModuleCssPath(ApplicationOrigin originator) {
+        switch (originator) {
+        case MINA_INTYG:
+            return "/intyg/css/fk7263.css";
+        case WEBCERT:
+            return "/webcert/css/fk7263.css";
+        default:
+        }
+        return null;
     }
 
     @Override
-    public String getModuleScriptPath() {
-        return "/webcert/js/module";
+    public String getModuleScriptPath(ApplicationOrigin originator) {
+        switch (originator) {
+        case MINA_INTYG:
+            return "/intyg/js/module";
+        case WEBCERT:
+            return "/webcert/js/module";
+        default:
+        }
+        return null;
     }
 }

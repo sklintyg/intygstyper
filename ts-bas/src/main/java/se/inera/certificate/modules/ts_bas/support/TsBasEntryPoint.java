@@ -2,6 +2,7 @@ package se.inera.certificate.modules.ts_bas.support;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.ModuleEntryPoint;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.ts_bas.rest.ModuleServiceWrapper;
@@ -38,12 +39,26 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
     }
 
     @Override
-    public String getModuleCssPath() {
-        return "/webcert/css/ts-bas.css";
+    public String getModuleCssPath(ApplicationOrigin originator) {
+        switch (originator) {
+        case MINA_INTYG:
+            return "/intyg/css/ts-bas.css";
+        case WEBCERT:
+            return "/webcert/css/ts-bas.css";
+        default:
+        }
+        return null;
     }
 
     @Override
-    public String getModuleScriptPath() {
-        return "/webcert/js/module";
+    public String getModuleScriptPath(ApplicationOrigin originator) {
+        switch (originator) {
+        case MINA_INTYG:
+            return "/intyg/js/module";
+        case WEBCERT:
+            return "/webcert/js/module";
+        default:
+        }
+        return null;
     }
 }
