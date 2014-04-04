@@ -202,13 +202,13 @@ define(
 						function updateWorkStateDate(checked, model) {
 							if (model != undefined) {
 								if (checked) {
-									if (!isDate(model.start))
-										model.start = ($filter('date')($scope.today, 'yyyy-MM-dd'));
-									if (!isDate(model.end))
-										model.end = ($filter('date')($scope.today, 'yyyy-MM-dd'));
+									if (!isDate(model.from)) 
+										model.from = ($filter('date')($scope.today, 'yyyy-MM-dd'));
+									if (!isDate(model.tom))
+										model.tom = ($filter('date')($scope.today, 'yyyy-MM-dd'));
 								} else {
-									model.start = "";
-									model.end = "";
+									model.from = "";
+									model.tom = "";
 								}
 								$scope.updateTotalCertDays();
 							}
@@ -265,10 +265,10 @@ define(
 						$scope.totalCertDays = false;
 						$scope.updateTotalCertDays = function() {
 							var oneDay = 24 * 60 * 60 * 1000;
-							var startDates = [ $scope.cert.nedsattMed25.start, $scope.cert.nedsattMed50.start,
-									$scope.cert.nedsattMed75.start, $scope.cert.nedsattMed100.start ]
-							var endDates = [ $scope.cert.nedsattMed25.end, $scope.cert.nedsattMed50.end,
-									$scope.cert.nedsattMed75.end, $scope.cert.nedsattMed100.end ]
+							var startDates = [ $scope.cert.nedsattMed25.from, $scope.cert.nedsattMed50.from,
+									$scope.cert.nedsattMed75.from, $scope.cert.nedsattMed100.from ]
+							var endDates = [ $scope.cert.nedsattMed25.tom, $scope.cert.nedsattMed50.tom,
+									$scope.cert.nedsattMed75.tom, $scope.cert.nedsattMed100.tom ]
 							var minDate = getMinMaxDate('min', startDates);
 							var maxDate = getMinMaxDate('max', endDates);
 

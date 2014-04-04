@@ -179,23 +179,20 @@ public class InternalDraftValidator {
             if (intervals[i] != null) {
                 Interval oneInterval = createInterval(intervals[i].getFrom(), intervals[i].getTom());
                 if (oneInterval == null) {
-                    addValidationError(fieldId, "Invalid date interval (from " + intervals[i].getFrom() + ", tom "
-                            + intervals[i].getTom());
+                    addValidationError(fieldId, "fk7263.validation.arbetsformaga.incorrect-date-interval");
                     return false;
                 }
                 for (int j = i + 1; j < intervals.length; j++) {
                     if (intervals[j] != null) {
                         Interval anotherInterval = createInterval(intervals[j].getFrom(), intervals[j].getTom());
                         if (anotherInterval == null) {
-                            addValidationError(fieldId, "Invalid date interval (from " + intervals[j].getFrom()
-                                    + ", tom " + intervals[j].getTom());
+                            addValidationError(fieldId, "fk7263.validation.arbetsformaga.incorrect-date-interval");
                             return false;
                         }
                         // Overlap OR abuts(one intervals tom day== another's
                         // from day) is considered invalid
                         if (oneInterval.overlaps(anotherInterval) || oneInterval.abuts(anotherInterval)) {
-                            addValidationError(fieldId, "Overlapping date intervals (" + oneInterval.toString()
-                                    + " vs " + anotherInterval.toString() + ")");
+                            addValidationError(fieldId, "fk7263.validation.arbetsformaga.overlapping-date-interval");
                             return false;
                         }
                     }

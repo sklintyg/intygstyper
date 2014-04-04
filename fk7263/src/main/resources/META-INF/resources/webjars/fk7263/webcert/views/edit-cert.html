@@ -187,9 +187,9 @@
                 <!-- 25% -->
                 <div class="control-group form-inline">
                     <label class="checkbox" style="min-width: 250px"><input type="checkbox" name="capacityForWork.work25" ng-model="workState.check25"/> 25% nedsatt arbetsförmåga från</label>
-                    <span wc-date-picker-field target-model="cert.nedsattMed25.start" on-change="updateTotalCertDays()" dom-id="nedsattMed25-start-date"></span>
+                    <span wc-date-picker-field target-model="cert.nedsattMed25.from" on-change="updateTotalCertDays()" dom-id="nedsattMed25-start-date"></span>
                     <span>till</span>
-                    <span wc-date-picker-field target-model="cert.nedsattMed25.end" on-change="updateTotalCertDays()" dom-id="nedsattMed25-end-date"></span>
+                    <span wc-date-picker-field target-model="cert.nedsattMed25.tom" on-change="updateTotalCertDays()" dom-id="nedsattMed25-end-date"></span>
                     <div class="indent pad10" ng-if="workState.check25">
                         <div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
                             Arbetstid timmar/vecka: <strong>{{cert.workTime / 4}}</strong>
@@ -203,9 +203,9 @@
                 <!-- 50% -->
                 <div class="control-group form-inline">
                     <label class="checkbox" style="min-width: 250px"><input type="checkbox" name="capacityForWork.work50" ng-model="workState.check50" /> 50% nedsatt arbetsförmåga från</label>
-                    <span wc-date-picker-field target-model="cert.nedsattMed50.start" on-change="updateTotalCertDays()" dom-id="nedsattMed50-start-date"></span>
+                    <span wc-date-picker-field target-model="cert.nedsattMed50.from" on-change="updateTotalCertDays()" dom-id="nedsattMed50-start-date"></span>
                     <span>till</span>
-                    <span wc-date-picker-field target-model="cert.nedsattMed50.end" on-change="updateTotalCertDays()" dom-id="nedsattMed50-end-date"></span>
+                    <span wc-date-picker-field target-model="cert.nedsattMed50.tom" on-change="updateTotalCertDays()" dom-id="nedsattMed50-end-date"></span>
                     <div class="indent pad10" ng-if="workState.check50">
                                     <div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
                                         Arbetstid timmar/vecka: <strong>{{cert.workTime / 2}}</strong>
@@ -220,9 +220,9 @@
                 <!-- 75% -->
                 <div class="control-group form-inline">
                     <label class="checkbox" style="min-width: 250px"><input type="checkbox" name="capacityForWork.work75" ng-model="workState.check75" /> 75% nedsatt arbetsförmåga från</label>
-                    <span wc-date-picker-field target-model="cert.nedsattMed75.start" on-change="updateTotalCertDays()" dom-id="nedsattMed75-start-date"></span>
+                    <span wc-date-picker-field target-model="cert.nedsattMed75.from" on-change="updateTotalCertDays()" dom-id="nedsattMed75-start-date"></span>
                     <span>till</span>
-                    <span wc-date-picker-field target-model="cert.nedsattMed75.end" on-change="updateTotalCertDays()" dom-id="nedsattMed75-end-date"></span>
+                    <span wc-date-picker-field target-model="cert.nedsattMed75.tom" on-change="updateTotalCertDays()" dom-id="nedsattMed75-end-date"></span>
                     <div class="indent pad10" ng-if="workState.check75">
                         <div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
                             Arbetstid timmar/vecka: <strong>{{cert.workTime * 0.75}}</strong>
@@ -239,9 +239,9 @@
                 <!-- 100% -->
                 <div class="control-group form-inline">
                     <label class="checkbox" style="min-width: 250px"><input type="checkbox" name="capacityForWork.workFull" ng-model="workState.check100" /> Helt nedsatt arbetsförmåga från</label>
-                    <span wc-date-picker-field target-model="cert.nedsattMed100.start" on-change="updateTotalCertDays()" dom-id="nedsattMed100-start-date"></span>
+                    <span wc-date-picker-field target-model="cert.nedsattMed100.from" on-change="updateTotalCertDays()" dom-id="nedsattMed100-start-date"></span>
                     <span>till</span>
-                    <span wc-date-picker-field target-model="cert.nedsattMed100.end" on-change="updateTotalCertDays()" dom-id="nedsattMed100-end-date"></span>
+                    <span wc-date-picker-field target-model="cert.nedsattMed100.tom" on-change="updateTotalCertDays()" dom-id="nedsattMed100-end-date"></span>
                 </div>
 
                 <div ng-show="totalCertDays">

@@ -123,7 +123,8 @@ define([
 	        "fk7263.validation.sysselsattning.missing" : "	Aktuella arbetsuppgifter som hör till alternativet Nuvarande arbete under 'Arbete' måste fyllas i. (Fält 8a)",
 	
 	        "fk7263.validation.arbetsformaga.choose-at-least-one" : "Välj minst ett alternativ för arbetsförmåga. (Fält 8b)",
-	        "fk7263.validation.arbetsformaga.overlapping" : "Välj minst ett alternativ för arbetsförmåga. (Fält 8b)",
+	        "fk7263.validation.arbetsformaga.incorrect-date-interval" : "Ett datuminterval har angetts på ett felaktigt sätt (startdatum efter slutdatum). (Fält 8b)",
+	        "fk7263.validation.arbetsformaga.overlapping-date-interval" : "Två datuminterval med överlappande datum har angetts. (Fält 8b)",
 	        
 	        "fk7263.validation.prognos.gar-ej-att-bedomma.beskrivning.missing" : "Fritextfältet som hör till alternativet Går ej att bedöma, förtydligande under 'Prognos - kommer patienten att få tillbaka sin arbetsförmåga i nuvarande arbete' måste fyllas i. (Fält 10)",
 	        
