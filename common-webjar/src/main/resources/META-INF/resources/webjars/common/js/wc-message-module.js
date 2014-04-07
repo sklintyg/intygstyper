@@ -75,7 +75,7 @@ define([
         }]).directive("message", ['$rootScope', 'messageService', function ($rootScope, messageService) {
 
             return {
-                restrict : "A",
+                restrict : "EA",
                 scope : {
                     "key" : "@",
                     "param" : "=",
