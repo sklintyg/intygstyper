@@ -7,9 +7,9 @@ define([ 'angular',
 	var moduleName = "fk7263.directives";
 
 	angular.module(moduleName, [])
-		.directive("fk7263.scrollHereIf", scrollHereIf)
+		.directive("scrollHereIf", scrollHereIf)
 		.directive("wcDatePickerField", wcDatePickerField)
-		.directive("fk7263.wcCertField", wcCertField);
+		.directive("wcCertField", wcCertField);
 
 	return moduleName;
 });
