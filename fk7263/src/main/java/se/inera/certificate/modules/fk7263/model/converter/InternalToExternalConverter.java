@@ -548,12 +548,7 @@ public class InternalToExternalConverter {
      * Util method to check if a string is null or empty
      */
     private boolean isNullOrEmpty(String string) {
-        if (string != null && !string.isEmpty()) {
-            return false;
-
-        } else {
-            return true;
-        }
+        return string == null || string.isEmpty();
     }
 
 }
