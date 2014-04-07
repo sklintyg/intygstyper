@@ -31,6 +31,7 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263HosPersonal;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Prognos;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Vardenhet;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
@@ -45,8 +46,6 @@ public class InternalToExternalConverter {
 
     private static Logger LOG = LoggerFactory.getLogger(InternalToExternalConverter.class);
 
-    private static Fk7263Intyg intUtlatande;
-
     private static final String PERS_ID_ROOT = "1.2.752.129.2.1.3.1";
     private static final String HSA_ID_ROOT = "1.2.752.129.2.1.4.1";
     private static final String ARBETSPLATSKOD_ROOT = "1.2.752.29.4.71";
@@ -59,35 +58,34 @@ public class InternalToExternalConverter {
      * 
      * @param source
      *            {@link Fk7263Intyg}
-     * @return {@link se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande}
+     * @return {@link Fk7263Utlatande}
      * @throws ConverterException 
      */
-    public se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande convert(Fk7263Intyg source) throws ConverterException {
+    public Fk7263Utlatande convert(Fk7263Intyg source) throws ConverterException {
         LOG.trace("Starting conversion from internalToExternal");
         if (source == null) {
             throw new ConverterException("Internal intyg was null");
         }
-        intUtlatande = source;
 
-        se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande utlatande = new se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande();
+        Fk7263Utlatande utlatande = new Fk7263Utlatande();
 
         utlatande.setId(new Id(source.getId(), null));
         utlatande.setTyp(FK7263_TYP);
 
-        utlatande.getAktiviteter().addAll(buildExternalAktiviteter());
-        utlatande.getObservationer().addAll(buildExternalObservationer());
-        utlatande.getReferenser().addAll(buildExternalReferenser());
-        utlatande.getVardkontakter().addAll(buildExternalVardkontakter());
+        utlatande.getAktiviteter().addAll(buildExternalAktiviteter(source));
+        utlatande.getObservationer().addAll(buildExternalObservationer(source));
+        utlatande.getReferenser().addAll(buildExternalReferenser(source));
+        utlatande.getVardkontakter().addAll(buildExternalVardkontakter(source));
 
-        List<String> kommentarer = buildKommentarer();
-        if (kommentarer != null) {
+        List<String> kommentarer = buildKommentarer(source);
+        if (!kommentarer.isEmpty()) {
             utlatande.getKommentarer().addAll(kommentarer);
         }
 
-        utlatande.setPatient(buildExternalPatient());
-        utlatande.setSigneringsdatum(intUtlatande.getSigneringsdatum());
-        utlatande.setSkickatdatum(intUtlatande.getSkickatDatum());
-        utlatande.setSkapadAv(buildExternalHosPersonal());
+        utlatande.setPatient(buildExternalPatient(source));
+        utlatande.setSigneringsdatum(source.getSigneringsdatum());
+        utlatande.setSkickatdatum(source.getSkickatDatum());
+        utlatande.setSkapadAv(buildExternalHosPersonal(source));
         return utlatande;
 
     }
@@ -95,46 +93,48 @@ public class InternalToExternalConverter {
     /**
      * Build a List of {@link String}[s] from different fields in the internal model
      * 
-     * @return List of {@link String} or null if no information was found going into the kommentarer field
+     * @return List of {@link String} information was found going into the kommentarer fields
+     * @param source internal representation
      */
-    private List<String> buildKommentarer() {
+    private List<String> buildKommentarer(Fk7263Intyg source) {
         List<String> kommentarer = new ArrayList<>();
 
-        if (!isNullOrEmpty(intUtlatande.getKommentar())) {
-            kommentarer.add(intUtlatande.getKommentar());
+        if (!isNullOrEmpty(source.getKommentar())) {
+            kommentarer.add(source.getKommentar());
         }
         
-        if (!isNullOrEmpty(intUtlatande.getArbetsformagaPrognosGarInteAttBedomBeskrivning())) {
-            kommentarer.add(intUtlatande.getArbetsformagaPrognosGarInteAttBedomBeskrivning());
+        if (!isNullOrEmpty(source.getArbetsformagaPrognosGarInteAttBedomBeskrivning())) {
+            kommentarer.add(source.getArbetsformagaPrognosGarInteAttBedomBeskrivning());
         }
         
-        if (!isNullOrEmpty(intUtlatande.getAnnanReferensBeskrivning())) {
-            kommentarer.add(intUtlatande.getAnnanReferensBeskrivning());
+        if (!isNullOrEmpty(source.getAnnanReferensBeskrivning())) {
+            kommentarer.add(source.getAnnanReferensBeskrivning());
         }
 
-        return !kommentarer.isEmpty() ? kommentarer : null;
+        return kommentarer;
     }
 
     /**
      * Create a List of {@link Vardkontakt} from the internal model
      * 
      * @return List of {@link Vardkontakt}
+     * @param source internal representation
      */
-    private List<Vardkontakt> buildExternalVardkontakter() {
+    private List<Vardkontakt> buildExternalVardkontakter(Fk7263Intyg source) {
         List<Vardkontakt> vardkontakter = new ArrayList<>();
 
-        if (intUtlatande.getUndersokningAvPatienten() != null) {
+        if (source.getUndersokningAvPatienten() != null) {
             Vardkontakt vardkontakt = new Vardkontakt();
-            vardkontakt.setVardkontaktstid(new LocalDateInterval(intUtlatande.getUndersokningAvPatienten(),
-                    intUtlatande.getUndersokningAvPatienten()));
+            vardkontakt.setVardkontaktstid(new LocalDateInterval(source.getUndersokningAvPatienten(),
+                    source.getUndersokningAvPatienten()));
             vardkontakt.setVardkontakttyp(Vardkontakttypkoder.MIN_UNDERSOKNING_AV_PATIENTEN);
             vardkontakter.add(vardkontakt);
         }
 
-        if (intUtlatande.getTelefonkontaktMedPatienten() != null) {
+        if (source.getTelefonkontaktMedPatienten() != null) {
             Vardkontakt vardkontakt = new Vardkontakt();
-            vardkontakt.setVardkontaktstid(new LocalDateInterval(intUtlatande.getTelefonkontaktMedPatienten(),
-                    intUtlatande.getTelefonkontaktMedPatienten()));
+            vardkontakt.setVardkontaktstid(new LocalDateInterval(source.getTelefonkontaktMedPatienten(),
+                    source.getTelefonkontaktMedPatienten()));
             vardkontakt.setVardkontakttyp(Vardkontakttypkoder.MIN_TELEFONKONTAKT_MED_PATIENTEN);
             vardkontakter.add(vardkontakt);
         }
@@ -146,22 +146,23 @@ public class InternalToExternalConverter {
      * Create a List of {@link Referens} from the internal model
      * 
      * @return List of {@link Referens}
+     * @param source internal representation
      */
-    private List<Referens> buildExternalReferenser() {
+    private List<Referens> buildExternalReferenser(Fk7263Intyg source) {
         List<Referens> referenser = new ArrayList<>();
 
-        if (intUtlatande.getJournaluppgifter() != null) {
+        if (source.getJournaluppgifter() != null) {
             Referens referens = new Referens();
             referens.setReferenstyp(Referenstypkoder.JOURNALUPPGIFT);
-            referens.setDatum(intUtlatande.getJournaluppgifter());
+            referens.setDatum(source.getJournaluppgifter());
             referenser.add(referens);
 
         }
 
-        if (intUtlatande.getAnnanReferens() != null) {
+        if (source.getAnnanReferens() != null) {
             Referens referens = new Referens();
             referens.setReferenstyp(Referenstypkoder.ANNAT);
-            referens.setDatum(intUtlatande.getAnnanReferens());
+            referens.setDatum(source.getAnnanReferens());
             referenser.add(referens);
         }
 
@@ -172,49 +173,50 @@ public class InternalToExternalConverter {
      * Create a List of {@link Fk7263Observation} from the internal model
      * 
      * @return List of {@link Fk7263Observation}
+     * @param source internal representation
      */
-    private List<Fk7263Observation> buildExternalObservationer() {
+    private List<Fk7263Observation> buildExternalObservationer(Fk7263Intyg source) {
         List<Fk7263Observation> observationer = new ArrayList<>();
 
         // observation huvudDiagnos
-        if (intUtlatande.getDiagnosKod() != null) {
-            Kod kod = buildDiagnoseCode(intUtlatande.getDiagnosKod());
-            observationer.add(buildObservation(kod, ObservationsKoder.DIAGNOS, intUtlatande.getDiagnosBeskrivning()));
+        if (source.getDiagnosKod() != null) {
+            Kod kod = buildDiagnoseCode(source.getDiagnosKod());
+            observationer.add(buildObservation(kod, ObservationsKoder.DIAGNOS, source.getDiagnosBeskrivning()));
         }
 
         // observation sjukdomsforlopp
-        if (!isNullOrEmpty(intUtlatande.getSjukdomsforlopp())) {
-            observationer.add(buildObservation(ObservationsKoder.FORLOPP, null, intUtlatande.getSjukdomsforlopp()));
+        if (!isNullOrEmpty(source.getSjukdomsforlopp())) {
+            observationer.add(buildObservation(ObservationsKoder.FORLOPP, null, source.getSjukdomsforlopp()));
         }
 
         // observation funktionsnedsattning
-        if (!isNullOrEmpty(intUtlatande.getFunktionsnedsattning())) {
+        if (!isNullOrEmpty(source.getFunktionsnedsattning())) {
             observationer.add(buildObservation(null, ObservationsKoder.KROPPSFUNKTIONER,
-                    intUtlatande.getFunktionsnedsattning()));
+                    source.getFunktionsnedsattning()));
         }
 
         // observation aktivitetsbegransning
-        if (!isNullOrEmpty(intUtlatande.getAktivitetsbegransning())) {
+        if (!isNullOrEmpty(source.getAktivitetsbegransning())) {
             observationer.add(buildObservation(null, ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET,
-                    intUtlatande.getAktivitetsbegransning()));
+                    source.getAktivitetsbegransning()));
         }
 
         // observation arbetsformaga (create between 1 and 4 instances)
-        if (intUtlatande.getNedsattMed100() != null) {
+        if (source.getNedsattMed100() != null) {
             observationer.add(buildArbetsformageObservation(ObservationsKoder.ARBETSFORMAGA,
-                    intUtlatande.getNedsattMed100(), buildPrognos(), new PhysicalQuantity(0.0, "percent")));
+                    source.getNedsattMed100(), buildPrognos(source), new PhysicalQuantity(0.0, "percent")));
         }
-        if (intUtlatande.getNedsattMed75() != null) {
+        if (source.getNedsattMed75() != null) {
             observationer.add(buildArbetsformageObservation(ObservationsKoder.ARBETSFORMAGA,
-                    intUtlatande.getNedsattMed75(), buildPrognos(), new PhysicalQuantity(25.0, "percent")));
+                    source.getNedsattMed75(), buildPrognos(source), new PhysicalQuantity(25.0, "percent")));
         }
-        if (intUtlatande.getNedsattMed50() != null) {
+        if (source.getNedsattMed50() != null) {
             observationer.add(buildArbetsformageObservation(ObservationsKoder.ARBETSFORMAGA,
-                    intUtlatande.getNedsattMed50(), buildPrognos(), new PhysicalQuantity(50.0, "percent")));
+                    source.getNedsattMed50(), buildPrognos(source), new PhysicalQuantity(50.0, "percent")));
         }
-        if (intUtlatande.getNedsattMed25() != null) {
+        if (source.getNedsattMed25() != null) {
             observationer.add(buildArbetsformageObservation(ObservationsKoder.ARBETSFORMAGA,
-                    intUtlatande.getNedsattMed25(), buildPrognos(), new PhysicalQuantity(75.0, "percent")));
+                    source.getNedsattMed25(), buildPrognos(source), new PhysicalQuantity(75.0, "percent")));
         }
 
         return observationer;
@@ -228,7 +230,7 @@ public class InternalToExternalConverter {
      * @param period
      *            {@link LocalDateInterval}
      * @param prognos
-     *            {@link Prognos}
+     *            {@link Fk7263Prognos}
      * @param varde
      *            {@link PhysicalQuantity}
      * @return {@link Fk7263Observation}
@@ -250,19 +252,20 @@ public class InternalToExternalConverter {
     }
 
     /**
-     * Creates a {@link Prognos} from information in the internal model
+     * Creates a {@link Fk7263Prognos} from information in the internal model
      * 
-     * @return {@link Prognos}
+     * @return {@link Fk7263Prognos}
+     * @param source internal representation
      */
-    private Fk7263Prognos buildPrognos() {
+    private Fk7263Prognos buildPrognos(Fk7263Intyg source) {
         Fk7263Prognos prognos = new Fk7263Prognos();
-        Kod kod = getCorrespondingPrognosKod();
+        Kod kod = getCorrespondingPrognosKod(source);
         if (kod == null) {
             LOG.trace("Got null while building prognos");
             return null;
         }
         prognos.setPrognoskod(kod);
-        prognos.setBeskrivning(intUtlatande.getArbetsformagaPrognos());
+        prognos.setBeskrivning(source.getArbetsformagaPrognos());
 
         return prognos;
     }
@@ -270,22 +273,21 @@ public class InternalToExternalConverter {
     /**
      * Get the prognoskod that corresponds with the correct boolean in the internal model
      * 
-     * @return {@link Kod} from {@link PrognosKoder}
+     * @return {@link Kod}
+     * @param source internal representation
      */
-    private Kod getCorrespondingPrognosKod() {
-        Kod kod = new Kod();
-        if (intUtlatande.isArbetsformataPrognosJa()) {
+    private Kod getCorrespondingPrognosKod(Fk7263Intyg source) {
+        Kod kod;
+        if (source.isArbetsformataPrognosJa()) {
             kod = Prognoskoder.ATERSTALLAS_HELT;
-        } else if (intUtlatande.isArbetsformataPrognosJaDelvis()) {
+        } else if (source.isArbetsformataPrognosJaDelvis()) {
             kod = Prognoskoder.ATERSTALLAS_DELVIS;
-
-        } else if (intUtlatande.isArbetsformataPrognosNej()) {
+        } else if (source.isArbetsformataPrognosNej()) {
             kod = Prognoskoder.INTE_ATERSTALLAS;
-
-        } else if (intUtlatande.isArbetsformataPrognosGarInteAttBedoma()) {
+        } else if (source.isArbetsformataPrognosGarInteAttBedoma()) {
             kod = Prognoskoder.DET_GAR_INTE_ATT_BEDOMA;
         } else {
-            return null;
+            kod = null;
         }
 
         return kod;
@@ -339,49 +341,50 @@ public class InternalToExternalConverter {
      * Create a List of Fk7263Aktivitet[s] from information in the internal model
      * 
      * @return {@link List} of {@link Fk7263Aktivitet}-objects
+     * @param source  internal representation
      */
-    private List<Fk7263Aktivitet> buildExternalAktiviteter() {
+    private List<Fk7263Aktivitet> buildExternalAktiviteter(Fk7263Intyg source) {
         List<Fk7263Aktivitet> aktiviteter = new ArrayList<>();
 
-        if (intUtlatande.isAvstangningSmittskydd()) {
+        if (source.isAvstangningSmittskydd()) {
             aktiviteter.add(buildAktivitet(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA, null));
         }
 
-        if (intUtlatande.isRekommendationKontaktArbetsformedlingen()) {
+        if (source.isRekommendationKontaktArbetsformedlingen()) {
             aktiviteter.add(buildAktivitet(Aktivitetskoder.PATIENTEN_BOR_FA_KONTAKT_MED_ARBETSFORMEDLINGEN, null));
         }
-        if (intUtlatande.isRekommendationKontaktForetagshalsovarden()) {
+        if (source.isRekommendationKontaktForetagshalsovarden()) {
             aktiviteter.add(buildAktivitet(Aktivitetskoder.PATIENTEN_BOR_FA_KONTAKT_MED_FORETAGSHALSOVARDEN, null));
         }
-        if (!isNullOrEmpty(intUtlatande.getRekommendationOvrigt())) {
-            aktiviteter.add(buildAktivitet(Aktivitetskoder.OVRIGT, intUtlatande.getRekommendationOvrigt()));
+        if (!isNullOrEmpty(source.getRekommendationOvrigt())) {
+            aktiviteter.add(buildAktivitet(Aktivitetskoder.OVRIGT, source.getRekommendationOvrigt()));
         }
-        if (!isNullOrEmpty(intUtlatande.getAtgardInomSjukvarden())) {
+        if (!isNullOrEmpty(source.getAtgardInomSjukvarden())) {
             aktiviteter.add(buildAktivitet(
                     Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN,
-                    intUtlatande.getAtgardInomSjukvarden()));
+                    source.getAtgardInomSjukvarden()));
         }
-        if (!isNullOrEmpty(intUtlatande.getAnnanAtgard())) {
+        if (!isNullOrEmpty(source.getAnnanAtgard())) {
             aktiviteter.add(buildAktivitet(Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD,
-                    intUtlatande.getAnnanAtgard()));
+                    source.getAnnanAtgard()));
         }
-        if (intUtlatande.isRehabiliteringAktuell()) {
+        if (source.isRehabiliteringAktuell()) {
             aktiviteter.add(buildAktivitet(Aktivitetskoder.ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL, null));
         }
-        if (intUtlatande.isRehabiliteringEjAktuell()) {
+        if (source.isRehabiliteringEjAktuell()) {
             aktiviteter.add(buildAktivitet(Aktivitetskoder.ARBETSLIVSINRIKTAD_REHABILITERING_AR_INTE_AKTUELL, null));
         }
-        if (intUtlatande.isRehabiliteringGarInteAttBedoma()) {
+        if (source.isRehabiliteringGarInteAttBedoma()) {
             aktiviteter.add(buildAktivitet(
                     Aktivitetskoder.GAR_EJ_ATT_BEDOMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL, null));
         }
-        if (intUtlatande.isRessattTillArbeteAktuellt()) {
+        if (source.isRessattTillArbeteAktuellt()) {
             aktiviteter.add(buildAktivitet(Aktivitetskoder.FORANDRA_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT, null));
         }
-        if (intUtlatande.isRessattTillArbeteEjAktuellt()) {
+        if (source.isRessattTillArbeteEjAktuellt()) {
             aktiviteter.add(buildAktivitet(Aktivitetskoder.FORANDRA_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT, null));
         }
-        if (intUtlatande.isKontaktMedFk()) {
+        if (source.isKontaktMedFk()) {
             aktiviteter.add(buildAktivitet(Aktivitetskoder.KONTAKT_MED_FK_AR_AKTUELL, null));
         }
 
@@ -413,9 +416,10 @@ public class InternalToExternalConverter {
      * Create a HosPersonal object from information in the internal model
      * 
      * @return {@link HosPersonal}
+     * @param source internal representation
      */
-    private Fk7263HosPersonal buildExternalHosPersonal() {
-        Vardperson intVardperson = intUtlatande.getVardperson();
+    private Fk7263HosPersonal buildExternalHosPersonal(Fk7263Intyg source) {
+        Vardperson intVardperson = source.getVardperson();
         Fk7263HosPersonal hosPersonal = new Fk7263HosPersonal();
 
         hosPersonal.setNamn(intVardperson.getNamn());
@@ -467,48 +471,47 @@ public class InternalToExternalConverter {
      * Create an {@link Fk7263Patient} from the internal model
      * 
      * @return {@link Fk7263Patient}
+     * @param source internal representation
      */
-    private Fk7263Patient buildExternalPatient() {
+    private Fk7263Patient buildExternalPatient(Fk7263Intyg source) {
         Fk7263Patient patient = new Fk7263Patient();
 
-        patient.setEfternamn(intUtlatande.getPatientNamn());
+        patient.setEfternamn(source.getPatientNamn());
         patient.getFornamn().add("");
-        patient.setId(new Id(PERS_ID_ROOT, intUtlatande.getPatientPersonnummer()));
-        buildPatientSysselsattningar(patient);
+        patient.setId(new Id(PERS_ID_ROOT, source.getPatientPersonnummer()));
+        buildPatientSysselsattningar(patient, source);
 
         return patient;
     }
 
     /**
      * Create a List of Sysselsattning for an {@link Fk7263Patient}
-     * 
+     *
      * @param patient
-     *            the {@link Fk7263Patient}
+     *            the {@link se.inera.certificate.modules.fk7263.model.external.Fk7263Patient}
+     * @param source  internal representation
      */
-    private void buildPatientSysselsattningar(Fk7263Patient patient) {
+    private void buildPatientSysselsattningar(Fk7263Patient patient, Fk7263Intyg source) {
         List<Sysselsattning> sysselsattningar = patient.getSysselsattningar();
 
-        if (intUtlatande.getNuvarandeArbetsuppgifter() != null) {
+        if (source.getNuvarandeArbetsuppgifter() != null) {
             Sysselsattning sysselsattning = new Sysselsattning();
             sysselsattning.setSysselsattningstyp(Sysselsattningskoder.NUVARANDE_ARBETE);
-            patient.getArbetsuppgifter().add(buildArbetsuppgift(intUtlatande.getNuvarandeArbetsuppgifter()));
+            patient.getArbetsuppgifter().add(buildArbetsuppgift(source.getNuvarandeArbetsuppgifter()));
             sysselsattningar.add(sysselsattning);
-
         }
 
-        if (intUtlatande.isArbetsloshet()) {
+        if (source.isArbetsloshet()) {
             Sysselsattning sysselsattning = new Sysselsattning();
             sysselsattning.setSysselsattningstyp(Sysselsattningskoder.ARBETSLOSHET);
             sysselsattningar.add(sysselsattning);
-
         }
 
-        if (intUtlatande.isForaldrarledighet() && patient.getId().getExtension() != null) {
+        if (source.isForaldrarledighet() && patient.getId().getExtension() != null) {
             Sysselsattning sysselsattning = new Sysselsattning();
             // TODO: change this implementation when a single code for foraldrarledighet is created
             if (isFemale(patient.getId().getExtension())) {
                 sysselsattning.setSysselsattningstyp(Sysselsattningskoder.MAMMALEDIG);
-
             } else {
                 sysselsattning.setSysselsattningstyp(Sysselsattningskoder.PAPPALEDIG);
             }
@@ -544,9 +547,6 @@ public class InternalToExternalConverter {
         return arbetsuppgift;
     }
 
-    /**
-     * Util method to check if a string is null or empty
-     */
     private boolean isNullOrEmpty(String string) {
         return string == null || string.isEmpty();
     }
