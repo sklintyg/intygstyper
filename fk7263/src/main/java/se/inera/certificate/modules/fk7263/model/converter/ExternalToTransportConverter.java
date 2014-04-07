@@ -65,9 +65,9 @@ public final class ExternalToTransportConverter {
     }
 
     private List<ReferensType> convertReferenser(List<Referens> source) {
-        if (source == null)
+        if (source == null) {
             return null;
-
+        }
         List<ReferensType> referenser = new ArrayList<>();
         for (Referens referens : source) {
             referenser.add(convert(referens));
@@ -76,9 +76,9 @@ public final class ExternalToTransportConverter {
     }
 
     private ReferensType convert(Referens source) {
-        if (source == null)
+        if (source == null) {
             return null;
-
+        }
         ReferensType referens = new ReferensType();
         referens.setReferenstyp(IsoTypeConverter.toCD(source.getReferenstyp()));
         referens.setReferensdatum(source.getDatum());
@@ -86,9 +86,9 @@ public final class ExternalToTransportConverter {
     }
 
     private List<VardkontaktType> convertVardkontakter(List<Vardkontakt> source) {
-        if (source == null)
+        if (source == null) {
             return null;
-
+        }
         List<VardkontaktType> vardkontakter = new ArrayList<>();
         for (Vardkontakt vardkontakt : source) {
             vardkontakter.add(convert(vardkontakt));
@@ -110,9 +110,9 @@ public final class ExternalToTransportConverter {
     }
 
     private List<ObservationType> convertObservations(List<Fk7263Observation> source) {
-        if (source == null)
+        if (source == null) {
             return null;
-
+        }
         List<ObservationType> observations = new ArrayList<>();
         for (Fk7263Observation observation : source) {
             observations.add(convert(observation));
@@ -141,9 +141,9 @@ public final class ExternalToTransportConverter {
     }
 
     private List<PQ> convertVarden(List<PhysicalQuantity> source) {
-        if (source == null)
+        if (source == null) {
             return null;
-
+        }
         List<PQ> varden = new ArrayList<>();
 
         for (PhysicalQuantity varde : source) {
@@ -178,9 +178,9 @@ public final class ExternalToTransportConverter {
     }
 
     private List<AktivitetType> convertAktiviteter(List<Fk7263Aktivitet> source) {
-        if (source == null)
+        if (source == null) {
             return null;
-
+        }
         List<AktivitetType> aktiviteter = new ArrayList<>();
 
         for (Fk7263Aktivitet aktivitet : source) {
@@ -197,9 +197,9 @@ public final class ExternalToTransportConverter {
     }
 
     private HosPersonalType convert(HosPersonal source) {
-        if (source == null)
+        if (source == null) {
             return null;
-
+        }
         HosPersonalType hosPersonal = new HosPersonalType();
         hosPersonal.setPersonalId(toHsaId(source.getId()));
         hosPersonal.setFullstandigtNamn(source.getNamn());
@@ -209,9 +209,9 @@ public final class ExternalToTransportConverter {
     }
 
     private EnhetType convert(Vardenhet source) {
-        if (source == null)
+        if (source == null) {
             return null;
-
+        }
         EnhetType enhet = new EnhetType();
         enhet.setEnhetsId(toHsaId(source.getId()));
         enhet.setArbetsplatskod(IsoTypeConverter.toArbetsplatsKod(source.getArbetsplatskod()));
@@ -226,9 +226,9 @@ public final class ExternalToTransportConverter {
     }
 
     private VardgivareType convert(Vardgivare source) {
-        if (source == null)
+        if (source == null) {
             return null;
-
+        }
         VardgivareType vardgivare = new VardgivareType();
         vardgivare.setVardgivareId(toHsaId(source.getId()));
         vardgivare.setVardgivarnamn(source.getNamn());
@@ -236,9 +236,9 @@ public final class ExternalToTransportConverter {
     }
 
     private PatientType convert(Fk7263Patient source) {
-        if (source == null)
+        if (source == null) {
             return null;
-
+        }
         PatientType patient = new PatientType();
         patient.setPersonId(IsoTypeConverter.toPersonId(source.getId()));
 
@@ -251,9 +251,9 @@ public final class ExternalToTransportConverter {
     }
 
     private List<ArbetsuppgiftType> convertArbetsuppgifts(List<Arbetsuppgift> source) {
-        if (source == null)
+        if (source == null) {
             return null;
-
+        }
         List<ArbetsuppgiftType> arbetsuppgifts = new ArrayList<>();
         for (Arbetsuppgift arbetsuppgift : source) {
             arbetsuppgifts.add(convert(arbetsuppgift));
@@ -262,18 +262,18 @@ public final class ExternalToTransportConverter {
     }
 
     private ArbetsuppgiftType convert(Arbetsuppgift source) {
-        if (source == null)
+        if (source == null) {
             return null;
-
+        }
         ArbetsuppgiftType arbetsuppgift = new ArbetsuppgiftType();
         arbetsuppgift.setTypAvArbetsuppgift(source.getTypAvArbetsuppgift());
         return arbetsuppgift;
     }
 
     private List<SysselsattningType> convertSysselsattnings(List<Sysselsattning> source) {
-        if (source == null)
+        if (source == null) {
             return null;
-
+        }
         List<SysselsattningType> sysselsattnings = new ArrayList<>();
         for (Sysselsattning sysselsattning : source) {
             sysselsattnings.add(convert(sysselsattning));
@@ -283,9 +283,9 @@ public final class ExternalToTransportConverter {
     }
 
     private SysselsattningType convert(Sysselsattning source) {
-        if (source == null)
+        if (source == null) {
             return null;
-
+        }
         SysselsattningType sysselsattning = new SysselsattningType();
         sysselsattning.setTypAvSysselsattning(IsoTypeConverter.toCD(source.getSysselsattningstyp()));
         return sysselsattning;
