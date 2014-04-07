@@ -3,8 +3,7 @@ define([
     'use strict';
 
     return ['$scope', '$filter', '$location', 'fk7263.certificateService', '$http', '$routeParams',
-        function ($scope, $filter, $location, certService, http, $routeParams) {
-
+        function ($scope, $filter, $location, certificateService, http, $routeParams) {    
 	        // init state
 	        $scope.widgetState = {
 	            doneLoading : false,
@@ -57,16 +56,19 @@ define([
 
             console.log("Loading certificate " + $routeParams.certificateId);
 
-            certService.getCertificate($routeParams.certificateId, function (result) {
+            certificateService.getCertificate($routeParams.certificateId, function (result){
             	$scope.doneLoading = true;
                 if (result != null && result != '') {
-                    $scope.cert = result.certificateContent;
+                    $scope.cert = result;
 
                     $scope.certProperties.sentToFK = isSentToFK(result.certificateContentMeta.statuses);
                     $scope.certProperties.isRevoked = isRevoked(result.certificateContentMeta.statuses);
                 } else {
                   $scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';
                 }
+            }, function (error) {
+            	console.log("Got error while loading cert");
+            	console.log(error.data);
             });
         }];
 });

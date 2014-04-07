@@ -5,6 +5,20 @@ define([
     return ['$http', '$log',
         function ($http, $log) {
 
+	        /*
+	         * Load certificate details from the server.
+	         */
+	        function _getCertificate (id, onSuccess, onError) {
+	            $log.debug('_getCertificate id:' + id);
+	            var restPath = '/moduleapi/intyg/signed/' + id;
+	            $http.get(restPath).success(function (data) {
+	                $log.debug('_getCertificate data:' + data);
+	                onSuccess(data);
+	            }).error(function (data, status) {
+	                $log.error('error ' + status);
+	                onError(data);
+	            });
+	        }
             /**
              * Get a certificate draft with the specified id from the server.
              */
@@ -58,6 +72,7 @@ define([
 
             // Return public API for the service
             return {
+            	getCertificate : _getCertificate,
                 getDraft : _getDraft,
                 saveDraft : _saveDraft,
                 discardDraft : _discardDraft
