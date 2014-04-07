@@ -31,7 +31,7 @@ define([
 
         function _buildMailToLink(qa) {
             var baseURL = $window.location.protocol + "//" + $window.location.hostname + ($window.location.port ? ':' + $window.location.port : '');
-            var url = baseURL + "/m/fk7263/webcert/intyg/" + qa.intygsReferens.intygsId + "#/view";
+            var url = baseURL + "/web/dashboard#/fk7263/view/" + qa.intygsReferens.intygsId;
             var recipient = "";
             var subject = "Du har blivit tilldelad ett Fråga&Svar ärende i Webcert";
             var body = "Klicka länken för att gå till ärendet:\n" + url;
