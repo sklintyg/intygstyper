@@ -14,7 +14,6 @@ define([
 	        };
           
 	        $scope.cert = {};
-            $scope.doneLoading = false;
             $scope.shouldBeOpen = false;
             $scope.cert.filledAlways = true;
 
@@ -57,12 +56,12 @@ define([
             console.log("Loading certificate " + $routeParams.certificateId);
 
             certificateService.getCertificate($routeParams.certificateId, function (result){
-            	$scope.doneLoading = true;
+            	$scope.widgetState.doneLoading = true;
                 if (result != null && result != '') {
-                    $scope.cert = result;
+                    $scope.cert = result.contents;
 
-                    $scope.certProperties.sentToFK = isSentToFK(result.certificateContentMeta.statuses);
-                    $scope.certProperties.isRevoked = isRevoked(result.certificateContentMeta.statuses);
+                    $scope.certProperties.sentToFK = isSentToFK(result.metaData.statuses);
+                    $scope.certProperties.isRevoked = isRevoked(result.metaData.statuses);
                 } else {
                   $scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';
                 }
