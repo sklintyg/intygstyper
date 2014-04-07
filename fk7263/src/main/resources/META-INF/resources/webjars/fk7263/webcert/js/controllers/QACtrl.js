@@ -93,7 +93,7 @@ define(
 							// local
 							// spinner
 
-							fragaSvarCommonService.saveNewQuestion($scope.MODULE_CONFIG.CERT_ID_PARAMETER, newQuestion,
+							fragaSvarService.saveNewQuestion($scope.MODULE_CONFIG.CERT_ID_PARAMETER, newQuestion,
 									function(result) {
 										$log.debug("Got saveNewQuestion result:" + result);
 										newQuestion.updateInProgress = false;
@@ -138,7 +138,7 @@ define(
 							qa.updateInProgress = true; // trigger local
 							// spinner
 
-							fragaSvarCommonService.saveAnswer(qa, function(result) {
+							fragaSvarService.saveAnswer(qa, function(result) {
 								$log.debug("Got saveAnswer result:" + result);
 								qa.updateInProgress = false;
 								qa.activeErrorMessageKey = null;
@@ -183,7 +183,7 @@ define(
 							$log.debug("updateAsHandled:" + qa);
 							qa.updateHandledStateInProgress = true;
 
-							fragaSvarCommonService.closeAsHandled(qa, function(result) {
+							fragaSvarService.closeAsHandled(qa, function(result) {
 								$log.debug("Got updateAsHandled result:" + result);
 								qa.activeErrorMessageKey = null;
 								qa.updateHandledStateInProgress = false;
@@ -208,7 +208,7 @@ define(
 							qa.updateHandledStateInProgress = true; // trigger
 							// local
 
-							fragaSvarCommonService.openAsUnhandled(qa, function(result) {
+							fragaSvarService.openAsUnhandled(qa, function(result) {
 								$log.debug("Got openAsUnhandled result:" + result);
 								qa.activeErrorMessageKey = null;
 								qa.updateHandledStateInProgress = false;
