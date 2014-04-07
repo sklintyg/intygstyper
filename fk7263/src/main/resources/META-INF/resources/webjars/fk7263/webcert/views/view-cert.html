@@ -1,35 +1,4 @@
-<div class="header-fix-top">
-  <div class="header-wrapper" ng-hide="widgetState.collapsedHeader" ng-animate="'menucollapse'">
-	  <div id="wcHeader" wc-header default-active="index">
-	  </div>
-  </div>
-  <div class="header-fix-panel">
-	  <div class="header-fix-top-expand">
-	    <div class="header-fix-top-expand-wrapper">
-	      <button class="btn btn-link" ng-click="toggleHeader()"><span ng-if="widgetState.collapsedHeader">Visa</span><span ng-if="!widgetState.collapsedHeader">Dölj</span> meny</button>
-	    </div>
-	  </div>
-    <a class="backlink-icon" href="/web/dashboard#/create" title="Tillbaka till Skriv intyg"></a>
-    <h1 style="display: inline-block; margin-right: 20px;"><span message key="view.label.pagetitle.fk7263"></span></h1>
-    <div class="inline-block">
-      <label class="control-label">{{cert.patientNamn || "Per Persson"}} - {{cert.patientPersonnummer || "19361123-5678"}}</label>
-    </div>
-    <div class="control-group buttonbar">
-      <button class="btn btn-info" ng-click="save()">Spara</button>
-      <button class="btn btn-secondary" ng-click="discard()">Ta bort utkast</button>
-      <button class="btn btn-secondary" ng-if="!widgetState.showComplete" ng-click="toggleShowComplete()">Visa vad som behöver kompletteras</button>
-      <button class="btn btn-secondary" ng-if="widgetState.showComplete" ng-click="toggleShowComplete()">Dölj vad som behöver kompletteras</button>
-    </div>
-    <div ng-show="certForm.$pristine && isComplete"><strong>Status:</strong> Intyget är sparat.</div>
-    <div ng-show="certForm.$pristine && !isComplete"><strong>Status:</strong> Intyget är sparat, men inte komplett</div>
-    <div ng-show="certForm.$dirty"><strong>Status:</strong> Intyget är <strong>inte</strong> sparat.</div>
-    
-<!--     <div class=""> -->
-<!--       <strong>Status:</strong> {{cert.status}} -->
-<!--     </div> -->
-  </div>
-</div><!-- top end -->
-
+<div id="wcHeader" wc-header default-active="index"></div>
 <div class="row-fluid webcert-multicol" id="viewCertAndQA">
 
   <!-- Left column -->
