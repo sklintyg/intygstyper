@@ -17,8 +17,7 @@
 
   <bean class="se.inera.certificate.modules.ts_bas.rest.ModuleService" />
 
-  <bean
-    class="se.inera.certificate.modules.ts_bas.model.converter.TransportToExternalConverter" />
+  <bean class="se.inera.certificate.modules.ts_bas.model.converter.TransportToExternalConverter" />
 
   <bean class="se.inera.certificate.modules.ts_bas.model.converter.ExternalToTransportConverter" />
 
