@@ -20,7 +20,7 @@ define([], function() {
 	'use strict';
 
 	/**
-	 * Directive for "Eye Decimals" with two way binding
+	 * Directive for "Eye Decimals" with two way binding /
 	 */
 
 	return [ function() {
@@ -42,8 +42,7 @@ define([], function() {
 							filtered += ',';
 						}
 					});
-					return filtered.length <= 3 ? filtered : filtered
-							.substring(3);
+					return filtered.length <= 3 ? filtered : filtered.substring(3);
 				}
 				function format(value) {
 					var l = value.length;
@@ -76,12 +75,10 @@ define([], function() {
 								valForView = value[0] + ',' + value[1];
 							}
 						}
-						valForModel = Number(valForView[0] + '.'
-								+ valForView[2]);
+						valForModel = Number(valForView[0] + '.' + valForView[2]);
 					}
 
-					// console.log("format(" + value + ") -> V(" + valForView +
-					// "), M(" + valForModel + ")");
+					//console.log("format(" + value + ") -> V(" + valForView + "), M(" + valForModel + ")");
 
 					return {
 						valForView : valForView,
@@ -104,6 +101,7 @@ define([], function() {
 						ngModelCtrl.$render();
 					}
 					return val.valForModel;
+
 				}
 				elem.bind("blur", blurFormat);
 				ngModelCtrl.$parsers.push(eyeDecimal);

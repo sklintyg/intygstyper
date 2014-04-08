@@ -1,7 +1,8 @@
 bin
 target
 *.log
-
+node
+node_modules
 rebel.xml
 
 .classpath

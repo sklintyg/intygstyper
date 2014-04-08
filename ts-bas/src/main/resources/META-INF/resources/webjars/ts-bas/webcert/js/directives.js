@@ -7,7 +7,7 @@ define([
     var moduleName = "ts-bas.directives";
 
     angular.module(moduleName, [])
-        .directive("ts-bas.eyeDecimal", eyeDecimal);
+        .directive("tsEyeDecimal", eyeDecimal);
 
     return moduleName;
 });
