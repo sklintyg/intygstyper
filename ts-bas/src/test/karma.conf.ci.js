@@ -9,7 +9,7 @@ module.exports = function(config){
         singleRun: true,
         autoWatch: false,
         plugins : [ 'karma-jasmine', 'karma-junit-reporter',
-            'karma-phantomjs-launcher' ],
+            'karma-phantomjs-launcher', 'karma-requirejs' ],
         browsers: ['PhantomJS']
     });
 };
