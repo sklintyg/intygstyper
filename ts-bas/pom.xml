@@ -200,6 +200,7 @@
             <goals>
               <goal>karma</goal>
             </goals>
+            <phase>process-test-classes</phase>
             <configuration>
               <karmaConfPath>${project.basedir}/src/test/karma.conf.ci.js</karmaConfPath>
             </configuration>

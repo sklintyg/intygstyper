@@ -71,7 +71,7 @@ module.exports = function(config) {
     singleRun : false,
 
     junitReporter : {
-        outputFile : 'target/surefire-reports/karma-test-results.xml'
+        outputFile : 'target/surefire-reports/TEST-karma-test-results.xml'
     },
 
     plugins : [ 'karma-jasmine', 'karma-junit-reporter', 'karma-chrome-launcher', 'karma-firefox-launcher',
