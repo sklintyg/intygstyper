@@ -362,7 +362,7 @@ controllers.controller('ViewCertCtrl', [ '$scope', '$log', '$timeout', 'certific
             activeErrorMessageKey : null
         };
         $scope.certProperties = {
-            sentToFK : false
+            sentToFK : undefined
         };
         $scope.cert = {};
         $scope.cert.filledAlways = true;

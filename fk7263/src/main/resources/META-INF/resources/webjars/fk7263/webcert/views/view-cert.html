@@ -19,10 +19,12 @@
                 <button class="btn btn-success" ng-click="toggleQuestionForm()" id="askQuestionBtn">Ny fråga till Försäkringskassan</button>
               </div>
             </div>
-            <div ng-if="!certProperties.sentToFK && (qaList.length<1)" class="alert alert-info" id="certificate-is-not-sent-to-fk-message-text">
+            <div ng-if="certProperties.sentToFK === false && (qaList.length<1)" class="alert alert-info" id="certificate-is-not-sent-to-fk-message-text">
               <strong>Intyget har inte skickats till försäkringskassan</strong><br> Frågor kan därför ej ställas för intyget.
             </div>
-          
+            <div ng-if="certProperties.sentToFK === undefined && (qaList.length<1)" class="alert alert-info" id="certificate-is-not-available">
+              <strong>Det finns inga frågor och svar.</strong>
+            </div>
 
             <!-- New question form -->
             <div ng-show="widgetState.newQuestionOpen">

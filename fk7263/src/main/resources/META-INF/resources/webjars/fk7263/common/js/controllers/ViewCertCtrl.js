@@ -10,7 +10,7 @@ define([
 	            activeErrorMessageKey : null
 	        };
 	        $scope.certProperties = {
-	            sentToFK : false
+	            sentToFK : undefined
 	        };
           
 	        $scope.cert = {};
@@ -66,6 +66,8 @@ define([
                   $scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';
                 }
             }, function (error) {
+                $scope.widgetState.doneLoading = true;
+                $scope.widgetState.activeErrorMessageKey = 'error.data_not_found';
             	console.log("Got error while loading cert");
             	console.log(error.data);
             });

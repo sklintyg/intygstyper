@@ -9,7 +9,7 @@ define([], function() {
 					activeErrorMessageKey : null
 				};
 				$scope.certProperties = {
-					sentToFK : false
+					sentToFK : undefined
 				};
 
 				$scope.cert = {};
