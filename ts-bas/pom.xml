@@ -248,6 +248,16 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
+          <executions>
+            <!-- This is a hack to get Jenkins to publish Karma test results when running a Maven project: we run 0 surefire tests, so Jenkins publishes the report of the Karma tests. -->
+            <execution>
+              <id>dummySureFire</id>
+              <phase>test</phase>
+              <goals>
+                <goal>test</goal>
+              </goals>
+            </execution>
+          </executions>
         <configuration>
           <systemPropertyVariables>
             <pdfOutput.dir>${project.build.directory}</pdfOutput.dir>
