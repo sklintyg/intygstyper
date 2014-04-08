@@ -29,13 +29,9 @@ import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
  */
 public class ExternalToInternalConverter {
 
-    private Fk7263Utlatande source;
-
     public Fk7263Intyg convert(Fk7263Utlatande source) throws ConverterException {
 
         Fk7263Intyg intyg = new Fk7263Intyg();
-
-        this.source = source;
 
         intyg.setId(source.getId().getRoot());
         intyg.setSkickatDatum(source.getSkickatdatum());
@@ -44,24 +40,24 @@ public class ExternalToInternalConverter {
         Fk7263Aktivitet smittskydd = source.getAktivitet(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
         intyg.setAvstangningSmittskydd(smittskydd != null);
 
-        convertDiagnos(intyg);
-        convertSjukdomsforlopp(intyg);
-        convertFunktionsnedsattning(intyg);
-        convertVardkontakter(intyg);
-        convertReferenser(intyg);
-        convertAktivitetsbegransning(intyg);
-        convertAktiviteter(intyg);
-        convertPatient(intyg);
-        convertArbetsformaga(intyg);
-        convertKommentar(intyg);
-        convertSkapasAv(intyg);
+        convertDiagnos(intyg, source);
+        convertSjukdomsforlopp(intyg, source);
+        convertFunktionsnedsattning(intyg, source);
+        convertVardkontakter(intyg, source);
+        convertReferenser(intyg, source );
+        convertAktivitetsbegransning(intyg, source);
+        convertAktiviteter(intyg, source);
+        convertPatient(intyg, source);
+        convertArbetsformaga(intyg, source);
+        convertKommentar(intyg, source);
+        convertSkapasAv(intyg, source);
 
         intyg.setSigneringsdatum(source.getSigneringsdatum());
 
         return intyg;
     }
 
-    private void convertSkapasAv(Fk7263Intyg intyg) {
+    private void convertSkapasAv(Fk7263Intyg intyg, Fk7263Utlatande source) {
         Fk7263HosPersonal personal = source.getSkapadAv();
         Vardperson vardperson = new Vardperson();
         if (personal != null) {
@@ -102,13 +98,13 @@ public class ExternalToInternalConverter {
         intyg.setVardperson(vardperson);
     }
 
-    private void convertKommentar(Fk7263Intyg intyg) {
+    private void convertKommentar(Fk7263Intyg intyg, Fk7263Utlatande source) {
         if (!source.getKommentarer().isEmpty()) {
             intyg.setKommentar(source.getKommentarer().get(0));
         }
     }
 
-    private void convertArbetsformaga(Fk7263Intyg intyg) {
+    private void convertArbetsformaga(Fk7263Intyg intyg, Fk7263Utlatande source) {
         List<Fk7263Observation> arbetsformagor = source.getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
 
         if (!arbetsformagor.isEmpty()) {
@@ -160,7 +156,7 @@ public class ExternalToInternalConverter {
         }
     }
 
-    private void convertPatient(Fk7263Intyg intyg) {
+    private void convertPatient(Fk7263Intyg intyg, Fk7263Utlatande source) {
 
         Fk7263Patient patient = source.getPatient();
         if (patient == null) {
@@ -185,7 +181,7 @@ public class ExternalToInternalConverter {
 
     }
 
-    private void convertAktiviteter(Fk7263Intyg intyg) {
+    private void convertAktiviteter(Fk7263Intyg intyg, Fk7263Utlatande source) {
 
         for (Fk7263Aktivitet aktivitet : source.getAktiviteter()) {
 
@@ -224,7 +220,7 @@ public class ExternalToInternalConverter {
 
     }
 
-    private void convertAktivitetsbegransning(Fk7263Intyg intyg) {
+    private void convertAktivitetsbegransning(Fk7263Intyg intyg, Fk7263Utlatande source) {
         Fk7263Observation aktivitetsbegransning = source
                 .findObservationByKategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
         if (aktivitetsbegransning != null) {
@@ -232,7 +228,7 @@ public class ExternalToInternalConverter {
         }
     }
 
-    private void convertVardkontakter(Fk7263Intyg intyg) {
+    private void convertVardkontakter(Fk7263Intyg intyg, Fk7263Utlatande source) {
         for (Vardkontakt vardkontakt : source.getVardkontakter()) {
             if (Vardkontakttypkoder.MIN_UNDERSOKNING_AV_PATIENTEN.equals(vardkontakt.getVardkontakttyp())
                     && vardkontakt.getVardkontaktstid() != null) {
@@ -244,7 +240,7 @@ public class ExternalToInternalConverter {
         }
     }
 
-    private void convertReferenser(Fk7263Intyg intyg) {
+    private void convertReferenser(Fk7263Intyg intyg, Fk7263Utlatande source) {
         for (Referens referens : source.getReferenser()) {
             if (Referenstypkoder.JOURNALUPPGIFT.equals(referens.getReferenstyp())) {
                 intyg.setJournaluppgifter(referens.getDatum());
@@ -255,21 +251,21 @@ public class ExternalToInternalConverter {
         }
     }
 
-    private void convertFunktionsnedsattning(Fk7263Intyg intyg) {
+    private void convertFunktionsnedsattning(Fk7263Intyg intyg, Fk7263Utlatande source) {
         Fk7263Observation funktionsnedsattning = source.findObservationByKategori(ObservationsKoder.KROPPSFUNKTIONER);
         if (funktionsnedsattning != null) {
             intyg.setFunktionsnedsattning(funktionsnedsattning.getBeskrivning());
         }
     }
 
-    private void convertSjukdomsforlopp(Fk7263Intyg intyg) {
+    private void convertSjukdomsforlopp(Fk7263Intyg intyg, Fk7263Utlatande source) {
         List<Fk7263Observation> sjukdomsforlopp = source.getObservationsByKod(ObservationsKoder.FORLOPP);
         if (sjukdomsforlopp != null && !sjukdomsforlopp.isEmpty()) {
             intyg.setSjukdomsforlopp(sjukdomsforlopp.get(0).getBeskrivning());
         }
     }
 
-    private void convertDiagnos(Fk7263Intyg intyg) {
+    private void convertDiagnos(Fk7263Intyg intyg, Fk7263Utlatande source) {
         Fk7263Observation huvudDiagnos = source.findObservationByKategori(ObservationsKoder.DIAGNOS);
         if (huvudDiagnos != null) {
             if (huvudDiagnos.getObservationskod() != null) {
