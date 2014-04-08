@@ -141,7 +141,7 @@
             <phase>process-test-resources</phase>
             <configuration>
               <target>
-                <copy todir="${project.build.directory}/webjardependencies" verbose="true">
+                <copy todir="${project.build.directory}/webjardependencies" verbose="false">
                   <regexpmapper from="^(.*)/.*/(.*)$$" to="\1/\2"/>
                   <fileset dir="${project.build.directory}/webjardependenciestemp/META-INF/resources/webjars/">
                   </fileset>
@@ -195,15 +195,15 @@
             </configuration>
           </execution>
 
-          <execution>
-            <id>javascript tests</id>
-            <goals>
-              <goal>karma</goal>
-            </goals>
-            <configuration>
-              <karmaConfPath>${project.basedir}/src/test/karma.conf.ci.js</karmaConfPath>
-            </configuration>
-          </execution>
+          <!--<execution>-->
+            <!--<id>javascript tests</id>-->
+            <!--<goals>-->
+              <!--<goal>karma</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+              <!--<karmaConfPath>${project.basedir}/src/test/karma.conf.ci.js</karmaConfPath>-->
+            <!--</configuration>-->
+          <!--</execution>-->
 
         </executions>
       </plugin>
