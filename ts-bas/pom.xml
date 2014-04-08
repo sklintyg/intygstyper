@@ -142,7 +142,7 @@
             <configuration>
               <target>
                 <copy todir="${project.build.directory}/webjardependencies" verbose="false">
-                  <regexpmapper from="^(.*)/.*/(.*)$$" to="\1/\2"/>
+                  <regexpmapper from="^(.*)[/\\].*[/\\](.*)$$" to="\1/\2"/>
                   <fileset dir="${project.build.directory}/webjardependenciestemp/META-INF/resources/webjars/">
                   </fileset>
                 </copy>
