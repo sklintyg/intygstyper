@@ -123,10 +123,7 @@
                       <label class="control-label">Förtydligande av diagnos/diagnoser</label><span wc-enable-tooltip field-help-text="fk7263.helptext.diagnos.fortydligande"></span>
                     </div>
                     <textarea id="diagnose.clarification" name="diagnose.clarification" rows='5'
-                      ng-model="cert.diagnosBeskrivning" maxlength="{{inputLimits.diagnosBeskrivning}}" ng-change="limitFieldLength('diagnosBeskrivning')"></textarea>
-                    <div class="counter">
-                        Tecken kvar: {{inputLimits.diagnosBeskrivning - cert.diagnosBeskrivning.length}}
-                    </div>
+                      ng-model="cert.diagnosBeskrivning" wc-maxlength maxlength="{{inputLimits.diagnosBeskrivning}}"></textarea>
                 </div>
 
                 <div class="control-group form-inline">
@@ -136,22 +133,19 @@
 			</div>
 
             <div wc-field field-label="view.label.progressofdisease" field-number="3" field-help-text="fk7263.helptext.aktuellt-sjukdomsforlopp" ng-hide="cert.avstangningSmittskydd" ng-animate="fade">
-                <textarea id="diseaseCause" name="diseaseCause" rows='5' ng-model="cert.sjukdomsforlopp" ng-change="limitFieldLength('sjukdomsforlopp')"></textarea>
-                <div class="counter">Tecken kvar: {{inputLimits.sjukdomsforlopp - cert.sjukdomsforlopp.length}}</div>
+                <textarea id="diseaseCause" name="diseaseCause" rows='5' ng-model="cert.sjukdomsforlopp" wc-maxlength maxlength="{{inputLimits.sjukdomsforlopp}}"></textarea>
             </div>
 
 			<div wc-field field-label="view.label.disabilities" field-number="4" field-help-text="fk7263.helptext.funktionsnedsattning" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
                 <a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
                     title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
-                <textarea id="disabilities" name="disabilities" rows='6' ng-model="cert.funktionsnedsattning" maxlength="{{inputLimits.funktionsnedsattning}}" ng-change="limitFieldLength('funktionsnedsattning')"></textarea>
-                <div class="counter">Tecken kvar: {{inputLimits.funktionsnedsattning - cert.funktionsnedsattning.length}}</div>
+                <textarea id="disabilities" name="disabilities" rows='6' ng-model="cert.funktionsnedsattning" wc-maxlength maxlength="{{inputLimits.funktionsnedsattning}}"></textarea>
 			</div>
 
 			<div wc-field field-label="view.label.limitation" field-number="5" field-help-text="fk7263.helptext.aktivitetsbegransning" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
                 <a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
                     title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
-                <textarea id="activityLimitation" name="activityLimitation"	rows='10' ng-model="cert.aktivitetsbegransning" maxlength="{{inputLimits.aktivitetsbegransning}}" ng-change="limitFieldLength('aktivitetsbegransning')"></textarea>
-                <div class="counter">Tecken kvar: {{inputLimits.aktivitetsbegransning - cert.aktivitetsbegransning.length}}</div>
+                <textarea id="activityLimitation" name="activityLimitation"	rows='10' ng-model="cert.aktivitetsbegransning" wc-maxlength maxlength="{{inputLimits.aktivitetsbegransning}}"></textarea>
 			</div>
 
             <!-- Arbete -->
@@ -163,10 +157,7 @@
                         <div class="indent" ng-if="cert.basedOnWork == 'CURRENT'">
                             <label for="currentWork">Ange aktuella arbetsuppgifter</label>
                             <div class="controls">
-                                <textarea id="currentWork" name="currentWork" rows='2' ng-model="cert.nuvarandeArbetsuppgifter" maxlength="{{inputLimits.nuvarandeArbetsuppgifter}}" ng-change="limitFieldLength('nuvarandeArbetsuppgifter')"></textarea>
-                                <div class="counter">
-                                    Tecken kvar: {{inputLimits.nuvarandeArbetsuppgifter - cert.nuvarandeArbetsuppgifter.length}}
-                                </div>
+                                <textarea id="currentWork" name="currentWork" rows='2' ng-model="cert.nuvarandeArbetsuppgifter" wc-maxlength maxlength="{{inputLimits.nuvarandeArbetsuppgifter}}"></textarea>
                             </div>
                         </div>
                     </div>
@@ -257,10 +248,7 @@
 			<div wc-field field-label="view.label.patientworkcapacityjudgement" field-number="9" field-help-text="fk7263.helptext.arbetsformaga.bedoms-langre">
                 <a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
                     title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
-                <textarea id="capacityForWork.text" name="capacityForWork.text"	rows='10' ng-model="cert.arbetsformagaPrognos" maxlength="{{inputLimits.arbetsformagaPrognos}}" ng-change="limitFieldLength('arbetsformagaPrognos')"></textarea>
-                <div class="counter">
-                    Tecken kvar: {{inputLimits.arbetsformagaPrognos - cert.arbetsformagaPrognos.length}}
-                </div>
+                <textarea id="capacityForWork.text" name="capacityForWork.text"	rows='10' ng-model="cert.arbetsformagaPrognos" wc-maxlength maxlength="{{inputLimits.arbetsformagaPrognos}}"></textarea>
 			</div>
 
             <!-- Prognos -->
@@ -295,16 +283,12 @@
 			<div wc-field field-label="view.label.treatments" field-number="6b" field-help-text="fk7263.helptext.atgarder">
                 <div class="control-group">
                     <label class="control-label">Planerad eller pågående behandling eller åtgärd inom sjukvården (ange vilken)</label>
-                    <textarea id="measures.current" name="measures.current" rows='1' ng-model="cert.atgardInomSjukvarden" maxlength="{{inputLimits.atgardInomSjukvarden}}" ng-change="limitFieldLength('atgardInomSjukvarden')"></textarea>
-                    <div class="counter">
-                        Tecken kvar: {{inputLimits.atgardInomSjukvarden - cert.atgardInomSjukvarden.length}}
-                    </div>
+                    <textarea id="measures.current" name="measures.current" rows='1' ng-model="cert.atgardInomSjukvarden" wc-maxlength maxlength="{{inputLimits.atgardInomSjukvarden}}"></textarea>
 				</div>
 
                 <div class="control-group">
 					<label class="control-label">Annan åtgärd (ange vilken)</label>
-					<textarea id="measures.other" name="measures.other" rows='1' ng-model="cert.annanAtgard" maxlength="{{inputLimits.annanAtgard}}" ng-change="limitFieldLength('annanAtgard')"></textarea>
-					<div class="counter">Tecken kvar: {{inputLimits.annanAtgard - cert.annanAtgard.length}}</div>
+					<textarea id="measures.other" name="measures.other" rows='1' ng-model="cert.annanAtgard" wc-maxlength maxlength="{{inputLimits.annanAtgard}}"></textarea>
 			    </div>
             </div>
 

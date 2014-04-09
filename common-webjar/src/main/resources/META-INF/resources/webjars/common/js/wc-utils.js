@@ -381,8 +381,14 @@ define([
             restrict: "A",
             require: "ngModel",
             link: function (scope, element, attrs, controller) {
-                scope["charsRemaining" + element[0].name] = attrs.maxlength;
-                var counter = angular.element("<div class='counter'>Tecken kvar: {{charsRemaining" + element[0].name + "}}</div>");
+
+                var uuid = (new Date()).getTime();
+                var random = Math.floor(Math.random() * 1000000);
+                uuid = uuid + random;
+                var counterName = "charsRemaining" + uuid;
+                scope[counterName] = attrs.maxlength;
+
+                var counter = angular.element("<div class='counter'>Tecken kvar: {{" + counterName + "}}</div>");
                 $compile(counter)(scope);
                 element.parent().append(counter);
 
@@ -396,7 +402,7 @@ define([
                         controller.$render();
                         return transformedInput;
                     }
-                    scope["charsRemaining" + element[0].name] = attrs.maxlength - text.length;
+                    scope[counterName] = attrs.maxlength - text.length;
                     return text;
                 }
 
