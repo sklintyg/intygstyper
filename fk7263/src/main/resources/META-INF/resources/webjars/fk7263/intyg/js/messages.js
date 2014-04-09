@@ -1,6 +1,9 @@
-'use strict';
-var fk7263Messages = {
-    "sv" : {
+define([
+], function() {
+	'use strict';
+
+	return {
+	"sv" : {
     	
         "recipient.label.pagetitle" : "Skicka Intyget - välj mottagare",
         "recipient.label.recipientlisttitle" : "Myndigheter och försäkringsbolag",
@@ -97,6 +100,7 @@ var fk7263Messages = {
         "error.certnotfound" : "Intygen i Inkorgen kunde inte visas. Om felet kvarstår kan du kontakta <a href='/web/start#/hjalp'>support</a>. Om du inte kan komma åt intyget på Mina intyg just nu så kan du kontakta din läkare för att få en kopia.<br><br><a href='/web/start'>Gå till Inkorgen och försök igen</a>"
     },
     "en" : {
-        "view.label.pagetitle" : "Show Certificate"
+    	"view.label.pagetitle" : "Show Certificate"
     }
 };
+});

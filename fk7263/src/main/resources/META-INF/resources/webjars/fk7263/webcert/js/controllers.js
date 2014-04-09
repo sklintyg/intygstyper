@@ -2,7 +2,7 @@ define([
     'angular',
     'fk7263/webcert/js/services',
     'fk7263/webcert/js/controllers/EditCertCtrl',
-    'fk7263/common/js/controllers/ViewCertCtrl',
+    'fk7263/webcert/js/controllers/ViewCertCtrl',
     'fk7263/webcert/js/controllers/QACtrl'
 ], function (angular, services, EditCertCtrl, ViewCertCtrl, QACtrl) {
     'use strict';

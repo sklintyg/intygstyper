@@ -17,7 +17,6 @@ define(
 					function($scope, $rootScope, $log, $timeout, $window, fragaSvarService, fragaSvarCommonService,
 							wcDialogService, User, $routeParams) {
 
-						console.log("Kör qa-ctrlern");
 						// init state
 						$scope.qaList = {};
 						$scope.widgetState = {
@@ -93,7 +92,7 @@ define(
 							// local
 							// spinner
 
-							fragaSvarService.saveNewQuestion($scope.MODULE_CONFIG.CERT_ID_PARAMETER, newQuestion,
+							fragaSvarService.saveNewQuestion($routeParams.certificateId, newQuestion,
 									function(result) {
 										$log.debug("Got saveNewQuestion result:" + result);
 										newQuestion.updateInProgress = false;

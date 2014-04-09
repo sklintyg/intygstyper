@@ -1,6 +1,6 @@
 define([
     'angular',
-    'fk7263/common/js/services/certificateService',
+    'fk7263/webcert/js/services/certificateService',
     'fk7263/webcert/js/services/fragaSvarService'
     
 ], function (angular, certificateService, fragaSvarService) {
