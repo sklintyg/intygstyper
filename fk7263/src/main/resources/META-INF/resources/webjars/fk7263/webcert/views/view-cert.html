@@ -397,23 +397,23 @@
                 <div wc-cert-field field-number="8b" field-label="view.label.nedsattning" filled="cert.nedsattMed25||cert.nedsattMed50||cert.nedsattMed75||cert.nedsattMed100" id="field8b">
 
                   <div ng-show="cert.nedsattMed25 != null">
-                    <strong><span message key="nedsattningsgrad.nedsatt_med_1_4"></span></strong><br> Från och med {{cert.nedsattMed25.start | date:'longDate'}}&ndash; längst till och med
-                    {{cert.nedsattMed25.end | date:'longDate'}}
+                    <strong><span message key="nedsattningsgrad.nedsatt_med_1_4"></span></strong><br> Från och med {{cert.nedsattMed25.from | date:'longDate'}} &ndash; längst till och med
+                    {{cert.nedsattMed25.tom | date:'longDate'}}
                   </div>
 
                   <div ng-show="cert.nedsattMed50 != null">
-                    <strong><span message key="nedsattningsgrad.nedsatt_med_1_2"></span></strong><br> Från och med {{cert.nedsattMed50.start | date:'longDate'}}&ndash; längst till och med
-                    {{cert.nedsattMed50.end | date:'longDate'}}
+                    <strong><span message key="nedsattningsgrad.nedsatt_med_1_2"></span></strong><br> Från och med {{cert.nedsattMed50.from | date:'longDate'}} &ndash; längst till och med
+                    {{cert.nedsattMed50.tom | date:'longDate'}}
                   </div>
 
                   <div ng-show="cert.nedsattMed75 != null">
-                    <strong><span message key="nedsattningsgrad.nedsatt_med_3_4"></span></strong><br> Från och med {{cert.nedsattMed75.start | date:'longDate'}}&ndash; längst till och med
-                    {{cert.nedsattMed75.end | date:'longDate'}}
+                    <strong><span message key="nedsattningsgrad.nedsatt_med_3_4"></span></strong><br> Från och med {{cert.nedsattMed75.from | date:'longDate'}} &ndash; längst till och med
+                    {{cert.nedsattMed75.tom | date:'longDate'}}
                   </div>
 
                   <div ng-show="cert.nedsattMed100 != null">
-                    <strong><span message key="nedsattningsgrad.helt_nedsatt"></span></strong><br> Från och med {{cert.nedsattMed100.start | date:'longDate'}}&ndash; längst till och med
-                    {{cert.nedsattMed100.end | date:'longDate'}}
+                    <strong><span message key="nedsattningsgrad.helt_nedsatt"></span></strong><br> Från och med {{cert.nedsattMed100.from | date:'longDate'}} &ndash; längst till och med
+                    {{cert.nedsattMed100.tom | date:'longDate'}}
                   </div>
 
                 </div>
