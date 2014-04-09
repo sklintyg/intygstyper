@@ -33,11 +33,11 @@
         <div class="inline-block">
             <label class="control-label">{{cert.patient.fullstandigtNamn}} - {{cert.patient.personid}}</label>
         </div>
-        <div class="control-group buttonbar">
+        <div class="form-group buttonbar">
             <button class="btn btn-info" ng-click="save()">Spara</button>
-            <button class="btn btn-secondary" ng-click="discard()">Ta bort utkast</button>
-            <button class="btn btn-secondary" ng-if="!widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">Visa vad som behöver kompletteras</button>
-            <button class="btn btn-secondary" ng-if="widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">Dölj vad som behöver kompletteras</button>
+            <button class="btn btn-default btn-secondary" ng-click="discard()">Ta bort utkast</button>
+            <button class="btn btn-default btn-secondary" ng-if="!widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">Visa vad som behöver kompletteras</button>
+            <button class="btn btn-default btn-secondary" ng-if="widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">Dölj vad som behöver kompletteras</button>
         </div>
         <div ng-show="certForm.$pristine && isComplete"><strong>Status:</strong> Intyget är sparat.</div>
         <div ng-show="certForm.$pristine && !isComplete"><strong>Status:</strong> Intyget är sparat, men inte komplett</div>
@@ -50,7 +50,7 @@
 
   <form name="certForm" novalidate autocomplete="off">
 
-    <div class="alert alert-error" ng-show="widgetState.showComplete && !isComplete" style="margin-right: 20px">
+    <div class="alert alert-danger" ng-show="widgetState.showComplete && !isComplete" style="margin-right: 20px">
         <h3>Följande fält behöver kompletteras:</h3>
         <ul>
           <li ng-repeat="message in validationMessages">
@@ -58,36 +58,36 @@
         </ul>
     </div>
 
-    <div id="certificate" class="row-fluid certificate">
-        <div class="span12 cert-body">
-            
+    <div id="certificate" class="row certificate">
+        <div class="col-md-12 cert-body">
+
             <div wc-field field-label="ts.label.intygavser" field-help-text="ts.helptext.intyg-avser">
-              <div class="alert alert-error" ng-if="validationMessagesGrouped.intygavser">
+              <div class="alert alert-danger" ng-if="validationMessagesGrouped.intygavser">
                 <ul>
                   <li ng-repeat="message in validationMessagesGrouped.intygavser"><span message key="{{message.message}}"></span></li>
                 </ul>
               </div>
 
-              <p>Detta intyg ska användas vid förlängd giltighet av högre behörighet, ansökan om körkortstillstånd för grupp II och III och vid ansökan om taxiförarlegitimation.<span wc-enable-tooltip field-help-text="ts.helptext.intyg-avser.grupp2-grupp3"></span> </p> 
+              <p>Detta intyg ska användas vid förlängd giltighet av högre behörighet, ansökan om körkortstillstånd för grupp II och III och vid ansökan om taxiförarlegitimation.<span wc-enable-tooltip field-help-text="ts.helptext.intyg-avser.grupp2-grupp3"></span> </p>
                 <p>Intyget kan också användas när Transportstyrelsen i andra fall begärt ett läkarintyg. Markera då endast i rutan Annat nedan.</p>
-                <div class="control-group clearfix">
-                    <label class="checkbox checkbox-columns span2" ng-repeat="typ in cert.intygAvser.korkortstyp track by $index"><input id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox" ng-model="typ.selected"> <span message key="ts.label.korkort.{{typ.type}}"></span></label>
+                <div class="form-group clearfix">
+                    <label class="checkbox checkbox-columns col-md-2" ng-repeat="typ in cert.intygAvser.korkortstyp track by $index"><input id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox" ng-model="typ.selected"> <span message key="ts.label.korkort.{{typ.type}}"></span></label>
                 </div>
             </div>
 
             <div wc-field field-label="ts.label.identitet" field-help-text="ts.helptext.identitet-styrkt-genom.id-kort">
-            	<div class="alert alert-error" ng-if="validationMessagesGrouped.identitet">
+            	<div class="alert alert-danger" ng-if="validationMessagesGrouped.identitet">
                 	<ul>
                   		<li ng-repeat="message in validationMessagesGrouped.identitet"><span message key="{{message.message}}"></span></li>
                 	</ul>
              	</div>
-                <div class="control-group clearfix">
-                    <label class="radio checkbox-columns span6" ng-repeat="(k,v) in form.identity"><input name="identity{{$index}}" type="radio" value="{{v}}" ng-model="cert.vardkontakt.idkontroll"> {{k}}</label>
+                <div class="form-group clearfix">
+                    <label class="radio checkbox-columns col-md-6" ng-repeat="(k,v) in form.identity"><input name="identity{{$index}}" type="radio" value="{{v}}" ng-model="cert.vardkontakt.idkontroll"> {{k}}</label>
                 </div>
             </div>
 
             <div class="alert alert-info">
-				<span message key="ts.helptext.lakaren-ska-uppmarksamma"></span>            
+				<span message key="ts.helptext.lakaren-ska-uppmarksamma"></span>
             </div>
 
             <!-- 1. Syn -->
@@ -95,7 +95,7 @@
 
                 <table class="table table-form">
                     <tr ng-if="validationMessagesGrouped.syn">
-                      <td colspan="3"><div class="alert alert-error">
+                      <td colspan="3"><div class="alert alert-danger">
                         <ul>
                           <li ng-repeat="message in validationMessagesGrouped.syn"><span message key="{{message.message}}"></span></li>
                         </ul>
@@ -122,7 +122,7 @@
                         <td>
                             <p>c) Har patienten någon progressiv ögonsjukdom?</p>
                             <div class="alert alert-info">
-                            	<span message key="ts.helptext.synfunktioner.om-nagon-av-a-c"></span>            
+                            	<span message key="ts.helptext.synfunktioner.om-nagon-av-a-c"></span>
                             </div>
                         </td>
                     </tr>
@@ -156,20 +156,20 @@
                                 </tr>
                                 <tr>
                                     <td>Höger öga</td>
-                                    <td><input type="text" class="small-decimal" eye-decimal ng-model="cert.syn.hogerOga.utanKorrektion"></td>
-                                    <td><input type="text" class="small-decimal" eye-decimal ng-model="cert.syn.hogerOga.medKorrektion"></td>
+                                    <td><input type="text" class="form-control small-decimal" eye-decimal ng-model="cert.syn.hogerOga.utanKorrektion"></td>
+                                    <td><input type="text" class="form-control small-decimal" eye-decimal ng-model="cert.syn.hogerOga.medKorrektion"></td>
                                     <td><input type="checkbox" ng-model="cert.syn.hogerOga.kontaktlins"></td>
                                 </tr>
                                 <tr>
                                     <td>Vänster öga</td>
-                                    <td><input type="text" class="small-decimal" eye-decimal ng-model="cert.syn.vansterOga.utanKorrektion"></td>
-                                    <td><input type="text" class="small-decimal" eye-decimal ng-model="cert.syn.vansterOga.medKorrektion"></td>
+                                    <td><input type="text" class="form-control small-decimal" eye-decimal ng-model="cert.syn.vansterOga.utanKorrektion"></td>
+                                    <td><input type="text" class="form-control small-decimal" eye-decimal ng-model="cert.syn.vansterOga.medKorrektion"></td>
                                     <td><input type="checkbox" ng-model="cert.syn.vansterOga.kontaktlins"></td>
                                 </tr>
                                 <tr>
                                     <td>Binokulärt</td>
-                                    <td><input type="text" class="small-decimal" eye-decimal ng-model="cert.syn.binokulart.utanKorrektion"></td>
-                                    <td><input type="text" class="small-decimal" eye-decimal ng-model="cert.syn.binokulart.medKorrektion"></td>
+                                    <td><input type="text" class="form-control small-decimal" eye-decimal ng-model="cert.syn.binokulart.utanKorrektion"></td>
+                                    <td><input type="text" class="form-control small-decimal" eye-decimal ng-model="cert.syn.binokulart.medKorrektion"></td>
                                     <td></td>
                                 </tr>
                             </table>
@@ -179,7 +179,7 @@
                             <div class="alert alert-info" ng-show="cert.syn.korrektionsglasensStyrka == true">
                             	<span message key="ts.helptext.synfunktioner.info-8-dioptrier"></span>
                             </div>
-                            
+
                         </td>
                     </tr>
                 </table>
@@ -190,7 +190,7 @@
 
                 <table class="table table-form">
                     <tr ng-if="validationMessagesGrouped.horselbalans">
-                      <td colspan="3"><div class="alert alert-error">
+                      <td colspan="3"><div class="alert alert-danger">
                         <ul>
                           <li ng-repeat="message in validationMessagesGrouped.horselbalans"><span message key="{{message.message}}"></span></li>
                         </ul>
@@ -218,7 +218,7 @@
             <div wc-field field-label="ts.label.funktionsnedsattning">
                 <table class="table table-form">
                     <tr ng-if="validationMessagesGrouped.funktionsnedsattning">
-                      <td colspan="3"><div class="alert alert-error">
+                      <td colspan="3"><div class="alert alert-danger">
                         <ul>
                           <li ng-repeat="message in validationMessagesGrouped.funktionsnedsattning"><span message key="{{message.message}}"></span></li>
                         </ul>
@@ -251,7 +251,7 @@
             <div wc-field field-label="ts.label.hjartkarl">
                 <table class="table table-form">
                   <tr ng-if="validationMessagesGrouped.hjartkarl">
-                    <td colspan="3"><div class="alert alert-error">
+                    <td colspan="3"><div class="alert alert-danger">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.hjartkarl"><span message key="{{message.message}}"></span></li>
                       </ul>
@@ -288,7 +288,7 @@
             <div wc-field field-label="ts.label.diabetes">
                 <table class="table table-form">
                     <tr ng-if="validationMessagesGrouped.diabetes">
-                      <td colspan="3"><div class="alert alert-error">
+                      <td colspan="3"><div class="alert alert-danger">
                         <ul>
                           <li ng-repeat="message in validationMessagesGrouped.diabetes"><span message key="{{message.message}}"></span></li>
                         </ul>
@@ -314,11 +314,11 @@
                                     <label class="checkbox"><input name="diabetestreat1" type="checkbox" ng-model="cert.diabetes.kost"> Kost</label>
                                     <label class="checkbox"><input name="diabetestreat2" type="checkbox" ng-model="cert.diabetes.tabletter"> Tabletter</label>
                                     <label class="checkbox"><input name="diabetestreat3" type="checkbox" ng-model="cert.diabetes.insulin"> Insulin</label>
-                                    
+
                                     <div class="alert alert-info" data-ng-show="cert.diabetes.tabletter || cert.diabetes.insulin">
                                         <span message key="ts.helptext.diabetes.tabletter-eller-insulin"></span>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </td>
@@ -329,7 +329,7 @@
             <div wc-field field-label="ts.label.neurologi">
                 <table class="table table-form">
                   <tr ng-if="validationMessagesGrouped.neurologi">
-                    <td colspan="3"><div class="alert alert-error">
+                    <td colspan="3"><div class="alert alert-danger">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.neurologi"><span message key="{{message.message}}"></span></li>
                       </ul>
@@ -353,7 +353,7 @@
             <div wc-field field-label="ts.label.medvetandestorning">
                 <table class="table table-form">
                   <tr ng-if="validationMessagesGrouped.medvetandestorning">
-                    <td colspan="3"><div class="alert alert-error">
+                    <td colspan="3"><div class="alert alert-danger">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.medvetandestorning"><span message key="{{message.message}}"></span></li>
                       </ul>
@@ -381,7 +381,7 @@
             <div wc-field field-label="ts.label.njurar">
                 <table class="table table-form">
                   <tr ng-if="validationMessagesGrouped.njurar">
-                    <td colspan="3"><div class="alert alert-error">
+                    <td colspan="3"><div class="alert alert-danger">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.njurar"><span message key="{{message.message}}"></span></li>
                       </ul>
@@ -405,7 +405,7 @@
             <div wc-field field-label="ts.label.kognitivt">
                 <table class="table table-form">
                   <tr ng-if="validationMessagesGrouped.kognitivt">
-                    <td colspan="3"><div class="alert alert-error">
+                    <td colspan="3"><div class="alert alert-danger">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.kognitivt"><span message key="{{message.message}}"></span></li>
                       </ul>
@@ -429,7 +429,7 @@
             <div wc-field field-label="ts.label.somnvakenhet">
                 <table class="table table-form">
                   <tr ng-if="validationMessagesGrouped.somnvakenhet">
-                    <td colspan="3"><div class="alert alert-error">
+                    <td colspan="3"><div class="alert alert-danger">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.somnvakenhet"><span message key="{{message.message}}"></span></li>
                       </ul>
@@ -453,7 +453,7 @@
             <div wc-field field-label="ts.label.narkotikalakemedel">
                 <table class="table table-form">
                   <tr ng-if="validationMessagesGrouped.narkotikalakemedel">
-                    <td colspan="3"><div class="alert alert-error">
+                    <td colspan="3"><div class="alert alert-danger">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.narkotikalakemedel"><span message key="{{message.message}}"></span></li>
                       </ul>
@@ -505,7 +505,7 @@
             <div wc-field field-label="ts.label.psykiskt">
                 <table class="table table-form">
                   <tr ng-if="validationMessagesGrouped.psykiskt">
-                    <td colspan="3"><div class="alert alert-error">
+                    <td colspan="3"><div class="alert alert-danger">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.psykiskt"><span message key="{{message.message}}"></span></li>
                       </ul>
@@ -529,7 +529,7 @@
             <div wc-field field-label="ts.label.utvecklingsstorning">
                 <table class="table table-form">
                   <tr ng-if="validationMessagesGrouped.utvecklingsstorning">
-                    <td colspan="3"><div class="alert alert-error">
+                    <td colspan="3"><div class="alert alert-danger">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.utvecklingsstorning"><span message key="{{message.message}}"></span></li>
                       </ul>
@@ -560,7 +560,7 @@
             <div wc-field field-label="ts.label.sjukhusvard">
                 <table class="table table-form">
                   <tr ng-if="validationMessagesGrouped.sjukhusvard">
-                    <td colspan="3"><div class="alert alert-error">
+                    <td colspan="3"><div class="alert alert-danger">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.sjukhusvard"><span message key="{{message.message}}"></span></li>
                       </ul>
@@ -580,15 +580,15 @@
                             <table data-ng-show="cert.sjukhusvard.sjukhusEllerLakarkontakt">
                                 <tr>
                                     <td>Om frågan besvaras med ja, när?</td>
-                                    <td><input name="tidpunkt" type="text" data-ng-model="cert.sjukhusvard.tidpunkt" wc-maxlength maxlength="{{inputLimits.sjukhusvardtidpunkt}}"></td>
+                                    <td><input name="tidpunkt" class="form-control" type="text" data-ng-model="cert.sjukhusvard.tidpunkt" wc-maxlength maxlength="{{inputLimits.sjukhusvardtidpunkt}}"></td>
                                 </tr>
                                 <tr>
                                     <td>Vårdinrättningens namn och klinik/er:</td>
-                                    <td><input name="vardinrattning" type="text" data-ng-model="cert.sjukhusvard.vardinrattning" wc-maxlength maxlength="{{inputLimits.sjukhusvardvardinrattning}}"></td>
+                                    <td><input name="vardinrattning" class="form-control" type="text" data-ng-model="cert.sjukhusvard.vardinrattning" wc-maxlength maxlength="{{inputLimits.sjukhusvardvardinrattning}}"></td>
                                 </tr>
                                 <tr>
                                     <td>För vad?</td>
-                                    <td><input name="anledning" type="text" data-ng-model="cert.sjukhusvard.anledning" wc-maxlength maxlength="{{inputLimits.sjukhusvardanledning}}"></td>
+                                    <td><input name="anledning" class="form-control" type="text" data-ng-model="cert.sjukhusvard.anledning" wc-maxlength maxlength="{{inputLimits.sjukhusvardanledning}}"></td>
                                 </tr>
                             </table>
                         </td>
@@ -599,7 +599,7 @@
             <div wc-field field-label="ts.label.medicinering">
                 <table class="table table-form">
                   <tr ng-if="validationMessagesGrouped.medicinering">
-                    <td colspan="3"><div class="alert alert-error">
+                    <td colspan="3"><div class="alert alert-danger">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.medicinering"><span message key="{{message.message}}"></span></li>
                       </ul>
@@ -630,7 +630,7 @@
             </div>
 
             <div wc-field field-label="ts.label.bedomning">
-              <div class="alert alert-error" ng-if="validationMessagesGrouped.bedomning">
+              <div class="alert alert-danger" ng-if="validationMessagesGrouped.bedomning">
                 <ul>
                   <li ng-repeat="message in validationMessagesGrouped.bedomning"><span message key="{{message.message}}"></span></li>
                 </ul>
@@ -638,10 +638,10 @@
 
                 <p>Patienten uppfyller kraven enligt Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2) för:</p>
 
-                <div class="control-group">
+                <div class="form-group">
                     <label class="radio"><input name="behorighetnagon" type="radio" ng-value="true" ng-model="form.behorighet"> Någon av följande behörigheter</label>
-                    <div class="control-group clearfix indent" data-ng-show="form.behorighet">
-                        <label class="checkbox checkbox-columns span2" ng-repeat="typ in cert.bedomning.korkortstyp track by $index"><input id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox" ng-model="typ.selected"> <span message key="ts.label.korkort.{{typ.type}}"></span></label>
+                    <div class="form-group clearfix indent" data-ng-show="form.behorighet">
+                        <label class="checkbox checkbox-columns col-md-2" ng-repeat="typ in cert.bedomning.korkortstyp track by $index"><input id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox" ng-model="typ.selected"> <span message key="ts.label.korkort.{{typ.type}}"></span></label>
                     </div>
                     <label class="radio"><input name="behorighetinte" type="radio" ng-value="false" ng-model="form.behorighet"> Kan inte ta ställning</label>
                 </div>
@@ -658,9 +658,9 @@
                 <h3 class="title">
                     <span message key="ts.label.unit"></span>
                 </h3>
-	   
+
                 <div class="text">
-                    <div class="alert alert-error" ng-if="validationMessagesGrouped.vardenhet">
+                    <div class="alert alert-danger" ng-if="validationMessagesGrouped.vardenhet">
 		                <ul>
 		                  <li ng-repeat="message in validationMessagesGrouped.vardenhet"><span message key="{{message.message}}"></span></li>
 		                </ul>
@@ -668,34 +668,34 @@
                     <label class="control-label">{{cert.skapadAv.vardenhet.enhetsnamn}} ({{cert.skapadAv.vardenhet.enhetsid}}), {{cert.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</label>
 
                     <div class="form-horizontal">
-                        <div class="control-group">
+                        <div class="form-group">
                             <label class="control-label">Postadress</label>
                             <div class="controls">
-                                <input type="text" id="clinicInfo.postalAddress" name="clinicInfo.postalAddress" ng-model="cert.skapadAv.vardenhet.postadress">
+                                <input type="text" class="form-control" id="clinicInfo.postalAddress" name="clinicInfo.postalAddress" ng-model="cert.skapadAv.vardenhet.postadress">
                             </div>
                         </div>
-                        <div class="control-group">
+                        <div class="form-group">
                             <label class="control-label">Postnummer</label>
                             <div class="controls">
-                                <input type="text" id="clinicInfo.postalCode" name="clinicInfo.postalCode" ng-model="cert.skapadAv.vardenhet.postnummer">
+                                <input type="text" class="form-control" id="clinicInfo.postalCode" name="clinicInfo.postalCode" ng-model="cert.skapadAv.vardenhet.postnummer">
                             </div>
                         </div>
-                        <div class="control-group">
+                        <div class="form-group">
                             <label class="control-label">Postort</label>
                             <div class="controls">
-                                <input type="text" id="clinicInfo.postalCity" name="clinicInfo.postalCity" ng-model="cert.skapadAv.vardenhet.postort">
+                                <input type="text" class="form-control" id="clinicInfo.postalCity" name="clinicInfo.postalCity" ng-model="cert.skapadAv.vardenhet.postort">
                             </div>
                         </div>
-                        <div class="control-group">
+                        <div class="form-group">
                             <label class="control-label">Telefonnummer</label>
                             <div class="controls">
-                                <input type="text" id="clinicInfo.phone" name="clinicInfo.phone" ng-model="cert.skapadAv.vardenhet.telefonnummer">
+                                <input type="text" class="form-control" id="clinicInfo.phone" name="clinicInfo.phone" ng-model="cert.skapadAv.vardenhet.telefonnummer">
                             </div>
                         </div>
-                        <div class="control-group" ng-if="false">
+                        <div class="form-group" ng-if="false">
                             <label class="control-label">Epost</label>
                             <div class="controls">
-                                <input type="text" id="clinicInfo.email" name="clinicInfo.email" ng-model="mats.ekhammar@callistaenterprise.se">
+                                <input type="text" class="form-control" id="clinicInfo.email" name="clinicInfo.email" ng-model="mats.ekhammar@callistaenterprise.se">
                             </div>
                         </div>
                     </div>

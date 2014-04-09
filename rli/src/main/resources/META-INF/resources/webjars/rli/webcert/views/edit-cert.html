@@ -36,12 +36,12 @@
     <div class="inline-block">
       <label class="control-label">{{cert.patient.fullstandigtNamn}} - {{cert.patient.personid}}</label>
     </div>
-    <div class="control-group buttonbar">
+    <div class="form-group buttonbar">
       <button class="btn btn-info" ng-click="save()">Spara</button>
-      <button class="btn btn-secondary" ng-click="discard()">Ta bort utkast</button>
-      <button class="btn btn-secondary" ng-if="!widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">Visa vad som behöver kompletteras
+      <button class="btn btn-default btn-secondary" ng-click="discard()">Ta bort utkast</button>
+      <button class="btn btn-default btn-secondary" ng-if="!widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">Visa vad som behöver kompletteras
       </button>
-      <button class="btn btn-secondary" ng-if="widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">
+      <button class="btn btn-default btn-secondary" ng-if="widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">
         Dölj vad som behöver kompletteras
       </button>
     </div>
@@ -56,15 +56,15 @@
 
   <form name="certForm" novalidate autocomplete="off">
 
-    <div class="alert alert-error" ng-show="widgetState.showComplete && !isComplete" style="margin-right: 20px">
+    <div class="alert alert-danger" ng-show="widgetState.showComplete && !isComplete" style="margin-right: 20px">
       <h3>Följande fält behöver kompletteras:</h3>
       <ul>
         <li ng-repeat="message in validationMessages"><span message key="{{message.message}}"></span></li>
       </ul>
     </div>
 
-    <div id="certificate" class="row-fluid certificate">
-      <div class="span12 cert-body">
+    <div id="certificate" class="row certificate">
+      <div class="col-md-12 cert-body">
 
 
       </div>

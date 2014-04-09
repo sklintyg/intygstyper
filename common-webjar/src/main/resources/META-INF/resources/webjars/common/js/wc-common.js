@@ -179,7 +179,7 @@ define([
                                 '</td>' +
                                 '</tr>' +
                                 '</table>' +
-                                '<div class="alert alert-error" data-ng-show="error">Tekniskt fel. Kunde inte byta vårdenhet.</div>' +
+                                '<div class="alert alert-danger" data-ng-show="error">Tekniskt fel. Kunde inte byta vårdenhet.</div>' +
                                 '</div>',
                             controller: function ($scope, $modalInstance, vardgivare) {
                                 $scope.vardgivare = vardgivare;
@@ -214,8 +214,8 @@ define([
                     };
                 },
                 template: '<div>' +
-                    '<div class="row-fluid header">' +
-                    '<div class="span12">' +
+                    '<div class="row header">' +
+                    '<div class="col-md-12">' +
                     '<div class="headerbox">' +
                     '<span class="headerbox-logo pull-left"><a href="/web/start"><img alt="Till startsidan" src="/img/webcert_logo.png"/></a></span>' +
                     '<span class="headerbox-date pull-left">' +
@@ -235,27 +235,25 @@ define([
                     '</div>' +
                     '</div>' +
                     '</div>' +
-                    '<div class="row-fluid">' +
-                    '<div class="span12">' +
-                    '<div class="navbar">' +
-                    '<div class="navbar-inner">' +
-                    '<div class="container">' +
-                    '<a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">' +
+                    '<div class="row">' +
+                    '<div class="col-md-12">' +
+                    '<div class="navbar navbar-default">' +
+                    '<div class="container-fluid">' +
+                    '<button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">' +
                     '<span class="icon-bar"></span>' +
                     '<span class="icon-bar"></span>' +
                     '<span class="icon-bar"></span>' +
-                    '</a>' +
-                    '<div class="nav-collapse collapse navbar-responsive-collapse">' +
-                    '<ul class="nav">' +
+                    '</button>' +
+                    '<div class="navbar-collapse collapse" ng-class="!navCollapsed && \'in\'">' +
+                    '<ul class="nav navbar-nav">' +
                     '<li ng-class="{active: isActive(menu.link)}" ng-repeat="menu in menuDefs">' +
                     '<a ng-href="{{menu.link}}" ng-show="(menu.requires_doctor && isDoctor) || !menu.requires_doctor">{{menu.label}}' +
-                    '<span id="{{menu.statNumberId}}" ng-if="menu.getStat()>0" class="stat-circle stat-circle-active"' +
+                    '<span id="{{menu.statNumberId}}" ng-if="menu.getStat()>0" class="stat-circle stat-circle-active" ' +
                     'title="{{menu.statTooltip}}">{{menu.getStat()}}</span></a>' +
                     '</li>' +
                     '</ul>' +
-                    '</div><!-- /.nav-collapse -->' +
+                    '</div><!-- /.navbar-collapse -->' +
                     '</div>' +
-                    '</div><!-- /navbar-inner -->' +
                     '</div>' +
                     '</div>' +
                     '</div>' +

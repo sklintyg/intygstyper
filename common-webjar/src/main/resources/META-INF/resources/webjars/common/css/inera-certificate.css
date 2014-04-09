@@ -296,11 +296,12 @@ div.infobox h4 {
 }
 
 .maxwidth {
+    max-width: 100% !important;
     width: 100% !important;
 }
 
 input[datepicker-popup] {
-    width: 80px;
+    width: 94px;
 }
 
 .qa-column {
@@ -327,7 +328,7 @@ input[datepicker-popup] {
     font-size: 13px;
 }
 
-.qa-panel .control-group {
+.qa-panel .form-group {
     margin: 0;
 }
 
@@ -491,17 +492,20 @@ input[datepicker-popup] {
     background-color: transparent;
 }
 
-.table-form td, .table-form th {
+.table-form > thead > tr > td,
+.table-form > tbody > tr > td,
+.table-form > thead > tr > th,
+.table-form > tbody > tr > th {
     padding: 0 5px 5px 0;
     text-align: left;
     vertical-align: top;
 }
 
-.table-form-radio td:last-child {
+.table-form-radio > tbody > tr > td:last-child {
     width: 100%;
 }
 
-.table-form td > input[type=radio] {
+.table-form > tbody > tr > td > input[type=radio] {
     margin-top: 0;
 }
 
@@ -510,14 +514,21 @@ input[datepicker-popup] {
 }
 
 input[type=text].small-decimal {
-    width: 20px;
+    width: 34px;
 }
 
 .radio, .checkbox {
     cursor: pointer;
 }
 
-.edit-form .alert-error {
+label.checkbox,
+label.checkbox + label.checkbox,
+label.radio,
+label.radio + label.radio {
+    font-weight: normal;
+    margin-top: 0;
+}
+.edit-form .alert-danger {
     border: 1px solid #A94442;
 }
 
