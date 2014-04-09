@@ -169,7 +169,7 @@ define([
                                 '</tr>' +
                                 '<tr ng-repeat="enhet in vg.vardenheter">' +
                                 '<td>' +
-                                '<button class="btn btn-link" data-ng-click="selectVardenhet(enhet)">{{enhet.namn}}</a>' +
+                                '<button id="select-active-unit-{{enhet.id}}" class="btn btn-link" data-ng-click="selectVardenhet(enhet)">{{enhet.namn}}</a>' +
                                 '</td>' +
                                 '<td>' +
                                 '{{enhet.fragaSvar}}' +
@@ -220,7 +220,7 @@ define([
                     '<span class="headerbox-logo pull-left"><a href="/web/start"><img alt="Till startsidan" src="/img/webcert_logo.png"/></a></span>' +
                     '<span class="headerbox-date pull-left">' +
                     '<span class="location">{{today | date:"shortDate"}} - {{user.userContext.valdVardgivare.namn}} - {{user.userContext.valdVardenhet.namn}}</span><br>' +
-                    '<span class="otherLocations" ng-show="(stat.intygAndraEnheter+stat.fragaSvarAndraEnheter) > 0"><span style="font-weight:bold">{{stat.intygAndraEnheter+stat.fragaSvarAndraEnheter}}</span> ej hanterade frågor och osignerade intyg på andra vårdenheter.</span> <a class="otherLocations" ng-href="#changedialog" ng-show="user.userContext.totaltAntalVardenheter > 1" data-ng-click="openChangeCareUnitDialog()">Byt vårdenhet</a>' +
+                    '<span class="otherLocations" ng-show="(stat.intygAndraEnheter+stat.fragaSvarAndraEnheter) > 0"><span style="font-weight:bold">{{stat.intygAndraEnheter+stat.fragaSvarAndraEnheter}}</span> ej hanterade frågor och osignerade intyg på andra vårdenheter.</span> <a id="wc-care-unit-clinic-selector" class="otherLocations" ng-href="#changedialog" ng-show="user.userContext.totaltAntalVardenheter > 1" data-ng-click="openChangeCareUnitDialog()">Byt vårdenhet</a>' +
                     '</span>' +
                     '</div>' +
                     '<div class="headerbox-user pull-right">' +
