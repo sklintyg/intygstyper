@@ -44,7 +44,7 @@ import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
  */
 public class InternalToExternalConverter {
 
-    private static Logger LOG = LoggerFactory.getLogger(InternalToExternalConverter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(InternalToExternalConverter.class);
 
     private static final String PERS_ID_ROOT = "1.2.752.129.2.1.3.1";
     private static final String HSA_ID_ROOT = "1.2.752.129.2.1.4.1";

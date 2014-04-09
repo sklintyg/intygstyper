@@ -18,7 +18,7 @@ import se.inera.certificate.modules.support.api.dto.ValidationMessage;
 import se.inera.certificate.modules.support.api.dto.ValidationStatus;
 
 public class InternalDraftValidator {
-    private static Logger LOG = LoggerFactory.getLogger(InternalDraftValidator.class);
+    private static final Logger LOG = LoggerFactory.getLogger(InternalDraftValidator.class);
 
     private Fk7263Intyg utlatande;
     

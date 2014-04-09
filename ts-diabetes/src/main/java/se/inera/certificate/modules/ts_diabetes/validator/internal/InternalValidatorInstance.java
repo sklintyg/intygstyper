@@ -30,7 +30,7 @@ public class InternalValidatorInstance {
 
     private static final String POSTNUMMER_FORMAT = "\\d{3}\\s?\\d{2}";
 
-    private static Logger LOG = LoggerFactory.getLogger(InternalValidatorInstance.class);
+    private static final Logger LOG = LoggerFactory.getLogger(InternalValidatorInstance.class);
 
     private List<ValidationMessage> validationMessages;
 

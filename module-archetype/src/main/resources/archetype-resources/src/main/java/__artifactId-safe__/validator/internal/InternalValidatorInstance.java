@@ -37,7 +37,7 @@ import ${package}.${artifactId-safe}.model.internal.wc.Utlatande;
  */
 public class InternalValidatorInstance {
 
-    private static Logger LOG = LoggerFactory.getLogger(InternalValidatorInstance.class);
+    private static final Logger LOG = LoggerFactory.getLogger(InternalValidatorInstance.class);
 
     private List<ValidationMessage> validationMessages;
     
