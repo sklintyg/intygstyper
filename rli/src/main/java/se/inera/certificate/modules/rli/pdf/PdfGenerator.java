@@ -188,13 +188,10 @@ public class PdfGenerator {
             return;
         }
 
-        String sjuk_code = null;
-        String rek_code = null;
+        String sjuk_code = utlatande.getRekommendation().getSjukdomskannedom().getCode();
+        String rek_code = utlatande.getRekommendation().getRekommendationskod().getCode();
 
-        sjuk_code = utlatande.getRekommendation().getSjukdomskannedom().getCode();
-        rek_code = utlatande.getRekommendation().getRekommendationskod().getCode();
-
-        if (sjuk_code == SJK3 || sjuk_code == SJK4) {
+        if (SJK3.equals(sjuk_code) || SJK4.equals(sjuk_code)) {
             fields.setField(sjuk_code, "Yes");
             fields.setField(SJK2, "Yes");
         } else {
