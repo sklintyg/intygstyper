@@ -29,7 +29,7 @@
   </div>
 
   <div ng-show="doneLoading">
-    <!-- Modals: visibility defined by $scope.doneLoading -->
+    Modals: visibility defined by $scope.doneLoading
     <div modal="shouldBeOpen" close="close()" options="opts">
       <div class="modal-header">
         <button class="close" ng-click="close()">×</button>
@@ -49,7 +49,7 @@
 
 
 
-    <!-- Content -->
+<!--     Content -->
 
     <div class="row-fluid">
       <div class="span7">
@@ -59,7 +59,7 @@
         <p>
           <message key="view.label.pagedescription" />
         </p>
-        <form id="view-as-pdf" action="/moduleapi/certificate/{{cert.utlatandeid}}/pdf" method="get" target="_blank">
+        <form id="view-as-pdf" action="{{downloadAsPdfLink}}" method="get" target="_blank">
           <p class="btn-row">
             <button type="button" ng-click="open()" class="btn btn-success">
               <message key="button.send" />
@@ -74,17 +74,17 @@
         <h2>
           <span message key="view.label.latestevent"></span>
         </h2>
-        <!--  Show if no events to show -->
+<!--          Show if no events to show -->
         <p ng-show="!cert.status">
           <span message key="view.label.latestevent.noevents"></span></a>
         </p>
 
-        <!-- Show first status in list if any viable status exist-->
+<!--         Show first status in list if any viable status exist -->
         <p id="lastest-certificate-event" ng-show="cert.status.length>0">
           {{cert.status[0].timestamp | date:'shortDate'}} <span message key="ts-bas.status.{{cert.status[0].type}}"></span> <span message
             key="ts-bas.target.{{cert.status[0].target}}"></span>
         </p>
-        <!-- Show if more than 1 viable status exists -->
+<!--         Show if more than 1 viable status exists -->
         <p ng-show="cert.status.length>1">
           <a class="statusHistoryLink" href ng-click="showStatusHistory()"><span message key="view.label.latestevent.showall"></span></a>
         </p>

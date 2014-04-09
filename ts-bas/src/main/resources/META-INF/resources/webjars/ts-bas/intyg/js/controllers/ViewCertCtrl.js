@@ -1,8 +1,8 @@
 define([], function() {
 	'use strict';
 
-	return [ '$scope', '$filter', '$location', '$routeParams', 'ts-bas.certificateService', '$http',
-			function($scope, $filter, $location, $routeParams, certificateService, http) {
+	return [ '$scope', '$filter', '$location', '$routeParams', 'ts-bas.certificateService', '$log',
+			function($scope, $filter, $location, $routeParams, certificateService, $log) {
 				$scope.cert = {};
 				$scope.doneLoading = false;
 				$scope.shouldBeOpen = false;
@@ -25,9 +25,15 @@ define([], function() {
 					$scope.doneLoading = true;
 					if (result != null) {
 						$scope.cert = result;
+						// expose calculated static link for pdf download
+						$scope.downloadAsPdfLink = "/moduleapi/certificate/" + $routeParams.certificateId + "/pdf";
+						
 					} else {
 						// show error view
 						$location.path("/fel");
 					}
+				}, function(error) {
+					$log.debug(error);
+				});
 			}];
 });

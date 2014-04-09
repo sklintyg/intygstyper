@@ -1,6 +1,6 @@
 define([
     'angular',
-    'ts-bas/common/js/services/certificateService'
+    'ts-bas/intyg/js/services/certificateService'
 ], function (angular, certificateService) {
     'use strict';
 
