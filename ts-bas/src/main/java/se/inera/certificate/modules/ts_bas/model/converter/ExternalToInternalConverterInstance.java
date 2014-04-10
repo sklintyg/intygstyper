@@ -78,10 +78,6 @@ public class ExternalToInternalConverterInstance {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExternalToInternalConverterInstance.class);
 
-    private List<Observation> observationer;
-
-    private List<Aktivitet> aktiviteter;
-
     public Utlatande convert(se.inera.certificate.modules.ts_bas.model.external.Utlatande externalModel) throws ConverterException {
         Utlatande intUtlatande = convertUtlatandeFromExternalToInternal(externalModel);
         LOG.trace("Converting external model to internal");
@@ -91,9 +87,6 @@ public class ExternalToInternalConverterInstance {
     private Utlatande convertUtlatandeFromExternalToInternal(
             se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande) throws ConverterException {
         LOG.debug("Converting Utlatande '{}' from external to internal", extUtlatande.getId());
-
-        this.observationer = extUtlatande.getObservationer();
-        this.aktiviteter = extUtlatande.getAktiviteter();
 
         Utlatande intUtlatande = new Utlatande();
 
@@ -140,7 +133,7 @@ public class ExternalToInternalConverterInstance {
     /**
      * Convert a List of Kod into an IntygAvser object
      * 
-     * @param source
+     * @param intygAvser
      *            a List of {@link Kod}
      * @param intUtlatande
      *            {@link Utlatande}
@@ -205,8 +198,8 @@ public class ExternalToInternalConverterInstance {
             Utlatande intUtlatande) {
         Medicinering medicinering = intUtlatande.getMedicinering();
 
-        Observation stadigvarandeMedicinering = getObservationWithKod(CodeConverter
-                .toKod(ObservationsKod.STADIGVARANDE_MEDICINERING));
+        Observation stadigvarandeMedicinering = getObservationWithKod(extUtlatande.getObservationer(),
+                CodeConverter.toKod(ObservationsKod.STADIGVARANDE_MEDICINERING));
 
         if (stadigvarandeMedicinering != null) {
             medicinering.setStadigvarandeMedicinering(stadigvarandeMedicinering.getForekomst());
@@ -228,7 +221,7 @@ public class ExternalToInternalConverterInstance {
             Utlatande intUtlatande) {
         Sjukhusvard sjukhusvard = intUtlatande.getSjukhusvard();
 
-        Aktivitet harVistatsSjukhus = getAktivitetWithKod(CodeConverter.toKod(AktivitetKod.VARD_PA_SJUKHUS));
+        Aktivitet harVistatsSjukhus = getAktivitetWithKod(extUtlatande.getAktiviteter(), CodeConverter.toKod(AktivitetKod.VARD_PA_SJUKHUS));
 
         if (harVistatsSjukhus != null) {
             sjukhusvard.setSjukhusEllerLakarkontakt(harVistatsSjukhus.getForekomst());
@@ -253,9 +246,9 @@ public class ExternalToInternalConverterInstance {
             Utlatande intUtlatande) {
         Utvecklingsstorning utvecklingsstorning = intUtlatande.getUtvecklingsstorning();
 
-        Observation psykiskUtvecklingsstorning = getObservationWithKod(CodeConverter
-                .toKod(ObservationsKod.PSYKISK_UTVECKLINGSSTORNING));
-        Observation adhdDampMm = getObservationWithKod(CodeConverter.toKod(ObservationsKod.ADHD_DAMP_MM));
+        Observation psykiskUtvecklingsstorning = getObservationWithKod(extUtlatande.getObservationer(),
+                CodeConverter.toKod(ObservationsKod.PSYKISK_UTVECKLINGSSTORNING));
+        Observation adhdDampMm = getObservationWithKod(extUtlatande.getObservationer(), CodeConverter.toKod(ObservationsKod.ADHD_DAMP_MM));
 
         if (psykiskUtvecklingsstorning != null) {
             utvecklingsstorning.setPsykiskUtvecklingsstorning(psykiskUtvecklingsstorning.getForekomst());
@@ -278,7 +271,7 @@ public class ExternalToInternalConverterInstance {
             Utlatande intUtlatande) {
         Psykiskt psykiskt = intUtlatande.getPsykiskt();
 
-        Observation psykiskSjukdom = getObservationWithKod(CodeConverter.toKod(ObservationsKod.PSYKISK_SJUKDOM));
+        Observation psykiskSjukdom = getObservationWithKod(extUtlatande.getObservationer(), CodeConverter.toKod(ObservationsKod.PSYKISK_SJUKDOM));
 
         if (psykiskSjukdom != null) {
             psykiskt.setPsykiskSjukdom(psykiskSjukdom.getForekomst());
@@ -297,13 +290,11 @@ public class ExternalToInternalConverterInstance {
             Utlatande intUtlatande) {
         NarkotikaLakemedel narkotikaLakemedel = intUtlatande.getNarkotikaLakemedel();
 
-        Observation teckenPaMissbruk = getObservationWithKod(CodeConverter.toKod(ObservationsKod.TECKEN_PA_MISSBRUK));
-        Aktivitet vardinsatsMissbruk = getAktivitetWithKod(CodeConverter
-                .toKod(AktivitetKod.VARDINSATS_MISSBRUK_BEROENDE));
-        Aktivitet provtagningMissbruk = getAktivitetWithKod(CodeConverter
-                .toKod(AktivitetKod.PROVTAGNING_ALKOHOL_NARKOTIKA));
-        Observation lakemedelsanvandning = getObservationWithKod(CodeConverter
-                .toKod(ObservationsKod.LAKEMEDELSANVANDNING_TRAFIKSAKERHETSRISK));
+        Observation teckenPaMissbruk = getObservationWithKod(extUtlatande.getObservationer(), CodeConverter.toKod(ObservationsKod.TECKEN_PA_MISSBRUK));
+        Aktivitet vardinsatsMissbruk = getAktivitetWithKod(extUtlatande.getAktiviteter(),
+                CodeConverter.toKod(AktivitetKod.VARDINSATS_MISSBRUK_BEROENDE));
+        Aktivitet provtagningMissbruk = getAktivitetWithKod(extUtlatande.getAktiviteter(), CodeConverter.toKod(AktivitetKod.PROVTAGNING_ALKOHOL_NARKOTIKA));
+        Observation lakemedelsanvandning = getObservationWithKod(extUtlatande.getObservationer(), CodeConverter.toKod(ObservationsKod.LAKEMEDELSANVANDNING_TRAFIKSAKERHETSRISK));
 
         if (teckenPaMissbruk != null) {
             narkotikaLakemedel.setTeckenMissbruk(teckenPaMissbruk.getForekomst());
@@ -334,8 +325,8 @@ public class ExternalToInternalConverterInstance {
             Utlatande intUtlatande) {
         SomnVakenhet somnVakenhet = intUtlatande.getSomnVakenhet();
 
-        Observation somnVakenhetsstorning = getObservationWithKod(CodeConverter
-                .toKod(ObservationsKod.SOMN_VAKENHETSSTORNING));
+        Observation somnVakenhetsstorning = getObservationWithKod(extUtlatande.getObservationer(),
+                CodeConverter.toKod(ObservationsKod.SOMN_VAKENHETSSTORNING));
 
         if (somnVakenhetsstorning != null) {
             somnVakenhet.setTeckenSomnstorningar(somnVakenhetsstorning.getForekomst());
@@ -354,8 +345,8 @@ public class ExternalToInternalConverterInstance {
             Utlatande intUtlatande) {
         Kognitivt kognitivt = intUtlatande.getKognitivt();
 
-        Observation sviktandeKognitivFunktion = getObservationWithKod(CodeConverter
-                .toKod(ObservationsKod.SVIKTANDE_KOGNITIV_FUNKTION));
+        Observation sviktandeKognitivFunktion = getObservationWithKod(extUtlatande.getObservationer(),
+                CodeConverter.toKod(ObservationsKod.SVIKTANDE_KOGNITIV_FUNKTION));
 
         if (sviktandeKognitivFunktion != null) {
             kognitivt.setSviktandeKognitivFunktion(sviktandeKognitivFunktion.getForekomst());
@@ -375,8 +366,8 @@ public class ExternalToInternalConverterInstance {
             Utlatande intUtlatande) {
         Njurar njurar = intUtlatande.getNjurar();
 
-        Observation nedsattNjurfunktion = getObservationWithKod(CodeConverter
-                .toKod(ObservationsKod.NEDSATT_NJURFUNKTION_TRAFIKSAKERHETSRISK));
+        Observation nedsattNjurfunktion = getObservationWithKod(extUtlatande.getObservationer(),
+                CodeConverter.toKod(ObservationsKod.NEDSATT_NJURFUNKTION_TRAFIKSAKERHETSRISK));
 
         if (nedsattNjurfunktion != null) {
             njurar.setNedsattNjurfunktion(nedsattNjurfunktion.getForekomst());
@@ -395,7 +386,7 @@ public class ExternalToInternalConverterInstance {
             Utlatande intUtlatande) {
         Medvetandestorning medvetandestorning = intUtlatande.getMedvetandestorning();
 
-        Observation harMedvetandestorning = getObservationWithKod(CodeConverter.toKod(ObservationsKod.EPILEPSI));
+        Observation harMedvetandestorning = getObservationWithKod(extUtlatande.getObservationer(), CodeConverter.toKod(ObservationsKod.EPILEPSI));
 
         if (harMedvetandestorning != null) {
             medvetandestorning.setMedvetandestorning(harMedvetandestorning.getForekomst());
@@ -418,8 +409,8 @@ public class ExternalToInternalConverterInstance {
             Utlatande intUtlatande) {
         Neurologi neurologi = intUtlatande.getNeurologi();
 
-        Observation neuroSjukdom = getObservationWithKod(CodeConverter
-                .toKod(ObservationsKod.TECKEN_PA_NEUROLOGISK_SJUKDOM));
+        Observation neuroSjukdom = getObservationWithKod(extUtlatande.getObservationer(),
+                CodeConverter.toKod(ObservationsKod.TECKEN_PA_NEUROLOGISK_SJUKDOM));
 
         if (neuroSjukdom != null) {
             neurologi.setNeurologiskSjukdom(neuroSjukdom.getForekomst());
@@ -438,12 +429,13 @@ public class ExternalToInternalConverterInstance {
             Utlatande intUtlatande) {
         Diabetes diabetes = intUtlatande.getDiabetes();
 
-        Observation harDiabetes = getObservationWithKod(CodeConverter.toKod(ObservationsKod.HAR_DIABETES));
-        Observation diabetesTyp1 = getObservationWithKod(CodeConverter.toKod(ObservationsKod.DIABETES_TYP_1));
-        Observation diabetesTyp2 = getObservationWithKod(CodeConverter.toKod(ObservationsKod.DIABETES_TYP_2));
-        Observation insulin = getObservationWithKod(CodeConverter.toKod(ObservationsKod.DIABETIKER_INSULINBEHANDLING));
-        Observation tabletter = getObservationWithKod(CodeConverter.toKod(ObservationsKod.DIABETIKER_TABLETTBEHANDLING));
-        Observation kost = getObservationWithKod(CodeConverter.toKod(ObservationsKod.DIABETIKER_KOSTBEHANDLING));
+        List<Observation> observationer = extUtlatande.getObservationer();
+        Observation harDiabetes = getObservationWithKod(observationer, CodeConverter.toKod(ObservationsKod.HAR_DIABETES));
+        Observation diabetesTyp1 = getObservationWithKod(observationer, CodeConverter.toKod(ObservationsKod.DIABETES_TYP_1));
+        Observation diabetesTyp2 = getObservationWithKod(observationer, CodeConverter.toKod(ObservationsKod.DIABETES_TYP_2));
+        Observation insulin = getObservationWithKod(observationer, CodeConverter.toKod(ObservationsKod.DIABETIKER_INSULINBEHANDLING));
+        Observation tabletter = getObservationWithKod(observationer, CodeConverter.toKod(ObservationsKod.DIABETIKER_TABLETTBEHANDLING));
+        Observation kost = getObservationWithKod(observationer, CodeConverter.toKod(ObservationsKod.DIABETIKER_KOSTBEHANDLING));
 
         if (harDiabetes != null) {
             diabetes.setHarDiabetes(harDiabetes.getForekomst());
@@ -481,11 +473,11 @@ public class ExternalToInternalConverterInstance {
             Utlatande intUtlatande) {
         HjartKarl hjartKarl = intUtlatande.getHjartKarl();
 
-        Observation hjartKarlSjukdom = getObservationWithKod(CodeConverter
-                .toKod(ObservationsKod.HJART_KARLSJUKDOM_TRAFIKSAKERHETSRISK));
-        Observation hjarnskadaEfterTrauma = getObservationWithKod(CodeConverter
-                .toKod(ObservationsKod.TECKEN_PA_HJARNSKADA));
-        Observation riskStroke = getObservationWithKod(CodeConverter.toKod(ObservationsKod.RISKFAKTORER_STROKE));
+        Observation hjartKarlSjukdom = getObservationWithKod(extUtlatande.getObservationer(),
+                CodeConverter.toKod(ObservationsKod.HJART_KARLSJUKDOM_TRAFIKSAKERHETSRISK));
+        Observation hjarnskadaEfterTrauma = getObservationWithKod(extUtlatande.getObservationer(),
+                CodeConverter.toKod(ObservationsKod.TECKEN_PA_HJARNSKADA));
+        Observation riskStroke = getObservationWithKod(extUtlatande.getObservationer(), CodeConverter.toKod(ObservationsKod.RISKFAKTORER_STROKE));
 
         if (hjartKarlSjukdom != null) {
             hjartKarl.setHjartKarlSjukdom(hjartKarlSjukdom.getForekomst());
@@ -516,10 +508,10 @@ public class ExternalToInternalConverterInstance {
 
         Funktionsnedsattning funktionsnedsattning = intUtlatande.getFunktionsnedsattning();
 
-        Observation framforaFordon = getObservationWithKod(CodeConverter
-                .toKod(ObservationsKod.FORSAMRAD_RORLIGHET_FRAMFORA_FORDON));
-        Observation hjalpaPassagerare = getObservationWithKod(CodeConverter
-                .toKod(ObservationsKod.FORSAMRAD_RORLIGHET_HJALPA_PASSAGERARE));
+        Observation framforaFordon = getObservationWithKod(extUtlatande.getObservationer(),
+                CodeConverter.toKod(ObservationsKod.FORSAMRAD_RORLIGHET_FRAMFORA_FORDON));
+        Observation hjalpaPassagerare = getObservationWithKod(extUtlatande.getObservationer(),
+                CodeConverter.toKod(ObservationsKod.FORSAMRAD_RORLIGHET_HJALPA_PASSAGERARE));
 
         if (framforaFordon != null) {
             funktionsnedsattning.setFunktionsnedsattning(framforaFordon.getForekomst());
@@ -545,9 +537,9 @@ public class ExternalToInternalConverterInstance {
             Utlatande intUtlatande) {
         HorselBalans horselBalans = intUtlatande.getHorselBalans();
 
-        Observation balansrubbning = getObservationWithKod(CodeConverter
+        Observation balansrubbning = getObservationWithKod(extUtlatande.getObservationer(), CodeConverter
                 .toKod(ObservationsKod.ANFALL_BALANSRUBBNING_YRSEL));
-        Observation samtal4M = getObservationWithKod(CodeConverter.toKod(ObservationsKod.SVARIGHET_SAMTAL_4M));
+        Observation samtal4M = getObservationWithKod(extUtlatande.getObservationer(), CodeConverter.toKod(ObservationsKod.SVARIGHET_SAMTAL_4M));
         if (balansrubbning != null) {
             horselBalans.setBalansrubbningar(balansrubbning.getForekomst());
         }
@@ -573,7 +565,7 @@ public class ExternalToInternalConverterInstance {
         Syn syn = intUtlatande.getSyn();
 
         // Find the Syn-related Aktivitet
-        Aktivitet plus8Korretionsgrader = getAktivitetWithKod(CodeConverter
+        Aktivitet plus8Korretionsgrader = getAktivitetWithKod(extUtlatande.getAktiviteter(), CodeConverter
                 .toKod(AktivitetKod.UNDERSOKNING_PLUS8_KORREKTIONSGRAD));
 
         if (plus8Korretionsgrader != null) {
@@ -581,11 +573,12 @@ public class ExternalToInternalConverterInstance {
         }
 
         // Handle Syn related Observationer
-        Observation diplopi = getObservationWithKod(CodeConverter.toKod(ObservationsKod.DIPLOPI));
-        Observation nattblindhet = getObservationWithKod(CodeConverter.toKod(ObservationsKod.NATTBLINDHET));
-        Observation nystagmus = getObservationWithKod(CodeConverter.toKod(ObservationsKod.NYSTAGMUS_MM));
-        Observation progresivSjukdom = getObservationWithKod(CodeConverter.toKod(ObservationsKod.PROGRESIV_OGONSJUKDOM));
-        Observation synfaltsdefekter = getObservationWithKod(CodeConverter.toKod(ObservationsKod.SYNFALTSDEFEKTER));
+        List<Observation> observationer = extUtlatande.getObservationer();
+        Observation diplopi = getObservationWithKod(observationer, CodeConverter.toKod(ObservationsKod.DIPLOPI));
+        Observation nattblindhet = getObservationWithKod(observationer, CodeConverter.toKod(ObservationsKod.NATTBLINDHET));
+        Observation nystagmus = getObservationWithKod(observationer, CodeConverter.toKod(ObservationsKod.NYSTAGMUS_MM));
+        Observation progresivSjukdom = getObservationWithKod(observationer, CodeConverter.toKod(ObservationsKod.PROGRESIV_OGONSJUKDOM));
+        Observation synfaltsdefekter = getObservationWithKod(observationer, CodeConverter.toKod(ObservationsKod.SYNFALTSDEFEKTER));
 
         if (diplopi != null) {
             syn.setDiplopi(diplopi.getForekomst());
@@ -604,10 +597,10 @@ public class ExternalToInternalConverterInstance {
         }
 
         // Used to populate Syn with Synskarpa later
-        List<Observation> synskarpa = new ArrayList<Observation>();
+        List<Observation> synskarpa = new ArrayList<>();
 
         // Hmmm does this need to be this way or can getObservationWithKod be used instead?
-        for (Observation obs : extUtlatande.getObservationer()) {
+        for (Observation obs : observationer) {
             Kod kod = obs.getObservationskod();
             if (kod.getCode().equals(ObservationsKod.EJ_KORRIGERAD_SYNSKARPA.getCode())
                     || kod.getCode().equals(ObservationsKod.KORRIGERAD_SYNSKARPA.getCode())
@@ -787,12 +780,13 @@ public class ExternalToInternalConverterInstance {
 
     /**
      * Returns an Observation based on the specified Kod, or <code>null</code> if none where found.
-     * 
+     *
+     * @param observationer observationer
      * @param observationskod
      *            Find an observation with this {@link Kod}
      * @return an {@link Observation} if it is found, or null otherwise
      */
-    public Observation getObservationWithKod(Kod observationskod) {
+    public Observation getObservationWithKod(List<Observation> observationer, Kod observationskod) {
         for (Observation observation : observationer) {
             if (observationskod.equals(observation.getObservationskod())) {
                 return observation;
@@ -804,12 +798,13 @@ public class ExternalToInternalConverterInstance {
 
     /**
      * Returns an Aktivitet based on the specified Kod, or <code>null</code> if none where found.
-     * 
+     *
+     * @param aktiviteter aktiviteter
      * @param aktivitetskod
      *            Find an aktivitet with this {@link Kod}
      * @return an {@link Aktivitet} if it is found, or null otherwise
      */
-    public Aktivitet getAktivitetWithKod(Kod aktivitetskod) {
+    public Aktivitet getAktivitetWithKod(List<Aktivitet> aktiviteter, Kod aktivitetskod) {
         for (Aktivitet aktivitet : aktiviteter) {
             if (aktivitetskod.equals(aktivitet.getAktivitetskod())) {
                 return aktivitet;
