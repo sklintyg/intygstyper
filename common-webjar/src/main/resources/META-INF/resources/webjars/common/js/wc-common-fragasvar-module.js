@@ -49,27 +49,22 @@ define([
         }
 
         function _isSkipVidareBefodradCookieSet() {
-            if (document.cookie && document.cookie.indexOf('WCDontAskForVidareBefordradToggle=1') != -1) {
-                return true;
-            } else {
-                return false;
-            }
-
+            return (document.cookie && document.cookie.indexOf('WCDontAskForVidareBefordradToggle=1') !== -1);
         }
 
         function _decorateSingleItemMeasure(qa) {
 
-            if (qa.status == "CLOSED") {
+            if (qa.status === "CLOSED") {
                 qa.measureResKey = "handled";
-            } else if (qa.status == "ANSWERED" || qa.amne == "MAKULERING" || qa.amne == "PAMINNELSE") {
+            } else if (qa.status === "ANSWERED" || qa.amne === "MAKULERING" || qa.amne === "PAMINNELSE") {
                 qa.measureResKey = "markhandled";
-            } else if (qa.amne == "KOMPLETTERING_AV_LAKARINTYG") {
+            } else if (qa.amne === "KOMPLETTERING_AV_LAKARINTYG") {
                 qa.measureResKey = "komplettering";
             } else {
 
-                if (qa.status == "PENDING_INTERNAL_ACTION") {
+                if (qa.status === "PENDING_INTERNAL_ACTION") {
                     qa.measureResKey = "svarfranvarden";
-                } else if (qa.status == "PENDING_EXTERNAL_ACTION") {
+                } else if (qa.status === "PENDING_EXTERNAL_ACTION") {
                     qa.measureResKey = "svarfranfk";
                 } else {
                     qa.measureResKey = "";
@@ -79,47 +74,23 @@ define([
 
         }
 
-
-        function _handleVidareBefodradToggle(qa, onYesCallback) {
-            // Only ask about toggle if not already set AND not skipFlag cookie is
-            // set
-            if (!qa.vidarebefordrad && !_isSkipVidareBefodradCookieSet()) {
-                _showVidarebefordradPreferenceDialog("markforward", "Det verkar som att du har informerat den som ska hantera ärendet. Vill du markera ärendet som vidarebefordrat?", function () { // yes
-                    $log.debug("yes");
-                    qa.vidarebefordrad = true;
-                    if (onYesCallback) {
-                        // let calling scope handle yes answer
-                        onYesCallback(qa);
-                    }
-                }, function () { // no
-                    $log.debug("no");
-                    // Do nothing
-                }, function () {
-                    $log.debug("no and dont ask");
-                    // How can user reset this?
-                    _setSkipVidareBefodradCookie();
-                });
-            }
-
-        }
-
         function _showVidarebefordradPreferenceDialog(title, bodyText, yesCallback, noCallback, noDontAskCallback, callback) {
 
             var DialogInstanceCtrl = function ($scope, $modalInstance, title, bodyText, yesCallback, noCallback, noDontAskCallback) {
                 $scope.title = title;
                 $scope.bodyText = bodyText;
-                $scope.noDontAskVisible = noDontAskCallback != undefined;
+                $scope.noDontAskVisible = noDontAskCallback !== undefined;
                 $scope.yes = function (result) {
                     yesCallback();
-                    $modalInstance.close(result)
+                    $modalInstance.close(result);
                 };
                 $scope.no = function (result) {
                     noCallback();
-                    $modalInstance.close('cancel')
+                    $modalInstance.close('cancel');
                 };
                 $scope.noDontAsk = function (result) {
                     noDontAskCallback();
-                    $modalInstance.close('cancel_dont_ask_again')
+                    $modalInstance.close('cancel_dont_ask_again');
                 };
             };
 
@@ -147,11 +118,38 @@ define([
 
             msgbox.result.then(function (result) {
                 if (callback) {
-                    callback(result)
+                    callback(result);
                 }
             }, function () {
             });
+        }
 
+        function _handleVidareBefodradToggle(qa, onYesCallback) {
+            // Only ask about toggle if not already set AND not skipFlag cookie is
+            // set
+            if (!qa.vidarebefordrad && !_isSkipVidareBefodradCookieSet()) {
+                _showVidarebefordradPreferenceDialog(
+                    "markforward",
+                    "Det verkar som att du har informerat den som ska hantera ärendet. Vill du markera ärendet som vidarebefordrat?",
+                    function () { // yes
+                        $log.debug("yes");
+                        qa.vidarebefordrad = true;
+                        if (onYesCallback) {
+                            // let calling scope handle yes answer
+                            onYesCallback(qa);
+                        }
+                    },
+                    function () { // no
+                        $log.debug("no");
+                        // Do nothing
+                    },
+                    function () {
+                        $log.debug("no and dont ask");
+                        // How can user reset this?
+                        _setSkipVidareBefodradCookie();
+                    }
+                );
+            }
         }
 
         // Return public API for the service
@@ -160,7 +158,7 @@ define([
             handleVidareBefodradToggle: _handleVidareBefodradToggle,
             buildMailToLink: _buildMailToLink,
             decorateSingleItemMeasure: _decorateSingleItemMeasure
-        }
+        };
     } ]);
 
     return moduleName;
