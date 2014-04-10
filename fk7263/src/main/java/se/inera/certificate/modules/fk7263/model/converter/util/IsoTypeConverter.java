@@ -19,38 +19,44 @@ public class IsoTypeConverter {
     }
 
     public static Id toId(II ii) {
-        if (ii == null)
+        if (ii == null) {
             return null;
+        }
         return new Id(ii.getRoot(), ii.getExtension());
     }
 
     public static Id toId(HsaId hsaId) {
-        if (hsaId == null)
+        if (hsaId == null) {
             return null;
+        }
         return new Id(hsaId.getRoot(), hsaId.getExtension());
     }
 
     public static Id toId(PersonId personId) {
-        if (personId == null)
+        if (personId == null) {
             return null;
+        }
         return new Id(personId.getRoot(), personId.getExtension());
     }
 
     public static Id toId(ArbetsplatsKod arbetsplatskod) {
-        if (arbetsplatskod == null)
+        if (arbetsplatskod == null) {
             return null;
+        }
         return new Id(arbetsplatskod.getRoot(), arbetsplatskod.getExtension());
     }
 
     public static Id toId(UtlatandeId utlatandeId) {
-        if (utlatandeId == null)
+        if (utlatandeId == null) {
             return null;
+        }
         return new Id(utlatandeId.getRoot(), utlatandeId.getExtension());
     }
 
     public static II toII(Id id) {
-        if (id == null)
+        if (id == null) {
             return null;
+        }
 
         II ii = new II();
         ii.setRoot(id.getRoot());
@@ -59,8 +65,9 @@ public class IsoTypeConverter {
     }
 
     public static HsaId toHsaId(Id id) {
-        if (id == null)
+        if (id == null) {
             return null;
+        }
 
         HsaId hsaId = new HsaId();
         hsaId.setRoot(id.getRoot());
@@ -69,8 +76,9 @@ public class IsoTypeConverter {
     }
 
     public static PersonId toPersonId(Id id) {
-        if (id == null)
+        if (id == null) {
             return null;
+        }
 
         PersonId personId = new PersonId();
         personId.setRoot(id.getRoot());
@@ -79,8 +87,9 @@ public class IsoTypeConverter {
     }
 
     public static ArbetsplatsKod toArbetsplatsKod(Id id) {
-        if (id == null)
+        if (id == null) {
             return null;
+        }
 
         ArbetsplatsKod arbetsplatskod = new ArbetsplatsKod();
         arbetsplatskod.setRoot(id.getRoot());
@@ -89,8 +98,9 @@ public class IsoTypeConverter {
     }
 
     public static UtlatandeId toUtlatandeId(Id id) {
-        if (id == null)
+        if (id == null) {
             return null;
+        }
 
         UtlatandeId utlatandeId = new UtlatandeId();
         utlatandeId.setRoot(id.getRoot());
@@ -99,20 +109,23 @@ public class IsoTypeConverter {
     }
 
     public static Kod toKod(CD cd) {
-        if (cd == null)
+        if (cd == null) {
             return null;
+        }
         return new Kod(cd.getCodeSystem(), cd.getCodeSystemName(), cd.getCodeSystemVersion(), cd.getCode());
     }
 
     public static Kod toKod(UtlatandeTyp utlatandeTyp) {
-        if (utlatandeTyp == null)
+        if (utlatandeTyp == null) {
             return null;
+        }
         return new Kod(utlatandeTyp.getCodeSystem(), utlatandeTyp.getCode());
     }
 
     public static CD toCD(Kod kod) {
-        if (kod == null)
+        if (kod == null) {
             return null;
+        }
         CD cd = new CD();
         cd.setCode(kod.getCode());
         cd.setCodeSystem(kod.getCodeSystem());
@@ -124,8 +137,9 @@ public class IsoTypeConverter {
     }
 
     public static UtlatandeTyp toUtlatandeTyp(Kod kod) {
-        if (kod == null)
+        if (kod == null) {
             return null;
+        }
         UtlatandeTyp utlatandeTyp = new UtlatandeTyp();
         utlatandeTyp.setCode(kod.getCode());
         utlatandeTyp.setCodeSystem(kod.getCodeSystem());

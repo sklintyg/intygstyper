@@ -91,8 +91,9 @@ public final class TransportToExternalConverter {
     }
 
     private static List<Fk7263Observation> convertObservations(List<ObservationType> source) {
-        if (source == null)
+        if (source == null) {
             return null;
+        }
 
         List<Fk7263Observation> observations = new ArrayList<>();
         for (ObservationType observationType : source) {
@@ -143,8 +144,9 @@ public final class TransportToExternalConverter {
     }
 
     private static Fk7263Prognos convert(PrognosType source) {
-        if (source == null)
+        if (source == null) {
             return null;
+        }
 
         Fk7263Prognos prognos = new Fk7263Prognos();
         prognos.setPrognoskod(IsoTypeConverter.toKod(source.getPrognoskod()));
@@ -153,8 +155,9 @@ public final class TransportToExternalConverter {
     }
 
     private static List<Vardkontakt> convertVardkontakter(List<VardkontaktType> source) {
-        if (source == null)
+        if (source == null) {
             return null;
+        }
 
         List<Vardkontakt> vardkontakter = new ArrayList<>();
         for (VardkontaktType vardkontakt : source) {
@@ -176,8 +179,9 @@ public final class TransportToExternalConverter {
     }
 
     private static List<Referens> convertReferenser(List<ReferensType> source) {
-        if (source == null)
+        if (source == null) {
             return null;
+        }
 
         List<Referens> referenser = new ArrayList<>();
         for (ReferensType referens : source) {
@@ -194,8 +198,9 @@ public final class TransportToExternalConverter {
     }
 
     private static List<Fk7263Aktivitet> convertAktiviteter(List<AktivitetType> source) {
-        if (source == null)
+        if (source == null) {
             return null;
+        }
 
         List<Fk7263Aktivitet> aktiviteter = new ArrayList<>();
         for (AktivitetType aktivitet : source) {

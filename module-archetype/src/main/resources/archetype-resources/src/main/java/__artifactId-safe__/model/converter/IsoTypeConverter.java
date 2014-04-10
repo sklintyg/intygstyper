@@ -34,14 +34,16 @@ import se.inera.certificate.${artifactId-safe}.model.v1.UtlatandeTyp;
 public final class IsoTypeConverter {
 
     public static Id toId(II ii) {
-        if (ii == null)
+        if (ii == null) {
             return null;
+        }
         return new Id(ii.getRoot(), ii.getExtension());
     }
 
     public static II toII(Id id) {
-        if (id == null)
+        if (id == null) {
             return null;
+        }
 
         II ii = new II();
         ii.setRoot(id.getRoot());
@@ -50,8 +52,9 @@ public final class IsoTypeConverter {
     }
 
     public static HsaId toHsaId(Id id) {
-        if (id == null)
+        if (id == null) {
             return null;
+        }
 
         HsaId hsaId = new HsaId();
         hsaId.setRoot(id.getRoot());

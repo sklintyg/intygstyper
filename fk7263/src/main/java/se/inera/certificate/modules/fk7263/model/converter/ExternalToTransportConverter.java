@@ -168,8 +168,9 @@ public final class ExternalToTransportConverter {
     }
 
     private PrognosType convert(Fk7263Prognos source) {
-        if (source == null)
+        if (source == null) {
             return null;
+        }
 
         PrognosType prognos = new PrognosType();
         prognos.setPrognoskod(IsoTypeConverter.toCD(source.getPrognoskod()));

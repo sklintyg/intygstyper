@@ -107,17 +107,21 @@ public final class CodeConverter {
             return false;
         }
 
-        if (codeEnum.getCode() != null ? !codeEnum.getCode().equals(kod.getCode()) : kod.getCode() != null)
+        if (codeEnum.getCode() != null ? !codeEnum.getCode().equals(kod.getCode()) : kod.getCode() != null) {
             return false;
+        }
         if (codeEnum.getCodeSystem() != null ? !codeEnum.getCodeSystem().equals(kod.getCodeSystem()) : kod
-                .getCodeSystem() != null)
+                .getCodeSystem() != null) {
             return false;
+        }
         if (codeEnum.getCodeSystemName() != null ? !codeEnum.getCodeSystemName().equals(kod.getCodeSystemName()) : kod
-                .getCodeSystemName() != null)
+                .getCodeSystemName() != null) {
             return false;
+        }
         if (codeEnum.getCodeSystemVersion() != null ? !codeEnum.getCodeSystemVersion().equals(
-                kod.getCodeSystemVersion()) : kod.getCodeSystemVersion() != null)
+                kod.getCodeSystemVersion()) : kod.getCodeSystemVersion() != null) {
             return false;
+        }
 
         return true;
     }
