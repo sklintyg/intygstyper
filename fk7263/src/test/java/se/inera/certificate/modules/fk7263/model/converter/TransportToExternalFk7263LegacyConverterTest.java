@@ -71,24 +71,44 @@ public class TransportToExternalFk7263LegacyConverterTest {
 	}
 
     @Test
-	public void testConversionWithMinimalCertificate() throws JAXBException,
-			IOException, JSONException {
+    public void testConversionWithMinimalCertificate() throws JAXBException,
+            IOException, JSONException {
 
-		// read utlatandeType from file
-		JAXBElement<Lakarutlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
-				+ "legacy-minimalt-fk7263-transport.xml");
+        // read utlatandeType from file
+        JAXBElement<Lakarutlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
+                + "legacy-minimalt-fk7263-transport.xml");
 
-		Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter
-				.convert(utlatandeElement.getValue());
+        Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter
+                .convert(utlatandeElement.getValue());
 
-		// serialize utlatande to JSON and compare with expected JSON
-		JsonNode tree = objectMapper.valueToTree(externalModel);
-		JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
-				resourceRoot + "legacy-minimalt-fk7263-external.json")
-				.getInputStream());
+        // serialize utlatande to JSON and compare with expected JSON
+        JsonNode tree = objectMapper.valueToTree(externalModel);
+        JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+                resourceRoot + "legacy-minimalt-fk7263-external.json")
+                .getInputStream());
 
         JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
-	}
+    }
+
+    @Test
+    public void testConversionWithNoPrognosAngivelseButMotivering() throws JAXBException,
+            IOException, JSONException {
+
+        // read utlatandeType from file
+        JAXBElement<Lakarutlatande> utlatandeElement = readUtlatandeTypeFromFile(resourceRoot
+                + "legacy-fk7263-without-prognoskod-transport.xml");
+
+        Fk7263Utlatande externalModel = TransportToExternalFk7263LegacyConverter
+                .convert(utlatandeElement.getValue());
+
+        // serialize utlatande to JSON and compare with expected JSON
+        JsonNode tree = objectMapper.valueToTree(externalModel);
+        JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+                resourceRoot + "legacy-fk7263-without-prognoskod-external.json")
+                .getInputStream());
+
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
+    }
 
 	// Below are tests for different ways of filling out an FK7263-form,
 	// see readme in
