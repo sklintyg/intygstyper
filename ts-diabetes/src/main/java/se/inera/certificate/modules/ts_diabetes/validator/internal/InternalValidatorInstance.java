@@ -104,31 +104,24 @@ public class InternalValidatorInstance {
         }
 
         if (isTrue(hypoglykemier.getAllvarligForekomst())) {
-            if (hypoglykemier.getAllvarligForekomst()) {
-                assertDescriptionNotEmpty(hypoglykemier.getAllvarligForekomstBeskrivning(),
-                        "hypoglykemier.allvarligForekomstBeskrivning",
-                        "ts.validation.hypoglykemier.allvarlig-forekomst.beskrivning.missing");
-            }
+            assertDescriptionNotEmpty(hypoglykemier.getAllvarligForekomstBeskrivning(),
+                    "hypoglykemier.allvarligForekomstBeskrivning",
+                    "ts.validation.hypoglykemier.allvarlig-forekomst.beskrivning.missing");
         }
 
         if (isTrue(hypoglykemier.getAllvarligForekomstTrafiken())) {
-            if (hypoglykemier.getAllvarligForekomstTrafiken()) {
-                assertDescriptionNotEmpty(hypoglykemier.getAllvarligForekomstTrafikBeskrivning(),
-                        "hypoglykemier.allvarligForekomstTrafikBeskrivning",
-                        "ts.validation.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning.missing");
-            }
+            assertDescriptionNotEmpty(hypoglykemier.getAllvarligForekomstTrafikBeskrivning(),
+                    "hypoglykemier.allvarligForekomstTrafikBeskrivning",
+                    "ts.validation.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning.missing");
         }
 
         if (isTrue(hypoglykemier.getAllvarligForekomstVakenTid())) {
-            if (hypoglykemier.getAllvarligForekomstVakenTid()) {
-                if (hypoglykemier.getAllvarligForekomstVakenTidObservationstid() == null) {
-                    addValidationError("hypoglykemier.allvarligForekomstVakenTidObservationstid",
-                            "ts.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.missing");
-
-                } else if (!isValidDate(hypoglykemier.getAllvarligForekomstVakenTidObservationstid(), "yyyy-mm-dd")) {
-                    addValidationError("hypoglykemier.allvarligForekomstVakenTidObservationstid",
-                            "ts.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.incorrect-date");
-                }
+            if (hypoglykemier.getAllvarligForekomstVakenTidObservationstid() == null) {
+                addValidationError("hypoglykemier.allvarligForekomstVakenTidObservationstid",
+                        "ts.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.missing");
+            } else if (!isValidDate(hypoglykemier.getAllvarligForekomstVakenTidObservationstid(), "yyyy-mm-dd")) {
+                addValidationError("hypoglykemier.allvarligForekomstVakenTidObservationstid",
+                        "ts.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.incorrect-date");
             }
         }
 
