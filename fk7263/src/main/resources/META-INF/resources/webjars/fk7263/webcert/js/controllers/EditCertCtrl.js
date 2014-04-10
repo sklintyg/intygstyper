@@ -4,13 +4,8 @@ define(
         'use strict';
 
         return [
-            '$scope',
-            '$location',
-            '$filter',
-            '$anchorScroll',
-            'fk7263.certificateService',
-            '$routeParams',
-            function ($scope, $location, $filter, $anchorScroll, certificateService, $routeParams) {
+            '$scope', '$location', '$filter', '$anchorScroll', 'fk7263.certificateService', '$routeParams', 'statService',
+            function ($scope, $location, $filter, $anchorScroll, certificateService, $routeParams, statService) {
                 $scope.cert = {};
 
                 $scope.messages = [];
@@ -208,7 +203,7 @@ define(
                 function updateWorkStateDate(checked, model) {
                     if (model !== undefined) {
                         if (checked) {
-                            if (!isDate(model.from)){
+                            if (!isDate(model.from)) {
                                 model.from = ($filter('date')($scope.today, 'yyyy-MM-dd'));
                             }
                             if (!isDate(model.tom)) {
@@ -364,6 +359,7 @@ define(
                 $scope.discard = function () {
                     certificateService.discardDraft($routeParams.certificateId, function (data) {
                         // TODO: Redirect back to start page.
+                        statService.refreshStat(); // Update statistics to reflect change
                     }, function (errorData) {
                         // TODO: Show error message.
                     });
