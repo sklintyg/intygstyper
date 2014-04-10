@@ -14,7 +14,8 @@ define([
         $routeProvider.
             when('/ts-bas/view/:certificateId', {
                 templateUrl : '/web/webjars/ts-bas/intyg/views/view-cert.html',
-                controller : 'ViewCertCtrl'
+                controller : 'ViewCertCtrl',
+                title : "Läkarintyg Transportstyrelsen Bas"
             });
     }]);
     // Inject language resources
