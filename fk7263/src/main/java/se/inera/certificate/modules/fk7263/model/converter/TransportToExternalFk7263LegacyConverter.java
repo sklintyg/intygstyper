@@ -299,23 +299,27 @@ public final class TransportToExternalFk7263LegacyConverter {
     private static List<Observation> convert(ArbetsformagaType source) {
 
         Prognos prognos = null;
-        if (source.getPrognosangivelse() != null) {
+        if (source.getPrognosangivelse() != null || source.getMotivering() != null) {
             prognos = new Prognos();
-            switch (source.getPrognosangivelse()) {
-            case ATERSTALLAS_DELVIS:
-                prognos.setPrognoskod(Prognoskoder.ATERSTALLAS_DELVIS);
-                break;
-            case ATERSTALLAS_HELT:
-                prognos.setPrognoskod(Prognoskoder.ATERSTALLAS_HELT);
-                break;
-            case DET_GAR_INTE_ATT_BEDOMMA:
-                prognos.setPrognoskod(Prognoskoder.DET_GAR_INTE_ATT_BEDOMA);
-                break;
-            case INTE_ATERSTALLAS:
-                prognos.setPrognoskod(Prognoskoder.INTE_ATERSTALLAS);
-                break;
+            if (source.getPrognosangivelse() != null) {
+                switch (source.getPrognosangivelse()) {
+                case ATERSTALLAS_DELVIS:
+                    prognos.setPrognoskod(Prognoskoder.ATERSTALLAS_DELVIS);
+                    break;
+                case ATERSTALLAS_HELT:
+                    prognos.setPrognoskod(Prognoskoder.ATERSTALLAS_HELT);
+                    break;
+                case DET_GAR_INTE_ATT_BEDOMMA:
+                    prognos.setPrognoskod(Prognoskoder.DET_GAR_INTE_ATT_BEDOMA);
+                    break;
+                case INTE_ATERSTALLAS:
+                    prognos.setPrognoskod(Prognoskoder.INTE_ATERSTALLAS);
+                    break;
+                }
             }
-            prognos.setBeskrivning(source.getMotivering());
+            if (source.getMotivering() != null) {
+                prognos.setBeskrivning(source.getMotivering());
+            }
         }
 
         List<Observation> observations = new ArrayList<>();
