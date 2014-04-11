@@ -8,7 +8,7 @@ define([
             /**
              * Get a certificate draft with the specified id from the server.
              */
-            function _getDraft (id, onSuccess, onError) {
+            function _getDraft(id, onSuccess, onError) {
                 $log.debug('_getDraft id: ' + id);
                 var restPath = '/moduleapi/intyg/draft/' + id;
                 $http.get(restPath).
@@ -25,7 +25,7 @@ define([
             /**
              * Saves a certificate draft to the server.
              */
-            function _saveDraft (id, cert, onSuccess, onError) {
+            function _saveDraft(id, cert, onSuccess, onError) {
                 $log.debug('_saveDraft id: ' + id);
                 var restPath = '/moduleapi/intyg/draft/' + id;
                 $http.put(restPath, cert).
@@ -42,10 +42,10 @@ define([
             /**
              * Discards a certificate draft and removes it from the server.
              */
-            function _discardDraft (id, onSuccess, onError) {
+            function _discardDraft(id, onSuccess, onError) {
                 $log.debug('_discardDraft id: ' + id);
                 var restPath = '/moduleapi/intyg/draft/' + id;
-                $http.remove(restPath).
+                $http['delete'](restPath).
                     success(function (data) {
                         $log.debug('_discardDraft data: ' + data);
                         onSuccess(data);
@@ -58,9 +58,9 @@ define([
 
             // Return public API for the service
             return {
-                getDraft : _getDraft,
-                saveDraft : _saveDraft,
-                discardDraft : _discardDraft
+                getDraft: _getDraft,
+                saveDraft: _saveDraft,
+                discardDraft: _discardDraft
             };
         }];
 });
