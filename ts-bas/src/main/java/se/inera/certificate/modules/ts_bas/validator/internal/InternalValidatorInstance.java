@@ -62,7 +62,7 @@ public class InternalValidatorInstance {
     public ValidateDraftResponse validate(Utlatande utlatande) {
 
         if (utlatande == null) {
-            addValidationError("utlatande", "ts.validation.utlatande.missing");
+            addValidationError("utlatande", "ts-bas.validation.utlatande.missing");
             
         } else {
 
@@ -98,126 +98,126 @@ public class InternalValidatorInstance {
 
     private void validateIdentitetStyrkt(Vardkontakt vardkontakt) {
         if (vardkontakt == null) {
-            addValidationError("vardkontakt", "ts.validation.vardkontakt.missing");
+            addValidationError("vardkontakt", "ts-bas.validation.vardkontakt.missing");
             return;
         }
         if (vardkontakt.getIdkontroll() == null) {
-            addValidationError("identitet", "ts.validation.identitet.missing");
+            addValidationError("identitet", "ts-bas.validation.identitet.missing");
         }
     }
 
     private void validateUtvecklingsstorning(Utvecklingsstorning utvecklingsstorning) {
         if (utvecklingsstorning == null) {
-            addValidationError("utvecklingsstorning", "ts.validation.utvecklingsstorning.missing");
+            addValidationError("utvecklingsstorning", "ts-bas.validation.utvecklingsstorning.missing");
             return;
         }
         if (utvecklingsstorning.getHarSyndrom() == null) {
-            addValidationError("utvecklingsstorning.harSyndrom", "ts.validation.utvecklingsstorning.harsyndrom.missing");
+            addValidationError("utvecklingsstorning.harSyndrom", "ts-bas.validation.utvecklingsstorning.harsyndrom.missing");
         }
         if (utvecklingsstorning.getPsykiskUtvecklingsstorning() == null) {
             addValidationError("utvecklingsstorning.psykiskUtvecklingsstorning",
-                    "ts.validation.utvecklingsstorning.psykiskutvecklingsstorning.missing");
+                    "ts-bas.validation.utvecklingsstorning.psykiskutvecklingsstorning.missing");
         }
 
     }
 
     private void validatePsykiskt(Psykiskt psykiskt) {
         if (psykiskt == null) {
-            addValidationError("psykiskt", "ts.validation.psykiskt.missing");
+            addValidationError("psykiskt", "ts-bas.validation.psykiskt.missing");
             return;
         }
 
         if (psykiskt.getPsykiskSjukdom() == null) {
-            addValidationError("psykiskt", "ts.validation.psykiskt.psykisksjukdom.missing");
+            addValidationError("psykiskt", "ts-bas.validation.psykiskt.psykisksjukdom.missing");
         }
     }
 
     private void validateSomnVakenhet(SomnVakenhet somnVakenhet) {
         if (somnVakenhet == null) {
-            addValidationError("somnVakenhet", "ts.validation.somnvakenhet.missing");
+            addValidationError("somnVakenhet", "ts-bas.validation.somnvakenhet.missing");
             return;
         }
         if (somnVakenhet.getTeckenSomnstorningar() == null) {
             addValidationError("somnVakenhet.teckenSomnstorningar",
-                    "ts.validation.somnvakenhet.teckensomnstorningar.missing");
+                    "ts-bas.validation.somnvakenhet.teckensomnstorningar.missing");
         }
     }
 
     private void validateNjurar(Njurar njurar) {
         if (njurar == null) {
-            addValidationError("njurar", "ts.validation.njurar.missing");
+            addValidationError("njurar", "ts-bas.validation.njurar.missing");
             return;
         }
         if (njurar.getNedsattNjurfunktion() == null) {
-            addValidationError("njurar.nedsattNjurfunktion", "ts.validation.njurar.nedsattnjurfunktion.missing");
+            addValidationError("njurar.nedsattNjurfunktion", "ts-bas.validation.njurar.nedsattnjurfunktion.missing");
         }
     }
 
     private void validateNeurologi(Neurologi neurologi) {
         if (neurologi == null) {
-            addValidationError("neurologi", "ts.validation.neurologi.missing");
+            addValidationError("neurologi", "ts-bas.validation.neurologi.missing");
             return;
         }
         if (neurologi.getNeurologiskSjukdom() == null) {
-            addValidationError("neurologi.neurologiskSjukdom", "ts.validation.neurologi.neurologisksjukdom.missing");
+            addValidationError("neurologi.neurologiskSjukdom", "ts-bas.validation.neurologi.neurologisksjukdom.missing");
         }
     }
 
     private void validateSjukhusvard(Sjukhusvard sjukhusvard) {
 
         if (sjukhusvard == null) {
-            addValidationError("sjukhusvard", "ts.validation.sjukhusvard.missing");
+            addValidationError("sjukhusvard", "ts-bas.validation.sjukhusvard.missing");
             return;
         }
 
         if (sjukhusvard.getSjukhusEllerLakarkontakt() == null) {
             addValidationError("sjukhusvard.sjukhusEllerLakarkontakt",
-                    "ts.validation.sjukhusvard.sjukhusEllerLakarkontakt.missing");
+                    "ts-bas.validation.sjukhusvard.sjukhusEllerLakarkontakt.missing");
             return;
 
         }
 
         if (sjukhusvard.getSjukhusEllerLakarkontakt()) {
             assertDescriptionNotEmpty(sjukhusvard.getAnledning(), "sjukhusvard.anledning",
-                    "ts.validation.sjukhusvard.anledning.missing");
+                    "ts-bas.validation.sjukhusvard.anledning.missing");
             assertDescriptionNotEmpty(sjukhusvard.getTidpunkt(), "sjukhusvard.tidpunkt",
-                    "ts.validation.sjukhusvard.tidpunkt.missing");
+                    "ts-bas.validation.sjukhusvard.tidpunkt.missing");
             assertDescriptionNotEmpty(sjukhusvard.getVardinrattning(), "sjukhusvard.vardinrattning",
-                    "ts.validation.sjukhusvard.vardinrattning.missing");
+                    "ts-bas.validation.sjukhusvard.vardinrattning.missing");
         }
     }
 
     private void validateBedomning(final Bedomning bedomning) {
 
         if (bedomning == null) {
-            addValidationError("bedomning", "ts.validation.bedomning.missing");
+            addValidationError("bedomning", "ts-bas.validation.bedomning.missing");
             return;
         }
 
         if (bedomning.getKanInteTaStallning() == null && bedomning.getKorkortstyp().isEmpty()) {
-            addValidationError("bedomning", "ts.validation.bedomning.must-choose-one");
+            addValidationError("bedomning", "ts-bas.validation.bedomning.must-choose-one");
         }
     }
 
     private void validateDiabetes(final Diabetes diabetes) {
 
         if (diabetes == null) {
-            addValidationError("diabetes", "ts.validation.diabetes.missing");
+            addValidationError("diabetes", "ts-bas.validation.diabetes.missing");
             return;
         }
 
         if (diabetes.getHarDiabetes() == null) {
-            addValidationError("diabetes.harDiabetes", "ts.validation.diabetes.harDiabetes.missing");
+            addValidationError("diabetes.harDiabetes", "ts-bas.validation.diabetes.harDiabetes.missing");
             return;
         }
         if (diabetes.getHarDiabetes()) {
 
             if (diabetes.getDiabetesTyp() == null) {
-                addValidationError("diabetes.diabetesTyp", "ts.validation.diabetes.diabetesTyp.missing");
+                addValidationError("diabetes.diabetesTyp", "ts-bas.validation.diabetes.diabetesTyp.missing");
 
             } else if (diabetes.getDiabetesTyp().equals(ObservationsKod.DIABETES_TYP_2.name())) {
                 if (diabetes.getInsulin() == null && diabetes.getKost() == null && diabetes.getTabletter() == null) {
-                    addValidationError("diabetes.diabetesTyp", "ts.validation.diabetes.diabetesTyp.must-choose-one");
+                    addValidationError("diabetes.diabetesTyp", "ts-bas.validation.diabetes.diabetesTyp.must-choose-one");
                 }
             }
         }
@@ -226,23 +226,23 @@ public class InternalValidatorInstance {
     private void validateFunktionsnedsattning(final Funktionsnedsattning funktionsnedsattning) {
 
         if (funktionsnedsattning == null) {
-            addValidationError("funktionsnedsattning", "ts.validation.funktionsnedsattning.missing");
+            addValidationError("funktionsnedsattning", "ts-bas.validation.funktionsnedsattning.missing");
             return;
         }
 
         if (funktionsnedsattning.getFunktionsnedsattning() == null) {
             addValidationError("funktionsnedsattning.funktionsnedsattning",
-                    "ts.validation.funktionsnedsattning.funktionsnedsattning.missing");
+                    "ts-bas.validation.funktionsnedsattning.funktionsnedsattning.missing");
             return;
 
         } else if (funktionsnedsattning.getFunktionsnedsattning()) {
             assertDescriptionNotEmpty(funktionsnedsattning.getBeskrivning(), "funktionsnedsattning.beskrivning",
-                    "ts.validation.funktionsnedsattning.beskrivning.missing");
+                    "ts-bas.validation.funktionsnedsattning.beskrivning.missing");
         }
         
         if (context.isPersontransportContext()) {
             if (funktionsnedsattning.getOtillrackligRorelseformaga() == null) {
-                addValidationError("funktionsnedsattning.otillrackligRorelseformaga","ts.validation.funktionsnedsattning.otillrackligrorelseformaga.missing");
+                addValidationError("funktionsnedsattning.otillrackligRorelseformaga","ts-bas.validation.funktionsnedsattning.otillrackligrorelseformaga.missing");
             }
         }
     }
@@ -250,41 +250,41 @@ public class InternalValidatorInstance {
     private void validateHjartKarl(final HjartKarl hjartKarl) {
 
         if (hjartKarl == null) {
-            addValidationError("hjartKarl", "ts.validation.hjartKarl.missing");
+            addValidationError("hjartKarl", "ts-bas.validation.hjartKarl.missing");
             return;
         }
         
         if (hjartKarl.getHjartKarlSjukdom() == null) {
-            addValidationError("hjartKarl.hjartKarlSjukdom", "ts.validation.hjartKarl.hjartkarlsjukdom.missing");
+            addValidationError("hjartKarl.hjartKarlSjukdom", "ts-bas.validation.hjartKarl.hjartkarlsjukdom.missing");
         }
         
         if (hjartKarl.getHjarnskadaEfterTrauma() == null) {
-            addValidationError("hjartKarl.hjarnskadaEfterTrauma", "ts.validation.hjartkarl.hjarnskadaeftertrauma.missing");
+            addValidationError("hjartKarl.hjarnskadaEfterTrauma", "ts-bas.validation.hjartkarl.hjarnskadaeftertrauma.missing");
         }
 
         if (hjartKarl.getRiskfaktorerStroke() == null) {
-            addValidationError("hjartKarl.riskfaktorerStroke", "ts.validation.hjartkarl.riskfaktorerStroke.missing");
+            addValidationError("hjartKarl.riskfaktorerStroke", "ts-bas.validation.hjartkarl.riskfaktorerStroke.missing");
 
         } else if (hjartKarl.getRiskfaktorerStroke()) {
             assertDescriptionNotEmpty(hjartKarl.getBeskrivningRiskfaktorer(), "hjartKarl.beskrivningRiskfaktorer",
-                    "ts.validation.hjartkarl.beskrivningriskfaktorer.missing");
+                    "ts-bas.validation.hjartkarl.beskrivningriskfaktorer.missing");
         }
     }
 
     private void validateHorselBalans(final HorselBalans horselBalans) {
 
         if (horselBalans == null) {
-            addValidationError("horselBalans", "ts.validation.horselBalans.missing");
+            addValidationError("horselBalans", "ts-bas.validation.horselBalans.missing");
             return;
         }
 
         if (horselBalans.getBalansrubbningar() == null) {
-            addValidationError("horselBalans.balansrubbningar", "ts.validation.horselBalans.balansrubbningar.missing");
+            addValidationError("horselBalans.balansrubbningar", "ts-bas.validation.horselBalans.balansrubbningar.missing");
         }
         
         if (context.isPersontransportContext()) {
             if (horselBalans.getSvartUppfattaSamtal4Meter() == null) {
-                addValidationError("horselBalans.svartUpfattaSamtal4Meter", "ts.validation.horselbalans.uppfattasamtal4meter.missing");
+                addValidationError("horselBalans.svartUpfattaSamtal4Meter", "ts-bas.validation.horselbalans.uppfattasamtal4meter.missing");
             }
         }
     }
@@ -295,195 +295,195 @@ public class InternalValidatorInstance {
             return;
         }
         assertDescriptionNotEmpty(skapadAv.getVardenhet().getPostadress(), "vardenhet.postadress",
-                "ts.validation.vardenhet.postadress.missing");
+                "ts-bas.validation.vardenhet.postadress.missing");
         if (assertDescriptionNotEmpty(skapadAv.getVardenhet().getPostnummer(), "vardenhet.postnummer",
-                "ts.validation.vardenhet.postnummer.missing").success()) {
+                "ts-bas.validation.vardenhet.postnummer.missing").success()) {
             if (!skapadAv.getVardenhet().getPostnummer().matches(POSTNUMMER_FORMAT)) {
-                addValidationError("vardenhet.postnummer", "ts.validation.vardenhet.postnummer.incorrect-format");
+                addValidationError("vardenhet.postnummer", "ts-bas.validation.vardenhet.postnummer.incorrect-format");
             }
         }
         
         assertDescriptionNotEmpty(skapadAv.getVardenhet().getPostort(), "vardenhet.postort",
-                "ts.validation.vardenhet.postort.missing");
+                "ts-bas.validation.vardenhet.postort.missing");
         assertDescriptionNotEmpty(skapadAv.getVardenhet().getTelefonnummer(), "vardenhet.telefonnummer",
-                "ts.validation.vardenhet.telefonnummer.missing");
+                "ts-bas.validation.vardenhet.telefonnummer.missing");
         
     }
 
     private void validateIntygAvser(final IntygAvser intygAvser) {
 
         if (intygAvser == null) {
-            addValidationError("intygAvser", "ts.validation.intygAvser.missing");
+            addValidationError("intygAvser", "ts-bas.validation.intygAvser.missing");
             return;
         }
 
         if (intygAvser.getKorkortstyp().isEmpty()) {
-            addValidationError("intygAvser", "ts.validation.intygAvser.must-choose-one");
+            addValidationError("intygAvser", "ts-bas.validation.intygAvser.must-choose-one");
         }
     }
 
     private void validateKognitivt(final Kognitivt kognitivt) {
 
         if (kognitivt == null) {
-            addValidationError("kognitivt", "ts.validation.kognitivt.missing");
+            addValidationError("kognitivt", "ts-bas.validation.kognitivt.missing");
             return;
         }
 
         if (kognitivt.getSviktandeKognitivFunktion() == null) {
             addValidationError("kognitivt.sviktandeKognitivFunktion",
-                    "ts.validation.kognitivt.sviktandeKognitivFunktion.missing");
+                    "ts-bas.validation.kognitivt.sviktandeKognitivFunktion.missing");
         }
     }
 
     private void validateMedicinering(final Medicinering medicinering) {
 
         if (medicinering == null) {
-            addValidationError("medicinering", "ts.validation.medicinering.missing");
+            addValidationError("medicinering", "ts-bas.validation.medicinering.missing");
             return;
         }
 
         if (medicinering.getStadigvarandeMedicinering() == null) {
             addValidationError("medicinering.stadigvarandeMedicinering",
-                    "ts.validation.medicinering.stadigvarandeMedicinering.missing");
+                    "ts-bas.validation.medicinering.stadigvarandeMedicinering.missing");
             return;
 
         } else if (medicinering.getStadigvarandeMedicinering()) {
             assertDescriptionNotEmpty(medicinering.getBeskrivning(), "medicinering.beskrivning",
-                    "ts.validation.medicinering.beskrivning.missing");
+                    "ts-bas.validation.medicinering.beskrivning.missing");
         }
     }
 
     private void validateNarkotikaLakemedel(final NarkotikaLakemedel narkotikaLakemedel) {
 
         if (narkotikaLakemedel == null) {
-            addValidationError("narkotikaLakemedel", "ts.validation.narkotikaLakemedel.missing");
+            addValidationError("narkotikaLakemedel", "ts-bas.validation.narkotikaLakemedel.missing");
             return;
         }
         
         if (narkotikaLakemedel.getTeckenMissbruk() == null) {
-            addValidationError("narkotikaLakemedel.teckenMissbruk", "ts.validation.narkotikaLakemedel.teckenmissbruk.missing");
+            addValidationError("narkotikaLakemedel.teckenMissbruk", "ts-bas.validation.narkotikaLakemedel.teckenmissbruk.missing");
             
         } else if (narkotikaLakemedel.getTeckenMissbruk()) {
             if (narkotikaLakemedel.getProvtagningBehovs() == null) {
-                addValidationError("narkotikaLakemedel.provtagningBehovs", "ts.validation.narkotikalakemedel.provtagning-behovs.missing");
+                addValidationError("narkotikaLakemedel.provtagningBehovs", "ts-bas.validation.narkotikalakemedel.provtagning-behovs.missing");
             }
         }
 
         if (narkotikaLakemedel.getForemalForVardinsats() == null) {
-            addValidationError("narkotikaLakemedel.vardinsats", "ts.validation.narkotikaLakemedel.vardinsats.missing");
+            addValidationError("narkotikaLakemedel.vardinsats", "ts-bas.validation.narkotikaLakemedel.vardinsats-bas.missing");
         }
         
         if (narkotikaLakemedel.getLakarordineratLakemedelsbruk() == null) {
             addValidationError("narkotikaLakemedel.lakarordineratLakemedelsbruk",
-                    "ts.validation.narkotikaLakemedel.lakarordineratLakemedelsbruk.missing");
+                    "ts-bas.validation.narkotikaLakemedel.lakarordineratLakemedelsbruk.missing");
             return;
 
         } else if (narkotikaLakemedel.getLakarordineratLakemedelsbruk()) {
             assertDescriptionNotEmpty(narkotikaLakemedel.getLakemedelOchDos(), "narkotikaLakemedel.getLakemedelOchDos",
-                    "ts.validation.narkotikaLakemedel.lakemedelOchDos.missing");
+                    "ts-bas.validation.narkotikaLakemedel.lakemedelOchDos.missing");
         }
     }
 
     private void validateMedvetandestorning(final Medvetandestorning medvetandestorning) {
 
         if (medvetandestorning == null) {
-            addValidationError("medvetandestorning", "ts.validation.medvetandestorning.missing");
+            addValidationError("medvetandestorning", "ts-bas.validation.medvetandestorning.missing");
             return;
         }
 
         if (medvetandestorning.getMedvetandestorning() == null) {
             addValidationError("medvetandestorning.medvetandestorning",
-                    "ts.validation.medvetandestorning.medvetandestorning.missing");
+                    "ts-bas.validation.medvetandestorning.medvetandestorning.missing");
             return;
 
         } else if (medvetandestorning.getMedvetandestorning()) {
             assertDescriptionNotEmpty(medvetandestorning.getBeskrivning(), "medvetandestorning.beskrivning",
-                    "ts.validation.medvetandestorning.beskrivning.missing");
+                    "ts-bas.validation.medvetandestorning.beskrivning.missing");
         }
     }
 
     private void validateSyn(final Syn syn) {
 
         if (syn == null) {
-            addValidationError("syn", "ts.validation.syn.missing");
+            addValidationError("syn", "ts-bas.validation.syn.missing");
             return;
         }
         
         if (syn.getSynfaltsdefekter() == null) {
-            addValidationError("syn.teckenSynfaltsdefekter", "ts.validation.syn.tecken-synfaltsdefekter.missing");
+            addValidationError("syn.teckenSynfaltsdefekter", "ts-bas.validation.syn.tecken-synfaltsdefekter.missing");
         }
         
         if (syn.getNattblindhet() == null) {
-            addValidationError("syn.nattblindhet", "ts.validation.syn.nattblindhet.missing");
+            addValidationError("syn.nattblindhet", "ts-bas.validation.syn.nattblindhet.missing");
         }
         
         if (syn.getProgressivOgonsjukdom() == null) {
-            addValidationError("syn.progressivOgonsjukdom", "ts.validation.syn.progressiv-ogonsjukdom.missing");
+            addValidationError("syn.progressivOgonsjukdom", "ts-bas.validation.syn.progressiv-ogonsjukdom.missing");
         }
 
         if (syn.getDiplopi() == null) {
-            addValidationError("syn.diplopi", "ts.validation.syn.diplopi.missing");
+            addValidationError("syn.diplopi", "ts-bas.validation.syn.diplopi.missing");
         }
         
         if (syn.getNystagmus() == null) {
-            addValidationError("syn.nystagmus", "ts.validation.syn.nystagmus.missing");
+            addValidationError("syn.nystagmus", "ts-bas.validation.syn.nystagmus.missing");
         }
 
         if (syn.getHogerOga() == null) {
-            addValidationError("syn.hogerOga", "ts.validation.syn.hogeroga.missing");
+            addValidationError("syn.hogerOga", "ts-bas.validation.syn.hogeroga.missing");
         } else {
             if (syn.getHogerOga().getUtanKorrektion() == null) {
-                addValidationError("syn.hogerOga.utanKorrektion", "ts.validation.syn.hogeroga.utanKorrektion.missing");
+                addValidationError("syn.hogerOga.utanKorrektion", "ts-bas.validation.syn.hogeroga.utanKorrektion.missing");
 
             } else if (syn.getHogerOga().getUtanKorrektion() < 0.0 || syn.getHogerOga().getUtanKorrektion() > 2.0) {
                 addValidationError("syn.hogerOga.utanKorrektion",
-                        "ts.validation.syn.hogeroga.utankorrektion.out-of-bounds");
+                        "ts-bas.validation.syn.hogeroga.utankorrektion.out-of-bounds");
             }
 
             if (syn.getHogerOga().getMedKorrektion() != null) {
                 if (syn.getHogerOga().getMedKorrektion() < 0.0 || syn.getHogerOga().getMedKorrektion() > 2.0) {
                     addValidationError("syn.hogerOga.medKorrektion",
-                            "ts.validation.syn.hogerOga.medKorrektion.out-of-bounds");
+                            "ts-bas.validation.syn.hogerOga.medKorrektion.out-of-bounds");
                 }
             }
         }
 
         if (syn.getVansterOga() == null) {
-            addValidationError("syn.vansterOga", "ts.validation.syn.vansteroga.missing");
+            addValidationError("syn.vansterOga", "ts-bas.validation.syn.vansteroga.missing");
         } else {
             if (syn.getVansterOga().getUtanKorrektion() == null) {
                 addValidationError("syn.vansterOga.utanKorrektion",
-                        "ts.validation.syn.vansteroga.utankorrektion.missing");
+                        "ts-bas.validation.syn.vansteroga.utankorrektion.missing");
 
             } else if (syn.getVansterOga().getUtanKorrektion() < 0.0 || syn.getVansterOga().getUtanKorrektion() > 2.0) {
                 addValidationError("syn.vansterOga.utanKorrektion",
-                        "ts.validation.syn.vansteroga.utankorrektion.missing");
+                        "ts-bas.validation.syn.vansteroga.utankorrektion.missing");
             }
 
             if (syn.getVansterOga().getMedKorrektion() != null) {
                 if (syn.getVansterOga().getMedKorrektion() < 0.0 || syn.getVansterOga().getMedKorrektion() > 2.0) {
                     addValidationError("syn.vansterOga.medKorrektion",
-                            "ts.validation.syn.vansteroga.medkorrektion.out-of-bounds");
+                            "ts-bas.validation.syn.vansteroga.medkorrektion.out-of-bounds");
                 }
             }
         }
 
         if (syn.getBinokulart() == null) {
-            addValidationError("syn.binokulart", "ts.validation.syn.binokulart.missing");
+            addValidationError("syn.binokulart", "ts-bas.validation.syn.binokulart.missing");
         } else {
             if (syn.getBinokulart().getUtanKorrektion() == null) {
                 addValidationError("syn.binokulart.utanKorrektion",
-                        "ts.validation.syn.binokulart.utankorrektion.missing");
+                        "ts-bas.validation.syn.binokulart.utankorrektion.missing");
 
             } else if (syn.getBinokulart().getUtanKorrektion() < 0.0 || syn.getBinokulart().getUtanKorrektion() > 2.0) {
                 addValidationError("syn.binokulart.utanKorrektion",
-                        "ts.validation.syn.binokulart.utankorrektion.out-of-bounds");
+                        "ts-bas.validation.syn.binokulart.utankorrektion.out-of-bounds");
             }
 
             if (syn.getBinokulart().getMedKorrektion() != null) {
                 if (syn.getBinokulart().getMedKorrektion() < 0.0 || syn.getBinokulart().getMedKorrektion() > 2.0) {
                     addValidationError("syn.binokulart.medKorrektion",
-                            "ts.validation.syn.binokulart.medkorrektion.out-of-bounds");
+                            "ts-bas.validation.syn.binokulart.medkorrektion.out-of-bounds");
                 }
             }
         }
