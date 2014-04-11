@@ -41,10 +41,10 @@
     <div class="row-fluid">
       <div class="span7">
         <h1>
-          <message key="view.label.pagetitle" />
+          <message key="ts-bas.label.pagetitle" />
         </h1>
         <p>
-          <message key="view.label.pagedescription" />
+          <message key="ts-bas.label.pagedescription" />
         </p>
         <form id="view-as-pdf" action="{{downloadAsPdfLink}}" method="get" target="_blank" name="pdfForm">
           <p class="btn-row">
@@ -59,11 +59,11 @@
       </div>
       <div class="span5 eventbox">
         <h2>
-          <span message key="view.label.latestevent"></span>
+          <span message key="ts-bas.label.latestevent"></span>
         </h2>
 <!--          Show if no events to show -->
         <p ng-show="!cert.status">
-          <span message key="view.label.latestevent.noevents"></span></a>
+          <span message key="ts-bas.label.latestevent.noevents"></span></a>
         </p>
 
 <!--         Show first status in list if any viable status exist -->
@@ -73,7 +73,7 @@
         </p>
 <!--         Show if more than 1 viable status exists -->
         <p ng-show="cert.status.length>1">
-          <a class="statusHistoryLink" href ng-click="showStatusHistory()"><span message key="view.label.latestevent.showall"></span></a>
+          <a class="statusHistoryLink" href ng-click="showStatusHistory()"><span message key="ts-bas.label.latestevent.showall"></span></a>
         </p>
       </div>
     </div>
@@ -86,11 +86,11 @@
               <div class="row-fluid">
                 <div class="span6">
                   <h2>
-                    <span><message key="view.label.certtitle" /></span>
+                    <span><message key="ts-bas.label.certtitle" /></span>
                   </h2>
                 </div>
                 <div class="span5 issue">
-                  <span><message key="view.label.issued" /></span> <span class="cert-titlebar-value">{{cert.signeringsdatum | date:'longDate'}}</span>
+                  <span><message key="ts-bas.label.issued" /></span> <span class="cert-titlebar-value">{{cert.signeringsdatum | date:'longDate'}}</span>
                 </div>
                 <div class="span1 archive">
                   <a href="#archiveModal" role="button" data-toggle="modal" onclick="return false"><img alt="Arkivera intyg" src="/img/archive-icon.gif" /></a>
@@ -100,18 +100,18 @@
             <div class="cert-header">
               <div class="row-fluid">
                 <div class="span6">
-                  <span class="tag"><message key="view.label.patientname" /></span> <span id="patient-name">{{cert.patient.fullstandigtNamn}}</span>
+                  <span class="tag"><message key="ts-bas.label.patientname" /></span> <span id="patient-name">{{cert.patient.fullstandigtNamn}}</span>
                 </div>
                 <div class="span6">
-                  <span class="tag"><message key="view.label.unit" /></span> <span id="careunit">{{cert.skapadAv.vardenhet.enhetsnamn}}</span>
+                  <span class="tag"><message key="ts-bas.label.unit" /></span> <span id="careunit">{{cert.skapadAv.vardenhet.enhetsnamn}}</span>
                 </div>
               </div>
               <div class="row-fluid">
                 <div class="span6">
-                  <span class="tag"><message key="view.label.civicnumber" /></span> <span id="patient-crn">{{cert.patient.personid}}</span>
+                  <span class="tag"><message key="ts-bas.label.civicnumber" /></span> <span id="patient-crn">{{cert.patient.personid}}</span>
                 </div>
                 <div class="span6">
-                  <span class="tag"><message key="view.label.issuer" /></span> <span id="caregiver">{{cert.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</span>
+                  <span class="tag"><message key="ts-bas.label.issuer" /></span> <span id="caregiver">{{cert.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</span>
                 </div>
               </div>
              

@@ -2,8 +2,10 @@ define([
 ], function () {
     'use strict';
 
-    return ['$scope', '$location', '$anchorScroll', 'ts-bas.certificateService', '$routeParams',
-        function ($scope, $location, $anchorScroll, certificateService, $routeParams) {
+    return ['$scope', '$log', '$location', '$anchorScroll', '$routeParams',
+            'ts-bas.certificateService', 'statService', 'wcDialogService',
+        function ($scope, $log, $location, $anchorScroll, $routeParams,
+                  certificateService, statService, wcDialogService) {
             $scope.cert = {};
 
             $scope.messages = [];
@@ -11,15 +13,15 @@ define([
 
             // init state
             $scope.widgetState = {
-                doneLoading : false,
-                hasError : false,
-                showComplete : false,
-                collapsedHeader : false
+                doneLoading: false,
+                hasError: false,
+                showComplete: false,
+                collapsedHeader: false
             };
 
-        $scope.toggleHeader = function () {
-            $scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
-        };
+            $scope.toggleHeader = function () {
+                $scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
+            };
 
             $scope.toggleShowComplete = function () {
                 $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
@@ -34,36 +36,38 @@ define([
             };
 
             $scope.form = {
-                'identity' : {
-                    'ID-kort' : 'ID_KORT',
-                    'Företagskort eller tjänstekort' : 'FORETAG_ELLER_TJANSTEKORT',
-                    'Körkort' : 'KORKORT',
-                    'Personlig kännedom' : 'PERS_KANNEDOM',
-                    'Försäkran enligt 18 kap. 4§' : 'FORSAKRAN_KAP18',
-                    'Pass' : 'PASS'
+                'identity': {
+                    'ID-kort': 'ID_KORT',
+                    'Företagskort eller tjänstekort': 'FORETAG_ELLER_TJANSTEKORT',
+                    'Körkort': 'KORKORT',
+                    'Personlig kännedom': 'PERS_KANNEDOM',
+                    'Försäkran enligt 18 kap. 4§': 'FORSAKRAN_KAP18',
+                    'Pass': 'PASS'
                 },
-                'korkortd' : false,
-                'behorighet' : true
+                'korkortd': false,
+                'behorighet': true
             };
 
             $scope.testerror = false;
 
             // Input limit handling
             $scope.inputLimits = {
-                'funktionsnedsattning' : 180,
-                'beskrivningRiskfaktorer' : 180,
-                'medvetandestorning' : 180,
-                'lakemedelOchDos' : 180,
-                'medicinering' : 180,
-                'kommentar' : 500,
-                'lakareSpecialKompetens' : 270,
-                'sjukhusvardtidpunkt' : 49,
-                'sjukhusvardvardinrattning' : 45,
-                'sjukhusvardanledning' : 63
+                'funktionsnedsattning': 180,
+                'beskrivningRiskfaktorer': 180,
+                'medvetandestorning': 180,
+                'lakemedelOchDos': 180,
+                'medicinering': 180,
+                'kommentar': 500,
+                'lakareSpecialKompetens': 270,
+                'sjukhusvardtidpunkt': 49,
+                'sjukhusvardvardinrattning': 45,
+                'sjukhusvardanledning': 63
             };
 
             $scope.$watch('cert.intygAvser.korkortstyp', function (newValue, oldValue) {
-                if (!$scope.cert || !$scope.cert.intygAvser || !$scope.cert.intygAvser.korkortstyp) return;
+                if (!$scope.cert || !$scope.cert.intygAvser || !$scope.cert.intygAvser.korkortstyp) {
+                    return;
+                }
                 $scope.form.korkortd = false;
                 for (var i = 4; i < $scope.cert.intygAvser.korkortstyp.length; i++) {
                     if (newValue[i].selected) {
@@ -74,167 +78,167 @@ define([
             }, true);
 
             var dummycert = {
-                "utlatandeid" : "987654321",
-                "typAvUtlatande" : "TSTRK1007 (U06, V06)",
-                "signeringsdatum" : "2013-08-12T15:57:00.000",
-                "kommentar" : "Här kommer en övrig kommentar",
-                "skapadAv" : {
-                    "personid" : "SE0000000000-1333",
-                    "fullstandigtNamn" : "Doktor Thompson",
-                    "specialiteter" : ["SPECIALITET"],
-                    "vardenhet" : {
-                        "enhetsid" : "SE0000000000-1337",
-                        "enhetsnamn" : "Vårdenhet Väst",
-                        "postadress" : "Enhetsvägen 12",
-                        "postnummer" : "54321",
-                        "postort" : "Tumba",
-                        "telefonnummer" : "08-1337",
-                        "vardgivare" : {
-                            "vardgivarid" : "SE0000000000-HAHAHHSAA",
-                            "vardgivarnamn" : "Vårdgivarnamn"
+                "utlatandeid": "987654321",
+                "typAvUtlatande": "TSTRK1007 (U06, V06)",
+                "signeringsdatum": "2013-08-12T15:57:00.000",
+                "kommentar": "Här kommer en övrig kommentar",
+                "skapadAv": {
+                    "personid": "SE0000000000-1333",
+                    "fullstandigtNamn": "Doktor Thompson",
+                    "specialiteter": ["SPECIALITET"],
+                    "vardenhet": {
+                        "enhetsid": "SE0000000000-1337",
+                        "enhetsnamn": "Vårdenhet Väst",
+                        "postadress": "Enhetsvägen 12",
+                        "postnummer": "54321",
+                        "postort": "Tumba",
+                        "telefonnummer": "08-1337",
+                        "vardgivare": {
+                            "vardgivarid": "SE0000000000-HAHAHHSAA",
+                            "vardgivarnamn": "Vårdgivarnamn"
                         }
                     },
-                    "befattningar" : []
+                    "befattningar": []
                 },
-                "patient" : {
-                    "personid" : "19121212-1212",
-                    "fullstandigtNamn" : "Herr Dundersjuk",
-                    "fornamn" : "Herr",
-                    "efternamn" : "Dundersjuk",
-                    "postadress" : "Testvägen 12",
-                    "postnummer" : "123456",
-                    "postort" : "Testort"
+                "patient": {
+                    "personid": "19121212-1212",
+                    "fullstandigtNamn": "Herr Dundersjuk",
+                    "fornamn": "Herr",
+                    "efternamn": "Dundersjuk",
+                    "postadress": "Testvägen 12",
+                    "postnummer": "123456",
+                    "postort": "Testort"
                 },
-                "vardkontakt" : {
-                    "typ" : "5880005",
-                    "idkontroll" : "PASS"
+                "vardkontakt": {
+                    "typ": "5880005",
+                    "idkontroll": "PASS"
                 },
-                "intygAvser" : {
-                    "korkortstyp" : [
-                        {"type" : "C1", "selected" : false},
-                        {"type" : "C1E", "selected" : false},
-                        {"type" : "C", "selected" : true},
-                        {"type" : "CE", "selected" : false},
-                        {"type" : "D1", "selected" : false},
-                        {"type" : "D1E", "selected" : false},
-                        {"type" : "D", "selected" : false},
-                        {"type" : "DE", "selected" : false},
-                        {"type" : "TAXI", "selected" : false}
+                "intygAvser": {
+                    "korkortstyp": [
+                        {"type": "C1", "selected": false},
+                        {"type": "C1E", "selected": false},
+                        {"type": "C", "selected": true},
+                        {"type": "CE", "selected": false},
+                        {"type": "D1", "selected": false},
+                        {"type": "D1E", "selected": false},
+                        {"type": "D", "selected": false},
+                        {"type": "DE", "selected": false},
+                        {"type": "TAXI", "selected": false}
                     ]
                 },
-                "syn" : {
-                    "synfaltsdefekter" : true,
-                    "nattblindhet" : true,
-                    "progressivOgonsjukdom" : true,
-                    "diplopi" : true,
-                    "nystagmus" : true,
-                    "hogerOga" : {
-                        "utanKorrektion" : 0.0,
-                        "medKorrektion" : 0.0,
-                        "kontaktlins" : true
+                "syn": {
+                    "synfaltsdefekter": true,
+                    "nattblindhet": true,
+                    "progressivOgonsjukdom": true,
+                    "diplopi": true,
+                    "nystagmus": true,
+                    "hogerOga": {
+                        "utanKorrektion": 0.0,
+                        "medKorrektion": 0.0,
+                        "kontaktlins": true
                     },
 
-                    "vansterOga" : {
-                        "utanKorrektion" : 0.0,
-                        "medKorrektion" : 0.0,
-                        "kontaktlins" : true
+                    "vansterOga": {
+                        "utanKorrektion": 0.0,
+                        "medKorrektion": 0.0,
+                        "kontaktlins": true
                     },
 
-                    "binokulart" : {
-                        "utanKorrektion" : 0.0,
-                        "medKorrektion" : 0.0
+                    "binokulart": {
+                        "utanKorrektion": 0.0,
+                        "medKorrektion": 0.0
                     },
-                    "korrektionsglasensStyrka" : true
+                    "korrektionsglasensStyrka": true
                 },
 
-                "horselBalans" : {
-                    "balansrubbningar" : true,
-                    "svartUppfattaSamtal4Meter" : true
+                "horselBalans": {
+                    "balansrubbningar": true,
+                    "svartUppfattaSamtal4Meter": true
                 },
 
-                "funktionsnedsattning" : {
-                    "funktionsnedsattning" : true,
-                    "otillrackligRorelseformaga" : true,
-                    "beskrivning" : "Spik i foten"
+                "funktionsnedsattning": {
+                    "funktionsnedsattning": true,
+                    "otillrackligRorelseformaga": true,
+                    "beskrivning": "Spik i foten"
 
                 },
 
-                "hjartKarl" : {
-                    "hjartKarlSjukdom" : true,
-                    "hjarnskadaEfterTrauma" : true,
-                    "riskfaktorerStroke" : true,
-                    "beskrivningRiskfaktorer" : "Förkärlek för Elivsmackor"
+                "hjartKarl": {
+                    "hjartKarlSjukdom": true,
+                    "hjarnskadaEfterTrauma": true,
+                    "riskfaktorerStroke": true,
+                    "beskrivningRiskfaktorer": "Förkärlek för Elivsmackor"
                 },
-                "diabetes" : {
-                    "harDiabetes" : true,
-                    "diabetesTyp" : "DIABETES_TYP_1",
-                    "kost" : true
-                },
-
-                "neurologi" : {
-                    "neurologiskSjukdom" : true
+                "diabetes": {
+                    "harDiabetes": true,
+                    "diabetesTyp": "DIABETES_TYP_1",
+                    "kost": true
                 },
 
-                "medvetandestorning" : {
-                    "medvetandestorning" : true,
-                    "beskrivning" : "Beskrivning"
+                "neurologi": {
+                    "neurologiskSjukdom": true
                 },
 
-                "njurar" : {
-                    "nedsattNjurfunktion" : true
+                "medvetandestorning": {
+                    "medvetandestorning": true,
+                    "beskrivning": "Beskrivning"
                 },
 
-                "kognitivt" : {
-                    "sviktandeKognitivFunktion" : true
+                "njurar": {
+                    "nedsattNjurfunktion": true
                 },
 
-                "somnVakenhet" : {
-                    "teckenSomnstorningar" : true
+                "kognitivt": {
+                    "sviktandeKognitivFunktion": true
                 },
 
-                "narkotikaLakemedel" : {
-                    "teckenMissbruk" : true,
-                    "foremalForVardinsats" : true,
-                    "lakarordineratLakemedelsbruk" : true,
-                    "lakemedelOchDos" : "Läkemedel och dos",
-                    "provtagningBehovs" : true
+                "somnVakenhet": {
+                    "teckenSomnstorningar": true
                 },
 
-                "psykiskt" : {
-                    "psykiskSjukdom" : true
+                "narkotikaLakemedel": {
+                    "teckenMissbruk": true,
+                    "foremalForVardinsats": true,
+                    "lakarordineratLakemedelsbruk": true,
+                    "lakemedelOchDos": "Läkemedel och dos",
+                    "provtagningBehovs": true
                 },
 
-                "utvecklingsstorning" : {
-                    "psykiskUtvecklingsstorning" : true,
-                    "harSyndrom" : true
+                "psykiskt": {
+                    "psykiskSjukdom": true
                 },
 
-                "sjukhusvard" : {
-                    "sjukhusEllerLakarkontakt" : true,
-                    "tidpunkt" : "20 Januari",
-                    "vardinrattning" : "Vårdcentralen",
-                    "anledning" : "Akut lungsot"
+                "utvecklingsstorning": {
+                    "psykiskUtvecklingsstorning": true,
+                    "harSyndrom": true
                 },
 
-                "medicinering" : {
-                    "stadigvarandeMedicinering" : true,
-                    "beskrivning" : "Alvedon"
+                "sjukhusvard": {
+                    "sjukhusEllerLakarkontakt": true,
+                    "tidpunkt": "20 Januari",
+                    "vardinrattning": "Vårdcentralen",
+                    "anledning": "Akut lungsot"
                 },
 
-                "bedomning" : {
-                    "korkortstyp" : [
-                        {"type" : "C1", "selected" : false},
-                        {"type" : "C1E", "selected" : false},
-                        {"type" : "C", "selected" : true},
-                        {"type" : "CE", "selected" : false},
-                        {"type" : "D1", "selected" : false},
-                        {"type" : "D1E", "selected" : false},
-                        {"type" : "D", "selected" : false},
-                        {"type" : "DE", "selected" : false},
-                        {"type" : "TAXI", "selected" : false},
-                        {"type" : "ANNAT", "selected" : false}
+                "medicinering": {
+                    "stadigvarandeMedicinering": true,
+                    "beskrivning": "Alvedon"
+                },
+
+                "bedomning": {
+                    "korkortstyp": [
+                        {"type": "C1", "selected": false},
+                        {"type": "C1E", "selected": false},
+                        {"type": "C", "selected": true},
+                        {"type": "CE", "selected": false},
+                        {"type": "D1", "selected": false},
+                        {"type": "D1E", "selected": false},
+                        {"type": "D", "selected": false},
+                        {"type": "DE", "selected": false},
+                        {"type": "TAXI", "selected": false},
+                        {"type": "ANNAT", "selected": false}
                     ],
-                    "lakareSpecialKompetens" : "Spektralanalys"
+                    "lakareSpecialKompetens": "Spektralanalys"
                 }
             };
 
@@ -292,13 +296,27 @@ define([
              * Action to discard the certificate draft and return to WebCert again.
              */
             $scope.discard = function () {
-                certificateService.discardDraft($routeParams.certificateId,
-                    function (data) {
-                        // TODO: Redirect back to start page.
+                var bodyText = "Är du säker på att du vill radera utkastet? Intyget tas då bort och finns inte längre tillgängligt i Webcert.";
+                wcDialogService.showDialog($scope, {
+                    dialogId: 'confirm-draft-delete',
+                    titleId: 'label.confirmaddress',
+                    bodyText: bodyText,
+
+                    button1click: function () {
+                        $log.debug('delete draft ');
+                        $scope.dialog.acceptprogressdone = false;
+                        certificateService.discardDraft($routeParams.certificateId, function (data) {
+                            $scope.dialog.acceptprogressdone = true;
+                            statService.refreshStat(); // Update statistics to reflect change
+                            $location.path("/unsigned");
+                        }, function (errorData) {
+                            $scope.dialog.acceptprogressdone = true;
+                            // TODO: Show error message.
+                        });
                     },
-                    function (errorData) {
-                        // TODO: Show error message.
-                    });
+                    button1text: 'common.delete',
+                    button2text: 'common.cancel'
+                });
             };
         }];
 });

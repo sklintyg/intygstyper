@@ -4,8 +4,9 @@ define(
         'use strict';
 
         return [
-            '$scope', '$location', '$filter', '$anchorScroll', 'fk7263.certificateService', '$routeParams', 'statService',
-            function ($scope, $location, $filter, $anchorScroll, certificateService, $routeParams, statService) {
+            '$scope', '$log', '$location', '$filter', '$anchorScroll', '$routeParams',
+            'fk7263.certificateService', 'statService', 'wcDialogService',
+            function ($scope, $log, $location, $filter, $anchorScroll, $routeParams, certificateService, statService, wcDialogService) {
                 $scope.cert = {};
 
                 $scope.messages = [];
@@ -357,11 +358,26 @@ define(
                  * Action to discard the certificate draft and return to WebCert again.
                  */
                 $scope.discard = function () {
-                    certificateService.discardDraft($routeParams.certificateId, function (data) {
-                        // TODO: Redirect back to start page.
-                        statService.refreshStat(); // Update statistics to reflect change
-                    }, function (errorData) {
-                        // TODO: Show error message.
+                    var bodyText = "Är du säker på att du vill radera utkastet? Intyget tas då bort och finns inte längre tillgängligt i Webcert.";
+                    wcDialogService.showDialog($scope, {
+                        dialogId: 'confirm-draft-delete',
+                        titleId: 'label.confirmaddress',
+                        bodyText: bodyText,
+
+                        button1click: function () {
+                            $log.debug('delete draft ');
+                            $scope.dialog.acceptprogressdone = false;
+                            certificateService.discardDraft($routeParams.certificateId, function (data) {
+                                $scope.dialog.acceptprogressdone = true;
+                                statService.refreshStat(); // Update statistics to reflect change
+                                $location.path("/unsigned");
+                            }, function (errorData) {
+                                $scope.dialog.acceptprogressdone = true;
+                                // TODO: Show error message.
+                            });
+                        },
+                        button1text: 'common.delete',
+                        button2text: 'common.cancel'
                     });
                 };
             } ];

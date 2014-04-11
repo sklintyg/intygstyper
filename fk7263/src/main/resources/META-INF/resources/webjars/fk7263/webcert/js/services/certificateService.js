@@ -60,7 +60,7 @@ define([
             function _discardDraft(id, onSuccess, onError) {
                 $log.debug('_discardDraft id: ' + id);
                 var restPath = '/moduleapi/intyg/draft/' + id;
-                $http.remove(restPath).
+                $http['delete'](restPath).
                     success(function (data) {
                         $log.debug('_discardDraft data: ' + data);
                         onSuccess(data);
