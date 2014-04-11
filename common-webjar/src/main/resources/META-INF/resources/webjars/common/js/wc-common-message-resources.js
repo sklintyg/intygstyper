@@ -13,6 +13,7 @@ define([
             "common.goback" : "Tillbaka",
 
             "common.copy" : "Kopiera",
+            "common.delete" : "Ta bort",
 
             // cert status messages
             "cert.status.sent" : "Skickat",
