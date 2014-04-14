@@ -4,21 +4,19 @@ import java.io.IOException;
 import java.util.EnumSet;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
- * Helper class that instructs Jackson to parse {@link EnumSet}s to JSON like:
- * <p>
+ * Helper class that instructs Jackson to parse {@link EnumSet}s to JSON as follows.
+ * <p/>
  * <code>[{type: "ENUM1", selected : true}, {type: "ENUM2", selected : false}, {type: "ENUM3", selected : false}]</code>
- * <p>
+ * <p/>
  * for a EnumSet containing <code>ENUM1</code> out of an enum with the enum values <code>ENUM1</code>,
  * <code>ENUM2</code> and <code>ENUM3</code>
- * 
+ * <p/>
  * A concrete class must be created for the specific enum type to use:
- * 
+ * <p/>
  * <pre>
  * public static class EnumTypeEnumSetSerializer extends AbstractEnumSetSerializer&lt;EnumType&gt; {
  *     protected EnumTypeEnumSetSerializer() {
@@ -26,14 +24,13 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  *     }
  * }
  * </pre>
- * 
+ * <p/>
  * Annotate your EnumSet with:
- * <p>
+ * <p/>
  * <code>@JsonSerialize(using = EnumTypeEnumSetSerializer.class)</code>
- * 
- * @see JsonSerialize
- * @param <E>
- *            An enum type.
+ *
+ * @param <E> An enum type.
+ * @see com.fasterxml.jackson.databind.annotation.JsonSerialize
  */
 public class AbstractEnumSetSerializer<E extends Enum<E>> extends JsonSerializer<EnumSet<E>> {
 
@@ -44,8 +41,7 @@ public class AbstractEnumSetSerializer<E extends Enum<E>> extends JsonSerializer
     }
 
     @Override
-    public void serialize(EnumSet<E> enumSet, JsonGenerator jgen, SerializerProvider provider) throws IOException,
-            JsonProcessingException {
+    public void serialize(EnumSet<E> enumSet, JsonGenerator jgen, SerializerProvider provider) throws IOException {
 
         jgen.writeStartArray();
         for (E enumValue : enumType.getEnumConstants()) {

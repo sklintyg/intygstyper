@@ -1,13 +1,13 @@
 package se.inera.certificate.modules.ts_bas.model.internal;
 
 public class HjartKarl {
-    
+
     private Boolean hjartKarlSjukdom;
-    
+
     private Boolean hjarnskadaEfterTrauma;
-    
+
     private Boolean riskfaktorerStroke;
-    
+
     private String beskrivningRiskfaktorer;
 
     public Boolean getHjartKarlSjukdom() {
@@ -41,6 +41,6 @@ public class HjartKarl {
     public void setBeskrivningRiskfaktorer(String beskrivningRiskfaktorer) {
         this.beskrivningRiskfaktorer = beskrivningRiskfaktorer;
     }
-    
+
 
 }

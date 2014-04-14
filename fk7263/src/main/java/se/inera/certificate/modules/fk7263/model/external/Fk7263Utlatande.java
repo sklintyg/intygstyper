@@ -152,7 +152,7 @@ public class Fk7263Utlatande extends Utlatande {
     /**
      * Certificate specific implementation of when a valid from date is. Iterate through all From dates and return the
      * earliest (non-null) date.
-     * 
+     *
      * @return
      */
     @Override
@@ -176,7 +176,7 @@ public class Fk7263Utlatande extends Utlatande {
     /**
      * Certificate specific implementation of when a valid from date is. Iterate through all Tom dates and return the
      * latest (non-null) date.
-     * 
+     *
      * @return
      */
     public LocalDate getValidToDate() {

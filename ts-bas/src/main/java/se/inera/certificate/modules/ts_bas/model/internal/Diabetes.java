@@ -1,15 +1,15 @@
 package se.inera.certificate.modules.ts_bas.model.internal;
 
 public class Diabetes {
-    
+
     private Boolean harDiabetes;
-    
+
     private String diabetesTyp;
-    
+
     private Boolean kost;
-    
+
     private Boolean insulin;
-    
+
     private Boolean tabletter;
 
     public Boolean getHarDiabetes() {
@@ -51,7 +51,5 @@ public class Diabetes {
     public void setTabletter(Boolean tabletter) {
         this.tabletter = tabletter;
     }
-    
-    
-    
+
 }

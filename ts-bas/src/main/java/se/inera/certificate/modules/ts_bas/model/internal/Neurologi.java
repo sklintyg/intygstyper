@@ -1,7 +1,7 @@
 package se.inera.certificate.modules.ts_bas.model.internal;
 
 public class Neurologi {
-    
+
     private Boolean neurologiskSjukdom;
 
     public Boolean getNeurologiskSjukdom() {

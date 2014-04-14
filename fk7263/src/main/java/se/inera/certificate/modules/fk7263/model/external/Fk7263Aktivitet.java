@@ -10,7 +10,7 @@ import se.inera.certificate.model.Vardenhet;
 /**
  * @author andreaskaltenbach
  */
-public class Fk7263Aktivitet extends Aktivitet{
+public class Fk7263Aktivitet extends Aktivitet {
 
     private List<Utforarroll> beskrivsAv;
     private Vardenhet utforsVid;

@@ -32,6 +32,9 @@ import se.inera.certificate.ts_bas.model.v1.UtlatandeTyp;
 
 public final class IsoTypeConverter {
 
+    private IsoTypeConverter() {
+    }
+
     public static Id toId(II ii) {
         if (ii == null) {
             return null;
@@ -127,23 +130,23 @@ public final class IsoTypeConverter {
 
         return utlatandeTyp;
     }
-    
+
     public static PhysicalQuantity toPhysicalQuantity(PQ pq) {
         if (pq == null) {
             return null;
         }
-        
+
         PhysicalQuantity physicalQuantity = new PhysicalQuantity();
         physicalQuantity.setQuantity(pq.getValue());
         physicalQuantity.setUnit(pq.getUnit());
         return physicalQuantity;
     }
-    
+
     public static PQ toPQ(PhysicalQuantity physicalQuantity) {
         if (physicalQuantity == null) {
             return null;
         }
-        
+
         PQ pq = new PQ();
         pq.setValue(physicalQuantity.getQuantity());
         pq.setUnit(physicalQuantity.getUnit());

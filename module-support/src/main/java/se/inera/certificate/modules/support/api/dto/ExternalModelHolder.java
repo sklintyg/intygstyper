@@ -21,7 +21,7 @@ package se.inera.certificate.modules.support.api.dto;
 import static org.springframework.util.Assert.notNull;
 
 /**
- * Wrapper class for holding the Utlatande in external format of a certificate
+ * Wrapper class for holding the Utlatande in external format of a certificate.
  */
 public class ExternalModelHolder {
 

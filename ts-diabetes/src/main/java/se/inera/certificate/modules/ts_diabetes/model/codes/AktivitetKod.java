@@ -1,18 +1,19 @@
 package se.inera.certificate.modules.ts_diabetes.model.codes;
 
-import static se.inera.certificate.modules.ts_diabetes.model.codes.Kodverk.*;
+import static se.inera.certificate.modules.ts_diabetes.model.codes.Kodverk.AKTIVITETER;
+import static se.inera.certificate.modules.ts_diabetes.model.codes.Kodverk.SNOMED_CT;
 
 import se.inera.certificate.model.Kod;
 
 public enum AktivitetKod implements CodeSystem {
 
-    /** Prövning av ögats rörlighet (AKT18) */
+    /** Prövning av ögats rörlighet (AKT18). */
     PROVNING_AV_OGATS_RORLIGHET("AKT18", "Prövning av ögats rörlighet ", AKTIVITETER),
 
-    /** Synfältsprövning (86944008) */
+    /** Synfältsprövning (86944008). */
     SYNFALTSUNDERSOKNING("86944008", "Synfältsundersökning", SNOMED_CT),
 
-    /** Egenövervakning av blodglukos (308113006) */
+    /** Egenövervakning av blodglukos (308113006). */
     EGENOVERVAKNING_BLODGLUKOS("308113006", "Egenövervakning av blodglukos", SNOMED_CT);
 
     private final String code;

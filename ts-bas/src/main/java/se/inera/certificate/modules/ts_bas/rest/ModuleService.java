@@ -47,7 +47,7 @@ import se.inera.certificate.modules.ts_bas.validator.Validator;
 
 /**
  * The contract between the certificate module and the generic components (Intygstjänsten and Mina-Intyg).
- * 
+ *
  * @author Gustav Norbäcker, R2M
  */
 public class ModuleService implements ModuleApi {
@@ -65,7 +65,7 @@ public class ModuleService implements ModuleApi {
 
     @Autowired
     private ExternalToInternalConverter externalToInternalConverter;
-    
+
     @Autowired
     private InternalToExternalConverter internalToExternalConverter;
 

@@ -32,6 +32,9 @@ import se.inera.certificate.ts_diabetes.model.v1.UtlatandeTyp;
 
 public final class IsoTypeConverter {
 
+    private IsoTypeConverter() {
+    }
+
     public static Id toId(II ii) {
         if (ii == null) {
             return null;

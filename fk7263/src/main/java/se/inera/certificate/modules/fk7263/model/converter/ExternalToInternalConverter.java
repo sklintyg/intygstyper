@@ -44,7 +44,7 @@ public class ExternalToInternalConverter {
         convertSjukdomsforlopp(intyg, source);
         convertFunktionsnedsattning(intyg, source);
         convertVardkontakter(intyg, source);
-        convertReferenser(intyg, source );
+        convertReferenser(intyg, source);
         convertAktivitetsbegransning(intyg, source);
         convertAktiviteter(intyg, source);
         convertPatient(intyg, source);
@@ -120,18 +120,20 @@ public class ExternalToInternalConverter {
                 PhysicalQuantity quantity = arbetsformaga.getVarde().get(0);
 
                 switch (quantity.getQuantity().toString()) {
-                case "75.0":
-                    intyg.setNedsattMed25(interval);
-                    break;
-                case "50.0":
-                    intyg.setNedsattMed50(interval);
-                    break;
-                case "25.0":
-                    intyg.setNedsattMed75(interval);
-                    break;
-                case "0.0":
-                    intyg.setNedsattMed100(interval);
-                    break;
+                    case "75.0":
+                        intyg.setNedsattMed25(interval);
+                        break;
+                    case "50.0":
+                        intyg.setNedsattMed50(interval);
+                        break;
+                    case "25.0":
+                        intyg.setNedsattMed75(interval);
+                        break;
+                    case "0.0":
+                        intyg.setNedsattMed100(interval);
+                        break;
+                    default:
+                        intyg.setNedsattMed100(interval);
                 }
             }
         }

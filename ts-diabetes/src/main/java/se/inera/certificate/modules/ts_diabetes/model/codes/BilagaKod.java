@@ -25,7 +25,7 @@ import se.inera.certificate.model.Kod;
  */
 public enum BilagaKod implements CodeSystem {
 
-    /** Ögonläkarintyg (BIL1) */
+    /** Ögonläkarintyg (BIL1). */
     OGONLAKARINTYG("BIL1", "Ögonläkarintyg");
 
     private static String codeSystemName = "kv_bilaga";

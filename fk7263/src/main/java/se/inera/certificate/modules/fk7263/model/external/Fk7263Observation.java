@@ -9,7 +9,7 @@ import se.inera.certificate.model.Utforarroll;
 /**
  * @author andreaskaltenbach
  */
-public class Fk7263Observation extends Observation{
+public class Fk7263Observation extends Observation {
 
     private List<Fk7263Prognos> prognoser;
     private Utforarroll utforsAv;

@@ -51,10 +51,8 @@ import se.inera.certificate.modules.rli.model.internal.mi.Vardgivare;
 
 /**
  * Converter for converting the external format to the internal view format.
- * 
- * 
+ *
  * @author Niklas Pettersson, R2M
- * 
  */
 public class ExternalToInternalConverter {
 

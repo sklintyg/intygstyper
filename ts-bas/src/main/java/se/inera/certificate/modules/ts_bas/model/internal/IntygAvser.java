@@ -10,17 +10,16 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
- * The Korkortstyp[er] a specific Utlatande concerns
- * 
+ * The Korkortstyp[er] a specific Utlatande concerns.
+ *
  * @author erik
- * 
  */
 public class IntygAvser {
 
     @JsonSerialize(using = IntygAvserEnumSetSerializer.class)
     @JsonDeserialize(using = IntygAvserEnumSetDeserializer.class)
-    EnumSet<IntygAvserKategori> korkortstyp;
-    
+    private EnumSet<IntygAvserKategori> korkortstyp;
+
     public Set<IntygAvserKategori> getKorkortstyp() {
         if (korkortstyp == null) {
             korkortstyp = EnumSet.noneOf(IntygAvserKategori.class);

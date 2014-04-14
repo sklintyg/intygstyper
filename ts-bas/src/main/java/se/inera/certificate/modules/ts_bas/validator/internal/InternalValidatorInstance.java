@@ -32,10 +32,9 @@ import se.inera.certificate.modules.ts_bas.model.internal.Utvecklingsstorning;
 import se.inera.certificate.modules.ts_bas.model.internal.Vardkontakt;
 
 /**
- * Class for validating drafts of the internal model
- * 
+ * Class for validating drafts of the internal model.
+ *
  * @author erik
- * 
  */
 public class InternalValidatorInstance {
 
@@ -44,7 +43,7 @@ public class InternalValidatorInstance {
     private static final Logger LOG = LoggerFactory.getLogger(InternalValidatorInstance.class);
 
     private List<ValidationMessage> validationMessages;
-    
+
     private ValidationContext context;
 
     public InternalValidatorInstance() {
@@ -53,17 +52,16 @@ public class InternalValidatorInstance {
 
     /**
      * Validates an internal draft of an {@link Utlatande} (this means the object being validated is not necessarily
-     * complete)
-     * 
-     * @param utlatande
-     *            an internal {@link Utlatande}
+     * complete).
+     *
+     * @param utlatande an internal {@link Utlatande}
      * @return a {@link ValidateDraftResponseHolder} with a status and a list of validationErrors
      */
     public ValidateDraftResponse validate(Utlatande utlatande) {
 
         if (utlatande == null) {
             addValidationError("utlatande", "ts-bas.validation.utlatande.missing");
-            
+
         } else {
 
             context = new ValidationContext(utlatande);
@@ -239,10 +237,10 @@ public class InternalValidatorInstance {
             assertDescriptionNotEmpty(funktionsnedsattning.getBeskrivning(), "funktionsnedsattning.beskrivning",
                     "ts-bas.validation.funktionsnedsattning.beskrivning.missing");
         }
-        
+
         if (context.isPersontransportContext()) {
             if (funktionsnedsattning.getOtillrackligRorelseformaga() == null) {
-                addValidationError("funktionsnedsattning.otillrackligRorelseformaga","ts-bas.validation.funktionsnedsattning.otillrackligrorelseformaga.missing");
+                addValidationError("funktionsnedsattning.otillrackligRorelseformaga", "ts-bas.validation.funktionsnedsattning.otillrackligrorelseformaga.missing");
             }
         }
     }
@@ -253,11 +251,11 @@ public class InternalValidatorInstance {
             addValidationError("hjartKarl", "ts-bas.validation.hjartKarl.missing");
             return;
         }
-        
+
         if (hjartKarl.getHjartKarlSjukdom() == null) {
             addValidationError("hjartKarl.hjartKarlSjukdom", "ts-bas.validation.hjartKarl.hjartkarlsjukdom.missing");
         }
-        
+
         if (hjartKarl.getHjarnskadaEfterTrauma() == null) {
             addValidationError("hjartKarl.hjarnskadaEfterTrauma", "ts-bas.validation.hjartkarl.hjarnskadaeftertrauma.missing");
         }
@@ -281,7 +279,7 @@ public class InternalValidatorInstance {
         if (horselBalans.getBalansrubbningar() == null) {
             addValidationError("horselBalans.balansrubbningar", "ts-bas.validation.horselBalans.balansrubbningar.missing");
         }
-        
+
         if (context.isPersontransportContext()) {
             if (horselBalans.getSvartUppfattaSamtal4Meter() == null) {
                 addValidationError("horselBalans.svartUpfattaSamtal4Meter", "ts-bas.validation.horselbalans.uppfattasamtal4meter.missing");
@@ -302,12 +300,12 @@ public class InternalValidatorInstance {
                 addValidationError("vardenhet.postnummer", "ts-bas.validation.vardenhet.postnummer.incorrect-format");
             }
         }
-        
+
         assertDescriptionNotEmpty(skapadAv.getVardenhet().getPostort(), "vardenhet.postort",
                 "ts-bas.validation.vardenhet.postort.missing");
         assertDescriptionNotEmpty(skapadAv.getVardenhet().getTelefonnummer(), "vardenhet.telefonnummer",
                 "ts-bas.validation.vardenhet.telefonnummer.missing");
-        
+
     }
 
     private void validateIntygAvser(final IntygAvser intygAvser) {
@@ -345,8 +343,6 @@ public class InternalValidatorInstance {
         if (medicinering.getStadigvarandeMedicinering() == null) {
             addValidationError("medicinering.stadigvarandeMedicinering",
                     "ts-bas.validation.medicinering.stadigvarandeMedicinering.missing");
-            return;
-
         } else if (medicinering.getStadigvarandeMedicinering()) {
             assertDescriptionNotEmpty(medicinering.getBeskrivning(), "medicinering.beskrivning",
                     "ts-bas.validation.medicinering.beskrivning.missing");
@@ -359,10 +355,10 @@ public class InternalValidatorInstance {
             addValidationError("narkotikaLakemedel", "ts-bas.validation.narkotikaLakemedel.missing");
             return;
         }
-        
+
         if (narkotikaLakemedel.getTeckenMissbruk() == null) {
             addValidationError("narkotikaLakemedel.teckenMissbruk", "ts-bas.validation.narkotikaLakemedel.teckenmissbruk.missing");
-            
+
         } else if (narkotikaLakemedel.getTeckenMissbruk()) {
             if (narkotikaLakemedel.getProvtagningBehovs() == null) {
                 addValidationError("narkotikaLakemedel.provtagningBehovs", "ts-bas.validation.narkotikalakemedel.provtagning-behovs.missing");
@@ -372,7 +368,7 @@ public class InternalValidatorInstance {
         if (narkotikaLakemedel.getForemalForVardinsats() == null) {
             addValidationError("narkotikaLakemedel.vardinsats", "ts-bas.validation.narkotikaLakemedel.vardinsats-bas.missing");
         }
-        
+
         if (narkotikaLakemedel.getLakarordineratLakemedelsbruk() == null) {
             addValidationError("narkotikaLakemedel.lakarordineratLakemedelsbruk",
                     "ts-bas.validation.narkotikaLakemedel.lakarordineratLakemedelsbruk.missing");
@@ -408,15 +404,15 @@ public class InternalValidatorInstance {
             addValidationError("syn", "ts-bas.validation.syn.missing");
             return;
         }
-        
+
         if (syn.getSynfaltsdefekter() == null) {
             addValidationError("syn.teckenSynfaltsdefekter", "ts-bas.validation.syn.tecken-synfaltsdefekter.missing");
         }
-        
+
         if (syn.getNattblindhet() == null) {
             addValidationError("syn.nattblindhet", "ts-bas.validation.syn.nattblindhet.missing");
         }
-        
+
         if (syn.getProgressivOgonsjukdom() == null) {
             addValidationError("syn.progressivOgonsjukdom", "ts-bas.validation.syn.progressiv-ogonsjukdom.missing");
         }
@@ -424,7 +420,7 @@ public class InternalValidatorInstance {
         if (syn.getDiplopi() == null) {
             addValidationError("syn.diplopi", "ts-bas.validation.syn.diplopi.missing");
         }
-        
+
         if (syn.getNystagmus() == null) {
             addValidationError("syn.nystagmus", "ts-bas.validation.syn.nystagmus.missing");
         }
@@ -490,14 +486,11 @@ public class InternalValidatorInstance {
     }
 
     /**
-     * Check for null or empty String, if so add a validation error for field with errorCode
-     * 
-     * @param beskrivning
-     *            the String to check
-     * @param field
-     *            the target field in the model
-     * @param errorCode
-     *            the errorCode to log in validation errors
+     * Check for null or empty String, if so add a validation error for field with errorCode.
+     *
+     * @param beskrivning the String to check
+     * @param field       the target field in the model
+     * @param errorCode   the errorCode to log in validation errors
      */
     private AssertionResult assertDescriptionNotEmpty(String beskrivning, String field, String errorCode) {
         if (beskrivning == null || beskrivning.isEmpty()) {
@@ -509,28 +502,26 @@ public class InternalValidatorInstance {
     }
 
     /**
-     * Check if there are validation errors
-     * 
+     * Check if there are validation errors.
+     *
      * @return {@link ValidationStatus.VALID} if there are no errors, and {@link ValidationStatus.INVALID}
-     *         otherwise
+     * otherwise
      */
     private ValidationStatus getValidationStatus() {
         return (validationMessages.isEmpty()) ? ValidationStatus.VALID : ValidationStatus.INVALID;
     }
 
     /**
-     * Create a ValidationMessage and add it to the {@link ValidateDraftResponseHolder}
-     * 
-     * @param field
-     *            a String with the name of the field
-     * @param msg
-     *            a String with an error code for the front end implementation
+     * Create a ValidationMessage and add it to the {@link ValidateDraftResponseHolder}.
+     *
+     * @param field a String with the name of the field
+     * @param msg   a String with an error code for the front end implementation
      */
     private void addValidationError(String field, String msg) {
         validationMessages.add(new ValidationMessage(field, msg));
         LOG.debug(field + " " + msg);
     }
-    
+
     /**
      * Since the validator assertions doesn't throw exceptions on assertion failure, they instead return an assertion
      * result. This might be used to implement conditional logic based on if an assertion {@link #failed()} or was

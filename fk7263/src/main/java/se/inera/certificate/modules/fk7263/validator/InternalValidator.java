@@ -13,7 +13,7 @@ import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 
 /**
  * Validates a fk7263 certificate's specific rules that's not covered by schema validation or external validation.
- * 
+ *
  * @author marced
  */
 public class InternalValidator extends AbstractValidator {
@@ -34,9 +34,9 @@ public class InternalValidator extends AbstractValidator {
         validateRessatt();
         validateKommentar();
 
-        return validationErrors;
+        return getValidationErrors();
     }
-    
+
     private void validateDiagnose() {
 
         // Fält 2 - Medicinskt tillstånd kod - mandatory if not smittskydd
@@ -155,8 +155,8 @@ public class InternalValidator extends AbstractValidator {
     }
 
     /**
-     * Checks that the given Observation is about arbetsformaga and has a period where tom>from
-     * 
+     * Checks that the given Observation is about arbetsformaga and has a period where tom>from.
+     *
      * @param nedsattning
      * @return
      */

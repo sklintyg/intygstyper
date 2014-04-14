@@ -113,13 +113,11 @@ public class PdfGenerator {
     }
 
     /**
-     * Method for filling out the fields of a pdf with data from the RLI-internal model
-     * 
-     * @param utlatande
-     *            {@link se.inera.certificate.modules.rli.model.internal.mi.Utlatande} containing data for populating
-     *            the pdf
-     * @param fields
-     *            The fields of the pdf
+     * Method for filling out the fields of a pdf with data from the RLI-internal model.
+     *
+     * @param utlatande {@link se.inera.certificate.modules.rli.model.internal.mi.Utlatande} containing data for populating
+     *                  the pdf
+     * @param fields    The fields of the pdf
      * @throws DocumentException
      * @throws IOException
      */
@@ -154,15 +152,13 @@ public class PdfGenerator {
         if (utlatande.getUndersokning().getUndersokningsdatum() != null) {
             fillText(fields, DATE_EXAM, utlatande.getUndersokning().getUndersokningsdatum());
         }
-        /**
+        /*
          * If KLINISK_UNDERSOKNING has a structured info about Plats (which it should), then use Vardenhet.Enhetsnamn
          * for Plats
          */
         if (utlatande.getUndersokning().getUtforsVid() != null) {
             fillText(fields, PLACE_EXAM, utlatande.getUndersokning().getUtforsVid().getEnhetsnamn());
-        }
-        /** Else use Undersokningsplats if it is specified (which it shouldn't */
-        else if (utlatande.getUndersokning().getUndersokningsplats() != null) {
+        } else if (utlatande.getUndersokning().getUndersokningsplats() != null) { /* Else use Undersokningsplats if it is specified (which it shouldn't */
             fillText(fields, PLACE_EXAM, utlatande.getUndersokning().getUndersokningsplats());
         }
 
@@ -188,24 +184,23 @@ public class PdfGenerator {
             return;
         }
 
-        String sjuk_code = utlatande.getRekommendation().getSjukdomskannedom().getCode();
-        String rek_code = utlatande.getRekommendation().getRekommendationskod().getCode();
+        String sjukCode = utlatande.getRekommendation().getSjukdomskannedom().getCode();
+        String rekCode = utlatande.getRekommendation().getRekommendationskod().getCode();
 
-        if (SJK3.equals(sjuk_code) || SJK4.equals(sjuk_code)) {
-            fields.setField(sjuk_code, "Yes");
+        if (SJK3.equals(sjukCode) || SJK4.equals(sjukCode)) {
+            fields.setField(sjukCode, "Yes");
             fields.setField(SJK2, "Yes");
         } else {
-            fields.setField(sjuk_code, "Yes");
+            fields.setField(sjukCode, "Yes");
         }
 
-        fields.setField(rek_code, "Yes");
+        fields.setField(rekCode, "Yes");
 
     }
 
     /**
-     * 
-     * Fill fields regarding the Patient
-     * 
+     * Fill fields regarding the Patient.
+     *
      * @param utlatande
      * @param fields
      */
@@ -218,9 +213,8 @@ public class PdfGenerator {
     }
 
     /**
-     * 
-     * Fill fields regarding signer of certificate
-     * 
+     * Fill fields regarding signer of certificate.
+     *
      * @param utlatande
      * @param fields
      */
@@ -231,9 +225,8 @@ public class PdfGenerator {
     }
 
     /**
-     * 
-     * Fill fields with travel information
-     * 
+     * Fill fields with travel information.
+     *
      * @param utlatande
      * @param fields
      */
@@ -255,9 +248,8 @@ public class PdfGenerator {
     }
 
     /**
-     * 
-     * Utility method for populating PDF fields with the correct kind of information
-     * 
+     * Utility method for populating PDF fields with the correct kind of information.
+     *
      * @param fields
      * @param fieldId
      * @param text

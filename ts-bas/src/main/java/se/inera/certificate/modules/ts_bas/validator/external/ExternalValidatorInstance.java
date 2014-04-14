@@ -48,15 +48,15 @@ import se.inera.certificate.validate.SimpleIdValidatorBuilder;
 
 public class ExternalValidatorInstance {
 
-    protected final List<String> validationErrors;
+    private final List<String> validationErrors;
 
-    protected ValidationContext context;
+    private ValidationContext context;
 
     private AktiviteterValidationInstance aktivitetInstance;
     private ObservationerValidationInstance observationInstance;
     private RekommendationerValidationInstance rekommendationInstance;
 
-    private final static IdValidator ID_VALIDATOR;
+    private static final IdValidator ID_VALIDATOR;
 
     static {
         SimpleIdValidatorBuilder builder = new SimpleIdValidatorBuilder();
@@ -94,8 +94,16 @@ public class ExternalValidatorInstance {
         return validationErrors;
     }
 
+    public List<String> getValidationErrors() {
+        return validationErrors;
+    }
+
+    public ValidationContext getContext() {
+        return context;
+    }
+
     /**
-     * Validates that required attributes connected with the actual class Utlatande are present
+     * Validates that required attributes connected with the actual class Utlatande are present.
      */
     private void validateUtlatande(Utlatande utlatande) {
         assertNotNull(utlatande.getId(), "id");
@@ -107,7 +115,7 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Make sure Utlatande contains 1 Patient
+     * Make sure Utlatande contains 1 Patient.
      */
     private void validatePatient(Patient patient) {
         if (assertNotNull(patient, "patient").failed()) {
@@ -131,10 +139,9 @@ public class ExternalValidatorInstance {
 
     /**
      * Validate HosPersonal, includes validating the HsaId, making sure a name is supplied and that a valid Vardenhet is
-     * present
-     * 
-     * @param skapadAv
-     *            {@link HosPersonal}
+     * present.
+     *
+     * @param skapadAv {@link HosPersonal}
      */
     private void validateHosPersonal(HosPersonal skapadAv) {
         if (assertNotNull(skapadAv, "skapadAv").failed()) {
@@ -155,13 +162,11 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Validates Vardenhet contains required information
-     * 
-     * @param vardenhet
-     *            {@link Vardenhet}
-     * @param prefix
-     *            {@link String} indicates where this instance of vardenhet is used in the model (i.e
-     *            skapadAv.vardenhet...)
+     * Validates Vardenhet contains required information.
+     *
+     * @param vardenhet {@link Vardenhet}
+     * @param prefix    {@link String} indicates where this instance of vardenhet is used in the model (i.e
+     *                  skapadAv.vardenhet...)
      */
     private void validateVardenhet(Vardenhet vardenhet, String prefix) {
         if (assertNotNull(vardenhet, prefix + ".vardenhet").failed()) {
@@ -179,12 +184,10 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Validate vardgivare
-     * 
-     * @param vardgivare
-     *            {@link Vardgivare}
-     * @param prefix
-     *            {@link String} prefix, where in the model this instance is used
+     * Validate vardgivare.
+     *
+     * @param vardgivare {@link Vardgivare}
+     * @param prefix     {@link String} prefix, where in the model this instance is used
      */
     private void validateVardgivare(Vardgivare vardgivare, String prefix) {
         if (assertNotNull(vardgivare, prefix + ".vardgivare").failed()) {
@@ -196,10 +199,9 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Validate a list of Vardkontakter
-     * 
-     * @param vardkontakter
-     *            List of {@link Vardkontakter}
+     * Validate a list of Vardkontakter.
+     *
+     * @param vardkontakter List of {@link Vardkontakter}
      */
     private void validateVardkontakter(List<Vardkontakt> vardkontakter) {
         if (vardkontakter.size() != 1) {
@@ -214,10 +216,9 @@ public class ExternalValidatorInstance {
 
     /**
      * Validates and ensures that all ObservationAktivitetRelation's that are required are present, also raises
-     * validation errors if incorrect relations are found
-     * 
-     * @param observationAktivitetRelationer
-     *            List of {@link ObservationAktivitetRelationer}
+     * validation errors if incorrect relations are found.
+     *
+     * @param observationAktivitetRelationer List of {@link ObservationAktivitetRelationer}
      */
     private void validateObservationAktivitetRelation(List<ObservationAktivitetRelation> observationAktivitetRelationer) {
         boolean synfaltsdefekterRelation = false;
@@ -268,10 +269,9 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Util method for pretty-printing a Kod
-     * 
-     * @param kod
-     *            {@link Kod}
+     * Util method for pretty-printing a Kod.
+     *
+     * @param kod {@link Kod}
      * @return a nicely formatted {@link #String} containing the {@link Kod}
      */
     protected String getDisplayCode(Kod kod) {
@@ -287,12 +287,10 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Assert that the value of Object is not null
-     * 
-     * @param value
-     *            {@link Object}
-     * @param element
-     *            {@link String} identifying element the under scrutiny
+     * Assert that the value of Object is not null.
+     *
+     * @param value   {@link Object}
+     * @param element {@link String} identifying element the under scrutiny
      * @return {@link AssertationResult}
      */
     protected AssertionResult assertNotNull(Object value, String element) {
@@ -306,12 +304,10 @@ public class ExternalValidatorInstance {
     /**
      * Assert if value is null or empty, if the object is a collection and is empty the validationError
      * "should not be empty" is raised, if its not and the object is null, the validationError "should not be defined"
-     * is raised
-     * 
-     * @param value
-     *            {@link Object}
-     * @param element
-     *            {@link String} identifying the element
+     * is raised.
+     *
+     * @param value   {@link Object}
+     * @param element {@link String} identifying the element
      * @return {@link AssertationResul}
      */
     protected AssertionResult assertNull(Object value, String element) {
@@ -329,14 +325,12 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Assert if a String is not empty
-     * 
-     * @param value
-     *            {@link String}
-     * @param element
-     *            {@link String} identifying the examined string
+     * Assert if a String is not empty.
+     *
+     * @param value   {@link String}
+     * @param element {@link String} identifying the examined string
      * @return {@link AssertationResult}.SUCCESS if the String was not empty or null, {@link #AssertationResult}
-     *         .FAILURE if it was
+     * .FAILURE if it was
      */
     protected AssertionResult assertNotEmpty(String value, String element) {
         if (value == null || value.isEmpty()) {
@@ -347,14 +341,11 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Assert that a Kod is present in a specified Enum
-     * 
-     * @param kod
-     *            the {@link Kod} to check
-     * @param expectedEnum
-     *            the enum-class extending {@link CodeSystem} against which the check is performed
-     * @param element
-     *            {@link String} identifying the element
+     * Assert that a Kod is present in a specified Enum.
+     *
+     * @param kod          the {@link Kod} to check
+     * @param expectedEnum the enum-class extending {@link CodeSystem} against which the check is performed
+     * @param element      {@link String} identifying the element
      * @return {@link AssertationResult}
      */
     protected AssertionResult assertKodInEnum(Kod kod, Class<? extends CodeSystem> expectedEnum, String element) {
@@ -370,22 +361,17 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Assert that a certain Kod is present a specified number of times
-     * 
-     * @param kodSet
-     *            an {@link Iterable} of {@link Kod}'s
-     * @param kodToCount
-     *            the {@link Kod} to check against the kodSet
-     * @param minCount
-     *            required number of occurrences
-     * @param maxCount
-     *            maximum number of occurrences
-     * @param element
-     *            String identifying the context
+     * Assert that a certain Kod is present a specified number of times.
+     *
+     * @param kodSet     an {@link Iterable} of {@link Kod}'s
+     * @param kodToCount the {@link Kod} to check against the kodSet
+     * @param minCount   required number of occurrences
+     * @param maxCount   maximum number of occurrences
+     * @param element    String identifying the context
      * @return {@link AssertationResult}
      */
     protected AssertionResult assertKodCountBetween(Iterable<Kod> kodSet, Kod kodToCount, int minCount, int maxCount,
-            String element) {
+                                                    String element) {
         int count = 0;
         for (Kod kod : kodSet) {
             if (kod.equals(kodToCount)) {
@@ -408,12 +394,10 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Assert the supplied personId has the correct code root
-     * 
-     * @param id
-     *            {@link Id} the id to check
-     * @param element
-     *            string identifying the context
+     * Assert the supplied personId has the correct code root.
+     *
+     * @param id      {@link Id} the id to check
+     * @param element string identifying the context
      */
     protected void assertValidPersonId(Id id, String element) {
         if (assertNotNull(id, element).success()) {
@@ -425,12 +409,10 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Assert the supplied HsaId has the correct code root
-     * 
-     * @param id
-     *            {@link Id} the id to check
-     * @param element
-     *            string identifying the context
+     * Assert the supplied HsaId has the correct code root.
+     *
+     * @param id      {@link Id} the id to check
+     * @param element string identifying the context
      */
     protected void assertValidHsaId(Id id, String element) {
         if (assertNotNull(id, element).success()) {

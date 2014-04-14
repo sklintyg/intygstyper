@@ -6,7 +6,7 @@ import java.util.List;
 import se.inera.certificate.model.PatientRelation;
 
 public class Patient extends se.inera.certificate.model.Patient {
-    
+
     private List<PatientRelation> patientrelationer;
 
     @Override

@@ -24,17 +24,17 @@ import se.inera.certificate.model.Kod;
  * Represents all the codes used by this module to define HoSPersonal.
  */
 public enum BefattningKod implements CodeSystem {
-    
-    OVERLAKARE("201010","Överläkare"),
-    DISTRIKT_ELLER_ALLMANMEDICIN("201011","Distriktsläkare/Specialist allmänmedicin"),
-    SKOLLAKARE("201012","Skolläkare"),
-    FORETAGSLAKARE("201013","Företagsläkare"),
-    SPECIALISTLAKARE("202010","Specialistläkare"),
-    ST_LAKARE("203010","Legitimerad läkare under specialiseringstjänstgöring (STläkare)"),
-    LAKARE_ANNAN("203090","Legitimerad läkare under till exempel vikariat"),
-    LAKARE_EJ_LEG_AT("204010","Ej legitimerad läkare under allmäntjänstgöring (AT-läkare)"),
-    LAKARE_EJ_LEG_ANNAN("204090","Ej legitimerad läkare under till exempel vikariat eller provtjänstgöring");
-    
+
+    OVERLAKARE("201010", "Överläkare"),
+    DISTRIKT_ELLER_ALLMANMEDICIN("201011", "Distriktsläkare/Specialist allmänmedicin"),
+    SKOLLAKARE("201012", "Skolläkare"),
+    FORETAGSLAKARE("201013", "Företagsläkare"),
+    SPECIALISTLAKARE("202010", "Specialistläkare"),
+    ST_LAKARE("203010", "Legitimerad läkare under specialiseringstjänstgöring (STläkare)"),
+    LAKARE_ANNAN("203090", "Legitimerad läkare under till exempel vikariat"),
+    LAKARE_EJ_LEG_AT("204010", "Ej legitimerad läkare under allmäntjänstgöring (AT-läkare)"),
+    LAKARE_EJ_LEG_ANNAN("204090", "Ej legitimerad läkare under till exempel vikariat eller provtjänstgöring");
+
     private static String codeSystemName = "Befattning HSA";
 
     private static String codeSystem = "1.2.752.129.2.2.1.4";

@@ -17,7 +17,7 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
 /**
  * Validates a fk7263 certificate's specific rules that's not covered by internal validation.
- * 
+ *
  * @author marced
  */
 public class ExternalValidator extends AbstractValidator {
@@ -36,7 +36,7 @@ public class ExternalValidator extends AbstractValidator {
         validateSysselSattning();
         validateObservationDescriptions();
 
-        return validationErrors;
+        return getValidationErrors();
     }
 
     private void validateObservationDescriptions() {

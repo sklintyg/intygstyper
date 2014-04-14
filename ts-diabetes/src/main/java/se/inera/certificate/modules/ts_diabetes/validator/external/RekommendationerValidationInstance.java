@@ -19,7 +19,7 @@ public class RekommendationerValidationInstance extends ExternalValidatorInstanc
     private final List<Rekommendation> rekommendationer;
 
     public RekommendationerValidationInstance(ExternalValidatorInstance prototype, List<Rekommendation> rekommendationer) {
-        super(prototype.validationErrors, prototype.context);
+        super(prototype.getValidationErrors(), prototype.getContext());
         this.rekommendationer = rekommendationer;
     }
 
@@ -64,7 +64,7 @@ public class RekommendationerValidationInstance extends ExternalValidatorInstanc
             }
         }
 
-        if (context.isHogrePersontransportContext()) {
+        if (getContext().isHogrePersontransportContext()) {
             Rekommendation lamplighet = getRekommendationWithKod(REK_REK10);
             if (lamplighet == null) {
                 validationError("Rekommendation REK10 (Lämplighet att inneha behörighet ...) must be present when intygAvser any of [C1, C1E, C, CE, D1, D1E, D, DE or TAXI]");
@@ -75,9 +75,8 @@ public class RekommendationerValidationInstance extends ExternalValidatorInstanc
 
     /**
      * Returns an Rekommendation based on the specified Kod, or <code>null</code> if none where found.
-     * 
-     * @param rekommendationsskod
-     *            Find a rekommendation with this {@link Kod}
+     *
+     * @param rekommendationskod Find a rekommendation with this {@link Kod}
      * @return an {@link Rekommendation} if it is found, or null otherwise
      */
     private Rekommendation getRekommendationWithKod(Kod rekommendationskod) {
@@ -91,10 +90,9 @@ public class RekommendationerValidationInstance extends ExternalValidatorInstanc
     }
 
     /**
-     * Gets a single Object from a list of objects, returns null if the size of the list is anything other than 1
-     * 
-     * @param objects
-     *            List of Objects
+     * Gets a single Object from a list of objects, returns null if the size of the list is anything other than 1.
+     *
+     * @param objects List of Objects
      * @return Object
      */
     private Object getSingleItem(List<?> objects) {

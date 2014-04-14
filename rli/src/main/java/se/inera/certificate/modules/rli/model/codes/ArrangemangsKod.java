@@ -25,7 +25,9 @@ import se.inera.certificate.model.Kod;
  */
 public enum ArrangemangsKod implements CodeSystem {
 
-    /** Resa (420008001) */
+    /**
+     * Resa (420008001).
+     */
     RESA("420008001", "Resa");
 
     private static String codeSystemName = "SNOMED-CT";

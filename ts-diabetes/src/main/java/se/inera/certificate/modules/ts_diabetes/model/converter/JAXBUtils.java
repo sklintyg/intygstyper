@@ -9,25 +9,24 @@ import org.w3c.dom.Node;
 
 import se.inera.certificate.ts_diabetes.model.v1.Utlatande;
 
-public class JAXBUtils {
+public final class JAXBUtils {
 
     private static JAXBContext jaxbContext;
+
+    private JAXBUtils() {
+    }
 
     /**
      * Helper method that resolves XSD elements defined with <code>xsd:anyType</code>. One or more accepted Java types
      * should be supplied. If the element couldn't be resolved to any of those, <code>null</code> is returned. The
      * implementation resolves both elements realized as {@link Node} and POJOs.
-     * <p>
+     * <p/>
      * Note that the if the element is a {@link Node}, the first successful JAXB unmarshall will be returned. Therefore
      * the order of the accepted types might be important.
-     * 
-     * @param element
-     *            The element that should be resolved to one of the accepted types.
-     * @param acceptedTypes
-     *            The types that are accepted.
-     * 
+     *
+     * @param element       The element that should be resolved to one of the accepted types.
+     * @param acceptedTypes The types that are accepted.
      * @return An object (or sub type thereof) of one of the accepted types, or <code>null</code> otherwise.
-     * 
      * @throws JAXBException
      */
     public static Object resolveAnyType(Object element, Class<?>... acceptedTypes) throws JAXBException {

@@ -35,15 +35,15 @@ import se.inera.certificate.validate.SimpleIdValidatorBuilder;
 
 public class ExternalValidatorInstance {
 
-    protected final List<String> validationErrors;
+    private final List<String> validationErrors;
 
-    protected ValidationContext context;
+    private ValidationContext context;
 
     private AktiviteterValidationInstance aktivitetInstance;
     private ObservationerValidationInstance observationInstance;
     private RekommendationerValidationInstance rekommendationInstance;
 
-    private final static IdValidator ID_VALIDATOR;
+    private static final IdValidator ID_VALIDATOR;
 
     static {
         SimpleIdValidatorBuilder builder = new SimpleIdValidatorBuilder();
@@ -81,7 +81,7 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Validates that required attributes connected with the actual class Utlatande are present
+     * Validates that required attributes connected with the actual class Utlatande are present.
      */
     private void validateUtlatande(Utlatande utlatande) {
         assertNotNull(utlatande.getId(), "id");
@@ -90,15 +90,14 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Validate that a bilaga is present
-     * 
+     * Validate that a bilaga is present.
      */
     private void validateBilaga(Bilaga bilaga) {
         assertNotNull(bilaga, "Bilaga");
     }
 
     /**
-     * Make sure Utlatande contains 1 Patient
+     * Make sure Utlatande contains 1 Patient.
      */
     private void validatePatient(Patient patient) {
         if (assertNotNull(patient, "patient").failed()) {
@@ -118,6 +117,14 @@ public class ExternalValidatorInstance {
         assertNotEmpty(patient.getPostadress(), "patient.postadress");
         assertNotEmpty(patient.getPostnummer(), "patient.postnummer");
         assertNotEmpty(patient.getPostort(), "patient.postort");
+    }
+
+    public List<String> getValidationErrors() {
+        return validationErrors;
+    }
+
+    public ValidationContext getContext() {
+        return context;
     }
 
     protected void validationError(String error) {
@@ -149,14 +156,11 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Assert that a Kod is present in a specified Enum
-     * 
-     * @param kod
-     *            the {@link Kod} to check
-     * @param expectedEnum
-     *            the enum-class extending {@link CodeSystem} against which the check is performed
-     * @param element
-     *            {@link String} identifying the element
+     * Assert that a Kod is present in a specified Enum.
+     *
+     * @param kod          the {@link Kod} to check
+     * @param expectedEnum the enum-class extending {@link CodeSystem} against which the check is performed
+     * @param element      {@link String} identifying the element
      * @return {@link AssertationResult}
      */
     protected AssertionResult assertKodInEnum(Kod kod, Class<? extends CodeSystem> expectedEnum, String element) {
@@ -172,10 +176,9 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Util method for pretty-printing a Kod
-     * 
-     * @param kod
-     *            {@link Kod}
+     * Util method for pretty-printing a Kod.
+     *
+     * @param kod {@link Kod}
      * @return a nicely formatted {@link #String} containing the {@link Kod}
      */
     protected String getDisplayCode(Kod kod) {
@@ -187,22 +190,17 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Assert that a certain Kod is present a specified number of times
-     * 
-     * @param kodSet
-     *            an {@link Iterable} of {@link Kod}'s
-     * @param kodToCount
-     *            the {@link Kod} to check against the kodSet
-     * @param minCount
-     *            required number of occurrences
-     * @param maxCount
-     *            maximum number of occurrences
-     * @param element
-     *            String identifying the context
+     * Assert that a certain Kod is present a specified number of times.
+     *
+     * @param kodSet     an {@link Iterable} of {@link Kod}'s
+     * @param kodToCount the {@link Kod} to check against the kodSet
+     * @param minCount   required number of occurrences
+     * @param maxCount   maximum number of occurrences
+     * @param element    String identifying the context
      * @return {@link AssertationResult}
      */
     protected AssertionResult assertKodCountBetween(Iterable<Kod> kodSet, Kod kodToCount, int minCount, int maxCount,
-            String element) {
+                                                    String element) {
         int count = 0;
         for (Kod kod : kodSet) {
             if (kod.equals(kodToCount)) {

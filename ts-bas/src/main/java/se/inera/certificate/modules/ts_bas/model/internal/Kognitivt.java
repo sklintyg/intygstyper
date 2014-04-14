@@ -11,5 +11,5 @@ public class Kognitivt {
     public void setSviktandeKognitivFunktion(Boolean sviktandeKognitivFunktion) {
         this.sviktandeKognitivFunktion = sviktandeKognitivFunktion;
     }
-    
+
 }

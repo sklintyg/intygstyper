@@ -13,7 +13,7 @@ public class IntygAvser {
 
     @JsonSerialize(using = IntygAvserEnumSetSerializer.class)
     @JsonDeserialize(using = IntygAvserEnumSetDeserializer.class)
-    EnumSet<IntygAvserKategori> korkortstyp;
+    private EnumSet<IntygAvserKategori> korkortstyp;
 
     public Set<IntygAvserKategori> getKorkortstyp() {
         if (korkortstyp == null) {

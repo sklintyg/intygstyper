@@ -136,13 +136,10 @@ public class InternalToExternalConverter {
     }
 
     /**
-     * 
-     * Create necessary Aktiviteter
-     * 
-     * @param aktiviteter
-     *            ArrayList of Aktiviteter
-     * @param undersokning
-     *            se.inera.certificate.modules.rli.model.internal.Undersokning
+     * Create necessary Aktiviteter.
+     *
+     * @param aktiviteter  ArrayList of Aktiviteter
+     * @param undersokning se.inera.certificate.modules.rli.model.internal.Undersokning
      * @throws ConverterException
      */
     private void buildAktiviteter(List<Aktivitet> aktiviteter, Undersokning undersokning) throws ConverterException {

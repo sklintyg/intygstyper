@@ -21,10 +21,9 @@ import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
 
 /**
- * Class for validating drafts of the internal model
- * 
+ * Class for validating drafts of the internal model.
+ *
  * @author erik
- * 
  */
 public class InternalValidatorInstance {
 
@@ -34,7 +33,7 @@ public class InternalValidatorInstance {
 
     private List<ValidationMessage> validationMessages;
 
-    protected ValidationContext context;
+    private ValidationContext context;
 
     public InternalValidatorInstance() {
         validationMessages = new ArrayList<>();
@@ -42,10 +41,9 @@ public class InternalValidatorInstance {
 
     /**
      * Validates an internal draft of an {@link Utlatande} (this means the object being validated is not necessarily
-     * complete)
-     * 
-     * @param utlatande
-     *            an internal {@link Utlatande}
+     * complete).
+     *
+     * @param utlatande an internal {@link Utlatande}
      * @return a {@link ValidateDraftResponseHolder} with a status and a list of validationErrors
      */
     public ValidateDraftResponse validate(Utlatande utlatande) {
@@ -297,12 +295,10 @@ public class InternalValidatorInstance {
     }
 
     /**
-     * Make sure a string representing a date conforms to the desired format
-     * 
-     * @param dateString
-     *            the date
-     * @param dateFormat
-     *            the format
+     * Make sure a string representing a date conforms to the desired format.
+     *
+     * @param dateString the date
+     * @param dateFormat the format
      * @return true if it does, false otherwise
      */
     private boolean isValidDate(String dateString, String dateFormat) {
@@ -324,14 +320,11 @@ public class InternalValidatorInstance {
     }
 
     /**
-     * Check for null or empty String, if so add a validation error for field with errorCode
-     * 
-     * @param beskrivning
-     *            the String to check
-     * @param field
-     *            the target field in the model
-     * @param errorCode
-     *            the errorCode to log in validation errors
+     * Check for null or empty String, if so add a validation error for field with errorCode.
+     *
+     * @param beskrivning the String to check
+     * @param field       the target field in the model
+     * @param errorCode   the errorCode to log in validation errors
      */
     private AssertionResult assertDescriptionNotEmpty(String beskrivning, String field, String errorCode) {
         if (beskrivning == null || beskrivning.isEmpty()) {
@@ -343,10 +336,10 @@ public class InternalValidatorInstance {
     }
 
     /**
-     * Check if there are validation errors
-     * 
+     * Check if there are validation errors.
+     *
      * @return {@link ValidationStatus.COMPLETE} if there are no errors, and {@link ValidationStatus.INCOMPLETE}
-     *         otherwise
+     * otherwise
      */
     private se.inera.certificate.modules.support.api.dto.ValidationStatus getValidationStatus() {
         return (validationMessages.isEmpty()) ? se.inera.certificate.modules.support.api.dto.ValidationStatus.VALID
@@ -354,12 +347,10 @@ public class InternalValidatorInstance {
     }
 
     /**
-     * Create a ValidationMessage and add it to the {@link ValidateDraftResponseHolder}
-     * 
-     * @param field
-     *            a String with the name of the field
-     * @param msg
-     *            a String with an error code for the front end implementation
+     * Create a ValidationMessage and add it to the {@link ValidateDraftResponseHolder}.
+     *
+     * @param field a String with the name of the field
+     * @param msg   a String with an error code for the front end implementation
      */
     private void addValidationError(String field, String msg) {
         validationMessages.add(new ValidationMessage(field, msg));

@@ -22,14 +22,12 @@ public class AktiviteterValidationInstance extends ExternalValidatorInstance {
 
     /**
      * Constructs a new validator instance, validating aktiviteter from the root validator.
-     * 
-     * @param prototype
-     *            The root validator, sharing validation errors and context.
-     * @param aktiviteter
-     *            The list of aktiviteter to validate.
+     *
+     * @param prototype   The root validator, sharing validation errors and context.
+     * @param aktiviteter The list of aktiviteter to validate.
      */
     public AktiviteterValidationInstance(ExternalValidatorInstance prototype, List<Aktivitet> aktiviteter) {
-        super(prototype.validationErrors, prototype.context);
+        super(prototype.getValidationErrors(), prototype.getContext());
         this.aktiviteter = aktiviteter;
     }
 
@@ -112,9 +110,8 @@ public class AktiviteterValidationInstance extends ExternalValidatorInstance {
 
     /**
      * Returns the aktivitet with the specified kod, or <code>null</code> if none where found.
-     * 
-     * @param aktivitetskod
-     *            The kod to find.
+     *
+     * @param aktivitetskod The kod to find.
      * @return A matching aktivitet or <code>null</code>.
      */
     public Aktivitet getAktivitetWithKod(Kod aktivitetskod) {
@@ -129,9 +126,8 @@ public class AktiviteterValidationInstance extends ExternalValidatorInstance {
 
     /**
      * Returns the aktivitet with the specified id, or <code>null</code> if none where found.
-     * 
-     * @param id
-     *            The id to find.
+     *
+     * @param id The id to find.
      * @return A matching aktivitet or <code>null</code>.
      */
     public Aktivitet getAktivitetWithId(Id id) {

@@ -62,7 +62,7 @@ public final class ExternalToTransportFk7263LegacyConverter {
     public static RegisterMedicalCertificate getJaxbObject(Fk7263Utlatande utlatande) {
         RegisterMedicalCertificate register = new RegisterMedicalCertificate();
         register.setLakarutlatande(new Lakarutlatande());
-        if (utlatande.getId()!=null) {
+        if (utlatande.getId() != null) {
             register.getLakarutlatande().setLakarutlatandeId(toII(utlatande.getId()).getRoot());
         }
         register.getLakarutlatande().setTypAvUtlatande(FK7263);
@@ -112,7 +112,7 @@ public final class ExternalToTransportFk7263LegacyConverter {
     }
 
     private static FunktionstillstandType toFunktionstillstand(Fk7263Observation observation,
-            TypAvFunktionstillstand typAvFunktionstillstand) {
+                                                               TypAvFunktionstillstand typAvFunktionstillstand) {
         FunktionstillstandType funktionstillstandType = new FunktionstillstandType();
         funktionstillstandType.setTypAvFunktionstillstand(typAvFunktionstillstand);
         funktionstillstandType.setBeskrivning(observation.getBeskrivning());
@@ -163,21 +163,21 @@ public final class ExternalToTransportFk7263LegacyConverter {
             if (arbetsformaga.getVarde() != null && arbetsformaga.getVarde() != null
                     && !arbetsformaga.getVarde().isEmpty()) {
                 switch (arbetsformaga.getVarde().get(0).getQuantity().intValue()) {
-                case 75: // 75% Arbetsformaga
-                    nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_1_4);
-                    break;
-                case 50: // 50% Arbetsformaga
-                    nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_1_2);
-                    break;
-                case 25: // 25% Arbetsformaga
-                    nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_3_4);
-                    break;
-                case 0: // 0% Arbetsformaga
-                    nedsattningType.setNedsattningsgrad(Nedsattningsgrad.HELT_NEDSATT);
-                    break;
-                default:
-                    throw new IllegalStateException("Wrong nedsättningsgrad "
-                            + arbetsformaga.getVarde().get(0).getQuantity());
+                    case 75: // 75% Arbetsformaga
+                        nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_1_4);
+                        break;
+                    case 50: // 50% Arbetsformaga
+                        nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_1_2);
+                        break;
+                    case 25: // 25% Arbetsformaga
+                        nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_3_4);
+                        break;
+                    case 0: // 0% Arbetsformaga
+                        nedsattningType.setNedsattningsgrad(Nedsattningsgrad.HELT_NEDSATT);
+                        break;
+                    default:
+                        throw new IllegalStateException("Wrong nedsättningsgrad "
+                                + arbetsformaga.getVarde().get(0).getQuantity());
                 }
             }
 

@@ -6,13 +6,15 @@ import org.joda.time.Partial;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.PartialInterval;
 
-public class DateTimeConverter {
+public final class DateTimeConverter {
+
+    private DateTimeConverter() {
+    }
 
     /**
-     * Convert a PartialInterval to LocalDateInterval
-     * 
-     * @param partialInterval
-     *            the {@link PartialInterval} to convert
+     * Convert a PartialInterval to LocalDateInterval.
+     *
+     * @param partialInterval the {@link PartialInterval} to convert
      * @return {@link LocalDateInterval}
      */
     public static LocalDateInterval toLocalDateInterval(PartialInterval partialInterval) {
@@ -20,10 +22,9 @@ public class DateTimeConverter {
     }
 
     /**
-     * Convert a LocalDateInterval to PartialInterval
-     * 
-     * @param localDateInterval
-     *            the {@link LocalDateInterval} to convert
+     * Convert a LocalDateInterval to PartialInterval.
+     *
+     * @param localDateInterval the {@link LocalDateInterval} to convert
      * @return {@link PartialInterval}
      */
     public static PartialInterval toPartialInterval(LocalDateInterval localDateInterval) {

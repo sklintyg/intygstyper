@@ -21,7 +21,7 @@ public class InternalDraftValidator {
     private static final Logger LOG = LoggerFactory.getLogger(InternalDraftValidator.class);
 
     private Fk7263Intyg utlatande;
-    
+
     private List<ValidationMessage> validationMessages;
 
     public InternalDraftValidator() {
@@ -122,10 +122,10 @@ public class InternalDraftValidator {
     }
 
     /**
-     * Check if there are validation errors
-     * 
+     * Check if there are validation errors.
+     *
      * @return {@link ValidationStatus.COMPLETE} if there are no errors, and {@link ValidationStatus.INCOMPLETE}
-     *         otherwise
+     * otherwise
      */
     private ValidationStatus getValidationStatus() {
         return (validationMessages.isEmpty()) ? se.inera.certificate.modules.support.api.dto.ValidationStatus.VALID
@@ -133,12 +133,10 @@ public class InternalDraftValidator {
     }
 
     /**
-     * Create a ValidationMessage and add it to the {@link ValidateDraftResponseHolder}
-     * 
-     * @param field
-     *            a String with the name of the field
-     * @param msg
-     *            a String with an error code for the front end implementation
+     * Create a ValidationMessage and add it to the {@link ValidateDraftResponseHolder}.
+     *
+     * @param field a String with the name of the field
+     * @param msg   a String with an error code for the front end implementation
      */
     private void addValidationError(String field, String msg) {
         validationMessages.add(new ValidationMessage(field, msg));
@@ -146,7 +144,6 @@ public class InternalDraftValidator {
     }
 
     /**
-     * 
      * @param values
      * @return
      */
@@ -164,7 +161,6 @@ public class InternalDraftValidator {
     }
 
     /**
-     * 
      * @param fieldId
      * @param intervals
      * @return
@@ -203,7 +199,6 @@ public class InternalDraftValidator {
     }
 
     /**
-     * 
      * @param intervals
      * @return
      */
@@ -217,7 +212,6 @@ public class InternalDraftValidator {
     }
 
     /**
-     * 
      * @param start
      * @param end
      * @return

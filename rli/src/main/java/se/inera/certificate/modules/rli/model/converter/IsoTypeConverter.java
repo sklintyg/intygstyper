@@ -33,6 +33,9 @@ import se.inera.certificate.rli.model.v1.UtlatandeTyp;
  */
 public final class IsoTypeConverter {
 
+    private IsoTypeConverter() {
+    }
+
     public static Id toId(II ii) {
         if (ii == null) {
             return null;

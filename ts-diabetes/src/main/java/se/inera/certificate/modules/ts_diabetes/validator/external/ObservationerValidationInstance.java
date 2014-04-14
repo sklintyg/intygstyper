@@ -22,9 +22,9 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
     private static final Kod OBS_OBS22 = CodeConverter.toKod(ObservationsKod.ALLVARLIG_HYPOGLYKEMI);
     private static final Kod OBS_OBS23 = CodeConverter.toKod(ObservationsKod.ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN);
     private static final Kod OBS_OBS24 = CodeConverter.toKod(ObservationsKod.ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND);
-    
+
     private static final Kod OBS_OBS25 = CodeConverter.toKod(ObservationsKod.SYNFALTSPROVNING_UTAN_ANMARKNING);
-    
+
     private static final Kod OBS_420050001 = CodeConverter.toKod(ObservationsKod.EJ_KORRIGERAD_SYNSKARPA);
     private static final Kod OBS_397535007 = CodeConverter.toKod(ObservationsKod.KORRIGERAD_SYNSKARPA);
 
@@ -35,19 +35,18 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
     private final List<Observation> observationer;
 
     public ObservationerValidationInstance(ExternalValidatorInstance prototype, List<Observation> observationer) {
-        super(prototype.validationErrors, prototype.context);
+        super(prototype.getValidationErrors(), prototype.getContext());
         this.observationer = observationer;
     }
 
     /**
      * Validate all the observations. Make sure required observations are present, and that the correct number is
      * present.
-     * 
      */
     public void validateObservationer() {
 
         Iterable<Kod> kodList = new ObservationerIterable(observationer);
-        
+
         //Diabetestyper
         assertKodCountBetween(kodList, OBS_E10, 0, 1, "observationer");
         assertKodCountBetween(kodList, OBS_E11, 0, 1, "observationer");
@@ -57,7 +56,7 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
         assertKodCountBetween(kodList, OBS_170746006, 0, 1, "observationer");
         assertKodCountBetween(kodList, OBS_170746002, 0, 1, "observationer");
         assertKodCountBetween(kodList, OBS_OBS10, 0, 1, "observationer");
-        
+
         //Hypoglykemi
         assertKodCountBetween(kodList, OBS_OBS19, 1, 1, "observationer");
         assertKodCountBetween(kodList, OBS_OBS20, 1, 1, "observationer");
@@ -106,17 +105,17 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
 
             }
         }
-        
+
         // Check syn-related stuff when separatOgonlakarintyg is NOT set
-        if (!context.isSeparatOgonlakarintyg()) {
+        if (!getContext().isSeparatOgonlakarintyg()) {
             Observation utanAnmarkning = getObservationWithKod(OBS_OBS25);
             Observation utanKorrektion = getObservationWithKod(OBS_397535007);
             Observation diplopi = getObservationWithKod(OBS_H53_2);
-            
+
             if (utanAnmarkning == null) {
                 validationError("Observation OBS25 (Synfältsprövning utan anmärkning) must be present when no Bilaga is set");
             }
-            
+
             if (utanKorrektion == null) {
                 validationError("Observation 397535007 (Synskärpa utan korrektion) must be present when no Bilaga is set");
             }
@@ -126,7 +125,7 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
         }
 
         // If the diabetes flag is set, assert that an observation of the type of diabetes is supplied
-        if (context.isDiabetesContext()) {
+        if (getContext().isDiabetesContext()) {
             Observation diabetesTyp1 = getObservationWithKod(OBS_E10);
             Observation diabetesTyp2 = getObservationWithKod(OBS_E11);
             if (diabetesTyp1 == null && diabetesTyp2 == null) {
@@ -149,21 +148,20 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
         }
 
         // If the persontransport flag is set, assert required observations are supplied
-        if (context.isHogrePersontransportContext()) {
+        if (getContext().isHogrePersontransportContext()) {
             Observation hypoglykemiVakenTid = getObservationWithKod(OBS_OBS24);
-            
+
             if (hypoglykemiVakenTid == null) {
                 validationError("Observation OBS24 must be present when intygAvser contains any of [C1, C1E, C, CE, D1, D1E, D, DE or TAXI]");
             }
-            
+
         }
     }
 
     /**
      * Returns an Observation based on the specified Kod, or <code>null</code> if none where found.
-     * 
-     * @param observationskod
-     *            Find an observation with this {@link Kod}
+     *
+     * @param observationskod Find an observation with this {@link Kod}
      * @return an {@link Observation} if it is found, or null otherwise
      */
     public Observation getObservationWithKod(Kod observationskod) {
@@ -178,9 +176,8 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
 
     /**
      * Returns an Observation based on the specified Id, or <code>null</code> if none where found.
-     * 
-     * @param observationskod
-     *            Find an observation with this {@link Id}
+     *
+     * @param id Find an observation with this {@link Id}
      * @return an {@link Observation} if it is found, or null otherwise
      */
     public Observation getObservationWithId(Id id) {

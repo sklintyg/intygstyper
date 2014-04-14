@@ -1,9 +1,9 @@
 package se.inera.certificate.modules.ts_bas.model.internal;
 
 public class Medicinering {
-    
+
     private Boolean stadigvarandeMedicinering;
-    
+
     private String beskrivning;
 
     public Boolean getStadigvarandeMedicinering() {
@@ -21,7 +21,6 @@ public class Medicinering {
     public void setBeskrivning(String beskrivning) {
         this.beskrivning = beskrivning;
     }
-    
-    
+
 
 }

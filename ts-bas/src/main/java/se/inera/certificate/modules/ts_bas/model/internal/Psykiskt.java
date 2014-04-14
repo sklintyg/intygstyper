@@ -1,7 +1,7 @@
 package se.inera.certificate.modules.ts_bas.model.internal;
 
 public class Psykiskt {
-    
+
     private Boolean psykiskSjukdom;
 
     public Boolean getPsykiskSjukdom() {
@@ -11,6 +11,6 @@ public class Psykiskt {
     public void setPsykiskSjukdom(Boolean psykiskSjukdom) {
         this.psykiskSjukdom = psykiskSjukdom;
     }
-    
+
 
 }

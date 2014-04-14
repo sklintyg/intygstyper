@@ -63,7 +63,7 @@ public class ExternalToTransportConverter {
         Utlatande utlatande = new Utlatande();
         utlatande.setPatient(convertPatient(source.getPatient()));
         utlatande.setSigneringsdatum(source.getSigneringsdatum());
-        
+
         if (!source.getKommentarer().isEmpty()) {
             utlatande.getKommentars().addAll(source.getKommentarer());
         }
@@ -93,10 +93,9 @@ public class ExternalToTransportConverter {
     }
 
     /**
-     * Convert a Collection of ObservationAktivitetRelation to ObservationAktivitetRelationType
-     * 
-     * @param source
-     *            List of {@link ObservationAktivitetRelation}
+     * Convert a Collection of ObservationAktivitetRelation to ObservationAktivitetRelationType.
+     *
+     * @param source List of {@link ObservationAktivitetRelation}
      * @return List of {@link ObservationAktivitetRelationType}
      * @throws ConverterException
      */
@@ -115,10 +114,9 @@ public class ExternalToTransportConverter {
     }
 
     /**
-     * Converts a single ObservationAktivitetRelation to ObservationAktivitetRelationType
-     * 
-     * @param source
-     *            {@link ObservationAktivitetRelation}
+     * Converts a single ObservationAktivitetRelation to ObservationAktivitetRelationType.
+     *
+     * @param source {@link ObservationAktivitetRelation}
      * @return {@link ObservationAktivitetRelationType}
      */
     private ObservationAktivitetRelationType convertObservationRelation(ObservationAktivitetRelation source) {
@@ -130,10 +128,9 @@ public class ExternalToTransportConverter {
     }
 
     /**
-     * Convert collection of Rekommendation to collection of RekommendationType
-     * 
-     * @param source
-     *            {@link Rekommendation}
+     * Convert collection of Rekommendation to collection of RekommendationType.
+     *
+     * @param source {@link Rekommendation}
      * @return {@link RekommendationType}
      * @throws ConverterException
      */
@@ -150,10 +147,9 @@ public class ExternalToTransportConverter {
     }
 
     /**
-     * Convert a single Rekommendation to RekommendationType
-     * 
-     * @param source
-     *            {@link Rekommendation}
+     * Convert a single Rekommendation to RekommendationType.
+     *
+     * @param source {@link Rekommendation}
      * @return {@link RekommendationType}
      */
     private RekommendationType convertRekommendation(Rekommendation source) {
@@ -176,10 +172,9 @@ public class ExternalToTransportConverter {
     }
 
     /**
-     * Convert collection of Kod to collection of CD
-     * 
-     * @param source
-     *            List of {@link Kod}
+     * Convert collection of Kod to collection of CD.
+     *
+     * @param source List of {@link Kod}
      * @return List of {@link CD}
      * @throws ConverterException
      */
@@ -195,10 +190,9 @@ public class ExternalToTransportConverter {
     }
 
     /**
-     * Convert a Collection of Observation to Collection of ObservationType
-     * 
-     * @param source
-     *            List of {@link Observation}
+     * Convert a Collection of Observation to Collection of ObservationType.
+     *
+     * @param source List of {@link Observation}
      * @return List of {@link ObservationType}
      * @throws ConverterException
      */
@@ -216,10 +210,9 @@ public class ExternalToTransportConverter {
     }
 
     /**
-     * Convert a single Observation to ObservationType
-     * 
-     * @param source
-     *            {@link Observation}
+     * Convert a single Observation to ObservationType.
+     *
+     * @param source {@link Observation}
      * @return {@link ObservationType}
      */
     private ObservationType convertObservation(Observation source) {
@@ -252,10 +245,9 @@ public class ExternalToTransportConverter {
     }
 
     /**
-     * Convert Collection of Aktivitet to Collection of AktivitetType
-     * 
-     * @param source
-     *            List of {@link Aktivitet}
+     * Convert Collection of Aktivitet to Collection of AktivitetType.
+     *
+     * @param source List of {@link Aktivitet}
      * @return List of {@link AktivitetType}
      * @throws ConverterException
      */
@@ -271,10 +263,9 @@ public class ExternalToTransportConverter {
     }
 
     /**
-     * Convert a single Aktivitet to AktivitetType
-     * 
-     * @param source
-     *            {@link Aktivitet}
+     * Convert a single Aktivitet to AktivitetType.
+     *
+     * @param source {@link Aktivitet}
      * @return {@link AktivitetType}
      */
     private AktivitetType convertAktivitet(Aktivitet source) {
@@ -310,10 +301,9 @@ public class ExternalToTransportConverter {
     }
 
     /**
-     * Convert at Patient to PatientType
-     * 
-     * @param source
-     *            {@link Patient}
+     * Convert at Patient to PatientType.
+     *
+     * @param source {@link Patient}
      * @return {@link PatientType}
      */
     private PatientType convertPatient(Patient source) {
@@ -329,10 +319,9 @@ public class ExternalToTransportConverter {
     }
 
     /**
-     * Convert a HosPersonal to HosPersonalType
-     * 
-     * @param source
-     *            {@link HosPersonal}
+     * Convert a HosPersonal to HosPersonalType.
+     *
+     * @param source {@link HosPersonal}
      * @return {@link HosPersonalType}
      */
     private HosPersonalType convertHosPersonal(HosPersonal source) {
@@ -347,10 +336,9 @@ public class ExternalToTransportConverter {
     }
 
     /**
-     * Convert a Vardenhet to EnhetType
-     * 
-     * @param source
-     *            {@link Vardenhet}
+     * Convert a Vardenhet to EnhetType.
+     *
+     * @param source {@link Vardenhet}
      * @return {@link EnhetType}
      */
     private EnhetType convertVardenhet(Vardenhet source) {
@@ -367,10 +355,9 @@ public class ExternalToTransportConverter {
     }
 
     /**
-     * Convert a Vardgivare to VardgivareType
-     * 
-     * @param source
-     *            {@link Vardgivare}
+     * Convert a Vardgivare to VardgivareType.
+     *
+     * @param source {@link Vardgivare}
      * @return {@link VardgivareType}
      */
     private VardgivareType convertVardgivare(Vardgivare source) {
@@ -382,10 +369,9 @@ public class ExternalToTransportConverter {
     }
 
     /**
-     * Convert a Collection of Kod to CD
-     * 
-     * @param source
-     *            List of {@link Kod}
+     * Convert a Collection of Kod to CD.
+     *
+     * @param source List of {@link Kod}
      * @return List of {@link CD}
      */
     private Collection<? extends CD> convertKodToCD(List<Kod> source) {
@@ -397,10 +383,9 @@ public class ExternalToTransportConverter {
     }
 
     /**
-     * Convert a Vardkontakt to VardkontaktType
-     * 
-     * @param source
-     *            {@link Vardkontakt}
+     * Convert a Vardkontakt to VardkontaktType.
+     *
+     * @param source {@link Vardkontakt}
      * @return {@link VardkontaktType}
      */
     private VardkontaktType convertVardkontakt(Vardkontakt source) {

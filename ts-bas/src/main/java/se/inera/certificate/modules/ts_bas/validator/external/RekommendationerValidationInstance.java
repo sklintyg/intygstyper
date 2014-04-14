@@ -17,7 +17,7 @@ public class RekommendationerValidationInstance extends ExternalValidatorInstanc
     private final List<Rekommendation> rekommendationer;
 
     public RekommendationerValidationInstance(ExternalValidatorInstance prototype, List<Rekommendation> rekommendationer) {
-        super(prototype.validationErrors, prototype.context);
+        super(prototype.getValidationErrors(), prototype.getContext());
         this.rekommendationer = rekommendationer;
     }
 

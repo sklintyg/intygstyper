@@ -37,7 +37,7 @@ public class Fk7263Intyg {
     private LocalDate telefonkontaktMedPatienten;
     private LocalDate journaluppgifter;
     private LocalDate annanReferens;
-    
+
     private String annanReferensBeskrivning;
 
     private String aktivitetsbegransning;
@@ -70,7 +70,7 @@ public class Fk7263Intyg {
     private boolean arbetsformataPrognosGarInteAttBedoma;
 
     private String prognosis;
-    
+
     private String arbetsformagaPrognosGarInteAttBedomBeskrivning;
 
     private boolean ressattTillArbeteAktuellt;
@@ -85,7 +85,7 @@ public class Fk7263Intyg {
     private LocalDateTime signeringsdatum;
 
     private Vardperson vardperson;
-    
+
     public boolean isAvstangningSmittskydd() {
         return avstangningSmittskydd;
     }
@@ -438,28 +438,28 @@ public class Fk7263Intyg {
         this.giltighet = giltighet;
     }
 
-	public String getArbetsformagaPrognosGarInteAttBedomBeskrivning() {
-		return arbetsformagaPrognosGarInteAttBedomBeskrivning;
-	}
+    public String getArbetsformagaPrognosGarInteAttBedomBeskrivning() {
+        return arbetsformagaPrognosGarInteAttBedomBeskrivning;
+    }
 
-	public void setArbetsformagaPrognosGarInteAttBedomBeskrivning(
-			String arbetsformagaPrognosGarInteAttBedomBeskrivning) {
-		this.arbetsformagaPrognosGarInteAttBedomBeskrivning = arbetsformagaPrognosGarInteAttBedomBeskrivning;
-	}
+    public void setArbetsformagaPrognosGarInteAttBedomBeskrivning(
+            String arbetsformagaPrognosGarInteAttBedomBeskrivning) {
+        this.arbetsformagaPrognosGarInteAttBedomBeskrivning = arbetsformagaPrognosGarInteAttBedomBeskrivning;
+    }
 
-	public String getPrognosis() {
-		return prognosis;
-	}
+    public String getPrognosis() {
+        return prognosis;
+    }
 
-	public void setPrognosis(String prognosis) {
-		this.prognosis = prognosis;
-	}
+    public void setPrognosis(String prognosis) {
+        this.prognosis = prognosis;
+    }
 
-	public String getAnnanReferensBeskrivning() {
-		return annanReferensBeskrivning;
-	}
+    public String getAnnanReferensBeskrivning() {
+        return annanReferensBeskrivning;
+    }
 
-	public void setAnnanReferensBeskrivning(String annanReferensBeskrivning) {
-		this.annanReferensBeskrivning = annanReferensBeskrivning;
-	}
+    public void setAnnanReferensBeskrivning(String annanReferensBeskrivning) {
+        this.annanReferensBeskrivning = annanReferensBeskrivning;
+    }
 }

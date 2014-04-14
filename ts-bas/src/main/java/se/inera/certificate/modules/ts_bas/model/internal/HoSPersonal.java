@@ -43,7 +43,7 @@ public class HoSPersonal {
         }
         return specialiteter;
     }
-    
+
     public List<String> getBefattningar() {
         if (befattningar == null) {
             befattningar = new ArrayList<String>();

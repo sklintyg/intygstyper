@@ -25,58 +25,58 @@ import se.inera.certificate.model.Kod;
  */
 public enum RekommendationVardeKod implements CodeSystem {
 
-    /** Medeltung lastbil (C1) */
+    /** Medeltung lastbil (C1). */
     C1("VAR1", "Medeltung lastbil"),
 
-    /** Medeltung lastbil med tungt släpfordon (C1E) */
+    /** Medeltung lastbil med tungt släpfordon (C1E). */
     C1E("VAR2", "Medeltung lastbil med tungt släpfordon"),
 
-    /** Tung lastbil (C) */
+    /** Tung lastbil (C). */
     C("VAR3", "Tung lastbil"),
 
-    /** Tung lastbil med tungt släpfordon (CE) */
+    /** Tung lastbil med tungt släpfordon (CE). */
     CE("VAR4", "Tung lastbil med tungt släpfordon"),
 
-    /** Mellanstor buss (D1) */
+    /** Mellanstor buss (D1). */
     D1("VAR5", "Mellanstor buss"),
 
-    /** Mellanstor buss med tungt släpfordon (D1E) */
+    /** Mellanstor buss med tungt släpfordon (D1E). */
     D1E("VAR6", "Mellanstor buss med tungt släpfordon"),
 
-    /** Buss (D) */
+    /** Buss (D). */
     D("VAR7", "Buss"),
 
-    /** Buss med tungt släpfordon (DE) */
+    /** Buss med tungt släpfordon (DE). */
     DE("VAR8", "Buss med tungt släpfordon"),
 
-    /** Taxi (TAXI) */
+    /** Taxi (TAXI). */
     TAXI("VAR9", "Taxi"),
 
-    /** Intyget avser inget av ovanstående (ANNAT) */
+    /** Intyget avser inget av ovanstående (ANNAT). */
     ANNAT("VAR10", "Intyget avser inget av ovanstående"),
 
-    /** Kan inte ta ställning */
+    /** Kan inte ta ställning. */
     INTE_TA_STALLNING("VAR11", "Kan inte ta ställning"),
 
-    /** med tungt släpfordon (AM) */
+    /** med tungt släpfordon (AM). */
     AM("VAR12", "Moped klass I"),
 
-    /** Lätt motorcykel (A1) */
+    /** Lätt motorcykel (A1). */
     A1("VAR13", "Lätt motorcykel"),
 
-    /** Mellanstor motorcykel (A2) */
+    /** Mellanstor motorcykel (A2). */
     A2("VAR14", "Mellanstor motorcykel"),
 
-    /** Motorcykel (A) */
+    /** Motorcykel (A). */
     A("VAR15", "Motorcykel"),
 
-    /** Personbil och lätt lastbil (B) */
+    /** Personbil och lätt lastbil (B). */
     B("VAR16", "Personbil och lätt lastbil"),
 
-    /** Personbil och lätt lastbil med tungt släpfordon (BE) */
+    /** Personbil och lätt lastbil med tungt släpfordon (BE). */
     BE("VAR17", "Personbil och lätt lastbil med tungt släpfordon"),
 
-    /** Traktor (VAR18) */
+    /** Traktor (VAR18). */
     TRAKTOR("VAR18", "Traktor");
 
     private static String codeSystemName = "kv_rekommendation_intyg";

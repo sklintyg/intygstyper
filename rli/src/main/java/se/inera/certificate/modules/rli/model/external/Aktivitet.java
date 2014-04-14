@@ -27,7 +27,7 @@ import java.util.List;
  * <ul>
  * <li> {@link #plats}
  * </ul>
- * 
+ *
  * @author Gustav Norbäcker, R2M
  */
 public class Aktivitet extends se.inera.certificate.model.Aktivitet {

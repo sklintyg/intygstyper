@@ -22,7 +22,7 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
  * Validates presence and validity of formal external model properties such as OID's. Preferably this validation should
  * have been implemented using Schema Validation, but since this is not an option we perform this pre-validation in
  * code. more specific business rules should subsequently validated in {@see UtlatandeValidator}
- * 
+ *
  * @author marced
  */
 public class ProgrammaticLegacyTransportSchemaValidator extends AbstractValidator {
@@ -50,7 +50,7 @@ public class ProgrammaticLegacyTransportSchemaValidator extends AbstractValidato
         validateHospersonal();
         validateReferens();
 
-        return validationErrors;
+        return getValidationErrors();
     }
 
     private void validateReferens() {

@@ -6,41 +6,41 @@ import se.inera.certificate.model.Kod;
 
 public enum IntygAvserKod implements CodeSystem {
 
-    /** Medeltung lastbil (C1) */
+    /** Medeltung lastbil (C1). */
     C1("IAV1", "Medeltung lastbil"),
 
-    /** Medeltung lastbil med tungt släpfordon (C1E) */
+    /** Medeltung lastbil med tungt släpfordon (C1E). */
     C1E("IAV2", "Medeltung lastbil med tungt släpfordon"),
 
-    /** Tung lastbil (C) */
+    /** Tung lastbil (C). */
     C("IAV3", "Tung lastbil"),
 
-    /** Tung lastbil med tungt släpfordon (CE) */
+    /** Tung lastbil med tungt släpfordon (CE). */
     CE("IAV4", "Tung lastbil med tungt släpfordon"),
 
-    /** Mellanstor buss (D1) */
+    /** Mellanstor buss (D1). */
     D1("IAV5", "Mellanstor buss"),
 
-    /** Mellanstor buss med tungt släpfordon (D1E) */
+    /** Mellanstor buss med tungt släpfordon (D1E). */
     D1E("IAV6", "Mellanstor buss med tungt släpfordon"),
 
-    /** Buss (D) */
+    /** Buss (D). */
     D("IAV7", "Buss"),
 
-    /** Buss med tungt släpfordon (DE) */
+    /** Buss med tungt släpfordon (DE). */
     DE("IAV8", "Buss med tungt släpfordon"),
 
-    /** Taxi (TAXI) */
+    /** Taxi (TAXI). */
     TAXI("IAV9", "Taxi"),
 
-    /** Intyget avser inget av ovanstående (ANNAT) */
+    /** Intyget avser inget av ovanstående (ANNAT). */
     ANNAT("IAV10", "Intyget avser inget av ovanstående");
 
-    /** Körkortsbehörigheter av högre typ */
+    /** Körkortsbehörigheter av högre typ. */
     public static final EnumSet<IntygAvserKod> HOGRE_KORKORTSBEHORIGHET = EnumSet.of(C1, C1E, C, CE, D1, D1E, D, DE,
             TAXI);
 
-    /** Körkortsbehörigheter som innefattar persontransport */
+    /** Körkortsbehörigheter som innefattar persontransport. */
     public static final EnumSet<IntygAvserKod> PERSONTRANSPORT = EnumSet.of(D1, D1E, D, DE, TAXI);
 
     private static String codeSystemName = "kv_intyget_avser";

@@ -20,9 +20,8 @@ package se.inera.certificate.modules.ts_bas.model.converter;
 
 /**
  * Exception for converting services.
- * 
+ *
  * @author nikpet
- * 
  */
 public class ConverterException extends Exception {
 

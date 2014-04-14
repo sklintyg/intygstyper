@@ -25,31 +25,49 @@ import se.inera.certificate.model.Kod;
  */
 public enum BefattningKod implements CodeSystem {
 
-    /** Överläkare (201010) */
+    /**
+     * Överläkare (201010).
+     */
     OVERLAKARE("201010", "Överläkare"),
 
-    /** Distriktsläkare/Specialist allmänmedicin (201011) */
+    /**
+     * Distriktsläkare/Specialist allmänmedicin (201011).
+     */
     DISTRIKT_ELLER_ALLMANMEDICIN("201011", "Distriktsläkare/Specialist allmänmedicin"),
 
-    /** Skolläkare (201012) */
+    /**
+     * Skolläkare (201012).
+     */
     SKOLLAKARE("201012", "Skolläkare"),
 
-    /** Företagsläkare (201013) */
+    /**
+     * Företagsläkare (201013).
+     */
     FORETAGSLAKARE("201013", "Företagsläkare"),
 
-    /** Specialistläkare (202010) */
+    /**
+     * Specialistläkare (202010).
+     */
     SPECIALISTLAKARE("202010", "Specialistläkare"),
 
-    /** ST-Läkare (203010) */
+    /**
+     * ST-Läkare (203010).
+     */
     STLAKARE("203010", "Legitimerad läkare under specialiseringstjänstgöring (STläkare)"),
 
-    /** Annan legitimerad läkare (203090) */
+    /**
+     * Annan legitimerad läkare (203090).
+     */
     LAKARE_ANNAN("203090", "Legitimerad läkare under till exempel vikariat"),
 
-    /** AT-Läkare (204010) */
+    /**
+     * AT-Läkare (204010).
+     */
     LAKARE_EJ_LEG_AT("204010", "Ej legitimerad läkare under allmäntjänstgöring (AT-läkare)"),
 
-    /** Ej legitimerad läkare (204090) */
+    /**
+     * Ej legitimerad läkare (204090).
+     */
     LAKARE_EJ_LEG_ANNAN("204090", "Ej legitimerad läkare under till exempel vikariat eller provtjänstgöring");
 
     private static String codeSystemName = "Befattning HSA";

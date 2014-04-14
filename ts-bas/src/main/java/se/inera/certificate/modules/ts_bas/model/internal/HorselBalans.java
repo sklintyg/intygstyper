@@ -1,9 +1,9 @@
 package se.inera.certificate.modules.ts_bas.model.internal;
 
 public class HorselBalans {
-    
+
     private Boolean balansrubbningar;
-    
+
     private Boolean svartUppfattaSamtal4Meter;
 
     public Boolean getBalansrubbningar() {
@@ -21,5 +21,5 @@ public class HorselBalans {
     public void setSvartUppfattaSamtal4Meter(Boolean svartUppfattaSamtal4Meter) {
         this.svartUppfattaSamtal4Meter = svartUppfattaSamtal4Meter;
     }
-    
+
 }

@@ -39,8 +39,6 @@ import se.inera.certificate.modules.support.api.dto.ValidationStatus;
 
 public class InternalValidatorInstance {
 
-    private static final String POSTNUMMER_FORMAT = "\\d{3}\\s?\\d{2}";
-
     private static final Logger LOG = LoggerFactory.getLogger(InternalValidatorInstance.class);
 
     private List<ValidationMessage> validationMessages;
@@ -51,10 +49,9 @@ public class InternalValidatorInstance {
 
     /**
      * Validates an internal draft of an {@link Utlatande} (this means the object being validated is not necessarily
-     * complete)
-     * 
-     * @param utlatande
-     *            an internal {@link Utlatande}
+     * complete).
+     *
+     * @param utlatande an internal {@link Utlatande}
      * @return a {@link ValidateDraftResponseHolder} with a status and a list of validationErrors
      */
     public ValidateDraftResponse validate(se.inera.certificate.modules.rli.model.internal.wc.Utlatande utlatande) {
@@ -105,14 +102,11 @@ public class InternalValidatorInstance {
     }
 
     /**
-     * Check for null or empty String, if so add a validation error for field with errorCode
-     * 
-     * @param string
-     *            the String to check
-     * @param field
-     *            the target field in the model
-     * @param errorCode
-     *            the errorCode to log in validation errors
+     * Check for null or empty String, if so add a validation error for field with errorCode.
+     *
+     * @param string    the String to check
+     * @param field     the target field in the model
+     * @param errorCode the errorCode to log in validation errors
      */
     private AssertionResult assertNotNullOrEmpty(String string, String field, String errorCode) {
         if (string == null || string.isEmpty()) {
@@ -124,12 +118,10 @@ public class InternalValidatorInstance {
     }
 
     /**
-     * Make sure a string representing a date conforms to the desired format
-     * 
-     * @param dateString
-     *            the date
-     * @param dateFormat
-     *            the format
+     * Make sure a string representing a date conforms to the desired format.
+     *
+     * @param dateString the date
+     * @param dateFormat the format
      * @return true if it does, false otherwise
      */
     private boolean isValidDate(String dateString, String dateFormat) {
@@ -143,10 +135,10 @@ public class InternalValidatorInstance {
     }
 
     /**
-     * Check if there are validation errors
-     * 
+     * Check if there are validation errors.
+     *
      * @return {@link ValidationStatus.COMPLETE} if there are no errors, and {@link ValidationStatus.INCOMPLETE}
-     *         otherwise
+     * otherwise
      */
     private ValidationStatus getValidationStatus() {
         return (validationMessages.isEmpty()) ? se.inera.certificate.modules.support.api.dto.ValidationStatus.VALID
@@ -154,12 +146,10 @@ public class InternalValidatorInstance {
     }
 
     /**
-     * Create a ValidationMessage and add it to the {@link ValidateDraftResponseHolder}
-     * 
-     * @param field
-     *            a String with the name of the field
-     * @param msg
-     *            a String with an error code for the front end implementation
+     * Create a ValidationMessage and add it to the {@link ValidateDraftResponseHolder}.
+     *
+     * @param field a String with the name of the field
+     * @param msg   a String with an error code for the front end implementation
      */
     private void addValidationError(String field, String msg) {
         validationMessages.add(new ValidationMessage(field, msg));

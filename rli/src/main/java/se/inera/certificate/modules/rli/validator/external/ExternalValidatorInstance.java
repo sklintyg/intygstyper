@@ -48,9 +48,9 @@ import se.inera.certificate.validate.SimpleIdValidatorBuilder;
 
 public class ExternalValidatorInstance {
 
-    private final List<String> validationErrors;
+    private static final IdValidator ID_VALIDATOR;
 
-    private final static IdValidator ID_VALIDATOR;
+    private final List<String> validationErrors;
 
     static {
         SimpleIdValidatorBuilder builder = new SimpleIdValidatorBuilder();
@@ -78,7 +78,7 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Validates that required attributes connected with the actual class Utlatande are present
+     * Validates that required attributes connected with the actual class Utlatande are present.
      */
     private void validateUtlatande(Utlatande utlatande) {
         assertNotNull(utlatande.getId(), "id");
@@ -88,7 +88,7 @@ public class ExternalValidatorInstance {
 
     /**
      * Validates Arrangemang in Utlatande First makes sure Arrangemang is not null, if so, the required attributes are
-     * validated in turn and any errors are added to validation error list
+     * validated in turn and any errors are added to validation error list.
      */
     private void validateArrangemang(Arrangemang arrangemang) {
         if (assertNotNull(arrangemang, "arrangemang").failed()) {
@@ -136,7 +136,7 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Make sure Utlatande contains 1..* Observation
+     * Make sure Utlatande contains 1..* Observation.
      */
     private void validateObservationer(List<Observation> observationer) {
         if (observationer.size() < 1 || observationer.size() > 2) {
@@ -172,7 +172,7 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Validate Aktiviteter,
+     * Validate Aktiviteter.
      */
     private void validateAktiviteter(List<Aktivitet> aktiviteter) {
         /**
@@ -213,7 +213,7 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Make sure Utlatande contains 1 Patient
+     * Make sure Utlatande contains 1 Patient.
      */
     private void validatePatient(Patient patient) {
         if (assertNotNull(patient, "patient").failed()) {

@@ -26,13 +26,13 @@ import static se.inera.certificate.modules.ts_diabetes.model.codes.Kodverk.SNOME
  */
 public enum LateralitetsKod implements CodeSystem {
 
-    /** Höger öga (24028007) */
+    /** Höger öga (24028007). */
     HOGER("24028007", "Höger öga", SNOMED_CT),
 
-    /** Vänster öga (7771000) */
+    /** Vänster öga (7771000). */
     VANSTER("7771000", "Vänster öga", SNOMED_CT),
 
-    /** Höger och vänster öga (51440002) */
+    /** Höger och vänster öga (51440002). */
     BINOKULART("51440002", "Höger och vänster", SNOMED_CT);
 
     private final String codeSystemName;

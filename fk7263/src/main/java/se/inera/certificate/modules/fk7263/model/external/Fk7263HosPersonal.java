@@ -5,7 +5,7 @@ import se.inera.certificate.model.HosPersonal;
 public class Fk7263HosPersonal extends HosPersonal {
 
     private Fk7263Vardenhet vardenhet;
-    
+
     @Override
     public Fk7263Vardenhet getVardenhet() {
         return vardenhet;

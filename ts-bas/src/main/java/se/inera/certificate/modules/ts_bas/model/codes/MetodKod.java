@@ -25,7 +25,7 @@ import se.inera.certificate.model.Kod;
  */
 public enum MetodKod implements CodeSystem {
 
-    /** Donders konfrontationsmetod (används vid synfältsprövning)*/
+    /** Donders konfrontationsmetod (används vid synfältsprövning). */
     DONDERS_KONFRONTATIONSMETOD("MET1", "Donders konfrontationsmetod");
 
     private static String codeSystemName = "kv_metod";

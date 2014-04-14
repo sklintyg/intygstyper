@@ -9,7 +9,7 @@ public class Fk7263CertificateContentHolder {
     private Fk7263Utlatande certificateContent;
     private CertificateContentMeta certificateContentMeta;
 
-  
+
     public CertificateContentMeta getCertificateContentMeta() {
         return certificateContentMeta;
     }

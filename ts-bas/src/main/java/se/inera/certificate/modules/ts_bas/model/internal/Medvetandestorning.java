@@ -1,9 +1,9 @@
 package se.inera.certificate.modules.ts_bas.model.internal;
 
 public class Medvetandestorning {
-    
+
     private Boolean medvetandestorning;
-    
+
     private String beskrivning;
 
     public Boolean getMedvetandestorning() {

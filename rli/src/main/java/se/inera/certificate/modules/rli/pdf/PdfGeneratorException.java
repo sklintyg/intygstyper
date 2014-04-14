@@ -20,7 +20,6 @@ package se.inera.certificate.modules.rli.pdf;
 
 /**
  * @author erik
- * 
  */
 public class PdfGeneratorException extends Exception {
 

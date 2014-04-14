@@ -10,7 +10,7 @@ import se.inera.certificate.model.Sysselsattning;
 /**
  * @author andreaskaltenbach
  */
-public class Fk7263Patient extends Patient{
+public class Fk7263Patient extends Patient {
 
     private List<Sysselsattning> sysselsattningar;
     private List<Arbetsuppgift> arbetsuppgifter;

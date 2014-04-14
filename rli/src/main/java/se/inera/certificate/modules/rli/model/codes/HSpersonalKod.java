@@ -25,7 +25,7 @@ import se.inera.certificate.model.Kod;
  */
 public enum HSpersonalKod implements CodeSystem {
 
-    /** HSA id root */
+    /** HSA id root. */
     HSA_ID("1.2.752.129.2.1.4.1", "root");
 
     private static String codeSystemName = "HSA";

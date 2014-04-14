@@ -6,21 +6,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
 /**
- * Helper class that instructs Jackson to parse JSON like below to {@link EnumSet}:
- * <p>
+ * Helper class that instructs Jackson to parse JSON like below to {@link EnumSet}.
+ * <p/>
  * <code>[{type: "ENUM1", selected : true}, {type: "ENUM2", selected : false}, {type: "ENUM3", selected : false}]</code>
- * <p>
+ * <p/>
  * for a EnumSet containing <code>ENUM1</code> out of an enum with the enum values <code>ENUM1</code>,
  * <code>ENUM2</code> and <code>ENUM3</code>
- * 
+ * <p/>
  * A concrete class must be created for the specific enum type to use:
- * 
+ * <p/>
  * <pre>
  * public static class EnumTypeEnumSetDeserializer extends AbstractEnumSetDeserializer&lt;EnumType&gt; {
  *     protected EnumTypeEnumSetDeserializer() {
@@ -28,13 +27,12 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
  *     }
  * }
  * </pre>
- * 
+ * <p/>
  * Annotate your EnumSet with:
- * <p>
+ * <p/>
  * <code>@JsonDeserialize(using = EnumTypeEnumSetDeserializer.class)</code>
- * 
- * @param <E>
- *            An enum type.
+ *
+ * @param <E> An enum type.
  */
 public abstract class AbstractEnumSetDeserializer<E extends Enum<E>> extends JsonDeserializer<EnumSet<E>> {
 
@@ -51,8 +49,7 @@ public abstract class AbstractEnumSetDeserializer<E extends Enum<E>> extends Jso
     }
 
     @Override
-    public EnumSet<E> deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException,
-            JsonProcessingException {
+    public EnumSet<E> deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
         EnumSet<E> enumSet = EnumSet.noneOf(enumType);
 
         while (jp.nextToken() != JsonToken.END_ARRAY) {

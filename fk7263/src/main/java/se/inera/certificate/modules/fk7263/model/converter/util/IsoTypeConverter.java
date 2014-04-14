@@ -13,7 +13,7 @@ import se.inera.certificate.model.Kod;
 /**
  * @author marced
  */
-public class IsoTypeConverter {
+public final class IsoTypeConverter {
 
     private IsoTypeConverter() {
     }

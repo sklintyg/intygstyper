@@ -50,6 +50,7 @@ public class PdfGenerator {
     private static final StringField INVANARE_PERSONNUMMER = new StringField("Falt__4");
 
     private static final CheckGroupField<IntygAvserKategori> INTYG_AVSER;
+
     static {
         INTYG_AVSER = new CheckGroupField<IntygAvserKategori>();
         INTYG_AVSER.addField(IntygAvserKategori.AM, "Falt_4");
@@ -112,6 +113,7 @@ public class PdfGenerator {
     private static final YesNoField DIPLOPI = new YesNoField("Falt_78", "Falt_79");
 
     private static final CheckGroupField<BedomningKorkortstyp> BEDOMNING;
+
     static {
         BEDOMNING = new CheckGroupField<BedomningKorkortstyp>();
         BEDOMNING.addField(BedomningKorkortstyp.AM, "Falt_108");
@@ -131,6 +133,7 @@ public class PdfGenerator {
         BEDOMNING.addField(BedomningKorkortstyp.DE, "Falt_89");
         BEDOMNING.addField(BedomningKorkortstyp.TAXI, "Falt_90");
     }
+
     private static final CheckField BEDOMNING_INTE_TA_STALLNING = new CheckField("Falt_91");
 
     private static final YesNoField LAMPLIGHET_INNEHA_BEHORIGHET_TILL_KORNINGAR_OCH_ARBETSFORMER = new YesNoField(
@@ -183,13 +186,11 @@ public class PdfGenerator {
     }
 
     /**
-     * Method for filling out the fields of a pdf with data from the internal model
-     * 
-     * @param utlatande
-     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande} containing data for
-     *            populating the pdf
-     * @param fields
-     *            The fields of the pdf
+     * Method for filling out the fields of a pdf with data from the internal model.
+     *
+     * @param utlatande {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande} containing data for
+     *                  populating the pdf
+     * @param fields    The fields of the pdf
      * @throws DocumentException
      * @throws IOException
      */
@@ -322,7 +323,7 @@ public class PdfGenerator {
         }
     }
 
-    private static class CheckField {
+    private static final class CheckField {
         private final String field;
 
         private CheckField(String field) {
@@ -352,7 +353,7 @@ public class PdfGenerator {
         }
     }
 
-    private static class YesNoField {
+    private static final class YesNoField {
         private final String yesField;
 
         private final String noField;
@@ -369,7 +370,7 @@ public class PdfGenerator {
         }
     }
 
-    private static class DecimalField {
+    private static final class DecimalField {
         private final String integerField;
 
         private final String decimalField;
@@ -390,7 +391,7 @@ public class PdfGenerator {
         }
     }
 
-    private static class StringField {
+    private static final class StringField {
         private final String field;
 
         private StringField(String field) {

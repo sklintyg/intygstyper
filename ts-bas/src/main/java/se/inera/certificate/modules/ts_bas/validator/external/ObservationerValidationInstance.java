@@ -48,14 +48,13 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
     private final List<Observation> observationer;
 
     public ObservationerValidationInstance(ExternalValidatorInstance prototype, List<Observation> observationer) {
-        super(prototype.validationErrors, prototype.context);
+        super(prototype.getValidationErrors(), prototype.getContext());
         this.observationer = observationer;
     }
 
     /**
      * Validate all the observations. Make sure required observations are present, and that the correct number is
      * present.
-     * 
      */
     public void validateObservationer() {
 
@@ -211,14 +210,14 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
 
             } else if (observation.getObservationskod().equals(OBS_OBS6)) {
                 assertNotNull(observation.getForekomst(), entity + ".förekomst");
-                
+
                 assertNull(observation.getBeskrivning(), entity + ".beskrivning");
                 assertNull(observation.getId(), entity + ".observationsid");
                 assertNull(observation.getLateralitet(), entity + ".lateralitet");
                 assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
                 assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
                 assertNull(observation.getVarde(), entity + ".varde");
-                
+
             } else if (observation.getObservationskod().equals(OBS_OBS7)) {
                 // (Riskfaktor för stroke)
                 if (assertNotNull(observation.getForekomst(), entity + ".förekomst").success()) {
@@ -242,9 +241,7 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
                 assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
                 assertNull(observation.getVarde(), entity + ".varde");
 
-            }
-            // Diabetes treatment related
-            else if (observation.getObservationskod().equals(OBS_OBS9)) {
+            } else if (observation.getObservationskod().equals(OBS_OBS9)) { // Diabetes treatment related
                 assertNotNull(observation.getForekomst(), entity + ".förekomst");
 
                 assertNull(observation.getId(), entity + ".observationsid");
@@ -273,10 +270,8 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
                 assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
                 assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
                 assertNull(observation.getVarde(), entity + ".varde");
-
-            }
-            // Diabetes related end
-            else if (observation.getObservationskod().equals(OBS_OBS10)) {
+                // Diabetes related end
+            } else if (observation.getObservationskod().equals(OBS_OBS10)) {
                 assertNotNull(observation.getForekomst(), entity + ".förekomst");
 
                 assertNull(observation.getId(), entity + ".observationsid");
@@ -348,7 +343,7 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
         }
 
         // If the diabetes flag is set, assert that an observation of the type of diabetes is supplied
-        if (context.isDiabetesContext()) {
+        if (getContext().isDiabetesContext()) {
             Observation diabetesTyp1 = getObservationWithKod(OBS_E10);
             Observation diabetesTyp2 = getObservationWithKod(OBS_E11);
             if (diabetesTyp1 == null && diabetesTyp2 == null) {
@@ -371,7 +366,7 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
         }
 
         // If the persontransport flag is set, assert required observations are supplied
-        if (context.isPersontransportContext()) {
+        if (getContext().isPersontransportContext()) {
             Observation rorelseformaga = getObservationWithKod(OBS_OBS5);
             if (rorelseformaga == null) {
                 validationError("observation OBS5 must be present when intygAvser contains any of [D1, D1E, D, DE, or TAXI]");
@@ -386,9 +381,8 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
 
     /**
      * Returns an Observation based on the specified Kod, or <code>null</code> if none where found.
-     * 
-     * @param observationskod
-     *            Find an observation with this {@link Kod}
+     *
+     * @param observationskod Find an observation with this {@link Kod}
      * @return an {@link Observation} if it is found, or null otherwise
      */
     public Observation getObservationWithKod(Kod observationskod) {
@@ -403,9 +397,8 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
 
     /**
      * Returns an Observation based on the specified Id, or <code>null</code> if none where found.
-     * 
-     * @param observationskod
-     *            Find an observation with this {@link Id}
+     *
+     * @param observationskod Find an observation with this {@link Id}
      * @return an {@link Observation} if it is found, or null otherwise
      */
     public Observation getObservationWithId(Id id) {

@@ -74,13 +74,10 @@ public class InternalToExternalConverter {
     private static final Id DIPLOPI_ID = new Id("1.2.752.129.2.1.2.1", "4");
 
     /**
-     * Takes an internal Utlatande and converts it to the external model
-     * 
-     * @param source
-     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
-     * 
+     * Takes an internal Utlatande and converts it to the external model.
+     *
+     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
      * @return {@link Utlatande}, unless the source is null in which case a {@link ConverterException} is thrown
-     * 
      * @throws ConverterException
      */
     public Utlatande convert(se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande source)
@@ -132,10 +129,9 @@ public class InternalToExternalConverter {
     }
 
     /**
-     * Creates a List of Vardkontakt[er] from and Internal Utlatande
-     * 
-     * @param source
-     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
+     * Creates a List of Vardkontakt[er] from and Internal Utlatande.
+     *
+     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
      * @return a List of {@link Vardkontakt}
      */
     private Collection<? extends Vardkontakt> buildVardkontakt(
@@ -158,10 +154,9 @@ public class InternalToExternalConverter {
     }
 
     /**
-     * Creates a List of {@link Kod}[er] concerning what type of permissions this Utlatande concerns
-     * 
-     * @param source
-     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
+     * Creates a List of {@link Kod}[er] concerning what type of permissions this Utlatande concerns.
+     *
+     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
      * @return List of {@link Kod}
      */
     private Collection<? extends Kod> buildIntygAvser(
@@ -175,10 +170,9 @@ public class InternalToExternalConverter {
     }
 
     /**
-     * Creates a List of ObservationAktivitetRelation (this will always consist of the same fixed relations)
-     * 
-     * @param source
-     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
+     * Creates a List of ObservationAktivitetRelation (this will always consist of the same fixed relations).
+     *
+     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
      * @return a List of {@link ObservationAktivitetRelation}
      */
     private Collection<? extends ObservationAktivitetRelation> buildObsAktRelationer(
@@ -199,10 +193,9 @@ public class InternalToExternalConverter {
     }
 
     /**
-     * Creates a List of Rekommendation[er]
-     * 
-     * @param source
-     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
+     * Creates a List of Rekommendation[er].
+     *
+     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
      * @return a List of {@link Rekommendation}
      */
     private Collection<? extends Rekommendation> buildRekommendationer(
@@ -248,10 +241,9 @@ public class InternalToExternalConverter {
     }
 
     /**
-     * Create a List of {@link Observation}[er] from internal model
-     * 
-     * @param source
-     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
+     * Create a List of {@link Observation}[er] from internal model.
+     *
+     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
      * @return a List of {@link Observation}
      */
     private Collection<? extends Observation> buildObservationer(
@@ -359,10 +351,9 @@ public class InternalToExternalConverter {
 
     /**
      * Creates a List with Observation[er] for right, left and both eyes without visual aid (utan korrektion) and with
-     * aid (if applicable)
-     * 
-     * @param syn
-     *            {@link Syn} object with data to be used
+     * aid (if applicable).
+     *
+     * @param syn {@link Syn} object with data to be used
      * @return a List of {@link Observation}[er]
      */
     private List<Observation> createSynRelatedObservations(Syn syn) {
@@ -433,14 +424,11 @@ public class InternalToExternalConverter {
     }
 
     /**
-     * Create Observation with ObservationsKod, forekomst and beskrivning
-     * 
-     * @param obsKod
-     *            {@link ObservationsKod}
-     * @param forekomst
-     *            {@link Boolean}
-     * @param beskrivning
-     *            {@link String}
+     * Create Observation with ObservationsKod, forekomst and beskrivning.
+     *
+     * @param obsKod      {@link ObservationsKod}
+     * @param forekomst   {@link Boolean}
+     * @param beskrivning {@link String}
      * @return An {@link Observation} constructed from the parameters provided
      */
     private Observation createObservationWithBeskrivning(ObservationsKod obsKod, Boolean forekomst, String beskrivning) {
@@ -453,14 +441,11 @@ public class InternalToExternalConverter {
     }
 
     /**
-     * Create an Observation with Id, ObservationsKod and Boolean (forekomst)
-     * 
-     * @param id
-     *            String with the {@link Id} extension
-     * @param obsKod
-     *            {@link ObservationsKod}
-     * @param forekomst
-     *            {@link Boolean}
+     * Create an Observation with Id, ObservationsKod and Boolean (forekomst).
+     *
+     * @param id        String with the {@link Id} extension
+     * @param obsKod    {@link ObservationsKod}
+     * @param forekomst {@link Boolean}
      * @return An {@link Observation} constructed from the parameters provided
      */
     private Observation createObservationWithId(ObservationsKod obsKod, Boolean forekomst, Id id) {
@@ -473,12 +458,10 @@ public class InternalToExternalConverter {
     }
 
     /**
-     * Create a "basic" observation i.e an observation consisting of only an ObservationsKod and a boolean
-     * 
-     * @param obsKod
-     *            {@link ObservationsKod}
-     * @param forekomst
-     *            {@link Boolean}
+     * Create a "basic" observation i.e an observation consisting of only an ObservationsKod and a boolean.
+     *
+     * @param obsKod    {@link ObservationsKod}
+     * @param forekomst {@link Boolean}
      * @return An {@link Observation} constructed from the parameters provided
      */
     private Observation createBasicObservation(ObservationsKod obsKod, Boolean forekomst) {
@@ -489,10 +472,9 @@ public class InternalToExternalConverter {
     }
 
     /**
-     * Create mandatory Aktivitet[er] from internal objects
-     * 
-     * @param source
-     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
+     * Create mandatory Aktivitet[er] from internal objects.
+     *
+     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
      * @return List of {@link Aktivitet}
      */
     private Collection<? extends Aktivitet> buildAktiviteter(
@@ -529,10 +511,9 @@ public class InternalToExternalConverter {
     }
 
     /**
-     * Convert from internal to external Patient
-     * 
-     * @param source
-     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Patient}
+     * Convert from internal to external Patient.
+     *
+     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Patient}
      * @return external {@link Patient}
      */
     private Patient convertToExtPatient(se.inera.certificate.modules.ts_diabetes.model.internal.Patient source) {
@@ -548,10 +529,9 @@ public class InternalToExternalConverter {
     }
 
     /**
-     * Convert from internal to external HosPersonal
-     * 
-     * @param source
-     *            internal {@link HoSPersonal}
+     * Convert from internal to external HosPersonal.
+     *
+     * @param source internal {@link HoSPersonal}
      * @return external {@link HosPersonal}
      */
     private HosPersonal convertToExtHosPersonal(HoSPersonal source) {
@@ -567,12 +547,10 @@ public class InternalToExternalConverter {
 
     /**
      * Convert a String-representation (i.e the name of the enum constant representing that particular Kod) to a Kod
-     * object
-     * 
-     * @param type
-     *            the code enum (must extend {@link CodeSystem})
-     * @param strings
-     *            a list of Strings with the names of enum constants to convert
+     * object.
+     *
+     * @param type    the code enum (must extend {@link CodeSystem})
+     * @param strings a list of Strings with the names of enum constants to convert
      * @return a list of {@link Kod}
      */
     private <E extends CodeSystem> Collection<Kod> convertStringToCode(Class<E> type, List<String> strings) {
@@ -587,10 +565,9 @@ public class InternalToExternalConverter {
     }
 
     /**
-     * Convert from internal to external Vardenhet
-     * 
-     * @param source
-     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Vardenhet}
+     * Convert from internal to external Vardenhet.
+     *
+     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Vardenhet}
      * @return external {@link Vardenhet}
      */
     private Vardenhet convertToExtVardenhet(se.inera.certificate.modules.ts_diabetes.model.internal.Vardenhet source) {
@@ -607,10 +584,9 @@ public class InternalToExternalConverter {
     }
 
     /**
-     * Convert from internal to external Vardenhet
-     * 
-     * @param source
-     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Vardgivare}
+     * Convert from internal to external Vardenhet.
+     *
+     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Vardgivare}
      * @return external {@link Vardgivare}
      */
     private Vardgivare convertToExtVardgivare(se.inera.certificate.modules.ts_diabetes.model.internal.Vardgivare source) {

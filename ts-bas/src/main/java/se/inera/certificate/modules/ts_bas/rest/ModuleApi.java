@@ -35,10 +35,8 @@ public interface ModuleApi {
 
     /**
      * Handles conversion from the transport model (XML) to the external JSON model.
-     * 
-     * @param transportModel
-     *            The transport model to convert.
-     * 
+     *
+     * @param transportModel The transport model to convert.
      * @return An instance of the external model, generated from the transport model.
      */
     @POST
@@ -49,10 +47,8 @@ public interface ModuleApi {
 
     /**
      * Handles conversion from the external JSON model to the transport model (XML).
-     * 
-     * @param externalModel
-     *            The external model to convert.
-     * 
+     *
+     * @param externalModel The external model to convert.
      * @return An instance of the transport model, generated from the external model.
      */
     @POST
@@ -64,9 +60,8 @@ public interface ModuleApi {
     /**
      * Validates the external model. If the validation succeeds, a empty result will be returned. If the validation
      * fails, a list of validation messages will be returned as a HTTP 400.
-     * 
-     * @param externalModel
-     *            The external model to validate.
+     *
+     * @param externalModel The external model to validate.
      * @return
      */
     @POST
@@ -77,9 +72,8 @@ public interface ModuleApi {
 
     /**
      * Validates the internal model. The status (complete, incomplete) and a list of validation errors is returned.
-     * 
-     * @param externalModel
-     *            The external model to validate.
+     *
+     * @param externalModel The external model to validate.
      * @return
      */
     @POST
@@ -90,10 +84,8 @@ public interface ModuleApi {
 
     /**
      * Generates a PDF from the external model.
-     * 
-     * @param externalModel
-     *            The external model to generate a PDF from.
-     * 
+     *
+     * @param externalModel The external model to generate a PDF from.
      * @return A binary stream containing a PDF template populated with the information of the external model.
      */
     @POST
@@ -104,10 +96,8 @@ public interface ModuleApi {
 
     /**
      * Handles conversion from the external model to the internal model.
-     * 
-     * @param externalModel
-     *            The external model to convert.
-     * 
+     *
+     * @param externalModel The external model to convert.
      * @return An instance of the internal model, generated from the external model.
      */
     @PUT
@@ -119,10 +109,8 @@ public interface ModuleApi {
 
     /**
      * Handles conversion from the internal model to the external model.
-     * 
-     * @param internalModel
-     *            The internal model to convert.
-     * 
+     *
+     * @param internalModel The internal model to convert.
      * @return An instance of the external model, generated from the internal model.
      */
     @PUT
@@ -135,7 +123,7 @@ public interface ModuleApi {
     /**
      * Creates a new editable model for use in WebCert. The model is pre populated using data contained in the
      * CreateNewDraftCertificateHolder parameter.
-     * 
+     *
      * @param draftCertificateHolder
      * @return
      */

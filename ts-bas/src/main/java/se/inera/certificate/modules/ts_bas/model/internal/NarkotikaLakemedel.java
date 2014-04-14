@@ -1,15 +1,15 @@
 package se.inera.certificate.modules.ts_bas.model.internal;
 
 public class NarkotikaLakemedel {
-    
+
     private Boolean teckenMissbruk;
-    
+
     private Boolean foremalForVardinsats;
-    
+
     private Boolean provtagningBehovs;
-    
+
     private Boolean lakarordineratLakemedelsbruk;
-    
+
     private String lakemedelOchDos;
 
     public Boolean getTeckenMissbruk() {
@@ -51,7 +51,6 @@ public class NarkotikaLakemedel {
     public void setLakemedelOchDos(String lakemedelOchDos) {
         this.lakemedelOchDos = lakemedelOchDos;
     }
-    
-    
+
 
 }

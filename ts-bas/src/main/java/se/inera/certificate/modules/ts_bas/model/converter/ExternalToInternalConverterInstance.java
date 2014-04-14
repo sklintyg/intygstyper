@@ -70,9 +70,8 @@ import se.inera.certificate.modules.ts_bas.model.internal.Vardkontakt;
 
 /**
  * Converter for converting the external format to the internal view format.
- * 
+ *
  * @author Erik
- * 
  */
 public class ExternalToInternalConverterInstance {
 
@@ -131,12 +130,10 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Convert a List of Kod into an IntygAvser object
-     * 
-     * @param intygAvser
-     *            a List of {@link Kod}
-     * @param intUtlatande
-     *            {@link Utlatande}
+     * Convert a List of Kod into an IntygAvser object.
+     *
+     * @param intygAvser   a List of {@link Kod}
+     * @param intUtlatande {@link Utlatande}
      */
     private void setIntygAvser(List<Kod> intygAvser, Utlatande intUtlatande) {
         IntygAvser internalIntygAvser = intUtlatande.getIntygAvser();
@@ -148,15 +145,13 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Convert Vardkontakt from external to internal format
-     * 
-     * @param source
-     *            {@link se.inera.certificate.modules.ts_bas.model.external.Vardkontakt}
-     * @param intUtlatande
-     *            {@link Utlatande}
+     * Convert Vardkontakt from external to internal format.
+     *
+     * @param source       {@link se.inera.certificate.modules.ts_bas.model.external.Vardkontakt}
+     * @param intUtlatande {@link Utlatande}
      */
     private void setVardkontakt(se.inera.certificate.modules.ts_bas.model.external.Vardkontakt source,
-            Utlatande intUtlatande) {
+                                Utlatande intUtlatande) {
         Vardkontakt vardkontakt = intUtlatande.getVardkontakt();
 
         vardkontakt.setIdkontroll(CodeConverter.getInternalNameFromKod(source.getIdkontroll(), IdKontrollKod.class));
@@ -187,15 +182,13 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Create Medicinering object from Observation
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @param intUtlatande
-     *            {@link Utlatande}
+     * Create Medicinering object from Observation.
+     *
+     * @param extUtlatande {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @param intUtlatande {@link Utlatande}
      */
     private void setMedicinering(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
-            Utlatande intUtlatande) {
+                                 Utlatande intUtlatande) {
         Medicinering medicinering = intUtlatande.getMedicinering();
 
         Observation stadigvarandeMedicinering = getObservationWithKod(extUtlatande.getObservationer(),
@@ -210,15 +203,13 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Create Sjukhusvard object from Aktivitet
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @param intUtlatande
-     *            {@link Utlatande}
+     * Create Sjukhusvard object from Aktivitet.
+     *
+     * @param extUtlatande {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @param intUtlatande {@link Utlatande}
      */
     private void setSjukhusvard(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
-            Utlatande intUtlatande) {
+                                Utlatande intUtlatande) {
         Sjukhusvard sjukhusvard = intUtlatande.getSjukhusvard();
 
         Aktivitet harVistatsSjukhus = getAktivitetWithKod(extUtlatande.getAktiviteter(), CodeConverter.toKod(AktivitetKod.VARD_PA_SJUKHUS));
@@ -235,15 +226,13 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Create Utvecklingsstorning object from Observationer
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @param intUtlatande
-     *            {@link Utlatande}
+     * Create Utvecklingsstorning object from Observationer.
+     *
+     * @param extUtlatande {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @param intUtlatande {@link Utlatande}
      */
     private void setUtvecklingsstorning(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
-            Utlatande intUtlatande) {
+                                        Utlatande intUtlatande) {
         Utvecklingsstorning utvecklingsstorning = intUtlatande.getUtvecklingsstorning();
 
         Observation psykiskUtvecklingsstorning = getObservationWithKod(extUtlatande.getObservationer(),
@@ -260,15 +249,13 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Create Psykiskt object from Observationer
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @param intUtlatande
-     *            {@link Utlatande}
+     * Create Psykiskt object from Observationer.
+     *
+     * @param extUtlatande {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @param intUtlatande {@link Utlatande}
      */
     private void setPsykiskt(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
-            Utlatande intUtlatande) {
+                             Utlatande intUtlatande) {
         Psykiskt psykiskt = intUtlatande.getPsykiskt();
 
         Observation psykiskSjukdom = getObservationWithKod(extUtlatande.getObservationer(), CodeConverter.toKod(ObservationsKod.PSYKISK_SJUKDOM));
@@ -279,15 +266,13 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Create NarkotikaLakemedel object from Observationer and Aktiviteter
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @param intUtlatande
-     *            {@link Utlatande}
+     * Create NarkotikaLakemedel object from Observationer and Aktiviteter.
+     *
+     * @param extUtlatande {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @param intUtlatande {@link Utlatande}
      */
     private void setNarkotikaLakemedel(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
-            Utlatande intUtlatande) {
+                                       Utlatande intUtlatande) {
         NarkotikaLakemedel narkotikaLakemedel = intUtlatande.getNarkotikaLakemedel();
 
         Observation teckenPaMissbruk = getObservationWithKod(extUtlatande.getObservationer(), CodeConverter.toKod(ObservationsKod.TECKEN_PA_MISSBRUK));
@@ -314,15 +299,13 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Create SomnVakenhet object from Observationer
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @param intUtlatande
-     *            {@link Utlatande}
+     * Create SomnVakenhet object from Observationer.
+     *
+     * @param extUtlatande {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @param intUtlatande {@link Utlatande}
      */
     private void setSomnVakenhet(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
-            Utlatande intUtlatande) {
+                                 Utlatande intUtlatande) {
         SomnVakenhet somnVakenhet = intUtlatande.getSomnVakenhet();
 
         Observation somnVakenhetsstorning = getObservationWithKod(extUtlatande.getObservationer(),
@@ -334,15 +317,13 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Create Kognitivt object from Observationer
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @param intUtlatande
-     *            {@link Utlatande}
+     * Create Kognitivt object from Observationer.
+     *
+     * @param extUtlatande {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @param intUtlatande {@link Utlatande}
      */
     private void setKognitivt(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
-            Utlatande intUtlatande) {
+                              Utlatande intUtlatande) {
         Kognitivt kognitivt = intUtlatande.getKognitivt();
 
         Observation sviktandeKognitivFunktion = getObservationWithKod(extUtlatande.getObservationer(),
@@ -354,16 +335,13 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Create Njurar object from Observationer
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * 
-     * @param intUtlatande
-     *            {@link Utlatande}
+     * Create Njurar object from Observationer.
+     *
+     * @param extUtlatande {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @param intUtlatande {@link Utlatande}
      */
     private void setNjurar(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
-            Utlatande intUtlatande) {
+                           Utlatande intUtlatande) {
         Njurar njurar = intUtlatande.getNjurar();
 
         Observation nedsattNjurfunktion = getObservationWithKod(extUtlatande.getObservationer(),
@@ -375,15 +353,13 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Create Medvetandestorning object from Observationer
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @param intUtlatande
-     *            {@link Utlatande}
+     * Create Medvetandestorning object from Observationer.
+     *
+     * @param extUtlatande {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @param intUtlatande {@link Utlatande}
      */
     private void setMedvetandestorning(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
-            Utlatande intUtlatande) {
+                                       Utlatande intUtlatande) {
         Medvetandestorning medvetandestorning = intUtlatande.getMedvetandestorning();
 
         Observation harMedvetandestorning = getObservationWithKod(extUtlatande.getObservationer(), CodeConverter.toKod(ObservationsKod.EPILEPSI));
@@ -398,15 +374,13 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Create Neurologi object from Observationer
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @param intUtlatande
-     *            {@link Utlatande}
+     * Create Neurologi object from Observationer.
+     *
+     * @param extUtlatande {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @param intUtlatande {@link Utlatande}
      */
     private void setNeurologi(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
-            Utlatande intUtlatande) {
+                              Utlatande intUtlatande) {
         Neurologi neurologi = intUtlatande.getNeurologi();
 
         Observation neuroSjukdom = getObservationWithKod(extUtlatande.getObservationer(),
@@ -418,15 +392,13 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Create Diabetes object from Observationer
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @param intUtlatande
-     *            {@link Utlatande}
+     * Create Diabetes object from Observationer.
+     *
+     * @param extUtlatande {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @param intUtlatande {@link Utlatande}
      */
     private void setDiabetes(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
-            Utlatande intUtlatande) {
+                             Utlatande intUtlatande) {
         Diabetes diabetes = intUtlatande.getDiabetes();
 
         List<Observation> observationer = extUtlatande.getObservationer();
@@ -462,15 +434,13 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Create object encapsulating HjartKarl-related stuff
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @param intUtlatande
-     *            {@link Utlatande}
+     * Create object encapsulating HjartKarl-related stuff.
+     *
+     * @param extUtlatande {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @param intUtlatande {@link Utlatande}
      */
     private void setHjartKarl(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
-            Utlatande intUtlatande) {
+                              Utlatande intUtlatande) {
         HjartKarl hjartKarl = intUtlatande.getHjartKarl();
 
         Observation hjartKarlSjukdom = getObservationWithKod(extUtlatande.getObservationer(),
@@ -496,15 +466,13 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Create object encapsulating Funktionsnedsattnings-related stuff
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @param intUtlatande
-     *            {@link Utlatande}
+     * Create object encapsulating Funktionsnedsattnings-related stuff.
+     *
+     * @param extUtlatande {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @param intUtlatande {@link Utlatande}
      */
     private void setFunktionsnedsattning(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
-            Utlatande intUtlatande) {
+                                         Utlatande intUtlatande) {
 
         Funktionsnedsattning funktionsnedsattning = intUtlatande.getFunktionsnedsattning();
 
@@ -526,15 +494,13 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Create object encapsulating Horsel and Balans-related stuff
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @param intUtlatande
-     *            {@link Utlatande}
+     * Create object encapsulating Horsel and Balans-related stuff.
+     *
+     * @param extUtlatande {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @param intUtlatande {@link Utlatande}
      */
     private void setHorselBalans(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
-            Utlatande intUtlatande) {
+                                 Utlatande intUtlatande) {
         HorselBalans horselBalans = intUtlatande.getHorselBalans();
 
         Observation balansrubbning = getObservationWithKod(extUtlatande.getObservationer(), CodeConverter
@@ -551,16 +517,13 @@ public class ExternalToInternalConverterInstance {
 
     /**
      * Create a {@link Syn} object from {@link Observation}s in
-     * {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * 
-     * @param intUtlatande
-     *            {@link Utlatande}
+     * {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}.
+     *
+     * @param extUtlatande {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
+     * @param intUtlatande {@link Utlatande}
      */
     private void setSyn(se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande,
-            Utlatande intUtlatande) {
+                        Utlatande intUtlatande) {
 
         Syn syn = intUtlatande.getSyn();
 
@@ -614,11 +577,9 @@ public class ExternalToInternalConverterInstance {
 
     /**
      * Takes a list of observations related to synskarpa and populates a syn object with the information found.
-     * 
-     * @param syn
-     *            The {@link Syn} object to populate with data
-     * @param synskarpa
-     *            A list of synskarpe-related {@link Observation}s
+     *
+     * @param syn       The {@link Syn} object to populate with data
+     * @param synskarpa A list of synskarpe-related {@link Observation}s
      */
     private void populateWithSynskarpa(Syn syn, List<Observation> synskarpa) {
 
@@ -769,7 +730,7 @@ public class ExternalToInternalConverterInstance {
     }
 
     private boolean isObservationAndLateralitet(Observation obs, ObservationsKod observationskod,
-            LateralitetsKod lateralitet) {
+                                                LateralitetsKod lateralitet) {
         if (CodeConverter.matches(observationskod, obs.getObservationskod())) {
             if (CodeConverter.matches(lateralitet, obs.getLateralitet())) {
                 return true;
@@ -781,9 +742,8 @@ public class ExternalToInternalConverterInstance {
     /**
      * Returns an Observation based on the specified Kod, or <code>null</code> if none where found.
      *
-     * @param observationer observationer
-     * @param observationskod
-     *            Find an observation with this {@link Kod}
+     * @param observationer   observationer
+     * @param observationskod Find an observation with this {@link Kod}
      * @return an {@link Observation} if it is found, or null otherwise
      */
     public Observation getObservationWithKod(List<Observation> observationer, Kod observationskod) {
@@ -799,9 +759,8 @@ public class ExternalToInternalConverterInstance {
     /**
      * Returns an Aktivitet based on the specified Kod, or <code>null</code> if none where found.
      *
-     * @param aktiviteter aktiviteter
-     * @param aktivitetskod
-     *            Find an aktivitet with this {@link Kod}
+     * @param aktiviteter   aktiviteter
+     * @param aktivitetskod Find an aktivitet with this {@link Kod}
      * @return an {@link Aktivitet} if it is found, or null otherwise
      */
     public Aktivitet getAktivitetWithKod(List<Aktivitet> aktiviteter, Kod aktivitetskod) {
@@ -816,9 +775,8 @@ public class ExternalToInternalConverterInstance {
 
     /**
      * Get a single object from a collection, return null if collection contains more than one object.
-     * 
-     * @param collection
-     *            The collection
+     *
+     * @param collection The collection
      * @return an object
      */
     private <T> T getSingleElement(Collection<T> collection) {

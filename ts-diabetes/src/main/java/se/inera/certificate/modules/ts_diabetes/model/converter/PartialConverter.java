@@ -34,9 +34,8 @@ import se.inera.certificate.model.PartialInterval;
 
 /**
  * Utility for converting a joda-time Partial to String and vice versa.
- * 
+ *
  * @author Niklas Pettersson, R2M
- * 
  */
 public final class PartialConverter {
 
@@ -48,14 +47,16 @@ public final class PartialConverter {
 
     private static final DateTimeFormatter YEAR_MONTH_DAY_PATTERN = DateTimeFormat.forPattern("yyyy-MM-dd");
 
-    private static final DateTimeFieldType[] PARTIAL_FIELDS = new DateTimeFieldType[] { DateTimeFieldType.year(),
-            DateTimeFieldType.monthOfYear(), DateTimeFieldType.dayOfMonth() };
+    private static final DateTimeFieldType[] PARTIAL_FIELDS = new DateTimeFieldType[]{DateTimeFieldType.year(),
+            DateTimeFieldType.monthOfYear(), DateTimeFieldType.dayOfMonth()};
+
+    private PartialConverter() {
+    }
 
     /**
      * Converts a Partial to a string on the form yyyy(-MM(-dd)).
-     * 
-     * @param partial
-     *            A partial with at least the year field set.
+     *
+     * @param partial A partial with at least the year field set.
      * @return A String
      */
     public static String partialToString(Partial partial) {
@@ -76,9 +77,8 @@ public final class PartialConverter {
 
     /**
      * Converts a date String to a Partial.
-     * 
-     * @param dateStr
-     *            A date expressed as yyyy(-MM(-dd)).
+     *
+     * @param dateStr A date expressed as yyyy(-MM(-dd)).
      * @return A Partial or null if the supplied string is empty.
      */
     public static Partial stringToPartial(String dateStr) {
