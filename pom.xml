@@ -40,6 +40,7 @@
     <module>ts-diabetes</module>
     <module>module-support</module>
     <module>common-webjar</module>
+    <module>integration-util</module>
   </modules>
 
   <properties>
@@ -200,7 +201,7 @@
         <version>${inera.certificate.version}</version>
       </dependency>
       <dependency>
-        <groupId>se.inera.certificate</groupId>
+        <groupId>se.inera.certificate.modules</groupId>
         <artifactId>integration-util</artifactId>
         <version>${inera.certificate.version}</version>
       </dependency>
@@ -237,6 +238,11 @@
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-databind</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.datatype</groupId>
+        <artifactId>jackson-datatype-joda</artifactId>
         <version>${jackson.version}</version>
       </dependency>
       <dependency>
