@@ -360,6 +360,14 @@ define([
                 },
 
                 /**
+                 * returns valdVardgivare from user context
+                 * @returns valdVardgivare
+                 */
+                getValdVardgivare: function () {
+                    return this.userContext.valdVardgivare;
+                },
+
+                /**
                  * returns valdVardenhet from user context
                  * @returns valdVardenhet
                  */
