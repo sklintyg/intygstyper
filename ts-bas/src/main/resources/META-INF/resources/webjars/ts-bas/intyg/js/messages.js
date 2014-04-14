@@ -76,7 +76,16 @@ define(
 					"ts-bas.label.latestevent.showall" : "Visa alla händelser",
 					"history.label.pagetitle" : "Intygets alla händelser",
 					"ts-bas.status.sent" : "Skickat till",
-					"ts-bas.target.mi" : "Försäkringsbolaget"
+					"ts-bas.target.mi" : "Försäkringsbolaget",
+						
+					"ts-bas.label.confirmedby" : "Ovanstående uppgifter och bedömningar har bekräftas",
+			        "ts-bas.label.date" : "Datum",
+			        "ts-bas.label.contactinfo" : "Namnförtydligande, mottagningens adress och telefon",
+			        
+			        "ts-bas-bedomning-info-alt-1":"Patienten uppfyller kraven enligt Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2) för:",
+			        "ts-bas-bedomning-info-alt-2":"Kan inte ta ställning",
+			        "ts-bas-bedomning-info-undersokas-med-specialkompetens":"Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i:",
+			        "ts-bas-bedomning-info-ej-angivet":"Ej angivet",
 
 				},
 				"en" : {
