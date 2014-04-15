@@ -158,6 +158,35 @@
                         <span message key="ts-bas.label.syn.nystagmus"></span>
                         <span message key="{{cert.syn.nystagmus | BoolToTextFilter}}"></span>
             		</span>	
+            		
+            		<span class="text">
+						<table class="table table-form">
+							<tr>
+							    <th></th>
+							    <th>Utan korrektion</th>
+							    <th>Med korrektion</th>
+							    <th>Kontaktlinser</th>
+							</tr>
+						    <tr>
+						        <td>Höger öga</td>
+						        <td><span class="text">{{cert.syn.hogerOga.utanKorrektion}}</span></td>
+						        <td><span class="text">{{cert.syn.hogerOga.medKorrektion}}</span></td>
+						        <td><span class="text" message key="{{cert.syn.hogerOga.kontaktlins | BoolToTextFilter}}"></span></td>
+						    </tr>
+						    <tr>
+						        <td>Vänster öga</td>
+       					        <td><span class="text">{{cert.syn.vansterOga.utanKorrektion}}</span></td>
+						        <td><span class="text">{{cert.syn.vansterOga.medKorrektion}}</span></td>
+						        <td><span class="text" message key="{{cert.syn.vansterOga.kontaktlins | BoolToTextFilter}}"></span></td>
+						    </tr>
+						    <tr>
+						        <td>Binokulärt</td>
+      					        <td><span class="text">{{cert.syn.binokulart.utanKorrektion}}</span></td>
+						        <td><span class="text">{{cert.syn.binokulart.medKorrektion}}</span></td>
+						        <td></td>
+						    </tr>
+						</table>
+					</span>
             	</div>
             	<div class="body-row">
             		<h3 class="title">
