@@ -20,13 +20,15 @@ define([], function() {
 					backdropFade : true,
 					dialogFade : true
 				};
+				
+
+				// expose calculated static link for pdf download
+				$scope.downloadAsPdfLink = "/moduleapi/certificate/" + $routeParams.certificateId + "/pdf";
 
 				certificateService.getCertificate($routeParams.certificateId, function(result) {
 					$scope.doneLoading = true;
 					if (result != null) {
 						$scope.cert = result;
-						// expose calculated static link for pdf download
-						$scope.downloadAsPdfLink = "/moduleapi/certificate/" + $routeParams.certificateId + "/pdf";
 						
 					} else {
 						// show error view

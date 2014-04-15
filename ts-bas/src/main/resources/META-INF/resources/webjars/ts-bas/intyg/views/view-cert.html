@@ -51,7 +51,7 @@
             <button type="button" ng-click="open()" class="btn btn-success">
               <message key="button.send" />
             </button>
-            <button id="downloadprint" type="submit" onClick="document.pdfForm.submit()" class="btn btn-inverse">
+            <button id="downloadprint" type="submit" ng-click="document.pdfForm.submit()" class="btn btn-inverse">
               <message key="button.downloadprint" />
             </button>
           </p>
@@ -120,7 +120,10 @@
               </div>
               <div class="row">
               	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                  <span class="tag"><message key="ts-bas.label.intygavser" /></span> <span id="caregiver">{{cert.intygAvser}}</span>
+                  <span class="tag"><message key="ts-bas.label.intygavser" /></span> 
+                  <label ng-repeat="typ in filtered.korkortstyp = (cert.intygAvser.korkortstyp | filter:{selected : true})" id="caregiver">
+                      <span message key="ts-bas.label.korkort.{{typ.type}}"></span><span ng-show="filtered.korkortstyp.length > 1">, </span>
+                  </label>
                 </div>
               </div>
             </div>
@@ -130,210 +133,247 @@
             <div class="cert-body">
             	<div class="body-row">
             		<h3 class="title">
-            			<span message key="ts-bas.label.synfunktioner">{{ts-bas.label.synfunktioner}}</span>
+            			<span message key="ts-bas.label.synfunktioner"></span>
             			<span>
             				<span></span>
             			</span>
             		</h3>
             		<span class="text">
-            			<span>
-            				FÄLTDATA HÄR
-            			</span>
+                        <span message key="ts-bas.label.syn.synfaltsdefekter"></span>
+                        <span message key="{{cert.syn.synfaltsdefekter | BoolToTextFilter}}"></span>
+                    </span>
+                    <span class="text">
+                        <span message key="ts-bas.label.syn.nattblindhet"></span>
+                        <span message key="{{cert.syn.nattblindhet | BoolToTextFilter}}"></span>
+                    </span>
+                    <span class="text">
+                        <span message key="ts-bas.label.syn.progressivogonsjukdom"></span>
+                        <span message key="{{cert.syn.progressivogonsjukdom | BoolToTextFilter}}"></span>
+                    </span>
+                    <span class="text">
+                        <span message key="ts-bas.label.syn.diplopi"></span>
+                        <span message key="{{cert.syn.diplopi | BoolToTextFilter}}"></span>
+                    </span>
+                    <span class="text">
+                        <span message key="ts-bas.label.syn.nystagmus"></span>
+                        <span message key="{{cert.syn.nystagmus | BoolToTextFilter}}"></span>
             		</span>	
             	</div>
             	<div class="body-row">
             		<h3 class="title">
-            			<span message key="ts-bas.label.horselbalans">{{ts-bas.label.horselbalans}}</span>
+            			<span message key="ts-bas.label.horselbalans"></span>
             			<span>
             				<span></span>
             			</span>
             		</h3>
             		<span class="text">
-            			<span>
-            				FÄLTDATA HÄR
-            			</span>
+            			<span message key="ts-bas.label.horselbalans.balansrubbningar"></span>
+            			<span message key="{{cert.horselbalans.balansrubbningar | BoolToTextFilter}}"></span>
             		</span>	
             	</div>
             	<div class="body-row">
             		<h3 class="title">
-            			<span message key="ts-bas.label.funktionsnedsattning">{{ts-bas.label.funktionsnedsattning}}</span>
+            			<span message key="ts-bas.label.funktionsnedsattning"></span>
             			<span>
             				<span></span>
             			</span>
             		</h3>
             		<span class="text">
-            			<span>
-            				FÄLTDATA HÄR
-            			</span>
+            			<span message key="ts-bas.label.funktionsnedsattning.funktionsnedsattning"></span>
+            			<span message key="{{cert.funktionsnedsattning.funktionsnedsattning | BoolToTextFilter}}"></span>
             		</span>	
             	</div>
             	<div class="body-row">
             		<h3 class="title">
-            			<span message key="ts-bas.label.hjartkarl">{{ts-bas.label.hjartkarl}}</span>
+            			<span message key="ts-bas.label.hjartkarl"></span>
             			<span>
             				<span></span>
             			</span>
             		</h3>
             		<span class="text">
-            			<span>
-            				FÄLTDATA HÄR
-            			</span>
+            			<span message key="ts-bas.label.hjartkarl.hjart-karlsjukdom"></span>
+            			<span message key="{{cert.hjartkarl.hjartKarlsjukdom | BoolToTextFilter}}"></span>
+            		</span>	
+        		    <span class="text">
+            			<span message key="ts-bas.label.hjartkarl.hjarnskada-efter-trauma"></span>
+            			<span message key="{{cert.hjartkarl.hjarnskadaEfterTrauma | BoolToTextFilter}}"></span>
+            		</span>	
+        		    <span class="text">
+            			<span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke"></span>
+            			<span message key="{{cert.hjartkarl.riskfaktorerStroke | BoolToTextFilter}}"></span>
             		</span>	
             	</div>
             	<div class="body-row">
             		<h3 class="title">
-            			<span message key="ts-bas.label.diabetes">{{ts-bas.label.diabetes}}</span>
+            			<span message key="ts-bas.label.diabetes"></span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>
+       		   		<span class="text">
+            			<span message key="ts-bas.label.diabetes.har-diabetes"></span>
+            			<span message key="{{cert.diabetes.harDiabetes | BoolToTextFilter}}"></span>
+            		</span>	
+            		<div ng-show="cert.diabetes.harDiabetes">
+       		   		    <span class="text">
+            			    <span message key="ts-bas.label.diabetes.diabetestyp"></span>
+            			    <span message key="ts-bas.label.diabetes.diabetestyp.{{cert.diabetes.diabetesTyp}}"></span>
+            		    </span>	
+       		   		    <span class="text">
+            			    <span message key="ts-bas.label.diabetes.behandling.kost"></span>
+            			    <span message key="{{cert.diabetes.kost | BoolToTextFilter}}"></span>
+            		    </span>	
+       		   		    <span class="text">
+            			    <span message key="ts-bas.label.diabetes.behandling.insulin"></span>
+            			    <span message key="{{cert.diabetes.insulin | BoolToTextFilter}}"></span>
+            		    </span>	
+       		   		    <span class="text">
+            			    <span message key="ts-bas.label.diabetes.behandling.tabletter"></span>
+            			    <span message key="{{cert.diabetes.tabletter | BoolToTextFilter}}"></span>
+            		    </span>	
+            		</div>	
+            	</div>
+            	<div class="body-row">
+            		<h3 class="title">
+            			<span message key="ts-bas.label.neurologi"></span>
             			<span>
             				<span></span>
             			</span>
             		</h3>
             		<span class="text">
-            			<span>
-            				FÄLTDATA HÄR
-            			</span>
+            			<span message key="ts-bas.label.neurologi.neurologisksjukdom"></span>
+            			<span message key="{{cert.neurologi.neurologiskSjukdom | BoolToTextFilter}}"></span>
             		</span>	
             	</div>
             	<div class="body-row">
             		<h3 class="title">
-            			<span message key="ts-bas.label.neurologi">{{ts-bas.label.neurologi}}</span>
+            			<span message key="ts-bas.label.medvetandestorning"></span>
             			<span>
             				<span></span>
             			</span>
             		</h3>
             		<span class="text">
-            			<span>
-            				FÄLTDATA HÄR
-            			</span>
+            			<span message key="ts-bas.label.medvetandestorning.medvetandestorning"></span>
+            			<span message key="{{cert.medvetandestorning.medvetandestorning | BoolToTextFilter}}"></span>
             		</span>	
             	</div>
             	<div class="body-row">
             		<h3 class="title">
-            			<span message key="ts-bas.label.medvetandestorning">{{ts-bas.label.medvetandestorning}}</span>
+            			<span message key="ts-bas.label.njurar"></span>
             			<span>
             				<span></span>
             			</span>
             		</h3>
             		<span class="text">
-            			<span>
-            				FÄLTDATA HÄR
-            			</span>
+            			<span message key="ts-bas.label.njurar.nedsatt-njurfunktion"></span>
+            			<span message key="{{cert.njurar.nedsattNjurfunktion | BoolToTextFilter}}"></span>
             		</span>	
             	</div>
             	<div class="body-row">
             		<h3 class="title">
-            			<span message key="ts-bas.label.njurar">{{ts-bas.label.njurar}}</span>
+            			<span message key="ts-bas.label.kognitivt"></span>
             			<span>
             				<span></span>
             			</span>
             		</h3>
             		<span class="text">
-            			<span>
-            				FÄLTDATA HÄR
-            			</span>
+            			<span message key="ts-bas.label.kognitivt.sviktande-kognitiv-funktion"></span>
+            			<span message key="{{cert.kognitivt.sviktandeKognitivFunktion | BoolToTextFilter}}"></span>
             		</span>	
             	</div>
             	<div class="body-row">
             		<h3 class="title">
-            			<span message key="ts-bas.label.kognitivt">{{ts-bas.label.kognitivt}}</span>
+            			<span message key="ts-bas.label.somn-vakenhet"></span>
             			<span>
             				<span></span>
             			</span>
             		</h3>
             		<span class="text">
-            			<span>
-            				FÄLTDATA HÄR
-            			</span>
+            			<span message key="ts-bas.label.somn-vakenhet.tecken-somnstorningar"></span>
+            			<span message key="{{cert.somnVakenhet.teckenSomnstorningar | BoolToTextFilter}}"></span>
             		</span>	
             	</div>
             	<div class="body-row">
             		<h3 class="title">
-            			<span message key="ts-bas.label.somnvakenhet">{{ts-bas.label.somnvakenhet}}</span>
+            			<span message key="ts-bas.label.narkotika-lakemedel"></span>
             			<span>
             				<span></span>
             			</span>
             		</h3>
             		<span class="text">
-            			<span>
-            				FÄLTDATA HÄR
-            			</span>
+            			<span message key="ts-bas.label.narkotika-lakemedel.tecken-missbruk"></span>
+            			<span message key="{{cert.narkotikaLakemedel.teckenMissbruk | BoolToTextFilter}}"></span>
+            		</span>	
+            		<span class="text">
+            			<span message key="ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats"></span>
+            			<span message key="{{cert.narkotikaLakemedel.foremalForVardinsats | BoolToTextFilter}}"></span>
+            		</span>	
+            		<span class="text">
+            			<span message key="ts-bas.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk"></span>
+            			<span message key="{{cert.narkotikaLakemedel.lakarordineratLakemedelsbruk | BoolToTextFilter}}"></span>
             		</span>	
             	</div>
             	<div class="body-row">
             		<h3 class="title">
-            			<span message key="ts-bas.label.narkotikalakemedel">{{ts-bas.label.narkotikalakemedel}}</span>
+            			<span message key="ts-bas.label.psykiskt"></span>
             			<span>
             				<span></span>
             			</span>
             		</h3>
             		<span class="text">
-            			<span>
-            				FÄLTDATA HÄR
-            			</span>
+            			<span message key="ts-bas.label.psykiskt.psykisksjukdom"></span>
+            			<span message key="{{cert.psykiskt.psykiskSjukdom | BoolToTextFilter}}"></span>
             		</span>	
             	</div>
             	<div class="body-row">
             		<h3 class="title">
-            			<span message key="ts-bas.label.psykiskt">{{ts-bas.label.psykiskt}}</span>
+            			<span message key="ts-bas.label.utvecklingsstorning"></span>
             			<span>
             				<span></span>
             			</span>
             		</h3>
             		<span class="text">
-            			<span>
-            				FÄLTDATA HÄR
-            			</span>
+            			<span message key="ts-bas.label.utvecklingsstorning.psykisk-utvecklingsstorning"></span>
+            			<span message key="{{cert.utvecklingsstorning.psykiskUtvecklingsstorning | BoolToTextFilter}}"></span>
+            		</span>	
+            		<span class="text">
+            			<span message key="ts-bas.label.utvecklingsstorning.har-syndrom"></span>
+            			<span message key="{{cert.utvecklingsstorning.harSyndrom | BoolToTextFilter}}"></span>
             		</span>	
             	</div>
             	<div class="body-row">
             		<h3 class="title">
-            			<span message key="ts-bas.label.utvecklingsstorning">{{ts-bas.label.utvecklingsstorning}}</span>
+            			<span message key="ts-bas.label.sjukhusvard"></span>
             			<span>
             				<span></span>
             			</span>
             		</h3>
             		<span class="text">
-            			<span>
-            				FÄLTDATA HÄR
-            			</span>
+            		    <span message key="ts-bas.label.sjukhusvard.sjukhus-eller-lakarkontakt"></span>
+            		    <span message key="{{cert.sjukhusvard.sjukhusEllerLakarkontakt | BoolToTextFilter}}"></span>
             		</span>	
             	</div>
             	<div class="body-row">
             		<h3 class="title">
-            			<span message key="ts-bas.label.sjukhusvard">{{ts-bas.label.sjukhusvard}}</span>
+            			<span message key="ts-bas.label.medicinering"></span>
             			<span>
             				<span></span>
             			</span>
             		</h3>
             		<span class="text">
-            			<span>
-            				FÄLTDATA HÄR
-            			</span>
+            		    <span message key="ts-bas.label.medicinering.stadigvarande-medicinering"></span>
+            		    <span message key="{{cert.medicinering.stadigvarandeMedicinering | BoolToTextFilter}}"></span>
             		</span>	
             	</div>
-            	<div class="body-row">
+            	<div class="body-row" ng-show="cert.ovrigkommentar.length > 0">
             		<h3 class="title">
-            			<span message key="ts-bas.label.medicinering">{{ts-bas.label.medicinering}}</span>
+            			<span message key="ts-bas.label.ovrigkommentar"></span>
             			<span>
             				<span></span>
             			</span>
             		</h3>
-            		<span class="text">
-            			<span>
-            				FÄLTDATA HÄR
-            			</span>
-            		</span>	
-            	</div>
-            	<div class="body-row">
-            		<h3 class="title">
-            			<span message key="ts-bas.label.ovrigkommentar">{{ts-bas.label.ovrigkommentar}}</span>
-            			<span>
-            				<span></span>
-            			</span>
-            		</h3>
-            		<span class="text">
-            			<span>
-            				FÄLTDATA HÄR
-            			</span>
+               		<span class="text">
+            		    <span>{{cert.ovrigkommentar}}</span>
             		</span>	
             	</div>
             	<div class="body-row">
@@ -343,15 +383,26 @@
             				<span></span>
             			</span>
             		</h3>
-            		<span class="text">
-            			<span>
-            				<span class="text" message key="ts-bas-bedomning-info-alt-1">{{ts-bas-bedomning-info-alt-1}}</span><br/>
-            				<span>{{cert.bedomning}}</span><br/>
-            				<span class="text">{{ts-bas-bedomning-info-alt-2}}</span><br/>
-            				<span class="text" message key="ts-bas-bedomning-info-undersokas-med-specialkompetens"><b>{{ts-bas-bedomning-info-undersokas-med-specialkompetens}}</b></span><br/>
-            				<span class="text" message key="ts-bas-bedomning-info-ej-angivet">{{ts-bas-bedomning-info-ej-angivet}}</span>
-            			</span>
-            		</span>	
+      				<div ng-show="!cert.bedomning.kanInteTaStallning">
+            				    <span class="text" message key="ts-bas.label.bedomning-info-alt-1"></span>
+            				
+            				    <span class="text">
+            				        <label ng-repeat="typ in filtered.korkortstyp = (cert.bedomning.korkortstyp | filter:{selected : true})" id="caregiver">
+            				            <span message key="ts-bas.label.korkort.{{typ.type}}"></span>
+            				            <span ng-show="filtered.korkortstyp.length > 1">, </span>
+            				        </label>
+            				    </span>
+            		</div>
+            				
+            		<div ng-show="cert.bedomning.kanInteTaStallning">
+            		    <span class="text">{{ts-bas.label.bedomning-info-alt-2}}</span>
+            		</div>
+            				
+           			<div>
+           			    <span class="text" message key="ts-bas.label.bedomning-info-undersokas-med-specialkompetens"></span>
+           			    <span ng-show="cert.bedomning.lakareSpecialKompetens.length > 0" class="text">{{cert.bedomning.lakareSpecialKompetens}}</span>
+           			    <span ng-show="!cert.bedomning.lakareSpecialKompetens" class="text" message key="ts-bas.label.bedomning-info-ej-angivet"></span>
+     			    </div>    
             	</div>
             	
             	<div class="row">

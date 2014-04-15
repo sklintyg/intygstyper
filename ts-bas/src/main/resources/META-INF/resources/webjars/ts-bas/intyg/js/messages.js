@@ -34,8 +34,8 @@ define(
 		            "ts-bas.label.medvetandestorning" : "7. Epilepsi, epileptiskt anfall och annan medvetandestörning",
 		            "ts-bas.label.njurar" : "8. Njursjukdomar",
 		            "ts-bas.label.kognitivt" : "9. Demens och andra kognitiva störningar",
-		            "ts-bas.label.somnvakenhet" : "10. Sömn- och vakenhetsstörningar",
-		            "ts-bas.label.narkotikalakemedel" : "11. Alkohol, narkotika och läkemedel",
+		            "ts-bas.label.somn-vakenhet" : "10. Sömn- och vakenhetsstörningar",
+		            "ts-bas.label.narkotika-lakemedel" : "11. Alkohol, narkotika och läkemedel",
 		            "ts-bas.label.psykiskt" : "12. Psykiska sjukdomar och störningar",
 		            "ts-bas.label.utvecklingsstorning" : "13. ADHD, autismspektrumtillstånd och likartade tillstånd samt psykisk utvecklingsstörning",
 		            "ts-bas.label.sjukhusvard" : "14. Sjukhusvård",
@@ -54,7 +54,63 @@ define(
 		            "ts-bas.label.korkort.de" : "DE",
 		            "ts-bas.label.korkort.taxi" : "Taxi",
 		            "ts-bas.label.korkort.annat" : "Annat",
-					
+		            
+		            "ts-bas.label.syn.binokulart" : "Binokulärt",
+		            "ts-bas.label.syn.diplopi" : "Diplopi",
+		            "ts-bas.label.syn.hogeroga" : "",
+		            "ts-bas.label.syn.nattblindhet" : "Nattblindhet",
+		            "ts-bas.label.syn.nystagmus" : "Nystagmus",
+		            "ts-bas.label.syn.progressivogonsjukdom" : "Progressiv ögonsjukdom",
+		            "ts-bas.label.syn.synfaltsdefekter" : "Synfältsdefekter",
+		            "ts-bas.label.syn.vansteroga" : "",
+		            "ts-bas.label.syn.utankorrektion" : "",
+		            "ts-bas.label.syn.medkorrektion" : "",
+		            "ts-bas.label.syn.kontaktlins" : "",
+
+		            "ts-bas.label.horselbalans.balansrubbningar" : "Balansrubbningar",
+		            
+		            "ts-bas.label.funktionsnedsattning.funktionsnedsattning" : "Funktionsnedsättning",
+		            
+		            "ts-bas.label.hjartkarl.hjart-karlsjukdom" : "Hjärt- och kärlsjukdomar",
+		            "ts-bas.label.hjartkarl.hjarnskada-efter-trauma" : "Förekommer hjärnskada efter trauma",
+		            "ts-bas.label.hjartkarl.riskfaktorer-stroke" : "Förekommer ökade riskfaktorer för stroke",
+		            
+		            "ts-bas.label.diabetes.har-diabetes" : "Har patienten diabetes",
+		            "ts-bas.label.diabetes.diabetestyp" : "Diabetestyp",
+		            "ts-bas.label.diabetes.diabetestyp.diabetes_typ_1" : "Diabetes Typ1",
+		            "ts-bas.label.diabetes.diabetestyp.diabetes_typ_2" : "Diabets Typ2",
+		            "ts-bas.label.diabetes.behandling" : "Typ av behandling(ar)",
+		            "ts-bas.label.diabetes.behandling.kost" : "Kost",
+		            "ts-bas.label.diabetes.behandling.tabletter" : "Tabletter",
+		            "ts-bas.label.diabetes.behandling.insulin" : "Insulin",
+		            
+		            
+		            "ts-bas.label.neurologi.neurologisksjukdom" : "Neurologisk sjukdom",
+		            
+		            "ts-bas.label.medvetandestorning.medvetandestorning" : "Medvetandestörning",
+		            
+		            "ts-bas.label.njurar.nedsatt-njurfunktion" : "Nedsatt njurfunktion",
+		   
+		            "ts-bas.label.kognitivt.sviktande-kognitiv-funktion" : "Sviktande kognitiv funktion",
+		            
+		            "ts-bas.label.somn-vakenhet.tecken-somnstorningar" : "Tecken på sömnstörningar",
+		            
+		            "ts-bas.label.narkotika-lakemedel.tecken-missbruk" : "Finns tecken på missbruk",
+		            "ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats" : "Har patienten varit föremål för vårdinsats",
+		            "ts-bas.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk" : "Förekommer läkarordinerat läkemedelsebruk",
+		            
+		            "ts-bas.label.psykiskt.psykisksjukdom" : "Psykisk sjukdom",
+		            
+		            "ts-bas.label.utvecklingsstorning.psykisk-utvecklingsstorning" : "Psykisk utvecklingsstörning",
+		            "ts-bas.label.utvecklingsstorning.har-syndrom" : "Syndrom av olika slag",
+		            
+		            "ts-bas.label.sjukhusvard.sjukhus-eller-lakarkontakt" : "Har patienten vårdats på sjukhus eller haft övrig kontakt med läkare",
+		            
+		            "ts-bas.label.medicinering.stadigvarande-medicinering" : "Förekommer stadigvarande medicinering",
+		            
+		            "ts-bas.label.true" : "JA",
+		            "ts-bas.label.false" : "NEJ",
+		            		            
 		            "ts-bas.label.certtitle" : "Läkarintyg Transportstyrelsen Bas",
 					"ts-bas.label.pagetitle" : "Granska och skicka",
 					"ts-bas.label.pagedescription" : "Här kan du titta på ditt intyg och skicka det. Om du upptäcker några felaktigheter så hör av dig enheten som utfärdade ditt intyg. Du kan även öppna intyget som en PDF och skriva ut och spara.",
@@ -82,10 +138,10 @@ define(
 			        "ts-bas.label.date" : "Datum",
 			        "ts-bas.label.contactinfo" : "Namnförtydligande, mottagningens adress och telefon",
 			        
-			        "ts-bas-bedomning-info-alt-1":"Patienten uppfyller kraven enligt Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2) för:",
-			        "ts-bas-bedomning-info-alt-2":"Kan inte ta ställning",
-			        "ts-bas-bedomning-info-undersokas-med-specialkompetens":"Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i:",
-			        "ts-bas-bedomning-info-ej-angivet":"Ej angivet",
+			        "ts-bas.label.bedomning-info-alt-1":"Patienten uppfyller kraven enligt Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2) för:",
+			        "ts-bas.label.bedomning.kan-inte-ta-stallning":"Kan inte ta ställning",
+			        "ts-bas.label.bedomning-info-undersokas-med-specialkompetens":"Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i:",
+			        "ts-bas.label.bedomning-info-ej-angivet":"Ej angivet",
 
 				},
 				"en" : {
