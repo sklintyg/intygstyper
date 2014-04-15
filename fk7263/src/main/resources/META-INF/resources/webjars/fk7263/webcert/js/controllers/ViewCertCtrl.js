@@ -67,8 +67,14 @@ define([], function() {
 						$scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';
 					}
 				}, function(error) {
+                    $scope.widgetState.doneLoading = true;
+                    if (error.errorCode === 'DATA_NOT_FOUND') {
+                        $scope.widgetState.activeErrorMessageKey = 'error.data_not_found';
+                    } else {
+                        $scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';
+                    }
 					console.log("Got error while loading cert");
-					console.log(error.data);
+					console.log(error.message);
 				});
 			} ];
 });
