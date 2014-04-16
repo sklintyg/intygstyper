@@ -8,7 +8,7 @@
   <div mi-spinner label="fk7263.message.certificateloading" show-spinner="!doneLoading" show-content="doneLoading">
 
     <!-- Content -->
-    <div class="row">
+    <div class="row-fluid">
       <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
         <h1 ng-focus="pagefocus" tabindex="-1">
           <span message key="fk7263.label.pagetitle"></span>
@@ -16,16 +16,6 @@
         <p>
           <div message key="fk7263.label.pagedescription"></div>
         </p>
-        <form id="view-as-pdf" action="{{downloadAsPdfLink}}" name="pdfForm" method="get" target="_blank">
-          <p class="btn-row">
-            <button id="sendCertificateBtn" type="button" ng-click="send()" class="btn btn-success">
-              <span message key="fk7263.button.sendToFK"></span>
-            </button>
-            <button id="downloadprint" type="submit" onClick="document.pdfForm.submit()" class="btn btn-inverse">
-              <span message key="button.downloadprint"></span>
-            </button>
-          </p>
-        </form>
       </div>
       <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 eventbox">
         <h2>
@@ -46,6 +36,20 @@
           <a class="statusHistoryLink" href ng-click="showStatusHistory()"><span message key="fk7263.label.latestevent.showall"></span></a>
         </p>
       </div>
+    </div>
+    <div class="row-fluid">
+    	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	    	<form id="view-as-pdf" action="{{downloadAsPdfLink}}" name="pdfForm" method="get" target="_blank">
+	          <p class="btn-row">
+	            <button id="sendCertificateBtn" type="button" ng-click="send()" class="btn btn-success">
+	              <span message key="fk7263.button.sendToFK"></span>
+	            </button>
+	            <button id="downloadprint" type="submit" onClick="document.pdfForm.submit()" class="btn btn-inverse">
+	              <span message key="button.downloadprint"></span>
+	            </button>
+	          </p>
+	        </form>
+	    </div>
     </div>
     <div id="certificate" class="certificate">
       <span class="hide" id="certId" title="{{cert.id}}"></span>&nbsp;<span class="hide" id="certType" title="fk7263"></span>

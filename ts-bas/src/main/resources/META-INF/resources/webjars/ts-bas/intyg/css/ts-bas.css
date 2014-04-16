@@ -1,2 +1,5 @@
 .ts-cert-answer { font-weight: bold; }
+.ts-text-field-wide { padding: 5px; }
 .ts-table { }
+.ts-table tr { background: transparent; }
+.ts-table tr th { border-top: 1px solid transparent; }
