@@ -362,14 +362,11 @@ public final class TransportToExternalFk7263LegacyConverter {
             nedsattning.getVarde().add(varde);
         }
         LocalDateInterval observationsperiod = new LocalDateInterval();
-        if (source.getVaraktighetFrom() != null) {
+        if (source.getVaraktighetFrom() != null && source.getVaraktighetTom() != null) {
             observationsperiod.setFrom(source.getVaraktighetFrom());
-        }
-        if (source.getVaraktighetTom() != null) {
             observationsperiod.setTom(source.getVaraktighetTom());
+            nedsattning.setObservationsperiod(DateTimeConverter.toPartialInterval(observationsperiod));
         }
-        nedsattning.setObservationsperiod(DateTimeConverter.toPartialInterval(observationsperiod));
-
         return nedsattning;
     }
 

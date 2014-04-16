@@ -15,7 +15,9 @@ import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.util.Strings;
+import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToExternalFk7263LegacyConverter;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
 /**
@@ -90,7 +92,13 @@ public class ProgrammaticLegacyTransportSchemaValidator extends AbstractValidato
         if (externalutlatande.getSigneringsdatum() == null) {
             addValidationError("Field 14: No signeringsDatum found!");
         }
-
+        // Check date interval for arbetsformaga-nedsattning - mandatory
+        List<Fk7263Observation> arbetsformagor = externalutlatande.getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
+        for(Fk7263Observation arbetsfarmaga : arbetsformagor) {
+            if (arbetsfarmaga.getObservationsperiod() == null) {
+                addValidationError("Field 8b: Invalid date interval!");
+            }
+        }
     }
 
     private void validatePatient() {
