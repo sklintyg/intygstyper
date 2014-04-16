@@ -144,26 +144,26 @@
             				<span></span>
             			</span>
             		</h3>
-            		<span class="text">
+            		<span class="text no-padding-bottom">
                         <span message key="ts-bas.label.syn.synfaltsdefekter"></span>
                         <span class="ts-cert-answer" message key="{{cert.syn.synfaltsdefekter | BoolToTextFilter}}"></span>
                     </span>
-                    <span class="text">
+                    <span class="text no-padding-bottom">
                         <span message key="ts-bas.label.syn.nattblindhet"></span>
                         <span class="ts-cert-answer" message key="{{cert.syn.nattblindhet | BoolToTextFilter}}"></span>
                     </span>
-                    <span class="text">
+                    <span class="text no-padding-bottom">
                         <span message key="ts-bas.label.syn.progressivogonsjukdom"></span>
                         <span class="ts-cert-answer" message key="{{cert.syn.progressivogonsjukdom | BoolToTextFilter}}"></span>
                     </span>
                     
-                    <span class="text" ng-show="achelptext == true">
+                    <span class="text no-padding-bottom" ng-show="achelptext == true">
 	  	                <div class="alert alert-info">
 	                    	<span message key="ts-bas.helptext.synfunktioner.a-c"></span>
 	                	</div>
 	                </span>
                     
-                    <span class="text">
+                    <span class="text no-padding-bottom">
                         <span message key="ts-bas.label.syn.diplopi"></span>
                         <span class="ts-cert-answer" message key="{{cert.syn.diplopi | BoolToTextFilter}}"></span>
                     </span>
@@ -199,13 +199,14 @@
 						        <td></td>
 						    </tr>
 						</table>
-						
-						 <h3>Korrektionsglasens styrka</h3>
-					<span message key="ts-bas.label.syn.8-dioptrier"></span>
-					<span class="ts-cert-answer" message key="{{cert.syn.korrektionsglasensStyrka | BoolToTextFilter}}"></span>
-	                <div class="alert alert-info" ng-show="cert.syn.korrektionsglasensStyrka == true">
-                    	<span message key="ts-bas.helptext.synfunktioner.8-dioptrier"></span>
-                	</div>
+					</span>
+					<span class="text">
+						<h3>Korrektionsglasens styrka</h3>
+						<span message key="ts-bas.label.syn.8-dioptrier"></span>
+						<span class="ts-cert-answer" message key="{{cert.syn.korrektionsglasensStyrka | BoolToTextFilter}}"></span>
+		                <div class="alert alert-info" ng-show="cert.syn.korrektionsglasensStyrka == true">
+                    		<span message key="ts-bas.helptext.synfunktioner.8-dioptrier"></span>
+                		</div>
 					</span>
             	</div>
             	<div class="body-row">
@@ -258,7 +259,6 @@
             			<span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke"></span>
             			<span class="ts-cert-answer" message key="{{cert.hjartkarl.riskfaktorerStroke | BoolToTextFilter}}"></span>
             		</span>	
-            		
             		<span class="text" ng-show="cert.hjartKarl.riskfaktorerStroke">
             			<span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning"></span><br/>
             			<span>{{cert.hjartKarl.beskrivningRiskfaktorer}}</span>
@@ -491,9 +491,9 @@
             			</span>
             		</h3>
       				<div ng-show="!cert.bedomning.kanInteTaStallning">
-            				    <span class="text" message key="ts-bas.label.bedomning-info-alt-1"></span>
+            				    <span class="text no-padding-bottom" message key="ts-bas.label.bedomning-info-alt-1"></span>
             				
-            				    <span class="text">
+            				    <span class="text no-padding-bottom">
             				        <label ng-repeat="typ in filtered.korkortstyp = (cert.bedomning.korkortstyp | filter:{selected : true})" id="caregiver">
             				            <span message key="ts-bas.label.korkort.{{typ.type}}"></span>
             				            <span ng-show="filtered.korkortstyp.length > 1">, </span>

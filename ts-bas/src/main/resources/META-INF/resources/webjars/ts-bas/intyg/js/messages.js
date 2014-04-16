@@ -122,8 +122,10 @@ define(
 		            "ts-bas.label.true" : "JA",
 		            "ts-bas.label.false" : "NEJ",
 		            		            
-		            "ts-bas.label.certtitle" : "Läkarintyg Transportstyrelsen Bas",
-					"ts-bas.label.pagetitle" : "Granska och skicka",
+		            "ts-bas.label.certtitle" : "Transportstyrelsens läkarintyg",
+		            "ts-bas.typename" : " - Bas",
+		            "ts-bas.label.pagetitle" : "Granska och skicka intyg",
+		            "ts-button.detail.send" : "Skicka intyg",
 					"ts-bas.label.pagedescription" : "Här kan du titta på ditt intyg och skicka det. Om du upptäcker några felaktigheter så hör av dig enheten som utfärdade ditt intyg. Du kan även öppna intyget som en PDF och skriva ut och spara.",
 					"ts-bas.label.patientname" : "Patientens namn:",
 					"ts-bas.label.issued" : "Utfärdat:",
