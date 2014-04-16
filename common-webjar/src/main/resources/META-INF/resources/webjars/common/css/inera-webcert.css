@@ -821,6 +821,7 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
 
 .webcert-top-padding-section {
     padding-top: 10px;
+    clear: both;
 }
 
 .qa-table-section {
