@@ -819,6 +819,10 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
     padding-bottom: 10px;
 }
 
+.webcert-top-padding-section {
+    padding-top: 10px;
+}
+
 .qa-table-section {
     padding-top: 20px;
 }

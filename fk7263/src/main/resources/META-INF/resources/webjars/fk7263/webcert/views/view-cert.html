@@ -164,7 +164,7 @@
                       <div class="form-group">
 						<textarea rows="5" class="form-control col-md-9 qa-block-wc" ng-model="qa.svarsText" id="answerText-{{qa.internReferens}}" ng-show="!qa.answerDisabled && !certProperties.isRevoked"></textarea>
 					  </div>
-                      <div>
+                      <div class="webcert-top-padding-section">
                         <!-- error message occuring when inteacting with server for this FragaSvar-->
                         <div id="{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey" class="alert alert-danger">
                           <span message key="error.{{qa.activeErrorMessageKey}}"></span>
