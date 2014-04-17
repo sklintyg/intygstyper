@@ -18,8 +18,6 @@
  */
 package se.inera.certificate.model;
 
-import se.inera.certificate.model.Kod;
-
 public class Utforarroll {
 
     private Kod utforartyp;

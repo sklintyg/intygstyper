@@ -63,7 +63,7 @@ public final class LocalDateAdapter {
         // a different TimeZone), and that LocalDateTime doesn't handle datetimes with explicit TimeZone.
         // Hence if the date contains an explicit TimeZone, use DatatypeConverter to do the parsing,
         // otherwise use LocalDateTime's parsing.
-        if (dateTimeString.matches(XSD_DATETIME_TIMEZONE_REGEXP) || dateTimeString.matches(XSD_DATE_TIMEZONE_REGEXP) ) {
+        if (dateTimeString.matches(XSD_DATETIME_TIMEZONE_REGEXP) || dateTimeString.matches(XSD_DATE_TIMEZONE_REGEXP)) {
             return new LocalDateTime(javax.xml.bind.DatatypeConverter.parseDateTime(dateTimeString).getTime(), TIME_ZONE);
         } else {
             return new LocalDateTime(dateTimeString, TIME_ZONE);
@@ -85,14 +85,14 @@ public final class LocalDateAdapter {
     }
 
     /**
-     * Print a DateTime (always using ISO format)
+     * Print a DateTime (always using ISO format).
      */
     public static String printDateTime(LocalDateTime dateTime) {
         return printIsoDateTime(dateTime);
     }
 
     /**
-     * Print a Date (always using ISO format)
+     * Print a Date (always using ISO format).
      */
     public static String printDate(LocalDate date) {
         return printIsoDate(date);

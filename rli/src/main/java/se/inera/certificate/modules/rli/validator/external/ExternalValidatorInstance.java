@@ -49,6 +49,7 @@ import se.inera.certificate.validate.SimpleIdValidatorBuilder;
 public class ExternalValidatorInstance {
 
     private static final IdValidator ID_VALIDATOR;
+    public static final int AKTIVITETER_MAX_SIZE = 3;
 
     private final List<String> validationErrors;
 
@@ -178,7 +179,7 @@ public class ExternalValidatorInstance {
         /**
          * Make sure Utlatande contains 1..3 Aktiviteter and nothing else
          */
-        if (aktiviteter.size() < 1 && aktiviteter.size() > 3) {
+        if (aktiviteter.size() < 1 && aktiviteter.size() > AKTIVITETER_MAX_SIZE) {
             validationError("Utlatande does not contain 1 to 3 Aktiviteter");
             return;
         }

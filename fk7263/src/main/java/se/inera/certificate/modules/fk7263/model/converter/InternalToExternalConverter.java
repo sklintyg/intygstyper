@@ -49,6 +49,9 @@ public class InternalToExternalConverter {
 
     private static final Kod FK7263_TYP = new Kod("f6fb361a-e31d-48b8-8657-99b63912dd9b", "kv_utlatandetyp_intyg",
             null, "FK7263");
+    public static final double FORMOGA_1_4 = 25D;
+    public static final double FORMOGA_1_2 = 50D;
+    public static final double FORMOGA_3_4 = 75D;
 
     /**
      * Converts from the internal to the external model.
@@ -204,15 +207,15 @@ public class InternalToExternalConverter {
         }
         if (source.getNedsattMed75() != null) {
             observationer.add(buildArbetsformageObservation(ObservationsKoder.ARBETSFORMAGA,
-                    source.getNedsattMed75(), buildPrognos(source), new PhysicalQuantity(25.0, "percent")));
+                    source.getNedsattMed75(), buildPrognos(source), new PhysicalQuantity(FORMOGA_1_4, "percent")));
         }
         if (source.getNedsattMed50() != null) {
             observationer.add(buildArbetsformageObservation(ObservationsKoder.ARBETSFORMAGA,
-                    source.getNedsattMed50(), buildPrognos(source), new PhysicalQuantity(50.0, "percent")));
+                    source.getNedsattMed50(), buildPrognos(source), new PhysicalQuantity(FORMOGA_1_2, "percent")));
         }
         if (source.getNedsattMed25() != null) {
             observationer.add(buildArbetsformageObservation(ObservationsKoder.ARBETSFORMAGA,
-                    source.getNedsattMed25(), buildPrognos(source), new PhysicalQuantity(75.0, "percent")));
+                    source.getNedsattMed25(), buildPrognos(source), new PhysicalQuantity(FORMOGA_3_4, "percent")));
         }
 
         return observationer;

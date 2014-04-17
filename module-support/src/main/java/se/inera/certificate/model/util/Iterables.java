@@ -10,7 +10,7 @@ public final class Iterables {
 
     public static <T> T find(List<? extends T> list, Predicate<T> predicate, T defaultResult) {
         if (list != null) {
-            for (T item: list) {
+            for (T item : list) {
                 if (predicate.apply(item)) {
                     return item;
                 }
@@ -24,11 +24,12 @@ public final class Iterables {
             targetCollection.addAll(toAdd);
         }
     }
-    
+
     /**
-     * Adds a value to a collection if the collection if both collection and value is non-null
-     * @param targetCollection
-     * @param toAdd
+     * Adds a value to a collection if the collection if both collection and value is non-null.
+     *
+     * @param targetCollection targetCollection
+     * @param toAdd            toAdd
      */
     public static <T> void addExisting(Collection<T> targetCollection, T toAdd) {
         if (targetCollection != null && toAdd != null) {

@@ -14,7 +14,13 @@ import static org.joda.time.format.ISODateTimeFormat.yearMonthDay;
 /**
  * @author andreaskaltenbach
  */
-public class PartialAdapter {
+public final class PartialAdapter {
+
+    public static final int YEAR_LENGTH = 4;
+    public static final int YEAR_MONTH_LENGTH = 7;
+
+    private PartialAdapter() {
+    }
 
     /**
      * Converts an intyg:common-model:1:partialDate to a Joda Partial.
@@ -27,9 +33,9 @@ public class PartialAdapter {
         LocalDate localDate = new LocalDate(dateString);
 
         switch (dateString.length()) {
-            case 4: // only year provided
+            case YEAR_LENGTH: // only year provided
                 return new Partial(year(), localDate.get(year()));
-            case 7: // year and month provided
+            case YEAR_MONTH_LENGTH: // year and month provided
                 return new Partial(new DateTimeFieldType[]{year(), monthOfYear()},
                         new int[]{localDate.get(year()), localDate.get(monthOfYear())});
             default:

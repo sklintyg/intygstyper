@@ -408,10 +408,9 @@ public class Fk7263Intyg {
     }
 
     public String getNamnfortydligandeOchAdress() {
-        String nameAndAddress = vardperson.getNamn() + "\n" + vardperson.getEnhetsnamn() + "\n"
+        return vardperson.getNamn() + "\n" + vardperson.getEnhetsnamn() + "\n"
                 + vardperson.getPostadress() + "\n" + vardperson.getPostnummer() + " " + vardperson.getPostort() + "\n"
                 + vardperson.getTelefonnummer();
-        return nameAndAddress;
     }
 
     public String getId() {

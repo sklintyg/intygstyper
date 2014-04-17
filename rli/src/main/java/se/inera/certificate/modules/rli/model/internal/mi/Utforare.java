@@ -23,7 +23,7 @@ package se.inera.certificate.modules.rli.model.internal.mi;
 
 /**
  * @author erik
- * 
+ *
  */
 public class Utforare {
     private String utforartyp;

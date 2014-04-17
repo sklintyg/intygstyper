@@ -19,22 +19,17 @@ public interface ModuleApi {
 
     /**
      * Handles conversion from the transport model (XML) to the external JSON model.
-     * 
-     * @param transportModel
-     *            The transport model to convert.
-     * 
+     *
+     * @param transportModel The transport model to convert.
      * @return An instance of the external model, generated from the transport model.
      */
     ExternalModelResponse unmarshall(TransportModelHolder transportModel) throws ModuleException;
 
     /**
      * Handles conversion from the external JSON model to the transport model (XML).
-     * 
-     * @param externalModel
-     *            The external model to convert.
-     * @param version
-     *            The expected version of the transport model.
-     * 
+     *
+     * @param externalModel The external model to convert.
+     * @param version       The expected version of the transport model.
      * @return An instance of the transport model, generated from the external model.
      */
     TransportModelResponse marshall(ExternalModelHolder externalModel, TransportModelVersion version)
@@ -43,48 +38,40 @@ public interface ModuleApi {
     /**
      * Validates the external model. If the validation succeeds, a empty result will be returned. If the validation
      * fails, a list of validation messages will be returned as a HTTP 400.
-     * 
-     * @param externalModel
-     *            The external model to validate.
-     * @return
+     *
+     * @param externalModel The external model to validate.
+     * @return messages
      */
     String validate(ExternalModelHolder externalModel) throws ModuleException;
 
     /**
      * Validates the internal model. The status (complete, incomplete) and a list of validation errors is returned.
-     * 
-     * @param internalModel
-     *            The internal model to validate.
-     * @return
+     *
+     * @param internalModel The internal model to validate.
+     * @return response
      */
     ValidateDraftResponse validateDraft(InternalModelHolder internalModel) throws ModuleException;
 
     /**
      * Generates a PDF from the external model.
-     * 
-     * @param externalModel
-     *            The external model to generate a PDF from.
-     * 
+     *
+     * @param externalModel The external model to generate a PDF from.
      * @return A binary stream containing a PDF template populated with the information of the external model.
      */
     PdfResponse pdf(ExternalModelHolder externalModel) throws ModuleException;
 
     /**
      * Handles conversion from the external model to the internal model.
-     * 
-     * @param externalModel
-     *            The external model to convert.
-     * 
+     *
+     * @param externalModel The external model to convert.
      * @return An instance of the internal model, generated from the external model.
      */
     InternalModelResponse convertExternalToInternal(ExternalModelHolder externalModel) throws ModuleException;
 
     /**
      * Handles conversion from the internal model to the external model.
-     * 
-     * @param internalModel
-     *            The internal model to convert.
-     * 
+     *
+     * @param internalModel The internal model to convert.
      * @return An instance of the external model, generated from the internal model.
      */
     ExternalModelResponse convertInternalToExternal(InternalModelHolder internalModel) throws ModuleException;
@@ -92,9 +79,9 @@ public interface ModuleApi {
     /**
      * Creates a new editable model for use in WebCert. The model is pre populated using data contained in the
      * CreateNewDraftCertificateHolder parameter.
-     * 
-     * @param draftCertificateHolder
-     * @return
+     *
+     * @param draftCertificateHolder draftCertificateHolder
+     * @return response
      */
     InternalModelResponse createNewInternal(CreateNewDraftHolder draftCertificateHolder) throws ModuleException;
 }

@@ -48,7 +48,7 @@ import se.inera.certificate.rli.model.v1.VardgivareType;
 
 /**
  * Converter between transport and external model.
- * 
+ *
  * @author erik
  */
 public class TransportToExternalConverter {
@@ -58,9 +58,8 @@ public class TransportToExternalConverter {
     /**
      * Converts from the transport format (se.inera.certificate.common.v1.Utlatande) to the external format
      * (se.inera.certificate.modules.rli.model.external.Utlatande).
-     * 
-     * @param source
-     *            Utlatande in the transport format to be converted to external format
+     *
+     * @param source Utlatande in the transport format to be converted to external format
      * @return se.inera.certificate.modules.rli.model.external.Utlatande
      * @throws ConverterException
      */
@@ -99,16 +98,15 @@ public class TransportToExternalConverter {
 
     /**
      * Convert List of RekommendationType to List of Rekommendation.
-     * 
-     * @param source
-     *            List of RekommendationType to be converted
+     *
+     * @param source List of RekommendationType to be converted
      * @return List of Rekommendation
      * @throws ConverterException
      */
     private List<Rekommendation> convertRekommendationer(List<RekommendationType> source) throws ConverterException {
         LOG.trace("Converting rekommendationer");
 
-        List<Rekommendation> rekommendationer = new ArrayList<Rekommendation>();
+        List<Rekommendation> rekommendationer = new ArrayList<>();
 
         if (source != null) {
             for (RekommendationType toConvert : source) {
@@ -120,9 +118,8 @@ public class TransportToExternalConverter {
 
     /**
      * Convert RekommendationType to Rekommendation.
-     * 
-     * @param source
-     *            RekommendationType
+     *
+     * @param source RekommendationType
      * @return Rekommendation, or null if source is null
      * @throws ConverterException
      */
@@ -140,9 +137,8 @@ public class TransportToExternalConverter {
 
     /**
      * Iterates over a list of objects of the type ObservationType and converts them to type Observation.
-     * 
-     * @param source
-     *            List of objects of type ObservationType to be converted
+     *
+     * @param source List of objects of type ObservationType to be converted
      * @return List of objects of type Observation
      * @throws ConverterException
      */
@@ -150,7 +146,7 @@ public class TransportToExternalConverter {
 
         LOG.trace("Converting observationer");
 
-        List<Observation> observations = new ArrayList<Observation>();
+        List<Observation> observations = new ArrayList<>();
         if (source != null) {
             for (ObservationType ot : source) {
                 observations.add(convertObservation(ot));
@@ -161,9 +157,8 @@ public class TransportToExternalConverter {
 
     /**
      * Converts an object from ObservationType to Observation, this needs more work.
-     * 
-     * @param source
-     *            ObservationType to be converted
+     *
+     * @param source ObservationType to be converted
      * @return object of type Observation
      * @throws ConverterException
      */
@@ -189,9 +184,8 @@ public class TransportToExternalConverter {
 
     /**
      * Converts a list of UtforarrollType to Utforarroll.
-     * 
-     * @param source
-     *            List of UtforarrollType
+     *
+     * @param source List of UtforarrollType
      * @return List of Utforarroll
      * @throws ConverterException
      */
@@ -209,9 +203,8 @@ public class TransportToExternalConverter {
 
     /**
      * Convert UtforarrollType to Utforarroll.
-     * 
-     * @param source
-     *            UtforarrollType
+     *
+     * @param source UtforarrollType
      * @return Utforarroll, or null if source is null
      * @throws ConverterException
      */
@@ -232,9 +225,8 @@ public class TransportToExternalConverter {
 
     /**
      * Convert transport model Arrangemang to external model arrangemang.
-     * 
-     * @param source
-     *            se.inera.certificate.rli.v1.Arrangemang
+     *
+     * @param source se.inera.certificate.rli.v1.Arrangemang
      * @return import se.inera.certificate.modules.rli.model.external.Arrangemang
      * @throws ConverterException
      */
@@ -269,9 +261,8 @@ public class TransportToExternalConverter {
     /**
      * Iterates through a list of AktivitetType and converts each subsequent item from AktivitetType to the Aktivitet
      * that the external model understands.
-     * 
-     * @param source
-     *            the list of AktivitetType's to be converted
+     *
+     * @param source the list of AktivitetType's to be converted
      * @return a List containing Aktiviteter
      * @throws ConverterException
      */
@@ -290,9 +281,8 @@ public class TransportToExternalConverter {
 
     /**
      * Converts an object of AktivitetType to Aktivitet.
-     * 
-     * @param source
-     *            the object of AktivitetType to be converted
+     *
+     * @param source the object of AktivitetType to be converted
      * @return Aktivitet
      * @throws ConverterException
      */
@@ -328,9 +318,8 @@ public class TransportToExternalConverter {
 
     /**
      * Converts HosPersonalType to HosPersonal, changing isoType II to Id.
-     * 
-     * @param source
-     *            HosPersonalType to be converted
+     *
+     * @param source HosPersonalType to be converted
      * @return HosPersonal, or null if source is null
      * @throws ConverterException
      */
@@ -361,9 +350,8 @@ public class TransportToExternalConverter {
 
     /**
      * Converts PatientType to Patient.
-     * 
-     * @param source
-     *            PatientType to be converted
+     *
+     * @param source PatientType to be converted
      * @return Patient, or null if source is null
      * @throws ConverterException
      */
@@ -389,7 +377,7 @@ public class TransportToExternalConverter {
     }
 
     private List<PatientRelation> convertPatientRelations(List<PatientRelationType> source) {
-        List<PatientRelation> patientRelation = new ArrayList<PatientRelation>();
+        List<PatientRelation> patientRelation = new ArrayList<>();
         if (source != null) {
             for (PatientRelationType prt : source) {
                 patientRelation.add(convertPatientRelation(prt));
@@ -423,9 +411,8 @@ public class TransportToExternalConverter {
 
     /**
      * Converts EnhetType to Enhet .
-     * 
-     * @param source
-     *            EnhetType to be converted
+     *
+     * @param source EnhetType to be converted
      * @return Enhet, or null if source is null
      * @throws ConverterException
      */
@@ -451,9 +438,8 @@ public class TransportToExternalConverter {
 
     /**
      * Converts VardgivareType to Vardgivare.
-     * 
-     * @param source
-     *            VardgivareType to be converted
+     *
+     * @param source VardgivareType to be converted
      * @return Vardgivare, or null if source is null
      * @throws ConverterException
      */

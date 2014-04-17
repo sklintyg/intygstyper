@@ -22,21 +22,21 @@ public final class Aktivitetskoder {
     public static final Kod AVSTANGNING_ENLIGT_SML_PGA_SMITTA = new Kod("8040b4d1-67dc-42e1-a938-de5374e9526a", "kv_aktiviteter_intyg", null, "AKT11");
     public static final Kod OVRIGT = new Kod("8040b4d1-67dc-42e1-a938-de5374e9526a", "kv_aktiviteter_intyg", null, "AKT12");
 
-    public static final Map<Kod, String> mapToFk7263 = new HashMap<>();
+    public static final Map<Kod, String> MAP_TO_FK_7263 = new HashMap<>();
 
     static {
-        mapToFk7263.put(ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL, "Arbetslivsinriktad_rehabilitering_ar_aktuell");
-        mapToFk7263.put(ARBETSLIVSINRIKTAD_REHABILITERING_AR_INTE_AKTUELL, "Arbetslivsinriktad_rehabilitering_ar_ej_aktuell");
-        mapToFk7263.put(GAR_EJ_ATT_BEDOMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL, "Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell");
-        mapToFk7263.put(FORANDRA_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT, "Forandrat_ressatt_till_arbetsplatsen_ar_aktuellt");
-        mapToFk7263.put(FORANDRA_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT, "Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt");
-        mapToFk7263.put(PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN, "Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden");
-        mapToFk7263.put(PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD, "Planerad_eller_pagaende_annan_atgard");
-        mapToFk7263.put(KONTAKT_MED_FK_AR_AKTUELL, "Kontakt_med_Forsakringskassan_ar_aktuell");
-        mapToFk7263.put(PATIENTEN_BOR_FA_KONTAKT_MED_FORETAGSHALSOVARDEN, "Patienten_behover_fa_kontakt_med_foretagshalsovarden");
-        mapToFk7263.put(AVSTANGNING_ENLIGT_SML_PGA_SMITTA, "Avstangning_enligt_SmL_pga_smitta");
-        mapToFk7263.put(OVRIGT, "Ovrigt");
-        mapToFk7263.put(PATIENTEN_BOR_FA_KONTAKT_MED_ARBETSFORMEDLINGEN, "Patienten_behover_fa_kontakt_med_Arbetsformedlingen");
+        MAP_TO_FK_7263.put(ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL, "Arbetslivsinriktad_rehabilitering_ar_aktuell");
+        MAP_TO_FK_7263.put(ARBETSLIVSINRIKTAD_REHABILITERING_AR_INTE_AKTUELL, "Arbetslivsinriktad_rehabilitering_ar_ej_aktuell");
+        MAP_TO_FK_7263.put(GAR_EJ_ATT_BEDOMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL, "Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell");
+        MAP_TO_FK_7263.put(FORANDRA_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT, "Forandrat_ressatt_till_arbetsplatsen_ar_aktuellt");
+        MAP_TO_FK_7263.put(FORANDRA_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT, "Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt");
+        MAP_TO_FK_7263.put(PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN, "Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden");
+        MAP_TO_FK_7263.put(PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD, "Planerad_eller_pagaende_annan_atgard");
+        MAP_TO_FK_7263.put(KONTAKT_MED_FK_AR_AKTUELL, "Kontakt_med_Forsakringskassan_ar_aktuell");
+        MAP_TO_FK_7263.put(PATIENTEN_BOR_FA_KONTAKT_MED_FORETAGSHALSOVARDEN, "Patienten_behover_fa_kontakt_med_foretagshalsovarden");
+        MAP_TO_FK_7263.put(AVSTANGNING_ENLIGT_SML_PGA_SMITTA, "Avstangning_enligt_SmL_pga_smitta");
+        MAP_TO_FK_7263.put(OVRIGT, "Ovrigt");
+        MAP_TO_FK_7263.put(PATIENTEN_BOR_FA_KONTAKT_MED_ARBETSFORMEDLINGEN, "Patienten_behover_fa_kontakt_med_Arbetsformedlingen");
     }
 
     private Aktivitetskoder() {

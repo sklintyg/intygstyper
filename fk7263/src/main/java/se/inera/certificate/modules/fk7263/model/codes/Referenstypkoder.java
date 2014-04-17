@@ -8,14 +8,17 @@ import java.util.Map;
 /**
  *
  */
-public class Referenstypkoder {
+public final class Referenstypkoder {
     public static final Kod JOURNALUPPGIFT = new Kod("1.2.752.116.2.1.1.1", "SNOMED-CT", null, "419891008");
     public static final Kod ANNAT = new Kod("1.2.752.116.2.1.1.1", "SNOMED-CT", null, "74964007");
 
-    public static final Map<Kod, String> mapToFk7263 = new HashMap<Kod, String>();
+    public static final Map<Kod, String> MAP_TO_FK7263 = new HashMap<>();
 
     static {
-        mapToFk7263.put(JOURNALUPPGIFT, "Journaluppgifter");
-        mapToFk7263.put(ANNAT, "Annat");
+        MAP_TO_FK7263.put(JOURNALUPPGIFT, "Journaluppgifter");
+        MAP_TO_FK7263.put(ANNAT, "Annat");
+    }
+
+    private Referenstypkoder() {
     }
 }

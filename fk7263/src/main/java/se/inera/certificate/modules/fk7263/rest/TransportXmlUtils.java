@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.xml.sax.SAXException;
 
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
 import se.inera.certificate.fk7263.model.v1.Utlatande;
 import se.inera.certificate.validate.ValidationException;
@@ -26,7 +25,7 @@ import se.inera.certificate.validate.ValidationException;
 /**
  * Helper methods to unmarshall and validate transport model XML.
  */
-public class TransportXmlUtils {
+public final class TransportXmlUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(TransportXmlUtils.class);
 
@@ -51,7 +50,7 @@ public class TransportXmlUtils {
             Source utlatandeSchemaFile = new StreamSource(
                     new ClassPathResource("/schemas/fk7263_model.xsd").getInputStream());
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            utlatandeSchema = schemaFactory.newSchema(new Source[] { isoSchemaFile, utlatandeSchemaFile });
+            utlatandeSchema = schemaFactory.newSchema(new Source[]{isoSchemaFile, utlatandeSchemaFile});
         } catch (IOException e) {
             throw new RuntimeException("Failed to read schema file", e);
         } catch (SAXException e) {
@@ -59,11 +58,13 @@ public class TransportXmlUtils {
         }
     }
 
+    private TransportXmlUtils() {
+    }
+
     /**
-     * Unmarshal xml string into jaxb. Supports both {@link Utlatande} and legacy {@link Lakarutlatande}.
-     * 
-     * @param transportXml
-     *            the xml as a string.
+     * Unmarshal xml string into jaxb. Supports both {@link Utlatande} and legacy {@link se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande}.
+     *
+     * @param transportXml the xml as a string.
      * @return jaxbObject if unmarshalling was successful
      */
     public static Object unmarshallTransportXML(String transportXml) {
@@ -79,9 +80,8 @@ public class TransportXmlUtils {
 
     /**
      * Validates the XML of a {@link Utlatande}.
-     * 
-     * @param utlatandeXml
-     *            The xml as a string.
+     *
+     * @param utlatandeXml The xml as a string.
      */
     public static void validateSchema(String utlatandeXml) {
         try {

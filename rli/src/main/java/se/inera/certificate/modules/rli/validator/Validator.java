@@ -42,13 +42,13 @@ import se.inera.certificate.modules.rli.validator.external.ExternalValidatorInst
 
 /**
  * @author erik
- * 
+ *
  */
 public class Validator {
 
     /**
      * Validates an external Utlatande.
-     * 
+     *
      * @param utlatande
      *            se.inera.certificate.modules.rli.model.external.Utlatande
      * @return List of validation errors, or an empty string if validated correctly

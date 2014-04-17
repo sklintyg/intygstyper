@@ -17,7 +17,7 @@ public class Fk7263Aktivitet extends Aktivitet {
 
     public List<Utforarroll> getBeskrivsAv() {
         if (beskrivsAv == null) {
-            beskrivsAv = new ArrayList<Utforarroll>();
+            beskrivsAv = new ArrayList<>();
         }
         return this.beskrivsAv;
     }

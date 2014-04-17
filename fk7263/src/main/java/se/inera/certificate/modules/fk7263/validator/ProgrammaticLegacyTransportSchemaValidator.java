@@ -203,9 +203,7 @@ public class ProgrammaticLegacyTransportSchemaValidator extends AbstractValidato
         if (vardenhet.getArbetsplatskod() == null) {
             addValidationError("Field 17: No arbetsplatskod found for enhet!");
             return;
-        }
-        if (vardenhet.getArbetsplatskod() == null
-                || !ARBETSPLATS_CODE_OID.contains(vardenhet.getArbetsplatskod().getRoot())) {
+        } else if (!ARBETSPLATS_CODE_OID.contains(vardenhet.getArbetsplatskod().getRoot())) {
             addValidationError(String.format(
                     "Field 17: Invalid arbetsplatskod root found for enhet! Should be one of %s",
                     Strings.join(" or ", ARBETSPLATS_CODE_OID)));

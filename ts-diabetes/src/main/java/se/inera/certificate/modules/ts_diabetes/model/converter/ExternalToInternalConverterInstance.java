@@ -58,9 +58,8 @@ import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
 
 /**
  * Converter for converting the external format to the internal view format.
- * 
+ *
  * @author Erik
- * 
  */
 public class ExternalToInternalConverterInstance {
 
@@ -113,17 +112,15 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Create Hypoglykemier object from external Utlatande
-     * 
-     * @param hypoglykemier
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_diabetes.model.external.Utlatande}
+     * Create Hypoglykemier object from external Utlatande.
+     *
+     * @param hypoglykemier hypoglykemier
+     * @param extUtlatande  {@link se.inera.certificate.modules.ts_diabetes.model.external.Utlatande}
      * @return {@link Hypoglykemier}
      * @throws ConverterException
      */
     private void createHypoglykemier(Hypoglykemier hypoglykemier,
-            se.inera.certificate.modules.ts_diabetes.model.external.Utlatande extUtlatande) throws ConverterException {
+                                     se.inera.certificate.modules.ts_diabetes.model.external.Utlatande extUtlatande) throws ConverterException {
         Observation kunskap = getObservationWithKod(CodeConverter.toKod(ObservationsKod.KUNSKAP_ATGARD_HYPOGLYKEMI));
         Observation teckenNedsattHjarnfunktion = getObservationWithKod(CodeConverter
                 .toKod(ObservationsKod.HYPOGLYKEMIER_MED_TECKEN_PA_NEDSATT_HJARNFUNKTION));
@@ -187,12 +184,10 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Convert a List of Kod into an IntygAvser object
-     * 
+     * Convert a List of Kod into an IntygAvser object.
+     *
      * @param intygAvser
-     * 
-     * @param source
-     *            a List of {@link Kod}
+     * @param source     a List of {@link Kod}
      * @return {@link IntygAvser}
      */
     private IntygAvser convertToIntIntygAvser(IntygAvser intygAvser, List<Kod> source) {
@@ -205,10 +200,9 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Convert Vardkontakt from external to internal format
-     * 
-     * @param source
-     *            {@link se.inera.certificate.modules.ts_diabetes.model.external.Vardkontakt}
+     * Convert Vardkontakt from external to internal format.
+     *
+     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.external.Vardkontakt}
      * @return {@link Vardkontakt}
      */
     private Vardkontakt convertToIntVardkontakt(
@@ -222,16 +216,14 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Create a Bedomning object from a List of Rekommendation[er]
-     * 
+     * Create a Bedomning object from a List of Rekommendation[er].
+     *
      * @param bedomning
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_diabetes.model.external.Utlatande}
+     * @param extUtlatande {@link se.inera.certificate.modules.ts_diabetes.model.external.Utlatande}
      * @return {@link Bedomning}
      */
     private void createBedomning(Bedomning bedomning,
-            se.inera.certificate.modules.ts_diabetes.model.external.Utlatande extUtlatande) {
+                                 se.inera.certificate.modules.ts_diabetes.model.external.Utlatande extUtlatande) {
         for (Rekommendation rek : extUtlatande.getRekommendationer()) {
 
             if (CodeConverter.matches(RekommendationsKod.PATIENT_UPPFYLLER_KRAV_FOR, rek.getRekommendationskod())) {
@@ -260,7 +252,7 @@ public class ExternalToInternalConverterInstance {
 
             } else if (CodeConverter.matches(RekommendationsKod.PATIENT_BOR_UNDESOKAS_AV_SPECIALIST,
 
-            rek.getRekommendationskod())) {
+                    rek.getRekommendationskod())) {
                 bedomning.setLakareSpecialKompetens(rek.getBeskrivning());
 
             }
@@ -268,17 +260,15 @@ public class ExternalToInternalConverterInstance {
     }
 
     /**
-     * Create Diabetes object from Observationer
-     * 
+     * Create Diabetes object from Observationer.
+     *
      * @param diabetes
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_diabetes.model.external.Utlatande}
+     * @param extUtlatande {@link se.inera.certificate.modules.ts_diabetes.model.external.Utlatande}
      * @return {@link Diabetes} object
      * @throws ConverterException
      */
     private void createDiabetes(Diabetes diabetes,
-            se.inera.certificate.modules.ts_diabetes.model.external.Utlatande extUtlatande) throws ConverterException {
+                                se.inera.certificate.modules.ts_diabetes.model.external.Utlatande extUtlatande) throws ConverterException {
         Observation diabetesTyp1 = getObservationWithKod(CodeConverter.toKod(ObservationsKod.DIABETES_TYP_1));
         Observation diabetesTyp2 = getObservationWithKod(CodeConverter.toKod(ObservationsKod.DIABETES_TYP_2));
 
@@ -336,12 +326,10 @@ public class ExternalToInternalConverterInstance {
 
     /**
      * Create a {@link Syn} object from {@link Observation}s in
-     * {@link se.inera.certificate.modules.ts_diabetes.model.external.Utlatande}
-     * 
-     * @param syn
-     * 
-     * @param extUtlatande
-     *            {@link se.inera.certificate.modules.ts_diabetes.model.external.Utlatande}
+     * {@link se.inera.certificate.modules.ts_diabetes.model.external.Utlatande}.
+     *
+     * @param syn syn
+     * @param extUtlatande {@link se.inera.certificate.modules.ts_diabetes.model.external.Utlatande}
      */
     private void createSyn(Syn syn, se.inera.certificate.modules.ts_diabetes.model.external.Utlatande extUtlatande) {
 
@@ -377,7 +365,7 @@ public class ExternalToInternalConverterInstance {
         }
 
         // Used to populate Syn with Synskarpa later
-        List<Observation> synskarpa = new ArrayList<Observation>();
+        List<Observation> synskarpa = new ArrayList<>();
 
         // Hmmm does this need to be this way or can getObservationWithKod be used instead?
         for (Observation obs : extUtlatande.getObservationer()) {
@@ -393,11 +381,9 @@ public class ExternalToInternalConverterInstance {
 
     /**
      * Takes a list of observations related to synskarpa and populates a syn object with the information found.
-     * 
-     * @param syn
-     *            The {@link Syn} object to populate with data
-     * @param synskarpa
-     *            A list of synskarpe-related {@link Observation}s
+     *
+     * @param syn       The {@link Syn} object to populate with data
+     * @param synskarpa A list of synskarpe-related {@link Observation}s
      */
     private void populateWithSynskarpa(Syn syn, List<Observation> synskarpa) {
 
@@ -407,7 +393,7 @@ public class ExternalToInternalConverterInstance {
         Double vansterMed = null;
         Double binUtan = null;
         Double binMed = null;
-        
+
         syn.setHoger(null);
         syn.setVanster(null);
         syn.setBinokulart(null);
@@ -436,7 +422,7 @@ public class ExternalToInternalConverterInstance {
         }
         if (hogerUtan != null || hogerMed != null) {
             syn.setHoger(hogerUtan, hogerMed);
-        } 
+        }
         if (vansterUtan != null || vansterMed != null) {
             syn.setVanster(vansterUtan, vansterMed);
         }
@@ -540,7 +526,7 @@ public class ExternalToInternalConverterInstance {
     }
 
     private boolean isObservationAndLateralitet(Observation obs, ObservationsKod observationskod,
-            LateralitetsKod lateralitet) {
+                                                LateralitetsKod lateralitet) {
         if (CodeConverter.matches(observationskod, obs.getObservationskod())) {
             if (CodeConverter.matches(lateralitet, obs.getLateralitet())) {
                 return true;
@@ -559,9 +545,8 @@ public class ExternalToInternalConverterInstance {
 
     /**
      * Returns an Observation based on the specified Kod, or <code>null</code> if none where found.
-     * 
-     * @param observationskod
-     *            Find an observation with this {@link Kod}
+     *
+     * @param observationskod Find an observation with this {@link Kod}
      * @return an {@link Observation} if it is found, or null otherwise
      */
     public Observation getObservationWithKod(Kod observationskod) {
@@ -576,9 +561,8 @@ public class ExternalToInternalConverterInstance {
 
     /**
      * Returns an Aktivitet based on the specified Kod, or <code>null</code> if none where found.
-     * 
-     * @param aktivitetskod
-     *            Find an aktivitet with this {@link Kod}
+     *
+     * @param aktivitetskod Find an aktivitet with this {@link Kod}
      * @return an {@link Aktivitet} if it is found, or null otherwise
      */
     public Aktivitet getAktivitetWithKod(Kod aktivitetskod) {

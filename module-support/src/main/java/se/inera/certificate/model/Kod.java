@@ -5,6 +5,7 @@ package se.inera.certificate.model;
  */
 public final class Kod {
 
+    public static final int MAGIC_HASH_BASE = 31;
     private String codeSystem;
     private String codeSystemName;
     private String codeSystemVersion;
@@ -72,29 +73,26 @@ public final class Kod {
 
         Kod kod = (Kod) o;
 
+        boolean result = true;
         if (code != null ? !code.equals(kod.code) : kod.code != null) {
-            return false;
-        }
-        if (codeSystem != null ? !codeSystem.equals(kod.codeSystem) : kod.codeSystem != null) {
-            return false;
-        }
-        if (codeSystemName != null ? !codeSystemName.equals(kod.codeSystemName) : kod.codeSystemName != null) {
-            return false;
-        }
-        if (codeSystemVersion != null ? !codeSystemVersion.equals(kod.codeSystemVersion)
-                : kod.codeSystemVersion != null) {
-            return false;
+            result = false;
+        } else if (codeSystem != null ? !codeSystem.equals(kod.codeSystem) : kod.codeSystem != null) {
+            result = false;
+        } else if (codeSystemName != null ? !codeSystemName.equals(kod.codeSystemName) : kod.codeSystemName != null) {
+            result = false;
+        } else if (codeSystemVersion != null ? !codeSystemVersion.equals(kod.codeSystemVersion) : kod.codeSystemVersion != null) {
+            result = false;
         }
 
-        return true;
+        return result;
     }
 
     @Override
     public int hashCode() {
         int result = codeSystem != null ? codeSystem.hashCode() : 0;
-        result = 31 * result + (codeSystemName != null ? codeSystemName.hashCode() : 0);
-        result = 31 * result + (codeSystemVersion != null ? codeSystemVersion.hashCode() : 0);
-        result = 31 * result + (code != null ? code.hashCode() : 0);
+        result = MAGIC_HASH_BASE * result + (codeSystemName != null ? codeSystemName.hashCode() : 0);
+        result = MAGIC_HASH_BASE * result + (codeSystemVersion != null ? codeSystemVersion.hashCode() : 0);
+        result = MAGIC_HASH_BASE * result + (code != null ? code.hashCode() : 0);
         return result;
     }
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 public final class Strings {
     private Strings() {
-    };
+    }
 
     public static boolean isNullOrEmpty(String string) {
         return string == null || string.length() == 0;
