@@ -25,7 +25,7 @@ import se.inera.certificate.modules.rli.model.codes.UtforarrollKod;
 
 /**
  * @author erik
- * 
+ *
  */
 public class Utforare {
     private UtforarrollKod utforartyp;

@@ -20,10 +20,10 @@ public class Vardenhet {
     private final String epost;
 
     private final Vardgivare vardgivare;
-   
+
 
     public Vardenhet(String hsaId, String namn, String postadress, String postnummer, String postort,
-            String telefonnummer, String epost, Vardgivare vardgivare) {
+                     String telefonnummer, String epost, Vardgivare vardgivare) {
         hasText(hsaId, "'hsaId' must not be empty");
         hasText(namn, "'namn' must not be empty");
         // TODO: these properties must be provided from HSA

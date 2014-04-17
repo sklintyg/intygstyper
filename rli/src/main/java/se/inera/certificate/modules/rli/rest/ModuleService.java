@@ -63,7 +63,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * The contract between the certificate module and the generic components (Intygstjänsten and Mina-Intyg).
- * 
+ *
  * @author Gustav Norbäcker, R2M
  */
 public class ModuleService implements ModuleApi {
@@ -99,7 +99,7 @@ public class ModuleService implements ModuleApi {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws ModuleException
      */
     @Override
@@ -115,7 +115,7 @@ public class ModuleService implements ModuleApi {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws ModuleException
      */
     @Override
@@ -136,7 +136,7 @@ public class ModuleService implements ModuleApi {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws ModuleException
      */
     @Override
@@ -155,7 +155,7 @@ public class ModuleService implements ModuleApi {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws ModuleException
      */
     @Override
@@ -179,7 +179,7 @@ public class ModuleService implements ModuleApi {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws ModuleException
      */
     @Override
@@ -195,7 +195,7 @@ public class ModuleService implements ModuleApi {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws ModuleException
      */
     @Override
@@ -210,7 +210,7 @@ public class ModuleService implements ModuleApi {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws ModuleException
      */
     @Override

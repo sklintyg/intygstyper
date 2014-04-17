@@ -88,7 +88,7 @@ public class InternalToExternalConverter {
 
     private List<Observation> convertObservationer(Undersokning source) {
         LOG.trace("Converting Observationer");
-        List<Observation> obs = new ArrayList<Observation>();
+        List<Observation> obs = new ArrayList<>();
 
         if (source.getOrsakforavbokning() == OrsakAvbokning.RESENAR_SJUK) {
             Observation o = new Observation();
@@ -130,7 +130,7 @@ public class InternalToExternalConverter {
     }
 
     private List<Aktivitet> convertAktiviteter(Undersokning source) throws ConverterException {
-        List<Aktivitet> aktiviteter = new ArrayList<Aktivitet>();
+        List<Aktivitet> aktiviteter = new ArrayList<>();
         buildAktiviteter(aktiviteter, source);
         return aktiviteter;
     }

@@ -100,7 +100,7 @@ public class ExternalToTransportConverter {
     private List<RekommendationType> convertRekommendationer(List<Rekommendation> source) {
         LOG.trace("Starting convertRekommendationer");
 
-        List<RekommendationType> rekommendationTypes = new ArrayList<RekommendationType>();
+        List<RekommendationType> rekommendationTypes = new ArrayList<>();
         for (Rekommendation r : source) {
             if (r != null) {
                 rekommendationTypes.add(convertRekommendation(r));
@@ -128,7 +128,7 @@ public class ExternalToTransportConverter {
             LOG.trace("List<Observation> was null, could not convert");
             return null;
         }
-        List<ObservationType> observationTypes = new ArrayList<ObservationType>();
+        List<ObservationType> observationTypes = new ArrayList<>();
         for (Observation o : source) {
             if (o != null) {
                 observationTypes.add(convertObservation(o));
@@ -157,7 +157,7 @@ public class ExternalToTransportConverter {
             LOG.trace("Utforarroll list was null, could not convert");
             return null;
         }
-        List<UtforarrollType> converted = new ArrayList<UtforarrollType>();
+        List<UtforarrollType> converted = new ArrayList<>();
         for (Utforarroll a : source) {
             if (a != null) {
                 converted.add(convertUtforarroll(a));
@@ -208,7 +208,7 @@ public class ExternalToTransportConverter {
             LOG.trace("Aktivitet list was null, could not convert");
             return null;
         }
-        List<AktivitetType> converted = new ArrayList<AktivitetType>();
+        List<AktivitetType> converted = new ArrayList<>();
         for (Aktivitet a : source) {
             if (a != null) {
                 converted.add(convertAktivitet(a));
@@ -319,7 +319,7 @@ public class ExternalToTransportConverter {
             LOG.trace("PatientRelation was null, could not convert");
             return null;
         }
-        List<PatientRelationType> patientRelationTypes = new ArrayList<PatientRelationType>();
+        List<PatientRelationType> patientRelationTypes = new ArrayList<>();
 
         for (PatientRelation p : source) {
             if (p != null) {
@@ -350,7 +350,7 @@ public class ExternalToTransportConverter {
     }
 
     private List<CD> convertRelationTyps(List<Kod> source) {
-        List<CD> relationTyps = new ArrayList<CD>();
+        List<CD> relationTyps = new ArrayList<>();
         for (Kod k : source) {
             relationTyps.add(IsoTypeConverter.toCD(k));
         }

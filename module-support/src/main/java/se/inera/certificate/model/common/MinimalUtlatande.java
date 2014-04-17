@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * Concrete implementation of the generic domain model with a bare minimal of fields. Useful if an application needs to
  * deserialize JSON etc.
- * <p>
+ * <p/>
  * Consider extending {@link Utlatande} with your own implementation if anything more specific is needed.
  */
 public class MinimalUtlatande extends Utlatande {
@@ -24,10 +24,10 @@ public class MinimalUtlatande extends Utlatande {
     private MinimalPatient patient;
 
     private MinimalHosPersonal skapadAv;
-    
-    private LocalDate validToDate; 
-    
-    private LocalDate validFromDate; 
+
+    private LocalDate validToDate;
+
+    private LocalDate validFromDate;
 
     @Override
     public MinimalPatient getPatient() {
@@ -81,7 +81,7 @@ public class MinimalUtlatande extends Utlatande {
     public LocalDate getValidToDate() {
         return validToDate;
     }
-    
+
     public void setValidToDate(LocalDate validToDate) {
         this.validToDate = validToDate;
     }

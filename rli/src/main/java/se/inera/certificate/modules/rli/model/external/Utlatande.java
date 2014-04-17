@@ -35,7 +35,7 @@ import se.inera.certificate.model.Vardkontakt;
  * <li> {@link Arrangemang}
  * <li> {@link Aktivitet}
  * </ul>
- * 
+ *
  * @author Gustav Norbäcker, R2M
  */
 public class Utlatande extends se.inera.certificate.model.Utlatande {
@@ -80,7 +80,7 @@ public class Utlatande extends se.inera.certificate.model.Utlatande {
 
     public List<HosPersonal> getHarDeltagandeHosPersonal() {
         if (harDeltagandeHosPersonal == null) {
-            harDeltagandeHosPersonal = new ArrayList<HosPersonal>();
+            harDeltagandeHosPersonal = new ArrayList<>();
         }
         return this.harDeltagandeHosPersonal;
     }
@@ -88,7 +88,7 @@ public class Utlatande extends se.inera.certificate.model.Utlatande {
     @Override
     public List<Vardkontakt> getVardkontakter() {
         if (vardkontakter == null) {
-            vardkontakter = new ArrayList<Vardkontakt>();
+            vardkontakter = new ArrayList<>();
         }
         return this.vardkontakter;
     }
@@ -96,7 +96,7 @@ public class Utlatande extends se.inera.certificate.model.Utlatande {
     @Override
     public List<Referens> getReferenser() {
         if (referenser == null) {
-            referenser = new ArrayList<Referens>();
+            referenser = new ArrayList<>();
         }
         return this.referenser;
     }
@@ -104,7 +104,7 @@ public class Utlatande extends se.inera.certificate.model.Utlatande {
     @Override
     public List<Aktivitet> getAktiviteter() {
         if (aktiviteter == null) {
-            aktiviteter = new ArrayList<Aktivitet>();
+            aktiviteter = new ArrayList<>();
         }
         return this.aktiviteter;
     }
@@ -112,7 +112,7 @@ public class Utlatande extends se.inera.certificate.model.Utlatande {
     @Override
     public List<Rekommendation> getRekommendationer() {
         if (rekommendationer == null) {
-            rekommendationer = new ArrayList<Rekommendation>();
+            rekommendationer = new ArrayList<>();
         }
         return this.rekommendationer;
     }
@@ -120,14 +120,14 @@ public class Utlatande extends se.inera.certificate.model.Utlatande {
     @Override
     public List<Observation> getObservationer() {
         if (observationer == null) {
-            observationer = new ArrayList<Observation>();
+            observationer = new ArrayList<>();
         }
         return this.observationer;
     }
 
     public List<Status> getStatus() {
         if (status == null) {
-            status = new ArrayList<Status>();
+            status = new ArrayList<>();
         }
         return this.status;
     }

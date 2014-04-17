@@ -7,9 +7,8 @@ import se.inera.certificate.model.Utlatande;
 
 /**
  * Placeholder for validation of common model that cannot practically be performed in schema validation.
- * 
+ *
  * @author marced
- * 
  */
 public class CommonModelValidator {
     private Utlatande commonUtlatande;

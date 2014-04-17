@@ -201,8 +201,8 @@ public class PdfGenerator {
     /**
      * Fill fields regarding the Patient.
      *
-     * @param utlatande
-     * @param fields
+     * @param utlatande utlatande
+     * @param fields fields
      */
     private void fillPatientDetails(Utlatande utlatande, AcroFields fields) {
         fillText(fields, PATIENT_NAME, utlatande.getPatient().getFullstandigtNamn());
@@ -215,8 +215,8 @@ public class PdfGenerator {
     /**
      * Fill fields regarding signer of certificate.
      *
-     * @param utlatande
-     * @param fields
+     * @param utlatande utlatande
+     * @param fields fields
      */
     private void fillSignerNameAndAddress(Utlatande utlatande, AcroFields fields) {
         fillText(fields, SIGNED, utlatande.getSkapadAv().getFullstandigtNamn() + "\n"
@@ -227,8 +227,8 @@ public class PdfGenerator {
     /**
      * Fill fields with travel information.
      *
-     * @param utlatande
-     * @param fields
+     * @param utlatande utlatande
+     * @param fields fields
      */
     private void fillTravelInformation(Utlatande utlatande, AcroFields fields) {
 
@@ -250,9 +250,9 @@ public class PdfGenerator {
     /**
      * Utility method for populating PDF fields with the correct kind of information.
      *
-     * @param fields
-     * @param fieldId
-     * @param text
+     * @param fields fields
+     * @param fieldId field id
+     * @param text text
      */
     private void fillText(AcroFields fields, String fieldId, String text) {
         try {

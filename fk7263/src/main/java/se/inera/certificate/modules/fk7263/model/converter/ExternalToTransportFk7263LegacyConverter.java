@@ -5,6 +5,7 @@ import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeCo
 import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toII;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.joda.time.LocalDate;
@@ -55,6 +56,9 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 public final class ExternalToTransportFk7263LegacyConverter {
 
     private static final String FK7263 = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
+    public static final int FORMOGA_3_4 = 75;
+    public static final int FORMOGA_1_2 = 50;
+    public static final int FORMOGA_1_4 = 25;
 
     private ExternalToTransportFk7263LegacyConverter() {
     }
@@ -125,7 +129,11 @@ public final class ExternalToTransportFk7263LegacyConverter {
 
         List<Fk7263Observation> arbetsformagas = utlatande.getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
 
-        if (arbetsformagas != null && arbetsformagas.size() > 0) {
+        if (arbetsformagas == null) {
+            arbetsformagas = Collections.emptyList();
+        }
+
+        if (arbetsformagas.size() > 0) {
             Fk7263Observation firstObservation = arbetsformagas.get(0);
             if (firstObservation.getPrognoser() != null && !firstObservation.getPrognoser().isEmpty()) {
                 Fk7263Prognos prognos = firstObservation.getPrognoser().get(0);
@@ -135,7 +143,7 @@ public final class ExternalToTransportFk7263LegacyConverter {
 
                 Kod prognosKod = prognos.getPrognoskod();
                 if (prognosKod != null) {
-                    String fk7263String = Prognoskoder.mapToFk7263.get(prognosKod);
+                    String fk7263String = Prognoskoder.MAP_TO_FK7263.get(prognosKod);
                     arbetsformagaType.setPrognosangivelse(Prognosangivelse.fromValue(fk7263String));
                 }
             }
@@ -160,16 +168,15 @@ public final class ExternalToTransportFk7263LegacyConverter {
         for (Fk7263Observation arbetsformaga : arbetsformagas) {
             ArbetsformagaNedsattningType nedsattningType = new ArbetsformagaNedsattningType();
 
-            if (arbetsformaga.getVarde() != null && arbetsformaga.getVarde() != null
-                    && !arbetsformaga.getVarde().isEmpty()) {
+            if (arbetsformaga.getVarde() != null && !arbetsformaga.getVarde().isEmpty()) {
                 switch (arbetsformaga.getVarde().get(0).getQuantity().intValue()) {
-                    case 75: // 75% Arbetsformaga
+                    case FORMOGA_3_4: // 75% Arbetsformaga
                         nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_1_4);
                         break;
-                    case 50: // 50% Arbetsformaga
+                    case FORMOGA_1_2: // 50% Arbetsformaga
                         nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_1_2);
                         break;
-                    case 25: // 25% Arbetsformaga
+                    case FORMOGA_1_4: // 25% Arbetsformaga
                         nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_3_4);
                         break;
                     case 0: // 0% Arbetsformaga
@@ -211,7 +218,7 @@ public final class ExternalToTransportFk7263LegacyConverter {
         SysselsattningType sysselsattningTyp = null;
         try {
             Kod sysselsattning = source.getSysselsattningstyp();
-            String fk7263String = Sysselsattningskoder.mapToFk7263.get(sysselsattning);
+            String fk7263String = Sysselsattningskoder.MAP_TO_FK7263.get(sysselsattning);
             if (fk7263String != null) {
                 sysselsattningTyp = new SysselsattningType();
                 sysselsattningTyp.setTypAvSysselsattning(TypAvSysselsattning.fromValue(fk7263String));
@@ -248,7 +255,7 @@ public final class ExternalToTransportFk7263LegacyConverter {
 
         try {
             Kod vardkontakttyp = source.getVardkontakttyp();
-            String fk7263String = Vardkontakttypkoder.mapToFk7263.get(vardkontakttyp);
+            String fk7263String = Vardkontakttypkoder.MAP_TO_FK7263.get(vardkontakttyp);
             if (fk7263String != null) {
                 vardkontaktType = new VardkontaktType();
                 vardkontaktType.setVardkontaktstid(source.getVardkontaktstid().getFrom());
@@ -286,7 +293,7 @@ public final class ExternalToTransportFk7263LegacyConverter {
 
         try {
             Kod referenstyp = source.getReferenstyp();
-            String fk7363String = Referenstypkoder.mapToFk7263.get(referenstyp);
+            String fk7363String = Referenstypkoder.MAP_TO_FK7263.get(referenstyp);
             if (fk7363String != null) {
                 referensType = new ReferensType();
                 referensType.setDatum(source.getDatum());
@@ -323,7 +330,7 @@ public final class ExternalToTransportFk7263LegacyConverter {
         AktivitetType aktivitet = null;
         try {
             Kod aktivitetskod = source.getAktivitetskod();
-            String asfk7263String = Aktivitetskoder.mapToFk7263.get(aktivitetskod);
+            String asfk7263String = Aktivitetskoder.MAP_TO_FK_7263.get(aktivitetskod);
             if (asfk7263String != null) {
                 aktivitet = new AktivitetType();
                 aktivitet.setBeskrivning(source.getBeskrivning());

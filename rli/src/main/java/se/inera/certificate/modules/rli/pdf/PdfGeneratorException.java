@@ -30,7 +30,7 @@ public class PdfGeneratorException extends Exception {
     }
 
     /**
-     * @param message
+     * @param message message
      */
     public PdfGeneratorException(String message) {
         super(message);
@@ -38,7 +38,7 @@ public class PdfGeneratorException extends Exception {
     }
 
     /**
-     * @param cause
+     * @param cause cause
      */
     public PdfGeneratorException(Throwable cause) {
         super(cause);
@@ -46,8 +46,8 @@ public class PdfGeneratorException extends Exception {
     }
 
     /**
-     * @param message
-     * @param cause
+     * @param message message
+     * @param cause cause
      */
     public PdfGeneratorException(String message, Throwable cause) {
         super(message, cause);
@@ -55,10 +55,10 @@ public class PdfGeneratorException extends Exception {
     }
 
     /**
-     * @param message
-     * @param cause
-     * @param enableSuppression
-     * @param writableStackTrace
+     * @param message message
+     * @param cause cause
+     * @param enableSuppression enableSuppression
+     * @param writableStackTrace writableStackTrace
      */
     public PdfGeneratorException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);

@@ -51,7 +51,7 @@ public class PatientRelation {
 
     public final List<Kod> getRelationtyper() {
         if (relationtyper == null) {
-            relationtyper = new ArrayList<Kod>();
+            relationtyper = new ArrayList<>();
         }
         return this.relationtyper;
     }
@@ -66,7 +66,7 @@ public class PatientRelation {
 
     public final List<String> getFornamn() {
         if (fornamn == null) {
-            fornamn = new ArrayList<String>();
+            fornamn = new ArrayList<>();
         }
         return this.fornamn;
     }
@@ -81,7 +81,7 @@ public class PatientRelation {
 
     public final List<String> getMellannamn() {
         if (mellannamn == null) {
-            mellannamn = new ArrayList<String>();
+            mellannamn = new ArrayList<>();
         }
         return this.mellannamn;
     }

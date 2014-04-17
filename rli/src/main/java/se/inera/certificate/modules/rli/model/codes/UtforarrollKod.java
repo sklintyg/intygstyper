@@ -25,10 +25,10 @@ import se.inera.certificate.model.Kod;
  */
 public enum UtforarrollKod implements CodeSystem {
 
-    /** Patient (116154003) */
+    /** Patient (116154003). */
     AV_PATIENT("116154003", "Patient"),
 
-    /** Hälso- och sjukvårdspersonal (223366009) */
+    /** Hälso- och sjukvårdspersonal (223366009). */
     AV_HOS_PERSONAL("223366009", "Hälso- och sjukvårdspersonal");
 
     private static String codeSystemName = "SNOMED-CT";

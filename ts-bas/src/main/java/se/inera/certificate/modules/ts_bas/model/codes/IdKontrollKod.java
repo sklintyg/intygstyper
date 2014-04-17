@@ -41,9 +41,9 @@ public enum IdKontrollKod implements CodeSystem {
 
     private final String codeSystemVersion;
 
-    private String code;
+    private final String code;
 
-    private String description;
+    private final String description;
 
     private IdKontrollKod(String code, String desc, Kodverk kodverk) {
         this.code = code;

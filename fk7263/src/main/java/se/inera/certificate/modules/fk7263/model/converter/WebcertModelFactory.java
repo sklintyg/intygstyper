@@ -30,10 +30,9 @@ import se.inera.certificate.modules.support.api.dto.Patient;
  */
 public class WebcertModelFactory {
     /**
-     * Create a new FK7263 draft pre-populated with the attached data
-     * 
-     * @param newDraftData
-     *            {@link CreateNewDraftCertificateHolder}
+     * Create a new FK7263 draft pre-populated with the attached data.
+     *
+     * @param newDraftData {@link CreateNewDraftCertificateHolder}
      * @return {@link Fk7263Intyg} or throws a ConverterException if something unforeseen happens
      * @throws ConverterException
      */
@@ -62,7 +61,7 @@ public class WebcertModelFactory {
         utlatande.setRekommendationKontaktForetagshalsovarden(false);
         utlatande.setRessattTillArbeteAktuellt(false);
         utlatande.setRessattTillArbeteEjAktuellt(false);
-        
+
         utlatande.setId(newDraftData.getCertificateId());
 
         populateWithSkapadAv(utlatande, newDraftData.getSkapadAv());
@@ -73,7 +72,7 @@ public class WebcertModelFactory {
     }
 
     private void populateWithPatientInfo(Fk7263Intyg utlatande,
-            Patient patient) throws ConverterException {
+                                         Patient patient) throws ConverterException {
 
         if (patient == null) {
             throw new ConverterException("Got null while trying to populateWithPatientInfo");
@@ -84,7 +83,7 @@ public class WebcertModelFactory {
     }
 
     private void populateWithSkapadAv(Fk7263Intyg utlatande,
-            se.inera.certificate.modules.support.api.dto.HoSPersonal hoSPersonal) throws ConverterException {
+                                      se.inera.certificate.modules.support.api.dto.HoSPersonal hoSPersonal) throws ConverterException {
         if (hoSPersonal == null) {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");
         }

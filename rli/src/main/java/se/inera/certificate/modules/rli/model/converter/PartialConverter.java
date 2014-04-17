@@ -102,7 +102,7 @@ public final class PartialConverter {
 
     private static int[] extractDateValuesFromDateStr(String dateStrs) {
 
-        List<Integer> dateValueList = new ArrayList<Integer>();
+        List<Integer> dateValueList = new ArrayList<>();
 
         Matcher matcher = DATE_STR_REGEX.matcher(dateStrs);
 

@@ -49,14 +49,11 @@ public final class TransportToExternalConverter {
     private TransportToExternalConverter() {
     }
 
-    /**
-     * 
-     */
     public static Fk7263Utlatande convert(se.inera.certificate.fk7263.model.v1.Utlatande source) {
         Fk7263Utlatande fk7263utlatande = new Fk7263Utlatande();
-        
+
         LOG.trace("Starting conversion from Transport to External");
-        
+
         fk7263utlatande.setId(toId(source.getUtlatandeId()));
         fk7263utlatande.setTyp(toKod(source.getTypAvUtlatande()));
         fk7263utlatande.getKommentarer().addAll(source.getKommentars());

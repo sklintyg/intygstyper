@@ -71,7 +71,7 @@ public class Utlatande {
 
     public List<String> getKommentarer() {
         if (kommentarer == null) {
-            kommentarer = new ArrayList<String>();
+            kommentarer = new ArrayList<>();
         }
         return kommentarer;
     }

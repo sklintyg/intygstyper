@@ -17,15 +17,17 @@ import java.util.regex.Pattern;
  */
 public class HsaIdValidator implements RootValidator {
 
-    /** The root of HSA-ids */
+    /** The root of HSA-ids. */
     private static final String HSA_ROOT = "1.2.752.129.2.1.4.1";
 
-    /** Regex pattern HSA-ids should conform to */
+    /** Regex pattern HSA-ids should conform to. */
     private static final Pattern HSA_VALID_PATTERN = Pattern.compile("SE(?:16)?([0-9]{10})\\-(.*)");
 
-    /** Regex validating that a local id only got characters from the PRINTABLE_STRING class */
+    /** Regex validating that a local id only got characters from the PRINTABLE_STRING class. */
     private static final Pattern LOCAL_ID_VALID_PATTERN = Pattern
             .compile("[0-9A-Za-z \\'\\(\\)\\+\\,\\-\\.\\/\\:\\=\\?]*");
+    public static final int MAX_EXTENSION_LENGTH = 31;
+    public static final int ORG_WO_CHECKSUM_END = 9;
 
     /**
      * {@inheritDoc}
@@ -40,7 +42,7 @@ public class HsaIdValidator implements RootValidator {
      */
     @Override
     public List<String> validateExtension(String extension) {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
 
         Matcher m = HSA_VALID_PATTERN.matcher(extension);
 
@@ -61,21 +63,21 @@ public class HsaIdValidator implements RootValidator {
 
     /**
      * Check that the total length of the HSA id doesn't exceed 31 characters.
-     * 
+     *
      * @param extension
      *            The id to check.
      * @param result
      *            List that validation messages are added to.
      */
     private void checkHSALength(String extension, List<String> result) {
-        if (extension.length() > 31) {
+        if (extension.length() > MAX_EXTENSION_LENGTH) {
             result.add(String.format("HSA id '%s' exceeded the maximum length of 31 charcters", extension));
         }
     }
 
     /**
      * Check that the local id only contain accepted characters.
-     * 
+     *
      * @param localId
      *            The local id to check.
      * @param result
@@ -89,15 +91,15 @@ public class HsaIdValidator implements RootValidator {
 
     /**
      * Check that the organisationsnummer has a valid checksum.
-     * 
+     *
      * @param orgNo
      *            The organisationsnummer to check.
      * @param result
      *            List that validation messages are added to.
      */
     private void checkOrgNumber(String orgNo, List<String> result) {
-        String orgNoWithoutChecksum = orgNo.substring(0, 9);
-        int mod10 = orgNo.charAt(9) - '0';
+        String orgNoWithoutChecksum = orgNo.substring(0, ORG_WO_CHECKSUM_END);
+        int mod10 = orgNo.charAt(ORG_WO_CHECKSUM_END) - '0';
 
         if (ValidatorUtils.calculateMod10(orgNoWithoutChecksum) != mod10) {
             result.add(String.format("The checksum digit in org-number '%s' is invalid", orgNo));

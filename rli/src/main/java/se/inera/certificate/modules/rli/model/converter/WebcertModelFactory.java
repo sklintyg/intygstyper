@@ -29,9 +29,9 @@ import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 
 /**
  * Factory for creating a editable model.
- * 
+ *
  * @author nikpet
- * 
+ *
  */
 public class WebcertModelFactory {
 

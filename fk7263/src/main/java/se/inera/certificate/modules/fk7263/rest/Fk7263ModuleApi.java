@@ -88,8 +88,7 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     /**
      * {@inheritDoc}
-     * 
-     * <p>
+     * <p/>
      * Unmmarshalls transport format xml into fitting JaxB Object tree and perform schema validation. If no schema
      * validation errors are found, next validation step is external model format transformation and validation Last
      * step is to validate internal format specific rules.
@@ -98,7 +97,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     public ExternalModelResponse unmarshall(TransportModelHolder transportModel) throws ModuleException {
         Object jaxbObject = TransportXmlUtils.unmarshallTransportXML(transportModel.getTransportModel());
         Fk7263Utlatande externalModel = null;
-        List<String> validationErrors = new ArrayList<String>();
+        List<String> validationErrors = new ArrayList<>();
 
         if (jaxbObject instanceof RegisterMedicalCertificate) {
             // Convert and validate legacy transport model
@@ -142,9 +141,8 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     /**
      * Extract the certificate-ID from a jaxbobject of legacy or normal type.
-     * 
-     * @param jaxbObject
-     *            the {@link Object}
+     *
+     * @param jaxbObject the {@link Object}
      * @return a String with the id
      */
     private String extractCertificateId(Object jaxbObject) {
@@ -168,9 +166,8 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     /**
      * Extract the enhets-ID from a jaxbobject of legacy or normal type.
-     * 
-     * @param jaxbObject
-     *            the {@link Object}
+     *
+     * @param jaxbObject the {@link Object}
      * @return a String with the id
      */
     private String extractEnhetsId(Object jaxbObject) {

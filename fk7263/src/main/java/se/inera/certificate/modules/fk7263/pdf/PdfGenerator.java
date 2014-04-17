@@ -133,8 +133,6 @@ public class PdfGenerator {
 
     private Fk7263Intyg intyg;
     private ByteArrayOutputStream outputStream;
-    private PdfReader pdfReader;
-    private PdfStamper pdfStamper;
     private AcroFields fields;
 
     public PdfGenerator(Fk7263Intyg intyg) throws PdfGeneratorException {
@@ -147,8 +145,8 @@ public class PdfGenerator {
 
             outputStream = new ByteArrayOutputStream();
 
-            pdfReader = new PdfReader(PDF_TEMPLATE);
-            pdfStamper = new PdfStamper(pdfReader, this.outputStream);
+            PdfReader pdfReader = new PdfReader(PDF_TEMPLATE);
+            PdfStamper pdfStamper = new PdfStamper(pdfReader, this.outputStream);
             fields = pdfStamper.getAcroFields();
 
             generatePdf();
@@ -368,9 +366,7 @@ public class PdfGenerator {
             if (checked) {
                 fields.setField(fieldId, "1");
             }
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Could not check field '" + fieldId + "'", e);
-        } catch (DocumentException e) {
+        } catch (IOException | DocumentException e) {
             throw new IllegalArgumentException("Could not check field '" + fieldId + "'", e);
         }
     }

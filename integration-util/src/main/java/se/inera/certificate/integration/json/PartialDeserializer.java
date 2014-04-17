@@ -1,7 +1,6 @@
 package se.inera.certificate.integration.json;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import org.joda.time.Partial;
@@ -22,7 +21,7 @@ public class PartialDeserializer extends StdDeserializer<Partial> {
 
     @Override
     public Partial deserialize(JsonParser jp, DeserializationContext ctxt)
-            throws IOException, JsonProcessingException {
+            throws IOException {
 
         if (jp.getCurrentToken() != VALUE_STRING) {
             throw ctxt.wrongTokenException(jp, VALUE_STRING, "expected JSON String");

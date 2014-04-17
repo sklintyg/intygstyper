@@ -54,15 +54,10 @@ public class InternalValidator extends AbstractValidator {
         String funktionsnedsattning = utlatande.getFunktionsnedsattning();
         if (!utlatande.isAvstangningSmittskydd() && (funktionsnedsattning == null)) {
             addValidationError("Field 4: No funktionsnedsattning element found!");
-            return;
-        }
-
-        // Fält 4 - höger Check that we at least got one field set if not smittskydd
-        if (!utlatande.isAvstangningSmittskydd()) {
+        } else if (!utlatande.isAvstangningSmittskydd()) { // Fält 4 - höger Check that we at least got one field set if not smittskydd
             if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
                     && utlatande.getJournaluppgifter() == null && utlatande.getAnnanReferens() == null) {
                 addValidationError("Field 4: At least 1 vardkontakt or referens element must be set!");
-                return;
             }
         }
     }
@@ -157,8 +152,8 @@ public class InternalValidator extends AbstractValidator {
     /**
      * Checks that the given Observation is about arbetsformaga and has a period where tom>from.
      *
-     * @param nedsattning
-     * @return
+     * @param nedsattning nedsattning
+     * @return boolean
      */
     private boolean validArbetsformageNedsattning(LocalDateInterval nedsattning) {
 

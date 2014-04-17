@@ -24,9 +24,8 @@ import se.inera.certificate.model.Kod;
 
 /**
  * Util for converting an enum implementing ICodeSystem to a Kod object.
- * 
+ *
  * @author nikpet
- * 
  */
 public final class CodeConverter {
 
@@ -63,16 +62,11 @@ public final class CodeConverter {
 
     /**
      * Converts from {@link Kod} to a specified enum representing that kod.
-     * 
-     * @param kod
-     *            The Kod to convert to an enum.
-     * @param type
-     *            The enum class to convert to.
-     * 
+     *
+     * @param kod  The Kod to convert to an enum.
+     * @param type The enum class to convert to.
      * @return An enum instance of <code>null</code> if the kod was <code>null</code>.
-     * 
-     * @throws RuntimeException
-     *             if no enum constant was defined for the specified kod.
+     * @throws RuntimeException if no enum constant was defined for the specified kod.
      */
     public static <T extends CodeSystem> T fromCode(Kod kod, Class<T> type) {
         if (kod == null) {
@@ -91,11 +85,9 @@ public final class CodeConverter {
 
     /**
      * Checks if a specified code enum matches a specified {@link Kod}.
-     * 
-     * @param codeEnum
-     *            The code enum to match.
-     * @param kod
-     *            The kod to match.
+     *
+     * @param codeEnum The code enum to match.
+     * @param kod      The kod to match.
      * @return <code>true</code> if the code enum and kod matches, <code>false</code> otherwise.
      */
     public static boolean matches(CodeSystem codeEnum, Kod kod) {

@@ -106,7 +106,6 @@ public class InternalDraftValidator {
             if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
                     && utlatande.getJournaluppgifter() == null && utlatande.getAnnanReferens() == null) {
                 addValidationError("Field 4", "fk7263.validation.intyg-baserat-pa.missing");
-                return;
             }
 
         }
@@ -144,8 +143,8 @@ public class InternalDraftValidator {
     }
 
     /**
-     * @param values
-     * @return
+     * @param values values
+     * @return boolean
      */
     private boolean hasMaxOneTruth(boolean... values) {
         boolean found = false;
@@ -161,9 +160,9 @@ public class InternalDraftValidator {
     }
 
     /**
-     * @param fieldId
-     * @param intervals
-     * @return
+     * @param fieldId field id
+     * @param intervals intervals
+     * @return booleans
      */
     protected boolean validateIntervals(String fieldId, LocalDateInterval... intervals) {
         if (intervals == null || allNulls(intervals)) {
@@ -199,8 +198,8 @@ public class InternalDraftValidator {
     }
 
     /**
-     * @param intervals
-     * @return
+     * @param intervals intervals
+     * @return boolean
      */
     private boolean allNulls(LocalDateInterval[] intervals) {
         for (LocalDateInterval interval : intervals) {
@@ -212,9 +211,9 @@ public class InternalDraftValidator {
     }
 
     /**
-     * @param start
-     * @param end
-     * @return
+     * @param start start
+     * @param end end
+     * @return Interval
      */
     private Interval createInterval(LocalDate start, LocalDate end) {
         if ((start == null || end == null || start.isAfter(end))) {
