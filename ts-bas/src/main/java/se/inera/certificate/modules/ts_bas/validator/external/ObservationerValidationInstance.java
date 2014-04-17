@@ -45,6 +45,8 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
     private static final Kod OBS_E11 = CodeConverter.toKod(ObservationsKod.DIABETES_TYP_2);
     private static final Kod OBS_G40_9 = CodeConverter.toKod(ObservationsKod.EPILEPSI);
 
+    public static final String OBSERVATIONER = "observationer";
+
     private final List<Observation> observationer;
 
     public ObservationerValidationInstance(ExternalValidatorInstance prototype, List<Observation> observationer) {
@@ -57,40 +59,39 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
      * present.
      */
     public void validateObservationer() {
-
         Iterable<Kod> kodList = new ObservationerIterable(observationer);
 
-        assertKodCountBetween(kodList, OBS_H53_4, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_H53_6, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_H53_2, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_H55_9, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_H53_4, 1, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_H53_6, 1, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_H53_2, 1, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_H55_9, 1, 1, OBSERVATIONER);
 
-        assertKodCountBetween(kodList, OBS_OBS1, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS2, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS3, 0, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS4, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS5, 0, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS6, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS7, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS8, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS9, 0, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS10, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS11, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS12, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS13, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS15, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS16, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS17, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS18, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_OBS1, 1, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_OBS2, 1, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_OBS3, 0, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_OBS4, 1, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_OBS5, 0, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_OBS6, 1, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_OBS7, 1, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_OBS8, 1, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_OBS9, 0, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_OBS10, 1, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_OBS11, 1, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_OBS12, 1, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_OBS13, 1, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_OBS15, 1, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_OBS16, 1, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_OBS17, 1, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_OBS18, 1, 1, OBSERVATIONER);
 
-        assertKodCountBetween(kodList, OBS_129104009, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_73211009, 0, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_285049007, 2, 2, "observationer");
-        assertKodCountBetween(kodList, OBS_397535007, 0, 3, "observationer");
-        assertKodCountBetween(kodList, OBS_420050001, 3, 3, "observationer");
+        assertKodCountBetween(kodList, OBS_129104009, 1, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_73211009, 0, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_285049007, 2, 2, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_397535007, 0, 3, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_420050001, 3, 3, OBSERVATIONER);
 
-        assertKodCountBetween(kodList, OBS_G40_9, 1, 1, "observationer");
-        assertKodCountBetween(kodList, OBS_OBS15, 1, 1, "observationer");
+        assertKodCountBetween(kodList, OBS_G40_9, 1, 1, OBSERVATIONER);
+        assertKodCountBetween(kodList, OBS_OBS15, 1, 1, OBSERVATIONER);
         // TODO: Count all other observations here
 
         for (Observation observation : observationer) {
@@ -398,7 +399,7 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
     /**
      * Returns an Observation based on the specified Id, or <code>null</code> if none where found.
      *
-     * @param observationskod Find an observation with this {@link Id}
+     * @param id Find an observation with this {@link Id}
      * @return an {@link Observation} if it is found, or null otherwise
      */
     public Observation getObservationWithId(Id id) {

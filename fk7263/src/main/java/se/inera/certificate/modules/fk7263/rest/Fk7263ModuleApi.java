@@ -249,7 +249,6 @@ public class Fk7263ModuleApi implements ModuleApi {
      */
     @Override
     public ValidateDraftResponse validateDraft(InternalModelHolder internalModel) throws ModuleException {
-        internalDraftValidator = new InternalDraftValidator();
         return internalDraftValidator.validateDraft(getInternal(internalModel));
 
     }

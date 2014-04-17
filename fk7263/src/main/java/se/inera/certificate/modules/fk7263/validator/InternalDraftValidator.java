@@ -20,82 +20,74 @@ import se.inera.certificate.modules.support.api.dto.ValidationStatus;
 public class InternalDraftValidator {
     private static final Logger LOG = LoggerFactory.getLogger(InternalDraftValidator.class);
 
-    private Fk7263Intyg utlatande;
-
-    private List<ValidationMessage> validationMessages;
-
-    public InternalDraftValidator() {
-        validationMessages = new ArrayList<>();
-    }
-
     public ValidateDraftResponse validateDraft(Fk7263Intyg utlatande) {
-        this.utlatande = utlatande;
+        List<ValidationMessage> validationMessages = new ArrayList<>();
 
-        validateDiagnose();
-        validateFunktionsnedsattning();
-        validateArbetsformaga();
-        validatePrognos();
-        validateRessatt();
-        validateKommentar();
+        validateDiagnose(utlatande, validationMessages);
+        validateFunktionsnedsattning(utlatande, validationMessages);
+        validateArbetsformaga(utlatande, validationMessages);
+        validatePrognos(utlatande, validationMessages);
+        validateRessatt(utlatande, validationMessages);
+        validateKommentar(utlatande, validationMessages);
 
-        return new ValidateDraftResponse(getValidationStatus(), validationMessages);
+        return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
     }
 
-    private void validateKommentar() {
+    private void validateKommentar(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
         // Fält 13 - Upplysningar - optional
         // If field 4 annat satt or field 10 går ej att bedömma is set then
         // field 13 should contain data.
         if (utlatande.getAnnanReferens() != null && isNullOrEmpty(utlatande.getAnnanReferensBeskrivning())) {
-            addValidationError("Field 4", "fk7263.validation.intyg-baserat-pa.annat.beskrivning.missing");
+            addValidationError(validationMessages, "Field 4", "fk7263.validation.intyg-baserat-pa.annat.beskrivning.missing");
         }
 
         if ((utlatande.getPrognosis() != null && utlatande.getPrognosis().equals("UNKNOWN"))
                 && isNullOrEmpty(utlatande.getArbetsformagaPrognosGarInteAttBedomBeskrivning())) {
-            addValidationError("Field 10", "fk7263.validation.prognos.gar-ej-att-bedomma.beskrivning.missing");
+            addValidationError(validationMessages, "Field 10", "fk7263.validation.prognos.gar-ej-att-bedomma.beskrivning.missing");
         }
 
     }
 
-    private void validateRessatt() {
+    private void validateRessatt(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
         // Fält 11 - optional
         boolean inForandratRessatt = utlatande.isRessattTillArbeteAktuellt();
         boolean inEjForandratRessatt = utlatande.isRessattTillArbeteEjAktuellt();
 
         // Fält 11 - If set only one should be set
         if (inForandratRessatt && inEjForandratRessatt) {
-            addValidationError("Field 11", "Only one forandrat ressatt could be set.");
+            addValidationError(validationMessages, "Field 11", "Only one forandrat ressatt could be set.");
         }
     }
 
-    private void validatePrognos() {
+    private void validatePrognos(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
         // Fält 10 - 4 optional checkboxes (but exclusive!)
         if (!hasMaxOneTruth(utlatande.isArbetsformataPrognosGarInteAttBedoma(), utlatande.isArbetsformataPrognosJa(),
                 utlatande.isArbetsformataPrognosJaDelvis(), utlatande.isArbetsformataPrognosNej())) {
-            addValidationError("Field 10", "Only one arbetsformaga.prognos field can be checked!");
+            addValidationError(validationMessages, "Field 10", "Only one arbetsformaga.prognos field can be checked!");
         }
     }
 
-    private void validateArbetsformaga() {
+    private void validateArbetsformaga(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
         // Fält 8a - arbetsformoga - sysselsattning - applies of not smittskydd
         // is set
         if (!utlatande.isAvstangningSmittskydd()) {
             boolean hasArbetsuppgifts = !StringUtils.isEmpty(utlatande.getNuvarandeArbetsuppgifter());
 
             if (!hasArbetsuppgifts && !utlatande.isArbetsloshet() && !utlatande.isForaldrarledighet()) {
-                addValidationError("Field 8a", "fk7263.validation.sysselsattning.missing");
+                addValidationError(validationMessages, "Field 8a", "fk7263.validation.sysselsattning.missing");
             }
         }
 
         // validate 8b - regardless of smittskydd
-        validateIntervals("Field 8b", utlatande.getNedsattMed100(), utlatande.getNedsattMed75(),
+        validateIntervals(validationMessages, "Field 8b", utlatande.getNedsattMed100(), utlatande.getNedsattMed75(),
                 utlatande.getNedsattMed50(), utlatande.getNedsattMed25());
     }
 
-    private void validateFunktionsnedsattning() {
+    private void validateFunktionsnedsattning(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
         // Fält 4 - vänster Check that we got a funktionsnedsattning element
         String funktionsnedsattning = utlatande.getFunktionsnedsattning();
         if (!utlatande.isAvstangningSmittskydd() && (funktionsnedsattning == null)) {
-            addValidationError("Field 4", "fk7263.validation.funktionsnedsattning.missing");
+            addValidationError(validationMessages, "Field 4", "fk7263.validation.funktionsnedsattning.missing");
             return;
         }
 
@@ -105,16 +97,16 @@ public class InternalDraftValidator {
 
             if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
                     && utlatande.getJournaluppgifter() == null && utlatande.getAnnanReferens() == null) {
-                addValidationError("Field 4", "fk7263.validation.intyg-baserat-pa.missing");
+                addValidationError(validationMessages, "Field 4", "fk7263.validation.intyg-baserat-pa.missing");
             }
 
         }
     }
 
-    private void validateDiagnose() {
+    private void validateDiagnose(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
         // Fält 2 - Medicinskt tillstånd kod - mandatory if not smittskydd
         if (!utlatande.isAvstangningSmittskydd() && isNullOrEmpty(utlatande.getDiagnosKod())) {
-            addValidationError("Field 2", "fk7263.validation.diagnos.missing");
+            addValidationError(validationMessages, "Field 2", "fk7263.validation.diagnos.missing");
         }
 
         // Fält 3 - always optional regardless of smittskydd
@@ -123,21 +115,24 @@ public class InternalDraftValidator {
     /**
      * Check if there are validation errors.
      *
-     * @return {@link ValidationStatus.COMPLETE} if there are no errors, and {@link ValidationStatus.INCOMPLETE}
+     * @param validationMessages list of validation messages
+     * @return {@link se.inera.certificate.modules.support.api.dto.ValidationStatus#VALID}
+     * if there are no errors, and {@link se.inera.certificate.modules.support.api.dto.ValidationStatus#INVALID}
      * otherwise
      */
-    private ValidationStatus getValidationStatus() {
+    private ValidationStatus getValidationStatus(List<ValidationMessage> validationMessages) {
         return (validationMessages.isEmpty()) ? se.inera.certificate.modules.support.api.dto.ValidationStatus.VALID
                 : se.inera.certificate.modules.support.api.dto.ValidationStatus.INVALID;
     }
 
     /**
-     * Create a ValidationMessage and add it to the {@link ValidateDraftResponseHolder}.
+     * Create a ValidationMessage and add it to the list of messages.
      *
+     * @param validationMessages list collection messages
      * @param field a String with the name of the field
      * @param msg   a String with an error code for the front end implementation
      */
-    private void addValidationError(String field, String msg) {
+    private void addValidationError(List<ValidationMessage> validationMessages, String field, String msg) {
         validationMessages.add(new ValidationMessage(field, msg));
         LOG.debug(field + " " + msg);
     }
@@ -160,13 +155,15 @@ public class InternalDraftValidator {
     }
 
     /**
+     *
+     * @param validationMessages list collecting message
      * @param fieldId field id
      * @param intervals intervals
      * @return booleans
      */
-    protected boolean validateIntervals(String fieldId, LocalDateInterval... intervals) {
+    protected boolean validateIntervals(List<ValidationMessage> validationMessages, String fieldId, LocalDateInterval... intervals) {
         if (intervals == null || allNulls(intervals)) {
-            addValidationError(fieldId, "fk7263.validation.arbetsformaga.choose-at-least-one");
+            addValidationError(validationMessages, fieldId, "fk7263.validation.arbetsformaga.choose-at-least-one");
             return false;
         }
 
@@ -174,20 +171,20 @@ public class InternalDraftValidator {
             if (intervals[i] != null) {
                 Interval oneInterval = createInterval(intervals[i].getFrom(), intervals[i].getTom());
                 if (oneInterval == null) {
-                    addValidationError(fieldId, "fk7263.validation.arbetsformaga.incorrect-date-interval");
+                    addValidationError(validationMessages, fieldId, "fk7263.validation.arbetsformaga.incorrect-date-interval");
                     return false;
                 }
                 for (int j = i + 1; j < intervals.length; j++) {
                     if (intervals[j] != null) {
                         Interval anotherInterval = createInterval(intervals[j].getFrom(), intervals[j].getTom());
                         if (anotherInterval == null) {
-                            addValidationError(fieldId, "fk7263.validation.arbetsformaga.incorrect-date-interval");
+                            addValidationError(validationMessages, fieldId, "fk7263.validation.arbetsformaga.incorrect-date-interval");
                             return false;
                         }
                         // Overlap OR abuts(one intervals tom day== another's
                         // from day) is considered invalid
                         if (oneInterval.overlaps(anotherInterval) || oneInterval.abuts(anotherInterval)) {
-                            addValidationError(fieldId, "fk7263.validation.arbetsformaga.overlapping-date-interval");
+                            addValidationError(validationMessages, fieldId, "fk7263.validation.arbetsformaga.overlapping-date-interval");
                             return false;
                         }
                     }
