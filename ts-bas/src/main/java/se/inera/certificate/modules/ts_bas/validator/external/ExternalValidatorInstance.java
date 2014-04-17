@@ -54,7 +54,6 @@ public class ExternalValidatorInstance {
 
     private AktiviteterValidationInstance aktivitetInstance;
     private ObservationerValidationInstance observationInstance;
-    private RekommendationerValidationInstance rekommendationInstance;
 
     private static final IdValidator ID_VALIDATOR;
 
@@ -71,7 +70,7 @@ public class ExternalValidatorInstance {
         validationErrors = new ArrayList<>();
     }
 
-    /* package */ExternalValidatorInstance(List<String> validationErrors, ValidationContext context) {
+    ExternalValidatorInstance(List<String> validationErrors, ValidationContext context) {
         this.validationErrors = validationErrors;
         this.context = context;
     }
@@ -80,7 +79,7 @@ public class ExternalValidatorInstance {
         context = new ValidationContext(utlatande);
         aktivitetInstance = new AktiviteterValidationInstance(this, utlatande.getAktiviteter());
         observationInstance = new ObservationerValidationInstance(this, utlatande.getObservationer());
-        rekommendationInstance = new RekommendationerValidationInstance(this, utlatande.getRekommendationer());
+        RekommendationerValidationInstance rekommendationInstance = new RekommendationerValidationInstance(this, utlatande.getRekommendationer());
 
         validateUtlatande(utlatande);
         validatePatient(utlatande.getPatient());
@@ -201,7 +200,7 @@ public class ExternalValidatorInstance {
     /**
      * Validate a list of Vardkontakter.
      *
-     * @param vardkontakter List of {@link Vardkontakter}
+     * @param vardkontakter List of {@link Vardkontakt}
      */
     private void validateVardkontakter(List<Vardkontakt> vardkontakter) {
         if (vardkontakter.size() != 1) {
@@ -218,7 +217,7 @@ public class ExternalValidatorInstance {
      * Validates and ensures that all ObservationAktivitetRelation's that are required are present, also raises
      * validation errors if incorrect relations are found.
      *
-     * @param observationAktivitetRelationer List of {@link ObservationAktivitetRelationer}
+     * @param observationAktivitetRelationer List of {@link ObservationAktivitetRelation}
      */
     private void validateObservationAktivitetRelation(List<ObservationAktivitetRelation> observationAktivitetRelationer) {
         boolean synfaltsdefekterRelation = false;
@@ -272,7 +271,7 @@ public class ExternalValidatorInstance {
      * Util method for pretty-printing a Kod.
      *
      * @param kod {@link Kod}
-     * @return a nicely formatted {@link #String} containing the {@link Kod}
+     * @return a nicely formatted {@link String} containing the {@link Kod}
      */
     protected String getDisplayCode(Kod kod) {
         if (kod == null || kod.getCode() == null) {
@@ -291,7 +290,7 @@ public class ExternalValidatorInstance {
      *
      * @param value   {@link Object}
      * @param element {@link String} identifying element the under scrutiny
-     * @return {@link AssertationResult}
+     * @return {@link AssertionResult}
      */
     protected AssertionResult assertNotNull(Object value, String element) {
         if (value == null) {
@@ -308,7 +307,7 @@ public class ExternalValidatorInstance {
      *
      * @param value   {@link Object}
      * @param element {@link String} identifying the element
-     * @return {@link AssertationResul}
+     * @return {@link AssertionResult}
      */
     protected AssertionResult assertNull(Object value, String element) {
         if (value instanceof Collection<?>) {
@@ -329,7 +328,7 @@ public class ExternalValidatorInstance {
      *
      * @param value   {@link String}
      * @param element {@link String} identifying the examined string
-     * @return {@link AssertationResult}.SUCCESS if the String was not empty or null, {@link #AssertationResult}
+     * @return {@link AssertionResult}.SUCCESS if the String was not empty or null, {@link AssertionResult}
      * .FAILURE if it was
      */
     protected AssertionResult assertNotEmpty(String value, String element) {
@@ -346,7 +345,7 @@ public class ExternalValidatorInstance {
      * @param kod          the {@link Kod} to check
      * @param expectedEnum the enum-class extending {@link CodeSystem} against which the check is performed
      * @param element      {@link String} identifying the element
-     * @return {@link AssertationResult}
+     * @return {@link AssertionResult}
      */
     protected AssertionResult assertKodInEnum(Kod kod, Class<? extends CodeSystem> expectedEnum, String element) {
         if (assertNotNull(kod, element).success()) {
@@ -368,7 +367,7 @@ public class ExternalValidatorInstance {
      * @param minCount   required number of occurrences
      * @param maxCount   maximum number of occurrences
      * @param element    String identifying the context
-     * @return {@link AssertationResult}
+     * @return {@link AssertionResult}
      */
     protected AssertionResult assertKodCountBetween(Iterable<Kod> kodSet, Kod kodToCount, int minCount, int maxCount,
                                                     String element) {
@@ -381,11 +380,11 @@ public class ExternalValidatorInstance {
 
         if (maxCount < count || count < minCount) {
             if (minCount == maxCount) {
-                validationError(String.format("%s must exist %s times; existed %s times", element
-                        + getDisplayCode(kodToCount), minCount, count));
+                validationError(String.format("%s%s must exist %s times; existed %s times",
+                        element, getDisplayCode(kodToCount), minCount, count));
             } else {
-                validationError(String.format("%s must exist between %s and %s times; existed %s times", element
-                        + getDisplayCode(kodToCount), minCount, maxCount, count));
+                validationError(String.format("%s%s must exist between %s and %s times; existed %s times",
+                        element, getDisplayCode(kodToCount), minCount, maxCount, count));
             }
             return AssertionResult.FAILURE;
         }

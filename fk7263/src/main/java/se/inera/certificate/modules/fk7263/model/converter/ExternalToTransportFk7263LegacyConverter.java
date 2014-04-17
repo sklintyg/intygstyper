@@ -5,7 +5,6 @@ import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeCo
 import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toII;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.joda.time.LocalDate;
@@ -129,11 +128,7 @@ public final class ExternalToTransportFk7263LegacyConverter {
 
         List<Fk7263Observation> arbetsformagas = utlatande.getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
 
-        if (arbetsformagas == null) {
-            arbetsformagas = Collections.emptyList();
-        }
-
-        if (arbetsformagas.size() > 0) {
+        if (!arbetsformagas.isEmpty()) {
             Fk7263Observation firstObservation = arbetsformagas.get(0);
             if (firstObservation.getPrognoser() != null && !firstObservation.getPrognoser().isEmpty()) {
                 Fk7263Prognos prognos = firstObservation.getPrognoser().get(0);

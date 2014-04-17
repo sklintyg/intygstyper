@@ -11,7 +11,7 @@ import se.inera.certificate.model.Utlatande;
  * @author marced
  */
 public class CommonModelValidator {
-    private Utlatande commonUtlatande;
+    private final Utlatande commonUtlatande;
     private List<String> validationErrors = new ArrayList<>();
 
     private static final String VALIDATION_ERROR_PREFIX = "Validation Error:";
@@ -21,7 +21,7 @@ public class CommonModelValidator {
     }
 
     public List<String> validate() {
-        //TODO: add non-schema-validation rules as they appear
+        // Add non-schema-validation rules as they appear
         return validationErrors;
     }
 
