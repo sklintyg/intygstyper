@@ -67,8 +67,15 @@
                     <span message key="certificatetypes.FK7263.commonname"></span> <span class="cert-titlebar-type"><span message key="certificatetypes.fk7263.typename"></span></span>
                   </h2>
                 </div>
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 issue">
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 issue">
                   <span><span message key="fk7263.label.issued"></span></span> <span class="cert-titlebar-value">{{cert.signeringsdatum | date:'longDate'}}</span>
+                </div>
+                
+				<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 archive hidden-xs">
+                  <a role="button" data-toggle="modal" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
+                      <span class="glyphicon glyphicon-folder-close white"></span>
+					  <!-- <img alt="Arkivera intyg" src="/img/archive-icon.gif" /> -->
+                  </a>
                 </div>
               </div>
             </div>

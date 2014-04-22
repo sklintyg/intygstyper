@@ -1,8 +1,18 @@
 define([], function() {
 	'use strict';
 
-	return [ '$scope','$filter', '$location', 'fk7263.certificateService', '$http', '$routeParams', '$log',
-			function($scope, $filter, $location, certificateService, http, $routeParams, $log) {
+	return [
+			'$scope',
+			'$filter',
+			'$location',
+			'fk7263.certificateService',
+			'listCertService',
+			'dialogService',
+			'$http',
+			'$routeParams',
+			'$log',
+			function($scope, $filter, $location, certificateService, listCertService, dialogService, http,
+					$routeParams, $log) {
 				$scope.cert = {};
 
 				$scope.doneLoading = false;
@@ -12,6 +22,53 @@ define([], function() {
 				};
 
 				$scope.visibleStatuses = [ 'SENT' ];
+
+				$scope.dialog = {
+					acceptprogressdone : true,
+					focus : false
+				};
+				var archiveDialog = {};
+
+				$scope.archiveSelected = function() {
+					var item = $scope.cert;
+					$log.debug("archive " + item.id);
+					$scope.dialog.acceptprogressdone = false;
+					listCertService.archiveCertificate(item, function(fromServer, oldItem) {
+						$log.debug("statusUpdate callback:" + fromServer);
+						if (fromServer != null) {
+							// Better way to update the object?
+							oldItem.archived = fromServer.archived;
+							oldItem.status = fromServer.status;
+							oldItem.selected = false;
+							archiveDialog.close();
+							$scope.dialog.acceptprogressdone = true;
+							$location.path("#/start");
+						} else {
+							// show error view
+							$location.path("/fel/couldnotarchivecert");
+						}
+					});
+				}
+
+				// Archive dialog
+				$scope.certToArchive = {};
+
+				$scope.openArchiveDialog = function(cert) {
+					$scope.certToArchive = cert;
+					$scope.dialog.focus = true;
+					archiveDialog = dialogService.showDialog($scope, {
+						dialogId : "archive-confirmation-dialog",
+						titleId : "inbox.archivemodal.header",
+						bodyTextId : "inbox.archivemodal.text",
+						button1click : function() {
+							$log.debug("archive");
+							$scope.archiveSelected();
+						},
+						button1id : "archive-button",
+						button1text : "button.archive",
+						autoClose : false
+					});
+				}
 
 				$scope.filterStatuses = function(statuses) {
 					var result = [];

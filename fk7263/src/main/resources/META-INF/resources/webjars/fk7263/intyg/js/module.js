@@ -1,14 +1,15 @@
 define([
         'angular',
+        'services',
         'fk7263/intyg/js/controllers',
         'fk7263/intyg/js/messages',
         'fk7263/intyg/js/services'
-    ], function (angular, controllers, messages, services) {
+    ], function (angular, miServices, controllers, messages, services) {
         'use strict';
 
         var moduleName = 'fk7263';
 
-        var module = angular.module(moduleName, [controllers, services]);
+        var module = angular.module(moduleName, [miServices, controllers, services]);
 
         module.config(['$routeProvider', function ($routeProvider) {
         	 $routeProvider.when('/fk7263/view/:certificateId', {
