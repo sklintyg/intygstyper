@@ -30,7 +30,7 @@ public class ScenarioFinder {
 
     /**
      * Finds the specified transport scenarios that matches the wildcard string.
-     * 
+     *
      * @param scenarioWithWildcards
      *            A wildcard string matching scenarios. '*' and '?' can be used.
      * @return A list of matching transport scenarios.
@@ -43,7 +43,7 @@ public class ScenarioFinder {
 
     /**
      * Finds the specified external scenarios that matches the wildcard string.
-     * 
+     *
      * @param scenarioWithWildcards
      *            A wildcard string matching scenarios. '*' and '?' can be used.
      * @return A list of matching external scenarios.
@@ -56,7 +56,7 @@ public class ScenarioFinder {
 
     /**
      * Finds the specified internal Mina Intyg scenarios that matches the wildcard string.
-     * 
+     *
      * @param scenarioWithWildcards
      *            A wildcard string matching scenarios. '*' and '?' can be used.
      * @return A list of matching internal Mina Intyg scenarios.
@@ -84,7 +84,7 @@ public class ScenarioFinder {
 
     /**
      * Finds the specified transport scenario matching the name.
-     * 
+     *
      * @param filename
      *            A name matching a scenario.
      * @return A matching transport scenario.
@@ -97,7 +97,7 @@ public class ScenarioFinder {
 
     /**
      * Finds the specified external scenario matching the name.
-     * 
+     *
      * @param filename
      *            A name matching a scenario.
      * @return A matching external scenario.
@@ -110,7 +110,7 @@ public class ScenarioFinder {
 
     /**
      * Finds the specified internal Mina Intyg scenario matching the name.
-     * 
+     *
      * @param filename
      *            A name matching a scenario.
      * @return A matching internal Mina Intyg scenario.
@@ -134,7 +134,7 @@ public class ScenarioFinder {
     /**
      * Scenario implementation using files.
      */
-    private static class FileBasedScenario implements Scenario {
+    private static final class FileBasedScenario implements Scenario {
 
         /** The file that represents the current scenario. */
         private final File scenarioFile;

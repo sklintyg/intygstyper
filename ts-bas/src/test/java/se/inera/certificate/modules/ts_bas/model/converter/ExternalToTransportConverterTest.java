@@ -43,11 +43,11 @@ public class ExternalToTransportConverterTest {
             Utlatande actual = converter.convert(extUtlatande);
 
             Utlatande expected = scenario.asTransportModel();
-            
+
             // We need to issue a get in order to create an empty list (and make the test pass)
             expected.getSkapadAv().getSpecialitets();
             expected.getSkapadAv().getBefattnings();
-            
+
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
     }

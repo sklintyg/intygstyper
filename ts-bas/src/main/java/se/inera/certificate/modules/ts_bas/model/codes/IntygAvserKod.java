@@ -45,7 +45,6 @@ public enum IntygAvserKod implements CodeSystem {
 
     private static String codeSystemName = "kv_intyget_avser";
 
-    // TODO: Change to correct OID when available
     private static String codeSystem = "24c41b8d-258a-46bf-a08a-b90738b28770";
 
     private static String codeSystemVersion = null;

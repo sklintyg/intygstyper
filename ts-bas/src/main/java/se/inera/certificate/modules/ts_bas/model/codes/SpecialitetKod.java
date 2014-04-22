@@ -25,7 +25,7 @@ import se.inera.certificate.model.Kod;
  */
 public enum SpecialitetKod implements CodeSystem {
 
-    /** HSA id root */
+    // TODO Change when specialitet is available
     SPECIALITET("SPEC", "Specialitet placeholder");
 
     private static String codeSystemName = "kv_intyg_specialitet";

@@ -50,7 +50,7 @@ public class CodeConverterTest {
 
     /**
      * Checks that a {@link CodeSystem} and a {@link Kod} can be compared without null pointer exceptions.
-     * 
+     *
      * @throws Exception
      */
     @Test

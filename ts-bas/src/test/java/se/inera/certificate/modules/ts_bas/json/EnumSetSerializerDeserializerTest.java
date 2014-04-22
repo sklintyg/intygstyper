@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class EnumSetSerializerDeserializerTest {
 
     /**
-     * A simple enum for testing
+     * A simple enum for testing.
      */
     public static enum TestEnum {
         ONE, TWO, THREE
@@ -82,7 +82,7 @@ public class EnumSetSerializerDeserializerTest {
 
     /**
      * Test that EnumSets are serialized as expected.
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -124,7 +124,7 @@ public class EnumSetSerializerDeserializerTest {
 
     /**
      * Test that EnumSets are deserialized as expected.
-     * 
+     *
      * @throws Exception
      */
     @Test

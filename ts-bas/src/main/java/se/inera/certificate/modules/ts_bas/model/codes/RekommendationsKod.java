@@ -22,10 +22,10 @@ import se.inera.certificate.model.Kod;
 
 public enum RekommendationsKod implements CodeSystem {
 
-    /** Patienten uppfyller kraven för (REK8) */
+    /** Patienten uppfyller kraven för (REK8). */
     PATIENT_UPPFYLLER_KRAV_FOR("REK8", "Patienten uppfyller kraven för"),
 
-    /** Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i (REK9) */
+    /** Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i (REK9). */
     PATIENT_BOR_UNDESOKAS_AV_SPECIALIST("REK9",
             "Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i");
 

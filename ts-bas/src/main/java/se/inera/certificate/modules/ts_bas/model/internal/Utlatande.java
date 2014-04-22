@@ -207,7 +207,7 @@ public class Utlatande {
 
     public Psykiskt getPsykiskt() {
         if (psykiskt == null) {
-            psykiskt = new Psykiskt();           
+            psykiskt = new Psykiskt();
         }
         return psykiskt;
     }
@@ -246,7 +246,6 @@ public class Utlatande {
         }
         return vardkontakt;
     }
-
 
     public IntygAvser getIntygAvser() {
         if (intygAvser == null) {

@@ -25,7 +25,6 @@ import se.inera.certificate.model.Kod;
  */
 public enum UtlatandeKod implements CodeSystem {
 
-    // TODO: Create specific Code representing module
     TS_BAS_U06_V06("TS-BAS", "06", "06",
             "Läkarintyg- avseende högre körkortsbehörigheter eller taxiförarlegitimation- på begäran från Transportstyrelsen");
 

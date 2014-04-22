@@ -92,7 +92,6 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
 
         assertKodCountBetween(kodList, OBS_G40_9, 1, 1, OBSERVATIONER);
         assertKodCountBetween(kodList, OBS_OBS15, 1, 1, OBSERVATIONER);
-        // TODO: Count all other observations here
 
         for (Observation observation : observationer) {
             String entity = "Observation " + getDisplayCode(observation.getObservationskod());
@@ -340,7 +339,6 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
                 assertNull(observation.getVarde(), entity + ".varde");
 
             }
-            // TODO: Check all other observations here
         }
 
         // If the diabetes flag is set, assert that an observation of the type of diabetes is supplied

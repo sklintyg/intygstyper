@@ -30,13 +30,13 @@ import se.inera.certificate.model.Status;
 /**
  * The utlåtande used by ts-bas. This class extends the common external model with:
  * <ul>
- * <li> new field - {@link #intygAvser}
- * <li> sub class of {@link HoSPersonal} (specialiteter, befattningar)
- * <li> sub class of {@link Aktivitet} (id, plats, metod, aktivitetsstatus, forekomst, ostruktureradTid)
- * <li> sub class of {@link Vardkontakt} (idkontroll)
- * <li> sub class of {@link Rekommendation} (varde)
- * <li> sub class of {@link Observation} (id, forekomst, lateralitet)
- * <li> new field - {@link #observationAktivitetRelation}
+ * <li>new field - {@link #intygAvser}
+ * <li>sub class of {@link HoSPersonal} (specialiteter, befattningar)
+ * <li>sub class of {@link Aktivitet} (id, plats, metod, aktivitetsstatus, forekomst, ostruktureradTid)
+ * <li>sub class of {@link Vardkontakt} (idkontroll)
+ * <li>sub class of {@link Rekommendation} (varde)
+ * <li>sub class of {@link Observation} (id, forekomst, lateralitet)
+ * <li>new field - {@link #observationAktivitetRelation}
  * </ul>
  */
 public class Utlatande extends se.inera.certificate.model.Utlatande {
@@ -54,7 +54,7 @@ public class Utlatande extends se.inera.certificate.model.Utlatande {
     private List<Rekommendation> rekommendationer;
 
     private List<Observation> observationer;
-    
+
     private List<ObservationAktivitetRelation> observationAktivitetRelation;
 
     private List<Status> status;
@@ -110,12 +110,12 @@ public class Utlatande extends se.inera.certificate.model.Utlatande {
         }
         return this.observationer;
     }
-    
+
     public List<ObservationAktivitetRelation> getObservationAktivitetRelationer() {
         if (observationAktivitetRelation == null) {
             observationAktivitetRelation = new ArrayList<ObservationAktivitetRelation>();
         }
-        return this.observationAktivitetRelation ;
+        return this.observationAktivitetRelation;
     }
 
     public List<Status> getStatus() {

@@ -1,16 +1,16 @@
 package se.inera.certificate.modules.ts_bas.model.internal;
 
 /**
- * Class encapsulating the values for synskarpa for a single eye
- * 
+ * Class encapsulating the values for synskarpa for a single eye.
+ *
  * @author erik
- * 
+ *
  */
 public class Synskarpevarden {
 
-    Double utanKorrektion;
-    Double medKorrektion;
-    Boolean kontaktlins;
+    private Double utanKorrektion;
+    private Double medKorrektion;
+    private Boolean kontaktlins;
 
     public Double getUtanKorrektion() {
         return utanKorrektion;

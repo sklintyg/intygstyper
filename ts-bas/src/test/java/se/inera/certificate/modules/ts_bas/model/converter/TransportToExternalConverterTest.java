@@ -28,7 +28,7 @@ import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
 
 /**
  * Test class for TransportToExternal, contains methods for setting up Utlatande using both the transport model and the
- * external model, and populating each with mock data
+ * external model, and populating each with mock data.
  * 
  * @author erik
  * 

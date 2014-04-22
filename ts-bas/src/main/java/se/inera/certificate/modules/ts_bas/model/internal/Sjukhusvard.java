@@ -1,14 +1,13 @@
 package se.inera.certificate.modules.ts_bas.model.internal;
 
 public class Sjukhusvard {
-    
     //har patienten vårdats på sjukhus eller haft kontakt med läkare med anledning av punkterna 1-13
     private Boolean sjukhusEllerLakarkontakt;
-    
+
     private String tidpunkt;
-    
+
     private String vardinrattning;
-    
+
     private String anledning;
 
     public Boolean getSjukhusEllerLakarkontakt() {
@@ -42,7 +41,5 @@ public class Sjukhusvard {
     public void setAnledning(String anledning) {
         this.anledning = anledning;
     }
-    
-    
 
 }

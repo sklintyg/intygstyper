@@ -214,7 +214,7 @@ public class PdfGenerator {
     }
 
     /**
-     * Method for filling out the fields of a pdf with data from the internal model
+     * Method for filling out the fields of a pdf with data from the internal model.
      * 
      * @param utlatande
      *            {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande} containing data for populating
@@ -409,8 +409,8 @@ public class PdfGenerator {
         List<String> specialiteter = utlatande.getSkapadAv().getSpecialiteter();
         if (specialiteter.size() > 0) {
             SPECIALISTKOMPETENS_CHECK.setField(fields, true);
-            // TODO: If 'Specialist i allmänmedicin' chose that one.
-            // TODO: Build text for 'beskrivning'
+            // TODO If 'Specialist i allmänmedicin' chose that one.
+            // TODO Build text for 'beskrivning'
             SPECIALISTKOMPETENS_BESKRVNING.setField(fields, "implement");
         }
 
@@ -419,7 +419,7 @@ public class PdfGenerator {
         AT_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.LAKARE_EJ_LEG_AT.name()));
     }
 
-    private static class CheckField {
+    private static final class CheckField {
         private final String field;
 
         private CheckField(String field) {
@@ -449,7 +449,7 @@ public class PdfGenerator {
         }
     }
 
-    private static class YesNoField {
+    private static final class YesNoField {
         private final String yesField;
 
         private final String noField;
@@ -466,7 +466,7 @@ public class PdfGenerator {
         }
     }
 
-    private static class DecimalField {
+    private static final class DecimalField {
         private final String integerField;
 
         private final String decimalField;
@@ -487,7 +487,7 @@ public class PdfGenerator {
         }
     }
 
-    private static class StringField {
+    private static final class StringField {
         private final String field;
 
         private StringField(String field) {

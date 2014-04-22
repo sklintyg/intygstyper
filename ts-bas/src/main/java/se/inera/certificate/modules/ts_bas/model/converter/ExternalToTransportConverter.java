@@ -57,8 +57,9 @@ public class ExternalToTransportConverter {
      * Converts from the external format ({@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}) to the
      * transport format ({@link se.inera.certificate.ts_bas.model.v1.Utlatande}).
      *
-     * @param source {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande} in the external format to be
-     *               converted to transport format
+     * @param source
+     *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande} in the external format to be
+     *            converted to transport format
      * @return {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
      * @throws ConverterException
      */
@@ -98,7 +99,8 @@ public class ExternalToTransportConverter {
     /**
      * Convert a Collection of ObservationAktivitetRelation to ObservationAktivitetRelationType.
      *
-     * @param source List of {@link ObservationAktivitetRelation}
+     * @param source
+     *            List of {@link ObservationAktivitetRelation}
      * @return List of {@link ObservationAktivitetRelationType}
      * @throws ConverterException
      */

@@ -26,7 +26,6 @@ import static se.inera.certificate.modules.ts_bas.model.codes.Kodverk.SNOMED_CT;
  */
 public enum LateralitetsKod implements CodeSystem {
 
-    // TODO: Create specific Code representing module
     HOGER ("24028007", "Höger öga", SNOMED_CT),
     VANSTER ("7771000", "Vänster öga", SNOMED_CT),
     BINOKULART ("51440002", "Höger och vänster", SNOMED_CT);

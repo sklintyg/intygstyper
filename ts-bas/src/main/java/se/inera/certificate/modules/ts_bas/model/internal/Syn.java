@@ -17,10 +17,8 @@ public class Syn {
     private Synskarpevarden vansterOga;
 
     private Synskarpevarden binokulart;
-    
+
     private Boolean korrektionsglasensStyrka;
-    
-    // TODO: Add fields for synundersökning here
 
     public Boolean getSynfaltsdefekter() {
         return synfaltsdefekter;
@@ -67,7 +65,7 @@ public class Syn {
             hogerOga = new Synskarpevarden();
         }
         hogerOga.setUtanKorrektion(utanKorr);
-        hogerOga.setMedKorrektion(medKorr != null ? medKorr : null);
+        hogerOga.setMedKorrektion(medKorr);
         hogerOga.setKontaktlins(kontaktlins);
     }
 
@@ -76,16 +74,16 @@ public class Syn {
             vansterOga = new Synskarpevarden();
         }
         vansterOga.setUtanKorrektion(utanKorr);
-        vansterOga.setMedKorrektion(medKorr != null ? medKorr : null);
+        vansterOga.setMedKorrektion(medKorr);
         vansterOga.setKontaktlins(kontaktlins);
     }
-    
+
     public void setSynskarpaBinokulart(Double utanKorr, Double medKorr) {
         if (binokulart == null) {
             binokulart = new Synskarpevarden();
         }
         binokulart.setUtanKorrektion(utanKorr);
-        binokulart.setMedKorrektion(medKorr != null ? medKorr : null);
+        binokulart.setMedKorrektion(medKorr);
         binokulart.setKontaktlins(null);
     }
 
@@ -120,5 +118,5 @@ public class Syn {
     public void setBinokulart(Synskarpevarden binokulart) {
         this.binokulart = binokulart;
     }
-    
+
 }

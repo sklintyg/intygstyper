@@ -33,8 +33,8 @@ import se.inera.certificate.modules.ts_bas.model.internal.Vardgivare;
 public class WebcertModelFactory {
 
     /**
-     * Create a new TS-bas draft pre-populated with the attached data
-     * 
+     * Create a new TS-bas draft pre-populated with the attached data.
+     *
      * @param newDraftData
      *            {@link CreateNewDraftCertificateHolder}
      * @return {@link Utlatande} or throws a ConverterException if something unforeseen happens
@@ -70,7 +70,7 @@ public class WebcertModelFactory {
         patient.setFullstandigtNamn(StringUtils.join(patientInfo.getFornamn(), " ", patientInfo.getEfternamn()));
         patient.setPersonid(patientInfo.getPersonnummer());
 
-        // TODO: Address information needs to be sorted out at a later time
+        // TODO Address information needs to be sorted out at a later time
         // patient.setPostadress(patientInfo.getPostadress());
         // patient.setPostnummer(patientInfo.getPostnummer());
         // patient.setPostort(patientInfo.getPostort());
