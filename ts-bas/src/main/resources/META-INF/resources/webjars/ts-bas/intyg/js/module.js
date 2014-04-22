@@ -1,15 +1,16 @@
 define([
     'angular',
+    'services',
     'ts-bas/intyg/js/controllers',
     'ts-bas/intyg/js/messages',
     'ts-bas/intyg/js/services',
     'ts-bas/intyg/js/filters',
-], function (angular, controllers, messages, services, filters) {
+], function (angular, miServices, controllers, messages, services, filters) {
     'use strict';
-    
+
     var moduleName = 'ts-bas';
 
-    var module = angular.module(moduleName, [controllers, services, filters]);
+    var module = angular.module(moduleName, [miServices, controllers, services, filters]);
 
     module.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
