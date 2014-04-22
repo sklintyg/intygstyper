@@ -89,8 +89,8 @@ public class ExternalToInternalConverterInstance {
 
         Utlatande intUtlatande = new Utlatande();
 
-        intUtlatande.setUtlatandeid(InternalModelConverterUtils.getExtensionFromId(extUtlatande.getId()));
-        intUtlatande.setTypAvUtlatande(InternalModelConverterUtils.getValueFromKod(extUtlatande.getTyp()));
+        intUtlatande.setId(InternalModelConverterUtils.getExtensionFromId(extUtlatande.getId()));
+        intUtlatande.setTyp(InternalModelConverterUtils.getValueFromKod(extUtlatande.getTyp()));
         intUtlatande.setSigneringsdatum(extUtlatande.getSigneringsdatum());
         intUtlatande.setSkickatdatum(extUtlatande.getSkickatdatum());
         intUtlatande.setKommentar(getSingleElement(extUtlatande.getKommentarer()));

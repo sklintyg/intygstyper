@@ -44,7 +44,7 @@ public class WebcertModelFactory {
 
         Utlatande utlatande = new Utlatande();
 
-        utlatande.setUtlatandeid(newDraftData.getCertificateId());
+        utlatande.setId(newDraftData.getCertificateId());
 
         populateWithSkapadAv(utlatande, newDraftData.getSkapadAv());
 
