@@ -206,11 +206,6 @@
         <version>${inera.certificate.version}</version>
       </dependency>
       <dependency>
-        <groupId>se.inera.certificate</groupId>
-        <artifactId>model</artifactId>
-        <version>${inera.certificate.version}</version>
-      </dependency>
-      <dependency>
         <groupId>se.inera.certificate.modules</groupId>
         <artifactId>module-support</artifactId>
         <version>${inera.certificate.version}</version>
