@@ -84,4 +84,13 @@ public interface ModuleApi {
      * @return response
      */
     InternalModelResponse createNewInternal(CreateNewDraftHolder draftCertificateHolder) throws ModuleException;
+
+    /**
+     * Returns complementary information for a specific module that can be displayed when intyg are listed.
+     * 
+     * @param externalModel The external model to extract complementary information from.
+     * 
+     * @return The complementary info for this type of intyg.
+     */
+    String getComplementaryInfo(ExternalModelHolder externalModel) throws ModuleException;
 }

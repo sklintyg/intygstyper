@@ -10,9 +10,9 @@ define([
     var moduleName = "fk7263.controllers";
 
     angular.module(moduleName, [services])
-        .controller('SentCertWizardCtrl', SentCertWizardCtrl)
-        .controller('ErrorCtrl', ErrorCtrl)
-        .controller('ViewCertCtrl', ViewCertCtrl);
+        .controller('fk7263.SentCertWizardCtrl', SentCertWizardCtrl)
+        .controller('fk7263.ErrorCtrl', ErrorCtrl)
+        .controller('fk7263.ViewCertCtrl', ViewCertCtrl);
 
     return moduleName;
 });

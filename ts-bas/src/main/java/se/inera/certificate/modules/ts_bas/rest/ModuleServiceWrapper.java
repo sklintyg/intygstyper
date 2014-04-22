@@ -3,6 +3,7 @@ package se.inera.certificate.modules.ts_bas.rest;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.ws.rs.WebApplicationException;
@@ -13,6 +14,8 @@ import javax.xml.bind.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
@@ -29,6 +32,8 @@ import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
 import se.inera.certificate.modules.support.api.exception.ModuleVersionUnsupportedException;
+import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
+import se.inera.certificate.modules.ts_bas.model.codes.IntygAvserKod;
 import se.inera.certificate.ts_bas.model.v1.Utlatande;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -188,5 +193,16 @@ public class ModuleServiceWrapper implements ModuleApi {
         } catch (IOException e) {
             throw new ModuleSystemException("Failed to serialize internal model", e);
         }
+    }
+
+    @Override
+    public String getComplementaryInfo(ExternalModelHolder externalModel) throws ModuleException {
+        se.inera.certificate.modules.ts_bas.model.external.Utlatande utlatande = getExternal(externalModel);
+
+        ArrayList<String> intygAvser = new ArrayList<>();
+        for (Kod intygAvserKod : utlatande.getIntygAvser()) {
+            intygAvser.add(CodeConverter.fromCode(intygAvserKod, IntygAvserKod.class).name());
+        }
+        return Strings.join(", ", intygAvser);
     }
 }

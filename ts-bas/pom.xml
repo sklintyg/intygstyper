@@ -22,10 +22,6 @@
       <artifactId>module-support</artifactId>
     </dependency>
     <dependency>
-      <groupId>se.inera.certificate</groupId>
-      <artifactId>model</artifactId>
-    </dependency>
-    <dependency>
       <groupId>se.inera.certificate.modules</groupId>
       <artifactId>integration-util</artifactId>
     </dependency>

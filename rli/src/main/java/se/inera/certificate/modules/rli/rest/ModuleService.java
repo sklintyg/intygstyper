@@ -39,6 +39,7 @@ import se.inera.certificate.modules.rli.model.converter.ExternalToTransportConve
 import se.inera.certificate.modules.rli.model.converter.InternalToExternalConverter;
 import se.inera.certificate.modules.rli.model.converter.TransportToExternalConverter;
 import se.inera.certificate.modules.rli.model.converter.WebcertModelFactory;
+import se.inera.certificate.modules.rli.model.external.Utlatande;
 import se.inera.certificate.modules.rli.pdf.PdfGenerator;
 import se.inera.certificate.modules.rli.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.rli.validator.Validator;
@@ -316,4 +317,9 @@ public class ModuleService implements ModuleApi {
         }
     }
 
+    @Override
+    public String getComplementaryInfo(ExternalModelHolder externalModel) throws ModuleException {
+        Utlatande utlatande = getExternal(externalModel);
+        return String.format("%s %s", utlatande.getArrangemang().getPlats(), utlatande.getArrangemang().getArrangemangstid().getFrom());
+    }
 }

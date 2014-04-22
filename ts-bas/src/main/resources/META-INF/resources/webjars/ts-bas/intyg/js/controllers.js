@@ -8,7 +8,7 @@ define([
     var moduleName = "ts-bas.controllers";
 
     angular.module(moduleName, [services])
-        .controller('ViewCertCtrl', ViewCertCtrl);
+        .controller('ts-bas.ViewCertCtrl', ViewCertCtrl);
 
     return moduleName;
 });
