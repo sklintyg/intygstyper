@@ -21,6 +21,7 @@ package se.inera.certificate.modules.ts_diabetes.rest;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
@@ -48,12 +50,15 @@ import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
 import se.inera.certificate.modules.support.api.exception.ModuleVersionUnsupportedException;
+import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
+import se.inera.certificate.modules.ts_diabetes.model.codes.IntygAvserKod;
 import se.inera.certificate.modules.ts_diabetes.model.converter.ConverterException;
 import se.inera.certificate.modules.ts_diabetes.model.converter.ExternalToInternalConverter;
 import se.inera.certificate.modules.ts_diabetes.model.converter.ExternalToTransportConverter;
 import se.inera.certificate.modules.ts_diabetes.model.converter.InternalToExternalConverter;
 import se.inera.certificate.modules.ts_diabetes.model.converter.TransportToExternalConverter;
 import se.inera.certificate.modules.ts_diabetes.model.converter.WebcertModelFactory;
+import se.inera.certificate.modules.ts_diabetes.model.external.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.pdf.PdfGenerator;
 import se.inera.certificate.modules.ts_diabetes.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.ts_diabetes.validator.Validator;
@@ -306,4 +311,14 @@ public class ModuleService implements se.inera.certificate.modules.support.api.M
         }
     }
 
+    @Override
+    public String getComplementaryInfo(ExternalModelHolder externalModel) throws ModuleException {
+        Utlatande utlatande = getExternal(externalModel);
+
+        ArrayList<String> intygAvser = new ArrayList<>();
+        for (Kod intygAvserKod : utlatande.getIntygAvser()) {
+            intygAvser.add(CodeConverter.fromCode(intygAvserKod, IntygAvserKod.class).name());
+        }
+        return Strings.join(", ", intygAvser);
+    }
 }

@@ -372,4 +372,9 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
     }
 
+    @Override
+    public String getComplementaryInfo(ExternalModelHolder externalModel) throws ModuleException {
+        Fk7263Utlatande utlatande = getExternal(externalModel);
+        return String.format("%s till %s", utlatande.getValidFromDate(), utlatande.getValidToDate());
+    }
 }
