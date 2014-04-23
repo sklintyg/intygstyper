@@ -21,6 +21,8 @@ define([
             "cert.status.draft_complete" : "Utkast, komplett",
             "cert.status.signed" : "Signerat",
             "cert.status.unknown" : "Okänd",
+            "cert.status.cancelled" : "Avbrutet",
+            "cert.status.received" : "Mottaget",
 
             // wc-common-directives-resources
             "nav.label.loggedinas" : "Inloggad som:",
