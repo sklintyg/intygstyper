@@ -15,27 +15,26 @@ define([
         	 $routeProvider.when('/fk7263/view/:certificateId', {
                  templateUrl : '/web/webjars/fk7263/intyg/views/view-cert.html',
                  controller : 'fk7263.ViewCertCtrl',
- 	            title : 'Läkarintyg FK7263'
-             // }).when('/recipients', {
-             // templateUrl : MODULE_CONFIG.MODULE_CONTEXT_PATH +
-             // '/views/recipients.html',
-             // controller : 'SentCertWizardCtrl'
+                 title : 'Läkarintyg FK7263'
+              }).when('/fk7263/recipients', {
+                 templateUrl : '/web/webjars/fk7263/intyg/views/recipients.html',
+                 controller : 'fk7263.SentCertWizardCtrl'
              }).when('/fk7263/statushistory', {
                  templateUrl : '/web/webjars/fk7263/intyg/views/status-history.html',
                  controller : 'fk7263.ViewCertCtrl',
- 			    title : 'Alla intygets händelser'
+                 title : 'Alla intygets händelser'
              }).when('/fk7263/summary', {
                  templateUrl : '/web/webjars/fk7263/intyg/views/send-summary.html',
                  controller : 'fk7263.SentCertWizardCtrl',
- 			    title : 'Kontrollera och skicka intyget'
+                 title : 'Kontrollera och skicka intyget'
              }).when('/fk7263/sent', {
                  templateUrl : '/web/webjars/fk7263/intyg/views/sent-cert.html',
                  controller : 'fk7263.SentCertWizardCtrl',
- 	            title : 'Intyget har skickats'
+                 title : 'Intyget har skickats'
              }).when('/fk7263/fel/:errorCode', {
                  templateUrl : '/web/webjars/fk7263/intyg/views/error.html',
                  controller : 'fk7263.ErrorCtrl',
- 	            title : 'Fel'
+                 title : 'Fel'
              }).when('/fk7263/visafel/:errorCode', {
                  templateUrl : '/web/webjars/fk7263/intyg/views/error.html',
                  controller : 'fk7263.ErrorCtrl',

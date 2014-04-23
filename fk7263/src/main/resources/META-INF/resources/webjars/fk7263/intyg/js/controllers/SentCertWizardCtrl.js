@@ -2,18 +2,18 @@ define(
     [],
     function() {
     'use strict';
-    return [ '$scope', '$filter', '$location', '$rootScope', '$routeParams', 'fk7263.certificateService', 
-        function SentCertWizardCtrl($scope, $filter, $location, $rootScope, $routeParams, certService) {
+    return [ '$scope', '$filter', '$location', '$rootScope', '$routeParams', 'sendCertService', 'listCertService',
+        function SentCertWizardCtrl($scope, $filter, $location, $rootScope, $routeParams, sendCertService, listCertService) {
             $scope.sendingInProgress = false;
             // Get active certificate from rootscope (passed from previous
             // controller)
             $scope.cert = $rootScope.cert;
             if (!angular.isObject($scope.cert)) {
-                $location.path("/fel/certnotfound");
+                $location.path("/fk7263/fel/certnotfound");
                 return;
             }
             // expose calculated static link for pdf download
-            $scope.downloadAsPdfLink = $scope.MODULE_CONFIG.MI_COMMON_API_CONTEXT_PATH + $routeParams.certificateId + "/pdf";
+            $scope.downloadAsPdfLink = "/moduleapi/certificate/" + $routeParams.certificateId + "/pdf";
 
             // Initialize recipient handling, default to FK
             $scope.selectedRecipientId = $rootScope.selectedRecipientId || "FK";
@@ -39,15 +39,16 @@ define(
                 // now we have a recipient selected, set the selection in
                 // rootscope
                 $rootScope.selectedRecipientId = $scope.selectedRecipientId;
-                $location.path("/summary");
+                $location.path("/fk7263/summary");
             }
 
             $scope.confirmAndSend = function() {
                 $scope.sendingInProgress = true;
-                certService.sendCertificate($routeParams.certificateId, $scope.selectedRecipientId, function(result) {
+                sendCertService.sendCertificate($scope.cert.id, $scope.selectedRecipientId, function(result) {
                     $scope.sendingInProgress = false;
                     if (result != null && result.resultCode == "sent") {
-                        $location.path("/sent");
+                    	listCertService.emptyCache();
+                        $location.path("/fk7263/sent");
                     } else {
                         // show error view
                         $location.path("/fel/couldnotsend");
@@ -69,7 +70,7 @@ define(
                 return false;
             }
             $scope.backToViewCertificate = function() {
-                $location.path("/view");
+                $location.path("/fk7263/view/" + $scope.cert.id);
             }
 
             $scope.pagefocus = true;
