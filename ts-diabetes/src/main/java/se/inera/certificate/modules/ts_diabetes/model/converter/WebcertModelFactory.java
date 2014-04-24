@@ -37,8 +37,8 @@ public class WebcertModelFactory {
     private static final Logger LOG = LoggerFactory.getLogger(WebcertModelFactory.class);
 
     /**
-     * Create a new TS-bas draft pre-populated with the attached data
-     * 
+     * Create a new TS-bas draft pre-populated with the attached data.
+     *
      * @param newDraftData
      *            {@link CreateNewDraftCertificateHolder}
      * @return {@link Utlatande} or throws a ConverterException if something unforeseen happens

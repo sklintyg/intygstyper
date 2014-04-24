@@ -11,14 +11,16 @@ define([], function() {
 			'$http',
 			'$routeParams',
 			'$log',
+			'$rootScope',
 			function($scope, $filter, $location, certificateService, listCertService, dialogService, http,
-					$routeParams, $log) {
+					$routeParams, $log, $rootScope) {
 				$scope.cert = {};
+				$rootScope.cert = {};
 
 				$scope.doneLoading = false;
 
 				$scope.send = function() {
-					$location.path("/summary");
+					$location.path("/fk7263/recipients");
 				};
 
 				$scope.visibleStatuses = [ 'SENT' ];
@@ -45,7 +47,7 @@ define([], function() {
 							$location.path("#/start");
 						} else {
 							// show error view
-							$location.path("/fel/couldnotarchivecert");
+							$location.path("/fk7263/fel/couldnotarchivecert");
 						}
 					});
 				}
@@ -93,11 +95,11 @@ define([], function() {
 				}
 
 				$scope.showStatusHistory = function() {
-					$location.path("/statushistory");
+					$location.path("/fk7263/statushistory");
 				}
 
 				$scope.backToViewCertificate = function() {
-					$location.path("/view");
+					$location.path("/fk7263/view/" + $routeParams.certificateId);
 				}
 
 				// expose calculated static link for pdf download
@@ -112,6 +114,7 @@ define([], function() {
 						// evaluate first to "img/.png" before correct value = 404
 						result.typ_image = "/img/fk7263.png";
 						$scope.cert = result;
+						$rootScope.cert = result;
 					} else {
 						// show error view
 						$location.path("/visafel/certnotfound");
