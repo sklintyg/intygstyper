@@ -12,11 +12,14 @@ import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Referens;
+import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
+import se.inera.certificate.modules.fk7263.model.codes.Sysselsattningskoder;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToExternalFk7263LegacyConverter;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
 /**
@@ -58,6 +61,7 @@ public class ProgrammaticLegacyTransportSchemaValidator {
 
         validateHospersonal();
         validateReferens();
+        validateSysselSattning();
 
         return validationErrors;
     }
@@ -189,6 +193,17 @@ public class ProgrammaticLegacyTransportSchemaValidator {
         if (vardgivare.getId() == null || !ENHET_OID.contains(vardgivare.getId().getRoot())) {
             addValidationError(String.format("Field 15: No vardgivarId root found or was invalid! Should be one of %s",
                     Strings.join(" or ", ENHET_OID)));
+        }
+    }
+    
+    private void validateSysselSattning() {
+        Fk7263Patient patient = externalutlatande.getPatient();
+        for (Sysselsattning sysselsattning : externalutlatande.getPatient().getSysselsattningar()) {
+            if (Sysselsattningskoder.NUVARANDE_ARBETE.equals(sysselsattning.getSysselsattningstyp())) {
+                if (patient.getArbetsuppgifter().isEmpty() || StringUtils.isEmpty(patient.getArbetsuppgifter().get(0).getTypAvArbetsuppgift())) {
+                    addValidationError("Field 8a(1): 'beskrivning aktuella arbetsuppgifter' is mandatory when 'nuvarande arbete' is checked.");
+                }
+            }
         }
     }
 
