@@ -28,6 +28,7 @@ define([
         "fk7263.target.fk" : "Försäkringskassan",
 
     	"fk7263.button.sendtofk" : "Skicka till Försäkringskassan",
+    	"fk7263.button.send.certificate" : "Skicka intyget",
         "fk7263.label.blank" : "- ej ifyllt",
         "fk7263.label.pagetitle" : "Granska och skicka intyg",
         "fk7263.label.pagedescription.general" : "Här kan du läsa ditt intyg och skicka det elektroniskt till olika mottagare. <br>För att skicka intyget till Försäkringskassan eller en annan mottagare så klickar du på Skicka intyg. <br>Vill du spara eller skriva ut ditt intyg så väljer du Ladda ner/Skriv ut. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut ", 
