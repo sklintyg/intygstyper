@@ -16,12 +16,14 @@ define([
             "common.delete" : "Ta bort",
 
             // cert status messages
-            "cert.status.sent" : "Skickat",
             "cert.status.draft_incomplete" : "Utkast, ej komplett",
             "cert.status.draft_complete" : "Utkast, komplett",
             "cert.status.signed" : "Signerat",
+            "cert.status.cancelled" : "Rättat",
             "cert.status.unknown" : "Okänd",
-            "cert.status.cancelled" : "Avbrutet",
+
+            // unused statuses in gui
+            "cert.status.sent" : "Skickat",
             "cert.status.received" : "Mottaget",
 
             // wc-common-directives-resources
