@@ -19,7 +19,6 @@
 package se.inera.certificate.modules.ts_diabetes.model.codes;
 
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
 
 /**
  * Represents the code used by this module to define the Utlåtandetyp.
@@ -28,19 +27,19 @@ public enum UtlatandeKod implements CodeSystem {
 
     TS_DIABETES("TSTRK1031 (U06, V02)", "06", "02", "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.");
 
-    private static String codeSystemName = "kv_utlåtandetyp_intyg";
+    private static final String CODE_SYSTEM_NAME = "kv_utlåtandetyp_intyg";
 
-    private static String codeSystem = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
+    private static final String CODE_SYSTEM = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
 
-    private static String codeSystemVersion = null;
+    private static final String CODE_SYSTEM_VERSION = null;
 
-    private String code;
+    private final String code;
 
     private final String tsUtgava;
 
     private final String tsVersion;
 
-    private String description;
+    private final String description;
 
     private UtlatandeKod(String code, String tsUtgava, String tsVersion, String desc) {
         this.code = code;
@@ -59,17 +58,17 @@ public enum UtlatandeKod implements CodeSystem {
 
     @Override
     public String getCodeSystem() {
-        return codeSystem;
+        return CODE_SYSTEM;
     }
 
     @Override
     public String getCodeSystemName() {
-        return codeSystemName;
+        return CODE_SYSTEM_NAME;
     }
 
     @Override
     public String getCodeSystemVersion() {
-        return codeSystemVersion;
+        return CODE_SYSTEM_VERSION;
     }
 
     public String getTsUtgava() {

@@ -94,7 +94,7 @@ public class ProgrammaticLegacyTransportSchemaValidator extends AbstractValidato
         }
         // Check date interval for arbetsformaga-nedsattning - mandatory
         List<Fk7263Observation> arbetsformagor = externalutlatande.getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
-        for(Fk7263Observation arbetsfarmaga : arbetsformagor) {
+        for (Fk7263Observation arbetsfarmaga : arbetsformagor) {
             if (arbetsfarmaga.getObservationsperiod() == null) {
                 addValidationError("Field 8b: Invalid date interval!");
             }

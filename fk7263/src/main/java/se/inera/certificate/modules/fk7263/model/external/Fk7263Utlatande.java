@@ -177,7 +177,7 @@ public class Fk7263Utlatande extends Utlatande {
      * Certificate specific implementation of when a valid from date is. Iterate through all Tom dates and return the
      * latest (non-null) date.
      *
-     * @return <localDate
+     * @return localDate
      */
     public LocalDate getValidToDate() {
         List<Fk7263Observation> nedsattningar = getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);

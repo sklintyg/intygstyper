@@ -24,7 +24,7 @@ import se.inera.certificate.model.Kod;
 
 /**
  * Util for converting an enum implementing CodeSystem to a Kod object.
- * 
+ *
  * @author nikpet
  */
 public final class CodeConverter {
@@ -62,7 +62,7 @@ public final class CodeConverter {
 
     /**
      * Converts from {@link Kod} to a specified enum representing that kod.
-     * 
+     *
      * @param kod
      *            The Kod to convert to an enum.
      * @param type
@@ -88,7 +88,7 @@ public final class CodeConverter {
 
     /**
      * Checks if a specified code enum matches a specified {@link Kod}.
-     * 
+     *
      * @param codeEnum
      *            The code enum to match.
      * @param kod

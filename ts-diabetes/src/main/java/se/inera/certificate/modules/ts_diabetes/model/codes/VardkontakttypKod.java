@@ -2,26 +2,23 @@ package se.inera.certificate.modules.ts_diabetes.model.codes;
 
 import se.inera.certificate.model.Kod;
 
-/**
- *
- */
 public enum VardkontakttypKod implements CodeSystem {
 
-    /** "5880005", "Min undersökning med patienten" */
+    /** "5880005", "Min undersökning med patienten". */
     MIN_UNDERSOKNING("5880005", "Min undersökning med patienten"),
 
-    /** "185317003", "Min telefonkontakt med patienten" */
+    /** "185317003", "Min telefonkontakt med patienten". */
     MIN_TELEFONKONTAKT("185317003", "Min telefonkontakt med patienten");
 
-    private static String codeSystemName = "SNOMED-CT";
+    private static final String CODE_SYSTEM_NAME = "SNOMED-CT";
 
-    private static String codeSystem = "1.2.752.116.2.1.1.1";
+    private static final String CODE_SYSTEM = "1.2.752.116.2.1.1.1";
 
-    private static String codeSystemVersion = null;
+    private static final String CODE_SYSTEM_VERSION = null;
 
-    private String code;
+    private final String code;
 
-    private String description;
+    private final String description;
 
     private VardkontakttypKod(String code, String desc) {
         this.code = code;
@@ -49,7 +46,7 @@ public enum VardkontakttypKod implements CodeSystem {
      */
     @Override
     public String getCodeSystem() {
-        return codeSystem;
+        return CODE_SYSTEM;
     }
 
     /**
@@ -57,7 +54,7 @@ public enum VardkontakttypKod implements CodeSystem {
      */
     @Override
     public String getCodeSystemName() {
-        return codeSystemName;
+        return CODE_SYSTEM_NAME;
     }
 
     /**
@@ -65,7 +62,7 @@ public enum VardkontakttypKod implements CodeSystem {
      */
     @Override
     public String getCodeSystemVersion() {
-        return codeSystemVersion;
+        return CODE_SYSTEM_VERSION;
     }
 
     /**

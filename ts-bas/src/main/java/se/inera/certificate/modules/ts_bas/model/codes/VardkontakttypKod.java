@@ -6,8 +6,8 @@ import se.inera.certificate.model.Kod;
  *
  */
 public enum VardkontakttypKod implements CodeSystem {
-    
-    /** "5880005", "Min undersökning med patienten" */
+
+    /** "5880005", "Min undersökning med patienten". */
     MIN_UNDERSOKNING("5880005", "Min undersökning med patienten");
 
     private static String codeSystemName = "SNOMED-CT";

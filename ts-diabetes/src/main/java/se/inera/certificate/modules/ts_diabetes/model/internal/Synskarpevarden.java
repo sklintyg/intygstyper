@@ -1,15 +1,15 @@
 package se.inera.certificate.modules.ts_diabetes.model.internal;
 
 /**
- * Class encapsulating the values for synskarpa for a single eye
- * 
+ * Class encapsulating the values for synskarpa for a single eye.
+ *
  * @author erik
- * 
+ *
  */
 public class Synskarpevarden {
 
-    Double utanKorrektion;
-    Double medKorrektion;
+    private Double utanKorrektion;
+    private Double medKorrektion;
 
     public Double getUtanKorrektion() {
         return utanKorrektion;
