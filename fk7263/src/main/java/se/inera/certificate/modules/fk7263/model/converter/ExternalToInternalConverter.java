@@ -35,7 +35,9 @@ public class ExternalToInternalConverter {
 
         intyg.setId(source.getId().getRoot());
         intyg.setSkickatDatum(source.getSkickatdatum());
-        intyg.setGiltighet(new LocalDateInterval(source.getValidFromDate(), source.getValidToDate()));
+        if (source.getValidFromDate() != null && source.getValidToDate() != null) {
+            intyg.setGiltighet(new LocalDateInterval(source.getValidFromDate(), source.getValidToDate()));
+        }
 
         Fk7263Aktivitet smittskydd = source.getAktivitet(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
         intyg.setAvstangningSmittskydd(smittskydd != null);
