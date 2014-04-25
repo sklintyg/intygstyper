@@ -19,7 +19,7 @@ define(
 							};
 
 							var el = angular
-									.element('<form name="form"><input id="test" name="test" type="text" class="small-decimal" ts-eye-decimal ng-model="model.test"></form>');
+									.element('<form name="form"><input id="test" name="test" type="text" class="small-decimal" eye-decimal ng-model="model.test"></form>');
 							form = $compile(el)($scope);
 							$scope.$digest();
 						}));
