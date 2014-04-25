@@ -453,7 +453,7 @@ public class InternalValidatorInstance {
 
             } else if (syn.getVansterOga().getUtanKorrektion() < 0.0 || syn.getVansterOga().getUtanKorrektion() > 2.0) {
                 addValidationError("syn.vansterOga.utanKorrektion",
-                        "ts-bas.validation.syn.vansteroga.utankorrektion.missing");
+                        "ts-bas.validation.syn.vansteroga.utankorrektion.out-of-bounds");
             }
 
             if (syn.getVansterOga().getMedKorrektion() != null) {

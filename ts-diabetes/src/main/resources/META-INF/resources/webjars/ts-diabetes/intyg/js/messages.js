@@ -41,8 +41,9 @@ var rliMessages = {
         "view.label.latestevent.showall" : "Visa alla händelser",
         "history.label.pagetitle" : "Intygets alla händelser",
         "rli.status.sent" : "Skickat till",
-        "rli.target.mi" : "Försäkringsbolaget"
-        	
+        "rli.target.mi" : "Försäkringsbolaget",
+
+        "ts-diabetes.inbox.complementaryinfo" : "Intyget avser"
     },
     "en": {
         "view.label.pagetitle": "Show Certificate"

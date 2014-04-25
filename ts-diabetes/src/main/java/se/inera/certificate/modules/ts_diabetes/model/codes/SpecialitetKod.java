@@ -25,18 +25,18 @@ import se.inera.certificate.model.Kod;
  */
 public enum SpecialitetKod implements CodeSystem {
 
-    /** HSA id root */
+    /** HSA id root. */
     SPECIALITET("SPEC", "Specialitet placeholder");
 
-    private static String codeSystemName = "kv_intyg_specialitet";
+    private static final String CODE_SYSTEM_NAME = "kv_intyg_specialitet";
 
-    private static String codeSystem = "coming_soon";
+    private static final String CODE_SYSTEM = "coming_soon";
 
-    private static String codeSystemVersion = null;
+    private static final String CODE_SYSTEM_VERSION = null;
 
-    private String code;
+    private final String code;
 
-    private String description;
+    private final String description;
 
     private SpecialitetKod(String code, String desc) {
         this.code = code;
@@ -64,7 +64,7 @@ public enum SpecialitetKod implements CodeSystem {
      */
     @Override
     public String getCodeSystem() {
-        return codeSystem;
+        return CODE_SYSTEM;
     }
 
     /**
@@ -72,7 +72,7 @@ public enum SpecialitetKod implements CodeSystem {
      */
     @Override
     public String getCodeSystemName() {
-        return codeSystemName;
+        return CODE_SYSTEM_NAME;
     }
 
     /**
@@ -80,7 +80,7 @@ public enum SpecialitetKod implements CodeSystem {
      */
     @Override
     public String getCodeSystemVersion() {
-        return codeSystemVersion;
+        return CODE_SYSTEM_VERSION;
     }
 
     /**

@@ -67,7 +67,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * The contract between the certificate module and the generic components (Intygstjänsten and Mina-Intyg).
- * 
+ *
  * @author Gustav Norbäcker, R2M
  */
 public class ModuleService implements se.inera.certificate.modules.support.api.ModuleApi {
@@ -103,7 +103,7 @@ public class ModuleService implements se.inera.certificate.modules.support.api.M
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws ModuleException
      */
     @Override
@@ -119,7 +119,7 @@ public class ModuleService implements se.inera.certificate.modules.support.api.M
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws ModuleException
      */
     @Override
@@ -141,7 +141,7 @@ public class ModuleService implements se.inera.certificate.modules.support.api.M
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws ModuleException
      */
     @Override
@@ -159,7 +159,7 @@ public class ModuleService implements se.inera.certificate.modules.support.api.M
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws ModuleException
      */
     @Override
@@ -169,7 +169,7 @@ public class ModuleService implements se.inera.certificate.modules.support.api.M
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws ModuleException
      */
     @Override
@@ -192,7 +192,7 @@ public class ModuleService implements se.inera.certificate.modules.support.api.M
 
     /**
      * {@inheritDoc}
-     * @throws ModuleException 
+     * @throws ModuleException
      */
     @Override
     public InternalModelResponse convertExternalToInternal(
@@ -208,7 +208,7 @@ public class ModuleService implements se.inera.certificate.modules.support.api.M
 
     /**
      * {@inheritDoc}
-     * @throws ModuleException 
+     * @throws ModuleException
      */
     @Override
     public ExternalModelResponse convertInternalToExternal(
@@ -223,7 +223,7 @@ public class ModuleService implements se.inera.certificate.modules.support.api.M
 
     /**
      * {@inheritDoc}
-     * @throws ModuleException 
+     * @throws ModuleException
      */
     @Override
     public InternalModelResponse createNewInternal(

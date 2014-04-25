@@ -2,8 +2,8 @@ package se.inera.certificate.modules.ts_diabetes.model.internal;
 
 public class Vardkontakt {
 
-    String typ;
-    String idkontroll;
+    private String typ;
+    private String idkontroll;
 
     public String getTyp() {
         return typ;

@@ -42,7 +42,8 @@ var rliMessages = {
         "history.label.pagetitle" : "Intygets alla händelser",
         "rli.status.sent" : "Skickat till",
         "rli.target.mi" : "Försäkringsbolaget"
-        	
+
+        "rli.inbox.complementaryinfo" : "Intyget avser resa till och avresedatum"
     },
     "en": {
         "view.label.pagetitle": "Show Certificate"

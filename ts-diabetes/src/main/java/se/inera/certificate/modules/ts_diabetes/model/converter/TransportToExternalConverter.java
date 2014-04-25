@@ -123,7 +123,7 @@ public class TransportToExternalConverter {
     }
 
     /**
-     * Convert a collection of ObservationAktivitetRelationTypes to ObservationAktivitetRelations
+     * Convert a collection of ObservationAktivitetRelationTypes to ObservationAktivitetRelations.
      *
      * @param source
      *            List of {@link ObservationAktivitetRelationType}
@@ -145,7 +145,7 @@ public class TransportToExternalConverter {
     }
 
     /**
-     * Convert a single ObservationAktivitetRelationType to ObservationAktivitetRelation
+     * Convert a single ObservationAktivitetRelationType to ObservationAktivitetRelation.
      *
      * @param source
      *            {@link ObservationAktivitetRelationType}
@@ -160,7 +160,7 @@ public class TransportToExternalConverter {
     }
 
     /**
-     * Converts a list of RekommendationType to Rekommendation
+     * Converts a list of RekommendationType to Rekommendation.
      *
      * @param source
      *            {@link RekommendationType}
@@ -180,7 +180,7 @@ public class TransportToExternalConverter {
     }
 
     /**
-     * Convert a RekommendationType to Rekommendation
+     * Convert a RekommendationType to Rekommendation.
      *
      * @param source
      *            {@link RekommendationType}
@@ -214,7 +214,7 @@ public class TransportToExternalConverter {
     }
 
     /**
-     * Convert a VardkontaktType to Vardkontakt
+     * Convert a VardkontaktType to Vardkontakt.
      *
      * @param source
      *            {@link VardkontaktType}
@@ -229,7 +229,7 @@ public class TransportToExternalConverter {
     }
 
     /**
-     * Convert a collection of AktivitetType to collection of Aktivitet
+     * Convert a collection of AktivitetType to collection of Aktivitet.
      *
      * @param source
      *            List of {@link AktivitetType}
@@ -246,7 +246,7 @@ public class TransportToExternalConverter {
     }
 
     /**
-     * Convert a single AktivitetType to Aktivitet
+     * Convert a single AktivitetType to Aktivitet.
      *
      * @param source
      *            {@link AktivitetType}
@@ -289,7 +289,7 @@ public class TransportToExternalConverter {
     }
 
     /**
-     * Converts a collection of ObservationType to a collection of Observation
+     * Converts a collection of ObservationType to a collection of Observation.
      *
      * @param source
      *            List of {@link ObservationType}
@@ -312,7 +312,7 @@ public class TransportToExternalConverter {
     }
 
     /**
-     * Convert a single ObservationType to Observation
+     * Convert a single ObservationType to Observation.
      *
      * @param source
      *            {@link ObservationType}
@@ -357,7 +357,7 @@ public class TransportToExternalConverter {
     }
 
     /**
-     * Convert from List of CD to List of Kod
+     * Convert from List of CD to List of Kod.
      *
      * @param source
      *            List of {@link CD}
@@ -372,7 +372,7 @@ public class TransportToExternalConverter {
     }
 
     /**
-     * Convert HosPersonalType to HosPersonal
+     * Convert HosPersonalType to HosPersonal.
      *
      * @param source
      *            {@link HosPersonalType}
@@ -394,7 +394,7 @@ public class TransportToExternalConverter {
     }
 
     /**
-     * Convert EnhetType to Vardenhet
+     * Convert EnhetType to Vardenhet.
      *
      * @param source
      *            {@link EnhetType}
@@ -419,7 +419,7 @@ public class TransportToExternalConverter {
     }
 
     /**
-     * Convert VardgivareType to Vardgivare
+     * Convert VardgivareType to Vardgivare.
      *
      * @param source
      *            {@link VardgivareType}
@@ -438,7 +438,7 @@ public class TransportToExternalConverter {
     }
 
     /**
-     * Convert PatientType to Patient
+     * Convert PatientType to Patient.
      *
      * @param source
      *            {@link PatientType}

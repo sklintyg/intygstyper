@@ -33,6 +33,8 @@ define([
         "fk7263.status.sent" : "Skickat till",
         "fk7263.target.fk" : "Försäkringskassan",
 
+        "fk7263.inbox.complementaryinfo" : "Intygsperiod",
+
     	"fk7263.button.sendtofk" : "Skicka till Försäkringskassan",
     	"fk7263.button.send.certificate" : "Skicka intyget",
         "fk7263.label.blank" : "- ej ifyllt",
