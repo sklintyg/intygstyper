@@ -162,7 +162,9 @@ define(
 			        "ts-bas.helptext.synfunktioner.a-c" : "Då någon av a - c besvarats med JA krävs ett läkarintyg från ögonspecialist.",
 			        "ts-bas.helptext.synfunktioner.8-dioptrier" : "Då högsta styrka i något av glasen överskrider 8 dioptrier besvarats med JA måste Intyg om korrektionsglasens styrka skickas in.",
 			        "ts-bas.helptext.diabetes.behandling" : "Vid tablett- eller insulinbehandlad diabetes krävs det att ett läkarintyg gällande sjukdomen skickas in.",
-			        "ts-bas.helptext.narkotika-lakemedel.provtagning" : "Om ja på ovanstående ska resultatet redovisas separat."
+			        "ts-bas.helptext.narkotika-lakemedel.provtagning" : "Om ja på ovanstående ska resultatet redovisas separat.",
+
+			        "ts-bas.inbox.complementaryinfo" : "Intyget avser"
 
 				},
 				"en" : {
