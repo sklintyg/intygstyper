@@ -3,3 +3,8 @@
     background-repeat: no-repeat;
     padding-left: 25px;
 }
+
+.recipentlist {
+	padding: 10px 0;
+	border-bottom: 1px solid #dddddd; 
+}

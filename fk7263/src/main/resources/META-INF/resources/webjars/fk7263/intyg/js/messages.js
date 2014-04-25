@@ -5,20 +5,26 @@ define([
 	return {
 	"sv" : {
     	
-        "recipient.label.pagetitle" : "Skicka Intyget - välj mottagare",
+        "recipient.label.pagetitle" : "Skicka Intyget steg 1/3 - Välj mottagare",
+        "recipient.label.selectrecipents" : "Här ser du de mottagare som du kan skicka intyget till elektroniskt. Välj önskad mottagare och klicka sedan på knappen Nästa för att gå vidare till nästa steg.",
         "recipient.label.recipientlisttitle" : "Myndigheter och försäkringsbolag",
         "recipient.label.recipientlisttitle.others" : "Myndigheter och försäkringsbolag",
-        "recipient.label.downloadlink" : "Ladda ner / Skriv ut och skicka per post istället",
+        "recipient.label.inactive.recipient" : "Varför går det inte att skicka intyget till vissa mottagare?",
+        "recipient.label.missing.recipients-1" : "Om du saknar din mottagare i listan beror det troligen på att mottagaren inte kan ta emot elektroniska läkarintyg. Du kan då ",
+        "recipient.label.missing.recipients-2" : " och skicka det per post istället.",
+        "recipient.label.downloadlink" : "Ladda ner / Skriv ut",
 
-        "confirm.label.pagetitle" : "Bekräfta och skicka intyg",
+        "confirm.label.pagetitle" : "Skicka Intyget steg 2/3 - Bekräfta och skicka intyg",
         "confirm.label.certrowtitle" : "Intyg",
         "confirm.label.recipienttitle" : "Mottagare",
         "confirm.label.summarypagedesc" : "Du har valt att skicka detta intyg.<br><br>",
         "confirm.label.verifytext" : "Kontrollera att uppgifterna ovan stämmer och tryck \"Skicka\"",
         "confirm.message.alreadysent" : "<strong>Observera!</strong> Du har redan skickat detta intyg till denna mottagare.",
 
-        "sent.label.pagetitle" : "Intyget har skickats",
-        "sent.label.result" : "Mottagare ",
+        "sent.label.pagetitle" : "Skicka Intyget steg 3/3 - Intyget har skickats",
+        "sent.label.pageinformation" : "Intyget har nu skickats och nedan presenteras försändelsen.",
+        "sent.label.result" : "Mottagare av intyget: <br>",
+        "sent.label.infoaboutrecipients" : "Observera att olika mottagare har olika tider när dom kan se det inskickade intyget.",
         "sent.button.backtocertificate" : "Tillbaka till intyget",
         "fk7263.label.latestevent" : "Senaste händelsen",
         "fk7263.label.latestevent.noevents" : "Inga händelser",

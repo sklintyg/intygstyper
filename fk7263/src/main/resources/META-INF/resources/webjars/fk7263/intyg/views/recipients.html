@@ -5,31 +5,49 @@
   </div>
 
   <!-- Content -->
-  <div class="row-fluid">
-    <div class="span7">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <h1 ng-focus="pagefocus" tabindex="-1">
         <span message key="recipient.label.pagetitle"></span>
       </h1>
+      <div class="row-fluid">
+      	<div class="wizard">
+			<ul class="steps">
+			    <li class="active" data-target="#step1"></span>Välj mottagare<span class="chevron"></span></li>
+			    <li data-target="#step2">Bekräfta och skicka<span class="chevron"></span></li>
+			    <li data-target="#step3">Summering</li>
+			</ul>
+	  	</div>
+      </div>
       <p>
-      <h2>
-        <span message key="recipient.label.recipientlisttitle"></span>
-      </h2>
-
-      <span ng-repeat="r in recipientList">
+        <span message key="recipient.label.selectrecipents"></span>
+      </p>
+	</div>
+  </div>
+  <div class="row recipentlist">
+  	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+ 	  <span ng-repeat="r in recipientList">
       <label class="radio control-label" for="recipient-{{r.id}}">
         <input type="radio" value="{{r.id}}" ng-model="$parent.selectedRecipientId" name="recipientSelection" id="recipient-{{r.id}}" />{{r.recipientName}}</label> 
       </span>
-      
-
-      <h2>
-        <span message key="recipient.label.recipientlisttitle.others"></span>
-      </h2>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+  	  <p>
+      	<span message key="recipient.label.inactive.recipient"></span>
+      	<span class='glyphicon glyphicon-question-sign text-align-left' tooltip-html-unsafe="<b>Varför kan jag inte skicka mitt intyg till vissa mottagare?</b>Mottagaren tar bara emot ett intyg om det finns ett startat ärende hos mottagaren. Vänd dig till den du vill skicka intyget till och starta ett nytt ärende." tooltip-trigger="mouseenter" tooltip-placement="right"></span>
+      </p>
+    </div>
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
       <p>
-      <a ng-href="{{downloadAsPdfLink}}"><span message key="recipient.label.downloadlink" target="_blank"></span></a>
+      	<span message key="recipient.label.missing.recipients-1"></span>
+      	<a ng-href="{{downloadAsPdfLink}}"><span message key="recipient.label.downloadlink" target="_blank"></span></a>
+      	<span message key="recipient.label.missing.recipients-2"></span>
       </p>
       <p>
-        <input id="confirmRecipientSelectionBtn" type="button" ng-click="confirmRecipientSelection()" value="Nästa" class="btn btn-success" /> <input id="cancelRecipientSelectionBtn" type="button"
-          ng-click="backToViewCertificate()" value="Avbryt" class="btn btn-link" />
+        <input id="confirmRecipientSelectionBtn" type="button" ng-click="confirmRecipientSelection()" value="Nästa" class="btn btn-success" /> 
+        <input id="cancelRecipientSelectionBtn" type="button" ng-click="backToViewCertificate()" value="Avbryt" class="btn btn-link" />
       </p>
     </div>
   </div>
