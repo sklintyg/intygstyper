@@ -8,8 +8,7 @@ for ( var file in window.__karma__.files) {
 }
 
 var WEBJARS = '/base/target/webjardependencies/';
-var TEST = '/base/src/test/';
-var TS_BAS = '/base/src/main/resources/META-INF/resources/webjars/ts-bas';
+var TS_BAS = '/base/ts-bas/src/main/resources/META-INF/resources/webjars/ts-bas';
 
 require.config({
 	paths : {
@@ -22,8 +21,6 @@ require.config({
 		angularSanitize : WEBJARS + 'angularjs/angular-sanitize.min',
 		angularSwedish : WEBJARS + 'angularjs/1.2.14/angular-locale_sv-se',
 		angularUiBootstrap : WEBJARS + 'angular-ui-bootstrap/ui-bootstrap-tpls',
-		'test-app' : TEST + 'resources/test-app',
-
 		text : WEBJARS + 'requirejs-text/text',
 
 		'ts-bas' : TS_BAS

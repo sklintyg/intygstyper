@@ -63,6 +63,26 @@
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>angularjs</artifactId>
+      <version>1.2.14</version>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>angular-ui-bootstrap</artifactId>
+      <version>0.8.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>requirejs</artifactId>
+      <version>2.1.10</version>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>requirejs-text</artifactId>
+      <version>2.0.10-1</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -173,6 +193,73 @@
         <configuration>
           <configLocation>${checkstyle.basedir}/src/main/resources/checkstyle.xml</configLocation>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.8</version>
+        <inherited>false</inherited>
+        <executions>
+          <execution>
+            <id>unpack-webjar-dependencies</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>unpack-dependencies</goal>
+            </goals>
+            <configuration>
+              <includeGroupIds>org.webjars</includeGroupIds>
+              <outputDirectory>${project.build.directory}/webjardependenciestemp</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.7</version>
+        <inherited>false</inherited>
+        <executions>
+          <execution>
+            <phase>process-test-resources</phase>
+            <configuration>
+              <target>
+                <copy todir="${project.build.directory}/webjardependencies" verbose="false">
+                  <regexpmapper from="^(.*)[/\\].*[/\\](.*)$$" to="\1/\2"/>
+                  <fileset dir="${project.build.directory}/webjardependenciestemp/META-INF/resources/webjars/">
+                  </fileset>
+                </copy>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <version>0.0.14</version>
+        <executions>
+          <execution>
+            <id>install node and npm</id>
+            <goals>
+              <goal>install-node-and-npm</goal>
+            </goals>
+            <configuration>
+              <nodeVersion>v0.10.18</nodeVersion>
+              <npmVersion>1.3.8</npmVersion>
+            </configuration>
+          </execution>
+          <execution>
+            <id>npm install</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <arguments>install</arguments>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

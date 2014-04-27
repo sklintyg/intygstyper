@@ -7,7 +7,7 @@ module.exports = function(config) {
     config.set({
 
     // base path, that will be used to resolve files and exclude
-    basePath: '../../',
+    basePath: '../../../',
 
 
     // frameworks to use
@@ -17,10 +17,10 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         {pattern: WEBJAR_DEPENDENCIES + '**/*.*', included: false},
-        {pattern: 'src/main/resources/META-INF/resources/**/*.js', included: false},
-        {pattern: 'src/test/js/common/directives/*Spec.js', included: false},
+        {pattern: 'ts-bas/src/main/resources/META-INF/resources/**/*.js', included: false},
+        {pattern: 'ts-bas/src/test/js/common/directives/*Spec.js', included: false},
 
-        'src/test/resources/test-main.js'
+        'ts-bas/src/test/resources/test-main.js'
     ],
 
 
