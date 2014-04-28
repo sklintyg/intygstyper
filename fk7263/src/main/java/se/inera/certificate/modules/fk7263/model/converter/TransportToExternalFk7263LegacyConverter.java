@@ -309,6 +309,8 @@ public final class TransportToExternalFk7263LegacyConverter {
                     case INTE_ATERSTALLAS:
                         prognos.setPrognoskod(Prognoskoder.INTE_ATERSTALLAS);
                         break;
+                    default:
+                        break;
                 }
             }
             if (source.getMotivering() != null) {

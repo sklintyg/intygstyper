@@ -29,7 +29,7 @@ public class Validator {
 
     /**
      * Validates an external Utlatande.
-     * 
+     *
      * @param utlatande
      *            se.inera.certificate.modules.ts_diabetes.model.external.Utlatande
      * @return List of validation errors, or an empty string if validated correctly
@@ -41,7 +41,7 @@ public class Validator {
 
     /**
      * Validates an external Utlatande.
-     * 
+     *
      * @param utlatande
      *            se.inera.certificate.modules.ts_diabetes.model.external.Utlatande
      * @return List of validation errors, or an empty string if validated correctly
