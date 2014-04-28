@@ -17,7 +17,7 @@ define([
         "confirm.label.pagetitle" : "Skicka Intyget steg 2/3 - Bekräfta och skicka intyg",
         "confirm.label.certrowtitle" : "Intyg",
         "confirm.label.recipienttitle" : "Mottagare",
-        "confirm.label.summarypagedesc" : "Du har valt att skicka detta intyg.<br><br>",
+        "confirm.label.summarypagedesc" : "<b>Du har valt att skicka detta intyg:</b><br>",
         "confirm.label.verifytext" : "Kontrollera att uppgifterna ovan stämmer och tryck \"Skicka\"",
         "confirm.message.alreadysent" : "<strong>Observera!</strong> Du har redan skickat detta intyg till denna mottagare.",
 

@@ -5,6 +5,45 @@
   </div>
 
   <!-- Content -->
+  <div class="row cert-preview">
+  	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  		<span message key="confirm.label.summarypagedesc"></span>
+  		<div class="cert">
+  			<div class="cert-titlebar">
+	  			<img class="cert-icon" alt="" ng-src="/web/webjars/fk7263/intyg/img/fk7263.png" src="/web/webjars/fk7263/intyg/img/fk7263.png">
+	  			<div class="row">
+	  				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+	                  <h2 class="cert-title">
+	                    <span message key="certificatetypes.FK7263.commonname"></span> <span class="cert-titlebar-type"><span message key="certificatetypes.fk7263.typename"></span></span>
+	                  </h2>
+	                </div>
+	                <div class="col-xs-6 col-sm-5 col-md-5 col-lg-5 issue">
+	                  <span><span message key="fk7263.label.issued"></span></span> <span class="cert-titlebar-value">{{cert.signeringsdatum | date:'longDate'}}</span>
+	                </div>
+	  			</div>
+	  		</div>
+	  		<div class="cert-header">
+	  			<div class="row">
+		  			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 header-row">
+	                  <h3 class="tag">
+	                    <span message key="fk7263.label.unit"></span>
+	                  </h3>
+	                  <span id="careunit">{{cert.vardperson.enhetsnamn}}</span>
+	                </div>
+	                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 header-row">
+	                  <h3 class="tag">
+	                    <span message key="fk7263.inbox.complementaryinfo"></span>
+	                  </h3>
+	                  <span>{{cert.giltighet.from |
+	          				date:'longDate'}}&ndash;{{cert.giltighet.tom | date:'longDate'}}
+	          		  </span>
+	                </div>
+	            </div>
+	  		</div>
+	  		<div class="table-bottom"></div>
+  		</div>
+  	</div>
+  </div>
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <h1 ng-focus="pagefocus" tabindex="-1">
