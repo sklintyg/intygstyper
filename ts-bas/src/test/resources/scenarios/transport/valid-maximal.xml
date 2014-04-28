@@ -5,7 +5,7 @@
 
   <p:utlatande-id root="1.2.752.129.2.1.2.1" extension="987654321" />
 
-  <p:typAvUtlatande code="TS-BAS"
+  <p:typAvUtlatande code="ts-bas"
     codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b" codeSystemName="kv_utlåtandetyp_intyg" />
   
   <p:kommentar>Här kommer en övrig kommentar</p:kommentar>

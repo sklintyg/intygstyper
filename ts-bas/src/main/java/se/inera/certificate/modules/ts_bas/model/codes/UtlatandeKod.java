@@ -25,7 +25,7 @@ import se.inera.certificate.model.Kod;
  */
 public enum UtlatandeKod implements CodeSystem {
 
-    TS_BAS_U06_V06("TS-BAS", "06", "06",
+    TS_BAS_U06_V06("ts-bas", "06", "06",
             "Läkarintyg- avseende högre körkortsbehörigheter eller taxiförarlegitimation- på begäran från Transportstyrelsen");
 
     private static String codeSystemName = "kv_utlåtandetyp_intyg";
