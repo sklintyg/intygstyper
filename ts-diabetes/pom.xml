@@ -100,15 +100,6 @@
         </configuration>
         <executions>
           <execution>
-            <id>grunt build</id>
-            <goals>
-              <goal>grunt</goal>
-            </goals>
-            <configuration>
-              <arguments>--no-color</arguments>
-            </configuration>
-          </execution>
-          <execution>
             <id>javascript tests</id>
             <goals>
               <goal>karma</goal>
