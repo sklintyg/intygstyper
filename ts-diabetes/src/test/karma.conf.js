@@ -3,7 +3,7 @@
 
 module.exports = function(config) {
     var WEBJAR_DEPENDENCIES = "target/webjardependencies/";
-    var MODULE_NAME = "ts-bas";
+    var MODULE_NAME = "ts-diabetes";
     config.set({
 
     // base path, that will be used to resolve files and exclude
