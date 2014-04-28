@@ -56,7 +56,11 @@ define(
                 });
 
             }
-
+            
+            $scope.backToViewRecipents = function() {
+            	$location.path("/fk7263/recipients");
+            }
+            
             $scope.alreadySentToRecipient = function() {
                 // check if selected recipient exists with SENT status in cert
                 // history

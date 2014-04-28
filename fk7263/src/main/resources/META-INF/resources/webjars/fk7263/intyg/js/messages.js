@@ -98,6 +98,8 @@ define([
         "button.send" : "Skicka",
         "button.cancel" : "Avbryt",
         "button.goback" : "Tillbaka",
+        "button.next" : "Nästa",
+        "button.previous" : "Föregående steg",
 
         "nedsattningsgrad.helt_nedsatt" : "Helt nedsatt",
         "nedsattningsgrad.nedsatt_med_3_4" : "Nedsatt med 3/4",

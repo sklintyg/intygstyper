@@ -46,8 +46,12 @@
       	<span message key="recipient.label.missing.recipients-2"></span>
       </p>
       <p>
-        <input id="confirmRecipientSelectionBtn" type="button" ng-click="confirmRecipientSelection()" value="Nästa" class="btn btn-success" /> 
-        <input id="cancelRecipientSelectionBtn" type="button" ng-click="backToViewCertificate()" value="Avbryt" class="btn btn-link" />
+      	<button id="confirmRecipientSelectionBtn" type="button" ng-click="confirmRecipientSelection()" class="btn btn-success">
+          <span message key="button.next"></span>
+        </button>
+        <button id="cancelRecipientSelectionBtn" ng-click="backToViewCertificate()" class="btn btn-link">
+          <span message key="button.cancel"></span>
+        </button>
       </p>
     </div>
   </div>

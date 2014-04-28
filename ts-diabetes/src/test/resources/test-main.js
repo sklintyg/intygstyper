@@ -7,7 +7,7 @@ for ( var file in window.__karma__.files) {
 	}
 }
 
-var MODULE_NAME = "ts-bas";
+var MODULE_NAME = "ts-diabetes";
 var WEBJARS = '/base/target/webjardependencies/';
 var MODULE = '/base/' + MODULE_NAME + '/src/main/resources/META-INF/resources/webjars/' + MODULE_NAME;
 
@@ -24,7 +24,7 @@ require.config({
 		angularUiBootstrap : WEBJARS + 'angular-ui-bootstrap/ui-bootstrap-tpls',
 		text : WEBJARS + 'requirejs-text/text',
 
-		'ts-bas' : MODULE
+        'ts-diabetes' : MODULE
 	},
 	deps : tests,
 
