@@ -25,7 +25,7 @@ define([
              */
             function _getDraft(id, onSuccess, onError) {
                 $log.debug('_getDraft id: ' + id);
-			                var restPath = '/moduleapi/intyg/draft/' + id;
+                var restPath = '/moduleapi/intyg/draft/' + id;
                 $http.get(restPath).
                     success(function (data) {
                         $log.debug('_getDraft data: ' + data);

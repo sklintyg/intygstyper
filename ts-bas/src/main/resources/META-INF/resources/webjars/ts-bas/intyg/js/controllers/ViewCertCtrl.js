@@ -11,9 +11,12 @@ define([],
 					'listCertService',
 					'dialogService',
 					'$log',
+					'$rootScope',
 					function($scope, $filter, $location, $routeParams, certificateService, listCertService,
-							dialogService, $log) {
+							dialogService, $log, $rootScope) {
 						$scope.cert = {};
+						$rootScope.cert = {};
+
 						$scope.doneLoading = false;
 						$scope.shouldBeOpen = false;
 
@@ -24,6 +27,10 @@ define([],
 						$scope.close = function() {
 							$scope.closeMsg = 'I was closed at: ' + new Date();
 							$scope.shouldBeOpen = false;
+						};
+						
+						$scope.send = function() {
+							$location.path("/ts-bas/recipients");
 						};
 
 						$scope.opts = {
@@ -89,7 +96,7 @@ define([],
 							$scope.doneLoading = true;
 							if (result != null) {
 								$scope.cert = result;
-
+								$rootScope.cert = result;
 								if (result.syn.synfaltsdefekter == true || result.syn.nattblindhet == true
 										|| result.syn.progressivogonsjukdom == true) {
 									$scope.achelptext = true;

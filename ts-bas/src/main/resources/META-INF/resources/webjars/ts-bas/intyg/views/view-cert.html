@@ -29,7 +29,6 @@
   </div>
 
   <div ng-show="doneLoading">
-  
     <div id="backnav" class="row col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <a class="backlink" href="/web/start"><message key="button.goback" /></a>
     </div>
@@ -41,50 +40,50 @@
     <div class="row">
       <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
         <h1>
-        	<message key="ts-bas.label.pagetitle" />
+            <message key="ts-bas.label.pagetitle" />
         </h1>
         <p></p>
         <p>
-        	<message key="ts-bas.label.pagedescription" />
+            <message key="ts-bas.label.pagedescription" />
         </p>
         <p>
-        	<message key="ts-bas.label.cert.inaccuracies" />
+            <message key="ts-bas.label.cert.inaccuracies" />
         </p>
       </div>
       <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 eventbox">
-	        <h2>
-	          <span message key="ts-bas.label.latestevent"></span>
-	        </h2>
-	<!--          Show if no events to show -->
-	        <p ng-show="!cert.status">
-	          <span message key="ts-bas.label.latestevent.noevents"></span></a>
-	        </p>
-	
-	<!--         Show first status in list if any viable status exist -->
-	        <p id="lastest-certificate-event" ng-show="cert.status.length>0">
-	          {{cert.status[0].timestamp | date:'shortDate'}} <span message key="ts-bas.status.{{cert.status[0].type}}"></span> <span message
-	            key="ts-bas.target.{{cert.status[0].target}}"></span>
-	        </p>
-	<!--         Show if more than 1 viable status exists -->
-	        <p ng-show="cert.status.length>1">
-	          <a class="statusHistoryLink" href ng-click="showStatusHistory()"><span message key="ts-bas.label.latestevent.showall"></span></a>
-	        </p>
-	   	</div>
+        <h2>
+          <span message key="ts-bas.label.latestevent"></span>
+        </h2>
+<!--          Show if no events to show -->
+        <p ng-show="!cert.status">
+          <span message key="ts-bas.label.latestevent.noevents"></span></a>
+        </p>
+
+<!--         Show first status in list if any viable status exist -->
+        <p id="lastest-certificate-event" ng-show="cert.status.length>0">
+          {{cert.status[0].timestamp | date:'shortDate'}} <span message key="ts-bas.status.{{cert.status[0].type}}"></span> <span message
+            key="ts-bas.target.{{cert.status[0].target}}"></span>
+        </p>
+<!--         Show if more than 1 viable status exists -->
+        <p ng-show="cert.status.length>1">
+          <a class="statusHistoryLink" href ng-click="showStatusHistory()"><span message key="ts-bas.label.latestevent.showall"></span></a>
+        </p>
+    </div>
     </div>
 
     <div class="row">
-    	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-	    	<form id="view-as-pdf" action="{{downloadAsPdfLink}}" method="get" target="_blank" name="pdfForm">
-	          <p class="btn-row">
-	            <button type="button" ng-click="open()" class="btn btn-success">
-	              <message key="ts-button.detail.send" />
-	            </button>
-	            <button id="downloadprint" type="submit" ng-click="document.pdfForm.submit()" class="btn btn-inverse">
-	              <message key="button.downloadprint" />
-	            </button>
-	          </p>
-	        </form>
-        </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+    <form id="view-as-pdf" action="{{downloadAsPdfLink}}" method="get" target="_blank" name="pdfForm">
+          <p class="btn-row">
+            <button type="button" ng-click="send()" class="btn btn-success">
+              <message key="ts-button.detail.send" />
+            </button>
+            <button id="downloadprint" type="submit" ng-click="document.pdfForm.submit()" class="btn btn-inverse">
+              <message key="button.downloadprint" />
+            </button>
+          </p>
+        </form>
+       </div>
     </div>
     <section id="certificate" class="certificate">
       <span class="hide" id="certId" title="{{cert.id}}"></span> <span class="hide" id="certType" title="{{cert.typ}}"></span>

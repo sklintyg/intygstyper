@@ -9,6 +9,8 @@ import se.inera.certificate.modules.ts_bas.rest.ModuleServiceWrapper;
 
 public class TsBasEntryPoint implements ModuleEntryPoint {
 
+    private static final String TRANSPORTSTYRELSEN_LOGICAL_ADRESS = "TS";
+
     @Autowired
     private ModuleServiceWrapper moduleServiceWrapper;
 
@@ -30,7 +32,7 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
 
     @Override
     public String getDefaultRecieverLogicalAddress() {
-        return null;
+        return TRANSPORTSTYRELSEN_LOGICAL_ADRESS;
     }
 
     @Override

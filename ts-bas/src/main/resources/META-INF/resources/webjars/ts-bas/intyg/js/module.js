@@ -18,6 +18,20 @@ define([
                 templateUrl : '/web/webjars/ts-bas/intyg/views/view-cert.html',
                 controller : 'ts-bas.ViewCertCtrl',
                 title : "Läkarintyg Transportstyrelsen Bas"
+            })
+            .when('/ts-bas/recipients', {
+                 templateUrl : '/web/webjars/ts-bas/intyg/views/recipients.html',
+                 controller : 'ts-bas.SendCertWizardCtrl'
+            })
+            .when('/ts-bas/summary', {
+                templateUrl : '/web/webjars/ts-bas/intyg/views/send-summary.html',
+                controller : 'ts-bas.SendCertWizardCtrl',
+                title : "Kontrollera och skicka intyget"
+            })
+            .when('/ts-bas/sent', {
+                templateUrl : '/web/webjars/ts-bas/intyg/views/sent-cert.html',
+                controller : 'ts-bas.SendCertWizardCtrl',
+                title : "Intyget skickat till mottagare"
             });
     }]);
     // Inject language resources
