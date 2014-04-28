@@ -88,18 +88,18 @@ define(
 		            "ts-bas.label.diabetes.behandling.kost" : "Kost",
 		            "ts-bas.label.diabetes.behandling.tabletter" : "Tabletter",
 		            "ts-bas.label.diabetes.behandling.insulin" : "Insulin",
-		            
+
 		            "ts-bas.label.neurologi.neurologisksjukdom" : "Finns tecken på neurologisk sjukdom?",
-		            
+
 		            "ts-bas.label.medvetandestorning.medvetandestorning" : "Har eller har patienten haft epilepsi, epileptiskt anfall eller annan medvetandestörning?",
 		            "ts-bas.label.medvetandestorning.beskrivning" : "Om ja. Information om när den inträffade och orsak:",
-		            
+
 		            "ts-bas.label.njurar.nedsatt-njurfunktion" : "Föreligger allvarligt nedsatt njurfunktion som kan innebära en trafiksäkerhetsrisk?",
-		   
+
 		            "ts-bas.label.kognitivt.sviktande-kognitiv-funktion" : "Finns tecken på sviktande kognitiv funktion?",
-		            
+
 		            "ts-bas.label.somn-vakenhet.tecken-somnstorningar" : "Finns tecken på, eller anamnestiska uppgifter som talar för sömn- eller vakenhetsstörning?",
-		            
+
 		            "ts-bas.label.narkotika-lakemedel.tecken-missbruk" : "a) Finns journaluppgifter, anamnestiska uppgifter, resultat av laboratorieprover eller andra tecken på missbruk eller beroende av alkohol, narkotika eller läkemedel?",
 		            "ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats" : "b) Har patienten vid något tillfälle varit föremål för vårdinsatser för missbruk eller beroende av alkohol, narkotika eller läkemedel?",
 		            "ts-bas.label.narkotika-lakemedel.behov-provtagning" : "Behövs det provtagning avseende aktuellt bruk av akohol eller narkotika?",
@@ -107,24 +107,32 @@ define(
 		            "ts-bas.label.narkotika-lakemedel.beskrivning" : "Om JA på C. Information om läkemedel och ordinerad dos:",
 
 		            "ts-bas.label.psykiskt.psykisksjukdom" : "Har eller har patienten haft psykisk sjukdom eller störning, till exempel schizofreni, annan psykos eller bipolär (manodepressiv) sjukdom?",
-		            
+
 		            "ts-bas.label.utvecklingsstorning.psykisk-utvecklingsstorning" : "a) Har patienten någon psykisk utvecklingsstörning?",
 		            "ts-bas.label.utvecklingsstorning.har-syndrom" : "b) Har patienten till exempel ADHD, ADD, DAMP, Aspergers syndrom eller Tourettes syndrom?",
-		            
+
 		            "ts-bas.label.sjukhusvard.sjukhus-eller-lakarkontakt" : "Har patienten vårdats på sjukhus eller haft kontakt med läkare med anledning av fälten 1-13?",
 		            "ts-bas.label.sjukhusvard.vardinrattning" : "Vårdinrättningens namn och klinik/er:",
 		            "ts-bas.label.sjukhusvard.anledning" : "För vad?",
 		            "ts-bas.label.sjukhusvard.tidpunkt" : "Om frågan besvarats med ja, när?",
-		            
+
 		            "ts-bas.label.medicinering.stadigvarande-medicinering" : "Har patienten någon stadigvarande medicinering?",
 		            "ts-bas.label.medicinering.beskrivning" : "Vilken eller vilka mediciner:",
-		            
+
 		            "ts-bas.label.true" : "JA",
 		            "ts-bas.label.false" : "NEJ",
-		            		            
+
 		            "ts-bas.label.certtitle" : "Transportstyrelsens läkarintyg",
+		            "ts-bas.confirm.label.pagetitle" : "Skicka intyg steg 2/3",
+		            "ts-bas.confirm.label.summarypagedesc" : "Du har valt att skicka följande intyg: ",
+		            "ts-bas.confirm.label.recipienttitle" : "Mottagare: ",
+		            "ts-bas.confirm.label.verifytext" : "Kontrollera att uppgifterna ovan stämmer och tryck på 'Skicka'.",
+
 		            "ts-bas.typename" : " - Bas",
 		            "ts-bas.label.pagetitle" : "Granska och skicka intyg",
+		            "ts-bas.button.send" : "Skicka",
+		            "ts-bas.common.cancel" : "Avbryt",
+
 		            "ts-button.detail.send" : "Skicka intyg",
 					"ts-bas.label.pagedescription" : "<p>Här kan du läsa ditt intyg och skicka det elektroniskt till olika Transportstyrelsen.</p> <p>För att skicka intyget till Transportstyrelsen så klickar du på Skicka intyg.</p> <p>Vill du spara eller skriva ut ditt intyg så väljer du Ladda ner / Skriv ut. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut</p>",
 					"ts-bas.label.cert.inaccuracies" : "Om du upptäcker några felaktigheter så hör av dig enheten som utfärdade ditt intyg.",
