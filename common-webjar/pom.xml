@@ -2,14 +2,38 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>certificates</artifactId>
-        <groupId>se.inera.certificate.modules</groupId>
-        <version>1.3-SNAPSHOT</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>certificates</artifactId>
+    <groupId>se.inera.certificate.modules</groupId>
+    <version>1.3-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>common-webjar</artifactId>
-
+  <artifactId>common-webjar</artifactId>
+  <build>
+    <finalName>common-webjar</finalName>
+    <plugins>
+      <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <version>0.0.14</version>
+        <configuration>
+          <workingDirectory>../</workingDirectory>
+        </configuration>
+        <executions>
+          <execution>
+            <id>javascript tests</id>
+            <goals>
+              <goal>karma</goal>
+            </goals>
+            <phase>process-test-classes</phase>
+            <configuration>
+              <karmaConfPath>${project.basedir}/src/test/karma.conf.ci.js</karmaConfPath>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
