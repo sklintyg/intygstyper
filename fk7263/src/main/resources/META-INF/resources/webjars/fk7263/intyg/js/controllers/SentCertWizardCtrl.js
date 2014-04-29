@@ -16,7 +16,7 @@ define(
             $scope.downloadAsPdfLink = "/moduleapi/certificate/" + $routeParams.certificateId + "/pdf";
 
             // Initialize recipient handling, default to FK
-            $scope.selectedRecipientId = $rootScope.selectedRecipientId || "FK";
+            $scope.selectedRecipientId = "FK";
             // set selected recipeintID in rootscope to preserve state between
             // controller instance invocations
             $rootScope.selectedRecipientId = $scope.selectedRecipientId;

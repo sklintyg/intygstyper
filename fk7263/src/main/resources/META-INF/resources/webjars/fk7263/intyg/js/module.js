@@ -18,7 +18,8 @@ define([
                  title : 'Läkarintyg FK7263'
               }).when('/fk7263/recipients', {
                  templateUrl : '/web/webjars/fk7263/intyg/views/recipients.html',
-                 controller : 'fk7263.SentCertWizardCtrl'
+                 controller : 'fk7263.SentCertWizardCtrl',
+                 title : 'Skicka intyg till mottagare'
              }).when('/fk7263/statushistory', {
                  templateUrl : '/web/webjars/fk7263/intyg/views/status-history.html',
                  controller : 'fk7263.ViewCertCtrl',

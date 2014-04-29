@@ -22,8 +22,8 @@ define([], function() {
 				// expose calculated static link for pdf download
 				$scope.downloadAsPdfLink = "/moduleapi/certificate/" + $scope.cert.id + "/pdf";
 
-				// Initialize recipient handling, default to FK
-				$scope.selectedRecipientId = $rootScope.selectedRecipientId || "TS";
+				// Initialize recipient handling, default to TS
+				$scope.selectedRecipientId = "TS";
 				// set selected recipeintID in rootscope to preserve state between
 				// controller instance invocations
 				$rootScope.selectedRecipientId = $scope.selectedRecipientId;
