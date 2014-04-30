@@ -91,7 +91,7 @@ public class InternalToExternalConverter {
         Utlatande utlatande = new Utlatande();
 
         // TODO: Where does the codeSystem come from?! (i.e "1.2.752.129.2.1.2.1")
-        utlatande.setId(new Id("1.2.752.129.2.1.2.1", source.getUtlatandeid()));
+        utlatande.setId(new Id("1.2.752.129.2.1.2.1", source.getId()));
 
         utlatande.setPatient(convertToExtPatient(source.getPatient()));
         utlatande.setSigneringsdatum(source.getSigneringsdatum());
