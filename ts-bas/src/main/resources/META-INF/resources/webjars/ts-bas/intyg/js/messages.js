@@ -123,10 +123,12 @@ define(
 		            "ts-bas.label.false" : "NEJ",
 
 		            "ts-bas.label.certtitle" : "Transportstyrelsens läkarintyg",
-		            "ts-bas.confirm.label.pagetitle" : "Skicka intyg steg 2/3",
+		            "ts-bas.label.pagetitle.step1" : "Skicka intyg steg 1/2 - Granska och skicka",
+		            "ts-bas.label.pagetitle.step2" : "Skicka intyg steg 2/2 - Summering",
 		            "ts-bas.confirm.label.summarypagedesc" : "Du har valt att skicka följande intyg: ",
 		            "ts-bas.confirm.label.recipienttitle" : "Mottagare: ",
-		            "ts-bas.confirm.label.verifytext" : "Kontrollera att uppgifterna ovan stämmer och tryck på 'Skicka'.",
+		            "ts-bas.confirm.label.verifytext" : "Kontrollera att uppgifterna ovan stämmer och tryck på Skicka.",
+		            "ts-bas.sent.label.pageinformation" : "Intyget har nu skickats och nedan presenteras försändelsen.",
 
 		            "ts-bas.typename" : " - Bas",
 		            "ts-bas.label.pagetitle" : "Granska och skicka intyg",

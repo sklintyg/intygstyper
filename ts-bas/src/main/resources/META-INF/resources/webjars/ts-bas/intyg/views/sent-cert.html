@@ -1,10 +1,25 @@
 <div id="send-certificate-flow-root-sent" class="row-fluid">
   <!-- Content -->
-  <div class="row-fluid">
-    <div class="span12">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <h1 ng-focus="pagefocus" tabindex="-1">
-        <span message key="sent.label.pagetitle"></span>
+        <span message key="ts-bas.label.pagetitle.step2"></span>
       </h1>
+      <div class="row-fluid">
+      	<div class="wizard">
+			<ul class="steps">
+			    <li class="wstep-completed" data-target="#step1">Granska och skicka<span class="chevron"></span></li>
+			    <li class="active" data-target="#step3">Summering</li>
+			</ul>
+	  	</div>
+      </div>
+      <p>
+      	<span message key="ts-bas.sent.label.pageinformation"></span>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <p id="send-certificate-flow-result">
         <span message key="sent.label.result"></span>
         <b>{{getRecipientName(selectedRecipientId)}}</b>
@@ -17,3 +32,4 @@
     </div>
   </div>
 </div>
+
