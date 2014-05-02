@@ -1,14 +1,22 @@
+/* global module */
 var baseConfig = require('./karma.conf.js');
 
 module.exports = function(config) {
-	// Load base config
-	baseConfig(config);
+    'use strict';
 
-	// Override base config
-	config.set({
-		singleRun : true,
-		autoWatch : false,
-		plugins : [ 'karma-jasmine', 'karma-junit-reporter', 'karma-phantomjs-launcher', 'karma-requirejs' ],
-		browsers : [ 'PhantomJS' ]
-	});
+    // Load base config
+    baseConfig(config);
+
+    // Override base config
+    config.set({
+        singleRun: true,
+        autoWatch: false,
+        plugins: [
+            'karma-jasmine',
+            'karma-junit-reporter',
+            'karma-phantomjs-launcher',
+            'karma-requirejs'
+        ],
+        browsers: [ 'PhantomJS' ]
+    });
 };

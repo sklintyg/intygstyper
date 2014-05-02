@@ -1,11 +1,10 @@
-define([
-], function () {
+define([ 'angular' ], function(angular) {
     'use strict';
 
-    return ['$scope', '$log', '$location', '$anchorScroll', '$routeParams',
-            'ts-bas.certificateService', 'statService', 'wcDialogService',
-        function ($scope, $log, $location, $anchorScroll, $routeParams,
-                  certificateService, statService, wcDialogService) {
+    return ['$scope', '$log', '$location', '$anchorScroll', '$routeParams', 'ts-bas.certificateService', 'statService',
+        'wcDialogService',
+        function($scope, $log, $location, $anchorScroll, $routeParams, certificateService, statService,
+            wcDialogService) {
             $scope.cert = {};
 
             $scope.messages = [];
@@ -19,11 +18,11 @@ define([
                 collapsedHeader: false
             };
 
-            $scope.toggleHeader = function () {
+            $scope.toggleHeader = function() {
                 $scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
             };
 
-            $scope.toggleShowComplete = function () {
+            $scope.toggleShowComplete = function() {
                 $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
                 if ($scope.widgetState.showComplete) {
 
@@ -64,7 +63,7 @@ define([
                 'sjukhusvardanledning': 63
             };
 
-            $scope.$watch('cert.intygAvser.korkortstyp', function (newValue, oldValue) {
+            $scope.$watch('cert.intygAvser.korkortstyp', function(newValue) {
                 if (!$scope.cert || !$scope.cert.intygAvser || !$scope.cert.intygAvser.korkortstyp) {
                     return;
                 }
@@ -77,188 +76,24 @@ define([
                 }
             }, true);
 
-            var dummycert = {
-                "utlatandeid": "987654321",
-                "typAvUtlatande": "TSTRK1007 (U06, V06)",
-                "signeringsdatum": "2013-08-12T15:57:00.000",
-                "kommentar": "Här kommer en övrig kommentar",
-                "skapadAv": {
-                    "personid": "SE0000000000-1333",
-                    "fullstandigtNamn": "Doktor Thompson",
-                    "specialiteter": ["SPECIALITET"],
-                    "vardenhet": {
-                        "enhetsid": "SE0000000000-1337",
-                        "enhetsnamn": "Vårdenhet Väst",
-                        "postadress": "Enhetsvägen 12",
-                        "postnummer": "54321",
-                        "postort": "Tumba",
-                        "telefonnummer": "08-1337",
-                        "vardgivare": {
-                            "vardgivarid": "SE0000000000-HAHAHHSAA",
-                            "vardgivarnamn": "Vårdgivarnamn"
-                        }
-                    },
-                    "befattningar": []
-                },
-                "patient": {
-                    "personid": "19121212-1212",
-                    "fullstandigtNamn": "Herr Dundersjuk",
-                    "fornamn": "Herr",
-                    "efternamn": "Dundersjuk",
-                    "postadress": "Testvägen 12",
-                    "postnummer": "123456",
-                    "postort": "Testort"
-                },
-                "vardkontakt": {
-                    "typ": "5880005",
-                    "idkontroll": "PASS"
-                },
-                "intygAvser": {
-                    "korkortstyp": [
-                        {"type": "C1", "selected": false},
-                        {"type": "C1E", "selected": false},
-                        {"type": "C", "selected": true},
-                        {"type": "CE", "selected": false},
-                        {"type": "D1", "selected": false},
-                        {"type": "D1E", "selected": false},
-                        {"type": "D", "selected": false},
-                        {"type": "DE", "selected": false},
-                        {"type": "TAXI", "selected": false}
-                    ]
-                },
-                "syn": {
-                    "synfaltsdefekter": true,
-                    "nattblindhet": true,
-                    "progressivOgonsjukdom": true,
-                    "diplopi": true,
-                    "nystagmus": true,
-                    "hogerOga": {
-                        "utanKorrektion": 0.0,
-                        "medKorrektion": 0.0,
-                        "kontaktlins": true
-                    },
-
-                    "vansterOga": {
-                        "utanKorrektion": 0.0,
-                        "medKorrektion": 0.0,
-                        "kontaktlins": true
-                    },
-
-                    "binokulart": {
-                        "utanKorrektion": 0.0,
-                        "medKorrektion": 0.0
-                    },
-                    "korrektionsglasensStyrka": true
-                },
-
-                "horselBalans": {
-                    "balansrubbningar": true,
-                    "svartUppfattaSamtal4Meter": true
-                },
-
-                "funktionsnedsattning": {
-                    "funktionsnedsattning": true,
-                    "otillrackligRorelseformaga": true,
-                    "beskrivning": "Spik i foten"
-
-                },
-
-                "hjartKarl": {
-                    "hjartKarlSjukdom": true,
-                    "hjarnskadaEfterTrauma": true,
-                    "riskfaktorerStroke": true,
-                    "beskrivningRiskfaktorer": "Förkärlek för Elivsmackor"
-                },
-                "diabetes": {
-                    "harDiabetes": true,
-                    "diabetesTyp": "DIABETES_TYP_1",
-                    "kost": true
-                },
-
-                "neurologi": {
-                    "neurologiskSjukdom": true
-                },
-
-                "medvetandestorning": {
-                    "medvetandestorning": true,
-                    "beskrivning": "Beskrivning"
-                },
-
-                "njurar": {
-                    "nedsattNjurfunktion": true
-                },
-
-                "kognitivt": {
-                    "sviktandeKognitivFunktion": true
-                },
-
-                "somnVakenhet": {
-                    "teckenSomnstorningar": true
-                },
-
-                "narkotikaLakemedel": {
-                    "teckenMissbruk": true,
-                    "foremalForVardinsats": true,
-                    "lakarordineratLakemedelsbruk": true,
-                    "lakemedelOchDos": "Läkemedel och dos",
-                    "provtagningBehovs": true
-                },
-
-                "psykiskt": {
-                    "psykiskSjukdom": true
-                },
-
-                "utvecklingsstorning": {
-                    "psykiskUtvecklingsstorning": true,
-                    "harSyndrom": true
-                },
-
-                "sjukhusvard": {
-                    "sjukhusEllerLakarkontakt": true,
-                    "tidpunkt": "20 Januari",
-                    "vardinrattning": "Vårdcentralen",
-                    "anledning": "Akut lungsot"
-                },
-
-                "medicinering": {
-                    "stadigvarandeMedicinering": true,
-                    "beskrivning": "Alvedon"
-                },
-
-                "bedomning": {
-                    "korkortstyp": [
-                        {"type": "C1", "selected": false},
-                        {"type": "C1E", "selected": false},
-                        {"type": "C", "selected": true},
-                        {"type": "CE", "selected": false},
-                        {"type": "D1", "selected": false},
-                        {"type": "D1E", "selected": false},
-                        {"type": "D", "selected": false},
-                        {"type": "DE", "selected": false},
-                        {"type": "TAXI", "selected": false},
-                        {"type": "ANNAT", "selected": false}
-                    ],
-                    "lakareSpecialKompetens": "Spektralanalys"
-                }
-            };
-
             $scope.cert = {};
 
             // Get the certificate draft from the server.
             // TODO: Hide the form until the draft has been loaded.
             certificateService.getDraft($routeParams.certificateId,
-                function (data) {
+                function(data) {
                     $scope.cert = data.content;
-                }, function (errorData) {
+                }, function() {
                     // TODO: Show error message.
-                });
+                }
+            );
 
             /**
              * Action to save the certificate draft to the server.
              */
-            $scope.save = function () {
+            $scope.save = function() {
                 certificateService.saveDraft($routeParams.certificateId, $scope.cert,
-                    function (data) {
+                    function(data) {
 
                         $scope.certForm.$setPristine();
 
@@ -271,9 +106,9 @@ define([
                             $scope.isComplete = false;
                             $scope.validationMessages = data.messages;
 
-                            angular.forEach(data.messages, function (message) {
+                            angular.forEach(data.messages, function(message) {
                                 var field = message.field;
-                                var parts = field.split(".");
+                                var parts = field.split('.');
                                 var section;
                                 if (parts.length > 0) {
                                     section = parts[0].toLowerCase();
@@ -287,29 +122,30 @@ define([
                             });
                         }
                     },
-                    function (errorData) {
+                    function() {
                         // TODO: Show error message.
-                    });
+                    }
+                );
             };
 
             /**
              * Action to discard the certificate draft and return to WebCert again.
              */
-            $scope.discard = function () {
-                var bodyText = "Är du säker på att du vill radera utkastet? Intyget tas då bort och finns inte längre tillgängligt i Webcert.";
+            $scope.discard = function() {
+                var bodyText = 'Är du säker på att du vill radera utkastet? Intyget tas då bort och finns inte längre tillgängligt i Webcert.';
                 wcDialogService.showDialog($scope, {
                     dialogId: 'confirm-draft-delete',
                     titleId: 'label.confirmaddress',
                     bodyText: bodyText,
 
-                    button1click: function () {
+                    button1click: function() {
                         $log.debug('delete draft ');
                         $scope.dialog.acceptprogressdone = false;
-                        certificateService.discardDraft($routeParams.certificateId, function (data) {
+                        certificateService.discardDraft($routeParams.certificateId, function() {
                             $scope.dialog.acceptprogressdone = true;
                             statService.refreshStat(); // Update statistics to reflect change
-                            $location.path("/unsigned");
-                        }, function (errorData) {
+                            $location.path('/unsigned');
+                        }, function() {
                             $scope.dialog.acceptprogressdone = true;
                             // TODO: Show error message.
                         });
@@ -318,5 +154,6 @@ define([
                     button2text: 'common.cancel'
                 });
             };
-        }];
+        }
+    ];
 });

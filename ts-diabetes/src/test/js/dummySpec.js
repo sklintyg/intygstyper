@@ -1,15 +1,10 @@
-'use strict';
-define(
-		[ 'angular', 'angularMocks', 'ts-diabetes/webcert/js/directives' ],
-		function(angular, mocks, directives) {
+define([ 'angular', 'angularMocks'], function() {
+    'use strict';
 
-			describe(
-					'dummySpec',
-					function() {
+    describe('dummySpec', function() {
 
-						it('you shall not pass', function() {
-							expect(true === false).toEqual(false);
-						});
-
-					});
-		});
+        it('you shall not pass', function() {
+            expect(true === false).toEqual(false);
+        });
+    });
+});

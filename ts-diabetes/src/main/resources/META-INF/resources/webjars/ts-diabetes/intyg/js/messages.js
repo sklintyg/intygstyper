@@ -18,34 +18,34 @@
  */
 'use strict';
 var rliMessages = {
-    "sv": {
-    	"view.label.certtitle": "Läkarintyg vid avbeställd resa",
-        "view.label.pagetitle": "Granska och skicka",
-        "view.label.pagedescription": "Här kan du titta på ditt intyg och skicka det. Om du upptäcker några felaktigheter så hör av dig enheten som utfärdade ditt intyg. Du kan även öppna intyget som en PDF och skriva ut och spara.",
-        "view.label.patientname": "Patientens namn:",
-        "view.label.issued": "Utfärdat:",
-        "view.label.civicnumber": "Personnr:",
-        "view.label.issuer": "Utfärdare:",
-        "view.label.period": "Period:",
-        "view.label.unit": "Enhet:",
-        "view.label.errorpagetitle": "Ett problem har uppstått",
-        "view.message.certificateloading": "Hämtar intyg...",
-        "button.sendtofk": "Skicka",
-        "button.downloadprint": "Ladda ner / Skriv ut",
-        "button.send": "Skicka",
-        "button.cancel": "Avbryt",
-        "button.goback": "Tillbaka",
-        "error.generic": "Kunde inte visa intyget",
-        "view.label.latestevent" : "Senaste händelsen",
-        "view.label.latestevent.noevents" : "Inga händelser",
-        "view.label.latestevent.showall" : "Visa alla händelser",
-        "history.label.pagetitle" : "Intygets alla händelser",
-        "rli.status.sent" : "Skickat till",
-        "rli.target.mi" : "Försäkringsbolaget",
+    'sv': {
+        'view.label.certtitle': 'Läkarintyg vid avbeställd resa',
+        'view.label.pagetitle': 'Granska och skicka',
+        'view.label.pagedescription': 'Här kan du titta på ditt intyg och skicka det. Om du upptäcker några felaktigheter så hör av dig enheten som utfärdade ditt intyg. Du kan även öppna intyget som en PDF och skriva ut och spara.',
+        'view.label.patientname': 'Patientens namn:',
+        'view.label.issued': 'Utfärdat:',
+        'view.label.civicnumber': 'Personnr:',
+        'view.label.issuer': 'Utfärdare:',
+        'view.label.period': 'Period:',
+        'view.label.unit': 'Enhet:',
+        'view.label.errorpagetitle': 'Ett problem har uppstått',
+        'view.message.certificateloading': 'Hämtar intyg...',
+        'button.sendtofk': 'Skicka',
+        'button.downloadprint': 'Ladda ner / Skriv ut',
+        'button.send': 'Skicka',
+        'button.cancel': 'Avbryt',
+        'button.goback': 'Tillbaka',
+        'error.generic': 'Kunde inte visa intyget',
+        'view.label.latestevent': 'Senaste händelsen',
+        'view.label.latestevent.noevents': 'Inga händelser',
+        'view.label.latestevent.showall': 'Visa alla händelser',
+        'history.label.pagetitle': 'Intygets alla händelser',
+        'rli.status.sent': 'Skickat till',
+        'rli.target.mi': 'Försäkringsbolaget',
 
-        "ts-diabetes.inbox.complementaryinfo" : "Intyget avser"
+        'ts-diabetes.inbox.complementaryinfo': 'Intyget avser'
     },
-    "en": {
-        "view.label.pagetitle": "Show Certificate"
+    'en': {
+        'view.label.pagetitle': 'Show Certificate'
     }
 };

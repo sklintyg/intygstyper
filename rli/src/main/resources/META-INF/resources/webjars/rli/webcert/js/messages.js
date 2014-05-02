@@ -16,27 +16,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-define([
-], function () {
+define([], function() {
     'use strict';
 
     return {
-        "sv" : {
-        	"view.label.certtitle": "Läkarintyg vid avbeställd resa",
-        	
-        	//Labels
-        	"rli.label.empty" : "",
-          
+        'sv': {
+            'view.label.certtitle': 'Läkarintyg vid avbeställd resa',
+
+            //Labels
+            'rli.label.empty': '',
 
             // Help texts
 
             // Validation messages
-            "rli.validation.utlatande.missing" : "Utlatande saknas",
+            'rli.validation.utlatande.missing': 'Utlatande saknas',
 
-            "rli.validation.vardenhet.namn.missing" : "Namn för vårdenhet måste anges"
+            'rli.validation.vardenhet.namn.missing': 'Namn för vårdenhet måste anges'
         },
-        "en" : {
-            "view.label.pagetitle" : "Show Certificate"
+        'en': {
+            'view.label.pagetitle': 'Show Certificate'
         }
     };
 });
