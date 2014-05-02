@@ -528,6 +528,7 @@ label.radio + label.radio {
     font-weight: normal;
     margin-top: 0;
 }
+
 .edit-form .alert-danger {
     border: 1px solid #A94442;
 }
