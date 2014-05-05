@@ -24,173 +24,299 @@
   <div ng-hide="doneLoading" style="text-align: center; padding: 20px;">
     <img src="/img/ajax-loader.gif" style="text-align: center;" />
     <p style="text-align: center; color: #64ABC0; margin-top: 20px;">
-      <strong><message key="view.message.certificateloading" /></strong>
+      <strong><message key="ts-diabetes.message.certificateloading" /></strong>
     </p>
   </div>
 
   <div ng-show="doneLoading">
-    <!-- Modals: visibility defined by $scope.doneLoading -->
-    <div modal="shouldBeOpen" close="close()" options="opts">
-      <div class="modal-header">
-        <button class="close" ng-click="close()">×</button>
-        <h3>Intyget har skickats till Försäkringskassan</h3>
-      </div>
-      <div class="modal-body">
-        <p>Ärendet behandlas nu av Försäkringskassan.</p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-success" ng-click="close()">OK</button>
-      </div>
-    </div>
-
-    <div id="backnav" class="row-fluid">
+    <div id="backnav" class="row col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <a class="backlink" href="/web/start"><message key="button.goback" /></a>
     </div>
 
-
-
     <!-- Content -->
-
-    <div class="row-fluid">
-      <div class="span7">
+    <div class="row">
+      <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
         <h1>
-          <message key="view.label.pagetitle" />
+          <message key="ts-diabetes.label.pagetitle" />
         </h1>
+        <p></p>
         <p>
-          <message key="view.label.pagedescription" />
+          <message key="ts-diabetes.label.pagedescription" />
         </p>
-        <form id="view-as-pdf" action="/moduleapi/certificate/{{cert.utlatandeid}}/pdf" method="get" target="_blank">
-          <p class="btn-row">
-            <button type="button" ng-click="open()" class="btn btn-success">
-              <message key="button.send" />
-            </button>
-            <button id="downloadprint" type="submit" class="btn btn-inverse">
-              <message key="button.downloadprint" />
-            </button>
-          </p>
-        </form>
+        <p>
+            <message key="ts-diabetes.label.cert.inaccuracies" />
+        </p>
       </div>
-      <div class="span5 eventbox">
+      <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 eventbox">
         <h2>
-          <span message key="view.label.latestevent"></span>
+          <span message key="ts-diabetes.label.latestevent"></span>
         </h2>
-        <!--  Show if no events to show -->
+<!--          Show if no events to show -->
         <p ng-show="!cert.status">
-          <span message key="view.label.latestevent.noevents"></span></a>
+          <span message key="ts-diabetes.label.latestevent.noevents"></span></a>
         </p>
 
-        <!-- Show first status in list if any viable status exist-->
+<!--         Show first status in list if any viable status exist -->
         <p id="lastest-certificate-event" ng-show="cert.status.length>0">
           {{cert.status[0].timestamp | date:'shortDate'}} <span message key="ts-diabetes.status.{{cert.status[0].type}}"></span> <span message
             key="ts-diabetes.target.{{cert.status[0].target}}"></span>
         </p>
-        <!-- Show if more than 1 viable status exists -->
+<!--         Show if more than 1 viable status exists -->
         <p ng-show="cert.status.length>1">
-          <a class="statusHistoryLink" href ng-click="showStatusHistory()"><span message key="view.label.latestevent.showall"></span></a>
+          <a class="statusHistoryLink" href ng-click="showStatusHistory()"><span message key="ts-diabetes.label.latestevent.showall"></span></a>
         </p>
-      </div>
+    </div>
+    </div>
+
+    <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+    <form id="view-as-pdf" action="{{downloadAsPdfLink}}" method="get" target="_blank" name="pdfForm">
+          <p class="btn-row">
+            <button type="button" ng-click="send()" class="btn btn-success">
+              <message key="ts-button.detail.send" />
+            </button>
+            <button id="downloadprint" type="submit" ng-click="document.pdfForm.submit()" class="btn btn-inverse">
+              <message key="button.downloadprint" />
+            </button>
+          </p>
+        </form>
+       </div>
     </div>
     <section id="certificate" class="certificate">
       <span class="hide" id="certId" title="{{cert.id}}"></span> <span class="hide" id="certType" title="{{cert.typ}}"></span>
-      <div class="row-fluid">
-        <div class="span12">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div class="cert">
             <div class="cert-titlebar">
-              <div class="row-fluid">
-                <div class="span6">
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                   <h2>
-                    <span><message key="view.label.certtitle" /></span>
+                    <span class="cert-title"><message key="ts-diabetes.label.certtitle" /></span>
+                    <span class="cert-titlebar-type"><span message key="ts-diabetes.typename"></span></span>
                   </h2>
                 </div>
-                <div class="span5 issue">
-                  <span><message key="view.label.issued" /></span> <span class="cert-titlebar-value">{{cert.signeringsdatum | date:'longDate'}}</span>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 issue">
+                  <span><message key="ts-diabetes.label.issued" /></span> <span class="cert-titlebar-value">{{cert.signeringsdatum | date:'longDate'}}</span>
                 </div>
-                <div class="span1 archive">
-                  <a href="#archiveModal" role="button" data-toggle="modal" onclick="return false"><img alt="Arkivera intyg" src="/img/archive-icon.gif" /></a>
+				<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 archive hidden-xs">
+                  <a role="button" data-toggle="modal" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
+                      <span class="glyphicon glyphicon-folder-close white"></span>
+					  <!-- <img alt="Arkivera intyg" src="/img/archive-icon.gif" /> -->
+                  </a>
                 </div>
               </div>
             </div>
             <div class="cert-header">
-              <div class="row-fluid">
-                <div class="span6">
-                  <span class="tag"><message key="view.label.patientname" /></span> <span id="patient-name">{{cert.patient.fullstandigtNamn}}</span>
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <span class="tag"><message key="ts-diabetes.label.patientname" /></span> <span id="patient-name">{{cert.patient.fullstandigtNamn}}</span>
                 </div>
-                <div class="span6">
-                  <span class="tag"><message key="view.label.unit" /></span> <span id="careunit">{{cert.skapadAv.vardenhet.enhetsnamn}}</span>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <span class="tag"><message key="ts-diabetes.label.civicnumber" /></span> <span id="patient-crn">{{cert.patient.personid}}</span>
                 </div>
-              </div>
-              <div class="row-fluid">
-                <div class="span6">
-                  <span class="tag"><message key="view.label.civicnumber" /></span> <span id="patient-crn">{{cert.patient.personid}}</span>
-                </div>
-                <div class="span6">
-                  <span class="tag"><message key="view.label.issuer" /></span> <span id="caregiver">{{cert.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</span>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-6 col-sm-offset-6 col-md-offset-6 col-lg-offset-6 margin-top-5px">
+                  <span class="tag"><message key="ts-diabetes.label.identitet" /></span> <span id="patient-crn">{{cert.vardkontakt.idkontroll}}</span>
                 </div>
               </div>
-             
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <span class="tag"><message key="ts-diabetes.label.unit" /></span> <span id="careunit">{{cert.skapadAv.vardenhet.enhetsnamn}}</span>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <span class="tag"><message key="ts-diabetes.label.issuer" /></span> <span id="caregiver">{{cert.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</span>
+                </div>
+              </div>
+              <div class="row">
+              	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <span class="tag"><message key="ts-diabetes.label.intygavser" /></span> 
+                  <label ng-repeat="typ in filtered.korkortstyp = (cert.intygAvser.korkortstyp | filter:{selected : true})" id="caregiver">
+                      <span message key="ts-diabetes.label.korkort.{{typ.type}}"></span><span ng-show="filtered.korkortstyp.length > 1">, </span>
+                  </label>
+                </div>
+                <div class="col-xs-6 hidden-sm hidden-md hidden-lg pull-right">
+                	<button class="btn btn-primary pull-right" ata-toggle="modal" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
+                		<span class="glyphicon glyphicon-folder-close white"></span>
+                	</button>
+                </div>
+              </div>
             </div>
+            
+            <div class="table-bottom"></div>
             <div class="cert-body">
-              
-				  <div class="body-row">
-	              	<h3>Information om den avbeställda resan</h3>
-	                <span class="title">Bokningsnummer</span> <span id="travel-booking-ref" class="text">{{cert.arrangemang.bokningsreferens}}</span><br/>
-	                <span class="title">Resmål</span> <span id="travel-destination" class="text">{{cert.arrangemang.plats}}</span><br/>
-	                <span class="title">Datum då resan bokades</span> <span id="travel-booking-date" class="text">{{cert.arrangemang.bokningsdatum | date:'longDate'}}</span><br/>
-	                <span class="title">Datum för avresa</span> <span id="travel-departure-date" class="text">{{cert.arrangemang.arrangemangsdatum}}</span><br/>
-	                <span class="title">Datum då resan avbeställdes</span> <span id="travel-cancel-date" class="text">{{cert.arrangemang.avbestallningsdatum | date:'longDate'}}</span>
-	              </div>
-	              
-	              <div class="body-row" ng-switch on="cert.rekommendation.rekommendationskod">
-					<h3>Läkares rekommendation</h3>
-	              	<span class="title">Rekommendation</span>
-	              	<span ng-switch-when="REK1" class="text">Jag avråder uttryckligen från resa, då patientens = resenärens tillstånd innebär, att sådan ej kan genomföras utan men.</span>
-	              	<span ng-switch-when="REK2" class="text">Jag avråder ej från resa. Patientens = resenärens tillstånd utgör inget hinder för resa.</span>
-	              	<span ng-switch-when="REK3" class="text">Jag avråder uttryckligen från resa. Komplikationer i graviditeten har uppkommit efter bokning av resan, vilka innebär hinder för resa.</span>
-	                <span ng-switch-when="REK4" class="text">Jag avråder ej från resa. Graviditeten utgör inget medicinskt hinder för resa.</span>
-	                <span ng-switch-when="REK5" class="text">Resenären, som är nära anhörig till patienten, bör ej genomföra resan. Detta emedan patientens tillstånd är allvats-diabetesgt.</span>
-	                <span ng-switch-when="REK6" class="text">Resenären, som är nära anhörig till patienten, bör ej genomföra resan. Detta emedan patientens tillstånd föranleder speciell omvårdnad genom resenärens försorg.</span>
-	                <span ng-switch-when="REK7" class="text">Jag avråder ej från resa. Patientens = anhörig till resenären, tillstånd utgör inget hinder för resenären att resa.</span>	                
-	              </div>
-	              
-	              <div class="body-row" ng-show="cert.undersokning.orsakforavbokning == 'RESENAR_GRAVID'">
-	              	<h3>Förlossningsdetaljer</h3>
-	              	<span class="title">Beräknat födelsedatum</span>
-	              	<span class="text">Barnet beräknas födas {{cert.undersokning.graviditet.beraknatForlossningsdatum}}</span>
-	              	
-	              </div>
-	              
-	              <div class="body-row">
-	              	<h3>Om den akutella sjukdomen/komplikationen</h3>
-			<div ng-show="cert.undersokning.forstaUndersokningsdatum">
-	                  <span class="title">Datum för första undersökning</span> <span id="examination-first-date" class="text">{{cert.undersokning.forstaUndersokningsdatum | date:'longDate'}}</span><br/></div>
-			<div ng-show="cert.undersoking.forstaUndersokningsplats">
-	                  <span class="title">Plats för första undersökning</span> <span id="examination-first-place" class="text">{{cert.undersokning.forstaUndersokningsplats}}</span>
-			</div><br/>             
-	                <span class="title">Datum för undersökning</span> <span id="examination-date" class="text">{{cert.undersokning.undersokningsdatum | date:'longDate'}}</span><br/>
-	                <span class="title">Plats för undersökning</span> <span id="examination-place" class="text">{{cert.undersokning.utforsVid.enhetsnamn}}</span>
-	              </div>
-	              
-	              <div class="body-row" ng-show="cert.rekommendation.sjukdomskannedom != 'SJK4'" ng-switch on="cert.rekommendation.sjukdomskannedom">
-	              	<h3>Sjukdomskännedom</h3>
-	              	<span class="title">Beskrivning</span>
-	                <span ng-switch-when="SJK1" class="text">Sjukdomen/komplikationen var okänd vid bokningstillfället.</span>
-	                <span ng-switch-when="SJK2" class="text">Patientens sjukdom/komplikation är kronisk, var känd vid inbokningstillfället och utgjorde då inget hinder för resan. Tillståndet har nu förvärrats på ett sätt som vid bokningstillfället ej var möjligt att förutse</span>
-	                <span ng-switch-when="SJK3" class="text">Patientens sjukdom/komplikation är kronisk, var känd vid inbokningstillfället och utgjorde då inget hinder för resan. Tillståndet har nu förvärrats på ett sätt som vid bokningstillfället var möjligt att förutse</span>
-	              </div>
-	              
-	              <div class="body-row" ng-show="cert.rekommendation.sjukdomskannedom == 'SJK4'">
-	              	<h3>Sjukdomskännedom</h3>
-	              	<span class="title">Beskrivning</span>
-	              	<span class="text">{{cert.rekommendation.beskrivning}}</span>
-	              </div> 
-	              
-	              <div class="body-row">
-	              	<h3>Utfärdare</h3>
-	              	<span class="title">Läkare</span> <span id="physician-name-id" class="text">{{cert.skapadAv.fullstandigtNamn}} ({{cert.skapadAv.personid}})</span><br/>
-	              	<span class="title">Vårdgivare</span> <span id="caregiver-name-id" class="text">{{cert.skapadAv.vardenhet.vardgivare.vardgivarnamn}} ({{cert.skapadAv.vardenhet.vardgivare.vardgivarid}})</span><br/>
-	                <span class="title">Vårdenhetens namn och id</span> <span id="careunit-name-id" class="text">{{cert.skapadAv.vardenhet.enhetsnamn}} ({{cert.skapadAv.vardenhet.enhetsid}})</span><br/>
-	                <span class="title">Postadress</span> <span id="careunit-postal_address" class="text">{{cert.skapadAv.vardenhet.postadress}}, {{cert.skapadAv.vardenhet.postnummer}} {{cert.skapadAv.vardenhet.postort}}</span>
-	              </div>
+                <div class="body-row">
+                    <h3 class="title">
+                        <span message key="ts-diabetes.label.allmant"></span>
+                            <span>
+                                <span></span>
+                            </span>
+                    </h3>
+                    <span class="text no-padding-bottom">
+                        <span message key="ts-diabetes.label.diabetes.diabetestyp"></span>
+                        <span class="ts-cert-answer" message key="ts-diabetes.label.diabetes.diabetestyp.{{cert.diabetes.diabetestyp}}"></span>
+                    </span>
+                    <span class="text no-padding-bottom">
+                        <span message key="ts-diabetes.label.diabetes.behandling"></span><br>
+                        <span message key="ts-diabetes.label.diabetes.behandling.endast-kost"></span>
+                        <span class="ts-cert-answer" message key="{{cert.diabetes.endastKost | BoolToTextFilter}}"></span>
+
+                        <span message key="ts-diabetes.label.diabetes.behandling.tabletter"></span>
+                        <span class="ts-cert-answer" message key="{{cert.diabetes.tabletter | BoolToTextFilter}}"></span>
+
+                        <span message key="ts-diabetes.label.diabetes.behandling.insulin"></span>
+                        <span class="ts-cert-answer" message key="{{cert.diabetes.insulin | BoolToTextFilter}}"></span>
+                       
+                        <span ng-show="{{cert.diabetes.insulin}}">
+                            <span message key="ts-diabetes.label.diabetes.behandling.insulin-period"></span>
+                            <span class="ts-cert-answer" message key="{{cert.diabetes.insulinBehandlingsperiod}}"></span>
+                        </span>
+                    </span>
+                    <span class="text">
+                        <span message key="ts-diabetes.label.diabetes.behandling.annan"></span>
+                        <span class="ts-cert-answer" message key="{{cert.diabetes.annanBehandling | BoolToTextFilter}}"></span>
+                        <span ng-show="{{cert.diabetes.annanBehandling}}">
+                            <span message key="ts-diabetes.label.diabetes.behandling.annan.period"></span>
+                            <span class="ts-cert-answer" message key="{{cert.diabetes.annanBehandlingBeskrivning}}"></span>
+                        </span>
+                    </span>
+                    
+                </div>
+                <div class="body-row">
+                    <h3 class="title">
+                        <span message key="ts-diabetes.label.hypoglykemier"></span>
+                            <span>
+                                <span></span>
+                            </span>
+                    </h3>
+                    <span class="text no-padding-bottom">
+                        <span message key="ts-diabetes.label.hypoglykemier.har-patient-kannedom"></span>
+                        <span class="ts-cert-answer" message key="{{cert.hypoglykemier.kunskapOmAtgarder | BoolToTextFilter}}"></span>
+                    </span>
+
+                    <span class="text no-padding-bottom">
+                        <span message key="ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion"></span>
+                        <span class="ts-cert-answer" message key="{{cert.hypoglykemier.teckenNedsattHjarnfunktion | BoolToTextFilter}}"></span>
+                    </span>
+
+                    <span class="text no-padding-bottom">
+                        <span message key="ts-diabetes.label.hypoglykemier.saknar-formaga-kanna-varningstecken"></span>
+                        <span class="ts-cert-answer" message key="{{cert.hypoglykemier.saknarFormagaKannaVarningstecken | BoolToTextFilter}}"></span>
+                    </span>
+
+                    <span class="text no-padding-bottom">
+                        <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst"></span>
+                        <span class="ts-cert-answer" message key="{{cert.hypoglykemier.allvarligForekomst | BoolToTextFilter}}"></span>
+
+                        <span ng-show="{{cert.hypoglykemier.allvarligForekomstBeskrivning}}">
+                            <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst.beskrivning"></span>
+                            <span class="ts-cert-answer" message key="{{cert.hypoglykemier.allvarligForekomstBeskrivning | BoolToTextFilter}}"></span><br>
+                        </span>                        
+                    </span>
+
+                    <span class="text">
+                        <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken"></span>
+                        <span class="ts-cert-answer" message key="{{cert.hypoglykemier.allvarligForekomstTrafiken | BoolToTextFilter}}"></span><br>
+                        
+                        <span ng-show="{{cert.hypoglykemier.allvarligForekomstTrafikBeskrivning}}">
+                            <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning"></span>
+                            <span class="ts-cert-answer" message key="{{cert.hypoglykemier.allvarligForekomstTrafikenBeskrivning | BoolToTextFilter}}"></span><br>
+                        </span>
+                    </span>
+
+                </div>
+
+                <div class="body-row">
+                    <h3 class="title">
+                        <span message key="ts-diabetes.label.syn"></span>
+                            <span>
+                                <span></span>
+                            </span>
+                    </h3>
+                    <span class="text no-padding-bottom">
+                        <span message key="ts-diabetes.label.syn.separat-ogonlakarintyg"></span>
+                        <span class="ts-cert-answer" message key="{{cert.syn.separatOgonlakarintyg | BoolToTextFilter}}"></span>
+                    </span>
+                    <span class="text no-padding-bottom">
+                        <span message key="ts-diabetes.label.syn.synfaltsprovning-utan-anmarkning"></span>
+                        <span class="ts-cert-answer" message key="{{cert.syn.synfaltsprovningUtanAnmarkning | BoolToTextFilter}}"></span>
+                    </span>
+            		<span class="text no-padding-bottom">
+                        <span message key="ts-diabetes.label.syn.synskarpa"></span>
+						<table class="table table-condensed ts-table">
+							<tr>
+							    <th></th>
+							    <th>Utan korrektion</th>
+							    <th>Med korrektion</th>
+							</tr>
+						    <tr>
+						        <td>Höger öga</td>
+						        <td><span class="text">{{cert.syn.hoger.utanKorrektion}}</span></td>
+						        <td><span class="text">{{cert.syn.hoger.medKorrektion}}</span></td>
+						    </tr>
+						    <tr>
+						        <td>Vänster öga</td>
+       					        <td><span class="text">{{cert.syn.vanster.utanKorrektion}}</span></td>
+						        <td><span class="text">{{cert.syn.vanster.medKorrektion}}</span></td>
+						    </tr>
+						    <tr>
+						        <td>Binokulärt</td>
+      					        <td><span class="text">{{cert.syn.binokulart.utanKorrektion}}</span></td>
+						        <td><span class="text">{{cert.syn.binokulart.medKorrektion}}</span></td>
+						        <td></td>
+						    </tr>
+						</table>
+					</span>                    
+
+                    <span class="text">
+                        <span message key="ts-diabetes.label.syn.diplopi"></span>
+                        <span class="ts-cert-answer" message key="{{cert.syn.diplopi | BoolToTextFilter}}"></span>
+                    </span>
+                </div>
+
+            	<div class="body-row">
+            		<h3 class="title">
+            			<span message key="ts-diabetes.label.bedomning">{{ts-diabetes.label.bedomning}}</span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>
+      				<div ng-show="!cert.bedomning.kanInteTaStallning">
+            				    <span class="text no-padding-bottom" message key="ts-diabetes.label.bedomning-info-alt-1"></span>
+            				
+            				    <span class="text no-padding-bottom">
+            				        <label ng-repeat="typ in filtered.korkortstyp = (cert.bedomning.korkortstyp | filter:{selected : true})" id="caregiver">
+            				            <span message key="ts-diabetes.label.korkort.{{typ.type}}"></span>
+            				            <span ng-show="filtered.korkortstyp.length > 1">, </span>
+            				        </label>
+            				    </span>
+            		</div>
+            				
+            		<div ng-show="cert.bedomning.kanInteTaStallning">
+            		    <span class="text">{{ts-bas.label.bedomning-info-alt-2}}</span>
+            		</div>
+            				
+           			<span class="text no-padding-bottom">
+           			    <span class="ts-cert-answer" message key="ts-diabetes.label.bedomning-info-undersokas-med-specialkompetens"></span><br>
+           			    <span ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">{{cert.bedomning.lakareSpecialKompetens}}</span>
+           			    <span ng-show="!cert.bedomning.lakareSpecialKompetens" message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
+     			    </span>
+
+                    <span class="text" >
+                        <span message key="ts-diabetes.label.bedomning.lamplighet-inneha"></span><br>
+                        <span class="ts-cert-answer" message key="{{cert.bedomning.lamplighetInnehaBehorighet | BoolToTextFilter}}"></span>
+                    </span>
+            	</div>
+            	
+                <div class="body-row" ng-show="{{cert.kommentar.length > 0}}">
+            		<h3 class="title">
+                        <span message key="ts-diabetes.label.ovrigkommentar"></span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>                
+                    <span class="text">
+                        <span>{{cert.kommentar}}</span>                       
+                    </span>
+                </div>
 
             </div>
           </div>
