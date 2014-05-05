@@ -1,7 +1,7 @@
 <div class="row-fluid">
 
   <div id="backnav" class="row-fluid">
-    <a class="backlink" href="/web/start"> <span message key="button.goback"></span>
+    <a class="backlink" href="/web/start"> <span message key="fk7263.button.goback"></span>
     </a>
   </div>
 
@@ -60,7 +60,7 @@
 	              <span message key="fk7263.button.send.certificate"></span>
 	            </button>
 	            <button id="downloadprint" type="submit" ng-click="document.pdfForm.submit()" class="btn btn-inverse">
-	              <span message key="button.downloadprint"></span>
+	              <span message key="fk7263.button.downloadprint"></span>
 	            </button>
 	          </p>
 	        </form>
@@ -113,22 +113,22 @@
                   </h3>
 
                   <div ng-show="nedsattMed25 != null">
-                    <span message key="nedsattningsgrad.nedsatt_med_1_4"></span> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed25.start |
+                    <span message key="fk7263.nedsattningsgrad.nedsatt_med_1_4"></span> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed25.start |
                       date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed25.end | date:'longDate'}} </span>
                   </div>
 
                   <div ng-show="cert.nedsattMed50 != null">
-                    <span message key="nedsattningsgrad.nedsatt_med_1_2"></span><br> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed50.start
+                    <span message key="fk7263.nedsattningsgrad.nedsatt_med_1_2"></span><br> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed50.start
                       | date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed50.end | date:'longDate'}} </span>
                   </div>
 
                   <div ng-show="cert.nedsattMed75 != null">
-                    <span message key="nedsattningsgrad.nedsatt_med_3_4"></span> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed75.start |
+                    <span message key="fk7263.nedsattningsgrad.nedsatt_med_3_4"></span> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed75.start |
                       date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed75.end | date:'longDate'}} </span>
                   </div>
 
                   <div ng-show="cert.nedsattMed100 != null">
-                    <span message key="nedsattningsgrad.helt_nedsatt"></span><br> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed100.start |
+                    <span message key="fk7263.nedsattningsgrad.helt_nedsatt"></span><br> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed100.start |
                       date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed100.end | date:'longDate'}} </span>
                   </div>
 
@@ -178,13 +178,13 @@
 
               <div mi-field field-label="fk7263.label.basedon" filled="cert.undersokningAvPatienten!=null || telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null">
                 <ul>
-                  <li ng-show="cert.undersokningAvPatienten!=null"><span message key="vardkontakt.undersokning"></span>{{cert.undersokningAvPatienten | date:'longDate' }}</li>
-                  <li ng-show="cert.telefonkontaktMedPatienten!=null"><span message key="vardkontakt.telefonkontakt"></span>{{cert.telefonkontaktMedPatienten | date:'longDate' }}</li>
-                  <li ng-show="cert.journaluppgifter!=null"><span message key="referens.journal"></span>{{cert.journaluppgifter | date:'longDate' }}</li>
+                  <li ng-show="cert.undersokningAvPatienten!=null"><span message key="fk7263.vardkontakt.undersokning"></span>{{cert.undersokningAvPatienten | date:'longDate' }}</li>
+                  <li ng-show="cert.telefonkontaktMedPatienten!=null"><span message key="fk7263.vardkontakt.telefonkontakt"></span>{{cert.telefonkontaktMedPatienten | date:'longDate' }}</li>
+                  <li ng-show="cert.journaluppgifter!=null"><span message key="fk7263.referens.journal"></span>{{cert.journaluppgifter | date:'longDate' }}</li>
 
 
                   <li ng-show="cert.annanReferens!=null">
-                    <!-- Annat --> <span message key="referens.annat"> </span>{{cert.annanReferens | date:'longDate' }}
+                    <!-- Annat --> <span message key="fk7263.referens.annat"> </span>{{cert.annanReferens | date:'longDate' }}
                     <div>
                       <span class="tag" message key="fk7263.label.reference.to.field13"></span>
                     </div>
