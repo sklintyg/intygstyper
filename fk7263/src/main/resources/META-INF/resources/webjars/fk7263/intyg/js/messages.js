@@ -4,7 +4,7 @@ define([], function() {
     return {
         'sv': {
 
-            'recipient.label.pagetitle': 'Skicka Intyget steg 1/3 - Välj mottagare',
+            'recipient.label.pagetitle': 'Skicka intyg - steg 1 av 3',
             'recipient.label.selectrecipents': 'Här ser du de mottagare som du kan skicka intyget till elektroniskt. Välj önskad mottagare och klicka sedan på knappen Nästa för att gå vidare till nästa steg.',
             'recipient.label.recipientlisttitle': 'Myndigheter och försäkringsbolag',
             'recipient.label.recipientlisttitle.others': 'Myndigheter och försäkringsbolag',
@@ -13,14 +13,14 @@ define([], function() {
             'recipient.label.missing.recipients-2': ' och skicka det per post istället.',
             'recipient.label.downloadlink': 'Ladda ner / Skriv ut',
 
-            'confirm.label.pagetitle': 'Skicka Intyget steg 2/3 - Bekräfta och skicka intyg',
+            'confirm.label.pagetitle': 'Skicka intyg - steg 2 av 3',
             'confirm.label.certrowtitle': 'Intyg',
             'confirm.label.recipienttitle': 'Mottagare',
-            'confirm.label.summarypagedesc': '<b>Du har valt att skicka detta intyg:</b><br>',
+            'confirm.label.summarypagedesc': '<p><b>Du har valt att skicka det här intyget.</b></p>',
             'confirm.label.verifytext': 'Kontrollera att uppgifterna ovan stämmer och tryck "Skicka"',
             'confirm.message.alreadysent': '<strong>Observera!</strong> Du har redan skickat detta intyg till denna mottagare.',
 
-            'sent.label.pagetitle': 'Skicka Intyget steg 3/3 - Intyget har skickats',
+            'sent.label.pagetitle': 'Skicka intyg - steg 3 av 3',
             'sent.label.pageinformation': 'Intyget har nu skickats och nedan presenteras försändelsen.',
             'sent.label.result': 'Mottagare av intyget: <br>',
             'sent.label.infoaboutrecipients': 'Observera att olika mottagare har olika tider när dom kan se det inskickade intyget.',
@@ -31,6 +31,8 @@ define([], function() {
             'history.label.pagetitle': 'Intygets alla händelser',
             'fk7263.status.sent': 'Skickat till',
             'fk7263.target.fk': 'Försäkringskassan',
+            'fk7263.target.afa' : 'AFA Försäkring',
+            'fk7263.target.skandia' : 'Skandia',
 
             'fk7263.inbox.complementaryinfo': 'Intygsperiod',
 
@@ -39,7 +41,7 @@ define([], function() {
             'fk7263.label.blank': '- ej ifyllt',
             'fk7263.label.pagetitle': 'Granska och skicka intyg',
             'fk7263.label.pageingress' : 'Här ser du den fullständiga informationen i ditt intyg. På denna sida kan du hantera ditt intyg med hjälp av olika funktioner.<br>',
-            'fk7263.label.pagedescription.general': '<br>Här kan du läsa ditt intyg och skicka det elektroniskt till olika mottagare. <br>För att skicka intyget till Försäkringskassan eller en annan mottagare så klickar du på Skicka intyg. <br>Vill du spara eller skriva ut ditt intyg så väljer du Ladda ner/Skriv ut. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut ',
+            'fk7263.label.pagedescription.general': 'Här kan du läsa ditt intyg och skicka det elektroniskt till olika mottagare. <br>För att skicka intyget till Försäkringskassan eller en annan mottagare så klickar du på Skicka intyg. <br>Vill du spara eller skriva ut ditt intyg så väljer du Ladda ner/Skriv ut. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut ',
             'fk7263.label.status.false': '<a>Dölj information</a>',
             'fk7263.label.status.true': '<a>Visa information</a>',
             'fk7263.label.pagedescription.error.in.certificate.header': '<h3>Fel i intyget?</h3>',
