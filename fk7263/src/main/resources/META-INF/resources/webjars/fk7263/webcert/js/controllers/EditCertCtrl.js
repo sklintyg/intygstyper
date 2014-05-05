@@ -352,9 +352,13 @@ define([ 'angular' ], function(angular) {
                             $scope.dialog.acceptprogressdone = true;
                             statService.refreshStat(); // Update statistics to reflect change
                             $location.path('/unsigned');
-                        }, function() {
+                        }, function(error) {
                             $scope.dialog.acceptprogressdone = true;
-                            // TODO: Show error message.
+                            if (error.errorCode === 'DATA_NOT_FOUND') { // Godtagbart, intyget var redan borta.
+                                statService.refreshStat(); // Update statistics to reflect change
+                                $location.path("/unsigned");
+                            }
+                            // TODO: Show other error message.
                         });
                     },
                     button1text: 'common.delete',
