@@ -75,13 +75,12 @@ define(
                     "ts-diabetes.label.hypoglykemier.har-patient-kannedom": "a) Har patienten kunskap om lämpliga åtgärder vid hypoglykemi?",
                     "ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion": "b) Förekommer hypoglykemier med tecken på nedsatt hjärnfunktion (neuroglukopena symptom) som bedöms kunna innebära en trafiksäkerhetsrisk?",
                     "ts-diabetes.label.hypoglykemier.saknar-formaga-kanna-varningstecken": "c) Saknar patienten förmåga att känna varningstecken på hypoglykemi",
-                    
+
                     "ts-diabetes.label.hypoglykemier.allvarlig-forekomst": "d) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under det senaste året?",
                     "ts-diabetes.label.hypoglykemier.allvarlig-forekomst.beskrivning": "Hur många sådana episoder? ",
-                    
+
                     "ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken": "e) Har patienten haft allvarlig hypoglykemi i trafiken under det senaste året?",
                     "ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning": "Hur många sådana episoder och när inträffade de? ",
-
 
                     "ts-diabetes.label.true": "JA",
                     "ts-diabetes.label.false": "NEJ",
@@ -94,10 +93,9 @@ define(
 
                     "ts-diabetes.typename": " - Diabetes",
                     "ts-diabetes.label.pagetitle": "Granska och skicka intyg",
-                    "ts-diabetes.button.send": "Skicka",
                     "ts-diabetes.common.cancel": "Avbryt",
 
-                    "ts-button.detail.send": "Skicka",
+                    "ts-diabetes.detail.send": "Skicka",
                     "ts-diabetes.label.pagedescription": "<p>Här kan du läsa ditt intyg och skicka det elektroniskt till olika Transportstyrelsen.</p> <p>För att skicka intyget till Transportstyrelsen så klickar du på Skicka intyg.</p> <p>Vill du spara eller skriva ut ditt intyg så väljer du Ladda ner / Skriv ut. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut</p>",
                     "ts-diabetes.label.cert.inaccuracies": "Om du upptäcker några felaktigheter så hör av dig enheten som utfärdade ditt intyg.",
                     "ts-diabetes.label.patientname": "Patientens namn:",
@@ -107,18 +105,23 @@ define(
                     "ts-diabetes.label.period": "Period:",
                     "ts-diabetes.label.errorpagetitle": "Ett problem har uppstått",
                     "ts-diabetes.message.certifits-diabetesloading": "Hämtar intyg...",
-                    "button.sendtofk": "Skicka",
-                    "button.downloadprint": "Ladda ner / Skriv ut",
-                    "button.send": "Skicka",
-                    "button.cancel": "Avbryt",
-                    "button.goback": "Tillbaka",
-                    "error.generic": "Kunde inte visa intyget",
+                    "ts-diabetes.button.downloadprint": "Ladda ner / Skriv ut",
+                    "ts-diabetes.button.send": "Skicka",
+                    "ts-diabetes.button.cancel": "Avbryt",
+                    "ts-diabetes.button.goback": "Tillbaka",
+                    "ts-diabetes.sent.label.result": "Mottagare av intyget: ",
+                    "ts-diabetes.sent.label.pagetitle": "Skicka intyg - steg 3 av 3",
+                    "ts-diabetes.sent.button.backtocertificate": "Tillbaka till intyget",
+                    "ts-diabetes.error.generic": "Kunde inte visa intyget",
                     "ts-diabetes.label.latestevent": "Senaste händelsen",
                     "ts-diabetes.label.latestevent.noevents": "Inga händelser",
                     "ts-diabetes.label.latestevent.showall": "Visa alla händelser",
-                    "history.label.pagetitle": "Intygets alla händelser",
+                    "ts-diabetes.history.label.pagetitle": "Intygets alla händelser",
                     "ts-diabetes.status.sent": "Skickat till",
                     "ts-diabetes.target.mi": "Försäkringsbolaget",
+                    "ts-diabetes.label.pagetitle.step1": "Skicka intyg - steg 1 av 2",
+                    "ts-diabetes.label.pagetitle.step2": "Skicka intyg - steg 2 av 2",
+                    'ts-diabetes.sent.label.pageinformation': 'Intyget har nu skickats och nedan presenteras försändelsen.',
 
                     "ts-diabetes.label.confirmedby": "Ovanstående uppgifter och bedömningar har bekräftas",
                     "ts-diabetes.label.date": "Datum",
