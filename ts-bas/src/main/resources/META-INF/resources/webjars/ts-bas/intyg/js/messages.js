@@ -121,8 +121,8 @@ define([], function() {
             'ts-bas.label.false': 'NEJ',
 
             'ts-bas.label.certtitle': 'Transportstyrelsens läkarintyg',
-            'ts-bas.label.pagetitle.step1': 'Skicka intyg steg 1/2 - Granska och skicka',
-            'ts-bas.label.pagetitle.step2': 'Skicka intyg steg 2/2 - Summering',
+            'ts-bas.label.pagetitle.step1': 'Skicka intyg - steg 1 av 2',
+            'ts-bas.label.pagetitle.step2': 'Skicka intyg - steg 2 av 2',
             'ts-bas.confirm.label.summarypagedesc': 'Du har valt att skicka följande intyg: ',
             'ts-bas.confirm.label.recipienttitle': 'Mottagare: ',
             'ts-bas.confirm.label.verifytext': 'Kontrollera att uppgifterna ovan stämmer och tryck på Skicka.',
@@ -133,7 +133,7 @@ define([], function() {
             'ts-bas.button.send': 'Skicka',
             'ts-bas.common.cancel': 'Avbryt',
 
-            'ts-button.detail.send': 'Skicka intyg',
+            'ts-button.detail.send': 'Skicka',
             'ts-bas.label.pagedescription': '<p>Här kan du läsa ditt intyg och skicka det elektroniskt till olika Transportstyrelsen.</p> <p>För att skicka intyget till Transportstyrelsen så klickar du på Skicka intyg.</p> <p>Vill du spara eller skriva ut ditt intyg så väljer du Ladda ner / Skriv ut. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut</p>',
             'ts-bas.label.cert.inaccuracies': 'Om du upptäcker några felaktigheter så hör av dig enheten som utfärdade ditt intyg.',
             'ts-bas.label.patientname': 'Patientens namn:',

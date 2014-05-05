@@ -87,7 +87,7 @@ define(
                     "ts-diabetes.label.false": "NEJ",
 
                     "ts-diabetes.label.certtitle": "Transportstyrelsens läkarintyg",
-                    "ts-diabetes.confirm.label.pagetitle": "Skicka intyg steg 2/3",
+                    "ts-diabetes.confirm.label.pagetitle": "Skicka intyg - steg 2 av 3",
                     "ts-diabetes.confirm.label.summarypagedesc": "Du har valt att skicka följande intyg: ",
                     "ts-diabetes.confirm.label.recipienttitle": "Mottagare: ",
                     "ts-diabetes.confirm.label.verifytext": "Kontrollera att uppgifterna ovan stämmer och tryck på 'Skicka'.",
@@ -97,7 +97,7 @@ define(
                     "ts-diabetes.button.send": "Skicka",
                     "ts-diabetes.common.cancel": "Avbryt",
 
-                    "ts-button.detail.send": "Skicka intyg",
+                    "ts-button.detail.send": "Skicka",
                     "ts-diabetes.label.pagedescription": "<p>Här kan du läsa ditt intyg och skicka det elektroniskt till olika Transportstyrelsen.</p> <p>För att skicka intyget till Transportstyrelsen så klickar du på Skicka intyg.</p> <p>Vill du spara eller skriva ut ditt intyg så väljer du Ladda ner / Skriv ut. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut</p>",
                     "ts-diabetes.label.cert.inaccuracies": "Om du upptäcker några felaktigheter så hör av dig enheten som utfärdade ditt intyg.",
                     "ts-diabetes.label.patientname": "Patientens namn:",
