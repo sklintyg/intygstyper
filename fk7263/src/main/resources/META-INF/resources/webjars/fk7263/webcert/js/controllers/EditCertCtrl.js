@@ -344,6 +344,7 @@ define([ 'angular' ], function(angular) {
                     dialogId: 'confirm-draft-delete',
                     titleId: 'label.confirmaddress',
                     bodyText: bodyText,
+                    button1id: 'confirm-draft-delete-button',
 
                     button1click: function() {
                         $log.debug('delete draft ');
