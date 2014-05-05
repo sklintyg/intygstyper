@@ -23,10 +23,10 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-  <bean id="objectMapper"
+  <bean id="ts-bas-objectMapper"
     class="se.inera.certificate.integration.json.CustomObjectMapper" />
 
-  <bean id="jaxbContext" class="javax.xml.bind.JAXBContext" factory-method="newInstance">
+  <bean id="ts-bas-jaxbContext" class="javax.xml.bind.JAXBContext" factory-method="newInstance">
     <constructor-arg type="java.lang.String" value="se.inera.certificate.ts_bas.iso.v21090.dt.v1:se.inera.certificate.ts_bas.model.v1" />
   </bean>
 

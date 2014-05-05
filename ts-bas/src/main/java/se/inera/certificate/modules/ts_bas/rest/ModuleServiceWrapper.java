@@ -13,6 +13,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.util.Strings;
@@ -44,9 +45,11 @@ public class ModuleServiceWrapper implements ModuleApi {
     private ModuleService moduleService;
 
     @Autowired
+    @Qualifier("ts-bas-objectMapper")
     private ObjectMapper objectMapper;
 
     @Autowired
+    @Qualifier("ts-bas-jaxbContext")
     private JAXBContext jaxbContext;
 
     @Override
