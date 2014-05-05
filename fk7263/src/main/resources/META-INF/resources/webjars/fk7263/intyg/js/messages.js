@@ -35,10 +35,11 @@ define([], function() {
             'fk7263.inbox.complementaryinfo': 'Intygsperiod',
 
             'fk7263.button.sendtofk': 'Skicka till Försäkringskassan',
-            'fk7263.button.send.certificate': 'Skicka intyget',
+            'fk7263.button.send.certificate': 'Skicka',
             'fk7263.label.blank': '- ej ifyllt',
             'fk7263.label.pagetitle': 'Granska och skicka intyg',
-            'fk7263.label.pagedescription.general': 'Här kan du läsa ditt intyg och skicka det elektroniskt till olika mottagare. <br>För att skicka intyget till Försäkringskassan eller en annan mottagare så klickar du på Skicka intyg. <br>Vill du spara eller skriva ut ditt intyg så väljer du Ladda ner/Skriv ut. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut ',
+            'fk7263.label.pageingress' : 'Här ser du den fullständiga informationen i ditt intyg. På denna sida kan du hantera ditt intyg med hjälp av olika funktioner.<br>',
+            'fk7263.label.pagedescription.general': '<br>Här kan du läsa ditt intyg och skicka det elektroniskt till olika mottagare. <br>För att skicka intyget till Försäkringskassan eller en annan mottagare så klickar du på Skicka intyg. <br>Vill du spara eller skriva ut ditt intyg så väljer du Ladda ner/Skriv ut. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut ',
             'fk7263.label.status.false': '<a>Dölj information</a>',
             'fk7263.label.status.true': '<a>Visa information</a>',
             'fk7263.label.pagedescription.error.in.certificate.header': '<h3>Fel i intyget?</h3>',
