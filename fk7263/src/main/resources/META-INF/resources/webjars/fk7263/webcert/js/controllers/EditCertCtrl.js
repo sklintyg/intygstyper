@@ -339,8 +339,15 @@ define([ 'angular' ], function(angular) {
              * Action to discard the certificate draft and return to WebCert again.
              */
             $scope.discard = function() {
-                var bodyText = 'Är du säker på att du vill radera utkastet? Intyget tas då bort och finns inte längre tillgängligt i Webcert.';
-                wcDialogService.showDialog($scope, {
+                var bodyText = 'Är du säker på att du vill radera utkastet? Intyget kommer tas bort och kan inte längre återskapas i Webcert.';
+                $scope.dialog = {
+                    acceptprogressdone: false,
+                    errormessageid: 'Error',
+                    showerror: false
+                };
+
+                var draftDeleteDialog = {};
+                draftDeleteDialog = wcDialogService.showDialog($scope, {
                     dialogId: 'confirm-draft-delete',
                     titleId: 'label.confirmaddress',
                     bodyText: bodyText,
@@ -353,17 +360,23 @@ define([ 'angular' ], function(angular) {
                             $scope.dialog.acceptprogressdone = true;
                             statService.refreshStat(); // Update statistics to reflect change
                             $location.path('/unsigned');
+                            draftDeleteDialog.close();
                         }, function(error) {
                             $scope.dialog.acceptprogressdone = true;
-                            if (error.errorCode === 'DATA_NOT_FOUND') { // Godtagbart, intyget var redan borta.
+                            $scope.dialog.showerror = true;
+							if (error.errorCode === 'DATA_NOT_FOUND') { // Godtagbart, intyget var redan borta.
                                 statService.refreshStat(); // Update statistics to reflect change
                                 $location.path("/unsigned");
+                            } else if (error === '') {
+                                $scope.dialog.errormessageid = 'common.error.cantconnect';
+                            } else {
+                                $scope.dialog.errormessageid = ('error.message.' + error.errorCode).toLowerCase();
                             }
-                            // TODO: Show other error message.
                         });
                     },
                     button1text: 'common.delete',
-                    button2text: 'common.cancel'
+                    button2text: 'common.cancel',
+                    autoClose: false
                 });
             };
         }

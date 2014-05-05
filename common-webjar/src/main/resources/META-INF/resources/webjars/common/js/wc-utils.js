@@ -151,12 +151,16 @@ define([ 'angular' ], function(angular) {
                 // Apply default dialog behaviour values
                 scope.dialog = {
                     acceptprogressdone: true,
-                    focus: false
+                    focus: false,
+                    errormessageid: 'common.error.cantconnect',
+                    showerror: false
                 };
 
+                if (options.dialogId === undefined) {
+                    throw 'dialogId must be specified';
+                }
+
                 // setup options defaults if parameters aren't included
-                options.dialogId =
-                    (options.dialogId === undefined) ? 'id' + Math.floor(Math.random() * 11) : options.dialogId;
                 options.bodyText = (options.bodyText === undefined) ? '' : options.bodyText;
                 options.button1text = (options.button1text === undefined) ? 'common.ok' : options.button1text;
                 options.button2text = (options.button2text === undefined) ? 'common.cancel' : options.button2text;
@@ -164,11 +168,11 @@ define([ 'angular' ], function(angular) {
                 options.button3visible = options.button3visible === undefined ? options.button3text !== undefined :
                     options.button3visible;
                 options.button1id =
-                    (options.button1id === undefined) ? 'button1' + Math.floor(Math.random() * 11) : options.button1id;
+                    (options.button1id === undefined) ? 'button1' + options.dialogId : options.button1id;
                 options.button2id =
-                    (options.button2id === undefined) ? 'button2' + Math.floor(Math.random() * 11) : options.button2id;
+                    (options.button2id === undefined) ? 'button2' + options.dialogId : options.button2id;
                 options.button3id =
-                    (options.button3id === undefined) ? 'button3' + Math.floor(Math.random() * 11) : options.button3id;
+                    (options.button3id === undefined) ? 'button3' + options.dialogId : options.button3id;
                 options.autoClose = (options.autoClose === undefined) ? true : options.autoClose;
 
                 // Create controller to setup dialog

@@ -53,8 +53,10 @@ define([], function() {
             'qa.measure.handled': 'Ingen',
 
             // Cert module messages. Used by several cert modules.
-            'modules.label.field': 'Fält'
+            'modules.label.field': 'Fält',
 
+            // Common errors
+            'common.error.cantconnect': 'Kunde inte kontakta servern',
         },
         'en': {
             'common.ok': 'OK',
