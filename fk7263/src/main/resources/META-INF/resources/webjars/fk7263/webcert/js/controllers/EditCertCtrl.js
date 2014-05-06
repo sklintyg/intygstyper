@@ -363,14 +363,16 @@ define([ 'angular' ], function(angular) {
                             draftDeleteDialog.close();
                         }, function(error) {
                             $scope.dialog.acceptprogressdone = true;
-                            $scope.dialog.showerror = true;
                             if (error.errorCode === 'DATA_NOT_FOUND') { // Godtagbart, intyget var redan borta.
                                 statService.refreshStat(); // Update statistics to reflect change
                                 $location.path("/unsigned");
-                            } else if (error === '') {
-                                $scope.dialog.errormessageid = 'common.error.cantconnect';
                             } else {
-                                $scope.dialog.errormessageid = ('error.message.' + error.errorCode).toLowerCase();
+                                $scope.dialog.showerror = true;
+                                if (error === '') {
+                                    $scope.dialog.errormessageid = 'common.error.cantconnect';
+                                } else {
+                                    $scope.dialog.errormessageid = ('error.message.' + error.errorCode).toLowerCase();
+                                }
                             }
                         });
                     },
