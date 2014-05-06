@@ -130,9 +130,11 @@
               <div class="row">
               	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                   <span class="tag"><message key="ts-diabetes.label.intygavser" /></span> 
-                  <label ng-repeat="typ in filtered.korkortstyp = (cert.intygAvser.korkortstyp | filter:{selected : true})" id="caregiver">
-                      <span message key="ts-diabetes.label.korkort.{{typ.type}}"></span><span ng-show="filtered.korkortstyp.length > 1">, </span>
-                  </label>
+        
+                  <span class="text no-padding-bottom">
+                      <span class="ts-cert-answer">{{intygAvser}}</span>
+                  </span>
+
                 </div>
                 <div class="col-xs-6 hidden-sm hidden-md hidden-lg pull-right">
                 	<button class="btn btn-primary pull-right" ata-toggle="modal" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
@@ -166,17 +168,19 @@
                         <span message key="ts-diabetes.label.diabetes.behandling.insulin"></span>
                         <span class="ts-cert-answer" message key="{{cert.diabetes.insulin | BoolToTextFilter}}"></span>
                        
-                        <span ng-show="{{cert.diabetes.insulin}}">
+                        <span ng-show="cert.diabetes.insulinBehandlingsperiod.length > 0">
+                        <br>
                             <span message key="ts-diabetes.label.diabetes.behandling.insulin-period"></span>
-                            <span class="ts-cert-answer" message key="{{cert.diabetes.insulinBehandlingsperiod}}"></span>
+                            <span class="ts-cert-answer">{{cert.diabetes.insulinBehandlingsperiod}}</span>
                         </span>
                     </span>
                     <span class="text">
                         <span message key="ts-diabetes.label.diabetes.behandling.annan"></span>
                         <span class="ts-cert-answer" message key="{{cert.diabetes.annanBehandling | BoolToTextFilter}}"></span>
-                        <span ng-show="{{cert.diabetes.annanBehandling}}">
+                        <span ng-show="cert.diabetes.annanBehandling">
+                        <br>
                             <span message key="ts-diabetes.label.diabetes.behandling.annan.period"></span>
-                            <span class="ts-cert-answer" message key="{{cert.diabetes.annanBehandlingBeskrivning}}"></span>
+                            <span class="ts-cert-answer">{{cert.diabetes.annanBehandlingBeskrivning}}</span>
                         </span>
                     </span>
                     
@@ -207,19 +211,20 @@
                         <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst"></span>
                         <span class="ts-cert-answer" message key="{{cert.hypoglykemier.allvarligForekomst | BoolToTextFilter}}"></span>
 
-                        <span ng-show="{{cert.hypoglykemier.allvarligForekomstBeskrivning}}">
+                        <span ng-show="cert.hypoglykemier.allvarligForekomstBeskrivning">
+                            <br>
                             <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst.beskrivning"></span>
-                            <span class="ts-cert-answer" message key="{{cert.hypoglykemier.allvarligForekomstBeskrivning | BoolToTextFilter}}"></span><br>
+                            <span class="ts-cert-answer">{{cert.hypoglykemier.allvarligForekomstBeskrivning}}</span><br>
                         </span>                        
                     </span>
 
                     <span class="text">
                         <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken"></span>
-                        <span class="ts-cert-answer" message key="{{cert.hypoglykemier.allvarligForekomstTrafiken | BoolToTextFilter}}"></span><br>
-                        
-                        <span ng-show="{{cert.hypoglykemier.allvarligForekomstTrafikBeskrivning}}">
+                        <span class="ts-cert-answer" message key="{{cert.hypoglykemier.allvarligForekomstTrafiken | BoolToTextFilter}}"></span>                        
+                        <span ng-show="cert.hypoglykemier.allvarligForekomstTrafikBeskrivning.length > 0">
+                            <br>
                             <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning"></span>
-                            <span class="ts-cert-answer" message key="{{cert.hypoglykemier.allvarligForekomstTrafikenBeskrivning | BoolToTextFilter}}"></span><br>
+                            <span class="ts-cert-answer">{{cert.hypoglykemier.allvarligForekomstTrafikBeskrivning}}</span>
                         </span>
                     </span>
 
@@ -252,18 +257,18 @@
 							</tr>
 						    <tr>
 						        <td>Höger öga</td>
-						        <td><span class="text">{{cert.syn.hoger.utanKorrektion}}</span></td>
-						        <td><span class="text">{{cert.syn.hoger.medKorrektion}}</span></td>
+						        <td><span class="text">{{cert.syn.hoger.utanKorrektion | number : 1}}</span></td>
+						        <td><span class="text">{{cert.syn.hoger.medKorrektion | number : 1}}</span></td>
 						    </tr>
 						    <tr>
 						        <td>Vänster öga</td>
-       					        <td><span class="text">{{cert.syn.vanster.utanKorrektion}}</span></td>
-						        <td><span class="text">{{cert.syn.vanster.medKorrektion}}</span></td>
+       					        <td><span class="text">{{cert.syn.vanster.utanKorrektion | number : 1}}</span></td>
+						        <td><span class="text">{{cert.syn.vanster.medKorrektion | number : 1}}</span></td>
 						    </tr>
 						    <tr>
 						        <td>Binokulärt</td>
-      					        <td><span class="text">{{cert.syn.binokulart.utanKorrektion}}</span></td>
-						        <td><span class="text">{{cert.syn.binokulart.medKorrektion}}</span></td>
+      					        <td><span class="text">{{cert.syn.binokulart.utanKorrektion | number : 1}}</span></td>
+						        <td><span class="text">{{cert.syn.binokulart.medKorrektion | number : 1}}</span></td>
 						    </tr>
 						</table>
                     </span>
@@ -281,15 +286,12 @@
             			</span>
             		</h3>
       				<div ng-show="!cert.bedomning.kanInteTaStallning">
-            				    <span class="text no-padding-bottom" message key="ts-diabetes.label.bedomning-info-alt-1"></span>
-            				
-            				    <span class="text no-padding-bottom">
-            				        <label ng-repeat="typ in filtered.korkortstyp = (cert.bedomning.korkortstyp | filter:{selected : true})" id="caregiver">
-            				            <span message key="ts-diabetes.label.korkort.{{typ.type}}"></span>
-            				            <span ng-show="filtered.korkortstyp.length > 1">, </span>
-            				        </label>
-            				    </span>
-            		</div>
+                        <span class="text no-padding-bottom" message key="ts-diabetes.label.bedomning-info-alt-1"></span>
+    
+                        <span class="text no-padding-bottom">
+                            <span class="ts-cert-answer">{{intygAvser}}</span>
+                        </span>
+                   </div>
             				
             		<div ng-show="cert.bedomning.kanInteTaStallning">
             		    <span class="text">{{ts-bas.label.bedomning-info-alt-2}}</span>
@@ -307,7 +309,7 @@
                     </span>
             	</div>
             	
-                <div class="body-row" ng-show="{{cert.kommentar.length > 0}}">
+                <div class="body-row" ng-show="cert.kommentar.length > 0">
             		<h3 class="title">
                         <span message key="ts-diabetes.label.ovrigkommentar"></span>
             			<span>

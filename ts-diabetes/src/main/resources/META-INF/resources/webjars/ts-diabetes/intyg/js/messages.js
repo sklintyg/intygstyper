@@ -37,6 +37,8 @@ define(
                     "ts-diabetes.label.korkort.a1": "A1",
                     "ts-diabetes.label.korkort.a2": "A2",
                     "ts-diabetes.label.korkort.c1": "C1",
+                    "ts-diabetes.label.korkort.b": "B",
+                    "ts-diabetes.label.korkort.be": "BE",
                     "ts-diabetes.label.korkort.c1e": "C1E",
                     "ts-diabetes.label.korkort.c": "C",
                     "ts-diabetes.label.korkort.ce": "CE",
@@ -45,6 +47,7 @@ define(
                     "ts-diabetes.label.korkort.d": "D",
                     "ts-diabetes.label.korkort.de": "DE",
                     "ts-diabetes.label.korkort.taxi": "Taxi",
+                    "ts-diabetes.label.korkort.traktor": "Traktor",
                     "ts-diabetes.label.korkort.annat": "Annat",
 
                     "ts-diabetes.label.syn.binokulart": "Binokulärt",
@@ -70,7 +73,7 @@ define(
                     "ts-diabetes.label.diabetes.behandling.insulin": "Insulin",
                     "ts-diabetes.label.diabetes.behandling.insulin-period": "Insulin sedan: ",
                     "ts-diabetes.label.diabetes.behandling.annan": "Annan behandling",
-                    "ts-diabetes.label.diabetes.behandling.annan.period": "Annan behandling",
+                    "ts-diabetes.label.diabetes.behandling.annan.period": "Annan behandling, vilken? ",
 
                     "ts-diabetes.label.hypoglykemier.har-patient-kannedom": "a) Har patienten kunskap om lämpliga åtgärder vid hypoglykemi?",
                     "ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion": "b) Förekommer hypoglykemier med tecken på nedsatt hjärnfunktion (neuroglukopena symptom) som bedöms kunna innebära en trafiksäkerhetsrisk?",

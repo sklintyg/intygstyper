@@ -132,10 +132,12 @@
               </div>
               <div class="row">
               	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                  <span class="tag"><message key="ts-bas.label.intygavser" /></span> 
-                  <label ng-repeat="typ in filtered.korkortstyp = (cert.intygAvser.korkortstyp | filter:{selected : true})" id="caregiver">
-                      <span message key="ts-bas.label.korkort.{{typ.type}}"></span><span ng-show="filtered.korkortstyp.length > 1">, </span>
-                  </label>
+                  <span class="tag"><message key="ts-bas.label.intygavser" /></span>
+
+                  <span class="text no-padding-bottom">
+                      <span class="ts-cert-answer">{{intygAvser}}</span>
+                  </span>
+
                 </div>
                 <div class="col-xs-6 hidden-sm hidden-md hidden-lg pull-right">
                 	<button class="btn btn-primary pull-right" ata-toggle="modal" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
@@ -144,9 +146,9 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="table-bottom"></div>
-            
+
             <div class="cert-body">
             	<div class="body-row">
             		<h3 class="title">
@@ -502,27 +504,24 @@
             			</span>
             		</h3>
       				<div ng-show="!cert.bedomning.kanInteTaStallning">
-            				    <span class="text no-padding-bottom" message key="ts-bas.label.bedomning-info-alt-1"></span>
-            				
-            				    <span class="text no-padding-bottom">
-            				        <label ng-repeat="typ in filtered.korkortstyp = (cert.bedomning.korkortstyp | filter:{selected : true})" id="caregiver">
-            				            <span message key="ts-bas.label.korkort.{{typ.type}}"></span>
-            				            <span ng-show="filtered.korkortstyp.length > 1">, </span>
-            				        </label>
-            				    </span>
+                        <span class="text no-padding-bottom" message key="ts-bas.label.bedomning-info-alt-1"></span>
+
+                        <span class="text no-padding-bottom">
+                            <span class="ts-cert-answer">{{intygAvser}}</span>
+                        </span>
             		</div>
-            				
+
             		<div ng-show="cert.bedomning.kanInteTaStallning">
             		    <span class="text">{{ts-bas.label.bedomning-info-alt-2}}</span>
             		</div>
-            				
+
            			<div>
            			    <span class="text" message key="ts-bas.label.bedomning-info-undersokas-med-specialkompetens"></span>
            			    <span ng-show="cert.bedomning.lakareSpecialKompetens.length > 0" class="text">{{cert.bedomning.lakareSpecialKompetens}}</span>
            			    <span ng-show="!cert.bedomning.lakareSpecialKompetens" class="text" message key="ts-bas.label.bedomning-info-ej-angivet"></span>
-     			    </div>    
+                    </div>
             	</div>
-            	
+
             	<div class="row">
             		<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
             			<div class="infobox">

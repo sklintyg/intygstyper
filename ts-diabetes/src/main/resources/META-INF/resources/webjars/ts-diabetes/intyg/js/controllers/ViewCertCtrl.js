@@ -27,6 +27,30 @@ define([], function() {
                     dialogFade: true
                 };
 
+                $scope.intygAvser = "";
+                $scope.intygAvserList = [];
+
+                $scope.$watch('cert.intygAvser.korkortstyp', function() {
+                    if (!$scope.cert || !$scope.cert.intygAvser || !$scope.cert.intygAvser.korkortstyp) {
+                        return;
+                    }
+                    angular.forEach($scope.cert.intygAvser.korkortstyp, function(key) {
+                        if (key.selected) {
+                            this.push(key);
+                        }
+                    }, $scope.intygAvserList );
+                    
+                    for (var i = 0; i < $scope.intygAvserList.length; i++) {
+                        if (i < $scope.intygAvserList.length-1) {
+                                $scope.intygAvser += $scope.intygAvserList[i].type + (', ');
+                        }
+                        else {
+                            $scope.intygAvser += $scope.intygAvserList[i].type;
+                        }
+                    }
+                }, true);
+                
+
                 $scope.dialog = {
                     acceptprogressdone: true,
                     focus: false
