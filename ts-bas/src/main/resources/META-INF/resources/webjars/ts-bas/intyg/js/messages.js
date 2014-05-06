@@ -146,6 +146,7 @@ define([], function() {
             'ts-bas.button.sendtofk': 'Skicka',
             'ts-bas.button.downloadprint': 'Ladda ner / Skriv ut',
             'ts-bas.button.goback': 'Tillbaka',
+            "ts-bas.button.cancel": "Avbryt",
             'ts-bas.error.generic': 'Kunde inte visa intyget',
             'ts-bas.label.latestevent': 'Senaste händelsen',
             'ts-bas.label.latestevent.noevents': 'Inga händelser',
