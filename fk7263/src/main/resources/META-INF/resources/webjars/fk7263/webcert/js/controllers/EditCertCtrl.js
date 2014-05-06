@@ -364,7 +364,7 @@ define([ 'angular' ], function(angular) {
                         }, function(error) {
                             $scope.dialog.acceptprogressdone = true;
                             $scope.dialog.showerror = true;
-							if (error.errorCode === 'DATA_NOT_FOUND') { // Godtagbart, intyget var redan borta.
+                            if (error.errorCode === 'DATA_NOT_FOUND') { // Godtagbart, intyget var redan borta.
                                 statService.refreshStat(); // Update statistics to reflect change
                                 $location.path("/unsigned");
                             } else if (error === '') {
