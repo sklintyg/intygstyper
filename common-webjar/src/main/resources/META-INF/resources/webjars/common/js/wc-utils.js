@@ -302,9 +302,12 @@ define([ 'angular', 'text!./wcField.html' ], function(angular, wcFieldTemplate) 
                 fieldHelpText: '@',
                 fieldHasErrors: '=',
                 fieldTooltipPlacement: '@',
-                filled : '=?'
+                filled : '&'
             },
             controller: function($scope) {
+
+                $scope.filled = $scope.$eval($scope.filled);
+
                 if ($scope.fieldTooltipPlacement === undefined) {
                     $scope.placement = 'right';
                 } else {
@@ -380,10 +383,7 @@ define([ 'angular', 'text!./wcField.html' ], function(angular, wcFieldTemplate) 
             require: 'ngModel',
             link: function(scope, element, attrs, controller) {
 
-                var uuid = (new Date()).getTime();
-                var random = Math.floor(Math.random() * 1000000);
-                uuid = uuid + random;
-                var counterName = 'charsRemaining' + uuid;
+                var counterName = 'charsRemaining' + element[0].id;
                 scope[counterName] = attrs.maxlength;
 
                 var counter = angular.element('<div class="counter">Tecken kvar: {{' + counterName + '}}</div>');
