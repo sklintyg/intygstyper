@@ -1,4 +1,4 @@
-define([ 'angular' ], function(angular) {
+define([ 'angular', 'text!./wcField.html' ], function(angular, wcFieldTemplate) {
     'use strict';
 
     var moduleName = 'wc.utils';
@@ -290,28 +290,30 @@ define([ 'angular' ], function(angular) {
     /**
      * wcField directive. Used to abstract common layout for full-layout form fields in cert modules
      */
-    utils.directive("wcField", ['messageService','/web/webjars/requirejs-text/2.0.10/text!/web/webjars/common/js/wcField.html', function (messageService, template) {
+    utils.directive('wcField', ['messageService', function (messageService) {
         return {
-            restrict: "A",
+            restrict: 'A',
             transclude: true,
             replace: true,
-            template: template,
+            template: wcFieldTemplate,
             scope: {
-                fieldLabel: "@",
-                fieldNumber: "@",
-                fieldHelpText: "@",
-                fieldHasErrors: "=",
-                fieldTooltipPlacement: "@",
-                filled : "=?"
+                fieldLabel: '@',
+                fieldNumber: '@',
+                fieldHelpText: '@',
+                fieldHasErrors: '=',
+                fieldTooltipPlacement: '@',
+                filled : '=?'
             },
-            controller: function ($scope) {
+            controller: function($scope) {
+                if ($scope.fieldTooltipPlacement === undefined) {
+                    $scope.placement = 'right';
+                } else {
+                    $scope.placement = $scope.fieldTooltipPlacement;
+                }
 
-                controller: function($scope) {
-                    if ($scope.fieldTooltipPlacement === undefined) {
-                        $scope.placement = 'right';
-                    } else {
-                        $scope.placement = $scope.fieldTooltipPlacement;
-                    }
+                if ($scope.filled === undefined) {
+                    $scope.filled = true;
+                }
 
                 $scope.getMessage = function (key) {
                     return messageService.getProperty(key);
@@ -319,21 +321,6 @@ define([ 'angular' ], function(angular) {
             }
         };
     }]);
-
-                template: '<div class="body-row clearfix">' +
-                    '<h4 class="cert-field-number" ng-if="fieldNumber != undefined">' +
-                    '<span message key="modules.label.field"></span> {{fieldNumber}}</h4>' +
-                    '<h3 class="title"><span message key="{{fieldLabel}}"></span>' +
-                    '<span ng-if="fieldHelpText != undefined" class="help" ' +
-                    'tooltip-trigger="mouseenter" ' +
-                    'tooltip-html-unsafe="{{getMessage(fieldHelpText)}}" tooltip-placement="{{placement}}">?</span></h3>' +
-                    '<span class="text" ng-class="{fielderror: fieldHasErrors}">' +
-                    '  <span ng-transclude></span>' +
-                    '</span>' +
-                    '</div>'
-            };
-        }
-    ]);
 
     /**
      * Enable tooltips for other components than wcFields
