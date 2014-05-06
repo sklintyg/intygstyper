@@ -49,7 +49,7 @@ public class WebcertModelFactory {
         LOG.trace("Creating draft with id {}", newDraftData.getCertificateId());
 
         Utlatande utlatande = new Utlatande();
-        utlatande.setUtlatandeid(newDraftData.getCertificateId());
+        utlatande.setId(newDraftData.getCertificateId());
         populateWithSkapadAv(utlatande, newDraftData.getSkapadAv());
         populateWithPatientInfo(utlatande, newDraftData.getPatient());
 

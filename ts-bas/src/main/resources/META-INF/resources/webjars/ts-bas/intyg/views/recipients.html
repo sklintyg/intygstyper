@@ -5,30 +5,90 @@
   </div>
 
   <!-- Content -->
-  <div class="row-fluid">
-    <div class="span7">
+  <div class="row cert-preview">
+  	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  		<span message key="confirm.label.summarypagedesc"></span>
+  		<div class="cert">
+  			<div class="cert-titlebar">
+	  			<img class="cert-icon" alt="" ng-src="/web/webjars/ts-bas/intyg/img/ts-bas.png" src="/web/webjars/ts-bas/intyg/img/ts-bas.png">
+	  			<div class="row">
+	  				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+	                  <h2 class="cert-title">
+	                    <span message key="ts-bas.label.certtitle"></span> <span class="cert-titlebar-type"><span message key="ts-bas.typename"></span></span>
+	                  </h2>
+	                </div>
+	                <div class="col-xs-6 col-sm-5 col-md-5 col-lg-5 issue">
+	                  <span><span message key="ts-bas.label.issued"></span></span> <span class="cert-titlebar-value">{{cert.signeringsdatum | date:'longDate'}}</span>
+	                </div>
+	  			</div>
+	  		</div>
+	  		<div class="cert-header">
+	  			<div class="row">
+		  			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 header-row">
+	                  <h3 class="tag">
+	                    <span message key="ts-bas.label.unit"></span>
+	                  </h3>
+	                  <span id="careunit">{{cert.skapadAv.vardenhet.enhetsnamn}}</span>
+	                </div>
+	                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 header-row">
+	                  <h3 class="tag">
+	                    <span message key="ts-bas.inbox.complementaryinfo"></span>
+	                  </h3>
+	                  <label ng-repeat="typ in filtered.korkortstyp = (cert.intygAvser.korkortstyp | filter:{selected : true})" id="caregiver">
+                        <span message key="ts-bas.label.korkort.{{typ.type}}"></span><span ng-show="filtered.korkortstyp.length > 1">, </span>
+                  	  </label>
+	                </div>
+	            </div>
+	  		</div>
+	  		<div class="table-bottom"></div>
+  		</div>
+  	</div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
       <h1 ng-focus="pagefocus" tabindex="-1">
-        <span message key="recipient.label.pagetitle"></span>
+        <span message key="ts-bas.label.pagetitle.step1"></span>
       </h1>
+      <div class="row-fluid">
+      	<div class="wizard">
+			<ul class="steps">
+			    <li class="active" data-target="#step1">Granska och skicka<span class="chevron"></span></li>
+			    <li data-target="#step3">Bekräftelse</li>
+			</ul>
+	  	</div>
+      </div>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
       <p>
       <h2>
-        <span message key="recipient.label.recipientlisttitle"></span>
+        <span message key="ts-bas.confirm.label.recipienttitle"></span>
       </h2>
-
-      <span ng-repeat="r in recipientList">
-      <label class="radio control-label" for="recipient-{{r.id}}">
-        <input type="radio" value="{{r.id}}" ng-model="$parent.selectedRecipientId" name="recipientSelection" id="recipient-{{r.id}}" />{{r.recipientName}}</label>
-      </span>
-      <h2>
-        <span message key="recipient.label.recipientlisttitle.others"></span>
-      </h2>
-      <p>
-      <a ng-href="{{downloadAsPdfLink}}"><span message key="recipient.label.downloadlink" target="_blank"></span></a>
-      </p>
-      <p>
-        <input id="confirmRecipientSelectionBtn" type="button" ng-click="confirmRecipientSelection()" value="Nästa" class="btn btn-success" /> <input id="cancelRecipientSelectionBtn" type="button"
-          ng-click="backToViewCertificate()" value="Avbryt" class="btn btn-link" />
-      </p>
-    </div>
+	</div> 
+  </div>
+  <div class="row recipentlist">
+  	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  		<p>
+		  	<span ng-repeat="r in recipientList">
+	      		<span for="recipient-{{r.id}}">{{r.recipientName}}</span>
+	      	</span>
+	  	</p>
+  	</div>	
+  </div>
+  <div class="row">
+  	<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+  		<p>
+  			<span message key="ts-bas.confirm.label.verifytext"></span>
+  		</p>
+  		<p>
+  			<button id="confirmAndSendBtn" type="button" ng-click="confirmAndSend()" class="btn btn-success">
+	        	<span message key="ts-bas.button.send"></span>
+	        </button>
+        	<button id="cancelRecipientSelectionBtn" ng-click="backToViewCertificate()" class="btn btn-link">
+	        	<span message key="button.cancel"></span>
+	        </button>
+      	</p>
+  	</div>	
   </div>
 </div>

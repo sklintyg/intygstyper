@@ -32,6 +32,7 @@ import javax.xml.bind.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.util.Strings;
@@ -96,9 +97,11 @@ public class ModuleService implements se.inera.certificate.modules.support.api.M
     private WebcertModelFactory webcertModelFactory;
 
     @Autowired
+    @Qualifier("ts-diabetes-jaxbContext")
     private JAXBContext jaxbContext;
 
     @Autowired
+    @Qualifier("ts-diabetes-objectMapper")
     private ObjectMapper objectMapper;
 
     /**

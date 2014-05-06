@@ -1,0 +1,35 @@
+<div id="send-certificate-flow-root-sent" class="row-fluid">
+  <!-- Content -->
+  <div class="row">
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+      <h1 ng-focus="pagefocus" tabindex="-1">
+        <span message key="ts-diabetes.label.pagetitle.step2"></span>
+      </h1>
+      <div class="row-fluid">
+      	<div class="wizard">
+			<ul class="steps">
+			    <li class="wstep-completed" data-target="#step1">Granska och skicka<span class="chevron"></span></li>
+			    <li class="active" data-target="#step3">Bekräftelse</li>
+			</ul>
+	  	</div>
+      </div>
+      <p>
+      	<span message key="ts-diabetes.sent.label.pageinformation"></span>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <p id="send-certificate-flow-result">
+        <span message key="ts-diabetes.sent.label.result"></span>
+        <b>{{getRecipientName(selectedRecipientId)}}</b>
+      </p>
+      <p class="btn-row">
+        <button id="backToViewCertificateBtn" type="button" ng-click="backToViewCertificate()" class="btn btn-success">
+          <span message key="ts-diabetes.sent.button.backtocertificate"></span>
+        </button>
+      </p>
+    </div>
+  </div>
+</div>
+

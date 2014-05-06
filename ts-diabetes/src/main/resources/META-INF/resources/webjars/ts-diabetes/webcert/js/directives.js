@@ -1,13 +1,13 @@
 define([
     'angular',
     'ts-diabetes/common/js/directives/eyeDecimal'
-], function (angular, eyeDecimal) {
+], function(angular, eyeDecimal) {
     'use strict';
 
-    var moduleName = "ts-diabetes.directives";
+    var moduleName = 'ts-diabetes.directives';
 
-    angular.module(moduleName, [])
-        .directive("ts-diabetes.eyeDecimal", eyeDecimal);
+    angular.module(moduleName, []).
+        directive('ts-diabetes.eyeDecimal', eyeDecimal);
 
     return moduleName;
 });

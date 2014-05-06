@@ -1,1 +1,3 @@
-textarea[wc-maxlength], input[type=text] { margin-bottom: 0; }
+textarea[wc-maxlength], input[type=text] {
+    margin-bottom: 0;
+}

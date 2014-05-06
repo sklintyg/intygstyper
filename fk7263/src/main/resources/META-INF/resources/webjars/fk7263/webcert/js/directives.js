@@ -1,15 +1,17 @@
-define([ 'angular',
-         'fk7263/common/js/directives/scrollHereIf',
-         'fk7263/common/js/directives/wcDatePickerField',
-         'fk7263/common/js/directives/wcCertField'
+define([
+    'angular',
+    'fk7263/common/js/directives/scrollHereIf',
+    'fk7263/common/js/directives/wcDatePickerField',
+    'fk7263/common/js/directives/wcCertField'
 ], function(angular, scrollHereIf, wcDatePickerField, wcCertField) {
-	'use strict';
-	var moduleName = "fk7263.directives";
+    'use strict';
 
-	angular.module(moduleName, [])
-		.directive("scrollHereIf", scrollHereIf)
-		.directive("wcDatePickerField", wcDatePickerField)
-		.directive("wcCertField", wcCertField);
+    var moduleName = 'fk7263.directives';
 
-	return moduleName;
+    angular.module(moduleName, []).
+        directive('scrollHereIf', scrollHereIf).
+        directive('wcDatePickerField', wcDatePickerField).
+        directive('wcCertField', wcCertField);
+
+    return moduleName;
 });

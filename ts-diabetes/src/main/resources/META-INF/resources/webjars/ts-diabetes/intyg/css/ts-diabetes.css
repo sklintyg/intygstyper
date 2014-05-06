@@ -1,1 +1,36 @@
-textarea[wc-maxlength], input[type=text] { margin-bottom: 0; }
+.ts-cert-answer {
+    font-weight: bold;
+}
+
+.ts-text-field-wide {
+    padding: 5px !important;
+}
+
+.ts-table {
+    overflow-x: auto !important;
+    display: inline-block !important;
+    border: 1px solid #e5e5e5 !important;
+}
+
+.ts-table tbody {
+    width: 100%;
+    display: inline-table;
+}
+
+.ts-table tbody td {
+    border-top: 1px solid transparent;
+}
+
+.ts-table tr {
+    background: transparent !important;
+}
+
+.ts-table tr th {
+    border-top: 1px solid transparent !important;
+    text-align: center !important;
+}
+
+.ts-table tr td span {
+    padding: 0px !important;
+    text-align: center !important;
+}

@@ -22,9 +22,9 @@ import org.joda.time.LocalDateTime;
 
 public class Utlatande {
 
-    private String utlatandeid;
+    private String id;
 
-    private String typAvUtlatande;
+    private String typ;
 
     private String kommentar;
 
@@ -52,20 +52,20 @@ public class Utlatande {
 
     }
 
-    public String getUtlatandeid() {
-        return utlatandeid;
+    public String getId() {
+        return id;
     }
 
-    public void setUtlatandeid(String utlatandeId) {
-        this.utlatandeid = utlatandeId;
+    public void setId(String utlatandeId) {
+        this.id = utlatandeId;
     }
 
-    public String getTypAvUtlatande() {
-        return typAvUtlatande;
+    public String getTyp() {
+        return typ;
     }
 
-    public void setTypAvUtlatande(String typAvUtlatande) {
-        this.typAvUtlatande = typAvUtlatande;
+    public void setTyp(String typAvUtlatande) {
+        this.typ = typAvUtlatande;
     }
 
     public String getKommentarer() {

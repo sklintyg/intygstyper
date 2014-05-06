@@ -9,6 +9,8 @@ import se.inera.certificate.modules.ts_diabetes.rest.ModuleService;
 
 public class TsDiabetesEntryPoint implements ModuleEntryPoint {
 
+    private static final String TRANSPORTSTYRELSEN_LOGICAL_ADRESS = "TS";
+
     @Autowired
     private ModuleService tsDiabetesModuleService;
 
@@ -29,7 +31,7 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
 
     @Override
     public String getDefaultRecieverLogicalAddress() {
-        return null;
+        return TRANSPORTSTYRELSEN_LOGICAL_ADRESS;
     }
 
     @Override

@@ -6,7 +6,7 @@
     "typ": {
         "codeSystem": "f6fb361a-e31d-48b8-8657-99b63912dd9b",
         "codeSystemName": "kv_utlåtandetyp_intyg",
-        "code": "TSTRK1031 (U06, V02)"
+        "code": "ts-diabetes"
     },
     "signeringsdatum": "2013-08-12T15:57:00.000",
     "kommentarer" : [ "Kommentarer av det viktiga slaget" ],
