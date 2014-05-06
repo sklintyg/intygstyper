@@ -1,5 +1,6 @@
 package se.inera.certificate.model.util;
 
+import java.util.Arrays;
 import java.util.List;
 
 public final class Strings {
@@ -8,6 +9,10 @@ public final class Strings {
 
     public static boolean isNullOrEmpty(String string) {
         return string == null || string.length() == 0;
+    }
+
+    public static boolean notNullOrEmpty(String string) {
+        return !isNullOrEmpty(string);
     }
 
     public static String emptyToNull(String string) {
@@ -21,7 +26,7 @@ public final class Strings {
     public static String join(String separator, List<String> parts) {
         StringBuilder result = new StringBuilder();
         for (String part: parts) {
-            if (part != null && part.length() > 0) {
+            if (notNullOrEmpty(part)) {
                 if (result.length() > 0) {
                     result.append(separator);
                 }
@@ -31,4 +36,7 @@ public final class Strings {
         return result.toString();
     }
 
+    public static String join(String separator, String...parts) {
+        return join(separator, Arrays.asList(parts));
+    }
 }

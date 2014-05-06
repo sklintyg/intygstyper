@@ -1,6 +1,5 @@
 package se.inera.certificate.modules.fk7263.model.internal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static se.inera.certificate.model.util.Strings.emptyToNull;
@@ -399,18 +398,15 @@ public class Fk7263Intyg {
     }
 
     public String getForskrivarkodOchArbetsplatskod() {
-        List<String> parts = new ArrayList<>();
-
-        parts.add(vardperson.getForskrivarKod());
-        parts.add(vardperson.getArbetsplatsKod());
-
-        return emptyToNull(join(" - ", parts));
+        return emptyToNull(join(" - ", vardperson.getForskrivarKod(), vardperson.getArbetsplatsKod()));
     }
 
     public String getNamnfortydligandeOchAdress() {
-        return vardperson.getNamn() + "\n" + vardperson.getEnhetsnamn() + "\n"
-                + vardperson.getPostadress() + "\n" + vardperson.getPostnummer() + " " + vardperson.getPostort() + "\n"
-                + vardperson.getTelefonnummer();
+        return join("\n", vardperson.getNamn(),
+                vardperson.getEnhetsnamn(),
+                vardperson.getPostadress(),
+                join(" ", vardperson.getPostnummer(), vardperson.getPostort()),
+                vardperson.getTelefonnummer());
     }
 
     public String getId() {
