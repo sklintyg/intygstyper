@@ -82,6 +82,7 @@ p {
 
 a {
     color: #28b4c4;
+    cursor: pointer;
 }
 
 .header a {

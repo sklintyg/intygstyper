@@ -94,7 +94,7 @@ define([
                             {
                                 link: '/web/dashboard#/unhandled-qa',
                                 label: 'Frågor och svar',
-                                requires_doctor: false,
+                                requiresDoctor: false,
                                 statNumberId: 'stat-unitstat-unhandled-question-count',
                                 statTooltip: 'not set',
                                 getStat: function() {
@@ -106,7 +106,7 @@ define([
                             {
                                 link: '/web/dashboard#/unsigned',
                                 label: messageService.getProperty('dashboard.unsigned.title'),
-                                requires_doctor: false,
+                                requiresDoctor: false,
                                 statNumberId: 'stat-unitstat-unsigned-certs-count',
                                 statTooltip: 'not set',
                                 getStat: function() {
@@ -118,7 +118,7 @@ define([
                             {
                                 link: '/web/dashboard#/support/about',
                                 label: 'Om Webcert',
-                                requires_doctor: false,
+                                requiresDoctor: false,
                                 getStat: function() {
                                     return '';
                                 }
@@ -128,7 +128,7 @@ define([
                         var writeCertMenuDef = {
                             link: '/web/dashboard#/create/index',
                             label: 'Sök/skriv intyg',
-                            requires_doctor: false,
+                            requiresDoctor: false,
                             getStat: function() {
                                 return '';
                             }
@@ -168,7 +168,7 @@ define([
 
                             $modal.open({
                                 template: '<div class="modal-header">' +
-                                    '<button class="close"  data-ng-click="close()">×</button>' +
+                                    '<button class="close" data-ng-click="close()">×</button>' +
                                     '<h3>Välj vårdenhet att logga in i</h3>' +
                                     '</div>' +
                                     '<div class="modal-body">' +
@@ -208,8 +208,13 @@ define([
                                             $cookieStore.remove('enhetsId');
 
                                             // We updated the user context. Reroute to start page so as not to end
-                                            // up on a page we aren't welcome anymore.
-                                            $location.path('/');
+                                            // up on a page we aren't welcome anymore. Maybe we should make these routes some kind of global configuration? No other choices are relevant today though.
+                                            if (User.userContext.lakare === true) {
+                                                $location.path('/');
+                                            } else {
+                                                $location.path('/unhandled-qa');
+                                            }
+
                                             $modalInstance.close();
                                         }, function() {
                                             $scope.error = true;
@@ -232,7 +237,7 @@ define([
                         '<span class="headerbox-logo pull-left"><a href="/web/start"><img alt="Till startsidan" src="/img/webcert_logo.png"/></a></span>' +
                         '<span class="headerbox-date pull-left">' +
                         '<span class="location">{{today | date:"shortDate"}} - {{user.userContext.valdVardgivare.namn}} - {{user.userContext.valdVardenhet.namn}}</span><br>' +
-                        '<span class="otherLocations" ng-show="(stat.intygAndraEnheter+stat.fragaSvarAndraEnheter) > 0"><span style="font-weight:bold">{{stat.intygAndraEnheter+stat.fragaSvarAndraEnheter}}</span> ej hanterade frågor och osignerade intyg på andra vårdenheter.</span> <a id="wc-care-unit-clinic-selector" class="otherLocations" ng-href="#changedialog" ng-show="user.userContext.totaltAntalVardenheter > 1" data-ng-click="openChangeCareUnitDialog()">Byt vårdenhet</a>' +
+                        '<span class="otherLocations" ng-show="(stat.intygAndraEnheter+stat.fragaSvarAndraEnheter) > 0"><span style="font-weight:bold">{{stat.intygAndraEnheter+stat.fragaSvarAndraEnheter}}</span> ej hanterade frågor och osignerade intyg på andra vårdenheter.</span> <a id="wc-care-unit-clinic-selector" tabindex="0" href class="otherLocations" ng-show="user.userContext.totaltAntalVardenheter > 1" data-ng-click="openChangeCareUnitDialog()">Byt vårdenhet</a>' +
                         '</span>' +
                         '</div>' +
                         '<div class="headerbox-user pull-right">' +
@@ -259,7 +264,7 @@ define([
                         '<div class="navbar-collapse collapse" ng-class="!navCollapsed && \'in\'">' +
                         '<ul class="nav navbar-nav">' +
                         '<li ng-class="{active: isActive(menu.link)}" ng-repeat="menu in menuDefs">' +
-                        '<a ng-href="{{menu.link}}" ng-show="(menu.requires_doctor && isDoctor) || !menu.requires_doctor">{{menu.label}}' +
+                        '<a ng-href="{{menu.link}}" ng-show="(menu.requiresDoctor && isDoctor) || !menu.requiresDoctor">{{menu.label}}' +
                         '<span id="{{menu.statNumberId}}" ng-if="menu.getStat()>0" class="stat-circle stat-circle-active" ' +
                         'title="{{menu.statTooltip}}">{{menu.getStat()}}</span></a>' +
                         '</li>' +
