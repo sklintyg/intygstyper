@@ -54,33 +54,10 @@ define([], function() {
                     acceptprogressdone: true,
                     focus: false
                 };
-
-                var archiveDialog = {};
-
-                $scope.archiveSelected = function() {
-                    var item = $scope.cert;
-                    $log.debug('archive ' + item.id);
-                    $scope.dialog.acceptprogressdone = false;
-                    listCertService.archiveCertificate(item, function(fromServer, oldItem) {
-                        $log.debug('statusUpdate callback:' + fromServer);
-                        if (fromServer !== null) {
-                            // Better way to update the object?
-                            oldItem.archived = fromServer.archived;
-                            oldItem.status = fromServer.status;
-                            oldItem.selected = false;
-                            archiveDialog.close();
-                            $scope.dialog.acceptprogressdone = true;
-                            $location.path('#/start');
-                        } else {
-                            // show error view
-                            $location.path('/fel/couldnotarchivecert');
-                        }
-                    });
-                };
-
+    
                 // Archive dialog
                 $scope.certToArchive = {};
-
+    
                 $scope.openArchiveDialog = function(cert) {
                     $scope.certToArchive = cert;
                     $scope.dialog.focus = true;
@@ -97,19 +74,45 @@ define([], function() {
                         autoClose: false
                     });
                 };
-
+    
                 // expose calculated static link for pdf download
                 $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $routeParams.certificateId + '/pdf';
-
+    
                 // Decide if helptext related to field 1.a) - 1.c)
                 $scope.achelptext = false;
-
+    
+                $scope.filterStatuses = function(statuses) {
+                    var result = [];
+                    if (!angular.isObject(statuses)) {
+                        return result;
+                    }
+                    for ( var i = 0; i < statuses.length; i++) {
+                        if ($scope.userVisibleStatusFilter(statuses[i])) {
+                            result.push(statuses[i]);
+                        }
+                    }
+                    return result;
+                }
+    
+                $scope.visibleStatuses = [ 'SENT' ];
+    
+                $scope.userVisibleStatusFilter = function(status) {
+                    for ( var i = 0; i < $scope.visibleStatuses.length; i++) {
+                        if (status.type == $scope.visibleStatuses[i]) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+    
                 certificateService.getCertificate($routeParams.certificateId, function(result) {
                     $scope.doneLoading = true;
                     if (result !== null) {
-                        $scope.cert = result;
-                        $rootScope.cert = result;
-                        if (result.syn.synfaltsdefekter === true || result.syn.nattblindhet === true || result.syn.progressivogonsjukdom === true) {
+                        $scope.cert = result.utlatande;
+                        $scope.cert.status = $scope.filterStatuses(result.meta.statuses);
+                        $rootScope.cert = $scope.cert;
+                        if ($scope.cert.syn.synfaltsdefekter === true || $scope.cert.syn.nattblindhet === true ||
+                                $scope.cert.syn.progressivogonsjukdom === true) {
                             $scope.achelptext = true;
                         }
                     } else {
@@ -119,5 +122,6 @@ define([], function() {
                 }, function(error) {
                     $log.debug(error);
                 });
-            } ];
+            }
+        ];
 });

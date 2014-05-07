@@ -98,20 +98,16 @@ define(['angular'], function(angular) {
 
             certificateService.getCertificate($routeParams.certificateId, function(result) {
                 $scope.doneLoading = true;
-                if (result !== null) {
-                    result.filteredStatuses = $scope.filterStatuses(result.status);
-                    // added calculated img src for certificate, beacuse for
-                    // some reason ng-src with '/img/{{cert.typ }}.png' would
-                    // evaluate first to 'img/.png' before correct value = 404
-                    result.typ_image = '/img/fk7263.png';
-                    $scope.cert = result;
-                    $rootScope.cert = result;
+                if (result != null) {
+                    $scope.cert = result.utlatande;
+                    $scope.cert.filteredStatuses = $scope.filterStatuses(result.meta.statuses);
+                    $rootScope.cert = $scope.cert;
                 } else {
                     // show error view
-                    $location.path('/visafel/certnotfound');
+                    $location.path("/visafel/certnotfound");
                 }
-            }, function() {
-                $log.debug('got error');
+            }, function(error) {
+                $log.debug("got error");
             });
 
             $scope.pagefocus = true;

@@ -154,6 +154,7 @@ define([], function() {
             'ts-bas.history.label.pagetitle': 'Intygets alla händelser',
             'ts-bas.status.sent': 'Skickat till',
             'ts-bas.target.mi': 'Försäkringsbolaget',
+            'ts-bas.target.ts' : 'Transportstyrelsen',
             "ts-bas.sent.label.result": "Mottagare av intyget: ",
             "ts-bas.sent.button.backtocertificate": "Tillbaka till intyget",
 
