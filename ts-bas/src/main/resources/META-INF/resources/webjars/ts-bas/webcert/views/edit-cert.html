@@ -922,14 +922,16 @@
 </div>
 <!-- certificate -->
 
-<p>Specialistkompetens i:</p>
+<div>
+  <h3>Signera</h3>
 
-<div ng-repeat="spec in cert.skapadAv.specialiteter">
-    {{spec}}
+  <div id="sign-requires-doctor-message-text" ng-if="!user.userContext.lakare" class="alert alert-info">
+    Endast läkare får skriva under intyget. Du kan skicka e-post med en länk till intyget till den läkare som ska signera.
+  </div>
+
+  <button id="signeraBtn" class="btn btn-success" ng-disabled="!isComplete" ng-show="user.userContext.lakare">Signera intyget</button>
 </div>
 
-<button class="btn btn-success" ng-disabled="!isComplete">Signera intyget och skicka direkt till Transportstyrelsen
-</button>
 </form>
 </div>
 

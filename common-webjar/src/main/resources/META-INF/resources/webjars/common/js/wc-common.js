@@ -134,7 +134,7 @@ define([
                             }
                         };
 
-                        if (eval(User.userContext.lakare) === true) {
+                        if (User.userContext.lakare) {
                             $scope.menuDefs.splice(0, 0, writeCertMenuDef);
                         } else {
                             $scope.menuDefs.splice(2, 0, writeCertMenuDef);

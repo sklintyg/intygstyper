@@ -1,12 +1,13 @@
 define([ 'angular' ], function(angular) {
     'use strict';
 
-    return ['$scope', '$log', '$location', '$anchorScroll', '$routeParams', 'CertificateService', 'ManageCertView',
-        function($scope, $log, $location, $anchorScroll, $routeParams, CertificateService, ManageCertView) {
+    return ['$scope', '$log', '$location', '$anchorScroll', '$routeParams', 'CertificateService', 'ManageCertView', 'User',
+        function($scope, $log, $location, $anchorScroll, $routeParams, CertificateService, ManageCertView, User) {
             $scope.cert = {};
 
             $scope.messages = [];
             $scope.isComplete = false;
+            $scope.user = User;
 
             // init state
             $scope.widgetState = {
@@ -78,13 +79,12 @@ define([ 'angular' ], function(angular) {
 
             // Get the certificate draft from the server.
             // TODO: Hide the form until the draft has been loaded.
-            CertificateService.getDraft($routeParams.certificateId,
-                function(data) {
-                    $scope.cert = data.content;
-                }, function() {
-                    // TODO: Show error message.
-                }
-            );
+            CertificateService.getDraft($routeParams.certificateId, function(data) {
+                $scope.cert = data.content;
+                $scope.isComplete = data.status === 'DRAFT_COMPLETE';
+            }, function() {
+                // TODO: Show error message.
+            });
 
             /**
              * Action to save the certificate draft to the server.
