@@ -2,14 +2,15 @@ define([
     'angular',
     'ts-bas/webcert/js/controllers',
     'ts-bas/webcert/js/messages',
-    'ts-bas/webcert/js/services',
+    'common/js/webcert/CertificateService',
+    'common/js/webcert/ManageCertView',
     'ts-bas/webcert/js/directives'
-], function(angular, controllers, messages, services, directives) {
+], function(angular, controllers, messages, wcCertificateService, wcManageCertView, directives) {
     'use strict';
 
     var moduleName = 'ts-bas';
 
-    var module = angular.module(moduleName, [controllers, services, directives]);
+    var module = angular.module(moduleName, [controllers, wcCertificateService, wcManageCertView, directives]);
 
     module.config(['$routeProvider', function($routeProvider) {
         $routeProvider.

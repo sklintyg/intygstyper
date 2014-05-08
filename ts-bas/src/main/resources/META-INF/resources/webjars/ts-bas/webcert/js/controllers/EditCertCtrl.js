@@ -1,10 +1,8 @@
 define([ 'angular' ], function(angular) {
     'use strict';
 
-    return ['$scope', '$log', '$location', '$anchorScroll', '$routeParams', 'ts-bas.certificateService', 'statService',
-        'wcDialogService',
-        function($scope, $log, $location, $anchorScroll, $routeParams, certificateService, statService,
-            wcDialogService) {
+    return ['$scope', '$log', '$location', '$anchorScroll', '$routeParams', 'CertificateService', 'ManageCertView',
+        function($scope, $log, $location, $anchorScroll, $routeParams, CertificateService, ManageCertView) {
             $scope.cert = {};
 
             $scope.messages = [];
@@ -80,7 +78,7 @@ define([ 'angular' ], function(angular) {
 
             // Get the certificate draft from the server.
             // TODO: Hide the form until the draft has been loaded.
-            certificateService.getDraft($routeParams.certificateId,
+            CertificateService.getDraft($routeParams.certificateId,
                 function(data) {
                     $scope.cert = data.content;
                 }, function() {
@@ -92,7 +90,7 @@ define([ 'angular' ], function(angular) {
              * Action to save the certificate draft to the server.
              */
             $scope.save = function() {
-                certificateService.saveDraft($routeParams.certificateId, $scope.cert,
+                CertificateService.saveDraft($routeParams.certificateId, $scope.cert,
                     function(data) {
 
                         $scope.certForm.$setPristine();
@@ -132,27 +130,7 @@ define([ 'angular' ], function(angular) {
              * Action to discard the certificate draft and return to WebCert again.
              */
             $scope.discard = function() {
-                var bodyText = 'Är du säker på att du vill radera utkastet? Intyget tas då bort och finns inte längre tillgängligt i Webcert.';
-                wcDialogService.showDialog($scope, {
-                    dialogId: 'confirm-draft-delete',
-                    titleId: 'label.confirmaddress',
-                    bodyText: bodyText,
-
-                    button1click: function() {
-                        $log.debug('delete draft ');
-                        $scope.dialog.acceptprogressdone = false;
-                        certificateService.discardDraft($routeParams.certificateId, function() {
-                            $scope.dialog.acceptprogressdone = true;
-                            statService.refreshStat(); // Update statistics to reflect change
-                            $location.path('/unsigned');
-                        }, function() {
-                            $scope.dialog.acceptprogressdone = true;
-                            // TODO: Show error message.
-                        });
-                    },
-                    button1text: 'common.delete',
-                    button2text: 'common.cancel'
-                });
+                ManageCertView.discard($scope);
             };
         }
     ];

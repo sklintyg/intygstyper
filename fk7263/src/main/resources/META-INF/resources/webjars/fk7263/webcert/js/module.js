@@ -8,12 +8,14 @@ define([
     'common/js/webcert/ManageCertView',
     'webjars/common/js/wc-common-fragasvar-module',
     'webjars/common/js/wc-utils'
-], function(angular, controllers, messages, services, directives, wcCertificateService, wcManageCertView, wcCommonFragaSvarModule, wcUtils) {
+], function(angular, controllers, messages, services, directives,
+            wcCertificateService, wcManageCertView, wcCommonFragaSvarModule, wcUtils) {
     'use strict';
 
     var moduleName = 'fk7263';
 
-    var module = angular.module(moduleName, [controllers, services, directives, wcCertificateService, wcManageCertView, wcCommonFragaSvarModule, wcUtils]);
+    var module = angular.module(moduleName, [controllers, services, directives,
+                                wcCertificateService, wcManageCertView, wcCommonFragaSvarModule, wcUtils]);
 
     module.config(['$routeProvider', function($routeProvider) {
         $routeProvider.
@@ -28,7 +30,7 @@ define([
     }]);
 
     // Inject language resources
-    // TODO: This only works since we always load webcert before the module, when the messageService
+    // NOTE: This only works since we always load webcert before the module, when the messageService
     // is moved to a commons project, make sure this is loaded for this module as well.
     module.run(['messageService',
         function(messageService) {
