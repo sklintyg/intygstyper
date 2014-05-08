@@ -41,11 +41,16 @@
         </h1>
         <p></p>
         <p>
-          <message key="ts-diabetes.label.pagedescription" />
+        	<message key="ts-diabetes.label.pageingress" />
         </p>
-        <p>
-            <message key="ts-diabetes.label.cert.inaccuracies" />
-        </p>
+        <div collapse="!isCollapsed1" class="collapse">
+        	<p>
+	            <message key="ts-diabetes.label.pagedescription" />
+	        </p>
+	        <div message key="ts-diabetes.label.pagedescription.error.in.certificate.header"></div>
+	        <div message key="ts-diabetes.label.pagedescription.error.in.certificate"></div>
+        </div>
+        <a ng-click="isCollapsed1 = !isCollapsed1" data-toggle="collapse" message key="ts-diabetes.label.status.{{ !isCollapsed1 }}">{{ts-diabetes.label.status.{{ !isCollapsed1 }}</a>
       </div>
       <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 eventbox">
         <h2>
