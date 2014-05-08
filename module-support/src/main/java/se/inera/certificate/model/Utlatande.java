@@ -35,6 +35,8 @@ public abstract class Utlatande {
 
     private LocalDateTime skickatdatum;
 
+    private Id relaterarTill;
+
     public final Id getId() {
         return id;
     }
@@ -74,12 +76,20 @@ public abstract class Utlatande {
         this.skickatdatum = skickatdatum;
     }
 
+    public final Id getRelaterarTill() {
+        return relaterarTill;
+    }
+
+    public final void setRelaterarTill(Id relaterarTill) {
+        this.relaterarTill = relaterarTill;
+    }
+
     /**
      * Returns the patient of this utlatande.
      * <p/>
      * The implementing class is free to chose a sub type of {@link Patient} as return value. A <code>setPatient</code>
      * method should also be created by the implementing class.
-     *
+     * 
      * @return The patient of this utlatande.
      */
     public abstract Patient getPatient();
@@ -89,7 +99,7 @@ public abstract class Utlatande {
      * <p/>
      * The implementing class is free to chose a sub type of {@link HosPersonal} as return value. A
      * <code>setSkapadAv</code> method should also be created by the implementing class.
-     *
+     * 
      * @return The hos-personal of this utlatande.
      */
     public abstract HosPersonal getSkapadAv();
@@ -103,7 +113,7 @@ public abstract class Utlatande {
      * <code>List&lt;Aktivitet></code><br>
      * or<br>
      * <code>List&lt;SubclassOfAktivitet></code>
-     *
+     * 
      * @return A list of {@link Aktivitet}er.
      */
     public List<? extends Aktivitet> getAktiviteter() {
@@ -119,7 +129,7 @@ public abstract class Utlatande {
      * <code>List&lt;Observation></code><br>
      * or<br>
      * <code>List&lt;SubclassOfObservation></code>
-     *
+     * 
      * @return A list of {@link Observation}er.
      */
     public List<? extends Observation> getObservationer() {
@@ -135,7 +145,7 @@ public abstract class Utlatande {
      * <code>List&lt;Vardkontakt></code><br>
      * or<br>
      * <code>List&lt;SubclassOfVardkontakt></code>
-     *
+     * 
      * @return A list of {@link Vardkontakt}er.
      */
     public List<? extends Vardkontakt> getVardkontakter() {
@@ -151,7 +161,7 @@ public abstract class Utlatande {
      * <code>List&lt;Rekommendation></code><br>
      * or<br>
      * <code>List&lt;SubclassOfRekommendation></code>
-     *
+     * 
      * @return A list of {@link Rekommendation}er.
      */
     public List<? extends Rekommendation> getRekommendationer() {
@@ -167,7 +177,7 @@ public abstract class Utlatande {
      * <code>List&lt;Referens></code><br>
      * or<br>
      * <code>List&lt;SubclassOfReferens></code>
-     *
+     * 
      * @return A list of {@link Referens}er.
      */
     public List<? extends Referens> getReferenser() {
@@ -176,14 +186,14 @@ public abstract class Utlatande {
 
     /**
      * Subclasses need to decide their respective validToDate, should return null if not applicable.
-     *
+     * 
      * @return {@link LocalDate}, or null if not applicable
      */
     public abstract LocalDate getValidToDate();
 
     /**
      * Subclasses need to decide their respective validFromDate, should return null if not applicable.
-     *
+     * 
      * @return {@link LocalDate}, or null if not applicable
      */
     public abstract LocalDate getValidFromDate();

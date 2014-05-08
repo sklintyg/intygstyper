@@ -18,7 +18,6 @@
  */
 package se.inera.certificate.modules.ts_diabetes.model.external;
 
-import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 
 /**
@@ -30,25 +29,13 @@ import se.inera.certificate.model.Kod;
  */
 public class Aktivitet extends se.inera.certificate.model.Aktivitet {
 
-    private Id id;
-
     private String plats;
 
     private Kod metod;
 
     private Kod aktivitetsstatus;
 
-    private Boolean forekomst;
-
     private String ostruktureradTid;
-
-    public Id getId() {
-        return id;
-    }
-
-    public void setId(Id id) {
-        this.id = id;
-    }
 
     public String getPlats() {
         return plats;
@@ -72,14 +59,6 @@ public class Aktivitet extends se.inera.certificate.model.Aktivitet {
 
     public void setAktivitetsstatus(Kod aktivitetsstatus) {
         this.aktivitetsstatus = aktivitetsstatus;
-    }
-
-    public Boolean getForekomst() {
-        return forekomst;
-    }
-
-    public void setForekomst(Boolean forekomst) {
-        this.forekomst = forekomst;
     }
 
     public String getOstruktureradTid() {

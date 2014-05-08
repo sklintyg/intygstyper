@@ -1,9 +1,13 @@
 package se.inera.certificate.model;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.joda.time.LocalDateTime;
+
 public class Observation {
+
+    private Id id;
 
     private Kod observationskategori;
 
@@ -13,7 +17,17 @@ public class Observation {
 
     private String beskrivning;
 
-    private List<PhysicalQuantity> varde;
+    private LocalDateTime observationstid;
+
+    private Boolean forekomst;
+
+    public final Id getId() {
+        return id;
+    }
+
+    public final void setId(Id id) {
+        this.id = id;
+    }
 
     public final Kod getObservationskategori() {
         return observationskategori;
@@ -47,11 +61,34 @@ public class Observation {
         this.beskrivning = beskrivning;
     }
 
-    public final List<PhysicalQuantity> getVarde() {
-        if (varde == null) {
-            varde = new ArrayList<>();
-        }
-        return varde;
+    /**
+     * Returns the list of varde for this observation.
+     * <p/>
+     * Note that this implementation only returns an immutable empty list of {@link Object}s. Subclasses which override
+     * this method should do this by concretise the return type like:
+     * <p/>
+     * <code>List&lt;PhysicalQuantity></code>
+     * 
+     * @return A list of {@link Object}s.
+     */
+    public List<? extends Object> getVarde() {
+        return Collections.emptyList();
+    }
+
+    public final LocalDateTime getObservationstid() {
+        return observationstid;
+    }
+
+    public final void setObservationstid(LocalDateTime observationstid) {
+        this.observationstid = observationstid;
+    }
+
+    public final Boolean getForekomst() {
+        return forekomst;
+    }
+
+    public final void setForekomst(Boolean forekomst) {
+        this.forekomst = forekomst;
     }
 
     public Utforarroll getUtforsAv() {

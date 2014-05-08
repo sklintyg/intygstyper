@@ -1,21 +1,25 @@
 package se.inera.certificate.modules.ts_diabetes.model.external;
 
-import org.joda.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.PhysicalQuantity;
 
 public class Observation extends se.inera.certificate.model.Observation {
 
-    private Id id;
-
-    private Boolean forekomst;
+    private List<PhysicalQuantity> varde;
 
     private Kod lateralitet;
 
     private String ostruktureradTid;
 
-    private LocalDate observationstid;
+    public List<PhysicalQuantity> getVarde() {
+        if (varde == null) {
+            varde = new ArrayList<>();
+        }
+        return varde;
+    }
 
     public Kod getLateralitet() {
         return lateralitet;
@@ -25,35 +29,11 @@ public class Observation extends se.inera.certificate.model.Observation {
         this.lateralitet = lateralitet;
     }
 
-    public Id getId() {
-        return id;
-    }
-
-    public void setId(Id id) {
-        this.id = id;
-    }
-
-    public Boolean getForekomst() {
-        return forekomst;
-    }
-
-    public void setForekomst(Boolean forekomst) {
-        this.forekomst = forekomst;
-    }
-
     public String getOstruktureradTid() {
         return ostruktureradTid;
     }
 
     public void setOstruktureradTid(String ostruktureradTid) {
         this.ostruktureradTid = ostruktureradTid;
-    }
-
-    public LocalDate getObservationstid() {
-        return observationstid;
-    }
-
-    public void setObservationstid(LocalDate observationstid) {
-        this.observationstid = observationstid;
     }
 }

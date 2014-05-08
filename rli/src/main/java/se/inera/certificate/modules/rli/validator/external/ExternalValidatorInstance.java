@@ -114,9 +114,9 @@ public class ExternalValidatorInstance {
 
         assertNotEmpty(skapatAv.getNamn(), elementPrefix + ".namn");
 
-        if (skapatAv.getBefattning() != null) {
+        if (!skapatAv.getBefattningar().isEmpty()) {
             // TODO: Change befattning to Kod when the time is right.
-            assertKodInEnum(new Kod(skapatAv.getBefattning()), BefattningsKod.class, elementPrefix + ".befattning");
+            assertKodInEnum(new Kod(skapatAv.getBefattningar().get(0)), BefattningsKod.class, elementPrefix + ".befattning");
         }
 
         validateVardenhet(skapatAv.getVardenhet(), elementPrefix);

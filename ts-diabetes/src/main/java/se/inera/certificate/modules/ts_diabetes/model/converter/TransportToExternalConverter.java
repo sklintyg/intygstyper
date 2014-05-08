@@ -24,6 +24,7 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
+import org.joda.time.LocalTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -350,7 +351,7 @@ public class TransportToExternalConverter {
         }
 
         if (source.getObservationstid() != null) {
-            observation.setObservationstid(source.getObservationstid());
+            observation.setObservationstid(source.getObservationstid().toLocalDateTime(LocalTime.MIDNIGHT));
         }
 
         return observation;
@@ -384,7 +385,7 @@ public class TransportToExternalConverter {
             throw new ConverterException("HosPersonal missing");
         }
         HosPersonal skapadAv = new HosPersonal();
-        skapadAv.getBefattningar().addAll(convertCDtoKod(source.getBefattnings()));
+        skapadAv.getBefattningar().addAll(source.getBefattnings());
         skapadAv.setId(IsoTypeConverter.toId(source.getPersonalId()));
         skapadAv.setNamn(source.getFullstandigtNamn());
         skapadAv.setVardenhet(convertVardenhet(source.getEnhet()));

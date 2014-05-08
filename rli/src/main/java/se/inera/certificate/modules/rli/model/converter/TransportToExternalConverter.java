@@ -340,7 +340,7 @@ public class TransportToExternalConverter {
         }
 
         if (source.getBefattning() != null) {
-            hosPersonal.setBefattning(source.getBefattning());
+            hosPersonal.getBefattningar().add(source.getBefattning());
         }
 
         hosPersonal.setVardenhet(convertEnhet(source.getEnhet()));

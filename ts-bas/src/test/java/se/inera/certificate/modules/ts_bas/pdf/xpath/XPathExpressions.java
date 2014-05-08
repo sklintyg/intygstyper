@@ -52,10 +52,10 @@ public class XPathExpressions {
             "/p:utlatande/p:skapadAv/p:specialitet/@code");
 
     public static final BooleanXPathExpression ST_LAKARE_CHECK_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:skapadAv/p:befattning/@code='203010'");
+            "p:utlatande/p:skapadAv/p:befattning='ST_LAKARE'");
 
     public static final BooleanXPathExpression AT_LAKARE_CHECK_XPATH = new BooleanXPathExpression(
-            "p:utlatande/p:skapadAv/p:befattning/@code='204010'");
+            "p:utlatande/p:skapadAv/p:befattning='AT_LAKARE'");
 
     public static final String INTYG_AVSER_TEMPLATE = "p:utlatande/p:intygAvser/@code = '%s'";
 

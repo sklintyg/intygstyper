@@ -1,14 +1,12 @@
 package se.inera.certificate.modules.fk7263.model.internal;
 
-import java.util.List;
-
 import static se.inera.certificate.model.util.Strings.emptyToNull;
 import static se.inera.certificate.model.util.Strings.join;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+
 import se.inera.certificate.model.LocalDateInterval;
-import se.inera.certificate.modules.fk7263.model.external.StatusMeta;
 
 /**
  * @author andreaskaltenbach
@@ -79,8 +77,6 @@ public class Fk7263Intyg {
 
     private String kommentar;
 
-    private List<StatusMeta> status;
-
     private LocalDateTime signeringsdatum;
 
     private Vardperson vardperson;
@@ -91,14 +87,6 @@ public class Fk7263Intyg {
 
     public void setAvstangningSmittskydd(boolean avstangningSmittskydd) {
         this.avstangningSmittskydd = avstangningSmittskydd;
-    }
-
-    public List<StatusMeta> getStatus() {
-        return status;
-    }
-
-    public void setStatus(List<StatusMeta> status) {
-        this.status = status;
     }
 
     public String getDiagnosKod() {

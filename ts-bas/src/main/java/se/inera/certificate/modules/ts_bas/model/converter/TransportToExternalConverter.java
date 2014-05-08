@@ -348,7 +348,7 @@ public class TransportToExternalConverter {
         }
 
         HosPersonal skapadAv = new HosPersonal();
-        skapadAv.getBefattningar().addAll(convertCDtoKod(source.getBefattnings()));
+        skapadAv.getBefattningar().addAll(source.getBefattnings());
         skapadAv.setId(IsoTypeConverter.toId(source.getPersonalId()));
         skapadAv.setNamn(source.getFullstandigtNamn());
         skapadAv.setVardenhet(convertVardenhet(source.getEnhet()));

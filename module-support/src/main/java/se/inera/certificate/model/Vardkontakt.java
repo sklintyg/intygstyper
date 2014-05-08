@@ -6,6 +6,8 @@ public class Vardkontakt {
 
     private LocalDateInterval vardkontaktstid;
 
+    private Kod idKontroll;
+
     public final Kod getVardkontakttyp() {
         return vardkontakttyp;
     }
@@ -20,5 +22,13 @@ public class Vardkontakt {
 
     public final void setVardkontaktstid(LocalDateInterval vardkontaktstid) {
         this.vardkontaktstid = vardkontaktstid;
+    }
+
+    public final Kod getIdKontroll() {
+        return idKontroll;
+    }
+
+    public final void setIdKontroll(Kod idKontroll) {
+        this.idKontroll = idKontroll;
     }
 }

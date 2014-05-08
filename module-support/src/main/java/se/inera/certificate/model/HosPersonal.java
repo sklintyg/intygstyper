@@ -1,5 +1,8 @@
 package se.inera.certificate.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class HosPersonal {
 
     private Id id;
@@ -8,7 +11,9 @@ public abstract class HosPersonal {
 
     private String forskrivarkod;
 
-    private String befattning;
+    private List<String> befattningar;
+
+    private List<Kod> yrkesgrupper;
 
     public final Id getId() {
         return id;
@@ -34,12 +39,18 @@ public abstract class HosPersonal {
         this.forskrivarkod = forskrivarkod;
     }
 
-    public final String getBefattning() {
-        return befattning;
+    public final List<String> getBefattningar() {
+        if (befattningar == null) {
+            befattningar = new ArrayList<>();
+        }
+        return befattningar;
     }
 
-    public final void setBefattning(String befattning) {
-        this.befattning = befattning;
+    public final List<Kod> getYrkesgrupper() {
+        if (yrkesgrupper == null) {
+            yrkesgrupper = new ArrayList<>();
+        }
+        return yrkesgrupper;
     }
 
     public abstract Vardenhet getVardenhet();

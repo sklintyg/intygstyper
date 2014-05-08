@@ -224,7 +224,7 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="befattning" type="iso:CD"
+      <xs:element name="befattning" type="xs:string"
         minOccurs="0" maxOccurs="unbounded" />
         
       <xs:element name="enhet" type="enhetType" />

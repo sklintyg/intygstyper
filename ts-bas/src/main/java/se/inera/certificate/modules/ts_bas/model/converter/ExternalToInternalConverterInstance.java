@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.ts_bas.model.codes.AktivitetKod;
-import se.inera.certificate.modules.ts_bas.model.codes.BefattningKod;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeSystem;
 import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
@@ -720,8 +719,7 @@ public class ExternalToInternalConverterInstance {
         intHoSPersonal.setPersonid(InternalModelConverterUtils.getExtensionFromId(extHoSPersonal.getId()));
         intHoSPersonal.setFullstandigtNamn(extHoSPersonal.getNamn());
 
-        intHoSPersonal.getBefattningar().addAll(
-                convertKodToString(extHoSPersonal.getBefattningar(), BefattningKod.class));
+        intHoSPersonal.getBefattningar().addAll(extHoSPersonal.getBefattningar());
         intHoSPersonal.getSpecialiteter().addAll(
                 convertKodToString(extHoSPersonal.getSpecialiteter(), SpecialitetKod.class));
 

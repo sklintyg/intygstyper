@@ -235,7 +235,7 @@ public class ExternalToTransportConverter {
             observation.setVarde(IsoTypeConverter.toPQ(source.getVarde().get(0)));
         }
         if (source.getObservationstid() != null) {
-            observation.setObservationstid(source.getObservationstid());
+            observation.setObservationstid(source.getObservationstid().toLocalDate());
         }
         if (source.getObservationsperiod() != null) {
             observation.setObservationsperiod(convertPartialDateInterval(source.getObservationsperiod()));
@@ -326,7 +326,7 @@ public class ExternalToTransportConverter {
      */
     private HosPersonalType convertHosPersonal(HosPersonal source) {
         HosPersonalType hosPersonal = new HosPersonalType();
-        hosPersonal.getBefattnings().addAll(convertKodToCD(source.getBefattningar()));
+        hosPersonal.getBefattnings().addAll(source.getBefattningar());
         hosPersonal.setEnhet(convertVardenhet(source.getVardenhet()));
         hosPersonal.setFullstandigtNamn(source.getNamn());
         hosPersonal.setPersonalId(IsoTypeConverter.toHsaId(source.getId()));

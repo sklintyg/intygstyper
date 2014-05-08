@@ -35,7 +35,7 @@
   <p:skapadAv>
     <p:personal-id extension="SE0000000000-1333" root="1.2.752.129.2.1.4.1" />
     <p:fullstandigtNamn>Doktor Thompson</p:fullstandigtNamn>
-    <p:befattning code="203010" codeSystem="1.2.752.129.2.2.1.4" codeSystemName="Befattning HSA" codeSystemVersion="3.1"/>
+    <p:befattning>ST_LAKARE</p:befattning>
     <p:enhet>
       <p:enhets-id extension="SE0000000000-1337" root="1.2.752.129.2.1.4.1" />
       <p:enhetsnamn>Vårdenhet Väst</p:enhetsnamn>

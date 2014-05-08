@@ -149,7 +149,9 @@ public class ExternalToInternalConverter {
 
         intHoSPersonal.setPersonid(InternalModelConverterUtils.getExtensionFromId(extHoSPersonal.getId()));
         intHoSPersonal.setFullstandigtNamn(extHoSPersonal.getNamn());
-        intHoSPersonal.setBefattning(extHoSPersonal.getBefattning());
+        if (!extHoSPersonal.getBefattningar().isEmpty()) {
+            intHoSPersonal.setBefattning(getSingleElement(extHoSPersonal.getBefattningar()));
+        }
 
         Vardenhet intVardenhet = convertToIntVardenhet(extHoSPersonal.getVardenhet());
         intHoSPersonal.setVardenhet(intVardenhet);
@@ -369,5 +371,13 @@ public class ExternalToInternalConverter {
         }
 
         return null;
+    }
+
+    private <T> T getSingleElement(List<T> list) throws ConverterException {
+        if (list != null && list.size() == 1) {
+            return list.get(0);
+        }
+
+        throw new ConverterException("Expected a single element in list - got " + (list == null ? 0 : list.size()));
     }
 }

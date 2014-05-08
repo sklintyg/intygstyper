@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.AktivitetKod;
-import se.inera.certificate.modules.ts_diabetes.model.codes.BefattningKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_diabetes.model.codes.CodeSystem;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
@@ -174,7 +173,7 @@ public class ExternalToInternalConverterInstance {
 
             if (allvarligHypoglykemiVaken.getForekomst()) {
                 hypoglykemier.setAllvarligForekomstVakenTidObservationstid(allvarligHypoglykemiVaken
-                        .getObservationstid().toString());
+                        .getObservationstid().toLocalDate().toString());
             }
         }
 
@@ -487,8 +486,7 @@ public class ExternalToInternalConverterInstance {
         intHoSPersonal.setPersonid(InternalModelConverterUtils.getExtensionFromId(extHoSPersonal.getId()));
         intHoSPersonal.setFullstandigtNamn(extHoSPersonal.getNamn());
 
-        intHoSPersonal.getBefattningar().addAll(
-                convertKodToString(extHoSPersonal.getBefattningar(), BefattningKod.class));
+        intHoSPersonal.getBefattningar().addAll(extHoSPersonal.getBefattningar());
         intHoSPersonal.getSpecialiteter().addAll(
                 convertKodToString(extHoSPersonal.getSpecialiteter(), SpecialitetKod.class));
 

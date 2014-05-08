@@ -31,7 +31,6 @@ import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.modules.ts_bas.model.codes.AktivitetKod;
-import se.inera.certificate.modules.ts_bas.model.codes.BefattningKod;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeSystem;
 import se.inera.certificate.modules.ts_bas.model.codes.HSpersonalKod;
@@ -597,7 +596,7 @@ public class InternalToExternalConverter {
         hosPersonal.setId(new Id(HSpersonalKod.HSA_ID.getCodeSystem(), source.getPersonid()));
         hosPersonal.setNamn(source.getFullstandigtNamn());
         hosPersonal.setVardenhet(convertToExtVardenhet(source.getVardenhet()));
-        hosPersonal.getBefattningar().addAll(convertStringToCode(BefattningKod.class, source.getBefattningar()));
+        hosPersonal.getBefattningar().addAll(source.getBefattningar());
         hosPersonal.getSpecialiteter().addAll(convertStringToCode(SpecialitetKod.class, source.getSpecialiteter()));
 
         return hosPersonal;
