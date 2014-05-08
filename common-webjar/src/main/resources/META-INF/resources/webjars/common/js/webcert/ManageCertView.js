@@ -15,7 +15,50 @@ define([
 
             //var member;
 
-            /*
+            /**
+             * Save draft to webcert
+             * @param $scope
+             * @private
+             */
+
+            function _save($scope) {
+                CertificateService.saveDraft($routeParams.certificateId, $scope.cert,
+                    function(data) {
+
+                        $scope.certForm.$setPristine();
+
+                        $scope.validationMessagesGrouped = {};
+                        $scope.validationMessages = [];
+
+                        if (data.status === 'COMPLETE') {
+                            $scope.isComplete = true;
+                        } else {
+                            $scope.isComplete = false;
+                            $scope.validationMessages = data.messages;
+
+                            angular.forEach(data.messages, function(message) {
+                                var field = message.field;
+                                var parts = field.split('.');
+                                var section;
+                                if (parts.length > 0) {
+                                    section = parts[0].toLowerCase();
+
+                                    if ($scope.validationMessagesGrouped[section]) {
+                                        $scope.validationMessagesGrouped[section].push(message);
+                                    } else {
+                                        $scope.validationMessagesGrouped[section] = [message];
+                                    }
+                                }
+                            });
+                        }
+                    }, function() {
+                        // Show error message if save fails
+                    }
+                );
+            }
+
+
+            /**
              * Discard a certificate draft
              */
             function _discard($scope) {
@@ -65,6 +108,7 @@ define([
 
             // Return public API for the service
             return {
+                save: _save,
                 discard: _discard
             };
         }
