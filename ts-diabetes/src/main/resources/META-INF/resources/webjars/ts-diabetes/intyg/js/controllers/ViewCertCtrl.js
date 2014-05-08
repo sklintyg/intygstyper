@@ -38,18 +38,16 @@ define([], function() {
                         if (key.selected) {
                             this.push(key);
                         }
-                    }, $scope.intygAvserList );
-                    
-                    for (var i = 0; i < $scope.intygAvserList.length; i++) {
-                        if (i < $scope.intygAvserList.length-1) {
-                                $scope.intygAvser += $scope.intygAvserList[i].type + (', ');
-                        }
-                        else {
+                    }, $scope.intygAvserList);
+
+                    for ( var i = 0; i < $scope.intygAvserList.length; i++) {
+                        if (i < $scope.intygAvserList.length - 1) {
+                            $scope.intygAvser += $scope.intygAvserList[i].type + (', ');
+                        } else {
                             $scope.intygAvser += $scope.intygAvserList[i].type;
                         }
                     }
                 }, true);
-                
 
                 $scope.dialog = {
                     acceptprogressdone: true,
@@ -105,18 +103,42 @@ define([], function() {
                 // Decide if helptext related to field 1.a) - 1.c)
                 $scope.achelptext = false;
 
+                $scope.filterStatuses = function(statuses) {
+                    var result = [];
+                    if (!angular.isObject(statuses)) {
+                        return result;
+                    }
+                    for ( var i = 0; i < statuses.length; i++) {
+                        if ($scope.userVisibleStatusFilter(statuses[i])) {
+                            result.push(statuses[i]);
+                        }
+                    }
+                    return result;
+                }
+
+                $scope.visibleStatuses = [ 'SENT' ];
+
+                $scope.userVisibleStatusFilter = function(status) {
+                    for ( var i = 0; i < $scope.visibleStatuses.length; i++) {
+                        if (status.type == $scope.visibleStatuses[i]) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
                 certificateService.getCertificate($routeParams.certificateId, function(result) {
                     $scope.doneLoading = true;
-                    if (result != null) {
-                        $scope.cert = result;
-                        $rootScope.cert = result;
+                    if (result !== null) {
+                        $scope.cert = result.utlatande;
+                        $scope.cert.status = $scope.filterStatuses(result.meta.statuses);
+                        $rootScope.cert = $scope.cert;
 
                     } else {
                         // show error view
-                        $location.path("/fel");
+                        $location.path("/visafel/certnotfound");
                     }
                 }, function(error) {
-                    $log.debug(error);
+                    $log.debug("got error");
                 });
             } ];
 });

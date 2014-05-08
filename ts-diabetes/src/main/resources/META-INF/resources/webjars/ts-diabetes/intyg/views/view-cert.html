@@ -52,7 +52,7 @@
           <span message key="ts-diabetes.label.latestevent"></span>
         </h2>
 <!--          Show if no events to show -->
-        <p ng-show="!cert.status">
+        <p ng-show="cert.status.length<1">
           <span message key="ts-diabetes.label.latestevent.noevents"></span></a>
         </p>
 

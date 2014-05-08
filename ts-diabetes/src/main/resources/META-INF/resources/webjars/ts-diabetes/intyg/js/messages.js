@@ -122,6 +122,7 @@ define(
                     "ts-diabetes.history.label.pagetitle": "Intygets alla händelser",
                     "ts-diabetes.status.sent": "Skickat till",
                     "ts-diabetes.target.mi": "Försäkringsbolaget",
+                    "ts-diabetes.target.ts": "Transportstyrelsen",
                     "ts-diabetes.label.pagetitle.step1": "Skicka intyg - steg 1 av 2",
                     "ts-diabetes.label.pagetitle.step2": "Skicka intyg - steg 2 av 2",
                     'ts-diabetes.sent.label.pageinformation': 'Intyget har nu skickats och nedan presenteras försändelsen.',
