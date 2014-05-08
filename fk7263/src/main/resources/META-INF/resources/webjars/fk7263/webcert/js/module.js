@@ -8,12 +8,12 @@ define([
     'common/js/webcert/ManageCertView',
     'webjars/common/js/wc-common-fragasvar-module',
     'webjars/common/js/wc-utils'
-], function(angular, controllers, messages, services, directives, commonCS, commonMCV, wcCommonFragaSvarModule, wcUtils) {
+], function(angular, controllers, messages, services, directives, wcCertificateService, wcManageCertView, wcCommonFragaSvarModule, wcUtils) {
     'use strict';
 
     var moduleName = 'fk7263';
 
-    var module = angular.module(moduleName, [controllers, services, directives, commonCS, commonMCV, wcCommonFragaSvarModule, wcUtils]);
+    var module = angular.module(moduleName, [controllers, services, directives, wcCertificateService, wcManageCertView, wcCommonFragaSvarModule, wcUtils]);
 
     module.config(['$routeProvider', function($routeProvider) {
         $routeProvider.

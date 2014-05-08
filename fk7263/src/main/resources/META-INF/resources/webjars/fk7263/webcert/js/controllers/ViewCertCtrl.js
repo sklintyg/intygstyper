@@ -1,8 +1,8 @@
 define([], function() {
     'use strict';
 
-    return [ '$scope', '$filter', '$location', 'fk7263.certificateService', '$http', '$routeParams', '$log',
-        function($scope, $filter, $location, certificateService, http, $routeParams, $log) {
+    return [ '$scope', '$filter', '$location', 'CertificateService', '$http', '$routeParams', '$log',
+        function($scope, $filter, $location, CertificateService, http, $routeParams, $log) {
             // init state
             $scope.widgetState = {
                 doneLoading: false,
@@ -54,7 +54,7 @@ define([], function() {
 
             $log.debug('Loading certificate ' + $routeParams.certificateId);
 
-            certificateService.getCertificate($routeParams.certificateId, function(result) {
+            CertificateService.getCertificate($routeParams.certificateId, function(result) {
                 $scope.widgetState.doneLoading = true;
                 if (result !== null && result !== '') {
                     $scope.cert = result.contents;
