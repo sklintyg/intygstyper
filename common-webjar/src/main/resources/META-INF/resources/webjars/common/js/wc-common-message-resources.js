@@ -10,6 +10,7 @@ define([], function() {
             'common.ok': 'OK',
             'common.cancel': 'Avbryt',
             'common.goback': 'Tillbaka',
+            'common.sign': 'Signera',
 
             'common.copy': 'Kopiera',
             'common.delete': 'Ta bort',

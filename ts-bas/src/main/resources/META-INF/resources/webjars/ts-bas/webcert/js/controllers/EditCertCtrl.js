@@ -99,6 +99,35 @@ define([ 'angular' ], function(angular) {
             $scope.discard = function() {
                 ManageCertView.discard($scope);
             };
+
+            /**
+             * Action to sign the certificate draft and return to Webcert again.
+             */
+            $scope.sign = function() {
+                var bodyText = 'Är du säker på att du vill signera utkastet?';
+                wcDialogService.showDialog($scope, {
+                    dialogId: 'confirm-sign',
+                    titleId: 'label.confirmsign',
+                    bodyText: bodyText,
+
+                    button1click: function() {
+                        $log.debug('sign draft ');
+                        $scope.dialog.acceptprogressdone = false;
+                        certificateService.signDraft($routeParams.certificateId, function(data) {
+                            $log.debug(data);
+                            $scope.dialog.acceptprogressdone = true;
+                        }, function(data) {
+                            $log.debug(data);
+                            $scope.dialog.acceptprogressdone = true;
+                        });
+                    },
+                    button1text: 'common.sign',
+                    button2text: 'common.cancel'
+                });
+
+
+
+            };
         }
     ];
 });
