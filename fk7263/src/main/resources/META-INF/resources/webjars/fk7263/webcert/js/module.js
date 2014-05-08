@@ -4,14 +4,16 @@ define([
     'fk7263/webcert/js/messages',
     'fk7263/webcert/js/services',
     'fk7263/webcert/js/directives',
+    'common/js/webcert/CertificateService',
+    'common/js/webcert/ManageCertView',
     'webjars/common/js/wc-common-fragasvar-module',
     'webjars/common/js/wc-utils'
-], function(angular, controllers, messages, services, directives, wcCommonFragaSvarModule, wcUtils) {
+], function(angular, controllers, messages, services, directives, commonCS, commonMCV, wcCommonFragaSvarModule, wcUtils) {
     'use strict';
 
     var moduleName = 'fk7263';
 
-    var module = angular.module(moduleName, [controllers, services, directives, wcCommonFragaSvarModule, wcUtils]);
+    var module = angular.module(moduleName, [controllers, services, directives, commonCS, commonMCV, wcCommonFragaSvarModule, wcUtils]);
 
     module.config(['$routeProvider', function($routeProvider) {
         $routeProvider.

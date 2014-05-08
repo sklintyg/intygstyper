@@ -1,7 +1,14 @@
-define([], function() {
+define(['angular'], function(angular) {
     'use strict';
 
-    return ['$http', '$log',
+    var moduleName = 'wc.CertificateService';
+
+    /**
+     * Common certificate management methods between certificate modules
+     */
+    var CertificateService = angular.module(moduleName, []);
+
+    CertificateService.factory('CertificateService', [ '$http', '$log',
         function($http, $log) {
 
             /*
@@ -78,5 +85,7 @@ define([], function() {
                 discardDraft: _discardDraft
             };
         }
-    ];
+    ]);
+
+    return moduleName;
 });
