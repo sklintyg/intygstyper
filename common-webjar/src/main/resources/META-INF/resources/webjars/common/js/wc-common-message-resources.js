@@ -58,7 +58,10 @@ define([], function() {
             'modules.label.blank': '- ej ifyllt',
 
             // Common errors
-            'common.error.cantconnect': 'Kunde inte kontakta servern'
+            'common.error.cantconnect': 'Kunde inte kontakta servern',
+            'common.error.certificatenotfound': 'Intyget finns inte',
+            'common.error.certificateinvalid': 'Intyget är inte korrekt ifyllt',
+            'common.error.signerror': 'Intyget kunde inte signeras. Försök igen.'
         },
         'en': {
             'common.ok': 'OK',
