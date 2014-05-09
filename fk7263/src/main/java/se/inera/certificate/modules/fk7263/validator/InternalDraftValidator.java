@@ -43,8 +43,8 @@ public class InternalDraftValidator {
 
         if ((utlatande.getPrognosis() != null && utlatande.getPrognosis().equals("UNKNOWN"))
                 && isNullOrEmpty(utlatande.getArbetsformagaPrognosGarInteAttBedomBeskrivning())) {
-            addValidationError(validationMessages, "arbetsformaga.prognos.gar-ej-att-bedomma.beskrivning",
-                    "fk7263.validation.arbetsformaga.prognos.gar-ej-att-bedomma.beskrivning.missing");
+            addValidationError(validationMessages, "prognos.gar-ej-att-bedomma.beskrivning",
+                    "fk7263.validation.prognos.gar-ej-att-bedomma.beskrivning.missing");
         }
 
     }
@@ -64,7 +64,7 @@ public class InternalDraftValidator {
         // Fält 10 - 4 optional checkboxes (but exclusive!)
         if (!hasMaxOneTruth(utlatande.isArbetsformataPrognosGarInteAttBedoma(), utlatande.isArbetsformataPrognosJa(),
                 utlatande.isArbetsformataPrognosJaDelvis(), utlatande.isArbetsformataPrognosNej())) {
-            addValidationError(validationMessages, "arbetsformaga.prognos", "fk7263.validation.arbetsformaga.prognos.choose-one");
+            addValidationError(validationMessages, "prognos", "fk7263.validation.prognos.choose-one");
         }
     }
 
