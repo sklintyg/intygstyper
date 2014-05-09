@@ -51,8 +51,15 @@
                 <label for="smittskydd" class="control-label title-single"><span message key="fk7263.label.smittskydd"></span></label>
             </div>
 
-			<div wc-field field-label="fk7263.label.basedon" field-number="4b" field-help-text="fk7263.helptext.intyg-baserat-pa" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
-                <div class="form-group form-inline">
+			<div wc-field field-label="fk7263.label.intyg-baserat-pa" field-number="4b" field-help-text="fk7263.helptext.intyg-baserat-pa" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
+				<div class="alert alert-danger" ng-if="validationMessagesGrouped['intyg-baserat-pa']">
+					<ul>
+						<li ng-repeat="message in validationMessagesGrouped['intyg-baserat-pa']"><span message
+								key="{{message.message}}"></span></li>
+					</ul>
+				</div>
+
+				<div class="form-group form-inline">
                     <label class="checkbox" style="min-width: 250px"><input type="checkbox" name="informationBasedOn.examination" class="checkbox-inline" ng-model="basedOnState.check.undersokningAvPatienten" ng-change="autoEnterDate('undersokningAvPatienten')"/> Min undersökning av patienten</label>
                     <span wc-date-picker-field target-model="cert.undersokningAvPatienten" on-change="basedOnState.check.undersokningAvPatienten = true" dom-id="undersokningAvPatienten-date"></span>
                 </div>
@@ -79,8 +86,14 @@
                 </div>
 			</div>
 
-			<div wc-field field-label="fk7263.label.diagnosis" field-number="2" field-help-text="fk7263.helptext.diagnos" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
-                <div class="row">
+			<div wc-field field-label="fk7263.label.diagnos" field-number="2" field-help-text="fk7263.helptext.diagnos" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
+				<div class="alert alert-danger" ng-if="validationMessagesGrouped.diagnos">
+					<ul>
+						<li ng-repeat="message in validationMessagesGrouped.diagnos"><span message
+								key="{{message.message}}"></span></li>
+					</ul>
+				</div>
+				<div class="row">
                     <div class='col-xs-3'>
                         <label class="control-label">ICD 10</label>
                         <input type="text" class="form-control" id="diagnose.code" name="diagnose.code"
@@ -126,26 +139,40 @@
                 </div>
 			</div>
 
-            <div wc-field field-label="fk7263.label.progressofdisease" field-number="3" field-help-text="fk7263.helptext.aktuellt-sjukdomsforlopp" ng-hide="cert.avstangningSmittskydd" ng-animate="fade">
+            <div wc-field field-label="fk7263.label.aktuellt-sjukdomsforlopp" field-number="3" field-help-text="fk7263.helptext.aktuellt-sjukdomsforlopp" ng-hide="cert.avstangningSmittskydd" ng-animate="fade">
                 <textarea id="diseaseCause" class="form-control" name="diseaseCause" rows='5' ng-model="cert.sjukdomsforlopp" wc-maxlength maxlength="{{inputLimits.sjukdomsforlopp}}"></textarea>
             </div>
 
-			<div wc-field field-label="fk7263.label.disabilities" field-number="4" field-help-text="fk7263.helptext.funktionsnedsattning" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
+			<div wc-field field-label="fk7263.label.funktionsnedsattningar" field-number="4" field-help-text="fk7263.helptext.funktionsnedsattning" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
+				<div class="alert alert-danger" ng-if="validationMessagesGrouped.funktionsnedsattning">
+					<ul>
+						<li ng-repeat="message in validationMessagesGrouped.funktionsnedsattning"><span message
+								key="{{message.message}}"></span></li>
+					</ul>
+				</div>
+
                 <a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
                     title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
                 <textarea id="disabilities" class="form-control" name="disabilities" rows='6' ng-model="cert.funktionsnedsattning" wc-maxlength maxlength="{{inputLimits.funktionsnedsattning}}"></textarea>
 			</div>
 
-			<div wc-field field-label="fk7263.label.limitation" field-number="5" field-help-text="fk7263.helptext.aktivitetsbegransning" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
+			<div wc-field field-label="fk7263.label.aktivitetsbegransning" field-number="5" field-help-text="fk7263.helptext.aktivitetsbegransning" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
                 <a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
                     title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
                 <textarea id="activityLimitation" class="form-control" name="activityLimitation" rows='10' ng-model="cert.aktivitetsbegransning" wc-maxlength maxlength="{{inputLimits.aktivitetsbegransning}}"></textarea>
 			</div>
 
             <!-- Arbete -->
-			<div wc-field field-label="fk7263.label.work" field-number="8a" field-help-text="fk7263.helptext.sysselsattning" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
+			<div wc-field field-label="fk7263.label.arbete" field-number="8a" field-help-text="fk7263.helptext.sysselsattning" ng-hide="cert.avstangningSmittskydd" ng-animate="'fade'">
+				<div class="alert alert-danger" ng-if="validationMessagesGrouped.sysselsattning">
+					<ul>
+						<li ng-repeat="message in validationMessagesGrouped.sysselsattning"><span message
+								key="{{message.message}}"></span></li>
+					</ul>
+				</div>
+
                 <div class="form-group form-inline">
-                    <label class="control-label"><span message key="fk7263.label.patientworkcapacity"></span></label>
+                    <label class="control-label"><span message key="fk7263.label.arbetsformaga"></span></label>
                     <div class="controls form-inline">
                         <label class="radio"><input type="radio" name="basedOnWork" value="CURRENT" ng-model="cert.basedOnWork" checked="checked"> Nuvarande arbete</label><span wc-enable-tooltip field-help-text="fk7263.helptext.sysselsattning.nuvarande"></span>
                         <div class="indent" ng-if="cert.basedOnWork == 'CURRENT'">
@@ -166,6 +193,13 @@
 
             <!-- Arbetsförmåga -->
 			<div wc-field field-label="fk7263.label.nedsattning" field-number="8b" field-help-text="fk7263.helptext.arbetsformaga">
+				<div class="alert alert-danger" ng-if="validationMessagesGrouped.arbetsformaga">
+					<ul>
+						<li ng-repeat="message in validationMessagesGrouped.arbetsformaga"><span message
+								key="{{message.message}}"></span></li>
+					</ul>
+				</div>
+
                 <div class="form-group form-inline">
                     Faktisk tjänstgöringstid <input style="width: 3em;" type="text"
                         id="capacityForWork.actualWorkingHoursPerWeek"
@@ -239,15 +273,23 @@
                 </div>
 			</div>
 
-			<div wc-field field-label="fk7263.label.patientworkcapacityjudgement" field-number="9" field-help-text="fk7263.helptext.arbetsformaga.bedoms-langre">
+			<div wc-field field-label="fk7263.label.arbetsformaga.bedomning" field-number="9" field-help-text="fk7263.helptext.arbetsformaga.bedoms-langre">
                 <a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
                     title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
                 <textarea id="capacityForWork.text" class="form-control" name="capacityForWork.text" rows='10' ng-model="cert.arbetsformagaPrognos" wc-maxlength maxlength="{{inputLimits.arbetsformagaPrognos}}"></textarea>
 			</div>
 
             <!-- Prognos -->
-			<div wc-field field-label="fk7263.label.prognosis" field-number="10" field-help-text="fk7263.helptext.arbetsformaga.prognos">
-                <a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
+			<div wc-field field-label="fk7263.label.prognos" field-number="10" field-help-text="fk7263.helptext.arbetsformaga.prognos">
+
+				<div class="alert alert-danger" ng-if="validationMessagesGrouped.prognos">
+					<ul>
+						<li ng-repeat="message in validationMessagesGrouped.prognos"><span message
+								key="{{message.message}}"></span></li>
+					</ul>
+				</div>
+
+				<a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod" target="_blank"
                     title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens försäkringsmedicinska beslutstöd</a>
                     <div class="form-group">
                         <label class="radio-inline"><input type="radio" name="capacityForWork.forecast" value="YES" ng-model="cert.prognosis" checked="checked"> Ja</label>
@@ -272,7 +314,7 @@
 			</div>
 
             <!-- Åtgärder -->
-			<div wc-field field-label="fk7263.label.treatments" field-number="6b" field-help-text="fk7263.helptext.atgarder">
+			<div wc-field field-label="fk7263.label.atgarder" field-number="6b" field-help-text="fk7263.helptext.atgarder">
                 <div class="form-group">
                     <label class="control-label">Planerad eller pågående behandling eller åtgärd inom sjukvården (ange vilken)</label>
                     <textarea id="measures.current" class="form-control" name="measures.current" rows='1' ng-model="cert.atgardInomSjukvarden" wc-maxlength maxlength="{{inputLimits.atgardInomSjukvarden}}"></textarea>
@@ -285,7 +327,7 @@
             </div>
 
             <!-- Rekommendationer -->
-			<div wc-field field-label="fk7263.label.recommendations" field-number="6a, 7, 11" field-help-text="fk7263.helptext.rekommendationer" class="form-inline">
+			<div wc-field field-label="fk7263.label.rekommendationer" field-number="6a, 7, 11" field-help-text="fk7263.helptext.rekommendationer" class="form-inline">
                 <div class="form-group form-inline">
 					<label class="checkbox"><input type="checkbox" name="recommendationsToFk.travel" ng-model="cert.ressattTillArbeteAktuellt"> Resor till och från arbetet med annat färdmedel än normalt kan göra det möjligt för patienten att återgå i arbete</label> <span wc-enable-tooltip field-help-text="fk7263.helptext.rekommendationer.resor"></span>
 				</div>
@@ -327,16 +369,16 @@
                 </div>
 			</div>
 
-			<div wc-field field-label="edit.label.fkcontact" field-number="12" field-help-text="fk7263.helptext.kontakt">
+			<div wc-field field-label="fk7263.label.fk-kontakt" field-number="12" field-help-text="fk7263.helptext.kontakt">
                 <label class="checkbox"><input type="checkbox" name="contactWithFkRequested" ng-model="cert.kontaktMedFk" /> Kontakt önskas med	Försäkringskassan</label>
 			</div>
 
-			<div wc-field field-label="fk7263.label.otherinformation" field-number="13" field-help-text="fk7263.helptext.ovrigt">
+			<div wc-field field-label="fk7263.label.ovrigt" field-number="13" field-help-text="fk7263.helptext.ovrigt">
                 <textarea name="otherInformation" rows='10'	class='form-control otherInformation' ng-model="cert.kommentar" ng-change="limitOtherField('kommentar')"></textarea>
                 <div class="counter">Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}</div>
 			</div>
 
-			<div wc-field field-label="fk7263.label.unitaddress" field-number="15">
+			<div wc-field field-label="fk7263.label.vardenhet.adress" field-number="15">
                 <label class="control-label">VårdEnhetA (0123456789012), IFV Testdata</label>
 
                 <div class="form-horizontal">
