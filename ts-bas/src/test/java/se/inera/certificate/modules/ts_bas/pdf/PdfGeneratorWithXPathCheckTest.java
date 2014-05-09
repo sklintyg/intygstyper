@@ -95,6 +95,7 @@ public class PdfGeneratorWithXPathCheckTest {
         XPath xPath = XPathFactory.newInstance().newXPath();
         SimpleNamespaceContext namespaces = new SimpleNamespaceContext();
         namespaces.bindNamespaceUri("p", "urn:riv:clinicalprocess:healthcond:certificate:1");
+        namespaces.bindNamespaceUri("p2", "urn:riv:clinicalprocess:healthcond:certificate:ts-bas:1");
         xPath.setNamespaceContext(namespaces);
         Node document = generateDocumentFor(transportModel);
 

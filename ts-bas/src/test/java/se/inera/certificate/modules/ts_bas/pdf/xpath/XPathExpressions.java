@@ -5,9 +5,9 @@ package se.inera.certificate.modules.ts_bas.pdf.xpath;
  */
 public class XPathExpressions {
 
-    public static final StringXPathExpression TS_UTGAVA_XPATH = new StringXPathExpression("p:utlatande/p:utgava");
+    public static final StringXPathExpression TS_UTGAVA_XPATH = new StringXPathExpression("p:utlatande/p2:utgava");
 
-    public static final StringXPathExpression TS_VERSION_XPATH = new StringXPathExpression("p:utlatande/p:version");
+    public static final StringXPathExpression TS_VERSION_XPATH = new StringXPathExpression("p:utlatande/p2:version");
 
     public static final StringXPathExpression INVANARE_ADRESS_FALT1_XPATH = new StringXPathExpression(
             "concat(p:utlatande/p:patient/p:fornamn, ' ', p:utlatande/p:patient/p:efternamn)");
@@ -22,10 +22,10 @@ public class XPathExpressions {
             "translate(p:utlatande/p:patient/p:person-id/@extension, '-', '')");
 
     public static final StringXPathExpression VARD_PA_SJUKHUS_TID_XPATH = new StringXPathExpression(
-            "p:utlatande/p:aktivitet/p:ostruktureradtid[(parent::p:aktivitet/p:aktivitetskod/@code='AKT19')]");
+            "p:utlatande/p:aktivitet/p2:ostruktureradtid[(parent::p:aktivitet/p:aktivitetskod/@code='AKT19')]");
 
     public static final StringXPathExpression VARD_PA_SJUKHUS_VARDINRATTNING_XPATH = new StringXPathExpression(
-            "p:utlatande/p:aktivitet/p:plats[(parent::p:aktivitet/p:aktivitetskod/@code='AKT19')]");
+            "p:utlatande/p:aktivitet/p2:plats[(parent::p:aktivitet/p:aktivitetskod/@code='AKT19')]");
 
     public static final StringXPathExpression OVRIG_BESKRIVNING_XPATH = new StringXPathExpression(
             "p:utlatande/p:kommentar");
@@ -46,10 +46,10 @@ public class XPathExpressions {
             "/p:utlatande/p:skapadAv/p:fullstandigtNamn");
 
     public static final BooleanXPathExpression SPECIALISTKOMPETENS_CHECK_XPATH = new BooleanXPathExpression(
-            "/p:utlatande/p:skapadAv/p:specialitet/@code");
+            "/p:utlatande/p:skapadAv/p2:specialitet/@code");
 
     public static final StringXPathExpression SPECIALISTKOMPETENS_BESKRVNING_XPATH = new StringXPathExpression(
-            "/p:utlatande/p:skapadAv/p:specialitet/@code");
+            "/p:utlatande/p:skapadAv/p2:specialitet/@code");
 
     public static final BooleanXPathExpression ST_LAKARE_CHECK_XPATH = new BooleanXPathExpression(
             "p:utlatande/p:skapadAv/p:befattning='ST_LAKARE'");
@@ -57,7 +57,7 @@ public class XPathExpressions {
     public static final BooleanXPathExpression AT_LAKARE_CHECK_XPATH = new BooleanXPathExpression(
             "p:utlatande/p:skapadAv/p:befattning='AT_LAKARE'");
 
-    public static final String INTYG_AVSER_TEMPLATE = "p:utlatande/p:intygAvser/@code = '%s'";
+    public static final String INTYG_AVSER_TEMPLATE = "p:utlatande/p2:intygAvser/@code = '%s'";
 
     public static final String AKTIVITET_FOREKOMST_TEMPLATE = "p:utlatande/p:aktivitet/p:forekomst[parent::p:aktivitet/p:aktivitetskod/@code='%s'] = '%s'";
 
@@ -67,15 +67,15 @@ public class XPathExpressions {
 
     public static final String OBSERVATION_FOREKOMST_TEMPLATE = "p:utlatande/p:observation/p:forekomst[parent::p:observation/p:observationskod/@code='%s'] = '%s'";
 
-    public static final String OBSERVATION_VARDE_INT_CODE_LATERALITET = "substring-before(p:utlatande/p:observation/p:varde[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p:lateralitet/@code='%s')]/@value, '.')";
+    public static final String OBSERVATION_VARDE_INT_CODE_LATERALITET = "substring-before(p:utlatande/p:observation/p:varde[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p2:lateralitet/@code='%s')]/@value, '.')";
 
-    public static final String OBSERVATION_VARDE_DEC_CODE_LATERALITET = "substring-after(p:utlatande/p:observation/p:varde[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p:lateralitet/@code='%s')]/@value, '.')";
+    public static final String OBSERVATION_VARDE_DEC_CODE_LATERALITET = "substring-after(p:utlatande/p:observation/p:varde[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p2:lateralitet/@code='%s')]/@value, '.')";
 
-    public static final String OBSERVATION_FOREKOMST_CODE_LATERALITET = "p:utlatande/p:observation/p:forekomst[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p:lateralitet/@code='%s')]='true'";
+    public static final String OBSERVATION_FOREKOMST_CODE_LATERALITET = "p:utlatande/p:observation/p:forekomst[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p2:lateralitet/@code='%s')]='true'";
 
     public static final String OBSERVATION_BESKRIVNING_TEMPLATE = "p:utlatande/p:observation/p:beskrivning[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p:forekomst = 'true')] ";
 
-    public static final String REKOMMENDATION_VARDE_TEMPLATE = "p:utlatande/p:rekommendation/p:varde/@code = '%s'";
+    public static final String REKOMMENDATION_VARDE_TEMPLATE = "p:utlatande/p:rekommendation/p2:varde/@code = '%s'";
 
     public static final String REKOMMENDATION_BESKRIVNING_TEMPLATE = "p:utlatande/p:rekommendation/p:beskrivning[parent::p:rekommendation/p:rekommendationskod/@code='%s']";
 

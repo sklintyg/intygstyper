@@ -42,7 +42,6 @@ import se.inera.certificate.ts_bas.iso.v21090.dt.v1.CD;
 import se.inera.certificate.ts_bas.model.v1.AktivitetType;
 import se.inera.certificate.ts_bas.model.v1.EnhetType;
 import se.inera.certificate.ts_bas.model.v1.HosPersonalType;
-import se.inera.certificate.ts_bas.model.v1.ObservationAktivitetRelationType;
 import se.inera.certificate.ts_bas.model.v1.ObservationType;
 import se.inera.certificate.ts_bas.model.v1.PatientType;
 import se.inera.certificate.ts_bas.model.v1.RekommendationType;
@@ -110,13 +109,13 @@ public class TransportToExternalConverter {
      * @throws ConverterException
      */
     private Collection<? extends ObservationAktivitetRelation> convertObservationAktivitetRelationer(
-            List<ObservationAktivitetRelationType> source) throws ConverterException {
+            List<se.inera.certificate.ts_bas.model.ext.v1.ObservationAktivitetRelation> source) throws ConverterException {
         if (source == null) {
             throw new ConverterException();
         }
         List<ObservationAktivitetRelation> converted = new ArrayList<ObservationAktivitetRelation>();
 
-        for (ObservationAktivitetRelationType it : source) {
+        for (se.inera.certificate.ts_bas.model.ext.v1.ObservationAktivitetRelation it : source) {
             converted.add(convertObservationRelation(it));
         }
 
@@ -130,7 +129,7 @@ public class TransportToExternalConverter {
      *            {@link ObservationAktivitetRelationType}
      * @return {@link ObservationAktivitetRelation}
      */
-    private ObservationAktivitetRelation convertObservationRelation(ObservationAktivitetRelationType source) {
+    private ObservationAktivitetRelation convertObservationRelation(se.inera.certificate.ts_bas.model.ext.v1.ObservationAktivitetRelation source) {
         ObservationAktivitetRelation converted = new ObservationAktivitetRelation();
         converted.setAktivitetsid(IsoTypeConverter.toId(source.getAktivitetsid()));
         converted.setObservationsid(IsoTypeConverter.toId(source.getObservationsid()));
@@ -240,8 +239,8 @@ public class TransportToExternalConverter {
             aktivitet.setAktivitetsstatus(IsoTypeConverter.toKod(source.getAktivitetsstatus()));
         }
 
-        if (source.getAktivitetsid() != null) {
-            aktivitet.setId(IsoTypeConverter.toId(source.getAktivitetsid()));
+        if (source.getAktivitetsId() != null) {
+            aktivitet.setId(IsoTypeConverter.toId(source.getAktivitetsId()));
         }
 
         if (source.getMetod() != null) {
@@ -300,8 +299,8 @@ public class TransportToExternalConverter {
             observation.setForekomst(source.isForekomst());
         }
 
-        if (source.getObservationsid() != null) {
-            observation.setId(IsoTypeConverter.toId(source.getObservationsid()));
+        if (source.getObservationsId() != null) {
+            observation.setId(IsoTypeConverter.toId(source.getObservationsId()));
         }
 
         observation.setObservationskod(IsoTypeConverter.toKod(source.getObservationskod()));
