@@ -38,12 +38,13 @@ public class InternalDraftValidator {
         // If field 4 annat satt or field 10 går ej att bedömma is set then
         // field 13 should contain data.
         if (utlatande.getAnnanReferens() != null && isNullOrEmpty(utlatande.getAnnanReferensBeskrivning())) {
-            addValidationError(validationMessages, "Field 4", "fk7263.validation.intyg-baserat-pa.annat.beskrivning.missing");
+            addValidationError(validationMessages, "intyg-baserat-pa.annat", "fk7263.validation.intyg-baserat-pa.annat.beskrivning.missing");
         }
 
         if ((utlatande.getPrognosis() != null && utlatande.getPrognosis().equals("UNKNOWN"))
                 && isNullOrEmpty(utlatande.getArbetsformagaPrognosGarInteAttBedomBeskrivning())) {
-            addValidationError(validationMessages, "Field 10", "fk7263.validation.prognos.gar-ej-att-bedomma.beskrivning.missing");
+            addValidationError(validationMessages, "arbetsformaga.prognos.gar-ej-att-bedomma.beskrivning",
+                    "fk7263.validation.arbetsformaga.prognos.gar-ej-att-bedomma.beskrivning.missing");
         }
 
     }
@@ -55,7 +56,7 @@ public class InternalDraftValidator {
 
         // Fält 11 - If set only one should be set
         if (inForandratRessatt && inEjForandratRessatt) {
-            addValidationError(validationMessages, "Field 11", "Only one forandrat ressatt could be set.");
+            addValidationError(validationMessages, "forandrat-ressatt", "fk7263.validation.forandrat-ressatt.choose-one");
         }
     }
 
@@ -63,7 +64,7 @@ public class InternalDraftValidator {
         // Fält 10 - 4 optional checkboxes (but exclusive!)
         if (!hasMaxOneTruth(utlatande.isArbetsformataPrognosGarInteAttBedoma(), utlatande.isArbetsformataPrognosJa(),
                 utlatande.isArbetsformataPrognosJaDelvis(), utlatande.isArbetsformataPrognosNej())) {
-            addValidationError(validationMessages, "Field 10", "Only one arbetsformaga.prognos field can be checked!");
+            addValidationError(validationMessages, "arbetsformaga.prognos", "fk7263.validation.arbetsformaga.prognos.choose-one");
         }
     }
 
@@ -74,12 +75,12 @@ public class InternalDraftValidator {
             boolean hasArbetsuppgifts = !StringUtils.isEmpty(utlatande.getNuvarandeArbetsuppgifter());
 
             if (!hasArbetsuppgifts && !utlatande.isArbetsloshet() && !utlatande.isForaldrarledighet()) {
-                addValidationError(validationMessages, "Field 8a", "fk7263.validation.sysselsattning.missing");
+                addValidationError(validationMessages, "sysselsattning", "fk7263.validation.sysselsattning.missing");
             }
         }
 
         // validate 8b - regardless of smittskydd
-        validateIntervals(validationMessages, "Field 8b", utlatande.getNedsattMed100(), utlatande.getNedsattMed75(),
+        validateIntervals(validationMessages, "arbetsformaga", utlatande.getNedsattMed100(), utlatande.getNedsattMed75(),
                 utlatande.getNedsattMed50(), utlatande.getNedsattMed25());
     }
 
@@ -87,7 +88,7 @@ public class InternalDraftValidator {
         // Fält 4 - vänster Check that we got a funktionsnedsattning element
         String funktionsnedsattning = utlatande.getFunktionsnedsattning();
         if (!utlatande.isAvstangningSmittskydd() && (funktionsnedsattning == null)) {
-            addValidationError(validationMessages, "Field 4", "fk7263.validation.funktionsnedsattning.missing");
+            addValidationError(validationMessages, "funktionsnedsattning", "fk7263.validation.funktionsnedsattning.missing");
             return;
         }
 
@@ -97,7 +98,7 @@ public class InternalDraftValidator {
 
             if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
                     && utlatande.getJournaluppgifter() == null && utlatande.getAnnanReferens() == null) {
-                addValidationError(validationMessages, "Field 4", "fk7263.validation.intyg-baserat-pa.missing");
+                addValidationError(validationMessages, "intyg-baserat-pa", "fk7263.validation.intyg-baserat-pa.missing");
             }
 
         }
@@ -106,7 +107,7 @@ public class InternalDraftValidator {
     private void validateDiagnose(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
         // Fält 2 - Medicinskt tillstånd kod - mandatory if not smittskydd
         if (!utlatande.isAvstangningSmittskydd() && isNullOrEmpty(utlatande.getDiagnosKod())) {
-            addValidationError(validationMessages, "Field 2", "fk7263.validation.diagnos.missing");
+            addValidationError(validationMessages, "diagnos", "fk7263.validation.diagnos.missing");
         }
 
         // Fält 3 - always optional regardless of smittskydd
@@ -114,11 +115,11 @@ public class InternalDraftValidator {
 
     /**
      * Check if there are validation errors.
-     *
-     * @param validationMessages list of validation messages
-     * @return {@link se.inera.certificate.modules.support.api.dto.ValidationStatus#VALID}
-     * if there are no errors, and {@link se.inera.certificate.modules.support.api.dto.ValidationStatus#INVALID}
-     * otherwise
+     * 
+     * @param validationMessages
+     *            list of validation messages
+     * @return {@link se.inera.certificate.modules.support.api.dto.ValidationStatus#VALID} if there are no errors, and
+     *         {@link se.inera.certificate.modules.support.api.dto.ValidationStatus#INVALID} otherwise
      */
     private ValidationStatus getValidationStatus(List<ValidationMessage> validationMessages) {
         return (validationMessages.isEmpty()) ? se.inera.certificate.modules.support.api.dto.ValidationStatus.VALID
@@ -127,10 +128,13 @@ public class InternalDraftValidator {
 
     /**
      * Create a ValidationMessage and add it to the list of messages.
-     *
-     * @param validationMessages list collection messages
-     * @param field a String with the name of the field
-     * @param msg   a String with an error code for the front end implementation
+     * 
+     * @param validationMessages
+     *            list collection messages
+     * @param field
+     *            a String with the name of the field
+     * @param msg
+     *            a String with an error code for the front end implementation
      */
     private void addValidationError(List<ValidationMessage> validationMessages, String field, String msg) {
         validationMessages.add(new ValidationMessage(field, msg));
@@ -138,7 +142,8 @@ public class InternalDraftValidator {
     }
 
     /**
-     * @param values values
+     * @param values
+     *            values
      * @return boolean
      */
     private boolean hasMaxOneTruth(boolean... values) {
@@ -155,10 +160,13 @@ public class InternalDraftValidator {
     }
 
     /**
-     *
-     * @param validationMessages list collecting message
-     * @param fieldId field id
-     * @param intervals intervals
+     * 
+     * @param validationMessages
+     *            list collecting message
+     * @param fieldId
+     *            field id
+     * @param intervals
+     *            intervals
      * @return booleans
      */
     protected boolean validateIntervals(List<ValidationMessage> validationMessages, String fieldId, LocalDateInterval... intervals) {
@@ -195,7 +203,8 @@ public class InternalDraftValidator {
     }
 
     /**
-     * @param intervals intervals
+     * @param intervals
+     *            intervals
      * @return boolean
      */
     private boolean allNulls(LocalDateInterval[] intervals) {
@@ -208,8 +217,10 @@ public class InternalDraftValidator {
     }
 
     /**
-     * @param start start
-     * @param end end
+     * @param start
+     *            start
+     * @param end
+     *            end
      * @return Interval
      */
     private Interval createInterval(LocalDate start, LocalDate end) {
