@@ -89,7 +89,6 @@ public class InternalDraftValidator {
         String funktionsnedsattning = utlatande.getFunktionsnedsattning();
         if (!utlatande.isAvstangningSmittskydd() && (funktionsnedsattning == null)) {
             addValidationError(validationMessages, "funktionsnedsattning", "fk7263.validation.funktionsnedsattning.missing");
-            return;
         }
 
         // Fält 4 - höger Check that we at least got one field set regarding
@@ -98,7 +97,7 @@ public class InternalDraftValidator {
 
             if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
                     && utlatande.getJournaluppgifter() == null && utlatande.getAnnanReferens() == null) {
-                addValidationError(validationMessages, "intyg-baserat-pa", "fk7263.validation.intyg-baserat-pa.missing");
+                addValidationError(validationMessages, "intygbaseratpa", "fk7263.validation.intyg-baserat-pa.missing");
             }
 
         }
