@@ -10,8 +10,8 @@ define([
      */
     var ManageCertView = angular.module(moduleName, []);
 
-    ManageCertView.factory('ManageCertView', [ '$http', '$log', '$location', '$routeParams', 'wcDialogService', 'CertificateService', 'statService',
-        function($http, $log, $location, $routeParams, wcDialogService, CertificateService, statService) {
+    ManageCertView.factory('ManageCertView', [ '$http', '$log', '$location', '$route', '$routeParams', '$timeout', 'wcDialogService', 'CertificateService', 'statService',
+        function($http, $log, $location, $route, $routeParams, $timeout, wcDialogService, CertificateService, statService) {
 
             //var member;
 
@@ -106,10 +106,67 @@ define([
                 });
             }
 
+            function _sign($scope) {
+                var bodyText = 'Är du säker på att du vill signera intyget?';
+                var dialog = wcDialogService.showDialog($scope, {
+                    dialogId: 'confirm-sign',
+                    titleId: 'label.confirmsign',
+                    bodyText: bodyText,
+                    autoClose: false,
+                    button1id: 'confirm-signera-utkast-button',
+
+                    button1click: function() {
+                        $log.debug('sign draft ');
+                        $scope.dialog.acceptprogressdone = false;
+                        $scope.dialog.showerror = false;
+                        CertificateService.signDraft($routeParams.certificateId, function(data) {
+                            (function checkStatus() {
+                                CertificateService.getSignStatus(data.id, function(data) {
+                                    $log.debug(data);
+                                    if ('BEARBETAR' === data.status) {
+                                        $scope._timer = $timeout(checkStatus, 1000);
+                                    } else if ('SIGNERAD' === data.status) {
+                                        statService.refreshStat(); // Update statistics to reflect change
+                                        $scope.dialog.acceptprogressdone = true;
+                                        dialog.close();
+                                        $route.reload();
+                                    } else {
+                                        $scope.dialog.acceptprogressdone = true;
+                                        $scope.dialog.showerror = true;
+                                        $scope.dialog.errormessageid = 'common.error.signerror';
+                                    }
+                                });
+                            })();
+                        }, function(error) {
+                            $scope.dialog.acceptprogressdone = true;
+                            $scope.dialog.showerror = true;
+                            if (error.errorCode === 'DATA_NOT_FOUND') {
+                                $scope.dialog.errormessageid = 'common.error.certificatenotfound';
+                            } else if (error.errorCode === 'INVALID_STATE') {
+                                $scope.dialog.errormessageid = 'common.error.certificateinvalid';
+                            } else if (error === '') {
+                                $scope.dialog.errormessageid = 'common.error.cantconnect';
+                            } else {
+                                $scope.dialog.errormessageid = ('error.message.' + error.errorCode).toLowerCase();
+                            }
+                        });
+                    },
+                    button1text: 'common.sign',
+                    button2click: function() {
+                        if ($scope._timer) {
+                            $timeout.cancel($scope._timer);
+                        }
+                        $scope.dialog.acceptprogressdone = true;
+                    },
+                    button2text: 'common.cancel'
+                });
+            }
+
             // Return public API for the service
             return {
                 save: _save,
-                discard: _discard
+                discard: _discard,
+                sign: _sign
             };
         }
     ]);

@@ -1,10 +1,8 @@
 define([ 'angular' ], function(angular) {
     'use strict';
 
-    return [ '$scope', '$log', '$location', '$anchorScroll', '$route', '$routeParams', '$timeout',
-        'ts-bas.certificateService', 'statService', 'wcDialogService', 'CertificateService', 'ManageCertView', 'User',
-        function($scope, $log, $location, $anchorScroll, $route, $routeParams, $timeout, certificateService,
-            statService, wcDialogService, CertificateService, ManageCertView, User) {
+    return [ '$scope', '$log', '$location', '$anchorScroll', '$routeParams', 'CertificateService', 'ManageCertView', 'User',
+        function($scope, $log, $location, $anchorScroll, $routeParams, CertificateService, ManageCertView, User) {
             $scope.cert = {};
 
             $scope.messages = [];
@@ -108,58 +106,7 @@ define([ 'angular' ], function(angular) {
              * Action to sign the certificate draft and return to Webcert again.
              */
             $scope.sign = function() {
-                var bodyText = 'Är du säker på att du vill signera intyget?';
-                var dialog = wcDialogService.showDialog($scope, {
-                    dialogId: 'confirm-sign',
-                    titleId: 'label.confirmsign',
-                    bodyText: bodyText,
-                    autoClose: false,
-
-                    button1click: function() {
-                        $log.debug('sign draft ');
-                        $scope.dialog.acceptprogressdone = false;
-                        $scope.dialog.showerror = false;
-                        certificateService.signDraft($routeParams.certificateId, function(data) {
-                            (function checkStatus() {
-                                certificateService.getSignStatus(data.id, function(data) {
-                                    $log.debug(data);
-                                    if ('BEARBETAR' === data.status) {
-                                        $scope._timer = $timeout(checkStatus, 1000);
-                                    } else if ('SIGNERAD' === data.status) {
-                                        statService.refreshStat(); // Update statistics to reflect change
-                                        $scope.dialog.acceptprogressdone = true;
-                                        dialog.close();
-                                        $route.reload();
-                                    } else {
-                                        $scope.dialog.acceptprogressdone = true;
-                                        $scope.dialog.showerror = true;
-                                        $scope.dialog.errormessageid = 'common.error.signerror';
-                                    }
-                                });
-                            })();
-                        }, function(error) {
-                            $scope.dialog.acceptprogressdone = true;
-                            $scope.dialog.showerror = true;
-                            if (error.errorCode === 'DATA_NOT_FOUND') {
-                                $scope.dialog.errormessageid = 'common.error.certificatenotfound';
-                            } else if (error.errorCode === 'INVALID_STATE') {
-                                $scope.dialog.errormessageid = 'common.error.certificateinvalid';
-                            } else if (error === '') {
-                                $scope.dialog.errormessageid = 'common.error.cantconnect';
-                            } else {
-                                $scope.dialog.errormessageid = ('error.message.' + error.errorCode).toLowerCase();
-                            }
-                        });
-                    },
-                    button1text: 'common.sign',
-                    button2click: function() {
-                        if ($scope._timer) {
-                            $timeout.cancel($scope._timer);
-                        }
-                        $scope.dialog.acceptprogressdone = true;
-                    },
-                    button2text: 'common.cancel'
-                });
+                ManageCertView.sign($scope);
             };
         }
     ];

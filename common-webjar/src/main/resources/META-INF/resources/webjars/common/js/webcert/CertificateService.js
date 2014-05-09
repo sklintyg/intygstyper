@@ -77,12 +77,42 @@ define(['angular'], function(angular) {
                     });
             }
 
+            function _signDraft(id, onSuccess, onError) {
+                $log.debug('_signDraft id:' + id);
+                var restPath = '/moduleapi/intyg/signera/' + id;
+                $http.post(restPath).
+                    success(function(data) {
+                        $log.debug('_signDraft data: ' + data);
+                        onSuccess(data);
+                    }).
+                    error(function(data, status) {
+                        $log.error('error ' + status);
+                        onError(data);
+                    });
+            }
+
+            function _getSignStatus(biljettId, onSuccess, onError) {
+                $log.debug('_getSignStatus biljettId: ' + biljettId);
+                var restPath = '/moduleapi/intyg/signera/status/' + biljettId;
+                $http.get(restPath).
+                    success(function(data) {
+                        $log.debug('_getSignStatus status: ' + data.status);
+                        onSuccess(data);
+                    }).
+                    error(function (data, status) {
+                        $log.error('error ' + status);
+                        onError(data);
+                    });
+            }
+
             // Return public API for the service
             return {
                 getCertificate: _getCertificate,
                 getDraft: _getDraft,
                 saveDraft: _saveDraft,
-                discardDraft: _discardDraft
+                discardDraft: _discardDraft,
+                signDraft: _signDraft,
+                getSignStatus : _getSignStatus
             };
         }
     ]);
