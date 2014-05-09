@@ -1,13 +1,15 @@
 define([ 'angular' ], function(angular) {
     'use strict';
 
-    return [
-        '$scope', '$log', '$location', '$filter', '$anchorScroll', '$routeParams', '$timeout', 'CertificateService', 'ManageCertView', 'User',
-        function($scope, $log, $location, $filter, $anchorScroll, $routeParams, $timeout, CertificateService, ManageCertView, User) {
+    return [ '$scope', '$log', '$location', '$filter', '$anchorScroll', '$route', '$routeParams', '$timeout',
+        'fk7263.certificateService', 'statService', 'wcDialogService', 'CertificateService', 'ManageCertView', 'User',
+        function($scope, $log, $location, $filter, $anchorScroll, $route, $routeParams, $timeout, certificateService,
+            statService, wcDialogService, CertificateService, ManageCertView, User) {
             $scope.cert = {};
 
             $scope.messages = [];
             $scope.isComplete = false;
+            $scope.isSigned = false;
             $scope.user = User;
 
             // init state
@@ -294,7 +296,8 @@ define([ 'angular' ], function(angular) {
             // TODO: Hide the form until the draft has been loaded.
             CertificateService.getDraft($routeParams.certificateId, function(data) {
                 $scope.cert = data.content;
-                $scope.isComplete = data.status === 'DRAFT_COMPLETE';
+                $scope.isSigned = data.status === 'SIGNED';
+                $scope.isComplete = $scope.isSigned || data.status === 'DRAFT_COMPLETE';
             }, function() {
                 // TODO: Show error message.
             });
@@ -338,6 +341,7 @@ define([ 'angular' ], function(angular) {
                                         statService.refreshStat(); // Update statistics to reflect change
                                         $scope.dialog.acceptprogressdone = true;
                                         dialog.close();
+                                        $route.reload();
                                     } else {
                                         $scope.dialog.acceptprogressdone = true;
                                         $scope.dialog.showerror = true;
