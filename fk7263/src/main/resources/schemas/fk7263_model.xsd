@@ -21,12 +21,14 @@
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns="urn:riv:clinicalprocess:healthcond:certificate:1"
+           xmlns:ext="urn:riv:clinicalprocess:healthcond:certificate:fk7263:1"
            xmlns:iso="urn:iso:21090:dt:1"
            targetNamespace="urn:riv:clinicalprocess:healthcond:certificate:1"
            elementFormDefault="qualified" attributeFormDefault="unqualified"
            version="1.0">
 
   <xs:import namespace="urn:iso:21090:dt:1" schemaLocation="core_components/iso_dt_subset_1.0.xsd"/>
+  <xs:import namespace="urn:riv:clinicalprocess:healthcond:certificate:fk7263:1" schemaLocation="fk7263_model_extension.xsd"/>
 
   <xs:element name="utlatande" type="utlatandeType"/>
 
@@ -44,27 +46,38 @@
       <xs:element name="referens" type="referensType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="aktivitet" type="aktivitetType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="observation" type="observationType" minOccurs="0" maxOccurs="unbounded"/>
-
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="utlatandeId">
-    <xs:attribute name="root" type="nonEmptyString" use="required"/>
-    <xs:attribute name="extension" type="nonEmptyString" use="optional"/>
+    <xs:complexContent>
+      <xs:restriction base="iso:II">
+        <xs:attribute name="root" type="iso:Uid" use="required"/>
+        <xs:attribute name="extension" type="nonEmptyString" use="optional"/>
+      </xs:restriction>
+    </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="utlatandeTyp">
-    <xs:attribute name="code" type="xs:string" use="required" fixed="fk7263"/>
-    <xs:attribute name="codeSystem" type="xs:string" use="required" fixed="f6fb361a-e31d-48b8-8657-99b63912dd9b"/>
+    <xs:complexContent>
+      <xs:restriction base="iso:CD">
+        <xs:attribute name="code" type="xs:string" use="required"/>
+        <xs:attribute name="codeSystem" type="iso:Uid" use="required" fixed="f6fb361a-e31d-48b8-8657-99b63912dd9b"/>
+        <xs:attribute name="codeSystemName" type="xs:string" use="required" fixed="kv_utlåtandetyp_intyg"/>
+      </xs:restriction>
+    </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="personId">
-    <xs:attribute name="root" type="patientIdRoot" use="required"/>
-    <xs:attribute name="extension" type="patientIdExtension" use="required"/>
+    <xs:complexContent>
+      <xs:restriction base="iso:II">
+        <xs:attribute name="root" type="patientIdRoot" use="required"/>
+        <xs:attribute name="extension" type="patientIdExtension" use="required"/>
+      </xs:restriction>
+    </xs:complexContent>
   </xs:complexType>
   <xs:simpleType name="patientIdRoot">
-    <xs:restriction base="xs:string">
+    <xs:restriction base="iso:Uid">
       <xs:enumeration value="1.2.752.129.2.1.3.1"/>
       <xs:enumeration value="1.2.752.129.2.1.3.3"/>
     </xs:restriction>
@@ -76,13 +89,21 @@
   </xs:simpleType>
 
   <xs:complexType name="hsaId">
-    <xs:attribute name="root" type="xs:string" use="required" fixed="1.2.752.129.2.1.4.1"/>
-    <xs:attribute name="extension" type="nonEmptyString" use="required"/>
+    <xs:complexContent>
+      <xs:restriction base="iso:II">
+        <xs:attribute name="root" type="iso:Uid" use="required" fixed="1.2.752.129.2.1.4.1"/>
+        <xs:attribute name="extension" type="nonEmptyString" use="required"/>
+      </xs:restriction>
+    </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="arbetsplatsKod">
-    <xs:attribute name="root" type="xs:string" use="required" fixed="1.2.752.29.4.71"/>
-    <xs:attribute name="extension" type="nonEmptyString" use="required"/>
+    <xs:complexContent>
+      <xs:restriction base="iso:II">
+        <xs:attribute name="root" type="iso:Uid" use="required" fixed="1.2.752.29.4.71"/>
+        <xs:attribute name="extension" type="nonEmptyString" use="required"/>
+      </xs:restriction>
+    </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="hosPersonalType">
@@ -102,7 +123,6 @@
       <!-- Skyddad identitet -->
       <xs:element name="forskrivarkod" type="nonEmptyString" minOccurs="0"/>
       <xs:element name="enhet" type="enhetType"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -125,7 +145,6 @@
       <xs:element name="telefonnummer" type="nonEmptyString"/>
       <xs:element name="epost" type="nonEmptyString" minOccurs="0"/>
       <xs:element name="vardgivare" type="vardgivareType"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -137,7 +156,6 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="vardgivarnamn" type="nonEmptyString"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -150,24 +168,18 @@
 
       <xs:element name="arbetsuppgift" type="arbetsuppgiftType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="sysselsattning" type="sysselsattningType" minOccurs="0" maxOccurs="unbounded"/>
-
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="arbetsuppgiftType">
     <xs:sequence>
       <xs:element name="typAvArbetsuppgift" type="nonEmptyString"/>
-
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="sysselsattningType">
     <xs:sequence>
       <xs:element name="typAvSysselsattning" type="iso:CD"/>
-
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -175,8 +187,6 @@
     <xs:sequence>
       <xs:element name="vardkontakttyp" type="iso:CD"/>
       <xs:element name="vardkontakttid" type="dateInterval"/>
-
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -184,8 +194,6 @@
     <xs:sequence>
       <xs:element name="referenstyp" type="iso:CD"/>
       <xs:element name="referensdatum" type="date"/>
-
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -194,7 +202,6 @@
       <xs:element name="aktivitetskod" type="iso:CD"/>
       <xs:element name="aktivitetstid" type="dateInterval" minOccurs="0"/>
       <xs:element name="beskrivning" type="nonEmptyString" minOccurs="0"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -206,18 +213,7 @@
       <xs:element name="observationsperiod" type="dateInterval" minOccurs="0"/>
       <xs:element name="varde" type="iso:PQ" minOccurs="0" maxOccurs="unbounded"/>
 
-      <xs:element name="prognos" type="prognosType" minOccurs="0" maxOccurs="unbounded"/>
-
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="prognosType">
-    <xs:sequence>
-      <xs:element name="prognoskod" type="iso:CD" minOccurs="0"/>
-      <xs:element name="beskrivning" type="nonEmptyString" minOccurs="0"/>
-
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="ext:prognos" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 

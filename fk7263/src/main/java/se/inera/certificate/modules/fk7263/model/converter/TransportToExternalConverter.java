@@ -17,7 +17,7 @@ import se.inera.certificate.fk7263.model.v1.EnhetType;
 import se.inera.certificate.fk7263.model.v1.HosPersonalType;
 import se.inera.certificate.fk7263.model.v1.ObservationType;
 import se.inera.certificate.fk7263.model.v1.PatientType;
-import se.inera.certificate.fk7263.model.v1.PrognosType;
+import se.inera.certificate.fk7263.model.ext.v1.Prognos;
 import se.inera.certificate.fk7263.model.v1.ReferensType;
 import se.inera.certificate.fk7263.model.v1.SysselsattningType;
 import se.inera.certificate.fk7263.model.v1.VardgivareType;
@@ -132,15 +132,15 @@ public final class TransportToExternalConverter {
         return vardes;
     }
 
-    private static List<Fk7263Prognos> convertPrognoser(List<PrognosType> source) {
+    private static List<Fk7263Prognos> convertPrognoser(List<Prognos> source) {
         List<Fk7263Prognos> prognoser = new ArrayList<>();
-        for (PrognosType prognosType : source) {
+        for (Prognos prognosType : source) {
             prognoser.add(convert(prognosType));
         }
         return prognoser;
     }
 
-    private static Fk7263Prognos convert(PrognosType source) {
+    private static Fk7263Prognos convert(Prognos source) {
         if (source == null) {
             return null;
         }

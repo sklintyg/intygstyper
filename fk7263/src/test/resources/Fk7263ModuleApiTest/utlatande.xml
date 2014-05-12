@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<utlatande xmlns="urn:riv:clinicalprocess:healthcond:certificate:1">
+<utlatande xmlns="urn:riv:clinicalprocess:healthcond:certificate:1"
+    xmlns:p="urn:riv:clinicalprocess:healthcond:certificate:fk7263:1">
   <utlatande-id root="b2f6d5bc-2f50-4623-9ce9-bf1ee5404347"/>
-  <typAvUtlatande code="fk7263" codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b"/>
+  <typAvUtlatande code="fk7263" codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b" codeSystemName="kv_utlåtandetyp_intyg"/>
   <kommentar>Har haft mailkontakt med patienten
     Prognosen att återgå till arbete är svår att bedömma förrän utredningen är genomförd.
   </kommentar>
@@ -124,13 +125,13 @@
       <tom>2011-05-31</tom>
     </observationsperiod>
     <varde value="75.0" unit="percent"/>
-    <prognos>
-      <prognoskod code="PRO4" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7" codeSystemName="kv_prognos_intyg"/>
-      <beskrivning>Skadan har förvärrats vid varje tillfälle patienten använt armen.
+    <p:prognos>
+      <p:prognoskod code="PRO4" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7" codeSystemName="kv_prognos_intyg"/>
+      <p:beskrivning>Skadan har förvärrats vid varje tillfälle patienten använt armen.
         Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg.
         Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.
-      </beskrivning>
-    </prognos>
+      </p:beskrivning>
+    </p:prognos>
   </observation>
   <observation>
     <observationskod code="302119000" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
@@ -139,13 +140,13 @@
       <tom>2011-03-31</tom>
     </observationsperiod>
     <varde value="50.0" unit="percent"/>
-    <prognos>
-      <prognoskod code="PRO4" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7" codeSystemName="kv_prognos_intyg"/>
-      <beskrivning>Skadan har förvärrats vid varje tillfälle patienten använt armen.
+    <p:prognos>
+      <p:prognoskod code="PRO4" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7" codeSystemName="kv_prognos_intyg"/>
+      <p:beskrivning>Skadan har förvärrats vid varje tillfälle patienten använt armen.
         Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg.
         Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.
-      </beskrivning>
-    </prognos>
+      </p:beskrivning>
+    </p:prognos>
   </observation>
   <observation>
     <observationskod code="302119000" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
@@ -154,13 +155,13 @@
       <tom>2011-03-06</tom>
     </observationsperiod>
     <varde value="25.0" unit="percent"/>
-    <prognos>
-      <prognoskod code="PRO4" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7" codeSystemName="kv_prognos_intyg"/>
-      <beskrivning>Skadan har förvärrats vid varje tillfälle patienten använt armen.
+    <p:prognos>
+      <p:prognoskod code="PRO4" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7" codeSystemName="kv_prognos_intyg"/>
+      <p:beskrivning>Skadan har förvärrats vid varje tillfälle patienten använt armen.
         Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg.
         Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.
-      </beskrivning>
-    </prognos>
+      </p:beskrivning>
+    </p:prognos>
   </observation>
   <observation>
     <observationskod code="302119000" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
@@ -169,12 +170,12 @@
       <tom>2011-02-13</tom>
     </observationsperiod>
     <varde value="0.0" unit="percent"/>
-    <prognos>
-      <prognoskod code="PRO4" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7" codeSystemName="kv_prognos_intyg"/>
-      <beskrivning>Skadan har förvärrats vid varje tillfälle patienten använt armen.
+    <p:prognos>
+      <p:prognoskod code="PRO4" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7" codeSystemName="kv_prognos_intyg"/>
+      <p:beskrivning>Skadan har förvärrats vid varje tillfälle patienten använt armen.
         Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg.
         Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.
-      </beskrivning>
-    </prognos>
+      </p:beskrivning>
+    </p:prognos>
   </observation>
 </utlatande>

@@ -2,9 +2,10 @@
     "id": {
         "root": "6ea04fd0-5fef-4809-823b-efeddf8a4d55"
     },
-    "typ": {
+    "typ" : {
         "codeSystem" : "f6fb361a-e31d-48b8-8657-99b63912dd9b",
-        "code": "fk7263"
+        "codeSystemName" : "kv_utlåtandetyp_intyg",
+        "code" : "fk7263"
     },
     "kommentarer": [
         "Det g\u00e5r inte att bed\u00f6ma"

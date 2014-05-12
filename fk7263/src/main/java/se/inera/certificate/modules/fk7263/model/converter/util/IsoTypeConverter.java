@@ -119,7 +119,7 @@ public final class IsoTypeConverter {
         if (utlatandeTyp == null) {
             return null;
         }
-        return new Kod(utlatandeTyp.getCodeSystem(), utlatandeTyp.getCode());
+        return new Kod(utlatandeTyp.getCodeSystem(), utlatandeTyp.getCodeSystemName(), utlatandeTyp.getCodeSystemVersion(), utlatandeTyp.getCode());
     }
 
     public static CD toCD(Kod kod) {
@@ -143,6 +143,8 @@ public final class IsoTypeConverter {
         UtlatandeTyp utlatandeTyp = new UtlatandeTyp();
         utlatandeTyp.setCode(kod.getCode());
         utlatandeTyp.setCodeSystem(kod.getCodeSystem());
+        utlatandeTyp.setCodeSystemName(kod.getCodeSystemName());
+        utlatandeTyp.setCodeSystemVersion(kod.getCodeSystemVersion());
 
         return utlatandeTyp;
     }

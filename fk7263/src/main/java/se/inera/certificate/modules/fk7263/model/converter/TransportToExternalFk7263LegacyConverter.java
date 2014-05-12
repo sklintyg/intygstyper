@@ -62,6 +62,8 @@ public final class TransportToExternalFk7263LegacyConverter {
 
     public static final String FK_7263 = "fk7263";
     public static final String UTLATANDE_TYP_OID = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
+    public static final String UTLATANDE_CODE_SYSTEM_NAME = "kv_utlåtandetyp_intyg";
+    public static final String UTLATANDE_CODE_SYSTEM_VERSION = null;
     public static final double FORMOGA_3_4 = 75;
     public static final double FORMOGA_1_2 = 50;
     public static final double FORMOGA_1_4 = 25;
@@ -74,7 +76,7 @@ public final class TransportToExternalFk7263LegacyConverter {
         Fk7263Utlatande fk7263utlatande = new Fk7263Utlatande();
 
         fk7263utlatande.setId(new Id(source.getLakarutlatandeId(), null));
-        fk7263utlatande.setTyp(new Kod(UTLATANDE_TYP_OID, FK_7263));
+        fk7263utlatande.setTyp(new Kod(UTLATANDE_TYP_OID, UTLATANDE_CODE_SYSTEM_NAME, UTLATANDE_CODE_SYSTEM_VERSION, FK_7263));
 
         if (source.getKommentar() != null && !source.getKommentar().isEmpty()) {
             fk7263utlatande.getKommentarer().add(source.getKommentar());

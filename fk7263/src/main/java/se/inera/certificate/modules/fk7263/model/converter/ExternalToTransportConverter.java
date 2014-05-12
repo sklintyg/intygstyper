@@ -12,6 +12,7 @@ import java.util.List;
 import org.joda.time.LocalDate;
 
 import se.inera.certificate.fk7263.iso.v21090.dt.v1.PQ;
+import se.inera.certificate.fk7263.model.ext.v1.Prognos;
 import se.inera.certificate.fk7263.model.v1.AktivitetType;
 import se.inera.certificate.fk7263.model.v1.ArbetsuppgiftType;
 import se.inera.certificate.fk7263.model.v1.DateInterval;
@@ -19,7 +20,6 @@ import se.inera.certificate.fk7263.model.v1.EnhetType;
 import se.inera.certificate.fk7263.model.v1.HosPersonalType;
 import se.inera.certificate.fk7263.model.v1.ObservationType;
 import se.inera.certificate.fk7263.model.v1.PatientType;
-import se.inera.certificate.fk7263.model.v1.PrognosType;
 import se.inera.certificate.fk7263.model.v1.ReferensType;
 import se.inera.certificate.fk7263.model.v1.SysselsattningType;
 import se.inera.certificate.fk7263.model.v1.Utlatande;
@@ -159,20 +159,20 @@ public final class ExternalToTransportConverter {
         return pq;
     }
 
-    private Collection<PrognosType> convertPrognoser(Collection<Fk7263Prognos> source) {
-        List<PrognosType> prognosTypes = new ArrayList<>();
+    private Collection<Prognos> convertPrognoser(Collection<Fk7263Prognos> source) {
+        List<Prognos> prognosTypes = new ArrayList<>();
         for (Fk7263Prognos prognos : source) {
             prognosTypes.add(convert(prognos));
         }
         return prognosTypes;
     }
 
-    private PrognosType convert(Fk7263Prognos source) {
+    private Prognos convert(Fk7263Prognos source) {
         if (source == null) {
             return null;
         }
 
-        PrognosType prognos = new PrognosType();
+        Prognos prognos = new Prognos();
         prognos.setPrognoskod(IsoTypeConverter.toCD(source.getPrognoskod()));
         prognos.setBeskrivning(source.getBeskrivning());
         return prognos;

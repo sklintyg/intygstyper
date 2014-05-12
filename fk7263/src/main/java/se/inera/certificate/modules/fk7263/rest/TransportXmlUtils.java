@@ -47,10 +47,12 @@ public final class TransportXmlUtils {
         try {
             Source isoSchemaFile = new StreamSource(
                     new ClassPathResource("/schemas/core_components/iso_dt_subset_1.0.xsd").getInputStream());
+            Source utlatandeSchemaExtensionFile = new StreamSource(
+                    new ClassPathResource("/schemas/fk7263_model_extension.xsd").getInputStream());
             Source utlatandeSchemaFile = new StreamSource(
                     new ClassPathResource("/schemas/fk7263_model.xsd").getInputStream());
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            utlatandeSchema = schemaFactory.newSchema(new Source[]{isoSchemaFile, utlatandeSchemaFile});
+            utlatandeSchema = schemaFactory.newSchema(new Source[]{isoSchemaFile, utlatandeSchemaExtensionFile, utlatandeSchemaFile});
         } catch (IOException e) {
             throw new RuntimeException("Failed to read schema file", e);
         } catch (SAXException e) {
