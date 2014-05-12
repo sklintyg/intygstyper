@@ -61,7 +61,8 @@ define([], function() {
             'common.error.cantconnect': 'Kunde inte kontakta servern',
             'common.error.certificatenotfound': 'Intyget finns inte',
             'common.error.certificateinvalid': 'Intyget är inte korrekt ifyllt',
-            'common.error.signerror': 'Intyget kunde inte signeras. Försök igen.'
+            'common.error.signerror': 'Intyget kunde inte signeras. Försök igen.',
+            'common.error.data_not_found': '<strong>Intyget kunde inte hittas.</strong><br>Intyget är borttaget eller så saknas behörighet.',
         },
         'en': {
             'common.ok': 'OK',

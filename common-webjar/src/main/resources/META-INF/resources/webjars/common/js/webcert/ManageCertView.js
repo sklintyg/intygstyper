@@ -16,7 +16,25 @@ define([
             function($http, $log, $location, $route, $routeParams, $timeout, wcDialogService, CertificateService,
                 statService) {
 
-                //var member;
+                /**
+                 * Load draft to webcert
+                 * @param $scope
+                 * @private
+                 */
+
+                function _load($scope) {
+                    $scope.widgetState.doneLoading = false;
+                    CertificateService.getDraft($routeParams.certificateId, function(data) {
+                        $scope.widgetState.doneLoading = true;
+                        $scope.widgetState.activeErrorMessageKey = null;
+                        $scope.cert = data.content;
+                        $scope.isSigned = data.status === 'SIGNED';
+                        $scope.isComplete = $scope.isSigned || data.status === 'DRAFT_COMPLETE';
+                    }, function(error) {
+                        $scope.widgetState.doneLoading = true;
+                        $scope.widgetState.activeErrorMessageKey = ('common.error.' + error.errorCode).toLowerCase();
+                    });
+                }
 
                 /**
                  * Save draft to webcert
@@ -54,8 +72,9 @@ define([
                                     }
                                 });
                             }
-                        }, function() {
+                        }, function(error) {
                             // Show error message if save fails
+                            $scope.widgetState.activeErrorMessageKey = ('common.error.' + error.errorCode).toLowerCase();
                         }
                     );
                 }
@@ -176,6 +195,7 @@ define([
 
                 // Return public API for the service
                 return {
+                    load: _load,
                     save: _save,
                     discard: _discard,
                     sign: _sign,

@@ -182,7 +182,7 @@ span.help {
 }
 
 .body-row .checkbox-columns {
-    margin-left: 0px;
+    margin-left: 0;
 }
 
 .body-row .checkbox input[type=checkbox] {
@@ -445,12 +445,12 @@ input[datepicker-popup] {
 
 .collapse-hide.collapse-hide-active {
     opacity: 0.5;
-    max-height: 0px;
+    max-height: 0;
 }
 
 .collapse-show {
     opacity: 0;
-    max-height: 0px;
+    max-height: 0;
 }
 
 .collapse-show.collapse-show-active {
@@ -529,10 +529,15 @@ label.radio + label.radio {
     margin-top: 0;
 }
 
-.edit-form .alert-danger {
+.edit-form .alert-danger, .cert-error-panel .alert-danger {
     border: 1px solid #A94442;
 }
 
 .fielderror {
     border: 2px solid #a94441;
+}
+
+.cert-error-panel {
+    margin-top: 100px;
+    max-width: 800px;
 }
