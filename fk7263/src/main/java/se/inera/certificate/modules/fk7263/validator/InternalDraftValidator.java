@@ -38,7 +38,7 @@ public class InternalDraftValidator {
         // If field 4 annat satt or field 10 går ej att bedömma is set then
         // field 13 should contain data.
         if (utlatande.getAnnanReferens() != null && isNullOrEmpty(utlatande.getAnnanReferensBeskrivning())) {
-            addValidationError(validationMessages, "intyg-baserat-pa.annat", "fk7263.validation.intyg-baserat-pa.annat.beskrivning.missing");
+            addValidationError(validationMessages, "intygbaseratpa.annat", "fk7263.validation.intyg-baserat-pa.annat.beskrivning.missing");
         }
 
         if ((utlatande.getPrognosis() != null && utlatande.getPrognosis().equals("UNKNOWN"))

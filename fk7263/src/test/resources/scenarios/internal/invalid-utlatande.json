@@ -14,8 +14,6 @@
     "undersokningAvPatienten":"2011-01-26",
     "telefonkontaktMedPatienten":"2011-01-12",
     "journaluppgifter":"2010-01-14",
-    "annanReferens":"2010-01-24",
-    "annanReferensBeskrivning" : "Annan referensbeskrivning",
     "aktivitetsbegransning":"Funktionstillstånd-Aktivitet: Patienten bör/kan inte använda armen förrän skadan läkt. Skadan förvärras vid för tidigt påtvingad belastning. Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning.",
     "rekommendationKontaktArbetsformedlingen":true,
     "rekommendationKontaktForetagshalsovarden":true,
@@ -29,7 +27,7 @@
     "arbetsloshet":true,
     "foraldrarledighet":true,
     "nedsattMed25":{
-        "from" :"2011-04-01",
+        "from" :"2011-06-01",
         "tom" :"2011-05-31"},
     "nedsattMed50":{
         "from" :"2011-03-07",
