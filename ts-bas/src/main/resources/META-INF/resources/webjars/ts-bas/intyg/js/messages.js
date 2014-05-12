@@ -139,8 +139,8 @@ define([], function() {
 
             'ts-bas.label.pagedescription.error.in.certificate.header': '<h3>Fel i intyget?</h3>',
             'ts-bas.label.pagedescription.error.in.certificate': 'Om någon uppgift är fel i läkarintyget så ska du kontakta den som utfärdat ditt läkarintyg.',
-            'ts-bas.label.status.false': '<a>Dölj information</a>',
-            'ts-bas.label.status.true': '<a>Visa information</a>',
+            'ts-bas.label.status.false': '<span class="glyphicon glyphicon-chevron-up"></span><a> Dölj information</a>',
+            'ts-bas.label.status.true': '<span class="glyphicon glyphicon-chevron-down"></span><a> Visa information</a>',
             'ts-bas.label.patientname': 'Patientens namn:',
             'ts-bas.label.issued': 'Utfärdat:',
             'ts-bas.label.civicnumber': 'Personnr:',
