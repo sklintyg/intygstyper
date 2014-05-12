@@ -216,6 +216,22 @@ define([ 'angular' ], function(angular) {
                     $scope.updateTotalCertDays();
                 }
             }
+            $scope.cert.nedsattMed25 = {
+                    from : "",
+                    tom : ""
+            };
+            $scope.cert.nedsattMed50 = {
+                from : "",
+                tom : ""
+            };
+            $scope.cert.nedsattMed75 = {
+                from : "",
+                tom : ""
+            };
+            $scope.cert.nedsattMed100 = {
+                from : "",
+                tom : ""
+            };
 
             $scope.$watch('workState.check25', function(newVal) {
                 updateWorkStateDate(newVal, $scope.cert.nedsattMed25);

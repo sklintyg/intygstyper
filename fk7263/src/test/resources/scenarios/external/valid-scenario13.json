@@ -4,7 +4,7 @@
     },
     "typ": {
         "codeSystem" : "f6fb361a-e31d-48b8-8657-99b63912dd9b",
-        "codeSystemName" : "kv_utlatandetyp_intyg",
+        "codeSystemName" : "kv_utlåtandetyp_intyg",
         "code": "FK7263"
     },
     "signeringsdatum": "2011-01-26T00:00:00.000",

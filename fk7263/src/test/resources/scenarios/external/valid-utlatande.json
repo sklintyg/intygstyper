@@ -5,7 +5,7 @@
     "typ" : {
         "code" : "FK7263",
         "codeSystem" : "f6fb361a-e31d-48b8-8657-99b63912dd9b",
-        "codeSystemName" : "kv_utlatandetyp_intyg"
+        "codeSystemName" : "kv_utlåtandetyp_intyg"
     },
     "kommentarer" : [
         "Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling."
