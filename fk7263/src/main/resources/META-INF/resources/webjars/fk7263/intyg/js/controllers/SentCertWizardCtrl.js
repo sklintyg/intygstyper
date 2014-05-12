@@ -52,7 +52,7 @@ define([ 'angular' ], function(angular) {
                         $location.path('/fk7263/sent');
                     } else {
                         // show error view
-                        $location.path('/fel/couldnotsend');
+                        $location.path('/fk7263/fel/couldnotsend');
                     }
                 });
             };
