@@ -27,7 +27,7 @@
     class="se.inera.certificate.integration.json.CustomObjectMapper" />
 
   <bean id="ts-bas-jaxbContext" class="javax.xml.bind.JAXBContext" factory-method="newInstance">
-    <constructor-arg type="java.lang.String" value="se.inera.certificate.ts_bas.iso.v21090.dt.v1:se.inera.certificate.ts_bas.model.v1" />
+    <constructor-arg type="java.lang.String" value="se.inera.certificate.ts_bas.iso.v21090.dt.v1:se.inera.certificate.ts_bas.model.ext.v1:se.inera.certificate.ts_bas.model.v1" />
   </bean>
 
 </beans>
