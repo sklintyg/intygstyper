@@ -467,6 +467,18 @@ input[datepicker-popup] {
     opacity: .25;
 }
 
+.glyphicon-question-sign {
+    top: 5px;
+    font-size: 20px;
+    margin-left: 5px;
+    color: #008391;
+}
+
+.glyphicon-question-sign:hover {
+    cursor: pointer;
+    color: #28b4c4;
+}
+
 .table {
     border-collapse: separate;
     border-spacing: 0 0;

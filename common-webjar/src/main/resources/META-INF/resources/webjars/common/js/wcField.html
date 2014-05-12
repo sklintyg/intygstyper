@@ -6,7 +6,7 @@
 	<h3 class="title" ng-class="{'unfilled' : !filled}">
 		<span message key="{{fieldLabel}}"></span>
 		<span class="cert-field-blank" ng-hide="filled"> <span message key="modules.label.blank"></span></span>
-		<span ng-if="fieldHelpText != undefined" class="help" tooltip-trigger="mouseenter" tooltip-html-unsafe="{{getMessage(fieldHelpText)}}" tooltip-placement="{{placement}}">?</span>
+		<span ng-if="fieldHelpText != undefined" class="glyphicon glyphicon-question-sign" tooltip-trigger="mouseenter" tooltip-html-unsafe="{{getMessage(fieldHelpText)}}" tooltip-placement="{{placement}}"></span>
 	</h3>
 	<span class="text" ng-show="filled" ng-class="{fielderror: fieldHasErrors}">
 		<span ng-transclude></span>

@@ -21,7 +21,6 @@ define([
                  * @param $scope
                  * @private
                  */
-
                 function _load($scope) {
                     $scope.widgetState.doneLoading = false;
                     CertificateService.getDraft($routeParams.certificateId, function(data) {
@@ -41,7 +40,6 @@ define([
                  * @param $scope
                  * @private
                  */
-
                 function _save($scope) {
                     CertificateService.saveDraft($routeParams.certificateId, $scope.cert,
                         function(data) {
@@ -74,7 +72,7 @@ define([
                             }
                         }, function(error) {
                             // Show error message if save fails
-                            $scope.widgetState.activeErrorMessageKey = ('common.error.' + error.errorCode).toLowerCase();
+                            setError($scope.widgetState.activeErrorMessageKey, error.errorCode);
                         }
                     );
                 }
@@ -127,6 +125,14 @@ define([
                         button2text: 'common.cancel',
                         autoClose: false
                     });
+                }
+
+                function checkSetError(model, errorCode) {
+                    if(errorCode === undefined || errorCode === null) {
+                        model = '';
+                    } else {
+                        model = ('common.error.' + errorCode).toLowerCase();
+                    }
                 }
 
                 var _confirmSign = function(certificateId, $scope, onSuccess) {
