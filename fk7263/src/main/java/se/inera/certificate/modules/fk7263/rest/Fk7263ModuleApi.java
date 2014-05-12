@@ -86,6 +86,10 @@ public class Fk7263ModuleApi implements ModuleApi {
     @Qualifier("fk7263-jaxbContext")
     private JAXBContext jaxbContext;
 
+    @Autowired
+    @Qualifier("fk7263-jaxbContext-legacy")
+    private JAXBContext jaxbContextLegacy;
+
     /**
      * {@inheritDoc}
      * <p/>
@@ -340,7 +344,11 @@ public class Fk7263ModuleApi implements ModuleApi {
     private TransportModelResponse toTransportModelResponse(Object transportModel) throws ModuleException {
         try {
             StringWriter writer = new StringWriter();
-            jaxbContext.createMarshaller().marshal(transportModel, writer);
+            if (transportModel instanceof RegisterMedicalCertificate) {
+                jaxbContextLegacy.createMarshaller().marshal(transportModel, writer);
+            } else {
+                jaxbContext.createMarshaller().marshal(transportModel, writer);
+            }
             return new TransportModelResponse(writer.toString());
 
         } catch (JAXBException e) {

@@ -20,7 +20,13 @@
   <bean id="fk7263-jaxbContext" class="javax.xml.bind.JAXBContext"
     factory-method="newInstance">
     <constructor-arg type="java.lang.String"
-      value="se.inera.certificate.fk7263.iso.v21090.dt.v1:se.inera.certificate.fk7263.model.ext.v1:se.inera.certificate.fk7263.model.v1:se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3" />
+      value="se.inera.certificate.fk7263.iso.v21090.dt.v1:se.inera.certificate.fk7263.model.ext.v1:se.inera.certificate.fk7263.model.v1" />
+  </bean>
+
+  <bean id="fk7263-jaxbContext-legacy" class="javax.xml.bind.JAXBContext"
+    factory-method="newInstance">
+    <constructor-arg type="java.lang.String"
+      value="se.inera.certificate.fk7263.iso.v21090.dt.v1:se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3" />
   </bean>
 
 </beans>

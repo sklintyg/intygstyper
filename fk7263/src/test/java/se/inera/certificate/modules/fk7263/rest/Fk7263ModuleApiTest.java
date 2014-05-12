@@ -14,6 +14,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -40,9 +41,6 @@ public class Fk7263ModuleApiTest {
 
     @Autowired
     private se.inera.certificate.modules.support.api.ModuleApi fk7263ModuleApi;
-
-    @Autowired
-    private JAXBContext jaxbContext;
 
     @Autowired
     private ObjectMapper mapper;
