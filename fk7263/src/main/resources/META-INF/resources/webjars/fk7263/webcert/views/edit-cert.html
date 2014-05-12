@@ -14,25 +14,25 @@
 
 		  <div class="header-fix-panel">
 			  <div class="header-fix-top-expand">
-				<div class="header-fix-top-expand-wrapper">
-				  <button class="btn btn-link" ng-click="toggleHeader()"><span ng-if="widgetState.collapsedHeader">Visa</span><span ng-if="!widgetState.collapsedHeader">Dölj</span> meny</button>
-				</div>
+          <div class="header-fix-top-expand-wrapper">
+            <button class="btn btn-link" ng-click="toggleHeader()"><span ng-if="widgetState.collapsedHeader">Visa</span><span ng-if="!widgetState.collapsedHeader">Dölj</span> meny</button>
+          </div>
 			  </div>
-			<a class="backlink-icon" href="/web/dashboard#/create" title="Tillbaka till Skriv intyg"></a>
-			<h1 style="display: inline-block; margin-right: 20px;"><span message key="fk7263.label.pagetitle.fk7263"></span></h1>
-			<div class="inline-block">
-			  <label class="control-label">{{cert.patientNamn}} - {{cert.patientPersonnummer}}</label>
-			</div>
-			<div class="form-group buttonbar">
-			  <button class="btn btn-info" ng-click="save()" ng-if="!isSigned">Spara</button>
-			  <button id="ta-bort-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="discard()">Ta bort utkast</button>
-			  <button class="btn btn-default btn-secondary" ng-if="!widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">Visa vad som behöver kompletteras</button>
-			  <button class="btn btn-default btn-secondary" ng-if="widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">Dölj vad som behöver kompletteras</button>
-			</div>
-			<div id="certificate-is-signed-message-text" ng-show="isSigned"><strong>Status:</strong> Intyget är signerat.</div>
-			<div ng-show="certForm.$pristine && isComplete && !isSigned"><strong>Status:</strong> Intyget är sparat.</div>
-			<div ng-show="certForm.$pristine && !isComplete"><strong>Status:</strong> Intyget är sparat, men inte komplett</div>
-			<div ng-show="certForm.$dirty"><strong>Status:</strong> Intyget är <strong>inte</strong> sparat.</div>
+        <a class="backlink-icon" href="/web/dashboard#/create" title="Tillbaka till Skriv intyg"></a>
+        <h1 style="display: inline-block; margin-right: 20px;"><span message key="fk7263.label.pagetitle.fk7263"></span></h1>
+        <div class="inline-block">
+          <label class="control-label">{{cert.patientNamn}} - {{cert.patientPersonnummer}}</label>
+        </div>
+        <div class="form-group buttonbar">
+          <button class="btn btn-info" ng-click="save()" ng-if="!isSigned">Spara</button>
+          <button id="ta-bort-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="discard()">Ta bort utkast</button>
+          <button class="btn btn-default btn-secondary" ng-if="!widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">Visa vad som behöver kompletteras</button>
+          <button class="btn btn-default btn-secondary" ng-if="widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">Dölj vad som behöver kompletteras</button>
+        </div>
+        <div id="certificate-is-signed-message-text" ng-show="isSigned"><strong>Status:</strong> Intyget är signerat.</div>
+        <div ng-show="certForm.$pristine && isComplete && !isSigned"><strong>Status:</strong> Intyget är sparat.</div>
+        <div ng-show="certForm.$pristine && !isComplete"><strong>Status:</strong> Intyget är sparat, men inte komplett</div>
+        <div ng-show="certForm.$dirty"><strong>Status:</strong> Intyget är <strong>inte</strong> sparat.</div>
 		  </div>
 		</div>
 	</div>

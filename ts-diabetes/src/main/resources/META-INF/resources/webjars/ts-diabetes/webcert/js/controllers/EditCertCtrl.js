@@ -72,14 +72,8 @@ define([ 'angular' ], function(angular) {
             $scope.cert = {};
 
             // Get the certificate draft from the server.
-            // TODO: Hide the form until the draft has been loaded.
-            CertificateService.getDraft($routeParams.certificateId, function(data) {
-                $scope.cert = data.content;
-                $scope.isSigned = data.status === 'SIGNED';
-                $scope.isComplete = $scope.isSigned || data.status === 'DRAFT_COMPLETE';
-            }, function() {
-                // TODO: Show error message.
-            });
+            $scope.cert = {};
+            ManageCertView.load($scope);
 
             /**
              * Action to save the certificate draft to the server.
@@ -94,7 +88,6 @@ define([ 'angular' ], function(angular) {
             $scope.discard = function() {
                 ManageCertView.discard($scope);
             };
-
 
             /**
              * Action to sign the certificate draft and return to Webcert again.
