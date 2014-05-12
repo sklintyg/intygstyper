@@ -30,7 +30,6 @@
 		schemaLocation="transport_model.xsd" />
 
 	<xs:element name="arrangemang" type="arrangemangType" />
-
 	<xs:complexType name="arrangemangType">
 		<xs:sequence>
 			<xs:element name="bokningsreferens" type="xs:string"
@@ -47,5 +46,7 @@
 				maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
+	
+	<xs:element name="plats" type="xs:string"/>
 
 </xs:schema>

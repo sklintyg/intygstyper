@@ -66,8 +66,6 @@
       <tom>2013-08-12</tom>
     </aktivitetstid>
 
-    <plats>Vårdcentralen västernorrland</plats>
-
     <beskrivsAv>
       <utforartyp code="223366009" codeSystem="1.2.752.116.2.1.1.1"
         codeSystemName="SNOMED-CT" />
@@ -91,6 +89,8 @@
         </enhet>
       </antasAv>
     </beskrivsAv>
+
+    <rli:plats>Vårdcentralen västernorrland</rli:plats>
   </aktivitet>
 
   <aktivitet>
