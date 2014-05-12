@@ -31,7 +31,7 @@ define([
                         $scope.isComplete = $scope.isSigned || data.status === 'DRAFT_COMPLETE';
                     }, function(error) {
                         $scope.widgetState.doneLoading = true;
-                        $scope.widgetState.activeErrorMessageKey = ('common.error.' + error.errorCode).toLowerCase();
+                        $scope.widgetState.activeErrorMessageKey = checkSetError(error.errorCode);
                     });
                 }
 
@@ -72,7 +72,7 @@ define([
                             }
                         }, function(error) {
                             // Show error message if save fails
-                            setError($scope.widgetState.activeErrorMessageKey, error.errorCode);
+                            $scope.widgetState.activeErrorMessageKey = checkSetError(error.errorCode);
                         }
                     );
                 }
@@ -127,12 +127,13 @@ define([
                     });
                 }
 
-                function checkSetError(model, errorCode) {
-                    if(errorCode === undefined || errorCode === null) {
-                        model = '';
-                    } else {
+                function checkSetError(errorCode) {
+                    var model = 'common.error.unknown';
+                    if(errorCode !== undefined && errorCode !== null) {
                         model = ('common.error.' + errorCode).toLowerCase();
                     }
+
+                    return model;
                 }
 
                 var _confirmSign = function(certificateId, $scope, onSuccess) {
