@@ -12,12 +12,14 @@
   program. If not, see <http://www.gnu.org/licenses/>. -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns="urn:riv:clinicalprocess:healthcond:certificate:1"
-  xmlns:extension="urn:intyg:ts-diabetes:model:ext:1" xmlns:iso="urn:iso:21090:dt:1"
+  xmlns:ext="urn:riv:clinicalprocess:healthcond:certificate:ts-diabetes:1"
+  xmlns:iso="urn:iso:21090:dt:1"
   targetNamespace="urn:riv:clinicalprocess:healthcond:certificate:1"
   elementFormDefault="qualified" attributeFormDefault="unqualified"
   version="1.0">
 
   <xs:import namespace="urn:iso:21090:dt:1" schemaLocation="core_components/iso_dt_subset_1.0.xsd" />
+  <xs:import namespace="urn:riv:clinicalprocess:healthcond:certificate:ts-diabetes:1" schemaLocation="transport_model_extension.xsd" />
 
   <xs:element name="utlatande" type="utlatandeType" />
 
@@ -30,8 +32,6 @@
       <xs:element name="signeringsdatum" type="dateTime" />
       <xs:element name="skickatdatum" type="dateTime"
         minOccurs="0" />
-      <xs:element name="intygAvser" type="iso:CD" maxOccurs="unbounded" />
-
 
       <xs:element name="patient" type="patientType" />
       <xs:element name="skapadAv" type="hosPersonalType" />
@@ -43,17 +43,12 @@
         minOccurs="1" maxOccurs="3" />
       <xs:element name="observation" type="observationType"
         maxOccurs="unbounded" />
-      <xs:element name="observationAktivitetRelation" type="observationAktivitetRelationType"
-        minOccurs="0" maxOccurs="unbounded" />
+      <xs:element ref="ext:observationAktivitetRelation" minOccurs="0" maxOccurs="unbounded" />
 
-      <xs:element name="bilaga" type="bilagaType" minOccurs="1"
-        maxOccurs="1" />
-      <xs:element name="utgava" type="xs:string" />
-      <xs:element name="version" type="xs:string" />
-
-
-      <xs:any namespace="##other" processContents="lax"
-        minOccurs="0" maxOccurs="unbounded" />
+      <xs:element ref="ext:intygAvser" maxOccurs="unbounded" />
+      <xs:element ref="ext:bilaga"/>
+      <xs:element ref="ext:utgava"/>
+      <xs:element ref="ext:version"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -130,9 +125,6 @@
       <xs:element name="postadress" type="xs:string" />
       <xs:element name="postnummer" type="xs:string" />
       <xs:element name="postort" type="xs:string" />
-
-      <xs:any namespace="##other" processContents="lax"
-        minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
 
@@ -140,50 +132,41 @@
     <xs:sequence>
       <xs:element name="vardkontakttyp" type="iso:CD" />
       <xs:element name="idKontroll" type="iso:CD" />
-
-      <xs:any namespace="##other" processContents="lax"
-        minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="aktivitetType">
     <xs:sequence>
-      <xs:element name="aktivitetsid" type="iso:II"
+      <xs:element name="aktivitets-id" type="iso:II"
         minOccurs="0" />
       <xs:element name="aktivitetskod" type="iso:CD" />
-      <xs:element name="ostruktureradtid" type="xs:string"
-        minOccurs="0" />
       <xs:element name="beskrivning" type="xs:string"
         minOccurs="0" />
       <xs:element name="aktivitetsstatus" type="iso:CD"
         minOccurs="0" />
       <xs:element name="plats" type="xs:string" minOccurs="0" />
-      <xs:element name="metod" type="iso:CD" minOccurs="0" />
       <xs:element name="forekomst" type="xs:boolean"
         minOccurs="0" />
-
-      <xs:any namespace="##other" processContents="lax"
-        minOccurs="0" maxOccurs="unbounded" />
+      <xs:element ref="ext:metod" minOccurs="0" />
+      <xs:element ref="ext:ostruktureradtid" minOccurs="0" />
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="observationType">
     <xs:sequence>
-      <xs:element name="observationsid" type="iso:II"
+      <xs:element name="observations-id" type="iso:II"
         minOccurs="0" />
       <xs:element name="observationskod" type="iso:CD" />
-      <xs:element name="forekomst" type="xs:boolean"
-        minOccurs="0" />
-      <xs:element name="lateralitet" type="iso:CD" minOccurs="0" />
-      <xs:element name="varde" type="iso:PQ" minOccurs="0" />
       <xs:element name="beskrivning" type="xs:string"
         minOccurs="0" />
-      <xs:element name="observationstid" type="date"
-        minOccurs="0" maxOccurs="1" />
       <xs:element name="observationsperiod" type="partialDateInterval"
         minOccurs="0" maxOccurs="1" />
-      <xs:any namespace="##other" processContents="lax"
-        minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="varde" type="iso:PQ" minOccurs="0" />
+      <xs:element name="observationstid" type="date"
+        minOccurs="0" maxOccurs="1" />
+      <xs:element name="forekomst" type="xs:boolean"
+        minOccurs="0" />
+      <xs:element ref="ext:lateralitet" minOccurs="0" />
     </xs:sequence>
   </xs:complexType>
 
@@ -192,17 +175,7 @@
       <xs:element name="rekommendationskod" type="iso:CD" />
       <xs:element name="beskrivning" type="xs:string"
         minOccurs="0" />
-      <xs:element name="varde" type="xs:anyType"
-        minOccurs="0" maxOccurs="16" />
-      <xs:any namespace="##other" processContents="lax"
-        minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="bilagaType">
-    <xs:sequence>
-      <xs:element name="bilagetyp" type="iso:CD"/>
-      <xs:element name="forekomst" type="xs:boolean" />
+      <xs:element ref="ext:varde" minOccurs="0" maxOccurs="16" />
     </xs:sequence>
   </xs:complexType>
 
@@ -228,11 +201,7 @@
         minOccurs="0" maxOccurs="unbounded" />
         
       <xs:element name="enhet" type="enhetType" />
-      <xs:element name="specialitet" type="iso:CD" minOccurs="0"
-        maxOccurs="unbounded" />
-
-      <xs:any namespace="##other" processContents="lax"
-        minOccurs="0" maxOccurs="unbounded" />
+      <xs:element ref="ext:specialitet" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
 
@@ -263,9 +232,6 @@
       <xs:element name="epost" type="xs:string" minOccurs="0" />
       <xs:element name="vardgivare" type="vardgivareType"
         minOccurs="0" />
-
-      <xs:any namespace="##other" processContents="lax"
-        minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
 
@@ -279,16 +245,6 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="vardgivarnamn" type="xs:string" />
-
-      <xs:any namespace="##other" processContents="lax"
-        minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="observationAktivitetRelationType">
-    <xs:sequence>
-      <xs:element name="observationsid" type="iso:II" />
-      <xs:element name="aktivitetsid" type="iso:II" />
     </xs:sequence>
   </xs:complexType>
 

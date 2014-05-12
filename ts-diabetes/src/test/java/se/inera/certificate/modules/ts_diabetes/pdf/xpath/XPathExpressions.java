@@ -5,9 +5,9 @@ package se.inera.certificate.modules.ts_diabetes.pdf.xpath;
  */
 public class XPathExpressions {
 
-    public static final StringXPathExpression TS_UTGAVA_XPATH = new StringXPathExpression("p:utlatande/p:utgava");
+    public static final StringXPathExpression TS_UTGAVA_XPATH = new StringXPathExpression("p:utlatande/p2:utgava");
 
-    public static final StringXPathExpression TS_VERSION_XPATH = new StringXPathExpression("p:utlatande/p:version");
+    public static final StringXPathExpression TS_VERSION_XPATH = new StringXPathExpression("p:utlatande/p2:version");
 
     public static final StringXPathExpression INVANARE_ADRESS_FALT1_XPATH = new StringXPathExpression(
             "concat(p:utlatande/p:patient/p:fornamn, ' ', p:utlatande/p:patient/p:efternamn)");
@@ -51,7 +51,7 @@ public class XPathExpressions {
     public static final StringXPathExpression ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND_DATUM_XPATH = new StringXPathExpression(
             "translate(p:utlatande/p:observation/p:observationstid[parent::p:observation/p:observationskod/@code='OBS24'], '-', '')");
 
-    public static final String INTYG_AVSER_TEMPLATE = "p:utlatande/p:intygAvser/@code = '%s'";
+    public static final String INTYG_AVSER_TEMPLATE = "p:utlatande/p2:intygAvser/@code = '%s'";
 
     public static final String AKTIVITET_FOREKOMST_TEMPLATE = "p:utlatande/p:aktivitet/p:forekomst[parent::p:aktivitet/p:aktivitetskod/@code='%s'] = '%s'";
 
@@ -59,17 +59,17 @@ public class XPathExpressions {
 
     public static final String OBSERVATION_FOREKOMST_TEMPLATE = "p:utlatande/p:observation/p:forekomst[parent::p:observation/p:observationskod/@code='%s'] = '%s'";
 
-    public static final String OBSERVATION_VARDE_INT_CODE_LATERALITET = "substring-before(p:utlatande/p:observation/p:varde[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p:lateralitet/@code='%s')]/@value, '.')";
+    public static final String OBSERVATION_VARDE_INT_CODE_LATERALITET = "substring-before(p:utlatande/p:observation/p:varde[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p2:lateralitet/@code='%s')]/@value, '.')";
 
-    public static final String OBSERVATION_VARDE_DEC_CODE_LATERALITET = "substring-after(p:utlatande/p:observation/p:varde[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p:lateralitet/@code='%s')]/@value, '.')";
+    public static final String OBSERVATION_VARDE_DEC_CODE_LATERALITET = "substring-after(p:utlatande/p:observation/p:varde[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p2:lateralitet/@code='%s')]/@value, '.')";
 
     public static final String OBSERVATION_BESKRIVNING_TEMPLATE = "p:utlatande/p:observation/p:beskrivning[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p:forekomst = 'true')]";
 
-    public static final String OBSERVATION_BILAGA_TEMPLATE = "p:utlatande/p:bilaga/p:forekomst[parent::p:bilaga/p:bilagetyp/@code='%s']='%s'";
+    public static final String OBSERVATION_BILAGA_TEMPLATE = "p:utlatande/p2:bilaga/p2:forekomst[parent::p2:bilaga/p2:bilagetyp/@code='%s']='%s'";
 
-    public static final String REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE = "p:utlatande/p:rekommendation/p:varde/@code = '%s'";
+    public static final String REKOMMENDATION_KORKORTSBEHORIGHET_TEMPLATE = "p:utlatande/p:rekommendation/p2:varde/@code = '%s'";
 
-    public static final String REKOMMENDATION_VARDE_TEMPLATE = "p:utlatande/p:rekommendation/p:varde[parent::p:rekommendation/p:rekommendationskod/@code='%s']='%s'";
+    public static final String REKOMMENDATION_VARDE_TEMPLATE = "p:utlatande/p:rekommendation/p2:varde[parent::p:rekommendation/p:rekommendationskod/@code='%s']='%s'";
 
     public static final String REKOMMENDATION_BESKRIVNING_TEMPLATE = "p:utlatande/p:rekommendation/p:beskrivning[parent::p:rekommendation/p:rekommendationskod/@code='%s']";
 

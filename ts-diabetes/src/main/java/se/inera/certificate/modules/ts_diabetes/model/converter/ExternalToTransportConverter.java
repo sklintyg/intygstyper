@@ -40,10 +40,8 @@ import se.inera.certificate.modules.ts_diabetes.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_diabetes.model.external.Vardkontakt;
 import se.inera.certificate.ts_diabetes.iso.v21090.dt.v1.CD;
 import se.inera.certificate.ts_diabetes.model.v1.AktivitetType;
-import se.inera.certificate.ts_diabetes.model.v1.BilagaType;
 import se.inera.certificate.ts_diabetes.model.v1.EnhetType;
 import se.inera.certificate.ts_diabetes.model.v1.HosPersonalType;
-import se.inera.certificate.ts_diabetes.model.v1.ObservationAktivitetRelationType;
 import se.inera.certificate.ts_diabetes.model.v1.ObservationType;
 import se.inera.certificate.ts_diabetes.model.v1.PartialDateInterval;
 import se.inera.certificate.ts_diabetes.model.v1.PatientType;
@@ -99,12 +97,12 @@ public class ExternalToTransportConverter {
      * @return List of {@link ObservationAktivitetRelationType}
      * @throws ConverterException
      */
-    private Collection<? extends ObservationAktivitetRelationType> convertObservationAktivitetRelationer(
+    private Collection<? extends se.inera.certificate.ts_diabetes.model.ext.v1.ObservationAktivitetRelation> convertObservationAktivitetRelationer(
             List<ObservationAktivitetRelation> source) throws ConverterException {
         if (source == null) {
             throw new ConverterException();
         }
-        List<ObservationAktivitetRelationType> converted = new ArrayList<ObservationAktivitetRelationType>();
+        List<se.inera.certificate.ts_diabetes.model.ext.v1.ObservationAktivitetRelation> converted = new ArrayList<se.inera.certificate.ts_diabetes.model.ext.v1.ObservationAktivitetRelation>();
 
         for (ObservationAktivitetRelation it : source) {
             converted.add(convertObservationRelation(it));
@@ -119,10 +117,10 @@ public class ExternalToTransportConverter {
      * @param source {@link ObservationAktivitetRelation}
      * @return {@link ObservationAktivitetRelationType}
      */
-    private ObservationAktivitetRelationType convertObservationRelation(ObservationAktivitetRelation source) {
-        ObservationAktivitetRelationType converted = new ObservationAktivitetRelationType();
-        converted.setAktivitetsid(IsoTypeConverter.toII(source.getAktivitetsid()));
-        converted.setObservationsid(IsoTypeConverter.toII(source.getObservationsid()));
+    private se.inera.certificate.ts_diabetes.model.ext.v1.ObservationAktivitetRelation convertObservationRelation(ObservationAktivitetRelation source) {
+        se.inera.certificate.ts_diabetes.model.ext.v1.ObservationAktivitetRelation converted = new se.inera.certificate.ts_diabetes.model.ext.v1.ObservationAktivitetRelation();
+        converted.setAktivitetsId(IsoTypeConverter.toII(source.getAktivitetsid()));
+        converted.setObservationsId(IsoTypeConverter.toII(source.getObservationsid()));
 
         return converted;
     }
@@ -227,7 +225,7 @@ public class ExternalToTransportConverter {
             observation.setLateralitet(IsoTypeConverter.toCD(source.getLateralitet()));
         }
         if (source.getId() != null) {
-            observation.setObservationsid(IsoTypeConverter.toII(source.getId()));
+            observation.setObservationsId(IsoTypeConverter.toII(source.getId()));
         }
         observation.setObservationskod(IsoTypeConverter.toCD(source.getObservationskod()));
 
@@ -272,7 +270,7 @@ public class ExternalToTransportConverter {
         AktivitetType aktivitet = new AktivitetType();
 
         if (source.getId() != null) {
-            aktivitet.setAktivitetsid(IsoTypeConverter.toII(source.getId()));
+            aktivitet.setAktivitetsId(IsoTypeConverter.toII(source.getId()));
         }
 
         aktivitet.setAktivitetskod(IsoTypeConverter.toCD(source.getAktivitetskod()));
@@ -396,8 +394,8 @@ public class ExternalToTransportConverter {
         return vardkontakt;
     }
 
-    private BilagaType convertBilaga(Bilaga source) {
-        BilagaType bilaga = new BilagaType();
+    private se.inera.certificate.ts_diabetes.model.ext.v1.Bilaga convertBilaga(Bilaga source) {
+        se.inera.certificate.ts_diabetes.model.ext.v1.Bilaga bilaga = new se.inera.certificate.ts_diabetes.model.ext.v1.Bilaga();
         bilaga.setBilagetyp(IsoTypeConverter.toCD(source.getBilagetyp()));
         bilaga.setForekomst(source.getForekomst());
 

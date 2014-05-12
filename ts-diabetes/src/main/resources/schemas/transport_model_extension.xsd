@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2013 Inera AB (http://www.inera.se)
+
+    This file is part of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules).
+
+    Inera Certificate Modules is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    Inera Certificate Modules is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="urn:riv:clinicalprocess:healthcond:certificate:ts-diabetes:1"
+           xmlns:iso="urn:iso:21090:dt:1" targetNamespace="urn:riv:clinicalprocess:healthcond:certificate:ts-diabetes:1"
+           elementFormDefault="qualified" attributeFormDefault="unqualified"
+           version="1.0">
+
+  <xs:import namespace="urn:iso:21090:dt:1" schemaLocation="core_components/iso_dt_subset_1.0.xsd"/>
+
+  <xs:element name="specialitet" type="iso:CD"/>
+
+  <xs:element name="metod" type="iso:CD"/>
+  <xs:element name="plats" type="xs:string"/>
+  <xs:element name="ostruktureradtid" type="xs:string"/>
+
+  <xs:element name="varde" type="xs:anyType"/>
+
+  <xs:element name="lateralitet" type="iso:CD"/>
+
+  <xs:element name="intygAvser" type="iso:CD"/>
+  <xs:complexType name="bilagaType">
+    <xs:sequence>
+      <xs:element name="bilagetyp" type="iso:CD"/>
+      <xs:element name="forekomst" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="bilaga" type="bilagaType"/>
+  <xs:element name="utgava" type="xs:string"/>
+  <xs:element name="version" type="xs:string"/>
+
+  <xs:element name="observationAktivitetRelation" type="observationAktivitetRelationType"/>
+  <xs:complexType name="observationAktivitetRelationType">
+    <xs:sequence>
+      <xs:element name="observations-id" type="iso:II"/>
+      <xs:element name="aktivitets-id" type="iso:II"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

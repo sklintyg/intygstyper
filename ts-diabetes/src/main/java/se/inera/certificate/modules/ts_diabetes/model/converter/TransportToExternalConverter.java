@@ -45,10 +45,8 @@ import se.inera.certificate.modules.ts_diabetes.model.external.Vardenhet;
 import se.inera.certificate.modules.ts_diabetes.model.external.Vardkontakt;
 import se.inera.certificate.ts_diabetes.iso.v21090.dt.v1.CD;
 import se.inera.certificate.ts_diabetes.model.v1.AktivitetType;
-import se.inera.certificate.ts_diabetes.model.v1.BilagaType;
 import se.inera.certificate.ts_diabetes.model.v1.EnhetType;
 import se.inera.certificate.ts_diabetes.model.v1.HosPersonalType;
-import se.inera.certificate.ts_diabetes.model.v1.ObservationAktivitetRelationType;
 import se.inera.certificate.ts_diabetes.model.v1.ObservationType;
 import se.inera.certificate.ts_diabetes.model.v1.PatientType;
 import se.inera.certificate.ts_diabetes.model.v1.RekommendationType;
@@ -112,7 +110,7 @@ public class TransportToExternalConverter {
         return utlatande;
     }
 
-    private Bilaga convertToExtBilaga(BilagaType source) throws ConverterException {
+    private Bilaga convertToExtBilaga(se.inera.certificate.ts_diabetes.model.ext.v1.Bilaga source) throws ConverterException {
         if (source == null) {
             throw new ConverterException("Missing bilaga");
         }
@@ -132,13 +130,13 @@ public class TransportToExternalConverter {
      * @throws ConverterException
      */
     private Collection<? extends ObservationAktivitetRelation> convertObservationAktivitetRelationer(
-            List<ObservationAktivitetRelationType> source) throws ConverterException {
+            List<se.inera.certificate.ts_diabetes.model.ext.v1.ObservationAktivitetRelation> source) throws ConverterException {
         if (source == null) {
             throw new ConverterException();
         }
         List<ObservationAktivitetRelation> converted = new ArrayList<ObservationAktivitetRelation>();
 
-        for (ObservationAktivitetRelationType it : source) {
+        for (se.inera.certificate.ts_diabetes.model.ext.v1.ObservationAktivitetRelation it : source) {
             converted.add(convertObservationRelation(it));
         }
 
@@ -152,10 +150,10 @@ public class TransportToExternalConverter {
      *            {@link ObservationAktivitetRelationType}
      * @return {@link ObservationAktivitetRelation}
      */
-    private ObservationAktivitetRelation convertObservationRelation(ObservationAktivitetRelationType source) {
+    private ObservationAktivitetRelation convertObservationRelation(se.inera.certificate.ts_diabetes.model.ext.v1.ObservationAktivitetRelation source) {
         ObservationAktivitetRelation converted = new ObservationAktivitetRelation();
-        converted.setAktivitetsid(IsoTypeConverter.toId(source.getAktivitetsid()));
-        converted.setObservationsid(IsoTypeConverter.toId(source.getObservationsid()));
+        converted.setAktivitetsid(IsoTypeConverter.toId(source.getAktivitetsId()));
+        converted.setObservationsid(IsoTypeConverter.toId(source.getObservationsId()));
 
         return converted;
     }
@@ -270,8 +268,8 @@ public class TransportToExternalConverter {
             aktivitet.setAktivitetsstatus(IsoTypeConverter.toKod(source.getAktivitetsstatus()));
         }
 
-        if (source.getAktivitetsid() != null) {
-            aktivitet.setId(IsoTypeConverter.toId(source.getAktivitetsid()));
+        if (source.getAktivitetsId() != null) {
+            aktivitet.setId(IsoTypeConverter.toId(source.getAktivitetsId()));
         }
 
         if (source.getMetod() != null) {
@@ -330,8 +328,8 @@ public class TransportToExternalConverter {
             observation.setForekomst(source.isForekomst());
         }
 
-        if (source.getObservationsid() != null) {
-            observation.setId(IsoTypeConverter.toId(source.getObservationsid()));
+        if (source.getObservationsId() != null) {
+            observation.setId(IsoTypeConverter.toId(source.getObservationsId()));
         }
 
         observation.setObservationskod(IsoTypeConverter.toKod(source.getObservationskod()));
