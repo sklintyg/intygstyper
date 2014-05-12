@@ -20,6 +20,7 @@ package se.inera.certificate.modules.fk7263.model.converter;
 
 import org.apache.commons.lang3.StringUtils;
 
+import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
@@ -61,6 +62,11 @@ public class WebcertModelFactory {
         utlatande.setRekommendationKontaktForetagshalsovarden(false);
         utlatande.setRessattTillArbeteAktuellt(false);
         utlatande.setRessattTillArbeteEjAktuellt(false);
+        
+        utlatande.setNedsattMed25(new LocalDateInterval(null, null));
+        utlatande.setNedsattMed50(new LocalDateInterval(null, null));
+        utlatande.setNedsattMed75(new LocalDateInterval(null, null));
+        utlatande.setNedsattMed100(new LocalDateInterval(null, null));
 
         utlatande.setId(newDraftData.getCertificateId());
 
