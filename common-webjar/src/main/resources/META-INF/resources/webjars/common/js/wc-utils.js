@@ -76,7 +76,7 @@ define([ 'angular', 'text!./wcField.html' ], function(angular, wcFieldTemplate) 
                     return response;
                 }, function(response) {
                     // for 403 responses - redirect browser to configured redirect url
-                    if (response.status === '403') {
+                    if (response.status === 403) {
                         $window.location.href = config.redirectUrl;
                     }
                     // signal rejection (arguably not meaningful here since we just
