@@ -105,6 +105,8 @@ public class WebcertModelFactory {
             vardperson.setPostnummer(hoSPersonal.getVardenhet().getPostnummer());
             vardperson.setPostort(hoSPersonal.getVardenhet().getPostort());
             vardperson.setTelefonnummer(hoSPersonal.getVardenhet().getTelefonnummer());
+            vardperson.setEpost(hoSPersonal.getVardenhet().getEpost());
+            vardperson.setArbetsplatsKod(hoSPersonal.getVardenhet().getArbetsplatskod());
         }
 
         if (hoSPersonal.getVardenhet() != null && hoSPersonal.getVardenhet().getVardgivare() != null) {

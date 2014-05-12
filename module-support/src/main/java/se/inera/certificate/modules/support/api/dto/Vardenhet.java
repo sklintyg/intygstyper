@@ -21,9 +21,10 @@ public class Vardenhet {
 
     private final Vardgivare vardgivare;
 
+    private final String arbetsplatskod;
 
     public Vardenhet(String hsaId, String namn, String postadress, String postnummer, String postort,
-                     String telefonnummer, String epost, Vardgivare vardgivare) {
+                     String telefonnummer, String epost, String arbetsplatskod, Vardgivare vardgivare) {
         hasText(hsaId, "'hsaId' must not be empty");
         hasText(namn, "'namn' must not be empty");
         // TODO: these properties must be provided from HSA
@@ -40,6 +41,7 @@ public class Vardenhet {
         this.telefonnummer = telefonnummer;
         this.epost = epost;
         this.vardgivare = vardgivare;
+        this.arbetsplatskod = arbetsplatskod;
     }
 
     public String getHsaId() {
@@ -72,5 +74,9 @@ public class Vardenhet {
 
     public String getEpost() {
         return epost;
+    }
+
+    public String getArbetsplatskod() {
+        return arbetsplatskod;
     }
 }
