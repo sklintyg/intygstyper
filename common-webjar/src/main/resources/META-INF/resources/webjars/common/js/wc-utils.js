@@ -341,8 +341,8 @@ define([ 'angular', 'text!./wcField.html' ], function(angular, wcFieldTemplate) 
                         return messageService.getProperty(key);
                     };
                 },
-                template: '<span class="help" tooltip-trigger="mouseenter" ' +
-                    'tooltip-html-unsafe="{{getMessage(fieldHelpText)}}" tooltip-placement="right">?</span>'
+                template: '<span class="glyphicon glyphicon-question-sign help" tooltip-trigger="mouseenter" ' +
+                    'tooltip-html-unsafe="{{getMessage(fieldHelpText)}}" tooltip-placement="right"></span>'
             };
         }
     ]);
