@@ -63,7 +63,7 @@
                   Dölj vad som behöver kompletteras
                 </button>
               </div>
-              <div id="certificate-is-signed-message-text" ng-show="isSigned"><strong>Status:</strong> Intyget är
+              <div id="certificate-is-sent-to-it-message-text" ng-show="isSigned"><strong>Status:</strong> Intyget är
                 signerat.
               </div>
               <div ng-show="certForm.$pristine && isComplete && !isSigned"><strong>Status:</strong> Intyget är sparat.
@@ -562,9 +562,8 @@
                 <h3>Signera</h3>
 
                 <div id="sign-requires-doctor-message-text" ng-if="!user.userContext.lakare" class="alert alert-info">
-                  Endast läkare får skriva under intyget. Du kan skicka e-post med en länk till intyget till den läkare
-                  som
-                  ska signera.
+                  Endast läkare får underteckna intyget. Du kan skicka ett mejl med en länk till intyget till den läkare
+                  som ska signera.
                 </div>
 
                 <button id="signera-utkast-button" class="btn btn-success" ng-disabled="!isComplete" ng-click="sign()"

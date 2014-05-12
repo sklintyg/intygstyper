@@ -61,7 +61,7 @@
                         ng-click="toggleShowComplete()">Dölj vad som behöver kompletteras
                 </button>
               </div>
-              <div id="certificate-is-signed-message-text" ng-show="isSigned"><strong>Status:</strong> Intyget är
+              <div id="certificate-is-sent-to-it-message-text" ng-show="isSigned"><strong>Status:</strong> Intyget är
                 signerat.
               </div>
               <div ng-show="certForm.$pristine && isComplete && !isSigned"><strong>Status:</strong> Intyget är sparat.
@@ -126,8 +126,8 @@
                     <div class="form-group clearfix">
                       <label class="checkbox checkbox-columns col-xs-2"
                              ng-repeat="typ in cert.intygAvser.korkortstyp track by $index"><input
-                          id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox"
-                          ng-model="typ.selected"> <span message key="ts-bas.label.korkort.{{typ.type}}"></span></label>
+                          id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox" ng-model="typ.selected">
+                        <span message key="ts-bas.label.korkort.{{typ.type}}"></span></label>
                     </div>
                   </div>
 
@@ -997,7 +997,7 @@
                 <h3>Signera</h3>
 
                 <div id="sign-requires-doctor-message-text" ng-if="!user.userContext.lakare" class="alert alert-info">
-                  Endast läkare får skriva under intyget. Du kan skicka e-post med en länk till intyget till den läkare
+                  Endast läkare får underteckna intyget. Du kan skicka ett mejl med en länk till intyget till den läkare
                   som ska signera.
                 </div>
 
@@ -1015,5 +1015,4 @@
     <!-- span12 webcert-col-single -->
   </div>
   <!-- row -->
-</div>
-<!-- container -->
+</div><!-- container -->

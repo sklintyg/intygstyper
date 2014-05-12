@@ -173,7 +173,7 @@ define([
                     });
                 };
 
-                function _sign($scope) {
+                function _sign($scope, intygTyp) {
                     var bodyText = 'Är du säker på att du vill signera intyget?';
                     var dialog = wcDialogService.showDialog($scope, {
                         dialogId: 'confirm-sign',
@@ -185,7 +185,11 @@ define([
                         button1click: function() {
                             _confirmSign($routeParams.certificateId, $scope, function() {
                                 dialog.close();
-                                $route.reload();
+                                if (intygTyp === 'fk7263') {
+                                    $location.path(intygTyp + '/view/' + $routeParams.certificateId);
+                                } else {
+                                    $route.reload();
+                                }
                                 statService.refreshStat();
                             });
                         },

@@ -275,9 +275,9 @@ define([ 'angular' ], function(angular) {
             $scope.updateTotalCertDays = function() {
                 var oneDay = 24 * 60 * 60 * 1000;
                 var startDates = [ $scope.cert.nedsattMed25.from, $scope.cert.nedsattMed50.from,
-                    $scope.cert.nedsattMed75.from, $scope.cert.nedsattMed100.from ]
+                    $scope.cert.nedsattMed75.from, $scope.cert.nedsattMed100.from ];
                 var endDates = [ $scope.cert.nedsattMed25.tom, $scope.cert.nedsattMed50.tom,
-                    $scope.cert.nedsattMed75.tom, $scope.cert.nedsattMed100.tom ]
+                    $scope.cert.nedsattMed75.tom, $scope.cert.nedsattMed100.tom ];
                 var minDate = getMinMaxDate('min', startDates);
                 var maxDate = getMinMaxDate('max', endDates);
 
@@ -328,7 +328,7 @@ define([ 'angular' ], function(angular) {
              * Action to sign the certificate draft and return to Webcert again.
              */
             $scope.sign = function() {
-                ManageCertView.sign($scope);
+                ManageCertView.sign($scope, 'fk7263');
             };
         }
     ];
