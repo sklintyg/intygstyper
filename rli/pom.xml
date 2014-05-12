@@ -85,6 +85,10 @@
       <artifactId>spring-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>se.inera.certificate</groupId>
+      <artifactId>schemas</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
