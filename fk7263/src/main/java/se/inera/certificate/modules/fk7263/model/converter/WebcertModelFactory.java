@@ -20,7 +20,6 @@ package se.inera.certificate.modules.fk7263.model.converter;
 
 import org.apache.commons.lang3.StringUtils;
 
-import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
@@ -33,7 +32,7 @@ public class WebcertModelFactory {
     /**
      * Create a new FK7263 draft pre-populated with the attached data.
      *
-     * @param newDraftData {@link CreateNewDraftCertificateHolder}
+     * @param newDraftData {@link CreateNewDraftHolder}
      * @return {@link Fk7263Intyg} or throws a ConverterException if something unforeseen happens
      * @throws ConverterException
      */

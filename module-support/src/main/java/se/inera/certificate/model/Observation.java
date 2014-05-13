@@ -68,7 +68,7 @@ public class Observation {
      * this method should do this by concretise the return type like:
      * <p/>
      * <code>List&lt;PhysicalQuantity></code>
-     * 
+     *
      * @return A list of {@link Object}s.
      */
     public List<? extends Object> getVarde() {
