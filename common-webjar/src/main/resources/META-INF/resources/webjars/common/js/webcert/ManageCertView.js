@@ -109,6 +109,7 @@ define([
                                 $scope.dialog.acceptprogressdone = true;
                                 if (error.errorCode === 'DATA_NOT_FOUND') { // Godtagbart, intyget var redan borta.
                                     statService.refreshStat(); // Update statistics to reflect change
+                                    draftDeleteDialog.close();
                                     $location.path('/unsigned');
                                 } else {
                                     $scope.dialog.showerror = true;
