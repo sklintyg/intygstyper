@@ -1,21 +1,20 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.dto.ValidationMessage;
 import se.inera.certificate.modules.support.api.dto.ValidationStatus;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 
 public class InternalDraftValidator {
     private static final Logger LOG = LoggerFactory.getLogger(InternalDraftValidator.class);
@@ -114,7 +113,7 @@ public class InternalDraftValidator {
 
     /**
      * Check if there are validation errors.
-     * 
+     *
      * @param validationMessages
      *            list of validation messages
      * @return {@link se.inera.certificate.modules.support.api.dto.ValidationStatus#VALID} if there are no errors, and
@@ -127,7 +126,7 @@ public class InternalDraftValidator {
 
     /**
      * Create a ValidationMessage and add it to the list of messages.
-     * 
+     *
      * @param validationMessages
      *            list collection messages
      * @param field
@@ -159,7 +158,7 @@ public class InternalDraftValidator {
     }
 
     /**
-     * 
+     *
      * @param validationMessages
      *            list collecting message
      * @param fieldId
@@ -175,14 +174,14 @@ public class InternalDraftValidator {
         }
 
         for (int i = 0; i < intervals.length; i++) {
-            if (intervals[i] != null) {
+            if (intervals[i] != null && (intervals[i].getFrom() != null || intervals[i].getTom() != null)) {
                 Interval oneInterval = createInterval(intervals[i].getFrom(), intervals[i].getTom());
                 if (oneInterval == null) {
                     addValidationError(validationMessages, fieldId, "fk7263.validation.arbetsformaga.incorrect-date-interval");
                     return false;
                 }
                 for (int j = i + 1; j < intervals.length; j++) {
-                    if (intervals[j] != null) {
+                    if (intervals[j] != null && (intervals[j].getFrom() != null || intervals[j].getTom() != null)) {
                         Interval anotherInterval = createInterval(intervals[j].getFrom(), intervals[j].getTom());
                         if (anotherInterval == null) {
                             addValidationError(validationMessages, fieldId, "fk7263.validation.arbetsformaga.incorrect-date-interval");

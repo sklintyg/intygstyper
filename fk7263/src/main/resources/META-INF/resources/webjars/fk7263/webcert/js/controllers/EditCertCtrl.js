@@ -216,22 +216,6 @@ define([ 'angular' ], function(angular) {
                     $scope.updateTotalCertDays();
                 }
             }
-            $scope.cert.nedsattMed25 = {
-                    from : "",
-                    tom : ""
-            };
-            $scope.cert.nedsattMed50 = {
-                from : "",
-                tom : ""
-            };
-            $scope.cert.nedsattMed75 = {
-                from : "",
-                tom : ""
-            };
-            $scope.cert.nedsattMed100 = {
-                from : "",
-                tom : ""
-            };
 
             $scope.$watch('workState.check25', function(newVal) {
                 updateWorkStateDate(newVal, $scope.cert.nedsattMed25);
@@ -274,10 +258,26 @@ define([ 'angular' ], function(angular) {
             $scope.totalCertDays = false;
             $scope.updateTotalCertDays = function() {
                 var oneDay = 24 * 60 * 60 * 1000;
-                var startDates = [ $scope.cert.nedsattMed25.from, $scope.cert.nedsattMed50.from,
-                    $scope.cert.nedsattMed75.from, $scope.cert.nedsattMed100.from ];
-                var endDates = [ $scope.cert.nedsattMed25.tom, $scope.cert.nedsattMed50.tom,
-                    $scope.cert.nedsattMed75.tom, $scope.cert.nedsattMed100.tom ];
+                var startDates = [];
+                var endDates = [];
+
+                if ($scope.cert.nedsattMed25) {
+                    startDates.push($scope.cert.nedsattMed25.from);
+                    endDates.push($scope.cert.nedsattMed25.tom);
+                }
+                if ($scope.cert.nedsattMed50) {
+                    startDates.push($scope.cert.nedsattMed50.from);
+                    endDates.push($scope.cert.nedsattMed50.tom);
+                }
+                if ($scope.cert.nedsattMed75) {
+                    startDates.push($scope.cert.nedsattMed75.from);
+                    endDates.push($scope.cert.nedsattMed75.tom);
+                }
+                if ($scope.cert.nedsattMed100) {
+                    startDates.push($scope.cert.nedsattMed100.from);
+                    endDates.push($scope.cert.nedsattMed100.tom);
+                }
+
                 var minDate = getMinMaxDate('min', startDates);
                 var maxDate = getMinMaxDate('max', endDates);
 
