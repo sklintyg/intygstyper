@@ -174,14 +174,14 @@ public class InternalDraftValidator {
         }
 
         for (int i = 0; i < intervals.length; i++) {
-            if (intervals[i] != null && (intervals[i].getFrom() != null || intervals[i].getTom() != null)) {
+            if (intervals[i] != null) {
                 Interval oneInterval = createInterval(intervals[i].getFrom(), intervals[i].getTom());
                 if (oneInterval == null) {
                     addValidationError(validationMessages, fieldId, "fk7263.validation.arbetsformaga.incorrect-date-interval");
                     return false;
                 }
                 for (int j = i + 1; j < intervals.length; j++) {
-                    if (intervals[j] != null && (intervals[j].getFrom() != null || intervals[j].getTom() != null)) {
+                    if (intervals[j] != null) {
                         Interval anotherInterval = createInterval(intervals[j].getFrom(), intervals[j].getTom());
                         if (anotherInterval == null) {
                             addValidationError(validationMessages, fieldId, "fk7263.validation.arbetsformaga.incorrect-date-interval");

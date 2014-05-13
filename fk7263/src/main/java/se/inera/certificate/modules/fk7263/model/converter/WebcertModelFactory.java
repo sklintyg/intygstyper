@@ -62,11 +62,6 @@ public class WebcertModelFactory {
         utlatande.setRekommendationKontaktForetagshalsovarden(false);
         utlatande.setRessattTillArbeteAktuellt(false);
         utlatande.setRessattTillArbeteEjAktuellt(false);
-        
-        utlatande.setNedsattMed25(new LocalDateInterval(null, null));
-        utlatande.setNedsattMed50(new LocalDateInterval(null, null));
-        utlatande.setNedsattMed75(new LocalDateInterval(null, null));
-        utlatande.setNedsattMed100(new LocalDateInterval(null, null));
 
         utlatande.setId(newDraftData.getCertificateId());
 
