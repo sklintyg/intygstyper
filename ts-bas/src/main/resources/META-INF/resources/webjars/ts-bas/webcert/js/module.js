@@ -4,13 +4,13 @@ define([
     'ts-bas/webcert/js/messages',
     'common/js/webcert/CertificateService',
     'common/js/webcert/ManageCertView',
-    'ts-bas/webcert/js/directives'
-], function(angular, controllers, messages, wcCertificateService, wcManageCertView, directives) {
+    'common/js/webcert/eyeDecimal'
+], function(angular, controllers, messages, wcCertificateService, wcManageCertView, eyeDecimal) {
     'use strict';
 
     var moduleName = 'ts-bas';
 
-    var module = angular.module(moduleName, [controllers, wcCertificateService, wcManageCertView, directives]);
+    var module = angular.module(moduleName, [controllers, wcCertificateService, wcManageCertView, eyeDecimal]);
 
     module.config(['$routeProvider', function($routeProvider) {
         $routeProvider.
@@ -25,7 +25,7 @@ define([
     }]);
 
     // Inject language resources
-    // TODO: This only works since we always load webcert before the module, when the messageService
+    // NOTE: This only works since we always load webcert before the module, when the messageService
     // is moved to a commons project, make sure this is loaded for this module as well.
     module.run(['messageService',
         function(messageService) {

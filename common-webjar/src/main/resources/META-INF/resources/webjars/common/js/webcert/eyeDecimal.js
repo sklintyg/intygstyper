@@ -23,8 +23,9 @@ define([ 'angular' ], function(angular) {
      * Directive for 'Eye Decimals' with two way binding /
      */
 
-    return [ function() {
-
+    var moduleName = 'wc.eyeDecimal';
+    var module = angular.module(moduleName, []);
+    module.directive('eyeDecimal', [function() {
         return {
             restrict: 'A',
             require: 'ngModel',
@@ -112,5 +113,7 @@ define([ 'angular' ], function(angular) {
                 ngModelCtrl.$parsers.push(eyeDecimal);
             }
         };
-    }];
+    }]);
+
+    return moduleName;
 });
