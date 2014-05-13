@@ -32,7 +32,13 @@
   <xs:complexType name="prognosType">
     <xs:sequence>
       <xs:element name="prognoskod" type="iso:CD" minOccurs="0"/>
-      <xs:element name="beskrivning" type="xs:string" minOccurs="0"/>
+      <xs:element name="beskrivning" type="nonEmptyString" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+
+  <xs:simpleType name="nonEmptyString">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
 </xs:schema>
