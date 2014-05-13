@@ -125,7 +125,7 @@ define([ 'angular' ], function(angular) {
                         decorateSingleItem(result);
                         // Create a proxyCopy
                         var proxyCopy = angular.copy(qa);
-                        proxyCopy.proxyMessage = 'fragasvar.answer.is.sent';
+                        proxyCopy.proxyMessage = 'fk7263.fragasvar.answer.is.sent';
                         $scope.qaList.push(proxyCopy);
                         // update real item
                         angular.copy(result, qa);
@@ -167,7 +167,7 @@ define([ 'angular' ], function(angular) {
                         decorateSingleItem(result);
                         // Create a proxyCopy
                         var proxyCopy = angular.copy(qa);
-                        proxyCopy.proxyMessage = 'fragasvar.marked.as.hanterad';
+                        proxyCopy.proxyMessage = 'fk7263.fragasvar.marked.as.hanterad';
                         $scope.qaList.push(proxyCopy);
 
                         angular.copy(result, qa);
@@ -194,7 +194,7 @@ define([ 'angular' ], function(angular) {
                         decorateSingleItem(result);
                         // Create a proxyCopy
                         var proxyCopy = angular.copy(qa);
-                        proxyCopy.proxyMessage = 'fragasvar.marked.as.ohanterad';
+                        proxyCopy.proxyMessage = 'fk7263.fragasvar.marked.as.ohanterad';
                         $scope.qaList.push(proxyCopy);
 
                         angular.copy(result, qa);
