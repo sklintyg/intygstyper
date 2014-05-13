@@ -63,10 +63,30 @@ import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
 public class ExternalToInternalConverterInstance {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExternalToInternalConverterInstance.class);
-
-    private List<Observation> observationer;
-
-    private List<Aktivitet> aktiviteter;
+    public static final Kod SAKNAR_FORMAGA_KANNA_HYPOGLYKEMI = CodeConverter
+            .toKod(ObservationsKod.SAKNAR_FORMAGA_KANNA_HYPOGLYKEMI);
+    public static final Kod ALLVARLIG_HYPOGLYKEMI = CodeConverter
+            .toKod(ObservationsKod.ALLVARLIG_HYPOGLYKEMI);
+    public static final Kod ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN = CodeConverter
+            .toKod(ObservationsKod.ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN);
+    public static final Kod ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND = CodeConverter
+            .toKod(ObservationsKod.ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND);
+    public static final Kod DIPLOPI = CodeConverter.toKod(ObservationsKod.DIPLOPI);
+    public static final Kod SYNFALTSPROVNING_UTAN_ANMARKNING = CodeConverter
+            .toKod(ObservationsKod.SYNFALTSPROVNING_UTAN_ANMARKNING);
+    public static final Kod PROVNING_AV_OGATS_RORLIGHET = CodeConverter
+            .toKod(AktivitetKod.PROVNING_AV_OGATS_RORLIGHET);
+    public static final Kod SYNFALTSUNDERSOKNING = CodeConverter.toKod(AktivitetKod.SYNFALTSUNDERSOKNING);
+    public static final Kod KUNSKAP_ATGARD_HYPOGLYKEMI = CodeConverter.toKod(ObservationsKod.KUNSKAP_ATGARD_HYPOGLYKEMI);
+    public static final Kod HYPOGLYKEMIER_MED_TECKEN_PA_NEDSATT_HJARNFUNKTION = CodeConverter
+            .toKod(ObservationsKod.HYPOGLYKEMIER_MED_TECKEN_PA_NEDSATT_HJARNFUNKTION);
+    public static final Kod INTE_TA_STALLNING = CodeConverter.toKod(RekommendationVardeKod.INTE_TA_STALLNING);
+    public static final Kod DIABETES_TYP_1 = CodeConverter.toKod(ObservationsKod.DIABETES_TYP_1);
+    public static final Kod DIABETES_TYP_2 = CodeConverter.toKod(ObservationsKod.DIABETES_TYP_2);
+    public static final Kod DIABETIKER_INSULINBEHANDLING = CodeConverter.toKod(ObservationsKod.DIABETIKER_INSULINBEHANDLING);
+    public static final Kod DIABETIKER_TABLETTBEHANDLING = CodeConverter.toKod(ObservationsKod.DIABETIKER_TABLETTBEHANDLING);
+    public static final Kod DIABETIKER_ENBART_KOST = CodeConverter.toKod(ObservationsKod.DIABETIKER_ENBART_KOST);
+    public static final Kod DIABETIKER_ANNAN_BEHANDLING = CodeConverter.toKod(ObservationsKod.DIABETIKER_ANNAN_BEHANDLING);
 
     public Utlatande convert(se.inera.certificate.modules.ts_diabetes.model.external.Utlatande externalModel) throws ConverterException {
         Utlatande intUtlatande = convertUtlatandeFromExternalToInternal(externalModel);
@@ -78,17 +98,13 @@ public class ExternalToInternalConverterInstance {
             se.inera.certificate.modules.ts_diabetes.model.external.Utlatande extUtlatande) throws ConverterException {
         LOG.debug("Converting Utlatande '{}' from external to internal", extUtlatande.getId());
 
-        this.observationer = extUtlatande.getObservationer();
-        this.aktiviteter = extUtlatande.getAktiviteter();
-
         Utlatande intUtlatande = new Utlatande();
 
         intUtlatande.setId(InternalModelConverterUtils.getExtensionFromId(extUtlatande.getId()));
         intUtlatande.setTyp(InternalModelConverterUtils.getValueFromKod(extUtlatande.getTyp()));
         intUtlatande.setSigneringsdatum(extUtlatande.getSigneringsdatum());
         intUtlatande.setSkickatdatum(extUtlatande.getSkickatdatum());
-        intUtlatande.setKommentarer(extUtlatande.getKommentarer().size() == 0 ? null : extUtlatande.getKommentarer()
-                .get(0));
+        intUtlatande.setKommentarer(extUtlatande.getKommentarer().isEmpty() ? null : extUtlatande.getKommentarer().get(0));
 
         HoSPersonal intHoSPersonal = convertToIntHoSPersonal(extUtlatande.getSkapadAv());
         intUtlatande.setSkapadAv(intHoSPersonal);
@@ -115,16 +131,14 @@ public class ExternalToInternalConverterInstance {
      *
      * @param hypoglykemier hypoglykemier
      * @param extUtlatande  {@link se.inera.certificate.modules.ts_diabetes.model.external.Utlatande}
-     * @return {@link Hypoglykemier}
      * @throws ConverterException
      */
     private void createHypoglykemier(Hypoglykemier hypoglykemier,
                                      se.inera.certificate.modules.ts_diabetes.model.external.Utlatande extUtlatande) throws ConverterException {
-        Observation kunskap = getObservationWithKod(CodeConverter.toKod(ObservationsKod.KUNSKAP_ATGARD_HYPOGLYKEMI));
-        Observation teckenNedsattHjarnfunktion = getObservationWithKod(CodeConverter
-                .toKod(ObservationsKod.HYPOGLYKEMIER_MED_TECKEN_PA_NEDSATT_HJARNFUNKTION));
+        Observation kunskap = getObservationWithKod(extUtlatande, KUNSKAP_ATGARD_HYPOGLYKEMI);
+        Observation teckenNedsattHjarnfunktion = getObservationWithKod(extUtlatande, HYPOGLYKEMIER_MED_TECKEN_PA_NEDSATT_HJARNFUNKTION);
 
-        Aktivitet blodsocker = getAktivitetWithKod(CodeConverter.toKod(AktivitetKod.EGENOVERVAKNING_BLODGLUKOS));
+        Aktivitet blodsocker = getAktivitetWithKod(extUtlatande, CodeConverter.toKod(AktivitetKod.EGENOVERVAKNING_BLODGLUKOS));
 
         // Mandatory observations, check for null, if not proceed and set corresponding booleans
         if (kunskap == null) {
@@ -137,14 +151,10 @@ public class ExternalToInternalConverterInstance {
         hypoglykemier.setKunskapOmAtgarder(kunskap.getForekomst());
 
         // Then proceed to convert optional Observations
-        Observation saknarFormaga = getObservationWithKod(CodeConverter
-                .toKod(ObservationsKod.SAKNAR_FORMAGA_KANNA_HYPOGLYKEMI));
-        Observation allvarligHypoglykemi = getObservationWithKod(CodeConverter
-                .toKod(ObservationsKod.ALLVARLIG_HYPOGLYKEMI));
-        Observation allvarligHypoglykemiTrafik = getObservationWithKod(CodeConverter
-                .toKod(ObservationsKod.ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN));
-        Observation allvarligHypoglykemiVaken = getObservationWithKod(CodeConverter
-                .toKod(ObservationsKod.ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND));
+        Observation saknarFormaga = getObservationWithKod(extUtlatande, SAKNAR_FORMAGA_KANNA_HYPOGLYKEMI);
+        Observation allvarligHypoglykemi = getObservationWithKod(extUtlatande, ALLVARLIG_HYPOGLYKEMI);
+        Observation allvarligHypoglykemiTrafik = getObservationWithKod(extUtlatande, ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN);
+        Observation allvarligHypoglykemiVaken = getObservationWithKod(extUtlatande, ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND);
 
         // Corresponding Observation in comments for clarity
         // Patienten saknar förmåga att känna varningstecken på hypoglykemi
@@ -185,8 +195,8 @@ public class ExternalToInternalConverterInstance {
     /**
      * Convert a List of Kod into an IntygAvser object.
      *
-     * @param intygAvser
-     * @param source     a List of {@link Kod}
+     * @param intygAvser intyg att convertera / uppdatera
+     * @param source a List of {@link Kod}
      * @return {@link IntygAvser}
      */
     private IntygAvser convertToIntIntygAvser(IntygAvser intygAvser, List<Kod> source) {
@@ -217,16 +227,15 @@ public class ExternalToInternalConverterInstance {
     /**
      * Create a Bedomning object from a List of Rekommendation[er].
      *
-     * @param bedomning
+     * @param bedomning bedömning att uppdatera
      * @param extUtlatande {@link se.inera.certificate.modules.ts_diabetes.model.external.Utlatande}
-     * @return {@link Bedomning}
      */
     private void createBedomning(Bedomning bedomning,
                                  se.inera.certificate.modules.ts_diabetes.model.external.Utlatande extUtlatande) {
         for (Rekommendation rek : extUtlatande.getRekommendationer()) {
 
             if (CodeConverter.matches(RekommendationsKod.PATIENT_UPPFYLLER_KRAV_FOR, rek.getRekommendationskod())) {
-                if (rek.getVarde().contains(CodeConverter.toKod(RekommendationVardeKod.INTE_TA_STALLNING))) {
+                if (rek.getVarde().contains(INTE_TA_STALLNING)) {
                     bedomning.setKanInteTaStallning(true);
                 } else {
                     for (Object varde : rek.getVarde()) {
@@ -249,11 +258,8 @@ public class ExternalToInternalConverterInstance {
                 }
                 bedomning.setLamplighetInnehaBehorighet(lamplighetInnehaBehorighet);
 
-            } else if (CodeConverter.matches(RekommendationsKod.PATIENT_BOR_UNDESOKAS_AV_SPECIALIST,
-
-                    rek.getRekommendationskod())) {
+            } else if (CodeConverter.matches(RekommendationsKod.PATIENT_BOR_UNDESOKAS_AV_SPECIALIST, rek.getRekommendationskod())) {
                 bedomning.setLakareSpecialKompetens(rek.getBeskrivning());
-
             }
         }
     }
@@ -261,43 +267,29 @@ public class ExternalToInternalConverterInstance {
     /**
      * Create Diabetes object from Observationer.
      *
-     * @param diabetes
+     * @param diabetes Diabetes object to update
      * @param extUtlatande {@link se.inera.certificate.modules.ts_diabetes.model.external.Utlatande}
-     * @return {@link Diabetes} object
      * @throws ConverterException
      */
-    private void createDiabetes(Diabetes diabetes,
-                                se.inera.certificate.modules.ts_diabetes.model.external.Utlatande extUtlatande) throws ConverterException {
-        Observation diabetesTyp1 = getObservationWithKod(CodeConverter.toKod(ObservationsKod.DIABETES_TYP_1));
-        Observation diabetesTyp2 = getObservationWithKod(CodeConverter.toKod(ObservationsKod.DIABETES_TYP_2));
+    private void createDiabetes(Diabetes diabetes, se.inera.certificate.modules.ts_diabetes.model.external.Utlatande extUtlatande)
+            throws ConverterException {
+        Observation diabetesTyp1 = getObservationWithKod(extUtlatande, DIABETES_TYP_1);
+        Observation diabetesTyp2 = getObservationWithKod(extUtlatande, DIABETES_TYP_2);
 
         if (diabetesTyp1 == null && diabetesTyp2 == null) {
             throw new ConverterException("One of Diabetes Typ1 or Diabetes Typ2 must be specified");
         }
 
-        Observation insulin = getObservationWithKod(CodeConverter.toKod(ObservationsKod.DIABETIKER_INSULINBEHANDLING));
-        Observation tabletter = getObservationWithKod(CodeConverter.toKod(ObservationsKod.DIABETIKER_TABLETTBEHANDLING));
-        Observation kost = getObservationWithKod(CodeConverter.toKod(ObservationsKod.DIABETIKER_ENBART_KOST));
-        Observation annan = getObservationWithKod(CodeConverter.toKod(ObservationsKod.DIABETIKER_ANNAN_BEHANDLING));
+        Observation insulin = getObservationWithKod(extUtlatande, DIABETIKER_INSULINBEHANDLING);
+        Observation tabletter = getObservationWithKod(extUtlatande, DIABETIKER_TABLETTBEHANDLING);
+        Observation kost = getObservationWithKod(extUtlatande, DIABETIKER_ENBART_KOST);
+        Observation annan = getObservationWithKod(extUtlatande, DIABETIKER_ANNAN_BEHANDLING);
 
         if (diabetesTyp1 != null) {
-            if (diabetesTyp1.getForekomst()) {
-                diabetes.setDiabetestyp(CodeConverter.getInternalNameFromKod(diabetesTyp1.getObservationskod(),
-                        ObservationsKod.class));
-                if (diabetesTyp1.getObservationsperiod() != null) {
-                    diabetes.setObservationsperiod(diabetesTyp1.getObservationsperiod().getFrom().toString());
-                }
-            }
+            updateWithObservation(diabetes, diabetesTyp1);
         }
-
         if (diabetesTyp2 != null) {
-            if (diabetesTyp2.getForekomst()) {
-                diabetes.setDiabetestyp(CodeConverter.getInternalNameFromKod(diabetesTyp2.getObservationskod(),
-                        ObservationsKod.class));
-                if (diabetesTyp2.getObservationsperiod() != null) {
-                    diabetes.setObservationsperiod(diabetesTyp2.getObservationsperiod().getFrom().toString());
-                }
-            }
+            updateWithObservation(diabetes, diabetesTyp2);
         }
 
         if (insulin != null) {
@@ -323,6 +315,16 @@ public class ExternalToInternalConverterInstance {
         }
     }
 
+    private void updateWithObservation(Diabetes diabetes, Observation diabetesTyp) {
+        if (diabetesTyp.getForekomst()) {
+            diabetes.setDiabetestyp(CodeConverter.getInternalNameFromKod(diabetesTyp.getObservationskod(),
+                    ObservationsKod.class));
+            if (diabetesTyp.getObservationsperiod() != null) {
+                diabetes.setObservationsperiod(diabetesTyp.getObservationsperiod().getFrom().toString());
+            }
+        }
+    }
+
     /**
      * Create a {@link Syn} object from {@link Observation}s in
      * {@link se.inera.certificate.modules.ts_diabetes.model.external.Utlatande}.
@@ -332,9 +334,8 @@ public class ExternalToInternalConverterInstance {
      */
     private void createSyn(Syn syn, se.inera.certificate.modules.ts_diabetes.model.external.Utlatande extUtlatande) {
 
-        Aktivitet synfaltsprovning = getAktivitetWithKod(CodeConverter.toKod(AktivitetKod.SYNFALTSUNDERSOKNING));
-        Aktivitet provningOgatsRorlighet = getAktivitetWithKod(CodeConverter
-                .toKod(AktivitetKod.PROVNING_AV_OGATS_RORLIGHET));
+        Aktivitet synfaltsprovning = getAktivitetWithKod(extUtlatande, SYNFALTSUNDERSOKNING);
+        Aktivitet provningOgatsRorlighet = getAktivitetWithKod(extUtlatande, PROVNING_AV_OGATS_RORLIGHET);
 
         syn.setSeparatOgonlakarintyg(extUtlatande.getBilaga().getForekomst());
         if (syn.getSeparatOgonlakarintyg()) {
@@ -351,9 +352,8 @@ public class ExternalToInternalConverterInstance {
         }
 
         // Handle Syn related Observationer
-        Observation diplopi = getObservationWithKod(CodeConverter.toKod(ObservationsKod.DIPLOPI));
-        Observation utanAnmarkning = getObservationWithKod(CodeConverter
-                .toKod(ObservationsKod.SYNFALTSPROVNING_UTAN_ANMARKNING));
+        Observation diplopi = getObservationWithKod(extUtlatande, DIPLOPI);
+        Observation utanAnmarkning = getObservationWithKod(extUtlatande, SYNFALTSPROVNING_UTAN_ANMARKNING);
 
         if (diplopi != null) {
             syn.setDiplopi(diplopi.getForekomst());
@@ -368,9 +368,9 @@ public class ExternalToInternalConverterInstance {
 
         // Hmmm does this need to be this way or can getObservationWithKod be used instead?
         for (Observation obs : extUtlatande.getObservationer()) {
-            Kod kod = obs.getObservationskod();
-            if (kod.getCode().equals(ObservationsKod.EJ_KORRIGERAD_SYNSKARPA.getCode())
-                    || kod.getCode().equals(ObservationsKod.KORRIGERAD_SYNSKARPA.getCode())) {
+            String kod = obs.getObservationskod().getCode();
+            if (ObservationsKod.EJ_KORRIGERAD_SYNSKARPA.matches(kod)
+                    || ObservationsKod.KORRIGERAD_SYNSKARPA.matches(kod)) {
                 synskarpa.add(obs);
             }
         }
@@ -431,8 +431,7 @@ public class ExternalToInternalConverterInstance {
 
     }
 
-    private Vardenhet convertToIntVardenhet(se.inera.certificate.model.Vardenhet extVardenhet)
-            throws ConverterException {
+    private Vardenhet convertToIntVardenhet(se.inera.certificate.model.Vardenhet extVardenhet) throws ConverterException {
 
         LOG.trace("Converting vardenhet");
 
@@ -456,8 +455,7 @@ public class ExternalToInternalConverterInstance {
         return intVardenhet;
     }
 
-    private Vardgivare convertToIntVardgivare(se.inera.certificate.model.Vardgivare extVardgivare)
-            throws ConverterException {
+    private Vardgivare convertToIntVardgivare(se.inera.certificate.model.Vardgivare extVardgivare) throws ConverterException {
 
         LOG.trace("Converting vardgivare");
 
@@ -523,8 +521,7 @@ public class ExternalToInternalConverterInstance {
         return intPatient;
     }
 
-    private boolean isObservationAndLateralitet(Observation obs, ObservationsKod observationskod,
-                                                LateralitetsKod lateralitet) {
+    private boolean isObservationAndLateralitet(Observation obs, ObservationsKod observationskod, LateralitetsKod lateralitet) {
         if (CodeConverter.matches(observationskod, obs.getObservationskod())) {
             if (CodeConverter.matches(lateralitet, obs.getLateralitet())) {
                 return true;
@@ -547,8 +544,8 @@ public class ExternalToInternalConverterInstance {
      * @param observationskod Find an observation with this {@link Kod}
      * @return an {@link Observation} if it is found, or null otherwise
      */
-    public Observation getObservationWithKod(Kod observationskod) {
-        for (Observation observation : observationer) {
+    public Observation getObservationWithKod(se.inera.certificate.modules.ts_diabetes.model.external.Utlatande utlatande, Kod observationskod) {
+        for (Observation observation : utlatande.getObservationer()) {
             if (observationskod.equals(observation.getObservationskod())) {
                 return observation;
             }
@@ -563,8 +560,8 @@ public class ExternalToInternalConverterInstance {
      * @param aktivitetskod Find an aktivitet with this {@link Kod}
      * @return an {@link Aktivitet} if it is found, or null otherwise
      */
-    public Aktivitet getAktivitetWithKod(Kod aktivitetskod) {
-        for (Aktivitet aktivitet : aktiviteter) {
+    public Aktivitet getAktivitetWithKod(se.inera.certificate.modules.ts_diabetes.model.external.Utlatande utlatande, Kod aktivitetskod) {
+        for (Aktivitet aktivitet : utlatande.getAktiviteter()) {
             if (aktivitetskod.equals(aktivitet.getAktivitetskod())) {
                 return aktivitet;
             }

@@ -33,6 +33,7 @@ import se.inera.certificate.modules.rli.model.internal.wc.Rekommendation;
 import se.inera.certificate.modules.rli.model.internal.wc.HoSPersonal;
 import se.inera.certificate.modules.rli.model.internal.wc.Undersokning;
 
+import se.inera.certificate.modules.rli.model.internal.wc.Utlatande;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.dto.ValidationMessage;
 import se.inera.certificate.modules.support.api.dto.ValidationStatus;
@@ -41,7 +42,7 @@ public class InternalValidatorInstance {
 
     private static final Logger LOG = LoggerFactory.getLogger(InternalValidatorInstance.class);
 
-    private List<ValidationMessage> validationMessages;
+    private final List<ValidationMessage> validationMessages;
 
     public InternalValidatorInstance() {
         validationMessages = new ArrayList<>();
@@ -52,9 +53,9 @@ public class InternalValidatorInstance {
      * complete).
      *
      * @param utlatande an internal {@link Utlatande}
-     * @return a {@link ValidateDraftResponseHolder} with a status and a list of validationErrors
+     * @return a {@link ValidateDraftResponse} with a status and a list of validationErrors
      */
-    public ValidateDraftResponse validate(se.inera.certificate.modules.rli.model.internal.wc.Utlatande utlatande) {
+    public ValidateDraftResponse validate(Utlatande utlatande) {
         if (utlatande == null) {
             addValidationError("utlatande", "ts.validation.utlatande.missing");
 
@@ -72,7 +73,6 @@ public class InternalValidatorInstance {
     }
 
     private void validateUndersokning(Undersokning undersokning) {
-        // TODO Auto-generated method stub
 
     }
 
@@ -81,24 +81,19 @@ public class InternalValidatorInstance {
             LOG.debug("No HoSPersonal found");
             return;
         }
-        assertNotNullOrEmpty(skapadAv.getVardenhet().getEnhetsnamn(), "vardenhet.namn",
-                "rli.validation.vardenhet.namn.missing");
-
+        assertNotNullOrEmpty(skapadAv.getVardenhet().getEnhetsnamn(), "vardenhet.namn", "rli.validation.vardenhet.namn.missing");
     }
 
     private void validateRekommendation(Rekommendation rekommendation) {
-        // TODO Auto-generated method stub
 
     }
 
     private void validatePatient(Patient patient) {
-        // TODO Auto-generated method stub
 
     }
 
     private void validateArrangemang(Arrangemang arrangemang) {
         assertNotNullOrEmpty(arrangemang.getPlats(), "arrangemang.plats", "rli.validation.arrangemang.plats.missing");
-
     }
 
     /**
@@ -137,16 +132,15 @@ public class InternalValidatorInstance {
     /**
      * Check if there are validation errors.
      *
-     * @return {@link ValidationStatus.COMPLETE} if there are no errors, and {@link ValidationStatus.INCOMPLETE}
-     * otherwise
+     * @return {@link ValidationStatus#VALID} if there are no errors, and {@link ValidationStatus#INVALID}
+     * otherwise.
      */
     private ValidationStatus getValidationStatus() {
-        return (validationMessages.isEmpty()) ? se.inera.certificate.modules.support.api.dto.ValidationStatus.VALID
-                : se.inera.certificate.modules.support.api.dto.ValidationStatus.INVALID;
+        return validationMessages.isEmpty() ? ValidationStatus.VALID : ValidationStatus.INVALID;
     }
 
     /**
-     * Create a ValidationMessage and add it to the {@link ValidateDraftResponseHolder}.
+     * Create a ValidationMessage and add it to the {@link ValidateDraftResponse}.
      *
      * @param field a String with the name of the field
      * @param msg   a String with an error code for the front end implementation

@@ -125,4 +125,8 @@ public enum ObservationsKod implements CodeSystem {
     public boolean matches(Kod kod) {
         return CodeConverter.matches(this, kod);
     }
+
+    public boolean matches(String code) {
+        return this.code.equals(code);
+    }
 }
