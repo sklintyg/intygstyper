@@ -33,7 +33,7 @@ public class ExternalToInternalConverter {
 
         Fk7263Intyg intyg = new Fk7263Intyg();
 
-        intyg.setId(source.getId().getRoot());
+        intyg.setId(source.getId().getExtension() == null ? source.getId().getRoot() : source.getId().getExtension());
         intyg.setSkickatDatum(source.getSkickatdatum());
         if (source.getValidFromDate() != null && source.getValidToDate() != null) {
             intyg.setGiltighet(new LocalDateInterval(source.getValidFromDate(), source.getValidToDate()));

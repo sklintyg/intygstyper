@@ -1,20 +1,14 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Collection;
+
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.core.io.ClassPathResource;
-import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.model.LocalDateInterval;
+
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.utils.Scenario;
 import se.inera.certificate.modules.fk7263.utils.ScenarioFinder;
