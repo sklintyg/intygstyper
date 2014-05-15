@@ -33,24 +33,28 @@
           <a ng-click="isCollapsed1 = !isCollapsed1" data-toggle="collapse" message key="fk7263.label.status.{{ !isCollapsed1 }}">{{fk7263.label.status.{{ !isCollapsed1 }}</a>
         </p>
       </div>
-      <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 eventbox">
+      <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
         <h2>
           <span message key="fk7263.label.latestevent"></span>
         </h2>
+
         <!--  Show if no events to show -->
         <p ng-show="cert.filteredStatuses.length<1">
           <span message key="fk7263.label.latestevent.noevents"></span></a>
         </p>
 
         <!-- Show first status in list if any viable status exist-->
-        <p id="lastest-certificate-event" ng-show="cert.filteredStatuses.length>0">
-          {{cert.filteredStatuses[0].timestamp | date:'shortDate'}} <span message key="fk7263.status.{{cert.filteredStatuses[0].type}}"></span> <span message
-            key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span>
-        </p>
+        <div class="certificate-event" id="lastest-certificate-event" ng-show="cert.filteredStatuses.length>0">
+        	<p ng-repeat="status in cert.filteredStatuses">
+	          <span message key="fk7263.status.{{cert.filteredStatuses[0].type}}"></span> <span message key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span>
+	          <span class="certificate-event-timestamp pull-right">{{status.timestamp | date:'short'}}</span> 
+	        </p>
+        </div>
+        
         <!-- Show if more than 1 viable status exists -->
-        <p ng-show="cert.filteredStatuses.length>1">
-          <a class="statusHistoryLink" href ng-click="showStatusHistory()"><span message key="fk7263.label.latestevent.showall"></span></a>
-        </p>
+<!--         <p ng-show="cert.filteredStatuses.length>1"> -->
+<!--           <a class="statusHistoryLink" href ng-click="showStatusHistory()"><span message key="fk7263.label.latestevent.showall"></span></a> -->
+<!--         </p> -->
       </div>
     </div>
     <div class="row">

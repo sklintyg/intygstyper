@@ -56,20 +56,23 @@
         <a ng-click="isCollapsed1 = !isCollapsed1" data-toggle="collapse" message key="ts-bas.label.status.{{ !isCollapsed1 }}">{{ts-bas.label.status.{{ !isCollapsed1 }}</a>
         
       </div>
-      <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 eventbox">
+      <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
         <h2>
           <span message key="ts-bas.label.latestevent"></span>
         </h2>
 <!--          Show if no events to show -->
         <p ng-show="cert.status.length<1">
-          <span message key="ts-bas.label.latestevent.noevents"></span></a>
+          <span message key="ts-bas.label.latestevent.noevents"></span>
         </p>
 
 <!--         Show first status in list if any viable status exist -->
-        <p id="lastest-certificate-event" ng-show="cert.status.length>0">
-          {{cert.status[0].timestamp | date:'shortDate'}} <span message key="ts-bas.status.{{cert.status[0].type}}"></span> <span message
-            key="ts-bas.target.{{cert.status[0].target}}"></span>
-        </p>
+		<div class="certificate-event"  id="lastest-certificate-event" ng-show="cert.status.length>0">
+        	<p>
+	          <span message key="ts-bas.status.{{cert.status[0].type}}"></span> <span message key="ts-bas.target.{{cert.status[0].target}}"></span>
+	          <span class="certificate-event-timestamp pull-right">{{cert.status[0].timestamp | date:'shortDate'}}</span> 
+	        </p>
+        </div>
+        
 <!--         Show if more than 1 viable status exists -->
         <p ng-show="cert.status.length>1">
           <a class="statusHistoryLink" href ng-click="showStatusHistory()"><span message key="ts-bas.label.latestevent.showall"></span></a>
