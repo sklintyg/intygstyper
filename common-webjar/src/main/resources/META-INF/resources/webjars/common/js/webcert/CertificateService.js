@@ -79,7 +79,7 @@ define(['angular'], function(angular) {
 
             function _signDraft(id, onSuccess, onError) {
                 $log.debug('_signDraft id:' + id);
-                var restPath = '/moduleapi/intyg/signera/' + id;
+                var restPath = '/moduleapi/intyg/signera/server/' + id;
                 $http.post(restPath).
                     success(function(data) {
                         $log.debug('_signDraft data: ' + data);
