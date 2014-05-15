@@ -2,11 +2,13 @@ define(['angular'], function(angular) {
     'use strict';
 
     return [ '$scope', '$filter', '$location', 'fk7263.certificateService', 'listCertService', 'dialogService', '$http',
-        '$routeParams', '$log', '$rootScope',
+        '$routeParams', '$log', '$rootScope', 'messageService',
         function($scope, $filter, $location, certificateService, listCertService, dialogService, http, $routeParams,
-            $log, $rootScope) {
+            $log, $rootScope, messageService) {
             $scope.cert = {};
             $rootScope.cert = {};
+            
+            $scope.messageService = messageService;
 
             $scope.doneLoading = false;
 

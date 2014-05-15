@@ -3,8 +3,9 @@ define([
     'services',
     'fk7263/intyg/js/controllers',
     'fk7263/intyg/js/messages',
-    'fk7263/intyg/js/services'
-], function(angular, miServices, controllers, messages, services) {
+    'fk7263/intyg/js/services',
+    'common/js/wc-common-message-resources'
+], function(angular, miServices, controllers, messages, services, commonMessages) {
     'use strict';
 
     var moduleName = 'fk7263';
@@ -50,6 +51,7 @@ define([
     module.run(['messageService',
         function(messageService) {
             messageService.addResources(messages);
+            messageService.addResources(commonMessages);
         }
     ]);
 
