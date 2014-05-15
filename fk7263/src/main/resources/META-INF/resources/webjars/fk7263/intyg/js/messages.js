@@ -18,7 +18,7 @@ define([], function() {
             'fk7263.confirm.label.recipienttitle': 'Mottagare',
             'fk7263.confirm.label.summarypagedesc': '<p><b>Du har valt att skicka det här intyget.</b></p>',
             'fk7263.confirm.label.verifytext': 'Kontrollera att uppgifterna ovan stämmer och tryck "Skicka"',
-            'fk7263.confirm.message.alreadysent': '<strong>Observera!</strong> Du har redan skickat detta intyg till: ',
+            'fk7263.confirm.message.alreadysent': '<strong>Observera!</strong> Du har redan skickat detta intyg till: <br>',
 
             'fk7263.sent.label.pagetitle': 'Skicka intyg - steg 3 av 3',
             'fk7263.sent.label.pageinformation': 'Intyget har nu skickats och nedan presenteras försändelsen.',
@@ -38,6 +38,7 @@ define([], function() {
 
             'fk7263.button.sendtofk': 'Skicka till Försäkringskassan',
             'fk7263.button.send.certificate': 'Skicka',
+            'fk7263.button.send.certificate.title' : 'Skicka detta intyg till en eller flera mottagare.',
             'fk7263.label.blank': '- ej ifyllt',
             'fk7263.label.pagetitle': 'Granska och skicka intyg',
             'fk7263.label.pageingress' : 'Här ser du den fullständiga informationen i ditt intyg. På denna sida kan du hantera ditt intyg med hjälp av olika funktioner.<br>',
