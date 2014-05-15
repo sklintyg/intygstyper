@@ -57,7 +57,7 @@
     	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	    	<form id="view-as-pdf" action="{{downloadAsPdfLink}}" name="pdfForm" method="get" target="_blank">
 	          <p class="btn-row">
-	            <button id="sendCertificateBtn" type="button" ng-click="send()" class="btn btn-success">
+	            <button id="sendCertificateBtn" type="button" ng-click="send()" class="btn btn-success" title="{{messageService.getProperty('fk7263.button.send.certificate.title')}}">
 	              <span message key="fk7263.button.send.certificate"></span>
 	            </button>
 	            <button id="downloadprint" type="submit" ng-click="document.pdfForm.submit()" class="btn btn-inverse">
@@ -74,7 +74,6 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div class="cert">
             <div class="cert-titlebar">
-			  <!-- <img class="cert-icon" alt="" ng-src="{{cert.typ_image}}" /> -->
               <img class="cert-icon" alt="" ng-src="/web/webjars/fk7263/intyg/img/fk7263.png" />
 
               <div class="row">

@@ -131,6 +131,7 @@ define([], function() {
             'ts-bas.typename': ' - Bas',
             'ts-bas.label.pagetitle': 'Granska och skicka intyg',
             'ts-bas.button.send': 'Skicka',
+            'ts-bas.button.send.certificate.title' : 'Skicka detta intyg till Transportstyrelsen.',
             'ts-bas.common.cancel': 'Avbryt',
 
             'ts-button.detail.send': 'Skicka',
