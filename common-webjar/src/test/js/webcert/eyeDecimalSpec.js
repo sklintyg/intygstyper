@@ -1,8 +1,8 @@
-define([ 'angular', 'angularMocks', 'ts-bas/webcert/js/directives' ], function(angular, mocks) {
+define([ 'angular', 'angularMocks', 'common/js/webcert/eyeDecimal' ], function(angular, mocks) {
     'use strict';
 
     describe('eyeSpec', function() {
-        beforeEach(mocks.module('ts-bas.directives'));
+        beforeEach(mocks.module('wc.eyeDecimal'));
 
         var $scope, form;
 
