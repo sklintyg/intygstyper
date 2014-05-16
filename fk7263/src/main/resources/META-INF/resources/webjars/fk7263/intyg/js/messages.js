@@ -25,7 +25,7 @@ define([], function() {
             'fk7263.sent.label.result': 'Mottagare av intyget: <br>',
             'fk7263.sent.label.infoaboutrecipients': 'Observera att olika mottagare har olika tider när dom kan se det inskickade intyget.',
             'fk7263.sent.button.backtocertificate': 'Tillbaka till intyget',
-            'fk7263.label.latestevent': 'Senaste händelsen',
+            'fk7263.label.latestevent': 'Senaste händelserna med intyget',
             'fk7263.label.latestevent.noevents': 'Inga händelser',
             'fk7263.label.latestevent.showall': 'Visa alla händelser',
             'fk7263.history.label.pagetitle': 'Intygets alla händelser',

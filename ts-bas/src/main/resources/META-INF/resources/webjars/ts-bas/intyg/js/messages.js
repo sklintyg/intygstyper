@@ -154,7 +154,7 @@ define([], function() {
             'ts-bas.button.goback': 'Tillbaka',
             "ts-bas.button.cancel": "Avbryt",
             'ts-bas.error.generic': 'Kunde inte visa intyget',
-            'ts-bas.label.latestevent': 'Senaste händelsen',
+            'ts-bas.label.latestevent': 'Senaste händelserna med intyget',
             'ts-bas.label.latestevent.noevents': 'Inga händelser',
             'ts-bas.label.latestevent.showall': 'Visa alla händelser',
             'ts-bas.history.label.pagetitle': 'Intygets alla händelser',

@@ -60,24 +60,27 @@
         <h2>
           <span message key="ts-bas.label.latestevent"></span>
         </h2>
-<!--          Show if no events to show -->
-        <p ng-show="cert.status.length<1">
-          <span message key="ts-bas.label.latestevent.noevents"></span>
-        </p>
 
-<!--         Show first status in list if any viable status exist -->
-		<div class="certificate-event"  id="lastest-certificate-event" ng-show="cert.status.length>0">
+        <!-- Show if no events to show -->
+        <div class="certificate-event" ng-show="cert.status.length<1">
         	<p>
+        		<span message key="ts-bas.label.latestevent.noevents"></span>
+        	</p>
+        </div>
+        
+        <!-- Show all TS-Bas status in list if any viable status exist-->
+        <div class="certificate-event" id="lastest-certificate-event" ng-show="cert.status.length>0">
+        	<p ng-repeat="status in cert.status" ng-show="$first">
 	          <span message key="ts-bas.status.{{cert.status[0].type}}"></span> <span message key="ts-bas.target.{{cert.status[0].target}}"></span>
-	          <span class="certificate-event-timestamp pull-right">{{cert.status[0].timestamp | date:'shortDate'}}</span> 
+	          <span class="certificate-event-timestamp pull-right">{{status.timestamp | date:'shortDate'}}</span> 
+	        </p>
+	        <p ng-show="cert.status.length>1" ng-repeat="status in cert.status" ng-hide="$first">
+	          	<span message key="ts-bas.status.{{cert.status[0].type}}"></span> <span message key="ts-bas.target.{{cert.status[0].target}}"></span>
+	          	<span class="certificate-event-timestamp pull-right">{{status.timestamp | date:'shortDate'}}</span>
 	        </p>
         </div>
         
-<!--         Show if more than 1 viable status exists -->
-        <p ng-show="cert.status.length>1">
-          <a class="statusHistoryLink" href ng-click="showStatusHistory()"><span message key="ts-bas.label.latestevent.showall"></span></a>
-        </p>
-    </div>
+      </div>
     </div>
 
     <div class="row">

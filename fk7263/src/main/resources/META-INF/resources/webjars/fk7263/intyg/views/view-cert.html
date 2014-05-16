@@ -38,23 +38,20 @@
           <span message key="fk7263.label.latestevent"></span>
         </h2>
 
-        <!--  Show if no events to show -->
-        <p ng-show="cert.filteredStatuses.length<1">
-          <span message key="fk7263.label.latestevent.noevents"></span></a>
-        </p>
+        <!-- Show if no events to show -->
+        <div class="certificate-event" ng-show="cert.filteredStatuses.length<1">
+        	<p>
+        		<span message key="fk7263.label.latestevent.noevents"></span>
+        	</p>
+        </div>
 
-        <!-- Show first status in list if any viable status exist-->
+        <!-- Show all FK7263 status in list if any viable status exist-->
         <div class="certificate-event" id="lastest-certificate-event" ng-show="cert.filteredStatuses.length>0">
         	<p ng-repeat="status in cert.filteredStatuses">
 	          <span message key="fk7263.status.{{cert.filteredStatuses[0].type}}"></span> <span message key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span>
-	          <span class="certificate-event-timestamp pull-right">{{status.timestamp | date:'short'}}</span> 
+	          <span class="certificate-event-timestamp pull-right">{{status.timestamp | date:'shortDate'}}</span> 
 	        </p>
         </div>
-        
-        <!-- Show if more than 1 viable status exists -->
-<!--         <p ng-show="cert.filteredStatuses.length>1"> -->
-<!--           <a class="statusHistoryLink" href ng-click="showStatusHistory()"><span message key="fk7263.label.latestevent.showall"></span></a> -->
-<!--         </p> -->
       </div>
     </div>
     <div class="row">

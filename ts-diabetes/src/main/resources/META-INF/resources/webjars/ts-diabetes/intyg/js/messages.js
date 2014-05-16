@@ -121,7 +121,7 @@ define(
                     "ts-diabetes.sent.label.pagetitle": "Skicka intyg - steg 3 av 3",
                     "ts-diabetes.sent.button.backtocertificate": "Tillbaka till intyget",
                     "ts-diabetes.error.generic": "Kunde inte visa intyget",
-                    "ts-diabetes.label.latestevent": "Senaste händelsen",
+                    "ts-diabetes.label.latestevent": "Senaste händelserna med intyget",
                     "ts-diabetes.label.latestevent.noevents": "Inga händelser",
                     "ts-diabetes.label.latestevent.showall": "Visa alla händelser",
                     "ts-diabetes.history.label.pagetitle": "Intygets alla händelser",
