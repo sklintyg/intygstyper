@@ -56,6 +56,7 @@ define([], function() {
             // Cert module messages. Used by several cert modules.
             'modules.label.field': 'Fält',
             'modules.label.blank': '- ej ifyllt',
+            'modules.button.alt.archive' : 'Arkivera intyget. Flyttar intyget till Arkiverade intyg',
 
             'info.loadingcertificate': 'Hämtar intyget...',
 

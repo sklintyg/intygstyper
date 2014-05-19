@@ -35,7 +35,7 @@ define([
                 var $scope = { dialog: {} };
                 var onSuccess = jasmine.createSpy('onSuccess');
 
-                $httpBackend.expectPOST('/moduleapi/intyg/signera/' + intygId).
+                $httpBackend.expectPOST('/moduleapi/intyg/signera/server/' + intygId).
                     respond(200, { id: biljettId, status: 'BEARBETAR' });
                 $httpBackend.expectGET('/moduleapi/intyg/signera/status/' + biljettId).
                     respond(200, { id: biljettId, status: 'SIGNERAD' });
@@ -54,7 +54,7 @@ define([
                 var $scope = { dialog: {} };
                 var onSuccess = jasmine.createSpy('onSuccess');
 
-                $httpBackend.expectPOST('/moduleapi/intyg/signera/' + intygId).
+                $httpBackend.expectPOST('/moduleapi/intyg/signera/server/' + intygId).
                     respond(200, { id: biljettId, status: 'BEARBETAR' });
                 $httpBackend.expectGET('/moduleapi/intyg/signera/status/' + biljettId).
                     respond(200, { id: biljettId, status: 'BEARBETAR' });
@@ -78,7 +78,7 @@ define([
                 var $scope = { dialog: {} };
                 var onSuccess = jasmine.createSpy('onSuccess');
 
-                $httpBackend.expectPOST('/moduleapi/intyg/signera/' + intygId).
+                $httpBackend.expectPOST('/moduleapi/intyg/signera/server/' + intygId).
                     respond(500, { errorCode: 'DATA_NOT_FOUND' });
 
                 ManageCertView.__test__.confirmSign(intygId, $scope, onSuccess);
@@ -95,7 +95,7 @@ define([
                 var $scope = { dialog: {} };
                 var onSuccess = jasmine.createSpy('onSuccess');
 
-                $httpBackend.expectPOST('/moduleapi/intyg/signera/' + intygId).
+                $httpBackend.expectPOST('/moduleapi/intyg/signera/server/' + intygId).
                     respond(200, { id: biljettId, status: 'ERROR' });
                 $httpBackend.expectGET('/moduleapi/intyg/signera/status/' + biljettId).
                     respond(200, { id: biljettId, status: 'ERROR' });

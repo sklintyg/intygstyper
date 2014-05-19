@@ -52,24 +52,29 @@
         </div>
         <a ng-click="isCollapsed1 = !isCollapsed1" data-toggle="collapse" message key="ts-diabetes.label.status.{{ !isCollapsed1 }}">{{ts-diabetes.label.status.{{ !isCollapsed1 }}</a>
       </div>
-      <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 eventbox">
+      <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
         <h2>
           <span message key="ts-diabetes.label.latestevent"></span>
         </h2>
-<!--          Show if no events to show -->
-        <p ng-show="cert.status.length<1">
-          <span message key="ts-diabetes.label.latestevent.noevents"></span></a>
-        </p>
-
-<!--         Show first status in list if any viable status exist -->
-        <p id="lastest-certificate-event" ng-show="cert.status.length>0">
-          {{cert.status[0].timestamp | date:'shortDate'}} <span message key="ts-diabetes.status.{{cert.status[0].type}}"></span> <span message
-            key="ts-diabetes.target.{{cert.status[0].target}}"></span>
-        </p>
-<!--         Show if more than 1 viable status exists -->
-        <p ng-show="cert.status.length>1">
-          <a class="statusHistoryLink" href ng-click="showStatusHistory()"><span message key="ts-diabetes.label.latestevent.showall"></span></a>
-        </p>
+		
+		<!-- Show if no events to show -->
+        <div class="certificate-event" ng-show="cert.status.length<1">
+        	<p>
+        		<span message key="ts-diabetes.label.latestevent.noevents"></span>
+        	</p>
+        </div>
+		
+		<!-- Show all TS-Diabetes status in list if any viable status exist-->
+        <div class="certificate-event" id="lastest-certificate-event" ng-show="cert.status.length>0">
+        	<p ng-repeat="status in cert.status" ng-show="$first">
+	          <span message key="ts-diabetes.status.{{cert.status[0].type}}"></span> <span message key="ts-diabetes.target.{{cert.status[0].target}}"></span>
+	          <span class="certificate-event-timestamp pull-right">{{status.timestamp | date:'shortDate'}}</span> 
+	        </p>
+	        <p ng-show="cert.status.length>1" ng-repeat="status in cert.status" ng-hide="$first">
+	          	<span message key="ts-diabetes.status.{{cert.status[0].type}}"></span> <span message key="ts-diabetes.target.{{cert.status[0].target}}"></span>
+	          	<span class="certificate-event-timestamp pull-right">{{status.timestamp | date:'shortDate'}}</span>
+	        </p>
+        </div>
     </div>
     </div>
 
@@ -77,7 +82,7 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
     <form id="view-as-pdf" action="{{downloadAsPdfLink}}" method="get" target="_blank" name="pdfForm">
           <p class="btn-row">
-            <button type="button" ng-click="send()" class="btn btn-success">
+            <button type="button" ng-click="send()" class="btn btn-success" title="{{messageService.getProperty('ts-diabetes.button.send.certificate.title')}}">
               <message key="ts-button.detail.send" />
             </button>
             <button id="downloadprint" type="submit" ng-click="document.pdfForm.submit()" class="btn btn-inverse">
