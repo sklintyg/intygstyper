@@ -4,7 +4,7 @@
     },
     "typ": {
         "codeSystem" : "f6fb361a-e31d-48b8-8657-99b63912dd9b",
-        "code": "FK7263",
+        "code": "fk7263",
         "codeSystemName" : "kv_utlåtandetyp_intyg"
     },
     "kommentarer": [

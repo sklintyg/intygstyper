@@ -47,8 +47,7 @@ public class InternalToExternalConverter {
     private static final String HSA_ID_ROOT = "1.2.752.129.2.1.4.1";
     private static final String ARBETSPLATSKOD_ROOT = "1.2.752.29.4.71";
 
-    private static final Kod FK7263_TYP = new Kod("f6fb361a-e31d-48b8-8657-99b63912dd9b", "kv_utlåtandetyp_intyg",
-            null, "FK7263");
+    private static final Kod FK7263_TYP = new Kod("f6fb361a-e31d-48b8-8657-99b63912dd9b", "kv_utlåtandetyp_intyg", null, "fk7263");
     public static final double FORMOGA_1_4 = 25D;
     public static final double FORMOGA_1_2 = 50D;
     public static final double FORMOGA_3_4 = 75D;
