@@ -1035,3 +1035,7 @@ body span:hover.qa-unit-selected {
 #showing-nr-hits {
     padding-bottom: 10px;
 }
+
+.weak-hidden {
+    display: none;
+}

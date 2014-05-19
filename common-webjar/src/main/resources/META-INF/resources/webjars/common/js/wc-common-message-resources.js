@@ -57,6 +57,8 @@ define([], function() {
             'modules.label.field': 'Fält',
             'modules.label.blank': '- ej ifyllt',
 
+            'info.loadingcertificate': 'Hämtar intyget...',
+
             // Common errors
             'common.error.unknown': '<strong>Tekniskt fel</strong>',
             'common.error.cantconnect': 'Kunde inte kontakta servern',

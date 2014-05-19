@@ -7,7 +7,8 @@ define([], function() {
         // init state
         $scope.widgetState = {
             doneLoading: false,
-            activeErrorMessageKey: null
+            activeErrorMessageKey: null,
+            showTemplate: true
         };
         $scope.certProperties = {
             sentToFK: false
