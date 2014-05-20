@@ -1,0 +1,378 @@
+<div class="weak-hidden" ng-class="{show: widgetState.showTemplate}" ng-controller="ts-diabetes.ViewCertCtrl">
+  <div wc-spinner label="info.loadingcertificate" show-spinner="!widgetState.doneLoading"
+       show-content="widgetState.doneLoading">
+
+    <!-- error message -->
+    <div id="cert-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey"
+         class="alert alert-danger alert-column">
+      <span message key="ts-diabetes.{{widgetState.activeErrorMessageKey}}"></span>
+    </div>
+    <div ng-show="!widgetState.activeErrorMessageKey">
+      <div class="form-group buttonbar">
+        <label class="control-label">{{cert.patient.fullstandigtNamn}} - {{cert.patient.personid}}</label>
+
+        <form id="view-as-pdf" action="{{pdfUrl}}" method="get" target="_blank" name="pdfForm">
+          <p class="btn-row">
+            <button class="btn btn-info">Skicka till Transportstyrelsen</button>
+            <button id="downloadprint" type="submit" value="submit" class="btn btn-info"
+                    onClick="document.pdfForm.submit()">Skriv ut
+            </button>
+            <button class="btn btn-info">Kopiera</button>
+            <button class="btn btn-inverse">Rätta</button>
+          </p>
+        </form>
+      </div>
+
+
+      <div class="alert alert-info alert-column" ng-if="!certProperties.isRevoked">
+        <strong>Status:</strong>
+        <span ng-if="certProperties.sentToTS" id="certificate-is-sent-to-fk-message-text">Intyget är signerat och skickat till Försäkringskassan.</span>
+            <span ng-if="!certProperties.sentToTS" id="certificate-is-sent-to-it-message-text">
+              Intyget är signerat och är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se.
+              Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till
+              Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.
+            </span>
+      </div>
+      <div ng-if="certProperties.isRevoked" id="certificate-is-revoked-message-text" class="alert alert-warning"
+           style="margin-right: 20px; max-width: 530px;">Detta intyg är rättat
+      </div>
+
+      <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : certProperties.isRevoked}">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="cert-body">
+
+              <div wc-field field-number="" field-label="ts-diabetes.label.intygavser" filled="true">
+                <span class="ts-cert-answer">{{intygAvser}}</span>
+              </div>
+
+              <div wc-field field-number="" field-label="ts-diabetes.label.synfunktioner" filled="true">
+                <p>
+                  <span message key="ts-diabetes.label.syn.synfaltsdefekter"></span>
+                        <span class="ts-cert-answer" message
+                              key="{{cert.syn.synfaltsdefekter | BoolToTextFilter}}"></span>
+                </p>
+                <p>
+                  <span message key="ts-diabetes.label.syn.nattblindhet"></span>
+                  <span class="ts-cert-answer" message key="{{cert.syn.nattblindhet | BoolToTextFilter}}"></span>
+                </p>
+                <p>
+                  <span message key="ts-diabetes.label.syn.progressivogonsjukdom"></span>
+                        <span class="ts-cert-answer" message
+                              key="{{cert.syn.progressivogonsjukdom | BoolToTextFilter}}"></span>
+                </p>
+
+                <div ng-show="achelptext === true" class="alert alert-info">
+                  <span message key="ts-diabetes.helptext.synfunktioner.a-c"></span>
+                </div>
+
+                <p>
+                  <span message key="ts-diabetes.label.syn.diplopi"></span>
+                  <span class="ts-cert-answer" message key="{{cert.syn.diplopi | BoolToTextFilter}}"></span>
+                </p>
+                <p>
+                  <span message key="ts-diabetes.label.syn.nystagmus"></span>
+                  <span class="ts-cert-answer" message key="{{cert.syn.nystagmus | BoolToTextFilter}}"></span>
+                </p>
+
+                <table class="table table-condensed ts-table">
+                  <tr>
+                    <th></th>
+                    <th>Utan korrektion</th>
+                    <th>Med korrektion</th>
+                    <th>Kontaktlinser</th>
+                  </tr>
+                  <tr>
+                    <td>Höger öga</td>
+                    <td>{{cert.syn.hogerOga.utanKorrektion}}</td>
+                    <td>{{cert.syn.hogerOga.medKorrektion}}</td>
+                    <td><span message key="{{cert.syn.hogerOga.kontaktlins | BoolToTextFilter}}"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Vänster öga</td>
+                    <td>{{cert.syn.vansterOga.utanKorrektion}}</td>
+                    <td>{{cert.syn.vansterOga.medKorrektion}}</td>
+                    <td><span message key="{{cert.syn.vansterOga.kontaktlins | BoolToTextFilter}}"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Binokulärt</td>
+                    <td>{{cert.syn.binokulart.utanKorrektion}}</td>
+                    <td>{{cert.syn.binokulart.medKorrektion}}</td>
+                    <td></td>
+                  </tr>
+                </table>
+                <h3>Korrektionsglasens styrka</h3>
+                <span message key="ts-diabetes.label.syn.8-dioptrier"></span>
+                <span class="ts-cert-answer" message
+                      key="{{cert.syn.korrektionsglasensStyrka | BoolToTextFilter}}"></span>
+                <div class="alert alert-info" ng-show="cert.syn.korrektionsglasensStyrka == true">
+                  <span message key="ts-diabetes.helptext.synfunktioner.8-dioptrier"></span>
+                </div>
+              </div>
+
+              <div wc-field field-number="" field-label="ts-diabetes.label.horselbalans" filled="true">
+                <span message key="ts-diabetes.label.horselbalans.balansrubbningar"></span>
+                <span class="ts-cert-answer" message
+                      key="{{cert.horselbalans.balansrubbningar | BoolToTextFilter}}"></span>
+              </div>
+
+              <div wc-field field-number="" field-label="ts-diabetes.label.funktionsnedsattning" filled="true">
+                <p>
+                  <span message key="ts-diabetes.label.funktionsnedsattning.funktionsnedsattning"></span>
+            			<span class="ts-cert-answer" message
+                        key="{{cert.funktionsnedsattning.funktionsnedsattning | BoolToTextFilter}}"></span>
+                </p>
+
+                <p ng-show="cert.funktionsnedsattning.funktionsnedsattning">
+                  <span message key="ts-diabetes.label.funktionsnedsattning.beskrivning"></span><br />
+                  <span>{{cert.funktionsnedsattning.beskrivning}}</span>
+                </p>
+
+              </div>
+
+              <div wc-field field-number="" field-label="ts-diabetes.label.hjartkarl" filled="true">
+                <p>
+                  <span message key="ts-diabetes.label.hjartkarl.hjart-karlsjukdom"></span>
+            			<span class="ts-cert-answer" message
+                        key="{{cert.hjartkarl.hjartKarlsjukdom | BoolToTextFilter}}"></span>
+                </p>
+                <p>
+                  <span message key="ts-diabetes.label.hjartkarl.hjarnskada-efter-trauma"></span>
+            			<span class="ts-cert-answer" message
+                        key="{{cert.hjartkarl.hjarnskadaEfterTrauma | BoolToTextFilter}}"></span>
+                </p>
+                <p>
+                  <span message key="ts-diabetes.label.hjartkarl.riskfaktorer-stroke"></span>
+            			<span class="ts-cert-answer" message
+                        key="{{cert.hjartkarl.riskfaktorerStroke | BoolToTextFilter}}"></span>
+                </p>
+                <p ng-show="cert.hjartKarl.riskfaktorerStroke">
+                  <span message key="ts-diabetes.label.hjartkarl.riskfaktorer-stroke.beskrivning"></span><br />
+                  <span>{{cert.hjartKarl.beskrivningRiskfaktorer}}</span>
+                </p>
+
+              </div>
+
+              <div wc-field field-number="" field-label="ts-diabetes.label.diabetes" filled="true">
+                <p>
+                  <span message key="ts-diabetes.label.diabetes.har-diabetes"></span>
+                  <span class="ts-cert-answer" message key="{{cert.diabetes.harDiabetes | BoolToTextFilter}}"></span>
+                </p>
+                <div ng-show="cert.diabetes.harDiabetes">
+                  <p>
+                    <span message key="ts-diabetes.label.diabetes.diabetestyp"></span>
+            			    <span class="ts-cert-answer" message
+                            key="ts-diabetes.label.diabetes.diabetestyp.{{cert.diabetes.diabetesTyp}}"></span>
+                  </p>
+                  <p>
+                    <span message key="ts-diabetes.label.diabetes.behandling"></span>
+            			    <span class="ts-cert-answer" ng-show="cert.diabetes.kost" message
+                            key="ts-diabetes.label.diabetes.behandling.kost"></span>
+            			    <span class="ts-cert-answer" ng-show="cert.diabetes.insulin" message
+                            key="ts-diabetes.label.diabetes.behandling.insulin"></span>
+            			    <span class="ts-cert-answer" ng-show="cert.diabetes.tabletter" message
+                            key="ts-diabetes.label.diabetes.behandling.tabletter"></span>
+                  </p>
+                  <p>
+                  <div class="alert alert-info" ng-show="cert.diabetes.insulin || cert.diabetes.tabletter">
+                    <span message key="ts-diabetes.helptext.diabetes.behandling"></span>
+                  </div>
+                  </p>
+                </div>
+
+              </div>
+
+              <div wc-field field-number="" field-label="ts-diabetes.label.neurologi" filled="true">
+                <p>
+                  <span message key="ts-diabetes.label.neurologi.neurologisksjukdom"></span>
+            			<span class="ts-cert-answer" message
+                        key="{{cert.neurologi.neurologiskSjukdom | BoolToTextFilter}}"></span>
+                </p>
+
+              </div>
+
+              <div wc-field field-number="" field-label="ts-diabetes.label.medvetandestorning" filled="true">
+                <p>
+                  <span message key="ts-diabetes.label.medvetandestorning.medvetandestorning"></span>
+            			<span class="ts-cert-answer" message
+                        key="{{cert.medvetandestorning.medvetandestorning | BoolToTextFilter}}"></span>
+                </p>
+
+                <p ng-show="cert.medvetandestorning.medvetandestorning">
+                  <span message key="ts-diabetes.label.medvetandestorning.beskrivning"></span><br />
+                  <span>{{cert.medvetandestorning.beskrivning}}</span>
+                </p>
+
+              </div>
+
+              <div wc-field field-number="" field-label="ts-diabetes.label.njurar" filled="true">
+                <span message key="ts-diabetes.label.njurar.nedsatt-njurfunktion"></span>
+                <span class="ts-cert-answer" message
+                      key="{{cert.njurar.nedsattNjurfunktion | BoolToTextFilter}}"></span>
+
+              </div>
+
+              <div wc-field field-number="" field-label="ts-diabetes.label.kognitivt" filled="true">
+                <span message key="ts-diabetes.label.kognitivt.sviktande-kognitiv-funktion"></span>
+                <span class="ts-cert-answer" message
+                      key="{{cert.kognitivt.sviktandeKognitivFunktion | BoolToTextFilter}}"></span>
+
+              </div>
+
+              <div wc-field field-number="" field-label="ts-diabetes.label.somn-vakenhet" filled="true">
+                <span message key="ts-diabetes.label.somn-vakenhet.tecken-somnstorningar"></span>
+                <span class="ts-cert-answer" message
+                      key="{{cert.somnVakenhet.teckenSomnstorningar | BoolToTextFilter}}"></span>
+
+              </div>
+
+              <div wc-field field-number="" field-label="ts-diabetes.label.narkotika-lakemedel" filled="true">
+                <p>
+                  <span message key="ts-diabetes.label.narkotika-lakemedel.tecken-missbruk"></span>
+            			<span class="ts-cert-answer" message
+                        key="{{cert.narkotikaLakemedel.teckenMissbruk | BoolToTextFilter}}"></span>
+                </p>
+
+                <p>
+                  <span message key="ts-diabetes.label.narkotika-lakemedel.foremal-for-vardinsats"></span>
+            			<span class="ts-cert-answer" message
+                        key="{{cert.narkotikaLakemedel.foremalForVardinsats | BoolToTextFilter}}"></span>
+                </p>
+
+                <div ng-show="cert.narkotikaLakemedel.foremalForVardinsats || cert.narkotikaLakemedel.teckenMissbruk">
+                  <p>
+                    <span message key="ts-diabetes.label.narkotika-lakemedel.behov-provtagning"></span>
+	            			<span class="ts-cert-answer" message
+                          key="{{cert.narkotikaLakemedel.provtagningBehovs | BoolToTextFilter}}"></span>
+                  </p>
+                  <p>
+                  <div class="alert alert-info">
+                    <span message key="ts-diabetes.helptext.narkotika-lakemedel.provtagning"></span>
+                  </div>
+                  </p>
+                </div>
+
+                <p>
+                  <span message key="ts-diabetes.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk"></span>
+            			<span class="ts-cert-answer" message
+                        key="{{cert.narkotikaLakemedel.lakarordineratLakemedelsbruk | BoolToTextFilter}}"></span>
+                </p>
+
+                <p ng-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk">
+                  <span class="ts-cert-answer" message key="ts-diabetes.label.narkotika-lakemedel.beskrivning"></span><br />
+                  <span>{{cert.narkotikaLakemedel.lakemedelOchDos}}</span>
+                </p>
+
+              </div>
+
+              <div wc-field field-number="" field-label="ts-diabetes.label.psykiskt" filled="true">
+                <span message key="ts-diabetes.label.psykiskt.psykisksjukdom"></span>
+                <span class="ts-cert-answer" message key="{{cert.psykiskt.psykiskSjukdom | BoolToTextFilter}}"></span>
+              </div>
+
+              <div wc-field field-number="" field-label="ts-diabetes.label.utvecklingsstorning" filled="true">
+                <p>
+                  <span message key="ts-diabetes.label.utvecklingsstorning.psykisk-utvecklingsstorning"></span>
+            			<span class="ts-cert-answer" message
+                        key="{{cert.utvecklingsstorning.psykiskUtvecklingsstorning | BoolToTextFilter}}"></span>
+                </p>
+                <p>
+                  <span message key="ts-diabetes.label.utvecklingsstorning.har-syndrom"></span>
+            			<span class="ts-cert-answer" message
+                        key="{{cert.utvecklingsstorning.harSyndrom | BoolToTextFilter}}"></span>
+                </p>
+              </div>
+
+              <div wc-field field-number="" field-label="ts-diabetes.label.sjukhusvard" filled="true">
+                <p>
+                  <span message key="ts-diabetes.label.sjukhusvard.sjukhus-eller-lakarkontakt"></span>
+            		    <span class="ts-cert-answer" message
+                          key="{{cert.sjukhusvard.sjukhusEllerLakarkontakt | BoolToTextFilter}}"></span>
+                </p>
+                <p ng-show="cert.sjukhusvard.sjukhusEllerLakarkontakt">
+                  <span class="ts-cert-answer" message key="ts-diabetes.label.sjukhusvard.tidpunkt"></span>
+                  <span>{{cert.sjukhusvard.tidpunkt}}</span><br />
+
+                  <span class="ts-cert-answer" message key="ts-diabetes.label.sjukhusvard.vardinrattning"></span>
+                  <span>{{cert.sjukhusvard.vardinrattning}}</span><br />
+
+                  <span class="ts-cert-answer" message key="ts-diabetes.label.sjukhusvard.anledning"></span>
+                  <span>{{cert.sjukhusvard.anledning}}</span><br />
+                </p>
+              </div>
+
+              <div wc-field field-number="" field-label="ts-diabetes.label.medicinering" filled="true">
+                <p>
+                  <span message key="ts-diabetes.label.medicinering.stadigvarande-medicinering"></span>
+            		    <span class="ts-cert-answer" message
+                          key="{{cert.medicinering.stadigvarandeMedicinering | BoolToTextFilter}}"></span>
+                </p>
+
+                <p ng-show="cert.medicinering.stadigvarandeMedicinering">
+                  <span class="ts-cert-answer" message key="ts-diabetes.label.medicinering.beskrivning"></span><br />
+                  <span>{{cert.medicinering.beskrivning}}</span>
+                </p>
+
+              </div>
+
+              <div wc-field field-number="" field-label="ts-diabetes.label.ovrigkommentar" filled="true">
+                <p ng-show="cert.ovrigkommentar.length > 0">
+                  <span>{{cert.ovrigkommentar}}</span>
+                </p>
+
+                <p class="ts-cert-answer" ng-show="!cert.ovrigkommentar">
+                  <span message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
+                </p>
+              </div>
+
+              <div wc-field field-number="" field-label="ts-diabetes.label.bedomning" filled="true">
+                <div ng-show="!cert.bedomning.kanInteTaStallning">
+                  <span message key="ts-diabetes.label.bedomning-info-alt-1"></span>
+
+                  <p>
+                    <span class="ts-cert-answer">{{intygAvser}}</span>
+                  </p>
+                </div>
+
+                <div ng-show="cert.bedomning.kanInteTaStallning">
+                  {{ts-diabetes.label.bedomning-info-alt-2}}
+                </div>
+
+                <div>
+                  <span message key="ts-diabetes.label.bedomning-info-undersokas-med-specialkompetens"></span><br>
+                  <span ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">{{cert.bedomning.lakareSpecialKompetens}}</span>
+                  <span ng-show="!cert.bedomning.lakareSpecialKompetens" class="ts-cert-answer" message
+                        key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
+                </div>
+              </div>
+
+              <div class="infobox">
+                <h3>
+                  <span message key="ts-diabetes.label.ovanstaende-har-bekraftats"></span>
+                </h3>
+                <h4>
+                  <span message key="common.date"></span>
+                </h4>
+                <p>{{cert.signeringsdatum | date:'longDate'}}</p>
+                <h4>
+                  <span message key="ts-diabetes.label.kontakt-info"></span>
+                </h4>
+                <span id="vardperson_namn">{{cert.skapadAv.fullstandigtNamn}}</span><br>
+                <span id="vardperson_enhetsnamn">{{cert.skapadAv.vardenhet.enhetsnamn}}</span><br>
+                {{cert.skapadAv.vardenhet.postadress}}<br>
+                {{cert.skapadAv.vardenhet.postnummer}} {{cert.skapadAv.vardenhet.postort}}<br>
+                {{cert.skapadAv.vardenhet.telefonnummer}}<br>
+              </div>
+
+            </div>
+            <!-- cert body -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- entire cert -->
+  </div>
+  <!--  spinner end -->
+</div>
