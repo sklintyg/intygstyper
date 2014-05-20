@@ -42,11 +42,11 @@
           <div class="col-md-12">
             <div class="cert-body">
 
-              <div wc-field field-number="1" field-label="ts-bas.label.intygavser" filled="true">
-                {{intygAvser}}
+              <div wc-field field-number="" field-label="ts-bas.label.intygavser" filled="true">
+                <span class="ts-cert-answer">{{intygAvser}}</span>
               </div>
 
-              <div wc-field field-number="1" field-label="ts-bas.label.synfunktioner" filled="true">
+              <div wc-field field-number="" field-label="ts-bas.label.synfunktioner" filled="true">
                 <p>
                   <span message key="ts-bas.label.syn.synfaltsdefekter"></span>
                         <span class="ts-cert-answer" message
@@ -60,301 +60,292 @@
                   <span message key="ts-bas.label.syn.progressivogonsjukdom"></span>
                         <span class="ts-cert-answer" message
                               key="{{cert.syn.progressivogonsjukdom | BoolToTextFilter}}"></span>
-                  </p>
+                </p>
 
-                    <p ng-show="achelptext == true">
-	  	                <div class="alert alert-info">
-                        <span message key="ts-bas.helptext.synfunktioner.a-c"></span>
-                      </div>
-	                </p>
+                <div ng-show="achelptext === true" class="alert alert-info">
+                  <span message key="ts-bas.helptext.synfunktioner.a-c"></span>
+                </div>
 
                 <p>
                   <span message key="ts-bas.label.syn.diplopi"></span>
                   <span class="ts-cert-answer" message key="{{cert.syn.diplopi | BoolToTextFilter}}"></span>
-                  </p>
-                    <p>
-                        <span message key="ts-bas.label.syn.nystagmus"></span>
-                        <span class="ts-cert-answer" message key="{{cert.syn.nystagmus | BoolToTextFilter}}"></span>
-            		</p>
+                </p>
+                <p>
+                  <span message key="ts-bas.label.syn.nystagmus"></span>
+                  <span class="ts-cert-answer" message key="{{cert.syn.nystagmus | BoolToTextFilter}}"></span>
+                </p>
 
-           		<span class="text ts-text-field-wide">
-						<table class="table table-condensed ts-table">
-              <tr>
-                <th></th>
-                <th>Utan korrektion</th>
-                <th>Med korrektion</th>
-                <th>Kontaktlinser</th>
-              </tr>
-              <tr>
-                <td>Höger öga</td>
-                <td><span class="text">{{cert.syn.hogerOga.utanKorrektion}}</span></td>
-                <td><span class="text">{{cert.syn.hogerOga.medKorrektion}}</span></td>
-                <td><span class="text" message key="{{cert.syn.hogerOga.kontaktlins | BoolToTextFilter}}"></span></td>
-              </tr>
-              <tr>
-                <td>Vänster öga</td>
-                <td><span class="text">{{cert.syn.vansterOga.utanKorrektion}}</span></td>
-                <td><span class="text">{{cert.syn.vansterOga.medKorrektion}}</span></td>
-                <td><span class="text" message key="{{cert.syn.vansterOga.kontaktlins | BoolToTextFilter}}"></span></td>
-              </tr>
-              <tr>
-                <td>Binokulärt</td>
-                <td><span class="text">{{cert.syn.binokulart.utanKorrektion}}</span></td>
-                <td><span class="text">{{cert.syn.binokulart.medKorrektion}}</span></td>
-                <td></td>
-              </tr>
-            </table>
-					</span>
-					<span class="text">
-						<h3>Korrektionsglasens styrka</h3>
-						<span message key="ts-bas.label.syn.8-dioptrier"></span>
-						<span class="ts-cert-answer" message key="{{cert.syn.korrektionsglasensStyrka | BoolToTextFilter}}"></span>
-		                <div class="alert alert-info" ng-show="cert.syn.korrektionsglasensStyrka == true">
-                      <span message key="ts-bas.helptext.synfunktioner.8-dioptrier"></span>
-                    </div>
-					</span>
+                <table class="table table-condensed ts-table">
+                  <tr>
+                    <th></th>
+                    <th>Utan korrektion</th>
+                    <th>Med korrektion</th>
+                    <th>Kontaktlinser</th>
+                  </tr>
+                  <tr>
+                    <td>Höger öga</td>
+                    <td>{{cert.syn.hogerOga.utanKorrektion}}</td>
+                    <td>{{cert.syn.hogerOga.medKorrektion}}</td>
+                    <td><span message key="{{cert.syn.hogerOga.kontaktlins | BoolToTextFilter}}"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Vänster öga</td>
+                    <td>{{cert.syn.vansterOga.utanKorrektion}}</td>
+                    <td>{{cert.syn.vansterOga.medKorrektion}}</td>
+                    <td><span message key="{{cert.syn.vansterOga.kontaktlins | BoolToTextFilter}}"></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Binokulärt</td>
+                    <td>{{cert.syn.binokulart.utanKorrektion}}</td>
+                    <td>{{cert.syn.binokulart.medKorrektion}}</td>
+                    <td></td>
+                  </tr>
+                </table>
+                <h3>Korrektionsglasens styrka</h3>
+                <span message key="ts-bas.label.syn.8-dioptrier"></span>
+                <span class="ts-cert-answer" message
+                      key="{{cert.syn.korrektionsglasensStyrka | BoolToTextFilter}}"></span>
+                <div class="alert alert-info" ng-show="cert.syn.korrektionsglasensStyrka == true">
+                  <span message key="ts-bas.helptext.synfunktioner.8-dioptrier"></span>
+                </div>
               </div>
 
-              <div wc-field field-number="1" field-label="ts-bas.label.horselbalans" filled="true">
+              <div wc-field field-number="" field-label="ts-bas.label.horselbalans" filled="true">
                 <span message key="ts-bas.label.horselbalans.balansrubbningar"></span>
                 <span class="ts-cert-answer" message
                       key="{{cert.horselbalans.balansrubbningar | BoolToTextFilter}}"></span>
-
               </div>
 
-              <div wc-field field-number="1" field-label="ts-bas.label.funktionsnedsattning" filled="true">
-            		<span class="text">
-            			<span message key="ts-bas.label.funktionsnedsattning.funktionsnedsattning"></span>
+              <div wc-field field-number="" field-label="ts-bas.label.funktionsnedsattning" filled="true">
+                <p>
+                  <span message key="ts-bas.label.funktionsnedsattning.funktionsnedsattning"></span>
             			<span class="ts-cert-answer" message
                         key="{{cert.funktionsnedsattning.funktionsnedsattning | BoolToTextFilter}}"></span>
-            		</span>
+                </p>
 
-            		<span class="text" ng-show="cert.funktionsnedsattning.funktionsnedsattning">
-            			<span message key="ts-bas.label.funktionsnedsattning.beskrivning"></span><br />
-            			<span>{{cert.funktionsnedsattning.beskrivning}}</span>
-            		</span>
+                <p ng-show="cert.funktionsnedsattning.funktionsnedsattning">
+                  <span message key="ts-bas.label.funktionsnedsattning.beskrivning"></span><br />
+                  <span>{{cert.funktionsnedsattning.beskrivning}}</span>
+                </p>
 
               </div>
 
-              <div wc-field field-number="1" field-label="ts-bas.label.hjartkarl" filled="true">
-            		<span class="text">
-            			<span message key="ts-bas.label.hjartkarl.hjart-karlsjukdom"></span>
+              <div wc-field field-number="" field-label="ts-bas.label.hjartkarl" filled="true">
+                <p>
+                  <span message key="ts-bas.label.hjartkarl.hjart-karlsjukdom"></span>
             			<span class="ts-cert-answer" message
                         key="{{cert.hjartkarl.hjartKarlsjukdom | BoolToTextFilter}}"></span>
-            		</span>
-        		    <span class="text">
-            			<span message key="ts-bas.label.hjartkarl.hjarnskada-efter-trauma"></span>
+                </p>
+                <p>
+                  <span message key="ts-bas.label.hjartkarl.hjarnskada-efter-trauma"></span>
             			<span class="ts-cert-answer" message
                         key="{{cert.hjartkarl.hjarnskadaEfterTrauma | BoolToTextFilter}}"></span>
-            		</span>
-        		    <span class="text">
-            			<span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke"></span>
+                </p>
+                <p>
+                  <span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke"></span>
             			<span class="ts-cert-answer" message
                         key="{{cert.hjartkarl.riskfaktorerStroke | BoolToTextFilter}}"></span>
-            		</span>
-            		<span class="text" ng-show="cert.hjartKarl.riskfaktorerStroke">
-            			<span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning"></span><br />
-            			<span>{{cert.hjartKarl.beskrivningRiskfaktorer}}</span>
-            		</span>
+                </p>
+                <p ng-show="cert.hjartKarl.riskfaktorerStroke">
+                  <span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning"></span><br />
+                  <span>{{cert.hjartKarl.beskrivningRiskfaktorer}}</span>
+                </p>
 
               </div>
 
-              <div wc-field field-number="1" field-label="ts-bas.label.diabetes" filled="true">
-       		   		<span class="text">
-            			<span message key="ts-bas.label.diabetes.har-diabetes"></span>
-            			<span class="ts-cert-answer" message key="{{cert.diabetes.harDiabetes | BoolToTextFilter}}"></span>
-            		</span>
+              <div wc-field field-number="" field-label="ts-bas.label.diabetes" filled="true">
+                <p>
+                  <span message key="ts-bas.label.diabetes.har-diabetes"></span>
+                  <span class="ts-cert-answer" message key="{{cert.diabetes.harDiabetes | BoolToTextFilter}}"></span>
+                </p>
                 <div ng-show="cert.diabetes.harDiabetes">
-       		   		    <span class="text">
-            			    <span message key="ts-bas.label.diabetes.diabetestyp"></span>
+                  <p>
+                    <span message key="ts-bas.label.diabetes.diabetestyp"></span>
             			    <span class="ts-cert-answer" message
                             key="ts-bas.label.diabetes.diabetestyp.{{cert.diabetes.diabetesTyp}}"></span>
-            		    </span>
-       		   		    <span class="text">
-       		   		    	<span message key="ts-bas.label.diabetes.behandling"></span>
+                  </p>
+                  <p>
+                    <span message key="ts-bas.label.diabetes.behandling"></span>
             			    <span class="ts-cert-answer" ng-show="cert.diabetes.kost" message
                             key="ts-bas.label.diabetes.behandling.kost"></span>
             			    <span class="ts-cert-answer" ng-show="cert.diabetes.insulin" message
                             key="ts-bas.label.diabetes.behandling.insulin"></span>
             			    <span class="ts-cert-answer" ng-show="cert.diabetes.tabletter" message
                             key="ts-bas.label.diabetes.behandling.tabletter"></span>
-            		    </span>
-            		    <span class="text">
-	    	                <div class="alert alert-info" ng-show="cert.diabetes.insulin || cert.diabetes.tabletter">
-                          <span message key="ts-bas.helptext.diabetes.behandling"></span>
-                        </div>
-            		    </span>
+                  </p>
+                  <p>
+                  <div class="alert alert-info" ng-show="cert.diabetes.insulin || cert.diabetes.tabletter">
+                    <span message key="ts-bas.helptext.diabetes.behandling"></span>
+                  </div>
+                  </p>
                 </div>
 
               </div>
 
-              <div wc-field field-number="1" field-label="ts-bas.label.neurologi" filled="true">
-            		<span class="text">
-            			<span message key="ts-bas.label.neurologi.neurologisksjukdom"></span>
+              <div wc-field field-number="" field-label="ts-bas.label.neurologi" filled="true">
+                <p>
+                  <span message key="ts-bas.label.neurologi.neurologisksjukdom"></span>
             			<span class="ts-cert-answer" message
                         key="{{cert.neurologi.neurologiskSjukdom | BoolToTextFilter}}"></span>
-            		</span>
+                </p>
 
               </div>
 
-              <div wc-field field-number="1" field-label="ts-bas.label.medvetandestorning" filled="true">
-            		<span class="text">
-            			<span message key="ts-bas.label.medvetandestorning.medvetandestorning"></span>
+              <div wc-field field-number="" field-label="ts-bas.label.medvetandestorning" filled="true">
+                <p>
+                  <span message key="ts-bas.label.medvetandestorning.medvetandestorning"></span>
             			<span class="ts-cert-answer" message
                         key="{{cert.medvetandestorning.medvetandestorning | BoolToTextFilter}}"></span>
-            		</span>
+                </p>
 
-            		<span class="text" ng-show="cert.medvetandestorning.medvetandestorning">
-            			<span message key="ts-bas.label.medvetandestorning.beskrivning"></span><br />
-            			<span>{{cert.medvetandestorning.beskrivning}}</span>
-            		</span>
+                <p ng-show="cert.medvetandestorning.medvetandestorning">
+                  <span message key="ts-bas.label.medvetandestorning.beskrivning"></span><br />
+                  <span>{{cert.medvetandestorning.beskrivning}}</span>
+                </p>
 
               </div>
 
-              <div wc-field field-number="1" field-label="ts-bas.label.njurar" filled="true">
+              <div wc-field field-number="" field-label="ts-bas.label.njurar" filled="true">
                 <span message key="ts-bas.label.njurar.nedsatt-njurfunktion"></span>
                 <span class="ts-cert-answer" message
                       key="{{cert.njurar.nedsattNjurfunktion | BoolToTextFilter}}"></span>
 
               </div>
 
-              <div wc-field field-number="1" field-label="ts-bas.label.kognitivt" filled="true">
+              <div wc-field field-number="" field-label="ts-bas.label.kognitivt" filled="true">
                 <span message key="ts-bas.label.kognitivt.sviktande-kognitiv-funktion"></span>
                 <span class="ts-cert-answer" message
                       key="{{cert.kognitivt.sviktandeKognitivFunktion | BoolToTextFilter}}"></span>
 
               </div>
 
-              <div wc-field field-number="1" field-label="ts-bas.label.somn-vakenhet" filled="true">
+              <div wc-field field-number="" field-label="ts-bas.label.somn-vakenhet" filled="true">
                 <span message key="ts-bas.label.somn-vakenhet.tecken-somnstorningar"></span>
                 <span class="ts-cert-answer" message
                       key="{{cert.somnVakenhet.teckenSomnstorningar | BoolToTextFilter}}"></span>
 
               </div>
 
-              <div wc-field field-number="1" field-label="ts-bas.label.narkotika-lakemedel" filled="true">
-            		<span class="text">
-            			<span message key="ts-bas.label.narkotika-lakemedel.tecken-missbruk"></span>
+              <div wc-field field-number="" field-label="ts-bas.label.narkotika-lakemedel" filled="true">
+                <p>
+                  <span message key="ts-bas.label.narkotika-lakemedel.tecken-missbruk"></span>
             			<span class="ts-cert-answer" message
                         key="{{cert.narkotikaLakemedel.teckenMissbruk | BoolToTextFilter}}"></span>
-            		</span>
+                </p>
 
-            		<span class="text">
-            			<span message key="ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats"></span>
+                <p>
+                  <span message key="ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats"></span>
             			<span class="ts-cert-answer" message
                         key="{{cert.narkotikaLakemedel.foremalForVardinsats | BoolToTextFilter}}"></span>
-            		</span>
+                </p>
 
                 <div ng-show="cert.narkotikaLakemedel.foremalForVardinsats || cert.narkotikaLakemedel.teckenMissbruk">
-	            		<span class="text">
-	            			<span message key="ts-bas.label.narkotika-lakemedel.behov-provtagning"></span>
+                  <p>
+                    <span message key="ts-bas.label.narkotika-lakemedel.behov-provtagning"></span>
 	            			<span class="ts-cert-answer" message
                           key="{{cert.narkotikaLakemedel.provtagningBehovs | BoolToTextFilter}}"></span>
-	            		</span>
-	            		<span class="text">
-	            			<div class="alert alert-info">
-                      <span message key="ts-bas.helptext.narkotika-lakemedel.provtagning"></span>
-                    </div>
-	            		</span>
+                  </p>
+                  <p>
+                  <div class="alert alert-info">
+                    <span message key="ts-bas.helptext.narkotika-lakemedel.provtagning"></span>
+                  </div>
+                  </p>
                 </div>
 
-            		<span class="text">
-            			<span message key="ts-bas.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk"></span>
+                <p>
+                  <span message key="ts-bas.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk"></span>
             			<span class="ts-cert-answer" message
                         key="{{cert.narkotikaLakemedel.lakarordineratLakemedelsbruk | BoolToTextFilter}}"></span>
-            		</span>
+                </p>
 
-            		<span class="text" ng-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk">
-            			<span class="ts-cert-answer" message key="ts-bas.label.narkotika-lakemedel.beskrivning"></span><br />
-            			<span>{{cert.narkotikaLakemedel.lakemedelOchDos}}</span>
-            		</span>
+                <p ng-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk">
+                  <span class="ts-cert-answer" message key="ts-bas.label.narkotika-lakemedel.beskrivning"></span><br />
+                  <span>{{cert.narkotikaLakemedel.lakemedelOchDos}}</span>
+                </p>
 
               </div>
 
-              <div wc-field field-number="1" field-label="ts-bas.label.psykiskt" filled="true">
+              <div wc-field field-number="" field-label="ts-bas.label.psykiskt" filled="true">
                 <span message key="ts-bas.label.psykiskt.psykisksjukdom"></span>
                 <span class="ts-cert-answer" message key="{{cert.psykiskt.psykiskSjukdom | BoolToTextFilter}}"></span>
-
               </div>
 
-              <div wc-field field-number="1" field-label="ts-bas.label.utvecklingsstorning" filled="true">
-            		<span class="text">
-            			<span message key="ts-bas.label.utvecklingsstorning.psykisk-utvecklingsstorning"></span>
+              <div wc-field field-number="" field-label="ts-bas.label.utvecklingsstorning" filled="true">
+                <p>
+                  <span message key="ts-bas.label.utvecklingsstorning.psykisk-utvecklingsstorning"></span>
             			<span class="ts-cert-answer" message
                         key="{{cert.utvecklingsstorning.psykiskUtvecklingsstorning | BoolToTextFilter}}"></span>
-            		</span>
-            		<span class="text">
-            			<span message key="ts-bas.label.utvecklingsstorning.har-syndrom"></span>
+                </p>
+                <p>
+                  <span message key="ts-bas.label.utvecklingsstorning.har-syndrom"></span>
             			<span class="ts-cert-answer" message
                         key="{{cert.utvecklingsstorning.harSyndrom | BoolToTextFilter}}"></span>
-            		</span>
-
+                </p>
               </div>
 
-              <div wc-field field-number="1" field-label="ts-bas.label.sjukhusvard" filled="true">
-            		<span class="text">
-            		    <span message key="ts-bas.label.sjukhusvard.sjukhus-eller-lakarkontakt"></span>
+              <div wc-field field-number="" field-label="ts-bas.label.sjukhusvard" filled="true">
+                <p>
+                  <span message key="ts-bas.label.sjukhusvard.sjukhus-eller-lakarkontakt"></span>
             		    <span class="ts-cert-answer" message
                           key="{{cert.sjukhusvard.sjukhusEllerLakarkontakt | BoolToTextFilter}}"></span>
-            		</span>
-            		<span class="text" ng-show="cert.sjukhusvard.sjukhusEllerLakarkontakt">
-            			<span class="ts-cert-answer" message key="ts-bas.label.sjukhusvard.tidpunkt"></span>
-            			<span>{{cert.sjukhusvard.tidpunkt}}</span><br />
+                </p>
+                <p ng-show="cert.sjukhusvard.sjukhusEllerLakarkontakt">
+                  <span class="ts-cert-answer" message key="ts-bas.label.sjukhusvard.tidpunkt"></span>
+                  <span>{{cert.sjukhusvard.tidpunkt}}</span><br />
 
-            			<span class="ts-cert-answer" message key="ts-bas.label.sjukhusvard.vardinrattning"></span>
-            			<span>{{cert.sjukhusvard.vardinrattning}}</span><br />
+                  <span class="ts-cert-answer" message key="ts-bas.label.sjukhusvard.vardinrattning"></span>
+                  <span>{{cert.sjukhusvard.vardinrattning}}</span><br />
 
-            			<span class="ts-cert-answer" message key="ts-bas.label.sjukhusvard.anledning"></span>
-            			<span>{{cert.sjukhusvard.anledning}}</span><br />
-            		</span>
-
+                  <span class="ts-cert-answer" message key="ts-bas.label.sjukhusvard.anledning"></span>
+                  <span>{{cert.sjukhusvard.anledning}}</span><br />
+                </p>
               </div>
 
-              <div wc-field field-number="1" field-label="ts-bas.label.medicinering" filled="true">
-            		<span class="text">
-            		    <span message key="ts-bas.label.medicinering.stadigvarande-medicinering"></span>
+              <div wc-field field-number="" field-label="ts-bas.label.medicinering" filled="true">
+                <p>
+                  <span message key="ts-bas.label.medicinering.stadigvarande-medicinering"></span>
             		    <span class="ts-cert-answer" message
                           key="{{cert.medicinering.stadigvarandeMedicinering | BoolToTextFilter}}"></span>
-            		</span>
+                </p>
 
-            		<span class="text" ng-show="cert.medicinering.stadigvarandeMedicinering">
-            		    <span class="ts-cert-answer" message key="ts-bas.label.medicinering.beskrivning"></span><br />
-            		    <span>{{cert.medicinering.beskrivning}}</span>
-            		</span>
-
-              </div>
-
-              <div wc-field field-number="1" field-label="ts-bas.label.ovrigkommentar" filled="true">
-               		<span class="text" ng-show="cert.ovrigkommentar.length > 0">
-            		    <span>{{cert.ovrigkommentar}}</span>
-            		</span>
-
-               		<span class="text" ng-show="!cert.ovrigkommentar">
-            		    <span message key="ts-bas.label.bedomning-info-ej-angivet"></span>
-            		</span>
+                <p ng-show="cert.medicinering.stadigvarandeMedicinering">
+                  <span class="ts-cert-answer" message key="ts-bas.label.medicinering.beskrivning"></span><br />
+                  <span>{{cert.medicinering.beskrivning}}</span>
+                </p>
 
               </div>
 
-              <div wc-field field-number="1" field-label="ts-bas.label.bedomning" filled="true">
+              <div wc-field field-number="" field-label="ts-bas.label.ovrigkommentar" filled="true">
+                <p ng-show="cert.ovrigkommentar.length > 0">
+                  <span>{{cert.ovrigkommentar}}</span>
+                </p>
+
+                <p class="ts-cert-answer" ng-show="!cert.ovrigkommentar">
+                  <span message key="ts-bas.label.bedomning-info-ej-angivet"></span>
+                </p>
+              </div>
+
+              <div wc-field field-number="" field-label="ts-bas.label.bedomning" filled="true">
                 <div ng-show="!cert.bedomning.kanInteTaStallning">
-                  <span class="text no-padding-bottom" message key="ts-bas.label.bedomning-info-alt-1"></span>
+                  <span message key="ts-bas.label.bedomning-info-alt-1"></span>
 
                   <p>
                     <span class="ts-cert-answer">{{intygAvser}}</span>
-                    </span>
+                  </p>
                 </div>
 
                 <div ng-show="cert.bedomning.kanInteTaStallning">
-                  <span class="text">{{ts-bas.label.bedomning-info-alt-2}}</span>
+                  {{ts-bas.label.bedomning-info-alt-2}}
                 </div>
 
                 <div>
-                  <span class="text" message key="ts-bas.label.bedomning-info-undersokas-med-specialkompetens"></span>
-                  <span ng-show="cert.bedomning.lakareSpecialKompetens.length > 0" class="text">{{cert.bedomning.lakareSpecialKompetens}}</span>
-                  <span ng-show="!cert.bedomning.lakareSpecialKompetens" class="text" message
+                  <span message key="ts-bas.label.bedomning-info-undersokas-med-specialkompetens"></span><br>
+                  <span ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">{{cert.bedomning.lakareSpecialKompetens}}</span>
+                  <span ng-show="!cert.bedomning.lakareSpecialKompetens" class="ts-cert-answer" message
                         key="ts-bas.label.bedomning-info-ej-angivet"></span>
                 </div>
-
               </div>
 
               <div class="infobox">
@@ -368,14 +359,11 @@
                 <h4>
                   <span message key="ts-bas.label.kontakt-info"></span>
                 </h4>
-                <p>
-                  <span class="text" id="vardperson_namn">{{cert.skapadAv.fullstandigtNamn}}</span><br> <span
-                    class="text" id="vardperson_enhetsnamn">{{cert.skapadAv.vardenhet.enhetsnamn}}</span><br>
-                  <span class="text">{{cert.skapadAv.vardenhet.postadress}}</span><br>
-                  <span
-                      class="text">{{cert.skapadAv.vardenhet.postnummer}} {{cert.skapadAv.vardenhet.postort}}</span><br> <span
-                    class="text">{{cert.skapadAv.vardenhet.telefonnummer}}</span><br>
-                </p>
+                <span id="vardperson_namn">{{cert.skapadAv.fullstandigtNamn}}</span><br>
+                <span id="vardperson_enhetsnamn">{{cert.skapadAv.vardenhet.enhetsnamn}}</span><br>
+                {{cert.skapadAv.vardenhet.postadress}}<br>
+                {{cert.skapadAv.vardenhet.postnummer}} {{cert.skapadAv.vardenhet.postort}}<br>
+                {{cert.skapadAv.vardenhet.telefonnummer}}<br>
               </div>
 
             </div>

@@ -1,1 +1,5 @@
 textarea[wc-maxlength], input[type=text] { margin-bottom: 0; }
+
+.ts-cert-answer {
+    font-weight: bold;
+}

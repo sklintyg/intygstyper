@@ -71,7 +71,7 @@ define(['angular'], function(angular) {
                 $scope.cert = result.contents;
                 $scope.cert.status = $scope.filterStatuses(result.metaData.statuses);
                 if ($scope.cert.syn.synfaltsdefekter === true || $scope.cert.syn.nattblindhet === true ||
-                    $scope.cert.syn.progressivogonsjukdom === true) {
+                    $scope.cert.syn.progressivOgonsjukdom === true) {
                     $scope.achelptext = true;
                 }
             } else {
