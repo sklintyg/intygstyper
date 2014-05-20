@@ -4,13 +4,14 @@ define([
     'ts-bas/intyg/js/controllers',
     'ts-bas/intyg/js/messages',
     'common/js/minaintyg/CertificateService',
-    'ts-bas/intyg/js/filters'
+    'common/js/filters'
 ], function(angular, miServices, controllers, messages, miCertificateService, filters) {
     'use strict';
 
     var moduleName = 'ts-bas';
 
-    var module = angular.module(moduleName, [miServices, controllers, miCertificateService, filters]);
+    var module = angular
+        .module(moduleName, [miServices, controllers, miCertificateService, filters]);
 
     module.config(['$routeProvider', function($routeProvider) {
         $routeProvider.

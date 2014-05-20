@@ -1,10 +1,16 @@
-define([ 'angular', 'services', 'ts-diabetes/intyg/js/controllers', 'ts-diabetes/intyg/js/messages', 'ts-diabetes/intyg/js/services',
-        'ts-diabetes/intyg/js/filters', ], function(angular, miServices, controllers, messages, services, filters) {
+define([
+    'angular',
+    'services',
+    'ts-diabetes/intyg/js/controllers',
+    'ts-diabetes/intyg/js/messages',
+    'common/js/minaintyg/CertificateService',
+    'common/js/filters',
+], function(angular, miServices, controllers, messages, miCertificateService, filters) {
     'use strict';
 
     var moduleName = 'ts-diabetes';
 
-    var module = angular.module(moduleName, [ miServices, controllers, services, filters ]);
+    var module = angular.module(moduleName, [ miServices, controllers, miCertificateService, filters ]);
 
     module.config([ '$routeProvider', function($routeProvider) {
         $routeProvider.when('/ts-diabetes/view/:certificateId', {
