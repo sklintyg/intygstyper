@@ -1,4 +1,4 @@
-define([], function() {
+define(['angular'], function(angular) {
     'use strict';
 
     return [ '$scope', '$filter', '$location', '$routeParams', 'ts-bas.certificateService', 'listCertService', 'dialogService', '$log', '$rootScope',
@@ -27,7 +27,7 @@ define([], function() {
                     dialogFade: true
                 };
 
-                $scope.intygAvser = "";
+                $scope.intygAvser = '';
                 $scope.intygAvserList = [];
 
                 $scope.$watch('cert.intygAvser.korkortstyp', function() {
@@ -39,10 +39,10 @@ define([], function() {
                             this.push(key);
                         }
                     }, $scope.intygAvserList );
-                    
+
                     for (var i = 0; i < $scope.intygAvserList.length; i++) {
                         if (i < $scope.intygAvserList.length-1) {
-                                $scope.intygAvser += $scope.intygAvserList[i].type + (', ');
+                            $scope.intygAvser += $scope.intygAvserList[i].type + (', ');
                         }
                         else {
                             $scope.intygAvser += $scope.intygAvserList[i].type;
@@ -54,10 +54,11 @@ define([], function() {
                     acceptprogressdone: true,
                     focus: false
                 };
-    
+
                 // Archive dialog
                 $scope.certToArchive = {};
-    
+                var archiveDialog;
+
                 $scope.openArchiveDialog = function(cert) {
                     $scope.certToArchive = cert;
                     $scope.dialog.focus = true;
@@ -74,13 +75,13 @@ define([], function() {
                         autoClose: false
                     });
                 };
-    
+
                 // expose calculated static link for pdf download
                 $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $routeParams.certificateId + '/pdf';
-    
+
                 // Decide if helptext related to field 1.a) - 1.c)
                 $scope.achelptext = false;
-    
+
                 $scope.filterStatuses = function(statuses) {
                     var result = [];
                     if (!angular.isObject(statuses)) {
@@ -92,19 +93,19 @@ define([], function() {
                         }
                     }
                     return result;
-                }
-    
+                };
+
                 $scope.visibleStatuses = [ 'SENT' ];
-    
+
                 $scope.userVisibleStatusFilter = function(status) {
                     for ( var i = 0; i < $scope.visibleStatuses.length; i++) {
-                        if (status.type == $scope.visibleStatuses[i]) {
+                        if (status.type === $scope.visibleStatuses[i]) {
                             return true;
                         }
                     }
                     return false;
-                }
-    
+                };
+
                 certificateService.getCertificate($routeParams.certificateId, function(result) {
                     $scope.doneLoading = true;
                     if (result !== null) {

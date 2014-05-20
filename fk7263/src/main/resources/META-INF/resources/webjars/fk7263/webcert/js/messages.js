@@ -9,7 +9,7 @@ define([], function() {
             'fk7263.message.certificateloading': 'Hämtar intyg...',
 
             // FK 7263
-            'fk7263.label.pagetitle.fk7263': 'Läkarintyg FK 7263',
+            'fk7263.label.certtitle': 'Läkarintyg FK 7263',
 
             //Labels
             'fk7263.label.field': 'Fält',

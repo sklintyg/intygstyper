@@ -6,6 +6,8 @@ define([], function() {
 
             'common.yes': 'Ja',
             'common.no': 'Nej',
+            'common.yes.caps': 'JA',
+            'common.no.caps': 'NEJ',
             'common.nodontask': 'Nej, fråga inte igen',
             'common.ok': 'OK',
             'common.cancel': 'Avbryt',
@@ -14,6 +16,8 @@ define([], function() {
 
             'common.copy': 'Kopiera',
             'common.delete': 'Ta bort',
+
+            'common.date': 'Datum',
 
             // cert status messages
             'cert.status.draft_incomplete': 'Utkast, ej komplett',
