@@ -1,7 +1,7 @@
 define(['angular'], function(angular) {
     'use strict';
 
-    return [ '$scope', '$filter', '$location', '$routeParams', 'ts-bas.certificateService', 'listCertService', 'dialogService', '$log', '$rootScope',
+    return [ '$scope', '$filter', '$location', '$routeParams', 'CertificateService', 'listCertService', 'dialogService', '$log', '$rootScope',
             function($scope, $filter, $location, $routeParams, certificateService, listCertService, dialogService, $log, $rootScope) {
                 $scope.cert = {};
                 $rootScope.cert = {};
