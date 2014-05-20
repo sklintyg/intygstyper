@@ -62,24 +62,32 @@
         </h2>
 
         <!-- Show if no events to show -->
-        <div class="certificate-event" ng-show="cert.status.length<1">
+        <div ng-show="cert.status.length<1">
         	<p>
         		<span message key="ts-bas.label.latestevent.noevents"></span>
         	</p>
         </div>
         
-        <!-- Show all TS-Bas status in list if any viable status exist-->
-        <div class="certificate-event" id="lastest-certificate-event" ng-show="cert.status.length>0">
-        	<p ng-repeat="status in cert.status" ng-show="$first">
-	          <span message key="ts-bas.status.{{cert.status[0].type}}"></span> <span message key="ts-bas.target.{{cert.status[0].target}}"></span>
-	          <span class="certificate-event-timestamp pull-right">{{status.timestamp | date:'shortDate'}}</span> 
-	        </p>
-	        <p ng-show="cert.status.length>1" ng-repeat="status in cert.status" ng-hide="$first">
-	          	<span message key="ts-bas.status.{{cert.status[0].type}}"></span> <span message key="ts-bas.target.{{cert.status[0].target}}"></span>
-	          	<span class="certificate-event-timestamp pull-right">{{status.timestamp | date:'shortDate'}}</span>
-	        </p>
+        <!-- Show if more than one event exists -->
+   		<div ng-show="cert.status.length>0">
+            <span message key="ts-bas.status.{{cert.status[0].type}}"></span>
+            <span ng-show="cert.statuses[0].type == 'SENT'"></span>
+            <span message key="ts-bas.target.{{cert.status[0].target}}"></span>
+            <span class="certificate-event-timestamp pull-right">{{cert.status[0].timestamp | date:'shortDate'}}</span>
+            <div collapse="!isCollapsedCertEvents" class="collapse">
+              <div ng-repeat="status in cert.status" ng-switch on="$index > 0">
+                <div ng-switch-when="true">
+                  <span message key="ts-bas.status.{{cert.status[0].type}}"></span>
+                  <span ng-show="status.type == 'SENT'"></span>
+                  <span message key="ts-bas.target.{{cert.status[0].target}}"></span>
+                  <span class="certificate-event-timestamp pull-right">{{status.timestamp | date:'shortDate'}}</span><br>
+                </div>
+              </div>
+            </div>
+            <p>
+              <a ng-show="cert.status.length>1" ng-click="isCollapsedCertEvents = !isCollapsedCertEvents" data-toggle="collapse" message key="ts-bas.label.showevents.{{ !isCollapsedCertEvents }}">{{ts-bas.label.showevents.{{ !isCollapsedCertEvents }}</a>
+            </p>
         </div>
-        
       </div>
     </div>
 

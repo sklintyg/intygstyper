@@ -39,18 +39,31 @@
         </h2>
 
         <!-- Show if no events to show -->
-        <div class="certificate-event" ng-show="cert.filteredStatuses.length<1">
+        <div ng-show="cert.filteredStatuses.length<1">
         	<p>
         		<span message key="fk7263.label.latestevent.noevents"></span>
         	</p>
         </div>
-
-        <!-- Show all FK7263 status in list if any viable status exist-->
-        <div class="certificate-event" id="lastest-certificate-event" ng-show="cert.filteredStatuses.length>0">
-        	<p ng-repeat="status in cert.filteredStatuses">
-	          <span message key="fk7263.status.{{cert.filteredStatuses[0].type}}"></span> <span message key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span>
-	          <span class="certificate-event-timestamp pull-right">{{status.timestamp | date:'shortDate'}}</span> 
-	        </p>
+		
+		<!-- Show if more than one event exists -->
+   		<div ng-show="cert.filteredStatuses.length>0">
+            <span message key="fk7263.status.{{cert.filteredStatuses[0].type}}"></span>
+            <span ng-show="cert.statuses[0].type == 'SENT'"></span>
+            <span message key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span>
+            <span class="certificate-event-timestamp pull-right">{{cert.filteredStatuses[0].timestamp | date:'shortDate'}}</span>
+            <div collapse="!isCollapsedCertEvents" class="collapse">
+              <div ng-repeat="status in cert.filteredStatuses" ng-switch on="$index > 0">
+                <div ng-switch-when="true">
+                  <span message key="fk7263.status.{{cert.filteredStatuses[0].type}}"></span>
+                  <span ng-show="status.type == 'SENT'"></span>
+                  <span message key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span>
+                  <span class="certificate-event-timestamp pull-right">{{status.timestamp | date:'shortDate'}}</span><br>
+                </div>
+              </div>
+            </div>
+            <p>
+              <a ng-show="cert.filteredStatuses.length>1" ng-click="isCollapsedCertEvents = !isCollapsedCertEvents" data-toggle="collapse" message key="fk7263.label.showevents.{{ !isCollapsedCertEvents }}">{{fk7263.label.showevents.{{ !isCollapsedCertEvents }}</a>
+            </p>
         </div>
       </div>
     </div>
