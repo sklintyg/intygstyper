@@ -295,8 +295,7 @@ define([
                     isSentToTarget: _isSentToTarget,
 
                     __test__: {
-                        confirmSignera: _confirmSignera,
-                        openNetIdPlugin: _openNetIdPlugin
+                        confirmSignera: _confirmSignera
                     }
                 };
             }
