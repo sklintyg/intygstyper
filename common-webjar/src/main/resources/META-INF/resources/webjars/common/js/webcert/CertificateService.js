@@ -11,6 +11,14 @@ define(['angular'], function(angular) {
     CertificateService.factory('CertificateService', [ '$http', '$log',
         function($http, $log) {
 
+            function _handleError(callback, error) {
+                if (callback) {
+                    callback(error);
+                } else {
+                    $log.error(error);
+                }
+            }
+
             /*
              * Load certificate details from the server.
              */
@@ -77,31 +85,51 @@ define(['angular'], function(angular) {
                     });
             }
 
-            function _signDraft(id, onSuccess, onError) {
-                $log.debug('_signDraft id:' + id);
-                var restPath = '/moduleapi/intyg/signera/server/' + id;
+            function _getSigneringshash(intygId, onSuccess, onError) {
+                $log.debug('_getSigneringshash, intygId: ' + intygId);
+                var restPath = '/moduleapi/intyg/signeringshash/' + intygId;
                 $http.post(restPath).
                     success(function(data) {
-                        $log.debug('_signDraft data: ' + data);
                         onSuccess(data);
                     }).
-                    error(function(data, status) {
-                        $log.error('error ' + status);
-                        onError(data);
+                    error(function(error) {
+                        _handleError(onError, error);
                     });
             }
 
-            function _getSignStatus(biljettId, onSuccess, onError) {
-                $log.debug('_getSignStatus biljettId: ' + biljettId);
-                var restPath = '/moduleapi/intyg/signera/status/' + biljettId;
+            function _getSigneringsstatus(ticketId, onSuccess, onError) {
+                $log.debug('_getSigneringsstatus, ticketId: ' + ticketId);
+                var restPath = '/moduleapi/intyg/signeringsstatus/' + ticketId;
                 $http.get(restPath).
                     success(function(data) {
-                        $log.debug('_getSignStatus status: ' + data.status);
                         onSuccess(data);
                     }).
-                    error(function (data, status) {
-                        $log.error('error ' + status);
-                        onError(data);
+                    error(function(error) {
+                        _handleError(onError, error);
+                    });
+            }
+
+            function _signeraUtkast(intygId, onSuccess, onError) {
+                $log.debug('_signeraUtkast, intygId:' + intygId);
+                var restPath = '/moduleapi/intyg/signera/server/' + intygId;
+                $http.post(restPath).
+                    success(function(data) {
+                        onSuccess(data);
+                    }).
+                    error(function(error) {
+                        _handleError(onError, error);
+                    });
+            }
+
+            function _signeraUtkastWithSignatur(ticketId, signatur, onSuccess, onError) {
+                $log.debug('_signeraUtkastWithSignatur, ticketId: ' + ticketId);
+                var restPath = '/moduleapi/intyg/signera/klient/' + ticketId;
+                $http.post(restPath, { signatur: signatur }).
+                    success(function(data) {
+                        onSuccess(data);
+                    }).
+                    error(function(error) {
+                        _handleError(onError, error);
                     });
             }
 
@@ -111,8 +139,10 @@ define(['angular'], function(angular) {
                 getDraft: _getDraft,
                 saveDraft: _saveDraft,
                 discardDraft: _discardDraft,
-                signDraft: _signDraft,
-                getSignStatus : _getSignStatus
+                getSigneringshash: _getSigneringshash,
+                getSigneringsstatus: _getSigneringsstatus,
+                signeraUtkast: _signeraUtkast,
+                signeraUtkastWithSignatur: _signeraUtkastWithSignatur
             };
         }
     ]);

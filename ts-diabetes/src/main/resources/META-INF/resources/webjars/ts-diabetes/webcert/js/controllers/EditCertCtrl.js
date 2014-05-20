@@ -93,7 +93,7 @@ define([ 'angular' ], function(angular) {
              * Action to sign the certificate draft and return to Webcert again.
              */
             $scope.sign = function() {
-                ManageCertView.sign($scope);
+                ManageCertView.signera($scope);
             };
         }
     ];

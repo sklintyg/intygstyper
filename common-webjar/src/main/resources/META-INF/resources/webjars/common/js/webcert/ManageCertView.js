@@ -11,10 +11,10 @@ define([
     var ManageCertView = angular.module(moduleName, []);
 
     ManageCertView.factory('ManageCertView',
-        [ '$http', '$log', '$location', '$route', '$routeParams', '$timeout', 'wcDialogService', 'CertificateService',
-            'statService',
-            function($http, $log, $location, $route, $routeParams, $timeout, wcDialogService, CertificateService,
-                statService) {
+        [ '$document', '$http', '$log', '$location', '$route', '$routeParams', '$timeout', 'wcDialogService',
+            'CertificateService', 'statService', 'User',
+            function($document, $http, $log, $location, $route, $routeParams, $timeout, wcDialogService,
+                CertificateService, statService, User) {
 
                 /**
                  * Load draft to webcert
@@ -77,7 +77,6 @@ define([
                     );
                 }
 
-
                 /**
                  * Discard a certificate draft
                  */
@@ -130,53 +129,24 @@ define([
 
                 function checkSetError(errorCode) {
                     var model = 'common.error.unknown';
-                    if(errorCode !== undefined && errorCode !== null) {
+                    if (errorCode !== undefined && errorCode !== null) {
                         model = ('common.error.' + errorCode).toLowerCase();
                     }
 
                     return model;
                 }
 
-                var _confirmSign = function(certificateId, $scope, onSuccess) {
-                    $log.debug('sign draft ');
-                    $scope.dialog.acceptprogressdone = false;
-                    $scope.dialog.showerror = false;
+                function signera($scope, intygsTyp) {
+                    if (User.userContext.authenticationScheme === 'urn:inera:webcert:fake') {
+                        return _signeraServer($scope, intygsTyp, $routeParams.certificateId);
+                    } else {
+                        return _signeraKlient($scope, intygsTyp, $routeParams.certificateId);
+                    }
+                }
 
-                    CertificateService.signDraft(certificateId, function(data) {
-
-                        (function checkStatus() {
-                            CertificateService.getSignStatus(data.id, function(data) {
-                                if ('BEARBETAR' === data.status) {
-                                    $scope._timer = $timeout(checkStatus, 1000);
-                                } else if ('SIGNERAD' === data.status) {
-                                    $scope.dialog.acceptprogressdone = true;
-                                    onSuccess();
-                                } else {
-                                    $scope.dialog.acceptprogressdone = true;
-                                    $scope.dialog.showerror = true;
-                                    $scope.dialog.errormessageid = 'common.error.signerror';
-                                }
-                            });
-                        })();
-
-                    }, function(error) {
-                        $scope.dialog.acceptprogressdone = true;
-                        $scope.dialog.showerror = true;
-                        if (error.errorCode === 'DATA_NOT_FOUND') {
-                            $scope.dialog.errormessageid = 'common.error.certificatenotfound';
-                        } else if (error.errorCode === 'INVALID_STATE') {
-                            $scope.dialog.errormessageid = 'common.error.certificateinvalid';
-                        } else if (error === '') {
-                            $scope.dialog.errormessageid = 'common.error.cantconnect';
-                        } else {
-                            $scope.dialog.errormessageid = ('error.message.' + error.errorCode).toLowerCase();
-                        }
-                    });
-                };
-
-                function _sign($scope, intygTyp) {
+                function _signeraServer($scope, intygsTyp, intygId) {
                     var bodyText = 'Är du säker på att du vill signera intyget?';
-                    var dialog = wcDialogService.showDialog($scope, {
+                    var confirmDialog = wcDialogService.showDialog($scope, {
                         dialogId: 'confirm-sign',
                         titleId: 'label.confirmsign',
                         bodyText: bodyText,
@@ -184,15 +154,7 @@ define([
                         button1id: 'confirm-signera-utkast-button',
 
                         button1click: function() {
-                            _confirmSign($routeParams.certificateId, $scope, function() {
-                                dialog.close();
-                                if (intygTyp === 'fk7263') {
-                                    $location.path(intygTyp + '/view/' + $routeParams.certificateId);
-                                } else {
-                                    $route.reload();
-                                }
-                                statService.refreshStat();
-                            });
+                            _confirmSignera($scope, intygsTyp, intygId, confirmDialog);
                         },
                         button1text: 'common.sign',
                         button2click: function() {
@@ -205,15 +167,116 @@ define([
                     });
                 }
 
+                function _signeraKlient($scope, intygsTyp, intygId) {
+                    CertificateService.getSigneringshash(intygId, function(ticket) {
+                        _openNetIdPlugin(ticket.hash, function(signatur) {
+                            CertificateService.signeraUtkastWithSignatur(ticket.id, signatur, function(ticket) {
+
+                                if (ticket.status === 'SIGNERAD') {
+                                    _showIntygAfterSignering(intygsTyp, intygId);
+                                } else {
+                                    _waitForSigneringsstatusSigneradAndClose($scope, intygsTyp, intygId, ticket);
+                                }
+
+                            }, function(error) {
+                                _showSigneringsError($scope, error);
+                            });
+                        }, function(error) {
+                            _showSigneringsError($scope, error);
+                        });
+                    }, function(error) {
+                        _showSigneringsError($scope, error);
+                    });
+                }
+
+                function _confirmSignera($scope, intygsTyp, intygId, confirmDialog) {
+                    $scope.dialog.acceptprogressdone = false;
+                    $scope.dialog.showerror = false;
+                    CertificateService.signeraUtkast(intygId, function(ticket) {
+                        _waitForSigneringsstatusSigneradAndClose($scope, intygsTyp, intygId, ticket,
+                            confirmDialog);
+                    }, function(error) {
+                        _showSigneringsError($scope, error);
+                    });
+                }
+
+                function _openNetIdPlugin(hash, onSuccess, onError) {
+                    var client = $document[0].iID;
+                    if (!client) {
+                        onError('Misslyckades med att starta klient för signering.');
+                        return;
+                    }
+                    client.SetProperty('Base64', 'true');
+                    client.SetProperty('DataToBeSigned', hash);
+                    client.SetProperty('URLEncode', 'false');
+                    var resultCode = client.Invoke('Sign');
+
+                    if (resultCode === 0) {
+                        onSuccess(client.GetProperty('Signature'));
+                    } else {
+                        $log.info('Signeringen avbröts med kod: ' + resultCode);
+                    }
+                }
+
+                function _waitForSigneringsstatusSigneradAndClose($scope, intygsTyp, intygId, ticket, dialog) {
+
+                    function getSigneringsstatus() {
+                        CertificateService.getSigneringsstatus(ticket.id, function(ticket) {
+                            if ('BEARBETAR' === ticket.status) {
+                                $scope._timer = $timeout(getSigneringsstatus, 1000);
+                            } else if ('SIGNERAD' === ticket.status) {
+                                _showIntygAfterSignering(intygsTyp, intygId, dialog);
+                            } else {
+                                _showSigneringsError($scope, { errorCode: 'SIGN_ERROR' });
+                            }
+                        });
+                    }
+
+                    getSigneringsstatus();
+                }
+
+                function _showIntygAfterSignering(intygsTyp, intygId, dialog) {
+                    if (dialog) {
+                        dialog.close();
+                    }
+                    if (intygsTyp === 'fk7263') {
+                        $location.path(intygsTyp + '/view/' + intygId);
+                    } else {
+                        // TODO: Ta bort det här specialfallet är visavyerna för TS-intygen är klar.
+                        $route.reload();
+                    }
+                    statService.refreshStat();
+                }
+
+                function _showSigneringsError($scope, error) {
+                    if ($scope.dialog) {
+                        $scope.dialog.acceptprogressdone = true;
+                        $scope.dialog.showerror = true;
+
+                        if (error.errorCode === 'DATA_NOT_FOUND') {
+                            $scope.dialog.errormessageid = 'common.error.certificatenotfound';
+                        } else if (error.errorCode === 'INVALID_STATE') {
+                            $scope.dialog.errormessageid = 'common.error.certificateinvalid';
+                        } else if (error === '') {
+                            $scope.dialog.errormessageid = 'common.error.cantconnect';
+                        } else {
+                            $scope.dialog.errormessageid = 'common.error.signerror';
+                        }
+                    } else {
+                        wcDialogService.showErrorMessageDialog(error);
+                    }
+                }
+
                 // Return public API for the service
                 return {
                     load: _load,
                     save: _save,
                     discard: _discard,
-                    sign: _sign,
+                    signera: signera,
 
                     __test__: {
-                        confirmSign: _confirmSign
+                        confirmSignera: _confirmSignera,
+                        openNetIdPlugin: _openNetIdPlugin
                     }
                 };
             }
