@@ -240,7 +240,7 @@ define([
                         dialog.close();
                     }
                     if (intygsTyp === 'fk7263') {
-                        $location.path(intygsTyp + '/view/' + intygId);
+                        $location.path('/view/' + intygsTyp + '/' + intygId);
                     } else {
                         // TODO: Ta bort det här specialfallet är visavyerna för TS-intygen är klar.
                         $route.reload();
