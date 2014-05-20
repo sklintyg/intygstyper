@@ -298,7 +298,7 @@ define([ 'angular', 'text!./wcField.html' ], function(angular, wcFieldTemplate) 
             template: wcFieldTemplate,
             scope: {
                 fieldLabel: '@',
-                fieldNumber: '@',
+                fieldNumber: '@?',
                 fieldHelpText: '@',
                 fieldHasErrors: '=',
                 fieldTooltipPlacement: '@',
@@ -307,6 +307,10 @@ define([ 'angular', 'text!./wcField.html' ], function(angular, wcFieldTemplate) 
             controller: function($scope) {
 
                 $scope.filled = $scope.$eval($scope.filled);
+
+                if ($scope.fieldNumber === null || $scope.fieldNumber === undefined) {
+                    $scope.fieldNumber = '';
+                }
 
                 if ($scope.fieldTooltipPlacement === undefined) {
                     $scope.placement = 'right';
