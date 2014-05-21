@@ -1,10 +1,10 @@
 define([], function() {
     'use strict';
 
-    return ['$scope', '$log', '$timeout', '$window', 'fk7263.fragaSvarService', 'fragaSvarCommonService',
-        'wcDialogService', 'User', '$routeParams', 'statService',
-        function($scope, $log, $timeout, $window, fragaSvarService, fragaSvarCommonService, wcDialogService,
-            User, $routeParams, statService) {
+    return ['$scope', '$rootScope', '$log', '$timeout', '$window', 'fk7263.fragaSvarService', 'fragaSvarCommonService',
+        'wcDialogService', 'User', '$routeParams', 'statService', 'ManageCertView',
+        function($scope, $rootScope, $log, $timeout, $window, fragaSvarService, fragaSvarCommonService, wcDialogService,
+            User, $routeParams, statService, ManageCertView) {
 
         // init state
         $scope.qaList = {};
@@ -55,6 +55,17 @@ define([], function() {
             $scope.widgetState.doneLoading = true;
             $scope.widgetState.activeErrorMessageKey = errorData.errorCode;
         });
+
+        $scope.certProperties = {
+            sentToFK: false,
+            isRevoked: false
+        };
+
+        var unbindFastEvent = $rootScope.$on('fk7263.ViewCertCtrl.load', function(event, metaData){
+            $scope.certProperties.sentToFK = ManageCertView.isSentToFK(metaData.statuses);
+            $scope.certProperties.isRevoked = ManageCertView.isRevoked(metaData.statuses);
+        });
+        $scope.$on('$destroy', unbindFastEvent);
 
         $scope.openIssuesFilter = function(qa) {
             return qa.status !== 'CLOSED';

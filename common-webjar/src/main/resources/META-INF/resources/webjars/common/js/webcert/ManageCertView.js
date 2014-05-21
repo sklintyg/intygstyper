@@ -262,12 +262,37 @@ define([
                     }
                 }
 
+                function _isSentToFK(statusArr) {
+                    if (statusArr) {
+                        for (var i = 0; i < statusArr.length; i++) {
+                            if (statusArr[i].target === 'FK' && statusArr[i].type === 'SENT') {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                };
+
+                function _isRevoked(statusArr) {
+                    if (statusArr) {
+                        for (var i = 0; i < statusArr.length; i++) {
+                            if (statusArr[i].type === 'CANCELLED') {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                };
+
+
                 // Return public API for the service
                 return {
                     load: _load,
                     save: _save,
                     discard: _discard,
                     signera: signera,
+                    isRevoked: _isRevoked,
+                    isSentToFK: _isSentToFK,
 
                     __test__: {
                         confirmSignera: _confirmSignera,
