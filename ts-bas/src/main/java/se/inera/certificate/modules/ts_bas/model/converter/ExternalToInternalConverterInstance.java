@@ -650,10 +650,9 @@ public class ExternalToInternalConverterInstance {
                 binMed = o.getVarde().get(0).getQuantity();
 
             } else if (isObservationAndLateralitet(o, ObservationsKod.KONTAKTLINSER, LateralitetsKod.HOGER)) {
-                hogerKontaktlins = o.getForekomst();
-
+                hogerKontaktlins = Boolean.TRUE.equals(o.getForekomst());
             } else if (isObservationAndLateralitet(o, ObservationsKod.KONTAKTLINSER, LateralitetsKod.VANSTER)) {
-                vansterKontaktlins = o.getForekomst();
+                vansterKontaktlins = Boolean.TRUE.equals(o.getForekomst());
             }
         }
 
