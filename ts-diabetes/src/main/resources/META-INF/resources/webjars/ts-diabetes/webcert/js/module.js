@@ -4,13 +4,14 @@ define([
     'ts-diabetes/webcert/js/messages',
     'common/js/webcert/CertificateService',
     'common/js/webcert/ManageCertView',
-    'common/js/webcert/eyeDecimal'
-], function(angular, controllers, messages, wcCertificateService, wcManageCertView, eyeDecimal) {
+    'common/js/webcert/eyeDecimal',
+    'common/js/filters'
+], function(angular, controllers, messages, wcCertificateService, wcManageCertView, eyeDecimal, filters) {
     'use strict';
 
     var moduleName = 'ts-diabetes';
 
-    var module = angular.module(moduleName, [controllers, wcCertificateService, wcManageCertView, eyeDecimal]);
+    var module = angular.module(moduleName, [controllers, wcCertificateService, wcManageCertView, eyeDecimal, filters]);
 
     module.config(['$routeProvider', function($routeProvider) {
         $routeProvider.
