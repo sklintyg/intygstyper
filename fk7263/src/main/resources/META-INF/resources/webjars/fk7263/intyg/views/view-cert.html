@@ -18,7 +18,8 @@
           <br />
           <div collapse="!isCollapsed1" class="collapse">
           	  <div message key="fk7263.label.pagedescription.general"></div>
-	          <span class='text-align-left' wc-enable-tooltip field-help-text="fk7263.helptext.readpdfhelp"></span>
+	          <a class="glyphicon glyphicon-question-sign more-info" ng-click="isCollapsedPDF = !isCollapsedPDF" title="{{messageService.getProperty('common.title.helptext.moreinfo')}}"></a>
+      		  <div collapse="!isCollapsedPDF" class="well well-sm margin-top-5px"><span message key="fk7263.helptext.readpdfhelp"></span></div>
 	          
 	          <div message key="fk7263.label.pagedescription.error.in.certificate.header"></div>
 	          <div message key="fk7263.label.pagedescription.error.in.certificate"></div>
@@ -30,7 +31,7 @@
 	          <div message key="fk7263.label.pagedescription.sickness.benefit.header"></div>
 	          <div message key="fk7263.label.pagedescription.sickness.benefit"></div>	
           </div>
-          <a ng-click="isCollapsed1 = !isCollapsed1" data-toggle="collapse" message key="fk7263.label.status.{{ !isCollapsed1 }}">{{fk7263.label.status.{{ !isCollapsed1 }}</a>
+          <a ng-click="isCollapsed1 = !isCollapsed1" class="margin-top-5px" data-toggle="collapse" message key="fk7263.label.status.{{ !isCollapsed1 }}">{{fk7263.label.status.{{ !isCollapsed1 }}</a>
         </p>
       </div>
       <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">

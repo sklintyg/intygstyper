@@ -52,7 +52,7 @@ define([], function() {
             'fk7263.label.pagedescription.certificate.to.employer': 'Om du ska lämna läkarintyget till din arbetsgivare så har du möjlighet att anpassa intyget. Du kan då välja om du vill visa alla uppgifter i intyget eller om du vill dölja vissa delar. Klicka på knappen Anpassa intyget för att välja vilken information du vill dela.',
             'fk7263.label.pagedescription.sickness.benefit.header': '<h3>Vill du ansöka om sjukpenning?</h3>',
             'fk7263.label.pagedescription.sickness.benefit': 'Det gör du enklast på <a href="http://www.forsakringskassan.se/sjuk">www.forsakringskassan.se/sjuk</a>. Där kan du läsa mer om sjukpenning och hur du ansöker.<br>',
-            'fk7263.helptext.readpdfhelp' : '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. Adobe Reader.',
+            'fk7263.helptext.readpdfhelp' : '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank">Adobe Reader</a>.',
             'fk7263.label.nedsattning': 'Jag bedömer att arbetsförmåga är (fält 8b)',
             'fk7263.label.patientname': 'Patientens namn',
             'fk7263.label.issued': 'Utfärdat',
