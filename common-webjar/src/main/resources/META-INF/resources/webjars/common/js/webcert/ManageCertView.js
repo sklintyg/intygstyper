@@ -239,12 +239,7 @@ define([
                     if (dialog) {
                         dialog.close();
                     }
-                    if (intygsTyp === 'fk7263') {
-                        $location.path('/view/' + intygsTyp + '/' + intygId);
-                    } else {
-                        // TODO: Ta bort det här specialfallet är visavyerna för TS-intygen är klar.
-                        $route.reload();
-                    }
+                    $location.path('/view/' + intygsTyp + '/' + intygId);
                     statService.refreshStat();
                 }
 
