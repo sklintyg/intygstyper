@@ -300,7 +300,7 @@ public class ExternalToInternalConverterInstance {
         }
 
         if (tabletter != null) {
-            diabetes.setTabletter(insulin.getForekomst());
+            diabetes.setTabletter(tabletter.getForekomst());
         }
 
         if (kost != null) {
