@@ -176,6 +176,12 @@
                         <span message key="ts-diabetes.label.diabetes.diabetestyp"></span>
                         <span class="ts-cert-answer" message key="ts-diabetes.label.diabetes.diabetestyp.{{cert.diabetes.diabetestyp}}"></span>
                     </span>
+
+                    <span class="text no-padding-bottom">
+                        <span message key="ts-diabetes.label.diabetes.diagnostid"></span>
+                        <span class="ts-cert-answer">{{cert.diabetes.observationsperiod}}</span>
+                    </span>
+
                     <span class="text no-padding-bottom">
                         <span message key="ts-diabetes.label.diabetes.behandling"></span><br>
                         <span message key="ts-diabetes.label.diabetes.behandling.endast-kost"></span>
@@ -195,7 +201,8 @@
                     </span>
                     <span class="text">
                         <span message key="ts-diabetes.label.diabetes.behandling.annan"></span>
-                        <span class="ts-cert-answer" message key="{{cert.diabetes.annanBehandling | BoolToTextFilter}}"></span>
+                        <span ng-show="cert.diabetes.annanBehandling" class="ts-cert-answer" message key="{{cert.diabetes.annanBehandling | BoolToTextFilter}}"></span>
+                        <span ng-show="!cert.diabetes.annanBehandling" class="ts-cert-answer" message key="ts-diabetes.label.ej-angivet"></span>
                         <span ng-show="cert.diabetes.annanBehandling">
                         <br>
                             <span message key="ts-diabetes.label.diabetes.behandling.annan.period"></span>
@@ -223,12 +230,15 @@
 
                     <span class="text no-padding-bottom">
                         <span message key="ts-diabetes.label.hypoglykemier.saknar-formaga-kanna-varningstecken"></span>
-                        <span class="ts-cert-answer" message key="{{cert.hypoglykemier.saknarFormagaKannaVarningstecken | BoolToTextFilter}}"></span>
+                        <span ng-show="cert.hypoglykemier.saknarFormagaKannaVarningstecken" class="ts-cert-answer" message key="{{cert.hypoglykemier.saknarFormagaKannaVarningstecken | BoolToTextFilter}}"></span>
+                        <span ng-show="!cert.hypoglykemier.saknarFormagaKannaVarningstecken" class="ts-cert-answer" message key="ts-diabetes.label.ej-angivet"></span>
+                        
                     </span>
 
                     <span class="text no-padding-bottom">
                         <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst"></span>
-                        <span class="ts-cert-answer" message key="{{cert.hypoglykemier.allvarligForekomst | BoolToTextFilter}}"></span>
+                        <span ng-show="cert.hypoglykemier.allvarligForekomst" class="ts-cert-answer" message key="{{cert.hypoglykemier.allvarligForekomst | BoolToTextFilter}}"></span>
+                        <span ng-show="!cert.hypoglykemier.allvarligForekomst" class="ts-cert-answer" message key="ts-diabetes.label.ej-angivet"></span>
 
                         <span ng-show="cert.hypoglykemier.allvarligForekomstBeskrivning">
                             <br>
@@ -237,13 +247,24 @@
                         </span>                        
                     </span>
 
-                    <span class="text">
+                    <span class="text no-padding-bottom">
                         <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken"></span>
-                        <span class="ts-cert-answer" message key="{{cert.hypoglykemier.allvarligForekomstTrafiken | BoolToTextFilter}}"></span>                        
+                        <span ng-show="cert.hypoglykemier.allvarligForekomstTrafiken" class="ts-cert-answer" message key="{{cert.hypoglykemier.allvarligForekomstTrafiken | BoolToTextFilter}}"></span>                        
+                        <span ng-show="!cert.hypoglykemier.allvarligForekomstTrafiken" class="ts-cert-answer" message key="ts-diabetes.label.ej-angivet"></span>                        
                         <span ng-show="cert.hypoglykemier.allvarligForekomstTrafikBeskrivning.length > 0">
                             <br>
                             <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning"></span>
                             <span class="ts-cert-answer">{{cert.hypoglykemier.allvarligForekomstTrafikBeskrivning}}</span>
+                        </span>
+                    </span>
+
+                    <span class="text">
+                        <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid"></span>
+                        <span class="ts-cert-answer" message key="{{cert.hypoglykemier.allvarligForekomstVakenTid | BoolToTextFilter}}"></span>                        
+                        <span ng-show="cert.hypoglykemier.allvarligForekomstVakenTidObservationstid">
+                            <br>
+                            <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid"></span>
+                            <span class="ts-cert-answer">{{cert.hypoglykemier.allvarligForekomstVakenTidObservationstid}}</span>
                         </span>
                     </span>
 
@@ -317,9 +338,9 @@
             		</div>
             				
            			<span class="text no-padding-bottom">
-           			    <span class="ts-cert-answer" message key="ts-diabetes.label.bedomning-info-undersokas-med-specialkompetens"></span><br>
-           			    <span ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">{{cert.bedomning.lakareSpecialKompetens}}</span>
-           			    <span ng-show="!cert.bedomning.lakareSpecialKompetens" message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
+           			    <span message key="ts-diabetes.label.bedomning-info-undersokas-med-specialkompetens"></span><br>
+           			    <span class="ts-cert-answer" ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">{{cert.bedomning.lakareSpecialKompetens}}</span>
+           			    <span class="ts-cert-answer" ng-show="!cert.bedomning.lakareSpecialKompetens" message key="ts-diabetes.label.ej-angivet"></span>
      			    </span>
 
                     <span class="text" >

@@ -65,6 +65,7 @@ define(
                     "ts-diabetes.label.syn.kontaktlins": "",
 
                     "ts-diabetes.label.diabetes.diabetestyp": "Diabetestyp",
+                    "ts-diabetes.label.diabetes.diagnostid" : "Diagnosen diabetes ställdes år: ",
                     "ts-diabetes.label.diabetes.diabetestyp.diabetes_typ_1": "Diabetes Typ1",
                     "ts-diabetes.label.diabetes.diabetestyp.diabetes_typ_2": "Diabets Typ2",
                     "ts-diabetes.label.diabetes.behandling": "Behandling:",
@@ -84,6 +85,9 @@ define(
 
                     "ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken": "e) Har patienten haft allvarlig hypoglykemi i trafiken under det senaste året?",
                     "ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning": "Hur många sådana episoder och när inträffade de? ",
+
+                    "ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid": "g) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under vaken tid det senaste året?",
+                    "ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid": "Observationstid: ",
 
                     "ts-diabetes.label.true": "JA",
                     "ts-diabetes.label.false": "NEJ",
@@ -141,7 +145,7 @@ define(
                     "ts-diabetes.label.bedomning-info-alt-1": "Patienten uppfyller kraven enligt Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2) för:",
                     "ts-diabetes.label.bedomning.kan-inte-ta-stallning": "Kan inte ta ställning",
                     "ts-diabetes.label.bedomning-info-undersokas-med-specialkompetens": "Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i:",
-                    "ts-diabetes.label.bedomning-info-ej-angivet": "Ej angivet",
+                    "ts-diabetes.label.ej-angivet": "Ej angivet",
                     "ts-diabetes.label.bedomning.lamplighet-inneha": "Om patienten söker behörighet C1, C1E, C, CE, D1, D1E, D, DE eller Taxi, är han eller hon lämplig att inneha sådan behörighet med hänsyn till de körningar och arbetsformer som är aktuella vid sådant innehav? (Se 6 kap. 16 §) ",
 
                     // Helptexts
