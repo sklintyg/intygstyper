@@ -151,13 +151,6 @@
             ]
         },
         {
-            "observationskategori": {
-                "codeSystem": "1.2.752.116.1.1.3.1.1",
-                "codeSystemName": "ICF",
-                "code": "d"
-            }
-        },
-        {
             "observationskod": {
                 "codeSystem": "1.2.752.116.2.1.1.1",
                 "codeSystemName": "SNOMED-CT",

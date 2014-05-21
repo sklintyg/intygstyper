@@ -274,16 +274,24 @@ public final class TransportToExternalFk7263LegacyConverter {
 
         switch (source.getTypAvFunktionstillstand()) {
             case AKTIVITET:
-                observation.setObservationskategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
+                if (source.getBeskrivning() != null && !source.getBeskrivning().isEmpty()) {
+                    observation.setObservationskategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
+                    observation.setBeskrivning(source.getBeskrivning());
+                } else {
+                    observation = null;
+                }
                 break;
             case KROPPSFUNKTION:
                 observation.setObservationskategori(ObservationsKoder.KROPPSFUNKTIONER);
+                observation.setBeskrivning(source.getBeskrivning());
                 break;
             default:
                 throw new IllegalArgumentException("Unknown FunktionstillstandType: " + source.getTypAvFunktionstillstand());
         }
-        observation.setBeskrivning(source.getBeskrivning());
-        observations.add(observation);
+
+        if (observation != null) {
+            observations.add(observation);
+        }
 
         if (source.getArbetsformaga() != null) {
             observations.addAll(convert(source.getArbetsformaga()));
