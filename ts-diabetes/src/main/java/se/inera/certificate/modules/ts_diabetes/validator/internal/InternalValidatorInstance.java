@@ -123,7 +123,7 @@ public class InternalValidatorInstance {
             }
         }
 
-        if (context.isHogreBehorighetContext()) {
+        if (context.isHogreBehorighetContext() && isTrue(hypoglykemier.getTeckenNedsattHjarnfunktion())) {
             if (hypoglykemier.getEgenkontrollBlodsocker() == null) {
                 addValidationError("hypoglykemier.egenkontrollBlodsocker",
                         "ts-diabetes.validation.hypoglykemier.egenkontroll-blodsocker.missing");
