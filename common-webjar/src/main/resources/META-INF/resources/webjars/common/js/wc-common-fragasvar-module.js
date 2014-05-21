@@ -31,7 +31,7 @@ define([ 'angular' ], function(angular) {
             function _buildMailToLink(qa) {
                 var baseURL = $window.location.protocol + '//' + $window.location.hostname + (
                     $window.location.port ? ':' + $window.location.port : '');
-                var url = baseURL + '/web/dashboard#/' + qa.intygsReferens.intygsTyp + '/view/' +
+                var url = baseURL + '/web/dashboard#/intyg/' + qa.intygsReferens.intygsTyp + '/' +
                     qa.intygsReferens.intygsId;
                 var recipient = '';
                 var subject = 'Du har blivit tilldelad ett Fråga&Svar ärende i Webcert';

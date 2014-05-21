@@ -17,10 +17,6 @@ define([
             when('/ts-diabetes/edit/:certificateId', {
                 templateUrl: '/web/webjars/ts-diabetes/webcert/views/edit-cert.html',
                 controller: 'ts-diabetes.EditCertCtrl'
-            }).
-            when('/ts-diabetes/view/:certificateId', {
-                templateUrl: '/web/webjars/ts-diabetes/common/views/view-cert.html',
-                controller: 'ts-diabetes.ViewCertCtrl'
             });
     }]);
 

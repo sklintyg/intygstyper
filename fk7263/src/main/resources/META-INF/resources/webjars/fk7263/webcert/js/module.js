@@ -22,11 +22,7 @@ define([
             when('/fk7263/edit/:certificateId', {
                 templateUrl: '/web/webjars/fk7263/webcert/views/edit-cert.html',
                 controller: 'fk7263.EditCertCtrl'
-            })/*.
-            when('/fk7263/view/:certificateId', {
-                templateUrl: '/web/webjars/fk7263/webcert/views/view-cert.html',
-                controller: 'fk7263.ViewCertCtrl'
-            })*/;
+            });
     }]);
 
     // Inject language resources

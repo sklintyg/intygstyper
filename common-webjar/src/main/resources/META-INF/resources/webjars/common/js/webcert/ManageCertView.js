@@ -239,7 +239,7 @@ define([
                     if (dialog) {
                         dialog.close();
                     }
-                    $location.path('/view/' + intygsTyp + '/' + intygId);
+                    $location.path('/intyg/' + intygsTyp + '/' + intygId);
                     statService.refreshStat();
                 }
 

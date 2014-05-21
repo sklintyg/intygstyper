@@ -18,10 +18,6 @@ define([
             when('/ts-bas/edit/:certificateId', {
                 templateUrl: '/web/webjars/ts-bas/webcert/views/edit-cert.html',
                 controller: 'ts-bas.EditCertCtrl'
-            }).
-            when('/ts-bas/view/:certificateId', {
-                templateUrl: '/web/webjars/ts-bas/common/views/view-cert.html',
-                controller: 'ts-bas.ViewCertCtrl'
             });
     }]);
 
