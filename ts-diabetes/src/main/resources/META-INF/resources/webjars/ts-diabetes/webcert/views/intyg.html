@@ -52,6 +52,7 @@
                   <span class="ts-cert-answer" message
                         key="ts-diabetes.label.diabetes.diabetestyp.{{cert.diabetes.diabetestyp}}"></span>
                 </p>
+
                 <h3 message key="ts-diabetes.label.diabetes.behandling"></h3>
                 <p>
                   <span message key="ts-diabetes.label.diabetes.behandling.endast-kost"></span>
@@ -116,10 +117,10 @@
                   <span class="ts-cert-answer" message
                         key="{{cert.hypoglykemier.allvarligForekomstTrafiken | BoolToTextFilter}}"></span>
                 </div>
-                <div class="form-group indent" ng-show="cert.hypoglykemier.allvarligForekomstTrafikBeskrivning.length > 0">
-                    <span message
-                          key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning"></span>
-                    <span class="ts-cert-answer">{{cert.hypoglykemier.allvarligForekomstTrafikBeskrivning}}</span>
+                <div class="form-group indent"
+                     ng-show="cert.hypoglykemier.allvarligForekomstTrafikBeskrivning.length > 0">
+                    <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning"></span>
+                  <span class="ts-cert-answer">{{cert.hypoglykemier.allvarligForekomstTrafikBeskrivning}}</span>
                 </div>
               </div>
 

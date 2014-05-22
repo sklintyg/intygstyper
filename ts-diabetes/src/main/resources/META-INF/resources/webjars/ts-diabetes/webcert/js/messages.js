@@ -71,7 +71,7 @@ define(
 
                     'ts-diabetes.label.diabetes.diabetestyp': 'Diabetestyp',
                     'ts-diabetes.label.diabetes.diabetestyp.diabetes_typ_1': 'Diabetes Typ1',
-                    'ts-diabetes.label.diabetes.diabetestyp.diabetes_typ_2': 'Diabets Typ2',
+                    'ts-diabetes.label.diabetes.diabetestyp.diabetes_typ_2': 'Diabetes Typ2',
                     'ts-diabetes.label.diabetes.behandling': 'Behandling:',
                     'ts-diabetes.label.diabetes.behandling.endast-kost': 'Endast kost',
                     'ts-diabetes.label.diabetes.behandling.tabletter': 'Tabletter',
