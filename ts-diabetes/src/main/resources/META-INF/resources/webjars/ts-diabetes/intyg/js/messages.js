@@ -106,7 +106,7 @@ define(
                     'ts-diabetes.button.send.certificate.title' : 'Skicka detta intyg till Transportstyrelsen.',
                     'ts-diabetes.label.pageingress' : 'Här ser du den fullständiga informationen i ditt intyg. På denna sida kan du hantera ditt intyg med hjälp av olika funktioner.',
                     "ts-diabetes.label.pagedescription": "<p>Här kan du läsa ditt intyg och skicka det elektroniskt till Transportstyrelsen.</p> <p>För att skicka intyget till Transportstyrelsen så klickar du på Skicka.</p> <p>Vill du spara eller skriva ut ditt intyg så väljer du Ladda ner / Skriv ut. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut</p>",
-                    'ts-diabetes.label.pagedescription.error.in.certificate.header': '<h3>Fel i intyget?</h3>',
+                    'ts-diabetes.label.pagedescription.error.in.certificate.header': '<h2>Fel i intyget?</h2>',
                     'ts-diabetes.label.pagedescription.error.in.certificate': 'Om någon uppgift är fel i läkarintyget så ska du kontakta den som utfärdat ditt läkarintyg.',
                     'ts-diabetes.label.status.false': '<span class="glyphicon glyphicon-chevron-up"></span><a> Dölj information</a>',
                     'ts-diabetes.label.status.true': '<span class="glyphicon glyphicon-chevron-down"></span><a> Visa information</a>',
