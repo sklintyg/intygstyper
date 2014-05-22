@@ -1,4 +1,7 @@
-define([ 'angular', 'angularMocks'], function() {
+define([
+    'angular',
+    'angularMocks'
+], function() {
     'use strict';
 
     describe('dummySpec', function() {

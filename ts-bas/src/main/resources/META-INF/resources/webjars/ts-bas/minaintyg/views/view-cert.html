@@ -1,0 +1,570 @@
+<!--
+
+    Copyright (C) 2013 Inera AB (http://www.inera.se)
+
+    This file is part of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules).
+
+    Inera Certificate Modules is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    Inera Certificate Modules is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<div class="row-fluid">
+
+  <!-- Loading spinner: visibility defined by $scope.doneLoading  -->
+  <div ng-hide="doneLoading" style="text-align: center; padding: 20px;">
+    <img src="/img/ajax-loader.gif" style="text-align: center;" />
+    <p style="text-align: center; color: #64ABC0; margin-top: 20px;">
+      <strong><message key="ts-bas.message.certifits-basloading" /></strong>
+    </p>
+  </div>
+
+  <div ng-show="doneLoading">
+    <div id="backnav" class="row col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <a class="backlink" href="/web/start"><message key="ts-bas.button.goback" /></a>
+    </div>
+
+
+
+<!--     Content -->
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7 mi-text">
+        <h1>
+            <message key="ts-bas.label.pagetitle" />
+        </h1>
+        <p></p>
+        <p>
+        	<message key="ts-bas.label.pageingress" />
+        </p>
+        <div collapse="!isCollapsed1" class="collapse mi-text">
+        	<p>
+	            <message key="ts-bas.label.pagedescription" />
+	        </p>
+	        <div message key="ts-bas.label.pagedescription.error.in.certificate.header"></div>
+	        <div message key="ts-bas.label.pagedescription.error.in.certificate"></div>
+        </div>
+        <a ng-click="isCollapsed1 = !isCollapsed1" data-toggle="collapse" message key="ts-bas.label.status.{{ !isCollapsed1 }}">{{ts-bas.label.status.{{ !isCollapsed1 }}</a>
+
+      </div>
+      <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+        <h2>
+          <span message key="ts-bas.label.latestevent"></span>
+        </h2>
+
+        <!-- Show if no events to show -->
+        <div ng-show="cert.status.length<1">
+        	<p>
+        		<span message key="ts-bas.label.latestevent.noevents"></span>
+        	</p>
+        </div>
+
+        <!-- Show if more than one event exists -->
+   		<div ng-show="cert.status.length>0">
+            <span message key="ts-bas.status.{{cert.status[0].type}}"></span>
+            <span ng-show="cert.statuses[0].type == 'SENT'"></span>
+            <span message key="ts-bas.target.{{cert.status[0].target}}"></span>
+            <span class="certificate-event-timestamp pull-right">{{cert.status[0].timestamp | date:'shortDate'}}</span>
+            <div collapse="!isCollapsedCertEvents" class="collapse">
+              <div ng-repeat="status in cert.status" ng-switch on="$index > 0">
+                <div ng-switch-when="true">
+                  <span message key="ts-bas.status.{{cert.status[0].type}}"></span>
+                  <span ng-show="status.type == 'SENT'"></span>
+                  <span message key="ts-bas.target.{{cert.status[0].target}}"></span>
+                  <span class="certificate-event-timestamp pull-right">{{status.timestamp | date:'shortDate'}}</span><br>
+                </div>
+              </div>
+            </div>
+            <p>
+              <a ng-show="cert.status.length>1" ng-click="isCollapsedCertEvents = !isCollapsedCertEvents" data-toggle="collapse" message key="ts-bas.label.showevents.{{ !isCollapsedCertEvents }}">{{ts-bas.label.showevents.{{ !isCollapsedCertEvents }}</a>
+            </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+    <form id="view-as-pdf" action="{{downloadAsPdfLink}}" method="get" target="_blank" name="pdfForm">
+          <p class="btn-row">
+            <button type="button" ng-click="send()" class="btn btn-success" title="{{messageService.getProperty('ts-bas.button.send.certificate.title')}}">
+              <message key="ts-button.detail.send" />
+            </button>
+            <button id="downloadprint" type="submit" ng-click="document.pdfForm.submit()" class="btn btn-inverse">
+              <message key="ts-bas.button.downloadprint" />
+            </button>
+          </p>
+        </form>
+       </div>
+    </div>
+    <section id="certificate" class="certificate">
+      <span class="hide" id="certId" title="{{cert.id}}"></span> <span class="hide" id="certType" title="{{cert.typ}}"></span>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="cert">
+            <div class="cert-titlebar">
+              <img class="cert-icon" alt="" ng-src="/web/webjars/ts-bas/minaintyg/img/ts-bas.png" />
+              <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                  <h2>
+                    <span class="cert-title"><message key="ts-bas.label.certtitle" /></span>
+                    <span class="cert-titlebar-type"><span message key="ts-bas.typename"></span></span>
+                  </h2>
+                </div>
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 issue">
+                  <span><message key="ts-bas.label.issued" /></span> <span class="cert-titlebar-value">{{cert.signeringsdatum | date:'longDate'}}</span>
+                </div>
+				<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 archive hidden-xs">
+                  <a role="button" data-toggle="modal" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
+                      <span class="glyphicon glyphicon-folder-close white"></span>
+					  <!-- <img alt="Arkivera intyg" src="/img/archive-icon.gif" /> -->
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="cert-header">
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <span class="tag"><message key="ts-bas.label.patientname" /></span> <span id="patient-name">{{cert.patient.fullstandigtNamn}}</span>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <span class="tag"><message key="ts-bas.label.civicnumber" /></span> <span id="patient-crn">{{cert.patient.personid}}</span>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-6 col-sm-offset-6 col-md-offset-6 col-lg-offset-6 margin-top-5px">
+                  <span class="tag"><message key="ts-bas.label.identitet" /></span> <span id="patient-crn">{{cert.vardkontakt.idkontroll}}</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <span class="tag"><message key="ts-bas.label.unit" /></span> <span id="careunit">{{cert.skapadAv.vardenhet.enhetsnamn}}</span>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <span class="tag"><message key="ts-bas.label.issuer" /></span> <span id="caregiver">{{cert.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</span>
+                </div>
+              </div>
+              <div class="row">
+              	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <span class="tag"><message key="ts-bas.label.intygavser" /></span>
+
+                  <span class="text no-padding-bottom">
+                      <span class="ts-cert-answer">{{intygAvser}}</span>
+                  </span>
+
+                </div>
+                <div class="col-xs-6 hidden-sm hidden-md hidden-lg pull-right">
+                	<button class="btn btn-primary pull-right" ata-toggle="modal" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
+                		<span class="glyphicon glyphicon-folder-close white"></span>
+                	</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-bottom"></div>
+
+            <div class="cert-body">
+            	<div class="body-row">
+            		<h3 class="title">
+            			<span message key="ts-bas.label.synfunktioner"></span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>
+            		<span class="text no-padding-bottom">
+                        <span message key="ts-bas.label.syn.synfaltsdefekter"></span>
+                        <span class="ts-cert-answer" message key="{{cert.syn.synfaltsdefekter | BoolToTextFilter}}"></span>
+                    </span>
+                    <span class="text no-padding-bottom">
+                        <span message key="ts-bas.label.syn.nattblindhet"></span>
+                        <span class="ts-cert-answer" message key="{{cert.syn.nattblindhet | BoolToTextFilter}}"></span>
+                    </span>
+                    <span class="text no-padding-bottom">
+                        <span message key="ts-bas.label.syn.progressivogonsjukdom"></span>
+                        <span class="ts-cert-answer" message key="{{cert.syn.progressivogonsjukdom | BoolToTextFilter}}"></span>
+                    </span>
+
+                    <span class="text no-padding-bottom" ng-show="achelptext == true">
+	  	                <div class="alert alert-info">
+	                    	<span message key="ts-bas.helptext.synfunktioner.a-c"></span>
+	                	</div>
+	                </span>
+
+                    <span class="text no-padding-bottom">
+                        <span message key="ts-bas.label.syn.diplopi"></span>
+                        <span class="ts-cert-answer" message key="{{cert.syn.diplopi | BoolToTextFilter}}"></span>
+                    </span>
+                    <span class="text">
+                        <span message key="ts-bas.label.syn.nystagmus"></span>
+                        <span class="ts-cert-answer" message key="{{cert.syn.nystagmus | BoolToTextFilter}}"></span>
+            		</span>
+
+            		<span class="text ts-text-field-wide">
+						<table class="table table-condensed ts-table">
+							<tr>
+							    <th></th>
+							    <th>Utan korrektion</th>
+							    <th>Med korrektion</th>
+							    <th>Kontaktlinser</th>
+							</tr>
+						    <tr>
+						        <td>Höger öga</td>
+						        <td><span class="text">{{cert.syn.hogerOga.utanKorrektion}}</span></td>
+						        <td><span class="text">{{cert.syn.hogerOga.medKorrektion}}</span></td>
+						        <td><span class="text" message key="{{cert.syn.hogerOga.kontaktlins | BoolToTextFilter}}"></span></td>
+						    </tr>
+						    <tr>
+						        <td>Vänster öga</td>
+       					        <td><span class="text">{{cert.syn.vansterOga.utanKorrektion}}</span></td>
+						        <td><span class="text">{{cert.syn.vansterOga.medKorrektion}}</span></td>
+						        <td><span class="text" message key="{{cert.syn.vansterOga.kontaktlins | BoolToTextFilter}}"></span></td>
+						    </tr>
+						    <tr>
+						        <td>Binokulärt</td>
+      					        <td><span class="text">{{cert.syn.binokulart.utanKorrektion}}</span></td>
+						        <td><span class="text">{{cert.syn.binokulart.medKorrektion}}</span></td>
+						        <td></td>
+						    </tr>
+						</table>
+					</span>
+					<span class="text">
+						<h3>Korrektionsglasens styrka</h3>
+						<span message key="ts-bas.label.syn.8-dioptrier"></span>
+						<span class="ts-cert-answer" message key="{{cert.syn.korrektionsglasensStyrka | BoolToTextFilter}}"></span>
+		                <div class="alert alert-info" ng-show="cert.syn.korrektionsglasensStyrka == true">
+                    		<span message key="ts-bas.helptext.synfunktioner.8-dioptrier"></span>
+                		</div>
+					</span>
+            	</div>
+            	<div class="body-row">
+            		<h3 class="title">
+            			<span message key="ts-bas.label.horselbalans"></span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>
+            		<span class="text">
+            			<span message key="ts-bas.label.horselbalans.balansrubbningar"></span>
+            			<span class="ts-cert-answer" message key="{{cert.horselbalans.balansrubbningar | BoolToTextFilter}}"></span>
+            		</span>
+
+            	</div>
+            	<div class="body-row">
+            		<h3 class="title">
+            			<span message key="ts-bas.label.funktionsnedsattning"></span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>
+            		<span class="text">
+            			<span message key="ts-bas.label.funktionsnedsattning.funktionsnedsattning"></span>
+            			<span class="ts-cert-answer" message key="{{cert.funktionsnedsattning.funktionsnedsattning | BoolToTextFilter}}"></span>
+            		</span>
+
+            		<span class="text" ng-show="cert.funktionsnedsattning.funktionsnedsattning">
+            			<span message key="ts-bas.label.funktionsnedsattning.beskrivning"></span><br/>
+            			<span>{{cert.funktionsnedsattning.beskrivning}}</span>
+            		</span>
+
+            	</div>
+            	<div class="body-row">
+            		<h3 class="title">
+            			<span message key="ts-bas.label.hjartkarl"></span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>
+            		<span class="text">
+            			<span message key="ts-bas.label.hjartkarl.hjart-karlsjukdom"></span>
+            			<span class="ts-cert-answer" message key="{{cert.hjartkarl.hjartKarlsjukdom | BoolToTextFilter}}"></span>
+            		</span>
+        		    <span class="text">
+            			<span message key="ts-bas.label.hjartkarl.hjarnskada-efter-trauma"></span>
+            			<span class="ts-cert-answer" message key="{{cert.hjartkarl.hjarnskadaEfterTrauma | BoolToTextFilter}}"></span>
+            		</span>
+        		    <span class="text">
+            			<span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke"></span>
+            			<span class="ts-cert-answer" message key="{{cert.hjartkarl.riskfaktorerStroke | BoolToTextFilter}}"></span>
+            		</span>
+            		<span class="text" ng-show="cert.hjartKarl.riskfaktorerStroke">
+            			<span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning"></span><br/>
+            			<span>{{cert.hjartKarl.beskrivningRiskfaktorer}}</span>
+            		</span>
+            	</div>
+            	<div class="body-row">
+            		<h3 class="title">
+            			<span message key="ts-bas.label.diabetes"></span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>
+       		   		<span class="text">
+            			<span message key="ts-bas.label.diabetes.har-diabetes"></span>
+            			<span class="ts-cert-answer" message key="{{cert.diabetes.harDiabetes | BoolToTextFilter}}"></span>
+            		</span>
+            		<div ng-show="cert.diabetes.harDiabetes">
+       		   		    <span class="text">
+            			    <span message key="ts-bas.label.diabetes.diabetestyp"></span>
+            			    <span class="ts-cert-answer" message key="ts-bas.label.diabetes.diabetestyp.{{cert.diabetes.diabetesTyp}}"></span>
+            		    </span>
+       		   		    <span class="text">
+       		   		    	<span message key="ts-bas.label.diabetes.behandling"></span>
+            			    <span class="ts-cert-answer" ng-show="cert.diabetes.kost" message key="ts-bas.label.diabetes.behandling.kost"></span>
+            			    <span class="ts-cert-answer" ng-show="cert.diabetes.insulin" message key="ts-bas.label.diabetes.behandling.insulin"></span>
+            			    <span class="ts-cert-answer" ng-show="cert.diabetes.tabletter" message key="ts-bas.label.diabetes.behandling.tabletter"></span>
+            		    </span>
+            		    <span class="text">
+	    	                <div class="alert alert-info" ng-show="cert.diabetes.insulin || cert.diabetes.tabletter">
+    		                	<span message key="ts-bas.helptext.diabetes.behandling"></span>
+	                		</div>
+            		    </span>
+            		</div>
+            	</div>
+            	<div class="body-row">
+            		<h3 class="title">
+            			<span message key="ts-bas.label.neurologi"></span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>
+            		<span class="text">
+            			<span message key="ts-bas.label.neurologi.neurologisksjukdom"></span>
+            			<span class="ts-cert-answer" message key="{{cert.neurologi.neurologiskSjukdom | BoolToTextFilter}}"></span>
+            		</span>
+            	</div>
+            	<div class="body-row">
+            		<h3 class="title">
+            			<span message key="ts-bas.label.medvetandestorning"></span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>
+            		<span class="text">
+            			<span message key="ts-bas.label.medvetandestorning.medvetandestorning"></span>
+            			<span class="ts-cert-answer" message key="{{cert.medvetandestorning.medvetandestorning | BoolToTextFilter}}"></span>
+            		</span>
+
+            		<span class="text" ng-show="cert.medvetandestorning.medvetandestorning">
+            			<span message key="ts-bas.label.medvetandestorning.beskrivning"></span><br/>
+            			<span>{{cert.medvetandestorning.beskrivning}}</span>
+            		</span>
+            	</div>
+            	<div class="body-row">
+            		<h3 class="title">
+            			<span message key="ts-bas.label.njurar"></span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>
+            		<span class="text">
+            			<span message key="ts-bas.label.njurar.nedsatt-njurfunktion"></span>
+            			<span class="ts-cert-answer" message key="{{cert.njurar.nedsattNjurfunktion | BoolToTextFilter}}"></span>
+            		</span>
+            	</div>
+            	<div class="body-row">
+            		<h3 class="title">
+            			<span message key="ts-bas.label.kognitivt"></span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>
+            		<span class="text">
+            			<span message key="ts-bas.label.kognitivt.sviktande-kognitiv-funktion"></span>
+            			<span class="ts-cert-answer" message key="{{cert.kognitivt.sviktandeKognitivFunktion | BoolToTextFilter}}"></span>
+            		</span>
+            	</div>
+            	<div class="body-row">
+            		<h3 class="title">
+            			<span message key="ts-bas.label.somn-vakenhet"></span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>
+            		<span class="text">
+            			<span message key="ts-bas.label.somn-vakenhet.tecken-somnstorningar"></span>
+            			<span class="ts-cert-answer" message key="{{cert.somnVakenhet.teckenSomnstorningar | BoolToTextFilter}}"></span>
+            		</span>
+            	</div>
+            	<div class="body-row">
+            		<h3 class="title">
+            			<span message key="ts-bas.label.narkotika-lakemedel"></span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>
+
+            		<span class="text">
+            			<span message key="ts-bas.label.narkotika-lakemedel.tecken-missbruk"></span>
+            			<span class="ts-cert-answer" message key="{{cert.narkotikaLakemedel.teckenMissbruk | BoolToTextFilter}}"></span>
+            		</span>
+
+            		<span class="text">
+            			<span message key="ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats"></span>
+            			<span class="ts-cert-answer" message key="{{cert.narkotikaLakemedel.foremalForVardinsats | BoolToTextFilter}}"></span>
+            		</span>
+
+            		<div ng-show="cert.narkotikaLakemedel.foremalForVardinsats || cert.narkotikaLakemedel.teckenMissbruk">
+	            		<span class="text">
+	            			<span message key="ts-bas.label.narkotika-lakemedel.behov-provtagning"></span>
+	            			<span class="ts-cert-answer" message key="{{cert.narkotikaLakemedel.provtagningBehovs | BoolToTextFilter}}"></span>
+	            		</span>
+	            		<span class="text">
+	            			<div class="alert alert-info">
+	   		                	<span message key="ts-bas.helptext.narkotika-lakemedel.provtagning"></span>
+	                		</div>
+	            		</span>
+	            	</div>
+
+            		<span class="text">
+            			<span message key="ts-bas.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk"></span>
+            			<span class="ts-cert-answer" message key="{{cert.narkotikaLakemedel.lakarordineratLakemedelsbruk | BoolToTextFilter}}"></span>
+            		</span>
+
+            		<span class="text" ng-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk">
+            			<span class="ts-cert-answer" message key="ts-bas.label.narkotika-lakemedel.beskrivning"></span><br/>
+            			<span>{{cert.narkotikaLakemedel.lakemedelOchDos}}</span>
+            		</span>
+            	</div>
+            	<div class="body-row">
+            		<h3 class="title">
+            			<span message key="ts-bas.label.psykiskt"></span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>
+            		<span class="text">
+            			<span message key="ts-bas.label.psykiskt.psykisksjukdom"></span>
+            			<span class="ts-cert-answer" message key="{{cert.psykiskt.psykiskSjukdom | BoolToTextFilter}}"></span>
+            		</span>
+            	</div>
+            	<div class="body-row">
+            		<h3 class="title">
+            			<span message key="ts-bas.label.utvecklingsstorning"></span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>
+            		<span class="text">
+            			<span message key="ts-bas.label.utvecklingsstorning.psykisk-utvecklingsstorning"></span>
+            			<span class="ts-cert-answer" message key="{{cert.utvecklingsstorning.psykiskUtvecklingsstorning | BoolToTextFilter}}"></span>
+            		</span>
+            		<span class="text">
+            			<span message key="ts-bas.label.utvecklingsstorning.har-syndrom"></span>
+            			<span class="ts-cert-answer" message key="{{cert.utvecklingsstorning.harSyndrom | BoolToTextFilter}}"></span>
+            		</span>
+            	</div>
+            	<div class="body-row">
+            		<h3 class="title">
+            			<span message key="ts-bas.label.sjukhusvard"></span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>
+            		<span class="text">
+            		    <span message key="ts-bas.label.sjukhusvard.sjukhus-eller-lakarkontakt"></span>
+            		    <span class="ts-cert-answer" message key="{{cert.sjukhusvard.sjukhusEllerLakarkontakt | BoolToTextFilter}}"></span>
+            		</span>
+            		<span class="text" ng-show="cert.sjukhusvard.sjukhusEllerLakarkontakt">
+            			<span class="ts-cert-answer" message key="ts-bas.label.sjukhusvard.tidpunkt"></span>
+            			<span>{{cert.sjukhusvard.tidpunkt}}</span><br/>
+
+            			<span class="ts-cert-answer" message key="ts-bas.label.sjukhusvard.vardinrattning"></span>
+            			<span>{{cert.sjukhusvard.vardinrattning}}</span><br/>
+
+            			<span class="ts-cert-answer" message key="ts-bas.label.sjukhusvard.anledning"></span>
+            			<span>{{cert.sjukhusvard.anledning}}</span><br/>
+            		</span>
+             	</div>
+            	<div class="body-row">
+            		<h3 class="title">
+            			<span message key="ts-bas.label.medicinering"></span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>
+            		<span class="text">
+            		    <span message key="ts-bas.label.medicinering.stadigvarande-medicinering"></span>
+            		    <span class="ts-cert-answer" message key="{{cert.medicinering.stadigvarandeMedicinering | BoolToTextFilter}}"></span>
+            		</span>
+
+            		<span class="text" ng-show="cert.medicinering.stadigvarandeMedicinering">
+            		    <span class="ts-cert-answer" message key="ts-bas.label.medicinering.beskrivning"></span><br/>
+            		    <span>{{cert.medicinering.beskrivning}}</span>
+            		</span>
+
+
+            	</div>
+            	<div class="body-row">
+            		<h3 class="title">
+            			<span message key="ts-bas.label.ovrigkommentar"></span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>
+
+               		<span class="text" ng-show="cert.ovrigkommentar.length > 0">
+            		    <span>{{cert.ovrigkommentar}}</span>
+            		</span>
+
+               		<span class="text" ng-show="!cert.ovrigkommentar">
+            		    <span message key="ts-bas.label.bedomning-info-ej-angivet"></span>
+            		</span>
+            	</div>
+            	<div class="body-row">
+            		<h3 class="title">
+            			<span message key="ts-bas.label.bedomning">{{ts-bas.label.bedomning}}</span>
+            			<span>
+            				<span></span>
+            			</span>
+            		</h3>
+      				<div ng-show="!cert.bedomning.kanInteTaStallning">
+                        <span class="text no-padding-bottom" message key="ts-bas.label.bedomning-info-alt-1"></span>
+
+                        <span class="text no-padding-bottom">
+                            <span class="ts-cert-answer">{{intygAvser}}</span>
+                        </span>
+            		</div>
+
+            		<div ng-show="cert.bedomning.kanInteTaStallning">
+            		    <span class="text">{{ts-bas.label.bedomning-info-alt-2}}</span>
+            		</div>
+
+           			<div>
+           			    <span class="text" message key="ts-bas.label.bedomning-info-undersokas-med-specialkompetens"></span>
+           			    <span ng-show="cert.bedomning.lakareSpecialKompetens.length > 0" class="text">{{cert.bedomning.lakareSpecialKompetens}}</span>
+           			    <span ng-show="!cert.bedomning.lakareSpecialKompetens" class="text" message key="ts-bas.label.bedomning-info-ej-angivet"></span>
+                    </div>
+            	</div>
+
+            	<div class="row padding-bottom-30px">
+            		<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+            			<div class="infobox">
+            				<h3><span message key="ts-bas.label.confirmedby">{{ts-bas.label.confirmedby}}</span></h3>
+            				<h4><span message key="ts-bas.label.date">{{ts-bas.label.date}}</span></h4>
+            				<p>{{cert.signeringsdatum | date:'longDate'}}</p>
+            				<h4><span message key="ts-bas.label.contactinfo"></span></h4>
+            				<p>
+            					<span id="physician-name-id" class="text">{{cert.skapadAv.fullstandigtNamn}}</span><br/>
+            					<!-- <span id="caregiver-name-id" class="text">{{cert.skapadAv.vardenhet.vardgivare.vardgivarnamn}} ({{cert.skapadAv.vardenhet.vardgivare.vardgivarid}})</span><br/> -->
+            					<span id="careunit-name-id" class="text">{{cert.skapadAv.vardenhet.enhetsnamn}}</span><br/>
+            					<span id="careunit-postal_address" class="text">{{cert.skapadAv.vardenhet.postadress}}<br/>
+            					{{cert.skapadAv.vardenhet.postnummer}} {{cert.skapadAv.vardenhet.postort}}</span><br/>
+            					<span id="careunit-postal_phone" class="text">{{cert.skapadAv.vardenhet.telefonnummer}}, {{cert.skapadAv.vardenhet.telefonnummer}}</span>
+            				</p>
+            			</div>
+            		</div>
+            	</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</div>

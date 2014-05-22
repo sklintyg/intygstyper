@@ -1,9 +1,9 @@
 define([
     'angular',
     'angularMocks',
-    'common/js/webcert/CertificateService',
-    'common/js/webcert/ManageCertView'
-], function(angular, mocks, CertificateServiceModule, ManageCertViewModule) {
+    'webjars/common/webcert/js/services/CertificateService',
+    'webjars/common/webcert/js/services/ManageCertView'
+], function(angular, mocks, CertificateServiceName, ManageCertViewName) {
     'use strict';
 
     describe('ManageCertView', function() {
@@ -17,30 +17,33 @@ define([
         var wcDialogService;
         var User;
 
-        beforeEach(mocks.module(ManageCertViewModule, CertificateServiceModule, function($provide) {
-            $provide.value('$document', [
-                {}
-            ]);
-            $provide.value('$route', jasmine.createSpyObj('$route', [ 'reload' ]));
-            $provide.value('$location', jasmine.createSpyObj('$location', [ 'path' ]));
-            $provide.value('$routeParams', {});
-            $provide.value('wcDialogService',
-                jasmine.createSpyObj('wcDialogService', [ 'showDialog', 'showErrorMessageDialog' ]));
-            $provide.value('statService', jasmine.createSpyObj('statService', [ 'refreshStat' ]));
-            $provide.value('User', { userContext: { authenticationScheme: null } });
-        }));
+        beforeEach(mocks.module(ManageCertViewName, CertificateServiceName,
+            function($provide) {
+                $provide.value('$document', [
+                    {}
+                ]);
+                $provide.value('$route', jasmine.createSpyObj('$route', [ 'reload' ]));
+                $provide.value('$location', jasmine.createSpyObj('$location', [ 'path' ]));
+                $provide.value('$routeParams', {});
+                $provide.value('common.dialogService',
+                    jasmine.createSpyObj('common.dialogService', [ 'showDialog', 'showErrorMessageDialog' ]));
+                $provide.value('common.statService', jasmine.createSpyObj('common.statService', [ 'refreshStat' ]));
+                $provide.value('common.User', { userContext: { authenticationScheme: null } });
+            }));
 
-        beforeEach(mocks.inject(function(_ManageCertView_, _$document_, _$httpBackend_, _$location_, _$routeParams_,
-            _$timeout_, _wcDialogService_, _User_) {
-            ManageCertView = _ManageCertView_;
-            $document = _$document_;
-            $httpBackend = _$httpBackend_;
-            $location = _$location_;
-            $routeParams = _$routeParams_;
-            $timeout = _$timeout_;
-            wcDialogService = _wcDialogService_;
-            User = _User_;
-        }));
+        beforeEach(mocks.inject([ManageCertViewName, '$document', '$httpBackend', '$location', '$routeParams',
+            '$timeout', 'common.dialogService', 'common.User',
+            function(_ManageCertView_, _$document_, _$httpBackend_, _$location_, _$routeParams_, _$timeout_,
+                _wcDialogService_, _User_) {
+                ManageCertView = _ManageCertView_;
+                $document = _$document_;
+                $httpBackend = _$httpBackend_;
+                $location = _$location_;
+                $routeParams = _$routeParams_;
+                $timeout = _$timeout_;
+                wcDialogService = _wcDialogService_;
+                User = _User_;
+            }]));
 
         describe('#signera server', function() {
             var intygId = 123, biljettId = 12345;
@@ -78,7 +81,7 @@ define([
                 $httpBackend.flush();
 
                 expect(confirmDialog.close).toHaveBeenCalled();
-                expect($location.path).toHaveBeenCalledWith('/view/fk7263/' + intygId);
+                expect($location.path).toHaveBeenCalledWith('/intyg/fk7263/' + intygId);
             });
 
             it('should redirect to "visa intyg" if the request to sign was successful, even if delayed', function() {
@@ -99,7 +102,7 @@ define([
                 $httpBackend.flush();
 
                 expect(confirmDialog.close).toHaveBeenCalled();
-                expect($location.path).toHaveBeenCalledWith('/view/fk7263/' + intygId);
+                expect($location.path).toHaveBeenCalledWith('/intyg/fk7263/' + intygId);
             });
 
             it('should show an error if the server refuses the request to sign', function() {
@@ -174,7 +177,7 @@ define([
                 ManageCertView.signera($scope, 'fk7263');
                 $httpBackend.flush();
 
-                expect($location.path).toHaveBeenCalledWith('/view/fk7263/' + intygId);
+                expect($location.path).toHaveBeenCalledWith('/intyg/fk7263/' + intygId);
             });
 
             it('should redirect to "visa intyg" if the request to sign was successful, even if delayed', function() {
@@ -198,7 +201,7 @@ define([
                 $timeout.flush();
                 $httpBackend.flush();
 
-                expect($location.path).toHaveBeenCalledWith('/view/fk7263/' + intygId);
+                expect($location.path).toHaveBeenCalledWith('/intyg/fk7263/' + intygId);
             });
 
             it('should show error if unable to get hash', function() {

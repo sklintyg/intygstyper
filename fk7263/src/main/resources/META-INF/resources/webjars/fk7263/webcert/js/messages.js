@@ -1,3 +1,4 @@
+/* jshint maxlen: false */
 define([], function() {
     'use strict';
 
@@ -128,7 +129,7 @@ define([], function() {
             'fk7263.validation.prognos.gar-ej-att-bedomma.beskrivning.missing': 'Fritextfältet som hör till alternativet Går ej att bedöma, förtydligande under \'Prognos - kommer patienten att få tillbaka sin arbetsförmåga i nuvarande arbete\' måste fyllas i. (Fält 10)',
 
             'fk7263.validation.forandrat-ressatt.choose-one': 'Endast ett alternativ kan anges avseende förändrat ressätt. (Fält 11)',
-            
+
 
             // errors
             'fk7263.error.could_not_load_cert': '<strong>Ett tekniskt problem inträffade.</strong>Kunde inte hämta intyget.',

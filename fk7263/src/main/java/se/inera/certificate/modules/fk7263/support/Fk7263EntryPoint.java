@@ -44,7 +44,7 @@ public class Fk7263EntryPoint implements ModuleEntryPoint {
     public String getModuleCssPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
-            return "/intyg/css/fk7263.css";
+            return "/minaintyg/css/fk7263.css";
         case WEBCERT:
             return "/webcert/css/fk7263.css";
         default:
@@ -56,7 +56,7 @@ public class Fk7263EntryPoint implements ModuleEntryPoint {
     public String getModuleScriptPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
-            return "/intyg/js/module";
+            return "/minaintyg/js/module";
         case WEBCERT:
             return "/webcert/js/module";
         default:

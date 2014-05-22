@@ -16,8 +16,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-define([
-], function() {
+
+/* jshint maxlen: false */
+define([], function() {
     'use strict';
 
     return {
