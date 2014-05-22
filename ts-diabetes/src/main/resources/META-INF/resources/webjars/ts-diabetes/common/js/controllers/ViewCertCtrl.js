@@ -1,38 +1,73 @@
-define([], function() {
+define(['angular'], function(angular) {
     'use strict';
 
-    return ['$scope', '$filter', '$location', 'ts-diabetes.certificateService', '$http', '$routeParams', '$log',
-        function($scope, $filter, $location, certService, http, $routeParams, $log) {
+    return ['$scope', '$rootScope', '$filter', '$location', 'CertificateService', '$http', '$routeParams', '$log', 'ManageCertView',
+        function($scope, $rootScope, $filter, $location, CertificateService, http, $routeParams, $log, ManageCertView) {
 
-            $scope.cert = {};
-            $scope.doneLoading = false;
-            $scope.shouldBeOpen = false;
+        $scope.cert = {};
 
-            $scope.open = function() {
-                $scope.shouldBeOpen = true;
-            };
+        $scope.widgetState = {
+            doneLoading: false,
+            activeErrorMessageKey: null,
+            showTemplate: true
+        };
 
-            $scope.close = function() {
-                $scope.closeMsg = 'I was closed at: ' + new Date();
-                $scope.shouldBeOpen = false;
-            };
+        $scope.intygAvser = '';
+        $scope.intygAvserList = [];
 
-            $scope.opts = {
-                backdropFade: true,
-                dialogFade: true
-            };
-
-            $log.debug('Loading certificate ' + $routeParams.certificateId);
-
-            certService.getCertificate($routeParams.certificateId, function(result) {
-                $scope.doneLoading = true;
-                if (result !== null) {
-                    $scope.cert = result;
-                } else {
-                    // show error view
-                    $location.path('/fel');
+        $scope.$watch('cert.intygAvser.korkortstyp', function() {
+            if (!$scope.cert || !$scope.cert.intygAvser || !$scope.cert.intygAvser.korkortstyp) {
+                return;
+            }
+            angular.forEach($scope.cert.intygAvser.korkortstyp, function(key) {
+                if (key.selected) {
+                    this.push(key);
                 }
-            });
-        }
-    ];
+            }, $scope.intygAvserList);
+
+            for ( var i = 0; i < $scope.intygAvserList.length; i++) {
+                if (i < $scope.intygAvserList.length - 1) {
+                    $scope.intygAvser += $scope.intygAvserList[i].type + (', ');
+                } else {
+                    $scope.intygAvser += $scope.intygAvserList[i].type;
+                }
+            }
+        }, true);
+
+        // expose calculated static link for pdf download
+        $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $routeParams.certificateId + '/pdf';
+
+        $scope.certProperties = {
+            isSent: false,
+            isRevoked: false
+        };
+
+        CertificateService.getCertificate($routeParams.certificateId, function(result) {
+            $scope.widgetState.doneLoading = true;
+            if (result !== null && result !== '') {
+                $scope.cert = result.contents;
+                $rootScope.$emit('ts-diabetes.ViewCertCtrl.load', result.metaData);
+                $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'TS');
+                $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
+            } else {
+                $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
+            }
+        }, function(error) {
+            $scope.widgetState.doneLoading = true;
+            $log.debug('got error' + error.message);
+            if (error.errorCode === 'DATA_NOT_FOUND') {
+                $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
+            } else {
+                $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
+            }
+        });
+
+        /**
+         * Exposed scope interaction functions
+         */
+
+        $scope.send = function() {
+            $location.path('/ts-diabetes/recipients');
+        };
+    }];
 });

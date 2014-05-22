@@ -50,6 +50,60 @@ define(
                     'ts-diabetes.label.korkort.taxi': 'Taxi',
                     'ts-diabetes.label.korkort.annat': 'Annat',
 
+                    // Visa ts-diabetes
+
+                    'ts-diabetes.label.syn': '3. Synintyg',
+                    'ts-diabetes.label.ovrigkommentar': '5. Övrig kommentar',
+
+                    'ts-diabetes.label.syn.binokulart': 'Binokulärt',
+                    'ts-diabetes.label.syn.diplopi': 'd) Förekommer dubbelseende? ',
+                    'ts-diabetes.label.syn.progressivogonsjukdom': ' c) Har patienten någon progressiv ögonsjukdom?',
+
+                    'ts-diabetes.label.syn.separat-ogonlakarintyg': 'a) Ögonläkarintyg kommer att skickas in separat',
+                    'ts-diabetes.label.syn.synfaltsprovning-utan-anmarkning': 'b) Är synfältsprövning enligt Donders konfrontationsmetod utan anmärkning? ',
+                    'ts-diabetes.label.syn.synskarpa': 'c) Värden för synskärpa',
+
+                    'ts-diabetes.label.syn.hogeroga': '',
+                    'ts-diabetes.label.syn.vansteroga': '',
+                    'ts-diabetes.label.syn.utankorrektion': '',
+                    'ts-diabetes.label.syn.medkorrektion': '',
+                    'ts-diabetes.label.syn.kontaktlins': '',
+
+                    'ts-diabetes.label.diabetes.diabetestyp': 'Diabetestyp',
+                    'ts-diabetes.label.diabetes.diabetestyp.diabetes_typ_1': 'Diabetes Typ1',
+                    'ts-diabetes.label.diabetes.diabetestyp.diabetes_typ_2': 'Diabets Typ2',
+                    'ts-diabetes.label.diabetes.behandling': 'Behandling:',
+                    'ts-diabetes.label.diabetes.behandling.endast-kost': 'Endast kost',
+                    'ts-diabetes.label.diabetes.behandling.tabletter': 'Tabletter',
+                    'ts-diabetes.label.diabetes.behandling.insulin': 'Insulin',
+                    'ts-diabetes.label.diabetes.behandling.insulin-period': 'Insulin sedan: ',
+                    'ts-diabetes.label.diabetes.behandling.annan': 'Annan behandling',
+                    'ts-diabetes.label.diabetes.behandling.annan.period': 'Annan behandling, vilken? ',
+
+                    'ts-diabetes.label.hypoglykemier.har-patient-kannedom': 'a) Har patienten kunskap om lämpliga åtgärder vid hypoglykemi?',
+                    'ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion': 'b) Förekommer hypoglykemier med tecken på nedsatt hjärnfunktion (neuroglukopena symptom) som bedöms kunna innebära en trafiksäkerhetsrisk?',
+                    'ts-diabetes.label.hypoglykemier.saknar-formaga-kanna-varningstecken': 'c) Saknar patienten förmåga att känna varningstecken på hypoglykemi',
+
+                    'ts-diabetes.label.hypoglykemier.allvarlig-forekomst': 'd) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under det senaste året?',
+                    'ts-diabetes.label.hypoglykemier.allvarlig-forekomst.beskrivning': 'Hur många sådana episoder? ',
+
+                    'ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken': 'e) Har patienten haft allvarlig hypoglykemi i trafiken under det senaste året?',
+                    'ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning': 'Hur många sådana episoder och när inträffade de? ',
+
+                    'ts-diabetes.label.ovanstaende-har-bekraftats': 'Ovanstående uppgifter och bedömningar har bekräftats',
+                    'ts-diabetes.label.kontakt-info': 'Namnförtydligande, mottagningens adress och telefon',
+
+                    'ts-diabetes.label.bedomning-info-alt-1': 'Patienten uppfyller kraven enligt Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2) för:',
+                    'ts-diabetes.label.bedomning.kan-inte-ta-stallning': 'Kan inte ta ställning',
+                    'ts-diabetes.label.bedomning-info-undersokas-med-specialkompetens': 'Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i:',
+                    'ts-diabetes.label.bedomning-info-ej-angivet': 'Ej angivet',
+                    'ts-diabetes.label.bedomning.lamplighet-inneha': 'Om patienten söker behörighet C1, C1E, C, CE, D1, D1E, D, DE eller Taxi, är han eller hon lämplig att inneha sådan behörighet med hänsyn till de körningar och arbetsformer som är aktuella vid sådant innehav? (Se 6 kap. 16 §) ',
+
+                    'ts-diabetes.helptext.synfunktioner.a-c': 'Då någon av a - c besvarats med JA krävs ett läkarintyg från ögonspecialist.',
+                    'ts-diabetes.helptext.synfunktioner.8-dioptrier': 'Då högsta styrka i något av glasen överskrider 8 dioptrier besvarats med JA måste Intyg om korrektionsglasens styrka skickas in.',
+                    'ts-diabetes.helptext.diabetes.behandling': 'Vid tablett- eller insulinbehandlad diabetes krävs det att ett läkarintyg gällande sjukdomen skickas in.',
+                    'ts-diabetes.helptext.narkotika-lakemedel.provtagning': 'Om ja på ovanstående ska resultatet redovisas separat.',
+
                     // Help texts
                     'ts-diabetes.helptext.lakaren-ska-uppmarksamma': 'Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget skall utfärdas i enlighet med vad som sägs i 17 kap. och får inte vara äldre än två månader när det inkommer till Transportstyrelsen. Se: <a href="http://www.transportstyrelsen.se">http://www.transportstyrelsen.se</a>. Därefter "Väg" och "Trafikmedicin".',
                     'ts-diabetes.helptext.intyget-avser': 'AM = moped klass I, <br/> A1 = lätt motorcykel, <br/>A2 = mellanstor motorcykel, <br/> A = motorcykel, <br/>B = personbil och lätt lastbil, <br/>BE = personbil, lätt lastbil och ett eller flera släpfordon, <br/>C1 = medeltung lastbil och enbart ett lättsläpfordon, <br/>C1E = medeltung lastbil och ett eller flera släpfordon oavsett vikt, <br/>C = tung lastbil och enbart ett lätt släpfordon, <br/>CE = tung lastbil och ett eller flera släpfordon oavsett vikt, <br/>D1 = mellanstor buss, <br/>D1E = mellanstorbuss och ett eller flera släpfordon oavsett vikt, <br/>D = buss, <br/>DE = buss och enbart ett lätt släpfordon, <br/>E = tungt släpfordon, <br/>Taxi = taxiförarlegitimation <br/>',

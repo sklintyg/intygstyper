@@ -1,4 +1,4 @@
-define([], function() {
+define(['angular'], function(angular) {
     'use strict';
 
     return [ '$scope', '$filter', '$location', '$routeParams', 'CertificateService', 'listCertService', 'dialogService', '$log',
@@ -19,7 +19,7 @@ define([], function() {
                 };
 
                 $scope.send = function() {
-                    $location.path("/ts-diabetes/recipients");
+                    $location.path('/ts-diabetes/recipients');
                 };
 
                 $scope.opts = {
@@ -27,7 +27,7 @@ define([], function() {
                     dialogFade: true
                 };
 
-                $scope.intygAvser = "";
+                $scope.intygAvser = '';
                 $scope.intygAvserList = [];
 
                 $scope.$watch('cert.intygAvser.korkortstyp', function() {
@@ -58,24 +58,24 @@ define([], function() {
 
                 $scope.archiveSelected = function() {
                     var item = $scope.cert;
-                    $log.debug("archive " + item.id);
+                    $log.debug('archive ' + item.id);
                     $scope.dialog.acceptprogressdone = false;
                     listCertService.archiveCertificate(item, function(fromServer, oldItem) {
-                        $log.debug("statusUpdate callback:" + fromServer);
-                        if (fromServer != null) {
+                        $log.debug('statusUpdate callback:' + fromServer);
+                        if (fromServer !== null) {
                             // Better way to update the object?
                             oldItem.archived = fromServer.archived;
                             oldItem.status = fromServer.status;
                             oldItem.selected = false;
                             archiveDialog.close();
                             $scope.dialog.acceptprogressdone = true;
-                            $location.path("#/start");
+                            $location.path('#/start');
                         } else {
                             // show error view
-                            $location.path("/fel/couldnotarchivecert");
+                            $location.path('/fel/couldnotarchivecert');
                         }
                     });
-                }
+                };
 
                 // Archive dialog
                 $scope.certToArchive = {};
@@ -84,21 +84,21 @@ define([], function() {
                     $scope.certToArchive = cert;
                     $scope.dialog.focus = true;
                     archiveDialog = dialogService.showDialog($scope, {
-                        dialogId: "archive-confirmation-dialog",
-                        titleId: "inbox.archivemodal.header",
-                        bodyTextId: "inbox.archivemodal.text",
+                        dialogId: 'archive-confirmation-dialog',
+                        titleId: 'inbox.archivemodal.header',
+                        bodyTextId: 'inbox.archivemodal.text',
                         button1click: function() {
-                            $log.debug("archive");
+                            $log.debug('archive');
                             $scope.archiveSelected();
                         },
-                        button1id: "archive-button",
-                        button1text: "button.archive",
+                        button1id: 'archive-button',
+                        button1text: 'button.archive',
                         autoClose: false
                     });
-                }
+                };
 
                 // expose calculated static link for pdf download
-                $scope.downloadAsPdfLink = "/moduleapi/certificate/" + $routeParams.certificateId + "/pdf";
+                $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $routeParams.certificateId + '/pdf';
 
                 // Decide if helptext related to field 1.a) - 1.c)
                 $scope.achelptext = false;
@@ -114,18 +114,19 @@ define([], function() {
                         }
                     }
                     return result;
-                }
+                };
 
                 $scope.visibleStatuses = [ 'SENT' ];
 
                 $scope.userVisibleStatusFilter = function(status) {
                     for ( var i = 0; i < $scope.visibleStatuses.length; i++) {
-                        if (status.type == $scope.visibleStatuses[i]) {
+                        if (status.type === $scope.visibleStatuses[i]) {
                             return true;
                         }
                     }
                     return false;
-                }
+                };
+
                 certificateService.getCertificate($routeParams.certificateId, function(result) {
                     $scope.doneLoading = true;
                     if (result !== null) {
@@ -135,10 +136,10 @@ define([], function() {
 
                     } else {
                         // show error view
-                        $location.path("/visafel/certnotfound");
+                        $location.path('/visafel/certnotfound');
                     }
                 }, function(error) {
-                    $log.debug("got error");
+                    $log.debug('got error' + error);
                 });
             } ];
 });

@@ -1,91 +1,75 @@
 define(['angular'], function(angular) {
     'use strict';
 
-    return ['$scope', '$filter', '$location', 'CertificateService', '$http', '$routeParams', '$log',
-        function($scope, $filter, $location, CertificateService, http, $routeParams, $log) {
+    return ['$scope', '$rootScope', '$filter', '$location', 'CertificateService', '$http', '$routeParams', '$log',
+        'ManageCertView',
+        function($scope, $rootScope, $filter, $location, CertificateService, http, $routeParams, $log, ManageCertView) {
 
-        $scope.cert = {};
+            $scope.cert = {};
 
-        $scope.widgetState = {
-            doneLoading: false,
-            showTemplate: true
-        };
-        $scope.shouldBeOpen = false;
+            $scope.widgetState = {
+                doneLoading: false,
+                activeErrorMessageKey: null,
+                showTemplate: true
+            };
 
-        $scope.intygAvser = '';
-        $scope.intygAvserList = [];
+            $scope.intygAvser = '';
+            $scope.intygAvserList = [];
 
-        $scope.$watch('cert.intygAvser.korkortstyp', function() {
-            if (!$scope.cert || !$scope.cert.intygAvser || !$scope.cert.intygAvser.korkortstyp) {
-                return;
-            }
-            angular.forEach($scope.cert.intygAvser.korkortstyp, function(key) {
-                if (key.selected) {
-                    this.push(key);
+            $scope.$watch('cert.intygAvser.korkortstyp', function() {
+                if (!$scope.cert || !$scope.cert.intygAvser || !$scope.cert.intygAvser.korkortstyp) {
+                    return;
                 }
-            }, $scope.intygAvserList );
+                angular.forEach($scope.cert.intygAvser.korkortstyp, function(key) {
+                    if (key.selected) {
+                        this.push(key);
+                    }
+                }, $scope.intygAvserList);
 
-            for (var i = 0; i < $scope.intygAvserList.length; i++) {
-                if (i < $scope.intygAvserList.length-1) {
-                    $scope.intygAvser += $scope.intygAvserList[i].type + (', ');
+                for (var i = 0; i < $scope.intygAvserList.length; i++) {
+                    if (i < $scope.intygAvserList.length - 1) {
+                        $scope.intygAvser += $scope.intygAvserList[i].type + (', ');
+                    }
+                    else {
+                        $scope.intygAvser += $scope.intygAvserList[i].type;
+                    }
                 }
-                else {
-                    $scope.intygAvser += $scope.intygAvserList[i].type;
+            }, true);
+
+            // expose calculated static link for pdf download
+            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $routeParams.certificateId + '/pdf';
+
+            // Decide if helptext related to field 1.a) - 1.c)
+            $scope.achelptext = false;
+
+            $scope.certProperties = {
+                isSent: false,
+                isRevoked: false
+            };
+
+            CertificateService.getCertificate($routeParams.certificateId, function(result) {
+                $scope.widgetState.doneLoading = true;
+                if (result !== null) {
+                    $scope.cert = result.contents;
+                    if ($scope.cert.syn.synfaltsdefekter === true || $scope.cert.syn.nattblindhet === true ||
+                        $scope.cert.syn.progressivOgonsjukdom === true) {
+                        $scope.achelptext = true;
+                    }
+                    $rootScope.$emit('ts-bas.ViewCertCtrl.load', result.metaData);
+                    $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'TS');
+                    $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
+                } else {
+                    $log.debug('Got error while loading cert - invalid data');
+                    $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
                 }
-            }
-        }, true);
-
-        // expose calculated static link for pdf download
-        $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $routeParams.certificateId + '/pdf';
-
-        // Decide if helptext related to field 1.a) - 1.c)
-        $scope.achelptext = false;
-
-        $scope.filterStatuses = function(statuses) {
-            var result = [];
-            if (!angular.isObject(statuses)) {
-                return result;
-            }
-            for ( var i = 0; i < statuses.length; i++) {
-                if ($scope.userVisibleStatusFilter(statuses[i])) {
-                    result.push(statuses[i]);
+            }, function(error) {
+                $scope.widgetState.doneLoading = true;
+                $log.debug('Got error while loading cert: ' + error.message);
+                if (error.errorCode === 'DATA_NOT_FOUND') {
+                    $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
+                } else {
+                    $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
                 }
-            }
-            return result;
-        };
-
-        $scope.visibleStatuses = [ 'SENT' ];
-
-        $scope.userVisibleStatusFilter = function(status) {
-            for ( var i = 0; i < $scope.visibleStatuses.length; i++) {
-                if (status.type === $scope.visibleStatuses[i]) {
-                    return true;
-                }
-            }
-            return false;
-        };
-
-        CertificateService.getCertificate($routeParams.certificateId, function(result) {
-            $scope.widgetState.doneLoading = true;
-            if (result !== null) {
-                $scope.cert = result.contents;
-                $scope.cert.status = $scope.filterStatuses(result.metaData.statuses);
-                if ($scope.cert.syn.synfaltsdefekter === true || $scope.cert.syn.nattblindhet === true ||
-                    $scope.cert.syn.progressivOgonsjukdom === true) {
-                    $scope.achelptext = true;
-                }
-            } else {
-                $scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';
-            }
-        }, function(error) {
-            $scope.widgetState.doneLoading = true;
-            if (error.errorCode === 'DATA_NOT_FOUND') {
-                $scope.widgetState.activeErrorMessageKey = 'error.data_not_found';
-            } else {
-                $scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';
-            }
-            $log.debug('Got error while loading cert');
-            $log.debug(error.message);
-        });
-    }];
+            });
+        }];
 });

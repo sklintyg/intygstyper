@@ -262,10 +262,10 @@ define([
                     }
                 }
 
-                function _isSentToFK(statusArr) {
+                function _isSentToTarget(statusArr, target) {
                     if (statusArr) {
                         for (var i = 0; i < statusArr.length; i++) {
-                            if (statusArr[i].target === 'FK' && statusArr[i].type === 'SENT') {
+                            if (statusArr[i].target === target && statusArr[i].type === 'SENT') {
                                 return true;
                             }
                         }
@@ -292,7 +292,7 @@ define([
                     discard: _discard,
                     signera: signera,
                     isRevoked: _isRevoked,
-                    isSentToFK: _isSentToFK,
+                    isSentToTarget: _isSentToTarget,
 
                     __test__: {
                         confirmSignera: _confirmSignera,

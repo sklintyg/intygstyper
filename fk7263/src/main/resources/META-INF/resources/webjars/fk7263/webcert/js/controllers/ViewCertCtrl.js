@@ -4,6 +4,9 @@ define([], function() {
     return ['$scope', '$rootScope', '$filter', '$location', 'CertificateService', '$http', '$routeParams', '$log', 'ManageCertView',
         function($scope, $rootScope, $filter, $location, CertificateService, http, $routeParams, $log, ManageCertView) {
 
+        $scope.cert = {};
+        $scope.cert.filledAlways = true;
+
         // init state
         $scope.widgetState = {
             doneLoading: false,
@@ -11,37 +14,18 @@ define([], function() {
             showTemplate: true
         };
 
-        $scope.cert = {};
-        $scope.shouldBeOpen = false;
-        $scope.cert.filledAlways = true;
-
-        $scope.open = function() {
-            $scope.shouldBeOpen = true;
-        };
-
-        $scope.close = function() {
-            $scope.closeMsg = 'I was closed at: ' + new Date();
-            $scope.shouldBeOpen = false;
-        };
-
-        $scope.opts = {
-            backdropFade: true,
-            dialogFade: true
-        };
-
-        $log.debug('Loading certificate ' + $routeParams.certificateId);
-
         $scope.certProperties = {
-            sentToFK: false,
+            isSent: false,
             isRevoked: false
         };
 
+        $log.debug('Loading certificate ' + $routeParams.certificateId);
         CertificateService.getCertificate($routeParams.certificateId, function(result) {
             $scope.widgetState.doneLoading = true;
             if (result !== null && result !== '') {
                 $scope.cert = result.contents;
                 $rootScope.$emit('fk7263.ViewCertCtrl.load', result.metaData);
-                $scope.certProperties.sentToFK = ManageCertView.isSentToFK(result.metaData.statuses);
+                $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'FK');
                 $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
 
                 $scope.pdfUrl = '/moduleapi/intyg/signed/' + $scope.cert.id + '/pdf';
