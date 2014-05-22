@@ -461,9 +461,7 @@ public class InternalToExternalConverter {
      */
     private Fk7263Patient buildExternalPatient(Fk7263Intyg source) {
         Fk7263Patient patient = new Fk7263Patient();
-
         patient.setEfternamn(source.getPatientNamn());
-        patient.getFornamn().add("");
         patient.setId(new Id(PERS_ID_ROOT, source.getPatientPersonnummer()));
         buildPatientSysselsattningar(patient, source);
 
