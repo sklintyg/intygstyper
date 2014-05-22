@@ -330,7 +330,7 @@ public class InternalToExternalConverter {
             hypoglykemiVakenTid.setObservationskod(CodeConverter
                     .toKod(ObservationsKod.ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND));
             hypoglykemiVakenTid.setForekomst(source.getHypoglykemier().getAllvarligForekomstVakenTid());
-
+            
             hypoglykemiVakenTid.setObservationstid(createLocalDateTimeFromString(source.getHypoglykemier()
                     .getAllvarligForekomstVakenTidObservationstid()));
 
@@ -343,10 +343,15 @@ public class InternalToExternalConverter {
 
         return observationer;
     }
-
+    
     private LocalDateTime createLocalDateTimeFromString(String timeString) {
-        LocalDate localDate = LocalDate.parse(timeString);
-        return localDate.toLocalDateTime(LocalTime.MIDNIGHT);
+        try {
+            LocalDate localDate = LocalDate.parse(timeString);
+            return localDate.toLocalDateTime(LocalTime.MIDNIGHT);
+        } catch (Exception e) {
+            // Unable to create LocalDate returning null
+            return null;
+        }
     }
 
     /**
