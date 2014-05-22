@@ -57,12 +57,12 @@ define([], function() {
         });
 
         $scope.certProperties = {
-            sentToFK: false,
+            isSent: false,
             isRevoked: false
         };
 
         var unbindFastEvent = $rootScope.$on('fk7263.ViewCertCtrl.load', function(event, metaData){
-            $scope.certProperties.sentToFK = ManageCertView.isSentToFK(metaData.statuses);
+            $scope.certProperties.isSent = ManageCertView.isSentToTarget(metaData.statuses, 'FK');
             $scope.certProperties.isRevoked = ManageCertView.isRevoked(metaData.statuses);
         });
         $scope.$on('$destroy', unbindFastEvent);
