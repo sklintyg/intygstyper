@@ -308,8 +308,8 @@ define([ 'angular', 'text!./wcField.html' ], function(angular, wcFieldTemplate) 
 
                 $scope.filled = $scope.$eval($scope.filled);
 
-                if ($scope.fieldNumber === null || $scope.fieldNumber === undefined) {
-                    $scope.fieldNumber = '';
+                if ($scope.fieldNumber === null) {
+                    $scope.fieldNumber = undefined;
                 }
 
                 if ($scope.fieldTooltipPlacement === undefined) {
