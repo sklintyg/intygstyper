@@ -2,14 +2,15 @@ define([
     'angular',
     'rli/webcert/js/controllers',
     'rli/webcert/js/messages',
-    'rli/webcert/js/services',
-    'rli/webcert/js/directives'
-], function(angular, controllers, messages, services, directives) {
+    'common/js/webcert/CertificateService',
+    'common/js/webcert/ManageCertView',
+    'common/js/webcert/eyeDecimal'
+], function(angular, controllers, messages, wcCertificateService, wcManageCertView, eyeDecimal) {
     'use strict';
 
     var moduleName = 'rli';
 
-    var module = angular.module(moduleName, [controllers, services, directives]);
+    var module = angular.module(moduleName, [controllers,  wcCertificateService, wcManageCertView, eyeDecimal]);
 
     module.config(['$routeProvider', function($routeProvider) {
         $routeProvider.
