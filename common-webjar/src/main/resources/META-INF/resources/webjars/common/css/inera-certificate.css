@@ -412,7 +412,7 @@ input[datepicker-popup] {
     left: 0;
 }
 
-.fade-hide.fade-hide-active {
+.fade-hide .fade-hide-active {
     opacity: 0;
     max-width: 500px;
     left: 100px;
@@ -424,7 +424,7 @@ input[datepicker-popup] {
     left: 100px;
 }
 
-.fade-show.fade-show-active {
+.fade-show .fade-show-active {
     opacity: 1;
     max-width: 800px;
     left: 0;
@@ -443,7 +443,7 @@ input[datepicker-popup] {
     max-height: 800px;
 }
 
-.collapse-hide.collapse-hide-active {
+.collapse-hide .collapse-hide-active {
     opacity: 0.5;
     max-height: 0;
 }

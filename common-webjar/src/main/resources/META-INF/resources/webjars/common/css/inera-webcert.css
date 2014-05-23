@@ -1,3 +1,4 @@
+@CHARSET "UTF-8";
 /**
  * Copyright (C) 2013 Inera AB (http://www.inera.se)
  *
@@ -16,7 +17,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-@CHARSET "UTF-8";
 
 html, body, .container-fluid {
     font-size: 14px;
@@ -213,7 +213,6 @@ div.headerbox-user-profile {
 }
 
 .settings {
-    /*padding: 28px 0 0 28px;*/
     display: block;
     width: 40px;
     height: 34px;
@@ -265,7 +264,7 @@ div.headerbox-user-profile {
     white-space: nowrap;
 }
 
-.btn-info, .btn-info[disabled] {
+.btn-info, .btn-info[disabled]{
     font-weight: bold;
     background: none;
     background-color: #28b4c4;
@@ -290,11 +289,6 @@ div.headerbox-user-profile {
 .btn-info[disabled]:hover {
     cursor: auto;
     background-color: #28b4c4;
-    /*  opacity: .5; /* Standards Compliant Browsers */
-    /*filter: alpha(opacity=50);*/
-    /* IE 7 and Earlier */
-    /*  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-      filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);*/
 }
 
 .btn-link {
@@ -330,13 +324,6 @@ button.btn-link-minimal {
 .buttonbar .btn-inverse {
     padding: 7px 15px;
 }
-
-/*
-.btn-block {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-*/
 
 .dropdown-menu {
     padding: 5px 5px;
@@ -374,7 +361,6 @@ input[datepicker-popup] {
     margin: 0;
     min-height: 0;
     padding: 0;
-/ / padding-left : 30 px;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
@@ -419,26 +405,28 @@ input[datepicker-popup] {
 
 .nav-pills.nav-stacked > li > a {
     border: 1px solid #ddd;
-    border-radius: 0;
     -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
 }
 
 .nav-pills.nav-stacked > li:last-child > a {
     -webkit-border-bottom-right-radius: 4px;
-    border-bottom-right-radius: 4px;
     -webkit-border-bottom-left-radius: 4px;
-    border-bottom-left-radius: 4px;
     -moz-border-radius-bottomright: 4px;
     -moz-border-radius-bottomleft: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
 }
 
 .nav-pills.nav-stacked > li:first-child > a {
     -webkit-border-top-right-radius: 4px;
-    border-top-right-radius: 4px;
     -webkit-border-top-left-radius: 4px;
-    border-top-left-radius: 4px;
     -moz-border-radius-topright: 4px;
     -moz-border-radius-topleft: 4px;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
 }
 
 .nav-pills.nav-stacked > li + li {
@@ -621,7 +609,7 @@ input[datepicker-popup] .btn-block {
     -webkit-border-radius: 50%;
     border-radius: 50%;
     color: #fff;
-    padding: 0px 6px 0px 6px;
+    padding: 0 6px 0 6px;
     font-size: 10px;
     font-weight: bold;
     position: absolute;
@@ -668,18 +656,6 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
 }
-
-/*
- Responsive fixes
-*/
-
-/*
-@media (max-width: 979px) {
-  span.headerbox-date {
-    padding: 10px 0 0 30px;
-    width: 100%;
-  }
-}*/
 
 /**
  Webcert elements
@@ -816,7 +792,7 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
 .webcert-col-secondary {
     position: relative;
     background-color: #f2f2f2;
-    padding: 0px 15px 30px 30px;
+    padding: 0 15px 30px 30px;
     min-height: 832px !important;
 }
 
@@ -836,8 +812,6 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
 
 .webcert-col-section {
     border-top: 1px solid #CCC;
-    /*margin-top: 20px;
-    padding-top: 12px;*/
 }
 
 .webcert-bottom-padding-section {
@@ -892,11 +866,6 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
     border-radius: 3px 3px 0 0;
 }
 
-/*
-.table-qa td.table-qa-nostyle {
-	background:none;
-}*/
-
 .table-qa .btn-info, .table-qa .btn-secondary, .table-qa .btn-success, .qa-panel .btn-info {
     padding: 7px 15px;
     min-width: 50px;
@@ -910,16 +879,14 @@ input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:fo
     white-space: nowrap;
 }
 
-/* needed?
-.table th:last-child, .table td:last-child {
-  text-align: center;
-}*/
+.qa-unit:focus {
+    outline: none;
+}
 
 .qa-unit {
     color: #323232;
     text-align: left;
     border: 0;
-    outline: none;
     display: block;
     width: 100%;
     min-width: 400px;
@@ -990,10 +957,6 @@ body span:hover.qa-unit-selected {
     color: #fff;
 }
 
-.qa-circle-inactive {
-
-}
-
 .qa-filter-panel {
     -webkit-border-radius: 0 5px 5px 5px;
     -moz-border-radius: 0 5px 5px 5px;
@@ -1007,27 +970,6 @@ body span:hover.qa-unit-selected {
     padding: 10px;
 }
 
-/*
-.qa-filter-panel label {
-    display: inline-block;
-    font-size: 12px;
-    padding-right: 10px;
-    padding-top: 5px;
-}
-
-.qa-filter-panel .control-label {
-    font-size: 12px;
-    width: 120px;
-}
-
-.qa-filter-panel .form-group {
-    margin-bottom: 7px;
-}
-
-.qa-filter-panel .controls {
-    margin-left: 140px;
-}
-*/
 #query-count {
     padding: 10px 0 20px 0;
 }
