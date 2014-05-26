@@ -137,13 +137,16 @@ define([], function() {
             'ts-bas.common.cancel': 'Avbryt',
 
             'ts-button.detail.send': 'Skicka',
-            'ts-bas.label.pageingress' : 'Här ser du den fullständiga informationen i ditt intyg. På denna sida kan du hantera ditt intyg med hjälp av olika funktioner.',
-            'ts-bas.label.pagedescription': '<p>Här kan du läsa ditt intyg och skicka det elektroniskt till Transportstyrelsen.</p> <p>För att skicka intyget till Transportstyrelsen så klickar du på Skicka.</p> <p>Vill du spara eller skriva ut ditt intyg så väljer du Ladda ner / Skriv ut. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut</p>',
-
+            'ts-bas.label.pageingress' : 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Transportstyrelsen, du kan även skriva ut eller spara intyget.<br>',
+            'ts-bas.label.pagedescription.sendcertificate.header' : '<h2>Skicka intyg</h2>',
+            'ts-bas.label.pagedescription.sendcertificate': 'Klicka på knappen Skicka för att skicka intyget elektroniskt till Transportstyrelsen.',
+            'ts-bas.label.pagedescription.save.or.print.certificate.header' : '<h2>Spara eller skriva ut</h2>',
+            'ts-bas.label.pagedescription.save.or.print.certificate' : 'Klicka på knappen Ladda ner/Skriv ut för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
             'ts-bas.label.pagedescription.error.in.certificate.header': '<h2>Fel i intyget?</h2>',
             'ts-bas.label.pagedescription.error.in.certificate': 'Om någon uppgift är fel i läkarintyget så ska du kontakta den som utfärdat ditt läkarintyg.',
-            'ts-bas.label.status.false': '<span class="glyphicon glyphicon-chevron-up"></span><a> Dölj information</a>',
-            'ts-bas.label.status.true': '<span class="glyphicon glyphicon-chevron-down"></span><a> Visa information</a>',
+            
+            'ts-bas.label.status.false': '<span class="glyphicon glyphicon-chevron-up"></span><a> Visa mindre</a>',
+            'ts-bas.label.status.true': '<span class="glyphicon glyphicon-chevron-down"></span><a> Visa mer</a>',
             'ts-bas.label.showevents.false': '<span class="glyphicon glyphicon-chevron-up"></span><a> Visa färre händelser</a>',
             'ts-bas.label.showevents.true': '<span class="glyphicon glyphicon-chevron-down"></span><a> Visa alla händelser</a>',
             'ts-bas.label.patientname': 'Patientens namn:',
@@ -158,7 +161,7 @@ define([], function() {
             'ts-bas.button.goback': 'Tillbaka',
             'ts-bas.button.cancel': 'Avbryt',
             'ts-bas.error.generic': 'Kunde inte visa intyget',
-            'ts-bas.label.latestevent': 'Senaste händelsen med intyget',
+            'ts-bas.label.latestevent': 'Senaste händelse',
             'ts-bas.label.latestevent.noevents': 'Inga händelser',
             'ts-bas.label.latestevent.showall': 'Visa alla händelser',
             'ts-bas.history.label.pagetitle': 'Intygets alla händelser',
@@ -176,7 +179,8 @@ define([], function() {
             'ts-bas.label.bedomning.kan-inte-ta-stallning': 'Kan inte ta ställning',
             'ts-bas.label.bedomning-info-undersokas-med-specialkompetens': 'Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i:',
             'ts-bas.label.bedomning-info-ej-angivet': 'Ej angivet',
-
+            'ts-bas.helptext.readpdfhelp' : '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank">Adobe Reader</a>.',
+            
             //Helptexts
 
             'ts-bas.helptext.synfunktioner.a-c': 'Då någon av a - c besvarats med JA krävs ett läkarintyg från ögonspecialist.',
