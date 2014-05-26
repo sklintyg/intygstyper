@@ -1,12 +1,12 @@
 {
     "id": {
-        "root": "???",
+        "root": "1.2.752.129.2.1.2.1",
         "extension": "d53c377e-4103-47f5-9f90-5e1bbd874466"
     },
     "typ": {
         "codeSystem": "f6fb361a-e31d-48b8-8657-99b63912dd9b",
         "codeSystemName": "kv_utl\u00e5tandetyp_intyg",
-        "code": "RLI"
+        "code": "rli"
     },
     "signeringsdatum": "2013-08-12T15:57:00.000",
     "skickatdatum": "2013-08-12T16:01:30.000",

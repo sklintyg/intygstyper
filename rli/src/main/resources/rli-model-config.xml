@@ -23,10 +23,10 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-  <bean id="objectMapper"
+  <bean id="rli-objectMapper"
     class="se.inera.certificate.integration.json.CustomObjectMapper" />
 
-  <bean id="rliJaxbContext" class="javax.xml.bind.JAXBContext" factory-method="newInstance">
+  <bean id="rli-jaxbContext" class="javax.xml.bind.JAXBContext" factory-method="newInstance">
     <constructor-arg type="java.lang.String" value="iso.v21090.dt.v1:se.inera.certificate.rli.model.ext.v1:se.inera.certificate.rli.model.v1" />
   </bean>
 

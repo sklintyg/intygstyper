@@ -31,6 +31,7 @@ import javax.xml.bind.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.rli.model.converter.ConverterException;
@@ -93,9 +94,11 @@ public class ModuleService implements ModuleApi {
     private WebcertModelFactory webcertModelFactory;
 
     @Autowired
+    @Qualifier("rli-jaxbContext")
     private JAXBContext jaxbContext;
 
     @Autowired
+    @Qualifier("rli-objectMapper")
     private ObjectMapper objectMapper;
 
     /**

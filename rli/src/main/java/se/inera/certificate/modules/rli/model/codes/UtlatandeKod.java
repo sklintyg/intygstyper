@@ -26,7 +26,7 @@ import se.inera.certificate.model.Kod;
 public enum UtlatandeKod implements CodeSystem {
 
     /** Intyg vid avbeställd resa (RLI). */
-    IVAR("RLI", "Intyg vid avbeställd resa");
+    IVAR("rli", "Intyg vid avbeställd resa");
 
     private static String codeSystemName = "kv_utlåtandetyp_intyg";
 

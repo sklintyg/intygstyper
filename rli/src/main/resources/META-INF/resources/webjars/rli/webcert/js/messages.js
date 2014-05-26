@@ -21,7 +21,7 @@ define([], function() {
 
     return {
         'sv': {
-            'view.label.certtitle': 'Läkarintyg vid avbeställd resa',
+            'rli.label.certtitle': 'Läkarintyg vid avbeställd resa',
 
             //Labels
             'rli.label.empty': '',

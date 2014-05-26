@@ -83,7 +83,13 @@ public class PdfGenerator {
 
     private static final String DATEFORMAT_FOR_FILENAMES = "yyMMdd";
     private static final String DATE_FORMAT = "yyyy-MM-dd";
+    
+    private final boolean formFlattening;
 
+    public PdfGenerator(boolean formFlattening) {
+        this.formFlattening = formFlattening;
+    }
+    
     public String generatePdfFilename(Utlatande utlatande) {
         String personId = utlatande.getPatient().getPersonid();
         String dateOfReservation = utlatande.getArrangemang().getBokningsdatum();
@@ -100,7 +106,7 @@ public class PdfGenerator {
 
             PdfReader pdfReader = new PdfReader("pdf/" + type + "_blankett.pdf");
             PdfStamper pdfStamper = new PdfStamper(pdfReader, outputStream);
-            pdfStamper.setFormFlattening(true);
+            pdfStamper.setFormFlattening(formFlattening);
             AcroFields fields = pdfStamper.getAcroFields();
             populatePdfFields(utlatande, fields);
             pdfStamper.close();

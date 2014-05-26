@@ -35,7 +35,7 @@ public class PdfGeneratorTest {
     private PdfGenerator pdfGen;
 
     public PdfGeneratorTest() {
-        pdfGen = new PdfGenerator();
+        pdfGen = new PdfGenerator(false);
     }
 
     @Test

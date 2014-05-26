@@ -1,114 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (C) 2013 Inera AB (http://www.inera.se) This file is part 
-  of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules). 
-  Inera Certificate Modules is free software: you can redistribute it and/or 
-  modify it under the terms of the GNU Affero General Public License as published 
-  by the Free Software Foundation, either version 3 of the License, or (at 
-  your option) any later version. Inera Certificate Modules is distributed 
-  in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even 
-  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
-  See the GNU Affero General Public License for more details. You should have 
-  received a copy of the GNU Affero General Public License along with this 
-  program. If not, see <http://www.gnu.org/licenses/>. -->
-<utlatande xmlns="urn:riv:clinicalprocess:healthcond:certificate:1"
-  xmlns:rli="urn:intyg:rli:model:ext:1">
+<p:utlatande xmlns:p="urn:riv:clinicalprocess:healthcond:certificate:1"
+  xmlns:rli="urn:riv:clinicalprocess:healthcond:certificate:rli:1">
 
-  <utlatande-id root="???" extension="d53c377e-4103-47f5-9f90-5e1bbd874466" />
-  <typAvUtlatande code="RLI"
+  <p:utlatande-id root="1.2.752.129.2.1.2.1" extension="d53c377e-4103-47f5-9f90-5e1bbd874466" />
+  <p:typAvUtlatande code="rli"
     codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b" codeSystemName="kv_utlåtandetyp_intyg" />
 
-  <kommentar>En ytterligare upplysning</kommentar>
+  <p:kommentar>En ytterligare upplysning</p:kommentar>
 
-  <signeringsdatum>2013-08-12T15:57:00</signeringsdatum>
-  <skickatdatum>2013-08-12T16:01:30</skickatdatum>
+  <p:signeringsdatum>2013-08-12T15:57:00</p:signeringsdatum>
+  <p:skickatdatum>2013-08-12T16:01:30</p:skickatdatum>
 
-  <patient>
-    <person-id root="1.2.752.129.2.1.3.1" extension="19331122-4400" />
-    <fornamn>Johny</fornamn>
-    <efternamn>Appleseed</efternamn>
-    <postadress>Testvägen 1</postadress>
-    <postnummer>150 21</postnummer>
-    <postort>Testo</postort>
-  </patient>
+  <p:patient>
+    <p:person-id root="1.2.752.129.2.1.3.1" extension="19331122-4400" />
+    <p:fornamn>Johny</p:fornamn>
+    <p:efternamn>Appleseed</p:efternamn>
+    <p:postadress>Testvägen 1</p:postadress>
+    <p:postnummer>150 21</p:postnummer>
+    <p:postort>Testo</p:postort>
+  </p:patient>
 
-  <skapadAv>
-    <personal-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-ABC123" />
-    <fullstandigtNamn>Doktor Alban</fullstandigtNamn>
+  <p:skapadAv>
+    <p:personal-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-ABC123" />
+    <p:fullstandigtNamn>Doktor Alban</p:fullstandigtNamn>
 
-    <enhet>
-      <enhets-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-1337" />
-      <enhetsnamn>Testenheten</enhetsnamn>
-      <postadress>Teststigen 12</postadress>
-      <postnummer>12345</postnummer>
-      <postort>Tolvberga</postort>
-      <telefonnummer>012-345678</telefonnummer>
-      <epost>ingen@alls.se</epost>
-      <vardgivare>
+    <p:enhet>
+      <p:enhets-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-1337" />
+      <p:enhetsnamn>Testenheten</p:enhetsnamn>
+      <p:postadress>Teststigen 12</p:postadress>
+      <p:postnummer>12345</p:postnummer>
+      <p:postort>Tolvberga</p:postort>
+      <p:telefonnummer>012-345678</p:telefonnummer>
+      <p:epost>ingen@alls.se</p:epost>
+      <p:vardgivare>
         <vardgivare-id root="1.2.752.129.2.1.4.1"
           extension="SE0000000000-h4xx" />
-        <vardgivarnamn>Testvårdgivaren</vardgivarnamn>
-      </vardgivare>
-    </enhet>
-  </skapadAv>
+        <p:vardgivarnamn>Testvårdgivaren</p:vardgivarnamn>
+      </p:vardgivare>
+    </p:enhet>
+  </p:skapadAv>
 
-  <aktivitet>
-    <aktivitetskod code="AKT13"
+  <p:aktivitet>
+    <p:aktivitetskod code="AKT13"
       codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a" codeSystemName="kv_aktiviteter_intyg" />
-    <aktivitetstid>
-      <from>2010-01-01</from>
-      <tom>2010-01-01</tom>
-    </aktivitetstid>
+    <p:aktivitetstid>
+      <p:from>2010-01-01</p:from>
+      <p:tom>2010-01-01</p:tom>
+    </p:aktivitetstid>
 
-    <beskrivsAv>
-      <utforartyp code="116154003" codeSystem="1.2.752.116.2.1.1.1"
+    <p:beskrivsAv>
+      <p:utforartyp code="116154003" codeSystem="1.2.752.116.2.1.1.1"
         codeSystemName="SNOMED-CT" />
-    </beskrivsAv>
+    </p:beskrivsAv>
 
     <rli:plats>Vårdcentralen västernorrland</rli:plats>
-  </aktivitet>
+  </p:aktivitet>
 
-  <aktivitet>
+  <p:aktivitet>
     <!-- displayName="klinisk undersökning UNS" -->
-    <aktivitetskod code="AV020" codeSystem="1.2.752.116.1.3.2.1.4"
+    <p:aktivitetskod code="AV020" codeSystem="1.2.752.116.1.3.2.1.4"
       codeSystemName="KVÅ" />
-    <aktivitetstid>
-      <from>2013-08-12</from>
-      <tom>2013-08-12</tom>
-    </aktivitetstid>
+    <p:aktivitetstid>
+      <p:from>2013-08-12</p:from>
+      <p:tom>2013-08-12</p:tom>
+    </p:aktivitetstid>
 
-    <utforsVidEnhet>
-      <enhets-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-1337" />
-      <enhetsnamn>Testenheten</enhetsnamn>
-      <postadress>Teststigen 12</postadress>
-      <postnummer>12345</postnummer>
-      <postort>Tolvberga</postort>
-      <telefonnummer>012-345678</telefonnummer>
-      <epost>ingen@alls.se</epost>
-      <vardgivare>
-        <vardgivare-id root="1.2.752.129.2.1.4.1"
+    <p:utforsVidEnhet>
+      <p:enhets-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-1337" />
+      <p:enhetsnamn>Testenheten</p:enhetsnamn>
+      <p:postadress>Teststigen 12</p:postadress>
+      <p:postnummer>12345</p:postnummer>
+      <p:postort>Tolvberga</p:postort>
+      <p:telefonnummer>012-345678</p:telefonnummer>
+      <p:epost>ingen@alls.se</p:epost>
+      <p:vardgivare>
+        <p:vardgivare-id root="1.2.752.129.2.1.4.1"
           extension="SE0000000000-h4xx" />
-        <vardgivarnamn>Testvårdgivaren</vardgivarnamn>
-      </vardgivare>
-    </utforsVidEnhet>
-  </aktivitet>
+        <p:vardgivarnamn>Testvårdgivaren</p:vardgivarnamn>
+      </p:vardgivare>
+    </p:utforsVidEnhet>
+  </p:aktivitet>
 
-  <rekommendation>
-    <rekommendationskod code="REK2"
+  <p:rekommendation>
+    <p:rekommendationskod code="REK2"
       codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
-    <sjukdomskannedom code="SJK4"
+    <p:sjukdomskannedom code="SJK4"
       codeSystem="f3a556c4-d54b-4f67-8496-d5259df70493" codeSystemName="kv_sjukdomskännedom_intyg" />
-  </rekommendation>
+  </p:rekommendation>
 
-  <observation>
+  <p:observation>
     <!-- displayName="Sjukdom" -->
-    <observationskod code="39104002" codeSystem="1.2.752.116.2.1.1.1"
+    <p:observationskod code="39104002" codeSystem="1.2.752.116.2.1.1.1"
       codeSystemName="SNOMED-CT" />
-  </observation>
+  </p:observation>
 
   <rli:arrangemang>
     <rli:bokningsdatum>2013-01-01</rli:bokningsdatum>
     <rli:arrangemangstid>
-      <from>2013-07-22</from>
+      <p:from>2013-07-22</p:from>
     </rli:arrangemangstid>
     <rli:avbestallningsdatum>2013-08-10</rli:avbestallningsdatum>
     <rli:arrangemangstyp code="420008001"
@@ -116,4 +105,4 @@
     <rli:plats>New York</rli:plats>
   </rli:arrangemang>
 
-</utlatande>
+</p:utlatande>

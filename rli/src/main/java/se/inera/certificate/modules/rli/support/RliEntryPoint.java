@@ -14,22 +14,22 @@ public class RliEntryPoint implements ModuleEntryPoint {
 
     @Override
     public String getModuleId() {
-        return "ts-diabetes";
+        return "rli";
     }
 
     @Override
     public String getModuleName() {
-        return "Transportstyrelsens läkarintyg, diabetes";
+        return "Intyg vid avbeställd resa";
     }
 
     @Override
     public String getModuleDescription() {
-        return "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.";
+        return "Intyg vid avbeställd resa";
     }
 
     @Override
     public String getDefaultRecieverLogicalAddress() {
-        return null;
+        return "TS";
     }
 
     @Override

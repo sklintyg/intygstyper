@@ -31,6 +31,7 @@
 
 
   <bean class="se.inera.certificate.modules.rli.pdf.PdfGenerator">
+    <constructor-arg value="true" />
   </bean>
 
   <bean

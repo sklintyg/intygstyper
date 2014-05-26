@@ -16,42 +16,54 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-'use strict';
+define([
+        'angular',
+        'services',
+        'rli/intyg/js/controllers',
+        'rli/intyg/js/messages',
+        'common/js/minaintyg/CertificateService',
+        'common/js/filters'
+    ], function(angular, miServices, controllers, messages, miCertificateService, filters) {
+        'use strict';
 
-/* App Module */
-/*
- * Cant seem to inject rootscope in .config, so for routing parameters, we use
- * the global JS config object for now
- */
-var RLIApp = angular.module('RLIViewCertApp',
-    [ 'ui.bootstrap', 'services.certService', 'controllers.rli.ViewCertCtrl', 'directives.mi',
-        'modules.messages' ]).config([ '$routeProvider', function($routeProvider) {
-        $routeProvider.when('/view', {
-            templateUrl: MODULE_CONFIG.MODULE_CONTEXT_PATH + '/intyg/views/view-cert.html',
-            controller: 'ViewCertCtrl',
-            title: 'Reseläkarintyg'
-        }).when('/fel', {
-            templateUrl: MODULE_CONFIG.MODULE_CONTEXT_PATH + '/intyg/views/error.html'
-            // no Controller needed?
-        }).otherwise({
-            redirectTo: '/view'
-        });
-    } ]);
+        var moduleName = 'rli';
 
-RLIApp.run([ '$rootScope', '$route', 'messageService', function($rootScope, $route, messageService) {
-    $rootScope.lang = 'sv';
-    $rootScope.DEFAULT_LANG = 'sv';
-    $rootScope.MODULE_CONFIG = MODULE_CONFIG;
-    messageService.addResources(commonMessageResources);
-    messageService.addResources(rliMessages);
+        var module = angular
+            .module(moduleName, [miServices, controllers, miCertificateService, filters]);
 
-    // Update page title
-    $rootScope.page_title = 'Titel';
-    $rootScope.$on('$routeChangeSuccess', function() {
-        //Seems like this is also called when redirecting with a
-        //partially populated $route.current without the $$route part
-        if ($route.current.$$route) {
-            $rootScope.page_title = $route.current.$$route.title + ' | Mina intyg';
-        }
+        module.config(['$routeProvider', function($routeProvider) {
+            $routeProvider.
+                when('/rli/view/:certificateId', {
+                    templateUrl: '/web/webjars/rli/intyg/views/view-cert.html',
+                    controller: 'rli.ViewCertCtrl',
+                    title: 'Läkarintyg Transportstyrelsen Bas'
+                }).
+                when('/rli/recipients', {
+                    templateUrl: '/web/webjars/rli/intyg/views/recipients.html',
+                    controller: 'rli.SendCertWizardCtrl'
+                }).
+                when('/rli/summary', {
+                    templateUrl: '/web/webjars/rli/intyg/views/send-summary.html',
+                    controller: 'rli.SendCertWizardCtrl',
+                    title: 'Kontrollera och skicka intyget'
+                }).
+                when('/rli/sent', {
+                    templateUrl: '/web/webjars/rli/intyg/views/sent-cert.html',
+                    controller: 'rli.SendCertWizardCtrl',
+                    title: 'Intyget skickat till mottagare'
+                });
+        }]);
+        // Inject language resources
+        // TODO: This only works since we always load webcert before the module, when the messageService
+        // is moved to a commons project, make sure this is loaded for this module as well.
+        module.run(['messageService',
+            function(messageService) {
+                messageService.addResources(messages);
+            }
+        ]);
+
+        return moduleName;
     });
-}]);
+
+
+
