@@ -39,19 +39,22 @@
         <h1>
           <message key="ts-diabetes.label.pagetitle" />
         </h1>
-        <p></p>
-        <p>
-        	<message key="ts-diabetes.label.pageingress" />
-        </p>
+      	<p></p>
+        <div class="mi-text" message key="ts-diabetes.label.pageingress"></div>
         <div collapse="!isCollapsed1" class="collapse mi-text">
-        	<p>
-	            <message key="ts-diabetes.label.pagedescription" />
-	        </p>
+        	<div message key="ts-diabetes.label.pagedescription.sendcertificate.header"></div>
+			<div message key="ts-diabetes.label.pagedescription.sendcertificate"></div>
+			<div message key="ts-diabetes.label.pagedescription.save.or.print.certificate.header"></div>
+	        <div message key="ts-diabetes.label.pagedescription.save.or.print.certificate"></div>
+	        <a class="glyphicon glyphicon-question-sign more-info" ng-click="isCollapsedPDF = !isCollapsedPDF" title="{{messageService.getProperty('common.title.helptext.moreinfo')}}"></a>
+      		<div collapse="!isCollapsedPDF" class="well well-sm margin-top-5px"><span message key="ts-diabetes.helptext.readpdfhelp"></span></div>
 	        <div message key="ts-diabetes.label.pagedescription.error.in.certificate.header"></div>
 	        <div message key="ts-diabetes.label.pagedescription.error.in.certificate"></div>
         </div>
-        <a ng-click="isCollapsed1 = !isCollapsed1" data-toggle="collapse" message key="ts-diabetes.label.status.{{ !isCollapsed1 }}">{{ts-diabetes.label.status.{{ !isCollapsed1 }}</a>
-      </div>
+        <br>
+        <a ng-click="isCollapsed1 = !isCollapsed1" class="margin-top-5px" data-toggle="collapse" message key="ts-diabetes.label.status.{{ !isCollapsed1 }}">{{ts-diabetes.label.status.{{ !isCollapsed1 }}</a>
+        
+	  </div>
       <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
         <h2>
           <span message key="ts-diabetes.label.latestevent"></span>
@@ -110,8 +113,8 @@
               <img class="cert-icon" alt="" ng-src="/web/webjars/ts-bas/minaintyg/img/ts-bas.png" src="/web/webjars/ts-diabetes/minaintyg/img/ts-diabetes.png">
               <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                  <h2>
-                    <span class="cert-title"><message key="ts-diabetes.label.certtitle" /></span>
+                  <h2 class="cert-title">
+                    <span><message key="ts-diabetes.label.certtitle" /></span>
                     <span class="cert-titlebar-type"><span class="text-nowrap" message key="ts-diabetes.typename"></span></span>
                   </h2>
                 </div>

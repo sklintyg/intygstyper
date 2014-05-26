@@ -104,12 +104,17 @@ define([], function() {
 
             'ts-diabetes.detail.send': 'Skicka',
             'ts-diabetes.button.send.certificate.title': 'Skicka detta intyg till Transportstyrelsen.',
-            'ts-diabetes.label.pageingress': 'Här ser du den fullständiga informationen i ditt intyg. På denna sida kan du hantera ditt intyg med hjälp av olika funktioner.',
-            'ts-diabetes.label.pagedescription': '<p>Här kan du läsa ditt intyg och skicka det elektroniskt till Transportstyrelsen.</p> <p>För att skicka intyget till Transportstyrelsen så klickar du på Skicka.</p> <p>Vill du spara eller skriva ut ditt intyg så väljer du Ladda ner / Skriv ut. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut</p>',
+            
+            'ts-diabetes.label.pageingress' : 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Transportstyrelsen, du kan även skriva ut eller spara intyget.<br>',
+            'ts-diabetes.label.pagedescription.sendcertificate.header' : '<h2>Skicka intyg</h2>',
+            'ts-diabetes.label.pagedescription.sendcertificate': 'Klicka på knappen Skicka för att skicka intyget elektroniskt till Transportstyrelsen.',
+            'ts-diabetes.label.pagedescription.save.or.print.certificate.header' : '<h2>Spara eller skriva ut</h2>',
+            'ts-diabetes.label.pagedescription.save.or.print.certificate' : 'Klicka på knappen Ladda ner/Skriv ut för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
             'ts-diabetes.label.pagedescription.error.in.certificate.header': '<h2>Fel i intyget?</h2>',
             'ts-diabetes.label.pagedescription.error.in.certificate': 'Om någon uppgift är fel i läkarintyget så ska du kontakta den som utfärdat ditt läkarintyg.',
-            'ts-diabetes.label.status.false': '<span class="glyphicon glyphicon-chevron-up"></span><a> Dölj information</a>',
-            'ts-diabetes.label.status.true': '<span class="glyphicon glyphicon-chevron-down"></span><a> Visa information</a>',
+            
+            'ts-diabetes.label.status.false': '<span class="glyphicon glyphicon-chevron-up"></span><a> Visa mindre</a>',
+            'ts-diabetes.label.status.true': '<span class="glyphicon glyphicon-chevron-down"></span><a> Visa mer</a>',
             'ts-diabetes.label.showevents.false': '<span class="glyphicon glyphicon-chevron-up"></span><a> Visa färre händelser</a>',
             'ts-diabetes.label.showevents.true': '<span class="glyphicon glyphicon-chevron-down"></span><a> Visa alla händelser</a>',
             'ts-diabetes.label.patientname': 'Patientens namn:',
@@ -127,7 +132,7 @@ define([], function() {
             'ts-diabetes.sent.label.pagetitle': 'Skicka intyg - steg 3 av 3',
             'ts-diabetes.sent.button.backtocertificate': 'Tillbaka till intyget',
             'ts-diabetes.error.generic': 'Kunde inte visa intyget',
-            'ts-diabetes.label.latestevent': 'Senaste händelsen med intyget',
+            'ts-diabetes.label.latestevent': 'Senaste händelse',
             'ts-diabetes.label.latestevent.noevents': 'Inga händelser',
             'ts-diabetes.label.latestevent.showall': 'Visa alla händelser',
             'ts-diabetes.history.label.pagetitle': 'Intygets alla händelser',
@@ -147,7 +152,7 @@ define([], function() {
             'ts-diabetes.label.bedomning.kan-inte-ta-stallning': 'Kan inte ta ställning',
             'ts-diabetes.label.bedomning-info-undersokas-med-specialkompetens': 'Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i:',
             'ts-diabetes.label.bedomning.lamplighet-inneha': 'Om patienten söker behörighet C1, C1E, C, CE, D1, D1E, D, DE eller Taxi, är han eller hon lämplig att inneha sådan behörighet med hänsyn till de körningar och arbetsformer som är aktuella vid sådant innehav? (Se 6 kap. 16 §) ',
-
+            'ts-diabetes.helptext.readpdfhelp' : '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank">Adobe Reader</a>.',
             // Helptexts
 
             'ts-diabetes.helptext.synfunktioner.a-c': 'Då någon av a - c besvarats med JA krävs ett läkarintyg från ögonspecialist.',
