@@ -1,13 +1,14 @@
 define([
     'angular',
+    'common/minaintyg/js/CertificateService',
     'webjars/ts-diabetes/minaintyg/js/controllers/ViewCertCtrl',
     'webjars/ts-diabetes/minaintyg/js/controllers/SendCertWizardCtrl'
-], function(angular, ViewCertCtrl, SendCertWizardCtrl) {
+], function(angular, CertificateService, ViewCertCtrl, SendCertWizardCtrl) {
     'use strict';
 
     var moduleName = 'ts-diabetes.controllers';
 
-    angular.module(moduleName, []).
+    angular.module(moduleName, [ CertificateService ]).
         controller('ts-diabetes.ViewCertCtrl', ViewCertCtrl).
         controller('ts-diabetes.SendCertWizardCtrl', SendCertWizardCtrl);
 
