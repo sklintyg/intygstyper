@@ -41,6 +41,11 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
     }
 
     @Override
+    public boolean isModuleFragaSvarAvailable() {
+        return false;
+    }
+
+    @Override
     public String getModuleCssPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:

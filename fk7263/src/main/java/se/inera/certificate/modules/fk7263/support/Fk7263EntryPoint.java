@@ -41,6 +41,11 @@ public class Fk7263EntryPoint implements ModuleEntryPoint {
     }
 
     @Override
+    public boolean isModuleFragaSvarAvailable() {
+        return true;
+    }
+
+    @Override
     public String getModuleCssPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:

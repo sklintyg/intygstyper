@@ -40,6 +40,13 @@ public interface ModuleEntryPoint {
     ModuleApi getModuleApi();
 
     /**
+     * Returns true if fraga/svar should be available.
+     *
+     * @return True if fraga/svar should be available.
+     */
+    boolean isModuleFragaSvarAvailable();
+
+    /**
      * Returns the module css path.
      *
      * @return The module css path for the calling application.
