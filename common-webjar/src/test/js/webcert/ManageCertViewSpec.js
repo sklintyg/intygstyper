@@ -24,6 +24,8 @@ define([
                 ]);
                 $provide.value('$route', jasmine.createSpyObj('$route', [ 'reload' ]));
                 $provide.value('$location', jasmine.createSpyObj('$location', [ 'path' ]));
+                $provide.value('common.messageService',
+                    jasmine.createSpyObj('common.messageService', [ 'getProperty' ]));
                 $provide.value('$routeParams', {});
                 $provide.value('common.dialogService',
                     jasmine.createSpyObj('common.dialogService', [ 'showDialog', 'showErrorMessageDialog' ]));

@@ -2,9 +2,10 @@ define([
     'angular',
     'webjars/common/webcert/js/services/CertificateService',
     'webjars/common/webcert/js/services/dialogService',
+    'webjars/common/webcert/js/services/messageService',
     'webjars/common/webcert/js/services/statService',
     'webjars/common/webcert/js/services/User'
-], function(angular, CertificateService, dialogService, statService, User) {
+], function(angular, CertificateService, dialogService, messageService, statService, User) {
     'use strict';
 
     var moduleName = 'common.ManageCertView';
@@ -12,11 +13,11 @@ define([
     /**
      * Common certificate management methods between certificate modules
      */
-    angular.module(moduleName, [ dialogService ]).
+    angular.module(moduleName, [ dialogService, messageService ]).
         factory(moduleName, [ '$document', '$log', '$location', '$route', '$routeParams', '$timeout',
-            CertificateService, dialogService, statService, User,
+            CertificateService, dialogService, messageService, statService, User,
             function($document, $log, $location, $route, $routeParams, $timeout, CertificateService, dialogService,
-                statService, User) {
+                messageService, statService, User) {
 
                 /**
                  * Load draft to webcert
@@ -260,7 +261,8 @@ define([
                             $scope.dialog.errormessageid = 'common.error.signerror';
                         }
                     } else {
-                        dialogService.showErrorMessageDialog(error);
+                        var errorMessage = messageService.getProperty(error, undefined, error);
+                        dialogService.showErrorMessageDialog(errorMessage);
                     }
                 }
 
