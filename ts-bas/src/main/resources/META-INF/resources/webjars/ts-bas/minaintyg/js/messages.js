@@ -144,6 +144,8 @@ define([], function() {
             'ts-bas.label.pagedescription.save.or.print.certificate' : 'Klicka på knappen Ladda ner/Skriv ut för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
             'ts-bas.label.pagedescription.error.in.certificate.header': '<h2>Fel i intyget?</h2>',
             'ts-bas.label.pagedescription.error.in.certificate': 'Om någon uppgift är fel i läkarintyget så ska du kontakta den som utfärdat ditt läkarintyg.',
+            'ts-bas.label.pagedescription.archive.header': '<h2>Akrivera</h2>',
+            'ts-bas.label.pagedescription.archive': 'För att arkivera intyget klickar du på symbolen Arkivera intyg <span class="glyphicon glyphicon-folder-close"></span>.',
             
             'ts-bas.label.status.false': '<span class="glyphicon glyphicon-chevron-up"></span><a> Visa mindre</a>',
             'ts-bas.label.status.true': '<span class="glyphicon glyphicon-chevron-down"></span><a> Visa mer</a>',
