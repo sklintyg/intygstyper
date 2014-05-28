@@ -37,6 +37,7 @@ import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_bas.model.codes.RekommendationVardeKod;
 import se.inera.certificate.modules.ts_bas.model.codes.RekommendationsKod;
 import se.inera.certificate.modules.ts_bas.model.codes.SpecialitetKod;
+import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_bas.model.external.Observation;
@@ -89,7 +90,7 @@ public class ExternalToInternalConverterInstance {
         Utlatande intUtlatande = new Utlatande();
 
         intUtlatande.setId(InternalModelConverterUtils.getExtensionFromId(extUtlatande.getId()));
-        intUtlatande.setTyp(InternalModelConverterUtils.getValueFromKod(extUtlatande.getTyp()));
+        intUtlatande.setTyp(UtlatandeKod.getVersionFromTSParams(extUtlatande.getTsUtgava(), extUtlatande.getTsVersion()).name());
         intUtlatande.setSigneringsdatum(extUtlatande.getSigneringsdatum());
         intUtlatande.setSkickatdatum(extUtlatande.getSkickatdatum());
         intUtlatande.setKommentar(getSingleElement(extUtlatande.getKommentarer()));

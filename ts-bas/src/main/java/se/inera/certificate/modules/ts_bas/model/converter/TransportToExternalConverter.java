@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardgivare;
-import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
@@ -75,13 +74,15 @@ public class TransportToExternalConverter {
 
         // Validate and set Typ
         Kod typAvUtlatande = IsoTypeConverter.toKod(source.getTypAvUtlatande());
-        UtlatandeKod utlatandeKod = CodeConverter.fromCode(typAvUtlatande, UtlatandeKod.class);
+        UtlatandeKod utlatandeKod = UtlatandeKod.getVersionFromTSParams(source.getUtgava(), source.getVersion());
         try {
             utlatandeKod.assertVersion(source.getUtgava(), source.getVersion());
         } catch (IllegalArgumentException e) {
             throw new ConverterException(e.getMessage());
         }
         utlatande.setTyp(typAvUtlatande);
+        utlatande.setTsUtgava(source.getUtgava());
+        utlatande.setTsVersion(source.getVersion());
 
         utlatande.setPatient(convertPatient(source.getPatient()));
         utlatande.setSigneringsdatum(source.getSigneringsdatum());

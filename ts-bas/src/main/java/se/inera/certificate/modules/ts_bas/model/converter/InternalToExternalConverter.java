@@ -102,7 +102,11 @@ public class InternalToExternalConverter {
         utlatande.setSigneringsdatum(source.getSigneringsdatum());
         utlatande.setSkapadAv(convertToExtHosPersonal(source.getSkapadAv()));
         utlatande.setSkickatdatum(source.getSkickatdatum());
-        utlatande.setTyp(CodeConverter.toKod(UtlatandeKod.TS_BAS_U06_V06));
+
+        UtlatandeKod utlatandeKod = UtlatandeKod.valueOf(source.getTyp());
+        utlatande.setTyp(CodeConverter.toKod(utlatandeKod));
+        utlatande.setTsUtgava(utlatandeKod.getTsUtgava());
+        utlatande.setTsVersion(utlatandeKod.getTsVersion());
 
         if (source.getKommentar() != null) {
             utlatande.getKommentarer().add(source.getKommentar());
