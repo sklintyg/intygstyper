@@ -82,8 +82,8 @@ public class WebcertModelFactory {
         utlatande.setPatientPersonnummer(patient.getPersonnummer());
     }
 
-    private void populateWithSkapadAv(Fk7263Intyg utlatande,
-                                      se.inera.certificate.modules.support.api.dto.HoSPersonal hoSPersonal) throws ConverterException {
+    public void populateWithSkapadAv(Fk7263Intyg utlatande, se.inera.certificate.modules.support.api.dto.HoSPersonal hoSPersonal)
+            throws ConverterException {
         if (hoSPersonal == null) {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");
         }
@@ -97,22 +97,18 @@ public class WebcertModelFactory {
         vardperson.setHsaId(hoSPersonal.getHsaId());
         vardperson.setForskrivarKod(hoSPersonal.getForskrivarkod());
 
-        if (hoSPersonal.getVardenhet() != null) {
-            vardperson.setEnhetsId(hoSPersonal.getVardenhet().getHsaId());
-            vardperson.setEnhetsnamn(hoSPersonal.getVardenhet().getNamn());
+        vardperson.setEnhetsId(hoSPersonal.getVardenhet().getHsaId());
+        vardperson.setEnhetsnamn(hoSPersonal.getVardenhet().getNamn());
 
-            vardperson.setPostadress(hoSPersonal.getVardenhet().getPostadress());
-            vardperson.setPostnummer(hoSPersonal.getVardenhet().getPostnummer());
-            vardperson.setPostort(hoSPersonal.getVardenhet().getPostort());
-            vardperson.setTelefonnummer(hoSPersonal.getVardenhet().getTelefonnummer());
-            vardperson.setEpost(hoSPersonal.getVardenhet().getEpost());
-            vardperson.setArbetsplatsKod(hoSPersonal.getVardenhet().getArbetsplatskod());
-        }
+        vardperson.setPostadress(hoSPersonal.getVardenhet().getPostadress());
+        vardperson.setPostnummer(hoSPersonal.getVardenhet().getPostnummer());
+        vardperson.setPostort(hoSPersonal.getVardenhet().getPostort());
+        vardperson.setTelefonnummer(hoSPersonal.getVardenhet().getTelefonnummer());
+        vardperson.setEpost(hoSPersonal.getVardenhet().getEpost());
+        vardperson.setArbetsplatsKod(hoSPersonal.getVardenhet().getArbetsplatskod());
 
-        if (hoSPersonal.getVardenhet() != null && hoSPersonal.getVardenhet().getVardgivare() != null) {
-            vardperson.setVardgivarId(hoSPersonal.getVardenhet().getVardgivare().getHsaId());
-            vardperson.setVardgivarnamn(hoSPersonal.getVardenhet().getVardgivare().getNamn());
-        }
+        vardperson.setVardgivarId(hoSPersonal.getVardenhet().getVardgivare().getHsaId());
+        vardperson.setVardgivarnamn(hoSPersonal.getVardenhet().getVardgivare().getNamn());
 
         return vardperson;
     }

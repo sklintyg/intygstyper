@@ -39,6 +39,7 @@ import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelResponse;
+import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.PdfResponse;
@@ -323,5 +324,10 @@ public class ModuleService implements se.inera.certificate.modules.support.api.M
             intygAvser.add(CodeConverter.fromCode(intygAvserKod, IntygAvserKod.class).name());
         }
         return Strings.join(", ", intygAvser);
+    }
+
+    @Override
+    public ExternalModelHolder updateExternal(ExternalModelHolder externalModel, HoSPersonal hosPerson) {
+        return externalModel;
     }
 }

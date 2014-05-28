@@ -40,6 +40,7 @@ import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelResponse;
+import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.PdfResponse;
@@ -166,35 +167,6 @@ public class Fk7263ModuleApi implements ModuleApi {
             }
         }
         return certificateId;
-    }
-
-    /**
-     * Extract the enhets-ID from a jaxbobject of legacy or normal type.
-     *
-     * @param jaxbObject the {@link Object}
-     * @return a String with the id
-     */
-    private String extractEnhetsId(Object jaxbObject) {
-        String enhetsId = "<not set>";
-        if (jaxbObject != null) {
-            if (jaxbObject instanceof RegisterMedicalCertificate) {
-                RegisterMedicalCertificate cert = (RegisterMedicalCertificate) jaxbObject;
-                if (cert.getLakarutlatande() != null && cert.getLakarutlatande().getSkapadAvHosPersonal() != null
-                        && cert.getLakarutlatande().getSkapadAvHosPersonal().getEnhet() != null
-                        && cert.getLakarutlatande().getSkapadAvHosPersonal().getEnhet().getEnhetsId() != null) {
-
-                    enhetsId = cert.getLakarutlatande().getSkapadAvHosPersonal().getEnhet().getEnhetsId()
-                            .getExtension();
-                }
-            } else if (jaxbObject instanceof Utlatande) {
-                Utlatande cert = (Utlatande) jaxbObject;
-                if (cert.getSkapadAv() != null && cert.getSkapadAv().getEnhet() != null
-                        && cert.getSkapadAv().getEnhet().getEnhetsId() != null) {
-                    enhetsId = cert.getSkapadAv().getEnhet().getEnhetsId().getExtension();
-                }
-            }
-        }
-        return enhetsId;
     }
 
     /**
@@ -384,5 +356,18 @@ public class Fk7263ModuleApi implements ModuleApi {
     public String getComplementaryInfo(ExternalModelHolder externalModel) throws ModuleException {
         Fk7263Utlatande utlatande = getExternal(externalModel);
         return String.format("%s till %s", utlatande.getValidFromDate(), utlatande.getValidToDate());
+    }
+
+    @Override
+    public ExternalModelHolder updateExternal(ExternalModelHolder externalModel, HoSPersonal hosPerson) throws ModuleException {
+        try {
+            Fk7263Intyg intyg = externalToInternalConverter.convert(getExternal(externalModel));
+            webcertModelFactory.populateWithSkapadAv(intyg, hosPerson);
+            String externalModelJson = toExternalModelResponse(internalToExternalConverter.convert(intyg)).getExternalModelJson();
+            return new ExternalModelHolder(externalModelJson);
+        } catch (ConverterException | ModuleException e) {
+            // TODO Vi skall kasta annat exception
+            throw new ModuleException("Okant fel", e);
+        }
     }
 }
