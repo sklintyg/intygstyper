@@ -1,12 +1,11 @@
 package se.inera.certificate.modules.fk7263.rest;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static se.inera.certificate.modules.support.api.dto.TransportModelVersion.LEGACY_LAKARUTLATANDE;
 import static se.inera.certificate.modules.support.api.dto.TransportModelVersion.UTLATANDE_V1;
 
 import java.io.IOException;
-
-import javax.xml.bind.JAXBContext;
 
 import junit.framework.Assert;
 
@@ -14,7 +13,6 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -23,7 +21,12 @@ import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
+import se.inera.certificate.modules.support.api.dto.HoSPersonal;
+import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
+import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.TransportModelHolder;
+import se.inera.certificate.modules.support.api.dto.Vardenhet;
+import se.inera.certificate.modules.support.api.dto.Vardgivare;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
 import se.inera.certificate.modules.support.api.exception.ModuleVersionUnsupportedException;
@@ -50,11 +53,9 @@ public class Fk7263ModuleApiTest {
 
     @Test
     public void testSchemaValidationDuringUnmarshall() throws IOException, ModuleException {
-        String utlatande = FileUtils
-                .readFileToString(new ClassPathResource("Fk7263ModuleApiTest/utlatande_invalid.xml").getFile());
+        String utlatande = FileUtils.readFileToString(new ClassPathResource("Fk7263ModuleApiTest/utlatande_invalid.xml").getFile());
         try {
             fk7263ModuleApi.unmarshall(new TransportModelHolder(utlatande));
-
         } catch (ModuleValidationException e) {
             assertTrue(e.getValidationEntries().size() == 1);
         }
@@ -62,34 +63,31 @@ public class Fk7263ModuleApiTest {
 
     @Test
     public void testUnmarshallLegacyTransport() throws Exception {
-        String utlatande = FileUtils.readFileToString(new ClassPathResource(
-                "Fk7263ModuleApiTest/registerMedicalCertificate.xml").getFile());
+        String utlatande = FileUtils.readFileToString(new ClassPathResource("Fk7263ModuleApiTest/registerMedicalCertificate.xml").getFile());
         fk7263ModuleApi.unmarshall(new TransportModelHolder(utlatande));
     }
 
     @Test
     public void testUnmarshallUtlatande() throws Exception {
-        String utlatande = FileUtils.readFileToString(new ClassPathResource("Fk7263ModuleApiTest/utlatande.xml")
-                .getFile());
+        String utlatande = FileUtils.readFileToString(new ClassPathResource("Fk7263ModuleApiTest/utlatande.xml").getFile());
 
         fk7263ModuleApi.unmarshall(new TransportModelHolder(utlatande));
     }
 
     @Test
     public void testMarshallWithVersion_1_0() throws IOException, ModuleException {
-        Fk7263Utlatande utlatande = new CustomObjectMapper().readValue(new ClassPathResource(
-                "Fk7263ModuleApiTest/utlatande.json").getFile(), Fk7263Utlatande.class);
+        Fk7263Utlatande utlatande = new CustomObjectMapper().readValue(
+                new ClassPathResource("Fk7263ModuleApiTest/utlatande.json").getFile(), Fk7263Utlatande.class);
 
-        String actual = fk7263ModuleApi.marshall(createExternalHolder(utlatande), LEGACY_LAKARUTLATANDE)
-                .getTransportModel();
+        String actual = fk7263ModuleApi.marshall(createExternalHolder(utlatande), LEGACY_LAKARUTLATANDE).getTransportModel();
 
         assertTrue(actual.contains("lakarutlatande"));
     }
 
     @Test
     public void testMarshallWithVersion_2_0() throws IOException, ModuleException {
-        Fk7263Utlatande utlatande = new CustomObjectMapper().readValue(new ClassPathResource(
-                "Fk7263ModuleApiTest/utlatande.json").getFile(), Fk7263Utlatande.class);
+        Fk7263Utlatande utlatande = new CustomObjectMapper().readValue(
+                new ClassPathResource("Fk7263ModuleApiTest/utlatande.json").getFile(), Fk7263Utlatande.class);
 
         String actual = fk7263ModuleApi.marshall(createExternalHolder(utlatande), UTLATANDE_V1).getTransportModel();
 
@@ -117,10 +115,27 @@ public class Fk7263ModuleApiTest {
         // assertEquals("lakarutlatande_19121212-1212_20110124-20110331.pdf", fk7263ModuleApi.pdfFileName(intyg));
     }
 
-    private ExternalModelHolder createExternalHolder(
-            se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande externalModel)
+    @Test
+    public void updateChangesHosPersonalInfo() throws IOException, ModuleException {
+        Fk7263Utlatande utlatande = new CustomObjectMapper().readValue(new ClassPathResource(
+                "Fk7263ModuleApiTest/utlatande.json").getFile(), Fk7263Utlatande.class);
+
+        InternalModelResponse internalModelResponse = fk7263ModuleApi.convertExternalToInternal(createExternalHolder(utlatande));
+        InternalModelHolder holder = new InternalModelHolder(internalModelResponse.getInternalModel());
+        Vardgivare vardgivare = new Vardgivare("vardgivarId", "vardgivarNamn");
+        Vardenhet vardenhet = new Vardenhet("enhetId", "enhetNamn", "", "", "", "", "", "", vardgivare);
+        HoSPersonal hosPerson = new HoSPersonal("nyId", "nyNamn", "nyForskrivarkod", "nyBefattning", vardenhet);
+        InternalModelHolder updatedHolder = fk7263ModuleApi.updateInternal(holder, hosPerson);
+        Fk7263Intyg updatedIntyg = mapper.readValue(updatedHolder.getInternalModel(), Fk7263Intyg.class);
+
+        assertEquals("nyId", updatedIntyg.getVardperson().getHsaId());
+        assertEquals("nyNamn", updatedIntyg.getVardperson().getNamn());
+        assertEquals("nyForskrivarkod", updatedIntyg.getVardperson().getForskrivarKod());
+        assertEquals(utlatande.getSkapadAv().getVardenhet().getNamn(), updatedIntyg.getVardperson().getEnhetsnamn());
+    }
+
+    private ExternalModelHolder createExternalHolder(se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande externalModel)
             throws JsonProcessingException {
         return new ExternalModelHolder(mapper.writeValueAsString(externalModel));
     }
-
 }

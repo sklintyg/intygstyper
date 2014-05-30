@@ -210,7 +210,7 @@ public class ModuleServiceWrapper implements ModuleApi {
         return Strings.join(", ", intygAvser);
     }
     @Override
-    public ExternalModelHolder updateExternal(ExternalModelHolder externalModel, HoSPersonal hosPerson) {
-        return externalModel;
+    public InternalModelHolder updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson) {
+        return internalModel;
     }
 }

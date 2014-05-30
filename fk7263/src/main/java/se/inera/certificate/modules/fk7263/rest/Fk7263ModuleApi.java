@@ -359,15 +359,14 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
-    public ExternalModelHolder updateExternal(ExternalModelHolder externalModel, HoSPersonal hosPerson) throws ModuleException {
+    public InternalModelHolder updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException {
         try {
-            Fk7263Intyg intyg = externalToInternalConverter.convert(getExternal(externalModel));
-            webcertModelFactory.populateWithSkapadAv(intyg, hosPerson);
-            String externalModelJson = toExternalModelResponse(internalToExternalConverter.convert(intyg)).getExternalModelJson();
-            return new ExternalModelHolder(externalModelJson);
-        } catch (ConverterException | ModuleException e) {
-            // TODO Vi skall kasta annat exception
-            throw new ModuleException("Okant fel", e);
+            Fk7263Intyg intyg = getInternal(internalModel);
+            webcertModelFactory.updateSkapadAv(intyg, hosPerson);
+            String internalModelJson = toInteralModelResponse(intyg).getInternalModel();
+            return new InternalModelHolder(internalModelJson);
+        } catch (ModuleException e) {
+            throw new ModuleException("Convert error of internal model", e);
         }
     }
 }

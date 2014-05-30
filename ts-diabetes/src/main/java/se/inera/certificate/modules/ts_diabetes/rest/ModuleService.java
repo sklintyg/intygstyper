@@ -327,7 +327,7 @@ public class ModuleService implements se.inera.certificate.modules.support.api.M
     }
 
     @Override
-    public ExternalModelHolder updateExternal(ExternalModelHolder externalModel, HoSPersonal hosPerson) {
-        return externalModel;
+    public InternalModelHolder updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson) {
+        return internalModel;
     }
 }

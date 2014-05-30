@@ -98,10 +98,10 @@ public interface ModuleApi {
     /**
      * Returns an updated version of the external model with the HoS person information.
      *
-     * @param externalModel The external model to extract complementary information from.
+     * @param internalModel The internal model to extract complementary information from.
      * @param hosPerson The HoS person to update the model with.
      *
-     * @return The external model uppdated with the hosPerson info.
+     * @return The internal model updated with the hosPerson info.
      */
-    ExternalModelHolder updateExternal(ExternalModelHolder externalModel, HoSPersonal hosPerson) throws ModuleException;
+    InternalModelHolder updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException;
 }
