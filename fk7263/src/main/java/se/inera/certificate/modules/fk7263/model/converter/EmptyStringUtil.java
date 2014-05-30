@@ -4,12 +4,13 @@ import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class EmptyStringUtil {
+public final class EmptyStringUtil {
 
     private static final Pattern ESCAPED_STRING_PATTERN = Pattern.compile("(%\\d{2})+");
     private static final Pattern ESCAPED_PART_STRING_PATTERN = Pattern.compile("(%\\d{2})");
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("00");
-
+    private EmptyStringUtil() {
+    };
     /**
      * Escapes a whitespace string with placeholder characters on the pattern (%\\d{2})+,
      * (i.e a single space becomes %32), returns the original string if input was not comprised of whitespace

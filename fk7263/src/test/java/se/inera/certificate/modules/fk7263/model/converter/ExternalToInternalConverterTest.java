@@ -21,7 +21,7 @@ import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
  */
 public class ExternalToInternalConverterTest {
 
-    ExternalToInternalConverter externalToInternalConverter;
+    private ExternalToInternalConverter externalToInternalConverter;
 
     @Before
     public void setUp() throws Exception {
