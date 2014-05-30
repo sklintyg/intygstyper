@@ -79,7 +79,7 @@ public final class CodeConverter {
             }
         }
 
-        throw new RuntimeException(String.format("Found no valid enum for code '%s' of type '%s'", kod,
+        throw new RuntimeException(String.format("Found no valid enum for code '%s' of type '%s'", kod.getCode(),
                 type.getSimpleName()));
     }
 
