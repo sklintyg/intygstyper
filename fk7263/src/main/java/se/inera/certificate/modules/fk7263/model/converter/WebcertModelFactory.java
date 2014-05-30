@@ -23,6 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.Patient;
 
 /**
@@ -82,7 +83,7 @@ public class WebcertModelFactory {
         utlatande.setPatientPersonnummer(patient.getPersonnummer());
     }
 
-    public void populateWithSkapadAv(Fk7263Intyg utlatande, se.inera.certificate.modules.support.api.dto.HoSPersonal hoSPersonal)
+    private void populateWithSkapadAv(Fk7263Intyg utlatande, se.inera.certificate.modules.support.api.dto.HoSPersonal hoSPersonal)
             throws ConverterException {
         if (hoSPersonal == null) {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");
@@ -113,4 +114,9 @@ public class WebcertModelFactory {
         return vardperson;
     }
 
+    public void updateSkapadAv(Fk7263Intyg utlatande, HoSPersonal hosPerson) {
+        utlatande.getVardperson().setHsaId(hosPerson.getHsaId());
+        utlatande.getVardperson().setNamn(hosPerson.getNamn());
+        utlatande.getVardperson().setForskrivarKod(hosPerson.getForskrivarkod());
+    }
 }
