@@ -73,7 +73,7 @@
         </div>
 
         <!-- Show if more than one event exists -->
-   		<div ng-show="cert.status.length>0">
+   		<div ng-show="cert.status.length>0" id="latest-certificate-event">
             <span message key="ts-bas.status.{{cert.status[0].type}}"></span>
             <span ng-show="cert.statuses[0].type == 'SENT'"></span>
             <span message key="ts-bas.target.{{cert.status[0].target}}"></span>

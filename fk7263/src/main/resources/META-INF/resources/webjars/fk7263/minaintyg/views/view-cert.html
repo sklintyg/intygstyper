@@ -56,7 +56,7 @@
         </div>
 
 		<!-- Show if more than one event exists -->
-   		<div ng-show="cert.filteredStatuses.length>0">
+   		<div ng-show="cert.filteredStatuses.length>0" id="latest-certificate-event">
             <span message key="fk7263.status.{{cert.filteredStatuses[0].type}}"></span>
             <span ng-show="cert.statuses[0].type == 'SENT'"></span>
             <span message key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span>
