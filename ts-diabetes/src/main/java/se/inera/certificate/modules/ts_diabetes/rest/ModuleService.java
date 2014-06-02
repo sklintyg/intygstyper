@@ -36,6 +36,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.util.Strings;
+import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelResponse;
@@ -72,7 +73,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  * @author Gustav Norbäcker, R2M
  */
-public class ModuleService implements se.inera.certificate.modules.support.api.ModuleApi {
+public class ModuleService implements ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(ModuleService.class);
 
@@ -327,7 +328,19 @@ public class ModuleService implements se.inera.certificate.modules.support.api.M
     }
 
     @Override
-    public InternalModelHolder updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson) {
-        return internalModel;
+    public InternalModelHolder updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException {
+        try {
+            se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande utlatande = getInternal(internalModel);
+            utlatande.getSkapadAv().setPersonid(hosPerson.getHsaId());
+            utlatande.getSkapadAv().setFullstandigtNamn(hosPerson.getNamn());
+            utlatande.getSkapadAv().getBefattningar().clear();
+            if (hosPerson.getBefattning() != null) {
+                utlatande.getSkapadAv().getBefattningar().add(hosPerson.getBefattning());
+            }
+            String internalModelJson = toInteralModelResponse(utlatande).getInternalModel();
+            return new InternalModelHolder(internalModelJson);
+        } catch (ModuleException e) {
+            throw new ModuleException("Convert error of internal model", e);
+        }
     }
 }
