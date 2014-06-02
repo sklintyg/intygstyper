@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_diabetes.model.internal.HoSPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Patient;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
@@ -50,6 +51,7 @@ public class WebcertModelFactory {
 
         Utlatande utlatande = new Utlatande();
         utlatande.setId(newDraftData.getCertificateId());
+        utlatande.setTyp(UtlatandeKod.TS_DIABETES.name());
         populateWithSkapadAv(utlatande, newDraftData.getSkapadAv());
         populateWithPatientInfo(utlatande, newDraftData.getPatient());
 
