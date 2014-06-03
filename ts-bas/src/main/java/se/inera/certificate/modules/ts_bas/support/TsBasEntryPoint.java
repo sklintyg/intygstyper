@@ -21,7 +21,7 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
 
     @Override
     public String getModuleName() {
-        return "Transportstyrelsens läkarintyg, bas";
+        return "Transportstyrelsens läkarintyg";
     }
 
     @Override
