@@ -204,11 +204,15 @@
                         <span message key="ts-bas.label.syn.diplopi"></span>
                         <span class="ts-cert-answer" message key="{{cert.syn.diplopi | BoolToTextFilter}}"></span>
                     </span>
-                    <span class="text">
+
+                    <span class="text no-padding-bottom">
                         <span message key="ts-bas.label.syn.nystagmus"></span>
                         <span class="ts-cert-answer" message key="{{cert.syn.nystagmus | BoolToTextFilter}}"></span>
             		</span>
 
+            		<span class="text no-padding-bottom">
+            			<span message key="ts-bas.label.syn.synvarden"></span>
+            		</span>
             		<span class="text ts-text-field-wide">
 						<table class="table table-condensed ts-table">
 							<tr>
@@ -219,20 +223,20 @@
 							</tr>
 						    <tr>
 						        <td>Höger öga</td>
-						        <td><span class="text">{{cert.syn.hogerOga.utanKorrektion}}</span></td>
-						        <td><span class="text">{{cert.syn.hogerOga.medKorrektion}}</span></td>
+						        <td><span class="text">{{cert.syn.hogerOga.utanKorrektion | number : 1}}</span></td>
+						        <td><span class="text">{{cert.syn.hogerOga.medKorrektion | number : 1}}</span></td>
 						        <td><span class="text" message key="{{cert.syn.hogerOga.kontaktlins | BoolToTextFilter}}"></span></td>
 						    </tr>
 						    <tr>
 						        <td>Vänster öga</td>
-       					        <td><span class="text">{{cert.syn.vansterOga.utanKorrektion}}</span></td>
-						        <td><span class="text">{{cert.syn.vansterOga.medKorrektion}}</span></td>
+       					        <td><span class="text">{{cert.syn.vansterOga.utanKorrektion | number : 1}}</span></td>
+						        <td><span class="text">{{cert.syn.vansterOga.medKorrektion | number : 1}}</span></td>
 						        <td><span class="text" message key="{{cert.syn.vansterOga.kontaktlins | BoolToTextFilter}}"></span></td>
 						    </tr>
 						    <tr>
 						        <td>Binokulärt</td>
-      					        <td><span class="text">{{cert.syn.binokulart.utanKorrektion}}</span></td>
-						        <td><span class="text">{{cert.syn.binokulart.medKorrektion}}</span></td>
+      					        <td><span class="text">{{cert.syn.binokulart.utanKorrektion | number : 1}}</span></td>
+						        <td><span class="text">{{cert.syn.binokulart.medKorrektion | number : 1}}</span></td>
 						        <td></td>
 						    </tr>
 						</table>

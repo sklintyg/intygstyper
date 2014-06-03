@@ -56,12 +56,13 @@ define([], function() {
             'ts-bas.label.korkort.annat': 'Annat',
 
             'ts-bas.label.syn.binokulart': 'Binokulärt',
-            'ts-bas.label.syn.diplopi': 'Framkommer dubbelseende vid prövning av ögats rörlighet (prövningen ska göras i de åtta huvudmeridianerna)?',
             'ts-bas.label.syn.8-dioptrier': 'Högsta styrka i något av glasen överskrider 8 dioptrier:',
-            'ts-bas.label.syn.nattblindhet': 'b) Framkommer anamnestiska uppgifter om begränsning av seendet vid nedsatt belysning?',
-            'ts-bas.label.syn.nystagmus': 'Förekommer nystagmus?',
-            'ts-bas.label.syn.progressivogonsjukdom': ' c) Har patienten någon progressiv ögonsjukdom?',
             'ts-bas.label.syn.synfaltsdefekter': 'a) Finns tecken på synfältsdefekter vid undersökning enligt Donders konfrontationsmetod?',
+            'ts-bas.label.syn.nattblindhet': 'b) Framkommer anamnestiska uppgifter om begränsning av seendet vid nedsatt belysning?',
+            'ts-bas.label.syn.progressivogonsjukdom': ' c) Har patienten någon progressiv ögonsjukdom?',
+            'ts-bas.label.syn.diplopi': 'd) Framkommer dubbelseende vid prövning av ögats rörlighet (prövningen ska göras i de åtta huvudmeridianerna)?',
+            'ts-bas.label.syn.nystagmus': 'e) Förekommer nystagmus?',
+            'ts-bas.label.syn.synvarden': 'f) Värden för synskärpa',
 
             'ts-bas.label.syn.synskarpa': 'Värden för synskärpa',
             'ts-bas.label.syn.hogeroga': '',

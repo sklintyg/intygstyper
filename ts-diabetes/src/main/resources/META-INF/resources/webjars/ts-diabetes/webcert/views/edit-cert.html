@@ -346,7 +346,7 @@
                                    ng-model="cert.syn.separatOgonlakarintyg"></td>
                         <td><input id="synan" name="synan" type="radio" ng-value="false"
                                    ng-model="cert.syn.separatOgonlakarintyg"></td>
-                        <td>a. Ögonläkarintyg kommer att skickas in separat</td>
+                        <td><span message key="ts-diabetes.label.syn.separat-ogonlakarintyg"></span></td>
                       </tr>
                       <tr data-ng-hide="cert.syn.separatOgonlakarintyg">
                         <td></td>
@@ -366,14 +366,15 @@
                         <td><input id="synbn" name="synbn" type="radio" ng-value="false"
                                    ng-model="cert.syn.synfaltsprovningUtanAnmarkning"></td>
                         <td>
-                          <p>b. Är synfältsprövning enligt Donders konfrontationsmetod utan anmärkning?</p>
+                          <span message key="ts-diabetes.label.syn.synfaltsprovning-utan-anmarkning"></span>
                         </td>
                       </tr>
                       <tr data-ng-hide="cert.syn.separatOgonlakarintyg">
                         <td></td>
                         <td></td>
                         <td>
-                          <p>c. Synskärpa (alla bokstäver ska kunna läsas på den rad som anger synskärpan. Är synskärpan
+                          <span message key="ts-diabetes.label.syn.synskarpa"></span>
+                          <p>Synskärpa (alla bokstäver ska kunna läsas på den rad som anger synskärpan. Är synskärpan
                             sämre än 0,1 ska den anges som 0,0).</p>
                           <p>
                             Uppgifterna om synskärpa med och utan korrektion kan grundas på aktuellt intyg av bl.a.
