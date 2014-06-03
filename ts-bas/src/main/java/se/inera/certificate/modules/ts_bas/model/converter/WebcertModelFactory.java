@@ -117,7 +117,6 @@ public class WebcertModelFactory {
         vardenhet.setEnhetsnamn(vardenhetDto.getNamn());
         vardenhet.setVardgivare(convertVardgivareToEdit(vardenhetDto.getVardgivare()));
 
-        // TODO Populate with the address of the Vardenhet
         vardenhet.setPostadress(vardenhetDto.getPostadress());
         vardenhet.setPostort(vardenhetDto.getPostort());
         vardenhet.setPostnummer(vardenhetDto.getPostnummer());
