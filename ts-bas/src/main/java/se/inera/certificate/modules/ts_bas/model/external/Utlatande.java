@@ -57,6 +57,10 @@ public class Utlatande extends se.inera.certificate.model.Utlatande {
 
     private List<ObservationAktivitetRelation> observationAktivitetRelation;
 
+    private String tsUtgava;
+
+    private String tsVersion;
+
     private List<Status> status;
 
     public List<Kod> getIntygAvser() {
@@ -116,6 +120,22 @@ public class Utlatande extends se.inera.certificate.model.Utlatande {
             observationAktivitetRelation = new ArrayList<ObservationAktivitetRelation>();
         }
         return this.observationAktivitetRelation;
+    }
+
+    public String getTsUtgava() {
+        return tsUtgava;
+    }
+
+    public void setTsUtgava(String tsUtgava) {
+        this.tsUtgava = tsUtgava;
+    }
+
+    public String getTsVersion() {
+        return tsVersion;
+    }
+
+    public void setTsVersion(String tsVersion) {
+        this.tsVersion = tsVersion;
     }
 
     public List<Status> getStatus() {

@@ -135,14 +135,14 @@ public final class TransportToExternalFk7263LegacyConverter {
         Vardkontakt vardkontakt = new Vardkontakt();
 
         switch (source.getVardkontakttyp()) {
-            case MIN_UNDERSOKNING_AV_PATIENTEN:
-                vardkontakt.setVardkontakttyp(Vardkontakttypkoder.MIN_UNDERSOKNING_AV_PATIENTEN);
-                break;
-            case MIN_TELEFONKONTAKT_MED_PATIENTEN:
-                vardkontakt.setVardkontakttyp(Vardkontakttypkoder.MIN_TELEFONKONTAKT_MED_PATIENTEN);
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown VardkontaktType: " + source.getVardkontakttyp());
+        case MIN_UNDERSOKNING_AV_PATIENTEN:
+            vardkontakt.setVardkontakttyp(Vardkontakttypkoder.MIN_UNDERSOKNING_AV_PATIENTEN);
+            break;
+        case MIN_TELEFONKONTAKT_MED_PATIENTEN:
+            vardkontakt.setVardkontakttyp(Vardkontakttypkoder.MIN_TELEFONKONTAKT_MED_PATIENTEN);
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown VardkontaktType: " + source.getVardkontakttyp());
         }
 
         // In FK7263Legacy case, we set fromDate=endDate since we only have 1 date
@@ -160,14 +160,14 @@ public final class TransportToExternalFk7263LegacyConverter {
         }
         if (source.getReferenstyp() != null) {
             switch (source.getReferenstyp()) {
-                case JOURNALUPPGIFTER:
-                    referens.setReferenstyp(Referenstypkoder.JOURNALUPPGIFT);
-                    break;
-                case ANNAT:
-                    referens.setReferenstyp(Referenstypkoder.ANNAT);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown ReferensType: " + source.getReferenstyp());
+            case JOURNALUPPGIFTER:
+                referens.setReferenstyp(Referenstypkoder.JOURNALUPPGIFT);
+                break;
+            case ANNAT:
+                referens.setReferenstyp(Referenstypkoder.ANNAT);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown ReferensType: " + source.getReferenstyp());
             }
         }
         referens.setDatum(source.getDatum());
@@ -184,44 +184,44 @@ public final class TransportToExternalFk7263LegacyConverter {
         }
 
         switch (source.getAktivitetskod()) {
-            case PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN:
-                aktivitetsCode = Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN;
-                break;
-            case PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD:
-                aktivitetsCode = Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD;
-                break;
-            case ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL:
-                aktivitetsCode = Aktivitetskoder.ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL;
-                break;
-            case ARBETSLIVSINRIKTAD_REHABILITERING_AR_EJ_AKTUELL:
-                aktivitetsCode = Aktivitetskoder.ARBETSLIVSINRIKTAD_REHABILITERING_AR_INTE_AKTUELL;
-                break;
-            case GAR_EJ_ATT_BEDOMMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL:
-                aktivitetsCode = Aktivitetskoder.GAR_EJ_ATT_BEDOMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL;
-                break;
-            case PATIENTEN_BEHOVER_FA_KONTAKT_MED_FORETAGSHALSOVARDEN:
-                aktivitetsCode = Aktivitetskoder.PATIENTEN_BOR_FA_KONTAKT_MED_FORETAGSHALSOVARDEN;
-                break;
-            case PATIENTEN_BEHOVER_FA_KONTAKT_MED_ARBETSFORMEDLINGEN:
-                aktivitetsCode = Aktivitetskoder.PATIENTEN_BOR_FA_KONTAKT_MED_ARBETSFORMEDLINGEN;
-                break;
-            case FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT:
-                aktivitetsCode = Aktivitetskoder.FORANDRA_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT;
-                break;
-            case FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT:
-                aktivitetsCode = Aktivitetskoder.FORANDRA_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT;
-                break;
-            case KONTAKT_MED_FORSAKRINGSKASSAN_AR_AKTUELL:
-                aktivitetsCode = Aktivitetskoder.KONTAKT_MED_FK_AR_AKTUELL;
-                break;
-            case AVSTANGNING_ENLIGT_SM_L_PGA_SMITTA:
-                aktivitetsCode = Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA;
-                break;
-            case OVRIGT:
-                aktivitetsCode = Aktivitetskoder.OVRIGT;
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown Aktivitetskod: " + source.getAktivitetskod());
+        case PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN:
+            aktivitetsCode = Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN;
+            break;
+        case PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD:
+            aktivitetsCode = Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD;
+            break;
+        case ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL:
+            aktivitetsCode = Aktivitetskoder.ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL;
+            break;
+        case ARBETSLIVSINRIKTAD_REHABILITERING_AR_EJ_AKTUELL:
+            aktivitetsCode = Aktivitetskoder.ARBETSLIVSINRIKTAD_REHABILITERING_AR_INTE_AKTUELL;
+            break;
+        case GAR_EJ_ATT_BEDOMMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL:
+            aktivitetsCode = Aktivitetskoder.GAR_EJ_ATT_BEDOMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL;
+            break;
+        case PATIENTEN_BEHOVER_FA_KONTAKT_MED_FORETAGSHALSOVARDEN:
+            aktivitetsCode = Aktivitetskoder.PATIENTEN_BOR_FA_KONTAKT_MED_FORETAGSHALSOVARDEN;
+            break;
+        case PATIENTEN_BEHOVER_FA_KONTAKT_MED_ARBETSFORMEDLINGEN:
+            aktivitetsCode = Aktivitetskoder.PATIENTEN_BOR_FA_KONTAKT_MED_ARBETSFORMEDLINGEN;
+            break;
+        case FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT:
+            aktivitetsCode = Aktivitetskoder.FORANDRA_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT;
+            break;
+        case FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT:
+            aktivitetsCode = Aktivitetskoder.FORANDRA_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT;
+            break;
+        case KONTAKT_MED_FORSAKRINGSKASSAN_AR_AKTUELL:
+            aktivitetsCode = Aktivitetskoder.KONTAKT_MED_FK_AR_AKTUELL;
+            break;
+        case AVSTANGNING_ENLIGT_SM_L_PGA_SMITTA:
+            aktivitetsCode = Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA;
+            break;
+        case OVRIGT:
+            aktivitetsCode = Aktivitetskoder.OVRIGT;
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown Aktivitetskod: " + source.getAktivitetskod());
         }
 
         aktivitet.setBeskrivning(source.getBeskrivning());
@@ -234,25 +234,26 @@ public final class TransportToExternalFk7263LegacyConverter {
         Kod sysselsattningsKod = null;
 
         switch (source.getTypAvSysselsattning()) {
-            case ARBETSLOSHET:
-                sysselsattningsKod = Sysselsattningskoder.ARBETSLOSHET;
-                break;
-            case NUVARANDE_ARBETE:
-                sysselsattningsKod = Sysselsattningskoder.NUVARANDE_ARBETE;
-                break;
-            case FORALDRALEDIGHET:
-                // GenderCheck
-                String personnr = patient.getPersonId().getExtension();
-                int v = Integer.parseInt(personnr.substring(personnr.indexOf('-')).substring(KON_INDEX, KON_INDEX + 1)) % 2;
-                if (v == 0) {
-                    sysselsattningsKod = Sysselsattningskoder.MAMMALEDIG;
-                } else if (v == 1) {
-                    sysselsattningsKod = Sysselsattningskoder.PAPPALEDIG;
-                }
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown SysselsattningsType: " + source.getTypAvSysselsattning());
+        case ARBETSLOSHET:
+            sysselsattningsKod = Sysselsattningskoder.ARBETSLOSHET;
+            break;
+        case NUVARANDE_ARBETE:
+            sysselsattningsKod = Sysselsattningskoder.NUVARANDE_ARBETE;
+            break;
+        case FORALDRALEDIGHET:
+            // GenderCheck
+            String personnr = patient.getPersonId().getExtension();
+            int v = Integer.parseInt(personnr.substring(personnr.indexOf('-')).substring(KON_INDEX, KON_INDEX + 1)) % 2;
+            if (v == 0) {
+                sysselsattningsKod = Sysselsattningskoder.MAMMALEDIG;
+            } else if (v == 1) {
+                sysselsattningsKod = Sysselsattningskoder.PAPPALEDIG;
+            }
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown SysselsattningsType: " + source.getTypAvSysselsattning());
         }
+
         sysselsattning.setSysselsattningstyp(sysselsattningsKod);
         return sysselsattning;
     }
@@ -273,20 +274,24 @@ public final class TransportToExternalFk7263LegacyConverter {
         Fk7263Observation observation = new Fk7263Observation();
 
         switch (source.getTypAvFunktionstillstand()) {
-            case AKTIVITET:
-                if (source.getBeskrivning() != null && !source.getBeskrivning().isEmpty()) {
-                    observation.setObservationskategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
-                    observation.setBeskrivning(source.getBeskrivning());
-                } else {
-                    observation = null;
-                }
-                break;
-            case KROPPSFUNKTION:
+        case AKTIVITET:
+            if (source.getBeskrivning() != null) {
+                observation.setObservationskategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
+                observation.setBeskrivning(EmptyStringUtil.escapeEmptyString(source.getBeskrivning()));
+            } else {
+                observation = null;
+            }
+            break;
+        case KROPPSFUNKTION:
+            if (source.getBeskrivning() != null) {
                 observation.setObservationskategori(ObservationsKoder.KROPPSFUNKTIONER);
-                observation.setBeskrivning(source.getBeskrivning());
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown FunktionstillstandType: " + source.getTypAvFunktionstillstand());
+                observation.setBeskrivning(EmptyStringUtil.escapeEmptyString(source.getBeskrivning()));
+            } else {
+                observation = null;
+            }
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown FunktionstillstandType: " + source.getTypAvFunktionstillstand());
         }
 
         if (observation != null) {
@@ -307,20 +312,20 @@ public final class TransportToExternalFk7263LegacyConverter {
             prognos = new Fk7263Prognos();
             if (source.getPrognosangivelse() != null) {
                 switch (source.getPrognosangivelse()) {
-                    case ATERSTALLAS_DELVIS:
-                        prognos.setPrognoskod(Prognoskoder.ATERSTALLAS_DELVIS);
-                        break;
-                    case ATERSTALLAS_HELT:
-                        prognos.setPrognoskod(Prognoskoder.ATERSTALLAS_HELT);
-                        break;
-                    case DET_GAR_INTE_ATT_BEDOMMA:
-                        prognos.setPrognoskod(Prognoskoder.DET_GAR_INTE_ATT_BEDOMA);
-                        break;
-                    case INTE_ATERSTALLAS:
-                        prognos.setPrognoskod(Prognoskoder.INTE_ATERSTALLAS);
-                        break;
-                    default:
-                        break;
+                case ATERSTALLAS_DELVIS:
+                    prognos.setPrognoskod(Prognoskoder.ATERSTALLAS_DELVIS);
+                    break;
+                case ATERSTALLAS_HELT:
+                    prognos.setPrognoskod(Prognoskoder.ATERSTALLAS_HELT);
+                    break;
+                case DET_GAR_INTE_ATT_BEDOMMA:
+                    prognos.setPrognoskod(Prognoskoder.DET_GAR_INTE_ATT_BEDOMA);
+                    break;
+                case INTE_ATERSTALLAS:
+                    prognos.setPrognoskod(Prognoskoder.INTE_ATERSTALLAS);
+                    break;
+                default:
+                    break;
                 }
             }
             if (source.getMotivering() != null) {
@@ -344,7 +349,8 @@ public final class TransportToExternalFk7263LegacyConverter {
      * Convert nedsattning to formaga. Note: kind of backwards, but meaning is opposite in transport model vs domain
      * model..
      *
-     * @param source source
+     * @param source
+     *            source
      * @return Fk7263Observation
      */
     private static Fk7263Observation convert(ArbetsformagaNedsattningType source) {
@@ -354,20 +360,20 @@ public final class TransportToExternalFk7263LegacyConverter {
             PhysicalQuantity varde = new PhysicalQuantity();
             varde.setUnit("percent");
             switch (source.getNedsattningsgrad()) {
-                case HELT_NEDSATT:
-                    varde.setQuantity(0.0);
-                    break;
-                case NEDSATT_MED_3_4:
-                    varde.setQuantity(FORMOGA_1_4);
-                    break;
-                case NEDSATT_MED_1_2:
-                    varde.setQuantity(FORMOGA_1_2);
-                    break;
-                case NEDSATT_MED_1_4:
-                    varde.setQuantity(FORMOGA_3_4);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown Nedsattningsgrad: " + source.getNedsattningsgrad());
+            case HELT_NEDSATT:
+                varde.setQuantity(0.0);
+                break;
+            case NEDSATT_MED_3_4:
+                varde.setQuantity(FORMOGA_1_4);
+                break;
+            case NEDSATT_MED_1_2:
+                varde.setQuantity(FORMOGA_1_2);
+                break;
+            case NEDSATT_MED_1_4:
+                varde.setQuantity(FORMOGA_3_4);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown Nedsattningsgrad: " + source.getNedsattningsgrad());
             }
             nedsattning.getVarde().add(varde);
         }
@@ -386,7 +392,7 @@ public final class TransportToExternalFk7263LegacyConverter {
         }
         Fk7263Observation observation = new Fk7263Observation();
         observation.setBeskrivning(bedomtTillstand.getBeskrivning());
-        // TODO: ObservationsKategori ?
+        // TODO ObservationsKategori ?
         observation.setObservationskod(ObservationsKoder.FORLOPP);
         return observation;
     }
@@ -423,7 +429,8 @@ public final class TransportToExternalFk7263LegacyConverter {
     /**
      * Creates and converts basic patient info.
      *
-     * @param source source
+     * @param source
+     *            source
      * @return Fk7263Patient
      */
     private static Fk7263Patient convert(PatientType source) {

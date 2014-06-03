@@ -3,6 +3,7 @@ package se.inera.certificate.modules.support.api;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelResponse;
+import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.PdfResponse;
@@ -93,4 +94,14 @@ public interface ModuleApi {
      * @return The complementary info for this type of intyg.
      */
     String getComplementaryInfo(ExternalModelHolder externalModel) throws ModuleException;
+
+    /**
+     * Returns an updated version of the external model with the HoS person information.
+     *
+     * @param internalModel The internal model to extract complementary information from.
+     * @param hosPerson The HoS person to update the model with.
+     *
+     * @return The internal model updated with the hosPerson info.
+     */
+    InternalModelHolder updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException;
 }

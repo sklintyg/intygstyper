@@ -77,7 +77,7 @@ public class ExternalToTransportFk7263LegacyConverterTest {
 
         Assert.assertTrue(diff.toString(), diff.identical());
     }
-    
+
     private JAXBElement<?> wrapJaxb(RegisterMedicalCertificate ws) {
             JAXBElement<?> jaxbElement = new JAXBElement<RegisterMedicalCertificate>(
                     new QName("urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3", "RegisterMedicalCertificate"),

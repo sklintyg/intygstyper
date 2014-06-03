@@ -63,7 +63,10 @@ public class WebcertModelFactoryTest {
         }
 
         assertNotNull(utlatande);
+        assertNotNull(utlatande.getId());
+        assertNotNull(utlatande.getTyp());
         assertNotNull(utlatande.getSkapadAv());
+        assertNotNull(utlatande.getPatient());
 
         /** Just verify some stuff from the json to make sure all is well.. */
         assertEquals("testID", utlatande.getId());

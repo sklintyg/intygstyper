@@ -492,7 +492,7 @@ public class InternalToExternalConverter {
 
         if (source.isForaldrarledighet() && patient.getId().getExtension() != null) {
             Sysselsattning sysselsattning = new Sysselsattning();
-            // TODO: change this implementation when a single code for foraldrarledighet is created
+            // TODO change this implementation when a single code for foraldrarledighet is created
             if (isFemale(patient.getId().getExtension())) {
                 sysselsattning.setSysselsattningstyp(Sysselsattningskoder.MAMMALEDIG);
             } else {

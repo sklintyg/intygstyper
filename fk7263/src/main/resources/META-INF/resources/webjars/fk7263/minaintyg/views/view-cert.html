@@ -56,7 +56,7 @@
         </div>
 
 		<!-- Show if more than one event exists -->
-   		<div ng-show="cert.filteredStatuses.length>0">
+   		<div ng-show="cert.filteredStatuses.length>0" id="latest-certificate-event">
             <span message key="fk7263.status.{{cert.filteredStatuses[0].type}}"></span>
             <span ng-show="cert.statuses[0].type == 'SENT'"></span>
             <span message key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span>
@@ -223,7 +223,7 @@
                 <ul>
                   <li ng-show="cert.rekommendationKontaktArbetsformedlingen"><span message key="fk7263.label.recommendations.contact.jobcenter"></span></li>
                   <li ng-show="cert.rekommendationKontaktForetagshalsovarden"><span message key="fk7263.label.recommendations.contact.healthdepartment"></span></li>
-                  <li ng-show="cert.rekommendationOvrigt != null"><span message key="fk7263.label.recommendations.contact.other"></span> {{cert.rekommenderarOvrigt.beskrivning}}</li>
+                  <li ng-show="cert.rekommendationOvrigt.length > 0"><span message key="fk7263.label.recommendations.contact.other"></span> {{cert.rekommendationOvrigt}}</li>
                 </ul>
               </div>
 
@@ -270,7 +270,7 @@
 
               <div mi-field field-label="fk7263.label.otherinformation" filled="cert.kommentar">
                 <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
-                <div class="tag" ng-show="cert.kommentar!=null">{{cert.kommentar}}</div>
+                <div class="tag" ng-show="cert.kommentar.length > 0">{{cert.kommentar}}</div>
               </div>
 
               <div mi-field field-label="fk7263.label.workcodes" filled="cert.forskrivarkodOchArbetsplatskod">

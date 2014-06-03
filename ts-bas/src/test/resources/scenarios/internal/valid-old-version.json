@@ -1,6 +1,6 @@
 {
     "id": "987654321",
-    "typ": "TS_BAS_U06_V06",
+    "typ": "TS_BAS_OLD_KOD",
     "signeringsdatum": "2013-08-12T15:57:00.000",
     "skapadAv": {
         "personid": "SE0000000000-1333",
@@ -47,26 +47,23 @@
         ]
     },
     "syn" : {
-        "synfaltsdefekter" :  true,
+        "synfaltsdefekter" :  false,
         "nattblindhet" : false,
         "progressivOgonsjukdom" : false,
         "diplopi" : false,
         "nystagmus" : false,
         "hogerOga" : {
         	"utanKorrektion" : 0.0,
-          	"medKorrektion" : 0.0,
         	"kontaktlins" : false
         },
         
         "vansterOga" : {
         	"utanKorrektion" : 0.0,
-        	"medKorrektion" : 0.0,
         	"kontaktlins" : false
         },
 
         "binokulart" : {
-        	"utanKorrektion" : 0.0,
-          	"medKorrektion" : 0.0
+        	"utanKorrektion" : 0.0
         }
     },
     

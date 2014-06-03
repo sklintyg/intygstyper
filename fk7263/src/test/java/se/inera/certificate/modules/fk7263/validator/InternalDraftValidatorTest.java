@@ -47,15 +47,14 @@ public class InternalDraftValidatorTest {
 
             Fk7263Intyg utlatande = scenario.asInternalModel();
             ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
-            System.out.println(validationResponse.getValidationErrors());
 
             assertEquals(ValidationStatus.INVALID, validationResponse.getStatus());
         }
     }
 
     /**
-     * Utility method for getting a single element from a collection
-     * 
+     * Utility method for getting a single element from a collection.
+     *
      * @param collection
      *            the collection
      * @return a single element, throws IllegalArgumentException in case the collection contains more than one element

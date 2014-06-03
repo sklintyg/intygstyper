@@ -26,10 +26,10 @@
         ],
         "arbetsuppgifter": [
             {
-                "typAvArbetsuppgift": "Dirigent Dirigerar en f\u00f6r st\u00f6rre orkester p\u00e5 deltid"
+                "typAvArbetsuppgift": "Dirigent Dirigerar en för större orkester på deltid"
             },
             {
-                "typAvArbetsuppgift": "Dirigent Dirigerar en f\u00f6r st\u00f6rre orkester p\u00e5 deltid"
+                "typAvArbetsuppgift": "Dirigent Dirigerar en för större orkester på deltid"
             }
         ],
         "fullstandigtNamn": "Test Testorsson"
@@ -51,7 +51,7 @@
                 "extension": "123456789011"
             },
             "namn": "Kir Mott",
-            "postadress": "Lasarettv\u00e4gen 13",
+            "postadress": "Lasarettvägen 13",
             "postnummer": "85150",
             "postort": "Sundsvall",
             "telefonnummer": "060-8188000",
@@ -97,7 +97,7 @@
             "observationskod": {
                 "code": "S47"
             },
-            "beskrivning": "Kl\u00e4mskada p\u00e5 \u00f6verarm"
+            "beskrivning": "Klämskada på överarm"
         },
         {
             "observationskod": {
@@ -105,7 +105,7 @@
                 "codeSystemName": "SNOMED-CT",
                 "code": "288524001"
             },
-            "beskrivning": "Aktuellt sjukdomsf\u00f6rlopp"
+            "beskrivning": "Aktuellt sjukdomsförlopp"
         },
         {
             "observationskategori": {
@@ -113,7 +113,7 @@
                 "codeSystemName": "ICF",
                 "code": "b"
             },
-            "beskrivning": "Kraftigt nedsatt r\u00f6rlighet i \u00f6verarmen pga skadan.\nB\u00f6j- och str\u00e4ckf\u00f6rm\u00e5gan \u00e4r mycket d\u00e5lig.\nSm\u00e4rtar vid r\u00f6relse vilket ger att patienten inte kan anv\u00e4nda armen s\u00e4rkilt mycket."
+            "beskrivning": "Kraftigt nedsatt rörlighet i överarmen pga skadan.\nBöj- och sträckförmågan är mycket dålig.\nSmärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket."
         },
         {
             "observationskategori": {
@@ -121,7 +121,7 @@
                 "codeSystemName": "ICF",
                 "code": "d"
             },
-            "beskrivning": "Patienten b\u00f6r/kan inte anv\u00e4nda armen f\u00f6rr\u00e4n skadan l\u00e4kt.\nSkadan f\u00f6rv\u00e4rras vid f\u00f6r tidigt p\u00e5tvingad belastning.\nPatienten kan inte lyfta armen utan den ska h\u00e5llas riktad ned\u00e5t och i fast l\u00e4ge s\u00e5 mycket som m\u00f6jligt under tiden f\u00f6r l\u00e4kning."
+            "beskrivning": "Patienten bör/kan inte använda armen förrän skadan läkt.\nSkadan förvärras vid för tidigt påtvingad belastning.\nPatienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning."
         },
         {
             "observationskod": {
@@ -140,7 +140,7 @@
                         "codeSystemName": "kv_prognos_intyg",
                         "code": "PRO1"
                     },
-                    "beskrivning": "Skadan har f\u00f6rv\u00e4rrats vid varje tillf\u00e4lle patienten anv\u00e4nt armen. M\u00e5ste h\u00e5llas i total stillhet tills l\u00e4kningsprocessen kommit en bit p\u00e5 v\u00e4g. Eventuellt kan utredning visa att operation \u00e4r n\u00f6dv\u00e4ndig f\u00f6r att l\u00e4ka skadan."
+                    "beskrivning": "Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
                 }
             ],
             "varde": [

@@ -48,6 +48,7 @@ import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelResponse;
+import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.PdfResponse;
@@ -324,5 +325,10 @@ public class ModuleService implements ModuleApi {
     public String getComplementaryInfo(ExternalModelHolder externalModel) throws ModuleException {
         Utlatande utlatande = getExternal(externalModel);
         return String.format("%s %s", utlatande.getArrangemang().getPlats(), utlatande.getArrangemang().getArrangemangstid().getFrom());
+    }
+
+    @Override
+    public InternalModelHolder updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson) {
+        return internalModel;
     }
 }

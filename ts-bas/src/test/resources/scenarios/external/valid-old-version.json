@@ -37,12 +37,12 @@
         },
         "namn": "Doktor Thompson",
         "specialiteter" : [ 
-                         {
-                       	  "code" : "SPEC",
-                       	  "codeSystem" : "coming_soon",
-                       	  "codeSystemName" : "kv_intyg_specialitet"
-                         }
-                         ],
+                           {
+                         	  "code" : "SPEC",
+                         	  "codeSystem" : "coming_soon",
+                         	  "codeSystemName" : "kv_intyg_specialitet"
+                           }
+                           ],
         "vardenhet": {
             "id": {
                 "root": "1.2.752.129.2.1.4.1",
@@ -64,20 +64,28 @@
         "befattningar" : []
     },
     "vardkontakter": [
-          {
-            "vardkontakttyp": {
-                "codeSystem": "1.2.752.116.2.1.1.1",
-                "codeSystemName": "SNOMED-CT",
-                "code": "5880005"
-            },
-            "idkontroll": {
-                "codeSystem": "e7cc8f30-a353-4c42-b17a-a189b6876647",
-                "codeSystemName": "kv_id_kontroll",
-                "code": "IDK6"
-            }
-          }
+	      {
+	        "vardkontakttyp": {
+	            "codeSystem": "1.2.752.116.2.1.1.1",
+	            "codeSystemName": "SNOMED-CT",
+	            "code": "5880005"
+	        },
+	        "idkontroll": {
+	            "codeSystem": "e7cc8f30-a353-4c42-b17a-a189b6876647",
+	            "codeSystemName": "kv_id_kontroll",
+	            "code": "IDK6"
+	        }
+	      }
       ],
     "aktiviteter": [
+        {
+            "aktivitetskod": {
+                "codeSystem": "8040b4d1-67dc-42e1-a938-de5374e9526a",
+                "codeSystemName": "kv_aktiviteter_intyg",
+                "code": "AKT19"
+            },
+            "forekomst" : false
+        },
         {
             "aktivitetskod": {
                 "codeSystem": "8040b4d1-67dc-42e1-a938-de5374e9526a",
@@ -87,43 +95,33 @@
             "forekomst" : false
         },
         {
-            "id" : {
-                "root" : "1.2.752.129.2.1.2.1",
-                "extension" : "1"
-            },
+        	"id" : {
+        		"root" : "1.2.752.129.2.1.2.1",
+        		"extension" : "1"
+        	},
             "aktivitetskod": {
                 "codeSystem": "1.2.752.116.2.1.1.1",
                 "codeSystemName": "SNOMED-CT",
                 "code": "86944008"
             },
             "metod" : {
-                "code" : "MET1",
-                "codeSystem" : "b0c078c6-512a-42a5-ab42-a3380f369ac3",
-                "codeSystemName" : "kv_metod"
+            	"code" : "MET1",
+            	"codeSystem" : "b0c078c6-512a-42a5-ab42-a3380f369ac3",
+            	"codeSystemName" : "kv_metod"
             }
         },
         {
-           "id" : {
-                "root" : "1.2.752.129.2.1.2.1",
-                "extension" : "2"
-            },
+           	"id" : {
+        		"root" : "1.2.752.129.2.1.2.1",
+        		"extension" : "2"
+        	},
             "aktivitetskod": {
                 "codeSystem": "8040b4d1-67dc-42e1-a938-de5374e9526a",
                 "codeSystemName": "kv_aktiviteter_intyg",
                 "code": "AKT18"
             }
-        },
-        {
-            "aktivitetskod" : {
-                 "codeSystem": "8040b4d1-67dc-42e1-a938-de5374e9526a",
-                 "codeSystemName": "kv_aktiviteter_intyg",
-                 "code": "AKT19"
-             },
-             "ostruktureradTid" : "2012-12-12",
-             "beskrivning" : "Spontan självantändning",
-             "plats" : "Vårdcentralen i Trollhättan",
-             "forekomst" : true
         }
+        
     ],
     "rekommendationer": [
         {
@@ -273,6 +271,7 @@
         		"code": "7771000"
         	}
         },
+
         {
             "observationskod": {
                 "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
@@ -290,6 +289,7 @@
             },
             "forekomst": false
         },
+
         {
             "observationskod": {
                 "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
@@ -298,7 +298,6 @@
             },
             "forekomst": false
         },
-
         {
             "observationskod": {
                 "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
@@ -315,7 +314,6 @@
         	},
         	"forekomst" : false
         },
-       
         {
             "observationskod": {
                 "codeSystem": "1.2.752.116.2.1.1.1",
@@ -364,6 +362,7 @@
             },
             "forekomst": false
         },
+        
         {
             "observationskod": {
                 "codeSystem": "335d4bed-7e1d-4f81-ae7d-b39b266ef1a3",
@@ -407,26 +406,26 @@
     ],
     "observationAktivitetRelationer" : [
         {
-            "observationsid" : {
-                "root" : "1.2.752.129.2.1.2.1",
-                "extension" : "3"
+	    	"observationsid" : {
+	    		"root" : "1.2.752.129.2.1.2.1",
+	            "extension" : "3"
             },
-            "aktivitetsid" : {
-                "root" : "1.2.752.129.2.1.2.1",
-                "extension" : "1"
-            }
-        },
-        {
-            "observationsid" : {
-                "root" : "1.2.752.129.2.1.2.1",
-                "extension" : "4"
+	        "aktivitetsid" : {
+	        	"root" : "1.2.752.129.2.1.2.1",
+	            "extension" : "1"
+        	}  
+      	},
+      	{
+      		"observationsid" : {
+	    		"root" : "1.2.752.129.2.1.2.1",
+	            "extension" : "4"
             },
-            "aktivitetsid" : {
-                "root" : "1.2.752.129.2.1.2.1",
-                "extension" : "2"
-            }
-        }
+	        "aktivitetsid" : {
+	        	"root" : "1.2.752.129.2.1.2.1",
+	            "extension" : "2"
+        	}  
+      	}
     ],
-    "tsUtgava" : "06",
-    "tsVersion" : "06"
+    "tsUtgava" : "old-utgava",
+    "tsVersion" : "old-version"
 }

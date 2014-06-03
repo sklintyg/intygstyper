@@ -21,6 +21,7 @@ import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelResponse;
+import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.PdfResponse;
@@ -207,5 +208,21 @@ public class ModuleServiceWrapper implements ModuleApi {
             intygAvser.add(CodeConverter.fromCode(intygAvserKod, IntygAvserKod.class).name());
         }
         return Strings.join(", ", intygAvser);
+    }
+    @Override
+    public InternalModelHolder updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException {
+        try {
+            se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande = getInternal(internalModel);
+            utlatande.getSkapadAv().setPersonid(hosPerson.getHsaId());
+            utlatande.getSkapadAv().setFullstandigtNamn(hosPerson.getNamn());
+            utlatande.getSkapadAv().getBefattningar().clear();
+            if (hosPerson.getBefattning() != null) {
+                utlatande.getSkapadAv().getBefattningar().add(hosPerson.getBefattning());
+            }
+            String internalModelJson = toInteralModelResponse(utlatande).getInternalModel();
+            return new InternalModelHolder(internalModelJson);
+        } catch (ModuleException e) {
+            throw new ModuleException("Convert error of internal model", e);
+        }
     }
 }
