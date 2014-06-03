@@ -592,7 +592,7 @@ input[datepicker-popup] .btn-block {
     max-width: 570px;
 }
 
-.alert-dialog-error-panel {
+.dialog-extra-panel {
     padding-top: 20px;
 }
 
