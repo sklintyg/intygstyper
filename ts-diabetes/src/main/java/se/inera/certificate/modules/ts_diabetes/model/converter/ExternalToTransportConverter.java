@@ -29,7 +29,7 @@ import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
-import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
+import se.inera.certificate.modules.ts_diabetes.model.converter.IsoTypeConverter;
 import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_diabetes.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_diabetes.model.external.Bilaga;
@@ -68,10 +68,12 @@ public class ExternalToTransportConverter {
 
         utlatande.setSkapadAv(convertHosPersonal(source.getSkapadAv()));
         utlatande.setSkickatdatum(source.getSkickatdatum());
+
         utlatande.setTypAvUtlatande(IsoTypeConverter.toUtlatandeTyp(source.getTyp()));
-        UtlatandeKod utlatandeKod = CodeConverter.fromCode(source.getTyp(), UtlatandeKod.class);
+        UtlatandeKod utlatandeKod = UtlatandeKod.getVersionFromTSParams(source.getTsUtgava(), source.getTsVersion());
         utlatande.setUtgava(utlatandeKod.getTsUtgava());
         utlatande.setVersion(utlatandeKod.getTsVersion());
+
         utlatande.setUtlatandeId(IsoTypeConverter.toUtlatandeId(source.getId()));
 
         // Just make sure getVardkontakter() doesn't return an empty list before getting an index..

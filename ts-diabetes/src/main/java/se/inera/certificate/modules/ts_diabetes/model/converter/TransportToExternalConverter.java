@@ -32,7 +32,6 @@ import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardgivare;
-import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_diabetes.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_diabetes.model.external.Bilaga;
@@ -63,7 +62,7 @@ public class TransportToExternalConverter {
     /**
      * Converts from the transport format (se.inera.certificate.common.v1.Utlatande) to the external format
      * (se.inera.certificate.modules.ts_diabetes.model.external.Utlatande).
-     *
+     * 
      * @param source
      *            {@link Utlatande} in the transport format to be converted to external format
      * @return {@link se.inera.certificate.modules.ts_diabetes.model.external.Utlatande}
@@ -80,7 +79,7 @@ public class TransportToExternalConverter {
 
         // Validate and set Typ
         Kod typAvUtlatande = IsoTypeConverter.toKod(source.getTypAvUtlatande());
-        UtlatandeKod utlatandeKod = CodeConverter.fromCode(typAvUtlatande, UtlatandeKod.class);
+        UtlatandeKod utlatandeKod = UtlatandeKod.getVersionFromTSParams(source.getUtgava(), source.getVersion());
         try {
             utlatandeKod.assertVersion(source.getUtgava(), source.getVersion());
         } catch (IllegalArgumentException e) {
@@ -88,6 +87,9 @@ public class TransportToExternalConverter {
         }
 
         utlatande.setTyp(typAvUtlatande);
+        utlatande.setTsUtgava(source.getUtgava());
+        utlatande.setTsVersion(source.getVersion());
+
         utlatande.getKommentarer().addAll(source.getKommentars());
         utlatande.setPatient(convertPatient(source.getPatient()));
         utlatande.setSigneringsdatum(source.getSigneringsdatum());
@@ -123,7 +125,7 @@ public class TransportToExternalConverter {
 
     /**
      * Convert a collection of ObservationAktivitetRelationTypes to ObservationAktivitetRelations.
-     *
+     * 
      * @param source
      *            List of {@link ObservationAktivitetRelationType}
      * @return List of {@link ObservationAktivitetRelation}
@@ -145,7 +147,7 @@ public class TransportToExternalConverter {
 
     /**
      * Convert a single ObservationAktivitetRelationType to ObservationAktivitetRelation.
-     *
+     * 
      * @param source
      *            {@link ObservationAktivitetRelationType}
      * @return {@link ObservationAktivitetRelation}
@@ -160,7 +162,7 @@ public class TransportToExternalConverter {
 
     /**
      * Converts a list of RekommendationType to Rekommendation.
-     *
+     * 
      * @param source
      *            {@link RekommendationType}
      * @return
@@ -180,11 +182,11 @@ public class TransportToExternalConverter {
 
     /**
      * Convert a RekommendationType to Rekommendation.
-     *
+     * 
      * @param source
      *            {@link RekommendationType}
      * @return {@link Rekommendation}
-     *
+     * 
      * @throws ConverterException
      */
     private Rekommendation convertRekommendation(RekommendationType source) throws ConverterException {
@@ -214,7 +216,7 @@ public class TransportToExternalConverter {
 
     /**
      * Convert a VardkontaktType to Vardkontakt.
-     *
+     * 
      * @param source
      *            {@link VardkontaktType}
      * @return {@link Vardkontakt}
@@ -229,7 +231,7 @@ public class TransportToExternalConverter {
 
     /**
      * Convert a collection of AktivitetType to collection of Aktivitet.
-     *
+     * 
      * @param source
      *            List of {@link AktivitetType}
      * @return List of {@link Aktivitet}
@@ -246,7 +248,7 @@ public class TransportToExternalConverter {
 
     /**
      * Convert a single AktivitetType to Aktivitet.
-     *
+     * 
      * @param source
      *            {@link AktivitetType}
      * @return {@link Aktivitet}
@@ -289,7 +291,7 @@ public class TransportToExternalConverter {
 
     /**
      * Converts a collection of ObservationType to a collection of Observation.
-     *
+     * 
      * @param source
      *            List of {@link ObservationType}
      * @return List of {@link Observation}
@@ -312,7 +314,7 @@ public class TransportToExternalConverter {
 
     /**
      * Convert a single ObservationType to Observation.
-     *
+     * 
      * @param source
      *            {@link ObservationType}
      * @return {@link Observation}
@@ -357,7 +359,7 @@ public class TransportToExternalConverter {
 
     /**
      * Convert from List of CD to List of Kod.
-     *
+     * 
      * @param source
      *            List of {@link CD}
      * @return List of {@link Kod}
@@ -372,7 +374,7 @@ public class TransportToExternalConverter {
 
     /**
      * Convert HosPersonalType to HosPersonal.
-     *
+     * 
      * @param source
      *            {@link HosPersonalType}
      * @return {@link HosPersonal}
@@ -394,7 +396,7 @@ public class TransportToExternalConverter {
 
     /**
      * Convert EnhetType to Vardenhet.
-     *
+     * 
      * @param source
      *            {@link EnhetType}
      * @return {@link Vardenhet}
@@ -419,7 +421,7 @@ public class TransportToExternalConverter {
 
     /**
      * Convert VardgivareType to Vardgivare.
-     *
+     * 
      * @param source
      *            {@link VardgivareType}
      * @return {@link Vardgivare}
@@ -438,7 +440,7 @@ public class TransportToExternalConverter {
 
     /**
      * Convert PatientType to Patient.
-     *
+     * 
      * @param source
      *            {@link PatientType}
      * @return {@link Patient}

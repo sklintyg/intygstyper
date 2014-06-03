@@ -140,5 +140,7 @@
             },
             "forekomst": false
         }
-    ]
+    ],
+    "tsUtgava" : "06",
+    "tsVersion" : "02"
 }

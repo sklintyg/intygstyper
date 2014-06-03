@@ -55,6 +55,10 @@ public class Utlatande extends se.inera.certificate.model.Utlatande {
     private List<Status> status;
 
     private Bilaga bilaga;
+    
+    private String tsUtgava;
+
+    private String tsVersion;
 
     public List<Kod> getIntygAvser() {
         if (intygAvser == null) {
@@ -139,5 +143,21 @@ public class Utlatande extends se.inera.certificate.model.Utlatande {
     public LocalDate getValidFromDate() {
         // TODO So far, this intyg does not have a validFromDate
         return null;
+    }
+
+    public void setTsUtgava(String tsUtgava) {
+        this.tsUtgava = tsUtgava;
+    }
+
+    public String getTsUtgava() {
+        return tsUtgava;
+    }
+
+    public void setTsVersion(String tsVersion) {
+        this.tsVersion = tsVersion;
+    }
+
+    public String getTsVersion() {
+        return tsVersion;
     }
 }

@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.AktivitetKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_diabetes.model.codes.CodeSystem;
@@ -101,7 +102,9 @@ public class ExternalToInternalConverterInstance {
         Utlatande intUtlatande = new Utlatande();
 
         intUtlatande.setId(InternalModelConverterUtils.getExtensionFromId(extUtlatande.getId()));
-        intUtlatande.setTyp(InternalModelConverterUtils.getValueFromKod(extUtlatande.getTyp()));
+
+        intUtlatande.setTyp(UtlatandeKod.getVersionFromTSParams(extUtlatande.getTsUtgava(), extUtlatande.getTsVersion()).name());
+
         intUtlatande.setSigneringsdatum(extUtlatande.getSigneringsdatum());
         intUtlatande.setSkickatdatum(extUtlatande.getSkickatdatum());
         intUtlatande.setKommentarer(extUtlatande.getKommentarer().isEmpty() ? null : extUtlatande.getKommentarer().get(0));

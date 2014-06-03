@@ -51,7 +51,10 @@ public class WebcertModelFactory {
 
         Utlatande utlatande = new Utlatande();
         utlatande.setId(newDraftData.getCertificateId());
-        utlatande.setTyp(UtlatandeKod.TS_DIABETES.name());
+
+        // This is where we set the concrete tsUtgava and tsVersion of the intyg that is created. 
+        utlatande.setTyp(UtlatandeKod.getCurrentVersion().name());
+
         populateWithSkapadAv(utlatande, newDraftData.getSkapadAv());
         populateWithPatientInfo(utlatande, newDraftData.getPatient());
 
