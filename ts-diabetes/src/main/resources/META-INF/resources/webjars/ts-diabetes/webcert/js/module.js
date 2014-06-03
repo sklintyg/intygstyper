@@ -4,8 +4,9 @@ define([
     'webjars/ts-diabetes/webcert/js/controllers/EditCertCtrl',
     'webjars/ts-diabetes/webcert/js/controllers/ViewCertCtrl',
     'webjars/common/webcert/js/directives/wcEyeDecimal',
-    'webjars/common/webcert/js/services/messageService'
-], function(angular, messages, EditCertCtrl, ViewCertCtrl, wcEyeDecimal, messageService) {
+    'webjars/common/webcert/js/services/messageService',
+    'text!webjars/ts-diabetes/webcert/views/edit-cert.html'
+], function(angular, messages, EditCertCtrl, ViewCertCtrl, wcEyeDecimal, messageService, editCertTemplate) {
     'use strict';
 
     var moduleName = 'ts-diabetes';
@@ -15,7 +16,7 @@ define([
     module.config(['$routeProvider', function($routeProvider) {
         $routeProvider.
             when('/ts-diabetes/edit/:certificateId', {
-                templateUrl: '/web/webjars/ts-diabetes/webcert/views/edit-cert.html',
+                template: editCertTemplate,
                 controller: EditCertCtrl
             });
     }]);
