@@ -45,6 +45,15 @@ define([], function() {
             'ts-bas.label.bedomning': 'Bedömning',
             'ts-bas.label.unit': 'Vårdenhet',
 
+            // Identitet styrkt genom
+            'ts-diabetes.label.identitet.id_kort': 'SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.',
+            'ts-diabetes.label.identitet.foretag_eller_tjanstekort': 'SIS-märkt företagskort eller tjänstekort.',
+            'ts-diabetes.label.identitet.korkort': 'Svenskt körkort',
+            'ts-diabetes.label.identitet.pers_kannedom': 'Personlig kännedom',
+            'ts-diabetes.label.identitet.forsakran_kap18': 'Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2)',
+            'ts-diabetes.label.identitet.pass': 'Svenskt EU-pass, annat EU-pass utfärdade från och med 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz fron och med den 1 september 2006.',
+
+            //Körkortsbehörigheter
             'ts-bas.label.korkort.c1': 'C1',
             'ts-bas.label.korkort.c1e': 'C1E',
             'ts-bas.label.korkort.c': 'C',
@@ -60,7 +69,8 @@ define([], function() {
             'ts-bas.helptext.intyg-avser': '<span style="text-align:left">C1 = medeltung lastbil,<br/> C1E = medeltung lastbil och ett eller flera släpfordon oavsett vikt,<br/> C = tung lastbil och enbart ett lätt släpfordon,<br/> CE = tung lastbil och ett eller flera släpfordon oavsett vikt,<br/> D1 = mellanstor buss,<br/> D1E = mellanstor buss och ett eller flera släpfordon oavsett vikt,<br/> D = buss och enbart ett lätt släpfordon,<br/> DE = buss och ett eller flera släpfordon oavsett vikt,<br/> E = tungt släpfordon,<br/> Taxi = taxiförarlegitimation</span>',
             'ts-bas.helptext.intyg-avser.grupp2-grupp3': 'Grupp II omfattar behörigheterna AM, A1, A2, A, B, BE, C1, C1E, C och CE.<br/> Grupp III omfattar behörigheterna AM, A1, A2, A, B, BE, C1, C1E, C, CE, D1, D1E, D och DE.',
 
-            'ts-bas.helptext.identitet-styrkt-genom.id-kort': 'ID-kort = SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.',
+            'ts-bas.helptext.identitet': 'Identitet styrkt genom',
+
             'ts-bas.helptext.identitet-styrkt-genom.foretag-tjanstekort': 'Företagskort eller tjänstekort = SIS-märkt företagskort eller tjänstekort.',
             'ts-bas.helptext.identitet-styrkt-genom.forsakran': 'Försäkran enligt 18 kap. 4 § = Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2): Identiteten får fastställas genom att en förälder, annan vårdnadshavare, make, maka eller sambo, registrerad partner eller myndigt barn skriftligen försäkrar att lämnade uppgifter om sökandens identitet är riktiga. Den som lämnar en sådan försäkran ska vara närvarande vid identitetskontrollen och kunna styrka sin egen identitet.',
             'ts-bas.helptext.identitet-styrkt-genom.pass': 'Pass = Svenskt EU-pass, annat EU-pass utfärdade från och med den 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 200',
