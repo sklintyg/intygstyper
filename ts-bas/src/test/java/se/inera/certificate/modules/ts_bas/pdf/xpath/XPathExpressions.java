@@ -37,7 +37,7 @@ public class XPathExpressions {
             "/p:utlatande/p:skapadAv/p:enhet/p:enhetsnamn");
 
     public static final StringXPathExpression ADRESS_OCH_ORT_XPATH = new StringXPathExpression(
-            "concat (/p:utlatande/p:skapadAv/p:enhet/p:postadress, ', ', /p:utlatande/p:skapadAv/p:enhet/p:postnummer, ' ', /p:utlatande/p:skapadAv/p:enhet/p:postort)");
+            "concat ( /p:utlatande/p:skapadAv/p:enhet/p:postort, ', ',/p:utlatande/p:skapadAv/p:enhet/p:postadress, ', ', /p:utlatande/p:skapadAv/p:enhet/p:postnummer)");
 
     public static final StringXPathExpression TELEFON_XPATH = new StringXPathExpression(
             "/p:utlatande/p:skapadAv/p:enhet/p:telefonnummer");

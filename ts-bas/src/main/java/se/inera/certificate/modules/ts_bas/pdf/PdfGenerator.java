@@ -215,7 +215,7 @@ public class PdfGenerator {
 
     /**
      * Method for filling out the fields of a pdf with data from the internal model.
-     *
+     * 
      * @param utlatande
      *            {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande} containing data for populating
      *            the pdf
@@ -400,8 +400,7 @@ public class PdfGenerator {
         INTYGSDATUM.setField(fields, utlatande.getSigneringsdatum().toString("yyMMdd"));
         Vardenhet vardenhet = utlatande.getSkapadAv().getVardenhet();
         VARDINRATTNINGENS_NAMN.setField(fields, vardenhet.getEnhetsnamn());
-        String adressOrt = String.format("%s, %s %s", vardenhet.getPostadress(), vardenhet.getPostnummer(),
-                vardenhet.getPostort());
+        String adressOrt = String.format("%s, %s, %s", vardenhet.getPostort(), vardenhet.getPostadress(), vardenhet.getPostnummer());
         ADRESS_OCH_ORT.setField(fields, adressOrt);
         TELEFON.setField(fields, vardenhet.getTelefonnummer());
         NAMNFORTYDLIGANDE.setField(fields, utlatande.getSkapadAv().getFullstandigtNamn());
