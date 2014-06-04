@@ -72,7 +72,7 @@ define([], function() {
             'ts-diabetes.label.diabetes.behandling.endast-kost': 'Endast kost',
             'ts-diabetes.label.diabetes.behandling.tabletter': 'Tabletter',
             'ts-diabetes.label.diabetes.behandling.insulin': 'Insulin',
-            'ts-diabetes.label.diabetes.behandling.insulin-period': 'Insulin sedan: ',
+            'ts-diabetes.label.diabetes.behandling.insulin-period': 'Insulin sedan år: ',
             'ts-diabetes.label.diabetes.behandling.annan': 'Annan behandling',
             'ts-diabetes.label.diabetes.behandling.annan.period': 'Annan behandling, vilken? ',
 

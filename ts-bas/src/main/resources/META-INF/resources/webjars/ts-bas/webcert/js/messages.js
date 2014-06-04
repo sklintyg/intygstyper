@@ -103,8 +103,8 @@ define([], function() {
             'ts-bas.label.syn.nystagmus': 'e) Förekommer nystagmus?',
             'ts-bas.label.syn.synskarpa': 'f) Värden för synskärpa',
 
-            'ts-bas.label.horselbalans.balansrubbningar': 'Har patienten överraskande anfall av balansrubbningar eller yrsel?',
-            'ts-bas.label.funktionsnedsattning.funktionsnedsattning': 'Har patienten någon sjukdom eller funktionsnedsättning som påverkar rörligheten och som medför att fordon inte kan köras på ett trafiksäkert sätt?',
+            'ts-bas.label.horselbalans.balansrubbningar': 'a) Har patienten överraskande anfall av balansrubbningar eller yrsel?',
+            'ts-bas.label.funktionsnedsattning.funktionsnedsattning': 'a) Har patienten någon sjukdom eller funktionsnedsättning som påverkar rörligheten och som medför att fordon inte kan köras på ett trafiksäkert sätt?',
             'ts-bas.label.funktionsnedsattning.beskrivning': 'Typ av nedsättning eller sjukdom:',
 
             'ts-bas.label.hjartkarl.hjart-karlsjukdom': 'Föreligger hjärt- eller kärlsjukdom som kan medföra en påtaglig risk för att hjärnans funktioner akut försämras eller som i övrigt innebär en trafiksäkerhetsrisk?',

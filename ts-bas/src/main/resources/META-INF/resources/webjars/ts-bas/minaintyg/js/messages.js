@@ -71,20 +71,22 @@ define([], function() {
             'ts-bas.label.syn.medkorrektion': '',
             'ts-bas.label.syn.kontaktlins': '',
 
-            'ts-bas.label.horselbalans.balansrubbningar': 'Har patienten överraskande anfall av balansrubbningar eller yrsel?',
+            'ts-bas.label.horselbalans.balansrubbningar': 'a) Har patienten överraskande anfall av balansrubbningar eller yrsel?',
+            'ts-bas.label.horselbalans.samtal4meter': 'b) Har patienten svårt att uppfatta vanlig samtalsstämma på fyra meters avstånd (hörapparat får användas)?',
 
-            'ts-bas.label.funktionsnedsattning.funktionsnedsattning': 'Har patienten någon sjukdom eller funktionsnedsättning som påverkar rörligheten och som medför att fordon inte kan köras på ett trafiksäkert sätt?',
+            'ts-bas.label.funktionsnedsattning.funktionsnedsattning': 'a) Har patienten någon sjukdom eller funktionsnedsättning som påverkar rörligheten och som medför att fordon inte kan köras på ett trafiksäkert sätt?',
             'ts-bas.label.funktionsnedsattning.beskrivning': 'Typ av nedsättning eller sjukdom:',
+            'ts-bas.label.funktionsnedsattning.otillracklig-rorelseformaga': 'b) Är rörelseförmågan otillräcklig för att kunna hjälpa passagerare in och ut ur fordonet samt med bilbälte?',
 
-            'ts-bas.label.hjartkarl.hjart-karlsjukdom': 'Föreligger hjärt- eller kärlsjukdom som kan medföra en påtaglig risk för att hjärnans funktioner akut försämras eller som i övrigt innebär en trafiksäkerhetsrisk?',
-            'ts-bas.label.hjartkarl.hjarnskada-efter-trauma': 'Finns tecken på hjärnskada eller trauma, stroke eller annan sjukdom i centrala nervsystemet?',
-            'ts-bas.label.hjartkarl.riskfaktorer-stroke': 'Föreligger viktiga riskfaktorer för stroke (tidigare stroke eller TIA, förhöjt blodtryck, förmaksflimmer eller kärlmissbildning)?',
-            'ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning': 'Typ av sjukdom:',
+            'ts-bas.label.hjartkarl.hjart-karlsjukdom': 'a) Föreligger hjärt- eller kärlsjukdom som kan medföra en påtaglig risk för att hjärnans funktioner akut försämras eller som i övrigt innebär en trafiksäkerhetsrisk?',
+            'ts-bas.label.hjartkarl.hjarnskada-efter-trauma': 'b) Finns tecken på hjärnskada eller trauma, stroke eller annan sjukdom i centrala nervsystemet?',
+            'ts-bas.label.hjartkarl.riskfaktorer-stroke': 'c) Föreligger viktiga riskfaktorer för stroke (tidigare stroke eller TIA, förhöjt blodtryck, förmaksflimmer eller kärlmissbildning)?',
+            'ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning': 'Vilken typ av sjukdom:',
 
             'ts-bas.label.diabetes.har-diabetes': 'Har patienten diabetes',
             'ts-bas.label.diabetes.diabetestyp': 'Diabetestyp',
-            'ts-bas.label.diabetes.diabetestyp.diabetes_typ_1': 'Diabetes Typ1',
-            'ts-bas.label.diabetes.diabetestyp.diabetes_typ_2': 'Diabets Typ2',
+            'ts-bas.label.diabetes.diabetestyp.diabetes_typ_1': 'Diabetes Typ 1',
+            'ts-bas.label.diabetes.diabetestyp.diabetes_typ_2': 'Diabets Typ 2',
             'ts-bas.label.diabetes.behandling': 'Behandling:',
             'ts-bas.label.diabetes.behandling.kost': 'Kost',
             'ts-bas.label.diabetes.behandling.tabletter': 'Tabletter',
@@ -93,7 +95,7 @@ define([], function() {
             'ts-bas.label.neurologi.neurologisksjukdom': 'Finns tecken på neurologisk sjukdom?',
 
             'ts-bas.label.medvetandestorning.medvetandestorning': 'Har eller har patienten haft epilepsi, epileptiskt anfall eller annan medvetandestörning?',
-            'ts-bas.label.medvetandestorning.beskrivning': 'Om ja. Information om när den inträffade och orsak:',
+            'ts-bas.label.medvetandestorning.beskrivning': 'Om frågan besvaras med ja, och det är frågan om annan medvetandestörning, ange när den inträffade och orsak:',
 
             'ts-bas.label.njurar.nedsatt-njurfunktion': 'Föreligger allvarligt nedsatt njurfunktion som kan innebära en trafiksäkerhetsrisk?',
 
@@ -105,7 +107,7 @@ define([], function() {
             'ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats': 'b) Har patienten vid något tillfälle varit föremål för vårdinsatser för missbruk eller beroende av alkohol, narkotika eller läkemedel?',
             'ts-bas.label.narkotika-lakemedel.behov-provtagning': 'Behövs det provtagning avseende aktuellt bruk av akohol eller narkotika?',
             'ts-bas.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk': 'c) Pågår regelbundet läkarordinerat bruk av läkemedel som kan innebära en trafiksäkerhetsrisk?',
-            'ts-bas.label.narkotika-lakemedel.beskrivning': 'Om JA på C. Information om läkemedel och ordinerad dos:',
+            'ts-bas.label.narkotika-lakemedel.beskrivning': 'Om frågan besvaras med ja, ange läkemedel och ordinerad dos:',
 
             'ts-bas.label.psykiskt.psykisksjukdom': 'Har eller har patienten haft psykisk sjukdom eller störning, till exempel schizofreni, annan psykos eller bipolär (manodepressiv) sjukdom?',
 
