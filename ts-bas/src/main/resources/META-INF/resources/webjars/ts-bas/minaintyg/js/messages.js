@@ -55,6 +55,14 @@ define([], function() {
             'ts-bas.label.korkort.taxi': 'Taxi',
             'ts-bas.label.korkort.annat': 'Annat',
 
+            // Identitet styrkt genom
+            'ts-bas.label.identitet.id_kort': 'ID-kort',
+            'ts-bas.label.identitet.foretag_eller_tjanstekort': 'Företagskort eller tjänstekort.',
+            'ts-bas.label.identitet.korkort': 'Svenskt körkort',
+            'ts-bas.label.identitet.pers_kannedom': 'Personlig kännedom',
+            'ts-bas.label.identitet.forsakran_kap18': 'Försäkran enligt 18 kap 4 §',
+            'ts-bas.label.identitet.pass': 'Pass',
+
             'ts-bas.label.syn.binokulart': 'Binokulärt',
             'ts-bas.label.syn.8-dioptrier': 'Högsta styrka i något av glasen överskrider 8 dioptrier:',
             'ts-bas.label.syn.synfaltsdefekter': 'a) Finns tecken på synfältsdefekter vid undersökning enligt Donders konfrontationsmetod?',
@@ -149,7 +157,7 @@ define([], function() {
             'ts-bas.label.pagedescription.error.in.certificate': 'Om någon uppgift är fel i läkarintyget så ska du kontakta den som utfärdat ditt läkarintyg.',
             'ts-bas.label.pagedescription.archive.header': '<h2>Akrivera</h2>',
             'ts-bas.label.pagedescription.archive': 'För att arkivera intyget klickar du på symbolen Arkivera intyg <span class="glyphicon glyphicon-folder-close"></span>.',
-            
+
             'ts-bas.label.status.false': '<span class="glyphicon glyphicon-chevron-up"></span><a> Visa mindre</a>',
             'ts-bas.label.status.true': '<span class="glyphicon glyphicon-chevron-down"></span><a> Visa mer</a>',
             'ts-bas.label.showevents.false': '<span class="glyphicon glyphicon-chevron-up"></span><a> Visa färre händelser</a>',
@@ -185,7 +193,7 @@ define([], function() {
             'ts-bas.label.bedomning-info-undersokas-med-specialkompetens': 'Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i:',
             'ts-bas.label.bedomning-info-ej-angivet': 'Ej angivet',
             'ts-bas.helptext.readpdfhelp' : '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank">Adobe Reader</a>.',
-            
+
             //Helptexts
 
             'ts-bas.helptext.synfunktioner.a-c': 'Då någon av a - c besvarats med JA krävs ett läkarintyg från ögonspecialist.',

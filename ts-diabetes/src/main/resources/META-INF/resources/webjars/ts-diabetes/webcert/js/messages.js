@@ -51,12 +51,12 @@ define([], function() {
             'ts-diabetes.label.korkort.annat': 'Annat',
 
             // Identitet styrkt genom
-            'ts-diabetes.label.identitet.id_kort': 'SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.',
-            'ts-diabetes.label.identitet.foretag_eller_tjanstekort': 'SIS-märkt företagskort eller tjänstekort.',
+            'ts-diabetes.label.identitet.id_kort': 'ID-kort',
+            'ts-diabetes.label.identitet.foretag_eller_tjanstekort': 'Företagskort eller tjänstekort.',
             'ts-diabetes.label.identitet.korkort': 'Svenskt körkort',
             'ts-diabetes.label.identitet.pers_kannedom': 'Personlig kännedom',
-            'ts-diabetes.label.identitet.forsakran_kap18': 'Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2)',
-            'ts-diabetes.label.identitet.pass': 'Svenskt EU-pass, annat EU-pass utfärdade från och med 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz fron och med den 1 september 2006.',
+            'ts-diabetes.label.identitet.forsakran_kap18': 'Försäkran enligt 18 kap 4 §',
+            'ts-diabetes.label.identitet.pass': 'Pass',
 
             // Visa ts-diabetes
 

@@ -50,6 +50,14 @@ define([], function() {
             'ts-diabetes.label.korkort.traktor': 'Traktor',
             'ts-diabetes.label.korkort.annat': 'Annat',
 
+            // Identitet styrkt genom
+            'ts-diabetes.label.identitet.id_kort': 'ID-kort',
+            'ts-diabetes.label.identitet.foretag_eller_tjanstekort': 'Företagskort eller tjänstekort.',
+            'ts-diabetes.label.identitet.korkort': 'Svenskt körkort',
+            'ts-diabetes.label.identitet.pers_kannedom': 'Personlig kännedom',
+            'ts-diabetes.label.identitet.forsakran_kap18': 'Försäkran enligt 18 kap 4 §',
+            'ts-diabetes.label.identitet.pass': 'Pass',
+
             'ts-diabetes.label.syn.binokulart': 'Binokulärt',
             'ts-diabetes.label.syn.diplopi': 'd) Förekommer dubbelseende? ',
             'ts-diabetes.label.syn.progressivogonsjukdom': ' c) Har patienten någon progressiv ögonsjukdom?',
