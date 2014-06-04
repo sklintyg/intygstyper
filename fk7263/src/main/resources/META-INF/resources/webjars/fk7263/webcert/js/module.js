@@ -5,8 +5,9 @@ define([
     'webjars/fk7263/webcert/js/controllers/QACtrl',
     'webjars/fk7263/webcert/js/controllers/ViewCertCtrl',
     'webjars/fk7263/webcert/js/directives/wcDatePickerField',
-    'webjars/common/webcert/js/services/messageService'
-], function(angular, messages, EditCertCtrl, QACtrl, ViewCertCtrl, wcDatePickerField, messageService) {
+    'webjars/common/webcert/js/services/messageService',
+    'text!webjars/fk7263/webcert/views/edit-cert.html'
+], function(angular, messages, EditCertCtrl, QACtrl, ViewCertCtrl, wcDatePickerField, messageService, editCertTemplate) {
     'use strict';
 
     var moduleName = 'fk7263';
@@ -16,7 +17,7 @@ define([
     module.config([ '$routeProvider', function($routeProvider) {
         $routeProvider.
             when('/fk7263/edit/:certificateId', {
-                templateUrl: '/web/webjars/fk7263/webcert/views/edit-cert.html',
+                template: editCertTemplate,
                 controller: EditCertCtrl
             });
     }]);

@@ -25,7 +25,7 @@ import se.inera.certificate.model.Kod;
  */
 public enum UtlatandeKod implements CodeSystem {
 
-    TS_DIABETES("ts-diabetes", "06", "02", "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.");
+    TS_DIABETES_U06_V02("ts-diabetes", "06", "02", "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.");
 
     private static final String CODE_SYSTEM_NAME = "kv_utlåtandetyp_intyg";
 
@@ -101,5 +101,14 @@ public enum UtlatandeKod implements CodeSystem {
         }
 
         return null;
+    }
+    
+    /**
+     * Returns the specific version that new intygs should use when created.
+     * 
+     * @return the current version of utlatande.
+     */
+    public static UtlatandeKod getCurrentVersion() {
+        return TS_DIABETES_U06_V02;
     }
 }

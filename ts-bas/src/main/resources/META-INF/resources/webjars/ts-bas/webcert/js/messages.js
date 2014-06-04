@@ -23,7 +23,7 @@ define([], function() {
 
     return {
         'sv': {
-            'ts-bas.label.certtitle': 'Läkarintyg Transportstyrelsen Bas',
+            'ts-bas.label.certtitle': 'Transportstyrelsens läkarintyg',
             'ts-bas.label.intygavser': 'Intyget avser',
             'ts-bas.label.identitet': 'Identiteten är styrkt genom',
             'ts-bas.label.synfunktioner': '1. Synfunktioner',
@@ -45,6 +45,15 @@ define([], function() {
             'ts-bas.label.bedomning': 'Bedömning',
             'ts-bas.label.unit': 'Vårdenhet',
 
+            // Identitet styrkt genom
+            'ts-bas.label.identitet.id_kort': 'ID-kort',
+            'ts-bas.label.identitet.foretag_eller_tjanstekort': 'Företagskort eller tjänstekort.',
+            'ts-bas.label.identitet.korkort': 'Svenskt körkort',
+            'ts-bas.label.identitet.pers_kannedom': 'Personlig kännedom',
+            'ts-bas.label.identitet.forsakran_kap18': 'Försäkran enligt 18 kap 4 §',
+            'ts-bas.label.identitet.pass': 'Pass',
+
+            //Körkortsbehörigheter
             'ts-bas.label.korkort.c1': 'C1',
             'ts-bas.label.korkort.c1e': 'C1E',
             'ts-bas.label.korkort.c': 'C',
@@ -56,11 +65,12 @@ define([], function() {
             'ts-bas.label.korkort.taxi': 'Taxi',
             'ts-bas.label.korkort.annat': 'Annat',
 
-            'ts-bas.helptext.lakaren-ska-uppmarksamma': 'Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget skall utfärdas i enlighet med vad som sägs i 17 kap. och får inte vara äldre än två månader när det inkommer till Transportstyrelsen. Se: <a href="http://www.transportstyrelsen.se">http://www.transportstyrelsen.se</a>. Därefter "Väg" och "Trafikmedicin".',
+            'ts-bas.helptext.lakaren-ska-uppmarksamma': 'Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget ska vara utfärdat tidigast 2 månader före att ansökan kom in till Transportstyrelsen och i enlighet med vad som sägs i 17 kapitlet.<br/>Se: <a href="http://www.transportstyrelsen.se">http://www.transportstyrelsen.se</a>. Därefter "Väg" och "Trafikmedicin".',
             'ts-bas.helptext.intyg-avser': '<span style="text-align:left">C1 = medeltung lastbil,<br/> C1E = medeltung lastbil och ett eller flera släpfordon oavsett vikt,<br/> C = tung lastbil och enbart ett lätt släpfordon,<br/> CE = tung lastbil och ett eller flera släpfordon oavsett vikt,<br/> D1 = mellanstor buss,<br/> D1E = mellanstor buss och ett eller flera släpfordon oavsett vikt,<br/> D = buss och enbart ett lätt släpfordon,<br/> DE = buss och ett eller flera släpfordon oavsett vikt,<br/> E = tungt släpfordon,<br/> Taxi = taxiförarlegitimation</span>',
             'ts-bas.helptext.intyg-avser.grupp2-grupp3': 'Grupp II omfattar behörigheterna AM, A1, A2, A, B, BE, C1, C1E, C och CE.<br/> Grupp III omfattar behörigheterna AM, A1, A2, A, B, BE, C1, C1E, C, CE, D1, D1E, D och DE.',
 
-            'ts-bas.helptext.identitet-styrkt-genom.id-kort': 'ID-kort = SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.',
+            'ts-bas.helptext.identitet': 'Identitet styrkt genom',
+
             'ts-bas.helptext.identitet-styrkt-genom.foretag-tjanstekort': 'Företagskort eller tjänstekort = SIS-märkt företagskort eller tjänstekort.',
             'ts-bas.helptext.identitet-styrkt-genom.forsakran': 'Försäkran enligt 18 kap. 4 § = Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2): Identiteten får fastställas genom att en förälder, annan vårdnadshavare, make, maka eller sambo, registrerad partner eller myndigt barn skriftligen försäkrar att lämnade uppgifter om sökandens identitet är riktiga. Den som lämnar en sådan försäkran ska vara närvarande vid identitetskontrollen och kunna styrka sin egen identitet.',
             'ts-bas.helptext.identitet-styrkt-genom.pass': 'Pass = Svenskt EU-pass, annat EU-pass utfärdade från och med den 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 200',
@@ -68,7 +78,7 @@ define([], function() {
             'ts-bas.helptext.synfunktioner.om-nagon-av-a-c': 'Om någon av frågorna a-c besvaras med ja eller om det bedöms sannolikt att synfältsdefekter föreligger krävs läkarintyg av ögonspecialist.',
             'ts-bas.helptext.synfunktioner.synskarpa-kan-grundas-pa-tidigare': 'OBS! Uppgifterna om synskärpa och korrektion kan grundas på tidigare utförd undersökning av bland annat legitimerad optiker. Uppgifterna ska då ingå som underlag vid läkarens samlade bedömning.',
             'ts-bas.helptext.synfunktioner.info-8-dioptrier': 'Intyg om korrektionsglasens styrka måste skickas in',
-            'ts-bas.helptext.synfunktioner.8-dioptrier-valt': 'Du har kryssat i frågan om 8 dioptrier – Glöm inte att skicka in Intyg som korrektionsglasens styrka.',
+            'ts-bas.helptext.synfunktioner.8-dioptrier-valt': 'Du har kryssat i frågan om 8 dioptrier – Glöm inte att skicka in intyg om korrektionsglasens styrka.',
             'ts-bas.helptext.synfunktioner.utan-korrektion': 'Uppgiften är obligatorisk',
             'ts-bas.helptext.synfunktioner.med-korrektion': 'Uppgiften är obligatorisk om föreskriven synskärpa endast uppnås med korrektion. Definition av föreskriven synskärpa finns i Transportstyrelsens föreskrifter.',
 
@@ -85,15 +95,16 @@ define([], function() {
 
             // Labels for showing signed intyg
             'ts-bas.label.syn.binokulart': 'Binokulärt',
-            'ts-bas.label.syn.diplopi': 'Framkommer dubbelseende vid prövning av ögats rörlighet (prövningen ska göras i de åtta huvudmeridianerna)?',
             'ts-bas.label.syn.8-dioptrier': 'Högsta styrka i något av glasen överskrider 8 dioptrier:',
-            'ts-bas.label.syn.nattblindhet': 'b) Framkommer anamnestiska uppgifter om begränsning av seendet vid nedsatt belysning?',
-            'ts-bas.label.syn.nystagmus': 'Förekommer nystagmus?',
-            'ts-bas.label.syn.progressivogonsjukdom': ' c) Har patienten någon progressiv ögonsjukdom?',
             'ts-bas.label.syn.synfaltsdefekter': 'a) Finns tecken på synfältsdefekter vid undersökning enligt Donders konfrontationsmetod?',
+            'ts-bas.label.syn.nattblindhet': 'b) Framkommer anamnestiska uppgifter om begränsning av seendet vid nedsatt belysning?',
+            'ts-bas.label.syn.progressivogonsjukdom': ' c) Har patienten någon progressiv ögonsjukdom?',
+            'ts-bas.label.syn.diplopi': 'd) Framkommer dubbelseende vid prövning av ögats rörlighet (prövningen ska göras i de åtta huvudmeridianerna)?',
+            'ts-bas.label.syn.nystagmus': 'e) Förekommer nystagmus?',
+            'ts-bas.label.syn.synskarpa': 'f) Värden för synskärpa',
 
-            'ts-bas.label.horselbalans.balansrubbningar': 'Har patienten överraskande anfall av balansrubbningar eller yrsel?',
-            'ts-bas.label.funktionsnedsattning.funktionsnedsattning': 'Har patienten någon sjukdom eller funktionsnedsättning som påverkar rörligheten och som medför att fordon inte kan köras på ett trafiksäkert sätt?',
+            'ts-bas.label.horselbalans.balansrubbningar': 'a) Har patienten överraskande anfall av balansrubbningar eller yrsel?',
+            'ts-bas.label.funktionsnedsattning.funktionsnedsattning': 'a) Har patienten någon sjukdom eller funktionsnedsättning som påverkar rörligheten och som medför att fordon inte kan köras på ett trafiksäkert sätt?',
             'ts-bas.label.funktionsnedsattning.beskrivning': 'Typ av nedsättning eller sjukdom:',
 
             'ts-bas.label.hjartkarl.hjart-karlsjukdom': 'Föreligger hjärt- eller kärlsjukdom som kan medföra en påtaglig risk för att hjärnans funktioner akut försämras eller som i övrigt innebär en trafiksäkerhetsrisk?',

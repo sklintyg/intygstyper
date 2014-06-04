@@ -173,15 +173,17 @@
                     </div>
                     <div class="form-group">
                       Behandling:
-                      <label class="checkbox"><input name="diabetestreat1" type="checkbox"
-                                                     ng-model="cert.diabetes.endastKost"> Kost</label>
-                      <label class="checkbox"><input name="diabetestreat2" type="checkbox"
-                                                     ng-model="cert.diabetes.tabletter"> Tabletter</label>
-                      <label class="checkbox"><input name="diabetestreat3" type="checkbox"
-                                                     ng-model="cert.diabetes.insulin">
-                        Insulin</label>
+                      <label class="checkbox"><input name="diabetestreat1" type="checkbox" ng-model="cert.diabetes.endastKost">
+                          <span message key="ts-diabetes.label.diabetes.behandling.endast-kost"></span>
+                      </label>
+                      <label class="checkbox"><input name="diabetestreat2" type="checkbox" ng-model="cert.diabetes.tabletter">
+                          <span message key="ts-diabetes.label.diabetes.behandling.tabletter"></span>
+                      </label>
+                      <label class="checkbox"><input name="diabetestreat3" type="checkbox" ng-model="cert.diabetes.insulin">
+                          <span message key="ts-diabetes.label.diabetes.behandling.insulin"></span>
+                      </label>
                       <div class="form-group" data-ng-show="cert.diabetes.insulin">
-                        <label for="insulinBehandlingsperiod"> Insulin sedan år</label>
+                        <label for="insulinBehandlingsperiod"><span message key="ts-diabetes.label.diabetes.behandling.insulin-period"></span></label>
                         <div class="controls">
                           <input id="insulinBehandlingsperiod" class="form-control" name="insulinBehandlingsperiod"
                                  type="text" ng-model="cert.diabetes.insulinBehandlingsperiod" wc-maxlength
@@ -190,7 +192,7 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="annanBehandlingBeskrivning"> Annan behandling, vilken? (ej obligatorisk)</label>
+                      <label for="annanBehandlingBeskrivning"><span message key="ts-diabetes.label.diabetes.behandling.annan-beskrivning"></span></label>
                       <div class="controls">
                         <input id="annanBehandlingBeskrivning" class="form-control" name="annanBehandlingBeskrivning"
                                type="text" ng-model="cert.diabetes.annanBehandlingBeskrivning" wc-maxlength
@@ -219,16 +221,14 @@
                                    ng-model="cert.hypoglykemier.kunskapOmAtgarder"></td>
                         <td><input id="hypoan" name="hypoan" type="radio" ng-value="false"
                                    ng-model="cert.hypoglykemier.kunskapOmAtgarder"></td>
-                        <td>a) Har patienten kunskap om lämpliga åtgärder vid hypoglykemi?</td>
+                        <td><span message key="ts-diabetes.label.hypoglykemier.har-patient-kannedom"></span></td>
                       </tr>
                       <tr>
                         <td><input id="hypoby" name="hypoby" type="radio" ng-value="true"
                                    ng-model="cert.hypoglykemier.teckenNedsattHjarnfunktion"></td>
                         <td><input id="hypobn" name="hypobn" type="radio" ng-value="false"
                                    ng-model="cert.hypoglykemier.teckenNedsattHjarnfunktion"></td>
-                        <td><p>b) Förekommer hypoglykemier med tecken på nedsatt hjärnfunktion (neuroglukopena symptom)
-                          som
-                          bedöms kunna innebära en trafiksäkerhetsrisk?</p>
+                        <td><span message key="ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion"></span>
                           <p>(Om nej behöver c-e inte besvaras)</p></td>
                       </tr>
                       <tr data-ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
@@ -236,24 +236,24 @@
                                    ng-model="cert.hypoglykemier.saknarFormagaKannaVarningstecken"></td>
                         <td><input id="hypocn" name="hypocn" type="radio" ng-value="false"
                                    ng-model="cert.hypoglykemier.saknarFormagaKannaVarningstecken"></td>
-                        <td>c) Saknar patienten förmåga att känna varningstecken på hypoglykemi ("unawareness")?</td>
+                        <td><span message key="ts-diabetes.label.hypoglykemier.saknar-formaga-kanna-varningstecken"></span></td>
                       </tr>
                       <tr data-ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
                         <td><input id="hypody" name="hypody" type="radio" ng-value="true"
                                    ng-model="cert.hypoglykemier.allvarligForekomst"></td>
                         <td><input id="hypodn" name="hypodn" type="radio" ng-value="false"
                                    ng-model="cert.hypoglykemier.allvarligForekomst"></td>
-                        <td>
-                          <p>d) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under
-                            det
-                            senaste året?</p>
-                          <label for="allvarligForekomstBeskrivning"> Hur många sådana episoder?</label>
-                          <div class="controls">
+                        <td> <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst"></span>
+                        
+                        <div class="controls" ng-show="cert.hypoglykemier.allvarligForekomst == true">
+                            <label for="allvarligForekomstBeskrivning">
+                                <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst.beskrivning"></span>
+                            </label>
                             <input id="allvarligForekomstBeskrivning" class="form-control"
                                    name="allvarligForekomstBeskrivning" type="text"
                                    ng-model="cert.hypoglykemier.allvarligForekomstBeskrivning" wc-maxlength
                                    maxlength="46" />
-                          </div>
+                        </div>
                         </td>
                       </tr>
                       <tr data-ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
@@ -261,10 +261,11 @@
                                    ng-model="cert.hypoglykemier.allvarligForekomstTrafiken"></td>
                         <td><input id="hypoen" name="hypoen" type="radio" ng-value="false"
                                    ng-model="cert.hypoglykemier.allvarligForekomstTrafiken"></td>
-                        <td><p>e) Har patienten haft allvarlig hypoglykemi i trafiken under det senaste året?</p>
-                          <label for="allvarligForekomstTrafikBeskrivning"> Hur många sådana episoder och när inträffade
-                            de?</label>
-                          <div class="controls">
+                        <td><span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken"></span>
+                          <div class="controls" ng-show="cert.hypoglykemier.allvarligForekomstTrafiken == true">
+                              <label for="allvarligForekomstTrafikBeskrivning">
+                                  <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning"></span>
+                              </label>
                             <input id="allvarligForekomstTrafikBeskrivning" class="form-control"
                                    name="allvarligForekomstTrafikBeskrivning" type="text"
                                    ng-model="cert.hypoglykemier.allvarligForekomstTrafikBeskrivning" wc-maxlength
@@ -283,23 +284,19 @@
                                    ng-model="cert.hypoglykemier.egenkontrollBlodsocker"></td>
                         <td><input id="hypofn" name="hypofn" type="radio" ng-value="false"
                                    ng-model="cert.hypoglykemier.egenkontrollBlodsocker"></td>
-                        <td>f) Genomför patienten egenkontroller av blodsocker?</td>
+                        <td><span message key="ts-diabetes.label.hypoglykemier.egenkontroll-blodsocker"></span></td>
                       </tr>
                       <tr data-ng-show="form.korkortd">
                         <td><input id="hypogy" name="hypogy" type="radio" ng-value="true"
                                    ng-model="cert.hypoglykemier.allvarligForekomstVakenTid"></td>
                         <td><input id="hypogn" name="hypogn" type="radio" ng-value="false"
                                    ng-model="cert.hypoglykemier.allvarligForekomstVakenTid"></td>
-                        <td>
-                          <p>g) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under
-                            vaken tid det senaste året?</p>
-                          <div class="form-group indent" data-ng-show="cert.hypoglykemier.allvarligForekomstVakenTid">
+                        <td><span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid"></span>
+                          <div class="controls" data-ng-show="cert.hypoglykemier.allvarligForekomstVakenTid">
                             <label class="control-label">När?</label>
-                            <div class="controls">
                               <input type="text" class="form-control"
                                      data-ng-model="cert.hypoglykemier.allvarligForekomstVakenTidObservationstid">
-                              <div>(Fyll i åååå-mm-dd)</div>
-                            </div>
+                              <p>(Fyll i åååå-mm-dd)</p>
                           </div>
                         </td>
                       </tr>
@@ -346,7 +343,7 @@
                                    ng-model="cert.syn.separatOgonlakarintyg"></td>
                         <td><input id="synan" name="synan" type="radio" ng-value="false"
                                    ng-model="cert.syn.separatOgonlakarintyg"></td>
-                        <td>a. Ögonläkarintyg kommer att skickas in separat</td>
+                        <td><span message key="ts-diabetes.label.syn.separat-ogonlakarintyg"></span></td>
                       </tr>
                       <tr data-ng-hide="cert.syn.separatOgonlakarintyg">
                         <td></td>
@@ -366,14 +363,15 @@
                         <td><input id="synbn" name="synbn" type="radio" ng-value="false"
                                    ng-model="cert.syn.synfaltsprovningUtanAnmarkning"></td>
                         <td>
-                          <p>b. Är synfältsprövning enligt Donders konfrontationsmetod utan anmärkning?</p>
+                          <span message key="ts-diabetes.label.syn.synfaltsprovning-utan-anmarkning"></span>
                         </td>
                       </tr>
                       <tr data-ng-hide="cert.syn.separatOgonlakarintyg">
                         <td></td>
                         <td></td>
                         <td>
-                          <p>c. Synskärpa (alla bokstäver ska kunna läsas på den rad som anger synskärpan. Är synskärpan
+                          <span message key="ts-diabetes.label.syn.synskarpa"></span>
+                          <p>Synskärpa (alla bokstäver ska kunna läsas på den rad som anger synskärpan. Är synskärpan
                             sämre än 0,1 ska den anges som 0,0).</p>
                           <p>
                             Uppgifterna om synskärpa med och utan korrektion kan grundas på aktuellt intyg av bl.a.

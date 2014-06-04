@@ -23,7 +23,7 @@ define([], function() {
 
     return {
         'sv': {
-            'ts-diabetes.label.intygavser': 'Intyget avser',
+            'ts-diabetes.label.intygavser': 'Avser lämplighet för körkort',
             'ts-diabetes.label.identitet': 'Identiteten är styrkt genom',
             'ts-diabetes.label.allmant': '1. Allmänt',
             'ts-diabetes.label.hypoglykemier': '2. Hypoglykemier (lågt blodsocker)',
@@ -50,6 +50,14 @@ define([], function() {
             'ts-diabetes.label.korkort.traktor': 'Traktor',
             'ts-diabetes.label.korkort.annat': 'Annat',
 
+            // Identitet styrkt genom
+            'ts-diabetes.label.identitet.id_kort': 'ID-kort',
+            'ts-diabetes.label.identitet.foretag_eller_tjanstekort': 'Företagskort eller tjänstekort.',
+            'ts-diabetes.label.identitet.korkort': 'Svenskt körkort',
+            'ts-diabetes.label.identitet.pers_kannedom': 'Personlig kännedom',
+            'ts-diabetes.label.identitet.forsakran_kap18': 'Försäkran enligt 18 kap 4 §',
+            'ts-diabetes.label.identitet.pass': 'Pass',
+
             'ts-diabetes.label.syn.binokulart': 'Binokulärt',
             'ts-diabetes.label.syn.diplopi': 'd) Förekommer dubbelseende? ',
             'ts-diabetes.label.syn.progressivogonsjukdom': ' c) Har patienten någon progressiv ögonsjukdom?',
@@ -72,7 +80,7 @@ define([], function() {
             'ts-diabetes.label.diabetes.behandling.endast-kost': 'Endast kost',
             'ts-diabetes.label.diabetes.behandling.tabletter': 'Tabletter',
             'ts-diabetes.label.diabetes.behandling.insulin': 'Insulin',
-            'ts-diabetes.label.diabetes.behandling.insulin-period': 'Insulin sedan: ',
+            'ts-diabetes.label.diabetes.behandling.insulin-period': 'Insulin sedan år: ',
             'ts-diabetes.label.diabetes.behandling.annan': 'Annan behandling',
             'ts-diabetes.label.diabetes.behandling.annan.period': 'Annan behandling, vilken? ',
 
@@ -85,6 +93,8 @@ define([], function() {
 
             'ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken': 'e) Har patienten haft allvarlig hypoglykemi i trafiken under det senaste året?',
             'ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning': 'Hur många sådana episoder och när inträffade de? ',
+
+            'ts-diabetes.label.hypoglykemier.egenkontroll-blodsocker': 'f) Genomför patienten egenkontroller av blodsocker?',
 
             'ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid': 'g) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under vaken tid det senaste året?',
             'ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid': 'Observationstid: ',
@@ -162,7 +172,7 @@ define([], function() {
             'ts-diabetes.helptext.diabetes.behandling': 'Vid tablett- eller insulinbehandlad diabetes krävs det att ett läkarintyg gällande sjukdomen skickas in.',
             'ts-diabetes.helptext.narkotika-lakemedel.provtagning': 'Om ja på ovanstående ska resultatet redovisas separat.',
 
-            'ts-diabetes.inbox.complementaryinfo': 'Intyget avser'
+            'ts-diabetes.inbox.complementaryinfo': 'Avser lämplighet för körkort'
 
         },
         'en': {

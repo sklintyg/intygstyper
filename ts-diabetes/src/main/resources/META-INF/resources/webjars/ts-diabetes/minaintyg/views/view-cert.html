@@ -140,7 +140,8 @@
                   <span class="tag"><message key="ts-diabetes.label.civicnumber" /></span> <span id="patient-crn">{{cert.patient.personid}}</span>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-6 col-sm-offset-6 col-md-offset-6 col-lg-offset-6 margin-top-5px">
-                  <span class="tag"><message key="ts-diabetes.label.identitet" /></span> <span id="patient-crn">{{cert.vardkontakt.idkontroll}}</span>
+                  <span class="tag"><message key="ts-diabetes.label.identitet" /></span>
+                  <span id="patient-crn" message key="ts-diabetes.label.identitet.{{cert.vardkontakt.idkontroll}}"></span>
                 </div>
               </div>
               <div class="row">
@@ -261,6 +262,11 @@
                             <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning"></span>
                             <span class="ts-cert-answer">{{cert.hypoglykemier.allvarligForekomstTrafikBeskrivning}}</span>
                         </span>
+                    </span>
+
+                    <span class="text no-padding-bottom">
+                        <span message key="ts-diabetes.label.hypoglykemier.egenkontroll-blodsocker"></span>
+                        <span class="ts-cert-answer" message key="{{cert.hypoglykemier.egenkontrollBlodsocker | BoolToTextFilter}}"></span>
                     </span>
 
                     <span class="text">

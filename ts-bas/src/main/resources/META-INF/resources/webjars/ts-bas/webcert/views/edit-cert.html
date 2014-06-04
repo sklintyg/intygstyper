@@ -132,7 +132,7 @@
                   </div>
 
                   <div wc-field field-label="ts-bas.label.identitet"
-                       field-help-text="ts-bas.helptext.identitet-styrkt-genom.id-kort">
+                       field-help-text="ts-bas.helptext.identitet">
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.identitet">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.identitet"><span message
@@ -910,9 +910,13 @@
                         inte ta ställning</label>
                     </div>
 
-                    <p>Om någon av frågorna har besvarats med ja, ska de krav på ytterligare underlag som framgår av
-                      föreskrifterna
-                      beaktas.</p>
+                    <p ng-show="form.anyTrue">
+                        <span message key="ts-bas.helptext.bedomning.info"></span>
+                    </p>
+
+                    <p ng-show="cert.syn.korrektionsglasensStyrka == true">
+                            <span message key="ts-bas.helptext.synfunktioner.8-dioptrier-valt"></span>
+                    </p>
 
                     <p data-ng-show="cert.diabetes.tabletter || cert.diabetes.insulin">Har patienten tablett- eller
                       insulinbehandlad

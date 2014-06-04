@@ -1,6 +1,6 @@
 {
     "id": "987654321",
-    "typ": "ts-diabetes",
+    "typ": "TS_DIABETES_U06_V02",
     "signeringsdatum": "2013-08-12T15:57:00.000",
     "skapadAv": {
         "personid": "SE0000000000-1333",

@@ -24,7 +24,7 @@ define([], function() {
     return {
         'sv': {
             'ts-diabetes.label.empty': '',
-            'ts-diabetes.label.certtitle': "Läkarintyg Transportstyrelsen Diabetes",
+            'ts-diabetes.label.certtitle': "Transportstyrelsens läkarintyg, diabetes",
             'ts-diabetes.label.intygavser': 'Intyget avser',
             'ts-diabetes.label.identitet': 'Identiteten är styrkt genom',
             'ts-diabetes.label.allmant': '1. Allmänt',
@@ -49,6 +49,14 @@ define([], function() {
             'ts-diabetes.label.korkort.de': 'DE',
             'ts-diabetes.label.korkort.taxi': 'Taxi',
             'ts-diabetes.label.korkort.annat': 'Annat',
+
+            // Identitet styrkt genom
+            'ts-diabetes.label.identitet.id_kort': 'ID-kort',
+            'ts-diabetes.label.identitet.foretag_eller_tjanstekort': 'Företagskort eller tjänstekort.',
+            'ts-diabetes.label.identitet.korkort': 'Svenskt körkort',
+            'ts-diabetes.label.identitet.pers_kannedom': 'Personlig kännedom',
+            'ts-diabetes.label.identitet.forsakran_kap18': 'Försäkran enligt 18 kap 4 §',
+            'ts-diabetes.label.identitet.pass': 'Pass',
 
             // Visa ts-diabetes
 
@@ -76,9 +84,9 @@ define([], function() {
             'ts-diabetes.label.diabetes.behandling.endast-kost': 'Endast kost',
             'ts-diabetes.label.diabetes.behandling.tabletter': 'Tabletter',
             'ts-diabetes.label.diabetes.behandling.insulin': 'Insulin',
-            'ts-diabetes.label.diabetes.behandling.insulin-period': 'Insulin sedan: ',
+            'ts-diabetes.label.diabetes.behandling.insulin-period': 'Insulin sedan år: ',
             'ts-diabetes.label.diabetes.behandling.annan': 'Annan behandling',
-            'ts-diabetes.label.diabetes.behandling.annan.period': 'Annan behandling, vilken? ',
+            'ts-diabetes.label.diabetes.behandling.annan-beskrivning': 'Annan behandling, vilken? (ej obligatorisk)',
 
             'ts-diabetes.label.hypoglykemier.har-patient-kannedom': 'a) Har patienten kunskap om lämpliga åtgärder vid hypoglykemi?',
             'ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion': 'b) Förekommer hypoglykemier med tecken på nedsatt hjärnfunktion (neuroglukopena symptom) som bedöms kunna innebära en trafiksäkerhetsrisk?',
@@ -89,6 +97,10 @@ define([], function() {
 
             'ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken': 'e) Har patienten haft allvarlig hypoglykemi i trafiken under det senaste året?',
             'ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning': 'Hur många sådana episoder och när inträffade de? ',
+
+            'ts-diabetes.label.hypoglykemier.egenkontroll-blodsocker': 'f) Genomför patienten egenkontroller av blodsocker?',
+
+            'ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid': 'g) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under vaken tid det senaste året?',
 
             'ts-diabetes.label.ovanstaende-har-bekraftats': 'Ovanstående uppgifter och bedömningar har bekräftats',
             'ts-diabetes.label.kontakt-info': 'Namnförtydligande, mottagningens adress och telefon',
@@ -105,7 +117,7 @@ define([], function() {
             'ts-diabetes.helptext.narkotika-lakemedel.provtagning': 'Om ja på ovanstående ska resultatet redovisas separat.',
 
             // Help texts
-            'ts-diabetes.helptext.lakaren-ska-uppmarksamma': 'Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget skall utfärdas i enlighet med vad som sägs i 17 kap. och får inte vara äldre än två månader när det inkommer till Transportstyrelsen. Se: <a href="http://www.transportstyrelsen.se">http://www.transportstyrelsen.se</a>. Därefter "Väg" och "Trafikmedicin".',
+            'ts-diabetes.helptext.lakaren-ska-uppmarksamma': 'Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget ska vara utfärdat tidigast 2 månader före att ansökan kom in till Transportstyrelsen och i enlighet med vad som sägs i 17 kapitlet.<br/>Se: <a href="http://www.transportstyrelsen.se">http://www.transportstyrelsen.se</a>. Därefter "Väg" och "Trafikmedicin".',
             'ts-diabetes.helptext.intyget-avser': 'AM = moped klass I, <br/> A1 = lätt motorcykel, <br/>A2 = mellanstor motorcykel, <br/> A = motorcykel, <br/>B = personbil och lätt lastbil, <br/>BE = personbil, lätt lastbil och ett eller flera släpfordon, <br/>C1 = medeltung lastbil och enbart ett lättsläpfordon, <br/>C1E = medeltung lastbil och ett eller flera släpfordon oavsett vikt, <br/>C = tung lastbil och enbart ett lätt släpfordon, <br/>CE = tung lastbil och ett eller flera släpfordon oavsett vikt, <br/>D1 = mellanstor buss, <br/>D1E = mellanstorbuss och ett eller flera släpfordon oavsett vikt, <br/>D = buss, <br/>DE = buss och enbart ett lätt släpfordon, <br/>E = tungt släpfordon, <br/>Taxi = taxiförarlegitimation <br/>',
 
             'ts-diabetes.helptext.identitet-styrkt-genom': 'ID-kort = SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.<br/> Företagskort eller tjänstekort = SIS-märkt företagskort eller tjänstekort.<br/> Försäkran enligt 18 kap. 4 § = Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2): Identiteten får fastställas genom att en förälder, annan vårdnadshavare, make, maka eller sambo, registrerad partner eller myndigt barn skriftligen försäkrar att lämnade uppgifter om sökandens identitet är riktiga. Den som lämnar en sådan försäkran ska vara närvarande vid identitetskontrollen och kunna styrka sin egen identitet.<br/> Pass = Svenskt EU-pass, annat EU-pass utfärdade från och med den 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 200<br/>',

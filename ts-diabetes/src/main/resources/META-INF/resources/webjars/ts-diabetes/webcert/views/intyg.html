@@ -26,8 +26,8 @@
 
       <div class="alert alert-info alert-column" ng-if="!certProperties.isRevoked">
         <strong>Status:</strong>
-        <span ng-if="certProperties.sentToTS" id="certificate-is-sent-to-fk-message-text">Intyget är signerat och skickat till Försäkringskassan.</span>
-            <span ng-if="!certProperties.sentToTS" id="certificate-is-sent-to-it-message-text">
+        <span ng-if="certProperties.isSent" id="certificate-is-sent-to-fk-message-text">Intyget är signerat och skickat till Transportstyrelsen.</span>
+            <span ng-if="!certProperties.isSent" id="certificate-is-sent-to-it-message-text">
               Intyget är signerat och är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se.
               Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till
               Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.
@@ -44,6 +44,10 @@
 
               <div wc-field field-label="ts-diabetes.label.intygavser" filled="true">
                 <span class="ts-cert-answer">{{intygAvser}}</span>
+              </div>
+
+              <div wc-field field-label="ts-diabetes.label.identitet" filled="true">
+                <span class="ts-cert-answer" message key="ts-diabetes.label.identitet.{{cert.vardkontakt.idkontroll}}"></span>
               </div>
 
               <div wc-field field-label="ts-diabetes.label.allmant" filled="true">

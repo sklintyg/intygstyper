@@ -95,6 +95,65 @@
   <build>
     <finalName>ts-bas</finalName>
     <plugins>
+
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <id>copy-javascript-for-optimization</id>
+            <phase>process-resources</phase>
+            <configuration>
+              <target>
+                <copy todir="${project.build.directory}/requirebuild" verbose="false">
+                  <fileset dir="${project.basedir}/../common-webjar/src/main/resources/META-INF/resources"/>
+                </copy>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>copy-optimized-javascript</id>
+            <phase>compile</phase>
+            <configuration>
+              <target>
+                <copy file="${project.build.directory}/requirebuild/webjars/ts-bas/minaintyg/js/module.min.js"
+                    todir="${project.build.directory}/classes/META-INF/resources/webjars/ts-bas/minaintyg/js"/>
+                <copy file="${project.build.directory}/requirebuild/webjars/ts-bas/webcert/js/module.min.js"
+                    todir="${project.build.directory}/classes/META-INF/resources/webjars/ts-bas/webcert/js"/>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>com.github.bringking</groupId>
+        <artifactId>requirejs-maven-plugin</artifactId>
+        <version>${requirejs-plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>optimize</goal>
+            </goals>
+            <phase>process-resources</phase>
+          </execution>
+        </executions>
+        <configuration>
+          <configFile>
+            ${basedir}/src/main/config/buildconfig.js
+          </configFile>
+          <optimizerFile>
+            ${basedir}/../node_modules/requirejs/bin/r.js
+          </optimizerFile>
+        </configuration>
+      </plugin>
+
       <plugin>
         <groupId>com.github.eirslett</groupId>
         <artifactId>frontend-maven-plugin</artifactId>
@@ -115,6 +174,7 @@
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>

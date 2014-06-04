@@ -23,7 +23,7 @@ define([], function() {
 
     return {
         'sv': {
-            'ts-bas.label.intygavser': 'Intyget avser',
+            'ts-bas.label.intygavser': 'Avser behörighet för körkort',
             'ts-bas.label.identitet': 'Identiteten är styrkt genom',
             'ts-bas.label.synfunktioner': '1. Synfunktioner',
             'ts-bas.label.horselbalans': '2. Hörsel och balanssinne',
@@ -55,13 +55,22 @@ define([], function() {
             'ts-bas.label.korkort.taxi': 'Taxi',
             'ts-bas.label.korkort.annat': 'Annat',
 
+            // Identitet styrkt genom
+            'ts-bas.label.identitet.id_kort': 'ID-kort',
+            'ts-bas.label.identitet.foretag_eller_tjanstekort': 'Företagskort eller tjänstekort.',
+            'ts-bas.label.identitet.korkort': 'Svenskt körkort',
+            'ts-bas.label.identitet.pers_kannedom': 'Personlig kännedom',
+            'ts-bas.label.identitet.forsakran_kap18': 'Försäkran enligt 18 kap 4 §',
+            'ts-bas.label.identitet.pass': 'Pass',
+
             'ts-bas.label.syn.binokulart': 'Binokulärt',
-            'ts-bas.label.syn.diplopi': 'Framkommer dubbelseende vid prövning av ögats rörlighet (prövningen ska göras i de åtta huvudmeridianerna)?',
             'ts-bas.label.syn.8-dioptrier': 'Högsta styrka i något av glasen överskrider 8 dioptrier:',
-            'ts-bas.label.syn.nattblindhet': 'b) Framkommer anamnestiska uppgifter om begränsning av seendet vid nedsatt belysning?',
-            'ts-bas.label.syn.nystagmus': 'Förekommer nystagmus?',
-            'ts-bas.label.syn.progressivogonsjukdom': ' c) Har patienten någon progressiv ögonsjukdom?',
             'ts-bas.label.syn.synfaltsdefekter': 'a) Finns tecken på synfältsdefekter vid undersökning enligt Donders konfrontationsmetod?',
+            'ts-bas.label.syn.nattblindhet': 'b) Framkommer anamnestiska uppgifter om begränsning av seendet vid nedsatt belysning?',
+            'ts-bas.label.syn.progressivogonsjukdom': ' c) Har patienten någon progressiv ögonsjukdom?',
+            'ts-bas.label.syn.diplopi': 'd) Framkommer dubbelseende vid prövning av ögats rörlighet (prövningen ska göras i de åtta huvudmeridianerna)?',
+            'ts-bas.label.syn.nystagmus': 'e) Förekommer nystagmus?',
+            'ts-bas.label.syn.synvarden': 'f) Värden för synskärpa',
 
             'ts-bas.label.syn.synskarpa': 'Värden för synskärpa',
             'ts-bas.label.syn.hogeroga': '',
@@ -70,20 +79,22 @@ define([], function() {
             'ts-bas.label.syn.medkorrektion': '',
             'ts-bas.label.syn.kontaktlins': '',
 
-            'ts-bas.label.horselbalans.balansrubbningar': 'Har patienten överraskande anfall av balansrubbningar eller yrsel?',
+            'ts-bas.label.horselbalans.balansrubbningar': 'a) Har patienten överraskande anfall av balansrubbningar eller yrsel?',
+            'ts-bas.label.horselbalans.samtal4meter': 'b) Har patienten svårt att uppfatta vanlig samtalsstämma på fyra meters avstånd (hörapparat får användas)?',
 
-            'ts-bas.label.funktionsnedsattning.funktionsnedsattning': 'Har patienten någon sjukdom eller funktionsnedsättning som påverkar rörligheten och som medför att fordon inte kan köras på ett trafiksäkert sätt?',
+            'ts-bas.label.funktionsnedsattning.funktionsnedsattning': 'a) Har patienten någon sjukdom eller funktionsnedsättning som påverkar rörligheten och som medför att fordon inte kan köras på ett trafiksäkert sätt?',
             'ts-bas.label.funktionsnedsattning.beskrivning': 'Typ av nedsättning eller sjukdom:',
+            'ts-bas.label.funktionsnedsattning.otillracklig-rorelseformaga': 'b) Är rörelseförmågan otillräcklig för att kunna hjälpa passagerare in och ut ur fordonet samt med bilbälte?',
 
-            'ts-bas.label.hjartkarl.hjart-karlsjukdom': 'Föreligger hjärt- eller kärlsjukdom som kan medföra en påtaglig risk för att hjärnans funktioner akut försämras eller som i övrigt innebär en trafiksäkerhetsrisk?',
-            'ts-bas.label.hjartkarl.hjarnskada-efter-trauma': 'Finns tecken på hjärnskada eller trauma, stroke eller annan sjukdom i centrala nervsystemet?',
-            'ts-bas.label.hjartkarl.riskfaktorer-stroke': 'Föreligger viktiga riskfaktorer för stroke (tidigare stroke eller TIA, förhöjt blodtryck, förmaksflimmer eller kärlmissbildning)?',
-            'ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning': 'Typ av sjukdom:',
+            'ts-bas.label.hjartkarl.hjart-karlsjukdom': 'a) Föreligger hjärt- eller kärlsjukdom som kan medföra en påtaglig risk för att hjärnans funktioner akut försämras eller som i övrigt innebär en trafiksäkerhetsrisk?',
+            'ts-bas.label.hjartkarl.hjarnskada-efter-trauma': 'b) Finns tecken på hjärnskada eller trauma, stroke eller annan sjukdom i centrala nervsystemet?',
+            'ts-bas.label.hjartkarl.riskfaktorer-stroke': 'c) Föreligger viktiga riskfaktorer för stroke (tidigare stroke eller TIA, förhöjt blodtryck, förmaksflimmer eller kärlmissbildning)?',
+            'ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning': 'Vilken typ av sjukdom:',
 
             'ts-bas.label.diabetes.har-diabetes': 'Har patienten diabetes',
             'ts-bas.label.diabetes.diabetestyp': 'Diabetestyp',
-            'ts-bas.label.diabetes.diabetestyp.diabetes_typ_1': 'Diabetes Typ1',
-            'ts-bas.label.diabetes.diabetestyp.diabetes_typ_2': 'Diabets Typ2',
+            'ts-bas.label.diabetes.diabetestyp.diabetes_typ_1': 'Diabetes Typ 1',
+            'ts-bas.label.diabetes.diabetestyp.diabetes_typ_2': 'Diabets Typ 2',
             'ts-bas.label.diabetes.behandling': 'Behandling:',
             'ts-bas.label.diabetes.behandling.kost': 'Kost',
             'ts-bas.label.diabetes.behandling.tabletter': 'Tabletter',
@@ -92,7 +103,7 @@ define([], function() {
             'ts-bas.label.neurologi.neurologisksjukdom': 'Finns tecken på neurologisk sjukdom?',
 
             'ts-bas.label.medvetandestorning.medvetandestorning': 'Har eller har patienten haft epilepsi, epileptiskt anfall eller annan medvetandestörning?',
-            'ts-bas.label.medvetandestorning.beskrivning': 'Om ja. Information om när den inträffade och orsak:',
+            'ts-bas.label.medvetandestorning.beskrivning': 'Om frågan besvaras med ja, och det är frågan om annan medvetandestörning, ange när den inträffade och orsak:',
 
             'ts-bas.label.njurar.nedsatt-njurfunktion': 'Föreligger allvarligt nedsatt njurfunktion som kan innebära en trafiksäkerhetsrisk?',
 
@@ -104,7 +115,7 @@ define([], function() {
             'ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats': 'b) Har patienten vid något tillfälle varit föremål för vårdinsatser för missbruk eller beroende av alkohol, narkotika eller läkemedel?',
             'ts-bas.label.narkotika-lakemedel.behov-provtagning': 'Behövs det provtagning avseende aktuellt bruk av akohol eller narkotika?',
             'ts-bas.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk': 'c) Pågår regelbundet läkarordinerat bruk av läkemedel som kan innebära en trafiksäkerhetsrisk?',
-            'ts-bas.label.narkotika-lakemedel.beskrivning': 'Om JA på C. Information om läkemedel och ordinerad dos:',
+            'ts-bas.label.narkotika-lakemedel.beskrivning': 'Om frågan besvaras med ja, ange läkemedel och ordinerad dos:',
 
             'ts-bas.label.psykiskt.psykisksjukdom': 'Har eller har patienten haft psykisk sjukdom eller störning, till exempel schizofreni, annan psykos eller bipolär (manodepressiv) sjukdom?',
 
@@ -146,7 +157,7 @@ define([], function() {
             'ts-bas.label.pagedescription.error.in.certificate': 'Om någon uppgift är fel i läkarintyget så ska du kontakta den som utfärdat ditt läkarintyg.',
             'ts-bas.label.pagedescription.archive.header': '<h2>Akrivera</h2>',
             'ts-bas.label.pagedescription.archive': 'För att arkivera intyget klickar du på symbolen Arkivera intyg <span class="glyphicon glyphicon-folder-close"></span>.',
-            
+
             'ts-bas.label.status.false': '<span class="glyphicon glyphicon-chevron-up"></span><a> Visa mindre</a>',
             'ts-bas.label.status.true': '<span class="glyphicon glyphicon-chevron-down"></span><a> Visa mer</a>',
             'ts-bas.label.showevents.false': '<span class="glyphicon glyphicon-chevron-up"></span><a> Visa färre händelser</a>',
@@ -182,7 +193,7 @@ define([], function() {
             'ts-bas.label.bedomning-info-undersokas-med-specialkompetens': 'Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i:',
             'ts-bas.label.bedomning-info-ej-angivet': 'Ej angivet',
             'ts-bas.helptext.readpdfhelp' : '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank">Adobe Reader</a>.',
-            
+
             //Helptexts
 
             'ts-bas.helptext.synfunktioner.a-c': 'Då någon av a - c besvarats med JA krävs ett läkarintyg från ögonspecialist.',
@@ -190,7 +201,7 @@ define([], function() {
             'ts-bas.helptext.diabetes.behandling': 'Vid tablett- eller insulinbehandlad diabetes krävs det att ett läkarintyg gällande sjukdomen skickas in.',
             'ts-bas.helptext.narkotika-lakemedel.provtagning': 'Om ja på ovanstående ska resultatet redovisas separat.',
 
-            'ts-bas.inbox.complementaryinfo': 'Intyget avser'
+            'ts-bas.inbox.complementaryinfo': 'Avser behörighet för körkort'
 
         },
         'en': {

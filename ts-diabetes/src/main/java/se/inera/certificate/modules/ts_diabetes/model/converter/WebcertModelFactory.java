@@ -51,7 +51,10 @@ public class WebcertModelFactory {
 
         Utlatande utlatande = new Utlatande();
         utlatande.setId(newDraftData.getCertificateId());
-        utlatande.setTyp(UtlatandeKod.TS_DIABETES.name());
+
+        // This is where we set the concrete tsUtgava and tsVersion of the intyg that is created. 
+        utlatande.setTyp(UtlatandeKod.getCurrentVersion().name());
+
         populateWithSkapadAv(utlatande, newDraftData.getSkapadAv());
         populateWithPatientInfo(utlatande, newDraftData.getPatient());
 
@@ -118,7 +121,6 @@ public class WebcertModelFactory {
         vardenhet.setEnhetsnamn(vardenhetDto.getNamn());
         vardenhet.setVardgivare(convertVardgivareToEdit(vardenhetDto.getVardgivare()));
 
-        // TODO Populate with the address of the Vardenhet
         vardenhet.setPostadress(vardenhetDto.getPostadress());
         vardenhet.setPostort(vardenhetDto.getPostort());
         vardenhet.setPostnummer(vardenhetDto.getPostnummer());

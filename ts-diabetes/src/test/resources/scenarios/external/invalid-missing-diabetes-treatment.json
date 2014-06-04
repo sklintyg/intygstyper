@@ -139,5 +139,7 @@
             "forekomst": true,
             "observationstid" : "2012-12-12" 
         }
-    ]
+    ],
+    "tsUtgava" : "06",
+    "tsVersion" : "02"
 }
