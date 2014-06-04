@@ -114,12 +114,6 @@
                         </li>
                       </ul>
                     </div>
-
-                    <p>Information om Transportstyrelsens föreskrifter finns under länken Väg och sedan länken
-                      Trafikmedicin
-                      på <a href="http://www.transportstyrelsen.se" target="_blank">www.transportstyrelsen.se <img
-                          src="/img/link_icon.png"></a>.</p>
-
                     <div class="form-group clearfix">
                       <label class="checkbox checkbox-columns col-md-2"
                              ng-repeat="typ in cert.intygAvser.korkortstyp track by $index"><input
@@ -370,23 +364,18 @@
                         <td></td>
                         <td></td>
                         <td>
-                          <span message key="ts-diabetes.label.syn.synskarpa"></span>
-                          <p>Synskärpa (alla bokstäver ska kunna läsas på den rad som anger synskärpan. Är synskärpan
-                            sämre än 0,1 ska den anges som 0,0).</p>
-                          <p>
-                            Uppgifterna om synskärpa med och utan korrektion kan grundas på aktuellt intyg av bl.a.
-                            legitimerad optiker eller den som är anställd hos optiker. Alternativt kan kopia av sådant
-                            intyg
-                            bifogas. Uppgifter från ögonbottenfoto kan också användas. </p>
+                          <p><span message key="ts-diabetes.label.syn.synskarpa"></span></p>
+
+                          <div class="alert alert-info">
+                            <span message key="ts-diabetes.helptext.synfunktioner.synskarpa"></span>
+                          </div>
 
                           <table class="table table-form">
                             <tr>
                               <th></th>
-                              <th>Utan korrektion <span wc-enable-tooltip
-                                                        field-help-text="ts-diabetes.helptext.synfunktioner.utan-korrektion" />
+                              <th>Utan korrektion <span wc-enable-tooltip field-help-text="ts-diabetes.helptext.synfunktioner.utan-korrektion"></span>
                               </th>
-                              <th>Med korrektion <span wc-enable-tooltip
-                                                       field-help-text="ts-diabetes.helptext.synfunktioner.med-korrektion" />
+                              <th>Med korrektion <span wc-enable-tooltip field-help-text="ts-diabetes.helptext.synfunktioner.med-korrektion"></span>
                               </th>
                             </tr>
                             <tr>

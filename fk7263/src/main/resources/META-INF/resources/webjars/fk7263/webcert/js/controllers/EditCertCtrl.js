@@ -11,8 +11,7 @@ define([
     angular.module(moduleName, [ CertificateService, ManageCertView, User ]).
         controller(moduleName, [ '$anchorScroll', '$filter', '$location', '$scope',
             CertificateService, ManageCertView, User,
-            function($anchorScroll, $filter, $location, $scope, CertificateService, ManageCertView,
-                User) {
+            function($anchorScroll, $filter, $location, $scope, CertificateService, ManageCertView, User) {
                 $scope.cert = {};
 
                 $scope.messages = [];
@@ -136,12 +135,12 @@ define([
                     var totalOvrigtLength = getLengthOrZero($scope.cert.kommentar);
 
                     if ($scope.cert.otherData !== undefined) {
-                        totalOvrigtLength = getLengthOrZero($scope.cert.otherData.baseradPaAnnat),
-                            +getLengthOrZero($scope.cert.otherData.workingHours25),
-                            +getLengthOrZero($scope.cert.otherData.workingHours50),
-                            +getLengthOrZero($scope.cert.otherData.workingHours75),
-                            +getLengthOrZero($scope.cert.otherData.workingHours100),
-                            +getLengthOrZero($scope.cert.otherData.prognosisClarification);
+                        totalOvrigtLength = getLengthOrZero($scope.cert.otherData.baseradPaAnnat) +
+                            getLengthOrZero($scope.cert.otherData.workingHours25) +
+                            getLengthOrZero($scope.cert.otherData.workingHours50) +
+                            getLengthOrZero($scope.cert.otherData.workingHours75) +
+                            getLengthOrZero($scope.cert.otherData.workingHours100) +
+                            getLengthOrZero($scope.cert.otherData.prognosisClarification);
                     }
                     if ($scope.cert.otherData !== undefined) {
                         if ($scope.cert.otherData.rehabWhen instanceof Date) {
@@ -211,37 +210,40 @@ define([
                     check100: false
                 };
 
-                function updateWorkStateDate(checked, model) {
+                function updateWorkStateDate(checked, model, key) {
                     if (model !== undefined) {
                         if (checked) {
-                            if (!isDate(model.from)) {
-                                model.from = ($filter('date')($scope.today, 'yyyy-MM-dd'));
+                            var workstate = model[key];
+                            if (!workstate) {
+                                workstate = model[key] = {};
                             }
-                            if (!isDate(model.tom)) {
-                                model.tom = ($filter('date')($scope.today, 'yyyy-MM-dd'));
+                            if (!workstate.from || !isDate(workstate.from)) {
+                                workstate.from = ($filter('date')($scope.today, 'yyyy-MM-dd'));
+                            }
+                            if (!workstate.tom || !isDate(workstate.tom)) {
+                                workstate.tom = ($filter('date')($scope.today, 'yyyy-MM-dd'));
                             }
                         } else {
-                            model.from = '';
-                            model.tom = '';
+                            delete model[key];
                         }
                         $scope.updateTotalCertDays();
                     }
                 }
 
                 $scope.$watch('workState.check25', function(newVal) {
-                    updateWorkStateDate(newVal, $scope.cert.nedsattMed25);
+                    updateWorkStateDate(newVal, $scope.cert, 'nedsattMed25');
                 });
 
                 $scope.$watch('workState.check50', function(newVal) {
-                    updateWorkStateDate(newVal, $scope.cert.nedsattMed50);
+                    updateWorkStateDate(newVal, $scope.cert, 'nedsattMed50');
                 });
 
                 $scope.$watch('workState.check75', function(newVal) {
-                    updateWorkStateDate(newVal, $scope.cert.nedsattMed75);
+                    updateWorkStateDate(newVal, $scope.cert, 'nedsattMed75');
                 });
 
                 $scope.$watch('workState.check100', function(newVal) {
-                    updateWorkStateDate(newVal, $scope.cert.nedsattMed100);
+                    updateWorkStateDate(newVal, $scope.cert, 'nedsattMed100');
                 });
 
                 function isDate(date) {
@@ -294,7 +296,8 @@ define([
 
                     if (!minDate || !maxDate) {
                         // return if there's no valid range span yet
-                        return $scope.totalCertDays = false;
+                        $scope.totalCertDays = false;
+                        return $scope.totalCertDays;
                     }
 
                     $scope.totalCertDays = Math.round(Math.abs((minDate.getTime() - maxDate.getTime()) / (oneDay))) + 1;
