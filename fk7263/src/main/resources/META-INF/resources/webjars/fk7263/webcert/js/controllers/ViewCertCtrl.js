@@ -1,13 +1,13 @@
 define([
     'angular',
     'webjars/common/webcert/js/services/CertificateService',
-    'webjars/common/webcert/js/services/ManageCertView',
-    'services/ManageCertificate'
-], function(angular, CertificateService, ManageCertView, ManageCertificate) {
+    'webjars/common/webcert/js/services/ManageCertView'
+], function(angular, CertificateService, ManageCertView) {
     'use strict';
 
-    var moduleName = 'fk7263.ViewCertCtrl';
+    var ManageCertificate = require('services/ManageCertificate');
 
+    var moduleName = 'fk7263.ViewCertCtrl';
     angular.module(moduleName, [ManageCertView, ManageCertificate]).
         controller(moduleName, ['$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', CertificateService, ManageCertView, ManageCertificate,
             function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView, ManageCertificate) {
