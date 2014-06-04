@@ -910,9 +910,9 @@
                         inte ta ställning</label>
                     </div>
 
-                    <p>Om någon av frågorna har besvarats med ja, ska de krav på ytterligare underlag som framgår av
-                      föreskrifterna
-                      beaktas.</p>
+                    <p ng-show="form.anyTrue">
+                        <span message key="ts-bas.helptext.bedomning.info"></span>
+                    </p>
 
                     <p ng-show="cert.syn.korrektionsglasensStyrka == true">
                             <span message key="ts-bas.helptext.synfunktioner.8-dioptrier-valt"></span>
