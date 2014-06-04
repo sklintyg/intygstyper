@@ -84,9 +84,9 @@ define([], function() {
             'ts-diabetes.label.diabetes.behandling.endast-kost': 'Endast kost',
             'ts-diabetes.label.diabetes.behandling.tabletter': 'Tabletter',
             'ts-diabetes.label.diabetes.behandling.insulin': 'Insulin',
-            'ts-diabetes.label.diabetes.behandling.insulin-period': 'Insulin sedan: ',
+            'ts-diabetes.label.diabetes.behandling.insulin-period': 'Insulin sedan år: ',
             'ts-diabetes.label.diabetes.behandling.annan': 'Annan behandling',
-            'ts-diabetes.label.diabetes.behandling.annan.period': 'Annan behandling, vilken? ',
+            'ts-diabetes.label.diabetes.behandling.annan-beskrivning': 'Annan behandling, vilken? (ej obligatorisk)',
 
             'ts-diabetes.label.hypoglykemier.har-patient-kannedom': 'a) Har patienten kunskap om lämpliga åtgärder vid hypoglykemi?',
             'ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion': 'b) Förekommer hypoglykemier med tecken på nedsatt hjärnfunktion (neuroglukopena symptom) som bedöms kunna innebära en trafiksäkerhetsrisk?',
@@ -97,6 +97,10 @@ define([], function() {
 
             'ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken': 'e) Har patienten haft allvarlig hypoglykemi i trafiken under det senaste året?',
             'ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning': 'Hur många sådana episoder och när inträffade de? ',
+
+            'ts-diabetes.label.hypoglykemier.egenkontroll-blodsocker': 'f) Genomför patienten egenkontroller av blodsocker?',
+
+            'ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid': 'g) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under vaken tid det senaste året?',
 
             'ts-diabetes.label.ovanstaende-har-bekraftats': 'Ovanstående uppgifter och bedömningar har bekräftats',
             'ts-diabetes.label.kontakt-info': 'Namnförtydligande, mottagningens adress och telefon',
