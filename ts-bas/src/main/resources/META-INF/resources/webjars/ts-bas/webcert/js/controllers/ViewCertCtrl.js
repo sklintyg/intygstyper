@@ -5,14 +5,28 @@ define([
 ], function(angular, CertificateService, ManageCertView) {
     'use strict';
 
+    var ManageCertificate = require('services/ManageCertificate');
     var moduleName = 'ts-bas.ViewCertCtrl';
 
-    angular.module(moduleName, [ CertificateService, ManageCertView ]).
-        controller(moduleName, [ '$log', '$rootScope', '$routeParams', '$scope', CertificateService, ManageCertView,
-            function($log, $rootScope, $routeParams, $scope, CertificateService, ManageCertView) {
+    angular.module(moduleName, [ CertificateService, ManageCertView, ManageCertificate ]).
+        controller(moduleName, [ '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', CertificateService, ManageCertView, ManageCertificate,
+            function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView, ManageCertificate) {
 
+                // Copy dialog setup
+                var COPY_DIALOG_COOKIE = 'wc.dontShowCopyDialog';
+                var copyDialog = {
+                    isOpen: false
+                };
+                $scope.dialog = {
+                    acceptprogressdone: true,
+                    focus: false,
+                    errormessageid: 'error.failedtocopyintyg',
+                    showerror: false,
+                    dontShowCopyInfo: $cookieStore.get(COPY_DIALOG_COOKIE)
+                };
+
+                // Page setup
                 $scope.cert = {};
-
                 $scope.widgetState = {
                     doneLoading: false,
                     activeErrorMessageKey: null,
@@ -77,6 +91,10 @@ define([
                         $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
                     }
                 });
+
+                $scope.copy = function(cert) {
+                    copyDialog = ManageCertificate.copy($scope, cert, COPY_DIALOG_COOKIE);
+                };
             }
         ]);
 

@@ -5,15 +5,29 @@ define([
 ], function(angular, CertificateService, ManageCertView) {
     'use strict';
 
+    var ManageCertificate = require('services/ManageCertificate');
+
     var moduleName = 'ts-diabetes.ViewCertCtrl';
+    angular.module(moduleName, [ CertificateService, ManageCertView, ManageCertificate ]).
+        controller(moduleName, [ '$location', '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore',
+            CertificateService, ManageCertView, ManageCertificate,
+            function($location, $log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView, ManageCertificate) {
 
-    angular.module(moduleName, [ CertificateService, ManageCertView ]).
-        controller(moduleName, [ '$location', '$log', '$rootScope', '$routeParams', '$scope',
-            CertificateService, ManageCertView,
-            function($location, $log, $rootScope, $routeParams, $scope, CertificateService, ManageCertView) {
+                // Copy dialog setup
+                var COPY_DIALOG_COOKIE = 'wc.dontShowCopyDialog';
+                var copyDialog = {
+                    isOpen: false
+                };
+                $scope.dialog = {
+                    acceptprogressdone: true,
+                    focus: false,
+                    errormessageid: 'error.failedtocopyintyg',
+                    showerror: false,
+                    dontShowCopyInfo: $cookieStore.get(COPY_DIALOG_COOKIE)
+                };
 
+                // Page setup
                 $scope.cert = {};
-
                 $scope.widgetState = {
                     doneLoading: false,
                     activeErrorMessageKey: null,
@@ -76,6 +90,10 @@ define([
 
                 $scope.send = function() {
                     $location.path('/ts-diabetes/recipients');
+                };
+
+                $scope.copy = function(cert) {
+                    copyDialog = ManageCertificate.copy($scope, cert, COPY_DIALOG_COOKIE);
                 };
             }
         ]);
