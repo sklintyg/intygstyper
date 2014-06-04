@@ -23,7 +23,7 @@ define([], function() {
 
     return {
         'sv': {
-            'ts-diabetes.label.intygavser': 'Intyget avser',
+            'ts-diabetes.label.intygavser': 'Avser lämplighet för körkort',
             'ts-diabetes.label.identitet': 'Identiteten är styrkt genom',
             'ts-diabetes.label.allmant': '1. Allmänt',
             'ts-diabetes.label.hypoglykemier': '2. Hypoglykemier (lågt blodsocker)',
@@ -162,7 +162,7 @@ define([], function() {
             'ts-diabetes.helptext.diabetes.behandling': 'Vid tablett- eller insulinbehandlad diabetes krävs det att ett läkarintyg gällande sjukdomen skickas in.',
             'ts-diabetes.helptext.narkotika-lakemedel.provtagning': 'Om ja på ovanstående ska resultatet redovisas separat.',
 
-            'ts-diabetes.inbox.complementaryinfo': 'Intyget avser'
+            'ts-diabetes.inbox.complementaryinfo': 'Avser lämplighet för körkort'
 
         },
         'en': {

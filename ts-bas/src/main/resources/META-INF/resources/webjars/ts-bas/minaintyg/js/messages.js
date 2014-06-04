@@ -23,7 +23,7 @@ define([], function() {
 
     return {
         'sv': {
-            'ts-bas.label.intygavser': 'Intyget avser',
+            'ts-bas.label.intygavser': 'Avser behörighet för körkort',
             'ts-bas.label.identitet': 'Identiteten är styrkt genom',
             'ts-bas.label.synfunktioner': '1. Synfunktioner',
             'ts-bas.label.horselbalans': '2. Hörsel och balanssinne',
@@ -191,7 +191,7 @@ define([], function() {
             'ts-bas.helptext.diabetes.behandling': 'Vid tablett- eller insulinbehandlad diabetes krävs det att ett läkarintyg gällande sjukdomen skickas in.',
             'ts-bas.helptext.narkotika-lakemedel.provtagning': 'Om ja på ovanstående ska resultatet redovisas separat.',
 
-            'ts-bas.inbox.complementaryinfo': 'Intyget avser'
+            'ts-bas.inbox.complementaryinfo': 'Avser behörighet för körkort'
 
         },
         'en': {
