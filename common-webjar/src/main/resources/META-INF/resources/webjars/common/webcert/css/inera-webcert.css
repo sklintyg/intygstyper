@@ -38,7 +38,7 @@ input, textarea, .uneditable-input {
 }
 
 select {
-    max-width: 220px;
+    max-width: 300px;
 }
 
 .form-control {
