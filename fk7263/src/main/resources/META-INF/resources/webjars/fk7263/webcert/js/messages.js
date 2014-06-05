@@ -9,6 +9,8 @@ define([], function() {
             'fk7263.info.loading.existing.qa': 'Hämtar tidigare frågor och svar...',
             'fk7263.message.certificateloading': 'Hämtar intyg...',
 
+            'fk7263.label.send': 'Skicka intyg till Försäkringskassan',
+
             // FK 7263
             'fk7263.label.certtitle': 'Läkarintyg FK 7263',
 

@@ -134,6 +134,18 @@ define([
                         });
                 }
 
+                function _sendSigneratIntyg(intygId, onSuccess, onError) {
+                    $log.debug('_sendSigneratIntyg: ' + intygId);
+                    var restPath = '/moduleapi/intyg/skicka/' + intygId;
+                    $http.post(restPath).
+                        success(function(data) {
+                            onSuccess(data);
+                        }).
+                        error(function(error) {
+                            _handleError(onError, error);
+                        });
+                }
+
                 // Return public API for the service
                 return {
                     getCertificate: _getCertificate,
@@ -143,7 +155,8 @@ define([
                     getSigneringshash: _getSigneringshash,
                     getSigneringsstatus: _getSigneringsstatus,
                     signeraUtkast: _signeraUtkast,
-                    signeraUtkastWithSignatur: _signeraUtkastWithSignatur
+                    signeraUtkastWithSignatur: _signeraUtkastWithSignatur,
+                    sendSigneratIntyg: _sendSigneratIntyg
                 };
             }
         ]);

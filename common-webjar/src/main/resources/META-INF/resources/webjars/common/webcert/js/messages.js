@@ -14,7 +14,7 @@ define([], function() {
             'common.cancel': 'Avbryt',
             'common.goback': 'Tillbaka',
             'common.sign': 'Signera',
-
+            'common.send': 'Skicka',
             'common.copy': 'Kopiera',
             'common.delete': 'Ta bort',
 
