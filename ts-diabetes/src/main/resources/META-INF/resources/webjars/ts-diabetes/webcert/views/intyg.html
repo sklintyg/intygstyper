@@ -7,7 +7,7 @@
          class="alert alert-danger alert-column">
       <span message key="{{widgetState.activeErrorMessageKey}}"></span>
     </div>
-    <div ng-show="!widgetState.activeErrorMessageKey">
+    <div ng-show="!widgetState.activeErrorMessageKey" id="intyg-vy-laddad">
       <div class="form-group buttonbar">
         <label class="control-label">{{cert.patient.fullstandigtNamn}} - {{cert.patient.personid}}</label>
 
@@ -17,7 +17,7 @@
             <button id="downloadprint" type="submit" value="submit" class="btn btn-info"
                     onClick="document.pdfForm.submit()">Skriv ut
             </button>
-            <button class="btn btn-info">Kopiera</button>
+            <button id="copyBtn" class="btn btn-info" ng-click="copy(cert)">Kopiera</button>
             <button class="btn btn-inverse">Rätta</button>
           </p>
         </form>

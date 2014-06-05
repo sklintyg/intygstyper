@@ -5,16 +5,29 @@ define([
 ], function(angular, CertificateService, ManageCertView) {
     'use strict';
 
+    var ManageCertificate = require('services/ManageCertificate');
+
     var moduleName = 'fk7263.ViewCertCtrl';
+    angular.module(moduleName, [ManageCertView, ManageCertificate]).
+        controller(moduleName, ['$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', CertificateService, ManageCertView, ManageCertificate,
+            function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView, ManageCertificate) {
 
-    angular.module(moduleName, []).
-        controller(moduleName, ['$log', '$rootScope', '$routeParams', '$scope', CertificateService, ManageCertView,
-            function($log, $rootScope, $routeParams, $scope, CertificateService, ManageCertView) {
+                // Copy dialog setup
+                var COPY_DIALOG_COOKIE = 'wc.dontShowCopyDialog';
+                var copyDialog = {
+                    isOpen: false
+                };
+                $scope.dialog = {
+                    acceptprogressdone: true,
+                    focus: false,
+                    errormessageid: 'error.failedtocopyintyg',
+                    showerror: false,
+                    dontShowCopyInfo: $cookieStore.get(COPY_DIALOG_COOKIE)
+                };
 
+                // Page setup
                 $scope.cert = {};
                 $scope.cert.filledAlways = true;
-
-                // init state
                 $scope.widgetState = {
                     doneLoading: false,
                     activeErrorMessageKey: null,
@@ -49,6 +62,20 @@ define([
                     $log.debug('Got error while loading cert');
                     $log.debug(error.message);
                 });
+
+                /**
+                 * Private
+                 */
+
+
+                /**
+                 * Exposed functions
+                 * @param cert
+                 */
+
+                $scope.copy = function(cert) {
+                    copyDialog = ManageCertificate.copy($scope, cert, COPY_DIALOG_COOKIE);
+                };
             }
         ]);
 

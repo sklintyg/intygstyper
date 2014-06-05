@@ -8,7 +8,7 @@ define([
     var moduleName = 'common.dialogService';
 
     /**
-     * wcDialogService - Generic error dialog service
+     * wcDialogService - Generic dialog service
      */
     angular.module(moduleName, []).
         factory(moduleName, [ '$modal',
@@ -63,9 +63,11 @@ define([
                     scope.dialog = {
                         acceptprogressdone: true,
                         focus: false,
-                        errormessageid: 'common.error.cantconnect',
+                        errormessageid: '',
                         showerror: false
                     };
+
+                    scope.dialog.errormessageid = (scope.dialog.errormessageid ? scope.dialog.errormessageid : 'common.error.cantconnect')
 
                     if (options.dialogId === undefined) {
                         throw 'dialogId must be specified';
@@ -85,12 +87,15 @@ define([
                     options.button3id =
                         (options.button3id === undefined) ? 'button3' + options.dialogId : options.button3id;
                     options.autoClose = (options.autoClose === undefined) ? true : options.autoClose;
+                    options.templateUrl = (options.templateUrl === undefined) ? '/views/partials/common-dialog.html' : options.templateUrl;
+                    options.model = (options.model === undefined) ? undefined : options.model;
 
                     // Create controller to setup dialog
-                    var DialogInstanceCtrl = function($scope, $modalInstance, dialogId, titleId, bodyTextId, bodyText,
+                    var DialogInstanceCtrl = function($scope, $modalInstance, model, dialogId, titleId, bodyTextId, bodyText,
                         button1id, button2id, button3id, button1click, button2click, button3click, button3visible,
                         button1text, button2text, button3text, autoClose) {
 
+                        $scope.model = model;
                         $scope.dialogId = dialogId;
                         $scope.titleId = titleId;
                         $scope.bodyTextId = bodyTextId;
@@ -129,9 +134,12 @@ define([
                     // Open dialog box using specified options, template and controller
                     var msgbox = $modal.open({
                         scope: scope,
-                        templateUrl: '/views/partials/common-dialog.html',
+                        templateUrl: options.templateUrl,
                         controller: DialogInstanceCtrl,
                         resolve: {
+                            model: function() {
+                                return options.model;
+                            },
                             dialogId: function() {
                                 return angular.copy(options.dialogId);
                             },

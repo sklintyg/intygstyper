@@ -5,7 +5,7 @@
     <div id="cert-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey" class="alert alert-danger alert-column">
       <span message key="fk7263.{{widgetState.activeErrorMessageKey}}"></span>
     </div>
-    <div ng-show="!widgetState.activeErrorMessageKey">
+    <div ng-show="!widgetState.activeErrorMessageKey" id="intyg-vy-laddad">
       <div class="form-group buttonbar">
         <label class="control-label">{{cert.patientNamn}} - {{cert.patientPersonnummer}}</label>
 
@@ -13,7 +13,7 @@
           <p class="btn-row">
             <button class="btn btn-info">Skicka till Försäkringskassan</button>
             <button id="downloadprint" type="submit" value="submit" class="btn btn-info" onClick="document.pdfForm.submit()">Skriv ut</button>
-            <button class="btn btn-info">Kopiera</button>
+            <button id="copyBtn" class="btn btn-info" ng-click="copy(cert)">Kopiera</button>
             <button class="btn btn-inverse">Rätta</button>
           </p>
         </form>
