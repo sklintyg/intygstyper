@@ -92,6 +92,11 @@ define([
                     }
                 });
 
+                ManageCertificate.initSend($scope);
+                $scope.send = function(cert) {
+                    ManageCertificate.send($scope, cert, 'fk7263.label.send');
+                };
+
                 $scope.copy = function(cert) {
                     copyDialog = ManageCertificate.copy($scope, cert, COPY_DIALOG_COOKIE);
                 };

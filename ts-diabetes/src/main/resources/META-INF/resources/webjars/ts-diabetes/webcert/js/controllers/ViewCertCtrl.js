@@ -88,8 +88,9 @@ define([
                  * Exposed scope interaction functions
                  */
 
-                $scope.send = function() {
-                    $location.path('/ts-diabetes/recipients');
+                ManageCertificate.initSend($scope);
+                $scope.send = function(cert) {
+                    ManageCertificate.send($scope, cert, 'fk7263.label.send');
                 };
 
                 $scope.copy = function(cert) {
