@@ -94,7 +94,7 @@ define([
 
                 ManageCertificate.initSend($scope);
                 $scope.send = function(cert) {
-                    ManageCertificate.send($scope, cert, 'fk7263.label.send');
+                    ManageCertificate.send($scope, cert, 'ts-bas.label.send');
                 };
 
                 $scope.copy = function(cert) {

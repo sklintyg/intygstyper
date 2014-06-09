@@ -44,6 +44,7 @@ define([], function() {
             'ts-bas.label.ovrigkommentar': '16. Övrig kommentar',
             'ts-bas.label.bedomning': 'Bedömning',
             'ts-bas.label.unit': 'Vårdenhet',
+            'ts-bas.label.send': 'Skicka till Transportstyrelsen',
 
             // Identitet styrkt genom
             'ts-bas.label.identitet.id_kort': 'ID-kort',
