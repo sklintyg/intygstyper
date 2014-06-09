@@ -41,12 +41,12 @@ define([ 'angular', 'webjars/common/webcert/js/services/CertificateService', 'we
 
                         $scope.form = {
                             'identity': {
-                                'ID-kort': 'ID_KORT',
-                                'Företagskort eller tjänstekort': 'FORETAG_ELLER_TJANSTEKORT',
+                                'ID-kort *': 'ID_KORT',
+                                'Företagskort eller tjänstekort **': 'FORETAG_ELLER_TJANSTEKORT',
                                 'Körkort': 'KORKORT',
                                 'Personlig kännedom': 'PERS_KANNEDOM',
-                                'Försäkran enligt 18 kap. 4§': 'FORSAKRAN_KAP18',
-                                'Pass': 'PASS'
+                                'Försäkran enligt 18 kap. 4§ ***': 'FORSAKRAN_KAP18',
+                                'Pass ****': 'PASS'
                             },
                             'korkortd': false,
                             'behorighet': true,
