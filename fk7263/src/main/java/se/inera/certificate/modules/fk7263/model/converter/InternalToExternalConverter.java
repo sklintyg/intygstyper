@@ -426,7 +426,9 @@ public class InternalToExternalConverter {
      */
     private Fk7263Vardenhet buildExternalVardenhet(Vardperson intVardperson) {
         Fk7263Vardenhet vardenhet = new Fk7263Vardenhet();
-        vardenhet.setArbetsplatskod(new Id(ARBETSPLATSKOD_ROOT, intVardperson.getArbetsplatsKod()));
+        if (intVardperson.getArbetsplatsKod() != null) {
+            vardenhet.setArbetsplatskod(new Id(ARBETSPLATSKOD_ROOT, intVardperson.getArbetsplatsKod()));
+        }
         vardenhet.setEpost(intVardperson.getEpost());
         vardenhet.setId(new Id(HSA_ID_ROOT, intVardperson.getEnhetsId()));
         vardenhet.setNamn(intVardperson.getEnhetsnamn());
