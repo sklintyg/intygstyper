@@ -487,7 +487,7 @@ input[datepicker-popup] {
 .menucollapse-show.menucollapse-show-active {
     margin-top: 0;
 }
-
+.table-padding-top { padding-top: 15px; }
 .table .table-form {
     background-color: transparent;
 }
