@@ -18,6 +18,7 @@ import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
+import se.inera.certificate.model.converter.util.InternalConverterUtil;
 import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
 import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
 import se.inera.certificate.modules.fk7263.model.codes.Prognoskoder;
@@ -43,7 +44,6 @@ public class InternalToExternalConverter {
 
     private static final Logger LOG = LoggerFactory.getLogger(InternalToExternalConverter.class);
 
-    private static final String PERS_ID_ROOT = "1.2.752.129.2.1.3.1";
     private static final String HSA_ID_ROOT = "1.2.752.129.2.1.4.1";
     private static final String ARBETSPLATSKOD_ROOT = "1.2.752.29.4.71";
 
@@ -55,7 +55,8 @@ public class InternalToExternalConverter {
     /**
      * Converts from the internal to the external model.
      *
-     * @param source {@link Fk7263Intyg}
+     * @param source
+     *            {@link Fk7263Intyg}
      * @return {@link Fk7263Utlatande}
      * @throws ConverterException
      */
@@ -91,7 +92,8 @@ public class InternalToExternalConverter {
     /**
      * Build a List of {@link String}[s] from different fields in the internal model.
      *
-     * @param source internal representation
+     * @param source
+     *            internal representation
      * @return List of {@link String} information was found going into the kommentarer fields
      */
     private List<String> buildKommentarer(Fk7263Intyg source) {
@@ -115,7 +117,8 @@ public class InternalToExternalConverter {
     /**
      * Create a List of {@link Vardkontakt} from the internal model.
      *
-     * @param source internal representation
+     * @param source
+     *            internal representation
      * @return List of {@link Vardkontakt}
      */
     private List<Vardkontakt> buildExternalVardkontakter(Fk7263Intyg source) {
@@ -143,7 +146,8 @@ public class InternalToExternalConverter {
     /**
      * Create a List of {@link Referens} from the internal model.
      *
-     * @param source internal representation
+     * @param source
+     *            internal representation
      * @return List of {@link Referens}
      */
     private List<Referens> buildExternalReferenser(Fk7263Intyg source) {
@@ -170,7 +174,8 @@ public class InternalToExternalConverter {
     /**
      * Create a List of {@link Fk7263Observation} from the internal model.
      *
-     * @param source internal representation
+     * @param source
+     *            internal representation
      * @return List of {@link Fk7263Observation}
      */
     private List<Fk7263Observation> buildExternalObservationer(Fk7263Intyg source) {
@@ -223,14 +228,18 @@ public class InternalToExternalConverter {
     /**
      * Creates the slightly more complex {@link Fk7263Observation}[s] regarding arbetsformaga.
      *
-     * @param kod     a {@link Kod} from {@link ObservationsKoder}
-     * @param period  {@link LocalDateInterval}
-     * @param prognos {@link Fk7263Prognos}
-     * @param varde   {@link PhysicalQuantity}
+     * @param kod
+     *            a {@link Kod} from {@link ObservationsKoder}
+     * @param period
+     *            {@link LocalDateInterval}
+     * @param prognos
+     *            {@link Fk7263Prognos}
+     * @param varde
+     *            {@link PhysicalQuantity}
      * @return {@link Fk7263Observation}
      */
     private Fk7263Observation buildArbetsformageObservation(Kod kod, LocalDateInterval period, Fk7263Prognos prognos,
-                                                            PhysicalQuantity varde) {
+            PhysicalQuantity varde) {
         Fk7263Observation obs = new Fk7263Observation();
 
         obs.setObservationskod(kod);
@@ -248,7 +257,8 @@ public class InternalToExternalConverter {
     /**
      * Creates a {@link Fk7263Prognos} from information in the internal model.
      *
-     * @param source internal representation
+     * @param source
+     *            internal representation
      * @return {@link Fk7263Prognos}
      */
     private Fk7263Prognos buildPrognos(Fk7263Intyg source) {
@@ -267,7 +277,8 @@ public class InternalToExternalConverter {
     /**
      * Get the prognoskod that corresponds with the correct boolean in the internal model.
      *
-     * @param source internal representation
+     * @param source
+     *            internal representation
      * @return {@link Kod}
      */
     private Kod getCorrespondingPrognosKod(Fk7263Intyg source) {
@@ -290,7 +301,8 @@ public class InternalToExternalConverter {
     /**
      * Create an ICD-10 diagnose code from a code string.
      *
-     * @param code the code
+     * @param code
+     *            the code
      * @return {@link Kod} or null
      */
     private Kod buildDiagnoseCode(String code) {
@@ -307,9 +319,12 @@ public class InternalToExternalConverter {
     /**
      * Create a single observation with kod, kategori and beskrivning.
      *
-     * @param kod         {@link Kod} Observationskod
-     * @param kategori    {@link Kod} Observationskategori
-     * @param beskrivning {@link String}
+     * @param kod
+     *            {@link Kod} Observationskod
+     * @param kategori
+     *            {@link Kod} Observationskategori
+     * @param beskrivning
+     *            {@link String}
      * @return {@link Fk7263Observation}
      */
     private Fk7263Observation buildObservation(Kod kod, Kod kategori, String beskrivning) {
@@ -330,7 +345,8 @@ public class InternalToExternalConverter {
     /**
      * Create a List of Fk7263Aktivitet[s] from information in the internal model.
      *
-     * @param source internal representation
+     * @param source
+     *            internal representation
      * @return {@link List} of {@link Fk7263Aktivitet}-objects
      */
     private List<Fk7263Aktivitet> buildExternalAktiviteter(Fk7263Intyg source) {
@@ -384,8 +400,10 @@ public class InternalToExternalConverter {
     /**
      * Build singular Fk7263Aktivitet.
      *
-     * @param kod         {@link Kod} Aktivitetskod, always mandatory
-     * @param beskrivning {@link String}, or null if not present
+     * @param kod
+     *            {@link Kod} Aktivitetskod, always mandatory
+     * @param beskrivning
+     *            {@link String}, or null if not present
      * @return {@link Fk7263Aktivitet}
      */
     private Fk7263Aktivitet buildAktivitet(Kod kod, String beskrivning) {
@@ -403,7 +421,8 @@ public class InternalToExternalConverter {
     /**
      * Create a HosPersonal object from information in the internal model.
      *
-     * @param source internal representation
+     * @param source
+     *            internal representation
      * @return {@link se.inera.certificate.model.HosPersonal}
      */
     private Fk7263HosPersonal buildExternalHosPersonal(Fk7263Intyg source) {
@@ -421,7 +440,8 @@ public class InternalToExternalConverter {
     /**
      * Creates a Vardenhet from information in the internal model.
      *
-     * @param intVardperson source of Vardenhet information
+     * @param intVardperson
+     *            source of Vardenhet information
      * @return {@link se.inera.certificate.model.Vardenhet}
      */
     private Fk7263Vardenhet buildExternalVardenhet(Vardperson intVardperson) {
@@ -444,7 +464,8 @@ public class InternalToExternalConverter {
     /**
      * Creates a Vardgivare from information in the internal model.
      *
-     * @param intVardperson source of Vardgivare information
+     * @param intVardperson
+     *            source of Vardgivare information
      * @return {@link Vardgivare}
      */
     private Vardgivare buildExternalVardgivare(Vardperson intVardperson) {
@@ -458,23 +479,27 @@ public class InternalToExternalConverter {
     /**
      * Create an {@link Fk7263Patient} from the internal model.
      *
-     * @param source internal representation
+     * @param source
+     *            internal representation
      * @return {@link Fk7263Patient}
      */
     private Fk7263Patient buildExternalPatient(Fk7263Intyg source) {
         Fk7263Patient patient = new Fk7263Patient();
         patient.setEfternamn(source.getPatientNamn());
-        patient.setId(new Id(PERS_ID_ROOT, source.getPatientPersonnummer()));
+        patient.setId(InternalConverterUtil.createPersonId(source.getPatientPersonnummer()));
         buildPatientSysselsattningar(patient, source);
 
         return patient;
     }
 
+
     /**
      * Create a List of Sysselsattning for an {@link Fk7263Patient}.
      *
-     * @param patient the {@link se.inera.certificate.modules.fk7263.model.external.Fk7263Patient}
-     * @param source  internal representation
+     * @param patient
+     *            the {@link se.inera.certificate.modules.fk7263.model.external.Fk7263Patient}
+     * @param source
+     *            internal representation
      */
     private void buildPatientSysselsattningar(Fk7263Patient patient, Fk7263Intyg source) {
         List<Sysselsattning> sysselsattningar = patient.getSysselsattningar();
@@ -507,7 +532,8 @@ public class InternalToExternalConverter {
     /**
      * Determine if the person connected with the personnummer is female or male.
      *
-     * @param personnummer {@link String} containing the personnummer
+     * @param personnummer
+     *            {@link String} containing the personnummer
      * @return true if the personnummer belongs to a female, and false otherwise
      */
     private Boolean isFemale(String personnummer) {
@@ -520,7 +546,8 @@ public class InternalToExternalConverter {
     /**
      * Build an Arbetsuppgift from a string.
      *
-     * @param type string describing the Arbetsuppgift
+     * @param type
+     *            string describing the Arbetsuppgift
      * @return {@link Arbetsuppgift}
      */
     private Arbetsuppgift buildArbetsuppgift(String type) {

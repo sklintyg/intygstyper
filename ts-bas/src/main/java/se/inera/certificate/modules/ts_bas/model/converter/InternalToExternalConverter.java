@@ -30,6 +30,7 @@ import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Vardgivare;
+import se.inera.certificate.model.converter.util.InternalConverterUtil;
 import se.inera.certificate.modules.ts_bas.model.codes.AktivitetKod;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_bas.model.codes.CodeSystem;
@@ -67,8 +68,6 @@ import se.inera.certificate.modules.ts_bas.model.internal.Syn;
 public class InternalToExternalConverter {
 
     private static final Logger LOG = LoggerFactory.getLogger(InternalToExternalConverter.class);
-
-    private static final String PERS_ID_ROOT = "1.2.752.129.2.1.3.1";
 
     // Since these IDs are only unique inside a given Utlatande, they are hereby fixed to following values
     private static final Id SYNFALTSPROVNING_ID = new Id("1.2.752.129.2.1.2.1", "1");
@@ -580,7 +579,7 @@ public class InternalToExternalConverter {
         Patient patient = new Patient();
         patient.setEfternamn(source.getEfternamn());
         patient.getFornamn().add(source.getFornamn());
-        patient.setId(new Id(PERS_ID_ROOT, source.getPersonid()));
+        patient.setId(InternalConverterUtil.createPersonId(source.getPersonid()));
         patient.setPostadress(source.getPostadress());
         patient.setPostnummer(source.getPostnummer());
         patient.setPostort(source.getPostort());
