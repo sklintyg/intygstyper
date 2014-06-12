@@ -9,9 +9,9 @@ define([
     var moduleName = 'fk7263.EditCertCtrl';
 
     angular.module(moduleName, [ CertificateService, ManageCertView, User ]).
-        controller(moduleName, [ '$anchorScroll', '$filter', '$location', '$scope',
+        controller(moduleName, [ '$anchorScroll', '$filter', '$location', '$scope', '$window',
             CertificateService, ManageCertView, User,
-            function($anchorScroll, $filter, $location, $scope, CertificateService, ManageCertView, User) {
+            function($anchorScroll, $filter, $location, $scope, $window, CertificateService, ManageCertView, User) {
                 $scope.cert = {};
 
                 $scope.messages = [];
@@ -344,6 +344,14 @@ define([
                 $scope.sign = function() {
                     ManageCertView.signera($scope, 'fk7263');
                 };
+
+                /**
+                 * Print draft
+                 */
+                $scope.print = function() {
+                    $window.print();
+                };
+
             }
         ]);
 
