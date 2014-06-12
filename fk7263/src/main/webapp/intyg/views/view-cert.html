@@ -81,24 +81,24 @@
                     <span message key="view.label.nedsattning"></span>
                   </h3>
 
-                  <div ng-show="nedsattMed25 != null">
-                    <span message key="nedsattningsgrad.nedsatt_med_1_4"></span> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed25.start |
-                      date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed25.end | date:'longDate'}} </span>
+                  <div ng-if="cert.nedsattMed25 != null" id="nedsattMed25">
+                    <span message key="nedsattningsgrad.nedsatt_med_1_4"></span><br> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed25.start |
+                      date:'longDate'}} &ndash; längst till och med {{cert.nedsattMed25.end | date:'longDate'}} </span>
                   </div>
 
-                  <div ng-show="cert.nedsattMed50 != null">
+                  <div ng-if="cert.nedsattMed50 != null" id="nedsattMed50">
                     <span message key="nedsattningsgrad.nedsatt_med_1_2"></span><br> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed50.start
-                      | date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed50.end | date:'longDate'}} </span>
+                      | date:'longDate'}} &ndash; längst till och med {{cert.nedsattMed50.end | date:'longDate'}} </span>
                   </div>
 
-                  <div ng-show="cert.nedsattMed75 != null">
-                    <span message key="nedsattningsgrad.nedsatt_med_3_4"></span> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed75.start |
-                      date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed75.end | date:'longDate'}} </span>
+                  <div ng-if="cert.nedsattMed75 != null" id="nedsattMed75">
+                    <span message key="nedsattningsgrad.nedsatt_med_3_4"></span><br> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed75.start |
+                      date:'longDate'}} &ndash; längst till och med {{cert.nedsattMed75.end | date:'longDate'}} </span>
                   </div>
 
-                  <div ng-show="cert.nedsattMed100 != null">
+                  <div ng-if="cert.nedsattMed100 != null" id="nedsattMed100">
                     <span message key="nedsattningsgrad.helt_nedsatt"></span><br> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed100.start |
-                      date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed100.end | date:'longDate'}} </span>
+                      date:'longDate'}} &ndash; längst till och med {{cert.nedsattMed100.end | date:'longDate'}} </span>
                   </div>
 
 
