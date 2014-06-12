@@ -131,22 +131,22 @@
                     <span message key="fk7263.label.nedsattning"></span>
                   </h3>
 
-                  <div ng-show="cert.nedsattMed25 != null">
+                  <div ng-if="cert.nedsattMed25 != null" id="nedsattMed25">
                     <span message key="fk7263.nedsattningsgrad.nedsatt_med_1_4"></span> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed25.from |
                       date:'longDate'}} &ndash; längst till och med {{cert.nedsattMed25.tom | date:'longDate'}} </span>
                   </div>
 
-                  <div ng-show="cert.nedsattMed50 != null">
+                  <div ng-if="cert.nedsattMed50 != null" id="nedsattMed50">
                     <span message key="fk7263.nedsattningsgrad.nedsatt_med_1_2"></span><br> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed50.from
                       | date:'longDate'}} &ndash; längst till och med {{cert.nedsattMed50.tom | date:'longDate'}} </span>
                   </div>
 
-                  <div ng-show="cert.nedsattMed75 != null">
+                  <div ng-if="cert.nedsattMed75 != null" id="nedsattMed75">
                     <span message key="fk7263.nedsattningsgrad.nedsatt_med_3_4"></span> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed75.from |
                       date:'longDate'}} &ndash; längst till och med {{cert.nedsattMed75.tom | date:'longDate'}} </span>
                   </div>
 
-                  <div ng-show="cert.nedsattMed100 != null">
+                  <div ng-if="cert.nedsattMed100 != null" id="nedsattMed100">
                     <span message key="fk7263.nedsattningsgrad.helt_nedsatt"></span><br> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed100.from |
                       date:'longDate'}} &ndash; längst till och med {{cert.nedsattMed100.tom | date:'longDate'}} </span>
                   </div>
