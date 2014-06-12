@@ -72,7 +72,6 @@
 		<!-- Show if more than one event exists -->
    		<div ng-show="cert.status.length>0" id="latest-certificate-event">
             <span message key="ts-diabetes.status.{{cert.status[0].type}}"></span>
-            <span ng-show="cert.statuses[0].type == 'SENT'"></span>
             <span message key="ts-diabetes.target.{{cert.status[0].target}}"></span>
             <span class="certificate-event-timestamp pull-right">{{cert.status[0].timestamp | date:'shortDate'}}</span>
             <div collapse="!isCollapsedCertEvents" class="collapse">
