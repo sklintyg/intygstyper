@@ -3,7 +3,6 @@
 	<div id="backnav" class="row-fluid">
 	  <a class="backlink" href ng-click="backToViewCertificate()"><span message key="fk7263.button.goback"></span></a>
 	</div>
-	<div mi-spinner label="common.module.message.sendingcertificate" show-spinner="sendingInProgress" show-content="!sendingInProgress">
 	  <!-- Content -->
 	  <div class="row cert-preview">
 	  	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -77,7 +76,7 @@
 	      </div>
 	      <p>
 	        <button id="confirmAndSendBtn" type="button" ng-click="confirmAndSend()" class="btn btn-success">
-	          <span message key="button.send"></span>
+	          <img src="/img/ajax-loader-small-green.gif" ng-show="sendingInProgress"/><span message key="button.send"></span>
 	        </button>
 	        <button id="backToViewRecipentsBtn" type="button" ng-click="backToViewRecipents()" class="btn btn-primary">
 	          <span message key="fk7263.button.previous"></span>
@@ -88,6 +87,4 @@
 	      </p>
 	    </div>
 	  </div>
-
-	</div> <!-- eof spinner -->
 </div>
