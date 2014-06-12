@@ -19,23 +19,18 @@
           <div collapse="!isCollapsed1" class="collapse mi-text">
 	          <div message key="fk7263.label.pagedescription.sendcertificate.header"></div>
 			  <div message key="fk7263.label.pagedescription.sendcertificate"></div>
-			  
 	          <!--
 	          <div message key="fk7263.label.pagedescription.certificate.to.employer.header"></div>
 	          <div message key="fk7263.label.pagedescription.certificate.to.employer"></div>
 	           -->
-			  
 			  <div message key="fk7263.label.pagedescription.save.or.print.certificate.header"></div>
 	          <div message key="fk7263.label.pagedescription.save.or.print.certificate"></div>
 	          <a class="glyphicon glyphicon-question-sign more-info" ng-click="isCollapsedPDF = !isCollapsedPDF" title="{{messageService.getProperty('common.title.helptext.moreinfo')}}"></a>
       		  <div collapse="!isCollapsedPDF" class="well well-sm margin-top-5px"><span message key="fk7263.helptext.readpdfhelp"></span></div>
-			  
 	          <div message key="fk7263.label.pagedescription.sickness.benefit.header"></div>
 	          <div message key="fk7263.label.pagedescription.sickness.benefit"></div>
-	          
 	          <div message key="fk7263.label.pagedescription.error.in.certificate.header"></div>
 	          <div message key="fk7263.label.pagedescription.error.in.certificate"></div>
-	          
 	          <div message key="fk7263.label.pagedescription.archive.header"></div>
 	          <div message key="fk7263.label.pagedescription.archive"></div>
           </div>
@@ -136,24 +131,24 @@
                     <span message key="fk7263.label.nedsattning"></span>
                   </h3>
 
-                  <div ng-show="nedsattMed25 != null">
-                    <span message key="fk7263.nedsattningsgrad.nedsatt_med_1_4"></span> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed25.start |
-                      date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed25.end | date:'longDate'}} </span>
+                  <div ng-show="cert.nedsattMed25 != null">
+                    <span message key="fk7263.nedsattningsgrad.nedsatt_med_1_4"></span> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed25.from |
+                      date:'longDate'}} &ndash; längst till och med {{cert.nedsattMed25.tom | date:'longDate'}} </span>
                   </div>
 
                   <div ng-show="cert.nedsattMed50 != null">
-                    <span message key="fk7263.nedsattningsgrad.nedsatt_med_1_2"></span><br> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed50.start
-                      | date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed50.end | date:'longDate'}} </span>
+                    <span message key="fk7263.nedsattningsgrad.nedsatt_med_1_2"></span><br> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed50.from
+                      | date:'longDate'}} &ndash; längst till och med {{cert.nedsattMed50.tom | date:'longDate'}} </span>
                   </div>
 
                   <div ng-show="cert.nedsattMed75 != null">
-                    <span message key="fk7263.nedsattningsgrad.nedsatt_med_3_4"></span> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed75.start |
-                      date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed75.end | date:'longDate'}} </span>
+                    <span message key="fk7263.nedsattningsgrad.nedsatt_med_3_4"></span> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed75.from |
+                      date:'longDate'}} &ndash; längst till och med {{cert.nedsattMed75.tom | date:'longDate'}} </span>
                   </div>
 
                   <div ng-show="cert.nedsattMed100 != null">
-                    <span message key="fk7263.nedsattningsgrad.helt_nedsatt"></span><br> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed100.start |
-                      date:'longDate'}}&ndash; längst till och med {{cert.nedsattMed100.end | date:'longDate'}} </span>
+                    <span message key="fk7263.nedsattningsgrad.helt_nedsatt"></span><br> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed100.from |
+                      date:'longDate'}} &ndash; längst till och med {{cert.nedsattMed100.tom | date:'longDate'}} </span>
                   </div>
 
 
