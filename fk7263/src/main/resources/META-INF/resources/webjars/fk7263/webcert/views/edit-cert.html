@@ -5,10 +5,17 @@
 
       <div class="print-show">
         <img class="print-logo" src="/img/webcert_black.png" />
-        <h1><span message key="fk7263.label.certtitle"></span></h1>
-        <h2>Detta är ett utkast från Webcert. Intyget är ej signerat och är därför inte giltigt.</h2>
-        <div>Utskrivet: {{today | date:"shortDate"}}</div>
-        <div>{{user.userContext.valdVardgivare.namn}} - {{user.userContext.valdVardenhet.namn}}</div>
+        <div class="row">
+
+          <div class="col-md-6 print-heading-column-left">
+            <h1><span message key="fk7263.label.certtitle"></span></h1>
+            <h2>Observera! Intyget är ej signerat och därför inte giltigt.</h2>
+          </div>
+          <div class="col-md-6 print-heading-column-right">
+            <div>{{user.userContext.valdVardgivare.namn}} - {{user.userContext.valdVardenhet.namn}}</div>
+            <div>Utskrivet: {{today | date:"shortDate"}}</div>
+          </div>
+        </div>
       </div>
 
       <div class="header-fix-top print-hide">
@@ -167,7 +174,7 @@
 
                   <div wc-field field-label="fk7263.label.diagnos" field-number="2"
                        field-help-text="fk7263.helptext.diagnos" ng-hide="cert.avstangningSmittskydd"
-                       ng-animate="'fade'">
+                       ng-animate="'fade'" class="print-pagebreak-after">
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.diagnos">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.diagnos"><span message
@@ -237,7 +244,7 @@
 
                   <div wc-field field-label="fk7263.label.aktuellt-sjukdomsforlopp" field-number="3"
                        field-help-text="fk7263.helptext.aktuellt-sjukdomsforlopp" ng-hide="cert.avstangningSmittskydd"
-                       ng-animate="fade" class="print-pagebreak-after">
+                       ng-animate="fade">
                     <textarea id="diseaseCause" class="form-control" name="diseaseCause" rows='5'
                               ng-model="cert.sjukdomsforlopp" wc-maxlength
                               maxlength="{{inputLimits.sjukdomsforlopp}}"></textarea>

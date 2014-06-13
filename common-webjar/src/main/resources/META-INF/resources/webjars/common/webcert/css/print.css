@@ -18,6 +18,16 @@
     /**
     Print-specifika overrides inera-certificate.css
     */
+
+    .print-heading-column-left, .print-heading-column-right {
+        width: 50%;
+        float: left;
+    }
+
+    .print-heading-column-right {
+        text-align: right;
+    }
+
     .print-logo {
         width: 150px;
     }

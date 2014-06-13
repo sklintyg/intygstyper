@@ -180,6 +180,7 @@
     .body-row label {
         max-width: 600px;
         vertical-align: text-top;
+        font-weight: normal;
     }
 
     .body-row .checkbox {
