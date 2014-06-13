@@ -47,7 +47,7 @@ public class WebcertModelFactory {
 
         utlatande.setId(newDraftData.getCertificateId());
 
-        // This is where we set the concrete tsUtgava and tsVersion of the intyg that is created. 
+        // This is where we set the concrete tsUtgava and tsVersion of the intyg that is created.
         utlatande.setTyp(UtlatandeKod.getCurrentVersion().name());
 
         populateWithSkapadAv(utlatande, newDraftData.getSkapadAv());

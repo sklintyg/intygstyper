@@ -123,6 +123,9 @@
         max-width: 800px
     }
 
+.alert-block {
+    display: inline-block;
+}
     .collapsed {
         margin-top: 150px;
     }
@@ -485,11 +488,13 @@
     .menucollapse-show {
         margin-top: -100px;
     }
-
+.table .table-form {
     .menucollapse-show.menucollapse-show-active {
         margin-top: 0;
     }
 
+
+	.table-padding-top { padding-top: 15px; }
     .table .table-form {
         background-color: transparent;
     }
