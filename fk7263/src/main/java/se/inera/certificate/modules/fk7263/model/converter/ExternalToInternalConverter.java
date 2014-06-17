@@ -228,7 +228,7 @@ public class ExternalToInternalConverter {
         Fk7263Observation aktivitetsbegransning = source
                 .findObservationByKategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
         if (aktivitetsbegransning != null) {
-            intyg.setAktivitetsbegransning(aktivitetsbegransning.getBeskrivning());
+            intyg.setAktivitetsbegransning(EmptyStringUtil.unescapeEmptyString(aktivitetsbegransning.getBeskrivning()));
         }
     }
 
@@ -258,7 +258,7 @@ public class ExternalToInternalConverter {
     private void convertFunktionsnedsattning() {
         Fk7263Observation funktionsnedsattning = source.findObservationByKategori(ObservationsKoder.KROPPSFUNKTIONER);
         if (funktionsnedsattning != null) {
-            intyg.setFunktionsnedsattning(funktionsnedsattning.getBeskrivning());
+            intyg.setFunktionsnedsattning(EmptyStringUtil.unescapeEmptyString(funktionsnedsattning.getBeskrivning()));
         }
     }
 

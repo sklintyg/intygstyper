@@ -7,7 +7,6 @@ import static se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder.
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -281,16 +280,28 @@ public final class TransportToExternalFk7263LegacyConverter {
 
         switch (source.getTypAvFunktionstillstand()) {
         case AKTIVITET:
-            observation.setObservationskategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
+            if (source.getBeskrivning() != null) {
+                observation.setObservationskategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
+                observation.setBeskrivning(EmptyStringUtil.escapeEmptyString(source.getBeskrivning()));
+            } else {
+                observation = null;
+            }
             break;
         case KROPPSFUNKTION:
-            observation.setObservationskategori(ObservationsKoder.KROPPSFUNKTIONER);
+            if (source.getBeskrivning() != null) {
+                observation.setObservationskategori(ObservationsKoder.KROPPSFUNKTIONER);
+                observation.setBeskrivning(EmptyStringUtil.escapeEmptyString(source.getBeskrivning()));
+            } else {
+                observation = null;
+            }
             break;
         default:
             throw new IllegalArgumentException("Unknown FunktionstillstandType: " + source.getTypAvFunktionstillstand());
         }
-        observation.setBeskrivning(source.getBeskrivning());
-        observations.add(observation);
+
+        if (observation != null) {
+            observations.add(observation);
+        }
 
         if (source.getArbetsformaga() != null) {
             observations.addAll(convert(source.getArbetsformaga()));

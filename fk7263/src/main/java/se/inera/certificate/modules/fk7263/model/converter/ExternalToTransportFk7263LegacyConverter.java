@@ -121,7 +121,7 @@ public final class ExternalToTransportFk7263LegacyConverter {
             TypAvFunktionstillstand typAvFunktionstillstand) {
         FunktionstillstandType funktionstillstandType = new FunktionstillstandType();
         funktionstillstandType.setTypAvFunktionstillstand(typAvFunktionstillstand);
-        funktionstillstandType.setBeskrivning(observation.getBeskrivning());
+        funktionstillstandType.setBeskrivning(EmptyStringUtil.unescapeEmptyString(observation.getBeskrivning()));
         return funktionstillstandType;
     }
 
