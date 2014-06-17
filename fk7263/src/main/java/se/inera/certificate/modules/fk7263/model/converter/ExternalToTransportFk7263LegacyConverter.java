@@ -111,6 +111,13 @@ public final class ExternalToTransportFk7263LegacyConverter {
 
             register.getLakarutlatande().getFunktionstillstands().add(aktivitetsbegransing);
 
+        } else if (utlatande.getAktivitet(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA) != null) {
+            // If no ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET is found,
+            // create FunktionstillstandType and populate it with Arbetsformaga to not loose information
+            FunktionstillstandType aktivitetsbegransing = new FunktionstillstandType();
+            aktivitetsbegransing.setTypAvFunktionstillstand(TypAvFunktionstillstand.AKTIVITET);
+            aktivitetsbegransing.setArbetsformaga(toArbetsformaga(utlatande));
+            register.getLakarutlatande().getFunktionstillstands().add(aktivitetsbegransing);
         }
         return register;
     }
