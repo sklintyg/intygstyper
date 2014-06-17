@@ -9,9 +9,9 @@ define([
     var moduleName = 'ts-diabetes.EditCertCtrl';
 
     angular.module(moduleName, [ CertificateService, ManageCertView, User ]).
-        controller(moduleName, [ '$anchorScroll', '$location', '$log', '$scope',
+        controller(moduleName, [ '$anchorScroll', '$location', '$log', '$scope', '$window',
             CertificateService, ManageCertView, User,
-            function($anchorScroll, $location, $log, $scope, CertificateService, ManageCertView, User) {
+            function($anchorScroll, $location, $log, $scope, $window, CertificateService, ManageCertView, User) {
                 $scope.cert = {};
 
                 $scope.messages = [];
@@ -103,6 +103,13 @@ define([
                  */
                 $scope.sign = function() {
                     ManageCertView.signera($scope, 'ts-diabetes');
+                };
+
+                /**
+                 * Print draft
+                 */
+                $scope.print = function() {
+                    $window.print();
                 };
             }
         ]);

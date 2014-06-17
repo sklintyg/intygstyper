@@ -3,15 +3,15 @@ define([
     'webjars/ts-bas/webcert/js/messages',
     'webjars/ts-bas/webcert/js/controllers/EditCertCtrl',
     'webjars/ts-bas/webcert/js/controllers/ViewCertCtrl',
-    'webjars/common/webcert/js/directives/wcEyeDecimal',
+    'webjars/common/webcert/js/directives',
     'webjars/common/webcert/js/services/messageService',
     'text!webjars/ts-bas/webcert/views/edit-cert.html'
-], function(angular, messages, EditCertCtrl, ViewCertCtrl, wcEyeDecimal, messageService, editCertTemplate) {
+], function(angular, messages, EditCertCtrl, ViewCertCtrl, directives, messageService, editCertTemplate) {
     'use strict';
 
     var moduleName = 'ts-bas';
 
-    var module = angular.module(moduleName, [ EditCertCtrl, ViewCertCtrl, wcEyeDecimal, messageService ]);
+    var module = angular.module(moduleName, [ EditCertCtrl, ViewCertCtrl, directives, messageService ]);
 
     module.config(['$routeProvider', function($routeProvider) {
         $routeProvider.

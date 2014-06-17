@@ -7,16 +7,18 @@ define([
     'webjars/common/webcert/js/directives/wcFieldSingle',
     'webjars/common/webcert/js/directives/wcFocusMe',
     'webjars/common/webcert/js/directives/wcHeader',
+    'webjars/common/webcert/js/directives/wcPrintHeader',
     'webjars/common/webcert/js/directives/wcMaxLength',
     'webjars/common/webcert/js/directives/wcSpinner'
-], function(angular, message, wcEnableTooltip, wcEyeDecimal, wcField, wcFieldSingle, wcFocusMe, wcHeader, wcMaxLength,
-    wcSpinner) {
+], function(angular, message, wcEnableTooltip, wcEyeDecimal, wcField, wcFieldSingle, wcFocusMe, wcHeader, wcPrintHeader,
+    wcMaxLength, wcSpinner) {
     'use strict';
 
     var moduleName = 'common.directives';
 
-    angular.module(moduleName, [ message, wcEnableTooltip, wcEyeDecimal, wcField, wcFieldSingle, wcFocusMe, wcHeader,
-        wcMaxLength, wcSpinner ]);
+    angular.module(moduleName,
+        [ message, wcEnableTooltip, wcEyeDecimal, wcField, wcFieldSingle, wcFocusMe, wcHeader, wcPrintHeader,
+            wcMaxLength, wcSpinner ]);
 
     return moduleName;
 });

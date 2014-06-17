@@ -3,20 +3,7 @@
   <div class="row">
     <div class="col-md-12 webcert-col webcert-col-single">
 
-      <div class="print-show">
-        <img class="print-logo" src="/img/webcert_black.png" />
-        <div class="row">
-
-          <div class="col-md-6 print-heading-column-left">
-            <h1><span message key="fk7263.label.certtitle"></span></h1>
-            <h2>Observera! Intyget är ej signerat och därför inte giltigt.</h2>
-          </div>
-          <div class="col-md-6 print-heading-column-right">
-            <div>{{user.userContext.valdVardgivare.namn}} - {{user.userContext.valdVardenhet.namn}}</div>
-            <div>Utskrivet: {{today | date:"shortDate"}}</div>
-          </div>
-        </div>
-      </div>
+      <div wc-print-header title-id="fk7263.label.certtitle"></div>
 
       <div class="header-fix-top print-hide">
         <div class="header-wrapper" ng-hide="widgetState.collapsedHeader" ng-animate="'menucollapse'">

@@ -24,7 +24,9 @@
   <div class="row">
     <div class="col-md-12 webcert-col webcert-col-single">
 
-      <div class="header-fix-top">
+      <div wc-print-header title-id="ts-bas.label.certtitle"></div>
+
+      <div class="header-fix-top print-hide">
         <div class="header-wrapper" ng-hide="widgetState.collapsedHeader" ng-animate="'menucollapse'">
           <div id="wcHeader" wc-header default-active="index"></div>
         </div>
@@ -53,6 +55,9 @@
               <div class="form-group buttonbar">
                 <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned">Spara</button>
                 <button id="ta-bort-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="discard()">Ta bort utkast
+                </button>
+                <button id="skriv-ut-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="print()">
+                Skriv ut utkast
                 </button>
                 <button class="btn btn-default btn-secondary" ng-if="!widgetState.showComplete && !isComplete"
                         ng-click="toggleShowComplete()">Visa vad som behöver kompletteras
@@ -152,7 +157,7 @@
 	                </div>
                   </div>
 				  
-				  <div class="alert alert-info">
+				          <div class="alert alert-info print-pagebreak-after">
                     <span message key="ts-bas.helptext.lakaren-ska-uppmarksamma"></span>
                   </div>
 
@@ -879,7 +884,7 @@
                     <!-- ng-change="inputlimit for IE"-->
                   </div>
 
-                  <div wc-field field-label="ts-bas.label.bedomning">
+                  <div wc-field field-label="ts-bas.label.bedomning" class="print-pagebreak-after">
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.bedomning">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.bedomning"><span message
@@ -996,7 +1001,7 @@
               </div>
               <!-- certificate -->
 
-              <div ng-if="!isSigned">
+              <div ng-if="!isSigned" class="print-hide">
                 <h3>Signera</h3>
 
                 <div id="sign-requires-doctor-message-text" ng-if="!user.userContext.lakare" class="alert alert-info">

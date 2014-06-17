@@ -88,6 +88,7 @@
     .radio, .checkbox {
         display: inline-block;
         margin: 0;
+        float: none;
     }
 
     .form-group {

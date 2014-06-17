@@ -24,7 +24,9 @@
   <div class="row">
     <div class="col-md-12 webcert-col webcert-col-single">
 
-      <div class="header-fix-top">
+      <div wc-print-header title-id="ts-diabetes.label.certtitle"></div>
+
+      <div class="header-fix-top print-hide">
         <div class="header-wrapper" ng-hide="widgetState.collapsedHeader" ng-animate="'menucollapse'">
           <div id="wcHeader" wc-header default-active="index"></div>
         </div>
@@ -53,7 +55,11 @@
               </div>
               <div class="form-group buttonbar">
                 <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned">Spara</button>
-                <button id="ta-bort-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="discard()">Ta bort utkast
+                <button id="ta-bort-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned"
+                        ng-click="discard()">Ta bort utkast
+                </button>
+                <button id="skriv-ut-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="print()">
+                  Skriv ut utkast
                 </button>
                 <button class="btn btn-default btn-secondary" ng-if="!widgetState.showComplete && !isComplete"
                         ng-click="toggleShowComplete()">Visa vad som behöver kompletteras
@@ -137,7 +143,7 @@
                         {{k}}</label>
                     </div>
                   </div>
-                  
+
                   <div class="alert alert-info">
                     <span message key="ts-diabetes.helptext.identitet-styrkt-genom.id-kort"></span><br>
                     <span message key="ts-diabetes.helptext.identitet-styrkt-genom.foretags-tjanstekort"></span><br>
@@ -150,7 +156,7 @@
                   </div>
 
                   <!-- 1. Allmänt -->
-                  <div wc-field field-label="ts-diabetes.label.allmant">
+                  <div wc-field field-label="ts-diabetes.label.allmant" class="print-pagebreak-after">
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.diabetes">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.diabetes"><span message
@@ -174,17 +180,21 @@
                     </div>
                     <div class="form-group">
                       Behandling:
-                      <label class="checkbox"><input name="diabetestreat1" type="checkbox" ng-model="cert.diabetes.endastKost">
-                          <span message key="ts-diabetes.label.diabetes.behandling.endast-kost"></span>
+                      <label class="checkbox"><input name="diabetestreat1" type="checkbox"
+                                                     ng-model="cert.diabetes.endastKost">
+                        <span message key="ts-diabetes.label.diabetes.behandling.endast-kost"></span>
                       </label>
-                      <label class="checkbox"><input name="diabetestreat2" type="checkbox" ng-model="cert.diabetes.tabletter">
-                          <span message key="ts-diabetes.label.diabetes.behandling.tabletter"></span>
+                      <label class="checkbox"><input name="diabetestreat2" type="checkbox"
+                                                     ng-model="cert.diabetes.tabletter">
+                        <span message key="ts-diabetes.label.diabetes.behandling.tabletter"></span>
                       </label>
-                      <label class="checkbox"><input name="diabetestreat3" type="checkbox" ng-model="cert.diabetes.insulin">
-                          <span message key="ts-diabetes.label.diabetes.behandling.insulin"></span>
+                      <label class="checkbox"><input name="diabetestreat3" type="checkbox"
+                                                     ng-model="cert.diabetes.insulin">
+                        <span message key="ts-diabetes.label.diabetes.behandling.insulin"></span>
                       </label>
                       <div class="form-group" data-ng-show="cert.diabetes.insulin">
-                        <label for="insulinBehandlingsperiod"><span message key="ts-diabetes.label.diabetes.behandling.insulin-period"></span></label>
+                        <label for="insulinBehandlingsperiod"><span message
+                                                                    key="ts-diabetes.label.diabetes.behandling.insulin-period"></span></label>
                         <div class="controls">
                           <input id="insulinBehandlingsperiod" class="form-control" name="insulinBehandlingsperiod"
                                  type="text" ng-model="cert.diabetes.insulinBehandlingsperiod" wc-maxlength
@@ -193,7 +203,8 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="annanBehandlingBeskrivning"><span message key="ts-diabetes.label.diabetes.behandling.annan-beskrivning"></span></label>
+                      <label for="annanBehandlingBeskrivning"><span message
+                                                                    key="ts-diabetes.label.diabetes.behandling.annan-beskrivning"></span></label>
                       <div class="controls">
                         <input id="annanBehandlingBeskrivning" class="form-control" name="annanBehandlingBeskrivning"
                                type="text" ng-model="cert.diabetes.annanBehandlingBeskrivning" wc-maxlength
@@ -237,24 +248,26 @@
                                    ng-model="cert.hypoglykemier.saknarFormagaKannaVarningstecken"></td>
                         <td><input id="hypocn" name="hypocn" type="radio" ng-value="false"
                                    ng-model="cert.hypoglykemier.saknarFormagaKannaVarningstecken"></td>
-                        <td><span message key="ts-diabetes.label.hypoglykemier.saknar-formaga-kanna-varningstecken"></span></td>
+                        <td><span message
+                                  key="ts-diabetes.label.hypoglykemier.saknar-formaga-kanna-varningstecken"></span></td>
                       </tr>
                       <tr data-ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
                         <td><input id="hypody" name="hypody" type="radio" ng-value="true"
                                    ng-model="cert.hypoglykemier.allvarligForekomst"></td>
                         <td><input id="hypodn" name="hypodn" type="radio" ng-value="false"
                                    ng-model="cert.hypoglykemier.allvarligForekomst"></td>
-                        <td> <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst"></span>
-                        
-                        <div class="controls" ng-show="cert.hypoglykemier.allvarligForekomst == true">
+                        <td><span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst"></span>
+
+                          <div class="controls" ng-show="cert.hypoglykemier.allvarligForekomst == true">
                             <label for="allvarligForekomstBeskrivning">
-                                <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst.beskrivning"></span>
+                              <span message
+                                    key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst.beskrivning"></span>
                             </label>
                             <input id="allvarligForekomstBeskrivning" class="form-control"
                                    name="allvarligForekomstBeskrivning" type="text"
                                    ng-model="cert.hypoglykemier.allvarligForekomstBeskrivning" wc-maxlength
                                    maxlength="46" />
-                        </div>
+                          </div>
                         </td>
                       </tr>
                       <tr data-ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
@@ -264,9 +277,10 @@
                                    ng-model="cert.hypoglykemier.allvarligForekomstTrafiken"></td>
                         <td><span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken"></span>
                           <div class="controls" ng-show="cert.hypoglykemier.allvarligForekomstTrafiken == true">
-                              <label for="allvarligForekomstTrafikBeskrivning">
-                                  <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning"></span>
-                              </label>
+                            <label for="allvarligForekomstTrafikBeskrivning">
+                              <span message
+                                    key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning"></span>
+                            </label>
                             <input id="allvarligForekomstTrafikBeskrivning" class="form-control"
                                    name="allvarligForekomstTrafikBeskrivning" type="text"
                                    ng-model="cert.hypoglykemier.allvarligForekomstTrafikBeskrivning" wc-maxlength
@@ -295,9 +309,9 @@
                         <td><span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid"></span>
                           <div class="controls" data-ng-show="cert.hypoglykemier.allvarligForekomstVakenTid">
                             <label class="control-label">När?</label>
-                              <input type="text" class="form-control"
-                                     data-ng-model="cert.hypoglykemier.allvarligForekomstVakenTidObservationstid">
-                              <p>(Fyll i åååå-mm-dd)</p>
+                            <input type="text" class="form-control"
+                                   data-ng-model="cert.hypoglykemier.allvarligForekomstVakenTidObservationstid">
+                            <p>(Fyll i åååå-mm-dd)</p>
                           </div>
                         </td>
                       </tr>
@@ -380,9 +394,11 @@
                           <table class="table table-form">
                             <tr>
                               <th></th>
-                              <th>Utan korrektion <span wc-enable-tooltip field-help-text="ts-diabetes.helptext.synfunktioner.utan-korrektion"></span>
+                              <th>Utan korrektion <span wc-enable-tooltip
+                                                        field-help-text="ts-diabetes.helptext.synfunktioner.utan-korrektion"></span>
                               </th>
-                              <th>Med korrektion <span wc-enable-tooltip field-help-text="ts-diabetes.helptext.synfunktioner.med-korrektion"></span>
+                              <th>Med korrektion <span wc-enable-tooltip
+                                                       field-help-text="ts-diabetes.helptext.synfunktioner.med-korrektion"></span>
                               </th>
                             </tr>
                             <tr>
@@ -552,7 +568,7 @@
               </div>
               <!-- certificate -->
 
-              <div ng-if="!isSigned">
+              <div ng-if="!isSigned" class="print-hide">
                 <h3>Signera</h3>
 
                 <div id="sign-requires-doctor-message-text" ng-if="!user.userContext.lakare" class="alert alert-info">
