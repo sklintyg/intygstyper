@@ -138,9 +138,9 @@
                       </ul>
                     </div>
                     <div class="form-group clearfix">
-                      <label class="radio checkbox-columns col-md-6" ng-repeat="(k,v) in form.identity"><input
-                          name="identity{{$index}}" type="radio" value="{{v}}" ng-model="cert.vardkontakt.idkontroll">
-                        {{k}}</label>
+                      <label class="radio checkbox-columns col-md-6" ng-repeat="v in form.identity"><input
+                          name="identity{{$index}}" type="radio" value="{{v.id}}" ng-model="cert.vardkontakt.idkontroll">
+                        {{v.label}}</label>
                     </div>
                   </div>
 

@@ -33,7 +33,7 @@ public enum IdKontrollKod implements CodeSystem {
     KORKORT("IDK3", "Svenskt körkort", ID_KONTROLL),
     PERS_KANNEDOM("IDK4", "Personlig kännedom", ID_KONTROLL),
     FORSAKRAN_KAP18("IDK5", "Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2)", ID_KONTROLL),
-    PASS("IDK6", "Svenskt EU-pass, annat EU-pass utfärdade från och med 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz fron och med den 1 september 2006.", ID_KONTROLL);
+    PASS("IDK6", "Svenskt EU-pass, annat EU-pass utfärdade från och med 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 2006.", ID_KONTROLL);
 
     private final String codeSystemName;
 

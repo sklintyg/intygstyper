@@ -41,14 +41,14 @@ define([ 'angular', 'webjars/common/webcert/js/services/CertificateService',
                 };
 
                 $scope.form = {
-                    'identity': {
-                        'ID-kort *': 'ID_KORT',
-                        'Företagskort eller tjänstekort **': 'FORETAG_ELLER_TJANSTEKORT',
-                        'Körkort': 'KORKORT',
-                        'Personlig kännedom': 'PERS_KANNEDOM',
-                        'Försäkran enligt 18 kap. 4§ ***': 'FORSAKRAN_KAP18',
-                        'Pass ****': 'PASS'
-                    },
+                    'identity': [
+                        {label: 'ID-kort *', id: 'ID_KORT'},
+                        {label: 'Företagskort eller tjänstekort **', id: 'FORETAG_ELLER_TJANSTEKORT'},
+                        {label: 'Körkort', id: 'KORKORT'},
+                        {label: 'Personlig kännedom', id: 'PERS_KANNEDOM'},
+                        {label: 'Försäkran enligt 18 kap. 4§ ***', id: 'FORSAKRAN_KAP18'},
+                        {label: 'Pass ****', id: 'PASS'}
+                    ],
                     'korkortd': false,
                     'behorighet': true,
                     'anyTrue': false
@@ -56,37 +56,30 @@ define([ 'angular', 'webjars/common/webcert/js/services/CertificateService',
 
                 // This is not so pretty, but necessary?
                 $scope.$watch('cert', function() {
-                    if (!$scope.cert || (!$scope.cert.syn && !$scope.cert.horselBalans
-                        && !$scope.cert.funktionsnedsattning && !$scope.cert.hjartKarl && !$scope.cert.diabetes
-                        && !$scope.cert.neurologi && !$scope.cert.medvetandestorning && !$scope.cert.njurar
-                        && !$scope.cert.kognitivt && !$scope.cert.somnVakenhet && !$scope.cert.narkotikaLakemedel
-                        && !$scope.cert.psykiskt && !$scope.cert.utvecklingsstorning && !$scope.cert.sjukhusvard
-                        && !$scope.cert.medicinering)) {
+                    if (!$scope.cert || (!$scope.cert.syn && !$scope.cert.horselBalans &&
+                        !$scope.cert.funktionsnedsattning && !$scope.cert.hjartKarl && !$scope.cert.diabetes &&
+                        !$scope.cert.neurologi && !$scope.cert.medvetandestorning && !$scope.cert.njurar &&
+                        !$scope.cert.kognitivt && !$scope.cert.somnVakenhet && !$scope.cert.narkotikaLakemedel &&
+                        !$scope.cert.psykiskt && !$scope.cert.utvecklingsstorning && !$scope.cert.sjukhusvard &&
+                        !$scope.cert.medicinering)) {
                         $scope.form.anyTrue = false;
-                        return;
-                    } else if ($scope.cert.syn.synfaltsdefekter == true || $scope.cert.syn.nattblindhet == true
-                        || $scope.cert.syn.progressivOgonsjukdom == true || $scope.cert.syn.diplopi == true
-                        || $scope.cert.syn.nystagmus == true || $scope.cert.horselBalans.balansrubbningar == true
-                        || $scope.cert.horselBalans.svartUppfattaSamtal4Meter == true ||
-                        $scope.cert.funktionsnedsattning.funktionsnedsattning == true
-                        || $scope.cert.funktionsnedsattning.otillrackligRorelseformaga == true ||
-                        $scope.cert.hjartKarl.hjartKarlSjukdom == true
-                        || $scope.cert.hjartKarl.hjarnskadaEfterTrauma == true ||
-                        $scope.cert.hjartKarl.riskfaktorerStroke == true
-                        || $scope.cert.diabetes.harDiabetes == true || $scope.cert.neurologi.neurologiskSjukdom == true
-                        || $scope.cert.medvetandestorning.medvetandestorning == true ||
-                        $scope.cert.njurar.nedsattNjurfunktion == true
-                        || $scope.cert.kognitivt.sviktandeKognitivFunktion == true ||
-                        $scope.cert.somnVakenhet.teckenSomnstorningar == true
-                        || $scope.cert.narkotikaLakemedel.teckenMissbruk == true ||
-                        $scope.cert.narkotikaLakemedel.foremalForVardinsats == true
-                        || $scope.cert.narkotikaLakemedel.provtagningBehovs == true ||
-                        $scope.cert.narkotikaLakemedel.lakarordineratLakemedelsbruk
-                        || $scope.cert.psykiskt.psykiskSjukdom == true ||
-                        $scope.cert.utvecklingsstorning.psykiskUtvecklingsstorning == true
-                        || $scope.cert.utvecklingsstorning.harSyndrom == true ||
-                        $scope.cert.sjukhusvard.sjukhusEllerLakarkontakt == true
-                        || $scope.cert.medicinering.stadigvarandeMedicinering == true) {
+                    } else if ($scope.cert.syn.synfaltsdefekter === true || $scope.cert.syn.nattblindhet === true ||
+                        $scope.cert.syn.progressivOgonsjukdom === true || $scope.cert.syn.diplopi === true ||
+                        $scope.cert.syn.nystagmus === true || $scope.cert.horselBalans.balansrubbningar === true ||
+                        $scope.cert.horselBalans.svartUppfattaSamtal4Meter === true ||
+                        $scope.cert.funktionsnedsattning.funktionsnedsattning === true ||
+                        $scope.cert.funktionsnedsattning.otillrackligRorelseformaga === true ||
+                        $scope.cert.hjartKarl.hjartKarlSjukdom === true ||
+                        $scope.cert.hjartKarl.hjarnskadaEfterTrauma === true ||
+                        $scope.cert.hjartKarl.riskfaktorerStroke === true ||
+                        $scope.cert.diabetes.harDiabetes === true || $scope.cert.neurologi.neurologiskSjukdom === true ||
+                        $scope.cert.medvetandestorning.medvetandestorning === true ||
+                        $scope.cert.njurar.nedsattNjurfunktion === true || $scope.cert.kognitivt.sviktandeKognitivFunktion === true ||
+                        $scope.cert.somnVakenhet.teckenSomnstorningar === true || $scope.cert.narkotikaLakemedel.teckenMissbruk === true ||
+                        $scope.cert.narkotikaLakemedel.foremalForVardinsats === true || $scope.cert.narkotikaLakemedel.provtagningBehovs === true ||
+                        $scope.cert.narkotikaLakemedel.lakarordineratLakemedelsbruk || $scope.cert.psykiskt.psykiskSjukdom === true ||
+                        $scope.cert.utvecklingsstorning.psykiskUtvecklingsstorning === true || $scope.cert.utvecklingsstorning.harSyndrom === true ||
+                        $scope.cert.sjukhusvard.sjukhusEllerLakarkontakt === true || $scope.cert.medicinering.stadigvarandeMedicinering === true) {
                         $scope.form.anyTrue = true;
                     } else {
                         $scope.form.anyTrue = false;
@@ -153,7 +146,9 @@ define([ 'angular', 'webjars/common/webcert/js/services/CertificateService',
                 $scope.print = function() {
                     $window.print();
                 };
-            } ]);
+            }
+        ]
+    );
 
     return moduleName;
 });

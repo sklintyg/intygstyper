@@ -44,14 +44,14 @@ define([
                 };
 
                 $scope.form = {
-                    'identity': {
-                    	'ID-kort *': 'ID_KORT',
-                        'Företagskort eller tjänstekort **': 'FORETAG_ELLER_TJANSTEKORT',
-                        'Körkort': 'KORKORT',
-                        'Personlig kännedom': 'PERS_KANNEDOM',
-                        'Försäkran enligt 18 kap. 4§ ***': 'FORSAKRAN_KAP18',
-                        'Pass ****': 'PASS'
-                    },
+                    'identity': [
+                        {label: 'ID-kort *', id: 'ID_KORT'},
+                        {label: 'Företagskort eller tjänstekort **', id: 'FORETAG_ELLER_TJANSTEKORT'},
+                        {label: 'Körkort', id: 'KORKORT'},
+                        {label: 'Personlig kännedom', id: 'PERS_KANNEDOM'},
+                        {label: 'Försäkran enligt 18 kap. 4§ ***', id: 'FORSAKRAN_KAP18'},
+                        {label: 'Pass ****', id: 'PASS'}
+                    ],
                     'korkorttypselected': false,
                     'behorighet': true
                 };
