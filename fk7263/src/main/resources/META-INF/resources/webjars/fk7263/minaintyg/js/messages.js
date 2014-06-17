@@ -41,7 +41,7 @@ define([], function() {
             'fk7263.button.send.certificate.title' : 'Skicka detta intyg till en eller flera mottagare.',
             'fk7263.label.blank': '- ej ifyllt',
             'fk7263.label.pagetitle': 'Granska och skicka intyg',
-            'fk7263.label.pageingress' : 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till olika mottagare, du kan även skriva ut, spara och anpassa intyget.<br>',
+            'fk7263.label.pageingress' : 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Försäkringskassan, du kan även skriva ut och spara intyget.<br>',
             'fk7263.label.pagedescription.sendcertificate.header' : '<h2>Skicka intyg</h2>',
             'fk7263.label.pagedescription.sendcertificate' : 'Klicka på knappen Skicka för att skicka intyget elektroniskt till Försäkringskassan eller en annan mottagare.<br>',
             'fk7263.label.status.false': '<span class="glyphicon glyphicon-chevron-up"></span><a> Visa mindre</a>',
