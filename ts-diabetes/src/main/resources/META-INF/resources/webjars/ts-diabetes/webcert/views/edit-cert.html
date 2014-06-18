@@ -561,7 +561,16 @@
                       </div>
                     </div>
                   </div>
-
+                  <div class="body-row clearfix">
+                     <div>
+                        <h4>Specialistkompetens</h4>
+                        <span ng-show="specialiteter.length > 0"> {{specialiteter}}</span><br/>
+                      </div><br/>
+                      <div>
+                        <h4>Befattningar </h4>
+                        <span ng-repeat="befattning in befattningar"></span>
+                      </div><br/>
+                   </div>
                 </div>
                 <!-- cert body -->
 

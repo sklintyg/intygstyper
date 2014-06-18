@@ -54,6 +54,34 @@ define([
                 }
             }, true);
 
+            //Make a printable list of Befattningar (which as of yet consists of un-readable codes...)
+            $scope.befattningar = '';
+            $scope.updateBefattningar = function (befattningar) {
+                var result = '';
+                for (var i = 0; i < befattningar.length; i++) {
+                    if (i < befattningar.length-1) {
+                        result += befattningar[i] + (', ');
+                    } else {
+                        result += befattningar[i];
+                    }
+                }
+                return result;
+            };
+
+            //Make a printable list of Specialiteter
+            $scope.specialiteter = '';
+            $scope.updateSpecialiteter = function (specialiteter) {
+                var result = '';
+                for (var i = 0; i < specialiteter.length; i++) {
+                    if (i < specialiteter.length-1) {
+                        result += specialiteter[i] + (', ');
+                    } else {
+                        result += specialiteter[i];
+                    }
+                }
+                return result;
+            };
+
             $scope.dialog = {
                 acceptprogressdone: true,
                 focus: false
@@ -120,6 +148,8 @@ define([
                         $scope.cert.syn.progressivogonsjukdom === true) {
                         $scope.achelptext = true;
                     }
+                    $scope.befattningar = $scope.updateBefattningar($scope.cert.skapadAv.befattningar);
+                    $scope.specialiteter = $scope.updateSpecialiteter($scope.cert.skapadAv.specialiteter);
                 } else {
                     // show error view
                     $location.path('/fel');

@@ -984,17 +984,25 @@
                         </div>
                         <div class="form-group" ng-if="false">
                           <label class="col-xs-3 control-label">Epost</label>
-
-                          <div class="col-xs-9">
-                            <input type="text" class="form-control" id="clinicInfo.email" name="clinicInfo.email"
-                                   ng-model="mats.ekhammar@callistaenterprise.se">
+                        <div class="col-xs-9">
+                          <input type="text" class="form-control" id="clinicInfo.email" name="clinicInfo.email"
+                                 ng-model="cert.skapadAv.epost">
+                                 {{cert.skapadAv.epost}}
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-
-
+                  <div class="body-row clearfix">
+                     <div>
+                        <h4>Specialistkompetens</h4>
+                        <span ng-show="specialiteter.length > 0"> {{specialiteter}}</span><br/>
+                      </div><br/>
+                      <div>
+                        <h4>Befattningar </h4>
+                        <span ng-repeat="befattning in befattningar"></span>
+                      </div><br/>
+                   </div>
                 </div>
                 <!-- cert body -->
 
