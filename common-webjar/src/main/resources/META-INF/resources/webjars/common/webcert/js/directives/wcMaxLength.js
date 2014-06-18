@@ -17,14 +17,15 @@ define([
      *  maxlength (for setting maxlength)
      */
     angular.module(moduleName, []).
-        directive(moduleName, [ '$compile',
-            function($compile) {
+        directive(moduleName, [ '$compile', '$log',
+            function($compile, $log) {
                 return {
                     restrict: 'A',
                     require: 'ngModel',
                     link: function(scope, element, attrs, controller) {
 
                         var counterName = 'charsRemaining' + element[0].id;
+                        counterName = counterName.replace('.', '');
                         scope[counterName] = attrs.maxlength;
 
                         var counter = angular.

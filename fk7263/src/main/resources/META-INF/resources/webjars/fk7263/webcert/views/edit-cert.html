@@ -105,10 +105,10 @@
 
                     <div class="form-group form-inline">
                       <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
-                                                                              name="informationBasedOn.examination"
-                                                                              class="checkbox-inline"
-                                                                              ng-model="basedOnState.check.undersokningAvPatienten"
-                                                                              ng-change="autoEnterDate('undersokningAvPatienten')" />
+                                                                                           name="informationBasedOn.examination"
+                                                                                           class="checkbox-inline"
+                                                                                           ng-model="basedOnState.check.undersokningAvPatienten"
+                                                                                           ng-change="autoEnterDate('undersokningAvPatienten')" />
                         Min undersökning av patienten</label>
                       <span wc-date-picker-field target-model="cert.undersokningAvPatienten"
                             on-change="basedOnState.check.undersokningAvPatienten = true"
@@ -116,9 +116,9 @@
                     </div>
                     <div class="form-group form-inline">
                       <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
-                                                                              name="informationBasedOn.phoneContact"
-                                                                              ng-model="basedOnState.check.telefonkontaktMedPatienten"
-                                                                              ng-change="autoEnterDate('telefonkontaktMedPatienten')" />
+                                                                                           name="informationBasedOn.phoneContact"
+                                                                                           ng-model="basedOnState.check.telefonkontaktMedPatienten"
+                                                                                           ng-change="autoEnterDate('telefonkontaktMedPatienten')" />
                         Min telefonkontakt med patienten</label>
                       <span wc-date-picker-field target-model="cert.telefonkontaktMedPatienten"
                             on-change="basedOnState.check.telefonkontaktMedPatienten = true"
@@ -126,9 +126,9 @@
                     </div>
                     <div class="form-group form-inline">
                       <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
-                                                                              name="informationBasedOn.journal"
-                                                                              ng-model="basedOnState.check.journaluppgifter"
-                                                                              ng-change="autoEnterDate('journaluppgifter')" />
+                                                                                           name="informationBasedOn.journal"
+                                                                                           ng-model="basedOnState.check.journaluppgifter"
+                                                                                           ng-change="autoEnterDate('journaluppgifter')" />
                         Journaluppgifter</label>
                       <span wc-date-picker-field target-model="cert.journaluppgifter"
                             on-change="basedOnState.check.journaluppgifter = true"
@@ -137,9 +137,9 @@
 
                     <div class="form-group form-inline">
                       <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
-                                                                              name="informationBasedOn.other"
-                                                                              ng-model="basedOnState.check.annanReferens"
-                                                                              ng-change="autoEnterDate('annanReferens')" />
+                                                                                           name="informationBasedOn.other"
+                                                                                           ng-model="basedOnState.check.annanReferens"
+                                                                                           ng-change="autoEnterDate('annanReferens')" />
                         Annat<span wc-enable-tooltip field-help-text="fk7263.helptext.intyg-baserat-pa.annat" />
                       </label>
                       <span wc-date-picker-field target-model="cert.annanReferens"
@@ -171,7 +171,7 @@
                     </div>
                     <div class="row bottom-padding-small">
                       <div class='col-xs-3'>
-                        <label class="control-label">ICD 10</label>
+                        <label class="control-label unbreakable">ICD 10</label>
                         <input type="text" class="form-control" id="diagnose.code" name="diagnose.code" value=""
                                class='diagnose-code col-xs-11 form-control' ng-model="cert.diagnosKod"
                                typeahead="d.value as d.label for d in diagnose_codes | filter:$viewValue | limitTo:8">
@@ -180,32 +180,33 @@
                         <label class="control-label">Diagnos</label>
                         <input type="text" class="form-control maxwidth" id="diagnose.description"
                                class="col-xs-12 form-control" name="diagnose.description" value=""
-                               ng-model="cert.diagnosBeskrivning"
+                               ng-model="cert.wcDiagnosBeskrivning1"
                                typeahead="d.value as d.label for d in diagnoses | filter:$viewValue | limitTo:8">
                       </div>
                     </div>
                     <div class="row bottom-padding-small">
                       <div class='col-xs-3'>
-                        <label class="control-label">ICD 10</label>
+                        <label class="control-label unbreakable">ICD 10</label>
                         <div class="controls">
                           <div class="bottom-padding-small clearfix">
                             <input type="text" id="diagnose.codeOpt1" name="diagnose.codeOpt1" value=""
-                                   class="col-xs-11 form-control">
+                                   ng-model="cert.wcDiagnosKod2" class="col-xs-11 form-control">
                           </div>
                           <input type="text" id="diagnose.codeOpt2" name="diagnose.codeOpt2" value=""
-                                 class="col-xs-11 form-control">
+                                 ng-model="cert.wcDiagnosKod3" class="col-xs-11 form-control">
                         </div>
                       </div>
                       <div class='col-xs-9 unbreakable'>
                         <label class="control-label inline-block">Ytterligare diagnoser (frivilligt)</label><span
-                          wc-enable-tooltip field-help-text="fk7263.helptext.diagnos.ytterligare"></span>
+                          wc-enable-tooltip class="absolute"
+                          field-help-text="fk7263.helptext.diagnos.ytterligare"></span>
                         <div class="controls">
                           <div class="bottom-padding-small clearfix">
                             <input type="text" id="diagnose.descriptionOpt1" name="diagnose.descriptionOpt1" value=""
-                                   class="block col-xs-12 form-control maxwidth">
+                                   ng-model="cert.wcDiagnosBeskrivning2" class="block col-xs-12 form-control maxwidth">
                           </div>
                           <input type="text" id="diagnose.descriptionOpt2" name="diagnose.descriptionOpt2" value=""
-                                 class="block col-xs-12 form-control maxwidth">
+                                 ng-model="cert.wcDiagnosBeskrivning3" class="block col-xs-12 form-control maxwidth">
                         </div>
                       </div>
                     </div>
@@ -424,7 +425,7 @@
                     </div>
 
                     <div ng-show="totalCertDays">
-                      Detta intyg motsvarar en period på: {{totalCertDays}}
+                      Detta intyg motsvarar en period på: {{totalCertDays}} <span ng-show="totalCertDays > 1">dagar</span><span ng-show="totalCertDays == 1">dag</span>
                     </div>
                   </div>
 
@@ -478,7 +479,8 @@
                         Förtydligande: <input type="text" ng-model="cert.otherData.prognosisClarification"
                                               id="capacityForWork.forecastText" name="capacityForWork.forecastText"
                                               value="" class='form-control otherInformation'
-                                              ng-change="limitOtherField('prognosisClarification')"> <span id="prognosis-counter">Tecken kvar:
+                                              ng-change="limitOtherField('prognosisClarification')"> <span
+                          id="prognosis-counter">Tecken kvar:
                         {{inputLimits.ovrigt - getTotalOvrigtLength()}}</span>
                         <div class="info-transfer">Informationen överförs till "Övriga upplysningar" i
                           Försäkringskassans blankett.

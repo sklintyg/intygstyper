@@ -112,7 +112,7 @@
                     </div>
                     <!-- Fraga fran fk eller wc? -->
                     <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
-                      <span ng-switch-when="wc">Skickat: </span> <span ng-switch-default>Mottaget: </span> <span class="qa-date" id="qa-skickaddatum-{{qa.internReferens}}">{{qa.frageSkickadDatum | date:'shortDate'}}</span>
+                      <span ng-switch-when="wc">Skickat: </span> <span ng-switch-default>Mottaget: </span> <span class="qa-date" id="qa-skickaddatum-{{qa.internReferens}}">{{qa.frageSkickadDatum | date:'short'}}</span>
                     </div>
                   </div>
 
@@ -141,7 +141,7 @@
                     </div>
                     <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
                       <!-- motsatt villkor mot frågan -->
-                      <span ng-switch-when="wc">Mottaget: </span> <span ng-switch-default>Skickat: </span> <span class="qa-date">{{qa.svarSkickadDatum | date:'shortDate'}}</span>
+                      <span ng-switch-when="wc">Mottaget: </span> <span ng-switch-default>Skickat: </span> <span class="qa-date">{{qa.svarSkickadDatum | date:'short'}}</span>
                     </div>
                   </div>
                   <div id="{{qa.internReferens}}-svarsText" class="qa-block-body">{{qa.svarsText}}</div>
@@ -228,7 +228,7 @@
                   </div>
                   <!-- Fraga fran fk eller wc? -->
                   <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
-                    <span ng-switch-when="wc">Skickat: </span> <span ng-switch-default>Mottaget: </span> <span class="qa-date">{{qa.frageSkickadDatum | date:'shortDate'}}</span>
+                    <span ng-switch-when="wc">Skickat: </span> <span ng-switch-default>Mottaget: </span> <span class="qa-date">{{qa.frageSkickadDatum | date:'short'}}</span>
                   </div>
                 </div>
                 <div class="qa-block-body">{{qa.frageText}}</div>
@@ -253,7 +253,7 @@
                   </div>
                   <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
                     <!-- motsatt villkor mot frågan -->
-                    <span ng-switch-when="wc">Mottaget: </span> <span ng-switch-default>Skickat: </span> <span class="qa-date">{{qa.svarSkickadDatum | date:'shortDate'}}</span>
+                    <span ng-switch-when="wc">Mottaget: </span> <span ng-switch-default>Skickat: </span> <span class="qa-date">{{qa.svarSkickadDatum | date:'short'}}</span>
                   </div>
                 </div>
                 <div class="qa-block-body" id="qaHandledSvarstext-{{qa.internReferens}}">{{qa.svarsText}}</div>

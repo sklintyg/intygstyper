@@ -24,7 +24,7 @@ define([
                  * @param $scope
                  * @private
                  */
-                function _load($scope) {
+                function _load($scope, onSuccess) {
                     $scope.widgetState.doneLoading = false;
                     CertificateService.getDraft($routeParams.certificateId, function(data) {
                         $scope.widgetState.doneLoading = true;
@@ -32,6 +32,9 @@ define([
                         $scope.cert = data.content;
                         $scope.isSigned = data.status === 'SIGNED';
                         $scope.isComplete = $scope.isSigned || data.status === 'DRAFT_COMPLETE';
+                        if (onSuccess !== undefined) {
+                            onSuccess(data.content);
+                        }
                     }, function(error) {
                         $scope.widgetState.doneLoading = true;
                         $scope.widgetState.activeErrorMessageKey = checkSetError(error.errorCode);

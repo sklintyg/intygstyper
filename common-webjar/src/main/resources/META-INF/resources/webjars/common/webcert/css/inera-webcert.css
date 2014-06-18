@@ -470,6 +470,7 @@
         font-size: 20px;
         margin-left: 5px;
         color: #008391;
+        /*position: absolute;*/
     }
 
     .glyphicon-question-sign:hover {
@@ -990,6 +991,14 @@
 
     .weak-hidden {
         display: none;
+    }
+
+    [wc-enable-tooltip] {
+        position: relative;
+    }
+
+    .absolute {
+        position: absolute;
     }
 
 }

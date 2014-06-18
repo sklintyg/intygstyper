@@ -9,11 +9,11 @@ define([
     var moduleName = 'fk7263.EditCertCtrl';
 
     angular.module(moduleName, [ CertificateService, ManageCertView, User ]).
-        controller(moduleName, [ '$anchorScroll', '$filter', '$location', '$scope', '$window',
+        controller(moduleName, [ '$anchorScroll', '$filter', '$location', '$scope', '$window', '$log',
             CertificateService, ManageCertView, User,
-            function($anchorScroll, $filter, $location, $scope, $window, CertificateService, ManageCertView, User) {
-                $scope.cert = {};
+            function($anchorScroll, $filter, $location, $scope, $window, $log, CertificateService, ManageCertView, User) {
 
+                $scope.cert = {};
                 $scope.messages = [];
                 $scope.isComplete = false;
                 $scope.isSigned = false;
@@ -246,8 +246,10 @@ define([
                     updateWorkStateDate(newVal, $scope.cert, 'nedsattMed100');
                 });
 
+                var ISODATE_REGEXP = /^\d{4}-\d{2}-\d{2}$/;
                 function isDate(date) {
-                    return (date instanceof Date);
+                    var validDateFormat = ISODATE_REGEXP.test(date);
+                    return validDateFormat;
                 }
 
                 function getMinMaxDate(comparisonType, dates) {
@@ -300,7 +302,10 @@ define([
                         return $scope.totalCertDays;
                     }
 
-                    $scope.totalCertDays = Math.round(Math.abs((minDate.getTime() - maxDate.getTime()) / (oneDay))) + 1;
+                    minDate = new Date(minDate);
+                    maxDate = new Date(maxDate);
+
+                    $scope.totalCertDays = Math.round(Math.abs((maxDate.getTime() - minDate.getTime()) / (oneDay))) + 1;
                 };
 
                 // Rekommendationer 6a, 7, 11
@@ -320,9 +325,23 @@ define([
                     }
                 });
 
+                function setPropertyDefaults(list, propertyNames, defaultValue) {
+                    for (var i = 0; i < propertyNames.length; i++) {
+                        if (list[propertyNames[i]] === undefined) {
+                            list[propertyNames[i]] = defaultValue;
+                        }
+                    }
+                }
+
                 // Get the certificate draft from the server.
-                $scope.cert = {};
-                ManageCertView.load($scope);
+                ManageCertView.load($scope, function(cert) {
+                    // Decorate intygspecific default data
+                    $scope.cert = cert;
+
+                    var propertyNames = ['diagnosBeskrivning', 'wcDiagnosBeskrivning1', 'wcDiagnosKod2', 'wcDiagnosBeskrivning2', 'wcDiagnosKod3', 'wcDiagnosBeskrivning3' ];
+                    setPropertyDefaults($scope.cert, propertyNames, '');
+                    //$log.debug($scope.cert);
+                });
 
                 /**
                  * Action to save the certificate draft to the server.
