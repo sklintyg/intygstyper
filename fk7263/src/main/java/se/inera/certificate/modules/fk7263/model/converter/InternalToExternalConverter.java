@@ -19,6 +19,7 @@ import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.model.converter.util.InternalConverterUtil;
+import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
 import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
 import se.inera.certificate.modules.fk7263.model.codes.Prognoskoder;
@@ -184,7 +185,10 @@ public class InternalToExternalConverter {
         // observation huvudDiagnos
         if (source.getDiagnosKod() != null) {
             Kod kod = buildDiagnoseCode(source.getDiagnosKod());
-            observationer.add(buildObservation(kod, ObservationsKoder.DIAGNOS, source.getDiagnosBeskrivning()));
+            String beskrivning = buildDiagnosBeskrivning(source.getWcDiagnosBeskrivning1(), source.getWcDiagnosKod2(),
+                    source.getWcDiagnosBeskrivning2(), source.getWcDiagnosKod3(), source.getWcDiagnosBeskrivning3(), source.getDiagnosBeskrivning(),
+                    source.isWcFleraDiagnoser());
+            observationer.add(buildObservation(kod, ObservationsKoder.DIAGNOS, beskrivning));
         }
 
         // observation sjukdomsforlopp
@@ -314,6 +318,33 @@ public class InternalToExternalConverter {
         kod.setCodeSystem(ICD_10.getCodeSystem());
         kod.setCodeSystemName(ICD_10.getCodeSystemName());
         return kod;
+    }
+
+    private String buildDiagnosBeskrivning(String diagnosBeskrivning1, String diagnosKod2, String diagnosBeskrivning2, String diagnosKod3,
+            String diagnosBeskrivning3, String forklaring, Boolean fleraDiagnoser) {
+        ArrayList<String> parts = new ArrayList<>();
+
+        if (isValidString(diagnosBeskrivning1)) {
+            parts.add(diagnosBeskrivning1);
+        }
+        if (isValidString(diagnosKod2)) {
+            parts.add(diagnosKod2 + " " + diagnosBeskrivning2);
+        }
+        if (isValidString(diagnosKod3)) {
+            parts.add(diagnosKod3 + " " + diagnosBeskrivning3);
+        }
+        if (isValidString(forklaring)) {
+            parts.add(forklaring);
+        }
+        if (fleraDiagnoser != null && fleraDiagnoser) {
+            parts.add("Samsjuklighet föreligger");
+        }
+
+        return StringUtils.trimToNull(Strings.join(", ", parts));
+    }
+
+    private boolean isValidString(String string) {
+        return string != null && !string.isEmpty();
     }
 
     /**

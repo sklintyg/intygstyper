@@ -26,6 +26,13 @@ public class Fk7263Intyg {
     private String diagnosKod;
     private String diagnosBeskrivning;
 
+    private String wcDiagnosBeskrivning1;
+    private String wcDiagnosKod2;
+    private String wcDiagnosBeskrivning2;
+    private String wcDiagnosKod3;
+    private String wcDiagnosBeskrivning3;
+    private Boolean wcFleraDiagnoser;
+
     private String sjukdomsforlopp;
 
     private String funktionsnedsattning;
@@ -103,6 +110,54 @@ public class Fk7263Intyg {
 
     public void setDiagnosBeskrivning(String diagnosBeskrivning) {
         this.diagnosBeskrivning = diagnosBeskrivning;
+    }
+
+    public String getWcDiagnosBeskrivning1() {
+        return wcDiagnosBeskrivning1;
+    }
+
+    public void setWcDiagnosBeskrivning1(String wcDiagnosBeskrivning1) {
+        this.wcDiagnosBeskrivning1 = wcDiagnosBeskrivning1;
+    }
+
+    public String getWcDiagnosKod2() {
+        return wcDiagnosKod2;
+    }
+
+    public void setWcDiagnosKod2(String wcDiagnosKod2) {
+        this.wcDiagnosKod2 = wcDiagnosKod2;
+    }
+
+    public String getWcDiagnosBeskrivning2() {
+        return wcDiagnosBeskrivning2;
+    }
+
+    public void setWcDiagnosBeskrivning2(String wcDiagnosBeskrivning2) {
+        this.wcDiagnosBeskrivning2 = wcDiagnosBeskrivning2;
+    }
+
+    public String getWcDiagnosKod3() {
+        return wcDiagnosKod3;
+    }
+
+    public void setWcDiagnosKod3(String wcDiagnosKod3) {
+        this.wcDiagnosKod3 = wcDiagnosKod3;
+    }
+
+    public String getWcDiagnosBeskrivning3() {
+        return wcDiagnosBeskrivning3;
+    }
+
+    public void setWcDiagnosBeskrivning3(String wcDiagnosBeskrivning3) {
+        this.wcDiagnosBeskrivning3 = wcDiagnosBeskrivning3;
+    }
+
+    public Boolean isWcFleraDiagnoser() {
+        return wcFleraDiagnoser;
+    }
+
+    public void setWcFleraDiagnoser(Boolean wcFleraDiagnoser) {
+        this.wcFleraDiagnoser = wcFleraDiagnoser;
     }
 
     public String getSjukdomsforlopp() {
