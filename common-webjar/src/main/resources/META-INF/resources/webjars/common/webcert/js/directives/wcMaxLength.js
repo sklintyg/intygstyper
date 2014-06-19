@@ -17,8 +17,8 @@ define([
      *  maxlength (for setting maxlength)
      */
     angular.module(moduleName, []).
-        directive(moduleName, [ '$compile', '$log',
-            function($compile, $log) {
+        directive(moduleName, [ '$compile',
+            function($compile) {
                 return {
                     restrict: 'A',
                     require: 'ngModel',
