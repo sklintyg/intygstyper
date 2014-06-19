@@ -270,6 +270,12 @@ define([
                     return compareDate;
                 }
 
+                function convertDateToTime(date) {
+                    var splitDate = date.split('-');
+                    var time = (new Date(splitDate[0], splitDate[1], splitDate[2])).getTime();
+                    return time;
+                }
+
                 $scope.totalCertDays = false;
                 $scope.updateTotalCertDays = function() {
                     var oneDay = 24 * 60 * 60 * 1000;
@@ -302,10 +308,13 @@ define([
                         return $scope.totalCertDays;
                     }
 
-                    minDate = new Date(minDate);
-                    maxDate = new Date(maxDate);
+                    minDate = convertDateToTime(minDate);
+                    maxDate = convertDateToTime(maxDate);
 
-                    $scope.totalCertDays = Math.round(Math.abs((maxDate.getTime() - minDate.getTime()) / (oneDay))) + 1;
+                    if (minDate === 'Invalid Date' || maxDate === 'Invalid Date') {
+                        alert('Invalid date');
+                    }
+                    $scope.totalCertDays = Math.round(Math.abs((minDate - maxDate) / (oneDay))) + 1;
                 };
 
                 // Rekommendationer 6a, 7, 11

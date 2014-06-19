@@ -31,8 +31,9 @@ define([
                             if (newValue instanceof Date) {
                                 $scope.targetModel = format(newValue);
                             }
+                            $scope.onChange();
                         }, false);
-                        // Expose 'now' as a model property for the template to render as todays date
+
                         $scope.isOpen = false;
                         $scope.toggleOpen = function() {
                             $timeout(function() {
