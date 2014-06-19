@@ -1,5 +1,6 @@
 package se.inera.certificate.modules.support.api;
 
+import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelResponse;
@@ -57,9 +58,10 @@ public interface ModuleApi {
      * Generates a PDF from the external model.
      *
      * @param externalModel The external model to generate a PDF from.
+     * @param applicationOrigin The context from which this method was called (i.e Webcert or MinaIntyg)
      * @return A binary stream containing a PDF template populated with the information of the external model.
      */
-    PdfResponse pdf(ExternalModelHolder externalModel) throws ModuleException;
+    PdfResponse pdf(ExternalModelHolder externalModel, ApplicationOrigin applicationOrigin) throws ModuleException;
 
     /**
      * Handles conversion from the external model to the internal model.

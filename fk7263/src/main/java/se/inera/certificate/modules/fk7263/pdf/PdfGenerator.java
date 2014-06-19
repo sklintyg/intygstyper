@@ -5,9 +5,12 @@ import java.io.IOException;
 
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import se.inera.certificate.modules.support.ApplicationOrigin;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
+import com.itextpdf.text.pdf.CMYKColor;
+import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 
@@ -15,6 +18,15 @@ import com.itextpdf.text.pdf.PdfStamper;
  * @author andreaskaltenbach
  */
 public class PdfGenerator {
+
+    //Coordinates for masking "Skicka till försäkringskassan.."
+    private static final int MASK_HEIGTH = 70;
+
+    private static final int MASK_WIDTH = 250;
+
+    private static final int MASK_START_Y = 670;
+
+    private static final int MASK_START_X = 300;
 
     private static final String DATE_PATTERN = "yyyy-MM-dd";
 
@@ -135,11 +147,11 @@ public class PdfGenerator {
     private ByteArrayOutputStream outputStream;
     private AcroFields fields;
 
-    public PdfGenerator(Fk7263Intyg intyg) throws PdfGeneratorException {
-        this(intyg, true);
+    public PdfGenerator(Fk7263Intyg intyg, ApplicationOrigin applicationOrigin) throws PdfGeneratorException {
+        this(intyg, true, applicationOrigin);
     }
 
-    public PdfGenerator(Fk7263Intyg intyg, boolean flatten) throws PdfGeneratorException {
+    public PdfGenerator(Fk7263Intyg intyg, boolean flatten, ApplicationOrigin applicationOrigin) throws PdfGeneratorException {
         try {
             this.intyg = intyg;
 
@@ -151,13 +163,33 @@ public class PdfGenerator {
 
             generatePdf();
 
-            pdfStamper.setFormFlattening(flatten);
+            switch (applicationOrigin) {
+            case MINA_INTYG:
+                maskSendToFkInformation(pdfStamper, pdfReader.getNumberOfPages());
+                break;
+            case WEBCERT:
+                break;
+            default:
+                break;
+            }
 
+            pdfStamper.setFormFlattening(flatten);
             pdfStamper.close();
 
         } catch (Exception e) {
             throw new PdfGeneratorException(e);
         }
+    }
+
+    private void maskSendToFkInformation(PdfStamper pdfStamper, int numberOfPages) {
+        PdfContentByte addOverlay;
+        addOverlay = pdfStamper.getOverContent(1);
+        addOverlay.saveState();
+        addOverlay.setColorFill(CMYKColor.WHITE);
+        addOverlay.setColorStroke(CMYKColor.WHITE);
+        addOverlay.rectangle(MASK_START_X, MASK_START_Y, MASK_WIDTH, MASK_HEIGTH);
+        addOverlay.fillStroke();
+        addOverlay.restoreState();
     }
 
     public String generatePdfFilename() {

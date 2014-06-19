@@ -33,6 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
@@ -113,7 +114,7 @@ public class ModuleApiTest {
     @Test
     public void testPdf() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            moduleApi.pdf(createExternalHolder(scenario.asExternalModel()));
+            moduleApi.pdf(createExternalHolder(scenario.asExternalModel()), ApplicationOrigin.MINA_INTYG);
 
             // String contentDisposition = getClientResponse().getHeaderString("Content-Disposition");
             // Assert.assertTrue("Error in scenario " + scenario.getName(),

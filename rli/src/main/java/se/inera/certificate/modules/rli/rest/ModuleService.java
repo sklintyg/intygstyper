@@ -44,6 +44,7 @@ import se.inera.certificate.modules.rli.model.external.Utlatande;
 import se.inera.certificate.modules.rli.pdf.PdfGenerator;
 import se.inera.certificate.modules.rli.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.rli.validator.Validator;
+import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
@@ -164,7 +165,7 @@ public class ModuleService implements ModuleApi {
      * @throws ModuleException
      */
     @Override
-    public PdfResponse pdf(ExternalModelHolder externalModel) throws ModuleException {
+    public PdfResponse pdf(ExternalModelHolder externalModel, ApplicationOrigin applicationOrigin) throws ModuleException {
         try {
             se.inera.certificate.modules.rli.model.internal.mi.Utlatande internalUtlatande = externalToInternalConverter
                     .convert(getExternal(externalModel));

@@ -38,6 +38,7 @@ import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.rli.model.internal.mi.Utlatande;
 import se.inera.certificate.modules.rli.utils.Scenario;
 import se.inera.certificate.modules.rli.utils.ScenarioFinder;
+import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
@@ -115,7 +116,7 @@ public class ModuleApiTest {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             ExternalModelHolder holder = createExternalHolder(scenario.asExternalModel());
 
-            moduleApi.pdf(holder);
+            moduleApi.pdf(holder, ApplicationOrigin.MINA_INTYG);
 
         }
     }

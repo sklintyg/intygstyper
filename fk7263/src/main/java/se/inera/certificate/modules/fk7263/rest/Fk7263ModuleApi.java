@@ -36,6 +36,7 @@ import se.inera.certificate.modules.fk7263.validator.ExternalValidator;
 import se.inera.certificate.modules.fk7263.validator.InternalDraftValidator;
 import se.inera.certificate.modules.fk7263.validator.InternalValidator;
 import se.inera.certificate.modules.fk7263.validator.ProgrammaticLegacyTransportSchemaValidator;
+import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
@@ -233,10 +234,10 @@ public class Fk7263ModuleApi implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public PdfResponse pdf(ExternalModelHolder externalModel) throws ModuleException {
+    public PdfResponse pdf(ExternalModelHolder externalModel, ApplicationOrigin applicationOrigin) throws ModuleException {
         try {
             Fk7263Intyg intyg = externalToInternalConverter.convert(getExternal(externalModel));
-            PdfGenerator pdfGenerator = new PdfGenerator(intyg);
+            PdfGenerator pdfGenerator = new PdfGenerator(intyg, applicationOrigin);
             return new PdfResponse(pdfGenerator.getBytes(), pdfGenerator.generatePdfFilename());
 
         } catch (ConverterException e) {

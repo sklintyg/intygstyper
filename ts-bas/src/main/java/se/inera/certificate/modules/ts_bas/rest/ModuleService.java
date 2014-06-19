@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.model.util.Strings;
+import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.PdfResponse;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
@@ -128,12 +129,12 @@ public class ModuleService implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public PdfResponse pdf(Utlatande externalModel) {
+    public PdfResponse pdf(Utlatande externalModel, ApplicationOrigin applicationOrigin) {
         try {
             se.inera.certificate.modules.ts_bas.model.internal.Utlatande internalUtlatande = externalToInternalConverter
                     .convert(externalModel);
 
-            return new PdfResponse(pdfGenerator.generatePDF(internalUtlatande),
+            return new PdfResponse(pdfGenerator.generatePDF(internalUtlatande, applicationOrigin),
                     pdfGenerator.generatePdfFilename(internalUtlatande));
 
         } catch (ConverterException e) {

@@ -27,6 +27,7 @@ import java.io.IOException;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
+import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
 
@@ -41,10 +42,33 @@ public class PdfGeneratorTest {
     @Test
     public void testGeneratePdf() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
-            byte[] pdf = pdfGen.generatePDF(scenario.asInternalModel());
+            byte[] pdf = pdfGen.generatePDF(scenario.asInternalModel(), ApplicationOrigin.MINA_INTYG);
             assertNotNull("Error in scenario " + scenario.getName(), pdf);
             writePdfToFile(pdf, scenario);
         }
+    }
+
+    @Test
+    public void testGenerateWebcertPdf() throws Exception {
+            Scenario s = ScenarioFinder.getInternalScenario("valid-maximal");
+            byte[] pdf = pdfGen.generatePDF(s.asInternalModel(), ApplicationOrigin.WEBCERT);
+            writePdfToFile(pdf);
+    }
+
+    private void writePdfToFile(byte[] pdf) throws IOException {
+        String dir = System.getProperty("pdfOutput.dir");
+        if (dir == null) {
+            return;
+        }
+
+        File file = new File(String.format("%s/%s_%s.pdf", dir, "webcert", LocalDateTime.now().toString("yyyyMMdd_HHmm")));
+        FileOutputStream fop = new FileOutputStream(file);
+
+        file.createNewFile();
+
+        fop.write(pdf);
+        fop.flush();
+        fop.close();
     }
 
     private void writePdfToFile(byte[] pdf, Scenario scenario) throws IOException {

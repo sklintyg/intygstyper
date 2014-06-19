@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.ts_bas.model.codes.BefattningKod;
 import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
@@ -179,6 +180,9 @@ public class PdfGenerator {
     private static final CheckField ST_LAKARE_CHECK = new CheckField("Falt_93");
     private static final CheckField AT_LAKARE_CHECK = new CheckField("Falt_94");
 
+    private static final StringField UTLATANDE_ID = new StringField("Cert-id");
+    private static final StringField UTSKRIVET_FRAN = new StringField("Cert-printed-from");
+
     private static final String DATEFORMAT_FOR_FILENAMES = "yyMMdd";
 
     private final boolean formFlattening;
@@ -194,7 +198,7 @@ public class PdfGenerator {
         return String.format("lakarutlatande_%s_-%s.pdf", personId, certificateSignatureDate);
     }
 
-    public byte[] generatePDF(Utlatande utlatande) throws PdfGeneratorException {
+    public byte[] generatePDF(Utlatande utlatande, ApplicationOrigin applicationOrigin) throws PdfGeneratorException {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
@@ -202,8 +206,7 @@ public class PdfGenerator {
             PdfStamper pdfStamper = new PdfStamper(pdfReader, outputStream);
             pdfStamper.setFormFlattening(formFlattening);
             AcroFields fields = pdfStamper.getAcroFields();
-            populatePdfFields(utlatande, fields);
-
+            populatePdfFields(utlatande, fields, applicationOrigin);
             pdfStamper.close();
 
             return outputStream.toByteArray();
@@ -224,7 +227,7 @@ public class PdfGenerator {
      * @throws DocumentException
      * @throws IOException
      */
-    private void populatePdfFields(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
+    private void populatePdfFields(Utlatande utlatande, AcroFields fields, ApplicationOrigin applicationOrigin) throws IOException, DocumentException {
         populatePatientInfo(utlatande.getPatient(), fields);
         populateIntygAvser(utlatande.getIntygAvser(), fields);
         populateIdkontroll(utlatande.getVardkontakt(), fields);
@@ -245,7 +248,7 @@ public class PdfGenerator {
         populateMedicinering(utlatande.getMedicinering(), fields);
         populateOvrigt(utlatande.getKommentar(), fields);
         populateBedomning(utlatande.getBedomning(), fields);
-        populateAvslut(utlatande, fields);
+        populateAvslut(utlatande, fields, applicationOrigin);
     }
 
     private void populatePatientInfo(Patient patient, AcroFields fields) throws IOException, DocumentException {
@@ -396,7 +399,7 @@ public class PdfGenerator {
         BEDOMNING_BOR_UNDERSOKAS_SPECIALIST.setField(fields, bedomning.getLakareSpecialKompetens());
     }
 
-    private void populateAvslut(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
+    private void populateAvslut(Utlatande utlatande, AcroFields fields, ApplicationOrigin applicationOrigin) throws IOException, DocumentException {
         INTYGSDATUM.setField(fields, utlatande.getSigneringsdatum().toString("yyMMdd"));
         Vardenhet vardenhet = utlatande.getSkapadAv().getVardenhet();
         VARDINRATTNINGENS_NAMN.setField(fields, vardenhet.getEnhetsnamn());
@@ -416,6 +419,18 @@ public class PdfGenerator {
         List<String> befattningar = utlatande.getSkapadAv().getBefattningar();
         ST_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.ST_LAKARE.name()));
         AT_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.LAKARE_EJ_LEG_AT.name()));
+
+        UTLATANDE_ID.setField(fields, utlatande.getId());
+        switch (applicationOrigin) {
+        case MINA_INTYG:
+            UTSKRIVET_FRAN.setField(fields, "Mina Intyg");
+            break;
+        case WEBCERT:
+            UTSKRIVET_FRAN.setField(fields, "Webcert");
+            break;
+        default:
+            break;
+        }
     }
 
     private static final class CheckField {

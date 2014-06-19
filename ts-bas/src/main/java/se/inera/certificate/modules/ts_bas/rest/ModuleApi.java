@@ -25,6 +25,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.PdfResponse;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
@@ -92,7 +93,7 @@ public interface ModuleApi {
     @Path("/pdf")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces("application/pdf")
-    PdfResponse pdf(Utlatande externalModel);
+    PdfResponse pdf(Utlatande externalModel, ApplicationOrigin applicationOrigin);
 
     /**
      * Handles conversion from the external model to the internal model.

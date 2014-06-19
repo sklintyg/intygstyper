@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.util.Strings;
+import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
@@ -108,8 +109,8 @@ public class ModuleServiceWrapper implements ModuleApi {
     }
 
     @Override
-    public PdfResponse pdf(ExternalModelHolder externalModel) throws ModuleException {
-        return moduleService.pdf(getExternal(externalModel));
+    public PdfResponse pdf(ExternalModelHolder externalModel, ApplicationOrigin applicationOrigin) throws ModuleException {
+        return moduleService.pdf(getExternal(externalModel), applicationOrigin);
     }
 
     @Override

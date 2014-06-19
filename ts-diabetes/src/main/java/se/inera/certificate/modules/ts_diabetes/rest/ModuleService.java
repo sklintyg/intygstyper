@@ -36,6 +36,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.util.Strings;
+import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
@@ -178,7 +179,7 @@ public class ModuleService implements ModuleApi {
      * @throws ModuleException
      */
     @Override
-    public PdfResponse pdf(ExternalModelHolder externalModel) throws ModuleException {
+    public PdfResponse pdf(ExternalModelHolder externalModel, ApplicationOrigin applicationOrigin) throws ModuleException {
         try {
             se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande internalUtlatande = externalToInternalConverter
                     .convert(getExternal(externalModel));
