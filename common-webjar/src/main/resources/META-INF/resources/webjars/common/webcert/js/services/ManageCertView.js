@@ -206,19 +206,14 @@ define([
                     });
                 }
 
-                function _openNetIdPlugin(hash, onSuccess, onError) {
-                    var client = $document[0].iID;
-                    if (!client) {
-                        onError('Misslyckades med att starta klient för signering.');
-                        return;
-                    }
-                    client.SetProperty('Base64', 'true');
-                    client.SetProperty('DataToBeSigned', hash);
-                    client.SetProperty('URLEncode', 'false');
-                    var resultCode = client.Invoke('Sign');
+                function _openNetIdPlugin(hash, onSuccess) {
+                    iid_SetProperty('Base64', 'true');
+                    iid_SetProperty('DataToBeSigned', hash);
+                    iid_SetProperty('URLEncode', 'false');
+                    var resultCode = iid_Invoke('Sign');
 
                     if (resultCode === 0) {
-                        onSuccess(client.GetProperty('Signature'));
+                        onSuccess(iid_GetProperty('Signature'));
                     } else {
                         $log.info('Signeringen avbröts med kod: ' + resultCode);
                     }
