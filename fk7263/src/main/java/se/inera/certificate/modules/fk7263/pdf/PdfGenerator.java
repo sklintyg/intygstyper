@@ -20,21 +20,41 @@ import com.itextpdf.text.pdf.PdfStamper;
  */
 public class PdfGenerator {
 
+    private static final int SIGNATURE_NOT_REQUIRED_PADDING_BOTTOM = 10;
+    private static final int SIGNATURE_NOT_REQUIRED_PADDING_LEFT = 5;
+    private static final int SIGNATURE_NOT_REQUIRED_FONT_SIZE = 8;
     // Coordinates for masking "Skicka till försäkringskassan.."
     private static final int MASK_HEIGTH = 70;
     private static final int MASK_WIDTH = 250;
-    private static final int MASK_START_Y = 670;
     private static final int MASK_START_X = 300;
+    private static final int MASK_START_Y = 670;
 
     // Constants used for watermarking
     private static final int MARK_AS_COPY_HEIGTH = 30;
     private static final int MARK_AS_COPY_WIDTH = 250;
-    private static final int MARK_AS_COPY_START_Y = 690;
     private static final int MARK_AS_COPY_START_X = 50;
-
+    private static final int MARK_AS_COPY_START_Y = 690;
     private static final int WATERMARK_TEXT_PADDING = 10;
     private static final int WATERMARK_FONTSIZE = 12;
-    private static final String MINA_INTYG_TEXT = "Detta är en utskrift av ett elektroniskt intyg";
+
+    private static final String WATERMARK_TEXT = "Detta är en utskrift av ett elektroniskt intyg";
+
+    // Right margin texts
+    private static final String MINA_INTYG_MARGIN_TEXT = "Intyget är utskrivet från Mina Intyg.";
+    private static final String WEBCERT_MARGIN_TEXT = "Intyget är elektroniskt undertecknat. Intyget är utskrivet från Webcert.";
+
+    // Constants for printing ID and origin in right margin
+    private static final int MARGIN_TEXT_START_X = 565;
+    private static final int MARGIN_TEXT_START_Y = 27;
+    private static final int MARGIN_TEXT_FONTSIZE = 7;
+
+    // Constants for printing "Fysisk underskrift krävs ej av intygsmottagare"
+    private static final int SIGNATURE_NOT_REQUIRED_START_X = 263;
+    private static final int SIGNATURE_NOT_REQUIRED_START_Y = 105;
+    private static final float SIGNATURE_NOT_REQUIRED_WIDTH = 289.5f;
+    private static final int SIGNATURE_NOT_REQUIRED_HEIGHT = 25;
+    private static final String SIGNATURE_NOT_REQUIRED_TEXT = "Fysisk underskrift krävs ej av intygsmottagare";
+    private static final CMYKColor SIGNATURE_NOT_REQUIRED_COLOR = new CMYKColor(0.01f, 0.04f, 0.42f, 0.0f);
 
     private static final String DATE_PATTERN = "yyyy-MM-dd";
 
@@ -175,9 +195,12 @@ public class PdfGenerator {
             switch (applicationOrigin) {
             case MINA_INTYG:
                 maskSendToFkInformation(pdfStamper);
-                markAsElectronicCopy(pdfStamper, MINA_INTYG_TEXT);
+                markAsElectronicCopy(pdfStamper, WATERMARK_TEXT);
+                createRightMarginText(pdfStamper, pdfReader.getNumberOfPages(), intyg.getId(), MINA_INTYG_MARGIN_TEXT);
                 break;
             case WEBCERT:
+                createRightMarginText(pdfStamper, pdfReader.getNumberOfPages(), intyg.getId(), WEBCERT_MARGIN_TEXT);
+                createSignatureNotRequiredField(pdfStamper, pdfReader.getNumberOfPages());
                 break;
             default:
                 break;
@@ -189,6 +212,30 @@ public class PdfGenerator {
         } catch (Exception e) {
             throw new PdfGeneratorException(e);
         }
+    }
+
+    private void createSignatureNotRequiredField(PdfStamper pdfStamper, int lastPage) throws DocumentException, IOException {
+        PdfContentByte addOverlay;
+        addOverlay = pdfStamper.getOverContent(lastPage);
+        addOverlay.saveState();
+        addOverlay.setColorFill(SIGNATURE_NOT_REQUIRED_COLOR);
+        addOverlay.setColorStroke(CMYKColor.BLACK);
+        addOverlay.rectangle(SIGNATURE_NOT_REQUIRED_START_X, SIGNATURE_NOT_REQUIRED_START_Y, SIGNATURE_NOT_REQUIRED_WIDTH,
+                SIGNATURE_NOT_REQUIRED_HEIGHT);
+        addOverlay.setLineWidth(0.6f);
+        addOverlay.fillStroke();
+        addOverlay.restoreState();
+        // Do text
+        addOverlay = pdfStamper.getOverContent(lastPage);
+        addOverlay.saveState();
+        BaseFont bf = BaseFont.createFont();
+        addOverlay.beginText();
+        addOverlay.setFontAndSize(bf, SIGNATURE_NOT_REQUIRED_FONT_SIZE);
+        addOverlay.setTextMatrix(SIGNATURE_NOT_REQUIRED_START_X + SIGNATURE_NOT_REQUIRED_PADDING_LEFT, SIGNATURE_NOT_REQUIRED_START_Y
+                + SIGNATURE_NOT_REQUIRED_PADDING_BOTTOM);
+        addOverlay.showText(SIGNATURE_NOT_REQUIRED_TEXT);
+        addOverlay.endText();
+        addOverlay.restoreState();
     }
 
     // Mask the information regarding where to send a physical copy of this document
@@ -223,6 +270,22 @@ public class PdfGenerator {
         addOverlay.showText(watermarkText);
         addOverlay.endText();
         addOverlay.restoreState();
+    }
+
+    private void createRightMarginText(PdfStamper pdfStamper, int numberOfPages, String id, String text) throws DocumentException, IOException {
+        PdfContentByte addOverlay;
+        BaseFont bf = BaseFont.createFont();
+        // Do text
+        for (int i = 1; i <= numberOfPages; i++) {
+            addOverlay = pdfStamper.getOverContent(i);
+            addOverlay.saveState();
+            addOverlay.beginText();
+            addOverlay.setFontAndSize(bf, MARGIN_TEXT_FONTSIZE);
+            addOverlay.setTextMatrix(0, 1, -1, 0, MARGIN_TEXT_START_X, MARGIN_TEXT_START_Y);
+            addOverlay.showText(String.format("Intygs-ID: %s. %s", id, text));
+            addOverlay.endText();
+            addOverlay.restoreState();
+        }
     }
 
     public String generatePdfFilename() {

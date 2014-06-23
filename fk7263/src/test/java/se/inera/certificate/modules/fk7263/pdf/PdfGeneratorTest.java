@@ -62,7 +62,16 @@ public class PdfGeneratorTest {
         Fk7263Intyg intyg = new CustomObjectMapper().readValue(fk7263_json, Fk7263Intyg.class);
         // generate PDF
         byte[] generatorResult = new PdfGenerator(intyg, true, ApplicationOrigin.MINA_INTYG).getBytes();
-        writePdfToFile(generatorResult);
+        writePdfToFile(generatorResult, "Mina-intyg");
+    }
+
+    @Test
+    public void testPdfGenerationFromWebcert() throws Exception {
+        
+        Fk7263Intyg intyg = new CustomObjectMapper().readValue(fk7263_json, Fk7263Intyg.class);
+        // generate PDF
+        byte[] generatorResult = new PdfGenerator(intyg, true, ApplicationOrigin.WEBCERT).getBytes();
+        writePdfToFile(generatorResult, "Webcert");
     }
 
     @Test
@@ -78,7 +87,7 @@ public class PdfGeneratorTest {
 
     /**
      * This test creates a new document to compare against. The new document ends up in the project root.
-     * 
+     *
      * @throws IOException
      * @throws DocumentException
      */
@@ -107,13 +116,13 @@ public class PdfGeneratorTest {
         fop.close();
     }
 
-    private void writePdfToFile(byte[] pdf) throws IOException {
+    private void writePdfToFile(byte[] pdf, String namingPrefix) throws IOException {
         String dir = System.getProperty("pdfOutput.dir");
         if (dir == null) {
             return;
         }
 
-        File file = new File(String.format("%s/masked_send_to_information.pdf", dir));
+        File file = new File(String.format("%s/%s_masked_send_to_information.pdf", dir, namingPrefix));
         FileOutputStream fop = new FileOutputStream(file);
 
         file.createNewFile();
