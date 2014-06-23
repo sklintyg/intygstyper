@@ -20,16 +20,21 @@ import com.itextpdf.text.pdf.PdfStamper;
  */
 public class PdfGenerator {
 
-    //Coordinates for masking "Skicka till försäkringskassan.."
+    // Coordinates for masking "Skicka till försäkringskassan.."
     private static final int MASK_HEIGTH = 70;
     private static final int MASK_WIDTH = 250;
     private static final int MASK_START_Y = 670;
     private static final int MASK_START_X = 300;
 
+    // Constants used for watermarking
     private static final int MARK_AS_COPY_HEIGTH = 30;
     private static final int MARK_AS_COPY_WIDTH = 250;
     private static final int MARK_AS_COPY_START_Y = 690;
     private static final int MARK_AS_COPY_START_X = 50;
+
+    private static final int WATERMARK_TEXT_PADDING = 10;
+    private static final int WATERMARK_FONTSIZE = 12;
+    private static final String MINA_INTYG_TEXT = "Detta är en utskrift av ett elektroniskt intyg";
 
     private static final String DATE_PATTERN = "yyyy-MM-dd";
 
@@ -166,11 +171,11 @@ public class PdfGenerator {
 
             generatePdf();
 
-            //Decorate PDF depending on the origin of the pdf-call
+            // Decorate PDF depending on the origin of the pdf-call
             switch (applicationOrigin) {
             case MINA_INTYG:
                 maskSendToFkInformation(pdfStamper);
-                markAsElectronicCopy(pdfStamper);
+                markAsElectronicCopy(pdfStamper, MINA_INTYG_TEXT);
                 break;
             case WEBCERT:
                 break;
@@ -186,7 +191,7 @@ public class PdfGenerator {
         }
     }
 
-    //Mask the information regarding where to send a physical copy of this document
+    // Mask the information regarding where to send a physical copy of this document
     private void maskSendToFkInformation(PdfStamper pdfStamper) {
         PdfContentByte addOverlay;
         addOverlay = pdfStamper.getOverContent(1);
@@ -198,8 +203,8 @@ public class PdfGenerator {
         addOverlay.restoreState();
     }
 
-    //Mark this document as a copy of an electronically signed document
-    private void markAsElectronicCopy(PdfStamper pdfStamper) throws DocumentException, IOException {
+    // Mark this document as a copy of an electronically signed document
+    private void markAsElectronicCopy(PdfStamper pdfStamper, String watermarkText) throws DocumentException, IOException {
         PdfContentByte addOverlay;
         addOverlay = pdfStamper.getOverContent(1);
         addOverlay.saveState();
@@ -208,14 +213,14 @@ public class PdfGenerator {
         addOverlay.rectangle(MARK_AS_COPY_START_X, MARK_AS_COPY_START_Y, MARK_AS_COPY_WIDTH, MARK_AS_COPY_HEIGTH);
         addOverlay.stroke();
         addOverlay.restoreState();
-        //Do text
+        // Do text
         addOverlay = pdfStamper.getOverContent(1);
         addOverlay.saveState();
         BaseFont bf = BaseFont.createFont();
         addOverlay.beginText();
-        addOverlay.setFontAndSize(bf, 12);
-        addOverlay.setTextMatrix(MARK_AS_COPY_START_X + 10, MARK_AS_COPY_START_Y + 10);
-        addOverlay.showText("Detta är en utskrift av ett elektroniskt intyg");
+        addOverlay.setFontAndSize(bf, WATERMARK_FONTSIZE);
+        addOverlay.setTextMatrix(MARK_AS_COPY_START_X + WATERMARK_TEXT_PADDING, MARK_AS_COPY_START_Y + WATERMARK_TEXT_PADDING);
+        addOverlay.showText(watermarkText);
         addOverlay.endText();
         addOverlay.restoreState();
     }
