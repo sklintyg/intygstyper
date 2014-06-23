@@ -9,8 +9,10 @@ define([
     var moduleName = 'ts-bas.ViewCertCtrl';
 
     angular.module(moduleName, [ CertificateService, ManageCertView, ManageCertificate ]).
-        controller(moduleName, [ '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', CertificateService, ManageCertView, ManageCertificate,
-            function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView, ManageCertificate) {
+        controller(moduleName, [ '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', CertificateService,
+            ManageCertView, ManageCertificate,
+            function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView,
+                ManageCertificate) {
 
                 // Copy dialog setup
                 var COPY_DIALOG_COOKIE = 'wc.dontShowCopyDialog';

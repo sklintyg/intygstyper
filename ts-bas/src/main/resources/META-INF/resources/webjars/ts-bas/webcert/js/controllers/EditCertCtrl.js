@@ -118,7 +118,7 @@ define([ 'angular', 'webjars/common/webcert/js/services/CertificateService',
                 //Make a printable list of Befattningar (which as of yet consists of un-readable codes...)
                 $scope.befattningar = '';
                 $scope.$watch('user.userContext.befattningar', function (befattningar) {
-                    if (befattningar == undefined) {
+                    if (befattningar === undefined) {
                         return;
                     }
                     $scope.befattningar = befattningar;
@@ -136,7 +136,7 @@ define([ 'angular', 'webjars/common/webcert/js/services/CertificateService',
                 //Make a printable list of Specialiteter
                 $scope.specialiteter = '';
                 $scope.$watch('user.userContext.specialiseringar', function (specialiteter) {
-                    if (specialiteter == undefined) {
+                    if (specialiteter === undefined) {
                         return;
                     }
                     var result = '';

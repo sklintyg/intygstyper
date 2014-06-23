@@ -24,7 +24,7 @@ define([], function() {
     return {
         'sv': {
             'ts-diabetes.label.empty': '',
-            'ts-diabetes.label.certtitle': "Transportstyrelsens läkarintyg, diabetes",
+            'ts-diabetes.label.certtitle': 'Transportstyrelsens läkarintyg, diabetes',
             'ts-diabetes.label.send': 'Skicka till Transportstyrelsen',
             'ts-diabetes.label.intygavser': 'Intyget avser',
             'ts-diabetes.label.identitet': 'Identiteten är styrkt genom',
@@ -62,7 +62,7 @@ define([], function() {
             'ts-diabetes.helptext.identitet-styrkt-genom.foretags-tjanstekort': '** SIS-märkt företagskort eller tjänstekort.',
             'ts-diabetes.helptext.identitet-styrkt-genom.forsakran-enl18kap4': '*** Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2): Identiteten får fastställas genom att en förälder, annan vårdnadshavare, make, maka eller sambo, registrerad partner eller myndigt barn skriftligen försäkrar att lämnade uppgifter om sökandens identitet är riktiga. Den som lämnar en sådan försäkran ska vara närvarande vid identitetskontrollen och kunna styrka sin egen identitet.',
             'ts-diabetes.helptext.identitet-styrkt-genom.pass': '**** Svenskt EU-pass, annat EU-pass utfärdade från och med den 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 2006.',
-            
+
 
             // Visa ts-diabetes
 

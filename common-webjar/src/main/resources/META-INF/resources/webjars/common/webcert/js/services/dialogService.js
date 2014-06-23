@@ -67,7 +67,7 @@ define([
                         showerror: false
                     };
 
-                    scope.dialog.errormessageid = (scope.dialog.errormessageid ? scope.dialog.errormessageid : 'common.error.cantconnect')
+                    scope.dialog.errormessageid = (scope.dialog.errormessageid ? scope.dialog.errormessageid : 'common.error.cantconnect');
 
                     if (options.dialogId === undefined) {
                         throw 'dialogId must be specified';

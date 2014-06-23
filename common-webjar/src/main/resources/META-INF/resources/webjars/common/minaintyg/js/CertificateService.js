@@ -11,14 +11,6 @@ define(['angular'], function(angular) {
     CertificateService.factory('CertificateService', [ '$http', '$log',
         function($http, $log) {
 
-            function _handleError(callback, error) {
-                if (callback) {
-                    callback(error);
-                } else {
-                    $log.error(error);
-                }
-            }
-
             /*
              * Load certificate details from the server.
              */
@@ -34,7 +26,7 @@ define(['angular'], function(angular) {
                 });
             }
 
-         
+
             // Return public API for the service
             return {
                 getCertificate: _getCertificate
