@@ -105,11 +105,12 @@ define([
                             return page === currentRoute;
                         };
 
-                        $scope.getLogoutUrl = function() {
+                        $scope.logout = function() {
                             if (User.userContext.authenticationScheme === 'urn:inera:webcert:fake') {
-                                return '/logout';
+                                $window.location = '/logout';
                             } else {
-                                return '/saml/logout/';
+                                iid_Invoke('Logout');
+                                $window.location = '/saml/logout/';
                             }
                         };
 

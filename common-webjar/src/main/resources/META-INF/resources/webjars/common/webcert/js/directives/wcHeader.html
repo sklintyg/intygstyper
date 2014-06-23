@@ -20,7 +20,7 @@
                     <strong ng-switch-default>Vårdadministratör</strong>
                     </span>
           - <span class="logged-in">{{user.userContext.namn}}</span><br>
-          <a class="pull-right" ng-href="{{getLogoutUrl()}}" id="logoutLink">Logga ut</a>
+          <a class="pull-right" ng-click="logout()" id="logoutLink">Logga ut</a>
         </div>
       </div>
     </div>
