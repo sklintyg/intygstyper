@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
@@ -151,6 +152,9 @@ public class PdfGenerator {
 
     private static final StringField SPECIALISTKOMPETENS_BESKRVNING = new StringField("Falt_102");
 
+    private static final StringField UTLATANDE_ID = new StringField("Cert-id");
+    private static final StringField UTSKRIVET_FRAN = new StringField("Cert-printed-from");
+
     private static final String DATEFORMAT_FOR_FILENAMES = "yyMMdd";
 
     private final boolean formFlattening;
@@ -166,7 +170,7 @@ public class PdfGenerator {
         return String.format("lakarutlatande_%s_-%s.pdf", personId, certificateSignatureDate);
     }
 
-    public byte[] generatePDF(Utlatande utlatande) throws PdfGeneratorException {
+    public byte[] generatePDF(Utlatande utlatande, ApplicationOrigin applicaionOrigin) throws PdfGeneratorException {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
@@ -174,7 +178,7 @@ public class PdfGenerator {
             PdfStamper pdfStamper = new PdfStamper(pdfReader, outputStream);
             pdfStamper.setFormFlattening(formFlattening);
             AcroFields fields = pdfStamper.getAcroFields();
-            populatePdfFields(utlatande, fields);
+            populatePdfFields(utlatande, fields, applicaionOrigin);
 
             pdfStamper.close();
 
@@ -194,7 +198,7 @@ public class PdfGenerator {
      * @throws DocumentException
      * @throws IOException
      */
-    private void populatePdfFields(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
+    private void populatePdfFields(Utlatande utlatande, AcroFields fields, ApplicationOrigin applicaionOrigin) throws IOException, DocumentException {
         populatePatientInfo(utlatande.getPatient(), fields);
         populateIntygAvser(utlatande.getIntygAvser(), fields);
         populateIdkontroll(utlatande.getVardkontakt(), fields);
@@ -203,7 +207,7 @@ public class PdfGenerator {
         populateSynintyg(utlatande.getSyn(), fields);
         populateBedomning(utlatande.getBedomning(), fields);
         populateOvrigt(utlatande.getKommentar(), fields);
-        populateAvslut(utlatande, fields);
+        populateAvslut(utlatande, fields, applicaionOrigin);
     }
 
     private void populatePatientInfo(Patient patient, AcroFields fields) throws IOException, DocumentException {
@@ -305,7 +309,7 @@ public class PdfGenerator {
         OVRIG_BESKRIVNING.setField(fields, kommentar);
     }
 
-    private void populateAvslut(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
+    private void populateAvslut(Utlatande utlatande, AcroFields fields, ApplicationOrigin applicationOrigin) throws IOException, DocumentException {
         INTYGSDATUM.setField(fields, utlatande.getSigneringsdatum().toString("yyMMdd"));
         Vardenhet vardenhet = utlatande.getSkapadAv().getVardenhet();
         VARDINRATTNINGENS_NAMN.setField(fields, vardenhet.getEnhetsnamn());
@@ -320,6 +324,18 @@ public class PdfGenerator {
             // TODO: Build text for 'beskrivning'
             SPECIALISTKOMPETENS_BESKRVNING.setField(fields, "implement");
         }
+        UTLATANDE_ID.setField(fields, utlatande.getId());
+        switch (applicationOrigin) {
+        case MINA_INTYG:
+            UTSKRIVET_FRAN.setField(fields, "Mina Intyg");
+            break;
+        case WEBCERT:
+            UTSKRIVET_FRAN.setField(fields, "Webcert");
+            break;
+        default:
+            break;
+        }
+
     }
 
     private static final class CheckField {

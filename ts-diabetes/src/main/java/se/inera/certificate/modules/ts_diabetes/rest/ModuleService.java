@@ -183,7 +183,7 @@ public class ModuleService implements ModuleApi {
         try {
             se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande internalUtlatande = externalToInternalConverter
                     .convert(getExternal(externalModel));
-            return new PdfResponse(pdfGenerator.generatePDF(internalUtlatande),
+            return new PdfResponse(pdfGenerator.generatePDF(internalUtlatande, applicationOrigin),
                     pdfGenerator.generatePdfFilename(internalUtlatande));
 
         } catch (ConverterException e) {

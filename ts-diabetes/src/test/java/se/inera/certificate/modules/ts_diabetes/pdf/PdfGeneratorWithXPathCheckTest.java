@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.springframework.util.xml.SimpleNamespaceContext;
 import org.w3c.dom.Node;
 
+import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.ts_diabetes.pdf.xpath.TransportToPDFMapping;
 import se.inera.certificate.modules.ts_diabetes.pdf.xpath.XPathEvaluator;
 import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
@@ -49,7 +50,7 @@ public class PdfGeneratorWithXPathCheckTest {
     public void testGeneratePdfAndValidateFieldsWithXPath() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
             // Generate a PDF from the internal model
-            byte[] pdf = pdfGen.generatePDF(scenario.asInternalModel());
+            byte[] pdf = pdfGen.generatePDF(scenario.asInternalModel(), ApplicationOrigin.MINA_INTYG);
             assertNotNull("Error in scenario " + scenario.getName(), pdf);
 
             // Open a reader to the newly created PDF
