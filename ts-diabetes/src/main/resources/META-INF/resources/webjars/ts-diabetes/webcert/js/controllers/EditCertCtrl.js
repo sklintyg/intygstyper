@@ -47,7 +47,7 @@ define([
                     'identity': [
                         {label: 'ID-kort *', id: 'ID_KORT'},
                         {label: 'Företagskort eller tjänstekort **', id: 'FORETAG_ELLER_TJANSTEKORT'},
-                        {label: 'Körkort', id: 'KORKORT'},
+                        {label: 'Svenskt körkort', id: 'KORKORT'},
                         {label: 'Personlig kännedom', id: 'PERS_KANNEDOM'},
                         {label: 'Försäkran enligt 18 kap. 4§ ***', id: 'FORSAKRAN_KAP18'},
                         {label: 'Pass ****', id: 'PASS'}
