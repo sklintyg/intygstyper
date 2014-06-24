@@ -11,7 +11,8 @@ define([
     angular.module(moduleName, [ CertificateService, ManageCertView, User ]).
         controller(moduleName, [ '$anchorScroll', '$filter', '$location', '$scope', '$window', '$log',
             CertificateService, ManageCertView, User,
-            function($anchorScroll, $filter, $location, $scope, $window, $log, CertificateService, ManageCertView, User) {
+            function($anchorScroll, $filter, $location, $scope, $window, $log, CertificateService, ManageCertView,
+                User) {
 
                 $scope.cert = {};
                 $scope.messages = [];
@@ -347,7 +348,8 @@ define([
                     // Decorate intygspecific default data
                     $scope.cert = cert;
 
-                    var propertyNames = ['diagnosBeskrivning', 'wcDiagnosBeskrivning1', 'wcDiagnosKod2', 'wcDiagnosBeskrivning2', 'wcDiagnosKod3', 'wcDiagnosBeskrivning3' ];
+                    var propertyNames = ['diagnosBeskrivning', 'wcDiagnosBeskrivning1', 'wcDiagnosKod2',
+                        'wcDiagnosBeskrivning2', 'wcDiagnosKod3', 'wcDiagnosBeskrivning3' ];
                     setPropertyDefaults($scope.cert, propertyNames, '');
                     //$log.debug($scope.cert);
                 });

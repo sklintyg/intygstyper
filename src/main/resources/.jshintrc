@@ -36,6 +36,9 @@
         "describe" : false,
         "expect" : false,
         "it" : false,
-        "jasmine" : false
+        "jasmine" : false,
+        "iid_Invoke" : false,
+        "iid_SetProperty" : false,
+        "iid_GetProperty" : false
     }
 }
