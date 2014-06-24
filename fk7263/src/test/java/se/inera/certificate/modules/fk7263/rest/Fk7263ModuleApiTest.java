@@ -125,7 +125,7 @@ public class Fk7263ModuleApiTest {
         Vardgivare vardgivare = new Vardgivare("vardgivarId", "vardgivarNamn");
         Vardenhet vardenhet = new Vardenhet("enhetId", "enhetNamn", "", "", "", "", "", "", vardgivare);
         HoSPersonal hosPerson = new HoSPersonal("nyId", "nyNamn", "nyForskrivarkod", "nyBefattning", vardenhet);
-        InternalModelHolder updatedHolder = fk7263ModuleApi.updateInternal(holder, hosPerson);
+        InternalModelResponse updatedHolder = fk7263ModuleApi.updateInternal(holder, hosPerson);
         Fk7263Intyg updatedIntyg = mapper.readValue(updatedHolder.getInternalModel(), Fk7263Intyg.class);
 
         assertEquals("nyId", updatedIntyg.getVardperson().getHsaId());

@@ -211,7 +211,7 @@ public class ModuleServiceWrapper implements ModuleApi {
         return Strings.join(", ", intygAvser);
     }
     @Override
-    public InternalModelHolder updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException {
+    public InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException {
         try {
             se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande = getInternal(internalModel);
             utlatande.getSkapadAv().setPersonid(hosPerson.getHsaId());
@@ -220,8 +220,8 @@ public class ModuleServiceWrapper implements ModuleApi {
             if (hosPerson.getBefattning() != null) {
                 utlatande.getSkapadAv().getBefattningar().add(hosPerson.getBefattning());
             }
-            String internalModelJson = toInteralModelResponse(utlatande).getInternalModel();
-            return new InternalModelHolder(internalModelJson);
+            return toInteralModelResponse(utlatande);
+
         } catch (ModuleException e) {
             throw new ModuleException("Convert error of internal model", e);
         }

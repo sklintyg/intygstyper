@@ -329,7 +329,7 @@ public class ModuleService implements ModuleApi {
     }
 
     @Override
-    public InternalModelHolder updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson) {
-        return internalModel;
+    public InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException {
+        return toInteralWcModelResponse(getInternal(internalModel));
     }
 }

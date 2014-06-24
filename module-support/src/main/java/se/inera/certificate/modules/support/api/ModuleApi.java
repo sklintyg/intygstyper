@@ -98,12 +98,12 @@ public interface ModuleApi {
     String getComplementaryInfo(ExternalModelHolder externalModel) throws ModuleException;
 
     /**
-     * Returns an updated version of the external model with the HoS person information.
+     * Returns an updated version of the internal model with new HoS person information.
      *
-     * @param internalModel The internal model to extract complementary information from.
-     * @param hosPerson The HoS person to update the model with.
+     * @param internalModel The internal model to use as a base.
+     * @param hosPerson The HoS person to complement the model with.
      *
-     * @return The internal model updated with the hosPerson info.
+     * @return A new internal model updated with the hosPerson info.
      */
-    InternalModelHolder updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException;
+    InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException;
 }
