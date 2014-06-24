@@ -20,6 +20,9 @@ import com.itextpdf.text.pdf.PdfStamper;
  */
 public class PdfGenerator {
 
+    // General stuff
+    private static final float LINE_WIDTH = 0.6f;
+
     private static final int SIGNATURE_NOT_REQUIRED_PADDING_BOTTOM = 10;
     private static final int SIGNATURE_NOT_REQUIRED_PADDING_LEFT = 5;
     private static final int SIGNATURE_NOT_REQUIRED_FONT_SIZE = 8;
@@ -51,7 +54,7 @@ public class PdfGenerator {
     // Constants for printing "Fysisk underskrift krävs ej av intygsmottagare"
     private static final int SIGNATURE_NOT_REQUIRED_START_X = 263;
     private static final int SIGNATURE_NOT_REQUIRED_START_Y = 105;
-    private static final float SIGNATURE_NOT_REQUIRED_WIDTH = 289.5f;
+    private static final float SIGNATURE_NOT_REQUIRED_WIDTH = 289.6f;
     private static final int SIGNATURE_NOT_REQUIRED_HEIGHT = 25;
     private static final String SIGNATURE_NOT_REQUIRED_TEXT = "Fysisk underskrift krävs ej av intygsmottagare";
     private static final CMYKColor SIGNATURE_NOT_REQUIRED_COLOR = new CMYKColor(0.01f, 0.04f, 0.42f, 0.0f);
@@ -222,7 +225,7 @@ public class PdfGenerator {
         addOverlay.setColorStroke(CMYKColor.BLACK);
         addOverlay.rectangle(SIGNATURE_NOT_REQUIRED_START_X, SIGNATURE_NOT_REQUIRED_START_Y, SIGNATURE_NOT_REQUIRED_WIDTH,
                 SIGNATURE_NOT_REQUIRED_HEIGHT);
-        addOverlay.setLineWidth(0.6f);
+        addOverlay.setLineWidth(LINE_WIDTH);
         addOverlay.fillStroke();
         addOverlay.restoreState();
         // Do text
