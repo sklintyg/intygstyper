@@ -111,7 +111,7 @@
                                                                                            ng-change="autoEnterDate('undersokningAvPatienten')" />
                         Min undersökning av patienten</label>
                       <span wc-date-picker-field target-model="cert.undersokningAvPatienten"
-                            on-change="basedOnState.check.undersokningAvPatienten = true"
+                            on-change="onChangeBaserasPaDate('undersokningAvPatienten')"
                             dom-id="undersokningAvPatienten-date"></span>
                     </div>
                     <div class="form-group form-inline">
@@ -121,7 +121,7 @@
                                                                                            ng-change="autoEnterDate('telefonkontaktMedPatienten')" />
                         Min telefonkontakt med patienten</label>
                       <span wc-date-picker-field target-model="cert.telefonkontaktMedPatienten"
-                            on-change="basedOnState.check.telefonkontaktMedPatienten = true"
+                            on-change="onChangeBaserasPaDate('telefonkontaktMedPatienten')"
                             dom-id="telefonkontaktMedPatienten-date"></span>
                     </div>
                     <div class="form-group form-inline">
@@ -131,8 +131,7 @@
                                                                                            ng-change="autoEnterDate('journaluppgifter')" />
                         Journaluppgifter</label>
                       <span wc-date-picker-field target-model="cert.journaluppgifter"
-                            on-change="basedOnState.check.journaluppgifter = true"
-                            dom-id="journaluppgifter-date"></span>
+                            on-change="onChangeBaserasPaDate('journaluppgifter')" dom-id="journaluppgifter-date"></span>
                     </div>
 
                     <div class="form-group form-inline">
@@ -143,7 +142,7 @@
                         Annat<span wc-enable-tooltip field-help-text="fk7263.helptext.intyg-baserat-pa.annat" />
                       </label>
                       <span wc-date-picker-field target-model="cert.annanReferens"
-                            on-change="basedOnState.check.annanReferens = true" dom-id="annanReferens-date"></span>
+                            on-change="onChangeBaserasPaDate('annanReferens')" dom-id="annanReferens-date"></span>
                     </div>
                     <div class="otherText indent" ng-if="basedOnState.check.annanReferens">
                       <span>Ange vad:</span><br />
@@ -334,14 +333,18 @@
                     <div class="form-group form-inline">
                       <label class="checkbox" style="min-width: 250px"><input type="checkbox"
                                                                               name="capacityForWork.work25"
-                                                                              ng-model="workState.check25" /> 25%
+                                                                              ng-change="onChangeWorkStateCheck('nedsattMed25')"
+                                                                              ng-model="workState.nedsattMed25" />
+                        25%
                         nedsatt arbetsförmåga från</label>
-                      <span wc-date-picker-field target-model="cert.nedsattMed25.from" on-change="updateTotalCertDays()"
+                      <span wc-date-picker-field target-model="cert.nedsattMed25.from"
+                            on-change="onChangeNedsattMed('nedsattMed25', 'from')"
                             dom-id="nedsattMed25-start-date"></span>
                       <span>till</span>
-                      <span wc-date-picker-field target-model="cert.nedsattMed25.tom" on-change="updateTotalCertDays()"
+                      <span wc-date-picker-field target-model="cert.nedsattMed25.tom"
+                            on-change="onChangeNedsattMed('nedsattMed25', 'tom')"
                             dom-id="nedsattMed25-end-date"></span>
-                      <div class="indent pad10" ng-if="workState.check25">
+                      <div class="indent pad10" ng-if="workState.nedsattMed25">
                         <div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
                           Arbetstid timmar/vecka: <strong>{{cert.workTime / 4}}</strong>
                         </div>
@@ -361,14 +364,16 @@
                     <div class="form-group form-inline">
                       <label class="checkbox" style="min-width: 250px"><input type="checkbox"
                                                                               name="capacityForWork.work50"
-                                                                              ng-model="workState.check50" /> 50%
+                                                                              ng-change="onChangeWorkStateCheck('nedsattMed50')"
+                                                                              ng-model="workState.nedsattMed50" /> 50%
                         nedsatt arbetsförmåga från</label>
-                      <span wc-date-picker-field target-model="cert.nedsattMed50.from" on-change="updateTotalCertDays()"
-                            dom-id="nedsattMed50-start-date"></span>
+                      <span wc-date-picker-field target-model="cert.nedsattMed50.from"
+                            on-change="onChangeNedsattMed('nedsattMed50', 'from')" dom-id="nedsattMed50-start-date"></span>
                       <span>till</span>
-                      <span wc-date-picker-field target-model="cert.nedsattMed50.tom" on-change="updateTotalCertDays()"
+                      <span wc-date-picker-field target-model="cert.nedsattMed50.tom"
+                            on-change="onChangeNedsattMed('nedsattMed50', 'tom')"
                             dom-id="nedsattMed50-end-date"></span>
-                      <div class="indent pad10" ng-if="workState.check50">
+                      <div class="indent pad10" ng-if="workState.nedsattMed50">
                         <div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
                           Arbetstid timmar/vecka: <strong>{{cert.workTime / 2}}</strong>
                         </div>
@@ -388,14 +393,16 @@
                     <div class="form-group form-inline">
                       <label class="checkbox" style="min-width: 250px"><input type="checkbox"
                                                                               name="capacityForWork.work75"
-                                                                              ng-model="workState.check75" /> 75%
+                                                                              ng-change="onChangeWorkStateCheck('nedsattMed75')"
+                                                                              ng-model="workState.nedsattMed75" /> 75%
                         nedsatt arbetsförmåga från</label>
-                      <span wc-date-picker-field target-model="cert.nedsattMed75.from" on-change="updateTotalCertDays()"
-                            dom-id="nedsattMed75-start-date"></span>
+                      <span wc-date-picker-field target-model="cert.nedsattMed75.from"
+                            on-change="onChangeNedsattMed('nedsattMed75', 'from')" dom-id="nedsattMed75-start-date"></span>
                       <span>till</span>
-                      <span wc-date-picker-field target-model="cert.nedsattMed75.tom" on-change="updateTotalCertDays()"
+                      <span wc-date-picker-field target-model="cert.nedsattMed75.tom"
+                            on-change="onChangeNedsattMed('nedsattMed75', 'tom')"
                             dom-id="nedsattMed75-end-date"></span>
-                      <div class="indent pad10" ng-if="workState.check75">
+                      <div class="indent pad10" ng-if="workState.nedsattMed75">
                         <div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
                           Arbetstid timmar/vecka: <strong>{{cert.workTime * 0.75}}</strong>
                         </div>
@@ -415,17 +422,19 @@
                     <div class="form-group form-inline">
                       <label class="checkbox" style="min-width: 250px"><input type="checkbox"
                                                                               name="capacityForWork.workFull"
-                                                                              ng-model="workState.check100" /> Helt
+                                                                              ng-change="onChangeWorkStateCheck('nedsattMed100')"
+                                                                              ng-model="workState.nedsattMed100" /> Helt
                         nedsatt arbetsförmåga från</label>
                       <span wc-date-picker-field target-model="cert.nedsattMed100.from"
-                            on-change="updateTotalCertDays()" dom-id="nedsattMed100-start-date"></span>
+                            on-change="onChangeNedsattMed('nedsattMed100', 'from')" dom-id="nedsattMed100-start-date"></span>
                       <span>till</span>
-                      <span wc-date-picker-field target-model="cert.nedsattMed100.tom" on-change="updateTotalCertDays()"
-                            dom-id="nedsattMed100-end-date"></span>
+                      <span wc-date-picker-field target-model="cert.nedsattMed100.tom"
+                            on-change="onChangeNedsattMed('nedsattMed100', 'tom')" dom-id="nedsattMed100-end-date"></span>
                     </div>
 
                     <div ng-show="totalCertDays">
-                      Detta intyg motsvarar en period på: {{totalCertDays}} <span ng-show="totalCertDays > 1">dagar</span><span ng-show="totalCertDays == 1">dag</span>
+                      Detta intyg motsvarar en period på: {{totalCertDays}} <span
+                        ng-show="totalCertDays > 1">dagar</span><span ng-show="totalCertDays == 1">dag</span>
                     </div>
                   </div>
 

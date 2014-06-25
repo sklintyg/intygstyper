@@ -172,11 +172,17 @@ define([
 
                 $scope.autoEnterDate = function(modelName) {
                     if ($scope.basedOnState.check[modelName]) {
-                        if ($scope.cert[modelName] === '' || $scope.cert[modelName] === undefined) {
+                        if ($scope.cert[modelName] === undefined || $scope.cert[modelName] === '') {
                             $scope.cert[modelName] = $filter('date')($scope.today, 'yyyy-MM-dd');
                         }
                     } else {
                         $scope.cert[modelName] = '';
+                    }
+                };
+
+                $scope.onChangeBaserasPaDate = function(baserasPaType) {
+                    if ($scope.cert[baserasPaType] !== undefined && isDate($scope.cert[baserasPaType])) {
+                        $scope.basedOnState.check[baserasPaType] = true;
                     }
                 };
 
@@ -205,12 +211,18 @@ define([
 
                 // Arbetsförmåga handling (8b)
                 $scope.workState = {
-                    check25: false,
-                    check50: false,
-                    check75: false,
-                    check100: false
+                    nedsattMed25: false,
+                    nedsattMed50: false,
+                    nedsattMed75: false,
+                    nedsattMed100: false
                 };
 
+                /**
+                 * Update (set/remove) arbetsformaga dates if checkbox is checked
+                 * @param checked
+                 * @param model
+                 * @param key
+                 */
                 function updateWorkStateDate(checked, model, key) {
                     if (model !== undefined) {
                         if (checked) {
@@ -231,23 +243,64 @@ define([
                     }
                 }
 
-                $scope.$watch('workState.check25', function(newVal) {
-                    updateWorkStateDate(newVal, $scope.cert, 'nedsattMed25');
-                });
+                /**
+                 * Update arbetsformaga dates when checkbox is updated
+                 * @param nedsattModelName
+                 */
+                $scope.onChangeWorkStateCheck = function(nedsattModelName) {
+                    updateWorkStateDate($scope.workState[nedsattModelName], $scope.cert, nedsattModelName);
+                };
 
-                $scope.$watch('workState.check50', function(newVal) {
-                    updateWorkStateDate(newVal, $scope.cert, 'nedsattMed50');
-                });
+                /**
+                 * Set checkbox and non-selected date for arbetsformaga % when a date is changed
+                 * @param nedsattModelName
+                 * @param fromTom
+                 */
+                $scope.onChangeNedsattMed = function(nedsattModelName, fromTom) {
 
-                $scope.$watch('workState.check75', function(newVal) {
-                    updateWorkStateDate(newVal, $scope.cert, 'nedsattMed75');
-                });
+                    // Bail out if model hasn't been loaded yet
+                    if ($scope.cert[nedsattModelName] === undefined ||
+                        $scope.cert[nedsattModelName][fromTom] === undefined) {
+                        return;
+                    }
 
-                $scope.$watch('workState.check100', function(newVal) {
-                    updateWorkStateDate(newVal, $scope.cert, 'nedsattMed100');
-                });
+                    $log.debug('Setting ' + nedsattModelName + '.' + fromTom + ' to true (source date: ' +
+                        $scope.cert[nedsattModelName][fromTom] + ')');
 
+                    // Check checkbox if a valid date has been set
+                    if ($scope.cert[nedsattModelName][fromTom] !== undefined &&
+                        isDate($scope.cert[nedsattModelName][fromTom])) {
+                        $scope.workState[nedsattModelName] = true;
+
+                        // If non-changed date for same % is still invalid, set that as well
+                        if (fromTom === 'from' && !isDate($scope.cert[nedsattModelName].tom)) {
+                            $scope.cert[nedsattModelName].tom =
+                                $scope.cert[nedsattModelName].from;
+                        }
+                        else if (fromTom === 'tom' && !isDate($scope.cert[nedsattModelName].from)) {
+                            $scope.cert[nedsattModelName].from =
+                                $scope.cert[nedsattModelName].tom;
+                        }
+                    }
+                };
+                /*
+                 $scope.$watch('workState.check25', function(newVal) {
+                 });
+
+                 $scope.$watch('workState.check50', function(newVal) {
+                 //                    updateWorkStateDate(newVal, $scope.cert, 'nedsattMed50');
+                 });
+
+                 $scope.$watch('workState.check75', function(newVal) {
+                 //                  updateWorkStateDate(newVal, $scope.cert, 'nedsattMed75');
+                 });
+
+                 $scope.$watch('workState.check100', function(newVal) {
+                 //                updateWorkStateDate(newVal, $scope.cert, 'nedsattMed100');
+                 });
+                 */
                 var ISODATE_REGEXP = /^\d{4}-\d{2}-\d{2}$/;
+
                 function isDate(date) {
                     var validDateFormat = ISODATE_REGEXP.test(date);
                     return validDateFormat;
@@ -351,7 +404,6 @@ define([
                     var propertyNames = ['diagnosBeskrivning', 'wcDiagnosBeskrivning1', 'wcDiagnosKod2',
                         'wcDiagnosBeskrivning2', 'wcDiagnosKod3', 'wcDiagnosBeskrivning3' ];
                     setPropertyDefaults($scope.cert, propertyNames, '');
-                    //$log.debug($scope.cert);
                 });
 
                 /**
