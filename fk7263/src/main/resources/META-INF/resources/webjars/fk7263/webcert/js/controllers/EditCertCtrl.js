@@ -171,11 +171,15 @@ define([
                 };
 
                 $scope.autoEnterDate = function(modelName) {
+
+                    // Set todays date when a baserat pa field is checked
                     if ($scope.basedOnState.check[modelName]) {
                         if ($scope.cert[modelName] === undefined || $scope.cert[modelName] === '') {
                             $scope.cert[modelName] = $filter('date')($scope.today, 'yyyy-MM-dd');
                         }
                     } else {
+
+                        // Clear date if check is unchecked
                         $scope.cert[modelName] = '';
                     }
                 };
@@ -218,17 +222,15 @@ define([
                 };
 
                 /**
-                 * Update (set/remove) arbetsformaga dates if checkbox is checked
-                 * @param checked
-                 * @param model
-                 * @param key
+                 * Update arbetsformaga dates when checkbox is updated
+                 * @param nedsattModelName
                  */
-                function updateWorkStateDate(checked, model, key) {
-                    if (model !== undefined) {
-                        if (checked) {
-                            var workstate = model[key];
+                $scope.onChangeWorkStateCheck = function(nedsattModelName) {
+                    if ($scope.cert !== undefined) {
+                        if ($scope.workState[nedsattModelName]) {
+                            var workstate = $scope.cert[nedsattModelName];
                             if (!workstate) {
-                                workstate = model[key] = {};
+                                workstate = $scope.cert[nedsattModelName] = {};
                             }
                             if (!workstate.from || !isDate(workstate.from)) {
                                 workstate.from = ($filter('date')($scope.today, 'yyyy-MM-dd'));
@@ -237,18 +239,10 @@ define([
                                 workstate.tom = ($filter('date')($scope.today, 'yyyy-MM-dd'));
                             }
                         } else {
-                            delete model[key];
+                            delete  $scope.cert[nedsattModelName];
                         }
                         $scope.updateTotalCertDays();
                     }
-                }
-
-                /**
-                 * Update arbetsformaga dates when checkbox is updated
-                 * @param nedsattModelName
-                 */
-                $scope.onChangeWorkStateCheck = function(nedsattModelName) {
-                    updateWorkStateDate($scope.workState[nedsattModelName], $scope.cert, nedsattModelName);
                 };
 
                 /**
@@ -259,46 +253,27 @@ define([
                 $scope.onChangeNedsattMed = function(nedsattModelName, fromTom) {
 
                     // Bail out if model hasn't been loaded yet
-                    if ($scope.cert[nedsattModelName] === undefined ||
-                        $scope.cert[nedsattModelName][fromTom] === undefined) {
+                    var nedsattModel = $scope.cert[nedsattModelName];
+                    var dateField = $scope.cert[nedsattModelName][fromTom];
+                    if (nedsattModel === undefined || dateField === undefined) {
                         return;
                     }
 
-                    $log.debug('Setting ' + nedsattModelName + '.' + fromTom + ' to true (source date: ' +
-                        $scope.cert[nedsattModelName][fromTom] + ')');
+                    // if a valid date has been set
+                    if (dateField !== undefined && isDate(dateField)) {
 
-                    // Check checkbox if a valid date has been set
-                    if ($scope.cert[nedsattModelName][fromTom] !== undefined &&
-                        isDate($scope.cert[nedsattModelName][fromTom])) {
+                        // Check checkbox
                         $scope.workState[nedsattModelName] = true;
 
                         // If non-changed date for same % is still invalid, set that as well
-                        if (fromTom === 'from' && !isDate($scope.cert[nedsattModelName].tom)) {
-                            $scope.cert[nedsattModelName].tom =
-                                $scope.cert[nedsattModelName].from;
-                        }
-                        else if (fromTom === 'tom' && !isDate($scope.cert[nedsattModelName].from)) {
-                            $scope.cert[nedsattModelName].from =
-                                $scope.cert[nedsattModelName].tom;
+                        if (fromTom === 'from' && !isDate(nedsattModel.tom)) {
+                            nedsattModel.tom = nedsattModel.from;
+                        } else if (fromTom === 'tom' && !isDate(nedsattModel.from)) {
+                            nedsattModel.from = nedsattModel.tom;
                         }
                     }
                 };
-                /*
-                 $scope.$watch('workState.check25', function(newVal) {
-                 });
 
-                 $scope.$watch('workState.check50', function(newVal) {
-                 //                    updateWorkStateDate(newVal, $scope.cert, 'nedsattMed50');
-                 });
-
-                 $scope.$watch('workState.check75', function(newVal) {
-                 //                  updateWorkStateDate(newVal, $scope.cert, 'nedsattMed75');
-                 });
-
-                 $scope.$watch('workState.check100', function(newVal) {
-                 //                updateWorkStateDate(newVal, $scope.cert, 'nedsattMed100');
-                 });
-                 */
                 var ISODATE_REGEXP = /^\d{4}-\d{2}-\d{2}$/;
 
                 function isDate(date) {
