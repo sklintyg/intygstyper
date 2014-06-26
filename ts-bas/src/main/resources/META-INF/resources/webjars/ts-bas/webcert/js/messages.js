@@ -77,7 +77,7 @@ define([], function() {
             'ts-bas.helptext.identitet': 'Identitet styrkt genom någon av nedanstående',
             
             'ts-bas.helptext.synfunktioner.om-nagon-av-a-c': 'Om någon av frågorna a-c besvaras med ja eller om det bedöms sannolikt att synfältsdefekter föreligger krävs läkarintyg av ögonspecialist.',
-            'ts-bas.helptext.synfunktioner.synskarpa': 'Alla bokstäver ska kunna läsas på den rad som anger synskärpa. Är synskärpan sämre än 0,1 ska den anges som 0,<br/><br/> OBS! Uppgifterna om synskärpa och korrektion kan grundas på tidigare utförd undersökning av bland annat legitimerad optiker. Uppgifterna ska då ingå som underlag vid läkarens samlade bedömning.',
+            'ts-bas.helptext.synfunktioner.synskarpa': 'Alla bokstäver ska kunna läsas på den rad som anger synskärpa. Är synskärpan sämre än 0,1 ska den anges som 0,0<br/><br/> OBS! Uppgifterna om synskärpa och korrektion kan grundas på tidigare utförd undersökning av bland annat legitimerad optiker. Uppgifterna ska då ingå som underlag vid läkarens samlade bedömning.',
             'ts-bas.helptext.synfunktioner.info-8-dioptrier': 'Intyg om korrektionsglasens styrka måste skickas in',
             'ts-bas.helptext.synfunktioner.8-dioptrier-valt': 'Du har kryssat i frågan om 8 dioptrier – Glöm inte att skicka in intyg om korrektionsglasens styrka.',
             'ts-bas.helptext.synfunktioner.utan-korrektion': 'Uppgiften är obligatorisk',
