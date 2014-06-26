@@ -34,7 +34,7 @@ define([
                         element.parent().append(counter);
 
                         function limitLength(text) {
-                            if (!text) {
+                            if (text === undefined) {
                                 return;
                             }
                             if (text.length > attrs.maxlength) {
