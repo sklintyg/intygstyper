@@ -62,11 +62,16 @@ define([
                     if (!$scope.cert || !$scope.cert.intygAvser || !$scope.cert.intygAvser.korkortstyp) {
                         return;
                     }
+
+                    // C1,C1E,C, CE,D1,D1E, D, DE och taxiförarlegitimation should activate 2g and 2f = korkortd = true
+                    var targetTypes = ['C1', 'C1E', 'C', 'CE', 'D1', 'D1E', 'D', 'DE', 'TAXI'];
                     $scope.form.korkortd = false;
-                    for (var i = 4; i < $scope.cert.intygAvser.korkortstyp.length; i++) {
-                        if (newValue[i].selected) {
-                            $scope.form.korkortd = true;
-                            break;
+                    for (var i = 0; i < $scope.cert.intygAvser.korkortstyp.length; i++) {
+                        for (var j = 0; j < targetTypes.length; j++) {
+                            if (newValue[i].type === targetTypes[j] && newValue[i].selected) {
+                                $scope.form.korkortd = true;
+                                break;
+                            }
                         }
                     }
                 }, true);
