@@ -14,6 +14,7 @@ define([ 'angular', 'webjars/common/webcert/js/services/CertificateService',
                 $scope.messages = [];
                 $scope.isComplete = false;
                 $scope.isSigned = false;
+                $scope.hasSavedThisSession = false;
                 $scope.user = User;
 
                 // init state
@@ -158,6 +159,7 @@ define([ 'angular', 'webjars/common/webcert/js/services/CertificateService',
                  * Action to save the certificate draft to the server.
                  */
                 $scope.save = function() {
+                    $scope.hasSavedThisSession = true;
                     ManageCertView.save($scope);
                 };
 

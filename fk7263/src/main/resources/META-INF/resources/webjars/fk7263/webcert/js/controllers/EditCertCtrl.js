@@ -15,6 +15,7 @@ define([
                 User) {
 
                 $scope.cert = {};
+                $scope.hasSavedThisSession = false;
                 $scope.messages = [];
                 $scope.isComplete = false;
                 $scope.isSigned = false;
@@ -385,6 +386,7 @@ define([
                  * Action to save the certificate draft to the server.
                  */
                 $scope.save = function() {
+                    $scope.hasSavedThisSession = true;
                     ManageCertView.save($scope);
                 };
 
