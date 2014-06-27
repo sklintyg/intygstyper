@@ -33,7 +33,7 @@
       <p:telefonnummer>012-345678</p:telefonnummer>
       <p:epost>ingen@alls.se</p:epost>
       <p:vardgivare>
-        <vardgivare-id root="1.2.752.129.2.1.4.1"
+        <p:vardgivare-id root="1.2.752.129.2.1.4.1"
           extension="SE0000000000-h4xx" />
         <p:vardgivarnamn>Testvårdgivaren</p:vardgivarnamn>
       </p:vardgivare>

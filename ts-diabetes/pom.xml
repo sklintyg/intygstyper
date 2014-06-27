@@ -201,7 +201,7 @@
             <configuration>
               <xsdOptions>
                 <xsdOption>
-                  <xsd>src/main/resources/schemas/transport_model.xsd</xsd>
+                  <xsd>src/main/resources/schemas/ts-diabetes_model.xsd</xsd>
                   <extension>true</extension>
                   <bindingFile>${basedir}/src/main/resources/schemas/binding.xjb</bindingFile>
                 </xsdOption>

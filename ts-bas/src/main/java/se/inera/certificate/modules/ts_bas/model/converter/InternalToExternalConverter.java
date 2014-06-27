@@ -387,11 +387,11 @@ public class InternalToExternalConverter {
 
         hoger.setObservationskod(CodeConverter.toKod(ObservationsKod.KONTAKTLINSER));
         hoger.setLateralitet(CodeConverter.toKod(LateralitetsKod.HOGER));
-        hoger.setForekomst(syn.getHogerOga().getKontaktlins());
+        hoger.setForekomst(syn.getHogerOga().getKontaktlins() == null ? false : syn.getHogerOga().getKontaktlins());
 
         vanster.setObservationskod(CodeConverter.toKod(ObservationsKod.KONTAKTLINSER));
         vanster.setLateralitet(CodeConverter.toKod(LateralitetsKod.VANSTER));
-        vanster.setForekomst(syn.getHogerOga().getKontaktlins());
+        vanster.setForekomst(syn.getHogerOga().getKontaktlins() == null ? false : syn.getHogerOga().getKontaktlins());
 
         obs.add(hoger);
         obs.add(vanster);

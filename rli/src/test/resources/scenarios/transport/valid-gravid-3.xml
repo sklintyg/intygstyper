@@ -22,7 +22,7 @@
     <p:fullstandigtNamn>Doktor Alban</p:fullstandigtNamn>
 
     <p:enhet>
-      <enhets-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-1337" />
+      <p:enhets-id root="1.2.752.129.2.1.4.1" extension="SE0000000000-1337" />
       <p:enhetsnamn>Testenheten</p:enhetsnamn>
       <p:postadress>Teststigen 12</p:postadress>
       <p:postnummer>12345</p:postnummer>

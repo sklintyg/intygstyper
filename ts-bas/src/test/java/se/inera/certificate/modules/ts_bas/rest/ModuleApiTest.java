@@ -34,11 +34,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.inera.certificate.modules.support.ApplicationOrigin;
+import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.TransportModelHolder;
-import se.inera.certificate.modules.support.api.exception.ModuleConverterException;
 import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.utils.ModelAssert;
@@ -78,7 +78,7 @@ public class ModuleApiTest {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("invalid-*")) {
             try {
                 moduleApi.unmarshall(createTransportHolder(scenario.asTransportModel()));
-            } catch (ModuleConverterException ignore) {
+            } catch (ModuleValidationException ignore) {
             }
         }
     }

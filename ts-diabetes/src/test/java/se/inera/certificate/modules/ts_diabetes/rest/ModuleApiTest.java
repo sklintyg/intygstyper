@@ -40,7 +40,6 @@ import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.TransportModelHolder;
-import se.inera.certificate.modules.support.api.exception.ModuleConverterException;
 import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
@@ -77,7 +76,7 @@ public class ModuleApiTest {
         }
     }
 
-    @Test(expected = ModuleConverterException.class)
+    @Test(expected = ModuleValidationException.class)
     public void testUnmarshallBroken() throws Exception {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("invalid-*")) {
             moduleApi.unmarshall(createTransportHolder(scenario.asTransportModel()));

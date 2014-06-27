@@ -11,13 +11,13 @@
     </jxb:schemaBindings>
   </jxb:bindings>
 
-  <jxb:bindings schemaLocation="transport_model.xsd" node="/xs:schema">
+  <jxb:bindings schemaLocation="ts-bas_model.xsd" node="/xs:schema">
     <jxb:schemaBindings>
       <jxb:package name="se.inera.certificate.ts_bas.model.v1"/>
     </jxb:schemaBindings>
   </jxb:bindings>
 
-  <jxb:bindings schemaLocation="transport_model_extension.xsd" node="/xs:schema">
+  <jxb:bindings schemaLocation="ts-bas_model_extension.xsd" node="/xs:schema">
     <jxb:schemaBindings>
       <jxb:package name="se.inera.certificate.ts_bas.model.ext.v1"/>
     </jxb:schemaBindings>

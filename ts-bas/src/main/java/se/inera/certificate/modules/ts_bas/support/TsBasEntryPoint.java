@@ -5,14 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.ModuleEntryPoint;
 import se.inera.certificate.modules.support.api.ModuleApi;
-import se.inera.certificate.modules.ts_bas.rest.ModuleServiceWrapper;
+import se.inera.certificate.modules.ts_bas.rest.ModuleService;
 
 public class TsBasEntryPoint implements ModuleEntryPoint {
 
     private static final String TRANSPORTSTYRELSEN_LOGICAL_ADRESS = "TS";
 
     @Autowired
-    private ModuleServiceWrapper moduleServiceWrapper;
+    private ModuleService moduleService;
 
     @Override
     public String getModuleId() {
@@ -37,7 +37,7 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
 
     @Override
     public ModuleApi getModuleApi() {
-        return moduleServiceWrapper;
+        return moduleService;
     }
 
     @Override

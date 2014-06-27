@@ -3,24 +3,22 @@ package se.inera.certificate.modules.fk7263.rest;
 import java.io.IOException;
 import java.io.StringReader;
 
-import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
 import org.xml.sax.SAXException;
 
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
 import se.inera.certificate.fk7263.model.v1.Utlatande;
 import se.inera.certificate.validate.ValidationException;
+import se.inera.certificate.xml.SchemaValidatorBuilder;
 
 /**
  * Helper methods to unmarshall and validate transport model XML.
@@ -45,14 +43,12 @@ public final class TransportXmlUtils {
     // Create schema for validation
     static {
         try {
-            Source isoSchemaFile = new StreamSource(
-                    new ClassPathResource("/schemas/core_components/iso_dt_subset_1.0.xsd").getInputStream());
-            Source utlatandeSchemaExtensionFile = new StreamSource(
-                    new ClassPathResource("/schemas/fk7263_model_extension.xsd").getInputStream());
-            Source utlatandeSchemaFile = new StreamSource(
-                    new ClassPathResource("/schemas/fk7263_model.xsd").getInputStream());
-            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            utlatandeSchema = schemaFactory.newSchema(new Source[]{isoSchemaFile, utlatandeSchemaExtensionFile, utlatandeSchemaFile});
+            SchemaValidatorBuilder schemaValidatorBuilder = new SchemaValidatorBuilder();
+            Source rootSource = schemaValidatorBuilder.registerResource("/schemas/fk7263_model.xsd");
+            schemaValidatorBuilder.registerResource("/schemas/core_components/iso_dt_subset_1.0.xsd");
+            schemaValidatorBuilder.registerResource("/schemas/fk7263_model_extension.xsd");
+
+            utlatandeSchema = schemaValidatorBuilder.build(rootSource);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read schema file", e);
         } catch (SAXException e) {

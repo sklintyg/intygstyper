@@ -61,7 +61,6 @@ public class ExternalValidatorInstance {
         SimpleIdValidatorBuilder builder = new SimpleIdValidatorBuilder();
         builder.withPersonnummerValidator(false);
         builder.withSamordningsnummerValidator(false);
-        builder.withHsaIdValidator();
 
         ID_VALIDATOR = builder.build();
     }
@@ -418,7 +417,6 @@ public class ExternalValidatorInstance {
             if (!id.getRoot().equals(HSpersonalKod.HSA_ID.getCode())) {
                 validationError(element + " should be an HSA-ID with root: " + HSpersonalKod.HSA_ID.getCode());
             }
-            validationErrors.addAll(ID_VALIDATOR.validate(id));
         }
     }
 

@@ -28,11 +28,15 @@ import java.util.List;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.ValidationException;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.xml.sax.SAXException;
 
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.util.Strings;
@@ -66,6 +70,7 @@ import se.inera.certificate.modules.ts_diabetes.model.external.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.pdf.PdfGenerator;
 import se.inera.certificate.modules.ts_diabetes.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.ts_diabetes.validator.Validator;
+import se.inera.certificate.xml.SchemaValidatorBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -107,6 +112,18 @@ public class ModuleService implements ModuleApi {
     @Qualifier("ts-diabetes-objectMapper")
     private ObjectMapper objectMapper;
 
+    private final Schema transportSchema;
+
+    public ModuleService() throws Exception {
+        SchemaValidatorBuilder builder = new SchemaValidatorBuilder();
+        Source rootSource = builder.registerResource("schemas/ts-diabetes_model.xsd");
+        builder.registerResource("schemas/ts-diabetes_model_extension.xsd");
+//        builder.registerResource("schemas/core_components/clinicalprocess_healthcond_types_0.9.xsd");
+        builder.registerResource("schemas/core_components/iso_dt_subset_1.0.xsd");
+
+        transportSchema = builder.build(rootSource);
+    }
+    
     /**
      * {@inheritDoc}
      *
@@ -115,11 +132,40 @@ public class ModuleService implements ModuleApi {
     @Override
     public ExternalModelResponse unmarshall(TransportModelHolder transportModel) throws ModuleException {
         try {
-            return toExternalModelResponse(transportToExternalConverter.convert(getTransport(transportModel)));
+            se.inera.certificate.ts_diabetes.model.v1.Utlatande utlatande = getTransport(transportModel);
+            
+            // Perform validation agains XML schema
+            validateSchema(transportModel.getTransportModel());
+            // Convert to external model
+            Utlatande externalUtlatande = transportToExternalConverter.convert(utlatande);
+            // Validate external model
+            validate(externalUtlatande);
+
+            return toExternalModelResponse(externalUtlatande);
 
         } catch (ConverterException e) {
             LOG.error("Could not unmarshall transport model to external model", e);
             throw new ModuleConverterException("Could not unmarshall transport model to external model", e);
+        }
+    }
+
+    /**
+     * Validates the XML of a {@link Utlatande}.
+     *
+     * @param utlatandeXml The xml as a string.
+     * @throws ModuleValidationException 
+     */
+    private void validateSchema(String utlatandeXml) throws ModuleValidationException {
+        try {
+            javax.xml.validation.Validator validator = transportSchema.newValidator();
+            validator.validate(new StreamSource(new StringReader(utlatandeXml)));
+
+        } catch (SAXException e) {
+            throw new ModuleValidationException(Collections.singletonList(e.getMessage()), e);
+
+        } catch (IOException e) {
+            LOG.error("Failed to validate message against schema", e);
+            throw new RuntimeException("Failed to validate message against schema", e);
         }
     }
 
@@ -152,7 +198,11 @@ public class ModuleService implements ModuleApi {
      */
     @Override
     public String validate(ExternalModelHolder externalModelHolder) throws ModuleException {
-        List<String> validationErrors = validator.validateExternal(getExternal(externalModelHolder));
+        return validate(getExternal(externalModelHolder));
+    }
+    
+    private String validate(Utlatande utlatande) throws ModuleException {
+        List<String> validationErrors = validator.validateExternal(utlatande);
 
         if (validationErrors.isEmpty()) {
             return null;
