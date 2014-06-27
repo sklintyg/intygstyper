@@ -97,7 +97,7 @@ define([ 'angular', 'webjars/common/webcert/js/services/CertificateService',
                     'lakemedelOchDos': 180,
                     'medicinering': 180,
                     'kommentar': 500,
-                    'lakareSpecialKompetens': 270,
+                    'lakareSpecialKompetens': 130,
                     'sjukhusvardtidpunkt': 49,
                     'sjukhusvardvardinrattning': 45,
                     'sjukhusvardanledning': 63
