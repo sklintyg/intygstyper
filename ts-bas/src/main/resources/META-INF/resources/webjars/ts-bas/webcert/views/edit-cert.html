@@ -207,7 +207,7 @@
                         <td>
                           <p>c) Har patienten någon progressiv ögonsjukdom?</p>
 
-                          <div class="alert alert-info">
+                          <div class="alert alert-info" ng-if="cert.syn.progressivOgonsjukdom || cert.syn.nattblindhet || cert.syn.synfaltsdefekter">
                             <span message key="ts-bas.helptext.synfunktioner.om-nagon-av-a-c"></span>
                           </div>
                         </td>
