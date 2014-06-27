@@ -21,9 +21,6 @@ public class Patient {
         hasText(fornamn, "'fornamn' must not be empty");
         hasText(efternamn, "'efternamn' must not be empty");
         hasText(personnummer, "'personnummer' must not be empty");
-        //hasText(postadress, "'postadress' must not be empty");
-        //hasText(postnummer, "'postnummer' must not be empty");
-        //hasText(postort, "'postort' must not be empty");
         this.fornamn = fornamn;
         this.efternamn = efternamn;
         this.personnummer = personnummer;

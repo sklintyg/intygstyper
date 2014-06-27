@@ -73,11 +73,9 @@ public class WebcertModelFactory {
         patient.setEfternamn(patientInfo.getEfternamn());
         patient.setFullstandigtNamn(StringUtils.join(patientInfo.getFornamn(), " ", patientInfo.getEfternamn()));
         patient.setPersonid(patientInfo.getPersonnummer());
-
-        // TODO Address information needs to be sorted out at a later time
-        // patient.setPostadress(patientInfo.getPostadress());
-        // patient.setPostnummer(patientInfo.getPostnummer());
-        // patient.setPostort(patientInfo.getPostort());
+        patient.setPostadress(patientInfo.getPostadress());
+        patient.setPostnummer(patientInfo.getPostnummer());
+        patient.setPostort(patientInfo.getPostort());
 
         return patient;
     }

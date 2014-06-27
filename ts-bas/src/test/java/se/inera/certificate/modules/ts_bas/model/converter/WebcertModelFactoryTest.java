@@ -18,22 +18,20 @@
  */
 package se.inera.certificate.modules.ts_bas.model.converter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.io.IOException;
-
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import org.junit.Before;
 import org.junit.Test;
-
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.Patient;
 import se.inera.certificate.modules.support.api.dto.Vardenhet;
 import se.inera.certificate.modules.support.api.dto.Vardgivare;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class WebcertModelFactoryTest {
 
@@ -47,7 +45,7 @@ public class WebcertModelFactoryTest {
     @Test
     public void testCreateEditableModel() throws JsonParseException, JsonMappingException, IOException {
         // Programmatically creating a CreateNewDraftHolder
-        Patient patient = new Patient("Johnny", "Appleseed", "19121212-1212", "Testvägen 12", "1337", "Huddinge");
+        Patient patient = new Patient("Johnny", "Appleseed", "19121212-1212", "Testvägen 12", "13337", "Huddinge");
         Vardgivare vardgivare = new Vardgivare("SE0000000000-HAHAHHSAA", "Vårdgivarnamn");
         Vardenhet vardenhet = new Vardenhet("SE0000000000-1337", "Vårdenhet Väst", "Enhetsvägen 12", "54321", "Tumba",
                 "08-1337", null, "0123456789", vardgivare);
@@ -71,5 +69,8 @@ public class WebcertModelFactoryTest {
         /** Just verify some stuff from the json to make sure all is well.. */
         assertEquals("testID", utlatande.getId());
         assertEquals("Johnny Appleseed", utlatande.getPatient().getFullstandigtNamn());
+        assertEquals("Testvägen 12", utlatande.getPatient().getPostadress());
+        assertEquals("13337", utlatande.getPatient().getPostnummer());
+        assertEquals("Huddinge", utlatande.getPatient().getPostort());
     }
 }

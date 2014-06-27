@@ -52,7 +52,7 @@ public class WebcertModelFactory {
         Utlatande utlatande = new Utlatande();
         utlatande.setId(newDraftData.getCertificateId());
 
-        // This is where we set the concrete tsUtgava and tsVersion of the intyg that is created. 
+        // This is where we set the concrete tsUtgava and tsVersion of the intyg that is created.
         utlatande.setTyp(UtlatandeKod.getCurrentVersion().name());
 
         populateWithSkapadAv(utlatande, newDraftData.getSkapadAv());
@@ -77,11 +77,9 @@ public class WebcertModelFactory {
         patient.setEfternamn(patientInfo.getEfternamn());
         patient.setFullstandigtNamn(StringUtils.join(patientInfo.getFornamn(), " ", patientInfo.getEfternamn()));
         patient.setPersonid(patientInfo.getPersonnummer());
-
-        // TODO: Address information needs to be sorted out at a later time
-        // patient.setPostadress(patientInfo.getPostadress());
-        // patient.setPostnummer(patientInfo.getPostnummer());
-        // patient.setPostort(patientInfo.getPostort());
+        patient.setPostadress(patientInfo.getPostadress());
+        patient.setPostnummer(patientInfo.getPostnummer());
+        patient.setPostort(patientInfo.getPostort());
 
         return patient;
     }
