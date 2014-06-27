@@ -1,9 +1,10 @@
 define([
     'angular',
+    'moment',
     'webjars/common/webcert/js/services/CertificateService',
     'webjars/common/webcert/js/services/ManageCertView',
     'webjars/common/webcert/js/services/User'
-], function(angular, CertificateService, ManageCertView, User) {
+], function(angular, moment, CertificateService, ManageCertView, User) {
     'use strict';
 
     var moduleName = 'fk7263.EditCertCtrl';
@@ -223,92 +224,39 @@ define([
                 };
 
                 /**
-                 * Update arbetsformaga dates when checkbox is updated
-                 * @param nedsattModelName
+                 * Called when checks or dates for Arbetsförmåga are changed. Update dependency controls here
                  */
-                $scope.onChangeWorkStateCheck = function(nedsattModelName) {
-                    if ($scope.cert !== undefined) {
-                        if ($scope.workState[nedsattModelName]) {
-                            var workstate = $scope.cert[nedsattModelName];
-                            if (!workstate) {
-                                workstate = $scope.cert[nedsattModelName] = {};
-                            }
-                            if (!workstate.from || !isDate(workstate.from)) {
-                                workstate.from = ($filter('date')($scope.today, 'yyyy-MM-dd'));
-                            }
-                            if (!workstate.tom || !isDate(workstate.tom)) {
-                                workstate.tom = ($filter('date')($scope.today, 'yyyy-MM-dd'));
-                            }
-                        } else {
-                            delete  $scope.cert[nedsattModelName];
-                        }
-                        $scope.updateTotalCertDays();
-                    }
-                };
+                function onArbetsformagaDatesUpdated(){
+                    $scope.updateTotalCertDays();
+                    checkArbetsformagaDatesRange();
+                }
 
                 /**
-                 * Set checkbox and non-selected date for arbetsformaga % when a date is changed
-                 * @param nedsattModelName
-                 * @param fromTom
+                 * 8b: Check that the earliest startdate in arbetsförmåga is no more than a week before today and no more than 6 months in the future
+                 * @type {boolean}
                  */
-                $scope.onChangeNedsattMed = function(nedsattModelName, fromTom) {
-
-                    // Bail out if model hasn't been loaded yet
-                    var nedsattModel = $scope.cert[nedsattModelName];
-                    var dateField = $scope.cert[nedsattModelName][fromTom];
-                    if (nedsattModel === undefined || dateField === undefined) {
+                $scope.datesOutOfRange = false;
+                function checkArbetsformagaDatesRange() {
+                    var dates = findStartEndDates();
+                    if (!dates.minDate) {
+                        $scope.datesOutOfRange = false;
                         return;
                     }
 
-                    // if a valid date has been set
-                    if (dateField !== undefined && isDate(dateField)) {
-
-                        // Check checkbox
-                        $scope.workState[nedsattModelName] = true;
-
-                        // If non-changed date for same % is still invalid, set that as well
-                        if (fromTom === 'from' && !isDate(nedsattModel.tom)) {
-                            nedsattModel.tom = nedsattModel.from;
-                        } else if (fromTom === 'tom' && !isDate(nedsattModel.from)) {
-                            nedsattModel.from = nedsattModel.tom;
-                        }
-                    }
-                };
-
-                var ISODATE_REGEXP = /^\d{4}-\d{2}-\d{2}$/;
-
-                function isDate(date) {
-                    var validDateFormat = ISODATE_REGEXP.test(date);
-                    return validDateFormat;
+                    var olderThanAWeek = moment(dates.minDate).isBefore(moment().subtract('days', 7));
+                    var moreThanSixMonthsInFuture = moment(dates.minDate).isAfter(moment().add('days', 180));
+                    $scope.datesOutOfRange = (olderThanAWeek || moreThanSixMonthsInFuture);
                 }
 
-                function getMinMaxDate(comparisonType, dates) {
-
-                    var compareDate = false;
-                    for (var i = 0; i < dates.length; i++) {
-                        if (isDate(dates[i])) {
-                            if (!compareDate || // no valid date found yet
-                                (comparisonType === 'min' && dates[i] < compareDate) || // looking for min date
-                                (comparisonType === 'max' && dates[i] > compareDate)) { // looking for max date
-                                compareDate = dates[i];
-                            }
-                        }
-                    }
-
-                    // if no valid dates, compareDate is still false, otherwise contains the lowest/highest date
-                    // sent depending on comparisonType
-                    return compareDate;
-                }
-
-                function convertDateToTime(date) {
-                    var splitDate = date.split('-');
-                    var time = (new Date(splitDate[0], splitDate[1], splitDate[2])).getTime();
-                    return time;
-                }
-
-                $scope.totalCertDays = false;
-                $scope.updateTotalCertDays = function() {
-                    var oneDay = 24 * 60 * 60 * 1000;
+                /**
+                 * 8b: find earliest and latest dates for arbetsförmåga
+                 * @returns {{minDate: null, maxDate: null}}
+                 */
+                function findStartEndDates() {
+                    var dates = {
+                        minDate : null,
+                        maxDate : null
+                    };
                     var startDates = [];
                     var endDates = [];
 
@@ -329,23 +277,79 @@ define([
                         endDates.push($scope.cert.nedsattMed100.tom);
                     }
 
-                    var minDate = getMinMaxDate('min', startDates);
-                    var maxDate = getMinMaxDate('max', endDates);
+                    dates.minDate = getMinMaxDate('min', startDates);
+                    dates.maxDate = getMinMaxDate('max', endDates);
+                    return dates;
+                }
 
-                    if (!minDate || !maxDate) {
+                /**
+                 * Does supplied date look like an iso date XXXX-XX-XX (not a complete validation)?
+                 * @param date
+                 * @returns {*}
+                 */
+                var ISODATE_REGEXP = /^\d{4}-\d{2}-\d{2}$/;
+                function isDate(date) {
+                    var validDateFormat = ISODATE_REGEXP.test(date);
+                    return validDateFormat;
+                }
+
+                /**
+                 * Get earliest or latest date in a list of dates
+                 * @param comparisonType
+                 * @param dates
+                 * @returns {boolean}
+                 */
+                function getMinMaxDate(comparisonType, dates) {
+
+                    var compareDate = false;
+                    for (var i = 0; i < dates.length; i++) {
+                        if (isDate(dates[i])) {
+                            if (!compareDate || // no valid date found yet
+                                (comparisonType === 'min' && dates[i] < compareDate) || // looking for min date
+                                (comparisonType === 'max' && dates[i] > compareDate)) { // looking for max date
+                                compareDate = dates[i];
+                            }
+                        }
+                    }
+
+                    // if no valid dates, compareDate is still false, otherwise contains the lowest/highest date
+                    // sent depending on comparisonType
+                    return compareDate;
+                }
+
+                /**
+                 * Convert a date into time ms since 1970-01-01
+                 * @param date
+                 * @returns {number}
+                 */
+                function convertDateToTime(date) {
+                    var splitDate = date.split('-');
+                    var time = (new Date(splitDate[0], splitDate[1], splitDate[2])).getTime();
+                    return time;
+                }
+
+                /**
+                 * Calculate total days between the earliest and the latest dates supplied in the 8b controls
+                 * @type {boolean}
+                 */
+                $scope.totalCertDays = false;
+                $scope.updateTotalCertDays = function() {
+                    var oneDay = 24 * 60 * 60 * 1000;
+                    var dates = findStartEndDates();
+                    if (!dates.minDate || !dates.maxDate) {
                         // return if there's no valid range span yet
                         $scope.totalCertDays = false;
                         return $scope.totalCertDays;
                     }
 
-                    minDate = convertDateToTime(minDate);
-                    maxDate = convertDateToTime(maxDate);
-
-                    if (minDate === 'Invalid Date' || maxDate === 'Invalid Date') {
-                        alert('Invalid date');
-                    }
-                    $scope.totalCertDays = Math.round(Math.abs((minDate - maxDate) / (oneDay))) + 1;
+                    dates.minDate = convertDateToTime(dates.minDate);
+                    dates.maxDate = convertDateToTime(dates.maxDate);
+                    $scope.totalCertDays = Math.round(Math.abs((dates.minDate - dates.maxDate) / (oneDay))) + 1;
                 };
+
+                /**
+                 * Watches for rehab
+                 */
 
                 // Rekommendationer 6a, 7, 11
                 $scope.$watch('cert.rehabNow', function(newVal) {
@@ -364,6 +368,12 @@ define([
                     }
                 });
 
+                /**
+                 * Set a default value to listed properties on an object
+                 * @param list
+                 * @param propertyNames
+                 * @param defaultValue
+                 */
                 function setPropertyDefaults(list, propertyNames, defaultValue) {
                     for (var i = 0; i < propertyNames.length; i++) {
                         if (list[propertyNames[i]] === undefined) {
@@ -411,6 +421,65 @@ define([
                     $window.print();
                 };
 
+                /**
+                 * Update arbetsformaga dates when checkbox is updated
+                 * @param nedsattModelName
+                 */
+                $scope.onChangeWorkStateCheck = function(nedsattModelName) {
+                    if ($scope.cert !== undefined) {
+                        if ($scope.workState[nedsattModelName]) {
+                            var workstate = $scope.cert[nedsattModelName];
+                            if (!workstate) {
+                                workstate = $scope.cert[nedsattModelName] = {};
+                            }
+                            if (!workstate.from || !isDate(workstate.from)) {
+                                workstate.from = ($filter('date')($scope.today, 'yyyy-MM-dd'));
+                            }
+                            if (!workstate.tom || !isDate(workstate.tom)) {
+                                workstate.tom = ($filter('date')($scope.today, 'yyyy-MM-dd'));
+                            }
+                        } else {
+                            delete  $scope.cert[nedsattModelName];
+                        }
+
+                        onArbetsformagaDatesUpdated();
+                    }
+                };
+
+                /**
+                 * Set checkbox and non-selected date for arbetsformaga % when a date is changed
+                 * @param nedsattModelName
+                 * @param fromTom
+                 */
+                $scope.onChangeNedsattMed = function(nedsattModelName, fromTom) {
+
+                    // Bail out if model hasn't been loaded yet
+                    var nedsattModel = $scope.cert[nedsattModelName];
+                    if (nedsattModel === undefined) {
+                        return;
+                    }
+
+                    var dateField = $scope.cert[nedsattModelName][fromTom];
+                    if (dateField === undefined) {
+                        return;
+                    }
+
+                    // if a valid date has been set
+                    if (dateField !== undefined && isDate(dateField)) {
+
+                        // Check checkbox
+                        $scope.workState[nedsattModelName] = true;
+
+                        // If non-changed date for same % is still invalid, set that as well
+                        if (fromTom === 'from' && !isDate(nedsattModel.tom)) {
+                            nedsattModel.tom = nedsattModel.from;
+                        } else if (fromTom === 'tom' && !isDate(nedsattModel.from)) {
+                            nedsattModel.from = nedsattModel.tom;
+                        }
+                    }
+
+                    onArbetsformagaDatesUpdated();
+                };
             }
         ]);
 

@@ -39,6 +39,7 @@
         angularSanitize: '../../../../../../target/webjardependencies/angularjs/angular-sanitize.min',
         angularSwedish: '../../../../../../target/webjardependencies/angularjs/1.2.14/angular-locale_sv-se',
         angularUiBootstrap: '../../../../../../target/webjardependencies/angular-ui-bootstrap/ui-bootstrap-tpls',
+        moment: '../../../../../../target/webjardependencies/momentjs/moment',
 
         text: '../../../../../../target/webjardependencies/requirejs-text/text'
     },
