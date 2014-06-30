@@ -147,6 +147,9 @@ define([], function() {
             'ts-bas.button.send': 'Skicka',
             'ts-bas.button.send.certificate.title' : 'Skicka detta intyg till Transportstyrelsen.',
             'ts-bas.common.cancel': 'Avbryt',
+            
+            'ts-bas.fishbone.label.granska-skicka': 'Granska och skicka',
+            'ts-bas.fishbone.label.bekraftelse': 'Bekräftelse',
 
             'ts-button.detail.send': 'Skicka',
             'ts-bas.label.pageingress' : 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Transportstyrelsen, du kan även skriva ut eller spara intyget.<br>',
