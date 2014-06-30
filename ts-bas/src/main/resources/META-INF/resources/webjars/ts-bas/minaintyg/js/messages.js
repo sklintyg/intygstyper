@@ -73,11 +73,12 @@ define([], function() {
             'ts-bas.label.syn.synvarden': 'f) Värden för synskärpa',
 
             'ts-bas.label.syn.synskarpa': 'Värden för synskärpa',
-            'ts-bas.label.syn.hogeroga': '',
-            'ts-bas.label.syn.vansteroga': '',
-            'ts-bas.label.syn.utankorrektion': '',
-            'ts-bas.label.syn.medkorrektion': '',
-            'ts-bas.label.syn.kontaktlins': '',
+            'ts-bas.label.syn.hogeroga': 'Höger öga',
+            'ts-bas.label.syn.vansteroga': 'Vänster öga',
+            'ts-bas.label.syn.utankorrektion': 'Utan korrektion',
+            'ts-bas.label.syn.medkorrektion': 'Med korrektion',
+            'ts-bas.label.syn.kontaktlins': 'Kontaktlinser',
+            'ts-bas.label.syn.korrektionsglasens-styrka': 'Korrektionsglasens styrka',
 
             'ts-bas.label.horselbalans.balansrubbningar': 'a) Har patienten överraskande anfall av balansrubbningar eller yrsel?',
             'ts-bas.label.horselbalans.samtal4meter': 'b) Har patienten svårt att uppfatta vanlig samtalsstämma på fyra meters avstånd (hörapparat får användas)?',

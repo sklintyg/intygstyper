@@ -143,7 +143,7 @@
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-6 col-sm-offset-6 col-md-offset-6 col-lg-offset-6 margin-top-5px">
                   <span class="tag"><message key="ts-bas.label.identitet" /></span>
-                  <span id="patient-crn" message key="ts-bas.label.identitet.{{cert.vardkontakt.idkontroll}}"><</span>
+                  <span id="patient-crn" message key="ts-bas.label.identitet.{{cert.vardkontakt.idkontroll}}"></span>
                 </div>
               </div>
               <div class="row">
@@ -217,24 +217,24 @@
 						<table class="table table-condensed ts-table">
 							<tr>
 							    <th></th>
-							    <th>Utan korrektion</th>
-							    <th>Med korrektion</th>
-							    <th>Kontaktlinser</th>
+							    <th><span message key="ts-bas.label.syn.utankorrektion"></span></th>
+							    <th><span message key="ts-bas.label.syn.medkorrektion"></span></th>
+							    <th><span message key="ts-bas.label.syn.kontaktlins"></span></th>
 							</tr>
 						    <tr>
-						        <td>Höger öga</td>
+						        <td><span message key="ts-bas.label.syn.hogeroga"></span></td>
 						        <td><span class="text">{{cert.syn.hogerOga.utanKorrektion | number : 1}}</span></td>
 						        <td><span class="text">{{cert.syn.hogerOga.medKorrektion | number : 1}}</span></td>
 						        <td><span class="text" message key="{{cert.syn.hogerOga.kontaktlins | BoolToTextFilter}}"></span></td>
 						    </tr>
 						    <tr>
-						        <td>Vänster öga</td>
+						        <td><span message key="ts-bas.label.syn.vansteroga"></span></td>
        					        <td><span class="text">{{cert.syn.vansterOga.utanKorrektion | number : 1}}</span></td>
 						        <td><span class="text">{{cert.syn.vansterOga.medKorrektion | number : 1}}</span></td>
 						        <td><span class="text" message key="{{cert.syn.vansterOga.kontaktlins | BoolToTextFilter}}"></span></td>
 						    </tr>
 						    <tr>
-						        <td>Binokulärt</td>
+						        <td><span message key="ts-bas.label.syn.binokulart"></span></td>
       					        <td><span class="text">{{cert.syn.binokulart.utanKorrektion | number : 1}}</span></td>
 						        <td><span class="text">{{cert.syn.binokulart.medKorrektion | number : 1}}</span></td>
 						        <td></td>
@@ -242,7 +242,7 @@
 						</table>
 					</span>
 					<span class="text">
-						<h3>Korrektionsglasens styrka</h3>
+						<h3><span message key="ts-bas.label.syn.korrektionsglasens-styrka"></span></h3>
 						<span message key="ts-bas.label.syn.8-dioptrier"></span>
 						<span class="ts-cert-answer" message key="{{cert.syn.korrektionsglasensStyrka | BoolToTextFilter}}"></span>
 		                <div class="alert alert-info" ng-show="cert.syn.korrektionsglasensStyrka == true">
