@@ -113,6 +113,7 @@ define([], function() {
             'fk7263.helptext.ovrigt': 'Ange här sådan ytterligare information som du bedömer att Försäkringskassan skulle ha nytta av. Observera att vid granskning och utskrift av intyget kommer text som skrivits in i vissa av fritextfälten på andra ställen i intyget också att flyttas hit. ',
 
             'fk7263.helptext.samtycke': 'Läkarintyget får bara skickas till Försäkringskassan om patienten givit sitt samtycke till det. Genom att kryssa i denna ruta intygar du att du fått patientens samtycke till att skicka intyget elektroniskt till Försäkringskassan. ',
+            'fk7263.helptext.adress': 'Vårdenhetens adress inhämtas från HSA. Om vårdenhetens adress inte stämmer kontakta HSA för att ändra denna.',
 
             //Validation messages
             'fk7263.validation.diagnos.missing': 'ICD-10 kod saknas på huvuddiagnosen. (Fält 2)',
