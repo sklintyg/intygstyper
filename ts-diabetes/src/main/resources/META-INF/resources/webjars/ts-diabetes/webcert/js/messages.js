@@ -86,7 +86,7 @@ define([], function() {
             'ts-diabetes.label.diabetes.diabetestyp': 'Diabetestyp',
             'ts-diabetes.label.diabetes.diabetestyp.diabetes_typ_1': 'Diabetes Typ1',
             'ts-diabetes.label.diabetes.diabetestyp.diabetes_typ_2': 'Diabetes Typ2',
-            'ts-diabetes.label.diabetes.behandling': 'Behandling:',
+            'ts-diabetes.label.diabetes.behandling': 'Behandling',
             'ts-diabetes.label.diabetes.behandling.endast-kost': 'Endast kost',
             'ts-diabetes.label.diabetes.behandling.tabletter': 'Tabletter',
             'ts-diabetes.label.diabetes.behandling.insulin': 'Insulin',
@@ -113,7 +113,7 @@ define([], function() {
 
             'ts-diabetes.label.bedomning-info-alt-1': 'Patienten uppfyller kraven enligt Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2) för:',
             'ts-diabetes.label.bedomning.kan-inte-ta-stallning': 'Kan inte ta ställning',
-            'ts-diabetes.label.bedomning-info-undersokas-med-specialkompetens': 'Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i:',
+            'ts-diabetes.label.bedomning-info-undersokas-med-specialkompetens': 'Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i',
             'ts-diabetes.label.bedomning-info-ej-angivet': 'Ej angivet',
             'ts-diabetes.label.bedomning.lamplighet-inneha': 'Om patienten söker behörighet C1, C1E, C, CE, D1, D1E, D, DE eller Taxi, är han eller hon lämplig att inneha sådan behörighet med hänsyn till de körningar och arbetsformer som är aktuella vid sådant innehav? (Se 6 kap. 16 §) ',
 
