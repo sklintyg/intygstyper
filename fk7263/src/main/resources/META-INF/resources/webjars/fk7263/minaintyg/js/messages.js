@@ -112,6 +112,10 @@ define([], function() {
             'fk7263.button.goback': 'Tillbaka',
             'fk7263.button.next': 'Nästa',
             'fk7263.button.previous': 'Föregående steg',
+            
+            'fk7263.fishbone.label.valj-mottagare': 'Välj mottagare',
+            'fk7263.fishbone.label.granska-skicka': 'Granska och skicka',
+            'fk7263.fishbone.label.bekraftelse': 'Bekräftelse',
 
             'fk7263.nedsattningsgrad.helt_nedsatt': 'Helt nedsatt',
             'fk7263.nedsattningsgrad.nedsatt_med_3_4': 'Nedsatt med 3/4',
