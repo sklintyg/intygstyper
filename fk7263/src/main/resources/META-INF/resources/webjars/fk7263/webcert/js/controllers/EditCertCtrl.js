@@ -224,11 +224,16 @@ define([
                 };
 
                 /**
-                 * Called when checks or dates for Arbetsförmåga are changed. Update dependency controls here
+                 * 8b: Called when checks or dates for Arbetsförmåga are changed. Update dependency controls here
                  */
                 function onArbetsformagaDatesUpdated(){
                     $scope.updateTotalCertDays();
-                    checkArbetsformagaDatesRange();
+
+                    var rangeDates = findStartEndDates();
+                    checkArbetsformagaDatesRange(rangeDates.minDate);
+
+                    var periodDates = findStartEndDates();
+                    checkArbetsformagaDatesPeriodLength(periodDates.minDate, periodDates.maxDate);
                 }
 
                 /**
@@ -236,16 +241,29 @@ define([
                  * @type {boolean}
                  */
                 $scope.datesOutOfRange = false;
-                function checkArbetsformagaDatesRange() {
-                    var dates = findStartEndDates();
-                    if (!dates.minDate) {
+                function checkArbetsformagaDatesRange(startDate) {
+                    if (!startDate) {
                         $scope.datesOutOfRange = false;
                         return;
                     }
 
-                    var olderThanAWeek = moment(dates.minDate).isBefore(moment().subtract('days', 7));
-                    var moreThanSixMonthsInFuture = moment(dates.minDate).isAfter(moment().add('days', 180));
+                    var olderThanAWeek = moment(startDate).isBefore(moment().subtract('days', 7));
+                    var moreThanSixMonthsInFuture = moment(startDate).isAfter(moment().add('months', 6));
                     $scope.datesOutOfRange = (olderThanAWeek || moreThanSixMonthsInFuture);
+                }
+
+                /**
+                 * 8b: Check that the period between the earliest startdate and the latest end date is no more than 6 months in the future
+                 * @type {boolean}
+                 */
+                $scope.datesPeriodTooLong = false;
+                function checkArbetsformagaDatesPeriodLength(startDate, endDate) {
+                    if (!startDate || !endDate) {
+                        $scope.datesPeriodTooLong = false;
+                        return;
+                    }
+
+                    $scope.datesPeriodTooLong = (Math.abs(moment(startDate).diff(endDate, 'months')) >= 6);
                 }
 
                 /**

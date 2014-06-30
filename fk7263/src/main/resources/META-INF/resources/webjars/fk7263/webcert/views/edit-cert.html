@@ -437,7 +437,10 @@
                         ng-show="totalCertDays > 1">dagar</span><span ng-show="totalCertDays == 1">dag</span></p>
                     </div>
                     <div class="alert alert-warning" ng-show="datesOutOfRange">
-                      Varning! De datum du angett är mer än en vecka före dagens datum eller mer än 6 månader fram i tiden. Du bör kontrollera att tidsperioderna är korrekta ovan.
+                      De datum du angett är <strong>mer än en vecka före dagens datum eller mer än 6 månader framåt i tiden</strong>. Du bör kontrollera att tidsperioderna är korrekta ovan.
+                    </div>
+                    <div class="alert alert-warning" ng-show="datesPeriodTooLong">
+                      De datum du angett innebär <strong>en period på mer än 6 månader</strong>. Du bör kontrollera att tidsperioderna är korrekta ovan.
                     </div>
                   </div>
 
