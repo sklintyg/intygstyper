@@ -97,7 +97,7 @@ define([], function() {
             
             // Labels for showing signed intyg
             'ts-bas.label.syn.binokulart': 'Binokulärt',
-            'ts-bas.label.syn.8-dioptrier': 'Högsta styrka i något av glasen överskrider 8 dioptrier:',
+            'ts-bas.label.syn.8-dioptrier': 'Högsta styrka i något av glasen överskrider plus 8 dioptrier:',
             'ts-bas.label.syn.synfaltsdefekter': 'a) Finns tecken på synfältsdefekter vid undersökning enligt Donders konfrontationsmetod?',
             'ts-bas.label.syn.nattblindhet': 'b) Framkommer anamnestiska uppgifter om begränsning av seendet vid nedsatt belysning?',
             'ts-bas.label.syn.progressivogonsjukdom': ' c) Har patienten någon progressiv ögonsjukdom?',
