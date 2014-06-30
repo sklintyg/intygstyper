@@ -66,11 +66,12 @@ define([], function() {
             'ts-diabetes.label.syn.synfaltsprovning-utan-anmarkning': 'b) Är synfältsprövning enligt Donders konfrontationsmetod utan anmärkning? ',
             'ts-diabetes.label.syn.synskarpa': 'c) Värden för synskärpa',
 
-            'ts-diabetes.label.syn.hogeroga': '',
-            'ts-diabetes.label.syn.vansteroga': '',
-            'ts-diabetes.label.syn.utankorrektion': '',
-            'ts-diabetes.label.syn.medkorrektion': '',
-            'ts-diabetes.label.syn.kontaktlins': '',
+            'ts-diabetes.label.syn.hogeroga': 'Höger öga',
+            'ts-diabetes.label.syn.vansteroga': 'Vänster öga',
+            'ts-diabetes.label.syn.utankorrektion': 'Utan korrektion',
+            'ts-diabetes.label.syn.medkorrektion': 'Med korrektion',
+            'ts-diabetes.label.syn.kontaktlins': 'Kontaktlinser',
+            'ts-diabetes.label.syn.korrektionsglasens-styrka': 'Korrektionsglasens styrka',
 
             'ts-diabetes.label.diabetes.diabetestyp': 'Diabetestyp',
             'ts-diabetes.label.diabetes.diagnostid': 'Diagnosen diabetes ställdes år: ',
@@ -114,6 +115,9 @@ define([], function() {
 
             'ts-diabetes.detail.send': 'Skicka',
             'ts-diabetes.button.send.certificate.title': 'Skicka detta intyg till Transportstyrelsen.',
+            
+            'ts-diabetes.fishbone.label.granska-skicka': 'Granska och skicka',
+            'ts-diabetes.fishbone.label.bekraftelse': 'Bekräftelse',
             
             'ts-diabetes.label.pageingress' : 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Transportstyrelsen, du kan även skriva ut eller spara intyget.<br>',
             'ts-diabetes.label.pagedescription.sendcertificate.header' : '<h2>Skicka intyg</h2>',
