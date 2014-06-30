@@ -83,9 +83,9 @@ define([], function() {
             'ts-bas.helptext.synfunktioner.utan-korrektion': 'Uppgiften är obligatorisk',
             'ts-bas.helptext.synfunktioner.med-korrektion': 'Uppgiften är obligatorisk om föreskriven synskärpa endast uppnås med korrektion. Definition av föreskriven synskärpa finns i Transportstyrelsens föreskrifter.',
 
-            'ts-bas.helptext.diabetes.tabletter-eller-insulin': 'Har patienten tablett- eller insulinbehandlad diabetes krävs ett läkarintyg gällande sjukdomen',
+            'ts-bas.helptext.diabetes.tabletter-eller-insulin': 'Har patienten tablett- eller insulinbehandlad diabetes krävs ett läkarintyg gällande sjukdomen.',
 
-            'ts-bas.helptext.alkohol-narkotika.provtagning': 'Om provtagning görs ska resultatet redovisas separat',
+            'ts-bas.helptext.alkohol-narkotika.provtagning': 'Om provtagning görs ska resultatet redovisas separat.',
 
             'ts-bas.helptext.bedomning.info': 'Om någon av frågorna har besvarats med ja, ska de krav på ytterligare underlag som framgår av föreskrifterna beaktas.',
 
