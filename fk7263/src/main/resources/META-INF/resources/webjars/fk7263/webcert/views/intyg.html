@@ -3,7 +3,19 @@
 
     <!-- error message -->
     <div id="cert-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey" class="alert alert-danger alert-column">
-      <span message key="fk7263.{{widgetState.activeErrorMessageKey}}"></span>
+
+      <p>
+        <span message key="fk7263.{{widgetState.activeErrorMessageKey}}"></span>
+      </p>
+
+      <div ng-if="intygBackup.showBackupInfo">
+        <p><strong>Intygsinformation</strong></p>
+        <ul>
+          <li>Patient: {{intygBackup.intyg.patientNamn}} ({{intygBackup.intyg.patientId.patientIdExtension}})</li>
+          <li>Signerat: {{intygBackup.intyg.signeringsDatum | date:'short'}}</li>
+          <li>ID: {{intygBackup.intyg.intygsId}}</li>
+        </ul>
+      </div>
     </div>
     <div ng-show="!widgetState.activeErrorMessageKey" id="intyg-vy-laddad">
       <div class="form-group buttonbar">

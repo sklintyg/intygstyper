@@ -64,6 +64,11 @@ define([
                     decorateWithGUIParameters(result);
                     $scope.qaList = result;
 
+                    // Tell viewcertctrl about the intyg in case cert load fails
+                    if(result.length > 0){
+                        $rootScope.$emit(ViewCertCtrl + '.load.failed', result[0].intygsReferens);
+                    }
+
                 }, function(errorData) {
                     // show error view
                     $scope.widgetState.doneLoading = true;
@@ -80,7 +85,6 @@ define([
                     $scope.certProperties.isRevoked = ManageCertView.isRevoked(metaData.statuses);
                 });
                 $scope.$on('$destroy', unbindFastEvent);
-
 
                 $scope.openIssuesFilter = function(qa) {
                     return qa.status !== 'CLOSED';

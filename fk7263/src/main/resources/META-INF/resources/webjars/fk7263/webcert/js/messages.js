@@ -135,14 +135,14 @@ define([], function() {
 
 
             // errors
-            'fk7263.error.could_not_load_cert': '<strong>Ett tekniskt problem inträffade.</strong>Kunde inte hämta intyget.',
-            'fk7263.error.could_not_load_cert_not_auth': '<strong>Kunde inte hämta intyget eftersom du saknar behörighet.',
-            'fk7263.error.could_not_load_cert_qa': '<strong>Kunde inte hämta frågor och svar för intyget.',
+            'fk7263.error.could_not_load_cert': '<strong>Ett tekniskt problem inträffade.</strong><br>Kunde inte hämta intyget.',
+            'fk7263.error.could_not_load_cert_not_auth': '<strong>Kunde inte hämta intyget eftersom du saknar behörighet.</strong>',
+            'fk7263.error.could_not_load_cert_qa': '<strong>Kunde inte hämta frågor och svar för intyget.</strong>',
             // fragaSvar errors
             'fk7263.error.external_system_problem': '<strong>Försäkringskassans system kan just nu inte ta emot informationen. Försök igen</strong>',
             'fk7263.error.internal_problem': '<strong>Ett tekniskt problem inträffade.</strong><br>Försök igen och kontakta supporten om problemet kvarstår.',
-            'fk7263.error.invalid_state': '<strong>Funktionen är inte giltig</strong>Förmodligen har en annan användare ändrat informationen medan du arbetat på samma post. Ladda om informationen och försök igen',
-            'fk7263.error.unknown_internal_problem': '<strong>Ett tekniskt problem inträffade</strong><br> Försök igen och kontakta supporten om problemet kvarstår.',
+            'fk7263.error.invalid_state': '<strong>Funktionen är inte giltig</strong><br>Förmodligen har en annan användare ändrat informationen medan du arbetat på samma post. Ladda om informationen och försök igen',
+            'fk7263.error.unknown_internal_problem': '<strong>Ett tekniskt problem inträffade</strong><br>Försök igen och kontakta supporten om problemet kvarstår.',
             'fk7263.error.authorization_problem': '<strong>Du har inte behörighet att utföra funktionen, kontakta supporten för mer information.</strong>',
             'fk7263.error.data_not_found': '<strong>Intyget kunde inte hittas i intygstjänsten.</strong><br>Intyget är borttaget eller så saknas behörighet.',
             'fk7263.fragasvar.answer.is.sent': '<strong>Svaret har skickats till Försäkringskassan</strong><br> Frågan är nu markerad som hanterad och visas nu under \'Hanterade frågor\' längre ner på sidan.',

@@ -52,6 +52,7 @@ define([
                     } else {
                         $scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';
                     }
+                    $scope.intygBackup.showBackupInfo = false;
                 }, function(error) {
                     $scope.widgetState.doneLoading = true;
                     if (error.errorCode === 'DATA_NOT_FOUND') {
@@ -61,12 +62,22 @@ define([
                     }
                     $log.debug('Got error while loading cert');
                     $log.debug(error.message);
+                    $scope.intygBackup.showBackupInfo = true;
                 });
 
                 /**
                  * Private
                  */
 
+                /**
+                 * Event response from QACtrl which sends its intyg-info here in case intyg couldn't be loaded but QA info could.
+                 * @type {{}}
+                 */
+                $scope.intygBackup = {intyg: null, showBackupInfo: false};
+                var unbindFastEventFail = $rootScope.$on(moduleName + '.load.failed', function(event, intyg) {
+                    $scope.intygBackup.intyg = intyg;
+                });
+                $scope.$on('$destroy', unbindFastEventFail);
 
                 /**
                  * Exposed functions
