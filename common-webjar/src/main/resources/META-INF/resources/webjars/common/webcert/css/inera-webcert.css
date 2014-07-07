@@ -788,8 +788,18 @@
     }
 
     .webcert-multicol {
-        background-color: #fff; /*#f2f2f2;*/
+        background-color: #fff;
+        float: left;
+        margin: 0;
+        width: 100%;
+    }
+
+    .webcert-multicol-background {
+        /* Equal height using http://matthewjamestaylor.com/blog/equal-height-columns-cross-browser-css-no-hacks */
+        float: left;
         min-height: 832px;
+        position: relative;
+        width: 100%;
     }
 
     .webcert-col {
@@ -798,16 +808,28 @@
     }
 
     .webcert-col-primary {
-        background-color: #fff;
-        padding: 30px 30px 20px 45px;
-        min-height: 832px !important;
+        padding: 30px 30px 20px 30px;
     }
 
     .webcert-col-secondary {
-        position: relative;
         background-color: #f2f2f2;
+        position: relative;
         padding: 0 15px 30px 30px;
-        min-height: 832px !important;
+    }
+
+    @media (min-width: 768px) {
+        .webcert-multicol-background {
+            background-color: #f2f2f2;
+            left: 50%;
+        }
+        .webcert-col-primary {
+            left: -50%;
+            padding: 30px 30px 20px 45px;
+        }
+        .webcert-col-secondary {
+            background: none;
+            left: -50%;
+        }
     }
 
     .webcert-col-single {
