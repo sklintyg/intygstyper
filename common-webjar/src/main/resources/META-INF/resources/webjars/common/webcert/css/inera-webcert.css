@@ -790,7 +790,6 @@
     .webcert-multicol {
         background-color: #fff; /*#f2f2f2;*/
         min-height: 832px;
-        overflow: hidden;
     }
 
     .webcert-col {
@@ -801,14 +800,14 @@
     .webcert-col-primary {
         background-color: #fff;
         padding: 30px 30px 20px 45px;
+        min-height: 832px !important;
     }
 
     .webcert-col-secondary {
         position: relative;
         background-color: #f2f2f2;
         padding: 0 15px 30px 30px;
-        padding-bottom: 30000px;
-        margin-bottom: -29970px;
+        min-height: 832px !important;
     }
 
     .webcert-col-single {
