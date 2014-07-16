@@ -18,12 +18,8 @@
  */
 package se.inera.certificate.modules.rli.model.converter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import se.inera.certificate.model.PartialInterval;
 import se.inera.certificate.model.PatientRelation;
 import se.inera.certificate.model.Rekommendation;
@@ -45,6 +41,9 @@ import se.inera.certificate.rli.model.v1.PatientType;
 import se.inera.certificate.rli.model.v1.RekommendationType;
 import se.inera.certificate.rli.model.v1.UtforarrollType;
 import se.inera.certificate.rli.model.v1.VardgivareType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Converter between transport and external model.
@@ -396,10 +395,7 @@ public class TransportToExternalConverter {
         patientRelation.setPostnummer(source.getPostnummer());
         patientRelation.setPostort(source.getPostort());
         patientRelation.getFornamn().addAll(source.getFornamns());
-
-        /* Until schema for PatientType is fixed, take mellannamn and put in fornamn */
-        patientRelation.getFornamn().addAll(source.getMellannamns());
-
+        patientRelation.getMellannamn().addAll(source.getMellannamns());
         patientRelation.setEfternamn(source.getEfternamn());
 
         for (iso.v21090.dt.v1.CD cd : source.getRelationTyps()) {

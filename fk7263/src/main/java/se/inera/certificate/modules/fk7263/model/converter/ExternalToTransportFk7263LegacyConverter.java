@@ -1,14 +1,6 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
-import static se.inera.certificate.model.util.Iterables.addAll;
-import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toCD;
-import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toII;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.joda.time.LocalDate;
-
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
@@ -39,7 +31,6 @@ import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
-import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
 import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
 import se.inera.certificate.modules.fk7263.model.codes.Prognoskoder;
@@ -51,6 +42,13 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Prognos;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static se.inera.certificate.model.util.Iterables.addAll;
+import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toCD;
+import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toII;
 
 public final class ExternalToTransportFk7263LegacyConverter {
 
@@ -404,24 +402,8 @@ public final class ExternalToTransportFk7263LegacyConverter {
 
     private static PatientType toJaxb(Fk7263Patient source) {
         PatientType patient = new PatientType();
-        patient.setFullstandigtNamn(extractFullstandigtNamn(source));
+        patient.setFullstandigtNamn(source.getFullstandigtNamn());
         patient.setPersonId(toII(source.getId()));
         return patient;
-    }
-
-    private static String extractFullstandigtNamn(Fk7263Patient source) {
-        List<String> names = new ArrayList<>();
-
-        if (source.getFornamn() != null) {
-            names.addAll(source.getFornamn());
-        }
-
-        if (source.getMellannamn() != null) {
-            names.addAll(source.getMellannamn());
-        }
-
-        names.add(source.getEfternamn());
-
-        return Strings.join(" ", names);
     }
 }

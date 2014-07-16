@@ -18,23 +18,14 @@
  */
 package se.inera.certificate.modules.rli.model.converter;
 
-import static se.inera.certificate.modules.rli.model.converter.IsoTypeConverter.toArbetsplatsKod;
-import static se.inera.certificate.modules.rli.model.converter.IsoTypeConverter.toHsaId;
-import static se.inera.certificate.modules.rli.model.converter.IsoTypeConverter.toPersonId;
-import static se.inera.certificate.modules.rli.model.converter.IsoTypeConverter.toUtlatandeId;
-import static se.inera.certificate.modules.rli.model.converter.IsoTypeConverter.toUtlatandeTyp;
 import iso.v21090.dt.v1.CD;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.PatientRelation;
 import se.inera.certificate.model.Rekommendation;
 import se.inera.certificate.model.Vardgivare;
+import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.HosPersonal;
 import se.inera.certificate.modules.rli.model.external.Observation;
@@ -53,6 +44,15 @@ import se.inera.certificate.rli.model.v1.RekommendationType;
 import se.inera.certificate.rli.model.v1.UtforarrollType;
 import se.inera.certificate.rli.model.v1.Utlatande;
 import se.inera.certificate.rli.model.v1.VardgivareType;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static se.inera.certificate.modules.rli.model.converter.IsoTypeConverter.toArbetsplatsKod;
+import static se.inera.certificate.modules.rli.model.converter.IsoTypeConverter.toHsaId;
+import static se.inera.certificate.modules.rli.model.converter.IsoTypeConverter.toPersonId;
+import static se.inera.certificate.modules.rli.model.converter.IsoTypeConverter.toUtlatandeId;
+import static se.inera.certificate.modules.rli.model.converter.IsoTypeConverter.toUtlatandeTyp;
 
 public class ExternalToTransportConverter {
 
@@ -290,19 +290,18 @@ public class ExternalToTransportConverter {
             LOG.trace("Patient was null, could not convert");
             return null;
         }
-        PatientType patientType = new PatientType();
 
+        PatientType patientType = new PatientType();
+        patientType.getFornamns().addAll(source.getFornamn());
+        if (source.getMellannamn().isEmpty()) {
+            patientType.setEfternamn(source.getEfternamn());
+        } else {
+            patientType.setEfternamn(Strings.join(" ", source.getMellannamn()) + " " + source.getEfternamn());
+        }
+        patientType.setPersonId(toPersonId(source.getId()));
         patientType.setPostadress(source.getPostadress());
         patientType.setPostnummer(source.getPostnummer());
         patientType.setPostort(source.getPostort());
-
-        patientType.setPersonId(toPersonId(source.getId()));
-
-        if (source.getFornamn() != null) {
-            patientType.getFornamns().addAll(source.getFornamn());
-        }
-
-        patientType.setEfternamn(source.getEfternamn());
 
         if (source.getPatientrelationer() != null) {
             List<PatientRelationType> patientRelationsTypes = convertPatientRelations(source.getPatientrelationer());
@@ -343,6 +342,7 @@ public class ExternalToTransportConverter {
         patientRelationType.setPersonId(toPersonId(source.getPersonId()));
         patientRelationType.setRelationskategori(IsoTypeConverter.toCD(source.getRelationskategori()));
         patientRelationType.getFornamns().addAll(source.getFornamn());
+        patientRelationType.getMellannamns().addAll(source.getMellannamn());
         patientRelationType.setEfternamn(source.getEfternamn());
         patientRelationType.getRelationTyps().addAll(convertRelationTyps(source.getRelationtyper()));
 
@@ -356,5 +356,4 @@ public class ExternalToTransportConverter {
         }
         return relationTyps;
     }
-
 }

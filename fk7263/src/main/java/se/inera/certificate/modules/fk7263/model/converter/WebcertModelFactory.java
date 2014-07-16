@@ -18,8 +18,6 @@
  */
 package se.inera.certificate.modules.fk7263.model.converter;
 
-import org.apache.commons.lang3.StringUtils;
-
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
@@ -79,7 +77,7 @@ public class WebcertModelFactory {
             throw new ConverterException("Got null while trying to populateWithPatientInfo");
         }
 
-        utlatande.setPatientNamn(StringUtils.join(patient.getFornamn(), " ", patient.getEfternamn()));
+        utlatande.setPatientNamn(patient.getFullstandigtNamn());
         utlatande.setPatientPersonnummer(patient.getPersonnummer());
     }
 

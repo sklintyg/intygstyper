@@ -18,13 +18,8 @@
  */
 package se.inera.certificate.modules.ts_bas.model.converter;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
@@ -57,6 +52,10 @@ import se.inera.certificate.modules.ts_bas.model.internal.BedomningKorkortstyp;
 import se.inera.certificate.modules.ts_bas.model.internal.HoSPersonal;
 import se.inera.certificate.modules.ts_bas.model.internal.IntygAvserKategori;
 import se.inera.certificate.modules.ts_bas.model.internal.Syn;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Convert from {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande} to the external {@link Utlatande}
@@ -577,8 +576,13 @@ public class InternalToExternalConverter {
      */
     private Patient convertToExtPatient(se.inera.certificate.modules.ts_bas.model.internal.Patient source) {
         Patient patient = new Patient();
+        if (patient.getFornamn() != null) {
+            patient.getFornamn().add(source.getFornamn());
+        }
+        if (source.getMellannamn() != null) {
+            patient.getMellannamn().add(source.getMellannamn());
+        }
         patient.setEfternamn(source.getEfternamn());
-        patient.getFornamn().add(source.getFornamn());
         patient.setId(InternalConverterUtil.createPersonId(source.getPersonid()));
         patient.setPostadress(source.getPostadress());
         patient.setPostnummer(source.getPostnummer());

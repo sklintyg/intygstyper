@@ -1,23 +1,16 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
-import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toId;
-import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toKod;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import se.inera.certificate.fk7263.iso.v21090.dt.v1.PQ;
+import se.inera.certificate.fk7263.model.ext.v1.Prognos;
 import se.inera.certificate.fk7263.model.v1.AktivitetType;
 import se.inera.certificate.fk7263.model.v1.ArbetsuppgiftType;
 import se.inera.certificate.fk7263.model.v1.EnhetType;
 import se.inera.certificate.fk7263.model.v1.HosPersonalType;
 import se.inera.certificate.fk7263.model.v1.ObservationType;
 import se.inera.certificate.fk7263.model.v1.PatientType;
-import se.inera.certificate.fk7263.model.ext.v1.Prognos;
 import se.inera.certificate.fk7263.model.v1.ReferensType;
 import se.inera.certificate.fk7263.model.v1.SysselsattningType;
 import se.inera.certificate.fk7263.model.v1.VardgivareType;
@@ -38,6 +31,12 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Prognos;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Vardenhet;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toId;
+import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toKod;
 
 /**
  * @author marced
@@ -230,15 +229,9 @@ public final class TransportToExternalConverter {
         Fk7263Patient patient = new Fk7263Patient();
         patient.setId(toId(source.getPersonId()));
 
-        if (!source.getFornamns().isEmpty()) {
-            patient.getFornamn().addAll(source.getFornamns());
-        }
-
+        patient.getFornamn().addAll(source.getFornamns());
+        patient.getMellannamn().addAll(source.getMellannamns());
         patient.setEfternamn(source.getEfternamn());
-
-        if (!source.getMellannamns().isEmpty()) {
-            patient.getMellannamn().addAll(source.getMellannamns());
-        }
 
         patient.getSysselsattningar().addAll(convert(source.getSysselsattnings()));
 

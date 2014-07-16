@@ -18,16 +18,10 @@
  */
 package se.inera.certificate.modules.ts_diabetes.model.converter;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
+import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.ts_diabetes.model.codes.AktivitetKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
 import se.inera.certificate.modules.ts_diabetes.model.codes.CodeSystem;
@@ -38,6 +32,7 @@ import se.inera.certificate.modules.ts_diabetes.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.RekommendationVardeKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.RekommendationsKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.SpecialitetKod;
+import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_diabetes.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_diabetes.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.external.Observation;
@@ -55,6 +50,10 @@ import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardenhet;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardgivare;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Converter for converting the external format to the internal view format.
@@ -509,13 +508,12 @@ public class ExternalToInternalConverterInstance {
 
         intPatient.setPersonid(InternalModelConverterUtils.getExtensionFromId(extPatient.getId()));
 
+        intPatient.setFornamn(Strings.join(" ", extPatient.getFornamn()));
+        if (!extPatient.getMellannamn().isEmpty()) {
+            intPatient.setMellannamn(Strings.join(" ", extPatient.getMellannamn()));
+        }
         intPatient.setEfternamn(extPatient.getEfternamn());
-
-        String forNamn = StringUtils.join(extPatient.getFornamn(), " ");
-        intPatient.setFornamn(forNamn);
-
-        String fullstandigtNamn = forNamn.concat(" ").concat(extPatient.getEfternamn());
-        intPatient.setFullstandigtNamn(fullstandigtNamn);
+        intPatient.setFullstandigtNamn(extPatient.getFullstandigtNamn());
 
         intPatient.setPostadress(extPatient.getPostadress());
         intPatient.setPostnummer(extPatient.getPostnummer());

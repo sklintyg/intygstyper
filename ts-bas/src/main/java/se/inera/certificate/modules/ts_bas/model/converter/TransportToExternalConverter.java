@@ -18,13 +18,8 @@
  */
 package se.inera.certificate.modules.ts_bas.model.converter;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardgivare;
@@ -46,6 +41,10 @@ import se.inera.certificate.ts_bas.model.v1.PatientType;
 import se.inera.certificate.ts_bas.model.v1.RekommendationType;
 import se.inera.certificate.ts_bas.model.v1.VardgivareType;
 import se.inera.certificate.ts_bas.model.v1.VardkontaktType;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Converter between transport and external model.
@@ -401,8 +400,8 @@ public class TransportToExternalConverter {
      */
     private Patient convertPatient(PatientType source) {
         Patient patient = new Patient();
-        patient.setEfternamn(source.getEfternamn());
         patient.getFornamn().addAll(source.getFornamns());
+        patient.setEfternamn(source.getEfternamn());
         patient.setId(IsoTypeConverter.toId(source.getPersonId()));
         patient.setPostadress(source.getPostadress());
         patient.setPostnummer(source.getPostnummer());

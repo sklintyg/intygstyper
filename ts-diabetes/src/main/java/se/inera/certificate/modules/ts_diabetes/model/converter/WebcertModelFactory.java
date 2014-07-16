@@ -18,10 +18,8 @@
  */
 package se.inera.certificate.modules.ts_diabetes.model.converter;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_diabetes.model.internal.HoSPersonal;
@@ -74,8 +72,9 @@ public class WebcertModelFactory {
     private Patient convertPatientToEdit(se.inera.certificate.modules.support.api.dto.Patient patientInfo) {
         Patient patient = new Patient();
         patient.setFornamn(patientInfo.getFornamn());
+        patient.setMellannamn(patientInfo.getMellannamn());
         patient.setEfternamn(patientInfo.getEfternamn());
-        patient.setFullstandigtNamn(StringUtils.join(patientInfo.getFornamn(), " ", patientInfo.getEfternamn()));
+        patient.setFullstandigtNamn(patientInfo.getFullstandigtNamn());
         patient.setPersonid(patientInfo.getPersonnummer());
         patient.setPostadress(patientInfo.getPostadress());
         patient.setPostnummer(patientInfo.getPostnummer());

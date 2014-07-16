@@ -1,10 +1,14 @@
 package se.inera.certificate.modules.support.api.dto;
 
+import org.apache.commons.lang3.StringUtils;
+
 import static org.springframework.util.Assert.hasText;
 
 public class Patient {
 
     private final String fornamn;
+
+    private final String mellannamn;
 
     private final String efternamn;
 
@@ -16,12 +20,13 @@ public class Patient {
 
     private final String postort;
 
-    public Patient(String fornamn, String efternamn, String personnummer, String postadress, String postnummer,
+    public Patient(String fornamn, String mellannamn, String efternamn, String personnummer, String postadress, String postnummer,
             String postort) {
         hasText(fornamn, "'fornamn' must not be empty");
         hasText(efternamn, "'efternamn' must not be empty");
         hasText(personnummer, "'personnummer' must not be empty");
         this.fornamn = fornamn;
+        this.mellannamn = mellannamn;
         this.efternamn = efternamn;
         this.personnummer = personnummer;
         this.postadress = postadress;
@@ -31,6 +36,10 @@ public class Patient {
 
     public String getFornamn() {
         return fornamn;
+    }
+
+    public String getMellannamn() {
+        return mellannamn;
     }
 
     public String getEfternamn() {
@@ -51,5 +60,13 @@ public class Patient {
 
     public String getPostort() {
         return postort;
+    }
+
+    public String getFullstandigtNamn() {
+        if (StringUtils.isBlank(mellannamn)) {
+            return fornamn + " " + efternamn;
+        } else {
+            return fornamn + " " + mellannamn + " " + efternamn;
+        }
     }
 }

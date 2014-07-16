@@ -18,17 +18,13 @@
  */
 package se.inera.certificate.modules.ts_bas.model.converter;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
+import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
@@ -46,6 +42,10 @@ import se.inera.certificate.ts_bas.model.v1.RekommendationType;
 import se.inera.certificate.ts_bas.model.v1.Utlatande;
 import se.inera.certificate.ts_bas.model.v1.VardgivareType;
 import se.inera.certificate.ts_bas.model.v1.VardkontaktType;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class ExternalToTransportConverter {
 
@@ -121,7 +121,8 @@ public class ExternalToTransportConverter {
     /**
      * Converts a single ObservationAktivitetRelation to ObservationAktivitetRelationType.
      *
-     * @param source {@link ObservationAktivitetRelation}
+     * @param source
+     *            {@link ObservationAktivitetRelation}
      * @return {@link ObservationAktivitetRelationType}
      */
     private se.inera.certificate.ts_bas.model.ext.v1.ObservationAktivitetRelation convertObservationRelation(ObservationAktivitetRelation source) {
@@ -135,7 +136,8 @@ public class ExternalToTransportConverter {
     /**
      * Convert collection of Rekommendation to collection of RekommendationType.
      *
-     * @param source {@link Rekommendation}
+     * @param source
+     *            {@link Rekommendation}
      * @return {@link RekommendationType}
      * @throws ConverterException
      */
@@ -154,7 +156,8 @@ public class ExternalToTransportConverter {
     /**
      * Convert a single Rekommendation to RekommendationType.
      *
-     * @param source {@link Rekommendation}
+     * @param source
+     *            {@link Rekommendation}
      * @return {@link RekommendationType}
      */
     private RekommendationType convertRekommendation(Rekommendation source) {
@@ -182,7 +185,8 @@ public class ExternalToTransportConverter {
     /**
      * Convert collection of Kod to collection of CD.
      *
-     * @param source List of {@link Kod}
+     * @param source
+     *            List of {@link Kod}
      * @return List of {@link CD}
      * @throws ConverterException
      */
@@ -200,7 +204,8 @@ public class ExternalToTransportConverter {
     /**
      * Convert a Collection of Observation to Collection of ObservationType.
      *
-     * @param source List of {@link Observation}
+     * @param source
+     *            List of {@link Observation}
      * @return List of {@link ObservationType}
      * @throws ConverterException
      */
@@ -220,7 +225,8 @@ public class ExternalToTransportConverter {
     /**
      * Convert a single Observation to ObservationType.
      *
-     * @param source {@link Observation}
+     * @param source
+     *            {@link Observation}
      * @return {@link ObservationType}
      */
     private ObservationType convertObservation(Observation source) {
@@ -249,7 +255,8 @@ public class ExternalToTransportConverter {
     /**
      * Convert Collection of Aktivitet to Collection of AktivitetType.
      *
-     * @param source List of {@link Aktivitet}
+     * @param source
+     *            List of {@link Aktivitet}
      * @return List of {@link AktivitetType}
      * @throws ConverterException
      */
@@ -267,7 +274,8 @@ public class ExternalToTransportConverter {
     /**
      * Convert a single Aktivitet to AktivitetType.
      *
-     * @param source {@link Aktivitet}
+     * @param source
+     *            {@link Aktivitet}
      * @return {@link AktivitetType}
      */
     private AktivitetType convertAktivitet(Aktivitet source) {
@@ -305,7 +313,8 @@ public class ExternalToTransportConverter {
     /**
      * Convert a Vardkontakt to VardkontaktType.
      *
-     * @param source {@link Vardkontakt}
+     * @param source
+     *            {@link Vardkontakt}
      * @return {@link VardkontaktType}
      */
     private VardkontaktType convertVardkontakt(Vardkontakt source) {
@@ -319,13 +328,23 @@ public class ExternalToTransportConverter {
     /**
      * Convert at Patient to PatientType.
      *
-     * @param source {@link Patient}
+     * @param source
+     *            {@link Patient}
      * @return {@link PatientType}
      */
     private PatientType convertPatient(Patient source) {
+        if (source == null) {
+            LOG.trace("Patient was null, could not convert");
+            return null;
+        }
+
         PatientType patient = new PatientType();
         patient.getFornamns().addAll(source.getFornamn());
-        patient.setEfternamn(source.getEfternamn());
+        if (source.getMellannamn().isEmpty()) {
+            patient.setEfternamn(source.getEfternamn());
+        } else {
+            patient.setEfternamn(Strings.join(" ", source.getMellannamn()) + " " + source.getEfternamn());
+        }
         patient.setPersonId(IsoTypeConverter.toPersonId(source.getId()));
         patient.setPostadress(source.getPostadress());
         patient.setPostnummer(source.getPostnummer());
@@ -337,7 +356,8 @@ public class ExternalToTransportConverter {
     /**
      * Convert a HosPersonal to HosPersonalType.
      *
-     * @param source {@link HosPersonal}
+     * @param source
+     *            {@link HosPersonal}
      * @return {@link HosPersonalType}
      */
     private HosPersonalType convertHosPersonal(HosPersonal source) {
@@ -354,7 +374,8 @@ public class ExternalToTransportConverter {
     /**
      * Convert a Collection of Kod to CD.
      *
-     * @param source List of {@link Kod}
+     * @param source
+     *            List of {@link Kod}
      * @return List of {@link CD}
      */
     private Collection<? extends CD> convertKodToCD(List<Kod> source) {
@@ -368,7 +389,8 @@ public class ExternalToTransportConverter {
     /**
      * Convert a Vardenhet to EnhetType.
      *
-     * @param source {@link Vardenhet}
+     * @param source
+     *            {@link Vardenhet}
      * @return {@link EnhetType}
      */
     private EnhetType convertVardenhet(Vardenhet source) {
@@ -387,7 +409,8 @@ public class ExternalToTransportConverter {
     /**
      * Convert a Vardgivare to VardgivareType.
      *
-     * @param source {@link Vardgivare}
+     * @param source
+     *            {@link Vardgivare}
      * @return {@link VardgivareType}
      */
     private VardgivareType convertVardgivare(Vardgivare source) {

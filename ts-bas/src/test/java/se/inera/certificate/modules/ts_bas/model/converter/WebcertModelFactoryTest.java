@@ -45,7 +45,7 @@ public class WebcertModelFactoryTest {
     @Test
     public void testCreateEditableModel() throws JsonParseException, JsonMappingException, IOException {
         // Programmatically creating a CreateNewDraftHolder
-        Patient patient = new Patient("Johnny", "Appleseed", "19121212-1212", "Testvägen 12", "13337", "Huddinge");
+        Patient patient = new Patient("Johnny", "Jobs", "Appleseed", "19121212-1212", "Testvägen 12", "13337", "Huddinge");
         Vardgivare vardgivare = new Vardgivare("SE0000000000-HAHAHHSAA", "Vårdgivarnamn");
         Vardenhet vardenhet = new Vardenhet("SE0000000000-1337", "Vårdenhet Väst", "Enhetsvägen 12", "54321", "Tumba",
                 "08-1337", null, "0123456789", vardgivare);
@@ -68,7 +68,7 @@ public class WebcertModelFactoryTest {
 
         /** Just verify some stuff from the json to make sure all is well.. */
         assertEquals("testID", utlatande.getId());
-        assertEquals("Johnny Appleseed", utlatande.getPatient().getFullstandigtNamn());
+        assertEquals("Johnny Jobs Appleseed", utlatande.getPatient().getFullstandigtNamn());
         assertEquals("Testvägen 12", utlatande.getPatient().getPostadress());
         assertEquals("13337", utlatande.getPatient().getPostnummer());
         assertEquals("Huddinge", utlatande.getPatient().getPostort());

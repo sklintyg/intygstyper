@@ -26,6 +26,8 @@ public class Patient {
 
     private String fornamn;
 
+    private String mellannamn;
+
     private String efternamn;
 
     private String postadress;
@@ -60,6 +62,14 @@ public class Patient {
 
     public void setFornamn(String fornamn) {
         this.fornamn = fornamn;
+    }
+
+    public String getMellannamn() {
+        return mellannamn;
+    }
+
+    public void setMellannamn(String mellannamn) {
+        this.mellannamn = mellannamn;
     }
 
     public String getEfternamn() {

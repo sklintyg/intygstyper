@@ -31,9 +31,9 @@ public class PatientRelation {
 
     private List<String> fornamn;
 
-    private String efternamn;
-
     private List<String> mellannamn;
+
+    private String efternamn;
 
     private String postadress;
 
@@ -71,19 +71,19 @@ public class PatientRelation {
         return this.fornamn;
     }
 
+    public final List<String> getMellannamn() {
+        if (mellannamn == null) {
+            mellannamn = new ArrayList<>();
+        }
+        return this.mellannamn;
+    }
+
     public final String getEfternamn() {
         return efternamn;
     }
 
     public final void setEfternamn(String efternamn) {
         this.efternamn = efternamn;
-    }
-
-    public final List<String> getMellannamn() {
-        if (mellannamn == null) {
-            mellannamn = new ArrayList<>();
-        }
-        return this.mellannamn;
     }
 
     public final String getPostadress() {

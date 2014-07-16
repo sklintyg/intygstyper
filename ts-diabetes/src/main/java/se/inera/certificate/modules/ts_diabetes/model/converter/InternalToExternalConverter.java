@@ -18,16 +18,11 @@
  */
 package se.inera.certificate.modules.ts_diabetes.model.converter;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.PartialInterval;
@@ -61,6 +56,10 @@ import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkorts
 import se.inera.certificate.modules.ts_diabetes.model.internal.HoSPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvserKategori;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class InternalToExternalConverter {
 
@@ -333,7 +332,7 @@ public class InternalToExternalConverter {
             hypoglykemiVakenTid.setObservationskod(CodeConverter
                     .toKod(ObservationsKod.ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND));
             hypoglykemiVakenTid.setForekomst(source.getHypoglykemier().getAllvarligForekomstVakenTid());
-            
+
             hypoglykemiVakenTid.setObservationstid(createLocalDateTimeFromString(source.getHypoglykemier()
                     .getAllvarligForekomstVakenTidObservationstid()));
 
@@ -346,7 +345,7 @@ public class InternalToExternalConverter {
 
         return observationer;
     }
-    
+
     private LocalDateTime createLocalDateTimeFromString(String timeString) {
         try {
             LocalDate localDate = LocalDate.parse(timeString);
@@ -526,8 +525,11 @@ public class InternalToExternalConverter {
      */
     private Patient convertToExtPatient(se.inera.certificate.modules.ts_diabetes.model.internal.Patient source) {
         Patient patient = new Patient();
-        patient.setEfternamn(source.getEfternamn());
         patient.getFornamn().add(source.getFornamn());
+        if (source.getMellannamn() != null) {
+            patient.getMellannamn().add(source.getMellannamn());
+        }
+        patient.setEfternamn(source.getEfternamn());
         patient.setId(InternalConverterUtil.createPersonId(source.getPersonid()));
         patient.setPostadress(source.getPostadress());
         patient.setPostnummer(source.getPostnummer());

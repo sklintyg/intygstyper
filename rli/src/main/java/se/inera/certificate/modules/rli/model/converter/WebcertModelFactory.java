@@ -18,9 +18,7 @@
  */
 package se.inera.certificate.modules.rli.model.converter;
 
-import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDate;
-
 import se.inera.certificate.modules.rli.model.internal.wc.Undersokning;
 import se.inera.certificate.modules.rli.model.internal.wc.Utlatande;
 import se.inera.certificate.modules.rli.model.internal.wc.Vardenhet;
@@ -63,9 +61,10 @@ public class WebcertModelFactory {
     private se.inera.certificate.modules.rli.model.internal.wc.Patient convertPatientToEdit(
             se.inera.certificate.modules.support.api.dto.Patient patientInfo) {
         se.inera.certificate.modules.rli.model.internal.wc.Patient patient = new se.inera.certificate.modules.rli.model.internal.wc.Patient();
-        patient.setFornamn(StringUtils.join(patientInfo.getFornamn(), " "));
+        patient.setFornamn(patientInfo.getFornamn());
+        patient.setMellannamn(patientInfo.getMellannamn());
         patient.setEfternamn(patientInfo.getEfternamn());
-        patient.setFullstandigtNamn(StringUtils.join(patient.getFornamn(), patient.getEfternamn()));
+        patient.setFullstandigtNamn(patientInfo.getFullstandigtNamn());
         patient.setPersonid(patientInfo.getPersonnummer());
         patient.setPostadress(patientInfo.getPostadress());
         patient.setPostnummer(patientInfo.getPostnummer());

@@ -18,15 +18,8 @@
  */
 package se.inera.certificate.modules.rli.model.converter;
 
-import static se.inera.certificate.modules.rli.model.codes.HSpersonalKod.HSA_ID;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Rekommendation;
 import se.inera.certificate.model.Vardgivare;
@@ -47,6 +40,12 @@ import se.inera.certificate.modules.rli.model.internal.wc.HoSPersonal;
 import se.inera.certificate.modules.rli.model.internal.wc.OrsakAvbokning;
 import se.inera.certificate.modules.rli.model.internal.wc.Undersokning;
 import se.inera.certificate.modules.rli.model.internal.wc.Utforare;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static se.inera.certificate.modules.rli.model.codes.HSpersonalKod.HSA_ID;
 
 public class InternalToExternalConverter {
 
@@ -239,8 +238,13 @@ public class InternalToExternalConverter {
 
     private Patient convertPatient(se.inera.certificate.modules.rli.model.internal.wc.Patient source) {
         Patient patient = new Patient();
+        if (source.getFornamn() != null) {
+            patient.getFornamn().add(source.getFornamn());
+        }
+        if (source.getMellannamn() != null) {
+            patient.getMellannamn().add(source.getMellannamn());
+        }
         patient.setEfternamn(source.getEfternamn());
-        patient.getFornamn().add(source.getFornamn());
         patient.setId(new Id(PERS_ID_ROOT, source.getPersonid()));
         patient.setPostadress(source.getPostadress());
         patient.setPostnummer(source.getPostnummer());
