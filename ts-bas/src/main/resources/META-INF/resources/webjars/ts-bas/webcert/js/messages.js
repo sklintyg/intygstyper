@@ -95,30 +95,56 @@ define([], function() {
             'ts-bas.helptext.narkotika-lakemedel.provtagning': 'Om ja på ovanstående ska resultatet redovisas separat.',
             'ts-bas.helptext.bedomning': '<span style="text-align:left">C1 - medeltung lastbil och enbart ett lätt släpfordon<br/>C1E - medeltung lastbil och ett eller flera släpfordon oavsett vikt<br/>C - tung lastbil och enbart ett lätt släpfordon<br/>CE - tung lastbil och ett eller flera släpfordon oavsett vikt<br/>D1 - mellanstor buss och enbart ett lätt släpfordon<br/>D1E - mellanstor buss och ett eller flera släpfordon oavsett vikt<br/>D - buss och enbart ett lätt släpfordon<br/>DE - buss och ett eller flera släpfordon oavsett vikt<br/>Taxi = taxiförarlegitimation<br/>Taxi = taxiförarlegitimation<br/>Annat = AM,A1,A,B,BE eller traktor<br/>',
             
+            'ts-bas.label.spara-utkast': 'Spara',
+            'ts-bas.label.ta-bort-utkast': 'Ta bort utkast',
+            'ts-bas.label.skriv-ut-utkast': 'Skriv ut utkast',
+            'ts-bas.label.visa-kompletteras': 'Visa vad som behöver kompletteras',
+            'ts-bas.label.dolj-kompletteras': 'Dölj vad som behöver kompletteras',
+            'ts-bas.label.status': 'Status:',
+            'ts-bas.label.status.intyget-signerat': ' Intyget är signerat.',
+            'ts-bas.label.status.intyget-sparat': ' Intyget är sparat.',
+            'ts-bas.label.status.intyget-sparat-ejKomplett': ' Intyget är sparat, men inte komplett.',
+            'ts-bas.label.status.intyget-inte-sparat': ' Intyget är <strong>inte</strong> sparat.',
+            
+            'ts-bas.label.komplettera-falt': 'Följande fält behöver kompletteras:',
+            
+            'ts-bas.text.information-om-intyg': 'Detta intyg ska användas vid förlängd giltighet av högre behörighet, ansökan om körkortstillstånd för grupp II och III och vid ansökan om taxiförarlegitimation.',
+            'ts-bas.text.information-om-begart-lakarintyg': 'Intyget kan också användas när Transportstyrelsen i andra fall begärt ett läkarintyg. Markera då endast i rutan Annat nedan.',
+            
             // Labels for showing signed intyg
             'ts-bas.label.syn.binokulart': 'Binokulärt',
+            'ts-bas.label.syn.vanster-oga': 'Vänster öga',
+            'ts-bas.label.syn.hoger-oga': 'Vänster öga',
+            'ts-bas.label.syn.kontaktlinster': 'Kontaktlinser',
+            'ts-bas.label.syn.utan-korrektion': 'Utan korrektion',
+            'ts-bas.label.syn.med-korrektion': 'Med korrektion',
             'ts-bas.label.syn.8-dioptrier': 'Högsta styrka i något av glasen överskrider plus 8 dioptrier:',
+            'ts-bas.label.syn.korrektionsglasens-styrka': 'Korrektionsglasens styrka',
             'ts-bas.label.syn.synfaltsdefekter': 'a) Finns tecken på synfältsdefekter vid undersökning enligt Donders konfrontationsmetod?',
             'ts-bas.label.syn.nattblindhet': 'b) Framkommer anamnestiska uppgifter om begränsning av seendet vid nedsatt belysning?',
             'ts-bas.label.syn.progressivogonsjukdom': ' c) Har patienten någon progressiv ögonsjukdom?',
             'ts-bas.label.syn.diplopi': 'd) Framkommer dubbelseende vid prövning av ögats rörlighet (prövningen ska göras i de åtta huvudmeridianerna)?',
             'ts-bas.label.syn.nystagmus': 'e) Förekommer nystagmus?',
             'ts-bas.label.syn.synskarpa': 'f) Värden för synskärpa',
+            
+            
 
             'ts-bas.label.horselbalans.balansrubbningar': 'a) Har patienten överraskande anfall av balansrubbningar eller yrsel?',
+            'ts-bas.label.horselbalans.uppfatta-vanlig-samtalsstamma': 'b) Har patienten svårt att uppfatta vanlig samtalsstämma på fyra meters avstånd (hörapparat får användas)?',
             'ts-bas.label.funktionsnedsattning.funktionsnedsattning': 'a) Har patienten någon sjukdom eller funktionsnedsättning som påverkar rörligheten och som medför att fordon inte kan köras på ett trafiksäkert sätt?',
-            'ts-bas.label.funktionsnedsattning.beskrivning': 'Typ av nedsättning eller sjukdom:',
+            'ts-bas.label.funktionsnedsattning.beskrivning': 'Ange vilken typ av nedsättning eller sjukdom:',
+            'ts-bas.label.funktionsnedsattning.rorelsformaga': 'b) Är rörelseförmågan otillräcklig för att kunna hjälpa passagerare in och ut ur fordonet samt med bilbälte?',
 
-            'ts-bas.label.hjartkarl.hjart-karlsjukdom': 'Föreligger hjärt- eller kärlsjukdom som kan medföra en påtaglig risk för att hjärnans funktioner akut försämras eller som i övrigt innebär en trafiksäkerhetsrisk?',
-            'ts-bas.label.hjartkarl.hjarnskada-efter-trauma': 'Finns tecken på hjärnskada eller trauma, stroke eller annan sjukdom i centrala nervsystemet?',
-            'ts-bas.label.hjartkarl.riskfaktorer-stroke': 'Föreligger viktiga riskfaktorer för stroke (tidigare stroke eller TIA, förhöjt blodtryck, förmaksflimmer eller kärlmissbildning)?',
+            'ts-bas.label.hjartkarl.hjart-karlsjukdom': 'a) Föreligger hjärt- eller kärlsjukdom som kan medföra en påtaglig risk för att hjärnans funktioner akut försämras eller som i övrigt innebär en trafiksäkerhetsrisk?',
+            'ts-bas.label.hjartkarl.hjarnskada-efter-trauma': 'b) Finns tecken på hjärnskada efter trauma, stroke eller annan sjukdom i centrala nervsystemet?',
+            'ts-bas.label.hjartkarl.riskfaktorer-stroke': 'c) Föreligger viktiga riskfaktorer för stroke (tidigare stroke eller TIA, förhöjt blodtryck, förmaksflimmer eller kärlmissbildning)?',
             'ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning': 'Typ av sjukdom:',
 
-            'ts-bas.label.diabetes.har-diabetes': 'Har patienten diabetes',
-            'ts-bas.label.diabetes.diabetestyp': 'Diabetestyp',
-            'ts-bas.label.diabetes.diabetestyp.diabetes_typ_1': 'Diabetes Typ1',
-            'ts-bas.label.diabetes.diabetestyp.diabetes_typ_2': 'Diabetes Typ2',
-            'ts-bas.label.diabetes.behandling': 'Behandling:',
+            'ts-bas.label.diabetes.har-diabetes': 'Har patienten diabetes?',
+            'ts-bas.label.diabetes.diabetestyp': 'Vilken typ?',
+            'ts-bas.label.diabetes.diabetestyp.diabetes_typ_1': 'Typ 1',
+            'ts-bas.label.diabetes.diabetestyp.diabetes_typ_2': 'Typ 2',
+            'ts-bas.label.diabetes.behandling': 'Ange behandling:',
             'ts-bas.label.diabetes.behandling.kost': 'Kost',
             'ts-bas.label.diabetes.behandling.tabletter': 'Tabletter',
             'ts-bas.label.diabetes.behandling.insulin': 'Insulin',
@@ -126,6 +152,7 @@ define([], function() {
             'ts-bas.label.neurologi.neurologisksjukdom': 'Finns tecken på neurologisk sjukdom?',
 
             'ts-bas.label.medvetandestorning.medvetandestorning': 'Har eller har patienten haft epilepsi, epileptiskt anfall eller annan medvetandestörning?',
+            'ts-bas.label.medvetandestorning.medvetandestorning-ange-datum-orsak': 'Om det är frågan om annan medvetandestörning, ange när den inträffade och orsak:',
             'ts-bas.label.medvetandestorning.beskrivning': 'Om ja. Information om när den inträffade och orsak:',
 
             'ts-bas.label.njurar.nedsatt-njurfunktion': 'Föreligger allvarligt nedsatt njurfunktion som kan innebära en trafiksäkerhetsrisk?',
@@ -138,6 +165,7 @@ define([], function() {
             'ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats': 'b) Har patienten vid något tillfälle varit föremål för vårdinsatser för missbruk eller beroende av alkohol, narkotika eller läkemedel?',
             'ts-bas.label.narkotika-lakemedel.behov-provtagning': 'Behövs det provtagning avseende aktuellt bruk av akohol eller narkotika?',
             'ts-bas.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk': 'c) Pågår regelbundet läkarordinerat bruk av läkemedel som kan innebära en trafiksäkerhetsrisk?',
+            'ts-bas.label.narkotika-lakemedel.ange-lakemedel-dos': 'Ange läkemedel och ordinerad dos:',
             'ts-bas.label.narkotika-lakemedel.beskrivning': 'Om JA på C. Information om läkemedel och ordinerad dos:',
 
             'ts-bas.label.psykiskt.psykisksjukdom': 'Har eller har patienten haft psykisk sjukdom eller störning, till exempel schizofreni, annan psykos eller bipolär (manodepressiv) sjukdom?',
@@ -151,15 +179,18 @@ define([], function() {
             'ts-bas.label.sjukhusvard.tidpunkt': 'Om frågan besvarats med ja, när?',
 
             'ts-bas.label.medicinering.stadigvarande-medicinering': 'Har patienten någon stadigvarande medicinering?',
-            'ts-bas.label.medicinering.beskrivning': 'Vilken eller vilka mediciner:',
+            'ts-bas.label.medicinering.beskrivning': 'Vilken eller vilka mediciner?',
 
             'ts-bas.label.ovanstaende-har-bekraftats': 'Ovanstående uppgifter och bedömningar har bekräftas',
             'ts-bas.label.kontakt-info': 'Namnförtydligande, mottagningens adress och telefon',
 
-            'ts-bas.label.bedomning-info-alt-1': 'Patienten uppfyller kraven enligt Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2) för',
+            'ts-bas.label.bedomning-info-alt-1': 'Patienten uppfyller kraven enligt Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2) för:',
             'ts-bas.label.bedomning.kan-inte-ta-stallning': 'Kan inte ta ställning',
             'ts-bas.label.bedomning-info-undersokas-med-specialkompetens': 'Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i',
             'ts-bas.label.bedomning-info-ej-angivet': 'Ej angivet',
+            'ts-bas.label.nagon-av-foljande-behorigheter': 'Någon av följande behörigheter',
+            
+            'ts-bas.label.kommentar-relevant-trafiksakerhet': 'Övriga kommentarer som är relevant ur trafiksäkerhetssynpunkt.',
 
             // Validation messages starting
             'ts-bas.validation.utlatande.missing': 'Utlatande saknas',
@@ -256,8 +287,20 @@ define([], function() {
 
             'ts-bas.validation.neurologi.missing': 'Neurologiska sjukdomar saknas',
             'ts-bas.validation.neurologi.neurologisksjukdom.missing': 'Finns tecken på neurologisk sjukdom måste anges',
+            
+            'ts-bas.validation.missing.krav-pa-lakarunderskrift': 'Endast läkare får underteckna intyget. Du kan skicka ett mejl med en länk till intyget till den läkare som ska signera.',
 
-            'ts-bas.validation.identitet.missing': 'Identitet styrkt saknas'
+            'ts-bas.validation.identitet.missing': 'Identitet styrkt saknas',
+            
+            'ts-bas.form.postadress': 'Postadress',
+            'ts-bas.form.postnummer': 'Postnummer',
+            'ts-bas.form.postort': 'Postort',
+            'ts-bas.form.telefonnummer': 'Telefonnummer',
+            'ts-bas.form.epost': 'Epost',
+            
+            'ts-bas.label.specialkompetens': 'Specialistkompetens',
+            'ts-bas.label.befattningar': 'Befattningar',
+            'ts-bas.label.signera': 'Signera',
         },
         'en': {
             'ts-bas.label.pagetitle': 'Show Certificate'
