@@ -51,10 +51,10 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
         case MINA_INTYG:
             return "/minaintyg/css/ts-bas.css";
         case WEBCERT:
-            return "/webcert/css/ts-bas.css";
+            return "/web/webjars/ts-bas/webcert/css/ts-bas.css";
         default:
+            return null;
         }
-        return null;
     }
 
     @Override
@@ -63,9 +63,21 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
         case MINA_INTYG:
             return "/minaintyg/js/module";
         case WEBCERT:
-            return "/webcert/js/module";
+            return "/web/webjars/ts-bas/webcert/js/module";
         default:
+            return null;
         }
-        return null;
+    }
+
+    @Override
+    public String getModuleDependencyDefinitionPath(ApplicationOrigin originator) {
+        switch (originator) {
+        case MINA_INTYG:
+            return null;
+        case WEBCERT:
+            return "/web/webjars/ts-bas/webcert/js/module-deps.json";
+        default:
+            return null;
+        }
     }
 }

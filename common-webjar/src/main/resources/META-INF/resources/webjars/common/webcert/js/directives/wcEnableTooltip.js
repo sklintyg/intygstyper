@@ -1,33 +1,22 @@
-define([
-    'angular',
-    'text!webjars/common/webcert/js/directives/wcEnableTooltip.html',
-    'webjars/common/webcert/js/services/messageService'
-], function(angular, template, messageService) {
-    'use strict';
+/**
+ * Enable tooltips for other components than wcFields
+ */
+angular.module('common').directive('wcEnableTooltip',
+    [ 'common.messageService',
+        function(messageService) {
+            'use strict';
 
-    var moduleName = 'wcEnableTooltip';
-
-    /**
-     * Enable tooltips for other components than wcFields
-     */
-    angular.module(moduleName, [ messageService ]).
-        directive(moduleName, [ messageService,
-            function(messageService) {
-                return {
-                    restrict: 'A',
-                    transclude: true,
-                    scope: {
-                        fieldHelpText: '@'
-                    },
-                    controller: function($scope) {
-                        $scope.getMessage = function(key) {
-                            return messageService.getProperty(key);
-                        };
-                    },
-                    template: template
-                };
-            }
-        ]);
-
-    return moduleName;
-});
+            return {
+                restrict: 'A',
+                transclude: true,
+                scope: {
+                    fieldHelpText: '@'
+                },
+                controller: function($scope) {
+                    $scope.getMessage = function(key) {
+                        return messageService.getProperty(key);
+                    };
+                },
+                templateUrl: '/web/webjars/common/webcert/js/directives/wcEnableTooltip.html'
+            };
+        }]);

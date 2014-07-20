@@ -1,34 +1,19 @@
-define([
-    'angular',
-    'webjars/fk7263/webcert/js/messages',
-    'webjars/fk7263/webcert/js/controllers/EditCertCtrl',
-    'webjars/fk7263/webcert/js/controllers/QACtrl',
-    'webjars/fk7263/webcert/js/controllers/ViewCertCtrl',
-    'webjars/fk7263/webcert/js/directives/wcDatePickerField',
-    'webjars/common/webcert/js/services/messageService',
-    'webjars/common/webcert/js/directives',
-    'text!webjars/fk7263/webcert/views/edit-cert.html'
-], function(angular, messages, EditCertCtrl, QACtrl, ViewCertCtrl, wcDatePickerField, messageService, directives, editCertTemplate) {
+angular.module('fk7263', [ 'ui.bootstrap', 'ngCookies', 'ngRoute', 'ngSanitize', 'common' ]);
+
+angular.module('fk7263').config(function($routeProvider) {
     'use strict';
 
-    var moduleName = 'fk7263';
-
-    var module = angular.module(moduleName, [ EditCertCtrl, QACtrl, ViewCertCtrl, wcDatePickerField, messageService, directives]);
-
-    module.config([ '$routeProvider', function($routeProvider) {
-        $routeProvider.
-            when('/fk7263/edit/:certificateId', {
-                template: editCertTemplate,
-                controller: EditCertCtrl
-            });
-    }]);
-
-    // Inject language resources
-    module.run([ messageService,
-        function(messageService) {
-            messageService.addResources(messages);
-        }
-    ]);
-
-    return moduleName;
+    $routeProvider.
+        when('/fk7263/edit/:certificateId', {
+            templateUrl: '/web/webjars/fk7263/webcert/views/edit-cert.html',
+            controller: 'fk7263.EditCertCtrl'
+        });
 });
+
+// Inject language resources
+angular.module('fk7263').run(['common.messageService',
+    function(messageService) {
+        'use strict';
+
+        messageService.addResources(fk7263Messages);
+    }]);

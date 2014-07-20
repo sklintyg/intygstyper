@@ -48,7 +48,7 @@ public class RliEntryPoint implements ModuleEntryPoint {
         case MINA_INTYG:
             return "/intyg/css/rli.css";
         case WEBCERT:
-            return "/webcert/css/rli.css";
+            return "/web/webjars/rli/webcert/css/rli.css";
         default:
         }
         return null;
@@ -60,9 +60,21 @@ public class RliEntryPoint implements ModuleEntryPoint {
         case MINA_INTYG:
             return "/intyg/js/module";
         case WEBCERT:
-            return "/webcert/js/module";
+            return "/web/webjars/rli/webcert/js/module";
         default:
+            return null;
         }
-        return null;
+    }
+
+    @Override
+    public String getModuleDependencyDefinitionPath(ApplicationOrigin originator) {
+        switch (originator) {
+        case MINA_INTYG:
+            return null;
+        case WEBCERT:
+            return "/web/webjars/rli/webcert/js/module-deps.json";
+        default:
+            return null;
+        }
     }
 }

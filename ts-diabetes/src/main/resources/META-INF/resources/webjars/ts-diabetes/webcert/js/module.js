@@ -1,32 +1,19 @@
-define([
-    'angular',
-    'webjars/ts-diabetes/webcert/js/messages',
-    'webjars/ts-diabetes/webcert/js/controllers/EditCertCtrl',
-    'webjars/ts-diabetes/webcert/js/controllers/ViewCertCtrl',
-    'webjars/common/webcert/js/directives',
-    'webjars/common/webcert/js/services/messageService',
-    'text!webjars/ts-diabetes/webcert/views/edit-cert.html'
-], function(angular, messages, EditCertCtrl, ViewCertCtrl, directives, messageService, editCertTemplate) {
+angular.module('ts-diabetes', [ 'ui.bootstrap', 'ngCookies', 'ngRoute', 'ngSanitize', 'common' ]);
+
+angular.module('ts-diabetes').config(function($routeProvider) {
     'use strict';
 
-    var moduleName = 'ts-diabetes';
-
-    var module = angular.module(moduleName, [ EditCertCtrl, ViewCertCtrl, directives, messageService ]);
-
-    module.config(['$routeProvider', function($routeProvider) {
-        $routeProvider.
-            when('/ts-diabetes/edit/:certificateId', {
-                template: editCertTemplate,
-                controller: EditCertCtrl
-            });
-    }]);
-
-    // Inject language resources
-    module.run([ messageService,
-        function(messageService) {
-            messageService.addResources(messages);
-        }
-    ]);
-
-    return moduleName;
+    $routeProvider.
+        when('/ts-diabetes/edit/:certificateId', {
+            templateUrl: '/web/webjars/ts-diabetes/webcert/views/edit-cert.html',
+            controller: 'ts-diabetes.EditCertCtrl'
+        });
 });
+
+// Inject language resources
+angular.module('ts-diabetes').run([ 'common.messageService',
+    function(messageService) {
+        'use strict';
+
+        messageService.addResources(tsDiabetesMessages);
+    }]);

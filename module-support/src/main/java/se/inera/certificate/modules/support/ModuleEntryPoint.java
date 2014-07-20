@@ -61,4 +61,12 @@ public interface ModuleEntryPoint {
      * @path originator The calling application.
      */
     String getModuleScriptPath(ApplicationOrigin originator);
+
+    /**
+     * Returns the path to a resource containing the dependencies for the module.
+     *
+     * @return The path to the module dependency definition for the calling application.
+     * @path originator The calling application.
+     */
+    String getModuleDependencyDefinitionPath(ApplicationOrigin originator);
 }

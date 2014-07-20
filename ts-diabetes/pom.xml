@@ -94,81 +94,43 @@
   <build>
     <finalName>ts-diabetes</finalName>
     <plugins>
-
-      <plugin>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.7</version>
-        <executions>
-          <execution>
-            <id>copy-javascript-for-optimization</id>
-            <phase>process-resources</phase>
-            <configuration>
-              <target>
-                <copy todir="${project.build.directory}/requirebuild" verbose="false">
-                  <fileset dir="${project.basedir}/../common-webjar/src/main/resources/META-INF/resources"/>
-                </copy>
-              </target>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>copy-optimized-javascript</id>
-            <phase>compile</phase>
-            <configuration>
-              <target>
-                <copy file="${project.build.directory}/requirebuild/webjars/ts-diabetes/minaintyg/js/module.min.js"
-                    todir="${project.build.directory}/classes/META-INF/resources/webjars/ts-diabetes/minaintyg/js"/>
-                <copy file="${project.build.directory}/requirebuild/webjars/ts-diabetes/webcert/js/module.min.js"
-                    todir="${project.build.directory}/classes/META-INF/resources/webjars/ts-diabetes/webcert/js"/>
-              </target>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>com.github.bringking</groupId>
-        <artifactId>requirejs-maven-plugin</artifactId>
-        <version>${requirejs-plugin.version}</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>optimize</goal>
-            </goals>
-            <phase>process-resources</phase>
-          </execution>
-        </executions>
-        <configuration>
-          <configFile>
-            ${basedir}/src/main/config/buildconfig.js
-          </configFile>
-          <optimizerFile>
-            ${basedir}/../node_modules/requirejs/bin/r.js
-          </optimizerFile>
-        </configuration>
-      </plugin>
-
       <plugin>
         <groupId>com.github.eirslett</groupId>
         <artifactId>frontend-maven-plugin</artifactId>
         <version>0.0.14</version>
-        <configuration>
-          <workingDirectory>../</workingDirectory>
-        </configuration>
         <executions>
+          <execution>
+            <id>install node and npm</id>
+            <goals>
+              <goal>install-node-and-npm</goal>
+            </goals>
+            <configuration>
+              <nodeVersion>${node.version}</nodeVersion>
+              <npmVersion>${npm.version}</npmVersion>
+            </configuration>
+          </execution>
+          <execution>
+            <id>npm install</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <arguments>install</arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>grunt build</id>
+            <goals>
+              <goal>grunt</goal>
+            </goals>
+          </execution>
           <execution>
             <id>javascript tests</id>
             <goals>
               <goal>karma</goal>
             </goals>
-            <phase>process-test-classes</phase>
             <configuration>
-              <karmaConfPath>${project.basedir}/src/test/karma.conf.ci.js</karmaConfPath>
+              <karmaConfPath>${project.basedir}/src/test/resources/karma.conf.ci.js</karmaConfPath>
             </configuration>
           </execution>
         </executions>

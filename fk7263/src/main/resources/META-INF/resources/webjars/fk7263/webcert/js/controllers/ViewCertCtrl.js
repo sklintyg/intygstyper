@@ -1,98 +1,87 @@
-define([
-    'angular',
-    'webjars/common/webcert/js/services/CertificateService',
-    'webjars/common/webcert/js/services/ManageCertView'
-], function(angular, CertificateService, ManageCertView) {
-    'use strict';
+angular.module('fk7263').controller('fk7263.ViewCertCtrl',
+    [ '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', 'common.CertificateService',
+        'common.ManageCertView', 'webcert.ManageCertificate',
+        function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView,
+            ManageCertificate) {
+            'use strict';
 
-    var ManageCertificate = require('services/ManageCertificate');
+            // Copy dialog setup
+            var COPY_DIALOG_COOKIE = 'wc.dontShowCopyDialog';
+            var copyDialog = {
+                isOpen: false
+            };
+            $scope.dialog = {
+                acceptprogressdone: true,
+                focus: false,
+                errormessageid: 'error.failedtocopyintyg',
+                showerror: false,
+                dontShowCopyInfo: $cookieStore.get(COPY_DIALOG_COOKIE)
+            };
 
-    var moduleName = 'fk7263.ViewCertCtrl';
-    angular.module(moduleName, [ManageCertView, ManageCertificate]).
-        controller(moduleName, ['$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', CertificateService, ManageCertView, ManageCertificate,
-            function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView, ManageCertificate) {
+            // Page setup
+            $scope.cert = {};
+            $scope.cert.filledAlways = true;
+            $scope.widgetState = {
+                doneLoading: false,
+                activeErrorMessageKey: null,
+                showTemplate: true
+            };
 
-                // Copy dialog setup
-                var COPY_DIALOG_COOKIE = 'wc.dontShowCopyDialog';
-                var copyDialog = {
-                    isOpen: false
-                };
-                $scope.dialog = {
-                    acceptprogressdone: true,
-                    focus: false,
-                    errormessageid: 'error.failedtocopyintyg',
-                    showerror: false,
-                    dontShowCopyInfo: $cookieStore.get(COPY_DIALOG_COOKIE)
-                };
+            $scope.certProperties = {
+                isSent: false,
+                isRevoked: false
+            };
 
-                // Page setup
-                $scope.cert = {};
-                $scope.cert.filledAlways = true;
-                $scope.widgetState = {
-                    doneLoading: false,
-                    activeErrorMessageKey: null,
-                    showTemplate: true
-                };
+            $log.debug('Loading certificate ' + $routeParams.certificateId);
+            CertificateService.getCertificate($routeParams.certificateId, function(result) {
+                $scope.widgetState.doneLoading = true;
+                if (result !== null && result !== '') {
+                    $scope.cert = result.contents;
+                    $rootScope.$emit('fk7263.ViewCertCtrl.load', result.metaData);
+                    $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'FK');
+                    $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
 
-                $scope.certProperties = {
-                    isSent: false,
-                    isRevoked: false
-                };
+                    $scope.pdfUrl = '/moduleapi/intyg/signed/' + $scope.cert.id + '/pdf';
+                } else {
+                    $scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';
+                }
+                $scope.intygBackup.showBackupInfo = false;
+            }, function(error) {
+                $scope.widgetState.doneLoading = true;
+                if (error.errorCode === 'DATA_NOT_FOUND') {
+                    $scope.widgetState.activeErrorMessageKey = 'error.data_not_found';
+                } else {
+                    $scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';
+                }
+                $log.debug('Got error while loading cert');
+                $log.debug(error.message);
+                $scope.intygBackup.showBackupInfo = true;
+            });
 
-                $log.debug('Loading certificate ' + $routeParams.certificateId);
-                CertificateService.getCertificate($routeParams.certificateId, function(result) {
-                    $scope.widgetState.doneLoading = true;
-                    if (result !== null && result !== '') {
-                        $scope.cert = result.contents;
-                        $rootScope.$emit(moduleName + '.load', result.metaData);
-                        $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'FK');
-                        $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
+            /**
+             * Private
+             */
 
-                        $scope.pdfUrl = '/moduleapi/intyg/signed/' + $scope.cert.id + '/pdf';
-                    } else {
-                        $scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';
-                    }
-                    $scope.intygBackup.showBackupInfo = false;
-                }, function(error) {
-                    $scope.widgetState.doneLoading = true;
-                    if (error.errorCode === 'DATA_NOT_FOUND') {
-                        $scope.widgetState.activeErrorMessageKey = 'error.data_not_found';
-                    } else {
-                        $scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';
-                    }
-                    $log.debug('Got error while loading cert');
-                    $log.debug(error.message);
-                    $scope.intygBackup.showBackupInfo = true;
-                });
+            /**
+             * Event response from QACtrl which sends its intyg-info here in case intyg couldn't be loaded but QA info could.
+             * @type {{}}
+             */
+            $scope.intygBackup = {intyg: null, showBackupInfo: false};
+            var unbindFastEventFail = $rootScope.$on('fk7263.ViewCertCtrl.load.failed', function(event, intyg) {
+                $scope.intygBackup.intyg = intyg;
+            });
+            $scope.$on('$destroy', unbindFastEventFail);
 
-                /**
-                 * Private
-                 */
+            /**
+             * Exposed functions
+             * @param cert
+             */
+            ManageCertificate.initSend($scope);
+            $scope.send = function(cert) {
+                ManageCertificate.send($scope, cert, 'fk7263.label.send');
+            };
 
-                /**
-                 * Event response from QACtrl which sends its intyg-info here in case intyg couldn't be loaded but QA info could.
-                 * @type {{}}
-                 */
-                $scope.intygBackup = {intyg: null, showBackupInfo: false};
-                var unbindFastEventFail = $rootScope.$on(moduleName + '.load.failed', function(event, intyg) {
-                    $scope.intygBackup.intyg = intyg;
-                });
-                $scope.$on('$destroy', unbindFastEventFail);
-
-                /**
-                 * Exposed functions
-                 * @param cert
-                 */
-                ManageCertificate.initSend($scope);
-                $scope.send = function(cert) {
-                    ManageCertificate.send($scope, cert, 'fk7263.label.send');
-                };
-
-                $scope.copy = function(cert) {
-                    copyDialog = ManageCertificate.copy($scope, cert, copyDialog, COPY_DIALOG_COOKIE);
-                };
-            }
-        ]);
-
-    return moduleName;
-});
+            $scope.copy = function(cert) {
+                copyDialog = ManageCertificate.copy($scope, cert, copyDialog, COPY_DIALOG_COOKIE);
+            };
+        }]);

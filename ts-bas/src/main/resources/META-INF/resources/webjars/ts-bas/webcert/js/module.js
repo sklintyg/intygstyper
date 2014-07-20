@@ -1,32 +1,19 @@
-define([
-    'angular',
-    'webjars/ts-bas/webcert/js/messages',
-    'webjars/ts-bas/webcert/js/controllers/EditCertCtrl',
-    'webjars/ts-bas/webcert/js/controllers/ViewCertCtrl',
-    'webjars/common/webcert/js/directives',
-    'webjars/common/webcert/js/services/messageService',
-    'text!webjars/ts-bas/webcert/views/edit-cert.html'
-], function(angular, messages, EditCertCtrl, ViewCertCtrl, directives, messageService, editCertTemplate) {
+angular.module('ts-bas', [ 'ui.bootstrap', 'ngCookies', 'ngRoute', 'ngSanitize', 'common' ]);
+
+angular.module('ts-bas').config(['$routeProvider', function($routeProvider) {
     'use strict';
 
-    var moduleName = 'ts-bas';
+    $routeProvider.
+        when('/ts-bas/edit/:certificateId', {
+            templateUrl: '/web/webjars/ts-bas/webcert/views/edit-cert.html',
+            controller: 'ts-bas.EditCertCtrl'
+        });
+}]);
 
-    var module = angular.module(moduleName, [ EditCertCtrl, ViewCertCtrl, directives, messageService ]);
+// Inject language resources
+angular.module('ts-bas').run([ 'common.messageService',
+    function(messageService) {
+        'use strict';
 
-    module.config(['$routeProvider', function($routeProvider) {
-        $routeProvider.
-            when('/ts-bas/edit/:certificateId', {
-                template: editCertTemplate,
-                controller: EditCertCtrl
-            });
+        messageService.addResources(tsBasMessages);
     }]);
-
-    // Inject language resources
-    module.run([ messageService,
-        function(messageService) {
-            messageService.addResources(messages);
-        }
-    ]);
-
-    return moduleName;
-});
