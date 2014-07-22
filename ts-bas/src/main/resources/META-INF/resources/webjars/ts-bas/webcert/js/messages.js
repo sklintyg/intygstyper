@@ -81,7 +81,7 @@ var tsBasMessages = {
         'ts-bas.label.status': 'Status:',
         'ts-bas.label.status.intyget-signerat': ' Intyget är signerat.',
         'ts-bas.label.status.intyget-sparat': ' Intyget är sparat.',
-        'ts-bas.label.status.intyget-sparat-ejKomplett': ' Intyget är sparat, men inte komplett.',
+        'ts-bas.label.status.intyget-sparat-ejkomplett': ' Intyget är sparat, men inte komplett.',
         'ts-bas.label.status.intyget-inte-sparat': ' Intyget är <strong>inte</strong> sparat.',
 
         'ts-bas.label.komplettera-falt': 'Följande fält behöver kompletteras:',
