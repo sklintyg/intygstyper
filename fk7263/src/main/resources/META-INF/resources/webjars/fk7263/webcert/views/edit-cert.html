@@ -346,7 +346,7 @@
                             dom-id="nedsattMed25-end-date"></span>
                       <div class="indent pad10" ng-if="workState.nedsattMed25">
                         <div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
-                          Arbetstid timmar/vecka: <strong>{{cert.workTime / 4}}</strong>
+                          Arbetstid timmar/vecka: <strong>{{cert.workTime * 0.75}}</strong>
                         </div>
                         Arbetstidsförläggning (frivilligt) <input type="text" ng-model="cert.otherData.workingHours25"
                                                                   id="capacityForWork.rec25LongerWorkingHours"
@@ -375,7 +375,7 @@
                             dom-id="nedsattMed50-end-date"></span>
                       <div class="indent pad10" ng-if="workState.nedsattMed50">
                         <div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
-                          Arbetstid timmar/vecka: <strong>{{cert.workTime / 2}}</strong>
+                          Arbetstid timmar/vecka: <strong>{{cert.workTime * 0.5}}</strong>
                         </div>
                         Arbetstidsförläggning (frivilligt) <input type="text" ng-model="cert.otherData.workingHours50"
                                                                   id="capacityForWork.rec50LongerWorkingHours"
@@ -404,7 +404,7 @@
                             dom-id="nedsattMed75-end-date"></span>
                       <div class="indent pad10" ng-if="workState.nedsattMed75">
                         <div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
-                          Arbetstid timmar/vecka: <strong>{{cert.workTime * 0.75}}</strong>
+                          Arbetstid timmar/vecka: <strong>{{cert.workTime * 0.25}}</strong>
                         </div>
                         Arbetstidsförläggning (frivilligt) <input type="text" ng-model="cert.otherData.workingHours75"
                                                                   id="capacityForWork.rec75LongerWorkingHours"
