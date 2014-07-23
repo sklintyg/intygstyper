@@ -89,6 +89,16 @@ public interface ModuleApi {
     InternalModelResponse createNewInternal(CreateNewDraftHolder draftCertificateHolder) throws ModuleException;
 
     /**
+     * Creates a new editable model for use in WebCert. The model is pre populated using data contained in the
+     * CreateNewDraftCertificateHolder parameter and template.
+     *
+     * @param draftCertificateHolder draftCertificateHolder
+     * @param template template
+     * @return new internal model
+     */
+    InternalModelResponse createNewInternalFromTemplate(CreateNewDraftHolder draftCertificateHolder, ExternalModelHolder template) throws ModuleException;
+
+    /**
      * Returns complementary information for a specific module that can be displayed when intyg are listed.
      *
      * @param externalModel The external model to extract complementary information from.

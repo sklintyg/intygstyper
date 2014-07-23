@@ -9,6 +9,8 @@ import java.util.List;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
 import se.inera.certificate.ts_diabetes.model.v1.Utlatande;
 
 /**
@@ -16,11 +18,11 @@ import se.inera.certificate.ts_diabetes.model.v1.Utlatande;
  */
 public class ScenarioFinder {
 
-    private static final File TRANSPORT_MODEL_PATH = new File("src/test/resources/scenarios/transport");
+    private static final String TRANSPORT_MODEL_PATH = "classpath:/scenarios/transport/";
 
-    private static final File EXTERNAL_MODEL_PATH = new File("src/test/resources/scenarios/external");
+    private static final String EXTERNAL_MODEL_PATH = "classpath:/scenarios/external/";
 
-    private static final File INTERNAL_MODEL_PATH = new File("src/test/resources/scenarios/internal");
+    private static final String INTERNAL_MODEL_PATH = "classpath:/scenarios/internal/";
 
     private static final String TRANSPORT_MODEL_EXT = ".xml";
 
@@ -67,19 +69,23 @@ public class ScenarioFinder {
         return getScenarios(scenarioWithWildcards + INTERNAL_MODEL_EXT, INTERNAL_MODEL_PATH, "internal");
     }
 
-    public static List<Scenario> getScenarios(String scenarioWithWildcards, File scenarioPath, String model)
+    public static List<Scenario> getScenarios(String scenarioWithWildcards, String scenarioPath, String model)
             throws ScenarioNotFoundException {
-        FilenameFilter filter = new WildcardFileFilter(scenarioWithWildcards);
-        File[] files = scenarioPath.listFiles(filter);
-        if (files == null || files.length == 0) {
-            throw new ScenarioNotFoundException(scenarioWithWildcards, model);
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext();
+        try {
+            Resource[] resources = context.getResources(scenarioPath + scenarioWithWildcards);
+            ArrayList<Scenario> result = new ArrayList<>();
+            if (resources.length < 1) {
+                throw new ScenarioNotFoundException(scenarioPath + scenarioWithWildcards, model);
+            }
+            for (Resource r : resources) {
+                System.err.println(r.getFile());
+                result.add(new FileBasedScenario(r.getFile()));
+            }
+            return result;
+        } catch (IOException e) {
+            throw new ScenarioNotFoundException(scenarioPath + scenarioWithWildcards, model);
         }
-
-        ArrayList<Scenario> result = new ArrayList<>();
-        for (File file : files) {
-            result.add(new FileBasedScenario(file));
-        }
-        return result;
     }
 
     /**
@@ -121,14 +127,14 @@ public class ScenarioFinder {
         return getScenario(filename + INTERNAL_MODEL_EXT, INTERNAL_MODEL_PATH, "internal");
     }
 
-    private static Scenario getScenario(String filename, File scenarioPath, String model)
+    private static Scenario getScenario(String filename, String scenarioPath, String model)
             throws ScenarioNotFoundException {
-        File file = new File(scenarioPath, filename);
-        if (!file.exists() || !file.isFile()) {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext();
+        try {
+            return new FileBasedScenario(context.getResource(scenarioPath + filename).getFile());
+        } catch (IOException e) {
             throw new ScenarioNotFoundException(filename, model);
         }
-
-        return new FileBasedScenario(file);
     }
 
     /**
@@ -191,19 +197,22 @@ public class ScenarioFinder {
 
     }
 
-    private static File getTransportModelFor(File otherModel) {
+    private static File getTransportModelFor(File otherModel) throws IOException {
         String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());
-        return new File(TRANSPORT_MODEL_PATH, filenameWithoutExt + TRANSPORT_MODEL_EXT);
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext();
+        return context.getResource(TRANSPORT_MODEL_PATH + filenameWithoutExt + TRANSPORT_MODEL_EXT).getFile();
     }
 
-    private static File getExternalModelFor(File otherModel) {
+    private static File getExternalModelFor(File otherModel) throws IOException {
         String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());
-        return new File(EXTERNAL_MODEL_PATH, filenameWithoutExt + EXTERNAL_MODEL_EXT);
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext();
+        return context.getResource(EXTERNAL_MODEL_PATH + filenameWithoutExt + EXTERNAL_MODEL_EXT).getFile();
     }
 
-    private static File getInternalModelFor(File otherModel) {
+    private static File getInternalModelFor(File otherModel) throws IOException {
         String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());
-        return new File(INTERNAL_MODEL_PATH, filenameWithoutExt + INTERNAL_MODEL_EXT);
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext();
+        return context.getResource(INTERNAL_MODEL_PATH + filenameWithoutExt + INTERNAL_MODEL_EXT).getFile();
     }
 
 }

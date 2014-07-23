@@ -123,7 +123,7 @@ public class ModuleService implements ModuleApi {
 
         transportSchema = builder.build(rootSource);
     }
-    
+
     /**
      * {@inheritDoc}
      *
@@ -133,7 +133,7 @@ public class ModuleService implements ModuleApi {
     public ExternalModelResponse unmarshall(TransportModelHolder transportModel) throws ModuleException {
         try {
             se.inera.certificate.ts_diabetes.model.v1.Utlatande utlatande = getTransport(transportModel);
-            
+
             // Perform validation agains XML schema
             validateSchema(transportModel.getTransportModel());
             // Convert to external model
@@ -153,7 +153,7 @@ public class ModuleService implements ModuleApi {
      * Validates the XML of a {@link Utlatande}.
      *
      * @param utlatandeXml The xml as a string.
-     * @throws ModuleValidationException 
+     * @throws ModuleValidationException
      */
     private void validateSchema(String utlatandeXml) throws ModuleValidationException {
         try {
@@ -200,7 +200,7 @@ public class ModuleService implements ModuleApi {
     public String validate(ExternalModelHolder externalModelHolder) throws ModuleException {
         return validate(getExternal(externalModelHolder));
     }
-    
+
     private String validate(Utlatande utlatande) throws ModuleException {
         List<String> validationErrors = validator.validateExternal(utlatande);
 
@@ -287,6 +287,17 @@ public class ModuleService implements ModuleApi {
         try {
             return toInteralModelResponse(webcertModelFactory.createNewWebcertDraft(draftCertificateHolder));
 
+        } catch (ConverterException e) {
+            LOG.error("Could not create a new internal Webcert model", e);
+            throw new ModuleConverterException("Could not create a new internal Webcert model", e);
+        }
+    }
+
+    @Override
+    public InternalModelResponse createNewInternalFromTemplate(CreateNewDraftHolder draftCertificateHolder, ExternalModelHolder template) throws ModuleException {
+        try {
+            se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande internal = externalToInternalConverter.convert(getExternal(template));
+            return toInteralModelResponse(webcertModelFactory.createNewWebcertDraftFromTemplate(draftCertificateHolder, internal));
         } catch (ConverterException e) {
             LOG.error("Could not create a new internal Webcert model", e);
             throw new ModuleConverterException("Could not create a new internal Webcert model", e);

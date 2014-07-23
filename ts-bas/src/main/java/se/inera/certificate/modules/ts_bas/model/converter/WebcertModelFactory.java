@@ -18,6 +18,8 @@
  */
 package se.inera.certificate.modules.ts_bas.model.converter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.internal.HoSPersonal;
@@ -30,12 +32,13 @@ import se.inera.certificate.modules.ts_bas.model.internal.Vardgivare;
  * Factory for creating a editable model.
  */
 public class WebcertModelFactory {
+    private static final Logger LOG = LoggerFactory.getLogger(WebcertModelFactory.class);
 
     /**
      * Create a new TS-bas draft pre-populated with the attached data.
      *
      * @param newDraftData
-     *            {@link CreateNewDraftCertificateHolder}
+     *            {@link CreateNewDraftHolder}
      * @return {@link Utlatande} or throws a ConverterException if something unforeseen happens
      * @throws ConverterException
      */
@@ -53,6 +56,28 @@ public class WebcertModelFactory {
         populateWithPatientInfo(utlatande, newDraftData.getPatient());
 
         return utlatande;
+    }
+
+    /**
+     * Create a new TS-bas draft pre-populated with the attached data.
+     *
+     * @param newDraftData
+     *            {@link CreateNewDraftHolder}
+     * @return {@link Utlatande} or throws a ConverterException if something unforeseen happens
+     * @throws ConverterException
+     */
+    public Utlatande createNewWebcertDraftFromTemplate(CreateNewDraftHolder newDraftData, Utlatande template) throws ConverterException {
+        LOG.trace("Creating copy with id {}", newDraftData.getCertificateId());
+
+        template.setId(newDraftData.getCertificateId());
+
+        // This is where we set the concrete tsUtgava and tsVersion of the intyg that is created.
+        template.setTyp(UtlatandeKod.getCurrentVersion().name());
+
+        populateWithSkapadAv(template, newDraftData.getSkapadAv());
+        populateWithPatientInfo(template, newDraftData.getPatient());
+
+        return template;
     }
 
     private void populateWithPatientInfo(Utlatande utlatande,

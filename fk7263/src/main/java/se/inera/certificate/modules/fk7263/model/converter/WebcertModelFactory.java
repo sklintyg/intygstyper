@@ -18,6 +18,8 @@
  */
 package se.inera.certificate.modules.fk7263.model.converter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
@@ -28,6 +30,8 @@ import se.inera.certificate.modules.support.api.dto.Patient;
  * Factory for creating a editable model.
  */
 public class WebcertModelFactory {
+    private static final Logger LOG = LoggerFactory.getLogger(WebcertModelFactory.class);
+
     /**
      * Create a new FK7263 draft pre-populated with the attached data.
      *
@@ -68,6 +72,25 @@ public class WebcertModelFactory {
         populateWithPatientInfo(utlatande, newDraftData.getPatient());
 
         return utlatande;
+    }
+
+    /**
+     * Create a new TS-bas draft pre-populated with the attached data.
+     *
+     * @param newDraftData
+     *            {@link CreateNewDraftHolder}
+     * @return {@link se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg} or throws a ConverterException if something unforeseen happens
+     * @throws ConverterException
+     */
+    public Fk7263Intyg createNewWebcertDraftFromTemplate(CreateNewDraftHolder newDraftData, Fk7263Intyg template) throws ConverterException {
+        LOG.trace("Creating copy with id {} from {}", newDraftData.getCertificateId(), template.getId());
+
+        template.setId(newDraftData.getCertificateId());
+
+        populateWithSkapadAv(template, newDraftData.getSkapadAv());
+        populateWithPatientInfo(template, newDraftData.getPatient());
+
+        return template;
     }
 
     private void populateWithPatientInfo(Fk7263Intyg utlatande,

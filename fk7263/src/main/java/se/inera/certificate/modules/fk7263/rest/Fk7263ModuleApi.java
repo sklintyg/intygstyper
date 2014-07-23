@@ -290,6 +290,17 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
     }
 
+    @Override
+    public InternalModelResponse createNewInternalFromTemplate(CreateNewDraftHolder draftCertificateHolder, ExternalModelHolder template) throws ModuleException {
+        try {
+            se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg internal = externalToInternalConverter.convert(getExternal(template));
+            return toInteralModelResponse(webcertModelFactory.createNewWebcertDraftFromTemplate(draftCertificateHolder, internal));
+        } catch (ConverterException e) {
+            LOG.error("Could not create a new internal Webcert model", e);
+            throw new ModuleConverterException("Could not create a new internal Webcert model", e);
+        }
+    }
+
     // Private transformation methods for building responses
 
     private se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande getExternal(

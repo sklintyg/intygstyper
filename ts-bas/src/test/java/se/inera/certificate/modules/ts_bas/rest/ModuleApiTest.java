@@ -18,6 +18,8 @@
  */
 package se.inera.certificate.modules.ts_bas.rest;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static se.inera.certificate.modules.support.api.dto.TransportModelVersion.UTLATANDE_V1;
 
 import java.io.StringWriter;
@@ -35,13 +37,21 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
+import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelResponse;
+import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
+import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
+import se.inera.certificate.modules.support.api.dto.Patient;
 import se.inera.certificate.modules.support.api.dto.TransportModelHolder;
+import se.inera.certificate.modules.support.api.dto.Vardenhet;
+import se.inera.certificate.modules.support.api.dto.Vardgivare;
+import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.utils.ModelAssert;
+import se.inera.certificate.modules.ts_bas.utils.ResourceConverterUtils;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
 
@@ -151,7 +161,7 @@ public class ModuleApiTest {
     }
 
     @Test
-    public void testRegisterCertificateRoudtrip() throws Exception {
+    public void testRegisterCertificateRoundtrip() throws Exception {
         se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande;
         Utlatande intUtlatande;
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
@@ -170,6 +180,35 @@ public class ModuleApiTest {
 
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, intUtlatande);
         }
+    }
+
+    @Test
+    public void copyCreatesBlank() throws Exception {
+        Scenario scenario = ScenarioFinder.getExternalScenario("valid-korrigerad-synskarpa");
+        ExternalModelHolder internalHolder = createExternalHolder(scenario.asExternalModel());
+
+        InternalModelResponse holder = moduleApi.createNewInternalFromTemplate(createNewDraftHolder(), internalHolder);
+
+        assertNotNull(holder);
+        Utlatande utlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
+        assertEquals(true, utlatande.getSyn().getSynfaltsdefekter());
+    }
+
+    @Test
+    public void createNewInternal() throws ModuleException {
+        CreateNewDraftHolder holder = createNewDraftHolder();
+
+        InternalModelResponse response = moduleApi.createNewInternal(holder);
+
+        assertNotNull(response.getInternalModel());
+    }
+
+    private CreateNewDraftHolder createNewDraftHolder() {
+        Vardgivare vardgivare = new Vardgivare("hsaId0", "vardgivare");
+        Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
+        HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", vardenhet);
+        Patient patient = new Patient("Kalle",null,"Kula","19121212-1212",null,null,null);
+        return new CreateNewDraftHolder("Id1", hosPersonal, patient);
     }
 
     private TransportModelHolder createTransportHolder(se.inera.certificate.ts_bas.model.v1.Utlatande transportModel)
