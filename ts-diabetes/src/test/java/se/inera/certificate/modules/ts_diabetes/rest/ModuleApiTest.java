@@ -18,6 +18,7 @@
  */
 package se.inera.certificate.modules.ts_diabetes.rest;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
 import static se.inera.certificate.modules.support.api.dto.TransportModelVersion.UTLATANDE_V1;
@@ -49,7 +50,9 @@ import se.inera.certificate.modules.support.api.dto.Vardenhet;
 import se.inera.certificate.modules.support.api.dto.Vardgivare;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
+import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvserKategori;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
+import se.inera.certificate.modules.ts_diabetes.utils.ResourceConverterUtils;
 import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
 import se.inera.certificate.modules.ts_diabetes.utils.ScenarioFinder;
 
@@ -159,11 +162,15 @@ public class ModuleApiTest {
     }
 
     @Test
-    public void copyCreatesBlank() throws Exception {
+    public void copyContainsOriginalData() throws Exception {
         Scenario scenario = ScenarioFinder.getExternalScenario("valid-syn");
         ExternalModelHolder internalHolder = createExternalHolder(scenario.asExternalModel());
+
         InternalModelResponse holder = moduleApi.createNewInternalFromTemplate(createNewDraftHolder(), internalHolder);
+
         assertNotNull(holder);
+        Utlatande utlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
+        assertEquals(true, utlatande.getIntygAvser().getKorkortstyp().contains(IntygAvserKategori.A1));
     }
 
     @Test

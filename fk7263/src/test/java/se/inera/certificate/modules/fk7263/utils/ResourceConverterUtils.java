@@ -27,4 +27,9 @@ public class ResourceConverterUtils {
             throws IOException {
         return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg.class);
     }
+
+    public static se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg toInternal(String resource)
+            throws IOException {
+        return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg.class);
+    }
 }

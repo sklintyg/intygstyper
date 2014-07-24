@@ -1,6 +1,7 @@
 package se.inera.certificate.modules.fk7263.rest;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static se.inera.certificate.modules.support.api.dto.TransportModelVersion.LEGACY_LAKARUTLATANDE;
 import static se.inera.certificate.modules.support.api.dto.TransportModelVersion.UTLATANDE_V1;
@@ -20,10 +21,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.utils.ResourceConverterUtils;
+import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
+import se.inera.certificate.modules.support.api.dto.Patient;
 import se.inera.certificate.modules.support.api.dto.TransportModelHolder;
 import se.inera.certificate.modules.support.api.dto.Vardenhet;
 import se.inera.certificate.modules.support.api.dto.Vardgivare;
@@ -132,6 +136,25 @@ public class Fk7263ModuleApiTest {
         assertEquals("nyNamn", updatedIntyg.getVardperson().getNamn());
         assertEquals("nyForskrivarkod", updatedIntyg.getVardperson().getForskrivarKod());
         assertEquals(utlatande.getSkapadAv().getVardenhet().getNamn(), updatedIntyg.getVardperson().getEnhetsnamn());
+    }
+
+    @Test
+    public void copyContainsOriginalData() throws IOException, ModuleException {
+        Fk7263Utlatande utlatande = new CustomObjectMapper().readValue(new ClassPathResource("Fk7263ModuleApiTest/utlatande.json").getFile(), Fk7263Utlatande.class);
+
+        InternalModelResponse holder = fk7263ModuleApi.createNewInternalFromTemplate(createNewDraftHolder(), createExternalHolder(utlatande));
+
+        assertNotNull(holder);
+        Fk7263Intyg creatededUtlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
+        assertEquals("2013-06-05", creatededUtlatande.getNedsattMed50().getFrom().toString());
+    }
+
+    private CreateNewDraftHolder createNewDraftHolder() {
+        Vardgivare vardgivare = new Vardgivare("hsaId0", "vardgivare");
+        Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
+        HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", vardenhet);
+        Patient patient = new Patient("Kalle",null,"Kula","19121212-1212",null,null,null);
+        return new CreateNewDraftHolder("Id1", hosPersonal, patient);
     }
 
     private ExternalModelHolder createExternalHolder(se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande externalModel)

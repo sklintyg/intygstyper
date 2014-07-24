@@ -30,4 +30,10 @@ public class ResourceConverterUtils {
                 se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande.class);
     }
 
+    public static se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande toInternal(String resource)
+            throws IOException {
+        return OBJECT_MAPPER.readValue(resource,
+                se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande.class);
+    }
+
 }
