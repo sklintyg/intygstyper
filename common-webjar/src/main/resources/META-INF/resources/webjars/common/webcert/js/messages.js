@@ -16,6 +16,10 @@ var commonMessages = {
         'common.delete': 'Ta bort',
 
         'common.date': 'Datum',
+        
+        // labels for common modal dialogs
+        'common.modal.label.discard_draft' : 'Ta bort utkast',
+        'common.modal.label.confirm_sign': 'Signera intyget',
 
         // cert status messages
         'cert.status.draft_incomplete': 'Utkast, ej komplett',

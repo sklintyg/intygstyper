@@ -87,7 +87,7 @@ angular.module('common').factory('common.ManageCertView',
                 var draftDeleteDialog = {};
                 draftDeleteDialog = dialogService.showDialog($scope, {
                     dialogId: 'confirm-draft-delete',
-                    titleId: 'label.confirmaddress',
+                    titleId: 'common.modal.label.discard_draft',
                     bodyText: bodyText,
                     button1id: 'confirm-draft-delete-button',
 
@@ -143,7 +143,7 @@ angular.module('common').factory('common.ManageCertView',
                 var bodyText = 'Är du säker på att du vill signera intyget?';
                 var confirmDialog = dialogService.showDialog($scope, {
                     dialogId: 'confirm-sign',
-                    titleId: 'label.confirmsign',
+                    titleId: 'common.modal.label.confirm_sign',
                     bodyText: bodyText,
                     autoClose: false,
                     button1id: 'confirm-signera-utkast-button',
