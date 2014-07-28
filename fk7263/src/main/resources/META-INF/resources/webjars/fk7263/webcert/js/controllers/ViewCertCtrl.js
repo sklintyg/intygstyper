@@ -82,6 +82,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             };
 
             $scope.copy = function(cert) {
+                cert.intygType = 'fk7263';
                 copyDialog = ManageCertificate.copy($scope, cert, copyDialog, COPY_DIALOG_COOKIE);
             };
         }]);

@@ -91,6 +91,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             };
 
             $scope.copy = function(cert) {
+                cert.intygType = 'ts-bas'
                 copyDialog = ManageCertificate.copy($scope, cert, COPY_DIALOG_COOKIE);
             };
         }]);
