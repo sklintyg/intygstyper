@@ -58,11 +58,13 @@ define([
             $scope.befattningar = '';
             $scope.updateBefattningar = function (befattningar) {
                 var result = '';
-                for (var i = 0; i < befattningar.length; i++) {
-                    if (i < befattningar.length-1) {
-                        result += befattningar[i] + (', ');
-                    } else {
-                        result += befattningar[i];
+                if (befattningar != undefined) {
+                    for (var i = 0; i < befattningar.length; i++) {
+                        if (i < befattningar.length-1) {
+                            result += befattningar[i] + (', ');
+                        } else {
+                            result += befattningar[i];
+                        }
                     }
                 }
                 return result;
@@ -72,11 +74,13 @@ define([
             $scope.specialiteter = '';
             $scope.updateSpecialiteter = function (specialiteter) {
                 var result = '';
-                for (var i = 0; i < specialiteter.length; i++) {
-                    if (i < specialiteter.length-1) {
-                        result += specialiteter[i] + (', ');
-                    } else {
-                        result += specialiteter[i];
+                if (specialiteter != undefined) {
+                    for (var i = 0; i < specialiteter.length; i++) {
+                        if (i < specialiteter.length-1) {
+                            result += specialiteter[i] + (', ');
+                        } else {
+                            result += specialiteter[i];
+                        }
                     }
                 }
                 return result;

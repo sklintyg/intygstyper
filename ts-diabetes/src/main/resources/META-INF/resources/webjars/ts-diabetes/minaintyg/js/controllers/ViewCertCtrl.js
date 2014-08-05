@@ -57,11 +57,13 @@ define([
             $scope.befattningar = '';
             $scope.updateBefattningar = function (befattningar) {
                 var result = '';
-                for (var i = 0; i < befattningar.length; i++) {
-                    if (i < befattningar.length-1) {
-                        result += befattningar[i] + (', ');
-                    } else {
-                        result += befattningar[i];
+                if (befattningar != undefined) {
+                    for (var i = 0; i < befattningar.length; i++) {
+                        if (i < befattningar.length-1) {
+                            result += befattningar[i] + (', ');
+                        } else {
+                            result += befattningar[i];
+                        }
                     }
                 }
                 return result;
@@ -71,11 +73,13 @@ define([
             $scope.specialiteter = '';
             $scope.updateSpecialiteter = function (specialiteter) {
                 var result = '';
-                for (var i = 0; i < specialiteter.length; i++) {
-                    if (i < specialiteter.length-1) {
-                        result += specialiteter[i] + (', ');
-                    } else {
-                        result += specialiteter[i];
+                if (specialiteter != undefined) {
+                    for (var i = 0; i < specialiteter.length; i++) {
+                        if (i < specialiteter.length-1) {
+                            result += specialiteter[i] + (', ');
+                        } else {
+                            result += specialiteter[i];
+                        }
                     }
                 }
                 return result;
@@ -165,6 +169,9 @@ define([
                     $scope.cert = result.utlatande;
                     $scope.cert.status = $scope.filterStatuses(result.meta.statuses);
                     $rootScope.cert = $scope.cert;
+
+                    $scope.befattningar = $scope.updateBefattningar($scope.cert.skapadAv.befattningar);
+                    $scope.specialiteter = $scope.updateSpecialiteter($scope.cert.skapadAv.specialiteter);
 
                 } else {
                     // show error view

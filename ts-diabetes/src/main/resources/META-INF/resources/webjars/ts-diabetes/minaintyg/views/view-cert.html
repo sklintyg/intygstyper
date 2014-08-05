@@ -381,8 +381,8 @@
             				<p>
             					<span id="physician-name-id" class="text">{{cert.skapadAv.fullstandigtNamn}}</span><br/>
             					<!-- <span id="caregiver-name-id" class="text">{{cert.skapadAv.vardenhet.vardgivare.vardgivarnamn}} ({{cert.skapadAv.vardenhet.vardgivare.vardgivarid}})</span><br/> -->
-            					<div ng-show="cert.skapadAv.befattningar"><span id="physician-position" class="text">Befattning: {{befattningar}}</span><br/></div>
-            					<div ng-show="cert.skapadAv.specialiteter"><span ng-show="cert.skapadAv.specialiteter" id="physician-speciality" class="text">Specialistkompetens i: {{specialiteter}}</span><br/><br/></div>
+            					<span ng-if="befattningar.length > 0" id="physician-position" class="text">Befattning: {{befattningar}}</span><br/>
+            					<span ng-if="specialiteter.length > 0" id="physician-speciality" class="text">Specialistkompetens i: {{specialiteter}}</span><br/><br/>
             					
             					<span id="careunit-name-id" class="text">{{cert.skapadAv.vardenhet.enhetsnamn}}</span><br/>
             					<span id="careunit-postal_address" class="text">{{cert.skapadAv.vardenhet.postadress}}<br/>
