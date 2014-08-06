@@ -1,5 +1,7 @@
 package se.inera.certificate.modules.support.api;
 
+import org.joda.time.LocalDateTime;
+
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
@@ -115,5 +117,5 @@ public interface ModuleApi {
      *
      * @return A new internal model updated with the hosPerson info.
      */
-    InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException;
+    InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException;
 }

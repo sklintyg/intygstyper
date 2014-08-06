@@ -11,6 +11,7 @@ import java.io.IOException;
 import junit.framework.Assert;
 
 import org.apache.commons.io.FileUtils;
+import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,9 +130,11 @@ public class Fk7263ModuleApiTest {
         Vardgivare vardgivare = new Vardgivare("vardgivarId", "vardgivarNamn");
         Vardenhet vardenhet = new Vardenhet("enhetId", "enhetNamn", "", "", "", "", "", "", vardgivare);
         HoSPersonal hosPerson = new HoSPersonal("nyId", "nyNamn", "nyForskrivarkod", "nyBefattning", vardenhet);
-        InternalModelResponse updatedHolder = fk7263ModuleApi.updateInternal(holder, hosPerson);
+        LocalDateTime signingDate = LocalDateTime.parse("2014-08-01");
+        InternalModelResponse updatedHolder = fk7263ModuleApi.updateInternal(holder, hosPerson, signingDate);
         Fk7263Intyg updatedIntyg = mapper.readValue(updatedHolder.getInternalModel(), Fk7263Intyg.class);
 
+        assertEquals(signingDate, updatedIntyg.getSigneringsdatum());
         assertEquals("nyId", updatedIntyg.getVardperson().getHsaId());
         assertEquals("nyNamn", updatedIntyg.getVardperson().getNamn());
         assertEquals("nyForskrivarkod", updatedIntyg.getVardperson().getForskrivarKod());

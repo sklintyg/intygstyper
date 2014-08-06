@@ -18,8 +18,10 @@
  */
 package se.inera.certificate.modules.fk7263.model.converter;
 
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
@@ -135,9 +137,10 @@ public class WebcertModelFactory {
         return vardperson;
     }
 
-    public void updateSkapadAv(Fk7263Intyg utlatande, HoSPersonal hosPerson) {
+    public void updateSkapadAv(Fk7263Intyg utlatande, HoSPersonal hosPerson, LocalDateTime signeringsdatum) {
         utlatande.getVardperson().setHsaId(hosPerson.getHsaId());
         utlatande.getVardperson().setNamn(hosPerson.getNamn());
         utlatande.getVardperson().setForskrivarKod(hosPerson.getForskrivarkod());
+        utlatande.setSigneringsdatum(signeringsdatum);
     }
 }

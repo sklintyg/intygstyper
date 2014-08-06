@@ -28,6 +28,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.ValidationException;
 
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -335,7 +336,7 @@ public class ModuleService implements ModuleApi {
     }
 
     @Override
-    public InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException {
+    public InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
         return toInteralWcModelResponse(getInternal(internalModel));
     }
 }

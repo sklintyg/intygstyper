@@ -11,6 +11,7 @@ import java.util.List;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -371,10 +372,10 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
-    public InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException {
+    public InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
         try {
             Fk7263Intyg intyg = getInternal(internalModel);
-            webcertModelFactory.updateSkapadAv(intyg, hosPerson);
+            webcertModelFactory.updateSkapadAv(intyg, hosPerson, signingDate);
             return toInteralModelResponse(intyg);
 
         } catch (ModuleException e) {

@@ -32,6 +32,7 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -298,9 +299,10 @@ public class ModuleService implements ModuleApi {
     }
 
     @Override
-    public InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException {
+    public InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
         try {
             se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande = getInternal(internalModel);
+            utlatande.setSigneringsdatum(signingDate);
             utlatande.getSkapadAv().setPersonid(hosPerson.getHsaId());
             utlatande.getSkapadAv().setFullstandigtNamn(hosPerson.getNamn());
             utlatande.getSkapadAv().getBefattningar().clear();
