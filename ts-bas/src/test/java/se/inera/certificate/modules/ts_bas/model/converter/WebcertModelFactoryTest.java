@@ -18,20 +18,19 @@
  */
 package se.inera.certificate.modules.ts_bas.model.converter;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.Patient;
 import se.inera.certificate.modules.support.api.dto.Vardenhet;
 import se.inera.certificate.modules.support.api.dto.Vardgivare;
-
-import java.io.IOException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class WebcertModelFactoryTest {
 
@@ -43,13 +42,13 @@ public class WebcertModelFactoryTest {
     }
 
     @Test
-    public void testCreateEditableModel() throws JsonParseException, JsonMappingException, IOException {
+    public void testCreateEditableModel() throws IOException {
         // Programmatically creating a CreateNewDraftHolder
         Patient patient = new Patient("Johnny", "Jobs", "Appleseed", "19121212-1212", "Testvägen 12", "13337", "Huddinge");
         Vardgivare vardgivare = new Vardgivare("SE0000000000-HAHAHHSAA", "Vårdgivarnamn");
         Vardenhet vardenhet = new Vardenhet("SE0000000000-1337", "Vårdenhet Väst", "Enhetsvägen 12", "54321", "Tumba",
                 "08-1337", null, "0123456789", vardgivare);
-        HoSPersonal skapadAv = new HoSPersonal("19101010-1010", "Doktor Alban", null, null, vardenhet);
+        HoSPersonal skapadAv = new HoSPersonal("19101010-1010", "Doktor Alban", "forskrivarKod", "befattning", null, vardenhet);
         CreateNewDraftHolder draftCertHolder = new CreateNewDraftHolder("testID", skapadAv, patient);
 
         se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande = null;

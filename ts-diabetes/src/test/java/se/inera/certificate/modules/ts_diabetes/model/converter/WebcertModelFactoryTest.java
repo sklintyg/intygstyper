@@ -49,7 +49,8 @@ public class WebcertModelFactoryTest {
         Vardgivare vardgivare = new Vardgivare("SE0000000000-HAHAHHSAA", "Vårdgivarnamn");
         Vardenhet vardenhet = new Vardenhet("SE0000000000-1337", "Vårdenhet Väst", "Enhetsvägen 12", "54321", "Tumba",
                 "08-1337", null, "0123456789", vardgivare);
-        HoSPersonal skapadAv = new HoSPersonal("19101010-1010", "Doktor Alban", null, null, vardenhet);
+        HoSPersonal skapadAv = new HoSPersonal("19101010-1010", "Doktor Alban", null, null, null, vardenhet);
+
         CreateNewDraftHolder draftCertHolder = new CreateNewDraftHolder("testID", skapadAv, patient);
 
         se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande utlatande = null;

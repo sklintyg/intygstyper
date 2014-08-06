@@ -129,7 +129,7 @@ public class Fk7263ModuleApiTest {
         InternalModelHolder holder = new InternalModelHolder(internalModelResponse.getInternalModel());
         Vardgivare vardgivare = new Vardgivare("vardgivarId", "vardgivarNamn");
         Vardenhet vardenhet = new Vardenhet("enhetId", "enhetNamn", "", "", "", "", "", "", vardgivare);
-        HoSPersonal hosPerson = new HoSPersonal("nyId", "nyNamn", "nyForskrivarkod", "nyBefattning", vardenhet);
+        HoSPersonal hosPerson = new HoSPersonal("nyId", "nyNamn", "nyForskrivarkod", "nyBefattning", null, vardenhet);
         LocalDateTime signingDate = LocalDateTime.parse("2014-08-01");
         InternalModelResponse updatedHolder = fk7263ModuleApi.updateInternal(holder, hosPerson, signingDate);
         Fk7263Intyg updatedIntyg = mapper.readValue(updatedHolder.getInternalModel(), Fk7263Intyg.class);
@@ -155,8 +155,8 @@ public class Fk7263ModuleApiTest {
     private CreateNewDraftHolder createNewDraftHolder() {
         Vardgivare vardgivare = new Vardgivare("hsaId0", "vardgivare");
         Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
-        HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", vardenhet);
-        Patient patient = new Patient("Kalle",null,"Kula","19121212-1212",null,null,null);
+        HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", null,  vardenhet);
+        Patient patient = new Patient("Kalle", null, "Kula", "19121212-1212", null, null, null);
         return new CreateNewDraftHolder("Id1", hosPersonal, patient);
     }
 
