@@ -135,6 +135,8 @@ public class ModuleService implements ModuleApi {
 
             // Perform validation agains XML schema
             validateSchema(transportModel.getTransportModel());
+            // Perform programmatic validation of transport model
+            validateTransport(utlatande);
             // Convert to external model
             Utlatande externalUtlatande = transportToExternalConverter.convert(utlatande);
             // Validate external model
@@ -145,6 +147,16 @@ public class ModuleService implements ModuleApi {
         } catch (ConverterException e) {
             LOG.error("Could not unmarshall transport model to external model", e);
             throw new ModuleConverterException("Could not unmarshall transport model to external model", e);
+        }
+    }
+
+    private String validateTransport(se.inera.certificate.ts_bas.model.v1.Utlatande utlatande) throws ModuleValidationException {
+        List<String> validationErrors = validator.validateTransport(utlatande);
+        if (validationErrors.isEmpty()) {
+            return null;
+        } else {
+            String response = Strings.join(",", validationErrors);
+            throw new ModuleValidationException(Collections.singletonList(response));
         }
     }
 

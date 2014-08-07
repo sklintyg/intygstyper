@@ -24,6 +24,7 @@ import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
 import se.inera.certificate.modules.ts_bas.validator.external.ExternalValidatorInstance;
 import se.inera.certificate.modules.ts_bas.validator.internal.InternalValidatorInstance;
+import se.inera.certificate.modules.ts_bas.validator.transport.ProgrammaticTransportValidatorInstance;
 
 public class Validator {
 
@@ -49,6 +50,18 @@ public class Validator {
     public ValidateDraftResponse validateInternal(
             se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande) {
         InternalValidatorInstance instance = new InternalValidatorInstance();
+        return instance.validate(utlatande);
+    }
+
+    /**
+     * Perform a programmatic validation of the transport model
+     *
+     * @param utlatande
+     *            se.inera.certificate.ts_bas.model.v1.Utlatande
+     * @return List of validation errors, or an empty string if validated correctly
+     */
+    public List<String> validateTransport(se.inera.certificate.ts_bas.model.v1.Utlatande utlatande) {
+        ProgrammaticTransportValidatorInstance instance = new ProgrammaticTransportValidatorInstance();
         return instance.validate(utlatande);
     }
 }
