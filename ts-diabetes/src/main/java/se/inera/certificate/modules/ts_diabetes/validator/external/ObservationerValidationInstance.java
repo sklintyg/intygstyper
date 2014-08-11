@@ -103,6 +103,35 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
                 assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
                 assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
 
+            } else if (observation.getObservationskod().equals(OBS_OBS22)) {
+                if (assertNotNull(observation.getForekomst(), entity + ".förekomst").success()) {
+                    if (observation.getForekomst()) {
+                        assertNotNull(observation.getBeskrivning(), entity + ".Beskrivning");
+                    }
+                }
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+
+            } else if (observation.getObservationskod().equals(OBS_OBS23)) {
+                if (assertNotNull(observation.getForekomst(), entity + ".förekomst").success()) {
+                    if (observation.getForekomst()) {
+                        assertNotNull(observation.getBeskrivning(), entity + ".Beskrivning");
+                    }
+                }
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+
+            } else if (observation.getObservationskod().equals(OBS_OBS24)) {
+                if (assertNotNull(observation.getForekomst(), entity + ".förekomst").success()) {
+                    if (observation.getForekomst()) {
+                        assertNotNull(observation.getObservationstid(), entity + ".Observationstid");
+                    }
+                }
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
             }
         }
 

@@ -338,6 +338,17 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
                 assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
                 assertNull(observation.getVarde(), entity + ".varde");
 
+            } else if (observation.getObservationskod().equals(OBS_OBS18)) {
+                if (assertNotNull(observation.getForekomst(), entity + ".förekomst").success()) {
+                    if (observation.getForekomst()) {
+                        assertNotNull(observation.getBeskrivning(), entity + ".beskrivning");
+                    }
+                }
+                assertNull(observation.getId(), entity + ".observationsid");
+                assertNull(observation.getLateralitet(), entity + ".lateralitet");
+                assertNull(observation.getObservationskategori(), entity + ".Observationskategori");
+                assertNull(observation.getObservationsperiod(), entity + ".observationsperiod");
+                assertNull(observation.getVarde(), entity + ".varde");
             }
         }
 
