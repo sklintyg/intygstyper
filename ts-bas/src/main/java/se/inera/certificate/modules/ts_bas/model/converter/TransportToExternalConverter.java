@@ -173,7 +173,7 @@ public class TransportToExternalConverter {
         rekommendation.setRekommendationskod(IsoTypeConverter.toKod(source.getRekommendationskod()));
 
         if (!source.getVardes().isEmpty()) {
-            rekommendation.getVarde().addAll(convertListOfKod(source.getVardes()));
+            rekommendation.getVarde().addAll(convertCDtoKod(source.getVardes()));
         }
 
         return rekommendation;
@@ -233,10 +233,6 @@ public class TransportToExternalConverter {
 
         if (source.getBeskrivning() != null) {
             aktivitet.setBeskrivning(source.getBeskrivning());
-        }
-
-        if (source.getAktivitetsstatus() != null) {
-            aktivitet.setAktivitetsstatus(IsoTypeConverter.toKod(source.getAktivitetsstatus()));
         }
 
         if (source.getAktivitetsId() != null) {
@@ -323,7 +319,7 @@ public class TransportToExternalConverter {
      *            List of {@link CD}
      * @return List of {@link Kod}
      */
-    private List<Kod> convertCDtoKod(List<CD> source) {
+    private List<Kod> convertCDtoKod(List<? extends CD> source) {
         List<Kod> converted = new ArrayList<Kod>();
         for (CD cd : source) {
             converted.add(IsoTypeConverter.toKod(cd));
@@ -408,20 +404,5 @@ public class TransportToExternalConverter {
         patient.setPostort(source.getPostort());
 
         return patient;
-    }
-
-    /**
-     * Utility method for converting a List of CD to a List of Kod.
-     *
-     * @param cds
-     *            List of {@link CD}
-     * @return a List of {@link Kod}
-     */
-    private List<Kod> convertListOfKod(List<CD> cds) {
-        List<Kod> koder = new ArrayList<Kod>();
-        for (CD cd : cds) {
-            koder.add(IsoTypeConverter.toKod(cd));
-        }
-        return koder;
     }
 }

@@ -33,6 +33,9 @@ import se.inera.certificate.modules.ts_bas.model.external.ObservationAktivitetRe
 import se.inera.certificate.modules.ts_bas.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_bas.model.external.Vardkontakt;
 import se.inera.certificate.ts_bas.iso.v21090.dt.v1.CD;
+import se.inera.certificate.ts_bas.model.ext.v1.IntygAvser;
+import se.inera.certificate.ts_bas.model.ext.v1.Specialitet;
+import se.inera.certificate.ts_bas.model.ext.v1.Varde;
 import se.inera.certificate.ts_bas.model.v1.AktivitetType;
 import se.inera.certificate.ts_bas.model.v1.EnhetType;
 import se.inera.certificate.ts_bas.model.v1.HosPersonalType;
@@ -88,7 +91,7 @@ public class ExternalToTransportConverter {
 
         utlatande.getAktivitets().addAll(convertAktiviteter(source.getAktiviteter()));
         utlatande.getObservations().addAll(convertObservationer(source.getObservationer()));
-        utlatande.getIntygAvsers().addAll(convertCodes(source.getIntygAvser()));
+        utlatande.getIntygAvsers().addAll(convertCodes(source.getIntygAvser(), IntygAvser.class));
         utlatande.getRekommendations().addAll(convertRekommendationer(source.getRekommendationer()));
         utlatande.getObservationAktivitetRelations().addAll(
                 convertObservationAktivitetRelationer(source.getObservationAktivitetRelationer()));
@@ -127,8 +130,8 @@ public class ExternalToTransportConverter {
      */
     private se.inera.certificate.ts_bas.model.ext.v1.ObservationAktivitetRelation convertObservationRelation(ObservationAktivitetRelation source) {
         se.inera.certificate.ts_bas.model.ext.v1.ObservationAktivitetRelation converted = new se.inera.certificate.ts_bas.model.ext.v1.ObservationAktivitetRelation();
-        converted.setAktivitetsid(IsoTypeConverter.toII(source.getAktivitetsid()));
-        converted.setObservationsid(IsoTypeConverter.toII(source.getObservationsid()));
+        converted.setAktivitetsid(IsoTypeConverter.toRelationId(source.getAktivitetsid()));
+        converted.setObservationsid(IsoTypeConverter.toRelationId(source.getObservationsid()));
 
         return converted;
     }
@@ -159,27 +162,20 @@ public class ExternalToTransportConverter {
      * @param source
      *            {@link Rekommendation}
      * @return {@link RekommendationType}
+     * @throws ConverterException 
      */
-    private RekommendationType convertRekommendation(Rekommendation source) {
+    private RekommendationType convertRekommendation(Rekommendation source) throws ConverterException {
         RekommendationType rekommendation = new RekommendationType();
         if (source.getBeskrivning() != null) {
             rekommendation.setBeskrivning(source.getBeskrivning());
         }
 
-        rekommendation.setRekommendationskod(IsoTypeConverter.toCD(source.getRekommendationskod()));
+        rekommendation.setRekommendationskod(IsoTypeConverter.toRekommendationKod(source.getRekommendationskod()));
 
         if (!source.getVarde().isEmpty()) {
-            rekommendation.getVardes().addAll(convertKoderToCDs(source.getVarde()));
+            rekommendation.getVardes().addAll(convertCodes(source.getVarde(), Varde.class));
         }
         return rekommendation;
-    }
-
-    private Collection<? extends CD> convertKoderToCDs(List<Kod> varde) {
-        List<CD> cds = new ArrayList<>();
-        for (Kod kod : varde) {
-            cds.add(IsoTypeConverter.toCD(kod));
-        }
-        return cds;
     }
 
     /**
@@ -190,15 +186,20 @@ public class ExternalToTransportConverter {
      * @return List of {@link CD}
      * @throws ConverterException
      */
-    private Collection<? extends CD> convertCodes(List<Kod> source) throws ConverterException {
-        if (source == null) {
-            throw new ConverterException();
+    private <T extends CD> Collection<T> convertCodes(List<Kod> source, Class<T> type) throws ConverterException {
+        try {
+            if (source == null) {
+                throw new ConverterException();
+            }
+            List<T> codes = new ArrayList<>();
+            for (Kod kod : source) {
+                codes.add(IsoTypeConverter.toCD(kod, type.newInstance()));
+            }
+            return codes;
+
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
-        List<CD> codes = new ArrayList<>();
-        for (Kod kod : source) {
-            codes.add(IsoTypeConverter.toCD(kod));
-        }
-        return codes;
     }
 
     /**
@@ -238,12 +239,12 @@ public class ExternalToTransportConverter {
             observation.setForekomst(source.getForekomst());
         }
         if (source.getLateralitet() != null) {
-            observation.setLateralitet(IsoTypeConverter.toCD(source.getLateralitet()));
+            observation.setLateralitet(IsoTypeConverter.toLateralitetKod(source.getLateralitet()));
         }
         if (source.getId() != null) {
-            observation.setObservationsId(IsoTypeConverter.toII(source.getId()));
+            observation.setObservationsId(IsoTypeConverter.toRelationId(source.getId()));
         }
-        observation.setObservationskod(IsoTypeConverter.toCD(source.getObservationskod()));
+        observation.setObservationskod(IsoTypeConverter.toObservationKod(source.getObservationskod()));
 
         if (!source.getVarde().isEmpty()) {
             observation.setVarde(IsoTypeConverter.toPQ(source.getVarde().get(0)));
@@ -282,14 +283,10 @@ public class ExternalToTransportConverter {
         AktivitetType aktivitet = new AktivitetType();
 
         if (source.getId() != null) {
-            aktivitet.setAktivitetsId(IsoTypeConverter.toII(source.getId()));
+            aktivitet.setAktivitetsId(IsoTypeConverter.toRelationId(source.getId()));
         }
 
-        aktivitet.setAktivitetskod(IsoTypeConverter.toCD(source.getAktivitetskod()));
-
-        if (source.getAktivitetsstatus() != null) {
-            aktivitet.setAktivitetsstatus(IsoTypeConverter.toCD(source.getAktivitetsstatus()));
-        }
+        aktivitet.setAktivitetskod(IsoTypeConverter.toAktivitetKod(source.getAktivitetskod()));
 
         if (source.getOstruktureradTid() != null) {
             aktivitet.setOstruktureradtid(source.getOstruktureradTid());
@@ -298,7 +295,7 @@ public class ExternalToTransportConverter {
             aktivitet.setBeskrivning(source.getBeskrivning());
         }
         if (source.getMetod() != null) {
-            aktivitet.setMetod(IsoTypeConverter.toCD(source.getMetod()));
+            aktivitet.setMetod(IsoTypeConverter.toMetodKod(source.getMetod()));
         }
         if (source.getPlats() != null) {
             aktivitet.setPlats(source.getPlats());
@@ -319,8 +316,8 @@ public class ExternalToTransportConverter {
      */
     private VardkontaktType convertVardkontakt(Vardkontakt source) {
         VardkontaktType vardkontakt = new VardkontaktType();
-        vardkontakt.setIdKontroll(IsoTypeConverter.toCD(source.getIdkontroll()));
-        vardkontakt.setVardkontakttyp(IsoTypeConverter.toCD(source.getVardkontakttyp()));
+        vardkontakt.setIdKontroll(IsoTypeConverter.toIdkontrollKod(source.getIdkontroll()));
+        vardkontakt.setVardkontakttyp(IsoTypeConverter.toVardkontaktKod(source.getVardkontakttyp()));
 
         return vardkontakt;
     }
@@ -359,31 +356,17 @@ public class ExternalToTransportConverter {
      * @param source
      *            {@link HosPersonal}
      * @return {@link HosPersonalType}
+     * @throws ConverterException 
      */
-    private HosPersonalType convertHosPersonal(HosPersonal source) {
+    private HosPersonalType convertHosPersonal(HosPersonal source) throws ConverterException {
         HosPersonalType hosPersonal = new HosPersonalType();
         hosPersonal.getBefattnings().addAll(source.getBefattningar());
         hosPersonal.setEnhet(convertVardenhet(source.getVardenhet()));
         hosPersonal.setFullstandigtNamn(source.getNamn());
         hosPersonal.setPersonalId(IsoTypeConverter.toHsaId(source.getId()));
-        hosPersonal.getSpecialitets().addAll(convertKodToCD(source.getSpecialiteter()));
+        hosPersonal.getSpecialitets().addAll(convertCodes(source.getSpecialiteter(), Specialitet.class));
 
         return hosPersonal;
-    }
-
-    /**
-     * Convert a Collection of Kod to CD.
-     *
-     * @param source
-     *            List of {@link Kod}
-     * @return List of {@link CD}
-     */
-    private Collection<? extends CD> convertKodToCD(List<Kod> source) {
-        List<CD> koder = new ArrayList<>();
-        for (Kod kod : source) {
-            koder.add(IsoTypeConverter.toCD(kod));
-        }
-        return koder;
     }
 
     /**
