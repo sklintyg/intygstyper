@@ -119,7 +119,7 @@ public class ModuleService implements ModuleApi {
         SchemaValidatorBuilder builder = new SchemaValidatorBuilder();
         Source rootSource = builder.registerResource("schemas/ts-diabetes_model.xsd");
         builder.registerResource("schemas/ts-diabetes_model_extension.xsd");
-//        builder.registerResource("schemas/core_components/clinicalprocess_healthcond_types_0.9.xsd");
+        builder.registerResource("schemas/core_components/clinicalprocess_healthcond_types_0.9.xsd");
         builder.registerResource("schemas/core_components/iso_dt_subset_1.0.xsd");
 
         transportSchema = builder.build(rootSource);

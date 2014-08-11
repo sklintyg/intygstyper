@@ -258,28 +258,12 @@ public class TransportToExternalConverter {
 
         aktivitet.setAktivitetskod(IsoTypeConverter.toKod(source.getAktivitetskod()));
 
-        if (source.getOstruktureradtid() != null) {
-            aktivitet.setOstruktureradTid(source.getOstruktureradtid());
-        }
-
-        if (source.getBeskrivning() != null) {
-            aktivitet.setBeskrivning(source.getBeskrivning());
-        }
-
-        if (source.getAktivitetsstatus() != null) {
-            aktivitet.setAktivitetsstatus(IsoTypeConverter.toKod(source.getAktivitetsstatus()));
-        }
-
         if (source.getAktivitetsId() != null) {
             aktivitet.setId(IsoTypeConverter.toId(source.getAktivitetsId()));
         }
 
         if (source.getMetod() != null) {
             aktivitet.setMetod(IsoTypeConverter.toKod(source.getMetod()));
-        }
-
-        if (source.getPlats() != null) {
-            aktivitet.setPlats(source.getPlats());
         }
 
         if (source.isForekomst() != null) {
@@ -364,7 +348,7 @@ public class TransportToExternalConverter {
      *            List of {@link CD}
      * @return List of {@link Kod}
      */
-    private List<Kod> convertCDtoKod(List<CD> source) {
+    private List<Kod> convertCDtoKod(List<? extends CD> source) {
         List<Kod> converted = new ArrayList<Kod>();
         for (CD cd : source) {
             converted.add(IsoTypeConverter.toKod(cd));

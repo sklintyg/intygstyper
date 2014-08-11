@@ -29,7 +29,6 @@ import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
-import se.inera.certificate.modules.ts_diabetes.model.converter.IsoTypeConverter;
 import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_diabetes.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_diabetes.model.external.Bilaga;
@@ -39,6 +38,8 @@ import se.inera.certificate.modules.ts_diabetes.model.external.ObservationAktivi
 import se.inera.certificate.modules.ts_diabetes.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_diabetes.model.external.Vardkontakt;
 import se.inera.certificate.ts_diabetes.iso.v21090.dt.v1.CD;
+import se.inera.certificate.ts_diabetes.model.ext.v1.IntygAvser;
+import se.inera.certificate.ts_diabetes.model.ext.v1.Specialitet;
 import se.inera.certificate.ts_diabetes.model.v1.AktivitetType;
 import se.inera.certificate.ts_diabetes.model.v1.EnhetType;
 import se.inera.certificate.ts_diabetes.model.v1.HosPersonalType;
@@ -83,7 +84,7 @@ public class ExternalToTransportConverter {
 
         utlatande.getAktivitets().addAll(convertAktiviteter(source.getAktiviteter()));
         utlatande.getObservations().addAll(convertObservationer(source.getObservationer()));
-        utlatande.getIntygAvsers().addAll(convertCodes(source.getIntygAvser()));
+        utlatande.getIntygAvsers().addAll(convertCodes(source.getIntygAvser(), IntygAvser.class));
         utlatande.getRekommendations().addAll(convertRekommendationer(source.getRekommendationer()));
         utlatande.getObservationAktivitetRelations().addAll(
                 convertObservationAktivitetRelationer(source.getObservationAktivitetRelationer()));
@@ -121,8 +122,8 @@ public class ExternalToTransportConverter {
      */
     private se.inera.certificate.ts_diabetes.model.ext.v1.ObservationAktivitetRelation convertObservationRelation(ObservationAktivitetRelation source) {
         se.inera.certificate.ts_diabetes.model.ext.v1.ObservationAktivitetRelation converted = new se.inera.certificate.ts_diabetes.model.ext.v1.ObservationAktivitetRelation();
-        converted.setAktivitetsId(IsoTypeConverter.toII(source.getAktivitetsid()));
-        converted.setObservationsId(IsoTypeConverter.toII(source.getObservationsid()));
+        converted.setAktivitetsId(IsoTypeConverter.toRelationId(source.getAktivitetsid()));
+        converted.setObservationsId(IsoTypeConverter.toRelationId(source.getObservationsid()));
 
         return converted;
     }
@@ -158,7 +159,7 @@ public class ExternalToTransportConverter {
             rekommendation.setBeskrivning(source.getBeskrivning());
         }
 
-        rekommendation.setRekommendationskod(IsoTypeConverter.toCD(source.getRekommendationskod()));
+        rekommendation.setRekommendationskod(IsoTypeConverter.toRekommendationKod(source.getRekommendationskod()));
 
         for (Object varde : source.getVarde()) {
             if (varde instanceof Kod) {
@@ -174,19 +175,25 @@ public class ExternalToTransportConverter {
     /**
      * Convert collection of Kod to collection of CD.
      *
-     * @param source List of {@link Kod}
+     * @param source
+     *            List of {@link Kod}
      * @return List of {@link CD}
      * @throws ConverterException
      */
-    private Collection<? extends CD> convertCodes(List<Kod> source) throws ConverterException {
-        if (source == null) {
-            throw new ConverterException();
+    private <T extends CD> Collection<T> convertCodes(List<Kod> source, Class<T> type) throws ConverterException {
+        try {
+            if (source == null) {
+                throw new ConverterException();
+            }
+            List<T> codes = new ArrayList<>();
+            for (Kod kod : source) {
+                codes.add(IsoTypeConverter.toCD(kod, type.newInstance()));
+            }
+            return codes;
+
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
-        List<CD> codes = new ArrayList<CD>();
-        for (Kod kod : source) {
-            codes.add(IsoTypeConverter.toCD(kod));
-        }
-        return codes;
     }
 
     /**
@@ -224,12 +231,12 @@ public class ExternalToTransportConverter {
             observation.setForekomst(source.getForekomst());
         }
         if (source.getLateralitet() != null) {
-            observation.setLateralitet(IsoTypeConverter.toCD(source.getLateralitet()));
+            observation.setLateralitet(IsoTypeConverter.toLateralitetKod(source.getLateralitet()));
         }
         if (source.getId() != null) {
-            observation.setObservationsId(IsoTypeConverter.toII(source.getId()));
+            observation.setObservationsId(IsoTypeConverter.toRelationId(source.getId()));
         }
-        observation.setObservationskod(IsoTypeConverter.toCD(source.getObservationskod()));
+        observation.setObservationskod(IsoTypeConverter.toObservationKod(source.getObservationskod()));
 
         if (!source.getVarde().isEmpty()) {
             observation.setVarde(IsoTypeConverter.toPQ(source.getVarde().get(0)));
@@ -272,27 +279,15 @@ public class ExternalToTransportConverter {
         AktivitetType aktivitet = new AktivitetType();
 
         if (source.getId() != null) {
-            aktivitet.setAktivitetsId(IsoTypeConverter.toII(source.getId()));
+            aktivitet.setAktivitetsId(IsoTypeConverter.toRelationId(source.getId()));
         }
 
-        aktivitet.setAktivitetskod(IsoTypeConverter.toCD(source.getAktivitetskod()));
+        aktivitet.setAktivitetskod(IsoTypeConverter.toAktivitetKod(source.getAktivitetskod()));
 
-        if (source.getAktivitetsstatus() != null) {
-            aktivitet.setAktivitetsstatus(IsoTypeConverter.toCD(source.getAktivitetsstatus()));
-        }
-
-        if (source.getOstruktureradTid() != null) {
-            aktivitet.setOstruktureradtid(source.getOstruktureradTid());
-        }
-        if (source.getBeskrivning() != null) {
-            aktivitet.setBeskrivning(source.getBeskrivning());
-        }
         if (source.getMetod() != null) {
-            aktivitet.setMetod(IsoTypeConverter.toCD(source.getMetod()));
+            aktivitet.setMetod(IsoTypeConverter.toMetodKod(source.getMetod()));
         }
-        if (source.getPlats() != null) {
-            aktivitet.setPlats(source.getPlats());
-        }
+
         if (source.getForekomst() != null) {
             aktivitet.setForekomst(source.getForekomst());
         }
@@ -323,14 +318,15 @@ public class ExternalToTransportConverter {
      *
      * @param source {@link HosPersonal}
      * @return {@link HosPersonalType}
+     * @throws ConverterException 
      */
-    private HosPersonalType convertHosPersonal(HosPersonal source) {
+    private HosPersonalType convertHosPersonal(HosPersonal source) throws ConverterException {
         HosPersonalType hosPersonal = new HosPersonalType();
         hosPersonal.getBefattnings().addAll(source.getBefattningar());
         hosPersonal.setEnhet(convertVardenhet(source.getVardenhet()));
         hosPersonal.setFullstandigtNamn(source.getNamn());
         hosPersonal.setPersonalId(IsoTypeConverter.toHsaId(source.getId()));
-        hosPersonal.getSpecialitets().addAll(convertKodToCD(source.getSpecialiteter()));
+        hosPersonal.getSpecialitets().addAll(convertCodes(source.getSpecialiteter(), Specialitet.class));
 
         return hosPersonal;
     }
@@ -369,20 +365,6 @@ public class ExternalToTransportConverter {
     }
 
     /**
-     * Convert a Collection of Kod to CD.
-     *
-     * @param source List of {@link Kod}
-     * @return List of {@link CD}
-     */
-    private Collection<? extends CD> convertKodToCD(List<Kod> source) {
-        List<CD> koder = new ArrayList<CD>();
-        for (Kod kod : source) {
-            koder.add(IsoTypeConverter.toCD(kod));
-        }
-        return koder;
-    }
-
-    /**
      * Convert a Vardkontakt to VardkontaktType.
      *
      * @param source {@link Vardkontakt}
@@ -390,15 +372,15 @@ public class ExternalToTransportConverter {
      */
     private VardkontaktType convertVardkontakt(Vardkontakt source) {
         VardkontaktType vardkontakt = new VardkontaktType();
-        vardkontakt.setIdKontroll(IsoTypeConverter.toCD(source.getIdkontroll()));
-        vardkontakt.setVardkontakttyp(IsoTypeConverter.toCD(source.getVardkontakttyp()));
+        vardkontakt.setIdKontroll(IsoTypeConverter.toIdkontrollKod(source.getIdkontroll()));
+        vardkontakt.setVardkontakttyp(IsoTypeConverter.toVardkontaktKod(source.getVardkontakttyp()));
 
         return vardkontakt;
     }
 
     private se.inera.certificate.ts_diabetes.model.ext.v1.Bilaga convertBilaga(Bilaga source) {
         se.inera.certificate.ts_diabetes.model.ext.v1.Bilaga bilaga = new se.inera.certificate.ts_diabetes.model.ext.v1.Bilaga();
-        bilaga.setBilagetyp(IsoTypeConverter.toCD(source.getBilagetyp()));
+        bilaga.setBilagetyp(IsoTypeConverter.toBilagaKod(source.getBilagetyp()));
         bilaga.setForekomst(source.getForekomst());
 
         return bilaga;

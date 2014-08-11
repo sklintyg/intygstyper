@@ -27,33 +27,132 @@
 
   <xs:import namespace="urn:iso:21090:dt:1" schemaLocation="core_components/iso_dt_subset_1.0.xsd"/>
 
-  <xs:element name="specialitet" type="iso:CD"/>
+  <xs:element name="specialitet" type="specialitetKod"/>
+  <xs:complexType name="specialitetKod">
+    <xs:complexContent>
+      <xs:restriction base="iso:CD">
+        <xs:attribute name="code" type="specialitetKodEnum" use="required"/>
+        <xs:attribute name="codeSystem" type="iso:Uid" use="required" fixed="coming_soon"/>
+        <xs:attribute name="codeSystemName" type="xs:string" use="required" fixed="kv_intyg_specialitet"/>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="specialitetKodEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SPEC"/>
+    </xs:restriction>
+  </xs:simpleType>
 
-  <xs:element name="metod" type="iso:CD"/>
+  <xs:element name="metod" type="metodKod"/>
+  <xs:complexType name="metodKod">
+    <xs:complexContent>
+      <xs:restriction base="iso:CD">
+        <xs:attribute name="code" type="metodKodEnum" use="required"/>
+        <xs:attribute name="codeSystem" type="iso:Uid" use="required" fixed="b0c078c6-512a-42a5-ab42-a3380f369ac3"/>
+        <xs:attribute name="codeSystemName" type="xs:string" use="required" fixed="kv_metod"/>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="metodKodEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MET1"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:element name="plats" type="xs:string"/>
   <xs:element name="ostruktureradtid" type="xs:string"/>
 
   <xs:element name="varde" type="xs:anyType"/>
 
-  <xs:element name="lateralitet" type="iso:CD"/>
+  <xs:element name="lateralitet" type="lateralitetKod"/>
+  <xs:complexType name="lateralitetKod">
+    <xs:complexContent>
+      <xs:restriction base="iso:CD">
+        <xs:attribute name="code" type="lateralitetKodEnum" use="required"/>
+        <xs:attribute name="codeSystem" type="iso:Uid" use="required" fixed="1.2.752.116.2.1.1.1"/>
+        <xs:attribute name="codeSystemName" type="xs:string" use="required" fixed="SNOMED-CT"/>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="lateralitetKodEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="24028007"/>
+      <xs:enumeration value="7771000"/>
+      <xs:enumeration value="51440002"/>
+    </xs:restriction>
+  </xs:simpleType>
 
-  <xs:element name="intygAvser" type="iso:CD"/>
+  <xs:element name="intygAvser" type="intygAvserKod"/>
+  <xs:complexType name="intygAvserKod">
+    <xs:complexContent>
+      <xs:restriction base="iso:CD">
+        <xs:attribute name="code" type="intygAvserKodEnum" use="required"/>
+        <xs:attribute name="codeSystem" type="iso:Uid" use="required" fixed="24c41b8d-258a-46bf-a08a-b90738b28770"/>
+        <xs:attribute name="codeSystemName" type="xs:string" use="required" fixed="kv_intyget_avser"/>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="intygAvserKodEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="IAV1"/>
+      <xs:enumeration value="IAV2"/>
+      <xs:enumeration value="IAV3"/>
+      <xs:enumeration value="IAV4"/>
+      <xs:enumeration value="IAV5"/>
+      <xs:enumeration value="IAV6"/>
+      <xs:enumeration value="IAV7"/>
+      <xs:enumeration value="IAV8"/>
+      <xs:enumeration value="IAV9"/>
+      <xs:enumeration value="IAV10"/>
+      <xs:enumeration value="IAV11"/>
+      <xs:enumeration value="IAV12"/>
+      <xs:enumeration value="IAV13"/>
+      <xs:enumeration value="IAV14"/>
+      <xs:enumeration value="IAV15"/>
+      <xs:enumeration value="IAV16"/>
+      <xs:enumeration value="IAV17"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="bilaga" type="bilagaType"/>
   <xs:complexType name="bilagaType">
     <xs:sequence>
-      <xs:element name="bilagetyp" type="iso:CD"/>
+      <xs:element name="bilagetyp" type="bilagaKod"/>
       <xs:element name="forekomst" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="bilaga" type="bilagaType"/>
+  <xs:complexType name="bilagaKod">
+    <xs:complexContent>
+      <xs:restriction base="iso:CD">
+        <xs:attribute name="code" type="bilagaTypeKodEnum" use="required"/>
+        <xs:attribute name="codeSystem" type="iso:Uid" use="required" fixed="80595600-7477-4a6c-baeb-d2439e86b8bc"/>
+        <xs:attribute name="codeSystemName" type="xs:string" use="required" fixed="kv_bilaga"/>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="bilagaTypeKodEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BIL1"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:element name="utgava" type="xs:string"/>
   <xs:element name="version" type="xs:string"/>
 
   <xs:element name="observationAktivitetRelation" type="observationAktivitetRelationType"/>
   <xs:complexType name="observationAktivitetRelationType">
     <xs:sequence>
-      <xs:element name="observations-id" type="iso:II"/>
-      <xs:element name="aktivitets-id" type="iso:II"/>
+      <xs:element name="observations-id" type="relationId"/>
+      <xs:element name="aktivitets-id" type="relationId"/>
     </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="relationId">
+    <xs:complexContent>
+      <xs:restriction base="iso:II">
+        <xs:attribute name="root" type="iso:Uid" use="required" />
+        <xs:attribute name="extension" type="xs:string" use="required"/>
+      </xs:restriction>
+    </xs:complexContent>
   </xs:complexType>
 
 </xs:schema>

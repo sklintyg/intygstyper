@@ -24,26 +24,12 @@ import se.inera.certificate.model.Kod;
  * The aktivitet used by RLI. This class is a copy of the common external model (defined in se.inera.certificate.model),
  * extending with:
  * <ul>
- * <li> {@link #plats}
+ * <li> {@link #metod}
  * </ul>
  */
 public class Aktivitet extends se.inera.certificate.model.Aktivitet {
 
-    private String plats;
-
     private Kod metod;
-
-    private Kod aktivitetsstatus;
-
-    private String ostruktureradTid;
-
-    public String getPlats() {
-        return plats;
-    }
-
-    public void setPlats(String plats) {
-        this.plats = plats;
-    }
 
     public Kod getMetod() {
         return metod;
@@ -51,21 +37,5 @@ public class Aktivitet extends se.inera.certificate.model.Aktivitet {
 
     public void setMetod(Kod metod) {
         this.metod = metod;
-    }
-
-    public Kod getAktivitetsstatus() {
-        return aktivitetsstatus;
-    }
-
-    public void setAktivitetsstatus(Kod aktivitetsstatus) {
-        this.aktivitetsstatus = aktivitetsstatus;
-    }
-
-    public String getOstruktureradTid() {
-        return ostruktureradTid;
-    }
-
-    public void setOstruktureradTid(String ostruktureradTid) {
-        this.ostruktureradTid = ostruktureradTid;
     }
 }

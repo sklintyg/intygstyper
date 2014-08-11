@@ -24,11 +24,20 @@ import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.ts_diabetes.iso.v21090.dt.v1.CD;
 import se.inera.certificate.ts_diabetes.iso.v21090.dt.v1.II;
 import se.inera.certificate.ts_diabetes.iso.v21090.dt.v1.PQ;
+import se.inera.certificate.ts_diabetes.model.ext.v1.BilagaKod;
+import se.inera.certificate.ts_diabetes.model.ext.v1.Lateralitet;
+import se.inera.certificate.ts_diabetes.model.ext.v1.Metod;
+import se.inera.certificate.ts_diabetes.model.ext.v1.RelationId;
+import se.inera.certificate.ts_diabetes.model.v1.AktivitetKod;
 import se.inera.certificate.ts_diabetes.model.v1.ArbetsplatsKod;
 import se.inera.certificate.ts_diabetes.model.v1.HsaId;
+import se.inera.certificate.ts_diabetes.model.v1.IdKontrollKod;
+import se.inera.certificate.ts_diabetes.model.v1.ObservationKod;
 import se.inera.certificate.ts_diabetes.model.v1.PersonId;
+import se.inera.certificate.ts_diabetes.model.v1.RekommendationKod;
 import se.inera.certificate.ts_diabetes.model.v1.UtlatandeId;
 import se.inera.certificate.ts_diabetes.model.v1.UtlatandeTyp;
+import se.inera.certificate.ts_diabetes.model.v1.VardkontaktKod;
 
 public final class IsoTypeConverter {
 
@@ -42,59 +51,38 @@ public final class IsoTypeConverter {
         return new Id(ii.getRoot(), ii.getExtension());
     }
 
-    public static II toII(Id id) {
+    public static <E extends II> E toII(Id id, E instance) {
         if (id == null) {
             return null;
         }
 
-        II ii = new II();
-        ii.setRoot(id.getRoot());
-        ii.setExtension(id.getExtension());
-        return ii;
+        instance.setRoot(id.getRoot());
+        instance.setExtension(id.getExtension());
+        return instance;
+    }
+
+    public static II toII(Id id) {
+        return toII(id, new II());
     }
 
     public static HsaId toHsaId(Id id) {
-        if (id == null) {
-            return null;
-        }
-
-        HsaId hsaId = new HsaId();
-        hsaId.setRoot(id.getRoot());
-        hsaId.setExtension(id.getExtension());
-        return hsaId;
+        return toII(id, new HsaId());
     }
 
     public static PersonId toPersonId(Id id) {
-        if (id == null) {
-            return null;
-        }
-
-        PersonId personId = new PersonId();
-        personId.setRoot(id.getRoot());
-        personId.setExtension(id.getExtension());
-        return personId;
+        return toII(id, new PersonId());
     }
 
     public static ArbetsplatsKod toArbetsplatsKod(Id id) {
-        if (id == null) {
-            return null;
-        }
-
-        ArbetsplatsKod arbetsplatskod = new ArbetsplatsKod();
-        arbetsplatskod.setRoot(id.getRoot());
-        arbetsplatskod.setExtension(id.getExtension());
-        return arbetsplatskod;
+        return toII(id, new ArbetsplatsKod());
     }
 
     public static UtlatandeId toUtlatandeId(Id id) {
-        if (id == null) {
-            return null;
-        }
+        return toII(id, new UtlatandeId());
+    }
 
-        UtlatandeId utlatandeId = new UtlatandeId();
-        utlatandeId.setRoot(id.getRoot());
-        utlatandeId.setExtension(id.getExtension());
-        return utlatandeId;
+    public static RelationId toRelationId(Id id) {
+        return toII(id, new RelationId());
     }
 
     public static Kod toKod(CD cd) {
@@ -104,31 +92,55 @@ public final class IsoTypeConverter {
         return new Kod(cd.getCodeSystem(), cd.getCodeSystemName(), cd.getCodeSystemVersion(), cd.getCode());
     }
 
-    public static CD toCD(Kod kod) {
+    public static <E extends CD> E toCD(Kod kod, E instance) {
         if (kod == null) {
             return null;
         }
-        CD cd = new CD();
-        cd.setCode(kod.getCode());
-        cd.setCodeSystem(kod.getCodeSystem());
-        cd.setCodeSystemName(kod.getCodeSystemName());
-        if (kod.getCodeSystemVersion() != null) {
-            cd.setCodeSystemVersion(kod.getCodeSystemVersion());
-        }
-        return cd;
+        instance.setCode(kod.getCode());
+        instance.setCodeSystem(kod.getCodeSystem());
+        instance.setCodeSystemName(kod.getCodeSystemName());
+        instance.setCodeSystemVersion(kod.getCodeSystemVersion());
+        return instance;
+    }
+
+    public static CD toCD(Kod kod) {
+        return toCD(kod, new CD());
     }
 
     public static UtlatandeTyp toUtlatandeTyp(Kod kod) {
-        if (kod == null) {
-            return null;
-        }
-        UtlatandeTyp utlatandeTyp = new UtlatandeTyp();
-        utlatandeTyp.setCode(kod.getCode());
-        utlatandeTyp.setCodeSystem(kod.getCodeSystem());
-        utlatandeTyp.setCodeSystemName(kod.getCodeSystemName());
-        utlatandeTyp.setCodeSystemVersion(kod.getCodeSystemVersion());
+        return toCD(kod, new UtlatandeTyp());
+    }
 
-        return utlatandeTyp;
+    public static VardkontaktKod toVardkontaktKod(Kod kod) {
+        return toCD(kod, new VardkontaktKod());
+    }
+
+    public static IdKontrollKod toIdkontrollKod(Kod kod) {
+        return toCD(kod, new IdKontrollKod());
+    }
+
+    public static AktivitetKod toAktivitetKod(Kod kod) {
+        return toCD(kod, new AktivitetKod());
+    }
+
+    public static ObservationKod toObservationKod(Kod kod) {
+        return toCD(kod, new ObservationKod());
+    }
+
+    public static RekommendationKod toRekommendationKod(Kod kod) {
+        return toCD(kod, new RekommendationKod());
+    }
+
+    public static Lateralitet toLateralitetKod(Kod kod) {
+        return toCD(kod, new Lateralitet());
+    }
+
+    public static Metod toMetodKod(Kod kod) {
+        return toCD(kod, new Metod());
+    }
+    
+    public static BilagaKod toBilagaKod(Kod kod) {
+        return toCD(kod, new BilagaKod());
     }
 
     public static PhysicalQuantity toPhysicalQuantity(PQ pq) {
@@ -153,3 +165,4 @@ public final class IsoTypeConverter {
         return pq;
     }
 }
+
