@@ -31,10 +31,27 @@
   <xs:element name="prognos" type="prognosType"/>
   <xs:complexType name="prognosType">
     <xs:sequence>
-      <xs:element name="prognoskod" type="iso:CD" minOccurs="0"/>
+      <xs:element name="prognoskod" type="prognosKod" minOccurs="0"/>
       <xs:element name="beskrivning" type="nonEmptyString" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="prognosKod">
+    <xs:complexContent>
+      <xs:restriction base="iso:CD">
+        <xs:attribute name="code" type="prognosKodEnum" use="required"/>
+        <xs:attribute name="codeSystem" type="iso:Uid" use="required" fixed="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7"/>
+        <xs:attribute name="codeSystemName" type="xs:string" use="required" fixed="kv_prognos_intyg"/>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="prognosKodEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PRO1"/>
+      <xs:enumeration value="PRO2"/>
+      <xs:enumeration value="PRO3"/>
+      <xs:enumeration value="PRO4"/>
+    </xs:restriction>
+  </xs:simpleType>
 
   <xs:simpleType name="nonEmptyString">
     <xs:restriction base="xs:string">

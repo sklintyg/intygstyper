@@ -80,7 +80,7 @@ public final class ExternalToTransportConverter {
             return null;
         }
         ReferensType referens = new ReferensType();
-        referens.setReferenstyp(IsoTypeConverter.toCD(source.getReferenstyp()));
+        referens.setReferenstyp(IsoTypeConverter.toReferensKod(source.getReferenstyp()));
         referens.setReferensdatum(source.getDatum());
         return referens;
     }
@@ -98,7 +98,7 @@ public final class ExternalToTransportConverter {
 
     private VardkontaktType convert(Vardkontakt source) {
         VardkontaktType vardkontakt = new VardkontaktType();
-        vardkontakt.setVardkontakttyp(IsoTypeConverter.toCD(source.getVardkontakttyp()));
+        vardkontakt.setVardkontakttyp(IsoTypeConverter.toVardkontaktKod(source.getVardkontakttyp()));
 
         if (source.getVardkontaktstid() != null) {
             DateInterval vardkontakttid = new DateInterval();
@@ -122,8 +122,8 @@ public final class ExternalToTransportConverter {
 
     private ObservationType convert(Fk7263Observation source) {
         ObservationType observation = new ObservationType();
-        observation.setObservationskategori(IsoTypeConverter.toCD(source.getObservationskategori()));
-        observation.setObservationskod(IsoTypeConverter.toCD(source.getObservationskod()));
+        observation.setObservationskategori(IsoTypeConverter.toObservationKategoriKod(source.getObservationskategori()));
+        observation.setObservationskod(IsoTypeConverter.toObservationKod(source.getObservationskod()));
 
         if (source.getObservationsperiod() != null) {
             DateInterval interval = new DateInterval();
@@ -173,7 +173,7 @@ public final class ExternalToTransportConverter {
         }
 
         Prognos prognos = new Prognos();
-        prognos.setPrognoskod(IsoTypeConverter.toCD(source.getPrognoskod()));
+        prognos.setPrognoskod(IsoTypeConverter.toPrognosKod(source.getPrognoskod()));
         prognos.setBeskrivning(source.getBeskrivning());
         return prognos;
     }
@@ -192,7 +192,7 @@ public final class ExternalToTransportConverter {
 
     private AktivitetType convert(Fk7263Aktivitet source) {
         AktivitetType aktivitet = new AktivitetType();
-        aktivitet.setAktivitetskod(IsoTypeConverter.toCD(source.getAktivitetskod()));
+        aktivitet.setAktivitetskod(IsoTypeConverter.toAktivitetKod(source.getAktivitetskod()));
         aktivitet.setBeskrivning(source.getBeskrivning());
         return aktivitet;
     }
@@ -288,7 +288,7 @@ public final class ExternalToTransportConverter {
             return null;
         }
         SysselsattningType sysselsattning = new SysselsattningType();
-        sysselsattning.setTypAvSysselsattning(IsoTypeConverter.toCD(source.getSysselsattningstyp()));
+        sysselsattning.setTypAvSysselsattning(IsoTypeConverter.toSysselsattningKod(source.getSysselsattningstyp()));
         return sysselsattning;
     }
 

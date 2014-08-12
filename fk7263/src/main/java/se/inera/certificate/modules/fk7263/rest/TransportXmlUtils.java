@@ -46,6 +46,7 @@ public final class TransportXmlUtils {
             SchemaValidatorBuilder schemaValidatorBuilder = new SchemaValidatorBuilder();
             Source rootSource = schemaValidatorBuilder.registerResource("/schemas/fk7263_model.xsd");
             schemaValidatorBuilder.registerResource("/schemas/core_components/iso_dt_subset_1.0.xsd");
+            schemaValidatorBuilder.registerResource("/schemas/core_components/clinicalprocess_healthcond_types_0.9.xsd");
             schemaValidatorBuilder.registerResource("/schemas/fk7263_model_extension.xsd");
 
             utlatandeSchema = schemaValidatorBuilder.build(rootSource);
