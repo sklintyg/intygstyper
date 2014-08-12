@@ -182,6 +182,6 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
              * Print draft
              */
             $scope.print = function() {
-                $window.print();
+                ManageCertView.printDraft($scope.cert.id);
             };
         }]);

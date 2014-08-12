@@ -1,7 +1,7 @@
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
-    [ '$anchorScroll', '$filter', '$location', '$scope', '$window', '$log', 'common.CertificateService',
+    [ '$anchorScroll', '$filter', '$location', '$scope', '$log', 'common.CertificateService',
         'common.ManageCertView', 'common.User',
-        function($anchorScroll, $filter, $location, $scope, $window, $log, CertificateService, ManageCertView, User) {
+        function($anchorScroll, $filter, $location, $scope, $log, CertificateService, ManageCertView, User) {
             'use strict';
 
             $scope.cert = {};
@@ -424,7 +424,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Print draft
              */
             $scope.print = function() {
-                $window.print();
+                ManageCertView.printDraft($scope.cert.id);
             };
 
             /**

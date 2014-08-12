@@ -143,6 +143,6 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
              * Print draft
              */
             $scope.print = function() {
-                $window.print();
+                ManageCertView.printDraft($scope.cert.id);
             };
         }]);

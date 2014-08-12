@@ -2,9 +2,9 @@
  * Common certificate management methods between certificate modules
  */
 angular.module('common').factory('common.ManageCertView',
-    [ '$document', '$log', '$location', '$route', '$routeParams', '$timeout', 'common.CertificateService',
+    [ '$document', '$log', '$location', '$route', '$routeParams', '$timeout', '$window', 'common.CertificateService',
         'common.dialogService', 'common.messageService', 'common.statService', 'common.User',
-        function($document, $log, $location, $route, $routeParams, $timeout, CertificateService, dialogService,
+        function($document, $log, $location, $route, $routeParams, $timeout, $window, CertificateService, dialogService,
             messageService, statService, User) {
             'use strict';
 
@@ -275,6 +275,13 @@ angular.module('common').factory('common.ManageCertView',
                 return false;
             }
 
+            function _printDraft(intygId) {
+                $window.print();
+                CertificateService.logPrint(intygId, function(data) {
+                        $log.debug('_logPrint, success: ' + data);
+                    });
+            }
+
 
             // Return public API for the service
             return {
@@ -284,6 +291,7 @@ angular.module('common').factory('common.ManageCertView',
                 signera: signera,
                 isRevoked: _isRevoked,
                 isSentToTarget: _isSentToTarget,
+                printDraft: _printDraft,
 
                 __test__: {
                     confirmSignera: _confirmSignera

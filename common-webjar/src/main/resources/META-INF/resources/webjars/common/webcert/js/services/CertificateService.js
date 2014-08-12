@@ -139,6 +139,18 @@ angular.module('common').factory('common.CertificateService',
                 });
         }
 
+        function _logPrint(intygId, onSuccess, onError) {
+            $log.debug('_logPrint, intygId: ' + intygId);
+            var restPath = '/moduleapi/intyg/draft/logprint';
+            $http.post(restPath, intygId).
+                success(function(data) {
+                    onSuccess(data);
+                }).
+                error(function(error) {
+                    _handleError(onError, error);
+                });
+        }
+
         // Return public API for the service
         return {
             getCertificate: _getCertificate,
@@ -149,6 +161,7 @@ angular.module('common').factory('common.CertificateService',
             getSigneringsstatus: _getSigneringsstatus,
             signeraUtkast: _signeraUtkast,
             signeraUtkastWithSignatur: _signeraUtkastWithSignatur,
-            sendSigneratIntyg: _sendSigneratIntyg
+            sendSigneratIntyg: _sendSigneratIntyg,
+            logPrint: _logPrint
         };
     });
