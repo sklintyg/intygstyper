@@ -127,10 +127,10 @@ angular.module('common').factory('common.CertificateService',
                 });
         }
 
-        function _sendSigneratIntyg(intygId, onSuccess, onError) {
-            $log.debug('_sendSigneratIntyg: ' + intygId);
-            var restPath = '/moduleapi/intyg/skicka/' + intygId;
-            $http.post(restPath).
+        function _sendSigneratIntyg(cert, recipientId, patientConsent, onSuccess, onError) {
+            $log.debug('_sendSigneratIntyg: ' + cert.id);
+            var restPath = '/moduleapi/intyg/signed/' + cert.id + '/send';
+            $http.post(restPath, {"recipient": recipientId, "patientConsent": patientConsent}).
                 success(function(data) {
                     onSuccess(data);
                 }).

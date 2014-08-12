@@ -23,7 +23,7 @@
 
         <form id="view-as-pdf" action="{{pdfUrl}}" method="get" target="_blank" name="pdfForm">
           <p class="btn-row">
-            <button id="sendBtn" class="btn btn-info" ng-click="send(cert)">Skicka till Försäkringskassan</button>
+            <button id="sendBtn" class="btn btn-info" ng-if="!certProperties.isSent" ng-click="send(cert)">Skicka till Försäkringskassan</button>
             <button id="downloadprint" type="submit" value="submit" class="btn btn-info" onClick="document.pdfForm.submit()">Skriv ut</button>
             <button id="copyBtn" class="btn btn-info" ng-click="copy(cert)">Kopiera</button>
             <button class="btn btn-inverse">Rätta</button>
