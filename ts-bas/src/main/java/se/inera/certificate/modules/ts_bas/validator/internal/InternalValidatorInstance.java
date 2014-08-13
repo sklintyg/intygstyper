@@ -23,6 +23,7 @@ import se.inera.certificate.modules.ts_bas.model.internal.Medvetandestorning;
 import se.inera.certificate.modules.ts_bas.model.internal.NarkotikaLakemedel;
 import se.inera.certificate.modules.ts_bas.model.internal.Neurologi;
 import se.inera.certificate.modules.ts_bas.model.internal.Njurar;
+import se.inera.certificate.modules.ts_bas.model.internal.Patient;
 import se.inera.certificate.modules.ts_bas.model.internal.Psykiskt;
 import se.inera.certificate.modules.ts_bas.model.internal.Sjukhusvard;
 import se.inera.certificate.modules.ts_bas.model.internal.SomnVakenhet;
@@ -88,10 +89,20 @@ public class InternalValidatorInstance {
             validateSomnVakenhet(utlatande.getSomnVakenhet());
             validatePsykiskt(utlatande.getPsykiskt());
             validateUtvecklingsstorning(utlatande.getUtvecklingsstorning());
+            validatePatient(utlatande.getPatient());
         }
 
         ValidateDraftResponse response = new ValidateDraftResponse(getValidationStatus(), validationMessages);
         return response;
+    }
+
+    private void validatePatient(Patient patient) {
+        if (patient == null) {
+            return;
+        }
+        assertDescriptionNotEmpty(patient.getPostadress(), "patient.postadress", "ts-bas.validation.patient.postadress.missing");
+        assertDescriptionNotEmpty(patient.getPostnummer(), "patient.postnummer", "ts-bas.validation.patient.postnummer.missing");
+        assertDescriptionNotEmpty(patient.getPostort(), "patient.postort", "ts-bas.validation.patient.postort.missing");
     }
 
     private void validateIdentitetStyrkt(Vardkontakt vardkontakt) {

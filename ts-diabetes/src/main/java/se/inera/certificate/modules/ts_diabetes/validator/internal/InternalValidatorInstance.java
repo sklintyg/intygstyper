@@ -16,6 +16,7 @@ import se.inera.certificate.modules.ts_diabetes.model.internal.Diabetes;
 import se.inera.certificate.modules.ts_diabetes.model.internal.HoSPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Hypoglykemier;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvser;
+import se.inera.certificate.modules.ts_diabetes.model.internal.Patient;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
@@ -61,11 +62,21 @@ public class InternalValidatorInstance {
             validateIdentitetStyrkt(utlatande.getVardkontakt());
             validateSyn(utlatande.getSyn());
             validateHypoglykemi(utlatande.getHypoglykemier());
+            validatePatient(utlatande.getPatient());
         }
 
         ValidateDraftResponse response = new ValidateDraftResponse(getValidationStatus(), validationMessages);
 
         return response;
+    }
+
+    private void validatePatient(Patient patient) {
+        if (patient == null) {
+            return;
+        }
+        assertDescriptionNotEmpty(patient.getPostadress(), "patient.postadress", "ts-diabetes.validation.patient.postadress.missing");
+        assertDescriptionNotEmpty(patient.getPostnummer(), "patient.postnummer", "ts-diabetes.validation.patient.postnummer.missing");
+        assertDescriptionNotEmpty(patient.getPostort(), "patient.postort", "ts-diabetes.validation.patient.postort.missing");
     }
 
     private void validateHypoglykemi(Hypoglykemier hypoglykemier) {
