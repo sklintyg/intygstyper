@@ -111,6 +111,42 @@
               <div id="certificate" class="row certificate">
                 <div class="col-md-12 cert-body">
 
+                  <div wc-field field-label="ts-bas.label.patientadress">
+                    <div class="alert alert-danger" ng-if="validationMessagesGrouped.patient">
+                      <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.patient"><span message
+                                                                                           key="{{message.message}}"></span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="form-horizontal">
+                      <div class="form-group">
+                        <label class="col-xs-3 control-label"><span message key="ts-bas.form.postadress"></span></label>
+                        <div class="col-xs-9">
+                          <input type="text" class="form-control input-full" id="patient.postadress"
+                                 name="cert.patient.postadress" ng-model="cert.patient.postadress">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="col-xs-3 control-label"><span message key="ts-bas.form.postnummer"></span></label>
+                        <div class="col-xs-9">
+                          <input type="text" class="form-control input-5" id="patient.postnummer"
+                                 name="cert.patient.postnummer" ng-model="cert.patient.postnummer">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="col-xs-3 control-label"><span message key="ts-bas.form.postort"></span></label>
+                        <div class="col-xs-9">
+                          <input type="text" class="form-control" id="patient.postort"
+                                 name="cert.patient.postort" ng-model="cert.patient.postort">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                   <div wc-field field-label="ts-diabetes.label.intygavser"
                        field-help-text="ts-diabetes.helptext.intyget-avser">
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.intygavser">
