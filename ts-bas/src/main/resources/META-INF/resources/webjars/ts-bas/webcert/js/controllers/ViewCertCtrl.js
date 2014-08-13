@@ -60,34 +60,39 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
                 isRevoked: false
             };
 
-            CertificateService.getCertificate($routeParams.certificateId, function(result) {
-                $scope.widgetState.doneLoading = true;
-                if (result !== null) {
-                    $scope.cert = result.contents;
-                    if ($scope.cert.syn.synfaltsdefekter === true || $scope.cert.syn.nattblindhet === true ||
-                        $scope.cert.syn.progressivOgonsjukdom === true) {
-                        $scope.achelptext = true;
+            function loadCertificate() {
+                CertificateService.getCertificate($routeParams.certificateId, function(result) {
+                    $scope.widgetState.doneLoading = true;
+                    if (result !== null) {
+                        $scope.cert = result.contents;
+                        if ($scope.cert.syn.synfaltsdefekter === true || $scope.cert.syn.nattblindhet === true ||
+                            $scope.cert.syn.progressivOgonsjukdom === true) {
+                            $scope.achelptext = true;
+                        }
+                        $rootScope.$emit('ts-bas.ViewCertCtrl.load', result.metaData);
+                        $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'TS');
+                        $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
+                    } else {
+                        $log.debug('Got error while loading cert - invalid data');
+                        $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
                     }
-                    $rootScope.$emit('ts-bas.ViewCertCtrl.load', result.metaData);
-                    $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'TS');
-                    $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
-                } else {
-                    $log.debug('Got error while loading cert - invalid data');
-                    $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
-                }
-            }, function(error) {
-                $scope.widgetState.doneLoading = true;
-                $log.debug('Got error while loading cert: ' + error.message);
-                if (error.errorCode === 'DATA_NOT_FOUND') {
-                    $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
-                } else {
-                    $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
-                }
-            });
+                }, function(error) {
+                    $scope.widgetState.doneLoading = true;
+                    $log.debug('Got error while loading cert: ' + error.message);
+                    if (error.errorCode === 'DATA_NOT_FOUND') {
+                        $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
+                    } else {
+                        $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
+                    }
+                });
+            }
+            loadCertificate();
 
             ManageCertificate.initSend($scope);
             $scope.send = function(cert) {
-                ManageCertificate.send($scope, cert, 'ts-bas.label.send');
+                ManageCertificate.send($scope, cert, 'TS', 'ts-bas.label.send', function() {
+                        loadCertificate();
+                    });
             };
 
             $scope.copy = function(cert) {

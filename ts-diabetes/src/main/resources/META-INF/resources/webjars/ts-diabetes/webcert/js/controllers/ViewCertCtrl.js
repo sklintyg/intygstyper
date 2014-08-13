@@ -56,25 +56,28 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                 isRevoked: false
             };
 
-            CertificateService.getCertificate($routeParams.certificateId, function(result) {
-                $scope.widgetState.doneLoading = true;
-                if (result !== null && result !== '') {
-                    $scope.cert = result.contents;
-                    $rootScope.$emit('ts-diabetes.ViewCertCtrl.load', result.metaData);
-                    $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'TS');
-                    $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
-                } else {
-                    $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
-                }
-            }, function(error) {
-                $scope.widgetState.doneLoading = true;
-                $log.debug('got error' + error.message);
-                if (error.errorCode === 'DATA_NOT_FOUND') {
-                    $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
-                } else {
-                    $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
-                }
-            });
+            function loadCertificate() {
+                CertificateService.getCertificate($routeParams.certificateId, function(result) {
+                    $scope.widgetState.doneLoading = true;
+                    if (result !== null && result !== '') {
+                        $scope.cert = result.contents;
+                        $rootScope.$emit('ts-diabetes.ViewCertCtrl.load', result.metaData);
+                        $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'TS');
+                        $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
+                    } else {
+                        $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
+                    }
+                }, function(error) {
+                    $scope.widgetState.doneLoading = true;
+                    $log.debug('got error' + error.message);
+                    if (error.errorCode === 'DATA_NOT_FOUND') {
+                        $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
+                    } else {
+                        $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
+                    }
+                });
+            }
+            loadCertificate();
 
             /**
              * Exposed scope interaction functions
@@ -82,7 +85,9 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
 
             ManageCertificate.initSend($scope);
             $scope.send = function(cert) {
-                ManageCertificate.send($scope, cert, 'ts-diabetes.label.send');
+                ManageCertificate.send($scope, cert, 'TS', 'ts-diabetes.label.send', function() {
+                        loadCertificate();
+                    });
             };
 
             $scope.copy = function(cert) {

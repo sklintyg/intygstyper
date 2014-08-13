@@ -13,7 +13,7 @@
 
         <form id="view-as-pdf" action="{{pdfUrl}}" method="get" target="_blank" name="pdfForm">
           <p class="btn-row">
-            <button id="sendBtn" class="btn btn-info" ng-click="send(cert)">Skicka till Transportstyrelsen</button>
+            <button id="sendBtn" class="btn btn-info" ng-if="!certProperties.isSent" ng-click="send(cert)">Skicka till Transportstyrelsen</button>
             <button id="downloadprint" type="submit" value="submit" class="btn btn-info"
                     onClick="document.pdfForm.submit()">Skriv ut
             </button>
@@ -26,7 +26,7 @@
 
       <div class="alert alert-info alert-column" ng-if="!certProperties.isRevoked">
         <strong>Status:</strong>
-        <span ng-if="certProperties.isSent" id="certificate-is-sent-to-fk-message-text">Intyget är signerat och skickat till Transportstyrelsen.</span>
+        <span ng-if="certProperties.isSent" id="certificate-is-sent-to-recipient-message-text">Intyget är signerat och skickat till Transportstyrelsen.</span>
             <span ng-if="!certProperties.isSent" id="certificate-is-sent-to-it-message-text">
               Intyget är signerat och är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se.
               Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till
