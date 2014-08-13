@@ -174,6 +174,10 @@ var tsBasMessages = {
         // Validation messages starting
         'ts-bas.validation.utlatande.missing': 'Utlatande saknas',
 
+        'ts-bas.validation.patient.postadress.missing': 'Postadress saknas.',
+        'ts-bas.validation.patient.postnummer.missing': 'Postnummer saknas',
+        'ts-bas.validation.patient.postort.missing': 'Postort saknas',
+
         'ts-bas.validation.vardenhet.postadress.missing': 'Kunde inte hämta postadress för vårdenheten från HSA, måste ifyllas manuellt',
         'ts-bas.validation.vardenhet.postnummer.missing': 'Kunde inte hämta postnummer för vårdenheten från HSA, måste ifyllas manuellt',
         'ts-bas.validation.vardenhet.postnummer.incorrect-format': 'Postnummer måste anges i formatet XXX XX eller XXXXX (exempelvis 123 45)',

@@ -111,6 +111,10 @@ var tsDiabetesMessages = {
         'ts-diabetes.helptext.synfunktioner.med-korrektion': 'Uppgiften är obligatorisk om föreskriven synskärpa endast uppnås med korrektion. Definition av föreskriven synskärpa finns i Transportstyrelsens föreskrifter.',
 
         // Validation messages
+        'ts-diabetes.validation.patient.postadress.missing': 'Postadress saknas.',
+        'ts-diabetes.validation.patient.postnummer.missing': 'Postnummer saknas',
+        'ts-diabetes.validation.patient.postort.missing': 'Postort saknas',
+
         'ts-diabetes.validation.utlatande.missing': 'Utlatande saknas',
 
         'ts-diabetes.validation.vardenhet.postadress.missing': 'Kunde inte hämta postadress för vårdenheten från HSA, måste ifyllas manuellt',
