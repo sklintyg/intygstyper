@@ -109,8 +109,9 @@ public final class TransportToExternalConverter {
         observation.setObservationskod(IsoTypeConverter.toKod(source.getObservationskod()));
 
         if (source.getObservationsperiod() != null) {
-            PartialInterval observationsPeriod = new PartialInterval(new Partial(source.getObservationsperiod()
-                    .getFrom()), new Partial(source.getObservationsperiod().getTom()));
+            Partial from = source.getObservationsperiod().getFrom() == null ? null : new Partial(source.getObservationsperiod().getFrom());
+            Partial tom = source.getObservationsperiod().getTom() == null ? null : new Partial(source.getObservationsperiod().getTom());
+            PartialInterval observationsPeriod = new PartialInterval(from, tom);
             observation.setObservationsperiod(observationsPeriod);
         }
 

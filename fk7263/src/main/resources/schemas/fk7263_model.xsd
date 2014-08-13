@@ -253,7 +253,7 @@
     <xs:complexContent>
       <xs:restriction base="iso:CD">
         <xs:attribute name="code" type="xs:string" use="required"/>
-        <xs:attribute name="codeSystem" type="iso:Uid" use="required"/>
+        <xs:attribute name="codeSystem" type="iso:Uid" use="optional"/>
         <xs:attribute name="codeSystemName" type="xs:string" use="required"/>
       </xs:restriction>
     </xs:complexContent>

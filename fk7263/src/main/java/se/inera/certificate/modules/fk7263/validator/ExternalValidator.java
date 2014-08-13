@@ -5,7 +5,9 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 import org.springframework.util.StringUtils;
+
 import se.inera.certificate.model.Sysselsattning;
+import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
 import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
@@ -35,6 +37,7 @@ public class ExternalValidator extends AbstractValidator {
         validateDiagnose();
         validateSysselSattning();
         validateObservationDescriptions();
+        validateVardkontakttid();
 
         return getValidationErrors();
     }
@@ -111,6 +114,19 @@ public class ExternalValidator extends AbstractValidator {
                     Strings.join(" or ", VALID_DIAGNOSE_CODE_SYSTEMS)));
         }
 
+    }
+
+    private void validateVardkontakttid() {
+        for (Vardkontakt vardkontakt : externalUtlatande.getVardkontakter()) {
+            if (vardkontakt.getVardkontaktstid() != null) {
+                if (vardkontakt.getVardkontaktstid().getFrom() == null) {
+                    addValidationError("Field 4: Missing date for 'vårdkontakt'");
+                }
+                if (vardkontakt.getVardkontaktstid().getTom() == null) {
+                    addValidationError("Field 4: Missing date for 'vårdkontakt'");
+                }
+            }
+        }
     }
 
 }
