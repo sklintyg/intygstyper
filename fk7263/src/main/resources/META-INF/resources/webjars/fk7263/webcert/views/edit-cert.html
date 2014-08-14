@@ -282,11 +282,11 @@
                     <div class="form-group form-inline">
                       <label class="control-label"><span message key="fk7263.label.arbetsformaga"></span></label>
                       <div class="controls form-inline">
-                        <label class="radio"><input type="radio" name="basedOnWork" value="CURRENT"
-                                                    ng-model="cert.basedOnWork" checked="checked"> Nuvarande
+                        <label class="radio"><input type="radio" name="arbete" value="NUVARANDE"
+                                                    ng-model="form.arbete" checked="checked"> Nuvarande
                           arbete</label><span wc-enable-tooltip
                                               field-help-text="fk7263.helptext.sysselsattning.nuvarande"></span>
-                        <div class="indent" ng-if="cert.basedOnWork == 'CURRENT'">
+                        <div class="indent" ng-if="form.arbete == 'NUVARANDE'">
                           <label for="currentWork">Ange aktuella arbetsuppgifter</label>
                           <div class="controls">
                             <textarea id="currentWork" class="" name="currentWork" rows='2'
@@ -297,14 +297,14 @@
                       </div>
                     </div>
                     <div class="form-group form-inline">
-                      <label class="radio"><input type="radio" name="basedOnWork" group="group1" value="UNEMPLOYMENT"
-                                                  ng-model="cert.basedOnWork"> Arbetslöshet - att utföra arbete på den
+                      <label class="radio"><input type="radio" name="arbete" group="group1" value="ARBETSLOSHET"
+                                                  ng-model="form.arbete"> Arbetslöshet - att utföra arbete på den
                         reguljära arbetsmarknaden</label><span wc-enable-tooltip
                                                                field-help-text="fk7263.helptext.sysselsattning.arbetsloshet"></span>
                     </div>
                     <div class="form-group form-inline">
-                      <label class="radio"><input type="radio" name="basedOnWork" group="group1" value="PARENTAL_LEAVE"
-                                                  ng-model="cert.basedOnWork"> Föräldraledighet med föräldrapenning -
+                      <label class="radio"><input type="radio" name="arbete" group="group1" value="FORALDRALEDIGHET"
+                                                  ng-model="form.arbete"> Föräldraledighet med föräldrapenning -
                         att vårda sitt barn</label><span wc-enable-tooltip
                                                          field-help-text="fk7263.helptext.sysselsattning.foraldrarledighet"></span>
                     </div>
@@ -563,8 +563,8 @@
                     <!-- YES -->
                     <div class="form-group">
                       <label class="radio-inline"><input type="radio" name="recommendationsToFk.reabInQuestion"
-                                                         value="YES" ng-model="cert.rehab"> Ja</label>
-                      <div class="indent" ng-show="cert.rehab == 'YES'">
+                                                         value="JA" ng-model="form.rehab"> Ja</label>
+                      <div class="indent" ng-show="form.rehab == 'JA'">
                         <label class="radio-inline"><input type="radio" name="recommendationsToFk.rehabNow" value="NOW"
                                                            ng-model="cert.rehabNow" checked> Omgående</label>
                         <div class="form-inline"><label class="radio"><input type="radio"
@@ -582,14 +582,14 @@
                     <!-- NO -->
                     <div class="form-group">
                       <label class="radio-inline"><input type="radio" name="recommendationsToFk.reabInQuestion"
-                                                         group="group3" value="NO" ng-model="cert.rehab"
+                                                         group="group3" value="NEJ" ng-model="form.rehab"
                                                          checked="checked"> Nej</label>
                     </div>
 
-                    <!-- UNKNOWN -->
+                    <!-- GÅR EJ ATT BEDÖMA -->
                     <div class="form-group">
                       <label class="radio-inline"><input type="radio" name="recommendationsToFk.reabInQuestion"
-                                                         group="group3" value="UNKNOWN" ng-model="cert.rehab"> Går ej
+                                                         group="group3" value="GAREJ" ng-model="form.rehab"> Går ej
                         att bestämma</label>
                     </div>
                   </div>

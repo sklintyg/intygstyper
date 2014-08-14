@@ -50,7 +50,9 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     'Pass': 'PASS'
                 },
                 'korkortd': false,
-                'behorighet': true
+                'behorighet': true,
+                'arbete': 'NUVARANDE',
+                'rehab': 'NEJ'
             };
 
             $scope.testerror = false;
@@ -388,14 +390,66 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
             }
 
+            function convertCertToForm($scope) {
+
+                // Set blank defaults
+                var propertyNames = ['diagnosBeskrivning', 'wcDiagnosBeskrivning1', 'wcDiagnosKod2',
+                    'wcDiagnosBeskrivning2', 'wcDiagnosKod3', 'wcDiagnosBeskrivning3' ];
+                setPropertyDefaults($scope.cert, propertyNames, '');
+
+                // Set prognosis default value
+                if ($scope.cert.prognosis === undefined) {
+                    $scope.cert.prognosis = 'YES';
+                }
+
+                // Arbete radio conversions
+                if($scope.cert.arbetsloshet) {
+                    $scope.form.arbete = 'ARBETSLOSHET';
+                }
+                else if($scope.cert.foraldrarledighet) {
+                    $scope.form.arbete = 'FORALDRALEDIGHET'
+                }
+
+                // Rehab radio conversions
+                if ($scope.cert.rehabiliteringAktuell) {
+                    $scope.form.rehab = 'JA';
+                }
+                else if ($scope.cert.rehabiliteringEjAktuell) {
+                    $scope.form.rehab = 'NEJ';
+                }
+                else if ($scope.cert.rehabiliteringGarInteAttBedoma) {
+                    $scope.form.rehab = 'GAREJ';
+                }
+            }
+
+            function convertFormToCert($scope) {
+
+                // Arbete radio conversions
+                $scope.cert.arbetsloshet = false;
+                $scope.cert.foraldrarledighet = false;
+
+                switch($scope.form.arbete) {
+                    case 'ARBETSLOSHET': $scope.cert.arbetsloshet = true; break;
+                    case 'FORALDRALEDIGHET': $scope.cert.foraldrarledighet = true; break;
+                }
+
+                // Rehab radio conversions
+                $scope.cert.rehabiliteringAktuell = false;
+                $scope.cert.rehabiliteringEjAktuell = false;
+                $scope.cert.rehabiliteringGarInteAttBedoma = false;
+
+                switch($scope.form.rehab) {
+                    case 'JA': $scope.cert.rehabiliteringAktuell = true; break;
+                    case 'NEJ': $scope.cert.rehabiliteringEjAktuell = true; break;
+                    case 'GAREJ': $scope.cert.rehabiliteringGarInteAttBedoma = true; break;
+                }
+            }
+
             // Get the certificate draft from the server.
             ManageCertView.load($scope, function(cert) {
                 // Decorate intygspecific default data
                 $scope.cert = cert;
-
-                var propertyNames = ['diagnosBeskrivning', 'wcDiagnosBeskrivning1', 'wcDiagnosKod2',
-                    'wcDiagnosBeskrivning2', 'wcDiagnosKod3', 'wcDiagnosBeskrivning3' ];
-                setPropertyDefaults($scope.cert, propertyNames, '');
+                convertCertToForm($scope);
             });
 
             /**
@@ -403,6 +457,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              */
             $scope.save = function() {
                 $scope.hasSavedThisSession = true;
+                convertFormToCert($scope)
                 ManageCertView.save($scope);
             };
 
