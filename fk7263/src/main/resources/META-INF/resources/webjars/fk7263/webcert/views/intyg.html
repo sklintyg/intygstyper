@@ -8,7 +8,7 @@
         <span message key="fk7263.{{widgetState.activeErrorMessageKey}}"></span>
       </p>
 
-      <div ng-if="intygBackup.showBackupInfo">
+      <div ng-if="intygBackup.showBackupInfo && intygBackup.intyg != undefined && intygBackup.intyg.intygsId != undefined">
         <p><strong>Intygsinformation</strong></p>
         <ul>
           <li>Patient: {{intygBackup.intyg.patientNamn}} ({{intygBackup.intyg.patientId.patientIdExtension}})</li>
