@@ -120,7 +120,7 @@ var fk7263Messages = {
 
         'fk7263.validation.funktionsnedsattning.missing': 'Fältet med funktionsnedsättning måste fyllas i. (Fält 4)',
 
-        'fk7263.validation.sysselsattning.missing': '	Aktuella arbetsuppgifter som hör till alternativet Nuvarande arbete under \'Arbete\' måste fyllas i. (Fält 8a)',
+        'fk7263.validation.sysselsattning.missing': 'Aktuella arbetsuppgifter som hör till alternativet Nuvarande arbete under \'Arbete\' måste fyllas i. (Fält 8a)',
 
         'fk7263.validation.arbetsformaga.choose-at-least-one': 'Välj minst ett alternativ för arbetsförmåga. (Fält 8b)',
         'fk7263.validation.arbetsformaga.incorrect-date-interval': 'Ett datuminterval har angetts på ett felaktigt sätt (startdatum efter slutdatum). (Fält 8b)',
@@ -129,6 +129,11 @@ var fk7263Messages = {
         'fk7263.validation.prognos.gar-ej-att-bedomma.beskrivning.missing': 'Fritextfältet som hör till alternativet Går ej att bedöma, förtydligande under \'Prognos - kommer patienten att få tillbaka sin arbetsförmåga i nuvarande arbete\' måste fyllas i. (Fält 10)',
 
         'fk7263.validation.forandrat-ressatt.choose-one': 'Endast ett alternativ kan anges avseende förändrat ressätt. (Fält 11)',
+
+        'fk7263.validation.vardenhet.telefonnummer.missing' : 'Telefonnummer för vårdenhet måste anges (Fält 15)',
+        'fk7263.validation.vardenhet.postadress.missing' : 'Postadress för vårdenhet måste anges (Fält 15)',
+        'fk7263.validation.vardenhet.postnummer.missing' : 'Postnummer för vårdenhet måste anges (Fält 15)',
+        'fk7263.validation.vardenhet.postort.missing' : 'Postort för vårdenhet måste anges (Fält 15)',
 
 
         // errors

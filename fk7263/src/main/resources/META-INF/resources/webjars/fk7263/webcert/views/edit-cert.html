@@ -620,6 +620,14 @@
                   </div>
 
                   <div wc-field field-label="fk7263.label.vardenhet.adress" field-number="15" field-help-text="fk7263.helptext.adress">
+                   <div class="alert alert-danger" ng-if="validationMessagesGrouped.vardperson">
+                      <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.vardperson"><span message
+                                                                                                 key="{{message.message}}"></span>
+                        </li>
+                      </ul>
+                    </div>
+
                     <label class="control-label" ng-model="cert.vardperson.enhetsnamn"></label>
 
                     <div class="form-horizontal">
