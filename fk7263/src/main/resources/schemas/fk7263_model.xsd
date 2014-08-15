@@ -40,7 +40,7 @@
       <xs:element name="typAvUtlatande" type="utlatandeTyp"/>
       <xs:element name="kommentar" type="nonEmptyString" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="signeringsdatum" type="dateTime"/>
-      <xs:element name="skickatdatum" type="dateTime"/>
+      <xs:element name="skickatdatum" type="dateTime" minOccurs="0"/>
 
       <xs:element name="patient" type="patientType"/>
       <xs:element name="skapadAv" type="hosPersonalType"/>

@@ -133,7 +133,7 @@ public class ModuleService implements ModuleApi {
         try {
             se.inera.certificate.ts_bas.model.v1.Utlatande utlatande = getTransport(transportModel);
 
-            // Perform validation agains XML schema
+            // Perform validation against XML schema
             validateSchema(transportModel.getTransportModel());
             // Convert to external model
             Utlatande externalUtlatande = transportToExternalConverter.convert(utlatande);
@@ -179,7 +179,14 @@ public class ModuleService implements ModuleApi {
         }
 
         try {
-            return toTransportModelResponse(externalToTransportConverter.convert(getExternal(externalModel)));
+            // Validate external model
+            validate(externalModel);
+            // Convert to transport model
+            TransportModelResponse response = toTransportModelResponse(externalToTransportConverter.convert(getExternal(externalModel)));
+            // Perform validation against XML schema
+            validateSchema(response.getTransportModel());
+
+            return response;
 
         } catch (ConverterException e) {
             LOG.error("Could not marshall external model to transport model", e);

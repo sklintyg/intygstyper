@@ -3,6 +3,8 @@ package se.inera.certificate.modules.support.api.exception;
 import java.util.Collections;
 import java.util.List;
 
+import se.inera.certificate.model.util.Strings;
+
 public class ModuleValidationException extends ModuleException {
 
     private static final long serialVersionUID = -4808921021590102478L;
@@ -10,6 +12,7 @@ public class ModuleValidationException extends ModuleException {
     private final List<String> validationEntries;
 
     public ModuleValidationException(List<String> validationEntries) {
+        super(Strings.join(",", validationEntries));
         this.validationEntries = validationEntries;
     }
 
@@ -24,7 +27,7 @@ public class ModuleValidationException extends ModuleException {
     }
 
     public ModuleValidationException(List<String> validationEntries, Throwable cause) {
-        super(cause);
+        super(Strings.join(",", validationEntries), cause);
         this.validationEntries = validationEntries;
     }
 

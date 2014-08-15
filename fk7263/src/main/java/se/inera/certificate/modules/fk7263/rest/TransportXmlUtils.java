@@ -2,6 +2,7 @@ package se.inera.certificate.modules.fk7263.rest;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Arrays;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -17,7 +18,7 @@ import org.xml.sax.SAXException;
 
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
 import se.inera.certificate.fk7263.model.v1.Utlatande;
-import se.inera.certificate.validate.ValidationException;
+import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
 import se.inera.certificate.xml.SchemaValidatorBuilder;
 
 /**
@@ -81,14 +82,15 @@ public final class TransportXmlUtils {
      * Validates the XML of a {@link Utlatande}.
      *
      * @param utlatandeXml The xml as a string.
+     * @throws ModuleValidationException 
      */
-    public static void validateSchema(String utlatandeXml) {
+    public static void validateSchema(String utlatandeXml) throws ModuleValidationException {
         try {
             Validator validator = utlatandeSchema.newValidator();
             validator.validate(new StreamSource(new StringReader(utlatandeXml)));
 
         } catch (SAXException e) {
-            throw new ValidationException(e.getMessage());
+            throw new ModuleValidationException(Arrays.asList(e.getMessage()));
 
         } catch (IOException e) {
             LOG.error("Failed to validate message against schema", e);

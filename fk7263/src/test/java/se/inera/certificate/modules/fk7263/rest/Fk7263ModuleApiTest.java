@@ -149,7 +149,7 @@ public class Fk7263ModuleApiTest {
 
         assertNotNull(holder);
         Fk7263Intyg creatededUtlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
-        assertEquals("2013-06-05", creatededUtlatande.getNedsattMed50().getFrom().toString());
+        assertEquals("2011-03-07", creatededUtlatande.getNedsattMed50().getFrom().toString());
     }
 
     private CreateNewDraftHolder createNewDraftHolder() {

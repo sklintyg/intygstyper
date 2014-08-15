@@ -5,7 +5,6 @@ import static se.inera.certificate.modules.support.api.dto.TransportModelVersion
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
 import se.inera.certificate.fk7263.model.v1.Utlatande;
-import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.converter.ConverterException;
 import se.inera.certificate.modules.fk7263.model.converter.ExternalToInternalConverter;
 import se.inera.certificate.modules.fk7263.model.converter.ExternalToTransportConverter;
@@ -55,7 +53,6 @@ import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
 import se.inera.certificate.modules.support.api.exception.ModuleVersionUnsupportedException;
-import se.inera.certificate.validate.ValidationException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -104,7 +101,6 @@ public class Fk7263ModuleApi implements ModuleApi {
     public ExternalModelResponse unmarshall(TransportModelHolder transportModel) throws ModuleException {
         Object jaxbObject = TransportXmlUtils.unmarshallTransportXML(transportModel.getTransportModel());
         Fk7263Utlatande externalModel = null;
-        List<String> validationErrors = new ArrayList<>();
 
         if (jaxbObject instanceof RegisterMedicalCertificate) {
             // Convert and validate legacy transport model
@@ -112,63 +108,23 @@ public class Fk7263ModuleApi implements ModuleApi {
             Lakarutlatande utlatande = ((RegisterMedicalCertificate) jaxbObject).getLakarutlatande();
             externalModel = TransportToExternalFk7263LegacyConverter.convert(utlatande);
 
-            validationErrors.addAll(new ProgrammaticLegacyTransportSchemaValidator(externalModel).validate());
+            validateLegacySchema(externalModel);
 
         } else if (jaxbObject instanceof Utlatande) {
             // Convert and validate utlatande transport model
-            try {
-                TransportXmlUtils.validateSchema(transportModel.getTransportModel());
+            TransportXmlUtils.validateSchema(transportModel.getTransportModel());
 
-                LOG.debug("Converting {}  to external model", jaxbObject.getClass().getCanonicalName());
-                externalModel = TransportToExternalConverter.convert((Utlatande) jaxbObject);
-            } catch (ValidationException ex) {
-                validationErrors.add(ex.getMessage());
-            }
+            LOG.debug("Converting {}  to external model", jaxbObject.getClass().getCanonicalName());
+            externalModel = TransportToExternalConverter.convert((Utlatande) jaxbObject);
 
         } else {
             LOG.error("Unsupported XML message: {}", transportModel.getTransportModel());
             throw new ModuleSystemException("Unsupported XML message type");
         }
 
-        // If no validation errors so far, continue with external validation...
-        if (validationErrors.isEmpty()) {
-            validationErrors.addAll(validateExternal(externalModel));
-        }
+        validateExternal(externalModel);
 
-        if (validationErrors.isEmpty()) {
-            return toExternalModelResponse(externalModel);
-
-        } else {
-            String certificateId = extractCertificateId(jaxbObject);
-
-            throw new ModuleValidationException(validationErrors, String.format("Validation failed for intyg %s",
-                    certificateId));
-        }
-    }
-
-    /**
-     * Extract the certificate-ID from a jaxbobject of legacy or normal type.
-     *
-     * @param jaxbObject the {@link Object}
-     * @return a String with the id
-     */
-    private String extractCertificateId(Object jaxbObject) {
-        String certificateId = "<not set>";
-        if (jaxbObject != null) {
-            if (jaxbObject instanceof RegisterMedicalCertificate) {
-                RegisterMedicalCertificate cert = (RegisterMedicalCertificate) jaxbObject;
-                if (cert.getLakarutlatande() != null) {
-                    certificateId = cert.getLakarutlatande().getLakarutlatandeId();
-                }
-            } else if (jaxbObject instanceof Utlatande) {
-                Utlatande cert = (Utlatande) jaxbObject;
-                if (cert.getUtlatandeId() != null) {
-                    certificateId = "[id-root: " + cert.getUtlatandeId().getRoot() + " id-extension: "
-                            + cert.getUtlatandeId().getExtension() + "]";
-                }
-            }
-        }
-        return certificateId;
+        return toExternalModelResponse(externalModel);
     }
 
     /**
@@ -177,15 +133,24 @@ public class Fk7263ModuleApi implements ModuleApi {
     @Override
     public TransportModelResponse marshall(ExternalModelHolder externalModel, TransportModelVersion version)
             throws ModuleException {
+        Fk7263Utlatande utlatande = getExternal(externalModel);
+
         if (LEGACY_LAKARUTLATANDE.equals(version)) {
-            RegisterMedicalCertificate registerMedicalCertificateJaxb = ExternalToTransportFk7263LegacyConverter
-                    .getJaxbObject(getExternal(externalModel));
+            validateExternal(utlatande);
+            validateLegacySchema(utlatande);
+
+            RegisterMedicalCertificate registerMedicalCertificateJaxb = ExternalToTransportFk7263LegacyConverter.getJaxbObject(utlatande);
+
             return toTransportModelResponse(registerMedicalCertificateJaxb);
         }
 
         if (UTLATANDE_V1.equals(version)) {
-            Utlatande utlatande = externalToTransportConverter.convert(getExternal(externalModel));
-            return toTransportModelResponse(utlatande);
+            TransportModelResponse response = toTransportModelResponse(externalToTransportConverter.convert(utlatande));
+
+            validateExternal(utlatande);
+            TransportXmlUtils.validateSchema(response.getTransportModel());
+
+            return response;
         }
 
         throw new ModuleVersionUnsupportedException("FK7263 does not support transport model version " + version);
@@ -196,17 +161,12 @@ public class Fk7263ModuleApi implements ModuleApi {
      */
     @Override
     public String validate(ExternalModelHolder externalModel) throws ModuleException {
-        List<String> validationErrors = validateExternal(getExternal(externalModel));
+        validateExternal(getExternal(externalModel));
 
-        if (validationErrors.isEmpty()) {
-            return null;
-        } else {
-            String response = Strings.join(",", validationErrors);
-            throw new ModuleConverterException(response);
-        }
+        return null;
     }
 
-    private List<String> validateExternal(Fk7263Utlatande externalModel) {
+    private void validateExternal(Fk7263Utlatande externalModel) throws ModuleValidationException {
         List<String> validationErrors = new ExternalValidator(externalModel).validate();
 
         // If no validation errors so far, continue with internal validation...
@@ -219,7 +179,17 @@ public class Fk7263ModuleApi implements ModuleApi {
             }
         }
 
-        return validationErrors;
+        if (!validationErrors.isEmpty()) {
+            throw new ModuleValidationException(validationErrors);
+        }
+    }
+
+    private void validateLegacySchema(Fk7263Utlatande externalModel) throws ModuleValidationException {
+        List<String> validationErrors = new ProgrammaticLegacyTransportSchemaValidator(externalModel).validate();
+
+        if (!validationErrors.isEmpty()) {
+            throw new ModuleValidationException(validationErrors);
+        }
     }
 
     /**

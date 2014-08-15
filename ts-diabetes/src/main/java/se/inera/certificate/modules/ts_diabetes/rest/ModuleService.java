@@ -184,7 +184,14 @@ public class ModuleService implements ModuleApi {
         }
 
         try {
-            return toTransportModelResponse(externalToTransportConverter.convert(getExternal(externalModel)));
+            // Validate external model
+            validate(externalModel);
+            // Convert to transport model
+            TransportModelResponse response = toTransportModelResponse(externalToTransportConverter.convert(getExternal(externalModel)));
+            // Perform validation against XML schema
+            validateSchema(response.getTransportModel());
+
+            return response;
 
         } catch (ConverterException e) {
             LOG.error("Could not marshall external model to transport model", e);
