@@ -84,10 +84,10 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="enhetsnamn" type="nonEmptyString"/>
-      <xs:element name="postadress" type="nonEmptyString"/>
-      <xs:element name="postnummer" type="nonEmptyString"/>
-      <xs:element name="postort" type="nonEmptyString"/>
-      <xs:element name="telefonnummer" type="nonEmptyString"/>
+      <xs:element name="postadress" type="nonEmptyString" minOccurs="0"/>
+      <xs:element name="postnummer" type="nonEmptyString" minOccurs="0"/>
+      <xs:element name="postort" type="nonEmptyString" minOccurs="0"/>
+      <xs:element name="telefonnummer" type="nonEmptyString" minOccurs="0"/>
       <xs:element name="epost" type="nonEmptyString" minOccurs="0"/>
       <xs:element name="vardgivare" type="vardgivareType"/>
     </xs:sequence>

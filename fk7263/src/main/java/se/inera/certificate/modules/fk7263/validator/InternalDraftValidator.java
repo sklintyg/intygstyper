@@ -28,8 +28,27 @@ public class InternalDraftValidator {
         validatePrognos(utlatande, validationMessages);
         validateRessatt(utlatande, validationMessages);
         validateKommentar(utlatande, validationMessages);
+        validateVardenhet(utlatande, validationMessages);
 
         return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
+    }
+
+    private void validateVardenhet(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
+        if (isNullOrEmpty(utlatande.getVardperson().getPostadress())) {
+            addValidationError(validationMessages, "vardperson.postadress", "fk7263.validation.vardenhet.postadress.missing");
+        }
+
+        if (isNullOrEmpty(utlatande.getVardperson().getPostnummer())) {
+            addValidationError(validationMessages, "vardperson.postnummer", "fk7263.validation.vardenhet.postnummer.missing");
+        }
+
+        if (isNullOrEmpty(utlatande.getVardperson().getPostort())) {
+            addValidationError(validationMessages, "vardperson.postort", "fk7263.validation.vardenhet.postort.missing");
+        }
+
+        if (isNullOrEmpty(utlatande.getVardperson().getPostort())) {
+            addValidationError(validationMessages, "vardperson.telefonnummer", "fk7263.validation.vardenhet.telefonnummer.missing");
+        }
     }
 
     private void validateKommentar(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
