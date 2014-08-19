@@ -126,11 +126,24 @@ public class ExternalValidatorTest {
     }
 
     @Test
+    public void testValidObservationKroppFunktionsBeskrivningSmittskydd() throws Exception {
+        Fk7263Utlatande utlatande = getValidUtlatande();
+        Fk7263Aktivitet smittskydd = new Fk7263Aktivitet();
+        smittskydd.setAktivitetskod(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
+        utlatande.getAktiviteter().add(smittskydd);
+
+        Fk7263Observation observation = utlatande.findObservationByKategori(ObservationsKoder.KROPPSFUNKTIONER);
+        observation.setBeskrivning(null);
+
+        assertEquals(0, new ExternalValidator(utlatande).validate().size());
+    }
+
+    @Test
     public void testInvalidAktivitetOvrigtRekommendationBeskrivning() throws Exception {
         Fk7263Utlatande utlatande = getValidUtlatande();
 
         Fk7263Aktivitet aktivitet = utlatande.getAktivitet(Aktivitetskoder.OVRIGT);
-        aktivitet.setBeskrivning("");
+        aktivitet.setBeskrivning(null);
 
         assertEquals(1, new ExternalValidator(utlatande).validate().size());
     }

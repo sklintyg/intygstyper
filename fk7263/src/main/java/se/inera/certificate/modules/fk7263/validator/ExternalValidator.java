@@ -48,9 +48,12 @@ public class ExternalValidator extends AbstractValidator {
         }
 
         // Field 4:
-        Fk7263Observation kroppsFunktion = externalUtlatande.findObservationByKategori(ObservationsKoder.KROPPSFUNKTIONER);
-        if (kroppsFunktion != null && StringUtils.isEmpty(kroppsFunktion.getBeskrivning())) {
-            addValidationError("Field 4: beskrivning is mandatory for this observation.");
+        Fk7263Aktivitet smittskydd = externalUtlatande.getAktivitet(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
+        if (smittskydd  == null) {
+            Fk7263Observation kroppsFunktion = externalUtlatande.findObservationByKategori(ObservationsKoder.KROPPSFUNKTIONER);
+            if (kroppsFunktion != null && StringUtils.isEmpty(kroppsFunktion.getBeskrivning())) {
+                addValidationError("Field 4: beskrivning is mandatory for this observation.");
+            }
         }
 
         // Field 5:
