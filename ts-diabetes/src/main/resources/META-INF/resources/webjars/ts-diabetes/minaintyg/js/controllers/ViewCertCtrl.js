@@ -57,7 +57,7 @@ define([
             $scope.befattningar = '';
             $scope.updateBefattningar = function (befattningar) {
                 var result = '';
-                if (befattningar != undefined) {
+                if (befattningar !== undefined) {
                     for (var i = 0; i < befattningar.length; i++) {
                         if (i < befattningar.length-1) {
                             result += befattningar[i] + (', ');
@@ -73,7 +73,7 @@ define([
             $scope.specialiteter = '';
             $scope.updateSpecialiteter = function (specialiteter) {
                 var result = '';
-                if (specialiteter != undefined) {
+                if (specialiteter !== undefined) {
                     for (var i = 0; i < specialiteter.length; i++) {
                         if (i < specialiteter.length-1) {
                             result += specialiteter[i] + (', ');

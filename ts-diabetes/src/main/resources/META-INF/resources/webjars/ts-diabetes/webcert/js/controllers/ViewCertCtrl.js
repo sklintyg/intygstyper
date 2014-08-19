@@ -91,7 +91,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
             };
 
             $scope.copy = function(cert) {
-                cert.intygType = 'ts-diabetes'
+                cert.intygType = 'ts-diabetes';
                 copyDialog = ManageCertificate.copy($scope, cert, COPY_DIALOG_COOKIE);
             };
         }]);

@@ -183,7 +183,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             };
 
             // Diagnose handling (2)
-            $scope.diagnose_codes = [
+            $scope.diagnoseCodes = [
                 {
                     value: 'J44.0',
                     label: 'J44.0 Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion'
@@ -407,7 +407,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.form.arbete = 'ARBETSLOSHET';
                 }
                 else if($scope.cert.foraldrarledighet) {
-                    $scope.form.arbete = 'FORALDRALEDIGHET'
+                    $scope.form.arbete = 'FORALDRALEDIGHET';
                 }
 
                 // Rehab radio conversions
@@ -457,7 +457,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              */
             $scope.save = function() {
                 $scope.hasSavedThisSession = true;
-                convertFormToCert($scope)
+                convertFormToCert($scope);
                 ManageCertView.save($scope);
             };
 
@@ -489,18 +489,35 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.onChangeWorkStateCheck = function(nedsattModelName) {
                 if ($scope.cert !== undefined) {
                     if ($scope.workState[nedsattModelName]) {
+
+                        // Set suggested dates
                         var workstate = $scope.cert[nedsattModelName];
                         if (!workstate) {
                             workstate = $scope.cert[nedsattModelName] = {};
                         }
+
+                        // Set from date
+                        var dates = findStartEndDates();
                         if (!workstate.from || !isDate(workstate.from)) {
-                            workstate.from = ($filter('date')($scope.today, 'yyyy-MM-dd'));
+
+                            // find highest max date
+                            if(!dates.maxDate) {
+                                // if no maxdate is available, use today
+                                var today = ($filter('date')($scope.today, 'yyyy-MM-dd'));
+                                workstate.from = today;
+                            } else {
+                                workstate.from = moment(dates.maxDate).add('days', 1).format('YYYY-MM-DD');
+                            }
                         }
+
+                        // Set tom date
                         if (!workstate.tom || !isDate(workstate.tom)) {
-                            workstate.tom = ($filter('date')($scope.today, 'yyyy-MM-dd'));
+                            workstate.tom = moment(workstate.from).add('days', 7).format('YYYY-MM-DD');
                         }
                     } else {
-                        delete  $scope.cert[nedsattModelName];
+
+                        // Remove dates
+                        delete $scope.cert[nedsattModelName];
                     }
 
                     onArbetsformagaDatesUpdated();
@@ -536,6 +553,18 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         nedsattModel.tom = nedsattModel.from;
                     } else if (fromTom === 'tom' && !isDate(nedsattModel.from)) {
                         nedsattModel.from = nedsattModel.tom;
+                    }
+
+                    // Set invalid if from dates are after tom dates
+                    var groups = ['nedsattMed25','nedsattMed50','nedsattMed75','nedsattMed100'];
+                    for(var i = 0; i < groups.length; i++) {
+                        if(moment($scope.cert[groups[i]].from).isAfter(moment($scope.cert[groups[i]].tom))) {
+                            $scope.certForm[groups[i]+'startdate'].$setValidity('invalidPeriod', false);
+                            $scope.certForm[groups[i]+'enddate'].$setValidity('invalidPeriod', false);
+                        } else {
+                            $scope.certForm[groups[i]+'startdate'].$setValidity('invalidPeriod', true);
+                            $scope.certForm[groups[i]+'enddate'].$setValidity('invalidPeriod', true);
+                        }
                     }
                 }
 

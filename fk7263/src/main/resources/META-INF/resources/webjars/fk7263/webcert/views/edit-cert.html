@@ -173,7 +173,7 @@
                         <label class="control-label unbreakable">ICD 10</label>
                         <input type="text" class="form-control" id="diagnose.code" name="diagnose.code" value=""
                                class='diagnose-code col-xs-11 form-control' ng-model="cert.diagnosKod"
-                               typeahead="d.value as d.label for d in diagnose_codes | filter:$viewValue | limitTo:8">
+                               typeahead="d.value as d.label for d in diagnoseCodes | filter:$viewValue | limitTo:8">
                       </div>
                       <div class='col-xs-9'>
                         <label class="control-label">Diagnos</label>
@@ -339,11 +339,11 @@
                         nedsatt arbetsförmåga från</label>
                       <span wc-date-picker-field target-model="cert.nedsattMed25.from"
                             on-change="onChangeNedsattMed('nedsattMed25', 'from')"
-                            dom-id="nedsattMed25-start-date"></span>
+                            dom-id="nedsattMed25startdate"></span>
                       <span>till</span>
                       <span wc-date-picker-field target-model="cert.nedsattMed25.tom"
                             on-change="onChangeNedsattMed('nedsattMed25', 'tom')"
-                            dom-id="nedsattMed25-end-date"></span>
+                            dom-id="nedsattMed25enddate"></span>
                       <div class="indent pad10" ng-if="workState.nedsattMed25">
                         <div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
                           Arbetstid timmar/vecka: <strong>{{cert.workTime * 0.75}}</strong>
@@ -368,11 +368,11 @@
                                                                               ng-model="workState.nedsattMed50" /> 50%
                         nedsatt arbetsförmåga från</label>
                       <span wc-date-picker-field target-model="cert.nedsattMed50.from"
-                            on-change="onChangeNedsattMed('nedsattMed50', 'from')" dom-id="nedsattMed50-start-date"></span>
+                            on-change="onChangeNedsattMed('nedsattMed50', 'from')" dom-id="nedsattMed50startdate"></span>
                       <span>till</span>
                       <span wc-date-picker-field target-model="cert.nedsattMed50.tom"
                             on-change="onChangeNedsattMed('nedsattMed50', 'tom')"
-                            dom-id="nedsattMed50-end-date"></span>
+                            dom-id="nedsattMed50enddate"></span>
                       <div class="indent pad10" ng-if="workState.nedsattMed50">
                         <div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
                           Arbetstid timmar/vecka: <strong>{{cert.workTime * 0.5}}</strong>
@@ -397,11 +397,11 @@
                                                                               ng-model="workState.nedsattMed75" /> 75%
                         nedsatt arbetsförmåga från</label>
                       <span wc-date-picker-field target-model="cert.nedsattMed75.from"
-                            on-change="onChangeNedsattMed('nedsattMed75', 'from')" dom-id="nedsattMed75-start-date"></span>
+                            on-change="onChangeNedsattMed('nedsattMed75', 'from')" dom-id="nedsattMed75startdate"></span>
                       <span>till</span>
                       <span wc-date-picker-field target-model="cert.nedsattMed75.tom"
                             on-change="onChangeNedsattMed('nedsattMed75', 'tom')"
-                            dom-id="nedsattMed75-end-date"></span>
+                            dom-id="nedsattMed75enddate"></span>
                       <div class="indent pad10" ng-if="workState.nedsattMed75">
                         <div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
                           Arbetstid timmar/vecka: <strong>{{cert.workTime * 0.25}}</strong>
@@ -426,10 +426,10 @@
                                                                               ng-model="workState.nedsattMed100" /> Helt
                         nedsatt arbetsförmåga från</label>
                       <span wc-date-picker-field target-model="cert.nedsattMed100.from"
-                            on-change="onChangeNedsattMed('nedsattMed100', 'from')" dom-id="nedsattMed100-start-date"></span>
+                            on-change="onChangeNedsattMed('nedsattMed100', 'from')" dom-id="nedsattMed100startdate"></span>
                       <span>till</span>
                       <span wc-date-picker-field target-model="cert.nedsattMed100.tom"
-                            on-change="onChangeNedsattMed('nedsattMed100', 'tom')" dom-id="nedsattMed100-end-date"></span>
+                            on-change="onChangeNedsattMed('nedsattMed100', 'tom')" dom-id="nedsattMed100enddate"></span>
                     </div>
 
                     <div ng-show="totalCertDays">
