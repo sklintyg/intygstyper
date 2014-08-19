@@ -36,56 +36,45 @@ public class WebcertModelFactory {
 
     /**
      * Create a new FK7263 draft pre-populated with the attached data.
-     *
-     * @param newDraftData {@link CreateNewDraftHolder}
+     * 
+     * @param newDraftData
+     *            {@link CreateNewDraftHolder}
+     * @param template
+     *            A template to use as a base, or <code>null</code> if an empty internal model should be used.
+     * 
      * @return {@link Fk7263Intyg} or throws a ConverterException if something unforeseen happens
      * @throws ConverterException
      */
-    public Fk7263Intyg createNewWebcertDraft(CreateNewDraftHolder newDraftData) throws ConverterException {
+    public Fk7263Intyg createNewWebcertDraft(CreateNewDraftHolder newDraftData, Fk7263Intyg template) throws ConverterException {
+        if (template == null) {
+            LOG.trace("Creating draft with id {}", newDraftData.getCertificateId());
+
+            template = new Fk7263Intyg();
+            template.setArbetsformataPrognosGarInteAttBedoma(false);
+            template.setArbetsformataPrognosJa(false);
+            template.setArbetsformataPrognosJaDelvis(false);
+            template.setArbetsformataPrognosNej(false);
+            template.setArbetsloshet(false);
+
+            template.setAvstangningSmittskydd(false);
+            template.setForaldrarledighet(false);
+            template.setKontaktMedFk(false);
+            template.setRehabiliteringAktuell(false);
+            template.setRehabiliteringAktuell(false);
+            template.setRehabiliteringEjAktuell(false);
+            template.setRehabiliteringGarInteAttBedoma(false);
+            template.setRekommendationKontaktArbetsformedlingen(false);
+            template.setRekommendationKontaktForetagshalsovarden(false);
+            template.setRessattTillArbeteAktuellt(false);
+            template.setRessattTillArbeteEjAktuellt(false);
+
+        } else {
+            LOG.trace("Creating copy with id {} from {}", newDraftData.getCertificateId(), template.getId());
+        }
 
         if (newDraftData.getCertificateId() == null) {
             throw new ConverterException("No certificateID found");
         }
-
-        Fk7263Intyg utlatande = new Fk7263Intyg();
-
-        utlatande.setArbetsformataPrognosGarInteAttBedoma(false);
-        utlatande.setArbetsformataPrognosJa(false);
-        utlatande.setArbetsformataPrognosJaDelvis(false);
-        utlatande.setArbetsformataPrognosNej(false);
-        utlatande.setArbetsloshet(false);
-
-        utlatande.setAvstangningSmittskydd(false);
-        utlatande.setForaldrarledighet(false);
-        utlatande.setKontaktMedFk(false);
-        utlatande.setRehabiliteringAktuell(false);
-        utlatande.setRehabiliteringAktuell(false);
-        utlatande.setRehabiliteringEjAktuell(false);
-        utlatande.setRehabiliteringGarInteAttBedoma(false);
-        utlatande.setRekommendationKontaktArbetsformedlingen(false);
-        utlatande.setRekommendationKontaktForetagshalsovarden(false);
-        utlatande.setRessattTillArbeteAktuellt(false);
-        utlatande.setRessattTillArbeteEjAktuellt(false);
-
-        utlatande.setId(newDraftData.getCertificateId());
-
-        populateWithSkapadAv(utlatande, newDraftData.getSkapadAv());
-
-        populateWithPatientInfo(utlatande, newDraftData.getPatient());
-
-        return utlatande;
-    }
-
-    /**
-     * Create a new TS-bas draft pre-populated with the attached data.
-     *
-     * @param newDraftData
-     *            {@link CreateNewDraftHolder}
-     * @return {@link se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg} or throws a ConverterException if something unforeseen happens
-     * @throws ConverterException
-     */
-    public Fk7263Intyg createNewWebcertDraftFromTemplate(CreateNewDraftHolder newDraftData, Fk7263Intyg template) throws ConverterException {
-        LOG.trace("Creating copy with id {} from {}", newDraftData.getCertificateId(), template.getId());
 
         template.setId(newDraftData.getCertificateId());
 
@@ -96,7 +85,7 @@ public class WebcertModelFactory {
     }
 
     private void populateWithPatientInfo(Fk7263Intyg utlatande,
-                                         Patient patient) throws ConverterException {
+            Patient patient) throws ConverterException {
 
         if (patient == null) {
             throw new ConverterException("Got null while trying to populateWithPatientInfo");

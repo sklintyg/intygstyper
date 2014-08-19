@@ -36,40 +36,23 @@ public class WebcertModelFactory {
 
     /**
      * Create a new TS-diabetes draft pre-populated with the attached data.
-     *
+     * 
      * @param newDraftData
      *            {@link CreateNewDraftHolder}
+     * @param template
+     *            A template to use as a base, or <code>null</code> if an empty internal model should be used.
+     * 
      * @return {@link Utlatande} or throws a ConverterException if something unforeseen happens
      * @throws ConverterException
      */
-    public Utlatande createNewWebcertDraft(CreateNewDraftHolder newDraftData) throws ConverterException {
+    public Utlatande createNewWebcertDraft(CreateNewDraftHolder newDraftData, Utlatande template) throws ConverterException {
+        if (template == null) {
+            LOG.trace("Creating draft with id {}", newDraftData.getCertificateId());
+            template = new Utlatande();
 
-        LOG.trace("Creating draft with id {}", newDraftData.getCertificateId());
-
-        Utlatande utlatande = new Utlatande();
-        utlatande.setId(newDraftData.getCertificateId());
-
-        // This is where we set the concrete tsUtgava and tsVersion of the intyg that is created.
-        utlatande.setTyp(UtlatandeKod.getCurrentVersion().name());
-
-        populateWithSkapadAv(utlatande, newDraftData.getSkapadAv());
-        populateWithPatientInfo(utlatande, newDraftData.getPatient());
-
-        return utlatande;
-    }
-
-    /**
-     * Create a new TS-diabetes draft pre-populated with the attached data.
-     *
-     * @param newDraftData
-     *            {@link CreateNewDraftHolder}
-     * @return {@link Utlatande} or throws a ConverterException if something unforeseen happens
-     * @throws ConverterException
-     */
-    public Utlatande createNewWebcertDraftFromTemplate(CreateNewDraftHolder newDraftData, Utlatande template) throws ConverterException {
-
-        LOG.trace("Creating copy with id {}", newDraftData.getCertificateId());
-
+        } else {
+            LOG.trace("Creating copy with id {} from {}", newDraftData.getCertificateId(), template.getId());
+        }
 
         template.setId(newDraftData.getCertificateId());
 

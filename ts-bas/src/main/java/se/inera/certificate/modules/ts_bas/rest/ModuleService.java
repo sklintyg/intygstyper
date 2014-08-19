@@ -76,7 +76,7 @@ import se.inera.certificate.xml.SchemaValidatorBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * The contract between the certificate module and the generic components (Intygstjänsten and Mina-Intyg).
+ * The contract between the certificate module and the generic components (Intygstjänsten, Mina-Intyg & Webcert).
  *
  * @author Gustav Norbäcker, R2M
  */
@@ -275,7 +275,7 @@ public class ModuleService implements ModuleApi {
     @Override
     public InternalModelResponse createNewInternal(CreateNewDraftHolder draftCertificateHolder) throws ModuleException {
         try {
-            return toInteralModelResponse(webcertModelFactory.createNewWebcertDraft(draftCertificateHolder));
+            return toInteralModelResponse(webcertModelFactory.createNewWebcertDraft(draftCertificateHolder, null));
 
         } catch (ConverterException e) {
             LOG.error("Could not create a new internal Webcert model", e);
@@ -283,17 +283,24 @@ public class ModuleService implements ModuleApi {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public InternalModelResponse createNewInternalFromTemplate(CreateNewDraftHolder draftCertificateHolder, ExternalModelHolder template) throws ModuleException {
         try {
             se.inera.certificate.modules.ts_bas.model.internal.Utlatande internal = externalToInternalConverter.convert(getExternal(template));
-            return toInteralModelResponse(webcertModelFactory.createNewWebcertDraftFromTemplate(draftCertificateHolder, internal));
+            return toInteralModelResponse(webcertModelFactory.createNewWebcertDraft(draftCertificateHolder, internal));
+
         } catch (ConverterException e) {
             LOG.error("Could not create a new internal Webcert model", e);
             throw new ModuleConverterException("Could not create a new internal Webcert model", e);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getComplementaryInfo(ExternalModelHolder externalModel) throws ModuleException {
         Utlatande utlatande = getExternal(externalModel);
@@ -305,22 +312,20 @@ public class ModuleService implements ModuleApi {
         return Strings.join(", ", intygAvser);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
-        try {
-            se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande = getInternal(internalModel);
-            utlatande.setSigneringsdatum(signingDate);
-            utlatande.getSkapadAv().setPersonid(hosPerson.getHsaId());
-            utlatande.getSkapadAv().setFullstandigtNamn(hosPerson.getNamn());
-            utlatande.getSkapadAv().getBefattningar().clear();
-            if (hosPerson.getBefattning() != null) {
-                utlatande.getSkapadAv().getBefattningar().add(hosPerson.getBefattning());
-            }
-            return toInteralModelResponse(utlatande);
-
-        } catch (ModuleException e) {
-            throw new ModuleException("Convert error of internal model", e);
+        se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande = getInternal(internalModel);
+        utlatande.setSigneringsdatum(signingDate);
+        utlatande.getSkapadAv().setPersonid(hosPerson.getHsaId());
+        utlatande.getSkapadAv().setFullstandigtNamn(hosPerson.getNamn());
+        utlatande.getSkapadAv().getBefattningar().clear();
+        if (hosPerson.getBefattning() != null) {
+            utlatande.getSkapadAv().getBefattningar().add(hosPerson.getBefattning());
         }
+        return toInteralModelResponse(utlatande);
     }
 
     private se.inera.certificate.ts_bas.model.v1.Utlatande getTransport(TransportModelHolder transportModel)

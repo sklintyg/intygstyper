@@ -54,7 +54,7 @@ public class WebcertModelFactoryTest {
         se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande = null;
 
         try {
-            utlatande = factory.createNewWebcertDraft(draftCertHolder);
+            utlatande = factory.createNewWebcertDraft(draftCertHolder, null);
         } catch (ConverterException e) {
             e.printStackTrace();
         }
