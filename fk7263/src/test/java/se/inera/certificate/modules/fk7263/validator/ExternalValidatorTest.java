@@ -154,7 +154,7 @@ public class ExternalValidatorTest {
 
         Fk7263Aktivitet aktivitet = utlatande
                 .getAktivitet(Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN);
-        aktivitet.setBeskrivning("");
+        aktivitet.setBeskrivning(null);
 
         assertEquals(1, new ExternalValidator(utlatande).validate().size());
     }
@@ -164,7 +164,7 @@ public class ExternalValidatorTest {
         Fk7263Utlatande utlatande = getValidUtlatande();
 
         Fk7263Aktivitet aktivitet = utlatande.getAktivitet(Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD);
-        aktivitet.setBeskrivning("");
+        aktivitet.setBeskrivning(null);
 
         assertEquals(1, new ExternalValidator(utlatande).validate().size());
     }

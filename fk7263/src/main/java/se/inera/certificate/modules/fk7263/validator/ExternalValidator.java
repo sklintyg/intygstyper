@@ -65,7 +65,7 @@ public class ExternalValidator extends AbstractValidator {
 
         // Field 6a:
         Fk7263Aktivitet ovrigtRekomendation = externalUtlatande.getAktivitet(Aktivitetskoder.OVRIGT);
-        if (ovrigtRekomendation != null && StringUtils.isEmpty(ovrigtRekomendation.getBeskrivning())) {
+        if (ovrigtRekomendation != null && ovrigtRekomendation.getBeskrivning() == null) {
             addValidationError("Field 6a: beskrivning is mandatory for this Aktivitet.");
         }
 
@@ -73,13 +73,13 @@ public class ExternalValidator extends AbstractValidator {
         Fk7263Aktivitet planeradAktivitetInomSjukVarden = externalUtlatande
                 .getAktivitet(Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN);
         if (planeradAktivitetInomSjukVarden != null
-                && StringUtils.isEmpty(planeradAktivitetInomSjukVarden.getBeskrivning())) {
+                && planeradAktivitetInomSjukVarden.getBeskrivning() == null) {
             addValidationError("Field 6b(1): beskrivning is mandatory for this Aktivitet.");
         }
         // Field 6b.2:
         Fk7263Aktivitet planeradAktivitetAnnan = externalUtlatande
                 .getAktivitet(Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD);
-        if (planeradAktivitetAnnan != null && StringUtils.isEmpty(planeradAktivitetAnnan.getBeskrivning())) {
+        if (planeradAktivitetAnnan != null && planeradAktivitetAnnan.getBeskrivning() == null) {
             addValidationError("Field 6b(2): beskrivning is mandatory for this Aktivitet.");
         }
 
