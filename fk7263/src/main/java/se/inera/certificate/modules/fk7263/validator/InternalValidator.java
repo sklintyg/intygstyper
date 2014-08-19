@@ -103,31 +103,13 @@ public class InternalValidator extends AbstractValidator {
 
         for (int i = 0; i < intervals.length; i++) {
             if (intervals[i] != null) {
-                Interval oneInterval = createInterval(intervals[i].getFrom(), intervals[i].getTom());
-                if (oneInterval == null) {
+                if (!isValidInterval(intervals[i].getFrom(), intervals[i].getTom())) {
                     addValidationError(fieldId + ": Invalid date interval (from " + intervals[i].getFrom() + ", tom "
                             + intervals[i].getTom());
                     return false;
                 }
-                for (int j = i + 1; j < intervals.length; j++) {
-                    if (intervals[j] != null) {
-                        Interval anotherInterval = createInterval(intervals[j].getFrom(), intervals[j].getTom());
-                        if (anotherInterval == null) {
-                            addValidationError(fieldId + ": Invalid date interval (from " + intervals[j].getFrom()
-                                    + ", tom " + intervals[j].getTom());
-                            return false;
-                        }
-                        // Overlap OR abuts(one intervals tom day== another's from day) is considered invalid
-                        if (oneInterval.overlaps(anotherInterval) || oneInterval.abuts(anotherInterval)) {
-                            addValidationError(fieldId + ": Overlapping date intervals (" + oneInterval.toString()
-                                    + " vs " + anotherInterval.toString() + ")");
-                            return false;
-                        }
-                    }
-                }
             }
         }
-
         return true;
 
     }
@@ -141,12 +123,8 @@ public class InternalValidator extends AbstractValidator {
         return true;
     }
 
-    private Interval createInterval(LocalDate start, LocalDate end) {
-        if ((start == null || end == null || start.isAfter(end))) {
-            return null;
-        } else {
-            return new Interval(start.toDate().getTime(), end.toDate().getTime());
-        }
+    private boolean isValidInterval(LocalDate start, LocalDate end) {
+        return (start != null && end != null && !start.isAfter(end));
     }
 
     /**
