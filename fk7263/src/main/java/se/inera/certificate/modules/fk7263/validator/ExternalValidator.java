@@ -43,7 +43,7 @@ public class ExternalValidator extends AbstractValidator {
         // Field 3:
         Fk7263Observation forlopp = externalUtlatande.findObservationByKod(ObservationsKoder.FORLOPP);
         // If forlopp observation exist, it must have an description set
-        if (forlopp != null && StringUtils.isEmpty(forlopp.getBeskrivning())) {
+        if (forlopp != null && forlopp.getBeskrivning() == null) {
             addValidationError("Field 3: beskrivning is mandatory for this observation.");
         }
 
