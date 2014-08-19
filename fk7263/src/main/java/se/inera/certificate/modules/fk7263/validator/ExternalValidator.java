@@ -92,8 +92,16 @@ public class ExternalValidator extends AbstractValidator {
         Fk7263Patient patient = externalUtlatande.getPatient();
         for (Sysselsattning sysselsattning : externalUtlatande.getPatient().getSysselsattningar()) {
             if (Sysselsattningskoder.NUVARANDE_ARBETE.equals(sysselsattning.getSysselsattningstyp())) {
-                if (patient.getArbetsuppgifter().isEmpty() || StringUtils.isEmpty(patient.getArbetsuppgifter().get(0).getTypAvArbetsuppgift())) {
-                    addValidationError("Field 8a(1): 'beskrivning aktuella arbetsuppgifter' is mandatory when 'nuvarande arbete' is checked.");
+                Fk7263Aktivitet smittskydd = externalUtlatande.getAktivitet(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
+                if (patient.getArbetsuppgifter().isEmpty()) {
+                    if (smittskydd == null) {
+                        addValidationError("Field 8a(1): 'beskrivning aktuella arbetsuppgifter' is mandatory when 'nuvarande arbete' is checked.");
+                    }
+                } else {
+                    String typAvArbetsuppgift = patient.getArbetsuppgifter().get(0).getTypAvArbetsuppgift();
+                    if (typAvArbetsuppgift == null || (smittskydd == null && StringUtils.isEmpty(typAvArbetsuppgift))) {
+                        addValidationError("Field 8a(1): 'beskrivning aktuella arbetsuppgifter' is mandatory when 'nuvarande arbete' is checked.");
+                    }
                 }
             }
         }

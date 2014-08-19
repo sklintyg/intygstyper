@@ -58,7 +58,36 @@ public class ExternalValidatorTest {
     }
 
     @Test
-    public void testInvalidSysselsattning() throws Exception {
+    public void testSaknadSysselsattning() throws Exception {
+        Fk7263Utlatande utlatande = getValidUtlatande();
+        Fk7263Patient patient = utlatande.getPatient();
+        for (Sysselsattning sysselsattning : utlatande.getPatient().getSysselsattningar()) {
+            if (Sysselsattningskoder.NUVARANDE_ARBETE.equals(sysselsattning.getSysselsattningstyp())
+                    && !patient.getArbetsuppgifter().isEmpty()) {
+                patient.getArbetsuppgifter().get(0).setTypAvArbetsuppgift(null);
+            }
+        }
+        assertEquals(1, new ExternalValidator(utlatande).validate().size());
+    }
+
+    @Test
+    public void testSaknadSysselsattningSmittskydd() throws Exception {
+        Fk7263Utlatande utlatande = getValidUtlatande();
+        Fk7263Aktivitet smittskyddsAktivitet = new Fk7263Aktivitet();
+        smittskyddsAktivitet.setAktivitetskod(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
+        utlatande.getAktiviteter().add(smittskyddsAktivitet);
+        Fk7263Patient patient = utlatande.getPatient();
+        for (Sysselsattning sysselsattning : utlatande.getPatient().getSysselsattningar()) {
+            if (Sysselsattningskoder.NUVARANDE_ARBETE.equals(sysselsattning.getSysselsattningstyp())
+                    && !patient.getArbetsuppgifter().isEmpty()) {
+                patient.getArbetsuppgifter().get(0).setTypAvArbetsuppgift(null);
+            }
+        }
+        assertEquals(1, new ExternalValidator(utlatande).validate().size());
+    }
+
+    @Test
+    public void testTomSysselsattning() throws Exception {
         Fk7263Utlatande utlatande = getValidUtlatande();
         Fk7263Patient patient = utlatande.getPatient();
         for (Sysselsattning sysselsattning : utlatande.getPatient().getSysselsattningar()) {
@@ -68,6 +97,22 @@ public class ExternalValidatorTest {
             }
         }
         assertEquals(1, new ExternalValidator(utlatande).validate().size());
+    }
+
+    @Test
+    public void testTomSysselsattningSmittskydd() throws Exception {
+        Fk7263Utlatande utlatande = getValidUtlatande();
+        Fk7263Aktivitet smittskyddsAktivitet = new Fk7263Aktivitet();
+        smittskyddsAktivitet.setAktivitetskod(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
+        utlatande.getAktiviteter().add(smittskyddsAktivitet);
+        Fk7263Patient patient = utlatande.getPatient();
+        for (Sysselsattning sysselsattning : utlatande.getPatient().getSysselsattningar()) {
+            if (Sysselsattningskoder.NUVARANDE_ARBETE.equals(sysselsattning.getSysselsattningstyp())
+                    && !patient.getArbetsuppgifter().isEmpty()) {
+                patient.getArbetsuppgifter().get(0).setTypAvArbetsuppgift("");
+            }
+        }
+        assertEquals(0, new ExternalValidator(utlatande).validate().size());
     }
 
     @Test
