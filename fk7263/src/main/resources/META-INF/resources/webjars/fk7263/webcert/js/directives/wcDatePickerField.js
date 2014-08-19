@@ -1,5 +1,5 @@
 angular.module('fk7263').directive('wcDatePickerField',
-    function($rootScope, $timeout) {
+    function($rootScope, $timeout, $log) {
         'use strict';
 
         return {
@@ -8,11 +8,13 @@ angular.module('fk7263').directive('wcDatePickerField',
             scope: {
                 targetModel: '=',
                 domId: '@',
+                invalid: '=',
                 onChange: '&'
             },
             templateUrl: '/web/webjars/fk7263/webcert/js/directives/wcDatePickerField.html',
 
             controller: function($scope) {
+
                 var format = function(date) {
                     var dd = date.getDate();
                     var mm = date.getMonth() + 1;
@@ -33,6 +35,9 @@ angular.module('fk7263').directive('wcDatePickerField',
                         $scope.isOpen = !$scope.isOpen;
                     });
                 };
-            }
+            }/*,
+            link: function (scope, element, attrs, ngModel) {
+                $log.debug(scope);
+            }*/
         };
     });
