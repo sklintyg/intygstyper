@@ -145,7 +145,7 @@ public class ExternalValidatorTest {
         Fk7263Utlatande utlatande = getValidUtlatande();
 
         Fk7263Observation observation = utlatande.findObservationByKod(ObservationsKoder.FORLOPP);
-        observation.setBeskrivning("");
+        observation.setBeskrivning(null);
 
         assertEquals(1, new ExternalValidator(utlatande).validate().size());
     }
