@@ -59,7 +59,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 },
                 'korkortd': false,
                 'behorighet': true,
-                'arbete': 'NUVARANDE',
+                'arbete': true,
                 'rehab': 'NEJ'
             };
 
@@ -405,17 +405,16 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     'wcDiagnosBeskrivning2', 'wcDiagnosKod3', 'wcDiagnosBeskrivning3' ];
                 setPropertyDefaults($scope.cert, propertyNames, '');
 
+                // Set nuvarande arbete value
+                if($scope.cert.nuvarandeArbetsuppgifter !== undefined || (!$scope.cert.arbetsloshet && !$scope.cert.foraldrarledighet)) {
+                    $scope.form.arbete = true;
+                } else {
+                    $scope.form.arbete = false;
+                }
+
                 // Set prognosis default value
                 if ($scope.cert.prognosis === undefined) {
                     $scope.cert.prognosis = 'YES';
-                }
-
-                // Arbete radio conversions
-                if($scope.cert.arbetsloshet) {
-                    $scope.form.arbete = 'ARBETSLOSHET';
-                }
-                else if($scope.cert.foraldrarledighet) {
-                    $scope.form.arbete = 'FORALDRALEDIGHET';
                 }
 
                 // Rehab radio conversions
@@ -431,15 +430,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             }
 
             function convertFormToCert($scope) {
-
-                // Arbete radio conversions
-                $scope.cert.arbetsloshet = false;
-                $scope.cert.foraldrarledighet = false;
-
-                switch($scope.form.arbete) {
-                    case 'ARBETSLOSHET': $scope.cert.arbetsloshet = true; break;
-                    case 'FORALDRALEDIGHET': $scope.cert.foraldrarledighet = true; break;
-                }
 
                 // Rehab radio conversions
                 $scope.cert.rehabiliteringAktuell = false;

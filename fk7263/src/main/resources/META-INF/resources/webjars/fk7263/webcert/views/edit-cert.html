@@ -282,11 +282,11 @@
                     <div class="form-group form-inline">
                       <label class="control-label"><span message key="fk7263.label.arbetsformaga"></span></label>
                       <div class="controls form-inline">
-                        <label class="radio"><input type="radio" name="arbete" value="NUVARANDE"
-                                                    ng-model="form.arbete" checked="checked"> Nuvarande
+                        <label class="checkbox"><input type="checkbox" name="arbete"
+                                                    ng-model="form.arbete"> Nuvarande
                           arbete</label><span wc-enable-tooltip
                                               field-help-text="fk7263.helptext.sysselsattning.nuvarande"></span>
-                        <div class="indent" ng-if="form.arbete == 'NUVARANDE'">
+                        <div class="indent" ng-if="form.arbete">
                           <label for="currentWork">Ange aktuella arbetsuppgifter</label>
                           <div class="controls">
                             <textarea id="currentWork" class="" name="currentWork" rows='2'
@@ -297,14 +297,14 @@
                       </div>
                     </div>
                     <div class="form-group form-inline">
-                      <label class="radio"><input type="radio" name="arbete" group="group1" value="ARBETSLOSHET"
-                                                  ng-model="form.arbete"> Arbetslöshet - att utföra arbete på den
+                      <label class="checkbox"><input type="checkbox" name="arbete"
+                                                  ng-model="cert.arbetsloshet"> Arbetslöshet - att utföra arbete på den
                         reguljära arbetsmarknaden</label><span wc-enable-tooltip
                                                                field-help-text="fk7263.helptext.sysselsattning.arbetsloshet"></span>
                     </div>
                     <div class="form-group form-inline">
-                      <label class="radio"><input type="radio" name="arbete" group="group1" value="FORALDRALEDIGHET"
-                                                  ng-model="form.arbete"> Föräldraledighet med föräldrapenning -
+                      <label class="checkbox"><input type="checkbox" name="arbete"
+                                                  ng-model="cert.foraldrarledighet"> Föräldraledighet med föräldrapenning -
                         att vårda sitt barn</label><span wc-enable-tooltip
                                                          field-help-text="fk7263.helptext.sysselsattning.foraldrarledighet"></span>
                     </div>
