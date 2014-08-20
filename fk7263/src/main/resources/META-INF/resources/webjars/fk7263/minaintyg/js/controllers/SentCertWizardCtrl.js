@@ -16,14 +16,28 @@ define([ 'angular' ], function(angular) {
                 $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $routeParams.certificateId + '/pdf';
 
                 // Initialize recipient handling, default to FK
-                $scope.selectedRecipientId = 'FK';
+                $scope.selectedRecipientId = 'fk';
                 // set selected recipeintID in rootscope to preserve state between
                 // controller instance invocations
                 $rootScope.selectedRecipientId = $scope.selectedRecipientId;
-                $scope.recipientList = [ {
-                    'id': 'FK',
-                    'recipientName': 'Försäkringskassan'
-                } ];
+
+                $scope.recipientList = [];
+                sendCertService.getRecipients('fk7263', function(result) {
+                    if (result !== null && result.length > 0) {
+                        for (var i = 0; i < result.length; ++i) {
+                            $scope.recipientList[i] = {
+                                'id': result[i].id,
+                                'recipientName': result[i].name
+                            }
+                        }
+                    } else {
+                        // show error view
+                        $location.path('/fk7263/fel/failedreceiverecipients');
+                    }
+                }, function(result) {
+                    // show error view
+                    $location.path('/fk7263/fel/failedreceiverecipients');
+                });
 
                 $scope.getRecipientName = function(id) {
                     for ( var i = 0; i < $scope.recipientList.length; i++) {

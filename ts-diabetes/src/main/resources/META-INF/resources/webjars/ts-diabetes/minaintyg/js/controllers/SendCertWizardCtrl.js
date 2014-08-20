@@ -26,16 +26,28 @@ define([
             $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $scope.cert.id + '/pdf';
 
             // Initialize recipient handling, default to TS
-            $scope.selectedRecipientId = 'TS';
+            $scope.selectedRecipientId = 'ts';
             // set selected recipeintID in rootscope to preserve state between
             // controller instance invocations
             $rootScope.selectedRecipientId = $scope.selectedRecipientId;
-            $scope.recipientList = [
-                {
-                    'id': 'TS',
-                    'recipientName': 'Transportstyrelsen'
+
+            $scope.recipientList = [];
+            sendCertService.getRecipients('ts-diabetes', function(result) {
+                if (result !== null && result.length > 0) {
+                    for (var i = 0; i < result.length; ++i) {
+                        $scope.recipientList[i] = {
+                            'id': result[i].id,
+                            'recipientName': result[i].name
+                        }
+                    }
+                } else {
+                    // show error view
+                    $location.path('/ts-diabetes/fel/failedreceiverecipients');
                 }
-            ];
+            }, function(result) {
+                // show error view
+                $location.path('/ts-diabetes/fel/failedreceiverecipients');
+            });
 
             $scope.getRecipientName = function(id) {
                 for (var i = 0; i < $scope.recipientList.length; i++) {
