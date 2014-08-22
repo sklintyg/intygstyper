@@ -53,26 +53,36 @@
                 <label class="control-label">{{cert.patient.fullstandigtNamn}} - {{cert.patient.personid}}</label>
               </div>
               <div class="form-group buttonbar">
-                <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned"><span message key="ts-bas.label.spara-utkast"></span></button>
-                <button id="ta-bort-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="discard()"><span message key="ts-bas.label.ta-bort-utkast"></span></button>
-                <button id="skriv-ut-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="print()"><span message key="ts-bas.label.skriv-ut-utkast"></span></button>
-                <button class="btn btn-default btn-secondary" ng-disabled="!hasSavedThisSession" ng-if="!widgetState.showComplete && !isComplete"
-                        ng-click="toggleShowComplete()"><span message key="ts-bas.label.visa-kompletteras"></span>
+                <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned"><span message
+                                                                                                         key="ts-bas.label.spara-utkast"></span>
                 </button>
-                <button class="btn btn-default btn-secondary" ng-disabled="!hasSavedThisSession" ng-if="widgetState.showComplete && !isComplete"
-                        ng-click="toggleShowComplete()"><span message key="ts-bas.label.dolj-kompletteras"></span>
+                <button id="ta-bort-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned"
+                        ng-click="discard()"><span message key="ts-bas.label.ta-bort-utkast"></span></button>
+                <button id="skriv-ut-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="print()">
+                  <span message key="ts-bas.label.skriv-ut-utkast"></span></button>
+                <button class="btn btn-default btn-secondary" ng-disabled="!hasSavedThisSession"
+                        ng-if="!widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()"><span message
+                                                                                                               key="ts-bas.label.visa-kompletteras"></span>
+                </button>
+                <button class="btn btn-default btn-secondary" ng-disabled="!hasSavedThisSession"
+                        ng-if="widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()"><span message
+                                                                                                              key="ts-bas.label.dolj-kompletteras"></span>
                 </button>
               </div>
-              <div id="certificate-is-sent-to-it-message-text" ng-show="isSigned"><strong><span message key="ts-bas.label.status"></span></strong>
-              	<span message key="ts-bas.label.status.intyget-signerat"></span>
+              <div id="certificate-is-sent-to-it-message-text" ng-show="isSigned"><strong><span message
+                                                                                                key="ts-bas.label.status"></span></strong>
+                <span message key="ts-bas.label.status.intyget-signerat"></span>
               </div>
-              <div ng-show="certForm.$pristine && isComplete && !isSigned"><strong><span message key="ts-bas.label.status"></span></strong>
-              	<span message key="ts-bas.label.status.intyget-sparat"></span>
+              <div ng-show="certForm.$pristine && isComplete && !isSigned"><strong><span message
+                                                                                         key="ts-bas.label.status"></span></strong>
+                <span message key="ts-bas.label.status.intyget-sparat"></span>
               </div>
-              <div ng-show="certForm.$pristine && !isComplete"><strong><span message key="ts-bas.label.status"></span></strong>
-              	<span message key="ts-bas.label.status.intyget-sparat-ejkomplett"></span>
+              <div ng-show="certForm.$pristine && !isComplete"><strong><span message
+                                                                             key="ts-bas.label.status"></span></strong>
+                <span message key="ts-bas.label.status.intyget-sparat-ejkomplett"></span>
               </div>
-              <div ng-show="certForm.$dirty"><strong><span message key="ts-bas.label.status"></span></strong><span message key="ts-bas.label.status.intyget-inte-sparat"></span></div>
+              <div ng-show="certForm.$dirty"><strong><span message key="ts-bas.label.status"></span></strong><span
+                  message key="ts-bas.label.status.intyget-inte-sparat"></span></div>
             </div>
           </div>
         </div>
@@ -111,7 +121,7 @@
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.patient">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.patient"><span message
-                                                                                              key="{{message.message}}"></span>
+                                                                                           key="{{message.message}}"></span>
                         </li>
                       </ul>
                     </div>
@@ -136,8 +146,8 @@
                       <div class="form-group">
                         <label class="col-xs-3 control-label"><span message key="ts-bas.form.postort"></span></label>
                         <div class="col-xs-9">
-                          <input type="text" class="form-control" id="patient.postort"
-                                 name="cert.patient.postort" ng-model="cert.patient.postort" maxlength="30">
+                          <input type="text" class="form-control" id="patient.postort" name="cert.patient.postort"
+                                 ng-model="cert.patient.postort" maxlength="30">
                         </div>
                       </div>
                     </div>
@@ -153,7 +163,7 @@
                     </div>
 
                     <p><span message key="ts-bas.text.information-om-intyg"></span><span wc-enable-tooltip
-                                                                             field-help-text="ts-bas.helptext.intyg-avser.grupp2-grupp3"></span>
+                                                                                         field-help-text="ts-bas.helptext.intyg-avser.grupp2-grupp3"></span>
                     </p>
 
                     <p><span message key="ts-bas.text.information-om-begart-lakarintyg"></span></p>
@@ -176,18 +186,19 @@
                     </div>
                     <div class="form-group clearfix">
                       <label class="radio checkbox-columns col-xs-6" ng-repeat="v in form.identity"><input
-                          name="identity{{$index}}" type="radio" value="{{v.id}}" ng-model="cert.vardkontakt.idkontroll">
+                          name="identity{{$index}}" type="radio" value="{{v.id}}"
+                          ng-model="cert.vardkontakt.idkontroll">
                         {{v.label}}</label>
                     </div>
                     <div class="alert alert-info">
-	                    <span message key="ts-bas.helptext.identitet-styrkt-genom.id-kort"></span><br>
-	                    <span message key="ts-bas.helptext.identitet-styrkt-genom.foretags-tjanstekort"></span><br>
-	                    <span message key="ts-bas.helptext.identitet-styrkt-genom.forsakran-enl18kap4"></span><br>
-	                    <span message key="ts-bas.helptext.identitet-styrkt-genom.pass"></span><br>
-	                </div>
+                      <span message key="ts-bas.helptext.identitet-styrkt-genom.id-kort"></span><br>
+                      <span message key="ts-bas.helptext.identitet-styrkt-genom.foretags-tjanstekort"></span><br>
+                      <span message key="ts-bas.helptext.identitet-styrkt-genom.forsakran-enl18kap4"></span><br>
+                      <span message key="ts-bas.helptext.identitet-styrkt-genom.pass"></span><br>
+                    </div>
                   </div>
-				  
-				          <div class="alert alert-info print-pagebreak-after">
+
+                  <div class="alert alert-info print-pagebreak-after">
                     <span message key="ts-bas.helptext.lakaren-ska-uppmarksamma"></span>
                   </div>
 
@@ -236,7 +247,8 @@
                         <td>
                           <p><span message key="ts-bas.label.syn.progressivogonsjukdom"></span></p>
 
-                          <div class="alert alert-info" ng-if="cert.syn.progressivOgonsjukdom || cert.syn.nattblindhet || cert.syn.synfaltsdefekter">
+                          <div class="alert alert-info"
+                               ng-if="cert.syn.progressivOgonsjukdom || cert.syn.nattblindhet || cert.syn.synfaltsdefekter">
                             <span message key="ts-bas.helptext.synfunktioner.om-nagon-av-a-c"></span>
                           </div>
                         </td>
@@ -267,10 +279,10 @@
                             <tr>
                               <th></th>
                               <th><span message key="ts-bas.label.syn.utan-korrektion"></span><span wc-enable-tooltip
-                                                        field-help-text="ts-bas.helptext.synfunktioner.utan-korrektion" />
+                                                                                                    field-help-text="ts-bas.helptext.synfunktioner.utan-korrektion" />
                               </th>
                               <th><span message key="ts-bas.label.syn.med-korrektion"></span><span wc-enable-tooltip
-                                                       field-help-text="ts-bas.helptext.synfunktioner.med-korrektion" />
+                                                                                                   field-help-text="ts-bas.helptext.synfunktioner.med-korrektion" />
                               </th>
                               <th><span message key="ts-bas.label.syn.kontaktlinster"></span></th>
                             </tr>
@@ -302,7 +314,8 @@
 
                           <h4><span message key="ts-bas.label.syn.korrektionsglasens-styrka"></span></h4>
                           <label class="checkbox"><input name="dioptrier" type="checkbox"
-                                                         ng-model="cert.syn.korrektionsglasensStyrka"><span message key="ts-bas.label.syn.8-dioptrier"></span></label>
+                                                         ng-model="cert.syn.korrektionsglasensStyrka"><span message
+                                                                                                            key="ts-bas.label.syn.8-dioptrier"></span></label>
 
                           <div class="alert alert-info" ng-show="cert.syn.korrektionsglasensStyrka == true">
                             <span message key="ts-bas.helptext.synfunktioner.info-8-dioptrier"></span>
@@ -437,7 +450,8 @@
                           <div ng-show="cert.hjartKarl.riskfaktorerStroke">
                             <p><span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning"></span></p>
                             <textarea class="form-control" ng-model="cert.hjartKarl.beskrivningRiskfaktorer"
-                                      wc-maxlength maxlength="{{inputLimits.beskrivningRiskfaktorer}}" rows="4"></textarea>
+                                      wc-maxlength maxlength="{{inputLimits.beskrivningRiskfaktorer}}"
+                                      rows="4"></textarea>
                           </div>
                         </td>
                       </tr>
@@ -473,19 +487,24 @@
                           <div data-ng-show="cert.diabetes.harDiabetes">
                             <p><span message key="ts-bas.label.diabetes.diabetestyp"></span>
                               <label class="radio"><input name="diabetestype1" type="radio" value="DIABETES_TYP_1"
-                                                          ng-model="cert.diabetes.diabetesTyp"><span message key="ts-bas.label.diabetes.diabetestyp.diabetes_typ_1"></span></label>
+                                                          ng-model="cert.diabetes.diabetesTyp"><span message
+                                                                                                     key="ts-bas.label.diabetes.diabetestyp.diabetes_typ_1"></span></label>
                               <label class="radio"><input name="diabetestype2" type="radio" value="DIABETES_TYP_2"
-                                                          ng-model="cert.diabetes.diabetesTyp"><span message key="ts-bas.label.diabetes.diabetestyp.diabetes_typ_2"></span></label>
+                                                          ng-model="cert.diabetes.diabetesTyp"><span message
+                                                                                                     key="ts-bas.label.diabetes.diabetestyp.diabetes_typ_2"></span></label>
                             </p>
 
                             <div data-ng-show="cert.diabetes.diabetesTyp == 'DIABETES_TYP_2'">
                               <span message key="ts-bas.label.diabetes.behandling"></span>
                               <label class="checkbox"><input name="diabetestreat1" type="checkbox"
-                                                             ng-model="cert.diabetes.kost"><span message key="ts-bas.label.diabetes.behandling.kost"></span></label>
+                                                             ng-model="cert.diabetes.kost"><span message
+                                                                                                 key="ts-bas.label.diabetes.behandling.kost"></span></label>
                               <label class="checkbox"><input name="diabetestreat2" type="checkbox"
-                                                             ng-model="cert.diabetes.tabletter"><span message key="ts-bas.label.diabetes.behandling.tabletter"></span></label>
+                                                             ng-model="cert.diabetes.tabletter"><span message
+                                                                                                      key="ts-bas.label.diabetes.behandling.tabletter"></span></label>
                               <label class="checkbox"><input name="diabetestreat3" type="checkbox"
-                                                             ng-model="cert.diabetes.insulin"><span message key="ts-bas.label.diabetes.behandling.insulin"></span></label>
+                                                             ng-model="cert.diabetes.insulin"><span message
+                                                                                                    key="ts-bas.label.diabetes.behandling.insulin"></span></label>
 
                               <div class="alert alert-info"
                                    data-ng-show="cert.diabetes.tabletter || cert.diabetes.insulin">
@@ -556,7 +575,9 @@
                           <p><span message key="ts-bas.label.medvetandestorning.medvetandestorning"></span></p>
 
                           <div data-ng-show="cert.medvetandestorning.medvetandestorning">
-                            <p><span message key="ts-bas.label.medvetandestorning.medvetandestorning-ange-datum-orsak"></span></p>
+                            <p><span message
+                                     key="ts-bas.label.medvetandestorning.medvetandestorning-ange-datum-orsak"></span>
+                            </p>
                             <textarea class="form-control" rows="4" data-ng-model="cert.medvetandestorning.beskrivning"
                                       wc-maxlength maxlength="{{inputLimits.medvetandestorning}}"></textarea>
                           </div>
@@ -700,7 +721,8 @@
                         <td><input name="narkotikalakemedelcn" type="radio" ng-value="false"
                                    ng-model="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk"></td>
                         <td>
-                          <p><span message key="ts-bas.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk"></span></p>
+                          <p><span message key="ts-bas.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk"></span>
+                          </p>
 
                           <div data-ng-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk == true">
                             <p><span message key="ts-bas.label.narkotika-lakemedel.ange-lakemedel-dos"></span></p>
@@ -763,7 +785,8 @@
                                    ng-model="cert.utvecklingsstorning.psykiskUtvecklingsstorning"></td>
                         <td><input name="utvecklingsstorningan" type="radio" ng-value="false"
                                    ng-model="cert.utvecklingsstorning.psykiskUtvecklingsstorning"></td>
-                        <td><span message key="ts-bas.label.utvecklingsstorning.psykisk-utvecklingsstorning"></span></td>
+                        <td><span message key="ts-bas.label.utvecklingsstorning.psykisk-utvecklingsstorning"></span>
+                        </td>
                       </tr>
                       <tr>
                         <td><input name="utvecklingsstorningby" type="radio" ng-value="true"
@@ -804,21 +827,31 @@
                           <table data-ng-show="cert.sjukhusvard.sjukhusEllerLakarkontakt">
                             <tr>
                               <td class="col-md-6"><span message key="ts-bas.label.sjukhusvard.tidpunkt"></span></td>
-                              <td class="col-md-6 table-padding-top"><input id="tidpunkt" name="tidpunkt" class="form-control" type="text"
-                                         data-ng-model="cert.sjukhusvard.tidpunkt" wc-maxlength
-                                         maxlength="{{inputLimits.sjukhusvardtidpunkt}}"></td>
+                              <td class="col-md-6 table-padding-top"><input id="tidpunkt" name="tidpunkt"
+                                                                            class="form-control" type="text"
+                                                                            data-ng-model="cert.sjukhusvard.tidpunkt"
+                                                                            wc-maxlength
+                                                                            maxlength="{{inputLimits.sjukhusvardtidpunkt}}">
+                              </td>
                             </tr>
                             <tr>
-                              <td class="col-md-6"><span message key="ts-bas.label.sjukhusvard.vardinrattning"></span></td>
-                              <td class="col-md-6 table-padding-top"><input id="vardinrattning" name="vardinrattning" class="form-control" type="text"
-                                         data-ng-model="cert.sjukhusvard.vardinrattning" wc-maxlength
-                                         maxlength="{{inputLimits.sjukhusvardvardinrattning}}"></td>
+                              <td class="col-md-6"><span message key="ts-bas.label.sjukhusvard.vardinrattning"></span>
+                              </td>
+                              <td class="col-md-6 table-padding-top"><input id="vardinrattning" name="vardinrattning"
+                                                                            class="form-control" type="text"
+                                                                            data-ng-model="cert.sjukhusvard.vardinrattning"
+                                                                            wc-maxlength
+                                                                            maxlength="{{inputLimits.sjukhusvardvardinrattning}}">
+                              </td>
                             </tr>
                             <tr>
                               <td class="col-md-6"><span message key="ts-bas.label.sjukhusvard.anledning"></span></td>
-                              <td class="col-md-6 table-padding-top"><input id="anledning" name="anledning" class="form-control" type="text"
-                                         data-ng-model="cert.sjukhusvard.anledning" wc-maxlength
-                                         maxlength="{{inputLimits.sjukhusvardanledning}}"></td>
+                              <td class="col-md-6 table-padding-top"><input id="anledning" name="anledning"
+                                                                            class="form-control" type="text"
+                                                                            data-ng-model="cert.sjukhusvard.anledning"
+                                                                            wc-maxlength
+                                                                            maxlength="{{inputLimits.sjukhusvardanledning}}">
+                              </td>
                             </tr>
                           </table>
                         </td>
@@ -869,7 +902,8 @@
                     <!-- ng-change="inputlimit for IE"-->
                   </div>
 
-                  <div wc-field field-label="ts-bas.label.bedomning" class="print-pagebreak-after" field-help-text="ts-bas.helptext.bedomning">
+                  <div wc-field field-label="ts-bas.label.bedomning" class="print-pagebreak-after"
+                       field-help-text="ts-bas.helptext.bedomning">
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.bedomning">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.bedomning"><span message
@@ -893,21 +927,21 @@
                                                            key="ts-bas.label.korkort.{{typ.type}}"></span></label>
                       </div>
                       <label class="radio"><input name="behorighetinte" type="radio" ng-value="false"
-                                                  ng-model="form.behorighet"> 
+                                                  ng-model="form.behorighet">
                         <span message key="ts-bas.label.bedomning.kan-inte-ta-stallning"></span></label>
                     </div>
 
                     <p ng-show="form.anyTrue">
-                        <span message key="ts-bas.helptext.bedomning.info"></span>
+                      <span message key="ts-bas.helptext.bedomning.info"></span>
                     </p>
 
                     <p ng-show="cert.syn.korrektionsglasensStyrka == true">
-                            <span message key="ts-bas.helptext.synfunktioner.8-dioptrier-valt"></span>
+                      <span message key="ts-bas.helptext.synfunktioner.8-dioptrier-valt"></span>
                     </p>
 
                     <p data-ng-show="cert.diabetes.tabletter || cert.diabetes.insulin">
-						<span message key="ts-bas.helptext.diabetes.tabletter-eller-insulin"></span>
-					</p>
+                      <span message key="ts-bas.helptext.diabetes.tabletter-eller-insulin"></span>
+                    </p>
 
                     <p><span message key="ts-bas.label.bedomning-info-undersokas-med-specialkompetens"></span></p>
                     <textarea name="specialist" class="form-control" rows='3'
@@ -934,19 +968,23 @@
 
                       <div class="form-horizontal">
                         <div class="form-group">
-                          <label class="col-xs-3 control-label"><span message key="ts-bas.form.postadress"></span></label>
+                          <label class="col-xs-3 control-label"><span message
+                                                                      key="ts-bas.form.postadress"></span></label>
 
                           <div class="col-xs-9">
                             <input type="text" class="form-control input-full" id="clinicInfo.postalAddress"
-                                   name="clinicInfo.postalAddress" ng-model="cert.skapadAv.vardenhet.postadress" maxlength="70">
+                                   name="clinicInfo.postalAddress" ng-model="cert.skapadAv.vardenhet.postadress"
+                                   maxlength="70">
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-xs-3 control-label"><span message key="ts-bas.form.postnummer"></span></label>
+                          <label class="col-xs-3 control-label"><span message
+                                                                      key="ts-bas.form.postnummer"></span></label>
 
                           <div class="col-xs-9">
                             <input type="text" class="form-control input-5" id="clinicInfo.postalCode"
-                                   name="clinicInfo.postalCode" ng-model="cert.skapadAv.vardenhet.postnummer" maxlength="6">
+                                   name="clinicInfo.postalCode" ng-model="cert.skapadAv.vardenhet.postnummer"
+                                   maxlength="6">
                           </div>
                         </div>
                         <div class="form-group">
@@ -954,55 +992,54 @@
 
                           <div class="col-xs-9">
                             <input type="text" class="form-control" id="clinicInfo.postalCity"
-                                   name="clinicInfo.postalCity" ng-model="cert.skapadAv.vardenhet.postort" maxlength="30">
+                                   name="clinicInfo.postalCity" ng-model="cert.skapadAv.vardenhet.postort"
+                                   maxlength="30">
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="col-xs-3 control-label"><span message key="ts-bas.form.telefonnummer"></span></label>
+                          <label class="col-xs-3 control-label"><span message
+                                                                      key="ts-bas.form.telefonnummer"></span></label>
 
                           <div class="col-xs-9">
                             <input type="text" class="form-control" id="clinicInfo.phone" name="clinicInfo.phone"
                                    ng-model="cert.skapadAv.vardenhet.telefonnummer" maxlength="20">
                           </div>
                         </div>
-                        <div class="form-group" ng-if="false">
-                          <label class="col-xs-3 control-label"><span message key="ts-bas.form.epost"></span></label>
-                        <div class="col-xs-9">
-                          <input type="text" class="form-control" id="clinicInfo.email" name="clinicInfo.email"
-                                 ng-model="cert.skapadAv.epost" maxlength="255">
-                                 {{cert.skapadAv.epost}}
-                            </div>
-                          </div>
-                        </div>
                       </div>
                     </div>
+                  </div>
+
                   <div class="body-row clearfix">
-                     <div ng-if="specialiteter.length > 0">
-                       <h4><span message key="ts-bas.label.specialkompetens"></span></h4>
-                       <span> {{specialiteter}}</span><br/>
-                     </div><br/>
-                     <div ng-if="befattningar.length > 0">
-                       <h4><span message key="ts-bas.label.befattningar"></span></h4>
-                       <span ng-repeat="befattning in befattningar"></span>
-                      </div><br/>
-                   </div>
+                    <div ng-if="specialiteter && specialiteter != ''">
+                      <h4><span message key="ts-bas.label.specialkompetens"></span></h4>
+                      <span> {{specialiteter}}</span><br />
+                    </div>
+                    <br />
+                    <div ng-if="befattningar && befattningar.length > 0">
+                      <h4><span message key="ts-bas.label.befattningar"></span></h4>
+                      <span ng-repeat="befattning in befattningar"></span>
+                    </div>
+                    <br />
+                  </div>
+
+                  <div ng-if="!isSigned" class="print-hide">
+                    <h3><span message key="ts-bas.label.signera"></span></h3>
+
+                    <div id="sign-requires-doctor-message-text" ng-if="!user.userContext.lakare"
+                         class="alert alert-info">
+                      <span message key="ts-bas.validation.missing.krav-pa-lakarunderskrift"></span>
+                    </div>
+
+                    <button id="signera-utkast-button" class="btn btn-success" ng-disabled="!isComplete"
+                            ng-click="sign()" ng-show="user.userContext.lakare">Signera intyget
+                    </button>
+                  </div>
+
                 </div>
                 <!-- cert body -->
 
               </div>
               <!-- certificate -->
-
-              <div ng-if="!isSigned" class="print-hide">
-                <h3><span message key="ts-bas.label.signera"></span></h3>
-
-                <div id="sign-requires-doctor-message-text" ng-if="!user.userContext.lakare" class="alert alert-info">
-                  <span message key="ts-bas.validation.missing.krav-pa-lakarunderskrift"></span>
-                </div>
-
-                <button id="signera-utkast-button" class="btn btn-success" ng-disabled="!isComplete" ng-click="sign()"
-                        ng-show="user.userContext.lakare">Signera intyget
-                </button>
-              </div>
 
             </div>
           </div>
