@@ -42,6 +42,10 @@
           <div class="col-md-12">
             <div class="cert-body">
 
+              <div wc-field field-label="ts-bas.label.patientadress" filled="true">
+                <span class="ts-cert-answer">{{cert.patient.postadress}}<br>{{cert.patient.postnummer}} {{cert.patient.postort}}</span>
+              </div>
+
               <div wc-field field-label="ts-bas.label.intygavser" filled="true">
                 <span class="ts-cert-answer">{{intygAvser}}</span>
               </div>
@@ -326,11 +330,11 @@
               </div>
 
               <div wc-field field-label="ts-bas.label.ovrigkommentar" filled="true">
-                <p ng-show="cert.ovrigkommentar.length > 0">
-                  <span>{{cert.ovrigkommentar}}</span>
+                <p ng-show="cert.kommentar.length > 0">
+                  <span>{{cert.kommentar}}</span>
                 </p>
 
-                <p class="ts-cert-answer" ng-show="!cert.ovrigkommentar">
+                <p class="ts-cert-answer" ng-show="!cert.kommentar">
                   <span message key="ts-bas.label.bedomning-info-ej-angivet"></span>
                 </p>
               </div>
