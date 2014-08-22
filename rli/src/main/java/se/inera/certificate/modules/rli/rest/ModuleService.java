@@ -148,14 +148,11 @@ public class ModuleService implements ModuleApi {
      * @throws ModuleException
      */
     @Override
-    public String validate(ExternalModelHolder externalHolder) throws ModuleException {
+    public void validate(ExternalModelHolder externalHolder) throws ModuleException {
 
         List<String> validationErrors = validator.validateExternal(getExternal(externalHolder));
 
-        if (validationErrors.isEmpty()) {
-            return null;
-
-        } else {
+        if (!validationErrors.isEmpty()) {
             String response = Strings.join(",", validationErrors);
             throw new ModuleValidationException(Collections.singletonList(response));
         }

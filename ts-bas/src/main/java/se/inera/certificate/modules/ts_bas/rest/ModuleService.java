@@ -200,19 +200,15 @@ public class ModuleService implements ModuleApi {
      * @throws ModuleException
      */
     @Override
-    public String validate(ExternalModelHolder externalModelHolder) throws ModuleException {
-        return validate(getExternal(externalModelHolder));
+    public void validate(ExternalModelHolder externalModelHolder) throws ModuleException {
+        validate(getExternal(externalModelHolder));
     }
 
-    private String validate(Utlatande utlatande) throws ModuleException {
+    private void validate(Utlatande utlatande) throws ModuleException {
         List<String> validationErrors = validator.validateExternal(utlatande);
 
-        if (validationErrors.isEmpty()) {
-            return null;
-
-        } else {
-            String response = Strings.join(",", validationErrors);
-            throw new ModuleValidationException(Collections.singletonList(response));
+        if (!validationErrors.isEmpty()) {
+            throw new ModuleValidationException(validationErrors);
         }
     }
 

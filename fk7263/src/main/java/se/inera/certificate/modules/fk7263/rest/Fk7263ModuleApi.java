@@ -160,10 +160,8 @@ public class Fk7263ModuleApi implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public String validate(ExternalModelHolder externalModel) throws ModuleException {
+    public void validate(ExternalModelHolder externalModel) throws ModuleException {
         validateExternal(getExternal(externalModel));
-
-        return null;
     }
 
     private void validateExternal(Fk7263Utlatande externalModel) throws ModuleValidationException {
