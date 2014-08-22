@@ -239,7 +239,7 @@
                       <label for="annanBehandlingBeskrivning"><span message
                                                                     key="ts-diabetes.label.diabetes.behandling.annan-beskrivning"></span></label>
                       <div class="controls">
-                        <input id="annanBehandlingBeskrivning" class="form-control" name="annanBehandlingBeskrivning"
+                        <input id="annanBehandlingBeskrivning" class="form-control input-full" name="annanBehandlingBeskrivning"
                                type="text" ng-model="cert.diabetes.annanBehandlingBeskrivning" wc-maxlength
                                maxlength="53" />
                       </div>
@@ -296,7 +296,7 @@
                               <span message
                                     key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst.beskrivning"></span>
                             </label>
-                            <input id="allvarligForekomstBeskrivning" class="form-control"
+                            <input id="allvarligForekomstBeskrivning" class="form-control input-full"
                                    name="allvarligForekomstBeskrivning" type="text"
                                    ng-model="cert.hypoglykemier.allvarligForekomstBeskrivning" wc-maxlength
                                    maxlength="46" />
@@ -314,7 +314,7 @@
                               <span message
                                     key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning"></span>
                             </label>
-                            <input id="allvarligForekomstTrafikBeskrivning" class="form-control"
+                            <input id="allvarligForekomstTrafikBeskrivning" class="form-control input-full"
                                    name="allvarligForekomstTrafikBeskrivning" type="text"
                                    ng-model="cert.hypoglykemier.allvarligForekomstTrafikBeskrivning" wc-maxlength
                                    maxlength="40" />
@@ -343,7 +343,7 @@
                           <div class="controls" data-ng-show="cert.hypoglykemier.allvarligForekomstVakenTid">
                             <label class="control-label">När?</label>
                             <input type="text" class="form-control"
-                                   data-ng-model="cert.hypoglykemier.allvarligForekomstVakenTidObservationstid">
+                                   data-ng-model="cert.hypoglykemier.allvarligForekomstVakenTidObservationstid" maxlength="10">
                             <p>(Fyll i åååå-mm-dd)</p>
                           </div>
                         </td>
@@ -528,13 +528,13 @@
                   <!-- Övriga upplysningar -->
                   <div wc-field field-label="ts-diabetes.label.empty">
                     <h5>Övriga upplysningar och kommentarer</h5>
-                    <textarea class="form-control" ng-model="cert.kommentar" wc-maxlength maxlength="189"></textarea>
+                    <textarea class="form-control" ng-model="cert.kommentar" wc-maxlength maxlength="189" rows="4"></textarea>
                   </div>
 
                   <!-- Specialistkompetens -->
                   <div wc-field field-label="ts-diabetes.label.empty">
                     <h5>Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i</h5>
-                    <textarea class="form-control" name="specialist" rows='5'
+                    <textarea class="form-control" name="specialist" rows='2'
                               ng-model="cert.bedomning.lakareSpecialKompetens" wc-maxlength maxlength="71"></textarea>
                   </div>
 

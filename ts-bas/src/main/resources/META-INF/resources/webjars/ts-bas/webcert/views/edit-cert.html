@@ -277,25 +277,25 @@
                             <tr>
                               <td><span message key="ts-bas.label.syn.hoger-oga"></span></td>
                               <td><input type="text" class="form-control small-decimal" wc-eye-decimal
-                                         ng-model="cert.syn.hogerOga.utanKorrektion"></td>
+                                         ng-model="cert.syn.hogerOga.utanKorrektion" maxlength="4"></td>
                               <td><input type="text" class="form-control small-decimal" wc-eye-decimal
-                                         ng-model="cert.syn.hogerOga.medKorrektion"></td>
-                              <td><input type="checkbox" ng-model="cert.syn.hogerOga.kontaktlins"></td>
+                                         ng-model="cert.syn.hogerOga.medKorrektion" maxlength="4"></td>
+                              <td><input type="checkbox" ng-model="cert.syn.hogerOga.kontaktlins" maxlength="4"></td>
                             </tr>
                             <tr>
                               <td><span message key="ts-bas.label.syn.vanster-oga"></span></td>
                               <td><input type="text" class="form-control small-decimal" wc-eye-decimal
-                                         ng-model="cert.syn.vansterOga.utanKorrektion"></td>
+                                         ng-model="cert.syn.vansterOga.utanKorrektion" maxlength="4"></td>
                               <td><input type="text" class="form-control small-decimal" wc-eye-decimal
-                                         ng-model="cert.syn.vansterOga.medKorrektion"></td>
-                              <td><input type="checkbox" ng-model="cert.syn.vansterOga.kontaktlins"></td>
+                                         ng-model="cert.syn.vansterOga.medKorrektion" maxlength="4"></td>
+                              <td><input type="checkbox" ng-model="cert.syn.vansterOga.kontaktlins" maxlength="4"></td>
                             </tr>
                             <tr>
                               <td><span message key="ts-bas.label.syn.binokulart"></span></td>
                               <td><input type="text" class="form-control small-decimal" wc-eye-decimal
-                                         ng-model="cert.syn.binokulart.utanKorrektion"></td>
+                                         ng-model="cert.syn.binokulart.utanKorrektion" maxlength="4"></td>
                               <td><input type="text" class="form-control small-decimal" wc-eye-decimal
-                                         ng-model="cert.syn.binokulart.medKorrektion"></td>
+                                         ng-model="cert.syn.binokulart.medKorrektion" maxlength="4"></td>
                               <td></td>
                             </tr>
                           </table>
@@ -437,7 +437,7 @@
                           <div ng-show="cert.hjartKarl.riskfaktorerStroke">
                             <p><span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning"></span></p>
                             <textarea class="form-control" ng-model="cert.hjartKarl.beskrivningRiskfaktorer"
-                                      wc-maxlength maxlength="{{inputLimits.beskrivningRiskfaktorer}}"></textarea>
+                                      wc-maxlength maxlength="{{inputLimits.beskrivningRiskfaktorer}}" rows="4"></textarea>
                           </div>
                         </td>
                       </tr>
@@ -557,7 +557,7 @@
 
                           <div data-ng-show="cert.medvetandestorning.medvetandestorning">
                             <p><span message key="ts-bas.label.medvetandestorning.medvetandestorning-ange-datum-orsak"></span></p>
-                            <textarea class="form-control" data-ng-model="cert.medvetandestorning.beskrivning"
+                            <textarea class="form-control" rows="4" data-ng-model="cert.medvetandestorning.beskrivning"
                                       wc-maxlength maxlength="{{inputLimits.medvetandestorning}}"></textarea>
                           </div>
                         </td>
@@ -705,7 +705,7 @@
                           <div data-ng-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk == true">
                             <p><span message key="ts-bas.label.narkotika-lakemedel.ange-lakemedel-dos"></span></p>
                             <textarea class="form-control" data-ng-model="cert.narkotikaLakemedel.lakemedelOchDos"
-                                      wc-maxlength maxlength="{{inputLimits.lakemedelOchDos}}"></textarea>
+                                      wc-maxlength maxlength="{{inputLimits.lakemedelOchDos}}" rows="3"></textarea>
                           </div>
                         </td>
                       </tr>
@@ -855,7 +855,7 @@
                           <div data-ng-show="cert.medicinering.stadigvarandeMedicinering">
                             <p><span message key="ts-bas.label.medicinering.beskrivning"></span></p>
                             <textarea class="form-control" data-ng-model="cert.medicinering.beskrivning" wc-maxlength
-                                      maxlength="{{inputLimits.medicinering}}"></textarea>
+                                      maxlength="{{inputLimits.medicinering}}" rows="4"></textarea>
                           </div>
                         </td>
                       </tr>
@@ -864,7 +864,7 @@
 
                   <div wc-field field-label="ts-bas.label.ovrigkommentar">
                     <p><span message key="ts-bas.label.kommentar-relevant-trafiksakerhet"></span></p>
-                    <textarea id="kommentar" class="form-control" name="kommentar" rows='5' ng-model="cert.kommentar"
+                    <textarea id="kommentar" class="form-control" name="kommentar" rows='10' ng-model="cert.kommentar"
                               wc-maxlength maxlength="{{inputLimits.kommentar}}"></textarea>
                     <!-- ng-change="inputlimit for IE"-->
                   </div>
@@ -910,7 +910,7 @@
 					</p>
 
                     <p><span message key="ts-bas.label.bedomning-info-undersokas-med-specialkompetens"></span></p>
-                    <textarea name="specialist" class="form-control" rows='2'
+                    <textarea name="specialist" class="form-control" rows='3'
                               ng-model="cert.bedomning.lakareSpecialKompetens" wc-maxlength
                               maxlength="{{inputLimits.lakareSpecialKompetens}}"></textarea>
                   </div>
@@ -938,7 +938,7 @@
 
                           <div class="col-xs-9">
                             <input type="text" class="form-control input-full" id="clinicInfo.postalAddress"
-                                   name="clinicInfo.postalAddress" ng-model="cert.skapadAv.vardenhet.postadress">
+                                   name="clinicInfo.postalAddress" ng-model="cert.skapadAv.vardenhet.postadress" maxlength="70">
                           </div>
                         </div>
                         <div class="form-group">
@@ -946,7 +946,7 @@
 
                           <div class="col-xs-9">
                             <input type="text" class="form-control input-5" id="clinicInfo.postalCode"
-                                   name="clinicInfo.postalCode" ng-model="cert.skapadAv.vardenhet.postnummer">
+                                   name="clinicInfo.postalCode" ng-model="cert.skapadAv.vardenhet.postnummer" maxlength="6">
                           </div>
                         </div>
                         <div class="form-group">
@@ -954,7 +954,7 @@
 
                           <div class="col-xs-9">
                             <input type="text" class="form-control" id="clinicInfo.postalCity"
-                                   name="clinicInfo.postalCity" ng-model="cert.skapadAv.vardenhet.postort">
+                                   name="clinicInfo.postalCity" ng-model="cert.skapadAv.vardenhet.postort" maxlength="30">
                           </div>
                         </div>
                         <div class="form-group">
@@ -962,14 +962,14 @@
 
                           <div class="col-xs-9">
                             <input type="text" class="form-control" id="clinicInfo.phone" name="clinicInfo.phone"
-                                   ng-model="cert.skapadAv.vardenhet.telefonnummer">
+                                   ng-model="cert.skapadAv.vardenhet.telefonnummer" maxlength="20">
                           </div>
                         </div>
                         <div class="form-group" ng-if="false">
                           <label class="col-xs-3 control-label"><span message key="ts-bas.form.epost"></span></label>
                         <div class="col-xs-9">
                           <input type="text" class="form-control" id="clinicInfo.email" name="clinicInfo.email"
-                                 ng-model="cert.skapadAv.epost">
+                                 ng-model="cert.skapadAv.epost" maxlength="255">
                                  {{cert.skapadAv.epost}}
                             </div>
                           </div>
