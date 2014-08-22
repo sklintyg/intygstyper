@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
-import ${package}.${artifactId-safe}.model.internal.wc.Utlatande;
+import ${package}.${artifactId-safe}.model.internal.Utlatande;
 
 /**
  * Factory for creating a editable model.
@@ -34,9 +34,30 @@ public class WebcertModelFactory {
 
     private static final Logger LOG = LoggerFactory.getLogger(WebcertModelFactory.class);
 
-    public Utlatande createNewWebcertDraft(CreateNewDraftHolder newDraftData) throws ConverterException {
+    /**
+     * Create a new draft pre-populated with the attached data.
+     * 
+     * @param newDraftData
+     *            {@link CreateNewDraftHolder}
+     * @param template
+     *            A template to use as a base, or <code>null</code> if an empty internal model should be used.
+     * 
+     * @return {@link Utlatande}
+     * 
+     * @throws ConverterException
+     *             if something unforeseen happens
+     */
+    public Utlatande createNewWebcertDraft(CreateNewDraftHolder newDraftData, Utlatande template) throws ConverterException {
+        if (template == null) {
+            LOG.trace("Creating draft with id {}", newDraftData.getCertificateId());
+            template = new Utlatande();
+
+        } else {
+            LOG.trace("Creating copy with id {} from {}", newDraftData.getCertificateId(), template.getId());
+        }
+        
         // TODO: Implement
-        LOG.trace("Creating new internal model for draft");
-        return null;
+        
+        return template;
     }
 }

@@ -53,7 +53,7 @@ public final class PartialConverter {
 
     /**
      * Converts a Partial to a string on the form yyyy(-MM(-dd)).
-     * 
+     *
      * @param partial
      *            A partial with at least the year field set.
      * @return A String
@@ -76,7 +76,7 @@ public final class PartialConverter {
 
     /**
      * Converts a date String to a Partial.
-     * 
+     *
      * @param dateStr
      *            A date expressed as yyyy(-MM(-dd)).
      * @return A Partial or null if the supplied string is empty.

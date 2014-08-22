@@ -19,27 +19,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ${package}.${artifactId-safe}.model.internal.mi;
+package ${package}.${artifactId-safe}.model.internal;
 
-public class Patient {
+public class HoSPersonal {
 
     private String personid;
 
     private String fullstandigtNamn;
 
-    private String fornamn;
-
-    private String efternamn;
-
-    private String postadress;
-
-    private String postnummer;
-
-    private String postort;
-
-    public Patient() {
-
-    }
+    private Vardenhet vardenhet;
 
     public String getPersonid() {
         return personid;
@@ -57,44 +45,12 @@ public class Patient {
         this.fullstandigtNamn = fullstandigtNamn;
     }
 
-    public String getFornamn() {
-        return fornamn;
+    public Vardenhet getVardenhet() {
+        return vardenhet;
     }
 
-    public void setFornamn(String fornamn) {
-        this.fornamn = fornamn;
-    }
-
-    public String getEfternamn() {
-        return efternamn;
-    }
-
-    public void setEfternamn(String efternamn) {
-        this.efternamn = efternamn;
-    }
-
-    public String getPostadress() {
-        return postadress;
-    }
-
-    public void setPostadress(String postadress) {
-        this.postadress = postadress;
-    }
-
-    public String getPostnummer() {
-        return postnummer;
-    }
-
-    public void setPostnummer(String postnummer) {
-        this.postnummer = postnummer;
-    }
-
-    public String getPostort() {
-        return postort;
-    }
-
-    public void setPostort(String postort) {
-        this.postort = postort;
+    public void setVardenhet(Vardenhet vardenhet) {
+        this.vardenhet = vardenhet;
     }
 
 }

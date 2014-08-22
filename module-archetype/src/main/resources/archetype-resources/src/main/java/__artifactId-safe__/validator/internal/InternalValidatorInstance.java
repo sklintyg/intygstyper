@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.dto.ValidationMessage;
 import se.inera.certificate.modules.support.api.dto.ValidationStatus;
-import ${package}.${artifactId-safe}.model.internal.wc.Utlatande;
+import ${package}.${artifactId-safe}.model.internal.Utlatande;
 
 /**
  * Class for validating drafts of the internal model
@@ -56,8 +56,8 @@ public class InternalValidatorInstance {
     public ValidateDraftResponse validate(Utlatande utlatande) {
 
         if (utlatande == null) {
-            addValidationError("utlatande", "ts.validation.utlatande.missing");
-            
+            addValidationError("utlatande", "${artifactId}.validation.utlatande.missing");
+
         } else {
 
             // TODO: Validate interna model

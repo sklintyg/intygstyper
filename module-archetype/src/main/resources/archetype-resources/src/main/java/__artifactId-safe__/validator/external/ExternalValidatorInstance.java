@@ -28,7 +28,6 @@ import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import ${package}.${artifactId-safe}.model.codes.CodeConverter;
-import ${package}.${artifactId-safe}.model.codes.HSpersonalKod;
 import ${package}.${artifactId-safe}.model.codes.CodeSystem;
 import ${package}.${artifactId-safe}.model.codes.UtlatandeKod;
 import ${package}.${artifactId-safe}.model.external.Utlatande;
@@ -36,6 +35,8 @@ import se.inera.certificate.validate.IdValidator;
 import se.inera.certificate.validate.SimpleIdValidatorBuilder;
 
 public class ExternalValidatorInstance {
+
+    private static final String HSA_CODE_VALUE = "1.2.752.129.2.1.4.1";
 
     private final List<String> validationErrors;
 
@@ -145,8 +146,8 @@ public class ExternalValidatorInstance {
 
     private void assertValidHsaId(Id id, String element) {
         if (assertNotNull(id, element).succeeded()) {
-            if (!id.getRoot().equals(HSpersonalKod.HSA_ID.getCode())) {
-                validationError(element + " should be an HSA-ID with root: " + HSpersonalKod.HSA_ID.getCode());
+            if (!id.getRoot().equals(HSA_CODE_VALUE)) {
+                validationError(element + " should be an HSA-ID with root: " + HSA_CODE_VALUE);
             }
             validationErrors.addAll(ID_VALIDATOR.validate(id));
         }

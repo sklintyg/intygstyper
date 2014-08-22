@@ -31,7 +31,7 @@ public class InternalToExternalConverter {
     private static final Logger LOG = LoggerFactory.getLogger(InternalToExternalConverter.class);
 
     public Utlatande convert(
-            ${package}.${artifactId-safe}.model.internal.wc.Utlatande source) throws ConverterException {
+            ${package}.${artifactId-safe}.model.internal.Utlatande source) throws ConverterException {
         // TODO: Implement
         LOG.trace("Converting internal model to external");
         return null;

@@ -23,7 +23,7 @@ package ${package}.${artifactId-safe}.validator;
 
 import java.util.List;
 
-import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
+import ${package}.support.api.dto.ValidateDraftResponse;
 import ${package}.${artifactId-safe}.model.external.Utlatande;
 import ${package}.${artifactId-safe}.validator.external.ExternalValidatorInstance;
 import ${package}.${artifactId-safe}.validator.internal.InternalValidatorInstance;
@@ -50,7 +50,7 @@ public class Validator {
      * @return List of validation errors, or an empty string if validated correctly
      */
     public ValidateDraftResponse validateInternal(
-            ${package}.${artifactId-safe}.model.internal.wc.Utlatande utlatande) {
+            ${package}.${artifactId-safe}.model.internal.Utlatande utlatande) {
         InternalValidatorInstance instance = new InternalValidatorInstance();
         return instance.validate(utlatande);
     }

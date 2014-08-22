@@ -21,6 +21,8 @@
  */
 package ${package}.${artifactId-safe}.model.external;
 
+import org.joda.time.LocalDate;
+
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Patient;
 
@@ -46,5 +48,17 @@ public class Utlatande extends se.inera.certificate.model.Utlatande {
 
     public void setSkapadAv(HosPersonal skapadAv) {
         this.skapadAv = skapadAv;
+    }
+
+    @Override
+    public LocalDate getValidToDate() {
+        // Implement if this intyg has a valid to date
+        return null;
+    }
+
+    @Override
+    public LocalDate getValidFromDate() {
+        // Implement if this intyg has a valid from date
+        return null;
     }
 }

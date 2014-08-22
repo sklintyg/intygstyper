@@ -24,7 +24,7 @@ package ${package}.${artifactId-safe}.model.converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ${package}.${artifactId-safe}.model.internal.mi.Utlatande;
+import ${package}.${artifactId-safe}.model.internal.Utlatande;
 
 /**
  * Converter for converting the external format to the internal view format.

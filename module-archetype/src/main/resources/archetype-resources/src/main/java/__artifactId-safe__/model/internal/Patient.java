@@ -19,13 +19,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ${package}.${artifactId-safe}.model.internal.wc;
+package ${package}.${artifactId-safe}.model.internal;
 
-public class Vardenhet {
+public class Patient {
 
-    private String enhetsid;
+    private String personid;
 
-    private String enhetsnamn;
+    private String fullstandigtNamn;
+
+    private String fornamn;
+
+    private String mellannamn;
+
+    private String efternamn;
 
     private String postadress;
 
@@ -33,30 +39,44 @@ public class Vardenhet {
 
     private String postort;
 
-    private String telefonnummer;
-
-    private String epost;
-
-    private Vardgivare vardgivare;
-
-    public Vardenhet() {
-
+    public String getPersonid() {
+        return personid;
     }
 
-    public String getEnhetsid() {
-        return enhetsid;
+    public void setPersonid(String personid) {
+        this.personid = personid;
     }
 
-    public void setEnhetsid(String enhetsId) {
-        this.enhetsid = enhetsId;
+    public String getFullstandigtNamn() {
+        return fullstandigtNamn;
     }
 
-    public String getEnhetsnamn() {
-        return enhetsnamn;
+    public void setFullstandigtNamn(String fullstandigtNamn) {
+        this.fullstandigtNamn = fullstandigtNamn;
     }
 
-    public void setEnhetsnamn(String enhetsNamn) {
-        this.enhetsnamn = enhetsNamn;
+    public String getFornamn() {
+        return fornamn;
+    }
+
+    public void setFornamn(String fornamn) {
+        this.fornamn = fornamn;
+    }
+
+    public String getMellannamn() {
+        return mellannamn;
+    }
+
+    public void setMellannamn(String mellannamn) {
+        this.mellannamn = mellannamn;
+    }
+
+    public String getEfternamn() {
+        return efternamn;
+    }
+
+    public void setEfternamn(String efternamn) {
+        this.efternamn = efternamn;
     }
 
     public String getPostadress() {
@@ -71,40 +91,16 @@ public class Vardenhet {
         return postnummer;
     }
 
-    public void setPostnummer(String postNummer) {
-        this.postnummer = postNummer;
+    public void setPostnummer(String postnummer) {
+        this.postnummer = postnummer;
     }
 
     public String getPostort() {
         return postort;
     }
 
-    public void setPostort(String postOrt) {
-        this.postort = postOrt;
-    }
-
-    public String getTelefonnummer() {
-        return telefonnummer;
-    }
-
-    public void setTelefonnummer(String telefonNummer) {
-        this.telefonnummer = telefonNummer;
-    }
-
-    public String getEpost() {
-        return epost;
-    }
-
-    public void setEpost(String epost) {
-        this.epost = epost;
-    }
-
-    public Vardgivare getVardgivare() {
-        return vardgivare;
-    }
-
-    public void setVardgivare(Vardgivare vardgivare) {
-        this.vardgivare = vardgivare;
+    public void setPostort(String postort) {
+        this.postort = postort;
     }
 
 }

@@ -10,17 +10,17 @@
 
   <jxb:bindings schemaLocation="core_components/iso_dt_subset_1.0.xsd" node="/xs:schema">
     <jxb:schemaBindings>
-      <jxb:package name="iso.v21090.dt.v1"/>
+      <jxb:package name="se.inera.certificate.${artifactId-safe}.iso.v21090.dt.v1"/>
     </jxb:schemaBindings>
   </jxb:bindings>
 
-  <jxb:bindings schemaLocation="transport_model.xsd" node="/xs:schema">
+  <jxb:bindings schemaLocation="${artifactId}_model.xsd" node="/xs:schema">
     <jxb:schemaBindings>
       <jxb:package name="se.inera.certificate.${artifactId-safe}.model.v1"/>
     </jxb:schemaBindings>
   </jxb:bindings>
 
-  <jxb:bindings schemaLocation="transport_model_extension.xsd" node="/xs:schema">
+  <jxb:bindings schemaLocation="${artifactId}_model_extension.xsd" node="/xs:schema">
     <jxb:schemaBindings>
       <jxb:package name="se.inera.certificate.${artifactId-safe}.model.ext.v1"/>
     </jxb:schemaBindings>

@@ -22,21 +22,19 @@
 
 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-  <bean class="${package}.${artifactId-safe}.model.converter.TransportToExternalConverter" />
+  <bean id="${artifactId}-objectMapper"
+    class="se.inera.certificate.integration.json.CustomObjectMapper" />
 
-  <bean class="${package}.${artifactId-safe}.model.converter.ExternalToTransportConverter" />
+  <bean id="jacksonJsonProvider"
+    class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider">
+    <property name="mapper" ref="objectMapper" />
+  </bean>
 
-  <bean class="${package}.${artifactId-safe}.validator.ExternalValidator" />
-
-  <bean class="${package}.${artifactId-safe}.model.converter.ExternalToInternalConverter" />
-
-  <bean class="${package}.${artifactId-safe}.model.converter.InternalToExternalConverter" />
-
-  <bean class="${package}.${artifactId-safe}.pdf.PdfGenerator" />
-
-  <bean class="${package}.${artifactId-safe}.model.converter.WebcertModelFactory" />
+  <bean id="${artifactId}-jaxbContext" class="javax.xml.bind.JAXBContext" factory-method="newInstance">
+    <constructor-arg type="java.lang.String" value="se.inera.certificate.${artifactId-safe}.iso.v21090.dt.v1:se.inera.certificate.${artifactId-safe}.model.ext.v1:se.inera.certificate.${artifactId-safe}.model.v1" />
 
 </beans>

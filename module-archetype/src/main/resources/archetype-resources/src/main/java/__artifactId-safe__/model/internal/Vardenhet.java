@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ${package}.${artifactId-safe}.model.internal.mi;
+package ${package}.${artifactId-safe}.model.internal;
 
 public class Vardenhet {
 

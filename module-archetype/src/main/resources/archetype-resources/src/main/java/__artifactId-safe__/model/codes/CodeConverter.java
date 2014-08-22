@@ -27,9 +27,8 @@ import se.inera.certificate.model.Kod;
 
 /**
  * Util for converting an enum implementing CodeSystem to a Kod object.
- * 
+ *
  * @author nikpet
- * 
  */
 public final class CodeConverter {
 
@@ -66,14 +65,12 @@ public final class CodeConverter {
 
     /**
      * Converts from {@link Kod} to a specified enum representing that kod.
-     * 
+     *
      * @param kod
      *            The Kod to convert to an enum.
      * @param type
      *            The enum class to convert to.
-     * 
      * @return An enum instance of <code>null</code> if the kod was <code>null</code>.
-     * 
      * @throws RuntimeException
      *             if no enum constant was defined for the specified kod.
      */
@@ -88,13 +85,13 @@ public final class CodeConverter {
             }
         }
 
-        throw new RuntimeException(String.format("Found no valid enum for code '%s' of type '%s'", kod,
+        throw new RuntimeException(String.format("Found no valid enum for code '%s' of type '%s'", kod.getCode(),
                 type.getSimpleName()));
     }
 
     /**
      * Checks if a specified code enum matches a specified {@link Kod}.
-     * 
+     *
      * @param codeEnum
      *            The code enum to match.
      * @param kod
@@ -109,18 +106,34 @@ public final class CodeConverter {
             return false;
         }
 
-        if (codeEnum.getCode() != null ? !codeEnum.getCode().equals(kod.getCode()) : kod.getCode() != null)
+        if (codeEnum.getCode() != null ? !codeEnum.getCode().equals(kod.getCode()) : kod.getCode() != null) {
             return false;
+        }
         if (codeEnum.getCodeSystem() != null ? !codeEnum.getCodeSystem().equals(kod.getCodeSystem()) : kod
-                .getCodeSystem() != null)
+                .getCodeSystem() != null) {
             return false;
+        }
         if (codeEnum.getCodeSystemName() != null ? !codeEnum.getCodeSystemName().equals(kod.getCodeSystemName()) : kod
-                .getCodeSystemName() != null)
+                .getCodeSystemName() != null) {
             return false;
+        }
         if (codeEnum.getCodeSystemVersion() != null ? !codeEnum.getCodeSystemVersion().equals(
-                kod.getCodeSystemVersion()) : kod.getCodeSystemVersion() != null)
+                kod.getCodeSystemVersion()) : kod.getCodeSystemVersion() != null) {
             return false;
+        }
 
         return true;
+    }
+
+    /**
+     * Given a Kod and its CodeSystem, returns the corresponding internal enum constant name for that code from the
+     * CodeSystem representing it.
+     *
+     * @param kod
+     *            {@link Kod}
+     * @return a String with the Enum constant
+     */
+    public static String getInternalNameFromKod(Kod kod, Class<? extends CodeSystem> type) {
+        return fromCode(kod, type).toString();
     }
 }

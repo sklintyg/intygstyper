@@ -37,9 +37,9 @@ public enum UtlatandeKod implements CodeSystem {
 
     private static String codeSystemVersion = null;
 
-    private String code;
+    private final String code;
 
-    private String description;
+    private final String description;
 
     private UtlatandeKod(String code, String desc) {
         this.code = code;

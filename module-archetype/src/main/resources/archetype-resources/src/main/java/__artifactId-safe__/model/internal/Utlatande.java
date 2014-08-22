@@ -19,19 +19,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ${package}.${artifactId-safe}.model.internal.mi;
-
-import java.util.List;
+package ${package}.${artifactId-safe}.model.internal;
 
 import org.joda.time.LocalDateTime;
 
 public class Utlatande {
 
-    private String utlatandeid;
+    private String id;
 
-    private String typAvUtlatande;
+    private String typ;
 
-    private List<String> kommentarer;
+    private String kommentar;
 
     private LocalDateTime signeringsdatum;
 
@@ -41,32 +39,30 @@ public class Utlatande {
 
     private Patient patient;
 
-    public Utlatande() {
+    // TODO: Add more internal fields here
 
+    public String getId() {
+        return id;
     }
 
-    public String getUtlatandeid() {
-        return utlatandeid;
+    public void setId(String utlatandeId) {
+        this.id = utlatandeId;
     }
 
-    public void setUtlatandeid(String utlatandeId) {
-        this.utlatandeid = utlatandeId;
+    public String getTyp() {
+        return typ;
     }
 
-    public String getTypAvUtlatande() {
-        return typAvUtlatande;
+    public void setTyp(String typAvUtlatande) {
+        this.typ = typAvUtlatande;
     }
 
-    public void setTypAvUtlatande(String typAvUtlatande) {
-        this.typAvUtlatande = typAvUtlatande;
+    public String getKommentar() {
+        return kommentar;
     }
 
-    public List<String> getKommentarer() {
-        return kommentarer;
-    }
-
-    public void setKommentarer(List<String> kommentarer) {
-        this.kommentarer = kommentarer;
+    public void setKommentar(String kommentar) {
+        this.kommentar = kommentar;
     }
 
     public LocalDateTime getSigneringsdatum() {
@@ -100,5 +96,4 @@ public class Utlatande {
     public void setPatient(Patient patient) {
         this.patient = patient;
     }
-
 }

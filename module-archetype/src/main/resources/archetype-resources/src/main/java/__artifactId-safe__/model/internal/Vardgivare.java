@@ -19,17 +19,13 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ${package}.${artifactId-safe}.model.internal.mi;
+package ${package}.${artifactId-safe}.model.internal;
 
 public class Vardgivare {
 
     private String vardgivarid;
 
     private String vardgivarnamn;
-
-    public Vardgivare() {
-
-    }
 
     public String getVardgivarid() {
         return vardgivarid;
@@ -46,5 +42,4 @@ public class Vardgivare {
     public void setVardgivarnamn(String vardgivarNamn) {
         this.vardgivarnamn = vardgivarNamn;
     }
-
 }

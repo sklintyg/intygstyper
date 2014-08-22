@@ -24,7 +24,8 @@ package ${package}.${artifactId-safe}.pdf;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import ${package}.${artifactId-safe}.model.internal.mi.Utlatande;
+import ${package}.support.ApplicationOrigin;
+import ${package}.${artifactId-safe}.model.internal.Utlatande;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
@@ -48,7 +49,7 @@ public class PdfGenerator {
         return String.format("lakarutlatande_%s_-%s.pdf", personId, certificateSignatureDate);
     }
 
-    public byte[] generatePDF(Utlatande utlatande) throws PdfGeneratorException {
+    public byte[] generatePDF(Utlatande utlatande, ApplicationOrigin applicationOrigin) throws PdfGeneratorException {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
@@ -56,7 +57,7 @@ public class PdfGenerator {
             PdfStamper pdfStamper = new PdfStamper(pdfReader, outputStream);
             pdfStamper.setFormFlattening(formFlattening);
             AcroFields fields = pdfStamper.getAcroFields();
-            populatePdfFields(utlatande, fields);
+            populatePdfFields(utlatande, fields, applicationOrigin);
             pdfStamper.close();
 
             return outputStream.toByteArray();
@@ -77,7 +78,7 @@ public class PdfGenerator {
      * @throws DocumentException
      * @throws IOException
      */
-    private void populatePdfFields(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
+    private void populatePdfFields(Utlatande utlatande, AcroFields fields, ApplicationOrigin applicationOrigin) throws IOException, DocumentException {
         // TODO: Implement
     }
 }
