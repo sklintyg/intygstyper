@@ -22,7 +22,7 @@
         <div ng-show="widgetState.newQuestionOpen">
           <div class="form-group">
             <label class="control-label">Fråga</label>
-            <textarea wc-maxlength maxlength="2000" rows="5" class="form-control" ng-model="newQuestion.frageText" wc-focus-me="widgetState.focusQuestion" id="newQuestionText"></textarea>
+            <textarea wc-maxlength ng-trim="false" maxlength="2000" rows="5" class="form-control" ng-model="newQuestion.frageText" wc-focus-me="widgetState.focusQuestion" id="newQuestionText"></textarea>
           </div>
           <div class="form-group" id="newQuestionForm">
             <label class="control-label">Ämne</label>

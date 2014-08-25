@@ -216,7 +216,7 @@
                                                                                                      field-help-text="fk7263.helptext.diagnos.fortydligande"></span>
                       </div>
                       <textarea id="diagnose.clarification" class="form-control" name="diagnose.clarification" rows='5'
-                                ng-model="cert.diagnosBeskrivning" wc-maxlength
+                                ng-model="cert.diagnosBeskrivning" wc-maxlength ng-trim="false"
                                 maxlength="{{inputLimits.diagnosBeskrivning}}"></textarea>
                     </div>
 
@@ -233,7 +233,7 @@
                        field-help-text="fk7263.helptext.aktuellt-sjukdomsforlopp" ng-hide="cert.avstangningSmittskydd"
                        ng-animate="fade">
                     <textarea id="diseaseCause" class="form-control" name="diseaseCause" rows='5'
-                              ng-model="cert.sjukdomsforlopp" wc-maxlength
+                              ng-model="cert.sjukdomsforlopp" wc-maxlength ng-trim="false"
                               maxlength="{{inputLimits.sjukdomsforlopp}}"></textarea>
                   </div>
 
@@ -252,7 +252,7 @@
                        target="_blank" title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
                       försäkringsmedicinska beslutstöd</a>
                     <textarea id="disabilities" class="form-control" name="disabilities" rows='6'
-                              ng-model="cert.funktionsnedsattning" wc-maxlength
+                              ng-model="cert.funktionsnedsattning" wc-maxlength ng-trim="false"
                               maxlength="{{inputLimits.funktionsnedsattning}}"></textarea>
                   </div>
 
@@ -263,7 +263,7 @@
                        target="_blank" title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
                       försäkringsmedicinska beslutstöd</a>
                     <textarea id="activityLimitation" class="form-control" name="activityLimitation" rows='10'
-                              ng-model="cert.aktivitetsbegransning" wc-maxlength
+                              ng-model="cert.aktivitetsbegransning" wc-maxlength ng-trim="false"
                               maxlength="{{inputLimits.aktivitetsbegransning}}"></textarea>
                   </div>
 
@@ -290,7 +290,7 @@
                           <label for="currentWork">Ange aktuella arbetsuppgifter</label>
                           <div class="controls">
                             <textarea id="currentWork" class="" name="currentWork" rows='2'
-                                      ng-model="cert.nuvarandeArbetsuppgifter" wc-maxlength
+                                      ng-model="cert.nuvarandeArbetsuppgifter" wc-maxlength ng-trim="false"
                                       maxlength="{{inputLimits.nuvarandeArbetsuppgifter}}"></textarea>
                           </div>
                         </div>
@@ -462,7 +462,7 @@
                        target="_blank" title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
                       försäkringsmedicinska beslutstöd</a>
                     <textarea id="capacityForWork.text" class="form-control" name="capacityForWork.text" rows='10'
-                              ng-model="cert.arbetsformagaPrognos" wc-maxlength
+                              ng-model="cert.arbetsformagaPrognos" wc-maxlength ng-trim="false"
                               maxlength="{{inputLimits.arbetsformagaPrognos}}"></textarea>
                   </div>
 
@@ -523,14 +523,14 @@
                       <label class="control-label">Planerad eller pågående behandling eller åtgärd inom sjukvården (ange
                         vilken)</label>
                       <textarea id="measures.current" class="form-control" name="measures.current" rows='1'
-                                ng-model="cert.atgardInomSjukvarden" wc-maxlength
+                                ng-model="cert.atgardInomSjukvarden" wc-maxlength ng-trim="false"
                                 maxlength="{{inputLimits.atgardInomSjukvarden}}"></textarea>
                     </div>
 
                     <div class="form-group">
                       <label class="control-label">Annan åtgärd (ange vilken)</label>
                       <textarea id="measures.other" class="form-control" name="measures.other" rows='1'
-                                ng-model="cert.annanAtgard" wc-maxlength
+                                ng-model="cert.annanAtgard" wc-maxlength ng-trim="false"
                                 maxlength="{{inputLimits.annanAtgard}}"></textarea>
                     </div>
                   </div>

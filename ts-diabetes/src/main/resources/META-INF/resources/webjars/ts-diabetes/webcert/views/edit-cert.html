@@ -239,7 +239,7 @@
                                                                     key="ts-diabetes.label.diabetes.behandling.annan-beskrivning"></span></label>
                       <div class="controls">
                         <input id="annanBehandlingBeskrivning" class="form-control input-full" name="annanBehandlingBeskrivning"
-                               type="text" ng-model="cert.diabetes.annanBehandlingBeskrivning" wc-maxlength
+                               type="text" ng-model="cert.diabetes.annanBehandlingBeskrivning" wc-maxlength ng-trim="false" ng-trim="false"
                                maxlength="53" />
                       </div>
                     </div>
@@ -297,7 +297,7 @@
                             </label>
                             <input id="allvarligForekomstBeskrivning" class="form-control input-full"
                                    name="allvarligForekomstBeskrivning" type="text"
-                                   ng-model="cert.hypoglykemier.allvarligForekomstBeskrivning" wc-maxlength
+                                   ng-model="cert.hypoglykemier.allvarligForekomstBeskrivning" wc-maxlength ng-trim="false"
                                    maxlength="46" />
                           </div>
                         </td>
@@ -315,7 +315,7 @@
                             </label>
                             <input id="allvarligForekomstTrafikBeskrivning" class="form-control input-full"
                                    name="allvarligForekomstTrafikBeskrivning" type="text"
-                                   ng-model="cert.hypoglykemier.allvarligForekomstTrafikBeskrivning" wc-maxlength
+                                   ng-model="cert.hypoglykemier.allvarligForekomstTrafikBeskrivning" wc-maxlength ng-trim="false"
                                    maxlength="40" />
                           </div>
                         </td>
@@ -527,14 +527,14 @@
                   <!-- Övriga upplysningar -->
                   <div wc-field field-label="ts-diabetes.label.empty">
                     <h5>Övriga upplysningar och kommentarer</h5>
-                    <textarea class="form-control" ng-model="cert.kommentar" wc-maxlength maxlength="189" rows="4"></textarea>
+                    <textarea class="form-control" ng-model="cert.kommentar" wc-maxlength ng-trim="false" maxlength="189" rows="4"></textarea>
                   </div>
 
                   <!-- Specialistkompetens -->
                   <div wc-field field-label="ts-diabetes.label.empty">
                     <h5>Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i</h5>
                     <textarea class="form-control" name="specialist" rows='2'
-                              ng-model="cert.bedomning.lakareSpecialKompetens" wc-maxlength maxlength="71"></textarea>
+                              ng-model="cert.bedomning.lakareSpecialKompetens" wc-maxlength ng-trim="false" maxlength="71"></textarea>
                   </div>
 
                   <div class="body-row clearfix">
