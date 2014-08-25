@@ -60,8 +60,9 @@
     <commons.ui.version>2.4</commons.ui.version>
     <xmlunit.version>1.4</xmlunit.version>
     <requirejs-plugin.version>2.0.4</requirejs-plugin.version>
-    <node.version>v0.10.27</node.version>
-    <npm.version>1.4.8</npm.version>
+    <frontend.version>0.0.16</frontend.version>
+    <node.version>v0.10.31</node.version>
+    <npm.version>1.4.23</npm.version>
   </properties>
 
   <dependencies>
