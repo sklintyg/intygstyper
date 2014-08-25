@@ -87,11 +87,12 @@
 			<tom>2012-01-26</tom>
 		</observationsperiod>
 		<varde value="25.0" unit="percent" />
-		<p:prognos>
-			<p:prognoskod code="PRO1" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7"
-				codeSystemName="kv_prognos_intyg" />
-			<p:beskrivning>Patientens förmåga bedöms nedsatt längre än vad som anges ovan pga:</p:beskrivning>
-		</p:prognos>
 	</observation>
 
+		<observation>
+			<observationskod code="170967006" codeSystem="1.2.752.116.2.1.1.1"
+				codeSystemName="SNOMED-CT" />
+			<varde code="PRO1" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7"
+				codeSystemName="kv_prognos_intyg" />
+		</observation>
 </utlatande>
