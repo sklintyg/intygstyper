@@ -21,10 +21,10 @@
  */
 package ${package}.${artifactId-safe}.model.converter;
 
-import iso.v21090.dt.v1.CD;
-import iso.v21090.dt.v1.II;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.${artifactId-safe}.iso.v21090.dt.v1.CD;
+import se.inera.certificate.${artifactId-safe}.iso.v21090.dt.v1.II;
 import se.inera.certificate.${artifactId-safe}.model.v1.ArbetsplatsKod;
 import se.inera.certificate.${artifactId-safe}.model.v1.HsaId;
 import se.inera.certificate.${artifactId-safe}.model.v1.PersonId;

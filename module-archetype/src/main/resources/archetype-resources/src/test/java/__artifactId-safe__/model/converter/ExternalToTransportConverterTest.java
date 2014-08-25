@@ -21,11 +21,8 @@
  */
 package ${package}.${artifactId-safe}.model.converter;
 
-import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
-
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Ignore;
 
 import ${package}.${artifactId-safe}.utils.ModelAssert;
 import ${package}.${artifactId-safe}.utils.Scenario;
@@ -41,7 +38,6 @@ public class ExternalToTransportConverterTest {
         converter = new ExternalToTransportConverter();
     }
 
-    @Ignore
     @Test
     public void testConvertUtlatande() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {

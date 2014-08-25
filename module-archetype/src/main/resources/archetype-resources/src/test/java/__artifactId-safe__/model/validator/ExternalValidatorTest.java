@@ -27,7 +27,6 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import ${package}.${artifactId-safe}.model.external.Utlatande;
@@ -44,7 +43,6 @@ public class ExternalValidatorTest {
         validator = new Validator();
     }
 
-    @Ignore
     @Test
     public void testValidate() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
@@ -56,7 +54,6 @@ public class ExternalValidatorTest {
         }
     }
 
-    @Ignore
     @Test
     public void testValidateWithErrors() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {

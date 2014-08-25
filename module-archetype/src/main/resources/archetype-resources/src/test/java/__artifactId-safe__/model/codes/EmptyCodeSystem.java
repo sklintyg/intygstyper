@@ -1,7 +1,7 @@
 #set( $symbol_pound = '#' )
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
-/*
+/**
  * Copyright (C) 2013 Inera AB (http://www.inera.se)
  *
  * This file is part of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules).
@@ -19,13 +19,39 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-var ${artifactId-safe}Messages = {
-    "sv" : {
-        // TODO: Define messages here
+package ${package}.${artifactId-safe}.model.codes;
 
-    },
-    "en" : {
-        "view.label.pagetitle" : "Show Certificate"
+import se.inera.certificate.model.Kod;
+
+class EmptyCodeSystem implements CodeSystem {
+
+    @Override
+    public String getCode() {
+        return null;
     }
-};
 
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
+    public String getCodeSystem() {
+        return null;
+    }
+
+    @Override
+    public String getCodeSystemName() {
+        return null;
+    }
+
+    @Override
+    public String getCodeSystemVersion() {
+        return null;
+    }
+
+    @Override
+    public boolean matches(Kod kod) {
+        return CodeConverter.matches(this, kod);
+    }
+}

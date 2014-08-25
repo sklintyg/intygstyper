@@ -3,7 +3,6 @@
 #set( $symbol_escape = '\' )
 package ${package}.${artifactId-safe}.utils;
 
-import se.inera.certificate.integration.rest.dto.CertificateContentHolder;
 import se.inera.certificate.${artifactId-safe}.model.v1.Utlatande;
 
 /**
@@ -11,24 +10,23 @@ import se.inera.certificate.${artifactId-safe}.model.v1.Utlatande;
  * <ul>
  * <li>Transport model
  * <li>Export model (with and without a {@link CertificateContentHolder})
- * <li>Internal model used by Mina Intyg
- * <li>Internal model used by WebCert
+ * <li>Internal model
  * </ul>
- * 
+ *
  * @see ScenarioFinder
  */
 public interface Scenario {
 
     /**
      * Returns the name of the scenario. Useful for assertion messages.
-     * 
+     *
      * @return The scenario name.
      */
     String getName();
 
     /**
      * Returns the scenario as a transport model.
-     * 
+     *
      * @return The scenario as a transport model.
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
@@ -37,7 +35,7 @@ public interface Scenario {
 
     /**
      * Returns the scenario as a external model.
-     * 
+     *
      * @return The scenario as a external model.
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
@@ -46,19 +44,10 @@ public interface Scenario {
 
     /**
      * Returns the scenario as a internal Mina Intyg model.
-     * 
+     *
      * @return The scenario as a internal Mina Intyg model.
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
      */
-    ${package}.${artifactId-safe}.model.internal.mi.Utlatande asInternalMIModel() throws ScenarioNotFoundException;
-
-    /**
-     * Returns the scenario as a internal WebCert model.
-     * 
-     * @return The scenario as a internal WebCert model.
-     * @throws ScenarioNotFoundException
-     *             if the scenario wasn't found.
-     */
-    ${package}.${artifactId-safe}.model.internal.wc.Utlatande asInternalWCModel() throws ScenarioNotFoundException;
+    ${package}.${artifactId-safe}.model.internal.Utlatande asInternalModel() throws ScenarioNotFoundException;
 }

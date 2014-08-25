@@ -1,3 +1,6 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
 /**
  * Copyright (C) 2013 Inera AB (http://www.inera.se)
  *
@@ -23,12 +26,11 @@ import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.dto.ValidationStatus;
-import ${package}.${artifactId-safe}.model.internal.wc.Utlatande;
+import ${package}.${artifactId-safe}.model.internal.Utlatande;
 import ${package}.${artifactId-safe}.utils.Scenario;
 import ${package}.${artifactId-safe}.utils.ScenarioFinder;
 import ${package}.${artifactId-safe}.validator.Validator;
@@ -42,11 +44,10 @@ public class InternalValidatorTest {
         validator = new Validator();
     }
 
-    @Ignore
     @Test
     public void testValidate() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
-            Utlatande utlatande = scenario.asInternalWCModel();
+        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
+            Utlatande utlatande = scenario.asInternalModel();
             ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
             assertEquals(
@@ -61,15 +62,16 @@ public class InternalValidatorTest {
         }
     }
 
-    @Ignore
     @Test
     public void testValidateWithErrors() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("invalid-*")) {
+        for (Scenario scenario : ScenarioFinder.getInternalScenarios("invalid-*")) {
 
-            Utlatande utlatande = scenario.asInternalWCModel();
+            Utlatande utlatande = scenario.asInternalModel();
             ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
             assertEquals(ValidationStatus.INVALID, validationResponse.getStatus());
         }
     }
+
+    // TODO: Add more tests here
 }

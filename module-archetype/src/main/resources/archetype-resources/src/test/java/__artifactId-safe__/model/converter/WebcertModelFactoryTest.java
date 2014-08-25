@@ -27,7 +27,6 @@ import static org.junit.Assert.assertNotNull;
 import java.io.IOException;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
@@ -35,9 +34,6 @@ import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.Patient;
 import se.inera.certificate.modules.support.api.dto.Vardenhet;
 import se.inera.certificate.modules.support.api.dto.Vardgivare;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class WebcertModelFactoryTest {
 
@@ -48,30 +44,35 @@ public class WebcertModelFactoryTest {
         factory = new WebcertModelFactory();
     }
 
-    @Ignore
     @Test
-    public void testCreateEditableModel() throws JsonParseException, JsonMappingException, IOException {
+    public void testCreateEditableModel() throws IOException {
         // Programmatically creating a CreateNewDraftHolder
-        Patient patient = new Patient("Johnny", "Appleseed", "19121212-1212", "Testvägen 12", "1337", "Huddinge");
+        Patient patient = new Patient("Johnny", "Jobs", "Appleseed", "19121212-1212", "Testvägen 12", "13337", "Huddinge");
         Vardgivare vardgivare = new Vardgivare("SE0000000000-HAHAHHSAA", "Vårdgivarnamn");
         Vardenhet vardenhet = new Vardenhet("SE0000000000-1337", "Vårdenhet Väst", "Enhetsvägen 12", "54321", "Tumba",
-                "08-1337", vardgivare);
-        HoSPersonal skapadAv = new HoSPersonal("19101010-1010", "Doktor Alban", null, null, vardenhet);
+                "08-1337", null, "0123456789", vardgivare);
+        HoSPersonal skapadAv = new HoSPersonal("19101010-1010", "Doktor Alban", "forskrivarKod", "befattning", null, vardenhet);
         CreateNewDraftHolder draftCertHolder = new CreateNewDraftHolder("testID", skapadAv, patient);
 
-        ${package}.${artifactId-safe}.model.internal.wc.Utlatande utlatande = null;
+        ${package}.${artifactId-safe}.model.internal.Utlatande utlatande = null;
 
         try {
-            utlatande = factory.createNewWebcertDraft(draftCertHolder);
+            utlatande = factory.createNewWebcertDraft(draftCertHolder, null);
         } catch (ConverterException e) {
             e.printStackTrace();
         }
 
         assertNotNull(utlatande);
+        assertNotNull(utlatande.getId());
+        assertNotNull(utlatande.getTyp());
         assertNotNull(utlatande.getSkapadAv());
+        assertNotNull(utlatande.getPatient());
 
         /** Just verify some stuff from the json to make sure all is well.. */
-        assertEquals("testID", utlatande.getUtlatandeid());
-        assertEquals("Johnny Appleseed", utlatande.getPatient().getFullstandigtNamn());
+        assertEquals("testID", utlatande.getId());
+        assertEquals("Johnny Jobs Appleseed", utlatande.getPatient().getFullstandigtNamn());
+        assertEquals("Testvägen 12", utlatande.getPatient().getPostadress());
+        assertEquals("13337", utlatande.getPatient().getPostnummer());
+        assertEquals("Huddinge", utlatande.getPatient().getPostort());
     }
 }

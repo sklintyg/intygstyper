@@ -53,7 +53,7 @@ public class CodeConverterTest {
 
     /**
      * Checks that a {@link CodeSystem} and a {@link Kod} can be compared without null pointer exceptions.
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -73,88 +73,5 @@ public class CodeConverterTest {
         assertFalse(CodeConverter.matches(emptyKod, new Kod(TestKod.CODE_SYSTEM, null, null, "CODE_RED")));
         assertFalse(CodeConverter.matches(emptyKod, new Kod(null, null, null, "CODE_RED")));
         assertTrue(CodeConverter.matches(emptyKod, new Kod(null, null, null, null)));
-    }
-
-    private class EmptyCodeSystem implements CodeSystem {
-
-        @Override
-        public String getCode() {
-            return null;
-        }
-
-        @Override
-        public String getDescription() {
-            return null;
-        }
-
-        @Override
-        public String getCodeSystem() {
-            return null;
-        }
-
-        @Override
-        public String getCodeSystemName() {
-            return null;
-        }
-
-        @Override
-        public String getCodeSystemVersion() {
-            return null;
-        }
-
-        @Override
-        public boolean matches(Kod kod) {
-            return CodeConverter.matches(this, kod);
-        }
-    }
-    
-    private enum TestKod implements CodeSystem {
-
-        CODE_RED("CODE_RED", "Code Red"), CODE_BLUE("CODE_BLUE", "Code Blue"), CODE_BLACK("", "");
-
-        public static final String CODE_SYSTEM_NAME = "ColorCodes";
-
-        public static final String CODE_SYSTEM = "CC";
-
-        public static final String CODE_SYSTEM_VERSION = "1.0";
-
-        private String code;
-
-        private String description;
-
-        private TestKod(String code, String description) {
-            this.code = code;
-            this.description = description;
-        }
-
-        @Override
-        public String getCode() {
-            return code;
-        }
-
-        @Override
-        public String getDescription() {
-            return description;
-        }
-
-        @Override
-        public String getCodeSystem() {
-            return CODE_SYSTEM;
-        }
-
-        @Override
-        public String getCodeSystemName() {
-            return CODE_SYSTEM_NAME;
-        }
-
-        @Override
-        public String getCodeSystemVersion() {
-            return CODE_SYSTEM_VERSION;
-        }
-
-        @Override
-        public boolean matches(Kod kod) {
-            return CodeConverter.matches(this, kod);
-        }
     }
 }

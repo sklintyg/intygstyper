@@ -21,11 +21,8 @@
  */
 package ${package}.${artifactId-safe}.model.converter;
 
-import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
-
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Ignore;
 
 import ${package}.${artifactId-safe}.model.external.Utlatande;
 import ${package}.${artifactId-safe}.utils.ModelAssert;
@@ -47,11 +44,10 @@ public class InternalToExternalConverterTest {
         this.converter = new InternalToExternalConverter();
     }
 
-    @Ignore
     @Test
     public void testConvertUtlatandeFromInternalToExternal() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
-            ${package}.${artifactId-safe}.model.internal.wc.Utlatande intUtlatande = scenario.asInternalWCModel();
+        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
+            ${package}.${artifactId-safe}.model.internal.Utlatande intUtlatande = scenario.asInternalModel();
 
             Utlatande actual = converter.convert(intUtlatande);
 

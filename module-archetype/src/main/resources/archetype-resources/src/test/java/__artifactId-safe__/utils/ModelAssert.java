@@ -1,3 +1,6 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
 package ${package}.${artifactId-safe}.utils;
 
 import junit.framework.AssertionFailedError;
@@ -7,7 +10,7 @@ import org.unitils.reflectionassert.ReflectionComparatorMode;
 
 public class ModelAssert {
 
-    public static void assertEquals(Object expected, Object actual) throws AssertionError {
+    public static void assertEquals(Object expected, Object actual) {
         try {
             ReflectionAssert.assertReflectionEquals(expected, actual, ReflectionComparatorMode.LENIENT_ORDER);
         } catch (AssertionFailedError e) {
@@ -15,7 +18,7 @@ public class ModelAssert {
         }
     }
 
-    public static void assertEquals(String message, Object expected, Object actual) throws AssertionError {
+    public static void assertEquals(String message, Object expected, Object actual) {
         try {
             ReflectionAssert.assertReflectionEquals(message, expected, actual, ReflectionComparatorMode.LENIENT_ORDER);
         } catch (AssertionFailedError e) {

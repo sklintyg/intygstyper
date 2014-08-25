@@ -4,13 +4,13 @@
 package ${package}.${artifactId-safe}.utils;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.filefilter.WildcardFileFilter;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
 
 import se.inera.certificate.${artifactId-safe}.model.v1.Utlatande;
 
@@ -19,25 +19,21 @@ import se.inera.certificate.${artifactId-safe}.model.v1.Utlatande;
  */
 public class ScenarioFinder {
 
-    private static final File TRANSPORT_MODEL_PATH = new File("src/test/resources/scenarios/transport");
+    private static final String TRANSPORT_MODEL_PATH = "classpath:/scenarios/transport/";
 
-    private static final File EXTERNAL_MODEL_PATH = new File("src/test/resources/scenarios/external");
+    private static final String EXTERNAL_MODEL_PATH = "classpath:/scenarios/external/";
 
-    private static final File INTERNAL_MODEL_MI_PATH = new File("src/test/resources/scenarios/internal-mi");
-
-    private static final File INTERNAL_MODEL_WC_PATH = new File("src/test/resources/scenarios/internal-wc");
+    private static final String INTERNAL_MODEL_PATH = "classpath:/scenarios/internal/";
 
     private static final String TRANSPORT_MODEL_EXT = ".xml";
 
     private static final String EXTERNAL_MODEL_EXT = ".json";
 
-    private static final String INTERNAL_MODEL_MI_EXT = ".json";
-
-    private static final String INTERNAL_MODEL_WC_EXT = ".json";
+    private static final String INTERNAL_MODEL_EXT = ".json";
 
     /**
      * Finds the specified transport scenarios that matches the wildcard string.
-     * 
+     *
      * @param scenarioWithWildcards
      *            A wildcard string matching scenarios. '*' and '?' can be used.
      * @return A list of matching transport scenarios.
@@ -50,7 +46,7 @@ public class ScenarioFinder {
 
     /**
      * Finds the specified external scenarios that matches the wildcard string.
-     * 
+     *
      * @param scenarioWithWildcards
      *            A wildcard string matching scenarios. '*' and '?' can be used.
      * @return A list of matching external scenarios.
@@ -63,48 +59,37 @@ public class ScenarioFinder {
 
     /**
      * Finds the specified internal Mina Intyg scenarios that matches the wildcard string.
-     * 
+     *
      * @param scenarioWithWildcards
      *            A wildcard string matching scenarios. '*' and '?' can be used.
      * @return A list of matching internal Mina Intyg scenarios.
      * @throws ScenarioNotFoundException
      *             If no scenarios could be found.
      */
-    public static List<Scenario> getInternalMIScenarios(String scenarioWithWildcards) throws ScenarioNotFoundException {
-        return getScenarios(scenarioWithWildcards + INTERNAL_MODEL_MI_EXT, INTERNAL_MODEL_MI_PATH, "internal MI");
+    public static List<Scenario> getInternalScenarios(String scenarioWithWildcards) throws ScenarioNotFoundException {
+        return getScenarios(scenarioWithWildcards + INTERNAL_MODEL_EXT, INTERNAL_MODEL_PATH, "internal");
     }
 
-    /**
-     * Finds the specified inernal WebCert scenarios that matches the wildcard string.
-     * 
-     * @param scenarioWithWildcards
-     *            A wildcard string matching scenarios. '*' and '?' can be used.
-     * @return A list of matching internal WebCert scenarios.
-     * @throws ScenarioNotFoundException
-     *             If no scenarios could be found.
-     */
-    public static List<Scenario> getInternalWCScenarios(String scenarioWithWildcards) throws ScenarioNotFoundException {
-        return getScenarios(scenarioWithWildcards + INTERNAL_MODEL_WC_EXT, INTERNAL_MODEL_WC_PATH, "internal WC");
-    }
-
-    public static List<Scenario> getScenarios(String scenarioWithWildcards, File scenarioPath, String model)
+    public static List<Scenario> getScenarios(String scenarioWithWildcards, String scenarioPath, String model)
             throws ScenarioNotFoundException {
-        FilenameFilter filter = new WildcardFileFilter(scenarioWithWildcards);
-        File[] files = scenarioPath.listFiles(filter);
-        if (files == null || files.length == 0) {
-            throw new ScenarioNotFoundException(scenarioWithWildcards, model);
+        try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext()) {
+            Resource[] resources = context.getResources(scenarioPath + scenarioWithWildcards);
+            ArrayList<Scenario> result = new ArrayList<>();
+            if (resources.length < 1) {
+                throw new ScenarioNotFoundException(scenarioPath + scenarioWithWildcards, model);
+            }
+            for (Resource r : resources) {
+                result.add(new FileBasedScenario(r.getFile()));
+            }
+            return result;
+        } catch (IOException e) {
+            throw new ScenarioNotFoundException(scenarioPath + scenarioWithWildcards, model);
         }
-
-        ArrayList<Scenario> result = new ArrayList<>();
-        for (File file : files) {
-            result.add(new FileBasedScenario(file));
-        }
-        return result;
     }
 
     /**
      * Finds the specified transport scenario matching the name.
-     * 
+     *
      * @param filename
      *            A name matching a scenario.
      * @return A matching transport scenario.
@@ -117,7 +102,7 @@ public class ScenarioFinder {
 
     /**
      * Finds the specified external scenario matching the name.
-     * 
+     *
      * @param filename
      *            A name matching a scenario.
      * @return A matching external scenario.
@@ -130,44 +115,30 @@ public class ScenarioFinder {
 
     /**
      * Finds the specified internal Mina Intyg scenario matching the name.
-     * 
+     *
      * @param filename
      *            A name matching a scenario.
      * @return A matching internal Mina Intyg scenario.
      * @throws ScenarioNotFoundException
      *             If no scenario could be found.
      */
-    public static Scenario getInternalMIScenario(String filename) throws ScenarioNotFoundException {
-        return getScenario(filename + INTERNAL_MODEL_MI_EXT, INTERNAL_MODEL_MI_PATH, "internal MI");
+    public static Scenario getInternalScenario(String filename) throws ScenarioNotFoundException {
+        return getScenario(filename + INTERNAL_MODEL_EXT, INTERNAL_MODEL_PATH, "internal ");
     }
 
-    /**
-     * Finds the specified internal WebCert scenario matching the name.
-     * 
-     * @param filename
-     *            A name matching a scenario.
-     * @return A matching internal WebCert scenario.
-     * @throws ScenarioNotFoundException
-     *             If no scenario could be found.
-     */
-    public static Scenario getInternalWCScenario(String filename) throws ScenarioNotFoundException {
-        return getScenario(filename + INTERNAL_MODEL_WC_EXT, INTERNAL_MODEL_WC_PATH, "internal WC");
-    }
-
-    private static Scenario getScenario(String filename, File scenarioPath, String model)
+    private static Scenario getScenario(String filename, String scenarioPath, String model)
             throws ScenarioNotFoundException {
-        File file = new File(scenarioPath, filename);
-        if (!file.exists() || !file.isFile()) {
+        try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext()) {
+            return new FileBasedScenario(context.getResource(scenarioPath + filename).getFile());
+        } catch (IOException e) {
             throw new ScenarioNotFoundException(filename, model);
         }
-
-        return new FileBasedScenario(file);
     }
 
     /**
      * Scenario implementation using files.
      */
-    private static class FileBasedScenario implements Scenario {
+    private static final class FileBasedScenario implements Scenario {
 
         /** The file that represents the current scenario. */
         private final File scenarioFile;
@@ -213,46 +184,35 @@ public class ScenarioFinder {
          * {@inheritDoc}
          */
         @Override
-        public ${package}.${artifactId-safe}.model.internal.mi.Utlatande asInternalMIModel()
+        public ${package}.${artifactId-safe}.model.internal.Utlatande asInternalModel()
                 throws ScenarioNotFoundException {
             try {
-                return ResourceConverterUtils.toInternalMI(getInternalMIModelFor(scenarioFile));
+                return ResourceConverterUtils.toInternal(getInternalModelFor(scenarioFile));
             } catch (IOException e) {
-                throw new ScenarioNotFoundException(scenarioFile.getName(), "internal MI", e);
+                throw new ScenarioNotFoundException(scenarioFile.getName(), "internal", e);
             }
         }
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public ${package}.${artifactId-safe}.model.internal.wc.Utlatande asInternalWCModel()
-                throws ScenarioNotFoundException {
-            try {
-                return ResourceConverterUtils.toInternalWC(getInternalWCModelFor(scenarioFile));
-            } catch (IOException e) {
-                throw new ScenarioNotFoundException(scenarioFile.getName(), "internal WC", e);
-            }
+    }
+
+    private static File getTransportModelFor(File otherModel) throws IOException {
+        String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());
+        try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext()) {
+            return context.getResource(TRANSPORT_MODEL_PATH + filenameWithoutExt + TRANSPORT_MODEL_EXT).getFile();
         }
     }
 
-    private static File getTransportModelFor(File otherModel) {
+    private static File getExternalModelFor(File otherModel) throws IOException {
         String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());
-        return new File(TRANSPORT_MODEL_PATH, filenameWithoutExt + TRANSPORT_MODEL_EXT);
+        try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext()) {
+            return context.getResource(EXTERNAL_MODEL_PATH + filenameWithoutExt + EXTERNAL_MODEL_EXT).getFile();
+        }
     }
 
-    private static File getExternalModelFor(File otherModel) {
+    private static File getInternalModelFor(File otherModel) throws IOException {
         String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());
-        return new File(EXTERNAL_MODEL_PATH, filenameWithoutExt + EXTERNAL_MODEL_EXT);
-    }
-
-    private static File getInternalMIModelFor(File otherModel) {
-        String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());
-        return new File(INTERNAL_MODEL_MI_PATH, filenameWithoutExt + INTERNAL_MODEL_MI_EXT);
-    }
-
-    private static File getInternalWCModelFor(File otherModel) {
-        String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());
-        return new File(INTERNAL_MODEL_WC_PATH, filenameWithoutExt + INTERNAL_MODEL_WC_EXT);
+        try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext()) {
+            return context.getResource(INTERNAL_MODEL_PATH + filenameWithoutExt + INTERNAL_MODEL_EXT).getFile();
+        }
     }
 }

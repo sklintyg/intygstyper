@@ -28,9 +28,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.joda.time.LocalDateTime;
-import org.junit.Ignore;
 import org.junit.Test;
 
+import ${package}.support.ApplicationOrigin;
 import ${package}.${artifactId-safe}.utils.Scenario;
 import ${package}.${artifactId-safe}.utils.ScenarioFinder;
 
@@ -42,23 +42,29 @@ public class PdfGeneratorTest {
         pdfGen = new PdfGenerator(true);
     }
 
-    @Ignore
     @Test
     public void testGeneratePdf() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getInternalMIScenarios("valid-*")) {
-            byte[] pdf = pdfGen.generatePDF(scenario.asInternalMIModel());
+        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
+            byte[] pdf = pdfGen.generatePDF(scenario.asInternalModel(), ApplicationOrigin.MINA_INTYG);
             assertNotNull("Error in scenario " + scenario.getName(), pdf);
-            writePdfToFile(pdf, scenario);
+            writePdfToFile(pdf, scenario.getName());
         }
     }
 
-    private void writePdfToFile(byte[] pdf, Scenario scenario) throws IOException {
+    @Test
+    public void testGenerateWebcertPdf() throws Exception {
+            Scenario s = ScenarioFinder.getInternalScenario("valid-maximal");
+            byte[] pdf = pdfGen.generatePDF(s.asInternalModel(), ApplicationOrigin.WEBCERT);
+            writePdfToFile(pdf, "webcert");
+    }
+
+    private void writePdfToFile(byte[] pdf, String name) throws IOException {
         String dir = System.getProperty("pdfOutput.dir");
         if (dir == null) {
             return;
         }
 
-        File file = new File(String.format("%s/%s_%s.pdf", dir, scenario.getName(), LocalDateTime.now().toString("yyyyMMdd_HHmm")));
+        File file = new File(String.format("%s/%s_%s.pdf", dir, name, LocalDateTime.now().toString("yyyyMMdd_HHmm")));
         FileOutputStream fop = new FileOutputStream(file);
 
         file.createNewFile();

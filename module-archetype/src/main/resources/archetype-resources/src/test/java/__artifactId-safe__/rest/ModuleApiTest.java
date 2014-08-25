@@ -21,6 +21,9 @@
  */
 package ${package}.${artifactId-safe}.rest;
 
+import static org.junit.Assert.assertNotNull;
+import static ${package}.support.api.dto.TransportModelVersion.UTLATANDE_V1;
+
 import java.io.StringWriter;
 
 import javax.xml.bind.JAXBContext;
@@ -28,7 +31,6 @@ import javax.xml.bind.JAXBException;
 
 import junit.framework.Assert;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,16 +38,24 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
-import se.inera.certificate.modules.support.api.dto.ExternalModelResponse;
-import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
-import se.inera.certificate.modules.support.api.dto.PdfResponse;
-import se.inera.certificate.modules.support.api.dto.TransportModelHolder;
-import se.inera.certificate.modules.support.api.exception.ModuleConverterException;
-import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
-import ${package}.${artifactId-safe}.model.internal.mi.Utlatande;
+import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
+import se.inera.certificate.modules.${artifactId-safe}.model.internal.Utlatande;
+import se.inera.certificate.modules.${artifactId-safe}.utils.ResourceConverterUtils;
+import se.inera.certificate.modules.${artifactId-safe}.utils.Scenario;
+import se.inera.certificate.modules.${artifactId-safe}.utils.ScenarioFinder;
+import ${package}.support.ApplicationOrigin;
+import ${package}.support.api.ModuleApi;
+import ${package}.support.api.dto.CreateNewDraftHolder;
+import ${package}.support.api.dto.ExternalModelResponse;
+import ${package}.support.api.dto.HoSPersonal;
+import ${package}.support.api.dto.InternalModelHolder;
+import ${package}.support.api.dto.Patient;
+import ${package}.support.api.dto.TransportModelHolder;
+import ${package}.support.api.dto.Vardenhet;
+import ${package}.support.api.dto.Vardgivare;
+import ${package}.support.api.exception.ModuleException;
+import ${package}.support.api.exception.ModuleValidationException;
 import ${package}.${artifactId-safe}.utils.ModelAssert;
-import ${package}.${artifactId-safe}.utils.Scenario;
-import ${package}.${artifactId-safe}.utils.ScenarioFinder;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -54,12 +64,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Sets up an actual HTTP server and client to test the {@link ModuleApi} service. This is the place to verify that
  * response headers and response statuses etc are correct.
  */
-@ContextConfiguration(locations = ("/$module-test-config.xml"))
+@ContextConfiguration(locations = ("/${artifactId}-test-config.xml"))
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ModuleApiTest {
 
+    /** An HTTP client proxy wired to the test HTTP server. */
     @Autowired
-    private se.inera.certificate.modules.support.api.ModuleApi moduleApi;
+    private ${package}.support.api.ModuleApi moduleApi;
 
     @Autowired
     private JAXBContext jaxbContext;
@@ -67,7 +78,6 @@ public class ModuleApiTest {
     @Autowired
     private ObjectMapper mapper;
 
-    @Ignore
     @Test
     public void testUnmarshallScenarios() throws Exception {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
@@ -75,27 +85,24 @@ public class ModuleApiTest {
         }
     }
 
-    @Ignore
     @Test
     public void testUnmarshallBroken() throws Exception {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("invalid-*")) {
             try {
                 moduleApi.unmarshall(createTransportHolder(scenario.asTransportModel()));
-            } catch (ModuleConverterException ignore) {
+            } catch (ModuleValidationException ignore) {
             }
         }
     }
 
-    @Ignore
     @Test
     public void testMarshall() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            moduleApi.marshall(createExternalHolder(scenario.asExternalModel()));
+            moduleApi.marshall(createExternalHolder(scenario.asExternalModel()), UTLATANDE_V1);
         }
 
     }
 
-    @Ignore
     @Test
     public void testValidate() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
@@ -103,7 +110,6 @@ public class ModuleApiTest {
         }
     }
 
-    @Ignore
     @Test
     public void testValidateWithErrors() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {
@@ -117,34 +123,31 @@ public class ModuleApiTest {
         }
     }
 
-    @Ignore
     @Test
     public void testPdf() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            PdfResponse pdfResponse = moduleApi.pdf(createExternalHolder(scenario.asExternalModel()));
+            moduleApi.pdf(createExternalHolder(scenario.asExternalModel()), ApplicationOrigin.MINA_INTYG);
 
-            Assert.assertTrue("Error in scenario " + scenario.getName(),
-                    pdfResponse.getFilename().startsWith("lakarutlatande"));
+            // String contentDisposition = getClientResponse().getHeaderString("Content-Disposition");
+            // Assert.assertTrue("Error in scenario " + scenario.getName(),
+            // contentDisposition.startsWith("filename=lakarutlatande"));
         }
     }
 
-    @Ignore
     @Test
     public void testConvertExternalToInternal() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            ${package}.${artifactId-safe}.model.external.Utlatande externalModel = scenario
-                    .asExternalModel();
+            ${package}.${artifactId-safe}.model.external.Utlatande externalModel = scenario.asExternalModel();
             moduleApi.convertExternalToInternal(createExternalHolder(externalModel));
         }
     }
 
-    @Ignore
     @Test
     public void testConvertInternalToExternal() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getInternalWCScenarios("valid-*")) {
+        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
 
             ExternalModelResponse externalModelReponse = moduleApi
-                    .convertInternalToExternal(createInternalHolder(scenario.asInternalWCModel()));
+                    .convertInternalToExternal(createInternalHolder(scenario.asInternalModel()));
             ${package}.${artifactId-safe}.model.external.Utlatande actual = mapper.readValue(
                     externalModelReponse.getExternalModelJson(),
                     ${package}.${artifactId-safe}.model.external.Utlatande.class);
@@ -155,9 +158,8 @@ public class ModuleApiTest {
         }
     }
 
-    @Ignore
     @Test
-    public void testRegisterCertificateRoudtrip() throws Exception {
+    public void testRegisterCertificateRoundtrip() throws Exception {
         ${package}.${artifactId-safe}.model.external.Utlatande extUtlatande;
         Utlatande intUtlatande;
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
@@ -168,29 +170,55 @@ public class ModuleApiTest {
                     .getInternalModel();
             intUtlatande = mapper.readValue(intUtlatandeString, Utlatande.class);
 
-            ${package}.${artifactId-safe}.model.internal.mi.Utlatande expected = scenario
-                    .asInternalMIModel();
+            Utlatande expected = scenario.asInternalModel();
 
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, intUtlatande);
         }
     }
 
-    private TransportModelHolder createTransportHolder(
-            se.inera.certificate.${artifactId-safe}.model.v1.Utlatande transportModel) throws JAXBException {
+    @Test
+    public void copyCreatesBlank() throws Exception {
+        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
+            ExternalModelHolder internalHolder = createExternalHolder(scenario.asExternalModel());
+
+            InternalModelResponse holder = moduleApi.createNewInternalFromTemplate(createNewDraftHolder(), internalHolder);
+
+            assertNotNull(holder);
+            Utlatande utlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
+            assertNotNull(utlatande.getTyp());
+        }
+    }
+
+    @Test
+    public void createNewInternal() throws ModuleException {
+        CreateNewDraftHolder holder = createNewDraftHolder();
+
+        InternalModelResponse response = moduleApi.createNewInternal(holder);
+
+        assertNotNull(response.getInternalModel());
+    }
+
+    private CreateNewDraftHolder createNewDraftHolder() {
+        Vardgivare vardgivare = new Vardgivare("hsaId0", "vardgivare");
+        Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
+        HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", null, vardenhet);
+        Patient patient = new Patient("Kalle",null,"Kula","19121212-1212",null,null,null);
+        return new CreateNewDraftHolder("Id1", hosPersonal, patient);
+    }
+
+    private TransportModelHolder createTransportHolder(se.inera.certificate.${artifactId-safe}.model.v1.Utlatande transportModel)
+            throws JAXBException {
         StringWriter writer = new StringWriter();
         jaxbContext.createMarshaller().marshal(transportModel, writer);
         return new TransportModelHolder(writer.toString());
     }
 
     private ExternalModelHolder createExternalHolder(
-            ${package}.${artifactId-safe}.model.external.Utlatande externalModel)
-            throws JsonProcessingException {
+            ${package}.${artifactId-safe}.model.external.Utlatande externalModel) throws JsonProcessingException {
         return new ExternalModelHolder(mapper.writeValueAsString(externalModel));
     }
 
-    private InternalModelHolder createInternalHolder(
-            ${package}.${artifactId-safe}.model.internal.wc.Utlatande internalModel)
-            throws JsonProcessingException {
+    private InternalModelHolder createInternalHolder(Utlatande internalModel) throws JsonProcessingException {
         return new InternalModelHolder(mapper.writeValueAsString(internalModel));
     }
 }

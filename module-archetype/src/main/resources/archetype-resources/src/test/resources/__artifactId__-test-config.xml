@@ -27,8 +27,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-	<import resource="module-beans.xml" />
-	<import resource="module-model-config.xml" />
-
+	<import resource="${artifactId}-beans.xml" />
+	<import resource="${artifactId}-model-config.xml" />
 
 </beans>

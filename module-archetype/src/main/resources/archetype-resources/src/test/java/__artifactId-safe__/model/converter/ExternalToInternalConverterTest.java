@@ -21,11 +21,8 @@
  */
 package ${package}.${artifactId-safe}.model.converter;
 
-import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
-
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Ignore;
 
 import ${package}.${artifactId-safe}.model.external.Utlatande;
 import ${package}.${artifactId-safe}.utils.ModelAssert;
@@ -44,15 +41,14 @@ public class ExternalToInternalConverterTest {
         converter = new ExternalToInternalConverter();
     }
 
-    @Ignore
     @Test
     public void testConvertUtlatande() throws Exception {
         for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
             Utlatande extUtlatande = scenario.asExternalModel();
 
-            ${package}.${artifactId-safe}.model.internal.mi.Utlatande actual = converter.convert(extUtlatande);
+            ${package}.${artifactId-safe}.model.internal.Utlatande actual = converter.convert(extUtlatande);
 
-            ${package}.${artifactId-safe}.model.internal.mi.Utlatande expected = scenario.asInternalMIModel();
+            ${package}.${artifactId-safe}.model.internal.Utlatande expected = scenario.asInternalModel();
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
     }

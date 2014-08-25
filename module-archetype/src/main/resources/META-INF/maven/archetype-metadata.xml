@@ -42,12 +42,12 @@
       <directory>src/test/resources</directory>
       <includes>
         <include>**/*.xml</include>
+        <include>**/*.js</include>
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
-      <directory>src/test/resources</directory>
+      <directory>src/test/js</directory>
       <includes>
-        <include>**/*.json</include>
         <include>**/*.js</include>
       </includes>
     </fileSet>
