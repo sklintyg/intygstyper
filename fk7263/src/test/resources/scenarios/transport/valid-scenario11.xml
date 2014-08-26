@@ -74,7 +74,7 @@
 			<from>2011-01-26</from>
 			<tom>2012-01-26</tom>
 		</observationsperiod>
-		<varde value="75.0" unit="percent" />
+		<p:varde value="75.0" unit="percent" />
 	</observation>
 
 	<observation>
@@ -106,7 +106,7 @@
 		<observation>
 			<observationskod code="170967006" codeSystem="1.2.752.116.2.1.1.1"
 				codeSystemName="SNOMED-CT" />
-			<varde code="PRO1" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7"
+			<p:varde code="PRO1" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7"
 				codeSystemName="kv_prognos_intyg" />
 		</observation>
 </utlatande>
