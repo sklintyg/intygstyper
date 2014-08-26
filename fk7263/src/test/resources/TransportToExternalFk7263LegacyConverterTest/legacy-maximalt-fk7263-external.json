@@ -250,7 +250,7 @@
                 "codeSystemName": "SNOMED-CT",
                 "code": "170967006"
             },
-            "beskrivning": "Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
+            "beskrivning": "Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.",
             "varde": [
                 {
                     "codeSystem": "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",

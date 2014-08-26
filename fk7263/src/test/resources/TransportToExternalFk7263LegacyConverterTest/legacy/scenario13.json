@@ -180,7 +180,7 @@
                 "codeSystemName": "SNOMED-CT",
                 "code": "170967006"
             },
-            "beskrivning": "Skadan har f\u00f6rv\u00e4rrats vid varje tillf\u00e4lle patienten anv\u00e4nt armen. M\u00e5ste h\u00e5llas i total stillhet tills l\u00e4kningsprocessen kommit en bit p\u00e5 v\u00e4g. Eventuellt kan utredning visa att operation \u00e4r n\u00f6dv\u00e4ndig f\u00f6r att l\u00e4ka skadan."
+            "beskrivning": "Skadan har f\u00f6rv\u00e4rrats vid varje tillf\u00e4lle patienten anv\u00e4nt armen. M\u00e5ste h\u00e5llas i total stillhet tills l\u00e4kningsprocessen kommit en bit p\u00e5 v\u00e4g. Eventuellt kan utredning visa att operation \u00e4r n\u00f6dv\u00e4ndig f\u00f6r att l\u00e4ka skadan.",
             "varde": [
                 {
                     "codeSystem": "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
