@@ -19,7 +19,7 @@ define([
             title: 'Läkarintyg FK7263'
         }).when('/fk7263/recipients', {
             templateUrl: '/web/webjars/fk7263/minaintyg/views/recipients.html',
-            controller: 'fk7263.SentCertWizardCtrl',
+            controller: 'fk7263.SendCertWizardCtrl',
             title: 'Skicka intyg till mottagare'
         }).when('/fk7263/statushistory', {
             templateUrl: '/web/webjars/fk7263/minaintyg/views/status-history.html',
@@ -27,11 +27,11 @@ define([
             title: 'Alla intygets händelser'
         }).when('/fk7263/summary', {
             templateUrl: '/web/webjars/fk7263/minaintyg/views/send-summary.html',
-            controller: 'fk7263.SentCertWizardCtrl',
+            controller: 'fk7263.SendCertWizardCtrl',
             title: 'Kontrollera och skicka intyget'
         }).when('/fk7263/sent', {
             templateUrl: '/web/webjars/fk7263/minaintyg/views/sent-cert.html',
-            controller: 'fk7263.SentCertWizardCtrl',
+            controller: 'fk7263.SendCertWizardCtrl',
             title: 'Intyget har skickats'
         }).when('/fk7263/fel/:errorCode', {
             templateUrl: '/web/webjars/fk7263/minaintyg/views/error.html',

@@ -2,7 +2,7 @@ define([
     'angular',
     'common/minaintyg/js/CertificateService',
     'webjars/ts-diabetes/minaintyg/js/controllers/ViewCertCtrl',
-    'webjars/ts-diabetes/minaintyg/js/controllers/SendCertWizardCtrl'
+    'common/minaintyg/js/controllers/SendCertWizardCtrl'
 ], function(angular, CertificateService, ViewCertCtrl, SendCertWizardCtrl) {
     'use strict';
 

@@ -13,7 +13,7 @@ define(['angular'], function(angular) {
             $scope.doneLoading = false;
 
             $scope.send = function() {
-                $location.path('/fk7263/recipients');
+                $location.path('/fk7263/recipients').search({ module : 'fk7263', defaultRecipient : 'fk'});
             };
 
             $scope.visibleStatuses = [ 'SENT' ];

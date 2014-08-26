@@ -2,29 +2,35 @@ define([ 'angular' ], function(angular) {
     'use strict';
 
     return [ '$scope', '$filter', '$location', '$rootScope', '$routeParams', 'sendCertService', 'listCertService',
-            function SentCertWizardCtrl($scope, $filter, $location, $rootScope, $routeParams, sendCertService, listCertService) {
+            function SendCertWizardCtrl($scope, $filter, $location, $rootScope, $routeParams, sendCertService, listCertService) {
+
+                // Get module and default recipient from querystring
+                var params = $location.search();
+                $scope.module = params.module;
+
+                // Initialize default recipient
+                $scope.selectedRecipientId = params.defaultRecipient;
+
                 $scope.sendingInProgress = false;
                 // Get active certificate from rootscope (passed from previous
                 // controller)
                 $scope.cert = $rootScope.cert;
 
                 if (!angular.isObject($scope.cert)) {
-                    $location.path('/fk7263/fel/certnotfound');
+                    $location.path($scope.module + '/fel/certnotfound');
                     return;
                 }
                 // expose calculated static link for pdf download
                 $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $routeParams.certificateId + '/pdf';
 
-                // Initialize recipient handling, default to FK
-                $scope.selectedRecipientId = 'fk';
                 // set selected recipeintID in rootscope to preserve state between
                 // controller instance invocations
                 $rootScope.selectedRecipientId = $scope.selectedRecipientId;
 
                 $scope.recipientList = [];
-                sendCertService.getRecipients('fk7263', function(result) {
+                sendCertService.getRecipients($scope.module, function(result) {
                     if (result !== null && result.length > 0) {
-                        for (var i = 0; i < result.length; ++i) {
+                        for ( var i = 0; i < result.length; ++i) {
                             $scope.recipientList[i] = {
                                 'id': result[i].id,
                                 'recipientName': result[i].name
@@ -32,11 +38,11 @@ define([ 'angular' ], function(angular) {
                         }
                     } else {
                         // show error view
-                        $location.path('/fk7263/fel/failedreceiverecipients');
+                        $location.path($scope.module + '/fel/failedreceiverecipients');
                     }
                 }, function(result) {
                     // show error view
-                    $location.path('/fk7263/fel/failedreceiverecipients');
+                    $location.path($scope.module + '/fel/failedreceiverecipients');
                 });
 
                 $scope.getRecipientName = function(id) {
@@ -52,7 +58,7 @@ define([ 'angular' ], function(angular) {
                     // now we have a recipient selected, set the selection in
                     // rootscope
                     $rootScope.selectedRecipientId = $scope.selectedRecipientId;
-                    $location.path('/fk7263/summary');
+                    $location.path($scope.module + '/summary');
                 };
 
                 $scope.confirmAndSend = function() {
@@ -61,16 +67,16 @@ define([ 'angular' ], function(angular) {
                         $scope.sendingInProgress = false;
                         if (result !== null && result.resultCode === 'sent') {
                             listCertService.emptyCache();
-                            $location.path('/fk7263/sent');
+                            $location.path($scope.module + '/sent');
                         } else {
                             // show error view
-                            $location.path('/fk7263/fel/couldnotsend');
+                            $location.path($scope.module + '/fel/couldnotsend');
                         }
                     });
                 };
 
                 $scope.backToViewRecipents = function() {
-                    $location.path('/fk7263/recipients');
+                    $location.path($scope.module + '/recipients');
                 };
 
                 $scope.alreadySentToRecipient = function() {
@@ -86,7 +92,7 @@ define([ 'angular' ], function(angular) {
                 };
 
                 $scope.backToViewCertificate = function() {
-                    $location.path('/fk7263/view/' + $scope.cert.id);
+                    $location.path($scope.module + '/view/' + $scope.cert.id).search({});
                 };
 
                 $scope.pagefocus = true;
