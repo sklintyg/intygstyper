@@ -66,8 +66,6 @@
 		</observationsperiod>
 		<p:varde value="25.0" unit="percent" />
 	</observation>
-	<observation>
-	</observation>
 
 		<observation>
 			<observationskod code="170967006" codeSystem="1.2.752.116.2.1.1.1"
