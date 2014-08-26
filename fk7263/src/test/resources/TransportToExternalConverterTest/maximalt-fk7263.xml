@@ -161,6 +161,7 @@ Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast lä
 		<observation>
 			<observationskod code="170967006" codeSystem="1.2.752.116.2.1.1.1"
 				codeSystemName="SNOMED-CT" />
+      <p:beskrivning>Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.</p:beskrivning>
 			<p:varde code="PRO4" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7"
 				codeSystemName="kv_prognos_intyg" />
 		</observation>

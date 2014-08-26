@@ -118,6 +118,7 @@
 		<observation>
 			<observationskod code="170967006" codeSystem="1.2.752.116.2.1.1.1"
 				codeSystemName="SNOMED-CT" />
+			<p:beskrivning>Patientens förmåga bedöms nedsatt längre än vad som anges ovan pga:</p:beskrivning>
 			<p:varde code="PRO4" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7"
 				codeSystemName="kv_prognos_intyg" />
 		</observation>
