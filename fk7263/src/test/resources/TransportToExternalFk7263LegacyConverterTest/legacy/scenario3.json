@@ -98,8 +98,7 @@
                     "unit": "percent"
                 }
             ]
-        }
-    ],
+        },
         {
             "observationskod": {
                 "codeSystem": "1.2.752.116.2.1.1.1",
@@ -114,6 +113,7 @@
                 }
             ]
         }
+    ],
     "vardkontakter": [
         {
             "vardkontakttyp": {

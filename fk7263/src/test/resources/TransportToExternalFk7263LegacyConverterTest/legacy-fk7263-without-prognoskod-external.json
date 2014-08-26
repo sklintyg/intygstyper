@@ -243,8 +243,7 @@
                     "unit" : "percent"
                 }
             ]
-        }
-    ],
+        },
         {
             "observationskod": {
                 "codeSystem": "1.2.752.116.2.1.1.1",
@@ -253,6 +252,7 @@
             },
             "beskrivning": "Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan."
         }
+    ],
     "vardkontakter" : [
         {
             "vardkontakttyp" : {
