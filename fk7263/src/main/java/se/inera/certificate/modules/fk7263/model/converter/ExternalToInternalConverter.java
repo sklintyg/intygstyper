@@ -2,6 +2,7 @@ package se.inera.certificate.modules.fk7263.model.converter;
 
 import java.util.List;
 
+import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Referens;
@@ -19,7 +20,6 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263HosPersonal;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
-import se.inera.certificate.modules.fk7263.model.external.Fk7263Prognos;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
@@ -48,6 +48,7 @@ public class ExternalToInternalConverter {
         convertVardkontakter(intyg, source);
         convertReferenser(intyg, source);
         convertAktivitetsbegransning(intyg, source);
+        convertPrognos(intyg, source);
         convertAktiviteter(intyg, source);
         convertPatient(intyg, source);
         convertArbetsformaga(intyg, source);
@@ -109,17 +110,12 @@ public class ExternalToInternalConverter {
     private void convertArbetsformaga(Fk7263Intyg intyg, Fk7263Utlatande source) {
         List<Fk7263Observation> arbetsformagor = source.getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
 
-        if (!arbetsformagor.isEmpty()) {
-            Fk7263Observation arbetsformaga = arbetsformagor.get(0);
-            convertPrognoser(intyg, arbetsformaga.getPrognoser());
-        }
-
         for (Fk7263Observation arbetsformaga : arbetsformagor) {
 
             if (!arbetsformaga.getVarde().isEmpty()) {
                 LocalDateInterval interval = DateTimeConverter.toLocalDateInterval(arbetsformaga
                         .getObservationsperiod());
-                PhysicalQuantity quantity = arbetsformaga.getVarde().get(0);
+                PhysicalQuantity quantity = (PhysicalQuantity) arbetsformaga.getVarde().get(0);
 
                 switch (quantity.getQuantity().toString()) {
                     case "75.0":
@@ -142,20 +138,21 @@ public class ExternalToInternalConverter {
 
     }
 
-    private void convertPrognoser(Fk7263Intyg intyg, List<Fk7263Prognos> prognoser) {
-        if (!prognoser.isEmpty()) {
-            intyg.setArbetsformagaPrognos(prognoser.get(0).getBeskrivning());
+    private void convertPrognos(Fk7263Intyg intyg, Fk7263Utlatande source) {
+        Fk7263Observation prognos = source.findObservationByKod(ObservationsKoder.PROGNOS);
 
-            for (Fk7263Prognos prognos : prognoser) {
-                if (Prognoskoder.ATERSTALLAS_HELT.equals(prognos.getPrognoskod())) {
-                    intyg.setArbetsformataPrognosJa(true);
-                } else if (Prognoskoder.ATERSTALLAS_DELVIS.equals(prognos.getPrognoskod())) {
-                    intyg.setArbetsformataPrognosJaDelvis(true);
-                } else if (Prognoskoder.INTE_ATERSTALLAS.equals(prognos.getPrognoskod())) {
-                    intyg.setArbetsformataPrognosNej(true);
-                } else if (Prognoskoder.DET_GAR_INTE_ATT_BEDOMA.equals(prognos.getPrognoskod())) {
-                    intyg.setArbetsformataPrognosGarInteAttBedoma(true);
-                }
+        if (prognos != null) {
+            intyg.setArbetsformagaPrognos(prognos.getBeskrivning());
+            Kod prognosKod = (Kod)prognos.getVarde().get(0);
+
+            if (Prognoskoder.ATERSTALLAS_HELT.equals(prognosKod)) {
+                intyg.setArbetsformataPrognosJa(true);
+            } else if (Prognoskoder.ATERSTALLAS_DELVIS.equals(prognosKod)) {
+                intyg.setArbetsformataPrognosJaDelvis(true);
+            } else if (Prognoskoder.INTE_ATERSTALLAS.equals(prognosKod)) {
+                intyg.setArbetsformataPrognosNej(true);
+            } else if (Prognoskoder.DET_GAR_INTE_ATT_BEDOMA.equals(prognosKod)) {
+                intyg.setArbetsformataPrognosGarInteAttBedoma(true);
             }
         }
     }

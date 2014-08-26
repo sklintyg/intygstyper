@@ -3,6 +3,8 @@ package se.inera.certificate.modules.fk7263.model.external;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import se.inera.certificate.model.Observation;
 import se.inera.certificate.model.Utforarroll;
 
@@ -11,6 +13,7 @@ import se.inera.certificate.model.Utforarroll;
  */
 public class Fk7263Observation extends Observation {
 
+    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
     private List<Object> varde;
 
     private Utforarroll utforsAv;
