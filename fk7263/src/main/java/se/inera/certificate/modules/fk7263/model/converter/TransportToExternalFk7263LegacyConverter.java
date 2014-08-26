@@ -31,6 +31,7 @@ import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.PhysicalQuantity;
+import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
@@ -45,7 +46,6 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263HosPersonal;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
-import se.inera.certificate.modules.fk7263.model.external.Fk7263Referens;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Vardenhet;
 
@@ -152,8 +152,8 @@ public final class TransportToExternalFk7263LegacyConverter {
         return vardkontakt;
     }
 
-    private static Fk7263Referens convert(ReferensType source) {
-        Fk7263Referens referens = new Fk7263Referens();
+    private static Referens convert(ReferensType source) {
+        Referens referens = new Referens();
         if (source == null) {
             return null;
         }

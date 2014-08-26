@@ -16,9 +16,6 @@ public final class ObservationsKoder {
     // Observationskoder
     public static final Kod ARBETSFORMAGA = new Kod("1.2.752.116.2.1.1.1", "SNOMED-CT", null, "302119000");
     public static final Kod FORLOPP = new Kod("1.2.752.116.2.1.1.1", "SNOMED-CT", null, "288524001");
-    public static final Kod SJUKDOM = new Kod("1.2.752.116.2.1.1.1", "SNOMED-CT", null, "39104002");
-    public static final Kod GRAVIDITET = new Kod("1.2.752.116.2.1.1.1", "SNOMED-CT", null, "289908002");
-    public static final Kod KOMPLIKATION_VID_GRAVIDITET = new Kod("1.2.752.116.2.1.1.1", "SNOMED-CT", null, "90821003");
     public static final Kod PROGNOS = new Kod("1.2.752.116.2.1.1.1", "SNOMED-CT", null, "170967006");
 
     private ObservationsKoder() {
