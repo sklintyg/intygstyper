@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.inera.certificate.model.Observation;
-import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Utforarroll;
 
 /**
@@ -12,21 +11,14 @@ import se.inera.certificate.model.Utforarroll;
  */
 public class Fk7263Observation extends Observation {
 
-    private List<PhysicalQuantity> varde;
-
-    private List<Fk7263Prognos> prognoser;
+    private List<Object> varde;
 
     private Utforarroll utforsAv;
 
-    public List<Fk7263Prognos> getPrognoser() {
-        if (prognoser == null) {
-            prognoser = new ArrayList<>();
-        }
-        return prognoser;
-    }
+    private String kommentar;
 
     @Override
-    public List<PhysicalQuantity> getVarde() {
+    public List<Object> getVarde() {
         if (varde == null) {
             varde = new ArrayList<>();
         }
@@ -39,5 +31,13 @@ public class Fk7263Observation extends Observation {
 
     public void setUtforsAv(Utforarroll utforsAv) {
         this.utforsAv = utforsAv;
+    }
+
+    public String getKommentar() {
+        return kommentar;
+    }
+
+    public void setKommentar(String kommentar) {
+        this.kommentar = kommentar;
     }
 }
