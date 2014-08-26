@@ -115,7 +115,11 @@ public class Fk7263ModuleApi implements ModuleApi {
             TransportXmlUtils.validateSchema(transportModel.getTransportModel());
 
             LOG.debug("Converting {}  to external model", jaxbObject.getClass().getCanonicalName());
-            externalModel = TransportToExternalConverter.convert((Utlatande) jaxbObject);
+            try {
+                externalModel = TransportToExternalConverter.convert((Utlatande) jaxbObject);
+            } catch (ConverterException e) {
+                throw new ModuleConverterException(String.format("Conversion failed with stacktrace: %s", e));
+            }
 
         } else {
             LOG.error("Unsupported XML message: {}", transportModel.getTransportModel());
