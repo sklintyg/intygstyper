@@ -188,6 +188,7 @@
             },
             "varde" : [
                 {
+                    "@class": "se.inera.certificate.model.PhysicalQuantity",
                     "quantity" : 75.0,
                     "unit" : "percent"
                 }
@@ -205,6 +206,7 @@
             },
             "varde" : [
                 {
+                    "@class": "se.inera.certificate.model.PhysicalQuantity",
                     "quantity" : 50.0,
                     "unit" : "percent"
                 }
@@ -222,6 +224,7 @@
             },
             "varde" : [
                 {
+                    "@class": "se.inera.certificate.model.PhysicalQuantity",
                     "quantity" : 25.0,
                     "unit" : "percent"
                 }
@@ -239,6 +242,7 @@
             },
             "varde" : [
                 {
+                    "@class": "se.inera.certificate.model.PhysicalQuantity",
                     "quantity" : 0.0,
                     "unit" : "percent"
                 }

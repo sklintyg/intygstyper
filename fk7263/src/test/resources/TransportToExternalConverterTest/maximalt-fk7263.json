@@ -191,6 +191,7 @@
             },
             "varde" : [
                 {
+                    "@class": "se.inera.certificate.model.PhysicalQuantity",
                     "quantity" : 75.0,
                     "unit" : "percent"
                 }
@@ -208,6 +209,7 @@
             },
             "varde" : [
                 {
+                    "@class": "se.inera.certificate.model.PhysicalQuantity",
                     "quantity" : 50.0,
                     "unit" : "percent"
                 }
@@ -225,6 +227,7 @@
             },
             "varde" : [
                 {
+                    "@class": "se.inera.certificate.model.PhysicalQuantity",
                     "quantity" : 25.0,
                     "unit" : "percent"
                 }
@@ -242,6 +245,7 @@
             },
             "varde" : [
                 {
+                    "@class": "se.inera.certificate.model.PhysicalQuantity",
                     "quantity" : 0.0,
                     "unit" : "percent"
                 }
@@ -256,6 +260,7 @@
             "beskrivning": "Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.",
             "varde": [
                 {
+                    "@class": "se.inera.certificate.model.Kod",
                     "codeSystem": "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
                     "codeSystemName": "kv_prognos_intyg",
                     "code": "PRO4"

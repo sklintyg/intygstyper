@@ -76,6 +76,7 @@
             },
             "varde" : [
                 {
+                    "@class": "se.inera.certificate.model.PhysicalQuantity",
                     "quantity" : 25.0,
                     "unit" : "percent"
                 }

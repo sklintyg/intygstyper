@@ -211,19 +211,24 @@ public class InternalToExternalConverter {
         // observation arbetsformaga (create between 1 and 4 instances)
         if (source.getNedsattMed100() != null) {
             observationer.add(buildArbetsformageObservation(ObservationsKoder.ARBETSFORMAGA,
-                    source.getNedsattMed100(), buildPrognos(source), new PhysicalQuantity(0.0, "percent")));
+                    source.getNedsattMed100(), new PhysicalQuantity(0.0, "percent")));
         }
         if (source.getNedsattMed75() != null) {
             observationer.add(buildArbetsformageObservation(ObservationsKoder.ARBETSFORMAGA,
-                    source.getNedsattMed75(), buildPrognos(source), new PhysicalQuantity(FORMOGA_1_4, "percent")));
+                    source.getNedsattMed75(), new PhysicalQuantity(FORMOGA_1_4, "percent")));
         }
         if (source.getNedsattMed50() != null) {
             observationer.add(buildArbetsformageObservation(ObservationsKoder.ARBETSFORMAGA,
-                    source.getNedsattMed50(), buildPrognos(source), new PhysicalQuantity(FORMOGA_1_2, "percent")));
+                    source.getNedsattMed50(), new PhysicalQuantity(FORMOGA_1_2, "percent")));
         }
         if (source.getNedsattMed25() != null) {
             observationer.add(buildArbetsformageObservation(ObservationsKoder.ARBETSFORMAGA,
-                    source.getNedsattMed25(), buildPrognos(source), new PhysicalQuantity(FORMOGA_3_4, "percent")));
+                    source.getNedsattMed25(), new PhysicalQuantity(FORMOGA_3_4, "percent")));
+        }
+
+        // observation prognos
+        if (getCorrespondingPrognosKod(source) != null) {
+            observationer.add(buildPrognos(source));
         }
 
         return observationer;
@@ -242,17 +247,11 @@ public class InternalToExternalConverter {
      *            {@link PhysicalQuantity}
      * @return {@link Fk7263Observation}
      */
-    private Fk7263Observation buildArbetsformageObservation(Kod kod, LocalDateInterval period, Fk7263Prognos prognos,
-            PhysicalQuantity varde) {
+    private Fk7263Observation buildArbetsformageObservation(Kod kod, LocalDateInterval period, PhysicalQuantity varde) {
         Fk7263Observation obs = new Fk7263Observation();
 
         obs.setObservationskod(kod);
         obs.setObservationsperiod(DateTimeConverter.toPartialInterval(period));
-
-        if (prognos != null) {
-            obs.getPrognoser().add(prognos);
-        }
-
         obs.getVarde().add(varde);
 
         return obs;
@@ -265,14 +264,15 @@ public class InternalToExternalConverter {
      *            internal representation
      * @return {@link Fk7263Prognos}
      */
-    private Fk7263Prognos buildPrognos(Fk7263Intyg source) {
-        Fk7263Prognos prognos = new Fk7263Prognos();
+    private Fk7263Observation buildPrognos(Fk7263Intyg source) {
+        Fk7263Observation prognos = new Fk7263Observation();
         Kod kod = getCorrespondingPrognosKod(source);
         if (kod == null) {
             LOG.trace("Got null while building prognos");
             return null;
         }
-        prognos.setPrognoskod(kod);
+        prognos.setObservationskod(ObservationsKoder.PROGNOS);
+        prognos.getVarde().add(kod);
         prognos.setBeskrivning(source.getArbetsformagaPrognos());
 
         return prognos;

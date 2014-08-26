@@ -99,6 +99,7 @@
             },
             "varde": [
                 {
+                    "@class": "se.inera.certificate.model.PhysicalQuantity",
                     "quantity": 25.0,
                     "unit": "percent"
                 }
@@ -150,6 +151,7 @@
             "beskrivning": "Patientens förmåga bedöms nedsatt längre än vad som anges ovan pga:",
             "varde": [
                 {
+                    "@class": "se.inera.certificate.model.Kod",
                     "codeSystem": "3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7",
                     "codeSystemName": "kv_prognos_intyg",
                     "code": "PRO1"
