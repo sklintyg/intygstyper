@@ -23,7 +23,7 @@ define([
             };
 
             $scope.send = function() {
-                $location.path('/ts-bas/recipients');
+                $location.path('/ts-bas/recipients').search({ module : 'ts-bas', defaultRecipient : 'ts'});
             };
 
             $scope.opts = {

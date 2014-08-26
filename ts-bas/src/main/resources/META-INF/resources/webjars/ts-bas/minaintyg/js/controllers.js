@@ -2,7 +2,7 @@ define([
     'angular',
     'common/minaintyg/js/CertificateService',
     'ts-bas/minaintyg/js/controllers/ViewCertCtrl',
-    'ts-bas/minaintyg/js/controllers/SendCertWizardCtrl'
+    'common/minaintyg/js/controllers/SendCertWizardCtrl'
 ], function(angular, CertificateService, ViewCertCtrl, SendCertWizardCtrl) {
     'use strict';
 

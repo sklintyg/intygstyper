@@ -23,7 +23,7 @@ define([
             };
 
             $scope.send = function() {
-                $location.path('/ts-diabetes/recipients');
+                $location.path('/ts-diabetes/recipients').search({ module : 'ts-diabetes', defaultRecipient : 'ts'});
             };
 
             $scope.opts = {
