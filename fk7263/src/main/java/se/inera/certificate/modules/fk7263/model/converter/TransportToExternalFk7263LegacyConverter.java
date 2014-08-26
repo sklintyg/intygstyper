@@ -31,7 +31,6 @@ import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.PhysicalQuantity;
-import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
@@ -46,7 +45,7 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263HosPersonal;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
-import se.inera.certificate.modules.fk7263.model.external.Fk7263Prognos;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Referens;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Vardenhet;
 
@@ -153,8 +152,8 @@ public final class TransportToExternalFk7263LegacyConverter {
         return vardkontakt;
     }
 
-    private static Referens convert(ReferensType source) {
-        Referens referens = new Referens();
+    private static Fk7263Referens convert(ReferensType source) {
+        Fk7263Referens referens = new Fk7263Referens();
         if (source == null) {
             return null;
         }
@@ -307,22 +306,23 @@ public final class TransportToExternalFk7263LegacyConverter {
 
     private static List<Fk7263Observation> convert(ArbetsformagaType source) {
 
-        Fk7263Prognos prognos = null;
+        Fk7263Observation prognos = null;
         if (source.getPrognosangivelse() != null || source.getMotivering() != null) {
-            prognos = new Fk7263Prognos();
+            prognos = new Fk7263Observation();
+            prognos.setObservationskod(ObservationsKoder.PROGNOS);
             if (source.getPrognosangivelse() != null) {
                 switch (source.getPrognosangivelse()) {
                 case ATERSTALLAS_DELVIS:
-                    prognos.setPrognoskod(Prognoskoder.ATERSTALLAS_DELVIS);
+                    prognos.getVarde().add(Prognoskoder.ATERSTALLAS_DELVIS);
                     break;
                 case ATERSTALLAS_HELT:
-                    prognos.setPrognoskod(Prognoskoder.ATERSTALLAS_HELT);
+                    prognos.getVarde().add(Prognoskoder.ATERSTALLAS_HELT);
                     break;
                 case DET_GAR_INTE_ATT_BEDOMMA:
-                    prognos.setPrognoskod(Prognoskoder.DET_GAR_INTE_ATT_BEDOMA);
+                    prognos.getVarde().add(Prognoskoder.DET_GAR_INTE_ATT_BEDOMA);
                     break;
                 case INTE_ATERSTALLAS:
-                    prognos.setPrognoskod(Prognoskoder.INTE_ATERSTALLAS);
+                    prognos.getVarde().add(Prognoskoder.INTE_ATERSTALLAS);
                     break;
                 default:
                     break;
@@ -332,14 +332,14 @@ public final class TransportToExternalFk7263LegacyConverter {
                 prognos.setBeskrivning(source.getMotivering());
             }
         }
-
         List<Fk7263Observation> observations = new ArrayList<>();
+
+        if (prognos != null) {
+            observations.add(prognos);
+        }
 
         for (ArbetsformagaNedsattningType nedsattning : source.getArbetsformagaNedsattnings()) {
             Fk7263Observation arbetsformaga = convert(nedsattning);
-            if (prognos != null) {
-                arbetsformaga.getPrognoser().add(prognos);
-            }
             observations.add(arbetsformaga);
         }
         return observations;

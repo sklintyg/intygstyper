@@ -3,7 +3,6 @@ package se.inera.certificate.modules.fk7263.model.converter.util;
 import se.inera.certificate.fk7263.iso.v21090.dt.v1.CD;
 import se.inera.certificate.fk7263.iso.v21090.dt.v1.II;
 import se.inera.certificate.fk7263.iso.v21090.dt.v1.PQ;
-import se.inera.certificate.fk7263.model.ext.v1.PrognosKod;
 import se.inera.certificate.fk7263.model.v1.AktivitetKod;
 import se.inera.certificate.fk7263.model.v1.ArbetsplatsKod;
 import se.inera.certificate.fk7263.model.v1.HsaId;
@@ -112,10 +111,6 @@ public final class IsoTypeConverter {
 
     public static SysselsattningKod toSysselsattningKod(Kod kod) {
         return toCD(kod, new SysselsattningKod());
-    }
-
-    public static PrognosKod toPrognosKod(Kod kod) {
-        return toCD(kod, new PrognosKod());
     }
 
     public static PhysicalQuantity toPhysicalQuantity(PQ pq) {

@@ -46,7 +46,7 @@ public class TransportToExternalConverterTest {
     }
 
     @Test
-    public void testConversion() throws JAXBException, IOException, JSONException {
+    public void testConversion() throws JAXBException, IOException, JSONException, ConverterException {
 
         // read fk7263 xml from file
         JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(RESOURCE_ROOT
@@ -76,7 +76,7 @@ public class TransportToExternalConverterTest {
      * @throws JSONException
      */
     @Test
-    public void testScenario1() throws JAXBException, IOException, JSONException {
+    public void testScenario1() throws JAXBException, IOException, JSONException, ConverterException {
         JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(RESOURCE_ROOT
                 + "transport/scenario1.xml");
         Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -98,7 +98,7 @@ public class TransportToExternalConverterTest {
      * @throws JSONException
      */
     @Test
-    public void testScenario2() throws JAXBException, IOException, JSONException {
+    public void testScenario2() throws JAXBException, IOException, JSONException, ConverterException {
         JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(RESOURCE_ROOT
                 + "transport/scenario2.xml");
         Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -120,7 +120,7 @@ public class TransportToExternalConverterTest {
      * @throws JSONException
      */
     @Test
-    public void testScenario3() throws JAXBException, IOException, JSONException {
+    public void testScenario3() throws JAXBException, IOException, JSONException, ConverterException {
         JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(RESOURCE_ROOT
                 + "transport/scenario3.xml");
         Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -142,7 +142,7 @@ public class TransportToExternalConverterTest {
      * @throws JSONException
      */
     @Test
-    public void testScenario4() throws JAXBException, IOException, JSONException {
+    public void testScenario4() throws JAXBException, IOException, JSONException, ConverterException {
         JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(RESOURCE_ROOT
                 + "transport/scenario4.xml");
         Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -164,7 +164,7 @@ public class TransportToExternalConverterTest {
      * @throws JSONException
      */
     @Test
-    public void testScenario5() throws JAXBException, IOException, JSONException {
+    public void testScenario5() throws JAXBException, IOException, JSONException, ConverterException {
         JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(RESOURCE_ROOT
                 + "transport/scenario5.xml");
         Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -186,7 +186,7 @@ public class TransportToExternalConverterTest {
      * @throws JSONException
      */
     @Test
-    public void testScenario6() throws JAXBException, IOException, JSONException {
+    public void testScenario6() throws JAXBException, IOException, JSONException, ConverterException {
         JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(RESOURCE_ROOT
                 + "transport/scenario6.xml");
         Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -208,7 +208,7 @@ public class TransportToExternalConverterTest {
      * @throws JSONException
      */
     @Test
-    public void testScenario7() throws JAXBException, IOException, JSONException {
+    public void testScenario7() throws JAXBException, IOException, JSONException, ConverterException {
         JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(RESOURCE_ROOT
                 + "transport/scenario7.xml");
         Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -230,7 +230,7 @@ public class TransportToExternalConverterTest {
      * @throws JSONException
      */
     @Test
-    public void testScenario8() throws JAXBException, IOException, JSONException {
+    public void testScenario8() throws JAXBException, IOException, JSONException, ConverterException {
         JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(RESOURCE_ROOT
                 + "transport/scenario8.xml");
         Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -253,7 +253,7 @@ public class TransportToExternalConverterTest {
      * @throws JSONException
      */
     @Test
-    public void testScenario9() throws JAXBException, IOException, JSONException {
+    public void testScenario9() throws JAXBException, IOException, JSONException, ConverterException {
         JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(RESOURCE_ROOT + "transport/scenario9.xml");
         Fk7263Utlatande externalModel = TransportToExternalConverter.convert(utlatandeElement.getValue());
 
@@ -274,7 +274,7 @@ public class TransportToExternalConverterTest {
      * @throws JSONException
      */
     @Test
-    public void testScenario10() throws JAXBException, IOException, JSONException {
+    public void testScenario10() throws JAXBException, IOException, JSONException, ConverterException {
         JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(RESOURCE_ROOT
                 + "transport/scenario10.xml");
         Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -297,7 +297,7 @@ public class TransportToExternalConverterTest {
      * @throws JSONException
      */
     @Test
-    public void testScenario11() throws JAXBException, IOException, JSONException {
+    public void testScenario11() throws JAXBException, IOException, JSONException, ConverterException {
         JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(RESOURCE_ROOT
                 + "transport/scenario11.xml");
         Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -320,7 +320,7 @@ public class TransportToExternalConverterTest {
      * @throws JSONException
      */
     @Test
-    public void testScenario12() throws JAXBException, IOException, JSONException {
+    public void testScenario12() throws JAXBException, IOException, JSONException, ConverterException {
         JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(RESOURCE_ROOT
                 + "transport/scenario12.xml");
         Fk7263Utlatande externalModel = TransportToExternalConverter
@@ -343,7 +343,7 @@ public class TransportToExternalConverterTest {
      * @throws JSONException
      */
     @Test
-    public void testScenario13() throws JAXBException, IOException, JSONException {
+    public void testScenario13() throws JAXBException, IOException, JSONException, ConverterException {
         JAXBElement<Utlatande> utlatandeElement = readUtlatandeTypeFromFile(RESOURCE_ROOT
                 + "transport/scenario13.xml");
         Fk7263Utlatande externalModel = TransportToExternalConverter

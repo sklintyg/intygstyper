@@ -1,10 +1,19 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
+import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toId;
+import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toKod;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.JAXBException;
+
 import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import se.inera.certificate.fk7263.iso.v21090.dt.v1.CD;
 import se.inera.certificate.fk7263.iso.v21090.dt.v1.PQ;
-import se.inera.certificate.fk7263.model.ext.v1.Prognos;
 import se.inera.certificate.fk7263.model.v1.AktivitetType;
 import se.inera.certificate.fk7263.model.v1.ArbetsuppgiftType;
 import se.inera.certificate.fk7263.model.v1.EnhetType;
@@ -18,8 +27,6 @@ import se.inera.certificate.fk7263.model.v1.VardkontaktType;
 import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.PartialInterval;
-import se.inera.certificate.model.PhysicalQuantity;
-import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
@@ -28,15 +35,9 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263HosPersonal;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
-import se.inera.certificate.modules.fk7263.model.external.Fk7263Prognos;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Referens;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Vardenhet;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toId;
-import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toKod;
 
 /**
  * @author marced
@@ -48,7 +49,7 @@ public final class TransportToExternalConverter {
     private TransportToExternalConverter() {
     }
 
-    public static Fk7263Utlatande convert(se.inera.certificate.fk7263.model.v1.Utlatande source) {
+    public static Fk7263Utlatande convert(se.inera.certificate.fk7263.model.v1.Utlatande source) throws ConverterException {
         Fk7263Utlatande fk7263utlatande = new Fk7263Utlatande();
 
         LOG.trace("Starting conversion from Transport to External");
@@ -86,7 +87,7 @@ public final class TransportToExternalConverter {
         return sysselsattning;
     }
 
-    private static List<Fk7263Observation> convertObservations(List<ObservationType> source) {
+    private static List<Fk7263Observation> convertObservations(List<ObservationType> source) throws ConverterException {
         if (source == null) {
             return null;
         }
@@ -101,7 +102,7 @@ public final class TransportToExternalConverter {
         return observations;
     }
 
-    private static Fk7263Observation convert(ObservationType source) {
+    private static Fk7263Observation convert(ObservationType source) throws ConverterException {
 
         Fk7263Observation observation = new Fk7263Observation();
 
@@ -115,40 +116,39 @@ public final class TransportToExternalConverter {
             observation.setObservationsperiod(observationsPeriod);
         }
 
-        observation.getVarde().addAll(convertVarde(source.getVardes()));
+        // observation.getVarde().addAll(convertVarde(source.getVardes()));
 
-        observation.getPrognoser().addAll(convertPrognoser(source.getPrognos()));
         observation.setBeskrivning(source.getBeskrivning());
+        if (source.getVardes() != null && !source.getVardes().isEmpty()) {
+            try {
+                for (Object varde : source.getVardes()) {
+                    Object vardeObject = JAXBUtils.resolveAnyType(varde, CD.class);
+                    if (vardeObject instanceof CD && ((CD) vardeObject).getCode() != null) {
+                        observation.getVarde().add(IsoTypeConverter.toKod((CD) vardeObject));
+                    } else {
+                        vardeObject = JAXBUtils.resolveAnyType(varde, PQ.class);
+                        if (vardeObject instanceof PQ) {
+                            observation.getVarde().add(IsoTypeConverter.toPhysicalQuantity((PQ) vardeObject));
+                        }
+                    }
+                }
+            } catch (JAXBException e) {
+                throw new ConverterException("Could not convert DOM element to object type", e);
+            }
+        }
+
+        if (notNullOrEmpty(source.getKommentar())) {
+            observation.setKommentar(source.getKommentar());
+        }
 
         return observation;
     }
 
-    private static List<PhysicalQuantity> convertVarde(List<PQ> source) {
-
-        List<PhysicalQuantity> vardes = new ArrayList<>();
-        for (PQ varde : source) {
-            vardes.add(new PhysicalQuantity(varde.getValue(), varde.getUnit()));
+    private static boolean notNullOrEmpty(String kommentar) {
+        if (kommentar == null) {
+            return false;
         }
-        return vardes;
-    }
-
-    private static List<Fk7263Prognos> convertPrognoser(List<Prognos> source) {
-        List<Fk7263Prognos> prognoser = new ArrayList<>();
-        for (Prognos prognosType : source) {
-            prognoser.add(convert(prognosType));
-        }
-        return prognoser;
-    }
-
-    private static Fk7263Prognos convert(Prognos source) {
-        if (source == null) {
-            return null;
-        }
-
-        Fk7263Prognos prognos = new Fk7263Prognos();
-        prognos.setPrognoskod(IsoTypeConverter.toKod(source.getPrognoskod()));
-        prognos.setBeskrivning(source.getBeskrivning());
-        return prognos;
+        return !kommentar.isEmpty();
     }
 
     private static List<Vardkontakt> convertVardkontakter(List<VardkontaktType> source) {
@@ -175,20 +175,20 @@ public final class TransportToExternalConverter {
         return vardkontakt;
     }
 
-    private static List<Referens> convertReferenser(List<ReferensType> source) {
+    private static List<Fk7263Referens> convertReferenser(List<ReferensType> source) {
         if (source == null) {
             return null;
         }
 
-        List<Referens> referenser = new ArrayList<>();
+        List<Fk7263Referens> referenser = new ArrayList<>();
         for (ReferensType referens : source) {
             referenser.add(convert(referens));
         }
         return referenser;
     }
 
-    private static Referens convert(ReferensType source) {
-        Referens referens = new Referens();
+    private static Fk7263Referens convert(ReferensType source) {
+        Fk7263Referens referens = new Fk7263Referens();
         referens.setReferenstyp(IsoTypeConverter.toKod(source.getReferenstyp()));
         referens.setDatum(source.getReferensdatum());
         return referens;

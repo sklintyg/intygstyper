@@ -83,7 +83,6 @@ public class TransportToExternalFk7263LegacyConverterTest {
         JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
                 RESOURCE_ROOT + "legacy-maximalt-fk7263-external.json")
                 .getInputStream());
-
         JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
     }
 
