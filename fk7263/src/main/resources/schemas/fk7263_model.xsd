@@ -228,9 +228,9 @@
       <xs:element name="observationskod" type="observationKod" minOccurs="0"/>
       <xs:element name="beskrivning" type="nonEmptyString" minOccurs="0"/>
       <xs:element name="observationsperiod" type="dateInterval" minOccurs="0"/>
-      <xs:element name="varde" type="iso:PQ" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="ext:varde" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="kommentar" type="nonEmptyString" minOccurs="0"/>
 
-      <xs:element ref="ext:prognos" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="observationKategoriKod">
