@@ -6,13 +6,10 @@ import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeCo
 import static se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter.toUtlatandeTyp;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.joda.time.LocalDate;
 
-import se.inera.certificate.fk7263.iso.v21090.dt.v1.PQ;
-import se.inera.certificate.fk7263.model.ext.v1.Prognos;
 import se.inera.certificate.fk7263.model.v1.AktivitetType;
 import se.inera.certificate.fk7263.model.v1.ArbetsuppgiftType;
 import se.inera.certificate.fk7263.model.v1.DateInterval;
@@ -27,6 +24,7 @@ import se.inera.certificate.fk7263.model.v1.VardgivareType;
 import se.inera.certificate.fk7263.model.v1.VardkontaktType;
 import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.HosPersonal;
+import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
@@ -37,7 +35,6 @@ import se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
-import se.inera.certificate.modules.fk7263.model.external.Fk7263Prognos;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
 public final class ExternalToTransportConverter {
@@ -82,6 +79,9 @@ public final class ExternalToTransportConverter {
         ReferensType referens = new ReferensType();
         referens.setReferenstyp(IsoTypeConverter.toReferensKod(source.getReferenstyp()));
         referens.setReferensdatum(source.getDatum());
+//        if (source.getBeskrivning() != null) {
+//            referens.setBeskrivning(source.getBeskrivning());
+//        }
         return referens;
     }
 
@@ -135,47 +135,36 @@ public final class ExternalToTransportConverter {
         addAll(observation.getVardes(), convertVarden(source.getVarde()));
 
         observation.setBeskrivning(source.getBeskrivning());
-        observation.getPrognos().addAll(convertPrognoser(source.getPrognoser()));
+
+
+        if (notNullOrEmpty(source.getKommentar())) {
+            observation.setKommentar(source.getKommentar());
+        }
 
         return observation;
     }
 
-    private List<PQ> convertVarden(List<PhysicalQuantity> source) {
+    private static boolean notNullOrEmpty(String string) {
+        if (string == null) {
+            return false;
+        }
+        return !string.isEmpty();
+    }
+
+    private List<Object> convertVarden(List<Object> source) {
         if (source == null) {
             return null;
         }
-        List<PQ> varden = new ArrayList<>();
+        List<Object> varden = new ArrayList<>();
 
-        for (PhysicalQuantity varde : source) {
-            varden.add(convert(varde));
+        for (Object varde : source) {
+            if (varde instanceof PhysicalQuantity) {
+                varden.add(IsoTypeConverter.toPQ((PhysicalQuantity) varde));
+            } else if (varde instanceof Kod) {
+                varden.add(IsoTypeConverter.toCD((Kod) varde));
+            }
         }
         return varden;
-    }
-
-    private PQ convert(PhysicalQuantity source) {
-        PQ pq = new PQ();
-        pq.setUnit(source.getUnit());
-        pq.setValue(source.getQuantity());
-        return pq;
-    }
-
-    private Collection<Prognos> convertPrognoser(Collection<Fk7263Prognos> source) {
-        List<Prognos> prognosTypes = new ArrayList<>();
-        for (Fk7263Prognos prognos : source) {
-            prognosTypes.add(convert(prognos));
-        }
-        return prognosTypes;
-    }
-
-    private Prognos convert(Fk7263Prognos source) {
-        if (source == null) {
-            return null;
-        }
-
-        Prognos prognos = new Prognos();
-        prognos.setPrognoskod(IsoTypeConverter.toPrognosKod(source.getPrognoskod()));
-        prognos.setBeskrivning(source.getBeskrivning());
-        return prognos;
     }
 
     private List<AktivitetType> convertAktiviteter(List<Fk7263Aktivitet> source) {
