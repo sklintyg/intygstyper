@@ -143,16 +143,18 @@ public class ExternalToInternalConverter {
 
         if (prognos != null) {
             intyg.setArbetsformagaPrognos(prognos.getBeskrivning());
-            Kod prognosKod = (Kod)prognos.getVarde().get(0);
+            if (!prognos.getVarde().isEmpty()) {
+                Kod prognosKod = (Kod) prognos.getVarde().get(0);
 
-            if (Prognoskoder.ATERSTALLAS_HELT.equals(prognosKod)) {
-                intyg.setArbetsformataPrognosJa(true);
-            } else if (Prognoskoder.ATERSTALLAS_DELVIS.equals(prognosKod)) {
-                intyg.setArbetsformataPrognosJaDelvis(true);
-            } else if (Prognoskoder.INTE_ATERSTALLAS.equals(prognosKod)) {
-                intyg.setArbetsformataPrognosNej(true);
-            } else if (Prognoskoder.DET_GAR_INTE_ATT_BEDOMA.equals(prognosKod)) {
-                intyg.setArbetsformataPrognosGarInteAttBedoma(true);
+                if (Prognoskoder.ATERSTALLAS_HELT.equals(prognosKod)) {
+                    intyg.setArbetsformataPrognosJa(true);
+                } else if (Prognoskoder.ATERSTALLAS_DELVIS.equals(prognosKod)) {
+                    intyg.setArbetsformataPrognosJaDelvis(true);
+                } else if (Prognoskoder.INTE_ATERSTALLAS.equals(prognosKod)) {
+                    intyg.setArbetsformataPrognosNej(true);
+                } else if (Prognoskoder.DET_GAR_INTE_ATT_BEDOMA.equals(prognosKod)) {
+                    intyg.setArbetsformataPrognosGarInteAttBedoma(true);
+                }
             }
         }
     }
