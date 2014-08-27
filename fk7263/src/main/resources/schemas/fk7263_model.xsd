@@ -48,6 +48,7 @@
       <xs:element name="referens" type="referensType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="aktivitet" type="aktivitetType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="observation" type="observationType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="ext:observationssamband" minOccurs="0" maxOccurs="2" />
     </xs:sequence>
   </xs:complexType>
 
@@ -171,6 +172,7 @@
     <xs:sequence>
       <xs:element name="referenstyp" type="referensKod"/>
       <xs:element name="referensdatum" type="date"/>
+      <xs:element name="beskrivning" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="referensKod">
@@ -224,15 +226,16 @@
 
   <xs:complexType name="observationType">
     <xs:sequence>
+      <xs:element name="observation-id" type="ext:relationId" minOccurs="0" maxOccurs="1"/>
       <xs:element name="observationskategori" type="observationKategoriKod" minOccurs="0"/>
       <xs:element name="observationskod" type="observationKod" minOccurs="0"/>
       <xs:element name="beskrivning" type="nonEmptyString" minOccurs="0"/>
       <xs:element name="observationsperiod" type="dateInterval" minOccurs="0"/>
       <xs:element ref="ext:varde" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="kommentar" type="nonEmptyString" minOccurs="0"/>
-
     </xs:sequence>
   </xs:complexType>
+  
   <xs:complexType name="observationKategoriKod">
     <xs:complexContent>
       <xs:restriction base="iso:CD">
@@ -247,6 +250,7 @@
       <xs:enumeration value="b"/>
       <xs:enumeration value="d"/>
       <xs:enumeration value="439401001"/>
+      <xs:enumeration value="85097005"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="observationKod">

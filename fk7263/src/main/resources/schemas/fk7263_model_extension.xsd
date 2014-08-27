@@ -34,5 +34,34 @@
     <xs:restriction base="xs:string">
       <xs:minLength value="1"/>
     </xs:restriction>
+
   </xs:simpleType>
+    <xs:element name="observationssamband" type="observationssambandType"/>
+  <xs:complexType name="observationssambandType">
+    <xs:sequence>
+      <xs:element name="observationssambandskod" type="observationssambandKod" minOccurs="0"/>
+      <xs:element name="observationsid1" type="relationId" minOccurs="0"/>
+      <xs:element name="observationsid2" type="relationId" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="observationssambandKod">
+  <xs:complexContent>
+      <xs:restriction base="iso:CD">
+        <xs:attribute name="code" type="xs:string" use="required" fixed="398192003"/>
+        <xs:attribute name="codeSystem" type="iso:Uid" use="required" fixed="1.2.752.116.2.1.1.1"/>
+        <xs:attribute name="codeSystemName" type="xs:string" use="required" fixed="SNOMED-CT"/>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="relationId">
+    <xs:complexContent>
+      <xs:restriction base="iso:II">
+        <xs:attribute name="root" type="iso:Uid" use="required" />
+        <xs:attribute name="extension" type="xs:string" use="required"/>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
 </xs:schema>
