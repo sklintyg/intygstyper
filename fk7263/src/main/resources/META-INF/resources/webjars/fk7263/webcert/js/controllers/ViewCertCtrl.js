@@ -24,7 +24,8 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             $scope.widgetState = {
                 doneLoading: false,
                 activeErrorMessageKey: null,
-                showTemplate: true
+                showTemplate: true,
+                printStatus: 'notloaded'
             };
 
             $scope.certProperties = {
@@ -44,7 +45,14 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                         $rootScope.$emit('fk7263.ViewCertCtrl.load', result.metaData);
                         $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'FK');
                         $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
+                        if($scope.certProperties.isRevoked) {
+                            $scope.widgetState.printStatus = 'revoked';
+                        } else {
+                            $scope.widgetState.printStatus = 'signed';
+                        }
+
                         $scope.pdfUrl = '/moduleapi/intyg/signed/' + $scope.cert.id + '/pdf';
+
                     } else {
                         $scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';
                     }
@@ -88,4 +96,13 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                 cert.intygType = 'fk7263';
                 copyDialog = ManageCertificate.copy($scope, cert, copyDialog, COPY_DIALOG_COOKIE);
             };
+
+            $scope.print = function(cert) {
+
+                if ($scope.certProperties.isRevoked) {
+                    ManageCertView.printDraft(cert.id);
+                } else {
+                    document.pdfForm.submit();
+                }
+            }
         }]);

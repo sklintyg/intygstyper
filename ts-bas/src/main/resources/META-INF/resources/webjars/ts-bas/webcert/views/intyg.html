@@ -2,39 +2,43 @@
   <div wc-spinner label="info.loadingcertificate" show-spinner="!widgetState.doneLoading"
        show-content="widgetState.doneLoading">
 
+    <div wc-print-header title-id="ts-bas.label.certtitle" print-message-id="print.label.{{widgetState.printStatus}}" intygs-id="cert.id"></div>
+
     <!-- error message -->
     <div id="cert-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey"
          class="alert alert-danger alert-column">
       <span message key="{{widgetState.activeErrorMessageKey}}"></span>
     </div>
     <div ng-show="!widgetState.activeErrorMessageKey" id="intyg-vy-laddad">
-      <div class="form-group buttonbar">
-        <label class="control-label">{{cert.patient.fullstandigtNamn}} - {{cert.patient.personid}}</label>
 
-        <form id="view-as-pdf" action="{{pdfUrl}}" method="get" target="_blank" name="pdfForm">
-          <p class="btn-row">
-            <button id="sendBtn" class="btn btn-info" ng-if="!certProperties.isSent" ng-click="send(cert)">Skicka till Transportstyrelsen</button>
-            <button id="downloadprint" type="submit" value="submit" class="btn btn-info"
-                    onClick="document.pdfForm.submit()">Skriv ut
-            </button>
-            <button id="copyBtn" class="btn btn-info" ng-click="copy(cert)">Kopiera</button>
-            <button class="btn btn-inverse">Rätta</button>
-          </p>
-        </form>
-      </div>
+      <div class="print-hide">
+        <div class="form-group buttonbar">
+          <label class="control-label">{{cert.patient.fullstandigtNamn}} - {{cert.patient.personid}}</label>
 
+          <form id="view-as-pdf" action="{{pdfUrl}}" method="get" target="_blank" name="pdfForm">
+            <p class="btn-row">
+              <button id="sendBtn" class="btn btn-info" ng-if="!certProperties.isSent" ng-click="send(cert)">Skicka till Transportstyrelsen</button>
+              <button id="downloadprint" type="submit" value="submit" class="btn btn-info"
+                      ng-click="print(cert)">Skriv ut
+              </button>
+              <button id="copyBtn" class="btn btn-info" ng-click="copy(cert)">Kopiera</button>
+              <button class="btn btn-inverse">Rätta</button>
+            </p>
+          </form>
+        </div>
 
-      <div class="alert alert-info alert-column" ng-if="!certProperties.isRevoked">
-        <strong>Status:</strong>
-        <span ng-if="certProperties.isSent" id="certificate-is-sent-to-recipient-message-text">Intyget är signerat och skickat till Transportstyrelsen.</span>
-            <span ng-if="!certProperties.isSent" id="certificate-is-sent-to-it-message-text">
-              Intyget är signerat och är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se.
-              Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till
-              Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.
-            </span>
-      </div>
-      <div ng-if="certProperties.isRevoked" id="certificate-is-revoked-message-text" class="alert alert-warning"
-           style="margin-right: 20px; max-width: 530px;">Detta intyg är rättat
+        <div class="alert alert-info alert-column" ng-if="!certProperties.isRevoked">
+          <strong>Status:</strong>
+          <span ng-if="certProperties.isSent" id="certificate-is-sent-to-recipient-message-text">Intyget är signerat och skickat till Transportstyrelsen.</span>
+              <span ng-if="!certProperties.isSent" id="certificate-is-sent-to-it-message-text">
+                Intyget är signerat och är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se.
+                Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till
+                Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.
+              </span>
+        </div>
+        <div ng-if="certProperties.isRevoked" id="certificate-is-revoked-message-text" class="alert alert-warning"
+             style="margin-right: 20px; max-width: 530px;">Detta intyg är rättat
+        </div>
       </div>
 
       <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : certProperties.isRevoked}">
@@ -130,7 +134,7 @@
                       key="{{cert.horselbalans.balansrubbningar | BoolToTextFilter}}"></span>
               </div>
 
-              <div wc-field field-label="ts-bas.label.funktionsnedsattning" filled="true">
+              <div wc-field field-label="ts-bas.label.funktionsnedsattning" filled="true" class="print-pagebreak-after">
                 <p>
                   <span message key="ts-bas.label.funktionsnedsattning.funktionsnedsattning"></span>
             			<span class="ts-cert-answer" message

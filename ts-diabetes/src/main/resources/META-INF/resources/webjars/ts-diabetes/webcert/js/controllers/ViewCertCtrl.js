@@ -23,7 +23,8 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
             $scope.widgetState = {
                 doneLoading: false,
                 activeErrorMessageKey: null,
-                showTemplate: true
+                showTemplate: true,
+                printStatus: 'notloaded'
             };
 
             $scope.intygAvser = '';
@@ -48,9 +49,6 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                 }
             }, true);
 
-            // expose calculated static link for pdf download
-            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $routeParams.certificateId + '/pdf';
-
             $scope.certProperties = {
                 isSent: false,
                 isRevoked: false
@@ -64,6 +62,14 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                         $rootScope.$emit('ts-diabetes.ViewCertCtrl.load', result.metaData);
                         $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'TS');
                         $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
+                        if($scope.certProperties.isRevoked) {
+                            $scope.widgetState.printStatus = 'revoked';
+                        } else {
+                            $scope.widgetState.printStatus = 'signed';
+                        }
+
+                        $scope.pdfUrl = '/moduleapi/intyg/signed/' + $scope.cert.id + '/pdf';
+
                     } else {
                         $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
                     }
@@ -94,4 +100,13 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                 cert.intygType = 'ts-diabetes';
                 copyDialog = ManageCertificate.copy($scope, cert, COPY_DIALOG_COOKIE);
             };
+
+            $scope.print = function(cert) {
+
+                if ($scope.certProperties.isRevoked) {
+                    ManageCertView.printDraft(cert.id);
+                } else {
+                    document.pdfForm.submit();
+                }
+            }
         }]);

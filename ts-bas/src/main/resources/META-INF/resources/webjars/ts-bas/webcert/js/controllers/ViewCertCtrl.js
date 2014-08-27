@@ -23,7 +23,8 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             $scope.widgetState = {
                 doneLoading: false,
                 activeErrorMessageKey: null,
-                showTemplate: true
+                showTemplate: true,
+                printStatus: 'notloaded'
             };
 
             $scope.intygAvser = '';
@@ -72,6 +73,14 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
                         $rootScope.$emit('ts-bas.ViewCertCtrl.load', result.metaData);
                         $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'TS');
                         $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
+                        if($scope.certProperties.isRevoked) {
+                            $scope.widgetState.printStatus = 'revoked';
+                        } else {
+                            $scope.widgetState.printStatus = 'signed';
+                        }
+
+                        $scope.pdfUrl = '/moduleapi/intyg/signed/' + $scope.cert.id + '/pdf';
+
                     } else {
                         $log.debug('Got error while loading cert - invalid data');
                         $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
@@ -99,4 +108,13 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
                 cert.intygType = 'ts-bas';
                 copyDialog = ManageCertificate.copy($scope, cert, COPY_DIALOG_COOKIE);
             };
+
+            $scope.print = function(cert) {
+
+                if ($scope.certProperties.isRevoked) {
+                    ManageCertView.printDraft(cert.id);
+                } else {
+                    document.pdfForm.submit();
+                }
+            }
         }]);
