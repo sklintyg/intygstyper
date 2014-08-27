@@ -140,12 +140,13 @@ public final class ExternalToTransportFk7263LegacyConverter {
 
                 String beskrivning = prognos.getBeskrivning();
                 arbetsformagaType.setMotivering(beskrivning);
-
-                if (prognos.getVarde().get(0) instanceof Kod) {
-                    Kod prognosKod = (Kod) prognos.getVarde().get(0);
-                    if (prognosKod != null) {
-                        String fk7263String = Prognoskoder.MAP_TO_FK7263.get(prognosKod);
-                        arbetsformagaType.setPrognosangivelse(Prognosangivelse.fromValue(fk7263String));
+                if (!prognos.getVarde().isEmpty()) {
+                    if (prognos.getVarde().get(0) instanceof Kod) {
+                        Kod prognosKod = (Kod) prognos.getVarde().get(0);
+                        if (prognosKod != null) {
+                            String fk7263String = Prognoskoder.MAP_TO_FK7263.get(prognosKod);
+                            arbetsformagaType.setPrognosangivelse(Prognosangivelse.fromValue(fk7263String));
+                        }
                     }
                 }
             }
