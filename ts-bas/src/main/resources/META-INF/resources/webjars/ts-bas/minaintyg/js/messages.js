@@ -95,7 +95,7 @@ define([], function() {
             'ts-bas.label.diabetes.har-diabetes': 'Har patienten diabetes',
             'ts-bas.label.diabetes.diabetestyp': 'Diabetestyp',
             'ts-bas.label.diabetes.diabetestyp.diabetes_typ_1': 'Diabetes Typ 1',
-            'ts-bas.label.diabetes.diabetestyp.diabetes_typ_2': 'Diabets Typ 2',
+            'ts-bas.label.diabetes.diabetestyp.diabetes_typ_2': 'Diabetes Typ 2',
             'ts-bas.label.diabetes.behandling': 'Behandling:',
             'ts-bas.label.diabetes.behandling.kost': 'Kost',
             'ts-bas.label.diabetes.behandling.tabletter': 'Tabletter',
