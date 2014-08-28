@@ -27,7 +27,6 @@ import se.inera.certificate.fk7263.model.v1.VardkontaktType;
 import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.PartialInterval;
-import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
@@ -36,6 +35,7 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263HosPersonal;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Referens;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Vardenhet;
 
@@ -175,20 +175,20 @@ public final class TransportToExternalConverter {
         return vardkontakt;
     }
 
-    private static List<Referens> convertReferenser(List<ReferensType> source) {
+    private static List<Fk7263Referens> convertReferenser(List<ReferensType> source) {
         if (source == null) {
             return null;
         }
 
-        List<Referens> referenser = new ArrayList<>();
+        List<Fk7263Referens> referenser = new ArrayList<>();
         for (ReferensType referens : source) {
             referenser.add(convert(referens));
         }
         return referenser;
     }
 
-    private static Referens convert(ReferensType source) {
-        Referens referens = new Referens();
+    private static Fk7263Referens convert(ReferensType source) {
+        Fk7263Referens referens = new Fk7263Referens();
         referens.setReferenstyp(IsoTypeConverter.toKod(source.getReferenstyp()));
         referens.setDatum(source.getReferensdatum());
         return referens;

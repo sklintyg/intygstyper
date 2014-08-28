@@ -276,5 +276,21 @@ public class ExternalToInternalConverter {
             }
             intyg.setDiagnosBeskrivning(huvudDiagnos.getBeskrivning());
         }
+
+        List<Fk7263Observation> bidiagnoser = source.getObservationsByKategori(ObservationsKoder.BIDIAGNOS);
+        if (!bidiagnoser.isEmpty()) {
+            intyg.setWcDiagnosKod2((bidiagnoser.get(0).getObservationskod().getCode()));
+            intyg.setWcDiagnosBeskrivning2(bidiagnoser.get(0).getBeskrivning());
+
+            if (bidiagnoser.get(1) != null) {
+                intyg.setWcDiagnosKod3((bidiagnoser.get(1).getObservationskod().getCode()));
+                intyg.setWcDiagnosBeskrivning2(bidiagnoser.get(1).getBeskrivning());
+            }
+        }
+
+        //If there are Observationssamband, set samsjuklighet = true
+        if (!source.getObservationssamband().isEmpty()) {
+            intyg.setWcSamsjuklighet(true);
+        }
     }
 }

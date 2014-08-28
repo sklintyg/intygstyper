@@ -35,7 +35,6 @@ import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.Vardgivar
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.PhysicalQuantity;
-import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
@@ -49,6 +48,7 @@ import se.inera.certificate.modules.fk7263.model.codes.Vardkontakttypkoder;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Referens;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
 public final class ExternalToTransportFk7263LegacyConverter {
@@ -273,13 +273,13 @@ public final class ExternalToTransportFk7263LegacyConverter {
         return vardkontaktType;
     }
 
-    private static List<ReferensType> convertReferenser(List<Referens> source) {
+    private static List<ReferensType> convertReferenser(List<Fk7263Referens> source) {
         if (source == null) {
             return null;
         }
 
         List<ReferensType> referensTypes = new ArrayList<>();
-        for (Referens referens : source) {
+        for (Fk7263Referens referens : source) {
             ReferensType referensType = toReferens(referens);
             if (referensType != null) {
                 referensTypes.add(referensType);
@@ -288,7 +288,7 @@ public final class ExternalToTransportFk7263LegacyConverter {
         return referensTypes;
     }
 
-    private static ReferensType toReferens(Referens source) {
+    private static ReferensType toReferens(Fk7263Referens source) {
         if (source == null || source.getReferenstyp() == null) {
             return null;
         }

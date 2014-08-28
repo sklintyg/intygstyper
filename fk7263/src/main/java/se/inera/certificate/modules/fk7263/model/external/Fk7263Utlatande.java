@@ -29,9 +29,11 @@ public class Fk7263Utlatande extends Utlatande {
 
     private List<Fk7263Observation> observationer = new ArrayList<>();
 
+    private List<Fk7263ObservationsSamband> observationssamband = new ArrayList<Fk7263ObservationsSamband>();
+
     private List<Vardkontakt> vardkontakter = new ArrayList<>();
 
-    private List<Referens> referenser = new ArrayList<>();
+    private List<Fk7263Referens> referenser = new ArrayList<>();
 
     public Fk7263Patient getPatient() {
         return patient;
@@ -63,6 +65,13 @@ public class Fk7263Utlatande extends Utlatande {
         return observationer;
     }
 
+    public List<Fk7263ObservationsSamband> getObservationssamband() {
+        if (observationssamband == null) {
+            observationssamband = new ArrayList<>();
+        }
+        return observationssamband;
+    }
+
     public List<Vardkontakt> getVardkontakter() {
         if (vardkontakter == null) {
             vardkontakter = new ArrayList<>();
@@ -70,7 +79,7 @@ public class Fk7263Utlatande extends Utlatande {
         return vardkontakter;
     }
 
-    public List<Referens> getReferenser() {
+    public List<Fk7263Referens> getReferenser() {
         if (referenser == null) {
             referenser = new ArrayList<>();
         }

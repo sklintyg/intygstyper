@@ -19,7 +19,6 @@ import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.model.converter.util.InternalConverterUtil;
-import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
 import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
 import se.inera.certificate.modules.fk7263.model.codes.Prognoskoder;
@@ -29,11 +28,14 @@ import se.inera.certificate.modules.fk7263.model.codes.Vardkontakttypkoder;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263HosPersonal;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263ObservationsSamband;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Referens;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Vardenhet;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
+import se.inera.certificate.modules.support.api.exception.ModuleException;
 
 /**
  * Used to convert from internal to external model, i.e for converting input from webcert to a signable certificate.
@@ -48,6 +50,10 @@ public class InternalToExternalConverter {
     private static final String ARBETSPLATSKOD_ROOT = "1.2.752.29.4.71";
 
     private static final Kod FK7263_TYP = new Kod("f6fb361a-e31d-48b8-8657-99b63912dd9b", "kv_utlåtandetyp_intyg", null, "fk7263");
+    private static final Id HUVUDDIAGNOS_ID = new Id("1.2.752.129.2.1.2.1", "1");
+    private static final Id BIDIAGNOS_1_ID = new Id("1.2.752.129.2.1.2.1", "2");
+    private static final Id BIDIAGNOS_2_ID = new Id("1.2.752.129.2.1.2.1", "3");
+
     public static final double FORMOGA_1_4 = 25D;
     public static final double FORMOGA_1_2 = 50D;
     public static final double FORMOGA_3_4 = 75D;
@@ -73,6 +79,7 @@ public class InternalToExternalConverter {
 
         utlatande.getAktiviteter().addAll(buildExternalAktiviteter(source));
         utlatande.getObservationer().addAll(buildExternalObservationer(source));
+        utlatande.getObservationssamband().addAll(buildObseravationsSamband(source));
         utlatande.getReferenser().addAll(buildExternalReferenser(source));
         utlatande.getVardkontakter().addAll(buildExternalVardkontakter(source));
 
@@ -101,14 +108,6 @@ public class InternalToExternalConverter {
 
         if (!isNullOrEmpty(source.getKommentar())) {
             kommentarer.add(source.getKommentar());
-        }
-
-        if (!isNullOrEmpty(source.getArbetsformagaPrognosGarInteAttBedomBeskrivning())) {
-            kommentarer.add(source.getArbetsformagaPrognosGarInteAttBedomBeskrivning());
-        }
-
-        if (!isNullOrEmpty(source.getAnnanReferensBeskrivning())) {
-            kommentarer.add(source.getAnnanReferensBeskrivning());
         }
 
         return kommentarer;
@@ -150,11 +149,11 @@ public class InternalToExternalConverter {
      *            internal representation
      * @return List of {@link Referens}
      */
-    private List<Referens> buildExternalReferenser(Fk7263Intyg source) {
-        List<Referens> referenser = new ArrayList<>();
+    private List<Fk7263Referens> buildExternalReferenser(Fk7263Intyg source) {
+        List<Fk7263Referens> referenser = new ArrayList<>();
 
         if (source.getJournaluppgifter() != null) {
-            Referens referens = new Referens();
+            Fk7263Referens referens = new Fk7263Referens();
             referens.setReferenstyp(Referenstypkoder.JOURNALUPPGIFT);
             referens.setDatum(source.getJournaluppgifter());
             referenser.add(referens);
@@ -162,9 +161,10 @@ public class InternalToExternalConverter {
         }
 
         if (source.getAnnanReferens() != null) {
-            Referens referens = new Referens();
+            Fk7263Referens referens = new Fk7263Referens();
             referens.setReferenstyp(Referenstypkoder.ANNAT);
             referens.setDatum(source.getAnnanReferens());
+            referens.setBeskrivning(source.getAnnanReferensBeskrivning());
             referenser.add(referens);
         }
 
@@ -183,11 +183,32 @@ public class InternalToExternalConverter {
 
         // observation huvudDiagnos
         if (source.getDiagnosKod() != null) {
-            Kod kod = buildDiagnoseCode(source.getDiagnosKod());
-            String beskrivning = buildDiagnosBeskrivning(source.getWcDiagnosBeskrivning1(), source.getWcDiagnosKod2(),
-                    source.getWcDiagnosBeskrivning2(), source.getWcDiagnosKod3(), source.getWcDiagnosBeskrivning3(), source.getDiagnosBeskrivning(),
-                    source.isWcFleraDiagnoser());
-            observationer.add(buildObservation(kod, ObservationsKoder.DIAGNOS, beskrivning));
+            Fk7263Observation observation = buildObservation(buildDiagnoseCode(source.getDiagnosKod()),
+                    ObservationsKoder.DIAGNOS, source.getDiagnosBeskrivning());
+            if (notNullAndTrue(source.getWcSamsjuklighet())) {
+                observation.setId(HUVUDDIAGNOS_ID);
+            }
+            observationer.add(observation);
+        }
+
+        //Check for bi-diagnos 1
+        if (source.getWcDiagnosKod2() != null) {
+            Fk7263Observation observation = buildObservation(buildDiagnoseCode(source.getWcDiagnosKod2()),
+                    ObservationsKoder.BIDIAGNOS, source.getWcDiagnosBeskrivning2());
+            if (notNullAndTrue(source.getWcSamsjuklighet())) {
+                observation.setId(BIDIAGNOS_1_ID);
+            }
+            observationer.add(observation);
+        }
+
+        //Check for bi-diagnos 2
+        if (source.getWcDiagnosKod3() != null) {
+            Fk7263Observation observation = buildObservation(buildDiagnoseCode(source.getWcDiagnosKod3()),
+                    ObservationsKoder.BIDIAGNOS, source.getWcDiagnosBeskrivning3());
+            if (notNullAndTrue(source.getWcSamsjuklighet())) {
+                observation.setId(BIDIAGNOS_2_ID);
+            }
+                observationer.add(observation);
         }
 
         // observation sjukdomsforlopp
@@ -210,19 +231,19 @@ public class InternalToExternalConverter {
         // observation arbetsformaga (create between 1 and 4 instances)
         if (source.getNedsattMed100() != null) {
             observationer.add(buildArbetsformageObservation(ObservationsKoder.ARBETSFORMAGA,
-                    source.getNedsattMed100(), new PhysicalQuantity(0.0, "percent")));
+                    source.getNedsattMed100(), new PhysicalQuantity(0.0, "percent"), source.getNedsattMed100Beskrivning()));
         }
         if (source.getNedsattMed75() != null) {
             observationer.add(buildArbetsformageObservation(ObservationsKoder.ARBETSFORMAGA,
-                    source.getNedsattMed75(), new PhysicalQuantity(FORMOGA_1_4, "percent")));
+                    source.getNedsattMed75(), new PhysicalQuantity(FORMOGA_1_4, "percent"), source.getNedsattMed75Beskrivning()));
         }
         if (source.getNedsattMed50() != null) {
             observationer.add(buildArbetsformageObservation(ObservationsKoder.ARBETSFORMAGA,
-                    source.getNedsattMed50(), new PhysicalQuantity(FORMOGA_1_2, "percent")));
+                    source.getNedsattMed50(), new PhysicalQuantity(FORMOGA_1_2, "percent"), source.getNedsattMed50Beskrivning()));
         }
         if (source.getNedsattMed25() != null) {
             observationer.add(buildArbetsformageObservation(ObservationsKoder.ARBETSFORMAGA,
-                    source.getNedsattMed25(), new PhysicalQuantity(FORMOGA_3_4, "percent")));
+                    source.getNedsattMed25(), new PhysicalQuantity(FORMOGA_3_4, "percent"), source.getNedsattMed25Beskrivning()));
         }
 
         // observation prognos
@@ -231,6 +252,31 @@ public class InternalToExternalConverter {
         }
 
         return observationer;
+    }
+
+    private boolean notNullAndTrue(Boolean value) {
+        if (value == null) {
+            return false;
+        } else {
+            return value;
+        }
+    }
+
+    private List<Fk7263ObservationsSamband> buildObseravationsSamband(Fk7263Intyg source) throws ConverterException {
+        List<Fk7263ObservationsSamband> observationsSamband = new ArrayList<Fk7263ObservationsSamband>();
+        if (notNullAndTrue(source.getWcSamsjuklighet())) {
+            try {
+                if (source.getDiagnosKod() != null && source.getWcDiagnosKod2() != null) {
+                    observationsSamband.add(new Fk7263ObservationsSamband(HUVUDDIAGNOS_ID, BIDIAGNOS_1_ID));
+                }
+                if (source.getDiagnosKod() != null && source.getWcDiagnosKod3() != null) {
+                    observationsSamband.add(new Fk7263ObservationsSamband(HUVUDDIAGNOS_ID, BIDIAGNOS_2_ID));
+                }
+            } catch (ModuleException e) {
+                throw new ConverterException(String.format("Error while converting observationssamband: %s", e.getMessage()));
+            }
+        }
+        return observationsSamband;
     }
 
     /**
@@ -246,12 +292,15 @@ public class InternalToExternalConverter {
      *            {@link PhysicalQuantity}
      * @return {@link Fk7263Observation}
      */
-    private Fk7263Observation buildArbetsformageObservation(Kod kod, LocalDateInterval period, PhysicalQuantity varde) {
+    private Fk7263Observation buildArbetsformageObservation(Kod kod, LocalDateInterval period, PhysicalQuantity varde, String beskrivning) {
         Fk7263Observation obs = new Fk7263Observation();
 
         obs.setObservationskod(kod);
         obs.setObservationsperiod(DateTimeConverter.toPartialInterval(period));
         obs.getVarde().add(varde);
+        if (beskrivning != null && !beskrivning.isEmpty()) {
+            obs.setBeskrivning(beskrivning);
+        }
 
         return obs;
     }
@@ -272,7 +321,13 @@ public class InternalToExternalConverter {
         }
         prognos.setObservationskod(ObservationsKoder.PROGNOS);
         prognos.getVarde().add(kod);
-        prognos.setBeskrivning(source.getArbetsformagaPrognos());
+        if (!isNullOrEmpty(source.getArbetsformagaPrognos())) {
+            prognos.setBeskrivning(source.getArbetsformagaPrognos());
+        }
+
+        if (!isNullOrEmpty(source.getArbetsformagaPrognosGarInteAttBedomBeskrivning())) {
+            prognos.setKommentar(source.getArbetsformagaPrognosGarInteAttBedomBeskrivning());
+        }
 
         return prognos;
     }
@@ -317,33 +372,6 @@ public class InternalToExternalConverter {
         kod.setCodeSystem(ICD_10.getCodeSystem());
         kod.setCodeSystemName(ICD_10.getCodeSystemName());
         return kod;
-    }
-
-    private String buildDiagnosBeskrivning(String diagnosBeskrivning1, String diagnosKod2, String diagnosBeskrivning2, String diagnosKod3,
-            String diagnosBeskrivning3, String forklaring, Boolean fleraDiagnoser) {
-        ArrayList<String> parts = new ArrayList<>();
-
-        if (isValidString(diagnosBeskrivning1)) {
-            parts.add(diagnosBeskrivning1);
-        }
-        if (isValidString(diagnosKod2)) {
-            parts.add(diagnosKod2 + " " + diagnosBeskrivning2);
-        }
-        if (isValidString(diagnosKod3)) {
-            parts.add(diagnosKod3 + " " + diagnosBeskrivning3);
-        }
-        if (isValidString(forklaring)) {
-            parts.add(forklaring);
-        }
-        if (fleraDiagnoser != null && fleraDiagnoser) {
-            parts.add("Samsjuklighet föreligger");
-        }
-
-        return StringUtils.trimToNull(Strings.join(", ", parts));
-    }
-
-    private boolean isValidString(String string) {
-        return string != null && !string.isEmpty();
     }
 
     /**
@@ -549,7 +577,6 @@ public class InternalToExternalConverter {
 
         if (source.isForaldrarledighet() && patient.getId().getExtension() != null) {
             Sysselsattning sysselsattning = new Sysselsattning();
-            // TODO change this implementation when a single code for foraldrarledighet is created
             if (isFemale(patient.getId().getExtension())) {
                 sysselsattning.setSysselsattningstyp(Sysselsattningskoder.MAMMALEDIG);
             } else {

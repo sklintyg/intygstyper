@@ -3,6 +3,7 @@ package se.inera.certificate.modules.fk7263.model.converter.util;
 import se.inera.certificate.fk7263.iso.v21090.dt.v1.CD;
 import se.inera.certificate.fk7263.iso.v21090.dt.v1.II;
 import se.inera.certificate.fk7263.iso.v21090.dt.v1.PQ;
+import se.inera.certificate.fk7263.model.ext.v1.RelationId;
 import se.inera.certificate.fk7263.model.v1.AktivitetKod;
 import se.inera.certificate.fk7263.model.v1.ArbetsplatsKod;
 import se.inera.certificate.fk7263.model.v1.HsaId;
@@ -133,5 +134,9 @@ public final class IsoTypeConverter {
         pq.setValue(physicalQuantity.getQuantity());
         pq.setUnit(physicalQuantity.getUnit());
         return pq;
+    }
+
+    public static RelationId toRelationId(Id id) {
+        return toII(id, new RelationId());
     }
 }

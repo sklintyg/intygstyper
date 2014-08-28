@@ -7,9 +7,6 @@
         "code": "fk7263",
         "codeSystemName" : "kv_utlåtandetyp_intyg"
     },
-    "kommentarer": [
-        "Går ej att fastställa en prognos"
-    ],
     "signeringsdatum": "2011-01-26T00:00:00.000",
     "skickatdatum": "2011-03-23T09:29:15.000",
     "patient": {
@@ -106,7 +103,8 @@
                     "codeSystemName": "kv_prognos_intyg",
                     "code": "PRO4"
                 }
-            ]
+            ],
+            "kommentar" : "Går ej att fastställa en prognos"
         }
     ],
     "vardkontakter": [

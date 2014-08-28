@@ -31,7 +31,7 @@ public class Fk7263Intyg {
     private String wcDiagnosBeskrivning2;
     private String wcDiagnosKod3;
     private String wcDiagnosBeskrivning3;
-    private Boolean wcFleraDiagnoser;
+    private Boolean wcSamsjuklighet;
 
     private String sjukdomsforlopp;
 
@@ -65,6 +65,43 @@ public class Fk7263Intyg {
     private LocalDateInterval nedsattMed50;
     private LocalDateInterval nedsattMed75;
     private LocalDateInterval nedsattMed100;
+
+    private String nedsattMed25Beskrivning;
+    private String nedsattMed50Beskrivning;
+    private String nedsattMed75Beskrivning;
+    private String nedsattMed100Beskrivning;
+
+    public String getNedsattMed25Beskrivning() {
+        return nedsattMed25Beskrivning;
+    }
+
+    public void setNedsattMed25Beskrivning(String nedsattMed25Beskrivning) {
+        this.nedsattMed25Beskrivning = nedsattMed25Beskrivning;
+    }
+
+    public String getNedsattMed50Beskrivning() {
+        return nedsattMed50Beskrivning;
+    }
+
+    public void setNedsattMed50Beskrivning(String nedsattMed50Beskrivning) {
+        this.nedsattMed50Beskrivning = nedsattMed50Beskrivning;
+    }
+
+    public String getNedsattMed75Beskrivning() {
+        return nedsattMed75Beskrivning;
+    }
+
+    public void setNedsattMed75Beskrivning(String nedsattMed75Beskrivning) {
+        this.nedsattMed75Beskrivning = nedsattMed75Beskrivning;
+    }
+
+    public String getNedsattMed100Beskrivning() {
+        return nedsattMed100Beskrivning;
+    }
+
+    public void setNedsattMed100Beskrivning(String nedsattMed100Beskrivning) {
+        this.nedsattMed100Beskrivning = nedsattMed100Beskrivning;
+    }
 
     private String arbetsformagaPrognos;
 
@@ -152,12 +189,12 @@ public class Fk7263Intyg {
         this.wcDiagnosBeskrivning3 = wcDiagnosBeskrivning3;
     }
 
-    public Boolean isWcFleraDiagnoser() {
-        return wcFleraDiagnoser;
+    public Boolean getWcSamsjuklighet() {
+        return wcSamsjuklighet;
     }
 
-    public void setWcFleraDiagnoser(Boolean wcFleraDiagnoser) {
-        this.wcFleraDiagnoser = wcFleraDiagnoser;
+    public void setWcSamsjuklighet(Boolean wcSamsjuklighet) {
+        this.wcSamsjuklighet = wcSamsjuklighet;
     }
 
     public String getSjukdomsforlopp() {

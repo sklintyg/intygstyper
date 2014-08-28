@@ -26,7 +26,6 @@ import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.PhysicalQuantity;
-import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
@@ -35,6 +34,7 @@ import se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Referens;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
 public final class ExternalToTransportConverter {
@@ -61,27 +61,27 @@ public final class ExternalToTransportConverter {
         return utlatande;
     }
 
-    private List<ReferensType> convertReferenser(List<Referens> source) {
+    private List<ReferensType> convertReferenser(List<Fk7263Referens> source) {
         if (source == null) {
             return null;
         }
         List<ReferensType> referenser = new ArrayList<>();
-        for (Referens referens : source) {
+        for (Fk7263Referens referens : source) {
             referenser.add(convert(referens));
         }
         return referenser;
     }
 
-    private ReferensType convert(Referens source) {
+    private ReferensType convert(Fk7263Referens source) {
         if (source == null) {
             return null;
         }
         ReferensType referens = new ReferensType();
         referens.setReferenstyp(IsoTypeConverter.toReferensKod(source.getReferenstyp()));
         referens.setReferensdatum(source.getDatum());
-//        if (source.getBeskrivning() != null) {
-//            referens.setBeskrivning(source.getBeskrivning());
-//        }
+        if (source.getBeskrivning() != null) {
+            referens.setBeskrivning(source.getBeskrivning());
+        }
         return referens;
     }
 
@@ -133,9 +133,13 @@ public final class ExternalToTransportConverter {
         }
 
         addAll(observation.getVardes(), convertVarden(source.getVarde()));
+        if (source.getBeskrivning() != null && !source.getBeskrivning().isEmpty()) {
+            observation.setBeskrivning(source.getBeskrivning());
+        }
 
-        observation.setBeskrivning(source.getBeskrivning());
-
+        if (source.getId() != null) {
+            observation.setObservationId(IsoTypeConverter.toRelationId(source.getId()));
+        }
 
         if (notNullOrEmpty(source.getKommentar())) {
             observation.setKommentar(source.getKommentar());

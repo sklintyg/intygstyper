@@ -8,8 +8,7 @@
         "codeSystemName" : "kv_utlåtandetyp_intyg"
     },
     "kommentarer" : [
-        "Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling.",
-        "Annan referensbeskrivning"
+        "Prognosen för patienten är god. Han kommer att kunna återgå till sitt arbete efter genomförd behandling."
     ],
     "signeringsdatum" : "2011-01-26T00:00:00.000",
     "skickatdatum" : "2011-03-23T09:29:15.000",
@@ -152,8 +151,49 @@
                 "codeSystemName" : "ICD-10",
                 "code" : "S47"
             },
-            "beskrivning" : "beskrivning1, TEST2 beskrivning2, TEST3 beskrivning3, Medicinskttillstånd: Klämskada på överarm, Samsjuklighet föreligger"
+            "beskrivning" : "Medicinskttillstånd: Klämskada på överarm",
+            "id" : {
+                    "root": "1.2.752.129.2.1.2.1",
+                    "extension": "1"
+            }
         },
+
+        {
+            "observationskategori" : {
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "85097005"
+            },
+            "observationskod" : {
+                "codeSystem" : "1.2.752.116.1.1.1.1.1",
+                "codeSystemName" : "ICD-10",
+                "code" : "TEST2"
+            },
+            "beskrivning" : "beskrivning2",
+            "id" : {
+                "root": "1.2.752.129.2.1.2.1",
+                "extension": "2"
+            }
+        },
+
+        {
+            "observationskategori" : {
+                "codeSystem" : "1.2.752.116.2.1.1.1",
+                "codeSystemName" : "SNOMED-CT",
+                "code" : "85097005"
+            },
+            "observationskod" : {
+                "codeSystem" : "1.2.752.116.1.1.1.1.1",
+                "codeSystemName" : "ICD-10",
+                "code" : "TEST3"
+            },
+            "beskrivning" : "beskrivning3",
+            "id" : {
+                "root": "1.2.752.129.2.1.2.1",
+                "extension": "3"
+            }
+        },
+
         {
             "observationskod" : {
                 "codeSystem" : "1.2.752.116.2.1.1.1",
@@ -194,7 +234,8 @@
                     "quantity" : 75.0,
                     "unit" : "percent"
                 }
-            ]
+            ],
+            "beskrivning" : "Arbetstidsförläggning"
         },
         {
             "observationskod" : {
@@ -264,8 +305,31 @@
                     "codeSystemName": "kv_prognos_intyg",
                     "code": "PRO4"
                 }
-            ]
+            ],
+            "kommentar" : "Akut trauma av det grövre slaget"
         }
+    ],
+    "observationssamband" : [
+      {
+          "observationsidEtt" : {
+              "root": "1.2.752.129.2.1.2.1",
+              "extension": "1"
+          },
+          "observationsidTva" : {
+              "root": "1.2.752.129.2.1.2.1",
+              "extension": "2"
+          }
+      },
+      {
+          "observationsidEtt" : {
+              "root": "1.2.752.129.2.1.2.1",
+              "extension": "1"
+          },
+          "observationsidTva" : {
+              "root": "1.2.752.129.2.1.2.1",
+              "extension": "3"
+          }
+      }
     ],
     "vardkontakter" : [
         {
@@ -306,7 +370,8 @@
                 "codeSystemName" : "SNOMED-CT",
                 "code" : "74964007"
             },
-            "datum" : "2010-01-24"
+            "datum" : "2010-01-24",
+            "beskrivning" : "Annan referensbeskrivning"
         }
     ],
     "validFromDate" : "2011-01-26",
