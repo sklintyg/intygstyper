@@ -226,7 +226,7 @@
 
   <xs:complexType name="observationType">
     <xs:sequence>
-      <xs:element name="observation-id" type="ext:relationId" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="observations-id" type="ext:relationId" minOccurs="0" maxOccurs="1"/>
       <xs:element name="observationskategori" type="observationKategoriKod" minOccurs="0"/>
       <xs:element name="observationskod" type="observationKod" minOccurs="0"/>
       <xs:element name="beskrivning" type="nonEmptyString" minOccurs="0"/>

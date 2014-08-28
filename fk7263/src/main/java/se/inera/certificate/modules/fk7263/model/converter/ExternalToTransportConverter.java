@@ -138,7 +138,7 @@ public final class ExternalToTransportConverter {
         }
 
         if (source.getId() != null) {
-            observation.setObservationId(IsoTypeConverter.toRelationId(source.getId()));
+            observation.setObservationsId(IsoTypeConverter.toRelationId(source.getId()));
         }
 
         if (notNullOrEmpty(source.getKommentar())) {

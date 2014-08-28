@@ -278,14 +278,23 @@ public class ExternalToInternalConverter {
         }
 
         List<Fk7263Observation> bidiagnoser = source.getObservationsByKategori(ObservationsKoder.BIDIAGNOS);
-        if (!bidiagnoser.isEmpty()) {
+        Fk7263Observation bidiagnos1 = null;
+        Fk7263Observation bidiagnos2 = null;
+        if (bidiagnoser.size() == 1) {
+            bidiagnos1 = bidiagnoser.get(0);
+        } else  if (bidiagnoser.size() == 2) {
+            bidiagnos1 = bidiagnoser.get(0);
+            bidiagnos2 = bidiagnoser.get(1);
+        }
+
+        if (bidiagnos1 != null) {
             intyg.setWcDiagnosKod2((bidiagnoser.get(0).getObservationskod().getCode()));
             intyg.setWcDiagnosBeskrivning2(bidiagnoser.get(0).getBeskrivning());
+        }
 
-            if (bidiagnoser.get(1) != null) {
-                intyg.setWcDiagnosKod3((bidiagnoser.get(1).getObservationskod().getCode()));
-                intyg.setWcDiagnosBeskrivning2(bidiagnoser.get(1).getBeskrivning());
-            }
+        if (bidiagnos2 != null) {
+            intyg.setWcDiagnosKod3((bidiagnoser.get(1).getObservationskod().getCode()));
+            intyg.setWcDiagnosBeskrivning2(bidiagnoser.get(1).getBeskrivning());
         }
 
         //If there are Observationssamband, set samsjuklighet = true
