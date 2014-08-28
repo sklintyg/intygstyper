@@ -139,12 +139,21 @@
             </goals>
           </execution>
           <execution>
-            <id>javascript tests</id>
+            <id>javascript minaintyg tests</id>
             <goals>
               <goal>karma</goal>
             </goals>
             <configuration>
-              <karmaConfPath>${project.basedir}/src/test/resources/karma.conf.ci.js</karmaConfPath>
+              <karmaConfPath>${project.basedir}/src/test/resources/karma-minaintyg.conf.ci.js</karmaConfPath>
+            </configuration>
+          </execution>
+          <execution>
+            <id>javascript webcert tests</id>
+            <goals>
+              <goal>karma</goal>
+            </goals>
+            <configuration>
+              <karmaConfPath>${project.basedir}/src/test/resources/karma-webcert.conf.ci.js</karmaConfPath>
             </configuration>
           </execution>
         </executions>

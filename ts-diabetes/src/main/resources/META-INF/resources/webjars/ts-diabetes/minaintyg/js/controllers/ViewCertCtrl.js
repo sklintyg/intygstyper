@@ -1,12 +1,10 @@
-define([
-    'angular'
-], function(angular) {
-    'use strict';
+angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
+    [ '$location', '$log', '$rootScope', '$routeParams', '$scope', 'minaintyg.listCertService',
+        'common.certificateService', 'common.dialogService',
+        function($location, $log, $rootScope, $routeParams, $scope, listCertService, certificateService,
+            dialogService) {
+            'use strict';
 
-    return [ '$scope', '$filter', '$location', '$routeParams', 'CertificateService', 'listCertService', 'dialogService',
-        '$log', '$rootScope',
-        function($scope, $filter, $location, $routeParams, certificateService, listCertService, dialogService, $log,
-            $rootScope) {
             $scope.cert = {};
             $rootScope.cert = {};
 
@@ -23,7 +21,7 @@ define([
             };
 
             $scope.send = function() {
-                $location.path('/ts-diabetes/recipients').search({ module : 'ts-diabetes', defaultRecipient : 'ts'});
+                $location.path('/ts-diabetes/recipients').search({ module: 'ts-diabetes', defaultRecipient: 'ts'});
             };
 
             $scope.opts = {
@@ -55,11 +53,11 @@ define([
 
             //Make a printable list of Befattningar (which as of yet consists of un-readable codes...)
             $scope.befattningar = '';
-            $scope.updateBefattningar = function (befattningar) {
+            $scope.updateBefattningar = function(befattningar) {
                 var result = '';
                 if (befattningar !== undefined) {
                     for (var i = 0; i < befattningar.length; i++) {
-                        if (i < befattningar.length-1) {
+                        if (i < befattningar.length - 1) {
                             result += befattningar[i] + (', ');
                         } else {
                             result += befattningar[i];
@@ -71,11 +69,11 @@ define([
 
             //Make a printable list of Specialiteter
             $scope.specialiteter = '';
-            $scope.updateSpecialiteter = function (specialiteter) {
+            $scope.updateSpecialiteter = function(specialiteter) {
                 var result = '';
                 if (specialiteter !== undefined) {
                     for (var i = 0; i < specialiteter.length; i++) {
-                        if (i < specialiteter.length-1) {
+                        if (i < specialiteter.length - 1) {
                             result += specialiteter[i] + (', ');
                         } else {
                             result += specialiteter[i];
@@ -180,5 +178,4 @@ define([
             }, function(error) {
                 $log.debug('got error' + error);
             });
-        } ];
-});
+        }]);

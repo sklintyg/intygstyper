@@ -304,6 +304,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * @returns {*}
              */
             var ISODATE_REGEXP = /^\d{4}-\d{2}-\d{2}$/;
+
             function isDate(date) {
                 var validDateFormat = ISODATE_REGEXP.test(date);
                 return validDateFormat;
@@ -406,7 +407,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 setPropertyDefaults($scope.cert, propertyNames, '');
 
                 // Set nuvarande arbete value
-                if($scope.cert.nuvarandeArbetsuppgifter !== undefined || (!$scope.cert.arbetsloshet && !$scope.cert.foraldrarledighet)) {
+                if ($scope.cert.nuvarandeArbetsuppgifter !== undefined ||
+                    (!$scope.cert.arbetsloshet && !$scope.cert.foraldrarledighet)) {
                     $scope.form.arbete = true;
                 } else {
                     $scope.form.arbete = false;
@@ -436,10 +438,16 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 $scope.cert.rehabiliteringEjAktuell = false;
                 $scope.cert.rehabiliteringGarInteAttBedoma = false;
 
-                switch($scope.form.rehab) {
-                    case 'JA': $scope.cert.rehabiliteringAktuell = true; break;
-                    case 'NEJ': $scope.cert.rehabiliteringEjAktuell = true; break;
-                    case 'GAREJ': $scope.cert.rehabiliteringGarInteAttBedoma = true; break;
+                switch ($scope.form.rehab) {
+                case 'JA':
+                    $scope.cert.rehabiliteringAktuell = true;
+                    break;
+                case 'NEJ':
+                    $scope.cert.rehabiliteringEjAktuell = true;
+                    break;
+                case 'GAREJ':
+                    $scope.cert.rehabiliteringGarInteAttBedoma = true;
+                    break;
                 }
             }
 
@@ -499,7 +507,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         if (!workstate.from || !isDate(workstate.from)) {
 
                             // find highest max date
-                            if(!dates.maxDate) {
+                            if (!dates.maxDate) {
                                 // if no maxdate is available, use today
                                 var today = ($filter('date')($scope.today, 'yyyy-MM-dd'));
                                 workstate.from = today;
@@ -528,6 +536,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * @param fromTom
              */
             $scope.onChangeNedsattMed = function(nedsattModelName, fromTom) {
+                var i;
 
                 // Bail out if model hasn't been loaded yet
                 var nedsattModel = $scope.cert[nedsattModelName];
@@ -554,58 +563,65 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     }
 
                     // Set invalid if from dates are after tom dates
-                    var groups = ['nedsattMed25','nedsattMed50','nedsattMed75','nedsattMed100'];
-                    for(var i = 0; i < groups.length; i++) {
-                        if($scope.cert[groups[i]] && $scope.cert[groups[i]].from && $scope.cert[groups[i]].tom) {
-                            if(moment($scope.cert[groups[i]].from).isAfter(moment($scope.cert[groups[i]].tom))) {
-                                $scope.nedsattInvalid[groups[i]+'from'] = true;
-                                $scope.nedsattInvalid[groups[i]+'tom'] = true;
+                    var groups = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
+                    for (i = 0; i < groups.length; i++) {
+                        if ($scope.cert[groups[i]] && $scope.cert[groups[i]].from && $scope.cert[groups[i]].tom) {
+                            if (moment($scope.cert[groups[i]].from).isAfter(moment($scope.cert[groups[i]].tom))) {
+                                $scope.nedsattInvalid[groups[i] + 'from'] = true;
+                                $scope.nedsattInvalid[groups[i] + 'tom'] = true;
                             } else {
-                                $scope.nedsattInvalid[groups[i]+'from'] = false;
-                                $scope.nedsattInvalid[groups[i]+'tom'] = false;
+                                $scope.nedsattInvalid[groups[i] + 'from'] = false;
+                                $scope.nedsattInvalid[groups[i] + 'tom'] = false;
                             }
                         } else {
-                            $scope.nedsattInvalid[groups[i]+'from'] = false;
-                            $scope.nedsattInvalid[groups[i]+'tom'] = false;
+                            $scope.nedsattInvalid[groups[i] + 'from'] = false;
+                            $scope.nedsattInvalid[groups[i] + 'tom'] = false;
                         }
                     }
 
                     // Set invalid if date periods overlap
-                    for(var i = 0; i < groups.length; i++) {
+                    for (i = 0; i < groups.length; i++) {
                         // for every nedsatt group
                         var nedsatt = $scope.cert[groups[i]];
 
                         // where group is used, set and not already marked as invalid
-                        if(nedsatt && nedsatt.from && nedsatt.tom && !($scope.nedsattInvalid[groups[i] + 'from'] && $scope.nedsattInvalid[groups[i] + 'tom'])) {
+                        if (nedsatt && nedsatt.from && nedsatt.tom &&
+                            !($scope.nedsattInvalid[groups[i] + 'from'] && $scope.nedsattInvalid[groups[i] + 'tom'])) {
 
                             // check with all other period groups after nedsatt period if periods overlap
-                            for (var j = i+1; j < groups.length; j++) {
+                            for (var j = i + 1; j < groups.length; j++) {
                                 var nedsattCompare = $scope.cert[groups[j]];
 
                                 // dont check against unused dates and already invalid dates
-                                if (nedsattCompare && nedsattCompare.from && nedsattCompare.tom && !($scope.nedsattInvalid[groups[j] + 'from'] && $scope.nedsattInvalid[groups[j] + 'tom'])) {
+                                if (nedsattCompare && nedsattCompare.from && nedsattCompare.tom &&
+                                    !($scope.nedsattInvalid[groups[j] + 'from'] &&
+                                        $scope.nedsattInvalid[groups[j] + 'tom'])) {
 
-                                    if(moment(nedsatt.from).isSame(nedsattCompare.from)) {
+                                    if (moment(nedsatt.from).isSame(nedsattCompare.from)) {
                                         $scope.nedsattInvalid[groups[i] + 'from'] = true;
                                         $scope.nedsattInvalid[groups[j] + 'from'] = true;
                                     }
-                                    if(moment(nedsatt.tom).isSame(nedsattCompare.from)) {
+                                    if (moment(nedsatt.tom).isSame(nedsattCompare.from)) {
                                         $scope.nedsattInvalid[groups[i] + 'tom'] = true;
                                         $scope.nedsattInvalid[groups[j] + 'from'] = true;
                                     }
-                                    if(moment(nedsatt.from).isSame(nedsattCompare.tom)) {
+                                    if (moment(nedsatt.from).isSame(nedsattCompare.tom)) {
                                         $scope.nedsattInvalid[groups[i] + 'from'] = true;
                                         $scope.nedsattInvalid[groups[j] + 'tom'] = true;
                                     }
-                                    if(moment(nedsatt.tom).isSame(nedsattCompare.tom)) {
+                                    if (moment(nedsatt.tom).isSame(nedsattCompare.tom)) {
                                         $scope.nedsattInvalid[groups[i] + 'tom'] = true;
                                         $scope.nedsattInvalid[groups[j] + 'tom'] = true;
                                     }
 
-                                    if((moment(nedsatt.tom).isAfter(nedsattCompare.from) && moment(nedsatt.from).isBefore(nedsattCompare.from)) // first group overlaps in front
-                                       || (moment(nedsatt.from).isBefore(nedsattCompare.tom) && moment(nedsatt.tom).isAfter(nedsattCompare.tom))  // first group overlaps behind
-                                       || (moment(nedsatt.from).isBefore(nedsattCompare.from) && moment(nedsatt.tom).isAfter(nedsattCompare.tom)) // first group wraps second group
-                                       || (moment(nedsatt.from).isAfter(nedsattCompare.from) && moment(nedsatt.tom).isBefore(nedsattCompare.tom))) { // second group wraps first group
+                                    if ((moment(nedsatt.tom).isAfter(nedsattCompare.from) &&
+                                        moment(nedsatt.from).isBefore(nedsattCompare.from)) || // first group overlaps in front
+                                        (moment(nedsatt.from).isBefore(nedsattCompare.tom) &&
+                                            moment(nedsatt.tom).isAfter(nedsattCompare.tom)) || // first group overlaps behind
+                                        (moment(nedsatt.from).isBefore(nedsattCompare.from) &&
+                                            moment(nedsatt.tom).isAfter(nedsattCompare.tom)) || // first group wraps second group
+                                        (moment(nedsatt.from).isAfter(nedsattCompare.from) &&
+                                            moment(nedsatt.tom).isBefore(nedsattCompare.tom))) { // second group wraps first group
                                         $scope.nedsattInvalid[groups[i] + 'from'] = true;
                                         $scope.nedsattInvalid[groups[i] + 'tom'] = true;
                                         $scope.nedsattInvalid[groups[j] + 'from'] = true;

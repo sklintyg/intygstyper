@@ -48,7 +48,7 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
     public String getModuleCssPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
-            return "/minaintyg/css/ts-diabetes.css";
+            return "/web/webjars/ts-diabetes/minaintyg/css/ts-diabetes.css";
         case WEBCERT:
             return "/web/webjars/ts-diabetes/webcert/css/ts-diabetes.css";
         default:
@@ -60,7 +60,7 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
     public String getModuleScriptPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
-            return "/minaintyg/js/module";
+            return "/web/webjars/ts-diabetes/minaintyg/js/module";
         case WEBCERT:
             return "/web/webjars/ts-diabetes/webcert/js/module";
         default:
@@ -72,7 +72,7 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
     public String getModuleDependencyDefinitionPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
-            return null;
+            return "/web/webjars/ts-diabetes/minaintyg/js/module-deps.json";
         case WEBCERT:
             return "/web/webjars/ts-diabetes/webcert/js/module-deps.json";
         default:

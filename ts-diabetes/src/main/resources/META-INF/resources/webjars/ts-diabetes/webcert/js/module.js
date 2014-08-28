@@ -1,3 +1,4 @@
+/* global tsDiabetesMessages */
 angular.module('ts-diabetes', [ 'ui.bootstrap', 'ngCookies', 'ngRoute', 'ngSanitize', 'common' ]);
 
 angular.module('ts-diabetes').config(function($routeProvider) {

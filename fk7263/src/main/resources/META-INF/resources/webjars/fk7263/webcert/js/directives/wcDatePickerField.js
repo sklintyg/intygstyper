@@ -1,5 +1,5 @@
 angular.module('fk7263').directive('wcDatePickerField',
-    function($rootScope, $timeout, $log) {
+    function($rootScope, $timeout) {
         'use strict';
 
         return {
@@ -35,9 +35,6 @@ angular.module('fk7263').directive('wcDatePickerField',
                         $scope.isOpen = !$scope.isOpen;
                     });
                 };
-            }/*,
-            link: function (scope, element, attrs, ngModel) {
-                $log.debug(scope);
-            }*/
+            }
         };
     });

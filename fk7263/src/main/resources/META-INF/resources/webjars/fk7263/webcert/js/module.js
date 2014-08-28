@@ -1,3 +1,4 @@
+/* global fk7263Messages */
 angular.module('fk7263', [ 'ui.bootstrap', 'ngCookies', 'ngRoute', 'ngSanitize', 'common' ]);
 
 angular.module('fk7263').config(function($routeProvider) {
