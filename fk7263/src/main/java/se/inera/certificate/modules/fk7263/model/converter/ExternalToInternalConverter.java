@@ -294,7 +294,7 @@ public class ExternalToInternalConverter {
 
         if (bidiagnos2 != null) {
             intyg.setWcDiagnosKod3((bidiagnoser.get(1).getObservationskod().getCode()));
-            intyg.setWcDiagnosBeskrivning2(bidiagnoser.get(1).getBeskrivning());
+            intyg.setWcDiagnosBeskrivning3(bidiagnoser.get(1).getBeskrivning());
         }
 
         //If there are Observationssamband, set samsjuklighet = true

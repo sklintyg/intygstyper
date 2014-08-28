@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 
+import se.inera.certificate.fk7263.model.ext.v1.Observationssamband;
 import se.inera.certificate.fk7263.model.v1.AktivitetType;
 import se.inera.certificate.fk7263.model.v1.ArbetsuppgiftType;
 import se.inera.certificate.fk7263.model.v1.DateInterval;
@@ -33,6 +34,7 @@ import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263ObservationsSamband;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Referens;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
@@ -55,10 +57,23 @@ public final class ExternalToTransportConverter {
 
         addAll(utlatande.getAktivitets(), convertAktiviteter(source.getAktiviteter()));
         addAll(utlatande.getObservations(), convertObservations(source.getObservationer()));
+        addAll(utlatande.getObservationssambands(), convertObservationsSamband(source.getObservationssamband()));
         addAll(utlatande.getVardkontakts(), convertVardkontakter(source.getVardkontakter()));
         addAll(utlatande.getReferens(), convertReferenser(source.getReferenser()));
 
         return utlatande;
+    }
+
+    private List<Observationssamband> convertObservationsSamband(List<Fk7263ObservationsSamband> source) {
+        List<Observationssamband> observationssambandList = new ArrayList<Observationssamband>();
+
+        for (Fk7263ObservationsSamband os : source) {
+            Observationssamband observationssamband = new Observationssamband();
+            observationssamband.setObservationsid1(IsoTypeConverter.toRelationId(os.getObservationsidEtt()));
+            observationssamband.setObservationsid2(IsoTypeConverter.toRelationId(os.getObservationsidTva()));
+            observationssambandList.add(observationssamband);
+        }
+        return observationssambandList;
     }
 
     private List<ReferensType> convertReferenser(List<Fk7263Referens> source) {

@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.fk7263.iso.v21090.dt.v1.CD;
 import se.inera.certificate.fk7263.iso.v21090.dt.v1.PQ;
+import se.inera.certificate.fk7263.model.ext.v1.Observationssamband;
 import se.inera.certificate.fk7263.model.v1.AktivitetType;
 import se.inera.certificate.fk7263.model.v1.ArbetsuppgiftType;
 import se.inera.certificate.fk7263.model.v1.EnhetType;
@@ -34,10 +35,12 @@ import se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263HosPersonal;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263ObservationsSamband;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Referens;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Vardenhet;
+import se.inera.certificate.modules.support.api.exception.ModuleException;
 
 /**
  * @author marced
@@ -65,12 +68,27 @@ public final class TransportToExternalConverter {
         fk7263utlatande.setSkapadAv(convert(source.getSkapadAv()));
 
         fk7263utlatande.getObservationer().addAll(convertObservations(source.getObservations()));
+        fk7263utlatande.getObservationssamband().addAll(convertObservationsSamband(source.getObservationssambands()));
 
         fk7263utlatande.getAktiviteter().addAll(convertAktiviteter(source.getAktivitets()));
         fk7263utlatande.getReferenser().addAll(convertReferenser(source.getReferens()));
         fk7263utlatande.getVardkontakter().addAll(convertVardkontakter(source.getVardkontakts()));
 
         return fk7263utlatande;
+    }
+
+    private static List<Fk7263ObservationsSamband> convertObservationsSamband(List<Observationssamband> source) throws ConverterException {
+        List<Fk7263ObservationsSamband> observationsSambandList = new ArrayList<Fk7263ObservationsSamband>();
+        for (Observationssamband os : source) {
+            try {
+                Fk7263ObservationsSamband observationssamband = new Fk7263ObservationsSamband(IsoTypeConverter.toId(os.getObservationsid1()),
+                        IsoTypeConverter.toId(os.getObservationsid2()));
+                observationsSambandList.add(observationssamband);
+            } catch (ModuleException e) {
+                throw new ConverterException(String.format("Failed to convert observationssamband, got message %s ", e));
+            }
+        }
+        return observationsSambandList;
     }
 
     private static List<Sysselsattning> convert(List<SysselsattningType> source) {
@@ -116,7 +134,9 @@ public final class TransportToExternalConverter {
             observation.setObservationsperiod(observationsPeriod);
         }
 
-        // observation.getVarde().addAll(convertVarde(source.getVardes()));
+        if (source.getObservationsId() != null) {
+            observation.setId(IsoTypeConverter.toId(source.getObservationsId()));
+        }
 
         observation.setBeskrivning(source.getBeskrivning());
         if (source.getVardes() != null && !source.getVardes().isEmpty()) {
