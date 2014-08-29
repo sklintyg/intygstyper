@@ -1,4 +1,4 @@
-/* jshint maxlen: false */
+/* jshint maxlen: false, unused: false */
 var tsBasMessages = {
     'sv': {
         'ts-bas.label.certtitle': 'Transportstyrelsens läkarintyg',

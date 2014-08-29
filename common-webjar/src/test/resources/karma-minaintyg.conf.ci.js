@@ -1,5 +1,5 @@
 /* global module, require */
-var baseConfig = require('./karma.conf.js');
+var baseConfig = require('./karma-minaintyg.conf.js');
 
 module.exports = function(config) {
     'use strict';
@@ -24,7 +24,7 @@ module.exports = function(config) {
         reporters: [ 'dots', 'junit' ],
 
         junitReporter: {
-            outputFile: 'target/surefire-reports/TEST-karma-test-results.xml'
+            outputFile: 'target/surefire-reports/TEST-karma-minaintyg-test-results.xml'
         }
     });
 };

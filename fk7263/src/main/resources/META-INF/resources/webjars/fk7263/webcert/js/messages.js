@@ -1,4 +1,4 @@
-/* jshint maxlen: false */
+/* jshint maxlen: false, unused: false */
 var fk7263Messages = {
     'sv': {
         'fk7263.error.generic': 'Kunde inte visa intyget',

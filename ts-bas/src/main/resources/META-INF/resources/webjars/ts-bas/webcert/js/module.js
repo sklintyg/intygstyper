@@ -1,3 +1,4 @@
+/* global tsBasMessages */
 angular.module('ts-bas', [ 'ui.bootstrap', 'ngCookies', 'ngRoute', 'ngSanitize', 'common' ]);
 
 angular.module('ts-bas').config(['$routeProvider', function($routeProvider) {

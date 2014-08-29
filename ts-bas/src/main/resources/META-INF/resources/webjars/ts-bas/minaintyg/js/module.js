@@ -1,46 +1,35 @@
-define([
-    'angular',
-    'services',
-    'ts-bas/minaintyg/js/controllers',
-    'ts-bas/minaintyg/js/messages'
-], function(angular, miServices, controllers, messages ) {
+/* global tsBasMessages */
+angular.module('ts-bas', [ 'ui.bootstrap', 'ngCookies', 'ngRoute', 'ngSanitize', 'common' ]);
+
+angular.module('ts-bas').config(['$routeProvider', function($routeProvider) {
     'use strict';
 
-    var moduleName = 'ts-bas';
+    $routeProvider.
+        when('/ts-bas/view/:certificateId', {
+            templateUrl: '/web/webjars/ts-bas/minaintyg/views/view-cert.html',
+            controller: 'ts-bas.ViewCertCtrl',
+            title: 'Läkarintyg Transportstyrelsen Bas'
+        }).
+        when('/ts-bas/recipients', {
+            templateUrl: '/web/webjars/ts-bas/minaintyg/views/recipients.html',
+            controller: 'common.SendCertWizardCtrl'
+        }).
+        when('/ts-bas/summary', {
+            templateUrl: '/web/webjars/ts-bas/minaintyg/views/send-summary.html',
+            controller: 'common.SendCertWizardCtrl',
+            title: 'Kontrollera och skicka intyget'
+        }).
+        when('/ts-bas/sent', {
+            templateUrl: '/web/webjars/ts-bas/minaintyg/views/sent-cert.html',
+            controller: 'common.SendCertWizardCtrl',
+            title: 'Intyget skickat till mottagare'
+        });
+}]);
 
-    var module = angular
-        .module(moduleName, [miServices, controllers ]);
+// Inject language resources
+angular.module('ts-bas').run([ 'common.messageService',
+    function(messageService) {
+        'use strict';
 
-    module.config(['$routeProvider', function($routeProvider) {
-        $routeProvider.
-            when('/ts-bas/view/:certificateId', {
-                templateUrl: '/web/webjars/ts-bas/minaintyg/views/view-cert.html',
-                controller: 'ts-bas.ViewCertCtrl',
-                title: 'Läkarintyg Transportstyrelsen Bas'
-            }).
-            when('/ts-bas/recipients', {
-                templateUrl: '/web/webjars/ts-bas/minaintyg/views/recipients.html',
-                controller: 'ts-bas.SendCertWizardCtrl'
-            }).
-            when('/ts-bas/summary', {
-                templateUrl: '/web/webjars/ts-bas/minaintyg/views/send-summary.html',
-                controller: 'ts-bas.SendCertWizardCtrl',
-                title: 'Kontrollera och skicka intyget'
-            }).
-            when('/ts-bas/sent', {
-                templateUrl: '/web/webjars/ts-bas/minaintyg/views/sent-cert.html',
-                controller: 'ts-bas.SendCertWizardCtrl',
-                title: 'Intyget skickat till mottagare'
-            });
+        messageService.addResources(tsBasMessages);
     }]);
-    // Inject language resources
-    // TODO: This only works since we always load webcert before the module, when the messageService
-    // is moved to a commons project, make sure this is loaded for this module as well.
-    module.run(['messageService',
-        function(messageService) {
-            messageService.addResources(messages);
-        }
-    ]);
-
-    return moduleName;
-});

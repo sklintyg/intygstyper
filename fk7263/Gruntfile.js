@@ -13,6 +13,11 @@ module.exports = function(grunt) {
     var TEST_DIR = 'src/test/js/';
     var DEST_DIR = 'target/classes/META-INF/resources/';
 
+    var minaintyg = grunt.file.readJSON(SRC_DIR + 'webjars/fk7263/minaintyg/js/module-deps.json').map(function(file) {
+        return file.replace(/\/web\//g, SRC_DIR);
+    });
+    minaintyg = [SRC_DIR + 'webjars/fk7263/minaintyg/js/module.js'].concat(minaintyg);
+
     var webcert = grunt.file.readJSON(SRC_DIR + 'webjars/fk7263/webcert/js/module-deps.json').map(function(file) {
         return file.replace(/\/web\//g, SRC_DIR);
     });
@@ -21,16 +26,23 @@ module.exports = function(grunt) {
     grunt.initConfig({
 
         csslint: {
-            dev: {
-                options: {
-                    csslintrc: '../src/main/resources/.csslintrc',
-                    force: true
-                },
-                src: [ SRC_DIR + 'webjars/fk7263/**/*.css' ]
+            options: {
+                csslintrc: '../src/main/resources/.csslintrc',
+                force: true
+            },
+            minaintyg: {
+                src: [ SRC_DIR + 'webjars/fk7263/minaintyg/**/*.css' ]
+            },
+            webcert: {
+                src: [ SRC_DIR + 'webjars/fk7263/webcert/**/*.css' ]
             }
         },
 
         concat: {
+            minaintyg: {
+                src: minaintyg,
+                dest: DEST_DIR + 'webjars/fk7263/minaintyg/js/module.min.js'
+            },
             webcert: {
                 src: webcert,
                 dest: DEST_DIR + 'webjars/fk7263/webcert/js/module.min.js'
@@ -38,24 +50,34 @@ module.exports = function(grunt) {
         },
 
         jshint: {
-            dev: {
-                options: {
-                    jshintrc: '../src/main/resources/.jshintrc',
-                    force: true
-                },
-                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/fk7263/**/*.js', TEST_DIR + '**/*.js' ]
+            options: {
+                jshintrc: '../src/main/resources/.jshintrc',
+                force: true
+            },
+            minaintyg: {
+                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/fk7263/minaintyg/**/*.js', TEST_DIR + 'minaintyg/**/*.js' ]
+            },
+            webcert: {
+                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/fk7263/webcert/**/*.js', TEST_DIR + 'webcert/**/*.js' ]
             }
         },
 
         karma: {
-            unit: {
-                configFile: 'src/test/resources/karma.conf.ci.js'
+            minaintyg: {
+                configFile: 'src/test/resources/karma-minaintyg.conf.ci.js'
+            },
+            webcert: {
+                configFile: 'src/test/resources/karma-webcert.conf.ci.js'
             }
         },
 
         ngAnnotate: {
             options: {
                 singleQuotes: true
+            },
+            minaintyg: {
+                src: DEST_DIR + 'webjars/fk7263/minaintyg/js/module.min.js',
+                dest: DEST_DIR + 'webjars/fk7263/minaintyg/js/module.min.js'
             },
             webcert: {
                 src: DEST_DIR + 'webjars/fk7263/webcert/js/module.min.js',
@@ -67,6 +89,10 @@ module.exports = function(grunt) {
             options: {
                 mangle: false
             },
+            minaintyg: {
+                src: DEST_DIR + 'webjars/fk7263/minaintyg/js/module.min.js',
+                dest: DEST_DIR + 'webjars/fk7263/minaintyg/js/module.min.js'
+            },
             webcert: {
                 src: DEST_DIR + 'webjars/fk7263/webcert/js/module.min.js',
                 dest: DEST_DIR + 'webjars/fk7263/webcert/js/module.min.js'
@@ -75,6 +101,10 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('default', [ 'concat', 'ngAnnotate', 'uglify' ]);
+    grunt.registerTask('lint-minaintyg', [ 'jshint:minaintyg', 'csslint:minaintyg' ]);
+    grunt.registerTask('lint-webcert', [ 'jshint:webcert', 'csslint:webcert' ]);
     grunt.registerTask('lint', [ 'jshint', 'csslint' ]);
+    grunt.registerTask('test-minaintyg', [ 'karma:minaintyg' ]);
+    grunt.registerTask('test-webcert', [ 'karma:webcert' ]);
     grunt.registerTask('test', [ 'karma' ]);
 };

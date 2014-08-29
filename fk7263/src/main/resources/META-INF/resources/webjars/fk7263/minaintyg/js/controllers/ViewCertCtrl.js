@@ -1,10 +1,10 @@
-define(['angular'], function(angular) {
-    'use strict';
+angular.module('fk7263').controller('fk7263.ViewCertCtrl',
+    [ '$location', '$log', '$rootScope', '$routeParams', '$scope', 'fk7263.certificateService',
+        'minaintyg.listCertService', 'common.dialogService', 'common.messageService',
+        function($location, $log, $rootScope, $routeParams, $scope, certificateService, listCertService, dialogService,
+            messageService) {
+            'use strict';
 
-    return [ '$scope', '$filter', '$location', 'fk7263.certificateService', 'listCertService', 'dialogService', '$http',
-        '$routeParams', '$log', '$rootScope', 'messageService',
-        function($scope, $filter, $location, certificateService, listCertService, dialogService, http, $routeParams,
-            $log, $rootScope, messageService) {
             $scope.cert = {};
             $rootScope.cert = {};
 
@@ -13,7 +13,7 @@ define(['angular'], function(angular) {
             $scope.doneLoading = false;
 
             $scope.send = function() {
-                $location.path('/fk7263/recipients').search({ module : 'fk7263', defaultRecipient : 'fk'});
+                $location.path('/fk7263/recipients').search({ module: 'fk7263', defaultRecipient: 'fk'});
             };
 
             $scope.visibleStatuses = [ 'SENT' ];
@@ -113,6 +113,4 @@ define(['angular'], function(angular) {
             });
 
             $scope.pagefocus = true;
-        }
-    ];
-});
+        }]);
