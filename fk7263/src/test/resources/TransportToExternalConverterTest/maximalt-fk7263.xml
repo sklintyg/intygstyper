@@ -148,7 +148,7 @@ Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast lä
       <tom>2011-05-31</tom>
     </observationsperiod>
     <p:varde value="75.0" unit="percent"/>
-    <kommentar>Arbetstidsförläggning</kommentar>
+    <p:kommentar>Arbetstidsförläggning</p:kommentar>
   </observation>
   <observation>
     <observationskod code="302119000" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>

@@ -30,6 +30,8 @@
 
   <xs:element name="varde" type="xs:anyType"/>
 
+  <xs:element name="kommentar" type="nonEmptyString"/>
+
   <xs:simpleType name="nonEmptyString">
     <xs:restriction base="xs:string">
       <xs:minLength value="1"/>

@@ -149,7 +149,7 @@ Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast lä
     </observationsperiod>
     <p:varde xsi:type="ns4:PQ" value="75.0" unit="percent"
       xmlns:ns4="urn:iso:21090:dt:1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-    <kommentar>Arbetstidsförläggning</kommentar>
+    <p:kommentar>Arbetstidsförläggning</p:kommentar>
   </observation>
   <observation>
     <observationskod code="302119000" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>

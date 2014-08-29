@@ -232,10 +232,10 @@
       <xs:element name="beskrivning" type="nonEmptyString" minOccurs="0"/>
       <xs:element name="observationsperiod" type="dateInterval" minOccurs="0"/>
       <xs:element ref="ext:varde" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="kommentar" type="nonEmptyString" minOccurs="0"/>
+      <xs:element ref="ext:kommentar" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  
+
   <xs:complexType name="observationKategoriKod">
     <xs:complexContent>
       <xs:restriction base="iso:CD">
