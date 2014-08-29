@@ -2,8 +2,12 @@ package se.inera.certificate.modules.fk7263.pdf;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+
+import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.model.LocalDateInterval;
+import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 
@@ -422,6 +426,31 @@ public class PdfGenerator {
         fillText(OTHER_INFORMATION, intyg.getKommentar());
     }
 
+    private String buildOtherDiagnoses() {
+        ArrayList<String> parts = new ArrayList<>();
+
+        if (isValidString(intyg.getDiagnosBeskrivning())) {
+            parts.add(intyg.getDiagnosBeskrivning());
+        }
+        if (isValidString(intyg.getDiagnosBeskrivning1())) {
+            parts.add(intyg.getDiagnosBeskrivning1());
+        }
+        if (isValidString(intyg.getDiagnosKod2())) {
+            parts.add(intyg.getDiagnosKod2() + " " + intyg.getDiagnosBeskrivning2());
+        }
+        if (isValidString(intyg.getDiagnosKod3())) {
+            parts.add(intyg.getDiagnosKod3() + " " + intyg.getDiagnosBeskrivning3());
+        }
+        if (intyg.getSamsjuklighet() != null && intyg.getSamsjuklighet()) {
+            parts.add("Samsjuklighet föreligger");
+        }
+        return StringUtils.trimToNull(Strings.join(", ", parts));
+    }
+
+    private boolean isValidString(String string) {
+        return string != null && !string.isEmpty();
+    }
+
     private void fillBasedOn() {
 
         if (intyg.getUndersokningAvPatienten() != null) {
@@ -471,7 +500,8 @@ public class PdfGenerator {
 
     private void fillDiagnose() {
         fillText(DIAGNOS_CODE, intyg.getDiagnosKod());
-        fillText(DIAGNOS, intyg.getDiagnosBeskrivning());
+        //  fillText(DIAGNOS, intyg.getDiagnosBeskrivning());
+        fillText(DIAGNOS, buildOtherDiagnoses());
     }
 
     private void fillText(String fieldId, String text) {
