@@ -184,27 +184,27 @@ public class InternalToExternalConverter {
         if (source.getDiagnosKod() != null) {
             Fk7263Observation observation = buildObservation(buildDiagnoseCode(source.getDiagnosKod()),
                     ObservationsKoder.DIAGNOS, source.getDiagnosBeskrivning());
-            if (notNullAndTrue(source.getWcSamsjuklighet())) {
+            if (notNullAndTrue(source.getSamsjuklighet())) {
                 observation.setId(HUVUDDIAGNOS_ID);
             }
             observationer.add(observation);
         }
 
         //Check for bi-diagnos 1
-        if (source.getWcDiagnosKod2() != null) {
-            Fk7263Observation observation = buildObservation(buildDiagnoseCode(source.getWcDiagnosKod2()),
-                    ObservationsKoder.BIDIAGNOS, source.getWcDiagnosBeskrivning2());
-            if (notNullAndTrue(source.getWcSamsjuklighet())) {
+        if (source.getDiagnosKod2() != null) {
+            Fk7263Observation observation = buildObservation(buildDiagnoseCode(source.getDiagnosKod2()),
+                    ObservationsKoder.BIDIAGNOS, source.getDiagnosBeskrivning2());
+            if (notNullAndTrue(source.getSamsjuklighet())) {
                 observation.setId(BIDIAGNOS_1_ID);
             }
             observationer.add(observation);
         }
 
         //Check for bi-diagnos 2
-        if (source.getWcDiagnosKod3() != null) {
-            Fk7263Observation observation = buildObservation(buildDiagnoseCode(source.getWcDiagnosKod3()),
-                    ObservationsKoder.BIDIAGNOS, source.getWcDiagnosBeskrivning3());
-            if (notNullAndTrue(source.getWcSamsjuklighet())) {
+        if (source.getDiagnosKod3() != null) {
+            Fk7263Observation observation = buildObservation(buildDiagnoseCode(source.getDiagnosKod3()),
+                    ObservationsKoder.BIDIAGNOS, source.getDiagnosBeskrivning3());
+            if (notNullAndTrue(source.getSamsjuklighet())) {
                 observation.setId(BIDIAGNOS_2_ID);
             }
                 observationer.add(observation);
@@ -263,12 +263,12 @@ public class InternalToExternalConverter {
 
     private List<Fk7263ObservationsSamband> buildObseravationsSamband(Fk7263Intyg source) throws ConverterException {
         List<Fk7263ObservationsSamband> observationsSamband = new ArrayList<Fk7263ObservationsSamband>();
-        if (notNullAndTrue(source.getWcSamsjuklighet())) {
+        if (notNullAndTrue(source.getSamsjuklighet())) {
             try {
-                if (source.getDiagnosKod() != null && source.getWcDiagnosKod2() != null) {
+                if (source.getDiagnosKod() != null && source.getDiagnosKod2() != null) {
                     observationsSamband.add(new Fk7263ObservationsSamband(HUVUDDIAGNOS_ID, BIDIAGNOS_1_ID));
                 }
-                if (source.getDiagnosKod() != null && source.getWcDiagnosKod3() != null) {
+                if (source.getDiagnosKod() != null && source.getDiagnosKod3() != null) {
                     observationsSamband.add(new Fk7263ObservationsSamband(HUVUDDIAGNOS_ID, BIDIAGNOS_2_ID));
                 }
             } catch (ModuleException e) {
@@ -324,8 +324,8 @@ public class InternalToExternalConverter {
             prognos.setBeskrivning(source.getArbetsformagaPrognos());
         }
 
-        if (!isNullOrEmpty(source.getArbetsformagaPrognosGarInteAttBedomBeskrivning())) {
-            prognos.setKommentar(source.getArbetsformagaPrognosGarInteAttBedomBeskrivning());
+        if (!isNullOrEmpty(source.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
+            prognos.setKommentar(source.getArbetsformagaPrognosGarInteAttBedomaBeskrivning());
         }
 
         return prognos;

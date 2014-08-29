@@ -174,7 +174,7 @@ public class Fk7263Utlatande extends Utlatande {
                     .getObservationsperiod());
 
             if (nextObservationsperiod != null) {
-                if (fromDate == null || fromDate.isAfter(nextObservationsperiod.getFrom())) {
+                if (fromDate == null || (nextObservationsperiod.getFrom() != null && fromDate.isAfter(nextObservationsperiod.getFrom()))) {
                     fromDate = nextObservationsperiod.getFrom();
                 }
             }
@@ -197,7 +197,7 @@ public class Fk7263Utlatande extends Utlatande {
                     .getObservationsperiod());
 
             if (nextObservationsperiod != null) {
-                if (toDate == null || toDate.isBefore(nextObservationsperiod.getFrom())) {
+                if (toDate == null || (nextObservationsperiod.getTom() != null && toDate.isBefore(nextObservationsperiod.getTom()))) {
                     toDate = nextObservationsperiod.getTom();
                 }
             }

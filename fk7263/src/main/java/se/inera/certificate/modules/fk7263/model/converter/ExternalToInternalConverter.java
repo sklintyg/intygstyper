@@ -288,18 +288,18 @@ public class ExternalToInternalConverter {
         }
 
         if (bidiagnos1 != null) {
-            intyg.setWcDiagnosKod2((bidiagnoser.get(0).getObservationskod().getCode()));
-            intyg.setWcDiagnosBeskrivning2(bidiagnoser.get(0).getBeskrivning());
+            intyg.setDiagnosKod2((bidiagnoser.get(0).getObservationskod().getCode()));
+            intyg.setDiagnosBeskrivning2(bidiagnoser.get(0).getBeskrivning());
         }
 
         if (bidiagnos2 != null) {
-            intyg.setWcDiagnosKod3((bidiagnoser.get(1).getObservationskod().getCode()));
-            intyg.setWcDiagnosBeskrivning3(bidiagnoser.get(1).getBeskrivning());
+            intyg.setDiagnosKod3((bidiagnoser.get(1).getObservationskod().getCode()));
+            intyg.setDiagnosBeskrivning3(bidiagnoser.get(1).getBeskrivning());
         }
 
         //If there are Observationssamband, set samsjuklighet = true
         if (!source.getObservationssamband().isEmpty()) {
-            intyg.setWcSamsjuklighet(true);
+            intyg.setSamsjuklighet(true);
         }
     }
 }

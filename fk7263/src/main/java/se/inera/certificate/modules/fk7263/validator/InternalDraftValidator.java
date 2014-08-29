@@ -60,7 +60,7 @@ public class InternalDraftValidator {
         }
 
         if ((utlatande.getPrognosis() != null && utlatande.getPrognosis().equals("UNKNOWN"))
-                && isNullOrEmpty(utlatande.getArbetsformagaPrognosGarInteAttBedomBeskrivning())) {
+                && isNullOrEmpty(utlatande.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
             addValidationError(validationMessages, "prognos.gar-ej-att-bedomma.beskrivning",
                     "fk7263.validation.prognos.gar-ej-att-bedomma.beskrivning.missing");
         }

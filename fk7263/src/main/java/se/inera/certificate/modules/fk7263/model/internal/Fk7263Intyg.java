@@ -26,12 +26,12 @@ public class Fk7263Intyg {
     private String diagnosKod;
     private String diagnosBeskrivning;
 
-    private String wcDiagnosBeskrivning1;
-    private String wcDiagnosKod2;
-    private String wcDiagnosBeskrivning2;
-    private String wcDiagnosKod3;
-    private String wcDiagnosBeskrivning3;
-    private Boolean wcSamsjuklighet;
+    private String diagnosBeskrivning1;
+    private String diagnosKod2;
+    private String diagnosBeskrivning2;
+    private String diagnosKod3;
+    private String diagnosBeskrivning3;
+    private Boolean samsjuklighet;
 
     private String sjukdomsforlopp;
 
@@ -71,6 +71,28 @@ public class Fk7263Intyg {
     private String nedsattMed75Beskrivning;
     private String nedsattMed100Beskrivning;
 
+    private String arbetsformagaPrognos;
+
+    private boolean arbetsformataPrognosJa;
+    private boolean arbetsformataPrognosJaDelvis;
+    private boolean arbetsformataPrognosNej;
+    private boolean arbetsformataPrognosGarInteAttBedoma;
+
+    private String prognosis;
+
+    private String arbetsformagaPrognosGarInteAttBedomaBeskrivning;
+
+    private boolean ressattTillArbeteAktuellt;
+    private boolean ressattTillArbeteEjAktuellt;
+
+    private boolean kontaktMedFk;
+
+    private String kommentar;
+
+    private LocalDateTime signeringsdatum;
+
+    private Vardperson vardperson;
+
     public String getNedsattMed25Beskrivning() {
         return nedsattMed25Beskrivning;
     }
@@ -103,27 +125,6 @@ public class Fk7263Intyg {
         this.nedsattMed100Beskrivning = nedsattMed100Beskrivning;
     }
 
-    private String arbetsformagaPrognos;
-
-    private boolean arbetsformataPrognosJa;
-    private boolean arbetsformataPrognosJaDelvis;
-    private boolean arbetsformataPrognosNej;
-    private boolean arbetsformataPrognosGarInteAttBedoma;
-
-    private String prognosis;
-
-    private String arbetsformagaPrognosGarInteAttBedomBeskrivning;
-
-    private boolean ressattTillArbeteAktuellt;
-    private boolean ressattTillArbeteEjAktuellt;
-
-    private boolean kontaktMedFk;
-
-    private String kommentar;
-
-    private LocalDateTime signeringsdatum;
-
-    private Vardperson vardperson;
 
     public boolean isAvstangningSmittskydd() {
         return avstangningSmittskydd;
@@ -149,52 +150,52 @@ public class Fk7263Intyg {
         this.diagnosBeskrivning = diagnosBeskrivning;
     }
 
-    public String getWcDiagnosBeskrivning1() {
-        return wcDiagnosBeskrivning1;
+    public String getDiagnosBeskrivning1() {
+        return diagnosBeskrivning1;
     }
 
-    public void setWcDiagnosBeskrivning1(String wcDiagnosBeskrivning1) {
-        this.wcDiagnosBeskrivning1 = wcDiagnosBeskrivning1;
+    public void setDiagnosBeskrivning1(String diagnosBeskrivning1) {
+        this.diagnosBeskrivning1 = diagnosBeskrivning1;
     }
 
-    public String getWcDiagnosKod2() {
-        return wcDiagnosKod2;
+    public String getDiagnosKod2() {
+        return diagnosKod2;
     }
 
-    public void setWcDiagnosKod2(String wcDiagnosKod2) {
-        this.wcDiagnosKod2 = wcDiagnosKod2;
+    public void setDiagnosKod2(String diagnosKod2) {
+        this.diagnosKod2 = diagnosKod2;
     }
 
-    public String getWcDiagnosBeskrivning2() {
-        return wcDiagnosBeskrivning2;
+    public String getDiagnosBeskrivning2() {
+        return diagnosBeskrivning2;
     }
 
-    public void setWcDiagnosBeskrivning2(String wcDiagnosBeskrivning2) {
-        this.wcDiagnosBeskrivning2 = wcDiagnosBeskrivning2;
+    public void setDiagnosBeskrivning2(String diagnosBeskrivning2) {
+        this.diagnosBeskrivning2 = diagnosBeskrivning2;
     }
 
-    public String getWcDiagnosKod3() {
-        return wcDiagnosKod3;
+    public String getDiagnosKod3() {
+        return diagnosKod3;
     }
 
-    public void setWcDiagnosKod3(String wcDiagnosKod3) {
-        this.wcDiagnosKod3 = wcDiagnosKod3;
+    public void setDiagnosKod3(String diagnosKod3) {
+        this.diagnosKod3 = diagnosKod3;
     }
 
-    public String getWcDiagnosBeskrivning3() {
-        return wcDiagnosBeskrivning3;
+    public String getDiagnosBeskrivning3() {
+        return diagnosBeskrivning3;
     }
 
-    public void setWcDiagnosBeskrivning3(String wcDiagnosBeskrivning3) {
-        this.wcDiagnosBeskrivning3 = wcDiagnosBeskrivning3;
+    public void setDiagnosBeskrivning3(String diagnosBeskrivning3) {
+        this.diagnosBeskrivning3 = diagnosBeskrivning3;
     }
 
-    public Boolean getWcSamsjuklighet() {
-        return wcSamsjuklighet;
+    public Boolean getSamsjuklighet() {
+        return samsjuklighet;
     }
 
-    public void setWcSamsjuklighet(Boolean wcSamsjuklighet) {
-        this.wcSamsjuklighet = wcSamsjuklighet;
+    public void setSamsjuklighet(Boolean samsjuklighet) {
+        this.samsjuklighet = samsjuklighet;
     }
 
     public String getSjukdomsforlopp() {
@@ -513,13 +514,13 @@ public class Fk7263Intyg {
         this.giltighet = giltighet;
     }
 
-    public String getArbetsformagaPrognosGarInteAttBedomBeskrivning() {
-        return arbetsformagaPrognosGarInteAttBedomBeskrivning;
+    public String getArbetsformagaPrognosGarInteAttBedomaBeskrivning() {
+        return arbetsformagaPrognosGarInteAttBedomaBeskrivning;
     }
 
-    public void setArbetsformagaPrognosGarInteAttBedomBeskrivning(
-            String arbetsformagaPrognosGarInteAttBedomBeskrivning) {
-        this.arbetsformagaPrognosGarInteAttBedomBeskrivning = arbetsformagaPrognosGarInteAttBedomBeskrivning;
+    public void setArbetsformagaPrognosGarInteAttBedomaBeskrivning(
+            String arbetsformagaPrognosGarInteAttBedomaBeskrivning) {
+        this.arbetsformagaPrognosGarInteAttBedomaBeskrivning = arbetsformagaPrognosGarInteAttBedomaBeskrivning;
     }
 
     public String getPrognosis() {

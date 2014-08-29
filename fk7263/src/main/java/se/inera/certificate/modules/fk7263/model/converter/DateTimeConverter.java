@@ -19,7 +19,9 @@ public final class DateTimeConverter {
      */
     public static LocalDateInterval toLocalDateInterval(PartialInterval partialInterval) {
         if (partialInterval != null) {
-            return new LocalDateInterval(new LocalDate(partialInterval.getFrom()), new LocalDate(partialInterval.getTom()));
+            LocalDate from = (partialInterval.getFrom() == null ? null : new LocalDate(partialInterval.getFrom()));
+            LocalDate tom = (partialInterval.getTom() == null ? null : new LocalDate(partialInterval.getTom()));
+            return new LocalDateInterval(from, tom);
         } else {
             return null;
         }
