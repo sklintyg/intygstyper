@@ -2,10 +2,11 @@
  * wcDialogService - Generic dialog service
  */
 angular.module('common').factory('common.dialogService',
-    function($modal) {
+    function($modal, $window) {
         'use strict';
 
         function _showErrorMessageDialog(message, callback) {
+            $window.doneLoading = false;
             var msgbox = $modal.open({
                 templateUrl: '/web/webjars/common/minaintyg/js/services/dialogServiceErrorTemplate.html',
                 controller: function($scope, $modalInstance, bodyText) {
@@ -19,6 +20,7 @@ angular.module('common').factory('common.dialogService',
             });
 
             msgbox.result.then(function(result) {
+                $window.doneLoading = true;
                 if (callback) {
                     callback(result);
                 }
@@ -49,6 +51,7 @@ angular.module('common').factory('common.dialogService',
          autoClose: whether dialog should close on button click. If false, use .close() on return value from showDialog to close dialog later
          */
         function _showDialog(scope, options) {
+            $window.doneLoading = false;
 
             // Apply default dialog behaviour values
             scope.dialog = {
@@ -182,6 +185,7 @@ angular.module('common').factory('common.dialogService',
             });
 
             msgbox.result.then(function(result) {
+                $window.doneLoading = true;
                 if (options.callback) {
                     options.callback(result);
                 }
