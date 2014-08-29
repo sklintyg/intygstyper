@@ -54,6 +54,30 @@ public class ExternalToTransportConverterTest {
         assertTrue(diff.toString(), diff.identical());
     }
 
+    @Test
+    public void testConversionMaximalt() throws JAXBException, IOException, SAXException {
+
+        Fk7263Utlatande fk7263Utlatande = new CustomObjectMapper().readValue(new ClassPathResource(
+                "ExternalToTransportConverterTest/maximalt-fk7263.json").getFile(), Fk7263Utlatande.class);
+
+        Utlatande utlatande = converter.convert(fk7263Utlatande);
+
+        // read utlatandeType from file
+        File xmlFile = new ClassPathResource("ExternalToTransportConverterTest/maximalt-fk7263.xml").getFile();
+        JAXBContext jaxbContext = JAXBContext.newInstance(Utlatande.class);
+
+        Marshaller marshaller = jaxbContext.createMarshaller();
+        StringWriter stringWriter = new StringWriter();
+        marshaller.marshal(utlatande, stringWriter);
+
+        XMLUnit.setIgnoreWhitespace(true);
+        XMLUnit.setNormalizeWhitespace(true);
+        Diff diff = new Diff(FileUtils.readFileToString(xmlFile), stringWriter.toString());
+        diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
+
+        assertTrue(diff.toString(), diff.identical());
+    }
+
     private class NamespacePrefixNameIgnoringListener implements DifferenceListener {
         public int differenceFound(Difference difference) {
             if (NAMESPACE_PREFIX_ID == difference.getId()) {

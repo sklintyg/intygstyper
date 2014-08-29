@@ -147,7 +147,8 @@ Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast lä
       <from>2011-04-01</from>
       <tom>2011-05-31</tom>
     </observationsperiod>
-    <p:varde value="75.0" unit="percent"/>
+    <p:varde xsi:type="ns4:PQ" value="75.0" unit="percent"
+      xmlns:ns4="urn:iso:21090:dt:1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
     <kommentar>Arbetstidsförläggning</kommentar>
   </observation>
   <observation>
@@ -156,7 +157,8 @@ Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast lä
       <from>2011-03-07</from>
       <tom>2011-03-31</tom>
     </observationsperiod>
-    <p:varde value="50.0" unit="percent"/>
+    <p:varde xsi:type="ns4:PQ" value="50.0" unit="percent"
+      xmlns:ns4="urn:iso:21090:dt:1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
   </observation>
   <observation>
     <observationskod code="302119000" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
@@ -164,7 +166,8 @@ Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast lä
       <from>2011-02-14</from>
       <tom>2011-03-06</tom>
     </observationsperiod>
-    <p:varde value="25.0" unit="percent"/>
+    <p:varde xsi:type="ns4:PQ" value="25.0" unit="percent"
+      xmlns:ns4="urn:iso:21090:dt:1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
   </observation>
   <observation>
     <observationskod code="302119000" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
@@ -172,21 +175,23 @@ Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast lä
       <from>2011-01-26</from>
       <tom>2011-02-13</tom>
     </observationsperiod>
-    <p:varde value="0.0" unit="percent"/>
+    <p:varde xsi:type="ns4:PQ" value="0.0" unit="percent"
+      xmlns:ns4="urn:iso:21090:dt:1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
   </observation>
   <observation>
       <observationskod code="170967006" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT" />
-      <p:beskrivning>Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.</p:beskrivning>
-        <p:varde code="PRO4" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7" codeSystemName="kv_prognos_intyg" />
+      <beskrivning>Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.</beskrivning>
+        <p:varde xsi:type="ns4:CD" code="PRO4" codeSystem="3de65a8b-ae2c-48ce-b6fe-35bdd1f60cf7" codeSystemName="kv_prognos_intyg"
+          xmlns:ns4="urn:iso:21090:dt:1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
   </observation>
+
   <p:observationssamband>
-    <observationssambandskod code="398192003" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
-    <observationsid1 root="1.2.752.129.2.1.2.1" extension="1"/>
-    <observationsid2 root="1.2.752.129.2.1.2.1" extension="2"/>
+    <p:observationsid1 root="1.2.752.129.2.1.2.1" extension="1"/>
+    <p:observationsid2 root="1.2.752.129.2.1.2.1" extension="2"/>
   </p:observationssamband>
+
   <p:observationssamband>
-    <observationssambandskod code="398192003" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
-    <observationsid1 root="1.2.752.129.2.1.2.1" extension="1"/>
-    <observationsid2 root="1.2.752.129.2.1.2.1" extension="3"/>
+    <p:observationsid1 root="1.2.752.129.2.1.2.1" extension="1"/>
+    <p:observationsid2 root="1.2.752.129.2.1.2.1" extension="3"/>
   </p:observationssamband>
 </utlatande>

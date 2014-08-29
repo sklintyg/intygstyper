@@ -59,7 +59,6 @@ public class TransportToExternalConverterTest {
         JsonNode tree = objectMapper.valueToTree(externalFormat);
         JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
                 RESOURCE_ROOT + "maximalt-fk7263.json").getInputStream());
-
         JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
     }
 
