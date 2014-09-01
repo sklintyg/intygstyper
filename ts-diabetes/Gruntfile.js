@@ -68,10 +68,12 @@ module.exports = function(grunt) {
 
         karma: {
             minaintyg: {
-                configFile: 'src/test/resources/karma-minaintyg.conf.ci.js'
+                configFile: 'src/test/resources/karma-minaintyg.conf.ci.js',
+                reporters: [ 'mocha' ]
             },
             webcert: {
-                configFile: 'src/test/resources/karma-webcert.conf.ci.js'
+                configFile: 'src/test/resources/karma-webcert.conf.ci.js',
+                reporters: [ 'mocha' ]
             }
         },
 
