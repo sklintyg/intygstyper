@@ -111,6 +111,9 @@ public class InternalToExternalConverter {
             utlatande.getObservationAktivitetRelationer().addAll(buildObsAktRelationer(source));
         }
 
+        // don't forget Aktivitet Egenkontroll av blodsocker
+        buildAktivitetEgenkontrollBlodsocker(utlatande.getAktiviteter(), source);
+
         utlatande.setBilaga(createBilaga(source.getSyn().getSeparatOgonlakarintyg()));
 
         utlatande.getObservationer().addAll(buildObservationer(source));
@@ -120,6 +123,16 @@ public class InternalToExternalConverter {
         utlatande.getVardkontakter().addAll(buildVardkontakt(source));
 
         return utlatande;
+    }
+
+    private void buildAktivitetEgenkontrollBlodsocker(List<Aktivitet> aktiviteter, se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande source) {
+        if (source.getHypoglykemier().getEgenkontrollBlodsocker() == null) {
+            return;
+        }
+        Aktivitet aktivitet = new Aktivitet();
+        aktivitet.setAktivitetskod(CodeConverter.toKod(AktivitetKod.EGENOVERVAKNING_BLODGLUKOS));
+        aktivitet.setForekomst(source.getHypoglykemier().getEgenkontrollBlodsocker());
+        aktiviteter.add(aktivitet);
     }
 
     // Since there's only one type of bilaga at this time...
@@ -505,14 +518,6 @@ public class InternalToExternalConverter {
             ogatsRorlighet.setId(OGATS_RORLIGHET_ID);
             ogatsRorlighet.setAktivitetskod(CodeConverter.toKod(AktivitetKod.PROVNING_AV_OGATS_RORLIGHET));
             aktiviteter.add(ogatsRorlighet);
-        }
-
-        // Egenkontroll av blodsocker
-        if (source.getHypoglykemier().getEgenkontrollBlodsocker() != null) {
-            Aktivitet egenkontrollBlodsocker = new Aktivitet();
-            egenkontrollBlodsocker.setAktivitetskod(CodeConverter.toKod(AktivitetKod.EGENOVERVAKNING_BLODGLUKOS));
-            egenkontrollBlodsocker.setForekomst(source.getHypoglykemier().getEgenkontrollBlodsocker());
-            aktiviteter.add(egenkontrollBlodsocker);
         }
 
         return aktiviteter;
