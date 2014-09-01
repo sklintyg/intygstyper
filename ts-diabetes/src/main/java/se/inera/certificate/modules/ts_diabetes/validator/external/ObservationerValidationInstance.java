@@ -138,7 +138,7 @@ public class ObservationerValidationInstance extends ExternalValidatorInstance {
         // Check syn-related stuff when separatOgonlakarintyg is NOT set
         if (!getContext().isSeparatOgonlakarintyg()) {
             Observation utanAnmarkning = getObservationWithKod(OBS_OBS25);
-            Observation utanKorrektion = getObservationWithKod(OBS_397535007);
+            Observation utanKorrektion = getObservationWithKod(OBS_420050001);
             Observation diplopi = getObservationWithKod(OBS_H53_2);
 
             if (utanAnmarkning == null) {
