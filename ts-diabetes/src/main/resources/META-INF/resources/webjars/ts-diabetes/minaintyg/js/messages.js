@@ -60,8 +60,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.diabetes.behandling.tabletter': 'Tabletter',
         'ts-diabetes.label.diabetes.behandling.insulin': 'Insulin',
         'ts-diabetes.label.diabetes.behandling.insulin-period': 'Insulin sedan år: ',
-        'ts-diabetes.label.diabetes.behandling.annan': 'Annan behandling',
-        'ts-diabetes.label.diabetes.behandling.annan.period': 'Annan behandling, vilken? ',
+        'ts-diabetes.label.diabetes.behandling.annan': 'Annan behandling: ',
 
         'ts-diabetes.label.hypoglykemier.har-patient-kannedom': 'a) Har patienten kunskap om lämpliga åtgärder vid hypoglykemi?',
         'ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion': 'b) Förekommer hypoglykemier med tecken på nedsatt hjärnfunktion (neuroglukopena symptom) som bedöms kunna innebära en trafiksäkerhetsrisk?',

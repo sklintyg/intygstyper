@@ -206,11 +206,10 @@
                     </span>
                     <span class="text">
                         <span message key="ts-diabetes.label.diabetes.behandling.annan"></span>
-                        <span ng-show="cert.diabetes.annanBehandling" class="ts-cert-answer" message key="{{cert.diabetes.annanBehandling | BoolToTextFilter}}"></span>
-                        <span ng-show="!cert.diabetes.annanBehandling" class="ts-cert-answer" message key="ts-diabetes.label.ej-angivet"></span>
-                        <span ng-show="cert.diabetes.annanBehandling">
+                        <span ng-show="!cert.diabetes.annanBehandlingBeskrivning && cert.diabetes.annanBehandlingBeskrivning.length == 0" class="ts-cert-answer" message key="ts-diabetes.label.ej-angivet">
+                        </span>
+                        <span ng-show="cert.diabetes.annanBehandlingBeskrivning && cert.diabetes.annanBehandlingBeskrivning.length > 0">
                         <br>
-                            <span message key="ts-diabetes.label.diabetes.behandling.annan.period"></span>
                             <span class="ts-cert-answer">{{cert.diabetes.annanBehandlingBeskrivning}}</span>
                         </span>
                     </span>
