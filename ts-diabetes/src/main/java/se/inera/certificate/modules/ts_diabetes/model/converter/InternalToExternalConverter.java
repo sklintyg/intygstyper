@@ -294,9 +294,10 @@ public class InternalToExternalConverter {
                     .getTabletter()));
         }
 
-        if (source.getDiabetes().getAnnanBehandling() != null) {
-            observationer.add(createObservationWithBeskrivning(ObservationsKod.DIABETIKER_ANNAN_BEHANDLING, source
-                    .getDiabetes().getAnnanBehandling(), source.getDiabetes().getAnnanBehandlingBeskrivning()));
+        if (source.getDiabetes().getAnnanBehandlingBeskrivning() != null && 
+                !source.getDiabetes().getAnnanBehandlingBeskrivning().isEmpty()) {
+            observationer.add(createObservationWithBeskrivning(ObservationsKod.DIABETIKER_ANNAN_BEHANDLING, true,
+                    source.getDiabetes().getAnnanBehandlingBeskrivning()));
         }
 
         // Hypoglykemi observationer

@@ -310,7 +310,6 @@ public class ExternalToInternalConverterInstance {
         }
 
         if (annan != null) {
-            diabetes.setAnnanBehandling(annan.getForekomst());
             if (annan.getForekomst()) {
                 diabetes.setAnnanBehandlingBeskrivning(annan.getBeskrivning());
             }

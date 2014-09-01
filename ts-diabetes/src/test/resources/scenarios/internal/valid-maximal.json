@@ -59,7 +59,6 @@
         "tabletter" : true,
         "insulin" : true,
         "insulinBehandlingsperiod" : "2012",
-        "annanBehandling" : true,
         "annanBehandlingBeskrivning" : "Hypnos"
     },
     "hypoglykemier" : {

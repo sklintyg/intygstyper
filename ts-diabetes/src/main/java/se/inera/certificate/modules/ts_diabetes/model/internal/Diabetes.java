@@ -8,7 +8,6 @@ public class Diabetes {
     private Boolean tabletter;
     private Boolean insulin;
     private String insulinBehandlingsperiod;
-    private Boolean annanBehandling;
     private String annanBehandlingBeskrivning;
 
     public String getDiabetestyp() {
@@ -57,14 +56,6 @@ public class Diabetes {
 
     public void setInsulinBehandlingsperiod(String insulinBehandlingsperiod) {
         this.insulinBehandlingsperiod = insulinBehandlingsperiod;
-    }
-
-    public Boolean getAnnanBehandling() {
-        return annanBehandling;
-    }
-
-    public void setAnnanBehandling(Boolean annanBehandling) {
-        this.annanBehandling = annanBehandling;
     }
 
     public String getAnnanBehandlingBeskrivning() {
