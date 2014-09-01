@@ -45,7 +45,7 @@ var tsDiabetesMessages = {
         // Visa ts-diabetes
 
         'ts-diabetes.label.syn': '3. Synintyg',
-        'ts-diabetes.label.ovrigkommentar': '5. Övrig kommentar',
+        'ts-diabetes.label.ovrigkommentar': 'Övriga upplysningar och kommentarer',
 
         'ts-diabetes.label.syn.binokulart': 'Binokulärt',
         'ts-diabetes.label.syn.diplopi': 'd) Förekommer dubbelseende? ',
