@@ -28,9 +28,9 @@ import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
 
 /**
  * Unit test for the ExternalToInteralConverter.
- * 
+ *
  * @author erik
- * 
+ *
  */
 public class ExternalToInternalConverterTest {
 

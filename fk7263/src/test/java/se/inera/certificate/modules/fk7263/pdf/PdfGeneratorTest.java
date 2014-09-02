@@ -18,7 +18,6 @@ import se.inera.certificate.modules.fk7263.utils.Scenario;
 import se.inera.certificate.modules.fk7263.utils.ScenarioFinder;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
 
@@ -67,7 +66,6 @@ public class PdfGeneratorTest {
 
     @Test
     public void testPdfGenerationFromWebcert() throws Exception {
-        
         Fk7263Intyg intyg = new CustomObjectMapper().readValue(fk7263_json, Fk7263Intyg.class);
         // generate PDF
         byte[] generatorResult = new PdfGenerator(intyg, true, ApplicationOrigin.WEBCERT).getBytes();

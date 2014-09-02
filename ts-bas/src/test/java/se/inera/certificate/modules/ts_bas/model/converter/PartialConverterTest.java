@@ -29,10 +29,17 @@ import org.junit.Test;
 
 public class PartialConverterTest {
 
+    private static final int DAY2 = 11;
+    private static final int DAY1 = 5;
+    private static final int MONTH3 = 4;
+    private static final int MONTH2 = 12;
+    private static final int MONTH1 = 3;
+    private static final int YEAR = 2013;
+
     @Test
     public void testPartialToStringWithYear() {
 
-        Partial partial = new Partial().with(DateTimeFieldType.year(), 2013);
+        Partial partial = new Partial().with(DateTimeFieldType.year(), YEAR);
 
         String partialAsString = PartialConverter.partialToString(partial);
 
@@ -43,7 +50,7 @@ public class PartialConverterTest {
     @Test
     public void testPartialToStringWithYearAndMonth1() {
 
-        Partial partial = new Partial().with(DateTimeFieldType.year(), 2013).with(DateTimeFieldType.monthOfYear(), 3);
+        Partial partial = new Partial().with(DateTimeFieldType.year(), YEAR).with(DateTimeFieldType.monthOfYear(), MONTH1);
 
         String partialAsString = PartialConverter.partialToString(partial);
 
@@ -54,7 +61,7 @@ public class PartialConverterTest {
     @Test
     public void testPartialToStringWithYearAndMonth2() {
 
-        Partial partial = new Partial().with(DateTimeFieldType.year(), 2013).with(DateTimeFieldType.monthOfYear(), 12);
+        Partial partial = new Partial().with(DateTimeFieldType.year(), YEAR).with(DateTimeFieldType.monthOfYear(), MONTH2);
 
         String partialAsString = PartialConverter.partialToString(partial);
 
@@ -65,8 +72,8 @@ public class PartialConverterTest {
     @Test
     public void testPartialToStringWithYearAndMonthAndDay1() {
 
-        Partial partial = new Partial().with(DateTimeFieldType.year(), 2013).with(DateTimeFieldType.monthOfYear(), 4)
-                .with(DateTimeFieldType.dayOfMonth(), 5);
+        Partial partial = new Partial().with(DateTimeFieldType.year(), YEAR).with(DateTimeFieldType.monthOfYear(), MONTH3)
+                .with(DateTimeFieldType.dayOfMonth(), DAY1);
 
         String partialAsString = PartialConverter.partialToString(partial);
 
@@ -77,13 +84,13 @@ public class PartialConverterTest {
     @Test
     public void testPartialToStringWithYearAndMonthAndDay2() {
 
-        Partial partial = new Partial().with(DateTimeFieldType.year(), 2008).with(DateTimeFieldType.monthOfYear(), 12)
-                .with(DateTimeFieldType.dayOfMonth(), 11);
+        Partial partial = new Partial().with(DateTimeFieldType.year(), YEAR).with(DateTimeFieldType.monthOfYear(), MONTH2)
+                .with(DateTimeFieldType.dayOfMonth(), DAY2);
 
         String partialAsString = PartialConverter.partialToString(partial);
 
         assertNotNull(partialAsString);
-        assertEquals("2008-12-11", partialAsString);
+        assertEquals("2013-12-11", partialAsString);
     }
 
     @Test

@@ -1,6 +1,35 @@
 package se.inera.certificate.modules.ts_bas.pdf.xpath;
 
-import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.*;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.ADRESS_OCH_ORT_XPATH;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.AKTIVITET_BESKRIVNING_TEMPLATE;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.AKTIVITET_FOREKOMST_TEMPLATE;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.AT_LAKARE_CHECK_XPATH;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.ID_KONTROLL_TEMPLATE;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.INTYGSDATUM_XPATH;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.INTYG_AVSER_TEMPLATE;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.INVANARE_ADRESS_FALT1_XPATH;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.INVANARE_ADRESS_FALT2_XPATH;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.INVANARE_ADRESS_FALT3_XPATH;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.INVANARE_PERSONNUMMER_XPATH;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.NAMNFORTYDLIGANDE_XPATH;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.OBSERVATION_BESKRIVNING_TEMPLATE;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.OBSERVATION_FOREKOMST_CODE_LATERALITET;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.OBSERVATION_FOREKOMST_TEMPLATE;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.OBSERVATION_VARDE_DEC_CODE_LATERALITET;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.OBSERVATION_VARDE_INT_CODE_LATERALITET;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.OVRIG_BESKRIVNING_XPATH;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.REKOMMENDATION_BESKRIVNING_TEMPLATE;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.REKOMMENDATION_VARDE_TEMPLATE;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.SPECIALISTKOMPETENS_CHECK_XPATH;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.ST_LAKARE_CHECK_XPATH;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.TELEFON_XPATH;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.TS_UTGAVA_XPATH;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.TS_VERSION_XPATH;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.VARDINRATTNINGENS_NAMN_XPATH;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.VARD_PA_SJUKHUS_TID_XPATH;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.VARD_PA_SJUKHUS_VARDINRATTNING_XPATH;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.booleanXPath;
+import static se.inera.certificate.modules.ts_bas.pdf.xpath.XPathExpressions.stringXPath;
 
 /**
  * Defines all xPath expressions that are needed in order to extract the information of the transport model in the way
@@ -392,7 +421,7 @@ public enum TransportToPDFMapping {
     SPECIALISTKOMPETENS_CHECK("Falt_91", SPECIALISTKOMPETENS_CHECK_XPATH),
 
     /** */
-    // TODO: Implement when specialitet is no longer an CV.
+    // TODO Implement when specialitet is no longer an CV.
     // SPECIALISTKOMPETENS_BESKRVNING("Falt_92", SPECIALISTKOMPETENS_BESKRVNING_XPATH),
 
     /** */
@@ -421,7 +450,7 @@ public enum TransportToPDFMapping {
     /**
      * Utility that dumps all xPath expressions in a CSV format. Usefull for exporting the xPaths to a human readable
      * format.
-     * 
+     *
      * @param args
      *            Not used.
      */

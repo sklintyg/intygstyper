@@ -10,7 +10,10 @@ import se.inera.certificate.integration.json.CustomObjectMapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class ResourceConverterUtils {
+public final class ResourceConverterUtils {
+
+    private ResourceConverterUtils() {
+    }
 
     private static final ObjectMapper OBJECT_MAPPER = new CustomObjectMapper();
 

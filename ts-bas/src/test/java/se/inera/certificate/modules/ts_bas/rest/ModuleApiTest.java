@@ -207,7 +207,7 @@ public class ModuleApiTest {
         Vardgivare vardgivare = new Vardgivare("hsaId0", "vardgivare");
         Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
         HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", null, vardenhet);
-        Patient patient = new Patient("Kalle",null,"Kula","19121212-1212",null,null,null);
+        Patient patient = new Patient("Kalle", null, "Kula", "19121212-1212", null, null, null);
         return new CreateNewDraftHolder("Id1", hosPersonal, patient);
     }
 

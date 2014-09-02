@@ -24,6 +24,6 @@ public class CodeEnumsTest {
 
     @Test
     public void test() {
-        //TODO: Test the modules ENUMs here.
+        //TODO Test the modules ENUMs here.
     }
 }

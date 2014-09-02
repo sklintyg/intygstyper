@@ -99,7 +99,7 @@ public class InternalValidatorTest {
         assertEquals("funktionsnedsattning.beskrivning", getSingleElement(validationResponse.getValidationErrors())
                 .getField());
     }
-    
+
     @Test
     public void testIdentitetMissing() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-missing-identitet")
@@ -109,10 +109,10 @@ public class InternalValidatorTest {
         assertEquals("identitet", getSingleElement(validationResponse.getValidationErrors())
                 .getField());
     }
-    
+
     /**
-     * Utility method for getting a single element from a collection
-     * 
+     * Utility method for getting a single element from a collection.
+     *
      * @param collection
      *            the collection
      * @return a single element, throws IllegalArgumentException in case the collection contains more than one element

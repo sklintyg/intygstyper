@@ -3,7 +3,9 @@ package se.inera.certificate.modules.ts_bas.pdf.xpath;
 /**
  * Defines xPath expressions and templates used to create all expressions needed by Transportstyrelsen.
  */
-public class XPathExpressions {
+public final class XPathExpressions {
+    private XPathExpressions() {
+    }
 
     public static final StringXPathExpression TS_UTGAVA_XPATH = new StringXPathExpression("p:utlatande/p2:utgava");
 
@@ -81,12 +83,12 @@ public class XPathExpressions {
 
     /**
      * Creates a {@link BooleanXPathExpression} from a string template and arguments.
-     * 
+     *
      * @param template
      *            The string template to use.
      * @param args
      *            The additional arguments to inject in the template.
-     * 
+     *
      * @return A boolean xPath expression.
      */
     public static BooleanXPathExpression booleanXPath(String template, Object... args) {
@@ -95,12 +97,12 @@ public class XPathExpressions {
 
     /**
      * Creates a {@link StringXPathExpression} from a string template and arguments.
-     * 
+     *
      * @param template
      *            The string template to use.
      * @param args
      *            The additional arguments to inject in the template.
-     * 
+     *
      * @return A string xPath expression.
      */
     public static StringXPathExpression stringXPath(String template, Object... args) {

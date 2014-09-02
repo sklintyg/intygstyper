@@ -18,7 +18,7 @@ public class XPathEvaluator {
 
     /**
      * Creates a new xPath evaluator.
-     * 
+     *
      * @param xPathEngine
      *            The xPath engine to use.
      * @param document
@@ -32,12 +32,12 @@ public class XPathEvaluator {
     /**
      * Evaluates the given {@link XPathExpression} against the wrapped DOM document, producing a result of the type of
      * the expression.
-     * 
+     *
      * @param expression
      *            The expression to evaluate.
-     * 
+     *
      * @return The result of the expression.
-     * 
+     *
      * @throws XPathExpressionException
      *             if an error occurred.
      */

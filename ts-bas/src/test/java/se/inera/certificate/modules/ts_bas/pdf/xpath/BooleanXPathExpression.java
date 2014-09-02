@@ -9,7 +9,7 @@ public class BooleanXPathExpression extends AbstractXPathExpression<Boolean> {
 
     /**
      * Creates a boolean xPath expression from an xPath string.
-     * 
+     *
      * @param xPathString
      *            The xPath string resulting in a boolean result.
      */

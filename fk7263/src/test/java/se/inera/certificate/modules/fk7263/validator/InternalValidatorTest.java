@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import org.joda.time.LocalDate;
 import org.junit.Test;
@@ -218,7 +216,7 @@ public class InternalValidatorTest {
 
         assertEquals(1, new InternalValidator(utlatande).validate().size());
     }
-        
+
     @Test
     public void testNedsattArbetsformagaInvalidIntervalStart() throws Exception {
         Fk7263Intyg utlatande = getValidUtlatande();
@@ -228,5 +226,5 @@ public class InternalValidatorTest {
         assertEquals(1, new InternalValidator(utlatande).validate().size());
 
     }
-    
+
 }

@@ -8,21 +8,21 @@ import org.w3c.dom.Node;
 
 /**
  * Abstract helper class that aids in creating concrete types of an {@link XPathExpression}.
- * 
+ *
  * @param <T>
  *            The return type of the expression.
  */
 public abstract class AbstractXPathExpression<T> implements XPathExpression<T> {
 
     /** The xPath expression. */
-    protected final String xPathString;
+    private final String xPathString;
 
     /** The return type of the evaluation. */
-    protected final QName returnType;
+    private final QName returnType;
 
     /**
      * Constructor for use by implementing classes.
-     * 
+     *
      * @param xPathString
      *            The xPath expression.
      * @param returnType

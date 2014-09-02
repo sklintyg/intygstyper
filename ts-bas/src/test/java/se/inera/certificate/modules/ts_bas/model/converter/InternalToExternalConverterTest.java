@@ -27,10 +27,10 @@ import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
 
 /**
- * Unit test for InternalToExternalConverter
- * 
+ * Unit test for InternalToExternalConverter.
+ *
  * @author erik
- * 
+ *
  */
 public class InternalToExternalConverterTest {
 
@@ -52,6 +52,6 @@ public class InternalToExternalConverterTest {
 
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
-        
+
     }
 }

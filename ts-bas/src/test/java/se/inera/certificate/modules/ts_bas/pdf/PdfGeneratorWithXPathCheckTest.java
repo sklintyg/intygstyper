@@ -42,7 +42,7 @@ public class PdfGeneratorWithXPathCheckTest {
      * <li>The PDF was correctly generated.
      * <li>The xPath expressions are correct.
      * </ul>
-     * 
+     *
      * @throws Exception
      *             if an error uccurred.
      */
@@ -86,6 +86,8 @@ public class PdfGeneratorWithXPathCheckTest {
 
         case AcroFields.FIELD_TYPE_NONE:
             throw new IllegalStateException("Field " + fieldName + " was not found.");
+        default:
+            break;
         }
 
         throw new IllegalStateException("Unexpected field type: " + fields.getFieldType(fieldName));

@@ -18,7 +18,7 @@ public class DateXPathExpression extends AbstractXPathExpression<String> {
 
     /**
      * Creates a boolean xPath expression from an xPath string.
-     * 
+     *
      * @param xPathString
      *            The xPath string resulting in a boolean result.
      * @param dateFormat

@@ -5,8 +5,11 @@ import junit.framework.AssertionFailedError;
 import org.unitils.reflectionassert.ReflectionAssert;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
 
-public class ModelAssert {
+public final class ModelAssert {
 
+    private ModelAssert() {
+
+    }
     public static void assertEquals(Object expected, Object actual) {
         try {
             ReflectionAssert.assertReflectionEquals(expected, actual, ReflectionComparatorMode.LENIENT_ORDER);
