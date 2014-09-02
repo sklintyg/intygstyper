@@ -82,7 +82,7 @@ public final class TransportXmlUtils {
      * Validates the XML of a {@link Utlatande}.
      *
      * @param utlatandeXml The xml as a string.
-     * @throws ModuleValidationException 
+     * @throws ModuleValidationException
      */
     public static void validateSchema(String utlatandeXml) throws ModuleValidationException {
         try {

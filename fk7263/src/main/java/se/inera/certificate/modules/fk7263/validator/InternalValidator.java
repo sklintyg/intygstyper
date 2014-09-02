@@ -5,7 +5,6 @@ import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
 import se.inera.certificate.model.LocalDateInterval;
@@ -13,7 +12,7 @@ import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 
 /**
  * Validates a fk7263 certificate's specific rules that's not covered by schema validation or external validation.
- * 
+ *
  * @author marced
  */
 public class InternalValidator extends AbstractValidator {
@@ -130,7 +129,7 @@ public class InternalValidator extends AbstractValidator {
 
     /**
      * Checks that the given Observation is about arbetsformaga and has a period where tom>from.
-     * 
+     *
      * @param nedsattning
      *            nedsattning
      * @return boolean

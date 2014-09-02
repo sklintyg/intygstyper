@@ -162,7 +162,7 @@ public class ExternalToTransportConverter {
      * @param source
      *            {@link Rekommendation}
      * @return {@link RekommendationType}
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     private RekommendationType convertRekommendation(Rekommendation source) throws ConverterException {
         RekommendationType rekommendation = new RekommendationType();
@@ -356,7 +356,7 @@ public class ExternalToTransportConverter {
      * @param source
      *            {@link HosPersonal}
      * @return {@link HosPersonalType}
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     private HosPersonalType convertHosPersonal(HosPersonal source) throws ConverterException {
         HosPersonalType hosPersonal = new HosPersonalType();

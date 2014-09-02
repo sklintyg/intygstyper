@@ -36,14 +36,14 @@ public class WebcertModelFactory {
 
     /**
      * Create a new TS-bas draft pre-populated with the attached data.
-     * 
+     *
      * @param newDraftData
      *            {@link CreateNewDraftHolder}
      * @param template
      *            A template to use as a base, or <code>null</code> if an empty internal model should be used.
-     * 
+     *
      * @return {@link Utlatande}
-     * 
+     *
      * @throws ConverterException
      *             if something unforeseen happens
      */

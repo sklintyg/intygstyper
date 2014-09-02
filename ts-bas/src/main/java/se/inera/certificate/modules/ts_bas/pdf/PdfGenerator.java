@@ -218,7 +218,7 @@ public class PdfGenerator {
 
     /**
      * Method for filling out the fields of a pdf with data from the internal model.
-     * 
+     *
      * @param utlatande
      *            {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande} containing data for populating
      *            the pdf
