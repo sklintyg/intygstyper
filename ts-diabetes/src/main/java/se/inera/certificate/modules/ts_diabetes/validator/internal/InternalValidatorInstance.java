@@ -197,6 +197,11 @@ public class InternalValidatorInstance {
         if (!(isTrue(diabetes.getEndastKost()) || isTrue(diabetes.getTabletter()) || isTrue(diabetes.getInsulin()) || annanBehandling)) {
             addValidationError("diabetes", "ts-diabetes.validation.diabetes.behandling.missing");
         }
+
+        if (isTrue(diabetes.getInsulin())) {
+            assertDescriptionNotEmpty(diabetes.getInsulinBehandlingsperiod(), "diabetes.insulin",
+                    "ts-diabetes.validation.diabetes.insulin.behandlingsperiod.missing");
+        }
     }
 
     private void validateHoSPersonal(final HoSPersonal skapadAv) {
