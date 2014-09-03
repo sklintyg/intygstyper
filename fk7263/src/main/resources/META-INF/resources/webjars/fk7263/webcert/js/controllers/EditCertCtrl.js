@@ -39,7 +39,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.toggleShowComplete = function() {
                 $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
                 if ($scope.widgetState.showComplete) {
-
+                    $scope.save();
                     var old = $location.hash();
                     $location.hash('top');
                     $anchorScroll();

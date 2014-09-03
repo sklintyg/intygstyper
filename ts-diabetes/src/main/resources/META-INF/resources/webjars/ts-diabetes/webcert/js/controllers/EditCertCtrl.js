@@ -27,7 +27,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
             $scope.toggleShowComplete = function() {
                 $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
                 if ($scope.widgetState.showComplete) {
-
+                    $scope.save();
                     var old = $location.hash();
                     $location.hash('top');
                     $anchorScroll();

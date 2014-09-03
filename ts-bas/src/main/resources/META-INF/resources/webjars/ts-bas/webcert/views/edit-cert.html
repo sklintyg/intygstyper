@@ -60,11 +60,11 @@
                         ng-click="discard()"><span message key="ts-bas.label.ta-bort-utkast"></span></button>
                 <button id="skriv-ut-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="print()">
                   <span message key="ts-bas.label.skriv-ut-utkast"></span></button>
-                <button class="btn btn-default btn-secondary" ng-disabled="!hasSavedThisSession"
+                <button class="btn btn-default btn-secondary"
                         ng-if="!widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()"><span message
                                                                                                                key="ts-bas.label.visa-kompletteras"></span>
                 </button>
-                <button class="btn btn-default btn-secondary" ng-disabled="!hasSavedThisSession"
+                <button class="btn btn-default btn-secondary"
                         ng-if="widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()"><span message
                                                                                                               key="ts-bas.label.dolj-kompletteras"></span>
                 </button>

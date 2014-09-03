@@ -27,7 +27,7 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
             $scope.toggleShowComplete = function() {
                 $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
                 if ($scope.widgetState.showComplete) {
-
+                    $scope.save();
                     var old = $location.hash();
                     $location.hash('top');
                     $anchorScroll();

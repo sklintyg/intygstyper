@@ -62,11 +62,11 @@
                 <button id="skriv-ut-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="print()">
                   Skriv ut utkast
                 </button>
-                <button class="btn btn-default btn-secondary" ng-disabled="!hasSavedThisSession"
+                <button class="btn btn-default btn-secondary"
                         ng-if="!widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">Visa vad som
                   behöver kompletteras
                 </button>
-                <button class="btn btn-default btn-secondary" ng-disabled="!hasSavedThisSession"
+                <button class="btn btn-default btn-secondary"
                         ng-if="widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">
                   Dölj vad som behöver kompletteras
                 </button>
