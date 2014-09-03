@@ -344,11 +344,11 @@
                         <td><input id="hypogn" name="hypogn" type="radio" ng-value="false"
                                    ng-model="cert.hypoglykemier.allvarligForekomstVakenTid"></td>
                         <td><span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid"></span>
-                          <div class="controls" data-ng-show="cert.hypoglykemier.allvarligForekomstVakenTid">
-                            <label class="control-label">När?</label>
-                            <input type="text" class="form-control"
-                                   data-ng-model="cert.hypoglykemier.allvarligForekomstVakenTidObservationstid"
-                                   maxlength="10">
+                          <div class="controls form-inline webcert-top-padding-section" data-ng-show="cert.hypoglykemier.allvarligForekomstVakenTid">
+                            <label class="control-label"><span message key="common.when"></span></label>
+                            <span wc-date-picker-field target-model="cert.hypoglykemier.allvarligForekomstVakenTidObservationstid"
+                                  dom-id="hypoglykemierg"
+                                  invalid="false"></span>
                             <p>(Fyll i åååå-mm-dd)</p>
                           </div>
                         </td>

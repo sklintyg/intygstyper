@@ -3,6 +3,5 @@
     "/web/webjars/fk7263/webcert/js/controllers/EditCertCtrl.js",
     "/web/webjars/fk7263/webcert/js/controllers/QACtrl.js",
     "/web/webjars/fk7263/webcert/js/controllers/ViewCertCtrl.js",
-    "/web/webjars/fk7263/webcert/js/directives/wcDatePickerField.js",
     "/web/webjars/fk7263/webcert/js/services/fragaSvarService.js"
 ]

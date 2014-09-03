@@ -5,6 +5,7 @@ module.exports = function(config) {
     var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/common/webcert/js/';
     var TEST_DIR = 'src/test/js/webcert/';
     var WEBJAR_DIR = '../target/webjardependencies/';
+    var TEMPLATE_PATH = SRC_DIR + '**/*.html';
 
     config.set({
 
@@ -72,6 +73,11 @@ module.exports = function(config) {
             'karma-phantomjs-launcher',
             'karma-mocha-reporter'
         ],
+
+        // generate js files from html templates to expose them during testing.
+        preprocessors: {
+            TEMPLATE_PATH: 'ng-html2js'
+        },
 
         reporters: [ 'progress' ]
     });

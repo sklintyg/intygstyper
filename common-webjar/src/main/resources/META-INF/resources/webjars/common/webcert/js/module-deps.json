@@ -10,6 +10,7 @@
     "/web/webjars/common/webcert/js/directives/wcMaxLength.js",
     "/web/webjars/common/webcert/js/directives/wcPrintHeader.js",
     "/web/webjars/common/webcert/js/directives/wcSpinner.js",
+    "/web/webjars/common/webcert/js/directives/wcDatePickerField.js",
     "/web/webjars/common/webcert/js/filters/BoolToTextFilter.js",
     "/web/webjars/common/webcert/js/services/CertificateService.js",
     "/web/webjars/common/webcert/js/services/dialogService.js",

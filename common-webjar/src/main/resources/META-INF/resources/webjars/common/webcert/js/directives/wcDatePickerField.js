@@ -1,4 +1,4 @@
-angular.module('fk7263').directive('wcDatePickerField',
+angular.module('common').directive('wcDatePickerField',
     function($rootScope, $timeout) {
         'use strict';
 
@@ -11,7 +11,7 @@ angular.module('fk7263').directive('wcDatePickerField',
                 invalid: '=',
                 onChange: '&'
             },
-            templateUrl: '/web/webjars/fk7263/webcert/js/directives/wcDatePickerField.html',
+            templateUrl: '/web/webjars/common/webcert/js/directives/wcDatePickerField.html',
 
             controller: function($scope) {
 
@@ -26,7 +26,9 @@ angular.module('fk7263').directive('wcDatePickerField',
                     if (newValue instanceof Date) {
                         $scope.targetModel = format(newValue);
                     }
-                    $scope.onChange();
+                    if ($scope.onChange) {
+                        $scope.onChange();
+                    }
                 }, false);
 
                 $scope.isOpen = false;
