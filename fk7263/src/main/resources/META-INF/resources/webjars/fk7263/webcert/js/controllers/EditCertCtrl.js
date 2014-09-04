@@ -190,27 +190,27 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
             };
 
-            // Diagnose handling (2)
+            // Diagnose handling (2) Typeahead is implemented in a future story
             $scope.diagnoseCodes = [
-                {
+/*                {
                     value: 'J44.0',
                     label: 'J44.0 Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion'
                 },
                 {
                     value: 'K92.2',
                     label: 'K92.2 Gastrointestinal blödning, ospecificerad'
-                }
+                }*/
             ];
 
             $scope.diagnoses = [
-                {
+/*                {
                     value: 'Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion',
                     label: 'J44.0 Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion'
                 },
                 {
                     value: 'Gastrointestinal blödning, ospecificerad',
                     label: 'K92.2 Gastrointestinal blödning, ospecificerad'
-                }
+                }*/
             ];
 
             // Arbetsförmåga handling (8b)
@@ -400,11 +400,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             }
 
             function convertCertToForm($scope) {
-
-                // Set blank defaults
-                var propertyNames = ['diagnosBeskrivning', 'wcDiagnosBeskrivning1', 'wcDiagnosKod2',
-                    'wcDiagnosBeskrivning2', 'wcDiagnosKod3', 'wcDiagnosBeskrivning3' ];
-                setPropertyDefaults($scope.cert, propertyNames, '');
 
                 // Set nuvarande arbete value
                 if ($scope.cert.nuvarandeArbetsuppgifter !== undefined ||

@@ -71,9 +71,20 @@
 
               <div wc-field field-number="2" field-label="fk7263.label.diagnos" filled="cert.diagnosBeskrivning"
                    id="field2">
-                {{cert.diagnosBeskrivning}} (<span class="tag"><span message
+                <div class="form-group">
+                  {{cert.diagnosBeskrivning}} (<span class="tag"><span message
                                                                      key="fk7263.label.diagnoskod"></span></span>
                 {{cert.diagnosKod}})
+                 </div>
+                <div class="form-group">
+                  <label class="control-label bold">
+                    <span message key="fk7263.label.additionalDiagnoses"></span>
+                  </label>
+                  <div class="controls">
+                    <p>{{cert.diagnosKod2}} {{cert.diagnosBeskrivning2}}</p>
+                    <p>{{cert.diagnosKod3}} {{cert.diagnosBeskrivning3}}</p>
+                  </div>
+                </div>
               </div>
 
               <div wc-field field-number="3" field-label="fk7263.label.aktuellt-sjukdomsforlopp"

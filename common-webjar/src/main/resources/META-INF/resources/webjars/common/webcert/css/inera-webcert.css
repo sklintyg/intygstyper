@@ -1039,4 +1039,7 @@
         position: absolute;
     }
 
+    .bold {
+        font-weight: bold !important;
+    }
 }

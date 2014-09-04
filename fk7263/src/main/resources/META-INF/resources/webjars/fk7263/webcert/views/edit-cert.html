@@ -179,7 +179,7 @@
                         <label class="control-label">Diagnos</label>
                         <input type="text" class="form-control maxwidth" id="diagnose.description"
                                class="col-xs-12 form-control" name="diagnose.description" value=""
-                               ng-model="cert.wcDiagnosBeskrivning1"
+                               ng-model="cert.diagnosBeskrivning1"
                                typeahead="d.value as d.label for d in diagnoses | filter:$viewValue | limitTo:8">
                       </div>
                     </div>
@@ -189,10 +189,10 @@
                         <div class="controls">
                           <div class="bottom-padding-small clearfix">
                             <input type="text" id="diagnose.codeOpt1" name="diagnose.codeOpt1" value=""
-                                   ng-model="cert.wcDiagnosKod2" class="col-xs-11 form-control">
+                                   ng-model="cert.diagnosKod2" class="col-xs-11 form-control">
                           </div>
                           <input type="text" id="diagnose.codeOpt2" name="diagnose.codeOpt2" value=""
-                                 ng-model="cert.wcDiagnosKod3" class="col-xs-11 form-control">
+                                 ng-model="cert.diagnosKod3" class="col-xs-11 form-control">
                         </div>
                       </div>
                       <div class='col-xs-9 unbreakable'>
@@ -202,10 +202,10 @@
                         <div class="controls">
                           <div class="bottom-padding-small clearfix">
                             <input type="text" id="diagnose.descriptionOpt1" name="diagnose.descriptionOpt1" value=""
-                                   ng-model="cert.wcDiagnosBeskrivning2" class="block col-xs-12 form-control maxwidth">
+                                   ng-model="cert.diagnosBeskrivning2" class="block col-xs-12 form-control maxwidth">
                           </div>
                           <input type="text" id="diagnose.descriptionOpt2" name="diagnose.descriptionOpt2" value=""
-                                 ng-model="cert.wcDiagnosBeskrivning3" class="block col-xs-12 form-control maxwidth">
+                                 ng-model="cert.diagnosBeskrivning3" class="block col-xs-12 form-control maxwidth">
                         </div>
                       </div>
                     </div>
