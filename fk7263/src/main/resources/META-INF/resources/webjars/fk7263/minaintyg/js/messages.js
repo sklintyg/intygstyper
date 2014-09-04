@@ -26,7 +26,7 @@ var fk7263Messages = {
         'fk7263.label.latestevent': 'Senaste händelse',
         'fk7263.label.latestevent.noevents': 'Inga händelser',
         'fk7263.history.label.pagetitle': 'Intygets alla händelser',
-        'fk7263.status.sent': 'Skickat till',
+        'fk7263.status.sent': 'Mottaget av',
         'fk7263.target.fk': 'Försäkringskassan',
         'fk7263.target.afa': 'AFA Försäkring',
         'fk7263.target.skandia': 'Skandia',

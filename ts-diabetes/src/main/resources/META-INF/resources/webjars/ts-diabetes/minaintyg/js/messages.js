@@ -129,7 +129,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.latestevent.noevents': 'Inga händelser',
         'ts-diabetes.label.latestevent.showall': 'Visa alla händelser',
         'ts-diabetes.history.label.pagetitle': 'Intygets alla händelser',
-        'ts-diabetes.status.sent': 'Skickat till',
+        'ts-diabetes.status.sent': 'Mottaget av',
         'ts-diabetes.target.mi': 'Försäkringsbolaget',
         'ts-diabetes.target.ts': 'Transportstyrelsen',
         'ts-diabetes.label.pagetitle.step1': 'Skicka intyg - steg 1 av 2',

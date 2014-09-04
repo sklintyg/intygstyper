@@ -160,7 +160,7 @@ var tsBasMessages = {
         'ts-bas.label.latestevent.noevents': 'Inga händelser',
         'ts-bas.label.latestevent.showall': 'Visa alla händelser',
         'ts-bas.history.label.pagetitle': 'Intygets alla händelser',
-        'ts-bas.status.sent': 'Skickat till',
+        'ts-bas.status.sent': 'Mottaget av',
         'ts-bas.target.mi': 'Försäkringsbolaget',
         'ts-bas.target.ts': 'Transportstyrelsen',
         'ts-bas.sent.label.result': 'Mottagare av intyget: ',
