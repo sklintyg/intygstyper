@@ -15,6 +15,11 @@ module.exports = function(config) {
         // frameworks to use
         frameworks: [ 'jasmine' ],
 
+        // generate js files from html templates to expose them during testing.
+        preprocessors: {
+            TEMPLATE_PATH: ['ng-html2js']
+        },
+
         // list of files / patterns to load in the browser
         files: [
 
@@ -71,13 +76,9 @@ module.exports = function(config) {
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-phantomjs-launcher',
-            'karma-mocha-reporter'
+            'karma-mocha-reporter',
+            'karma-ng-html2js-preprocessor'
         ],
-
-        // generate js files from html templates to expose them during testing.
-        preprocessors: {
-            TEMPLATE_PATH: 'ng-html2js'
-        },
 
         reporters: [ 'progress' ]
     });

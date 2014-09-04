@@ -1,7 +1,7 @@
 describe('wcDatePickerFieldSpec', function() {
     'use strict';
 
-    beforeEach(angular.mock.module('common', '/web/webjars/common/webcert/js/directives/wcDatePickerField.html'));
+    beforeEach(angular.mock.module('common', 'wcDatePickerField.html'));
 
     var $scope, form, template;
 
@@ -12,8 +12,8 @@ describe('wcDatePickerFieldSpec', function() {
             test: null
         };
 
-        template = $templateCache.get('/web/webjars/common/webcert/js/directives/wcDatePickerField.html');
-        $templateCache.put('/templates/wcDatePickerField.html',template);
+        //template = $templateCache.get('/web/webjars/common/webcert/js/directives/wcDatePickerField.html');
+        //$templateCache.put('/templates/wcDatePickerField.html',template);
 
         var el = angular.element('<form name="form"><span wc-date-picker-field target-model="model.test" dom-id="test" invalid="false"></span></form>');
         form = $compile(el)($scope);
