@@ -1,5 +1,4 @@
 <div class="row-fluid">
-
   <div id="backnav" class="row-fluid">
     <a class="backlink" href="/web/start"> <span message key="fk7263.button.goback"></span>
     </a>
@@ -190,18 +189,19 @@
               </div>
 
 
-              <div mi-field field-label="fk7263.label.diagnosis" filled="cert.diagnosBeskrivning">
+              <div mi-field field-label="fk7263.label.diagnosis" filled="cert.diagnosKod">
                 <div class="form-group">
                   {{cert.diagnosBeskrivning}} (<span class="tag"><span message key="fk7263.label.diagnosisCode"></span></span> {{cert.diagnosKod}})
                 </div>
 
                 <div class="form-group">
-                  <label class="control-label bold">
-                    <span message key="fk7263.label.additionalDiagnoses"></span>
+                  <label class="control-label bold" ng-show="cert.diagnosKod2 || cert.diagnosBeskrivning2 || cert.diagnosKod3 || cert.diagnosBeskrivning3">
+                    <span message key="fk7263.label.ytterligarediagnoser"></span>
                   </label>
                   <div class="controls">
-                    <p>{{cert.diagnosKod2}} {{cert.diagnosBeskrivning2}}</p>
-                    <p>{{cert.diagnosKod3}} {{cert.diagnosBeskrivning3}}</p>
+                    <p ng-show="cert.diagnosKod2 != '' || cert.diagnosBeskrivning2 != ''">{{cert.diagnosKod2}} {{cert.diagnosBeskrivning2}}</p>
+                    <p ng-show="cert.diagnosKod3 != '' || cert.diagnosBeskrivning3 != ''">{{cert.diagnosKod3}} {{cert.diagnosBeskrivning3}}</p>
+                    <div ng-show="cert.samsjuklighet" class="bold"><span message key="fk7263.label.samsjuklighet"></span></div>
                   </div>
                 </div>
               </div>
