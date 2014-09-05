@@ -54,7 +54,9 @@
 	        <div message key="ts-diabetes.label.pagedescription.archive"></div>
         </div>
         <br>
-        <a ng-click="isCollapsed1 = !isCollapsed1" class="margin-top-5px" data-toggle="collapse" message key="ts-diabetes.label.status.{{ !isCollapsed1 }}">{{ts-diabetes.label.status.{{ !isCollapsed1 }}</a>
+        <button ng-click="isCollapsed1 = !isCollapsed1" class="btn-link btn-link-link margin-top-5px" data-toggle="collapse">
+          <span message key="ts-diabetes.label.status.{{ !isCollapsed1 }}">{{ts-diabetes.label.status.{{ !isCollapsed1 }}</span>
+        </button>
         
 	  </div>
       <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
@@ -85,7 +87,9 @@
               </div>
             </div>
             <p>
-              <a ng-show="cert.status.length>1" ng-click="isCollapsedCertEvents = !isCollapsedCertEvents" data-toggle="collapse" message key="ts-diabetes.label.showevents.{{ !isCollapsedCertEvents }}">{{ts-diabetes.label.showevents.{{ !isCollapsedCertEvents }}</a>
+              <button class="btn-link btn-link-link" ng-show="cert.status.length>1" ng-click="isCollapsedCertEvents = !isCollapsedCertEvents" data-toggle="collapse">
+                <span message key="ts-diabetes.label.showevents.{{ !isCollapsedCertEvents }}">{{ts-diabetes.label.showevents.{{ !isCollapsedCertEvents }}</span>
+              </button>
             </p>
         </div>
     </div>
