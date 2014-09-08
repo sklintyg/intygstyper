@@ -17,11 +17,9 @@ angular.module('common').directive('wcField',
                     fieldHelpText: '@',
                     fieldHasErrors: '=',
                     fieldTooltipPlacement: '@',
-                    filled: '&'
+                    filled: '=?'
                 },
                 controller: function($scope) {
-
-                    $scope.filled = $scope.$eval($scope.filled);
 
                     if ($scope.fieldNumber === null) {
                         $scope.fieldNumber = undefined;
