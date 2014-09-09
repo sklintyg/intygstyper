@@ -86,12 +86,14 @@
               <div id="certificate" class="row certificate">
                 <div class="col-md-12 cert-body">
 
+                  <!-- 1. Smittskydd -->
                   <div wc-field-single field-number="1">
                     <input id="smittskydd" name="smittskydd" type="checkbox" ng-model="cert.avstangningSmittskydd" />
                     <label for="smittskydd" class="control-label title-single"><span message
                                                                                      key="fk7263.label.smittskydd"></span></label>
                   </div>
 
+                  <!-- 4b. Intyger baseras på -->
                   <div id="intygetbaseraspa" wc-field field-label="fk7263.label.intyg-baserat-pa" field-number="4b"
                        field-help-text="fk7263.helptext.intyg-baserat-pa" ng-hide="cert.avstangningSmittskydd"
                        ng-animate="'fade'">
@@ -103,6 +105,7 @@
                       </ul>
                     </div>
 
+                    <!-- Undersökning -->
                     <div class="form-group form-inline">
                       <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
                                                                                            name="informationBasedOn.examination"
@@ -114,6 +117,8 @@
                             on-change="onChangeBaserasPaDate('undersokningAvPatienten')"
                             dom-id="undersokningAvPatienten-date"></span>
                     </div>
+
+                    <!-- Telefonkontakt -->
                     <div class="form-group form-inline">
                       <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
                                                                                            name="informationBasedOn.phoneContact"
@@ -124,6 +129,8 @@
                             on-change="onChangeBaserasPaDate('telefonkontaktMedPatienten')"
                             dom-id="telefonkontaktMedPatienten-date"></span>
                     </div>
+
+                    <!-- Journaluppgifter -->
                     <div class="form-group form-inline">
                       <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
                                                                                            name="informationBasedOn.journal"
@@ -134,6 +141,7 @@
                             on-change="onChangeBaserasPaDate('journaluppgifter')" dom-id="journaluppgifter-date"></span>
                     </div>
 
+                    <!-- Annat -->
                     <div class="form-group form-inline">
                       <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
                                                                                            name="informationBasedOn.other"
@@ -147,8 +155,8 @@
                     <div class="otherText indent" ng-if="basedOnState.check.annanReferens">
                       <span>Ange vad:</span><br />
                       <textarea id="informationBasedOn.otherText" name="informationBasedOn.otherText" rows='2'
-                                class='form-control otherInformation' ng-model="cert.otherData.baseradPaAnnat"
-                                ng-change="limitOtherField('baseradPaAnnat')"></textarea>
+                                class='form-control otherInformation' ng-model="form.ovrigt.annanReferensBeskrivning"
+                                ng-change="limitOtherField('annanReferensBeskrivning')"></textarea>
                       <div class="counter">
                         Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}
                       </div>
@@ -350,7 +358,7 @@
                         <div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
                           Arbetstid timmar/vecka: <strong>{{cert.workTime * 0.75}}</strong>
                         </div>
-                        Arbetstidsförläggning (frivilligt) <input type="text" ng-model="cert.otherData.workingHours25"
+                        Arbetstidsförläggning (frivilligt) <input type="text" ng-model="form.ovrigt.workingHours25"
                                                                   id="capacityForWork.rec25LongerWorkingHours"
                                                                   name="capacityForWork.rec25LongerWorkingHours"
                                                                   value="" class='form-control otherInformation'
@@ -382,7 +390,7 @@
                         <div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
                           Arbetstid timmar/vecka: <strong>{{cert.workTime * 0.5}}</strong>
                         </div>
-                        Arbetstidsförläggning (frivilligt) <input type="text" ng-model="cert.otherData.workingHours50"
+                        Arbetstidsförläggning (frivilligt) <input type="text" ng-model="form.ovrigt.workingHours50"
                                                                   id="capacityForWork.rec50LongerWorkingHours"
                                                                   name="capacityForWork.rec50LongerWorkingHours"
                                                                   value="" class='form-control otherInformation'
@@ -414,7 +422,7 @@
                         <div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
                           Arbetstid timmar/vecka: <strong>{{cert.workTime * 0.25}}</strong>
                         </div>
-                        Arbetstidsförläggning (frivilligt) <input type="text" ng-model="cert.otherData.workingHours75"
+                        Arbetstidsförläggning (frivilligt) <input type="text" ng-model="form.ovrigt.workingHours75"
                                                                   id="capacityForWork.rec75LongerWorkingHours"
                                                                   name="capacityForWork.rec75LongerWorkingHours"
                                                                   value="" class='form-control otherInformation'
@@ -483,30 +491,30 @@
                       försäkringsmedicinska beslutstöd</a>
                     <div class="form-group">
                       <label class="radio-inline"><input type="radio" name="capacityForWork.forecast" value="YES"
-                                                         ng-model="cert.prognosis" checked="checked"> Ja</label>
+                                                         ng-model="form.prognos" checked="checked"> Ja</label>
                     </div>
 
                     <div class="form-group">
                       <label class="radio-inline"><input type="radio" id="capacityForWork2"
                                                          name="capacityForWork.forecast" value="PARTLY"
-                                                         ng-model="cert.prognosis"> Delvis</label>
+                                                         ng-model="form.prognos"> Delvis</label>
                     </div>
 
                     <div class="form-group">
                       <label class="radio-inline"><input type="radio" id="capacityForWork3"
                                                          name="capacityForWork.forecast" value="NO"
-                                                         ng-model="cert.prognosis"> Nej</label>
+                                                         ng-model="form.prognos"> Nej</label>
                     </div>
 
                     <div class="form-group">
                       <label class="radio-inline"><input type="radio" id="capacityForWork4"
                                                          name="capacityForWork.forecast" value="UNKNOWN"
-                                                         ng-model="cert.prognosis"> Går ej att bedöma</label>
-                      <div class="indent form-inline" ng-show="cert.prognosis == 'UNKNOWN'">
-                        Förtydligande: <input type="text" ng-model="cert.otherData.prognosisClarification"
+                                                         ng-model="form.prognos"> Går ej att bedöma</label>
+                      <div class="indent form-inline" ng-show="form.prognos == 'UNKNOWN'">
+                        Förtydligande: <input type="text" ng-model="form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning"
                                               id="capacityForWork.forecastText" name="capacityForWork.forecastText"
                                               value="" class='form-control otherInformation'
-                                              ng-change="limitOtherField('prognosisClarification')"> <span
+                                              ng-change="limitOtherField('arbetsformagaPrognosGarInteAttBedomaBeskrivning')"> <span
                           id="prognosis-counter">Tecken kvar:
                         {{inputLimits.ovrigt - getTotalOvrigtLength()}}</span>
                         <div class="info-transfer">Informationen överförs till "Övriga upplysningar" i
@@ -559,7 +567,7 @@
                     </div>
                     <div class="form-group form-inline">
                       <label class="checkbox"><input type="checkbox" name="recommendationsToFk.other"
-                                                     ng-model="cert.rekommendationOvrigtCheck" /> Övrigt (ange
+                                                     ng-model="form.rekommendationOvrigtCheck" /> Övrigt (ange
                         vad)</label>
                       <div class="indent"
                            ng-if="cert.rekommendationOvrigtCheck || (cert.rekommendationOvrigt && cert.rekommendationOvrigt != '')">
@@ -578,12 +586,12 @@
                                                          value="JA" ng-model="form.rehab"> Ja</label>
                       <div class="indent" ng-show="form.rehab == 'JA'">
                         <label class="radio-inline"><input type="radio" name="recommendationsToFk.rehabNow" value="NOW"
-                                                           ng-model="cert.rehabNow" checked> Omgående</label>
+                                                           ng-model="form.ovrigt.rehabNow" checked>Omgående</label>
                         <div class="form-inline"><label class="radio"><input type="radio"
                                                                              name="recommendationsToFk.rehabNow"
-                                                                             value="LATER" ng-model="cert.rehabNow">
+                                                                             value="LATER" ng-model="form.ovrigt.rehabNow">
                           Senare, med start</label>
-                          <span wc-date-picker-field target-model="cert.otherData.rehabWhen"
+                          <span wc-date-picker-field target-model="form.ovrigt.rehabWhen"
                                 dom-id="cert-otherData-rehabWhen-date"></span></div>
                         <div class="info-transfer" style="white-space: nowrap">Informationen överförs till "Övriga
                           upplysningar" i Försäkringskassans blankett.
