@@ -463,7 +463,11 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Ng-change and watches updating behaviour in form (try to get rid of these or at least make them consistent)
              *************************************************************************/
 
-            $scope.autoEnterDate = function(modelName) {
+            /**
+             * 4b. Toggle dates in the Based On date pickers when checkboxes are interacted with
+             * @param modelName
+             */
+            $scope.toggleBaseradPaDate = function(modelName) {
 
                 // Set todays date when a baserat pa field is checked
                 if ($scope.basedOnState.check[modelName]) {
@@ -477,16 +481,28 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
             };
 
+            /**
+             * 4b. Update checkboxes when datepickers are interacted with
+             * @param baserasPaType
+             */
             $scope.onChangeBaserasPaDate = function(baserasPaType) {
                 if ($scope.cert[baserasPaType] !== undefined && isDate($scope.cert[baserasPaType])) {
                     $scope.basedOnState.check[baserasPaType] = true;
                 }
             };
 
+            /**
+             * Truncate intyg field to length of inputLimit
+             * @param field
+             */
             $scope.limitFieldLength = function(field) {
                 $scope.cert[field] = $scope.cert[field].substr(0, $scope.inputLimits[field]);
             };
 
+            /**
+             * Limit length of field dependent on field 13 in the external model
+             * @param field
+             */
             $scope.limitOtherField = function(field) {
                 function limitOvrigtLength(val) {
                     var totalOvrigtLength = $scope.getTotalOvrigtLength();
@@ -500,7 +516,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 $scope.cert[field] = limitOvrigtLength($scope.cert[field]);
             };
 
-            // Calculate total length of all fields ending up in Övrigt in the external model
+            /**
+             * Calculate total length of all fields ending up in Övrigt in the external model
+             * @returns {*}
+             */
             $scope.getTotalOvrigtLength = function() {
                 function getLengthOrZero(value) {
                     if (value === undefined || value === null) {
@@ -590,7 +609,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             };
 
             /**
-             * Watches Rekommendationer 6a, 7, 11
+             * Watch Now/later radio under Rekommendationer 6a, 7, 11
              */
             $scope.$watch('form.ovrigt.rehabNow', function(newVal) {
                 if ($scope.form.ovrigt !== undefined) {
@@ -601,6 +620,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     }
                 }
             });
+
+            /**
+             * Watch later datepicker under Rekommendationer 6a, 7, 11
+             */
             $scope.$watch('form.ovrigt.rehabWhen', function(newVal) {
                 if (isDate(newVal)) {
                     $scope.form.ovrigt.rehabNow = 'LATER';
@@ -718,6 +741,28 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              ****************************************************************************/
 
             /**
+             * Toggle header part ("Dölj meny"-knapp)
+             */
+            $scope.toggleHeader = function() {
+                $scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
+            };
+
+            /**
+             * Toggle "Visa vad som behöver kompletteras
+             */
+            $scope.toggleShowComplete = function() {
+                $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
+                if ($scope.widgetState.showComplete) {
+                    $scope.save();
+                    var old = $location.hash();
+                    $location.hash('top');
+                    $anchorScroll();
+                    // reset to old to keep any additional routing logic from kicking in
+                    $location.hash(old);
+                }
+            };
+
+            /**
              * Action to save the certificate draft to the server.
              */
             $scope.save = function() {
@@ -745,28 +790,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              */
             $scope.print = function() {
                 ManageCertView.printDraft($scope.cert.id);
-            };
-
-            /**
-             * Toggle header part ("Dölj meny"-knapp)
-             */
-            $scope.toggleHeader = function() {
-                $scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
-            };
-
-            /**
-             * Toggle "Visa vad som behöver kompletteras
-             */
-            $scope.toggleShowComplete = function() {
-                $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
-                if ($scope.widgetState.showComplete) {
-                    $scope.save();
-                    var old = $location.hash();
-                    $location.hash('top');
-                    $anchorScroll();
-                    // reset to old to keep any additional routing logic from kicking in
-                    $location.hash(old);
-                }
             };
 
             /**************************************************************************

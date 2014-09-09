@@ -111,7 +111,7 @@
                                                                                            name="informationBasedOn.examination"
                                                                                            class="checkbox-inline"
                                                                                            ng-model="basedOnState.check.undersokningAvPatienten"
-                                                                                           ng-change="autoEnterDate('undersokningAvPatienten')" />
+                                                                                           ng-change="toggleBaseradPaDate('undersokningAvPatienten')" />
                         Min undersökning av patienten</label>
                       <span wc-date-picker-field target-model="cert.undersokningAvPatienten"
                             on-change="onChangeBaserasPaDate('undersokningAvPatienten')"
@@ -123,7 +123,7 @@
                       <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
                                                                                            name="informationBasedOn.phoneContact"
                                                                                            ng-model="basedOnState.check.telefonkontaktMedPatienten"
-                                                                                           ng-change="autoEnterDate('telefonkontaktMedPatienten')" />
+                                                                                           ng-change="toggleBaseradPaDate('telefonkontaktMedPatienten')" />
                         Min telefonkontakt med patienten</label>
                       <span wc-date-picker-field target-model="cert.telefonkontaktMedPatienten"
                             on-change="onChangeBaserasPaDate('telefonkontaktMedPatienten')"
@@ -135,7 +135,7 @@
                       <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
                                                                                            name="informationBasedOn.journal"
                                                                                            ng-model="basedOnState.check.journaluppgifter"
-                                                                                           ng-change="autoEnterDate('journaluppgifter')" />
+                                                                                           ng-change="toggleBaseradPaDate('journaluppgifter')" />
                         Journaluppgifter</label>
                       <span wc-date-picker-field target-model="cert.journaluppgifter"
                             on-change="onChangeBaserasPaDate('journaluppgifter')" dom-id="journaluppgifter-date"></span>
@@ -146,7 +146,7 @@
                       <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
                                                                                            name="informationBasedOn.other"
                                                                                            ng-model="basedOnState.check.annanReferens"
-                                                                                           ng-change="autoEnterDate('annanReferens')" />
+                                                                                           ng-change="toggleBaseradPaDate('annanReferens')" />
                         Annat<span wc-enable-tooltip field-help-text="fk7263.helptext.intyg-baserat-pa.annat" />
                       </label>
                       <span wc-date-picker-field target-model="cert.annanReferens"
