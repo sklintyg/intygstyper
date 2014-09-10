@@ -49,9 +49,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     'nedsattMed25Beskrivning' : null,
                     'nedsattMed50Beskrivning' : null,
                     'nedsattMed75Beskrivning' : null,
-                    'arbetsformagaPrognosGarInteAttBedomaBeskrivning' : null,
-                    'rehabNow' : 'NOW',
-                    'rehabWhen' : null
+                    'arbetsformagaPrognosGarInteAttBedomaBeskrivning' : null
                 }
             };
 
@@ -345,9 +343,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 if ($scope.cert.rekommendationOvrigt) {
                     $scope.form.rekommendationOvrigtCheck = true;
                 }
-
-                // TODO? omgående/senare form.ovrigt.rehabNow
-                // datum senare form.ovrigt.rehabWhen
             }
 
             /**
@@ -402,8 +397,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.cert.rekommendationKontaktForetagshalsovarden = false;
                     $scope.form.rekommendationOvrigtCheck = false;
                     $scope.cert.rekommendationOvrigt = undefined;
-                    $scope.form.rehabNow = 'NOW';
-                    $scope.form.rehabWhen = undefined;
                 }
 
                 // Fält 4b. AnnanReferensBeskrivning
@@ -469,9 +462,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.cert.rehabiliteringGarInteAttBedoma = true;
                     break;
                 }
-
-                // TODO? omgående/senare form.ovrigt.rehabNow
-                // datum senare form.ovrigt.rehabWhen
             }
 
             /*************************************************************************
@@ -553,12 +543,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         getLengthOrZero($scope.form.ovrigt.nedsattMed75Beskrivning) +
                         getLengthOrZero($scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning);
                 }
-                if ($scope.form.ovrigt !== undefined) {
-                    if ($scope.form.ovrigt.rehabWhen instanceof Date) {
-                        totalOvrigtLength += ($filter('date')
-                        ($scope.form.ovrigt.rehabWhen, 'yyyy-MM-dd')).length;
-                    }
-                }
 
                 return totalOvrigtLength;
             };
@@ -622,28 +606,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     onArbetsformagaDatesUpdated();
                 }
             };
-
-            /**
-             * Watch Now/later radio under Rekommendationer 6a, 7, 11
-             */
-            $scope.$watch('form.ovrigt.rehabNow', function(newVal) {
-                if ($scope.form.ovrigt !== undefined) {
-                    if (newVal === 'LATER' && $scope.form.ovrigt.rehabWhen === '') {
-                        $scope.form.ovrigt.rehabWhen = $scope.today;
-                    } else if (newVal === 'NOW') {
-                        $scope.form.ovrigt.rehabWhen = '';
-                    }
-                }
-            });
-
-            /**
-             * Watch later datepicker under Rekommendationer 6a, 7, 11
-             */
-            $scope.$watch('form.ovrigt.rehabWhen', function(newVal) {
-                if (isDate(newVal)) {
-                    $scope.form.ovrigt.rehabNow = 'LATER';
-                }
-            });
 
             /**
              * Set checkbox and non-selected date for arbetsformaga % when a date is changed
