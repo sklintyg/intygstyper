@@ -69,7 +69,6 @@ public class Fk7263Intyg {
     private String nedsattMed25Beskrivning;
     private String nedsattMed50Beskrivning;
     private String nedsattMed75Beskrivning;
-    private String nedsattMed100Beskrivning;
 
     private String arbetsformagaPrognos;
 
@@ -116,15 +115,6 @@ public class Fk7263Intyg {
     public void setNedsattMed75Beskrivning(String nedsattMed75Beskrivning) {
         this.nedsattMed75Beskrivning = nedsattMed75Beskrivning;
     }
-
-    public String getNedsattMed100Beskrivning() {
-        return nedsattMed100Beskrivning;
-    }
-
-    public void setNedsattMed100Beskrivning(String nedsattMed100Beskrivning) {
-        this.nedsattMed100Beskrivning = nedsattMed100Beskrivning;
-    }
-
 
     public boolean isAvstangningSmittskydd() {
         return avstangningSmittskydd;

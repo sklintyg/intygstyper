@@ -230,7 +230,7 @@ public class InternalToExternalConverter {
         // observation arbetsformaga (create between 1 and 4 instances)
         if (source.getNedsattMed100() != null) {
             observationer.add(buildArbetsformageObservation(ObservationsKoder.ARBETSFORMAGA,
-                    source.getNedsattMed100(), new PhysicalQuantity(0.0, "percent"), source.getNedsattMed100Beskrivning()));
+                    source.getNedsattMed100(), new PhysicalQuantity(0.0, "percent"), null));
         }
         if (source.getNedsattMed75() != null) {
             observationer.add(buildArbetsformageObservation(ObservationsKoder.ARBETSFORMAGA,
