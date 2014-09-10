@@ -54,14 +54,13 @@
 		<!-- Show if more than one event exists -->
    		<div ng-show="cert.filteredStatuses.length>0" id="latest-certificate-event">
             <span message key="fk7263.status.{{cert.filteredStatuses[0].type}}"></span>
-            <span message key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span>
+            <span message key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span><span>s system</span>
             <span class="certificate-event-timestamp pull-right">{{cert.filteredStatuses[0].timestamp | date:'shortDate'}}</span>
             <div collapse="!isCollapsedCertEvents" class="collapse">
               <div ng-repeat="status in cert.filteredStatuses" ng-switch on="$index > 0">
                 <div ng-switch-when="true">
                   <span message key="fk7263.status.{{cert.filteredStatuses[0].type}}"></span>
-                  <span ng-show="status.type == 'SENT'"></span>
-                  <span message key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span>
+                  <span ng-show="status.type == 'SENT'"><span message key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span>s system</span>
                   <span class="certificate-event-timestamp pull-right">{{status.timestamp | date:'shortDate'}}</span><br>
                 </div>
               </div>
