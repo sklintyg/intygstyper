@@ -200,14 +200,14 @@
       <groupId>org.webjars</groupId>
       <artifactId>momentjs</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.webjars</groupId>
-      <artifactId>requirejs</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.webjars</groupId>
-      <artifactId>requirejs-text</artifactId>
-    </dependency>
+<!--     <dependency> -->
+<!--       <groupId>org.webjars</groupId> -->
+<!--       <artifactId>requirejs</artifactId> -->
+<!--     </dependency> -->
+<!--     <dependency> -->
+<!--       <groupId>org.webjars</groupId> -->
+<!--       <artifactId>requirejs-text</artifactId> -->
+<!--     </dependency> -->
   </dependencies>
 
   <build>
