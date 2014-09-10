@@ -41,7 +41,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 korkortd: false,
                 behorighet: true,
                 arbete: true,
-                prognosis: 'YES',
+                prognos: 'YES',
                 rehab: 'NEJ',
                 rekommendationOvrigtCheck: false,
                 ovrigt: {
@@ -304,10 +304,12 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
                 if ($scope.cert.nedsattMed25Beskrivning !== undefined) {
                     $scope.form.ovrigt.nedsattMed25Beskrivning = $scope.cert.nedsattMed25Beskrivning;
-                } else if ($scope.cert.nedsattMed50Beskrivning !== undefined) {
-                    $scope.form.ovrigt.cert.nedsattMed50Beskrivning = $scope.cert.nedsattMed50Beskrivning;
-                } else if ($scope.cert.nedsattMed75Beskrivning !== undefined) {
-                    $scope.form.ovrigt.cert.nedsattMed75Beskrivning = $scope.cert.nedsattMed75Beskrivning;
+                }
+                if ($scope.cert.nedsattMed50Beskrivning !== undefined) {
+                    $scope.form.ovrigt.nedsattMed50Beskrivning = $scope.cert.nedsattMed50Beskrivning;
+                }
+                if ($scope.cert.nedsattMed75Beskrivning !== undefined) {
+                    $scope.form.ovrigt.nedsattMed75Beskrivning = $scope.cert.nedsattMed75Beskrivning;
                 }
 
                 // Fält 8a. Set nuvarande arbete default value
@@ -395,6 +397,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.cert.ressattTillArbeteAktuellt = false;
                     $scope.cert.rekommendationKontaktArbetsformedlingen = false;
                     $scope.cert.rekommendationKontaktForetagshalsovarden = false;
+                    $scope.form.rehab = 'NEJ';
                     $scope.form.rekommendationOvrigtCheck = false;
                     $scope.cert.rekommendationOvrigt = undefined;
                 }
@@ -518,7 +521,11 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     return val;
                 }
 
-                $scope.cert[field] = limitOvrigtLength($scope.cert[field]);
+                if($scope.form.ovrigt[field])
+                    $scope.form.ovrigt[field] = limitOvrigtLength($scope.form.ovrigt[field]);
+                else if($scope.cert[field]) {
+                    $scope.cert[field] = limitOvrigtLength($scope.cert[field]);
+                }
             };
 
             /**
@@ -537,7 +544,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 var totalOvrigtLength = getLengthOrZero($scope.cert.kommentar);
 
                 if ($scope.form.ovrigt !== undefined) {
-                    totalOvrigtLength = getLengthOrZero($scope.form.ovrigt.annanReferensBeskrivning) +
+                    totalOvrigtLength += getLengthOrZero($scope.form.ovrigt.annanReferensBeskrivning) +
                         getLengthOrZero($scope.form.ovrigt.nedsattMed25Beskrivning) +
                         getLengthOrZero($scope.form.ovrigt.nedsattMed50Beskrivning) +
                         getLengthOrZero($scope.form.ovrigt.nedsattMed75Beskrivning) +
