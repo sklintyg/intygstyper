@@ -341,6 +341,11 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.form.rehab = 'GAREJ';
                 }
 
+                // Fält 6a.
+                if ($scope.cert.rekommendationOvrigt) {
+                    $scope.form.rekommendationOvrigtCheck = true;
+                }
+
                 // TODO? omgående/senare form.ovrigt.rehabNow
                 // datum senare form.ovrigt.rehabWhen
             }
@@ -351,44 +356,54 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              */
             function convertFormToCert($scope) {
 
-                // Fält 1. Smittskydd. Vid sparning: ta bort data på alla fält som döljs när smittskydd är icheckat.
+                // Fält 1. Smittskydd. Vid sparning: ta bort data på alla fält före 8b som döljs när smittskydd är icheckat.
                 if ($scope.cert.avstangningSmittskydd) {
-                    $scope.cert.undersokningAvPatienten = null;
-                    $scope.cert.telefonkontaktMedPatienten = null;
-                    $scope.cert.journaluppgifter = null;
-                    $scope.cert.annanReferens = null;
-                    $scope.form.ovrigt.annanReferensBeskrivning = null;
-                    $scope.cert.annanReferensBeskrivning = null;
 
-                    $scope.cert.diagnosKod = null;
-                    $scope.cert.diagnosKod2 = null;
-                    $scope.cert.diagnosKod3 = null;
+                    // 4b. Baserat på
+                    $scope.cert.undersokningAvPatienten = undefined;
+                    $scope.cert.telefonkontaktMedPatienten = undefined;
+                    $scope.cert.journaluppgifter = undefined;
+                    $scope.cert.annanReferens = undefined;
+                    $scope.form.ovrigt.annanReferensBeskrivning = undefined;
+                    $scope.cert.annanReferensBeskrivning = undefined;
+                    $scope.basedOnState.check.undersokningAvPatienten = false;
+                    $scope.basedOnState.check.telefonkontaktMedPatienten = false;
+                    $scope.basedOnState.check.journaluppgifter = false;
+                    $scope.basedOnState.check.annanReferens = false;
 
-                    $scope.cert.diagnosBeskrivning1 = null;
-                    $scope.cert.diagnosBeskrivning2 = null;
-                    $scope.$scope.cert.diagnosBeskrivning3 = null;
-                    $scope.cert.diagnosBeskrivning = null;
+                    // 2. Diagnos
+                    $scope.cert.diagnosKod = undefined;
+                    $scope.cert.diagnosKod2 = undefined;
+                    $scope.cert.diagnosKod3 = undefined;
+                    $scope.cert.diagnosBeskrivning1 = undefined;
+                    $scope.cert.diagnosBeskrivning2 = undefined;
+                    $scope.cert.diagnosBeskrivning3 = undefined;
+                    $scope.cert.diagnosBeskrivning = undefined;
                     $scope.cert.samsjuklighet = false;
 
-                    $scope.cert.sjukdomsforlopp = null;
-                    $scope.cert.funktionsnedsattning = null;
-                    $scope.cert.aktivitetsbegransning = null;
+                    // 3,4,5
+                    $scope.cert.sjukdomsforlopp = undefined;
+                    $scope.cert.funktionsnedsattning = undefined;
+                    $scope.cert.aktivitetsbegransning = undefined;
 
-                    $scope.form.rehabNow = 'NOW';
-                    $scope.form.rehabWhen = null;
-
-                    $scope.form.arbete = false;
-                    $scope.cert.nuvarandeArbetsuppgifter = null;
+                    // 8a
+                    $scope.form.arbete = true;
+                    $scope.cert.nuvarandeArbetsuppgifter = undefined;
                     $scope.cert.arbetsloshet = false;
                     $scope.cert.foraldrarledighet = false;
 
-                    $scope.cert.atgardInomSjukvarden = null;
-                    $scope.cert.annanAtgard = null;
+                    // 6b åtgärder
+                    $scope.cert.atgardInomSjukvarden = undefined;
+                    $scope.cert.annanAtgard = undefined;
+
+                    // 6a, 7, 11
                     $scope.cert.ressattTillArbeteAktuellt = false;
                     $scope.cert.rekommendationKontaktArbetsformedlingen = false;
                     $scope.cert.rekommendationKontaktForetagshalsovarden = false;
                     $scope.form.rekommendationOvrigtCheck = false;
-                    $scope.cert.rekommendationOvrigt = null;
+                    $scope.cert.rekommendationOvrigt = undefined;
+                    $scope.form.rehabNow = 'NOW';
+                    $scope.form.rehabWhen = undefined;
                 }
 
                 // Fält 4b. AnnanReferensBeskrivning

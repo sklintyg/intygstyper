@@ -570,7 +570,7 @@
                                                      ng-model="form.rekommendationOvrigtCheck" /> Övrigt (ange
                         vad)</label>
                       <div class="indent"
-                           ng-if="cert.rekommendationOvrigtCheck || (cert.rekommendationOvrigt && cert.rekommendationOvrigt != '')">
+                           ng-if="form.rekommendationOvrigtCheck || (cert.rekommendationOvrigt && cert.rekommendationOvrigt != '')">
                         <input type="text" id="recommendationsToFk.otherText" name="recommendationsToFk.otherText"
                                value="" class='form-control maxwidth' ng-model="cert.rekommendationOvrigt">
                       </div>
