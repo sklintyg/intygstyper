@@ -148,7 +148,7 @@ public final class ExternalToTransportConverter {
         }
 
         addAll(observation.getVardes(), convertVarden(source.getVarde()));
-        if (source.getBeskrivning() != null && !source.getBeskrivning().isEmpty()) {
+        if (notNullOrEmpty(source.getBeskrivning())) {
             observation.setBeskrivning(source.getBeskrivning());
         }
 

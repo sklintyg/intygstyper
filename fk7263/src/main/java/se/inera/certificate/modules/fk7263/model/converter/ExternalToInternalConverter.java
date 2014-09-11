@@ -120,18 +120,21 @@ public class ExternalToInternalConverter {
                 switch (quantity.getQuantity().toString()) {
                     case "75.0":
                         intyg.setNedsattMed25(interval);
+                        intyg.setNedsattMed25Beskrivning(arbetsformaga.getBeskrivning());
                         break;
                     case "50.0":
                         intyg.setNedsattMed50(interval);
+                        intyg.setNedsattMed50Beskrivning(arbetsformaga.getBeskrivning());
                         break;
                     case "25.0":
                         intyg.setNedsattMed75(interval);
+                        intyg.setNedsattMed75Beskrivning(arbetsformaga.getBeskrivning());
                         break;
                     case "0.0":
                         intyg.setNedsattMed100(interval);
                         break;
                     default:
-                        intyg.setNedsattMed100(interval);
+                        break;
                 }
             }
         }

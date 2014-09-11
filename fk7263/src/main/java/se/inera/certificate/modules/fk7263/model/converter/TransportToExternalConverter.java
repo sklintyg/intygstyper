@@ -211,7 +211,7 @@ public final class TransportToExternalConverter {
         Fk7263Referens referens = new Fk7263Referens();
         referens.setReferenstyp(IsoTypeConverter.toKod(source.getReferenstyp()));
         referens.setDatum(source.getReferensdatum());
-        if (source.getBeskrivning() != null && !source.getBeskrivning().isEmpty()) {
+        if (notNullOrEmpty(source.getBeskrivning())) {
             referens.setBeskrivning(source.getBeskrivning());
         }
         return referens;
