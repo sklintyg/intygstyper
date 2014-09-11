@@ -93,7 +93,7 @@ var tsBasMessages = {
         // Labels for showing signed intyg
         'ts-bas.label.syn.binokulart': 'Binokulärt',
         'ts-bas.label.syn.vanster-oga': 'Vänster öga',
-        'ts-bas.label.syn.hoger-oga': 'Vänster öga',
+        'ts-bas.label.syn.hoger-oga': 'Höger öga',
         'ts-bas.label.syn.kontaktlinster': 'Kontaktlinser',
         'ts-bas.label.syn.utan-korrektion': 'Utan korrektion',
         'ts-bas.label.syn.med-korrektion': 'Med korrektion',
