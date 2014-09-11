@@ -172,7 +172,7 @@
     <xs:sequence>
       <xs:element name="referenstyp" type="referensKod"/>
       <xs:element name="referensdatum" type="date"/>
-      <xs:element name="beskrivning" type="xs:string" minOccurs="0"/>
+      <xs:element ref="ext:beskrivning" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="referensKod">
