@@ -127,7 +127,7 @@
               </div>
 
               <div wc-field field-number="6a" field-label="fk7263.label.rekommendationer" id="field6a"
-                   filled="cert.rekommendationKontaktArbetsformedlingen|| cert.rekommendationKontaktForetagshalsovarden || cert.rekommendationOvrigt!=null">
+                   filled="{{cert.rekommendationKontaktArbetsformedlingen || cert.rekommendationKontaktForetagshalsovarden || cert.rekommendationOvrigt!=null}}">
                 <ul>
                   <li ng-show="cert.rekommendationKontaktArbetsformedlingen"><span message
                                                                                    key="fk7263.label.rekommendationer.kontakt.arbetsformedlingen"></span>
