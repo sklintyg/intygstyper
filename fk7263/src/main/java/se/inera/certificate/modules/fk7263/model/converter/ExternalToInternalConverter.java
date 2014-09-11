@@ -5,7 +5,6 @@ import java.util.List;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.PhysicalQuantity;
-import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
@@ -20,6 +19,7 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263HosPersonal;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
+import se.inera.certificate.modules.fk7263.model.external.Fk7263Referens;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
@@ -120,18 +120,21 @@ public class ExternalToInternalConverter {
                 switch (quantity.getQuantity().toString()) {
                     case "75.0":
                         intyg.setNedsattMed25(interval);
+                        intyg.setNedsattMed25Beskrivning(arbetsformaga.getBeskrivning());
                         break;
                     case "50.0":
                         intyg.setNedsattMed50(interval);
+                        intyg.setNedsattMed50Beskrivning(arbetsformaga.getBeskrivning());
                         break;
                     case "25.0":
                         intyg.setNedsattMed75(interval);
+                        intyg.setNedsattMed75Beskrivning(arbetsformaga.getBeskrivning());
                         break;
                     case "0.0":
                         intyg.setNedsattMed100(interval);
                         break;
                     default:
-                        intyg.setNedsattMed100(interval);
+                        break;
                 }
             }
         }
@@ -244,12 +247,13 @@ public class ExternalToInternalConverter {
     }
 
     private void convertReferenser(Fk7263Intyg intyg, Fk7263Utlatande source) {
-        for (Referens referens : source.getReferenser()) {
+        for (Fk7263Referens referens : source.getReferenser()) {
             if (Referenstypkoder.JOURNALUPPGIFT.equals(referens.getReferenstyp())) {
                 intyg.setJournaluppgifter(referens.getDatum());
             }
             if (Referenstypkoder.ANNAT.equals(referens.getReferenstyp())) {
                 intyg.setAnnanReferens(referens.getDatum());
+                intyg.setAnnanReferensBeskrivning(referens.getBeskrivning());
             }
         }
     }
