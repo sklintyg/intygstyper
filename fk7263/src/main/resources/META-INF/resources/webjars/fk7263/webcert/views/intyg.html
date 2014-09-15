@@ -30,14 +30,14 @@
 
           <form id="view-as-pdf" action="{{pdfUrl}}" method="get" target="_blank" name="pdfForm">
             <p class="btn-row">
-              <button id="sendBtn" class="btn btn-info" ng-if="!certProperties.isSent" ng-click="send(cert)">Skicka till
+              <button id="sendBtn" class="btn btn-info" ng-if="!certProperties.isSent && !certProperties.isRevoked" ng-click="send(cert)">Skicka till
                 Försäkringskassan
               </button>
               <button id="downloadprint" type="submit" value="submit" class="btn btn-info" ng-click="print(cert)">Skriv
                 ut
               </button>
               <button id="copyBtn" class="btn btn-info" ng-if="!certProperties.isRevoked" ng-click="copy(cert)">Kopiera</button>
-              <button class="btn btn-inverse">Rätta</button>
+              <button id="revokeBtn" class="btn btn-inverse" ng-if="!certProperties.isRevoked" ng-click="makulera(cert)">Rätta</button>
             </p>
           </form>
         </div>

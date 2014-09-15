@@ -24,6 +24,7 @@ var tsBasMessages = {
         'ts-bas.label.bedomning': 'Bedömning',
         'ts-bas.label.unit': 'Vårdenhet',
         'ts-bas.label.send': 'Skicka till Transportstyrelsen',
+        'ts-bas.label.makulera.confirmation': 'Transportstyrelsens läkarintyg utställt på ${namn} - ${personnummer} har rättats. Intyget kan inte längre visas av patienten.',
 
         // Identitet styrkt genom
         'ts-bas.label.identitet.id_kort': 'ID-kort',

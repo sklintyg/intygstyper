@@ -1,8 +1,8 @@
 angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
     [ '$location', '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', 'common.CertificateService',
-        'common.ManageCertView', 'webcert.ManageCertificate',
+        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate',
         function($location, $log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView,
-            ManageCertificate) {
+            messageService, ManageCertificate) {
             'use strict';
 
             // Copy dialog setup
@@ -94,6 +94,16 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                 ManageCertificate.send($scope, cert, 'TS', 'ts-diabetes.label.send', function() {
                         loadCertificate();
                     });
+            };
+
+            ManageCertificate.initMakulera($scope);
+            $scope.makulera = function(cert) {
+                var confirmationMessage = messageService.getProperty('ts-diabetes.label.makulera.confirmation', {
+                    namn: cert.patient.fullstandigtNamn, personnummer: cert.patient.personid });
+
+                ManageCertificate.makulera($scope, cert, confirmationMessage, function() {
+                    loadCertificate();
+                });
             };
 
             $scope.copy = function(cert) {

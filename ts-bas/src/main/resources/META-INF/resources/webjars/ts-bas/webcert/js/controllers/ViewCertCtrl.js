@@ -1,8 +1,8 @@
 angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
     [ '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', 'common.CertificateService',
-        'common.ManageCertView', 'webcert.ManageCertificate',
+        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate',
         function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView,
-            ManageCertificate) {
+            messageService, ManageCertificate) {
             'use strict';
 
             // Copy dialog setup
@@ -102,6 +102,16 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
                 ManageCertificate.send($scope, cert, 'TS', 'ts-bas.label.send', function() {
                         loadCertificate();
                     });
+            };
+
+            ManageCertificate.initMakulera($scope);
+            $scope.makulera = function(cert) {
+                var confirmationMessage = messageService.getProperty('ts-bas.label.makulera.confirmation', {
+                    namn: cert.patient.fullstandigtNamn, personnummer: cert.patient.personid });
+
+                ManageCertificate.makulera($scope, cert, confirmationMessage, function() {
+                    loadCertificate();
+                });
             };
 
             $scope.copy = function(cert) {

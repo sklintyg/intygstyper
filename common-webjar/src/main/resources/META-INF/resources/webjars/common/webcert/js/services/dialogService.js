@@ -26,6 +26,31 @@ angular.module('common').factory('common.dialogService',
             });
         }
 
+        function _showMessageDialog(titleId, bodyText, callback) {
+            var msgbox = $modal.open({
+                templateUrl: '/web/webjars/common/webcert/js/services/dialogServiceMessageTemplate.html',
+                controller: function($scope, $modalInstance, bodyText, titleId) {
+                    $scope.bodyText = bodyText;
+                    $scope.titleId = titleId;
+                },
+                resolve: {
+                    bodyText: function() {
+                        return angular.copy(bodyText);
+                    },
+                    titleId: function() {
+                        return angular.copy(titleId);
+                    }
+                }
+            });
+
+            msgbox.result.then(function(result) {
+                if (callback) {
+                    callback(result);
+                }
+            }, function() {
+            });
+        }
+
         /*
          showDialog parameters:
 
@@ -194,6 +219,7 @@ angular.module('common').factory('common.dialogService',
         // Return public API for the service
         return {
             showErrorMessageDialog: _showErrorMessageDialog,
+            showMessageDialog: _showMessageDialog,
             showDialog: _showDialog
         };
     });

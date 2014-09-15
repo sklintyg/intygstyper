@@ -118,9 +118,9 @@ angular.module('common').factory('common.CertificateService',
         function _signeraUtkastWithSignatur(ticketId, signatur, onSuccess, onError) {
             $log.debug('_signeraUtkastWithSignatur, ticketId: ' + ticketId);
             var restPath = '/moduleapi/intyg/signera/klient/' + ticketId;
-            $http.post(restPath, { signatur: signatur }).
-                success(function(data) {
-                    onSuccess(data);
+            $http.post(restPath).
+                success(function() {
+                    onSuccess();
                 }).
                 error(function(error) {
                     _handleError(onError, error);
@@ -133,6 +133,22 @@ angular.module('common').factory('common.CertificateService',
             $http.post(restPath, {'recipient': recipientId, 'patientConsent': patientConsent}).
                 success(function(data) {
                     onSuccess(data);
+                }).
+                error(function(error) {
+                    _handleError(onError, error);
+                });
+        }
+
+        function _revokeSigneratIntyg(intygId, onSuccess, onError) {
+            $log.debug('_revokeSigneratIntyg: ' + intygId);
+            var restPath = '/moduleapi/intyg/signed/' + intygId + '/revoke';
+            $http.post(restPath, {}).
+                success(function(data) {
+                    if (data === '"OK"') {
+                        onSuccess();
+                    } else {
+                        onError();
+                    }
                 }).
                 error(function(error) {
                     _handleError(onError, error);
@@ -159,6 +175,7 @@ angular.module('common').factory('common.CertificateService',
             discardDraft: _discardDraft,
             getSigneringshash: _getSigneringshash,
             getSigneringsstatus: _getSigneringsstatus,
+            revokeSigneratIntyg: _revokeSigneratIntyg,
             signeraUtkast: _signeraUtkast,
             signeraUtkastWithSignatur: _signeraUtkastWithSignatur,
             sendSigneratIntyg: _sendSigneratIntyg,

@@ -1,8 +1,8 @@
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
     [ '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', 'common.CertificateService',
-        'common.ManageCertView', 'webcert.ManageCertificate',
+        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate',
         function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView,
-            ManageCertificate) {
+            messageService, ManageCertificate) {
             'use strict';
 
             // Copy dialog setup
@@ -45,7 +45,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                         $rootScope.$emit('fk7263.ViewCertCtrl.load', result.metaData);
                         $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'FK');
                         $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
-                        if($scope.certProperties.isRevoked) {
+                        if ($scope.certProperties.isRevoked) {
                             $scope.widgetState.printStatus = 'revoked';
                         } else {
                             $scope.widgetState.printStatus = 'signed';
@@ -69,6 +69,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                     $scope.intygBackup.showBackupInfo = true;
                 });
             }
+
             loadCertificate();
 
             /**
@@ -88,8 +89,18 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             ManageCertificate.initSend($scope);
             $scope.send = function(cert) {
                 ManageCertificate.send($scope, cert, 'FK', 'fk7263.label.send', function() {
-                        loadCertificate();
-                    });
+                    loadCertificate();
+                });
+            };
+
+            ManageCertificate.initMakulera($scope);
+            $scope.makulera = function(cert) {
+                var confirmationMessage = messageService.getProperty('fk7263.label.makulera.confirmation', {
+                    namn: cert.patientNamn, personnummer: cert.patientPersonnummer });
+
+                ManageCertificate.makulera($scope, cert, confirmationMessage, function() {
+                    loadCertificate();
+                });
             };
 
             $scope.copy = function(cert) {
@@ -104,5 +115,5 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                 } else {
                     document.pdfForm.submit();
                 }
-            }
+            };
         }]);

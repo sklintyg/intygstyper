@@ -55,15 +55,14 @@ var fk7263Messages = {
         'fk7263.label.rekommendationer.kontakt.ovrigt': 'Övrigt: ',
         'fk7263.label.se-ovrigt': 'Se under Övriga upplysningar och förtydliganden',
         'fk7263.label.ovrigt': 'Övriga upplysningar och förtydliganden',
-
         'fk7263.label.ovanstaende-har-bekraftats': 'Ovanstående uppgifter och bedömningar har bekräftas',
         'fk7263.label.datum': 'Datum',
         'fk7263.label.kontakt-info': 'Namnförtydligande, mottagningens adress och telefon',
-
         'fk7263.label.atgarder': 'Åtgärder',
         'fk7263.label.rekommendationer.fk': 'Rekommendationer till Försäkringskassan',
         'fk7263.label.fk-kontakt': 'Kontakt',
         'fk7263.label.vardenhet.adress': 'Vårdenhetens adress',
+        'fk7263.label.makulera.confirmation': 'Läkarintyg FK 7263 utställt på ${namn} - ${personnummer} har rättats. Intyget kan inte längre visas av patienten.',
 
         'fk7263.vardkontakt.undersokning': 'Min undersökning av patienten den ',
         'fk7263.vardkontakt.telefonkontakt': 'Min telefonkontakt med patienten den ',

@@ -10,6 +10,7 @@ var commonMessages = {
         'common.ok': 'OK',
         'common.cancel': 'Avbryt',
         'common.goback': 'Tillbaka',
+        'common.revoke': 'Intyget ska återtas',
         'common.sign': 'Signera',
         'common.send': 'Skicka',
         'common.copy': 'Kopiera',
