@@ -36,7 +36,7 @@
               <button id="downloadprint" type="submit" value="submit" class="btn btn-info" ng-click="print(cert)">Skriv
                 ut
               </button>
-              <button id="copyBtn" class="btn btn-info" ng-click="copy(cert)">Kopiera</button>
+              <button id="copyBtn" class="btn btn-info" ng-if="!certProperties.isRevoked" ng-click="copy(cert)">Kopiera</button>
               <button class="btn btn-inverse">Rätta</button>
             </p>
           </form>
