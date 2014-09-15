@@ -46,7 +46,7 @@ public class InternalDraftValidator {
             addValidationError(validationMessages, "vardperson.postort", "fk7263.validation.vardenhet.postort.missing");
         }
 
-        if (isNullOrEmpty(utlatande.getVardperson().getPostort())) {
+        if (isNullOrEmpty(utlatande.getVardperson().getTelefonnummer())) {
             addValidationError(validationMessages, "vardperson.telefonnummer", "fk7263.validation.vardenhet.telefonnummer.missing");
         }
     }
