@@ -28,13 +28,6 @@
   </properties>
 
   <dependencies>
-    <!-- Project dependencies -->
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>rli</artifactId>
-      <type>test-jar</type>
-      <version>${rli.version}</version>
-    </dependency>
 
     <!-- Dependencies to Intygstjansten -->
     <dependency>
