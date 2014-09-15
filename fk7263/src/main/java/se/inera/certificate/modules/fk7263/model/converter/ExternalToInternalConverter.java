@@ -157,6 +157,9 @@ public class ExternalToInternalConverter {
                     intyg.setArbetsformataPrognosNej(true);
                 } else if (Prognoskoder.DET_GAR_INTE_ATT_BEDOMA.equals(prognosKod)) {
                     intyg.setArbetsformataPrognosGarInteAttBedoma(true);
+                    if (prognos.getKommentar() != null && !prognos.getKommentar().isEmpty()) {
+                        intyg.setArbetsformagaPrognosGarInteAttBedomaBeskrivning(prognos.getKommentar());
+                    }
                 }
             }
         }
