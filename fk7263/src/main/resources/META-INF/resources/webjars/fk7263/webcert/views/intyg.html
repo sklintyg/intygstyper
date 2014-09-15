@@ -69,7 +69,7 @@
                     </span>
               </div>
 
-              <div wc-field field-number="2" field-label="fk7263.label.diagnos" filled="{{cert.diagnosBeskrivning}}"
+              <div wc-field field-number="2" field-label="fk7263.label.diagnos" filled="{{cert.diagnosBeskrivning!=null}}"
                    id="field2">
                 <div class="form-group">
                   {{cert.diagnosBeskrivning}} (<span class="tag"><span message
@@ -139,7 +139,7 @@
               </div>
 
               <div wc-field field-number="6b" field-label="fk7263.label.planerad-atgard"
-                   filled="{{cert.atgardInomSjukvarden||cert.annanAtgard}}" id="field6b">
+                   filled="{{cert.atgardInomSjukvarden!=null||cert.annanAtgard!=null}}" id="field6b">
                 <ul>
                   <li ng-show="cert.atgardInomSjukvarden != null"><span message
                                                                         key="fk7263.label.planerad-atgard.sjukvarden"></span>
@@ -175,7 +175,7 @@
               </div>
 
               <div wc-field field-number="8b" field-label="fk7263.label.nedsattning"
-                   filled="{{cert.nedsattMed25||cert.nedsattMed50||cert.nedsattMed75||cert.nedsattMed100}}" id="field8b">
+                   filled="{{cert.nedsattMed25!=null||cert.nedsattMed50!=null||cert.nedsattMed75!=null||cert.nedsattMed100!=null}}" id="field8b">
 
                 <div ng-show="cert.nedsattMed25 != null">
                   <strong><span message key="fk7263.nedsattningsgrad.nedsatt_med_1_4"></span></strong><br> Från och med
@@ -241,7 +241,7 @@
               </div>
 
               <div wc-field field-label="fk7263.label.arbetsplatskod" field-number="17"
-                   filled="{{cert.forskrivarkodOchArbetsplatskod}}" id="field17">
+                   filled="{{cert.forskrivarkodOchArbetsplatskod!=null}}" id="field17">
                 <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
                 <div>{{cert.forskrivarkodOchArbetsplatskod}}</div>
               </div>
