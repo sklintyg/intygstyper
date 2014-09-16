@@ -24,7 +24,7 @@ angular.module('common').directive('message',
                             useLanguage = $rootScope.lang;
                         }
 
-                        result = messageService.getProperty(normalizedKey, useLanguage, attr.fallback,
+                        result = messageService.getProperty(normalizedKey, null, attr.fallback, useLanguage,
                             (typeof attr.fallbackDefaultLang !== 'undefined'));
 
                         if (typeof scope.param !== 'undefined') {

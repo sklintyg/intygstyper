@@ -13,34 +13,39 @@ angular.module('common').factory('common.messageService',
 
         var _messageResources = null;
 
-        function _getProperty(key, language, defaultValue, fallbackToDefaultLanguage) {
+        function _getProperty(key, variables, defaultValue, language, fallbackToDefaultLanguage) {
             var value;
 
-            if (typeof language === 'undefined') {
+            if (!language) {
                 language = $rootScope.lang;
+                if (!language && fallbackToDefaultLanguage) {
+                    language = $rootScope.DEFAULT_LANG;
+                }
             }
 
-            value = _getPropertyInLanguage(language, key);
-            if (typeof value === 'undefined') {
-                // use fallback attr value if defined
-                if (fallbackToDefaultLanguage) {
-                    value = _getPropertyInLanguage($rootScope.DEFAULT_LANG, key);
+            if (language) {
+                value = _getPropertyInLanguage(language, key, variables);
+                if (value === null || value === undefined) {
+                    value = defaultValue === null || defaultValue === undefined ?
+                        '[Missing "' + key + '"]' : defaultValue;
                 }
-                if (typeof value === 'undefined') {
-                    // use fallback attr value if defined
-                    value = (typeof defaultValue === 'undefined') ? '[Missing "' + key + '"]' : defaultValue;
-                }
+            } else {
+                value = '[Missing language]';
             }
+
             return value;
         }
 
-        function _getPropertyInLanguage(lang, key) {
+        function _getPropertyInLanguage(lang, key, variables) {
             _checkResources();
-            return _lookupProperty(_messageResources[lang], key);
-        }
+            var message = _messageResources[lang][key];
 
-        function _lookupProperty(resources, key) {
-            return resources[key];
+            angular.forEach(variables, function(value, key) {
+                var regexp = new RegExp('\\$\\{' + key + '\\}', 'g');
+                message = message.replace(regexp, value);
+            });
+
+            return message;
         }
 
         function _addResources(resources) {
@@ -66,4 +71,5 @@ angular.module('common').factory('common.messageService',
             getProperty: _getProperty,
             addResources: _addResources
         };
-    });
+    }
+);

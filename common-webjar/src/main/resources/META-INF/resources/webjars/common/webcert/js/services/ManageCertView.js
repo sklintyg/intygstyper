@@ -248,7 +248,7 @@ angular.module('common').factory('common.ManageCertView',
                         $scope.dialog.errormessageid = 'common.error.signerror';
                     }
                 } else {
-                    var errorMessage = messageService.getProperty(error, undefined, error);
+                    var errorMessage = messageService.getProperty(error, null, error);
                     dialogService.showErrorMessageDialog(errorMessage);
                 }
             }
