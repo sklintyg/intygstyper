@@ -93,10 +93,14 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
             // 8b. Arbetsförmåga date field invalid states. Keeps track of which nedsatt date fields that are invalid from onChange checks
             $scope.nedsattInvalid = {
-                nedsattMed25from: false, nedsattMed25tom: false,
-                nedsattMed50from: false, nedsattMed50tom: false,
-                nedsattMed75from: false, nedsattMed75tom: false,
-                nedsattMed100from: false, nedsattMed100tom: false
+                nedsattMed25from: false,
+                nedsattMed25tom: false,
+                nedsattMed50from: false,
+                nedsattMed50tom: false,
+                nedsattMed75from: false,
+                nedsattMed75tom: false,
+                nedsattMed100from: false,
+                nedsattMed100tom: false
             };
 
             // Text input limits for different fields
@@ -118,17 +122,70 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              ***************************************************************************/
 
             /**
-             * Set a default value to listed properties on an object
-             * @param list
-             * @param propertyNames
-             * @param defaultValue
+             * Does supplied date look like an iso date XXXX-XX-XX (not a complete validation)?
+             * @param date
+             * @returns {*}
              */
-            function setPropertyDefaults(list, propertyNames, defaultValue) {
-                for (var i = 0; i < propertyNames.length; i++) {
-                    if (list[propertyNames[i]] === undefined) {
-                        list[propertyNames[i]] = defaultValue;
+            function isDate(date) {
+                return ISODATE_REGEXP.test(date);
+            }
+
+            /**
+             * Get earliest or latest date in a list of dates
+             * @param comparisonType
+             * @param dates
+             * @returns {boolean}
+             */
+            function getMinMaxDate(comparisonType, dates) {
+                var i = 0;
+                var compareDate = false;
+                for (i = 0; i < dates.length; i++) {
+                    if (isDate(dates[i])) {
+                        if (!compareDate || // no valid date found yet
+                            (comparisonType === 'min' && dates[i] < compareDate) || // looking for min date
+                            (comparisonType === 'max' && dates[i] > compareDate)) { // looking for max date
+                            compareDate = dates[i];
+                        }
                     }
                 }
+
+                // if no valid dates, compareDate is still false, otherwise contains the lowest/highest date
+                // sent depending on comparisonType
+                return compareDate;
+            }
+
+            /**
+             * 8b: find earliest and latest dates for arbetsförmåga
+             * @returns {{minDate: null, maxDate: null}}
+             */
+            function findStartEndDates() {
+                var dates = {
+                    minDate: null,
+                    maxDate: null
+                };
+                var startDates = [];
+                var endDates = [];
+
+                if ($scope.cert.nedsattMed25) {
+                    startDates.push($scope.cert.nedsattMed25.from);
+                    endDates.push($scope.cert.nedsattMed25.tom);
+                }
+                if ($scope.cert.nedsattMed50) {
+                    startDates.push($scope.cert.nedsattMed50.from);
+                    endDates.push($scope.cert.nedsattMed50.tom);
+                }
+                if ($scope.cert.nedsattMed75) {
+                    startDates.push($scope.cert.nedsattMed75.from);
+                    endDates.push($scope.cert.nedsattMed75.tom);
+                }
+                if ($scope.cert.nedsattMed100) {
+                    startDates.push($scope.cert.nedsattMed100.from);
+                    endDates.push($scope.cert.nedsattMed100.tom);
+                }
+
+                dates.minDate = getMinMaxDate('min', startDates);
+                dates.maxDate = getMinMaxDate('max', endDates);
+                return dates;
             }
 
             /**
@@ -173,82 +230,13 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             }
 
             /**
-             * 8b: find earliest and latest dates for arbetsförmåga
-             * @returns {{minDate: null, maxDate: null}}
-             */
-            function findStartEndDates() {
-                var dates = {
-                    minDate: null,
-                    maxDate: null
-                };
-                var startDates = [];
-                var endDates = [];
-
-                if ($scope.cert.nedsattMed25) {
-                    startDates.push($scope.cert.nedsattMed25.from);
-                    endDates.push($scope.cert.nedsattMed25.tom);
-                }
-                if ($scope.cert.nedsattMed50) {
-                    startDates.push($scope.cert.nedsattMed50.from);
-                    endDates.push($scope.cert.nedsattMed50.tom);
-                }
-                if ($scope.cert.nedsattMed75) {
-                    startDates.push($scope.cert.nedsattMed75.from);
-                    endDates.push($scope.cert.nedsattMed75.tom);
-                }
-                if ($scope.cert.nedsattMed100) {
-                    startDates.push($scope.cert.nedsattMed100.from);
-                    endDates.push($scope.cert.nedsattMed100.tom);
-                }
-
-                dates.minDate = getMinMaxDate('min', startDates);
-                dates.maxDate = getMinMaxDate('max', endDates);
-                return dates;
-            }
-
-            /**
-             * Does supplied date look like an iso date XXXX-XX-XX (not a complete validation)?
-             * @param date
-             * @returns {*}
-             */
-            function isDate(date) {
-                var validDateFormat = ISODATE_REGEXP.test(date);
-                return validDateFormat;
-            }
-
-            /**
-             * Get earliest or latest date in a list of dates
-             * @param comparisonType
-             * @param dates
-             * @returns {boolean}
-             */
-            function getMinMaxDate(comparisonType, dates) {
-
-                var compareDate = false;
-                for (var i = 0; i < dates.length; i++) {
-                    if (isDate(dates[i])) {
-                        if (!compareDate || // no valid date found yet
-                            (comparisonType === 'min' && dates[i] < compareDate) || // looking for min date
-                            (comparisonType === 'max' && dates[i] > compareDate)) { // looking for max date
-                            compareDate = dates[i];
-                        }
-                    }
-                }
-
-                // if no valid dates, compareDate is still false, otherwise contains the lowest/highest date
-                // sent depending on comparisonType
-                return compareDate;
-            }
-
-            /**
              * Convert a date into time ms since 1970-01-01
              * @param date
              * @returns {number}
              */
             function convertDateToTime(date) {
                 var splitDate = date.split('-');
-                var time = (new Date(splitDate[0], splitDate[1], splitDate[2])).getTime();
-                return time;
+                return (new Date(splitDate[0], splitDate[1], splitDate[2])).getTime();
             }
 
             /**
@@ -258,21 +246,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             function convertCertToForm($scope) {
 
                 // Fält 4b. AnnanReferensBeskrivning
-                if ($scope.cert.undersokningAvPatienten !== undefined) {
-                    $scope.basedOnState.check.undersokningAvPatienten = true;
-                } else {
-                    $scope.basedOnState.check.undersokningAvPatienten = false;
-                }
-                if ($scope.cert.telefonkontaktMedPatienten !== undefined) {
-                    $scope.basedOnState.check.telefonkontaktMedPatienten = true;
-                } else {
-                    $scope.basedOnState.check.telefonkontaktMedPatienten = false;
-                }
-                if ($scope.cert.journaluppgifter !== undefined) {
-                    $scope.basedOnState.check.journaluppgifter = true;
-                } else {
-                    $scope.basedOnState.check.journaluppgifter = false;
-                }
+                $scope.basedOnState.check.undersokningAvPatienten = $scope.cert.undersokningAvPatienten !== undefined;
+                $scope.basedOnState.check.telefonkontaktMedPatienten =
+                    $scope.cert.telefonkontaktMedPatienten !== undefined;
+                $scope.basedOnState.check.journaluppgifter = $scope.cert.journaluppgifter !== undefined;
                 if ($scope.cert.annanReferensBeskrivning !== undefined) {
                     $scope.form.ovrigt.annanReferensBeskrivning = $scope.cert.annanReferensBeskrivning;
                     $scope.basedOnState.check.annanReferens = true;
@@ -304,12 +281,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
 
                 // Fält 8a. Set nuvarande arbete default value
-                if ($scope.cert.nuvarandeArbetsuppgifter !== undefined ||
-                    (!$scope.cert.arbetsloshet && !$scope.cert.foraldrarledighet)) {
-                    $scope.form.arbete = true;
-                } else {
-                    $scope.form.arbete = false;
-                }
+                $scope.form.arbete = !!($scope.cert.nuvarandeArbetsuppgifter !== undefined ||
+                    (!$scope.cert.arbetsloshet && !$scope.cert.foraldrarledighet));
 
                 // Fält 10. Går ej att bedöma and update backend model when view changes.
                 if ($scope.cert.arbetsformataPrognosJa) {
@@ -525,9 +498,9 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     return val;
                 }
 
-                if($scope.form.ovrigt[field])
+                if($scope.form.ovrigt[field]) {
                     $scope.form.ovrigt[field] = limitOvrigtLength($scope.form.ovrigt[field]);
-                else if($scope.cert[field]) {
+                } else if($scope.cert[field]) {
                     $scope.cert[field] = limitOvrigtLength($scope.cert[field]);
                 }
             };
@@ -597,8 +570,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                             // find highest max date
                             if (!dates.maxDate) {
                                 // if no maxdate is available, use today
-                                var today = ($filter('date')($scope.today, 'yyyy-MM-dd'));
-                                workstate.from = today;
+                                workstate.from = $filter('date')($scope.today, 'yyyy-MM-dd');
                             } else {
                                 workstate.from = moment(dates.maxDate).add('days', 1).format('YYYY-MM-DD');
                             }
