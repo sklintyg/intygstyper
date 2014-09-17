@@ -214,13 +214,14 @@
                    filled="{{cert.arbetsformataPrognosJa || cert.arbetsformataPrognosJaDelvis||cert.arbetsformataPrognosNej||cert.arbetsformataPrognosGarInteAttBedoma}}"
                    id="field10">
 
-                <span ng-show="cert.arbetsformataPrognosJa"><span message key="fk7263.label.yes"></span></span> <span
-                  ng-show="cert.arbetsformataPrognosJaDelvis"><span message key="fk7263.label.delvis"></span></span>
-                <span ng-show="cert.arbetsformataPrognosNej"><span message key="fk7263.label.no"></span></span> <span
-                  ng-show="cert.arbetsformataPrognosGarInteAttBedoma"><span message
-                                                                            key="fk7263.label.gar-ej-att-bedomma"></span>
-                <br>
-                <span class="tag">Förtydligande: {{cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning}}</span>
+                <span ng-show="cert.arbetsformataPrognosJa"><span message key="fk7263.label.yes"></span></span>
+                <span ng-show="cert.arbetsformataPrognosJaDelvis"><span message key="fk7263.label.delvis"></span></span>
+                <span ng-show="cert.arbetsformataPrognosNej"><span message key="fk7263.label.no"></span></span>
+                <span ng-show="cert.arbetsformataPrognosGarInteAttBedoma">
+                  <span message key="fk7263.label.gar-ej-att-bedomma"></span>
+                  <br>
+                  <span class="tag">Förtydligande: {{cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning}}</span>
+                </span>
               </div>
 
               <div wc-field field-number="11" field-label="fk7263.label.resor-till-arbetet"
