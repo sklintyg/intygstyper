@@ -52,7 +52,26 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
 
             $scope.testerror = false;
 
-            // ---------------------------------------------------------------------------------------------------------
+            /******************************************************************************************
+             * Private support functions
+             ******************************************************************************************/
+
+            /**
+             * Convert form data to internal model
+             */
+            function convertFormToCert() {
+
+                // 2g. if entered date is valid, convert it to string so backend validation is happy.
+                // otherwise leave it as an invalid Date so backend sends back a validation error
+                if($scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid !== undefined && moment($scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid).isValid()) {
+                    $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid =
+                        moment($scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid).format('YYYY-MM-DD');
+                }
+            }
+
+            /******************************************************************************************
+             * Watches
+             ******************************************************************************************/
 
             // Watch changes to the form and make sure that other form elements that are dependent on the changed
             // element is updated correctly.
@@ -171,11 +190,16 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 $scope.specialiteter = result;
             }, true);
 
+            /******************************************************************************************
+             * Exposed interaction
+             ******************************************************************************************/
+
             /**
              * Action to save the certificate draft to the server.
              */
             $scope.save = function() {
                 $scope.hasSavedThisSession = true;
+                convertFormToCert();
                 ManageCertView.save($scope);
             };
 
