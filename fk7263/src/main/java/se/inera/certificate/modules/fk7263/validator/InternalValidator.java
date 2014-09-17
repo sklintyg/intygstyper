@@ -31,7 +31,6 @@ public class InternalValidator extends AbstractValidator {
         validateArbetsformaga();
         validatePrognos();
         validateRessatt();
-        validateKommentar();
 
         return getValidationErrors();
     }
@@ -165,22 +164,6 @@ public class InternalValidator extends AbstractValidator {
         // Fält 11 - If set only one should be set
         if (inForandratRessatt && inEjForandratRessatt) {
             addValidationError("Field 11: Only one forandrat ressatt could be set.");
-        }
-    }
-
-    private void validateKommentar() {
-
-        // Fält 13 - Upplysningar - optional
-        // If field 4 annat satt or field 10 går ej att bedömma is set then
-        // field 13 should contain data.
-        boolean hasKommentar = !isNullOrEmpty(utlatande.getKommentar());
-
-        LocalDate annat = utlatande.getAnnanReferens();
-
-        boolean garEjAttBedomma = utlatande.isArbetsformataPrognosGarInteAttBedoma();
-
-        if ((annat != null || garEjAttBedomma) && !hasKommentar) {
-            addValidationError("Field 13: Field should contain data as field 4 or fields 10 are checked.");
         }
     }
 

@@ -52,14 +52,6 @@ public class InternalValidatorTest {
     }
 
     @Test
-    public void testMissingComment() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
-        utlatande.setKommentar(null);
-
-        assertEquals(1, new InternalValidator(utlatande).validate().size());
-    }
-
-    @Test
     public void testMissingCommentOkIfField4And10NotFilled() throws Exception {
         Fk7263Intyg utlatande = getValidUtlatande();
         utlatande.setKommentar(null);

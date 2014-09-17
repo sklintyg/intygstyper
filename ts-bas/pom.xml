@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
+
   <parent>
     <groupId>se.inera.certificate.modules</groupId>
     <artifactId>certificates</artifactId>
@@ -9,26 +11,40 @@
   </parent>
 
   <artifactId>ts-bas</artifactId>
-
+  <version>1.0-SNAPSHOT</version>
   <name>Transportstyrelsen Bas</name>
+
   <properties>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
   </properties>
-  <version>1.0-SNAPSHOT</version>
 
   <dependencies>
+    <!-- Project dependencies -->
     <dependency>
-      <groupId>se.inera.certificate.modules</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>module-support</artifactId>
     </dependency>
     <dependency>
-      <groupId>se.inera.certificate.modules</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>integration-util</artifactId>
     </dependency>
+
+    <!-- Dependencies to projects inside Intygstjansten -->
+    <dependency>
+      <groupId>se.inera.certificate</groupId>
+      <artifactId>schemas</artifactId>
+    </dependency>
+    
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
     </dependency>
+    
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
@@ -37,28 +53,28 @@
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-    </dependency>
+    
     <dependency>
       <groupId>com.itextpdf</groupId>
       <artifactId>itextpdf</artifactId>
     </dependency>
+
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.1</version>
     </dependency>
+
     <dependency>
-      <groupId>commons-collections</groupId>
-      <artifactId>commons-collections</artifactId>
-      <version>3.2.1</version>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxrs</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+    
+    <!-- Test dependencies -->
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
@@ -72,23 +88,17 @@
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
-      <version>1.9.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.unitils</groupId>
       <artifactId>unitils-core</artifactId>
-      <version>3.3</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>se.inera.certificate</groupId>
-      <artifactId>schemas</artifactId>
     </dependency>
   </dependencies>
 
@@ -98,7 +108,6 @@
       <plugin>
         <groupId>com.github.eirslett</groupId>
         <artifactId>frontend-maven-plugin</artifactId>
-        <version>${frontend.version}</version>
         <executions>
           <execution>
             <id>install node and npm</id>
@@ -149,7 +158,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>2.3.2</version>
         <executions>
           <execution>
             <id>test-jar</id>
@@ -163,7 +171,6 @@
       <plugin>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-xjc-plugin</artifactId>
-        <version>2.6.0</version>
         <executions>
           <execution>
             <goals>
@@ -194,4 +201,5 @@
       </plugin>
     </plugins>
   </build>
+  
 </project>

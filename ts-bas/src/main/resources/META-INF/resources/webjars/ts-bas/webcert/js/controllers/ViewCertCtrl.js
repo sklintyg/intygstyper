@@ -116,5 +116,5 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
                 } else {
                     document.pdfForm.submit();
                 }
-            }
+            };
         }]);

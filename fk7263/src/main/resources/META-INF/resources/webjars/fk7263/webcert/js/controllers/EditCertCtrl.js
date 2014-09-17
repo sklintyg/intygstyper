@@ -4,14 +4,14 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
         function($anchorScroll, $filter, $location, $scope, $log, CertificateService, ManageCertView, User) {
             'use strict';
 
-            $scope.cert = {};
-            $scope.hasSavedThisSession = false;
-            $scope.messages = [];
-            $scope.isComplete = false;
-            $scope.isSigned = false;
-            $scope.user = User;
+            /**********************************************************************************
+             * Default state
+             **********************************************************************************/
 
-            // init state
+            // Page states
+            $scope.user = User;
+            $scope.today = new Date();
+            $scope.today.setHours(0, 0, 0, 0); // reset time to increase comparison accuracy (using new Date() also sets time)
             $scope.widgetState = {
                 doneLoading: false,
                 activeErrorMessageKey: null,
@@ -20,52 +20,90 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 collapsedHeader: false
             };
 
-            // Keeps track of which nedsatt fields that are invalid from onChange checks
-            $scope.nedsattInvalid = {
-                nedsattMed25from: false, nedsattMed25tom: false,
-                nedsattMed50from: false, nedsattMed50tom: false,
-                nedsattMed75from: false, nedsattMed75tom: false,
-                nedsattMed100from: false, nedsattMed100tom: false
-            };
+            // Intyg state
+            $scope.cert = {};
+            $scope.hasSavedThisSession = false;
+            $scope.messages = [];
+            $scope.isComplete = false;
+            $scope.isSigned = false;
 
-            $scope.today = new Date();
-            $scope.today.setHours(0, 0, 0, 0); // reset time to
-            // increase comparison accuracy (using new Date() also sets time)
-
-            $scope.toggleHeader = function() {
-                $scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
-            };
-
-            $scope.toggleShowComplete = function() {
-                $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
-                if ($scope.widgetState.showComplete) {
-                    $scope.save();
-                    var old = $location.hash();
-                    $location.hash('top');
-                    $anchorScroll();
-                    // reset to old to keep any additional routing logic from kicking in
-                    $location.hash(old);
+            // Keeps track of in-form interactions which is converted to internal model on save,
+            // and converted from internal model on load
+            $scope.form = {
+                arbete: true,
+                prognos: 'YES',
+                rehab: 'NEJ',
+                ressattTillArbeteAktuellt: false,
+                rekommendationOvrigtCheck: false,
+                ovrigt: {
+                    'annanReferensBeskrivning' : null,
+                    'nedsattMed25Beskrivning' : null,
+                    'nedsattMed50Beskrivning' : null,
+                    'nedsattMed75Beskrivning' : null,
+                    'arbetsformagaPrognosGarInteAttBedomaBeskrivning' : null
                 }
             };
 
-            $scope.form = {
-                'identity': {
-                    'ID-kort': 'ID_KORT',
-                    'Företagskort eller tjänstekort': 'FORETAG_ELLER_TJANSTEKORT',
-                    'Körkort': 'KORKORT',
-                    'Personlig kännedom': 'PERS_KANNEDOM',
-                    'Försäkran enligt 18 kap. 4§': 'FORSAKRAN_KAP18',
-                    'Pass': 'PASS'
-                },
-                'korkortd': false,
-                'behorighet': true,
-                'arbete': true,
-                'rehab': 'NEJ'
+            // Fält 2. Diagnose handling Typeahead is implemented in a future story
+            $scope.diagnoseCodes = [
+                /*                {
+                 value: 'J44.0',
+                 label: 'J44.0 Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion'
+                 },
+                 {
+                 value: 'K92.2',
+                 label: 'K92.2 Gastrointestinal blödning, ospecificerad'
+                 }*/
+            ];
+
+            $scope.diagnoses = [
+                /*                {
+                 value: 'Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion',
+                 label: 'J44.0 Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion'
+                 },
+                 {
+                 value: 'Gastrointestinal blödning, ospecificerad',
+                 label: 'K92.2 Gastrointestinal blödning, ospecificerad'
+                 }*/
+            ];
+
+            // Fält 4b. Based on handling
+            $scope.basedOnState = {
+                check: {
+                    undersokningAvPatienten: false,
+                    telefonkontaktMedPatienten: false,
+                    journaluppgifter: false,
+                    annanReferens: false
+                }
             };
 
-            $scope.testerror = false;
+            // 8b. Arbetsförmåga date management
+            var ISODATE_REGEXP = /^\d{4}-\d{2}-\d{2}$/;
+            $scope.datesOutOfRange = false;
+            $scope.datesPeriodTooLong = false;
+            $scope.totalCertDays = false;
 
-            // Input limit handling
+            // 8b. Arbetsförmåga checks
+            $scope.workState = {
+                nedsattMed25: false,
+                nedsattMed50: false,
+                nedsattMed75: false,
+                nedsattMed100: false
+            };
+
+            // 8b. Arbetsförmåga date field invalid states. Keeps track of which nedsatt date fields that are invalid from onChange checks
+            $scope.nedsattInvalid = {
+                nedsattMed25from: false,
+                nedsattMed25tom: false,
+                nedsattMed50from: false,
+                nedsattMed50tom: false,
+                nedsattMed75from: false,
+                nedsattMed75tom: false,
+                nedsattMed100from: false,
+                nedsattMed100tom: false
+            };
+
+            // Text input limits for different fields
             $scope.inputLimits = {
                 diagnosBeskrivning: 100,
                 sjukdomsforlopp: 270,
@@ -79,189 +117,41 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 // 420 = combined field 13 (and dependencies) limit
             };
 
-            // Watch Fält 4b -> Annat and update backend model when view changes.
-            $scope.$watchCollection('[cert.otherData.baseradPaAnnat, basedOnState.check.annanReferens]',
-                function() {
-                    if ($scope.cert.otherData !== undefined) {
-                        if (!$scope.cert.otherData.baseradPaAnnat ||
-                            $scope.cert.otherData.baseradPaAnnat === '' || !$scope.basedOnState.check.annanReferens) {
-                            $scope.cert.annanReferensBeskrivning = null;
-                            return;
-                        }
-                        $scope.cert.annanReferensBeskrivning = $scope.cert.otherData.baseradPaAnnat;
-                    }
-                });
-
-            // Watch Fält 10 -> Går ej att bedöma and update backend model when view changes.
-            $scope.$watchCollection('[cert.otherData.prognosisClarification, cert.prognosis]',
-                function() {
-                    if ($scope.cert.otherData !== undefined) {
-                        if (!$scope.cert.otherData.prognosisClarification ||
-                            $scope.cert.otherData.prognosisClarification === '' ||
-                            $scope.cert.prognosis !== 'UNKNOWN') {
-                            $scope.cert.arbetsformagaPrognosGarInteAttBedomBeskrivning = null;
-                            return;
-                        }
-                        $scope.cert.arbetsformagaPrognosGarInteAttBedomBeskrivning =
-                            $scope.cert.otherData.prognosisClarification;
-                    }
-                });
-
-            $scope.limitFieldLength = function(field) {
-                $scope.cert[field] = $scope.cert[field].substr(0, $scope.inputLimits[field]);
-            };
-
-            $scope.limitOtherField = function(field) {
-                function limitOvrigtLength(val) {
-                    var totalOvrigtLength = $scope.getTotalOvrigtLength();
-                    if (totalOvrigtLength > $scope.inputLimits.ovrigt) {
-                        // Remove characters over limit from current field
-                        return val.substr(0, val.length - (totalOvrigtLength - $scope.inputLimits.ovrigt));
-                    }
-                    return val;
-                }
-
-                $scope.cert[field] = limitOvrigtLength($scope.cert[field]);
-            };
-
-            $scope.getTotalOvrigtLength = function() {
-                function getLengthOrZero(value) {
-                    if (value === undefined) {
-                        return 0;
-                    } else {
-                        return value.length;
-                    }
-                }
-
-                var totalOvrigtLength = getLengthOrZero($scope.cert.kommentar);
-
-                if ($scope.cert.otherData !== undefined) {
-                    totalOvrigtLength = getLengthOrZero($scope.cert.otherData.baseradPaAnnat) +
-                        getLengthOrZero($scope.cert.otherData.workingHours25) +
-                        getLengthOrZero($scope.cert.otherData.workingHours50) +
-                        getLengthOrZero($scope.cert.otherData.workingHours75) +
-                        getLengthOrZero($scope.cert.otherData.workingHours100) +
-                        getLengthOrZero($scope.cert.otherData.prognosisClarification);
-                }
-                if ($scope.cert.otherData !== undefined) {
-                    if ($scope.cert.otherData.rehabWhen instanceof Date) {
-                        totalOvrigtLength += ($filter('date')
-                        ($scope.cert.otherData.rehabWhen, 'yyyy-MM-dd')).length;
-                    }
-                }
-                // NOTE: this date (rehabWhen) will probably
-                // need a label and therefore
-                // use more than the length of the date when
-                // merged with the other
-                // fields.
-                // Remember to add length for the label as well
-                // (probably applies to all
-                // in cert.otherData)
-                return totalOvrigtLength;
-            };
-
-            // Based on handling (4b)
-            $scope.basedOnState = {
-                check: {
-                    undersokningAvPatienten: false,
-                    telefonkontaktMedPatienten: false,
-                    journaluppgifter: false,
-                    annanReferens: false
-                }
-            };
-
-            $scope.autoEnterDate = function(modelName) {
-
-                // Set todays date when a baserat pa field is checked
-                if ($scope.basedOnState.check[modelName]) {
-                    if ($scope.cert[modelName] === undefined || $scope.cert[modelName] === '') {
-                        $scope.cert[modelName] = $filter('date')($scope.today, 'yyyy-MM-dd');
-                    }
-                } else {
-
-                    // Clear date if check is unchecked
-                    $scope.cert[modelName] = '';
-                }
-            };
-
-            $scope.onChangeBaserasPaDate = function(baserasPaType) {
-                if ($scope.cert[baserasPaType] !== undefined && isDate($scope.cert[baserasPaType])) {
-                    $scope.basedOnState.check[baserasPaType] = true;
-                }
-            };
-
-            // Diagnose handling (2)
-            $scope.diagnoseCodes = [
-                {
-                    value: 'J44.0',
-                    label: 'J44.0 Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion'
-                },
-                {
-                    value: 'K92.2',
-                    label: 'K92.2 Gastrointestinal blödning, ospecificerad'
-                }
-            ];
-
-            $scope.diagnoses = [
-                {
-                    value: 'Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion',
-                    label: 'J44.0 Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion'
-                },
-                {
-                    value: 'Gastrointestinal blödning, ospecificerad',
-                    label: 'K92.2 Gastrointestinal blödning, ospecificerad'
-                }
-            ];
-
-            // Arbetsförmåga handling (8b)
-            $scope.workState = {
-                nedsattMed25: false,
-                nedsattMed50: false,
-                nedsattMed75: false,
-                nedsattMed100: false
-            };
+            /***************************************************************************
+             * Private controller support functions
+             ***************************************************************************/
 
             /**
-             * 8b: Called when checks or dates for Arbetsförmåga are changed. Update dependency controls here
+             * Does supplied date look like an iso date XXXX-XX-XX (not a complete validation)?
+             * @param date
+             * @returns {*}
              */
-            function onArbetsformagaDatesUpdated() {
-                $scope.updateTotalCertDays();
-
-                var rangeDates = findStartEndDates();
-                checkArbetsformagaDatesRange(rangeDates.minDate);
-
-                var periodDates = findStartEndDates();
-                checkArbetsformagaDatesPeriodLength(periodDates.minDate, periodDates.maxDate);
+            function isDate(date) {
+                return ISODATE_REGEXP.test(date);
             }
 
             /**
-             * 8b: Check that the earliest startdate in arbetsförmåga is no more than a week before today and no more than 6 months in the future
-             * @type {boolean}
+             * Get earliest or latest date in a list of dates
+             * @param comparisonType
+             * @param dates
+             * @returns {boolean}
              */
-            $scope.datesOutOfRange = false;
-            function checkArbetsformagaDatesRange(startDate) {
-                if (!startDate) {
-                    $scope.datesOutOfRange = false;
-                    return;
+            function getMinMaxDate(comparisonType, dates) {
+                var i = 0;
+                var compareDate = false;
+                for (i = 0; i < dates.length; i++) {
+                    if (isDate(dates[i])) {
+                        if (!compareDate || // no valid date found yet
+                            (comparisonType === 'min' && dates[i] < compareDate) || // looking for min date
+                            (comparisonType === 'max' && dates[i] > compareDate)) { // looking for max date
+                            compareDate = dates[i];
+                        }
+                    }
                 }
 
-                var olderThanAWeek = moment(startDate).isBefore(moment().subtract('days', 7));
-                var moreThanSixMonthsInFuture = moment(startDate).isAfter(moment().add('months', 6));
-                $scope.datesOutOfRange = (olderThanAWeek || moreThanSixMonthsInFuture);
-            }
-
-            /**
-             * 8b: Check that the period between the earliest startdate and the latest end date is no more than 6 months in the future
-             * @type {boolean}
-             */
-            $scope.datesPeriodTooLong = false;
-            function checkArbetsformagaDatesPeriodLength(startDate, endDate) {
-                if (!startDate || !endDate) {
-                    $scope.datesPeriodTooLong = false;
-                    return;
-                }
-
-                $scope.datesPeriodTooLong = (Math.abs(moment(startDate).diff(endDate, 'months')) >= 6);
+                // if no valid dates, compareDate is still false, otherwise contains the lowest/highest date
+                // sent depending on comparisonType
+                return compareDate;
             }
 
             /**
@@ -299,39 +189,44 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             }
 
             /**
-             * Does supplied date look like an iso date XXXX-XX-XX (not a complete validation)?
-             * @param date
-             * @returns {*}
+             * 8b: Called when checks or dates for Arbetsförmåga are changed. Update dependency controls here
              */
-            var ISODATE_REGEXP = /^\d{4}-\d{2}-\d{2}$/;
+            function onArbetsformagaDatesUpdated() {
+                $scope.updateTotalCertDays();
 
-            function isDate(date) {
-                var validDateFormat = ISODATE_REGEXP.test(date);
-                return validDateFormat;
+                var rangeDates = findStartEndDates();
+                checkArbetsformagaDatesRange(rangeDates.minDate);
+
+                var periodDates = findStartEndDates();
+                checkArbetsformagaDatesPeriodLength(periodDates.minDate, periodDates.maxDate);
             }
 
             /**
-             * Get earliest or latest date in a list of dates
-             * @param comparisonType
-             * @param dates
-             * @returns {boolean}
+             * 8b: Check that the earliest startdate in arbetsförmåga is no more than a week before today and no more than 6 months in the future
+             * @type {boolean}
              */
-            function getMinMaxDate(comparisonType, dates) {
-
-                var compareDate = false;
-                for (var i = 0; i < dates.length; i++) {
-                    if (isDate(dates[i])) {
-                        if (!compareDate || // no valid date found yet
-                            (comparisonType === 'min' && dates[i] < compareDate) || // looking for min date
-                            (comparisonType === 'max' && dates[i] > compareDate)) { // looking for max date
-                            compareDate = dates[i];
-                        }
-                    }
+            function checkArbetsformagaDatesRange(startDate) {
+                if (!startDate) {
+                    $scope.datesOutOfRange = false;
+                    return;
                 }
 
-                // if no valid dates, compareDate is still false, otherwise contains the lowest/highest date
-                // sent depending on comparisonType
-                return compareDate;
+                var olderThanAWeek = moment(startDate).isBefore(moment().subtract('days', 7));
+                var moreThanSixMonthsInFuture = moment(startDate).isAfter(moment().add('months', 6));
+                $scope.datesOutOfRange = (olderThanAWeek || moreThanSixMonthsInFuture);
+            }
+
+            /**
+             * 8b: Check that the period between the earliest startdate and the latest end date is no more than 6 months in the future
+             * @type {boolean}
+             */
+            function checkArbetsformagaDatesPeriodLength(startDate, endDate) {
+                if (!startDate || !endDate) {
+                    $scope.datesPeriodTooLong = false;
+                    return;
+                }
+
+                $scope.datesPeriodTooLong = (Math.abs(moment(startDate).diff(endDate, 'months')) >= 6);
             }
 
             /**
@@ -341,99 +236,188 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              */
             function convertDateToTime(date) {
                 var splitDate = date.split('-');
-                var time = (new Date(splitDate[0], splitDate[1], splitDate[2])).getTime();
-                return time;
+                return (new Date(splitDate[0], splitDate[1], splitDate[2])).getTime();
             }
 
             /**
-             * Calculate total days between the earliest and the latest dates supplied in the 8b controls
-             * @type {boolean}
+             * Convert internal model to form temporary data bindings
+             * @param $scope
              */
-            $scope.totalCertDays = false;
-            $scope.updateTotalCertDays = function() {
-                var oneDay = 24 * 60 * 60 * 1000;
-                var dates = findStartEndDates();
-                if (!dates.minDate || !dates.maxDate) {
-                    // return if there's no valid range span yet
-                    $scope.totalCertDays = false;
-                    return $scope.totalCertDays;
-                }
-
-                dates.minDate = convertDateToTime(dates.minDate);
-                dates.maxDate = convertDateToTime(dates.maxDate);
-                $scope.totalCertDays = Math.round(Math.abs((dates.minDate - dates.maxDate) / (oneDay))) + 1;
-            };
-
-            /**
-             * Watches for rehab
-             */
-
-                // Rekommendationer 6a, 7, 11
-            $scope.$watch('cert.rehabNow', function(newVal) {
-                if ($scope.cert.otherData !== undefined) {
-                    if (newVal === 'LATER' && $scope.cert.otherData.rehabWhen === '') {
-                        $scope.cert.otherData.rehabWhen = $scope.today;
-                    } else if (newVal === 'NOW') {
-                        $scope.cert.otherData.rehabWhen = '';
-                    }
-                }
-            });
-
-            $scope.$watch('cert.otherData.rehabWhen', function(newVal) {
-                if (isDate(newVal)) {
-                    $scope.cert.rehabNow = 'LATER';
-                }
-            });
-
-            /**
-             * Set a default value to listed properties on an object
-             * @param list
-             * @param propertyNames
-             * @param defaultValue
-             */
-            function setPropertyDefaults(list, propertyNames, defaultValue) {
-                for (var i = 0; i < propertyNames.length; i++) {
-                    if (list[propertyNames[i]] === undefined) {
-                        list[propertyNames[i]] = defaultValue;
-                    }
-                }
-            }
-
             function convertCertToForm($scope) {
 
-                // Set blank defaults
-                var propertyNames = ['diagnosBeskrivning', 'wcDiagnosBeskrivning1', 'wcDiagnosKod2',
-                    'wcDiagnosBeskrivning2', 'wcDiagnosKod3', 'wcDiagnosBeskrivning3' ];
-                setPropertyDefaults($scope.cert, propertyNames, '');
-
-                // Set nuvarande arbete value
-                if ($scope.cert.nuvarandeArbetsuppgifter !== undefined ||
-                    (!$scope.cert.arbetsloshet && !$scope.cert.foraldrarledighet)) {
-                    $scope.form.arbete = true;
+                // Fält 4b. AnnanReferensBeskrivning
+                $scope.basedOnState.check.undersokningAvPatienten = $scope.cert.undersokningAvPatienten !== undefined;
+                $scope.basedOnState.check.telefonkontaktMedPatienten =
+                    $scope.cert.telefonkontaktMedPatienten !== undefined;
+                $scope.basedOnState.check.journaluppgifter = $scope.cert.journaluppgifter !== undefined;
+                if ($scope.cert.annanReferensBeskrivning !== undefined) {
+                    $scope.form.ovrigt.annanReferensBeskrivning = $scope.cert.annanReferensBeskrivning;
+                    $scope.basedOnState.check.annanReferens = true;
                 } else {
-                    $scope.form.arbete = false;
+                    $scope.basedOnState.check.annanReferens = false;
                 }
 
-                // Set prognosis default value
-                if ($scope.cert.prognosis === undefined) {
-                    $scope.cert.prognosis = 'YES';
+                // Fält 8b. nedsattMedXXBeskrivning
+                if ($scope.cert.nedsattMed25) {
+                    $scope.workState.nedsattMed25 = true;
+                }
+                if ($scope.cert.nedsattMed50) {
+                    $scope.workState.nedsattMed50 = true;
+                }
+                if ($scope.cert.nedsattMed75) {
+                    $scope.workState.nedsattMed75 = true;
+                }
+                if ($scope.cert.nedsattMed100) {
+                    $scope.workState.nedsattMed100 = true;
+                }
+                if ($scope.cert.nedsattMed25Beskrivning !== undefined) {
+                    $scope.form.ovrigt.nedsattMed25Beskrivning = $scope.cert.nedsattMed25Beskrivning;
+                }
+                if ($scope.cert.nedsattMed50Beskrivning !== undefined) {
+                    $scope.form.ovrigt.nedsattMed50Beskrivning = $scope.cert.nedsattMed50Beskrivning;
+                }
+                if ($scope.cert.nedsattMed75Beskrivning !== undefined) {
+                    $scope.form.ovrigt.nedsattMed75Beskrivning = $scope.cert.nedsattMed75Beskrivning;
                 }
 
-                // Rehab radio conversions
+                // Fält 8a. Set nuvarande arbete default value
+                $scope.form.arbete = !!($scope.cert.nuvarandeArbetsuppgifter !== undefined ||
+                    (!$scope.cert.arbetsloshet && !$scope.cert.foraldrarledighet));
+
+                // Fält 10. Går ej att bedöma and update backend model when view changes.
+                if ($scope.cert.arbetsformataPrognosJa) {
+                    $scope.form.prognos = 'YES';
+                } else if ($scope.cert.arbetsformataPrognosJaDelvis) {
+                    $scope.form.prognos = 'PARTLY';
+                } else if ($scope.cert.arbetsformataPrognosNej) {
+                    $scope.form.prognos = 'NO';
+                } else if ($scope.cert.arbetsformataPrognosGarInteAttBedoma) {
+                    $scope.form.prognos = 'UNKNOWN';
+                    $scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning = $scope.cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
+                }
+
+                // Fält 7. Rehab radio conversions
                 if ($scope.cert.rehabiliteringAktuell) {
                     $scope.form.rehab = 'JA';
-                }
-                else if ($scope.cert.rehabiliteringEjAktuell) {
+                } else if ($scope.cert.rehabiliteringEjAktuell) {
                     $scope.form.rehab = 'NEJ';
-                }
-                else if ($scope.cert.rehabiliteringGarInteAttBedoma) {
+                } else if ($scope.cert.rehabiliteringGarInteAttBedoma) {
                     $scope.form.rehab = 'GAREJ';
                 }
+
+                // Fält 6a.
+                if ($scope.cert.rekommendationOvrigt) {
+                    $scope.form.rekommendationOvrigtCheck = true;
+                }
+
+                // Fält 11. Ressätt till arbete
+                $scope.form.ressattTillArbeteAktuellt = $scope.cert.ressattTillArbeteAktuellt;
             }
 
+            /**
+             * Convert form temporary bindings to internal model
+             * @param $scope
+             */
             function convertFormToCert($scope) {
 
-                // Rehab radio conversions
+                // Fält 1. Smittskydd. Vid sparning: ta bort data på alla fält före 8b som döljs när smittskydd är icheckat.
+                if ($scope.cert.avstangningSmittskydd) {
+
+                    // 4b. Baserat på
+                    $scope.cert.undersokningAvPatienten = undefined;
+                    $scope.cert.telefonkontaktMedPatienten = undefined;
+                    $scope.cert.journaluppgifter = undefined;
+                    $scope.cert.annanReferens = undefined;
+                    $scope.form.ovrigt.annanReferensBeskrivning = undefined;
+                    $scope.cert.annanReferensBeskrivning = undefined;
+                    $scope.basedOnState.check.undersokningAvPatienten = false;
+                    $scope.basedOnState.check.telefonkontaktMedPatienten = false;
+                    $scope.basedOnState.check.journaluppgifter = false;
+                    $scope.basedOnState.check.annanReferens = false;
+
+                    // 2. Diagnos
+                    $scope.cert.diagnosKod = undefined;
+                    $scope.cert.diagnosKod2 = undefined;
+                    $scope.cert.diagnosKod3 = undefined;
+                    $scope.cert.diagnosBeskrivning1 = undefined;
+                    $scope.cert.diagnosBeskrivning2 = undefined;
+                    $scope.cert.diagnosBeskrivning3 = undefined;
+                    $scope.cert.diagnosBeskrivning = undefined;
+                    $scope.cert.samsjuklighet = false;
+
+                    // 3,4,5
+                    $scope.cert.sjukdomsforlopp = undefined;
+                    $scope.cert.funktionsnedsattning = undefined;
+                    $scope.cert.aktivitetsbegransning = undefined;
+
+                    // 8a
+                    $scope.form.arbete = true;
+                    $scope.cert.nuvarandeArbetsuppgifter = undefined;
+                    $scope.cert.arbetsloshet = false;
+                    $scope.cert.foraldrarledighet = false;
+
+                    // 6b åtgärder
+                    $scope.cert.atgardInomSjukvarden = undefined;
+                    $scope.cert.annanAtgard = undefined;
+
+                    // 6a, 7, 11
+                    $scope.cert.ressattTillArbeteAktuellt = false;
+                    $scope.cert.ressattTillArbeteEjAktuellt = false;
+                    $scope.cert.rekommendationKontaktArbetsformedlingen = false;
+                    $scope.cert.rekommendationKontaktForetagshalsovarden = false;
+                    $scope.form.rehab = 'NEJ';
+                    $scope.form.rekommendationOvrigtCheck = false;
+                    $scope.cert.rekommendationOvrigt = undefined;
+                }
+
+                // Fält 4b. AnnanReferensBeskrivning
+                if ($scope.basedOnState.check.annanReferens) {
+                    $scope.cert.annanReferensBeskrivning = $scope.form.ovrigt.annanReferensBeskrivning;
+                } else {
+                    $scope.cert.annanReferensBeskrivning = null;
+                }
+
+                // Fält 8b.
+                if ($scope.workState.nedsattMed25) {
+                    $scope.cert.nedsattMed25Beskrivning = $scope.form.ovrigt.nedsattMed25Beskrivning;
+                } else {
+                    $scope.cert.nedsattMed25Beskrivning = null;
+                }
+                if ($scope.workState.nedsattMed50) {
+                    $scope.cert.nedsattMed50Beskrivning = $scope.form.ovrigt.nedsattMed50Beskrivning;
+                } else {
+                    $scope.cert.nedsattMed50Beskrivning = null;
+                }
+                if ($scope.workState.nedsattMed75) {
+                    $scope.cert.nedsattMed75Beskrivning = $scope.form.ovrigt.nedsattMed75Beskrivning;
+                } else {
+                    $scope.cert.nedsattMed75Beskrivning = null;
+                }
+
+                // Fält 10. Går ej att bedöma and update backend model when view changes.
+                $scope.cert.arbetsformataPrognosJa = false;
+                $scope.cert.arbetsformataPrognosJaDelvis = false;
+                $scope.cert.arbetsformataPrognosNej = false;
+                $scope.cert.arbetsformataPrognosGarInteAttBedoma = false;
+                $scope.cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning = null;
+                switch($scope.form.prognos) {
+                    case 'YES':
+                        $scope.cert.arbetsformataPrognosJa = true;
+                        break;
+                    case 'PARTLY':
+                        $scope.cert.arbetsformataPrognosJaDelvis = true;
+                        break;
+                    case 'NO':
+                        $scope.cert.arbetsformataPrognosNej = true;
+                        break;
+                    case 'UNKNOWN':
+                        $scope.cert.arbetsformataPrognosGarInteAttBedoma = true;
+                        $scope.cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning =
+                            $scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
+                        break;
+                }
+
+                // Fält 7. Rehab radio conversions
                 $scope.cert.rehabiliteringAktuell = false;
                 $scope.cert.rehabiliteringEjAktuell = false;
                 $scope.cert.rehabiliteringGarInteAttBedoma = false;
@@ -449,43 +433,120 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.cert.rehabiliteringGarInteAttBedoma = true;
                     break;
                 }
+
+                // Fält 11. Ressätt till arbete
+                if ($scope.form.ressattTillArbeteAktuellt) {
+                    $scope.cert.ressattTillArbeteAktuellt = true;
+                    $scope.cert.ressattTillArbeteEjAktuellt = false;
+                } else {
+                    $scope.cert.ressattTillArbeteAktuellt = false;
+                    $scope.cert.ressattTillArbeteEjAktuellt = true;
+                }
             }
 
-            // Get the certificate draft from the server.
-            ManageCertView.load($scope, function(cert) {
-                // Decorate intygspecific default data
-                $scope.cert = cert;
-                convertCertToForm($scope);
-            });
+            /*************************************************************************
+             * Ng-change and watches updating behaviour in form (try to get rid of these or at least make them consistent)
+             *************************************************************************/
 
             /**
-             * Action to save the certificate draft to the server.
+             * 4b. Toggle dates in the Based On date pickers when checkboxes are interacted with
+             * @param modelName
              */
-            $scope.save = function() {
-                $scope.hasSavedThisSession = true;
-                convertFormToCert($scope);
-                ManageCertView.save($scope);
+            $scope.toggleBaseradPaDate = function(modelName) {
+
+                // Set todays date when a baserat pa field is checked
+                if ($scope.basedOnState.check[modelName]) {
+                    if ($scope.cert[modelName] === undefined || $scope.cert[modelName] === '') {
+                        $scope.cert[modelName] = $filter('date')($scope.today, 'yyyy-MM-dd');
+                    }
+                } else {
+
+                    // Clear date if check is unchecked
+                    $scope.cert[modelName] = '';
+                }
             };
 
             /**
-             * Action to discard the certificate draft and return to WebCert again.
+             * 4b. Update checkboxes when datepickers are interacted with
+             * @param baserasPaType
              */
-            $scope.discard = function() {
-                ManageCertView.discard($scope);
+            $scope.onChangeBaserasPaDate = function(baserasPaType) {
+                if ($scope.cert[baserasPaType] !== undefined && isDate($scope.cert[baserasPaType])) {
+                    $scope.basedOnState.check[baserasPaType] = true;
+                }
             };
 
             /**
-             * Action to sign the certificate draft and return to Webcert again.
+             * Truncate intyg field to length of inputLimit
+             * @param field
              */
-            $scope.sign = function() {
-                ManageCertView.signera($scope, 'fk7263');
+            $scope.limitFieldLength = function(field) {
+                $scope.cert[field] = $scope.cert[field].substr(0, $scope.inputLimits[field]);
             };
 
             /**
-             * Print draft
+             * Limit length of field dependent on field 13 in the external model
+             * @param field
              */
-            $scope.print = function() {
-                ManageCertView.printDraft($scope.cert.id);
+            $scope.limitOtherField = function(field) {
+                function limitOvrigtLength(val) {
+                    var totalOvrigtLength = $scope.getTotalOvrigtLength();
+                    if (totalOvrigtLength > $scope.inputLimits.ovrigt) {
+                        // Remove characters over limit from current field
+                        return val.substr(0, val.length - (totalOvrigtLength - $scope.inputLimits.ovrigt));
+                    }
+                    return val;
+                }
+
+                if($scope.form.ovrigt[field]) {
+                    $scope.form.ovrigt[field] = limitOvrigtLength($scope.form.ovrigt[field]);
+                } else if($scope.cert[field]) {
+                    $scope.cert[field] = limitOvrigtLength($scope.cert[field]);
+                }
+            };
+
+            /**
+             * Calculate total length of all fields ending up in Övrigt in the external model
+             * @returns {*}
+             */
+            $scope.getTotalOvrigtLength = function() {
+                function getLengthOrZero(value) {
+                    if (value === undefined || value === null) {
+                        return 0;
+                    } else {
+                        return value.length;
+                    }
+                }
+
+                var totalOvrigtLength = getLengthOrZero($scope.cert.kommentar);
+
+                if ($scope.form.ovrigt !== undefined) {
+                    totalOvrigtLength += getLengthOrZero($scope.form.ovrigt.annanReferensBeskrivning) +
+                        getLengthOrZero($scope.form.ovrigt.nedsattMed25Beskrivning) +
+                        getLengthOrZero($scope.form.ovrigt.nedsattMed50Beskrivning) +
+                        getLengthOrZero($scope.form.ovrigt.nedsattMed75Beskrivning) +
+                        getLengthOrZero($scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning);
+                }
+
+                return totalOvrigtLength;
+            };
+
+            /**
+             * Calculate total days between the earliest and the latest dates supplied in the 8b controls
+             * @type {boolean}
+             */
+            $scope.updateTotalCertDays = function() {
+                var oneDay = 24 * 60 * 60 * 1000;
+                var dates = findStartEndDates();
+                if (!dates.minDate || !dates.maxDate) {
+                    // return if there's no valid range span yet
+                    $scope.totalCertDays = false;
+                    return $scope.totalCertDays;
+                }
+
+                dates.minDate = convertDateToTime(dates.minDate);
+                dates.maxDate = convertDateToTime(dates.maxDate);
+                $scope.totalCertDays = Math.round(Math.abs((dates.minDate - dates.maxDate) / (oneDay))) + 1;
             };
 
             /**
@@ -509,8 +570,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                             // find highest max date
                             if (!dates.maxDate) {
                                 // if no maxdate is available, use today
-                                var today = ($filter('date')($scope.today, 'yyyy-MM-dd'));
-                                workstate.from = today;
+                                workstate.from = $filter('date')($scope.today, 'yyyy-MM-dd');
                             } else {
                                 workstate.from = moment(dates.maxDate).add('days', 1).format('YYYY-MM-DD');
                             }
@@ -631,9 +691,76 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                             }
                         }
                     }
-
                 }
 
                 onArbetsformagaDatesUpdated();
             };
+
+            /****************************************************************************
+             * Exposed interaction functions to view
+             ****************************************************************************/
+
+            /**
+             * Toggle header part ("Dölj meny"-knapp)
+             */
+            $scope.toggleHeader = function() {
+                $scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
+            };
+
+            /**
+             * Toggle "Visa vad som behöver kompletteras
+             */
+            $scope.toggleShowComplete = function() {
+                $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
+                if ($scope.widgetState.showComplete) {
+                    $scope.save();
+                    var old = $location.hash();
+                    $location.hash('top');
+                    $anchorScroll();
+                    // reset to old to keep any additional routing logic from kicking in
+                    $location.hash(old);
+                }
+            };
+
+            /**
+             * Action to save the certificate draft to the server.
+             */
+            $scope.save = function() {
+                $scope.hasSavedThisSession = true;
+                convertFormToCert($scope);
+                ManageCertView.save($scope);
+            };
+
+            /**
+             * Action to discard the certificate draft and return to WebCert again.
+             */
+            $scope.discard = function() {
+                ManageCertView.discard($scope);
+            };
+
+            /**
+             * Action to sign the certificate draft and return to Webcert again.
+             */
+            $scope.sign = function() {
+                ManageCertView.signera($scope, 'fk7263');
+            };
+
+            /**
+             * Print draft
+             */
+            $scope.print = function() {
+                ManageCertView.printDraft($scope.cert.id);
+            };
+
+            /**************************************************************************
+             * Load certificate and setup form
+             **************************************************************************/
+
+            // Get the certificate draft from the server.
+            ManageCertView.load($scope, function(cert) {
+                // Decorate intygspecific default data
+                $scope.cert = cert;
+                convertCertToForm($scope);
+            });
+
         }]);

@@ -1,10 +1,7 @@
 angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
-    [ '$anchorScroll', '$location', '$log', '$scope', '$window', 'common.CertificateService', 'common.ManageCertView',
-        'common.User',
-        function($anchorScroll, $location, $log, $scope, $window, CertificateService, ManageCertView, User) {
+    [ '$anchorScroll', '$location', '$log', '$scope', '$window', 'common.ManageCertView', 'common.User',
+        function($anchorScroll, $location, $log, $scope, $window, ManageCertView, User) {
             'use strict';
-
-            $scope.cert = {};
 
             $scope.messages = [];
             $scope.isComplete = false;
@@ -19,6 +16,10 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 showComplete: false,
                 collapsedHeader: false
             };
+
+            // Get the certificate draft from the server.
+            $scope.cert = {};
+            ManageCertView.load($scope);
 
             $scope.toggleHeader = function() {
                 $scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
@@ -51,30 +52,89 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
 
             $scope.testerror = false;
 
-            $scope.$watch('cert.intygAvser.korkortstyp', function(newValue) {
-                if (!$scope.cert || !$scope.cert.intygAvser || !$scope.cert.intygAvser.korkortstyp) {
-                    return;
-                }
+            // ---------------------------------------------------------------------------------------------------------
 
-                // C1,C1E,C, CE,D1,D1E, D, DE och taxiförarlegitimation should activate 2g and 2f = korkortd = true
-                var targetTypes = ['C1', 'C1E', 'C', 'CE', 'D1', 'D1E', 'D', 'DE', 'TAXI'];
-                $scope.form.korkortd = false;
-                for (var i = 0; i < $scope.cert.intygAvser.korkortstyp.length; i++) {
-                    for (var j = 0; j < targetTypes.length; j++) {
-                        if (newValue[i].type === targetTypes[j] && newValue[i].selected) {
-                            $scope.form.korkortd = true;
-                            break;
+            // Watch changes to the form and make sure that other form elements that are dependent on the changed
+            // element is updated correctly.
+
+            $scope.$watch('cert.intygAvser.korkortstyp', function(valdaKorkortstyper) {
+                if ($scope.cert.intygAvser && $scope.cert.intygAvser.korkortstyp) {
+                    var targetTypes = ['C1', 'C1E', 'C', 'CE', 'D1', 'D1E', 'D', 'DE', 'TAXI'];
+                    var visaKorkortd = false;
+                    for (var i = 0; i < valdaKorkortstyper.length; i++) {
+                        for (var j = 0; j < targetTypes.length; j++) {
+                            if (valdaKorkortstyper[i].type === targetTypes[j] && valdaKorkortstyper[i].selected) {
+                                visaKorkortd = true;
+                                break;
+                            }
                         }
+                    }
+                    $scope.form.korkortd = visaKorkortd;
+                    if (!visaKorkortd) {
+                        $scope.cert.hypoglykemier.egenkontrollBlodsocker = null;
+                        $scope.cert.hypoglykemier.allvarligForekomstVakenTid = null;
+                        $scope.cert.bedomning.lamplighetInnehaBehorighet = null;
                     }
                 }
             }, true);
-
-            $scope.$watch('form.behorighet', function(newValue) {
-                if (!$scope.cert || !$scope.cert.bedomning) {
-                    return;
+            $scope.$watch('cert.diabetes.insulin', function(behandlasMedInsulin) {
+                if (!behandlasMedInsulin && $scope.cert.diabetes) {
+                    $scope.cert.diabetes.insulinBehandlingsperiod = null;
                 }
-                $scope.cert.bedomning.kanInteTaStallning = !newValue;
             }, true);
+            $scope.$watch('cert.hypoglykemier.teckenNedsattHjarnfunktion',
+                function(forekommerTeckenNedsattHjarnfunktion) {
+                    if (!forekommerTeckenNedsattHjarnfunktion && $scope.cert.hypoglykemier) {
+                        $scope.cert.hypoglykemier.saknarFormagaKannaVarningstecken = null;
+                        $scope.cert.hypoglykemier.allvarligForekomst = null;
+                        $scope.cert.hypoglykemier.allvarligForekomstTrafiken = null;
+                    }
+                }, true);
+            $scope.$watch('cert.hypoglykemier.allvarligForekomst', function(haftAllvarligForekomst) {
+                if (!haftAllvarligForekomst && $scope.cert.hypoglykemier) {
+                    $scope.cert.hypoglykemier.allvarligForekomstBeskrivning = '';
+                }
+            }, true);
+            $scope.$watch('cert.hypoglykemier.allvarligForekomstTrafiken', function(haftAllvarligForekomstTrafiken) {
+                if (!haftAllvarligForekomstTrafiken && $scope.cert.hypoglykemier) {
+                    $scope.cert.hypoglykemier.allvarligForekomstTrafikBeskrivning = '';
+                }
+            }, true);
+            $scope.$watch('cert.hypoglykemier.allvarligForekomstVakenTid', function(haftAllvarligForekomstVakenTid) {
+                if (!haftAllvarligForekomstVakenTid && $scope.cert.hypoglykemier) {
+                    $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = '';
+                }
+            }, true);
+            $scope.$watch('cert.syn.separatOgonlakarintyg', function(separatOgonlakarintyg) {
+                if (separatOgonlakarintyg && $scope.cert.syn) {
+                    $scope.cert.syn.synfaltsprovningUtanAnmarkning = null;
+                    if ($scope.cert.syn.hoger) {
+                        $scope.cert.syn.hoger.utanKorrektion = '';
+                        $scope.cert.syn.hoger.medKorrektion = '';
+                    }
+                    if ($scope.cert.syn.vanster) {
+                        $scope.cert.syn.vanster.utanKorrektion = '';
+                        $scope.cert.syn.vanster.medKorrektion = '';
+                    }
+                    if ($scope.cert.syn.binokulart) {
+                        $scope.cert.syn.binokulart.utanKorrektion = '';
+                        $scope.cert.syn.binokulart.medKorrektion = '';
+                    }
+                    $scope.cert.syn.diplopi = null;
+                }
+            }, true);
+            $scope.$watch('form.behorighet', function (uppfyllerKravForBehorighet) {
+                if ($scope.cert.bedomning) {
+                    $scope.cert.bedomning.kanInteTaStallning = !uppfyllerKravForBehorighet;
+                    if (!uppfyllerKravForBehorighet) {
+                        angular.forEach($scope.cert.bedomning.korkortstyp, function (korkortstyp) {
+                            korkortstyp.selected = false;
+                        });
+                    }
+                }
+            });
+
+            // ---------------------------------------------------------------------------------------------------------
 
             //Make a printable list of Befattningar (which as of yet consists of un-readable codes...)
             $scope.befattningar = '';
@@ -110,12 +170,6 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 }
                 $scope.specialiteter = result;
             }, true);
-
-            $scope.cert = {};
-
-            // Get the certificate draft from the server.
-            $scope.cert = {};
-            ManageCertView.load($scope);
 
             /**
              * Action to save the certificate draft to the server.

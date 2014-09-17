@@ -20,7 +20,7 @@
 -->
 
 <a id="top"></a>
-<div class="container-fluid">
+<div class="container-fluid" id="edit-ts-diabetes">
   <div class="row">
     <div class="col-md-12 webcert-col webcert-col-single">
 
@@ -74,7 +74,8 @@
               <div id="certificate-is-sent-to-it-message-text" ng-show="isSigned"><strong>Status:</strong> Intyget är
                 signerat.
               </div>
-              <div ng-show="certForm.$pristine && isComplete && !isSigned"><strong>Status:</strong> Intyget är sparat.
+              <div ng-show="certForm.$pristine && isComplete && !isSigned">
+                <span id="intyget-sparat-meddelande"><strong>Status:</strong> Intyget är sparat.</span>
               </div>
               <div ng-show="certForm.$pristine && !isComplete"><strong>Status:</strong> Intyget är sparat, men inte
                 komplett
@@ -113,7 +114,7 @@
               <div id="certificate" class="row certificate">
                 <div class="col-md-12 cert-body">
 
-                  <div wc-field field-label="ts-bas.label.patientadress">
+                  <div wc-field field-label="ts-bas.label.patientadress" id="patientForm">
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.patient">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.patient"><span message
@@ -126,7 +127,7 @@
                       <div class="form-group">
                         <label class="col-xs-3 control-label"><span message key="ts-bas.form.postadress"></span></label>
                         <div class="col-xs-9">
-                          <input type="text" class="form-control input-full" id="patient.postadress"
+                          <input type="text" class="form-control input-full" id="patientPostadress"
                                  name="cert.patient.postadress" ng-model="cert.patient.postadress" maxlength="50">
                         </div>
                       </div>
@@ -134,7 +135,7 @@
                       <div class="form-group">
                         <label class="col-xs-3 control-label"><span message key="ts-bas.form.postnummer"></span></label>
                         <div class="col-xs-9">
-                          <input type="text" class="form-control input-5" id="patient.postnummer"
+                          <input type="text" class="form-control input-5" id="patientPostnummer"
                                  name="cert.patient.postnummer" ng-model="cert.patient.postnummer" maxlength="6">
                         </div>
                       </div>
@@ -142,7 +143,7 @@
                       <div class="form-group">
                         <label class="col-xs-3 control-label"><span message key="ts-bas.form.postort"></span></label>
                         <div class="col-xs-9">
-                          <input type="text" class="form-control" id="patient.postort" name="cert.patient.postort"
+                          <input type="text" class="form-control" id="patientPostort" name="cert.patient.postort"
                                  ng-model="cert.patient.postort" maxlength="25">
                         </div>
                       </div>
@@ -150,7 +151,7 @@
                   </div>
 
                   <div wc-field field-label="ts-diabetes.label.intygavser"
-                       field-help-text="ts-diabetes.helptext.intyget-avser">
+                       field-help-text="ts-diabetes.helptext.intyget-avser" id="intygetAvserForm">
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.intygavser">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.intygavser"><span message
@@ -166,7 +167,7 @@
                     </div>
                   </div>
 
-                  <div wc-field field-label="ts-diabetes.label.identitet">
+                  <div wc-field field-label="ts-diabetes.label.identitet" id="identitetForm">
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.identitet">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.identitet"><span message
@@ -176,7 +177,7 @@
                     </div>
                     <div class="form-group clearfix">
                       <label class="radio checkbox-columns col-md-6" ng-repeat="v in form.identity"><input
-                          name="identity{{$index}}" type="radio" value="{{v.id}}"
+                          id="identity{{$index}}" name="identity{{$index}}" type="radio" value="{{v.id}}"
                           ng-model="cert.vardkontakt.idkontroll">
                         {{v.label}}</label>
                     </div>
@@ -192,7 +193,7 @@
                   </div>
 
                   <!-- 1. Allmänt -->
-                  <div wc-field field-label="ts-diabetes.label.allmant" class="print-pagebreak-after">
+                  <div wc-field field-label="ts-diabetes.label.allmant" class="print-pagebreak-after" id="allmantForm">
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.diabetes">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.diabetes"><span message
@@ -209,22 +210,22 @@
                     </div>
                     <div class="form-group">
                       Patienten har diabetes {{cert.diabetes.diabetesTyp}}
-                      <label class="radio"><input name="diabetestype1" type="radio" value="DIABETES_TYP_1"
+                      <label class="radio"><input name="diabetestyp" type="radio" value="DIABETES_TYP_1"
                                                   ng-model="cert.diabetes.diabetestyp">Typ 1</label>
-                      <label class="radio"><input name="diabetestype2" type="radio" value="DIABETES_TYP_2"
+                      <label class="radio"><input name="diabetestyp" type="radio" value="DIABETES_TYP_2"
                                                   ng-model="cert.diabetes.diabetestyp">Typ 2</label>
                     </div>
                     <div class="form-group">
                       Behandling
-                      <label class="checkbox"><input name="diabetestreat1" type="checkbox"
+                      <label class="checkbox"><input id="diabetestreat1" name="diabetestreat1" type="checkbox"
                                                      ng-model="cert.diabetes.endastKost">
                         <span message key="ts-diabetes.label.diabetes.behandling.endast-kost"></span>
                       </label>
-                      <label class="checkbox"><input name="diabetestreat2" type="checkbox"
+                      <label class="checkbox"><input id="diabetestreat2" name="diabetestreat2" type="checkbox"
                                                      ng-model="cert.diabetes.tabletter">
                         <span message key="ts-diabetes.label.diabetes.behandling.tabletter"></span>
                       </label>
-                      <label class="checkbox"><input name="diabetestreat3" type="checkbox"
+                      <label class="checkbox"><input id="diabetestreat3" name="diabetestreat3" type="checkbox"
                                                      ng-model="cert.diabetes.insulin">
                         <span message key="ts-diabetes.label.diabetes.behandling.insulin"></span>
                       </label>
@@ -251,7 +252,7 @@
                   </div>
 
                   <!-- 2. Hypoglykemier (lågt blodsocker)-->
-                  <div wc-field field-label="ts-diabetes.label.hypoglykemier">
+                  <div wc-field field-label="ts-diabetes.label.hypoglykemier" id="hypoglykemierForm">
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.hypoglykemier">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.hypoglykemier"><span message
@@ -266,32 +267,32 @@
                         <th class="maxwidth"></th>
                       </tr>
                       <tr>
-                        <td><input id="hypoay" name="hypoay" type="radio" ng-value="true"
+                        <td><input id="hypoay" name="hypoa" type="radio" ng-value="true"
                                    ng-model="cert.hypoglykemier.kunskapOmAtgarder"></td>
-                        <td><input id="hypoan" name="hypoan" type="radio" ng-value="false"
+                        <td><input id="hypoan" name="hypoa" type="radio" ng-value="false"
                                    ng-model="cert.hypoglykemier.kunskapOmAtgarder"></td>
                         <td><span message key="ts-diabetes.label.hypoglykemier.har-patient-kannedom"></span></td>
                       </tr>
                       <tr>
-                        <td><input id="hypoby" name="hypoby" type="radio" ng-value="true"
+                        <td><input id="hypoby" name="hypob" type="radio" ng-value="true"
                                    ng-model="cert.hypoglykemier.teckenNedsattHjarnfunktion"></td>
-                        <td><input id="hypobn" name="hypobn" type="radio" ng-value="false"
+                        <td><input id="hypobn" name="hypob" type="radio" ng-value="false"
                                    ng-model="cert.hypoglykemier.teckenNedsattHjarnfunktion"></td>
                         <td><span message key="ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion"></span>
                           <p>(Om nej behöver c-e inte besvaras)</p></td>
                       </tr>
                       <tr data-ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
-                        <td><input id="hypocy" name="hypocy" type="radio" ng-value="true"
+                        <td><input id="hypocy" name="hypoc" type="radio" ng-value="true"
                                    ng-model="cert.hypoglykemier.saknarFormagaKannaVarningstecken"></td>
-                        <td><input id="hypocn" name="hypocn" type="radio" ng-value="false"
+                        <td><input id="hypocn" name="hypoc" type="radio" ng-value="false"
                                    ng-model="cert.hypoglykemier.saknarFormagaKannaVarningstecken"></td>
                         <td><span message
                                   key="ts-diabetes.label.hypoglykemier.saknar-formaga-kanna-varningstecken"></span></td>
                       </tr>
                       <tr data-ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
-                        <td><input id="hypody" name="hypody" type="radio" ng-value="true"
+                        <td><input id="hypody" name="hypod" type="radio" ng-value="true"
                                    ng-model="cert.hypoglykemier.allvarligForekomst"></td>
-                        <td><input id="hypodn" name="hypodn" type="radio" ng-value="false"
+                        <td><input id="hypodn" name="hypod" type="radio" ng-value="false"
                                    ng-model="cert.hypoglykemier.allvarligForekomst"></td>
                         <td><span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst"></span>
 
@@ -308,9 +309,9 @@
                         </td>
                       </tr>
                       <tr data-ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
-                        <td><input id="hypoey" name="hypoey" type="radio" ng-value="true"
+                        <td><input id="hypoey" name="hypoe" type="radio" ng-value="true"
                                    ng-model="cert.hypoglykemier.allvarligForekomstTrafiken"></td>
-                        <td><input id="hypoen" name="hypoen" type="radio" ng-value="false"
+                        <td><input id="hypoen" name="hypoe" type="radio" ng-value="false"
                                    ng-model="cert.hypoglykemier.allvarligForekomstTrafiken"></td>
                         <td><span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken"></span>
                           <div class="controls" ng-show="cert.hypoglykemier.allvarligForekomstTrafiken == true">
@@ -332,22 +333,22 @@
                           taxiförarlegitimation ska även fråga f-g besvaras</h5></td>
                       </tr>
                       <tr data-ng-show="form.korkortd">
-                        <td><input id="hypofy" name="hypofy" type="radio" ng-value="true"
+                        <td><input id="hypofy" name="hypof" type="radio" ng-value="true"
                                    ng-model="cert.hypoglykemier.egenkontrollBlodsocker"></td>
-                        <td><input id="hypofn" name="hypofn" type="radio" ng-value="false"
+                        <td><input id="hypofn" name="hypof" type="radio" ng-value="false"
                                    ng-model="cert.hypoglykemier.egenkontrollBlodsocker"></td>
                         <td><span message key="ts-diabetes.label.hypoglykemier.egenkontroll-blodsocker"></span></td>
                       </tr>
                       <tr data-ng-show="form.korkortd">
-                        <td><input id="hypogy" name="hypogy" type="radio" ng-value="true"
+                        <td><input id="hypogy" name="hypog" type="radio" ng-value="true"
                                    ng-model="cert.hypoglykemier.allvarligForekomstVakenTid"></td>
-                        <td><input id="hypogn" name="hypogn" type="radio" ng-value="false"
+                        <td><input id="hypogn" name="hypog" type="radio" ng-value="false"
                                    ng-model="cert.hypoglykemier.allvarligForekomstVakenTid"></td>
                         <td><span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid"></span>
                           <div class="controls form-inline webcert-top-padding-section" data-ng-show="cert.hypoglykemier.allvarligForekomstVakenTid">
                             <label class="control-label"><span message key="common.when"></span></label>
                             <span wc-date-picker-field target-model="cert.hypoglykemier.allvarligForekomstVakenTidObservationstid"
-                                  dom-id="hypoglykemierg"
+                                  dom-id="allvarligForekomstVakenTidObservationstid"
                                   invalid="false"></span>
                             <p>(Fyll i åååå-mm-dd)</p>
                           </div>
@@ -358,7 +359,7 @@
 
                   <!-- 3. Synintyg -->
                   <div wc-field field-label="ts-diabetes.label.synintyg" field-has-errors="testerror" ng-form
-                       name="synForm">
+                       name="synForm" id="synForm">
 
                     <table class="table table-form">
                       <tr ng-if="validationMessagesGrouped.syn">
@@ -392,9 +393,9 @@
                         <th class="maxwidth"></th>
                       </tr>
                       <tr>
-                        <td><input id="synay" name="synay" type="radio" ng-value="true"
+                        <td><input id="synay" name="syna" type="radio" ng-value="true"
                                    ng-model="cert.syn.separatOgonlakarintyg"></td>
-                        <td><input id="synan" name="synan" type="radio" ng-value="false"
+                        <td><input id="synan" name="syna" type="radio" ng-value="false"
                                    ng-model="cert.syn.separatOgonlakarintyg"></td>
                         <td><span message key="ts-diabetes.label.syn.separat-ogonlakarintyg"></span></td>
                       </tr>
@@ -411,9 +412,9 @@
                         </td>
                       </tr>
                       <tr data-ng-hide="cert.syn.separatOgonlakarintyg">
-                        <td><input id="synby" name="synby" type="radio" ng-value="true"
+                        <td><input id="synby" name="synb" type="radio" ng-value="true"
                                    ng-model="cert.syn.synfaltsprovningUtanAnmarkning"></td>
-                        <td><input id="synbn" name="synbn" type="radio" ng-value="false"
+                        <td><input id="synbn" name="synb" type="radio" ng-value="false"
                                    ng-model="cert.syn.synfaltsprovningUtanAnmarkning"></td>
                         <td>
                           <span message key="ts-diabetes.label.syn.synfaltsprovning-utan-anmarkning"></span>
@@ -442,30 +443,30 @@
                             <tr>
                               <td>Höger öga</td>
                               <td><input type="text" class="form-control small-decimal" wc-eye-decimal
-                                         ng-model="cert.syn.hoger.utanKorrektion" maxlength="4"></td>
+                                         id="synHogerOgaUtanKorrektion" ng-model="cert.syn.hoger.utanKorrektion" maxlength="4"></td>
                               <td><input type="text" class="form-control small-decimal" wc-eye-decimal
-                                         ng-model="cert.syn.hoger.medKorrektion" maxlength="4"></td>
+                                         id="synHogerOgaMedKorrektion" ng-model="cert.syn.hoger.medKorrektion" maxlength="4"></td>
                             </tr>
                             <tr>
                               <td>Vänster öga</td>
                               <td><input type="text" class="form-control small-decimal" wc-eye-decimal
-                                         ng-model="cert.syn.vanster.utanKorrektion" maxlength="4"></td>
+                                         id="synVansterOgaUtanKorrektion" ng-model="cert.syn.vanster.utanKorrektion" maxlength="4"></td>
                               <td><input type="text" class="form-control small-decimal" wc-eye-decimal
-                                         ng-model="cert.syn.vanster.medKorrektion" maxlength="4"></td>
+                                         id="synVansterOgaMedKorrektion" ng-model="cert.syn.vanster.medKorrektion" maxlength="4"></td>
                             </tr>
                             <tr>
                               <td>Binokulärt</td>
                               <td><input type="text" class="form-control small-decimal" wc-eye-decimal
-                                         ng-model="cert.syn.binokulart.utanKorrektion" maxlength="4"></td>
+                                         id="synBinokulartUtanKorrektion" ng-model="cert.syn.binokulart.utanKorrektion" maxlength="4"></td>
                               <td><input type="text" class="form-control small-decimal" wc-eye-decimal
-                                         ng-model="cert.syn.binokulart.medKorrektion" maxlength="4"></td>
+                                         id="synBinokulartMedKorrektion" ng-model="cert.syn.binokulart.medKorrektion" maxlength="4"></td>
                             </tr>
                           </table>
                       </tr>
                       <tr data-ng-hide="cert.syn.separatOgonlakarintyg">
-                        <td><input id="syndy" name="syndy" type="radio" ng-value="true" ng-model="cert.syn.diplopi">
+                        <td><input id="syndy" name="synd" type="radio" ng-value="true" ng-model="cert.syn.diplopi">
                         </td>
-                        <td><input id="syndn" name="syndn" type="radio" ng-value="false" ng-model="cert.syn.diplopi">
+                        <td><input id="syndn" name="synd" type="radio" ng-value="false" ng-model="cert.syn.diplopi">
                         </td>
                         <td>d) Förekommer dubbelseende?</td>
                       </tr>
@@ -473,7 +474,7 @@
                   </div>
 
                   <!-- 4. Bedömning -->
-                  <div wc-field field-label="ts-diabetes.label.bedomning" field-help-text="ts-diabetes.helptext.intyget-avser">
+                  <div wc-field field-label="ts-diabetes.label.bedomning" field-help-text="ts-diabetes.helptext.intyget-avser" id="bedomningForm">
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.bedomning">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.bedomning"><span message
@@ -496,7 +497,7 @@
                                 src="/img/link_icon.png"></a>. Därefter "Väg" och "Trafikmedicin".</p>
 
                           <div class="form-group">
-                            <label class="radio"><input name="behorighetnagon" type="radio" ng-value="true"
+                            <label class="radio"><input name="behorighet" type="radio" ng-value="true"
                                                         ng-model="form.behorighet"> Någon av följande
                               behörigheter</label>
                             <div class="form-group clearfix indent" data-ng-show="form.behorighet">
@@ -506,7 +507,7 @@
                                   ng-model="typ.selected"> <span message
                                                                  key="ts-diabetes.label.korkort.{{typ.type}}"></span></label>
                             </div>
-                            <label class="radio"><input name="behorighetinte" type="radio" ng-value="false"
+                            <label class="radio"><input name="behorighet" type="radio" ng-value="false"
                                                         ng-model="form.behorighet"> Kan inte ta ställning</label>
                           </div>
                         </td>
@@ -517,14 +518,13 @@
                         <th class="maxwidth"></th>
                       </tr>
                       <tr data-ng-show="form.korkortd">
-                        <td><input id="bedomningy" name="bedomningy" type="radio" ng-value="true"
+                        <td><input id="bedomningy" name="bedomning" type="radio" ng-value="true"
                                    ng-model="cert.bedomning.lamplighetInnehaBehorighet"></td>
-                        <td><input id="bedomningn" name="bedomningn" type="radio" ng-value="false"
+                        <td><input id="bedomningn" name="bedomning" type="radio" ng-value="false"
                                    ng-model="cert.bedomning.lamplighetInnehaBehorighet"></td>
                         <td>Om patienten söker behörighet C1, C1E, C, CE, D1, D1E, D, DE eller Taxi, är han eller hon
                           lämplig att inneha sådan behörighet med hänsyn till de körningar och arbetsformer som är
-                          aktuella
-                          vid sådant innehav? (Se 6 kap. 16 §)
+                          aktuella vid sådant innehav? (Se 6 kap. 16 §)
                         </td>
                       </tr>
                     </table>
@@ -534,18 +534,18 @@
                   <div wc-field field-label="ts-diabetes.label.empty">
                     <h5>Övriga upplysningar och kommentarer</h5>
                     <textarea class="form-control" ng-model="cert.kommentar" wc-maxlength ng-trim="false"
-                              maxlength="189" rows="4"></textarea>
+                              id="kommentar" maxlength="189" rows="4"></textarea>
                   </div>
 
                   <!-- Specialistkompetens -->
                   <div wc-field field-label="ts-diabetes.label.empty">
                     <h5>Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i</h5>
-                    <textarea class="form-control" name="specialist" rows='2'
+                    <textarea class="form-control" name="specialist" rows='2' id="specialist"
                               ng-model="cert.bedomning.lakareSpecialKompetens" wc-maxlength ng-trim="false"
                               maxlength="71"></textarea>
                   </div>
 
-                  <div class="body-row clearfix">
+                  <div class="body-row clearfix" id="vardenhetForm">
                     <h3 class="title">
                       <span message key="ts-diabetes.label.unit"></span>
                     </h3>
@@ -566,7 +566,7 @@
                         <div class="form-group">
                           <label class="col-xs-3 control-label">Postadress</label>
                           <div class="col-xs-9">
-                            <input type="text" class="form-control input-full" id="clinicInfo.postalAddress"
+                            <input type="text" class="form-control input-full" id="clinicInfoPostalAddress"
                                    name="clinicInfo.postalAddress" ng-model="cert.skapadAv.vardenhet.postadress"
                                    maxlength="70">
                           </div>
@@ -574,7 +574,7 @@
                         <div class="form-group">
                           <label class="col-xs-3 control-label">Postnummer</label>
                           <div class="col-xs-9">
-                            <input type="text" class="form-control input-5" id="clinicInfo.postalCode"
+                            <input type="text" class="form-control input-5" id="clinicInfoPostalCode"
                                    name="clinicInfo.postalCode" ng-model="cert.skapadAv.vardenhet.postnummer"
                                    maxlength="6">
                           </div>
@@ -582,7 +582,7 @@
                         <div class="form-group">
                           <label class="col-xs-3 control-label">Postort</label>
                           <div class="col-xs-9">
-                            <input type="text" class="form-control" id="clinicInfo.postalCity"
+                            <input type="text" class="form-control" id="clinicInfoPostalCity"
                                    name="clinicInfo.postalCity" ng-model="cert.skapadAv.vardenhet.postort"
                                    maxlength="30">
                           </div>
@@ -590,7 +590,7 @@
                         <div class="form-group">
                           <label class="col-xs-3 control-label">Telefonnummer</label>
                           <div class="col-xs-9">
-                            <input type="text" class="form-control" id="clinicInfo.phone" name="clinicInfo.phone"
+                            <input type="text" class="form-control" id="clinicInfoPhone" name="clinicInfo.phone"
                                    ng-model="cert.skapadAv.vardenhet.telefonnummer" maxlength="20">
                           </div>
                         </div>

@@ -61,14 +61,15 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.syn.medkorrektion': '',
         'ts-diabetes.label.syn.kontaktlins': '',
 
+        'ts-diabetes.label.diabetes.vilket-ar': 'Vilket år ställdes diagnosen diabetes?',
         'ts-diabetes.label.diabetes.diabetestyp': 'Diabetestyp',
-        'ts-diabetes.label.diabetes.diabetestyp.diabetes_typ_1': 'Diabetes Typ1',
-        'ts-diabetes.label.diabetes.diabetestyp.diabetes_typ_2': 'Diabetes Typ2',
+        'ts-diabetes.label.diabetes.diabetestyp.diabetes_typ_1': 'Typ 1',
+        'ts-diabetes.label.diabetes.diabetestyp.diabetes_typ_2': 'Typ 2',
         'ts-diabetes.label.diabetes.behandling': 'Behandling',
         'ts-diabetes.label.diabetes.behandling.endast-kost': 'Endast kost',
         'ts-diabetes.label.diabetes.behandling.tabletter': 'Tabletter',
         'ts-diabetes.label.diabetes.behandling.insulin': 'Insulin',
-        'ts-diabetes.label.diabetes.behandling.insulin-period': 'Insulin sedan år: ',
+        'ts-diabetes.label.diabetes.behandling.insulin-period': 'Insulin sedan år',
         'ts-diabetes.label.diabetes.behandling.annan': 'Annan behandling',
         'ts-diabetes.label.diabetes.behandling.annan-beskrivning': 'Annan behandling, vilken? (ej obligatorisk)',
 
@@ -137,6 +138,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.validation.diabetes.diabetestyp.missing': 'Diabetestyp måste anges',
         'ts-diabetes.validation.diabetes.observationsperiod.missing': 'År då diabetesdiagnos ställdes måste anges',
         'ts-diabetes.validation.diabetes.behandling.missing': 'Minst en behandling måste väljas',
+        'ts-diabetes.validation.diabetes.insulin.behandlingsperiod.missing' : 'Insulin sedan år måste anges', 
 
         'ts-diabetes.validation.intygavser.missing': 'Intyget avser körkortsbehörighet saknas',
         'ts-diabetes.validation.intygavser.must-choose-one': 'Minst en körkortsbehörighet, eller Annat måste väljas',

@@ -36,7 +36,7 @@
               <button id="downloadprint" type="submit" value="submit" class="btn btn-info" ng-click="print(cert)">Skriv
                 ut
               </button>
-              <button id="copyBtn" class="btn btn-info" ng-click="copy(cert)">Kopiera</button>
+              <button id="copyBtn" class="btn btn-info" ng-if="!certProperties.isRevoked" ng-click="copy(cert)">Kopiera</button>
               <button class="btn btn-inverse">Rätta</button>
             </p>
           </form>
@@ -63,29 +63,41 @@
           <div class="col-md-12">
             <div class="cert-body">
 
-              <div wc-field field-number="1" field-label="fk7263.label.smittskydd" filled="true">
+              <div wc-field field-number="1" field-label="fk7263.label.smittskydd" filled="{{true}}">
                 <span ng-show="cert.avstangningSmittskydd" id="field1yes"> <span message key="fk7263.label.yes"></span></span> <span
                   ng-show="!cert.avstangningSmittskydd" id="field1no"> <span message key="fk7263.label.no"></span>
                     </span>
               </div>
 
-              <div wc-field field-number="2" field-label="fk7263.label.diagnos" filled="cert.diagnosBeskrivning"
+              <div wc-field field-number="2" field-label="fk7263.label.diagnos" filled="{{cert.diagnosBeskrivning!=null}}"
                    id="field2">
-                {{cert.diagnosBeskrivning}} (<span class="tag"><span message
+                <div class="form-group">
+                  {{cert.diagnosBeskrivning}} (<span class="tag"><span message
                                                                      key="fk7263.label.diagnoskod"></span></span>
                 {{cert.diagnosKod}})
+                 </div>
+                <div class="form-group">
+                  <label class="control-label bold" ng-show="cert.diagnosKod2 || cert.diagnosBeskrivning2 || cert.diagnosKod3 || cert.diagnosBeskrivning3">
+                    <span message key="fk7263.label.ytterligarediagnoser"></span>
+                  </label>
+                  <div class="controls">
+                    <p ng-show="cert.diagnosKod2 || cert.diagnosBeskrivning2 ">{{cert.diagnosKod2}} {{cert.diagnosBeskrivning2}}</p>
+                    <p ng-show="cert.diagnosKod3 || cert.diagnosBeskrivning3">{{cert.diagnosKod3}} {{cert.diagnosBeskrivning3}}</p>
+                    <div ng-show="cert.samsjuklighet" class="bold"><span message key="fk7263.label.samsjuklighet"></span></div>
+                  </div>
+                </div>
               </div>
 
               <div wc-field field-number="3" field-label="fk7263.label.aktuellt-sjukdomsforlopp"
-                   filled="cert.sjukdomsforlopp!=null" id="field3">{{cert.sjukdomsforlopp}}
+                   filled="{{cert.sjukdomsforlopp!=null}}" id="field3">{{cert.sjukdomsforlopp}}
               </div>
 
               <div wc-field field-number="4" field-label="fk7263.label.funktionsnedsattningar"
-                   filled="cert.funktionsnedsattning!=null" id="field4">{{cert.funktionsnedsattning}}
+                   filled="{{cert.funktionsnedsattning!=null}}" id="field4">{{cert.funktionsnedsattning}}
               </div>
 
               <div wc-field field-number="4b" field-label="fk7263.label.intyg-baserat-pa" id="field4b"
-                   filled="cert.undersokningAvPatienten!=null || telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null">
+                   filled="{{cert.undersokningAvPatienten!=null || telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null}}">
                 <ul>
                   <li ng-show="cert.undersokningAvPatienten!=null"><span message
                                                                          key="fk7263.vardkontakt.undersokning"></span>{{cert.undersokningAvPatienten
@@ -99,23 +111,19 @@
                     | date:'longDate' }}
                   </li>
 
-
                   <li ng-show="cert.annanReferens!=null">
-                    <!-- Annat --> <span message key="fk7263.referens.annat"> </span>{{cert.annanReferens |
-                    date:'longDate' }}
-                    <div>
-                      <span class="tag" message key="fk7263.label.se-ovrigt"></span>
-                    </div>
+                    <!-- Annat -->
+                    <span message key="fk7263.referens.annat"></span> {{cert.annanReferens | date:'longDate'}}: {{cert.annanReferensBeskrivning}}
                   </li>
                 </ul>
               </div>
 
               <div wc-field field-number="5" field-label="fk7263.label.aktivitetsbegransning"
-                   filled="cert.aktivitetsbegransning!=null" id="field5">{{cert.aktivitetsbegransning}}
+                   filled="{{cert.aktivitetsbegransning!=null}}" id="field5">{{cert.aktivitetsbegransning}}
               </div>
 
               <div wc-field field-number="6a" field-label="fk7263.label.rekommendationer" id="field6a"
-                   filled="cert.rekommendationKontaktArbetsformedlingen|| cert.rekommendationKontaktForetagshalsovarden || cert.rekommendationOvrigt!=null">
+                   filled="{{cert.rekommendationKontaktArbetsformedlingen || cert.rekommendationKontaktForetagshalsovarden || cert.rekommendationOvrigt!=null}}">
                 <ul>
                   <li ng-show="cert.rekommendationKontaktArbetsformedlingen"><span message
                                                                                    key="fk7263.label.rekommendationer.kontakt.arbetsformedlingen"></span>
@@ -123,15 +131,15 @@
                   <li ng-show="cert.rekommendationKontaktForetagshalsovarden"><span message
                                                                                     key="fk7263.label.rekommendationer.kontakt.foretagshalsovarden"></span>
                   </li>
-                  <li ng-show="cert.rekommendationOvrigt != null"><span message
+                  <li ng-show="cert.rekommendationOvrigt"><span message
                                                                         key="fk7263.label.rekommendationer.kontakt.ovrigt"></span>
-                    {{cert.rekommenderarOvrigt.beskrivning}}
+                    {{cert.rekommendationOvrigt}}
                   </li>
                 </ul>
               </div>
 
               <div wc-field field-number="6b" field-label="fk7263.label.planerad-atgard"
-                   filled="cert.atgardInomSjukvarden||cert.annanAtgard" id="field6b">
+                   filled="{{cert.atgardInomSjukvarden!=null||cert.annanAtgard!=null}}" id="field6b">
                 <ul>
                   <li ng-show="cert.atgardInomSjukvarden != null"><span message
                                                                         key="fk7263.label.planerad-atgard.sjukvarden"></span>
@@ -144,7 +152,7 @@
               </div>
 
               <div wc-field field-number="7" field-label="fk7263.label.rehabilitering-aktuell"
-                   filled="cert.rehabiliteringAktuell||cert.rehabiliteringEjAktuell||cert.rehabiliteringGarInteAttBedoma"
+                   filled="{{cert.rehabiliteringAktuell||cert.rehabiliteringEjAktuell||cert.rehabiliteringGarInteAttBedoma}}"
                    id="field7" class="print-pagebreak-after">
                 <span ng-show="cert.rehabiliteringAktuell"> <span message key="fk7263.label.yes"></span></span> <span
                   ng-show="cert.rehabiliteringEjAktuell"> <span message key="fk7263.label.no"></span>
@@ -153,7 +161,7 @@
               </div>
 
               <div wc-field field-number="8a" field-label="fk7263.label.arbetsformaga"
-                   filled="cert.nuvarandeArbetsuppgifter||cert.arbetsloshet||cert.foraldrarledighet" id="field8">
+                   filled="{{cert.nuvarandeArbetsuppgifter||cert.arbetsloshet||cert.foraldrarledighet}}" id="field8">
                 <ul>
                   <li ng-show="cert.nuvarandeArbetsuppgifter"><span message
                                                                     key="fk7263.label.arbetsformaga.nuvarande-arbete"></span>
@@ -167,24 +175,27 @@
               </div>
 
               <div wc-field field-number="8b" field-label="fk7263.label.nedsattning"
-                   filled="cert.nedsattMed25||cert.nedsattMed50||cert.nedsattMed75||cert.nedsattMed100" id="field8b">
+                   filled="{{cert.nedsattMed25!=null||cert.nedsattMed50!=null||cert.nedsattMed75!=null||cert.nedsattMed100!=null}}" id="field8b">
 
                 <div ng-show="cert.nedsattMed25 != null">
                   <strong><span message key="fk7263.nedsattningsgrad.nedsatt_med_1_4"></span></strong><br> Från och med
                   {{cert.nedsattMed25.from | date:'longDate'}} &ndash; längst till och med
                   {{cert.nedsattMed25.tom | date:'longDate'}}
+                  <div ng-show="cert.nedsattMed25Beskrivning">Arbetstidsförläggning: {{cert.nedsattMed25Beskrivning}}</div>
                 </div>
 
                 <div ng-show="cert.nedsattMed50 != null">
                   <strong><span message key="fk7263.nedsattningsgrad.nedsatt_med_1_2"></span></strong><br> Från och med
                   {{cert.nedsattMed50.from | date:'longDate'}} &ndash; längst till och med
                   {{cert.nedsattMed50.tom | date:'longDate'}}
+                  <div ng-show="cert.nedsattMed50Beskrivning">Arbetstidsförläggning: {{cert.nedsattMed50Beskrivning}}</div>
                 </div>
 
                 <div ng-show="cert.nedsattMed75 != null">
                   <strong><span message key="fk7263.nedsattningsgrad.nedsatt_med_3_4"></span></strong><br> Från och med
                   {{cert.nedsattMed75.from | date:'longDate'}} &ndash; längst till och med
                   {{cert.nedsattMed75.tom | date:'longDate'}}
+                  <div ng-show="cert.nedsattMed75Beskrivning">Arbetstidsförläggning: {{cert.nedsattMed75Beskrivning}}</div>
                 </div>
 
                 <div ng-show="cert.nedsattMed100 != null">
@@ -196,41 +207,41 @@
               </div>
 
               <div wc-field field-number="9" field-label="fk7263.label.arbetsformaga.bedomning"
-                   filled="cert.arbetsformagaPrognos!=null" id="field9">{{cert.arbetsformagaPrognos}}
+                   filled="{{cert.arbetsformagaPrognos!=null}}" id="field9">{{cert.arbetsformagaPrognos}}
               </div>
 
               <div wc-field field-number="10" field-label="fk7263.label.prognos"
-                   filled="cert.arbetsformataPrognosJa || cert.arbetsformataPrognosJaDelvis||cert.arbetsformataPrognosNej||cert.arbetsformataPrognosGarInteAttBedoma"
+                   filled="{{cert.arbetsformataPrognosJa || cert.arbetsformataPrognosJaDelvis||cert.arbetsformataPrognosNej||cert.arbetsformataPrognosGarInteAttBedoma}}"
                    id="field10">
 
                 <span ng-show="cert.arbetsformataPrognosJa"><span message key="fk7263.label.yes"></span></span> <span
                   ng-show="cert.arbetsformataPrognosJaDelvis"><span message key="fk7263.label.delvis"></span></span>
                 <span ng-show="cert.arbetsformataPrognosNej"><span message key="fk7263.label.no"></span></span> <span
                   ng-show="cert.arbetsformataPrognosGarInteAttBedoma"><span message
-                                                                            key="fk7263.label.gar-ej-att-bedomma"></span><br> <span
-                  class="tag"><span message key="fk7263.label.kommentar"></span></span> <span class="tag" message
-                                                                                              key="fk7263.label.se-ovrigt"></span> </span>
+                                                                            key="fk7263.label.gar-ej-att-bedomma"></span>
+                <br>
+                <span class="tag">Förtydligande: {{cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning}}</span>
               </div>
 
               <div wc-field field-number="11" field-label="fk7263.label.resor-till-arbetet"
-                   filled="cert.ressattTillArbeteAktuellt || cert.ressattTillArbeteEjAktuellt" id="field11">
+                   filled="{{cert.ressattTillArbeteAktuellt || cert.ressattTillArbeteEjAktuellt}}" id="field11">
                 <span ng-show="cert.ressattTillArbeteAktuellt"> <span message
                                                                       key="fk7263.label.yes"></span></span> <span
                   ng-show="cert.ressattTillArbeteEjAktuellt"> <span message key="fk7263.label.no"></span></span>
               </div>
 
-              <div wc-field field-number="12" field-label="fk7263.label.kontakt-med-fk" filled="true" id="field12">
+              <div wc-field field-number="12" field-label="fk7263.label.kontakt-med-fk" filled="{{true}}" id="field12">
                 <span ng-show="cert.kontaktMedFk"> <span message key="fk7263.label.yes"></span></span> <span
                   ng-show="!cert.kontaktMedFk"> <span message key="fk7263.label.no"></span>
                     </span>
               </div>
 
-              <div wc-field field-number="13" field-label="fk7263.label.ovrigt" filled="cert.kommentar" id="field13">
+              <div wc-field field-number="13" field-label="fk7263.label.ovrigt" filled="{{cert.kommentar}}" id="field13">
                 <div class="tag">{{cert.kommentar}}</div>
               </div>
 
               <div wc-field field-label="fk7263.label.arbetsplatskod" field-number="17"
-                   filled="cert.forskrivarkodOchArbetsplatskod" id="field17">
+                   filled="{{cert.forskrivarkodOchArbetsplatskod!=null}}" id="field17">
                 <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
                 <div>{{cert.forskrivarkodOchArbetsplatskod}}</div>
               </div>
@@ -250,8 +261,9 @@
                   <span class="text" id="vardperson_namn">{{cert.vardperson.namn}}</span><br> <span class="text"
                                                                                                     id="vardperson_enhetsnamn">{{cert.vardperson.enhetsnamn}}</span><br>
                   <span class="text">{{cert.vardperson.postadress}}</span><br>
-                  <span class="text">{{cert.vardperson.postnummer}} {{cert.vardperson.postort}}</span><br> <span
-                    class="text">{{cert.vardperson.telefonnummer}}</span><br>
+                  <span class="text">{{cert.vardperson.postnummer}} {{cert.vardperson.postort}}</span><br>
+                  <span class="text">{{cert.vardperson.telefonnummer}}</span><br>
+                  <span class="text">{{cert.vardperson.epost}}</span><br>
                 </p>
               </div>
 

@@ -17,11 +17,12 @@ angular.module('common').directive('wcField',
                     fieldHelpText: '@',
                     fieldHasErrors: '=',
                     fieldTooltipPlacement: '@',
-                    filled: '&'
+                    filled: '@?'
+                },
+                compile: function(element, attrs){
+                    if (!attrs.filled) { attrs.filled = true }
                 },
                 controller: function($scope) {
-
-                    $scope.filled = $scope.$eval($scope.filled);
 
                     if ($scope.fieldNumber === null) {
                         $scope.fieldNumber = undefined;
@@ -31,10 +32,6 @@ angular.module('common').directive('wcField',
                         $scope.placement = 'right';
                     } else {
                         $scope.placement = $scope.fieldTooltipPlacement;
-                    }
-
-                    if ($scope.filled === undefined) {
-                        $scope.filled = true;
                     }
 
                     $scope.getMessage = function(key) {
