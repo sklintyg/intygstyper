@@ -61,14 +61,15 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.syn.medkorrektion': '',
         'ts-diabetes.label.syn.kontaktlins': '',
 
+        'ts-diabetes.label.diabetes.vilket-ar': 'Vilket år ställdes diagnosen diabetes?',
         'ts-diabetes.label.diabetes.diabetestyp': 'Diabetestyp',
-        'ts-diabetes.label.diabetes.diabetestyp.diabetes_typ_1': 'Diabetes Typ1',
-        'ts-diabetes.label.diabetes.diabetestyp.diabetes_typ_2': 'Diabetes Typ2',
+        'ts-diabetes.label.diabetes.diabetestyp.diabetes_typ_1': 'Typ 1',
+        'ts-diabetes.label.diabetes.diabetestyp.diabetes_typ_2': 'Typ 2',
         'ts-diabetes.label.diabetes.behandling': 'Behandling',
         'ts-diabetes.label.diabetes.behandling.endast-kost': 'Endast kost',
         'ts-diabetes.label.diabetes.behandling.tabletter': 'Tabletter',
         'ts-diabetes.label.diabetes.behandling.insulin': 'Insulin',
-        'ts-diabetes.label.diabetes.behandling.insulin-period': 'Insulin sedan år: ',
+        'ts-diabetes.label.diabetes.behandling.insulin-period': 'Insulin sedan år',
         'ts-diabetes.label.diabetes.behandling.annan': 'Annan behandling',
         'ts-diabetes.label.diabetes.behandling.annan-beskrivning': 'Annan behandling, vilken? (ej obligatorisk)',
 

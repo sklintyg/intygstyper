@@ -46,21 +46,29 @@
           <div class="col-md-12">
             <div class="cert-body">
 
+              <!-- Patientens uppgifter -->
               <div wc-field field-label="ts-bas.label.patientadress" filled="true">
                 <span class="ts-cert-answer">{{cert.patient.postadress}}<br>{{cert.patient.postnummer}} {{cert.patient.postort}}</span>
               </div>
 
+              <!-- Intyget avser -->
               <div wc-field field-label="ts-diabetes.label.intygavser" filled="true">
                 <span class="ts-cert-answer">{{intygAvser}}</span>
               </div>
 
+              <!-- Identiteten är styrkt genom -->
               <div wc-field field-label="ts-diabetes.label.identitet" filled="true">
                 <span class="ts-cert-answer" message key="ts-diabetes.label.identitet.{{cert.vardkontakt.idkontroll}}"></span>
               </div>
 
+              <!-- 1. Allmänt diabetes -->
               <div wc-field field-label="ts-diabetes.label.allmant" filled="true">
                 <p>
-                  <span message key="ts-diabetes.label.diabetes.diabetestyp"></span>
+                  <span message key="ts-diabetes.label.diabetes.vilket-ar"></span><br>
+                  <span class="ts-cert-answer">{{cert.diabetes.observationsperiod}}</span>
+                </p>
+                <p>
+                  <span message key="ts-diabetes.label.diabetes.diabetestyp"></span><br>
                   <span class="ts-cert-answer" message
                         key="ts-diabetes.label.diabetes.diabetestyp.{{cert.diabetes.diabetestyp}}"></span>
                 </p>
@@ -68,52 +76,56 @@
                 <h3 message key="ts-diabetes.label.diabetes.behandling"></h3>
                 <p>
                   <span message key="ts-diabetes.label.diabetes.behandling.endast-kost"></span>
-                  <span class="ts-cert-answer" message key="{{cert.diabetes.endastKost | BoolToTextFilter}}"></span>
+                  <span class="ts-cert-answer" message key="{{cert.diabetes.endastKost | BoolToTextFilter}}"></span><br>
 
                   <span message key="ts-diabetes.label.diabetes.behandling.tabletter"></span>
-                  <span class="ts-cert-answer" message key="{{cert.diabetes.tabletter | BoolToTextFilter}}"></span>
+                  <span class="ts-cert-answer" message key="{{cert.diabetes.tabletter | BoolToTextFilter}}"></span><br>
 
                   <span message key="ts-diabetes.label.diabetes.behandling.insulin"></span>
-                  <span class="ts-cert-answer" message key="{{cert.diabetes.insulin | BoolToTextFilter}}"></span>
-
+                  <span class="ts-cert-answer" message key="{{cert.diabetes.insulin | BoolToTextFilter}}"></span><br>
+                  <br>
                   <span ng-show="cert.diabetes.insulinBehandlingsperiod.length > 0">
-                    <br>
-                    <span message key="ts-diabetes.label.diabetes.behandling.insulin-period"></span>
+                    <span message key="ts-diabetes.label.diabetes.behandling.insulin-period"></span><br>
                     <span class="ts-cert-answer">{{cert.diabetes.insulinBehandlingsperiod}}</span>
                   </span>
                 </p>
                 <p>
-                  <span message key="ts-diabetes.label.diabetes.behandling.annan"></span>
+                  <span message key="ts-diabetes.label.diabetes.behandling.annan"></span><br>
                   <span ng-show="cert.diabetes.annanBehandlingBeskrivning && cert.diabetes.annanBehandlingBeskrivning.length > 0">
-                    <span message key="ts-diabetes.label.diabetes.behandling.annan.period"></span>
                     <span class="ts-cert-answer">{{cert.diabetes.annanBehandlingBeskrivning}}</span>
                   </span>
-                </p>
-                <p class="ts-cert-answer" ng-show="!cert.diabetes.annanBehandlingBeskrivning">
-                  <span message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
+                  <span class="ts-cert-answer" ng-show="!cert.diabetes.annanBehandlingBeskrivning">
+                    <span message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
+                  </span>
                 </p>
 
               </div>
 
+              <!-- 2. Hypoglykemier -->
               <div wc-field field-label="ts-diabetes.label.hypoglykemier" filled="true" class="print-pagebreak-after">
+
+                <!-- a -->
                 <p>
                   <span message key="ts-diabetes.label.hypoglykemier.har-patient-kannedom"></span>
                   <span class="ts-cert-answer" message
                         key="{{cert.hypoglykemier.kunskapOmAtgarder | BoolToTextFilter}}"></span>
                 </p>
 
+                <!-- b -->
                 <p>
                   <span message key="ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion"></span>
                   <span class="ts-cert-answer" message
                         key="{{cert.hypoglykemier.teckenNedsattHjarnfunktion | BoolToTextFilter}}"></span>
                 </p>
 
+                <!-- c -->
                 <p>
                   <span message key="ts-diabetes.label.hypoglykemier.saknar-formaga-kanna-varningstecken"></span>
                   <span class="ts-cert-answer" message
                         key="{{cert.hypoglykemier.saknarFormagaKannaVarningstecken | BoolToTextFilter}}"></span>
                 </p>
 
+                <!-- d -->
                 <div class="form-group">
                   <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst"></span>
                   <span class="ts-cert-answer" message
@@ -124,6 +136,7 @@
                   <span class="ts-cert-answer">{{cert.hypoglykemier.allvarligForekomstBeskrivning}}</span><br>
                 </div>
 
+                <!-- e -->
                 <div class="form-group">
                   <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken"></span>
                   <span class="ts-cert-answer" message
@@ -133,6 +146,22 @@
                      ng-show="cert.hypoglykemier.allvarligForekomstTrafikBeskrivning.length > 0">
                     <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning"></span>
                   <span class="ts-cert-answer">{{cert.hypoglykemier.allvarligForekomstTrafikBeskrivning}}</span>
+                </div>
+
+                <!-- f -->
+                <div class="form-group">
+                  <span message key="ts-diabetes.label.hypoglykemier.egenkontroll-blodsocker"></span>
+                  <span class="ts-cert-answer" message
+                        key="{{cert.hypoglykemier.egenkontrollBlodsocker | BoolToTextFilter}}"></span>
+                </div>
+
+                <!-- g -->
+                <div class="form-group">
+                  <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid"></span>
+                  <span class="ts-cert-answer" message
+                        key="{{cert.hypoglykemier.allvarligForekomstVakenTid | BoolToTextFilter}}"></span><br>
+                  <span message key="common.when"></span>
+                  <span class="ts-cert-answer">{{cert.hypoglykemier.allvarligForekomstVakenTidObservationstid}}</span>
                 </div>
               </div>
 

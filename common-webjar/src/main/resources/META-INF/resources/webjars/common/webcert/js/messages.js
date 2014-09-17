@@ -16,6 +16,7 @@ var commonMessages = {
         'common.delete': 'Ta bort',
 
         'common.date': 'Datum',
+        'common.when': 'När?',
 
         // labels for common modal dialogs
         'common.modal.label.discard_draft' : 'Ta bort utkast',
