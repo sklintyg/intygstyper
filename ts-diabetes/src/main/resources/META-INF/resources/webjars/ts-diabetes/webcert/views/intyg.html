@@ -210,16 +210,15 @@
               </div>
 
               <div wc-field field-label="ts-diabetes.label.bedomning" filled="true">
+
                 <div ng-show="!cert.bedomning.kanInteTaStallning">
                   <span message key="ts-diabetes.label.bedomning-info-alt-1"></span>
-
                   <p>
                     <span class="ts-cert-answer">{{view.bedomning}}</span>
                   </p>
                 </div>
-
                 <div ng-show="cert.bedomning.kanInteTaStallning">
-                  {{ts-diabetes.label.bedomning-info-alt-2}}
+                  <span message key="ts-diabetes.label.bedomning.kan-inte-ta-stallning"></span><br><br>
                 </div>
 
                 <div>

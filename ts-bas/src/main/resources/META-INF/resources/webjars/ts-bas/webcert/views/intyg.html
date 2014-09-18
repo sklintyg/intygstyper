@@ -145,9 +145,16 @@
 
               <!-- 2 -->
               <div wc-field field-label="ts-bas.label.horselbalans" filled="true">
-                <span message key="ts-bas.label.horselbalans.balansrubbningar"></span>
-                <span class="ts-cert-answer" message
-                      key="{{cert.horselbalans.balansrubbningar | BoolToTextFilter}}"></span>
+                <p>
+                  <span message key="ts-bas.label.horselbalans.balansrubbningar"></span>
+                  <span class="ts-cert-answer" message
+                        key="{{cert.horselBalans.balansrubbningar | BoolToTextFilter}}"></span>
+                </p>
+                <p>
+                  <span message key="ts-bas.label.horselbalans.uppfatta-vanlig-samtalsstamma"></span>
+                  <span class="ts-cert-answer" message
+                        key="{{cert.horselBalans.svartUppfattaSamtal4Meter | BoolToTextFilter}}"></span>
+                </p>
               </div>
 
               <!-- 3 -->
@@ -157,10 +164,15 @@
             			<span class="ts-cert-answer" message
                         key="{{cert.funktionsnedsattning.funktionsnedsattning | BoolToTextFilter}}"></span>
                 </p>
-
-                <p ng-show="cert.funktionsnedsattning.funktionsnedsattning">
+                <p class="indent" ng-show="cert.funktionsnedsattning.funktionsnedsattning">
                   <span message key="ts-bas.label.funktionsnedsattning.beskrivning"></span><br />
-                  <span>{{cert.funktionsnedsattning.beskrivning}}</span>
+                  <span class="ts-cert-answer">{{cert.funktionsnedsattning.beskrivning}}</span>
+                </p>
+
+                <p ng-show="cert.funktionsnedsattning.otillrackligRorelseformaga">
+                  <span message key="ts-bas.label.funktionsnedsattning.rorelsformaga"></span>
+            			<span class="ts-cert-answer" message
+                        key="{{cert.funktionsnedsattning.otillrackligRorelseformaga | BoolToTextFilter}}"></span>
                 </p>
 
               </div>
@@ -170,21 +182,21 @@
                 <p>
                   <span message key="ts-bas.label.hjartkarl.hjart-karlsjukdom"></span>
             			<span class="ts-cert-answer" message
-                        key="{{cert.hjartkarl.hjartKarlsjukdom | BoolToTextFilter}}"></span>
+                        key="{{cert.hjartKarl.hjartKarlSjukdom | BoolToTextFilter}}"></span>
                 </p>
                 <p>
                   <span message key="ts-bas.label.hjartkarl.hjarnskada-efter-trauma"></span>
             			<span class="ts-cert-answer" message
-                        key="{{cert.hjartkarl.hjarnskadaEfterTrauma | BoolToTextFilter}}"></span>
+                        key="{{cert.hjartKarl.hjarnskadaEfterTrauma | BoolToTextFilter}}"></span>
                 </p>
                 <p>
                   <span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke"></span>
             			<span class="ts-cert-answer" message
-                        key="{{cert.hjartkarl.riskfaktorerStroke | BoolToTextFilter}}"></span>
+                        key="{{cert.hjartKarl.riskfaktorerStroke | BoolToTextFilter}}"></span>
                 </p>
                 <p ng-show="cert.hjartKarl.riskfaktorerStroke">
                   <span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning"></span><br />
-                  <span>{{cert.hjartKarl.beskrivningRiskfaktorer}}</span>
+                  <span class="ts-cert-answer">{{cert.hjartKarl.beskrivningRiskfaktorer}}</span>
                 </p>
 
               </div>
@@ -205,10 +217,10 @@
                     <span message key="ts-bas.label.diabetes.behandling"></span>
             			    <span class="ts-cert-answer" ng-show="cert.diabetes.kost" message
                             key="ts-bas.label.diabetes.behandling.kost"></span>
-            			    <span class="ts-cert-answer" ng-show="cert.diabetes.insulin" message
-                            key="ts-bas.label.diabetes.behandling.insulin"></span>
             			    <span class="ts-cert-answer" ng-show="cert.diabetes.tabletter" message
                             key="ts-bas.label.diabetes.behandling.tabletter"></span>
+            			    <span class="ts-cert-answer" ng-show="cert.diabetes.insulin" message
+                            key="ts-bas.label.diabetes.behandling.insulin"></span>
                   </p>
                   <p>
                   <div class="alert alert-info" ng-show="cert.diabetes.insulin || cert.diabetes.tabletter">
