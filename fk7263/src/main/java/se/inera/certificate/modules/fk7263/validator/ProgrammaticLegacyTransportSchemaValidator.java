@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.util.StringUtils;
 
+import se.inera.certificate.model.Aktivitet;
 import se.inera.certificate.model.HosPersonal;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
@@ -16,6 +17,7 @@ import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.util.Strings;
+import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
 import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
 import se.inera.certificate.modules.fk7263.model.codes.Sysselsattningskoder;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToExternalFk7263LegacyConverter;
@@ -52,18 +54,80 @@ public class ProgrammaticLegacyTransportSchemaValidator {
     }
 
     public List<String> validate() {
-        
+
         validateUtlatande();
-        
+
         validateDiagonse();
 
         validatePatient();
-
+        validateSjukdomsforlopp();
+        validateKroppsfunktion();
         validateHospersonal();
         validateReferens();
         validateSysselSattning();
+        validateRekommendationer();
+        validateAktiviteter();
 
         return validationErrors;
+    }
+
+    private void validateAktiviteter() {
+        Aktivitet planeradAktivitetInomSjukVarden = externalutlatande
+                .getAktivitet(Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN);
+        if (planeradAktivitetInomSjukVarden != null
+                && planeradAktivitetInomSjukVarden.getBeskrivning() == null) {
+            addValidationError("Field 6b(1): beskrivning is mandatory for this Aktivitet.");
+        }
+        // Field 6b.2:
+        Aktivitet planeradAktivitetAnnan = externalutlatande
+                .getAktivitet(Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD);
+        if (planeradAktivitetAnnan != null && planeradAktivitetAnnan.getBeskrivning() == null) {
+            addValidationError("Field 6b(2): beskrivning is mandatory for this Aktivitet.");
+        }
+
+        //Field 7
+        Aktivitet rehabAktuell = externalutlatande.getAktivitet(Aktivitetskoder.ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL);
+        Aktivitet rehabEjAktuell = externalutlatande.getAktivitet(Aktivitetskoder.ARBETSLIVSINRIKTAD_REHABILITERING_AR_INTE_AKTUELL);
+        Aktivitet rehabGarEjBedomma = externalutlatande.getAktivitet(Aktivitetskoder.GAR_EJ_ATT_BEDOMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL);
+        if (rehabAktuell != null && checkForMultipleRehabObjects(rehabEjAktuell, rehabGarEjBedomma)) {
+            addValidationError("Field 7: only one of this Aktivitet can be present at one time");
+        } else if (rehabEjAktuell != null && checkForMultipleRehabObjects(rehabAktuell, rehabGarEjBedomma)) {
+            addValidationError("Field 7: only one of this Aktivitet can be present at one time");
+        } else if (rehabGarEjBedomma != null && checkForMultipleRehabObjects(rehabAktuell, rehabEjAktuell)) {
+            addValidationError("Field 7: only one of this Aktivitet can be present at one time");
+        }
+    }
+
+    private boolean checkForMultipleRehabObjects(Aktivitet one, Aktivitet two) {
+        return one != null && two != null;
+    }
+
+    private void validateRekommendationer() {
+        // Field 6a:
+        Aktivitet ovrigtRekomendation = externalutlatande.getAktivitet(Aktivitetskoder.OVRIGT);
+        if (ovrigtRekomendation != null && ovrigtRekomendation.getBeskrivning() == null) {
+            addValidationError("Field 6a: beskrivning is mandatory for this Aktivitet.");
+        }
+    }
+
+    private void validateKroppsfunktion() {
+        Aktivitet smittskydd = externalutlatande.getAktivitet(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
+        if (smittskydd == null) {
+            Observation kroppsFunktion = externalutlatande.findObservationByKategori(ObservationsKoder.KROPPSFUNKTIONER);
+            if (kroppsFunktion != null && StringUtils.isEmpty(kroppsFunktion.getBeskrivning())) {
+                addValidationError("Field 4: beskrivning is mandatory for this observation.");
+            }
+        }
+    }
+
+    private void validateSjukdomsforlopp() {
+        Observation forlopp = externalutlatande.findObservationByKod(ObservationsKoder.FORLOPP);
+        // If forlopp observation exist, it must have an description set
+        if (forlopp != null && StringUtils.isEmpty(forlopp.getBeskrivning())) {
+            if (forlopp != null && forlopp.getBeskrivning() == null) {
+                addValidationError("Field 3: beskrivning is mandatory for this observation.");
+            }
+        }
     }
 
     private void validateReferens() {
@@ -78,7 +142,6 @@ public class ProgrammaticLegacyTransportSchemaValidator {
     }
 
     private void validateUtlatande() {
-        
         Kod typ = externalutlatande.getTyp();
         if (!TransportToExternalFk7263LegacyConverter.FK_7263.equals(typ.getCode())) {
             addValidationError("Head: Invalid utlatandetyp - must be " + TransportToExternalFk7263LegacyConverter.FK_7263);
@@ -86,15 +149,12 @@ public class ProgrammaticLegacyTransportSchemaValidator {
         if (!TransportToExternalFk7263LegacyConverter.UTLATANDE_TYP_OID.equals(typ.getCodeSystem())) {
             addValidationError("Head: Invalid utlatandetyp code system - must be " + TransportToExternalFk7263LegacyConverter.UTLATANDE_TYP_OID);
         }
-        
-        
+
         Id id = externalutlatande.getId();
         if (StringUtils.isEmpty(id.getRoot())) {
             addValidationError("Head: Utlatande Id.root is mandatory!");
         }
-        
-        
-        
+
     }
 
     private void validateDiagonse() {
@@ -195,13 +255,21 @@ public class ProgrammaticLegacyTransportSchemaValidator {
                     Strings.join(" or ", ENHET_OID)));
         }
     }
-    
+
     private void validateSysselSattning() {
         Fk7263Patient patient = externalutlatande.getPatient();
         for (Sysselsattning sysselsattning : externalutlatande.getPatient().getSysselsattningar()) {
             if (Sysselsattningskoder.NUVARANDE_ARBETE.equals(sysselsattning.getSysselsattningstyp())) {
-                if (patient.getArbetsuppgifter().isEmpty() || StringUtils.isEmpty(patient.getArbetsuppgifter().get(0).getTypAvArbetsuppgift())) {
-                    addValidationError("Field 8a(1): 'beskrivning aktuella arbetsuppgifter' is mandatory when 'nuvarande arbete' is checked.");
+                Aktivitet smittskydd = externalutlatande.getAktivitet(Aktivitetskoder.AVSTANGNING_ENLIGT_SML_PGA_SMITTA);
+                if (patient.getArbetsuppgifter().isEmpty()) {
+                    if (smittskydd == null) {
+                        addValidationError("Field 8a(1): 'beskrivning aktuella arbetsuppgifter' is mandatory when 'nuvarande arbete' is checked.");
+                    }
+                } else {
+                    String typAvArbetsuppgift = patient.getArbetsuppgifter().get(0).getTypAvArbetsuppgift();
+                    if (typAvArbetsuppgift == null || (smittskydd == null && StringUtils.isEmpty(typAvArbetsuppgift))) {
+                        addValidationError("Field 8a(1): 'beskrivning aktuella arbetsuppgifter' is mandatory when 'nuvarande arbete' is checked.");
+                    }
                 }
             }
         }
