@@ -390,7 +390,7 @@ public class InternalToExternalConverter {
 
         vanster.setObservationskod(CodeConverter.toKod(ObservationsKod.KONTAKTLINSER));
         vanster.setLateralitet(CodeConverter.toKod(LateralitetsKod.VANSTER));
-        vanster.setForekomst(syn.getHogerOga().getKontaktlins() == null ? false : syn.getHogerOga().getKontaktlins());
+        vanster.setForekomst(syn.getVansterOga().getKontaktlins() == null ? false : syn.getVansterOga().getKontaktlins());
 
         obs.add(hoger);
         obs.add(vanster);
