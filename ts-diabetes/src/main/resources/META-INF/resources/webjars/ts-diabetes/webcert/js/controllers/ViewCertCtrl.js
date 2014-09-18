@@ -18,7 +18,10 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                 dontShowCopyInfo: $cookieStore.get(COPY_DIALOG_COOKIE)
             };
 
-            // Page setup
+            /*********************************************************************
+             * Page state
+             *********************************************************************/
+
             $scope.cert = {};
             $scope.widgetState = {
                 doneLoading: false,
@@ -27,38 +30,50 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                 printStatus: 'notloaded'
             };
 
-            $scope.intygAvser = '';
-            $scope.intygAvserList = [];
-
-            $scope.$watch('cert.intygAvser.korkortstyp', function() {
-                if (!$scope.cert || !$scope.cert.intygAvser || !$scope.cert.intygAvser.korkortstyp) {
-                    return;
-                }
-                angular.forEach($scope.cert.intygAvser.korkortstyp, function(key) {
-                    if (key.selected) {
-                        this.push(key);
-                    }
-                }, $scope.intygAvserList);
-
-                for (var i = 0; i < $scope.intygAvserList.length; i++) {
-                    if (i < $scope.intygAvserList.length - 1) {
-                        $scope.intygAvser += $scope.intygAvserList[i].type + (', ');
-                    } else {
-                        $scope.intygAvser += $scope.intygAvserList[i].type;
-                    }
-                }
-            }, true);
+            $scope.view = {
+                intygAvser: '',
+                bedomning: ''
+            };
 
             $scope.certProperties = {
                 isSent: false,
                 isRevoked: false
             };
 
+            /*********************************************************************
+             * Private support functions
+             *********************************************************************/
+
+            function createKorkortstypListString(list) {
+
+                var tempList = [];
+                angular.forEach(list, function(key) {
+                    if (key.selected) {
+                        this.push(key);
+                    }
+                }, tempList);
+
+                var resultString = '';
+                for (var i = 0; i < tempList.length; i++) {
+                    if (i < tempList.length - 1) {
+                        resultString += tempList[i].type + (', ');
+                    } else {
+                        resultString += tempList[i].type;
+                    }
+                }
+
+                return resultString;
+            }
+
             function loadCertificate() {
                 CertificateService.getCertificate($routeParams.certificateId, function(result) {
                     $scope.widgetState.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
+
+                        $scope.view.intygAvser = createKorkortstypListString($scope.cert.intygAvser.korkortstyp);
+                        $scope.view.bedomning = createKorkortstypListString($scope.cert.bedomning.korkortstyp);
+
                         $rootScope.$emit('ts-diabetes.ViewCertCtrl.load', result.metaData);
                         $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'TS');
                         $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
@@ -83,11 +98,10 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                     }
                 });
             }
-            loadCertificate();
 
-            /**
+            /*********************************************************************
              * Exposed scope interaction functions
-             */
+             *********************************************************************/
 
             ManageCertificate.initSend($scope);
             $scope.send = function(cert) {
@@ -118,5 +132,11 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                 } else {
                     document.pdfForm.submit();
                 }
-            }
+            };
+
+            /*********************************************************************
+             * Page load
+             *********************************************************************/
+            loadCertificate();
+
         }]);
