@@ -160,55 +160,62 @@
                   <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid"></span>
                   <span class="ts-cert-answer" message
                         key="{{cert.hypoglykemier.allvarligForekomstVakenTid | BoolToTextFilter}}"></span><br>
-                  <span message key="common.when"></span>
-                  <span class="ts-cert-answer">{{cert.hypoglykemier.allvarligForekomstVakenTidObservationstid}}</span>
+                  <p ng-show="cert.hypoglykemier.allvarligForekomstVakenTidObservationstid.length > 0">
+                    <span message key="common.when"></span>
+                    <span class="ts-cert-answer">{{cert.hypoglykemier.allvarligForekomstVakenTidObservationstid}}</span>
+                  </p>
                 </div>
               </div>
 
+              <!-- 3 -->
               <div wc-field field-label="ts-diabetes.label.syn" filled="true">
                 <p>
                   <span message key="ts-diabetes.label.syn.separat-ogonlakarintyg"></span>
                   <span class="ts-cert-answer" message
                         key="{{cert.syn.separatOgonlakarintyg | BoolToTextFilter}}"></span>
                 </p>
-                <p>
-                  <span message key="ts-diabetes.label.syn.synfaltsprovning-utan-anmarkning"></span>
-                  <span class="ts-cert-answer" message
-                        key="{{cert.syn.synfaltsprovningUtanAnmarkning | BoolToTextFilter}}"></span>
-                </p>
-                <p>
-                  <span message key="ts-diabetes.label.syn.synskarpa"></span>
-                </p>
-                <div>
-                  <table class="table table-condensed ts-table">
-                    <tr>
-                      <th></th>
-                      <th>Utan korrektion</th>
-                      <th>Med korrektion</th>
-                    </tr>
-                    <tr>
-                      <td>Höger öga</td>
-                      <td><span class="text">{{cert.syn.hoger.utanKorrektion | number : 1}}</span></td>
-                      <td><span class="text">{{cert.syn.hoger.medKorrektion | number : 1}}</span></td>
-                    </tr>
-                    <tr>
-                      <td>Vänster öga</td>
-                      <td><span class="text">{{cert.syn.vanster.utanKorrektion | number : 1}}</span></td>
-                      <td><span class="text">{{cert.syn.vanster.medKorrektion | number : 1}}</span></td>
-                    </tr>
-                    <tr>
-                      <td>Binokulärt</td>
-                      <td><span class="text">{{cert.syn.binokulart.utanKorrektion | number : 1}}</span></td>
-                      <td><span class="text">{{cert.syn.binokulart.medKorrektion | number : 1}}</span></td>
-                    </tr>
-                  </table>
+
+                <div ng-hide="cert.syn.separatOgonlakarintyg">
+                  <p>
+                    <span message key="ts-diabetes.label.syn.synfaltsprovning-utan-anmarkning"></span>
+                    <span class="ts-cert-answer" message
+                          key="{{cert.syn.synfaltsprovningUtanAnmarkning | BoolToTextFilter}}"></span>
+                  </p>
+                  <p>
+                    <span message key="ts-diabetes.label.syn.synskarpa"></span>
+                  </p>
+                  <div>
+                    <table class="table table-condensed ts-table">
+                      <tr>
+                        <th></th>
+                        <th>Utan korrektion</th>
+                        <th>Med korrektion</th>
+                      </tr>
+                      <tr>
+                        <td>Höger öga</td>
+                        <td><span class="text">{{cert.syn.hoger.utanKorrektion | number : 1}}</span></td>
+                        <td><span class="text">{{cert.syn.hoger.medKorrektion | number : 1}}</span></td>
+                      </tr>
+                      <tr>
+                        <td>Vänster öga</td>
+                        <td><span class="text">{{cert.syn.vanster.utanKorrektion | number : 1}}</span></td>
+                        <td><span class="text">{{cert.syn.vanster.medKorrektion | number : 1}}</span></td>
+                      </tr>
+                      <tr>
+                        <td>Binokulärt</td>
+                        <td><span class="text">{{cert.syn.binokulart.utanKorrektion | number : 1}}</span></td>
+                        <td><span class="text">{{cert.syn.binokulart.medKorrektion | number : 1}}</span></td>
+                      </tr>
+                    </table>
+                  </div>
+                  <p>
+                    <span message key="ts-diabetes.label.syn.diplopi"></span>
+                    <span class="ts-cert-answer" message key="{{cert.syn.diplopi | BoolToTextFilter}}"></span>
+                  </p>
                 </div>
-                <p>
-                  <span message key="ts-diabetes.label.syn.diplopi"></span>
-                  <span class="ts-cert-answer" message key="{{cert.syn.diplopi | BoolToTextFilter}}"></span>
-                </p>
               </div>
 
+              <!-- 4 bedomning -->
               <div wc-field field-label="ts-diabetes.label.bedomning" filled="true">
 
                 <div ng-show="!cert.bedomning.kanInteTaStallning">
@@ -221,12 +228,11 @@
                   <span message key="ts-diabetes.label.bedomning.kan-inte-ta-stallning"></span><br><br>
                 </div>
 
-                <div>
-                  <span message key="ts-diabetes.label.bedomning-info-undersokas-med-specialkompetens"></span><br>
-                  <span class="ts-cert-answer" ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">{{cert.bedomning.lakareSpecialKompetens}}</span><br>
-                  <span class="ts-cert-answer" ng-show="!cert.bedomning.lakareSpecialKompetens" message
-                        key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
+                <div class="form-group">
+                  <span message key="ts-diabetes.label.bedomning.lamplighet-inneha"></span><br>
+                  <span class="ts-cert-answer" message key="{{cert.bedomning.lamplighetInnehaBehorighet | BoolToTextFilter}}"></span>
                 </div>
+
               </div>
 
               <div wc-field field-label="ts-diabetes.label.ovrigkommentar" filled="true">
@@ -237,6 +243,13 @@
                 <p class="ts-cert-answer" ng-show="!cert.kommentar">
                   <span message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
                 </p>
+              </div>
+
+              <div wc-field field-label="ts-diabetes.label.ovrigkommentar" filled="true">
+                <span message key="ts-diabetes.label.bedomning-info-undersokas-med-specialkompetens"></span><br>
+                <span class="ts-cert-answer" ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">{{cert.bedomning.lakareSpecialKompetens}}</span><br>
+                  <span class="ts-cert-answer" ng-show="!cert.bedomning.lakareSpecialKompetens" message
+                        key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
               </div>
 
               <div class="infobox">

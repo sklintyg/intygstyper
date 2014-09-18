@@ -142,7 +142,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.validation.diabetes.insulin.behandlingsperiod.missing' : 'Insulin sedan år måste anges',
 
         'ts-diabetes.validation.intygavser.missing': 'Intyget avser körkortsbehörighet saknas',
-        'ts-diabetes.validation.intygavser.must-choose-one': 'Minst en körkortsbehörighet, eller Annat måste väljas',
+        'ts-diabetes.validation.intygavser.must-choose-one': 'Minst en körkortsbehörighet måste väljas',
 
         'ts-diabetes.validation.syn.missing': 'Synfunktioner saknas',
         'ts-diabetes.validation.syn.diplopi.missing': 'Förekommer dubbelseende saknas',
