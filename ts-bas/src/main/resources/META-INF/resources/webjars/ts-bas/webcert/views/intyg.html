@@ -46,47 +46,61 @@
           <div class="col-md-12">
             <div class="cert-body">
 
+              <!-- Patientens adressuppgifter -->
               <div wc-field field-label="ts-bas.label.patientadress" filled="true">
                 <span class="ts-cert-answer">{{cert.patient.postadress}}<br>{{cert.patient.postnummer}} {{cert.patient.postort}}</span>
               </div>
 
+              <!-- Intyget avser -->
               <div wc-field field-label="ts-bas.label.intygavser" filled="true">
                 <span class="ts-cert-answer">{{view.intygAvser}}</span>
               </div>
 
+              <!-- Identitet -->
               <div wc-field field-label="ts-diabetes.label.identitet" filled="true">
                 <span class="ts-cert-answer" message key="ts-diabetes.label.identitet.{{cert.vardkontakt.idkontroll}}"></span>
               </div>
 
+              <!-- 1 syn -->
               <div wc-field field-label="ts-bas.label.synfunktioner" filled="true">
+                <!-- a -->
                 <p>
                   <span message key="ts-bas.label.syn.synfaltsdefekter"></span>
                         <span class="ts-cert-answer" message
                               key="{{cert.syn.synfaltsdefekter | BoolToTextFilter}}"></span>
                 </p>
+
+                <!-- b -->
                 <p>
                   <span message key="ts-bas.label.syn.nattblindhet"></span>
                   <span class="ts-cert-answer" message key="{{cert.syn.nattblindhet | BoolToTextFilter}}"></span>
                 </p>
+
+                <!-- c -->
                 <p>
                   <span message key="ts-bas.label.syn.progressivogonsjukdom"></span>
                         <span class="ts-cert-answer" message
-                              key="{{cert.syn.progressivogonsjukdom | BoolToTextFilter}}"></span>
+                              key="{{cert.syn.progressivOgonsjukdom | BoolToTextFilter}}"></span>
                 </p>
 
+                <!-- a-c message -->
                 <div ng-show="achelptext === true" class="alert alert-info">
                   <span message key="ts-bas.helptext.synfunktioner.a-c"></span>
                 </div>
 
+                <!-- d -->
                 <p>
                   <span message key="ts-bas.label.syn.diplopi"></span>
                   <span class="ts-cert-answer" message key="{{cert.syn.diplopi | BoolToTextFilter}}"></span>
                 </p>
+
+                <!-- e -->
                 <p>
                   <span message key="ts-bas.label.syn.nystagmus"></span>
                   <span class="ts-cert-answer" message key="{{cert.syn.nystagmus | BoolToTextFilter}}"></span>
                 </p>
 
+                <!-- f -->
                 <p>
                   <span message key="ts-bas.label.syn.synskarpa"></span>
                 </p>
@@ -119,6 +133,7 @@
                     <td></td>
                   </tr>
                 </table>
+
                 <h3>Korrektionsglasens styrka</h3>
                 <span message key="ts-bas.label.syn.8-dioptrier"></span>
                 <span class="ts-cert-answer" message
@@ -128,12 +143,14 @@
                 </div>
               </div>
 
+              <!-- 2 -->
               <div wc-field field-label="ts-bas.label.horselbalans" filled="true">
                 <span message key="ts-bas.label.horselbalans.balansrubbningar"></span>
                 <span class="ts-cert-answer" message
                       key="{{cert.horselbalans.balansrubbningar | BoolToTextFilter}}"></span>
               </div>
 
+              <!-- 3 -->
               <div wc-field field-label="ts-bas.label.funktionsnedsattning" filled="true" class="print-pagebreak-after">
                 <p>
                   <span message key="ts-bas.label.funktionsnedsattning.funktionsnedsattning"></span>
@@ -148,6 +165,7 @@
 
               </div>
 
+              <!-- 4 -->
               <div wc-field field-label="ts-bas.label.hjartkarl" filled="true">
                 <p>
                   <span message key="ts-bas.label.hjartkarl.hjart-karlsjukdom"></span>
@@ -171,6 +189,7 @@
 
               </div>
 
+              <!-- 5 -->
               <div wc-field field-label="ts-bas.label.diabetes" filled="true">
                 <p>
                   <span message key="ts-bas.label.diabetes.har-diabetes"></span>
@@ -200,6 +219,7 @@
 
               </div>
 
+              <!-- 6 -->
               <div wc-field field-label="ts-bas.label.neurologi" filled="true">
                 <p>
                   <span message key="ts-bas.label.neurologi.neurologisksjukdom"></span>
@@ -209,6 +229,7 @@
 
               </div>
 
+              <!-- 7 -->
               <div wc-field field-label="ts-bas.label.medvetandestorning" filled="true">
                 <p>
                   <span message key="ts-bas.label.medvetandestorning.medvetandestorning"></span>
@@ -223,6 +244,7 @@
 
               </div>
 
+              <!-- 8 -->
               <div wc-field field-label="ts-bas.label.njurar" filled="true">
                 <span message key="ts-bas.label.njurar.nedsatt-njurfunktion"></span>
                 <span class="ts-cert-answer" message
@@ -230,6 +252,7 @@
 
               </div>
 
+              <!-- 9 -->
               <div wc-field field-label="ts-bas.label.kognitivt" filled="true">
                 <span message key="ts-bas.label.kognitivt.sviktande-kognitiv-funktion"></span>
                 <span class="ts-cert-answer" message
@@ -237,6 +260,7 @@
 
               </div>
 
+              <!-- 10 -->
               <div wc-field field-label="ts-bas.label.somn-vakenhet" filled="true">
                 <span message key="ts-bas.label.somn-vakenhet.tecken-somnstorningar"></span>
                 <span class="ts-cert-answer" message
@@ -244,6 +268,7 @@
 
               </div>
 
+              <!-- 11 -->
               <div wc-field field-label="ts-bas.label.narkotika-lakemedel" filled="true">
                 <p>
                   <span message key="ts-bas.label.narkotika-lakemedel.tecken-missbruk"></span>
@@ -283,11 +308,13 @@
 
               </div>
 
+              <!-- 12 -->
               <div wc-field field-label="ts-bas.label.psykiskt" filled="true">
                 <span message key="ts-bas.label.psykiskt.psykisksjukdom"></span>
                 <span class="ts-cert-answer" message key="{{cert.psykiskt.psykiskSjukdom | BoolToTextFilter}}"></span>
               </div>
 
+              <!-- 13 -->
               <div wc-field field-label="ts-bas.label.utvecklingsstorning" filled="true">
                 <p>
                   <span message key="ts-bas.label.utvecklingsstorning.psykisk-utvecklingsstorning"></span>
@@ -301,6 +328,7 @@
                 </p>
               </div>
 
+              <!-- 14 -->
               <div wc-field field-label="ts-bas.label.sjukhusvard" filled="true">
                 <p>
                   <span message key="ts-bas.label.sjukhusvard.sjukhus-eller-lakarkontakt"></span>
@@ -319,6 +347,7 @@
                 </p>
               </div>
 
+              <!-- 15 -->
               <div wc-field field-label="ts-bas.label.medicinering" filled="true">
                 <p>
                   <span message key="ts-bas.label.medicinering.stadigvarande-medicinering"></span>
@@ -333,6 +362,7 @@
 
               </div>
 
+              <!-- 16 ovrigt -->
               <div wc-field field-label="ts-bas.label.ovrigkommentar" filled="true">
                 <p ng-show="cert.kommentar.length > 0">
                   <span>{{cert.kommentar}}</span>
@@ -343,6 +373,7 @@
                 </p>
               </div>
 
+              <!-- Bedomning -->
               <div wc-field field-label="ts-bas.label.bedomning" filled="true">
                 <div ng-show="!cert.bedomning.kanInteTaStallning">
                   <span message key="ts-bas.label.bedomning-info-alt-1"></span>
@@ -364,6 +395,7 @@
                 </div>
               </div>
 
+              <!-- Vardenhet underskrift -->
               <div class="infobox">
                 <h3>
                   <span message key="ts-bas.label.ovanstaende-har-bekraftats"></span>
