@@ -28,6 +28,7 @@ import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
  */
 public class InternalValidatorInstance {
 
+    private static final String AR_FORMAT = "[1-2][0-9]{3,3}(-((0[1-9])|(1[0-2]))(-((0[1-9])|([1-2][0-9])|(3[0-1])))?)?";
     private static final String POSTNUMMER_FORMAT = "\\d{3}\\s?\\d{2}";
 
     private static final Logger LOG = LoggerFactory.getLogger(InternalValidatorInstance.class);
@@ -190,6 +191,9 @@ public class InternalValidatorInstance {
 
         if (diabetes.getObservationsperiod() == null) {
             addValidationError("diabetes.observationsperiod", "ts-diabetes.validation.diabetes.observationsperiod.missing");
+        }
+        else if (!diabetes.getObservationsperiod().matches(AR_FORMAT)) {
+            addValidationError("diabetes.observationsperiod", "ts-diabetes.validation.diabetes.observationsperiod.incorrect-format");
         }
 
         boolean annanBehandling = diabetes.getAnnanBehandlingBeskrivning() != null
