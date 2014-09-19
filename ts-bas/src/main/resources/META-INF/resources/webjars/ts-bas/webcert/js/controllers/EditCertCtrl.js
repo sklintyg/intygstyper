@@ -112,7 +112,7 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
 
             $scope.$watch('cert.intygAvser.korkortstyp', function(valdaKorkortstyper) {
                 if ($scope.cert.intygAvser && $scope.cert.intygAvser.korkortstyp) {
-                    var targetTypes = ['D1', 'D1E', 'D', 'DE', 'TAXI', 'ANNAT'];
+                    var targetTypes = ['D1', 'D1E', 'D', 'DE', 'TAXI'];
                     var visaKorkortd = false;
                     for (var i = 0; i < valdaKorkortstyper.length; i++) {
                         for (var j = 0; j < targetTypes.length; j++) {
@@ -217,6 +217,17 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
                 }
                 $scope.specialiteter = result;
             }, true);
+
+            $scope.$watch('form.behorighet', function (uppfyllerKravForBehorighet) {
+                if ($scope.cert.bedomning) {
+                    $scope.cert.bedomning.kanInteTaStallning = !uppfyllerKravForBehorighet;
+                    if (!uppfyllerKravForBehorighet) {
+                        angular.forEach($scope.cert.bedomning.korkortstyp, function (korkortstyp) {
+                            korkortstyp.selected = false;
+                        });
+                    }
+                }
+            });
 
             /**
              * Action to save the certificate draft to the server.

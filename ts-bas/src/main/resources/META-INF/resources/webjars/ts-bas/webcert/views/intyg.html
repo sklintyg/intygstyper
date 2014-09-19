@@ -150,7 +150,7 @@
                   <span class="ts-cert-answer" message
                         key="{{cert.horselBalans.balansrubbningar | BoolToTextFilter}}"></span>
                 </p>
-                <p>
+                <p ng-show="cert.horselBalans.svartUppfattaSamtal4Meter">
                   <span message key="ts-bas.label.horselbalans.uppfatta-vanlig-samtalsstamma"></span>
                   <span class="ts-cert-answer" message
                         key="{{cert.horselBalans.svartUppfattaSamtal4Meter | BoolToTextFilter}}"></span>
@@ -194,7 +194,7 @@
             			<span class="ts-cert-answer" message
                         key="{{cert.hjartKarl.riskfaktorerStroke | BoolToTextFilter}}"></span>
                 </p>
-                <p ng-show="cert.hjartKarl.riskfaktorerStroke">
+                <p class="indent" ng-show="cert.hjartKarl.riskfaktorerStroke">
                   <span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning"></span><br />
                   <span class="ts-cert-answer">{{cert.hjartKarl.beskrivningRiskfaktorer}}</span>
                 </p>
@@ -213,20 +213,18 @@
             			    <span class="ts-cert-answer" message
                             key="ts-bas.label.diabetes.diabetestyp.{{cert.diabetes.diabetesTyp}}"></span>
                   </p>
-                  <p>
+                  <p ng-show="cert.diabetes.kost || cert.diabetes.tabletter || cert.diabetes.insulin">
                     <span message key="ts-bas.label.diabetes.behandling"></span>
-            			    <span class="ts-cert-answer" ng-show="cert.diabetes.kost" message
-                            key="ts-bas.label.diabetes.behandling.kost"></span>
-            			    <span class="ts-cert-answer" ng-show="cert.diabetes.tabletter" message
-                            key="ts-bas.label.diabetes.behandling.tabletter"></span>
-            			    <span class="ts-cert-answer" ng-show="cert.diabetes.insulin" message
-                            key="ts-bas.label.diabetes.behandling.insulin"></span>
+                    <span class="ts-cert-answer" ng-show="cert.diabetes.kost" message
+                          key="ts-bas.label.diabetes.behandling.kost"></span>
+                    <span class="ts-cert-answer" ng-show="cert.diabetes.tabletter" message
+                          key="ts-bas.label.diabetes.behandling.tabletter"></span>
+                    <span class="ts-cert-answer" ng-show="cert.diabetes.insulin" message
+                          key="ts-bas.label.diabetes.behandling.insulin"></span>
                   </p>
-                  <p>
                   <div class="alert alert-info" ng-show="cert.diabetes.insulin || cert.diabetes.tabletter">
-                    <span message key="ts-bas.helptext.diabetes.behandling"></span>
+                    <span message key="ts-bas.helptext.diabetes.tabletter-eller-insulin"></span>
                   </div>
-                  </p>
                 </div>
 
               </div>
@@ -249,9 +247,9 @@
                         key="{{cert.medvetandestorning.medvetandestorning | BoolToTextFilter}}"></span>
                 </p>
 
-                <p ng-show="cert.medvetandestorning.medvetandestorning">
+                <p class="indent" ng-show="cert.medvetandestorning.medvetandestorning">
                   <span message key="ts-bas.label.medvetandestorning.beskrivning"></span><br />
-                  <span>{{cert.medvetandestorning.beskrivning}}</span>
+                  <span class="ts-cert-answer">{{cert.medvetandestorning.beskrivning}}</span>
                 </p>
 
               </div>
@@ -313,9 +311,9 @@
                         key="{{cert.narkotikaLakemedel.lakarordineratLakemedelsbruk | BoolToTextFilter}}"></span>
                 </p>
 
-                <p ng-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk">
-                  <span class="ts-cert-answer" message key="ts-bas.label.narkotika-lakemedel.beskrivning"></span><br />
-                  <span>{{cert.narkotikaLakemedel.lakemedelOchDos}}</span>
+                <p class="indent" ng-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk">
+                  <span message key="ts-bas.label.narkotika-lakemedel.beskrivning"></span><br />
+                  <span class="ts-cert-answer">{{cert.narkotikaLakemedel.lakemedelOchDos}}</span>
                 </p>
 
               </div>
@@ -347,15 +345,15 @@
             		    <span class="ts-cert-answer" message
                           key="{{cert.sjukhusvard.sjukhusEllerLakarkontakt | BoolToTextFilter}}"></span>
                 </p>
-                <p ng-show="cert.sjukhusvard.sjukhusEllerLakarkontakt">
-                  <span class="ts-cert-answer" message key="ts-bas.label.sjukhusvard.tidpunkt"></span>
-                  <span>{{cert.sjukhusvard.tidpunkt}}</span><br />
+                <p class="indent" ng-show="cert.sjukhusvard.sjukhusEllerLakarkontakt">
+                  <span message key="ts-bas.label.sjukhusvard.tidpunkt"></span>
+                  <span class="ts-cert-answer">{{cert.sjukhusvard.tidpunkt}}</span><br />
 
-                  <span class="ts-cert-answer" message key="ts-bas.label.sjukhusvard.vardinrattning"></span>
-                  <span>{{cert.sjukhusvard.vardinrattning}}</span><br />
+                  <span message key="ts-bas.label.sjukhusvard.vardinrattning"></span>
+                  <span class="ts-cert-answer">{{cert.sjukhusvard.vardinrattning}}</span><br />
 
-                  <span class="ts-cert-answer" message key="ts-bas.label.sjukhusvard.anledning"></span>
-                  <span>{{cert.sjukhusvard.anledning}}</span><br />
+                  <span message key="ts-bas.label.sjukhusvard.anledning"></span>
+                  <span class="ts-cert-answer">{{cert.sjukhusvard.anledning}}</span><br />
                 </p>
               </div>
 
@@ -366,12 +364,10 @@
             		    <span class="ts-cert-answer" message
                           key="{{cert.medicinering.stadigvarandeMedicinering | BoolToTextFilter}}"></span>
                 </p>
-
-                <p ng-show="cert.medicinering.stadigvarandeMedicinering">
-                  <span class="ts-cert-answer" message key="ts-bas.label.medicinering.beskrivning"></span><br />
-                  <span>{{cert.medicinering.beskrivning}}</span>
+                <p class="indent" ng-show="cert.medicinering.stadigvarandeMedicinering">
+                  <span message key="ts-bas.label.medicinering.beskrivning"></span><br />
+                  <span class="ts-cert-answer">{{cert.medicinering.beskrivning}}</span>
                 </p>
-
               </div>
 
               <!-- 16 ovrigt -->
@@ -396,13 +392,13 @@
                 </div>
 
                 <div ng-show="cert.bedomning.kanInteTaStallning">
-                  {{ts-bas.label.bedomning-info-alt-2}}
+                  <span class="ts-cert-answer" message key="ts-bas.label.bedomning.kan-inte-ta-stallning"></span><br><br>
                 </div>
 
                 <div>
                   <span message key="ts-bas.label.bedomning-info-undersokas-med-specialkompetens"></span><br>
-                  <span ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">{{cert.bedomning.lakareSpecialKompetens}}</span>
-                  <span ng-show="!cert.bedomning.lakareSpecialKompetens" class="ts-cert-answer" message
+                  <span class="ts-cert-answer" ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">{{cert.bedomning.lakareSpecialKompetens}}</span>
+                  <span class="ts-cert-answer" ng-show="!cert.bedomning.lakareSpecialKompetens" message
                         key="ts-bas.label.bedomning-info-ej-angivet"></span>
                 </div>
               </div>
