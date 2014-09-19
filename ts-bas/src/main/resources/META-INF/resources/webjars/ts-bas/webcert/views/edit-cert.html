@@ -24,7 +24,10 @@
   <div class="row">
     <div class="col-md-12 webcert-col webcert-col-single">
 
-      <div wc-print-header title-id="ts-bas.label.certtitle" print-message-id="print.label.draft"></div>
+      <div wc-print-header title-id="ts-bas.label.certtitle" print-message-id="print.label.draft" intygs-id="{{cert.id}}"></div>
+      <div class="print-show">
+        <label class="control-label">{{cert.patient.fullstandigtNamn}} - {{cert.patient.personid}}</label>
+      </div>
 
       <div class="header-fix-top print-hide">
         <div class="header-wrapper" ng-hide="widgetState.collapsedHeader" ng-animate="'menucollapse'">
