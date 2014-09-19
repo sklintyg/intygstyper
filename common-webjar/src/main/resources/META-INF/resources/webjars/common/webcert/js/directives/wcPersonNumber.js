@@ -10,6 +10,8 @@ angular.module('common').directive('wcPersonNumber',
         var PERSONNUMMER_REGEXP = /^(\d{2})?(\d{2})(\d{2})([0-3]\d)([-+]?)(\d{4})$/;
         var SAMORDNINGSNUMMER_REGEXP = /^(\d{2})?(\d{2})(\d{2})([6-9]\d)-?(\d{4})$/;
 
+        var MAXIMUM_AGE = 125;
+        
         var isCheckDigitValid = function(value) {
 
             // Remove separator.
@@ -54,36 +56,14 @@ angular.module('common').directive('wcPersonNumber',
         }
 
         function isDateValid(dateStr) {
-            // We have to implement this since there is no native, cross browser, way of checking this.
+            // dateStr is on the format YYYY/MM/DD
+            return moment(dateStr, 'YYYY/MM/DD').isValid();
+        }
 
-            var parts = dateStr.split('/');
-            var year = parseInt(parts[0], 10);
-            var month = parseInt(parts[1], 10);
-            var day = parseInt(parts[2], 10);
-
-            if (day < 1) {
-                return false;
-            }
-
-            if (month < 1 || month > 12) {
-                return false;
-            }
-
-            if (month === 2) {
-                var isLeapYear = ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0);
-                if (isLeapYear && day > 29) {
-                    return false;
-                }
-                if (!isLeapYear && day > 28) {
-                    return false;
-                }
-            } else if ((( month === 4 || month === 6 || month === 9 || month === 11 ) && day > 30) ||
-                (( month === 1 || month === 3 || month === 5 || month === 7 || month === 8 ||
-                    month === 10 || month === 12 ) && day > 31)) {
-                return false;
-            }
-
-            return true;
+        function isDateInValidRange(dateStr) {
+            // A date is not allowed to be greater than 125 years
+            var yearsDiff = moment().diff(moment(dateStr, 'YYYY/MM/DD'), 'years');
+            return yearsDiff < MAXIMUM_AGE + 1;
         }
 
         return {
@@ -111,7 +91,7 @@ angular.module('common').directive('wcPersonNumber',
                             dateStr = parts[1] + parts[2] + '/' + parts[3] + '/' + parts[4];
 
                             // Handle invalid dates.
-                            if (!isDateValid(dateStr)) {
+                            if ( !(isDateValid(dateStr) && isDateInValidRange(dateStr)) ) {
                                 ctrl.$setValidity('personNumberValidate', false);
                                 return undefined;
                             }
@@ -165,7 +145,7 @@ angular.module('common').directive('wcPersonNumber',
                             dateStr = parts[1] + parts[2] + '/' + parts[3] + '/' + pad(day);
 
                             // Handle invalid dates.
-                            if (!isDateValid(dateStr)) {
+                            if ( !(isDateValid(dateStr) && isDateInValidRange(dateStr)) ) {
                                 ctrl.$setValidity('personNumberValidate', false);
                                 return undefined;
                             }
@@ -178,7 +158,7 @@ angular.module('common').directive('wcPersonNumber',
                             dateStr = (parseInt(parts[2], 10) + 2000) + '/' + parts[3] + '/' + pad(day);
 
                             // Handle invalid dates.
-                            if (!isDateValid(dateStr)) {
+                            if ( !(isDateValid(dateStr) && isDateInValidRange(dateStr)) ) {
                                 ctrl.$setValidity('personNumberValidate', false);
                                 return undefined;
                             }
