@@ -121,7 +121,7 @@ describe('ts-bas.EditCertCtrl', function() {
 
         getCheckboxForKorkortstyp('ANNAT').selected = true;
         $scope.$digest();
-        expect($scope.form.korkortd).toBeTruthy();
+        expect($scope.form.korkortd).toBeFalsy();
         getCheckboxForKorkortstyp('ANNAT').selected = false;
 
         getCheckboxForKorkortstyp('C1').selected = true;
