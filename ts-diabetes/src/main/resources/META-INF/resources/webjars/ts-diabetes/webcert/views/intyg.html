@@ -239,16 +239,14 @@
                 <p ng-show="cert.kommentar.length > 0">
                   <span>{{cert.kommentar}}</span>
                 </p>
-
                 <p class="ts-cert-answer" ng-show="!cert.kommentar">
                   <span message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
                 </p>
               </div>
 
-              <div wc-field field-label="ts-diabetes.label.ovrigkommentar" filled="true">
-                <span message key="ts-diabetes.label.bedomning-info-undersokas-med-specialkompetens"></span><br>
-                <span class="ts-cert-answer" ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">{{cert.bedomning.lakareSpecialKompetens}}</span><br>
-                  <span class="ts-cert-answer" ng-show="!cert.bedomning.lakareSpecialKompetens" message
+              <div wc-field field-label="ts-diabetes.label.bedomning-info-undersokas-med-specialkompetens" filled="true">
+                <span ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">{{cert.bedomning.lakareSpecialKompetens}}</span><br>
+                  <span ng-show="!cert.bedomning.lakareSpecialKompetens" message
                         key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
               </div>
 

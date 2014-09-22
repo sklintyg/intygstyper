@@ -29,27 +29,31 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                 dialogFade: true
             };
 
-            $scope.intygAvser = '';
-            $scope.intygAvserList = [];
+            $scope.view = {
+                intygAvser: '',
+                bedomning: ''
+            };
 
-            $scope.$watch('cert.intygAvser.korkortstyp', function() {
-                if (!$scope.cert || !$scope.cert.intygAvser || !$scope.cert.intygAvser.korkortstyp) {
-                    return;
-                }
-                angular.forEach($scope.cert.intygAvser.korkortstyp, function(key) {
+            function createKorkortstypListString(list) {
+
+                var tempList = [];
+                angular.forEach(list, function(key) {
                     if (key.selected) {
                         this.push(key);
                     }
-                }, $scope.intygAvserList);
+                }, tempList);
 
-                for (var i = 0; i < $scope.intygAvserList.length; i++) {
-                    if (i < $scope.intygAvserList.length - 1) {
-                        $scope.intygAvser += $scope.intygAvserList[i].type + (', ');
+                var resultString = '';
+                for (var i = 0; i < tempList.length; i++) {
+                    if (i < tempList.length - 1) {
+                        resultString += tempList[i].type + (', ');
                     } else {
-                        $scope.intygAvser += $scope.intygAvserList[i].type;
+                        resultString += tempList[i].type;
                     }
                 }
-            }, true);
+
+                return resultString;
+            }
 
             //Make a printable list of Befattningar (which as of yet consists of un-readable codes...)
             $scope.befattningar = '';
@@ -104,6 +108,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                         archiveDialog.close();
                         $scope.dialog.acceptprogressdone = true;
                         $location.path('#/start');
+
                     } else {
                         // show error view
                         $location.path('/fel/couldnotarchivecert');
@@ -168,8 +173,11 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                     $scope.cert.status = $scope.filterStatuses(result.meta.statuses);
                     $rootScope.cert = $scope.cert;
 
-                    $scope.befattningar = $scope.updateBefattningar($scope.cert.skapadAv.befattningar);
-                    $scope.specialiteter = $scope.updateSpecialiteter($scope.cert.skapadAv.specialiteter);
+                    $scope.view.befattningar = $scope.updateBefattningar($scope.cert.skapadAv.befattningar);
+                    $scope.view.specialiteter = $scope.updateSpecialiteter($scope.cert.skapadAv.specialiteter);
+
+                    $scope.view.intygAvser = createKorkortstypListString($scope.cert.intygAvser.korkortstyp);
+                    $scope.view.bedomning = createKorkortstypListString($scope.cert.bedomning.korkortstyp);
 
                 } else {
                     // show error view
