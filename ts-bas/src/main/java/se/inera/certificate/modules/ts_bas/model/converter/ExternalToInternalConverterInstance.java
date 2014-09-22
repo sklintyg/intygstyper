@@ -657,7 +657,6 @@ public class ExternalToInternalConverterInstance {
         }
 
         syn.setSynskarpaHoger(hogerUtan, hogerMed, hogerKontaktlins);
-        syn.setSynskarpaHoger(hogerUtan, hogerMed, hogerKontaktlins);
         syn.setSynskarpaVanster(vansterUtan, vansterMed, vansterKontaktlins);
         syn.setSynskarpaBinokulart(binUtan, binMed);
 

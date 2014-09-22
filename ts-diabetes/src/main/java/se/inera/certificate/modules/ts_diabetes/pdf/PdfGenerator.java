@@ -320,8 +320,8 @@ public class PdfGenerator {
 
         List<String> specialiteter = utlatande.getSkapadAv().getSpecialiteter();
         if (specialiteter.size() > 0) {
-            // TODO: If 'Specialist i allmänmedicin' chose that one.
-            // TODO: Build text for 'beskrivning'
+            // TODO If 'Specialist i allmänmedicin' chose that one.
+            // TODO Build text for 'beskrivning'
             SPECIALISTKOMPETENS_BESKRVNING.setField(fields, "implement");
         }
         UTLATANDE_ID.setField(fields, utlatande.getId());
@@ -386,6 +386,8 @@ public class PdfGenerator {
     }
 
     private static final class DecimalField {
+        private static final int ADD_DECIMAL_PART = 10;
+
         private final String integerField;
 
         private final String decimalField;
@@ -397,8 +399,8 @@ public class PdfGenerator {
 
         public void setField(AcroFields fields, Double value) throws IOException, DocumentException {
             if (value != null) {
-                long integerPart = Math.round(value);
-                long decimalPart = Math.round((value - integerPart) * 10);
+                long integerPart = Math.round(Math.floor(value));
+                long decimalPart = Math.round((value - integerPart) * ADD_DECIMAL_PART);
 
                 fields.setField(integerField, String.valueOf(integerPart));
                 fields.setField(decimalField, String.valueOf(decimalPart));

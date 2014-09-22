@@ -419,11 +419,11 @@ public class InternalToExternalConverter {
 
         vansterUtan.setObservationskod(CodeConverter.toKod(ObservationsKod.EJ_KORRIGERAD_SYNSKARPA));
         vansterUtan.setLateralitet(CodeConverter.toKod(LateralitetsKod.VANSTER));
-        vansterUtan.getVarde().add(new PhysicalQuantity(syn.getHogerOga().getUtanKorrektion(), null));
+        vansterUtan.getVarde().add(new PhysicalQuantity(syn.getVansterOga().getUtanKorrektion(), null));
 
         binokulartUtan.setObservationskod(CodeConverter.toKod(ObservationsKod.EJ_KORRIGERAD_SYNSKARPA));
         binokulartUtan.setLateralitet(CodeConverter.toKod(LateralitetsKod.BINOKULART));
-        binokulartUtan.getVarde().add(new PhysicalQuantity(syn.getHogerOga().getUtanKorrektion(), null));
+        binokulartUtan.getVarde().add(new PhysicalQuantity(syn.getBinokulart().getUtanKorrektion(), null));
 
         obs.add(hogerUtan);
         obs.add(vansterUtan);
@@ -448,7 +448,7 @@ public class InternalToExternalConverter {
             Observation binokulartMed = new Observation();
             binokulartMed.setObservationskod(CodeConverter.toKod(ObservationsKod.KORRIGERAD_SYNSKARPA));
             binokulartMed.setLateralitet(CodeConverter.toKod(LateralitetsKod.BINOKULART));
-            binokulartMed.getVarde().add(new PhysicalQuantity(syn.getHogerOga().getMedKorrektion(), null));
+            binokulartMed.getVarde().add(new PhysicalQuantity(syn.getBinokulart().getMedKorrektion(), null));
             obs.add(binokulartMed);
         }
 

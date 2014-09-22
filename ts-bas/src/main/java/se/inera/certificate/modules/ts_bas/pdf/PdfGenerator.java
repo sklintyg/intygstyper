@@ -481,6 +481,8 @@ public class PdfGenerator {
     }
 
     private static final class DecimalField {
+        private static final int ADD_DECIMAL_PART = 10;
+
         private final String integerField;
 
         private final String decimalField;
@@ -492,8 +494,8 @@ public class PdfGenerator {
 
         public void setField(AcroFields fields, Double value) throws IOException, DocumentException {
             if (value != null) {
-                long integerPart = Math.round(value);
-                long decimalPart = Math.round((value - integerPart) * 10);
+                long integerPart = Math.round(Math.floor(value));
+                long decimalPart = Math.round((value - integerPart) * ADD_DECIMAL_PART);
 
                 fields.setField(integerField, String.valueOf(integerPart));
                 fields.setField(decimalField, String.valueOf(decimalPart));
