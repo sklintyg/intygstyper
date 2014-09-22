@@ -153,7 +153,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.helptext.diabetes.behandling': 'Vid tablett- eller insulinbehandlad diabetes krävs det att ett läkarintyg gällande sjukdomen skickas in.',
         'ts-diabetes.helptext.narkotika-lakemedel.provtagning': 'Om ja på ovanstående ska resultatet redovisas separat.',
 
-        'ts-diabetes.inbox.complementaryinfo': 'Avser lämplighet för körkort'
+        'ts-diabetes.inbox.complementaryinfo': 'Avser behörighet'
 
     },
     'en': {
