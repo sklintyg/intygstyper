@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.dto.ValidationMessage;
+import se.inera.certificate.modules.support.api.dto.ValidationStatus;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Diabetes;
 import se.inera.certificate.modules.ts_diabetes.model.internal.HoSPersonal;
@@ -165,8 +166,7 @@ public class InternalValidatorInstance {
             addValidationError("bedomning", "ts-diabetes.validation.bedomning.missing");
             return;
         }
-
-        if (isFalse(bedomning.getKanInteTaStallning()) && bedomning.getKorkortstyp().isEmpty()) {
+        if (bedomning.getKorkortstyp().isEmpty() && (bedomning.getKanInteTaStallning() == null || isFalse(bedomning.getKanInteTaStallning()))) {
             addValidationError("bedomning", "ts-diabetes.validation.bedomning.must-choose-one");
         }
 

@@ -203,7 +203,7 @@ public class InternalValidatorInstance {
             return;
         }
 
-        if (bedomning.getKanInteTaStallning() == null && bedomning.getKorkortstyp().isEmpty()) {
+        if ((bedomning.getKanInteTaStallning() == null || !bedomning.getKanInteTaStallning()) && bedomning.getKorkortstyp().isEmpty()) {
             addValidationError("bedomning", "ts-bas.validation.bedomning.must-choose-one");
         }
     }
