@@ -7,20 +7,21 @@
     "patientNamn":"Test Testorsson",
     "patientPersonnummer":"19121212-1212",
     "avstangningSmittskydd":false,
+    "nuvarandeArbete":true,
     "nuvarandeArbetsuppgifter" : "Arbetsuppgift",
-    
+
     "undersokningAvPatienten" : "2011-01-26",
-    
+
     "diagnosKod" : "S47",
-    
+
     "funktionsnedsattning" : "Funktionsnedsättning",
     "aktivitetsbegransning" : "Aktivitetsbegränsning relaterat till diagnos och funktionsnedsättning",
-    
+
     "nedsattMed75":{
         "from" :"2011-01-26",
         "tom" :"2012-01-23"
     },
-    
+
     "signeringsdatum":"2011-01-26T00:00:00.000",
     "vardperson":{
         "hsaId":"Personal HSA-ID",

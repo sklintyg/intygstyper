@@ -24,6 +24,7 @@
     "rehabiliteringAktuell" : false,
     "rehabiliteringEjAktuell" : false,
     "rehabiliteringGarInteAttBedoma" : true,
+    "nuvarandeArbete" : true,
     "nuvarandeArbetsuppgifter" : "Dirigent. Dirigerar en större orkester på deltid",
     "arbetsloshet" : true,
     "foraldrarledighet" : true,

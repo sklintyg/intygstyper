@@ -8,29 +8,23 @@
     "patientPersonnummer":"19121212-1212",
     "avstangningSmittskydd":false,
 
-    "undersokningAvPatienten" : "2011-01-26",
+    "telefonkontaktMedPatienten":"2006-01-01",
 
-    "nuvarandeArbete":true,
-    "nuvarandeArbetsuppgifter" : "Arbetsuppgift",
-    "rehabiliteringEjAktuell" : true,
-    "kontaktMedFk" : true,
+    "arbetsloshet":true,
 
     "diagnosKod" : "S47",
-    "diagnosBeskrivning" : "Diagnos för sjukdom - beskrivning",
+    "diagnosBeskrivning":"Medicinskttillstånd: Klämskada på överarm",
 
-    "funktionsnedsattning" : "Funktionsnedsättning - observationer",
+    "funktionsnedsattning" : "Funktionsnedsättning",
     "aktivitetsbegransning" : "Aktivitetsbegränsning",
-    "sjukdomsforlopp" : "Sjukdomsförlopp",
 
-    "annanAtgard":"Annan åtgärd - ange vilken",
+    "rekommendationOvrigtCheck": true,
+    "rekommendationOvrigt": "",
 
     "nedsattMed50":{
-        "from" :"2011-01-26",
-        "tom" :"2011-05-26"
+        "from" :"2006-01-01",
+        "tom" :"2007-01-01"
     },
-    "arbetsformagaPrognos":"Patientens förmåga bedöms nedsatt längre än vad som anges ovan pga:",
-    "arbetsformataPrognosJaDelvis":true,
-
 
     "signeringsdatum":"2011-01-26T00:00:00.000",
     "vardperson":{

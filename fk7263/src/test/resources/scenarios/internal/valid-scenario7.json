@@ -7,18 +7,19 @@
     "patientNamn":"Test Testorsson",
     "patientPersonnummer":"19121212-1212",
     "avstangningSmittskydd":false,
-    
+
     "undersokningAvPatienten" : "2011-01-26",
-    
+
+    "nuvarandeArbete":true,
     "nuvarandeArbetsuppgifter" : "Nuvarande arbete",
-    
+
     "ressattTillArbeteEjAktuellt" : true,
-    
+
     "diagnosKod" : "S47",
-   
+
     "funktionsnedsattning" : "Funktionsnedsättning - observationer",
     "aktivitetsbegransning" : "Aktivitetsbegränsning",
-    
+
     "nedsattMed50":{
         "from" :"2011-01-26",
         "tom" :"2011-02-24"

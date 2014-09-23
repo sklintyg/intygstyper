@@ -1,14 +1,13 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
+import org.apache.commons.lang3.StringUtils;
+import org.joda.time.LocalDate;
+import se.inera.certificate.model.LocalDateInterval;
+import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-import org.joda.time.LocalDate;
-
-import se.inera.certificate.model.LocalDateInterval;
-import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 
 /**
  * Validates a fk7263 certificate's specific rules that's not covered by schema validation or external validation.
@@ -31,6 +30,7 @@ public class InternalValidator extends AbstractValidator {
         validateArbetsformaga();
         validatePrognos();
         validateRessatt();
+        validateOvrigaRekommendationer();
 
         return getValidationErrors();
     }
@@ -81,10 +81,10 @@ public class InternalValidator extends AbstractValidator {
 
         // Fält 8a - arbetsformoga - sysselsattning - applies of not smittskydd is set
         if (!utlatande.isAvstangningSmittskydd()) {
-            boolean hasArbetsuppgifts = !StringUtils.isEmpty(utlatande.getNuvarandeArbetsuppgifter());
-
-            if (!hasArbetsuppgifts && !utlatande.isArbetsloshet() && !utlatande.isForaldrarledighet()) {
+            if (!utlatande.isNuvarandeArbete() && !utlatande.isArbetsloshet() && !utlatande.isForaldrarledighet()) {
                 addValidationError("Field 8a: At least 1 sysselsattning must be set");
+            } else if (utlatande.isNuvarandeArbete() && StringUtils.isEmpty(utlatande.getNuvarandeArbetsuppgifter())) {
+                addValidationError("Field 8a: Arbetsuppgifter must be set");
             }
         }
 
@@ -92,6 +92,13 @@ public class InternalValidator extends AbstractValidator {
         validateIntervals("Field 8b", utlatande.getNedsattMed100(), utlatande.getNedsattMed75(),
                 utlatande.getNedsattMed50(), utlatande.getNedsattMed25());
 
+    }
+
+    private void validateOvrigaRekommendationer() {
+        // Fält 6a - If Övrigt is checked, something must be entered.
+        if (utlatande.isRekommendationOvrigtCheck() && StringUtils.isEmpty(utlatande.getRekommendationOvrigt())) {
+            addValidationError("Field 6a: Övrigt must be entered if checkbox is checked");
+        }
     }
 
     protected boolean validateIntervals(String fieldId, LocalDateInterval... intervals) {

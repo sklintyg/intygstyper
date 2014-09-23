@@ -29,6 +29,7 @@ public class InternalDraftValidator {
         validateRessatt(utlatande, validationMessages);
         validateKommentar(utlatande, validationMessages);
         validateVardenhet(utlatande, validationMessages);
+        validateOvrigaRekommendationer(utlatande, validationMessages);
 
         return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
     }
@@ -87,13 +88,12 @@ public class InternalDraftValidator {
     }
 
     private void validateArbetsformaga(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
-        // Fält 8a - arbetsformoga - sysselsattning - applies of not smittskydd
-        // is set
+        // Fält 8a - arbetsformoga - sysselsattning - applies of not smittskydd is set
         if (!utlatande.isAvstangningSmittskydd()) {
-            boolean hasArbetsuppgifts = !StringUtils.isEmpty(utlatande.getNuvarandeArbetsuppgifter());
-
-            if (!hasArbetsuppgifts && !utlatande.isArbetsloshet() && !utlatande.isForaldrarledighet()) {
+            if (!utlatande.isNuvarandeArbete() && !utlatande.isArbetsloshet() && !utlatande.isForaldrarledighet()) {
                 addValidationError(validationMessages, "sysselsattning", "fk7263.validation.sysselsattning.missing");
+            } else if (utlatande.isNuvarandeArbete() && StringUtils.isEmpty(utlatande.getNuvarandeArbetsuppgifter())) {
+                addValidationError(validationMessages, "sysselsattning", "fk7263.validation.sysselsattning.arbetsuppgifter.missing");
             }
         }
 
@@ -128,6 +128,13 @@ public class InternalDraftValidator {
         }
 
         // Fält 3 - always optional regardless of smittskydd
+    }
+
+    private void validateOvrigaRekommendationer(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
+        // Fält 6a - If Övrigt is checked, something must be entered.
+        if (utlatande.isRekommendationOvrigtCheck() && StringUtils.isEmpty(utlatande.getRekommendationOvrigt())) {
+            addValidationError(validationMessages, "rekommendationer", "fk7263.validation.rekommendationer.ovriga");
+        }
     }
 
     /**

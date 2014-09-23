@@ -1,16 +1,16 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import java.io.IOException;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+
+import java.io.IOException;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author andreaskaltenbach, marced
@@ -124,16 +124,44 @@ public class InternalValidatorTest {
     }
 
     @Test
-    public void testNoArbetsformagas() throws Exception {
+    public void testNoArbetsformaga() throws Exception {
         Fk7263Intyg utlatande = getValidUtlatande();
         utlatande.setAvstangningSmittskydd(false);
         // set conflicting values
-        utlatande.setNuvarandeArbetsuppgifter("");
+        utlatande.setNuvarandeArbete(false);
+        utlatande.setNuvarandeArbetsuppgifter(null);
         utlatande.setArbetsloshet(false);
         utlatande.setForaldrarledighet(false);
 
         assertEquals(1, new InternalValidator(utlatande).validate().size());
     }
+
+    @Test
+    public void testNoArbetsuppgifter() throws Exception {
+        Fk7263Intyg utlatande = getValidUtlatande();
+        utlatande.setAvstangningSmittskydd(false);
+        // set conflicting values
+        utlatande.setNuvarandeArbete(true);
+        utlatande.setNuvarandeArbetsuppgifter(null);
+        utlatande.setArbetsloshet(false);
+        utlatande.setForaldrarledighet(false);
+
+        assertEquals(1, new InternalValidator(utlatande).validate().size());
+    }
+
+    @Test
+    public void testNoArbetsuppgifterAndOthersChecked() throws Exception {
+        Fk7263Intyg utlatande = getValidUtlatande();
+        utlatande.setAvstangningSmittskydd(false);
+        // set conflicting values
+        utlatande.setNuvarandeArbete(true);
+        utlatande.setNuvarandeArbetsuppgifter("");
+        utlatande.setArbetsloshet(true);
+        utlatande.setForaldrarledighet(true);
+
+        assertEquals(1, new InternalValidator(utlatande).validate().size());
+    }
+
 
     @Test
     public void testRessattTillArbeteAktuellt() throws Exception {
@@ -153,6 +181,17 @@ public class InternalValidatorTest {
         utlatande.setRessattTillArbeteEjAktuellt(true);
 
         assertEquals(0, new InternalValidator(utlatande).validate().size());
+    }
+
+
+    @Test
+    public void testRekommendationOvrigtIngenBeskrivning() throws Exception {
+        Fk7263Intyg utlatande = getValidUtlatande();
+
+        utlatande.setRekommendationOvrigtCheck(true);
+        utlatande.setRekommendationOvrigt(null);
+
+        assertEquals(1, new InternalValidator(utlatande).validate().size());
     }
 
     @Test

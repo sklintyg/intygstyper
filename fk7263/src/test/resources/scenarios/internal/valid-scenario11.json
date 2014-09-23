@@ -7,30 +7,31 @@
     "patientNamn":"Test Testorsson",
     "patientPersonnummer":"19121212-1212",
     "avstangningSmittskydd":false,
+    "nuvarandeArbete":true,
     "nuvarandeArbetsuppgifter" : "Arbetsuppgift",
-    
+
     "undersokningAvPatienten" : "2011-01-26",
     "atgardInomSjukvarden" : "Planerad aktivitet inom sjukvården",
     "rehabiliteringEjAktuell" : true,
     "kontaktMedFk" : true,
     "rekommendationKontaktArbetsformedlingen" : true,
-    
+
     "diagnosKod" : "S47",
     "diagnosBeskrivning" : "Diagnos för sjukdom - beskrivning",
-    
+
     "funktionsnedsattning" : "Funktionsnedsättning - observationer",
     "aktivitetsbegransning" : "Aktivitetsbegränsning",
     "sjukdomsforlopp" : "Sjukdomsförlopp",
-    
+
     "nedsattMed25":{
         "from" :"2011-01-26",
         "tom" :"2012-03-13"
     },
     "arbetsformagaPrognos":"Patientens förmåga bedöms nedsatt längre än vad som anges ovan pga:",
-    
+
     "arbetsformataPrognosGarInteAttBedoma":true,
     "arbetsformagaPrognosGarInteAttBedomaBeskrivning" : "Går inte att bedöma, förtydligar i fält 13",
-    
+
     "signeringsdatum":"2011-01-26T00:00:00.000",
     "vardperson":{
         "hsaId":"Personal HSA-ID",

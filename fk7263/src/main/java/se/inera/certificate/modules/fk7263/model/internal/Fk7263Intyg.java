@@ -1,12 +1,11 @@
 package se.inera.certificate.modules.fk7263.model.internal;
 
-import static se.inera.certificate.model.util.Strings.emptyToNull;
-import static se.inera.certificate.model.util.Strings.join;
-
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-
 import se.inera.certificate.model.LocalDateInterval;
+
+import static se.inera.certificate.model.util.Strings.emptyToNull;
+import static se.inera.certificate.model.util.Strings.join;
 
 /**
  * @author andreaskaltenbach
@@ -48,6 +47,7 @@ public class Fk7263Intyg {
 
     private boolean rekommendationKontaktArbetsformedlingen;
     private boolean rekommendationKontaktForetagshalsovarden;
+    private boolean rekommendationOvrigtCheck;
     private String rekommendationOvrigt;
 
     private String atgardInomSjukvarden;
@@ -57,6 +57,7 @@ public class Fk7263Intyg {
     private boolean rehabiliteringEjAktuell;
     private boolean rehabiliteringGarInteAttBedoma;
 
+    private boolean nuvarandeArbete;
     private String nuvarandeArbetsuppgifter;
     private boolean arbetsloshet;
     private boolean foraldrarledighet;
@@ -260,6 +261,14 @@ public class Fk7263Intyg {
         this.rekommendationKontaktForetagshalsovarden = rekommendationKontaktForetagshalsovarden;
     }
 
+    public boolean isRekommendationOvrigtCheck() {
+        return rekommendationOvrigtCheck;
+    }
+
+    public void setRekommendationOvrigtCheck(boolean rekommendationOvrigtCheck) {
+        this.rekommendationOvrigtCheck = rekommendationOvrigtCheck;
+    }
+
     public String getRekommendationOvrigt() {
         return rekommendationOvrigt;
     }
@@ -322,6 +331,14 @@ public class Fk7263Intyg {
 
     public void setRehabiliteringGarInteAttBedoma(boolean rehabiliteringGarInteAttBedoma) {
         this.rehabiliteringGarInteAttBedoma = rehabiliteringGarInteAttBedoma;
+    }
+
+    public boolean isNuvarandeArbete() {
+        return nuvarandeArbete;
+    }
+
+    public void setNuvarandeArbete(boolean nuvarandeArbete) {
+        this.nuvarandeArbete = nuvarandeArbete;
     }
 
     public String getNuvarandeArbetsuppgifter() {

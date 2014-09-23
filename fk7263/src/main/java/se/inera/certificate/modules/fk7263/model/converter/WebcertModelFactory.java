@@ -54,6 +54,7 @@ public class WebcertModelFactory {
             template.setArbetsformataPrognosJa(false);
             template.setArbetsformataPrognosJaDelvis(false);
             template.setArbetsformataPrognosNej(false);
+            template.setNuvarandeArbete(true);
             template.setArbetsloshet(false);
 
             template.setAvstangningSmittskydd(false);

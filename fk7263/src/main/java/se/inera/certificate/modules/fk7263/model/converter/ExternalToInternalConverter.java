@@ -1,7 +1,5 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
-import java.util.List;
-
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.PhysicalQuantity;
@@ -23,6 +21,8 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Referens;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
+
+import java.util.List;
 
 /**
  * @author andreaskaltenbach
@@ -178,6 +178,7 @@ public class ExternalToInternalConverter {
         for (Sysselsattning sysselsattning : patient.getSysselsattningar()) {
             if (Sysselsattningskoder.NUVARANDE_ARBETE.equals(sysselsattning.getSysselsattningstyp())
                     && !patient.getArbetsuppgifter().isEmpty()) {
+                intyg.setNuvarandeArbete(true);
                 intyg.setNuvarandeArbetsuppgifter(patient.getArbetsuppgifter().get(0).getTypAvArbetsuppgift());
             } else if (Sysselsattningskoder.ARBETSLOSHET.equals(sysselsattning.getSysselsattningstyp())) {
                 intyg.setArbetsloshet(true);
@@ -200,6 +201,7 @@ public class ExternalToInternalConverter {
                     .getAktivitetskod())) {
                 intyg.setRekommendationKontaktForetagshalsovarden(true);
             } else if (Aktivitetskoder.OVRIGT.equals(aktivitet.getAktivitetskod())) {
+                intyg.setRekommendationOvrigtCheck(true);
                 intyg.setRekommendationOvrigt(aktivitet.getBeskrivning());
             } else if (Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN.equals(aktivitet
                     .getAktivitetskod())) {
