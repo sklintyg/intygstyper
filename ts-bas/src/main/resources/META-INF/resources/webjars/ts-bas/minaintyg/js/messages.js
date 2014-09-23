@@ -70,10 +70,10 @@ var tsBasMessages = {
         'ts-bas.label.hjartkarl.riskfaktorer-stroke': 'c) Föreligger viktiga riskfaktorer för stroke (tidigare stroke eller TIA, förhöjt blodtryck, förmaksflimmer eller kärlmissbildning)?',
         'ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning': 'Vilken typ av sjukdom:',
 
-        'ts-bas.label.diabetes.har-diabetes': 'Har patienten diabetes',
+        'ts-bas.label.diabetes.har-diabetes': 'Har patienten diabetes?',
         'ts-bas.label.diabetes.diabetestyp': 'Diabetestyp',
-        'ts-bas.label.diabetes.diabetestyp.diabetes_typ_1': 'Diabetes Typ 1',
-        'ts-bas.label.diabetes.diabetestyp.diabetes_typ_2': 'Diabetes Typ 2',
+        'ts-bas.label.diabetes.diabetestyp.diabetes_typ_1': 'Typ 1',
+        'ts-bas.label.diabetes.diabetestyp.diabetes_typ_2': 'Typ 2',
         'ts-bas.label.diabetes.behandling': 'Behandling:',
         'ts-bas.label.diabetes.behandling.kost': 'Kost',
         'ts-bas.label.diabetes.behandling.tabletter': 'Tabletter',

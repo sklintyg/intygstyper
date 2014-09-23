@@ -165,7 +165,7 @@
                         key="{{cert.funktionsnedsattning.funktionsnedsattning | BoolToTextFilter}}"></span>
                 </p>
                 <p class="indent" ng-show="cert.funktionsnedsattning.funktionsnedsattning">
-                  <span message key="ts-bas.label.funktionsnedsattning.beskrivning"></span><br />
+                  <span message key="ts-bas.label.view.funktionsnedsattning.beskrivning"></span><br />
                   <span class="ts-cert-answer">{{cert.funktionsnedsattning.beskrivning}}</span>
                 </p>
 
@@ -180,17 +180,17 @@
               <!-- 4 -->
               <div wc-field field-label="ts-bas.label.hjartkarl" filled="true">
                 <p>
-                  <span message key="ts-bas.label.hjartkarl.hjart-karlsjukdom"></span>
+                  <span message key="ts-bas.label.hjartkarl.hjart-karlsjukdom"></span><br>
             			<span class="ts-cert-answer" message
                         key="{{cert.hjartKarl.hjartKarlSjukdom | BoolToTextFilter}}"></span>
                 </p>
                 <p>
-                  <span message key="ts-bas.label.hjartkarl.hjarnskada-efter-trauma"></span>
+                  <span message key="ts-bas.label.hjartkarl.hjarnskada-efter-trauma"></span><br>
             			<span class="ts-cert-answer" message
                         key="{{cert.hjartKarl.hjarnskadaEfterTrauma | BoolToTextFilter}}"></span>
                 </p>
                 <p>
-                  <span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke"></span>
+                  <span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke"></span><br>
             			<span class="ts-cert-answer" message
                         key="{{cert.hjartKarl.riskfaktorerStroke | BoolToTextFilter}}"></span>
                 </p>
@@ -214,7 +214,7 @@
                             key="ts-bas.label.diabetes.diabetestyp.{{cert.diabetes.diabetesTyp}}"></span>
                   </p>
                   <p ng-show="cert.diabetes.kost || cert.diabetes.tabletter || cert.diabetes.insulin">
-                    <span message key="ts-bas.label.diabetes.behandling"></span>
+                    <span message key="ts-bas.label.diabetes.view.behandling"></span><br>
                     <span class="ts-cert-answer" ng-show="cert.diabetes.kost" message
                           key="ts-bas.label.diabetes.behandling.kost"></span>
                     <span class="ts-cert-answer" ng-show="cert.diabetes.tabletter" message

@@ -113,6 +113,7 @@ var tsBasMessages = {
         'ts-bas.label.horselbalans.uppfatta-vanlig-samtalsstamma': 'b) Har patienten svårt att uppfatta vanlig samtalsstämma på fyra meters avstånd (hörapparat får användas)?',
         'ts-bas.label.funktionsnedsattning.funktionsnedsattning': 'a) Har patienten någon sjukdom eller funktionsnedsättning som påverkar rörligheten och som medför att fordon inte kan köras på ett trafiksäkert sätt?',
         'ts-bas.label.funktionsnedsattning.beskrivning': 'Ange vilken typ av nedsättning eller sjukdom:',
+        'ts-bas.label.view.funktionsnedsattning.beskrivning': 'Typ av nedsättning eller sjukdom:',
         'ts-bas.label.funktionsnedsattning.rorelsformaga': 'b) Är rörelseförmågan otillräcklig för att kunna hjälpa passagerare in och ut ur fordonet samt med bilbälte?',
 
         'ts-bas.label.hjartkarl.hjart-karlsjukdom': 'a) Föreligger hjärt- eller kärlsjukdom som kan medföra en påtaglig risk för att hjärnans funktioner akut försämras eller som i övrigt innebär en trafiksäkerhetsrisk?',
@@ -125,6 +126,7 @@ var tsBasMessages = {
         'ts-bas.label.diabetes.diabetestyp.diabetes_typ_1': 'Typ 1',
         'ts-bas.label.diabetes.diabetestyp.diabetes_typ_2': 'Typ 2',
         'ts-bas.label.diabetes.behandling': 'Ange behandling:',
+        'ts-bas.label.diabetes.view.behandling': 'Behandling:',
         'ts-bas.label.diabetes.behandling.kost': 'Kost',
         'ts-bas.label.diabetes.behandling.tabletter': 'Tabletter',
         'ts-bas.label.diabetes.behandling.insulin': 'Insulin',
