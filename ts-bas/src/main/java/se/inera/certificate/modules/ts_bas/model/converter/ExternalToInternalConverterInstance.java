@@ -566,7 +566,7 @@ public class ExternalToInternalConverterInstance {
                 .toKod(AktivitetKod.UNDERSOKNING_PLUS8_KORREKTIONSGRAD));
 
         if (plus8Korretionsgrader != null) {
-            syn.setKorrektionsglasensStyrka(true);
+            syn.setKorrektionsglasensStyrka(plus8Korretionsgrader.getForekomst());
         }
 
         // Handle Syn related Observationer
