@@ -472,7 +472,7 @@
 
                             <div wc-cert-field field-number="6a" field-label="view.label.recommendations" id="field6a"
                                  filled="cert.rekommendationKontaktArbetsformedlingen|| cert.rekommendationKontaktForetagshalsovarden || cert.rekommendationOvrigt!=null">
-                                <ul>
+                              <ul>
                                     <li ng-show="cert.rekommendationKontaktArbetsformedlingen"><span message
                                                                                                      key="view.label.recommendations.contact.jobcenter"></span>
                                     </li>
@@ -481,7 +481,7 @@
                                     </li>
                                     <li ng-show="cert.rekommendationOvrigt != null"><span message
                                                                                           key="view.label.recommendations.contact.other"></span>
-                                        {{cert.rekommenderarOvrigt.beskrivning}}
+                                        {{cert.rekommendationOvrigt}}
                                     </li>
                                 </ul>
                             </div>
