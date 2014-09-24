@@ -48,7 +48,7 @@ angular.module('common').directive('wcHeader',
                             statTooltip: 'not set',
                             getStat: function() {
                                 this.statTooltip =
-                                    'Vårdenheten har ' + $scope.stat.intygValdEnhet + ' ej signerade intyg.';
+                                    'Vårdenheten har ' + $scope.stat.intygValdEnhet + ' ej signerade utkast.';
                                 return $scope.stat.intygValdEnhet || '';
                             }
                         },

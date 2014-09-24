@@ -31,18 +31,18 @@
                 <label class="control-label">{{cert.patientNamn}} - {{cert.patientPersonnummer}}</label>
               </div>
               <div class="form-group buttonbar">
-                <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned">Spara</button>
+                <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned" title="Sparar intyget som ett utkast.">Spara utkast</button>
                 <button id="ta-bort-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned"
-                        ng-click="discard()">Ta bort utkast
+                        ng-click="discard()" title="Klicka på papperskorgen för att radera utkastet."><i class="glyphicon glyphicon-trash"></i>
                 </button>
-                <button id="skriv-ut-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="print()">
-                  Skriv ut utkast
+                <button id="skriv-ut-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="print()" title="Skriver ut utkastet.">
+                  Skriv ut
                 </button>
                 <button class="btn btn-default btn-secondary" ng-if="!widgetState.showComplete && !isComplete"
-                        ng-click="toggleShowComplete()">Visa vad som behöver kompletteras
+                        ng-click="toggleShowComplete()" title="Visar vilka obligatoriska fält i utkastet som inte är ifyllda. Alla obligatoriska fält måste vara ifyllda för att utkastet ska kunna signeras.">Visa vad som saknas
                 </button>
                 <button class="btn btn-default btn-secondary" ng-if="widgetState.showComplete && !isComplete"
-                        ng-click="toggleShowComplete()">Dölj vad som behöver kompletteras
+                        ng-click="toggleShowComplete()" title="Visar vilka obligatoriska fält i utkastet som inte är ifyllda. Alla obligatoriska fält måste vara ifyllda för att utkastet ska kunna signeras.">Dölj vad som saknas
                 </button>
               </div>
               <div id="certificate-is-sent-to-it-message-text" ng-show="isSigned"><strong>Status:</strong> Intyget är
@@ -687,7 +687,7 @@
                 </div>
 
                 <button id="signera-utkast-button" class="btn btn-success" ng-disabled="!isComplete || certForm.$dirty"
-                        ng-click="sign()" ng-show="user.userContext.lakare">Signera intyget
+                        ng-click="sign()" ng-show="user.userContext.lakare">Signera
                 </button>
               </div>
 
