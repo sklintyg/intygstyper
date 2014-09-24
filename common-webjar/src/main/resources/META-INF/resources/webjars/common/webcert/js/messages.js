@@ -14,7 +14,7 @@ var commonMessages = {
         'common.sign': 'Signera',
         'common.send': 'Skicka',
         'common.copy': 'Kopiera',
-        'common.delete': 'Ta bort',
+        'common.delete': 'Radera',
 
         'common.date': 'Datum',
         'common.when': 'När?',
@@ -34,6 +34,7 @@ var commonMessages = {
 
         // intyg forms
         'draft.saknar-uppgifter': 'Utkastet saknar uppgifter',
+        'draft.onlydoctorscansign': 'Endast läkare får signera intyget. Skicka ett mejl med en länk till utkastet till den läkare som ska signera.',
 
         // wc-common-directives-resources
         'nav.label.loggedinas': 'Inloggad som:',

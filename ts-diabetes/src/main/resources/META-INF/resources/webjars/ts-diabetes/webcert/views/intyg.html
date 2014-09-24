@@ -21,8 +21,15 @@
               <button id="downloadprint" type="submit" value="submit" class="btn btn-info"
                       ng-click="print(cert)">Skriv ut
               </button>
-              <button id="copyBtn" class="btn btn-info" ng-if="!certProperties.isRevoked" ng-click="copy(cert)">Kopiera</button>
-              <button id="makuleraBtn" class="btn btn-inverse" ng-if="!certProperties.isRevoked" ng-click="makulera(cert)">Rätta</button>
+              <button id="copyBtn" class="btn btn-info" ng-if="!certProperties.isRevoked" ng-click="copy(cert)"
+                      title="Kopiera intyg innebär att en kopia skapas av det befintliga intyget och med samma information.
+I de fall patienten har ändrat namn eller adress så uppdateras den informationen.
+Uppgifterna i intygsutkastet går att ändra innan det signeras.
+Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
+                Kopiera
+              </button>
+              <button id="makuleraBtn" class="btn btn-inverse" ng-if="!certProperties.isRevoked" ng-click="makulera(cert)"
+                      title="Makulera intyg innebär att intyget återtas. Vid behov kan intyget ersättas med ett nytt.">Makulera</button>
             </p>
           </form>
         </div>

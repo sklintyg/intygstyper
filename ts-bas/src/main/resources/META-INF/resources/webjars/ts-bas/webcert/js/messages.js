@@ -23,7 +23,7 @@ var tsBasMessages = {
         'ts-bas.label.ovrigkommentar': '16. Övrig kommentar',
         'ts-bas.label.bedomning': 'Bedömning',
         'ts-bas.label.unit': 'Vårdenhet',
-        'ts-bas.label.send': 'Skicka till Transportstyrelsen',
+        'ts-bas.label.send': 'Skicka intyg till Transportstyrelsen',
         'ts-bas.label.makulera.confirmation': 'Transportstyrelsens läkarintyg utställt på ${namn} - ${personnummer} har rättats. Intyget kan inte längre visas av patienten.',
 
         // Identitet styrkt genom
@@ -271,8 +271,6 @@ var tsBasMessages = {
 
         'ts-bas.validation.neurologi.missing': 'Neurologiska sjukdomar saknas',
         'ts-bas.validation.neurologi.neurologisksjukdom.missing': 'Finns tecken på neurologisk sjukdom måste anges',
-
-        'ts-bas.validation.missing.krav-pa-lakarunderskrift': 'Endast läkare får underteckna intyget. Du kan skicka ett mejl med en länk till intyget till den läkare som ska signera.',
 
         'ts-bas.validation.identitet.missing': 'Identitet styrkt saknas',
 

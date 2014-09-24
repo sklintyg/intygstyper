@@ -55,14 +55,14 @@ var fk7263Messages = {
         'fk7263.label.rekommendationer.kontakt.ovrigt': 'Övrigt: ',
         'fk7263.label.se-ovrigt': 'Se under Övriga upplysningar och förtydliganden',
         'fk7263.label.ovrigt': 'Övriga upplysningar och förtydliganden',
-        'fk7263.label.ovanstaende-har-bekraftats': 'Ovanstående uppgifter och bedömningar har bekräftas',
+        'fk7263.label.ovanstaende-har-bekraftats': 'Ovanstående uppgifter och bedömningar bekräftas',
         'fk7263.label.datum': 'Datum',
-        'fk7263.label.kontakt-info': 'Namnförtydligande, mottagningens adress och telefon',
+        'fk7263.label.kontakt-info': 'Namn och kontaktuppgifter till vårdenheten',
         'fk7263.label.atgarder': 'Åtgärder',
         'fk7263.label.rekommendationer.fk': 'Rekommendationer till Försäkringskassan',
         'fk7263.label.fk-kontakt': 'Kontakt',
-        'fk7263.label.vardenhet.adress': 'Vårdenhetens adress',
-        'fk7263.label.makulera.confirmation': 'Läkarintyg FK 7263 utställt på ${namn} - ${personnummer} har rättats. Intyget kan inte längre visas av patienten.',
+        'fk7263.label.vardenhet.adress': 'Vårdenhetens kontaktuppgifter',
+        'fk7263.label.makulera.confirmation': 'Läkarintyg FK 7263 utställt på ${namn} - ${personnummer} har makulerats. Intyget kan inte längre visas av patienten.',
 
         'fk7263.vardkontakt.undersokning': 'Min undersökning av patienten den ',
         'fk7263.vardkontakt.telefonkontakt': 'Min telefonkontakt med patienten den ',
@@ -138,19 +138,19 @@ var fk7263Messages = {
 
 
         // errors
-        'fk7263.error.could_not_load_cert': '<strong>Ett tekniskt problem inträffade.</strong><br>Kunde inte hämta intyget.',
+        'fk7263.error.could_not_load_cert': '<strong>Intyget gick inte att läsa in.</strong><br>Prova att ladda om sidan. Om problemet kvarstår kan du kontakta nationell kundservice på 0771-251010.',
         'fk7263.error.could_not_load_cert_not_auth': '<strong>Kunde inte hämta intyget eftersom du saknar behörighet.</strong>',
-        'fk7263.error.could_not_load_cert_qa': '<strong>Kunde inte hämta frågor och svar för intyget.</strong>',
+        'fk7263.error.could_not_load_cert_qa': '<strong>Frågor och svar för detta intyg gick inte att läsa in. Prova att ladda om sidan. Om problemet kvarstår bör du kontakta nationell kundservice på 0771-251010.</strong>',
         // fragaSvar errors
-        'fk7263.error.external_system_problem': '<strong>Försäkringskassans system kan just nu inte ta emot informationen. Försök igen</strong>',
+        'fk7263.error.external_system_problem': '<strong>Meddelandet har inte skickats till Försäkringskassan då Webcert saknar kontakt med Försäkringskassans datasystem.</strong><br>Prova att skicka om meddelandet. Om problemet kvarstår kan du kontakta nationell kundservice på 0771-251010.',
         'fk7263.error.internal_problem': '<strong>Ett tekniskt problem inträffade.</strong><br>Försök igen och kontakta supporten om problemet kvarstår.',
-        'fk7263.error.invalid_state': '<strong>Funktionen är inte giltig</strong><br>Förmodligen har en annan användare ändrat informationen medan du arbetat på samma post. Ladda om informationen och försök igen',
-        'fk7263.error.unknown_internal_problem': '<strong>Ett tekniskt problem inträffade</strong><br>Försök igen och kontakta supporten om problemet kvarstår.',
+        'fk7263.error.invalid_state': '<strong>Funktionen är inte giltig.</strong><br>Förmodligen har en annan användare ändrat informationen medan du arbetat på samma post. Ladda om informationen och försök igen',
+        'fk7263.error.unknown_internal_problem': '<strong>Ett tekniskt problem inträffade.</strong><br>Försök igen och kontakta supporten om problemet kvarstår.',
         'fk7263.error.authorization_problem': '<strong>Du har inte behörighet att utföra funktionen, kontakta supporten för mer information.</strong>',
         'fk7263.error.data_not_found': '<strong>Intyget kunde inte hittas i intygstjänsten.</strong><br>Intyget är borttaget eller så saknas behörighet.',
-        'fk7263.fragasvar.answer.is.sent': '<strong>Svaret har skickats till Försäkringskassan</strong><br> Frågan är nu markerad som hanterad och visas nu under \'Hanterade frågor\' längre ner på sidan.',
-        'fk7263.fragasvar.marked.as.ohanterad': '<strong>Frågan är nu markerad som ohanterad</strong><br> Den visas nu under \'Ohanterade frågor\' längre upp på sidan.',
-        'fk7263.fragasvar.marked.as.hanterad': '<strong>Frågan är nu markerad som hanterad</strong><br> Den visas nu under \'Hanterade frågor\' längre ner på sidan.'
+        'fk7263.fragasvar.answer.is.sent': '<strong>Svaret har skickats till Försäkringskassan.</strong><br> Frågan är nu markerad som hanterad och visas nu under \'Hanterade frågor\' längre ner på sidan.',
+        'fk7263.fragasvar.marked.as.hanterad': '<strong>Frågan-svaret är markerad som hanterad.</strong><br> Frågan-svaret visas under rubriken \'hanterade frågor och svar\' nedan.',
+        'fk7263.fragasvar.marked.as.ohanterad': '<strong>Frågan-svaret är markerad som ej hanterad.</strong><br> Frågan-svaret visas under rubriken \'Ej hanterade frågor och svar\' ovan.'
 
     },
     'en': {

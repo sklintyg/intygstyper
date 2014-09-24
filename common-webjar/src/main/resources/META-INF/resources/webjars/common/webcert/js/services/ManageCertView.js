@@ -77,7 +77,7 @@ angular.module('common').factory('common.ManageCertView',
              */
             function _discard($scope) {
 
-                var bodyText = 'Är du säker på att du vill radera utkastet? Intyget kommer tas bort och kan inte längre återskapas i Webcert.';
+                var bodyText = 'När du raderar utkastet tas det bort från Webcert.';
                 $scope.dialog = {
                     acceptprogressdone: false,
                     errormessageid: 'Error',
