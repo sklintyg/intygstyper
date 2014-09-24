@@ -29,10 +29,11 @@ var commonMessages = {
         'cert.status.signed': 'Signerat',
         'cert.status.cancelled': 'Rättat',
         'cert.status.unknown': 'Okänd',
-
-        // unused statuses in gui
         'cert.status.sent': 'Skickat',
         'cert.status.received': 'Mottaget',
+
+        // intyg forms
+        'draft.saknar-uppgifter': 'Utkastet saknar uppgifter',
 
         // wc-common-directives-resources
         'nav.label.loggedinas': 'Inloggad som:',

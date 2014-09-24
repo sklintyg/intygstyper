@@ -2,7 +2,8 @@
   <div wc-spinner label="fk7263.info.loadingcertificate" show-spinner="!widgetState.doneLoading"
        show-content="widgetState.doneLoading">
 
-    <div wc-print-header title-id="fk7263.label.certtitle" print-message-id="print.label.{{widgetState.printStatus}}" intygs-id="cert.id"></div>
+    <div wc-print-header title-id="fk7263.label.certtitle" print-message-id="print.label.{{widgetState.printStatus}}"
+         intygs-id="cert.id"></div>
 
     <!-- error message -->
     <div id="cert-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey"
@@ -30,14 +31,19 @@
 
           <form id="view-as-pdf" action="{{pdfUrl}}" method="get" target="_blank" name="pdfForm">
             <p class="btn-row">
-              <button id="sendBtn" class="btn btn-info" ng-if="!certProperties.isSent && !certProperties.isRevoked" ng-click="send(cert)">Skicka till
+              <button id="sendBtn" class="btn btn-info" ng-if="!certProperties.isSent && !certProperties.isRevoked"
+                      ng-click="send(cert)">Skicka till
                 Försäkringskassan
               </button>
               <button id="downloadprint" type="submit" value="submit" class="btn btn-info" ng-click="print(cert)">Skriv
                 ut
               </button>
-              <button id="copyBtn" class="btn btn-info" ng-if="!certProperties.isRevoked" ng-click="copy(cert)">Kopiera</button>
-              <button id="makuleraBtn" class="btn btn-inverse" ng-if="!certProperties.isRevoked" ng-click="makulera(cert)">Rätta</button>
+              <button id="copyBtn" class="btn btn-info" ng-if="!certProperties.isRevoked" ng-click="copy(cert)">
+                Kopiera
+              </button>
+              <button id="makuleraBtn" class="btn btn-inverse" ng-if="!certProperties.isRevoked"
+                      ng-click="makulera(cert)">Makulera
+              </button>
             </p>
           </form>
         </div>
@@ -47,10 +53,8 @@
           <strong>Status:</strong>
           <span ng-if="certProperties.isSent" id="certificate-is-sent-to-recipient-message-text">Intyget är signerat och skickat till Försäkringskassan.</span>
           <span ng-if="!certProperties.isSent" id="certificate-is-sent-to-it-message-text">
-            Intyget är signerat och är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se.
-            Intyget går även att nå via Försäkringskassans e-tjänst för ansökan om sjukpenning. Om patienten inte har
-            möjlighet att skicka intyget elektroniskt till Försäkringskassan kan du skicka intyget direkt till
-            Försäkringskassan åt patienten. Observera att patientens samtycke då krävs.
+            Intyget är signerat. Intyget är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se. Intyget går även att nå via Försäkringskassans e-tjänst för ansökan om sjukpenning.
+            Om patienten inte har möjlighet att skicka intyget elektroniskt till Försäkringskassan kan du skicka intyget direkt till Försäkringskassan åt patienten. Observera att patientens samtycke då krävs.
           </span>
         </div>
         <div ng-if="certProperties.isRevoked" id="certificate-is-revoked-message-text" class="alert alert-warning"
@@ -69,21 +73,25 @@
                     </span>
               </div>
 
-              <div wc-field field-number="2" field-label="fk7263.label.diagnos" filled="{{cert.diagnosBeskrivning!=null}}"
-                   id="field2">
+              <div wc-field field-number="2" field-label="fk7263.label.diagnos"
+                   filled="{{cert.diagnosBeskrivning!=null}}" id="field2">
                 <div class="form-group">
                   {{cert.diagnosBeskrivning}} (<span class="tag"><span message
-                                                                     key="fk7263.label.diagnoskod"></span></span>
-                {{cert.diagnosKod}})
-                 </div>
+                                                                       key="fk7263.label.diagnoskod"></span></span>
+                  {{cert.diagnosKod}})
+                </div>
                 <div class="form-group">
-                  <label class="control-label bold" ng-show="cert.diagnosKod2 || cert.diagnosBeskrivning2 || cert.diagnosKod3 || cert.diagnosBeskrivning3">
+                  <label class="control-label bold"
+                         ng-show="cert.diagnosKod2 || cert.diagnosBeskrivning2 || cert.diagnosKod3 || cert.diagnosBeskrivning3">
                     <span message key="fk7263.label.ytterligarediagnoser"></span>
                   </label>
                   <div class="controls">
-                    <p ng-show="cert.diagnosKod2 || cert.diagnosBeskrivning2 ">{{cert.diagnosKod2}} {{cert.diagnosBeskrivning2}}</p>
-                    <p ng-show="cert.diagnosKod3 || cert.diagnosBeskrivning3">{{cert.diagnosKod3}} {{cert.diagnosBeskrivning3}}</p>
-                    <div ng-show="cert.samsjuklighet" class="bold"><span message key="fk7263.label.samsjuklighet"></span></div>
+                    <p ng-show="cert.diagnosKod2 || cert.diagnosBeskrivning2 ">{{cert.diagnosKod2}}
+                      {{cert.diagnosBeskrivning2}}</p>
+                    <p ng-show="cert.diagnosKod3 || cert.diagnosBeskrivning3">{{cert.diagnosKod3}}
+                      {{cert.diagnosBeskrivning3}}</p>
+                    <div ng-show="cert.samsjuklighet" class="bold"><span message
+                                                                         key="fk7263.label.samsjuklighet"></span></div>
                   </div>
                 </div>
               </div>
@@ -113,7 +121,8 @@
 
                   <li ng-show="cert.annanReferens!=null">
                     <!-- Annat -->
-                    <span message key="fk7263.referens.annat"></span> {{cert.annanReferens | date:'longDate'}}: {{cert.annanReferensBeskrivning}}
+                    <span message key="fk7263.referens.annat"></span> {{cert.annanReferens | date:'longDate'}}:
+                    {{cert.annanReferensBeskrivning}}
                   </li>
                 </ul>
               </div>
@@ -132,7 +141,7 @@
                                                                                     key="fk7263.label.rekommendationer.kontakt.foretagshalsovarden"></span>
                   </li>
                   <li ng-show="cert.rekommendationOvrigt"><span message
-                                                                        key="fk7263.label.rekommendationer.kontakt.ovrigt"></span>
+                                                                key="fk7263.label.rekommendationer.kontakt.ovrigt"></span>
                     {{cert.rekommendationOvrigt}}
                   </li>
                 </ul>
@@ -175,27 +184,31 @@
               </div>
 
               <div wc-field field-number="8b" field-label="fk7263.label.nedsattning"
-                   filled="{{cert.nedsattMed25!=null||cert.nedsattMed50!=null||cert.nedsattMed75!=null||cert.nedsattMed100!=null}}" id="field8b">
+                   filled="{{cert.nedsattMed25!=null||cert.nedsattMed50!=null||cert.nedsattMed75!=null||cert.nedsattMed100!=null}}"
+                   id="field8b">
 
                 <div ng-show="cert.nedsattMed25 != null">
                   <strong><span message key="fk7263.nedsattningsgrad.nedsatt_med_1_4"></span></strong><br> Från och med
                   {{cert.nedsattMed25.from | date:'longDate'}} &ndash; längst till och med
                   {{cert.nedsattMed25.tom | date:'longDate'}}
-                  <div ng-show="cert.nedsattMed25Beskrivning">Arbetstidsförläggning: {{cert.nedsattMed25Beskrivning}}</div>
+                  <div ng-show="cert.nedsattMed25Beskrivning">Arbetstidsförläggning: {{cert.nedsattMed25Beskrivning}}
+                  </div>
                 </div>
 
                 <div ng-show="cert.nedsattMed50 != null">
                   <strong><span message key="fk7263.nedsattningsgrad.nedsatt_med_1_2"></span></strong><br> Från och med
                   {{cert.nedsattMed50.from | date:'longDate'}} &ndash; längst till och med
                   {{cert.nedsattMed50.tom | date:'longDate'}}
-                  <div ng-show="cert.nedsattMed50Beskrivning">Arbetstidsförläggning: {{cert.nedsattMed50Beskrivning}}</div>
+                  <div ng-show="cert.nedsattMed50Beskrivning">Arbetstidsförläggning: {{cert.nedsattMed50Beskrivning}}
+                  </div>
                 </div>
 
                 <div ng-show="cert.nedsattMed75 != null">
                   <strong><span message key="fk7263.nedsattningsgrad.nedsatt_med_3_4"></span></strong><br> Från och med
                   {{cert.nedsattMed75.from | date:'longDate'}} &ndash; längst till och med
                   {{cert.nedsattMed75.tom | date:'longDate'}}
-                  <div ng-show="cert.nedsattMed75Beskrivning">Arbetstidsförläggning: {{cert.nedsattMed75Beskrivning}}</div>
+                  <div ng-show="cert.nedsattMed75Beskrivning">Arbetstidsförläggning: {{cert.nedsattMed75Beskrivning}}
+                  </div>
                 </div>
 
                 <div ng-show="cert.nedsattMed100 != null">
@@ -237,7 +250,8 @@
                     </span>
               </div>
 
-              <div wc-field field-number="13" field-label="fk7263.label.ovrigt" filled="{{cert.kommentar}}" id="field13">
+              <div wc-field field-number="13" field-label="fk7263.label.ovrigt" filled="{{cert.kommentar}}"
+                   id="field13">
                 <div class="tag">{{cert.kommentar}}</div>
               </div>
 
