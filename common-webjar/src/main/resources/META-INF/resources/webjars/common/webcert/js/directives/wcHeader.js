@@ -53,7 +53,7 @@ angular.module('common').directive('wcHeader',
                             }
                         },
                         {
-                            link: '/web/dashboard#/support/about',
+                            link: '/web/dashboard#/webcert/about',
                             label: 'Om Webcert',
                             requiresDoctor: false,
                             getStat: function() {

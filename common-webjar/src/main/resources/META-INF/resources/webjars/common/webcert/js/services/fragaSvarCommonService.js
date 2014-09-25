@@ -28,7 +28,7 @@ angular.module('common').factory('common.fragaSvarCommonService',
                 ($window.location.port ? ':' + $window.location.port : '');
             var url = baseURL + '/m/fk7263/webcert/intyg/' + qa.intygsReferens.intygsId + '#/view';
             var recipient = '';
-            var subject = 'Du har blivit tilldelad ett Fråga&Svar-ärende i Webcert';
+            var subject = 'En fraga-svar ska besvaras i Webcert.';
             if (qa.vardperson.enhetsnamn !== undefined) {
                 subject += ' på enhet ' + qa.vardperson.enhetsnamn;
                 if (qa.vardperson.vardgivarnamn !== undefined) {
@@ -36,7 +36,7 @@ angular.module('common').factory('common.fragaSvarCommonService',
                 }
             }
 
-            var body = 'Klicka länken för att gå till ärendet:\n' + url;
+            var body = 'Klicka pa lanktexten for att besvara fraga-svar::\n' + url;
             var link = 'mailto:' + recipient + '?subject=' + encodeURIComponent(subject) + '&body=' +
                 encodeURIComponent(body);
             $log.debug(link);
