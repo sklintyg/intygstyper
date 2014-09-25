@@ -10,10 +10,10 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 
+import se.inera.certificate.fk7263.model.v1.DateInterval;
 import se.inera.certificate.fk7263.model.ext.v1.Observationssamband;
 import se.inera.certificate.fk7263.model.v1.AktivitetType;
 import se.inera.certificate.fk7263.model.v1.ArbetsuppgiftType;
-import se.inera.certificate.fk7263.model.v1.DateInterval;
 import se.inera.certificate.fk7263.model.v1.EnhetType;
 import se.inera.certificate.fk7263.model.v1.HosPersonalType;
 import se.inera.certificate.fk7263.model.v1.ObservationType;
