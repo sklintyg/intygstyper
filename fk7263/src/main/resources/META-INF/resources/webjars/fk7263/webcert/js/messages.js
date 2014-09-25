@@ -117,6 +117,9 @@ var fk7263Messages = {
 
         //Validation messages
         'fk7263.validation.diagnos.missing': 'ICD-10 kod saknas på huvuddiagnosen. (Fält 2)',
+        'fk7263.validation.diagnos.invalid': 'ICD-10 kod på huvuddiagnosen är ej giltig',
+        'fk7263.validation.diagnos2.invalid': 'ICD-10 kod på ytterligare diagnoser rad 1, är ej giltig. (Fält 2)',
+        'fk7263.validation.diagnos3.invalid': 'ICD-10 kod på ytterligare diagnoser rad 2, är ej giltig. (Fält 2)',
 
         'fk7263.validation.rekommendationer.ovriga': 'Fritextfältet som hör till alternativet Övrigt måste fyllas i. (Fält 6a)',
 

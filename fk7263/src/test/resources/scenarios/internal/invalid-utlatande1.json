@@ -7,7 +7,7 @@
     "patientNamn":"Test Testorsson",
     "patientPersonnummer":"19121212-1212",
     "avstangningSmittskydd":false,
-    "diagnosKod":"S47",
+    "diagnosKod":"",
     "diagnosBeskrivning":"Medicinskttillstånd: Klämskada på överarm",
     "sjukdomsforlopp":"Bedömttillstånd: Patienten klämde höger överarm vid olycka i hemmet. Problemen har pågått en längre tid.",
     "funktionsnedsattning":"Funktionstillstånd-Kroppsfunktion: Kraftigt nedsatt rörlighet i överarmen pga skadan. Böj- och sträckförmågan är mycket dålig. Smärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket.",

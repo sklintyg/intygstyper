@@ -5,8 +5,11 @@ import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import se.inera.certificate.modules.service.WebcertModuleService;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.dto.ValidationMessage;
 import se.inera.certificate.modules.support.api.dto.ValidationStatus;
@@ -17,7 +20,13 @@ import java.util.List;
 import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 
 public class InternalDraftValidator {
+
     private static final Logger LOG = LoggerFactory.getLogger(InternalDraftValidator.class);
+
+    private static final int MIN_LENGTH_DIAGNOS_KOD = 3;
+
+    @Autowired(required = false)
+    private WebcertModuleService moduleService;
 
     public ValidateDraftResponse validateDraft(Fk7263Intyg utlatande) {
         List<ValidationMessage> validationMessages = new ArrayList<>();
@@ -122,12 +131,43 @@ public class InternalDraftValidator {
     }
 
     private void validateDiagnose(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
+
+        // Fält 3 - always optional regardless of smittskydd
+
         // Fält 2 - Medicinskt tillstånd kod - mandatory if not smittskydd
-        if (!utlatande.isAvstangningSmittskydd() && isNullOrEmpty(utlatande.getDiagnosKod())) {
+        if (utlatande.isAvstangningSmittskydd()) {
+            return;
+        }
+
+        if (!isNullOrEmpty(utlatande.getDiagnosKod())) {
+            validateDiagnosKod(utlatande.getDiagnosKod(), "diagnos", "fk7263.validation.diagnos.invalid", validationMessages);
+        } else {
             addValidationError(validationMessages, "diagnos", "fk7263.validation.diagnos.missing");
         }
 
-        // Fält 3 - always optional regardless of smittskydd
+        // Validate bidiagnos 1
+        if (!isNullOrEmpty(utlatande.getDiagnosKod2())) {
+            validateDiagnosKod(utlatande.getDiagnosKod2(), "diagnos", "fk7263.validation.diagnos2.invalid", validationMessages);
+        }
+
+        // Validate bidiagnos 2
+        if (!isNullOrEmpty(utlatande.getDiagnosKod3())) {
+            validateDiagnosKod(utlatande.getDiagnosKod3(), "diagnos", "fk7263.validation.diagnos3.invalid", validationMessages);
+        }
+
+    }
+
+    private void validateDiagnosKod(String diagnosKod, String field, String msgKey, List<ValidationMessage> validationMessages) {
+        
+        // if moduleService is not available, skip this validation
+        if (moduleService == null) {
+            LOG.warn("Forced to skip validation of diagnosKod since an implementation of ModuleService is not available");
+            return;
+        }
+
+        if (!moduleService.validateDiagnosisCode(diagnosKod, MIN_LENGTH_DIAGNOS_KOD)) {
+            addValidationError(validationMessages, field, msgKey);
+        }
     }
 
     private void validateOvrigaRekommendationer(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {

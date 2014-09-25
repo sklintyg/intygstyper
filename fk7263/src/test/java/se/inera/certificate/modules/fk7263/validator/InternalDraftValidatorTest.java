@@ -3,26 +3,41 @@ package se.inera.certificate.modules.fk7263.validator;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatcher;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.utils.Scenario;
 import se.inera.certificate.modules.fk7263.utils.ScenarioFinder;
+import se.inera.certificate.modules.service.WebcertModuleService;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.dto.ValidationStatus;
 
+@RunWith(MockitoJUnitRunner.class)
 public class InternalDraftValidatorTest {
-    private InternalDraftValidator validator;
+    
+    @Mock
+    private WebcertModuleService mockModuleService;
+    
+    @InjectMocks
+    private InternalDraftValidator validator = new InternalDraftValidator();
 
     @Before
-    public void setUp() throws Exception {
-        validator = new InternalDraftValidator();
+    public void setUpModuleServiceExpectation() throws Exception {
+        Mockito.when(mockModuleService.validateDiagnosisCode(Mockito.argThat(new DiagnosKodArgmentMatcher()), Mockito.anyInt())).thenReturn(true);
     }
-
+    
     @Test
     public void testValidate() throws Exception {
         for (se.inera.certificate.modules.fk7263.utils.Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
@@ -49,6 +64,7 @@ public class InternalDraftValidatorTest {
             ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
 
             assertEquals(ValidationStatus.INVALID, validationResponse.getStatus());
+            assertEquals("Should trigger on missing diagnos kod and incorrect interval", 2, validationResponse.getValidationErrors().size());
         }
     }
 
@@ -65,4 +81,25 @@ public class InternalDraftValidatorTest {
         }
         return collection.iterator().next();
     }
+    
+    /**
+     * ArgumentMatcher that validates a supplied diagnos code argument. If its not in the list, it is invalid!
+     * 
+     * @author npet
+     *
+     */
+    class DiagnosKodArgmentMatcher extends ArgumentMatcher<String> {
+        
+        private List<String> ALLOWED_CODES = Arrays.asList("S47", "TEST1", "TEST2", "TEST3");
+        
+        @Override
+        public boolean matches(Object arg) {
+            if (arg instanceof String) {
+                return ALLOWED_CODES.contains(arg);
+            }
+            return false;
+        }
+        
+    }
+    
 }
