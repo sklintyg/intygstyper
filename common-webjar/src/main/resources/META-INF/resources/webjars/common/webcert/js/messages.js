@@ -24,13 +24,19 @@ var commonMessages = {
         'common.modal.label.confirm_sign': 'Signera intyget',
 
         // cert status messages
-        'cert.status.draft_incomplete': 'Utkast, ej komplett',
-        'cert.status.draft_complete': 'Utkast, komplett',
+        'cert.status.draft_incomplete': 'Utkast, uppgifter saknas',
+        'cert.status.draft_complete': 'Utkast, kan signeras',
         'cert.status.signed': 'Signerat',
         'cert.status.cancelled': 'Makulerat',
         'cert.status.unknown': 'Okänd',
-        'cert.status.sent': 'Skickat',
-        'cert.status.received': 'Mottaget',
+        'cert.status.sent': 'Mottaget',
+        'cert.status.received': 'Signerat',
+
+        // draft form status messages
+        'draft.status.draft_incomplete': '<strong>Status:</strong> Intyget är signerat.',
+        'draft.status.draft_complete': '<strong>Status:</strong> Intyget är signerat.',
+        'draft.status.signed': '<strong>Status:</strong> Intyget är signerat.',
+        'draft.status.changed': '<strong>Status:</strong> Utkastet är ändrat sedan det senast sparades',
 
         // intyg forms
         'draft.saknar-uppgifter': 'Utkastet saknar uppgifter',

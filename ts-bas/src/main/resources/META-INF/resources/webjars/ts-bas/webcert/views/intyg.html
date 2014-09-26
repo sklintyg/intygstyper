@@ -34,7 +34,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
 
         <div class="alert alert-info alert-column" ng-if="!certProperties.isRevoked">
           <strong>Status:</strong>
-          <span ng-if="certProperties.isSent" id="certificate-is-sent-to-recipient-message-text">Intyget är signerat och skickat till Transportstyrelsen.</span>
+          <span ng-if="certProperties.isSent" id="certificate-is-sent-to-recipient-message-text">Intyget är signerat och mottaget av Transportstyrelsens system.</span>
           <span ng-if="!certProperties.isSent" id="certificate-is-sent-to-it-message-text">
             Intyget är signerat och är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se.
             Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till
@@ -42,7 +42,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
           </span>
         </div>
         <div ng-if="certProperties.isRevoked" id="certificate-is-revoked-message-text" class="alert alert-warning"
-             style="margin-right: 20px; max-width: 530px;">Detta intyg är makulerat
+             style="margin-right: 20px; max-width: 530px;">Intyget är makulerat
         </div>
       </div>
 

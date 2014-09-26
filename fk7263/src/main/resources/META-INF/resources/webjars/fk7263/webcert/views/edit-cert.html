@@ -45,15 +45,17 @@
                         ng-click="toggleShowComplete()" title="Visar vilka obligatoriska fält i utkastet som inte är ifyllda. Alla obligatoriska fält måste vara ifyllda för att utkastet ska kunna signeras.">Dölj vad som saknas
                 </button>
               </div>
-              <div id="certificate-is-sent-to-it-message-text" ng-show="isSigned"><strong>Status:</strong> Intyget är
-                signerat.
+              <!-- Just in case -->
+              <div id="certificate-is-sent-to-it-message-text" ng-show="isSigned"><span message key="draft.status.signed"></span>
               </div>
-              <div ng-show="certForm.$pristine && isComplete && !isSigned"><strong>Status:</strong> Intyget är sparat.
+              <!-- complete -->
+              <div ng-show="certForm.$pristine && isComplete && !isSigned"><span id="intyget-sparat-meddelande" message key="draft.status.draft_complete"></span>
               </div>
-              <div ng-show="certForm.$pristine && !isComplete"><strong>Status:</strong> Intyget är sparat, men inte
-                komplett
+              <!-- incomplete -->
+              <div ng-show="certForm.$pristine && !isComplete"><span message key="draft.status.draft_incomplete"></span>
               </div>
-              <div ng-show="certForm.$dirty"><strong>Status:</strong> Intyget är <strong>inte</strong> sparat.</div>
+              <!-- form changed -->
+              <div ng-show="certForm.$dirty"><span message key="draft.status.changed"></span></div>
             </div>
           </div>
         </div>

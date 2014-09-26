@@ -80,11 +80,6 @@ var tsBasMessages = {
         'ts-bas.label.skriv-ut-utkast': 'Skriv ut utkast',
         'ts-bas.label.visa-kompletteras': 'Visa vad som behöver kompletteras',
         'ts-bas.label.dolj-kompletteras': 'Dölj vad som behöver kompletteras',
-        'ts-bas.label.status': 'Status:',
-        'ts-bas.label.status.intyget-signerat': ' Intyget är signerat.',
-        'ts-bas.label.status.intyget-sparat': ' Intyget är sparat.',
-        'ts-bas.label.status.intyget-sparat-ejkomplett': ' Intyget är sparat, men inte komplett.',
-        'ts-bas.label.status.intyget-inte-sparat': ' Intyget är <strong>inte</strong> sparat.',
 
         'ts-bas.text.information-om-intyg': 'Detta intyg ska användas vid förlängd giltighet av högre behörighet, ansökan om körkortstillstånd för grupp II och III och vid ansökan om taxiförarlegitimation.',
         'ts-bas.text.information-om-begart-lakarintyg': 'Intyget kan också användas när Transportstyrelsen i andra fall begärt ett läkarintyg. Markera då endast i rutan Annat nedan.',

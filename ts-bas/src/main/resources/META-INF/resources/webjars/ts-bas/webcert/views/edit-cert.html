@@ -70,20 +70,17 @@
                         ng-click="toggleShowComplete()" title="Visar vilka obligatoriska fält i utkastet som inte är ifyllda. Alla obligatoriska fält måste vara ifyllda för att utkastet ska kunna signeras.">Dölj vad som saknas
                 </button>
               </div>
-              <div id="certificate-is-sent-to-it-message-text" ng-show="isSigned"><strong><span message
-                                                                                                key="ts-bas.label.status"></span></strong>
-                <span message key="ts-bas.label.status.intyget-signerat"></span>
+              <!-- Just in case -->
+              <div id="certificate-is-sent-to-it-message-text" ng-show="isSigned"><span message key="draft.status.signed"></span>
               </div>
-              <div ng-show="certForm.$pristine && isComplete && !isSigned"><strong><span message
-                                                                                         key="ts-bas.label.status"></span></strong>
-                <span id="intyget-sparat-meddelande" message key="ts-bas.label.status.intyget-sparat"></span>
+              <!-- complete -->
+              <div ng-show="certForm.$pristine && isComplete && !isSigned"><span id="intyget-sparat-meddelande" message key="draft.status.draft_complete"></span>
               </div>
-              <div ng-show="certForm.$pristine && !isComplete"><strong><span message
-                                                                             key="ts-bas.label.status"></span></strong>
-                <span message key="ts-bas.label.status.intyget-sparat-ejkomplett"></span>
+              <!-- incomplete -->
+              <div ng-show="certForm.$pristine && !isComplete"><span message key="draft.status.draft_incomplete"></span>
               </div>
-              <div ng-show="certForm.$dirty"><strong><span message key="ts-bas.label.status"></span></strong><span
-                  message key="ts-bas.label.status.intyget-inte-sparat"></span></div>
+              <!-- form changed -->
+              <div ng-show="certForm.$dirty"><span message key="draft.status.changed"></span></div>
             </div>
           </div>
         </div>
