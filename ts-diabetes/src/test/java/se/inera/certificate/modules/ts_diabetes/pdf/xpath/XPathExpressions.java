@@ -43,10 +43,10 @@ public class XPathExpressions {
             "/p:utlatande/p:skapadAv/p:specialitet/@code");
 
     public static final StringXPathExpression DIABETES_AR_FOR_DIAGNOS_XPATH = new StringXPathExpression(
-            "p:utlatande/p:observation/p:observationsperiod[(parent::p:observation/p:observationskod/@code='E10' or parent::p:observation/p:observationskod/@code='E11') and (parent::p:observation/p:forekomst = 'true')]/p:from");
+            "p:utlatande/p:observation/p:observationsperiod[(parent::p:observation/p:observationskod/@code='E10' or parent::p:observation/p:observationskod/@code='E11') and (parent::p:observation/p:forekomst = 'true')]/c:from");
 
     public static final StringXPathExpression DIABETIKER_INSULINBEHANDLING_SEDAN_XPATH = new StringXPathExpression(
-            "p:utlatande/p:observation/p:observationsperiod[(parent::p:observation/p:observationskod/@code='170747006') and (parent::p:observation/p:forekomst = 'true')]/p:from");
+            "p:utlatande/p:observation/p:observationsperiod[(parent::p:observation/p:observationskod/@code='170747006') and (parent::p:observation/p:forekomst = 'true')]/c:from");
 
     public static final StringXPathExpression ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND_DATUM_XPATH = new StringXPathExpression(
             "translate(p:utlatande/p:observation/p:observationstid[parent::p:observation/p:observationskod/@code='OBS24'], '-', '')");

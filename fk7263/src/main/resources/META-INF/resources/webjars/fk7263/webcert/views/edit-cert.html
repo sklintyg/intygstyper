@@ -293,14 +293,14 @@
                     <div class="form-group form-inline">
                       <label class="control-label"><span message key="fk7263.label.arbetsformaga"></span></label>
                       <div class="controls form-inline">
-                        <label class="checkbox"><input type="checkbox" name="arbete" ng-model="form.arbete"> Nuvarande
+                        <label class="checkbox"><input type="checkbox" name="arbete" ng-model="cert.nuvarandeArbete"> Nuvarande
                           arbete</label><span wc-enable-tooltip
                                               field-help-text="fk7263.helptext.sysselsattning.nuvarande"></span>
-                        <div class="indent" ng-if="form.arbete">
+                        <div class="indent" ng-if="cert.nuvarandeArbete">
                           <label for="currentWork">Ange aktuella arbetsuppgifter</label>
                           <div class="controls">
                             <textarea id="currentWork" class="" name="currentWork" rows='2'
-                                      ng-model="cert.nuvarandeArbetsuppgifter" wc-maxlength ng-trim="false"
+                                      ng-model="form.nuvarandeArbetsuppgifter" wc-maxlength ng-trim="false"
                                       maxlength="{{inputLimits.nuvarandeArbetsuppgifter}}"></textarea>
                           </div>
                         </div>
@@ -544,6 +544,14 @@
                   <div wc-field field-label="fk7263.label.rekommendationer"
                        field-number="6a, 7, 11" field-help-text="fk7263.helptext.rekommendationer">
 
+                    <div class="alert alert-danger" ng-if="validationMessagesGrouped.rekommendationer">
+                      <ul>
+                        <li ng-repeat="message in validationMessagesGrouped.rekommendationer"><span message
+                                                                                           key="{{message.message}}"></span>
+                        </li>
+                      </ul>
+                    </div>
+
                     <!-- 11 -->
                     <div class="form-group form-inline">
                       <label class="checkbox"><input type="checkbox" name="recommendationsToFk.travel"
@@ -573,12 +581,11 @@
                       </div>
                       <div class="form-group form-inline">
                         <label class="checkbox"><input type="checkbox" name="recommendationsToFk.other"
-                                                       ng-model="form.rekommendationOvrigtCheck" /> Övrigt (ange
+                                                       ng-model="cert.rekommendationOvrigtCheck" /> Övrigt (ange
                           vad)</label>
-                        <div class="indent"
-                             ng-if="form.rekommendationOvrigtCheck || (cert.rekommendationOvrigt && cert.rekommendationOvrigt != '')">
+                        <div class="indent" ng-if="cert.rekommendationOvrigtCheck">
                           <input type="text" id="recommendationsToFk.otherText" name="recommendationsToFk.otherText"
-                                 value="" class='form-control maxwidth' ng-model="cert.rekommendationOvrigt" maxlength="80">
+                                 value="" class='form-control maxwidth' ng-model="form.rekommendationOvrigt" maxlength="80">
                           <span wc-enable-tooltip field-help-text="fk7263.helptext.rekommendationer.ovrigt"></span>
                         </div>
                       </div>

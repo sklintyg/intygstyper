@@ -118,12 +118,15 @@ var fk7263Messages = {
         //Validation messages
         'fk7263.validation.diagnos.missing': 'ICD-10 kod saknas på huvuddiagnosen. (Fält 2)',
 
+        'fk7263.validation.rekommendationer.ovriga': 'Fritextfältet som hör till alternativet Övrigt måste fyllas i. (Fält 6a)',
+
         'fk7263.validation.intyg-baserat-pa.missing': 'Välj minst ett alternativ som uppgifterna i intyget baseras på. (Fält 4b)',
         'fk7263.validation.intyg-baserat-pa.annat.beskrivning.missing': 'Fritextfältet som hör till alternativet Annat under \'Uppgifterna i intyget baseras på\' måste fyllas i. (Fält 4)',
 
         'fk7263.validation.funktionsnedsattning.missing': 'Fältet med funktionsnedsättning måste fyllas i. (Fält 4)',
 
-        'fk7263.validation.sysselsattning.missing': 'Aktuella arbetsuppgifter som hör till alternativet Nuvarande arbete under \'Arbete\' måste fyllas i. (Fält 8a)',
+        'fk7263.validation.sysselsattning.missing': 'Välj minst ett alternativ som arbetsförmågan bedöms i förhållande till. (Fält 8a)',
+        'fk7263.validation.sysselsattning.arbetsuppgifter.missing': 'Aktuella arbetsuppgifter som hör till alternativet Nuvarande arbete under \'Arbete\' måste fyllas i. (Fält 8a)',
 
         'fk7263.validation.arbetsformaga.choose-at-least-one': 'Välj minst ett alternativ för arbetsförmåga. (Fält 8b)',
         'fk7263.validation.arbetsformaga.incorrect-date-interval': 'Ett datuminterval har angetts på ett felaktigt sätt (startdatum efter slutdatum). (Fält 8b)',

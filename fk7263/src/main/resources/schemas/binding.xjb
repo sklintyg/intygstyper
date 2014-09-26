@@ -3,7 +3,7 @@
               xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
               xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
               xmlns:xs="http://www.w3.org/2001/XMLSchema"
-              xmlns:c="urn:riv:clinicalprocess:healthcond:certificate:1">
+              xmlns:c="urn:riv:clinicalprocess:healthcond:certificate:types:1">
 
   <jxb:bindings schemaLocation="core_components/iso_dt_subset_1.0.xsd" node="/xs:schema">
     <jxb:schemaBindings>
@@ -12,6 +12,12 @@
   </jxb:bindings>
 
   <jxb:bindings schemaLocation="fk7263_model.xsd" node="/xs:schema">
+    <jxb:schemaBindings>
+      <jxb:package name="se.inera.certificate.fk7263.model.v1"/>
+    </jxb:schemaBindings>
+  </jxb:bindings>
+
+  <jxb:bindings schemaLocation="core_components/clinicalprocess_healthcond_certificate_types_1.0.xsd" node="/xs:schema">
     <jxb:schemaBindings>
       <jxb:package name="se.inera.certificate.fk7263.model.v1"/>
     </jxb:schemaBindings>

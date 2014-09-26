@@ -1,19 +1,19 @@
 package se.inera.certificate.modules.fk7263.model.converter.util;
 
+import se.inera.certificate.fk7263.model.v1.ArbetsplatsKod;
+import se.inera.certificate.fk7263.model.v1.HsaId;
+import se.inera.certificate.fk7263.model.v1.PersonId;
+import se.inera.certificate.fk7263.model.v1.UtlatandeId;
+import se.inera.certificate.fk7263.model.v1.UtlatandeTyp;
 import se.inera.certificate.fk7263.iso.v21090.dt.v1.CD;
 import se.inera.certificate.fk7263.iso.v21090.dt.v1.II;
 import se.inera.certificate.fk7263.iso.v21090.dt.v1.PQ;
 import se.inera.certificate.fk7263.model.ext.v1.RelationId;
 import se.inera.certificate.fk7263.model.v1.AktivitetKod;
-import se.inera.certificate.fk7263.model.v1.ArbetsplatsKod;
-import se.inera.certificate.fk7263.model.v1.HsaId;
 import se.inera.certificate.fk7263.model.v1.ObservationKategoriKod;
 import se.inera.certificate.fk7263.model.v1.ObservationKod;
-import se.inera.certificate.fk7263.model.v1.PersonId;
 import se.inera.certificate.fk7263.model.v1.ReferensKod;
 import se.inera.certificate.fk7263.model.v1.SysselsattningKod;
-import se.inera.certificate.fk7263.model.v1.UtlatandeId;
-import se.inera.certificate.fk7263.model.v1.UtlatandeTyp;
 import se.inera.certificate.fk7263.model.v1.VardkontaktKod;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;

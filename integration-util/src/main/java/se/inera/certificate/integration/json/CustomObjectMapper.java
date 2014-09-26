@@ -40,7 +40,14 @@ public class CustomObjectMapper extends ObjectMapper {
             addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
 
             addSerializer(LocalDate.class, new LocalDateSerializer());
-            addDeserializer(LocalDate.class, new LocalDateDeserializer());
+            //addDeserializer(LocalDate.class, new LocalDateDeserializer());
+            
+            /*
+             * Using a custom crafted deserializer that handles dates
+             * on the UTC format. The original LocalDateDeserializer class do not 
+             * handle the UTC format.
+             */
+            addDeserializer(LocalDate.class, new CustomLocalDateDeserializer());
         }
 
     }
