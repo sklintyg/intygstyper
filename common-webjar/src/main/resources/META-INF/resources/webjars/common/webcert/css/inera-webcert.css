@@ -81,7 +81,7 @@
         text-decoration: underline;
     }
 
-    body.start h1, .content-container p, body.start li {
+    body.start h1, body.start h2, body.start h3 {
         color: #28b4c4;
     }
 
