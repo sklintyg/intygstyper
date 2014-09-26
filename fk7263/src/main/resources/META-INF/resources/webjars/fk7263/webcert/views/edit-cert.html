@@ -342,7 +342,7 @@
                                                       id="capacityForWorkActualWorkingHoursPerWeek"
                                                       name="capacityForWork.actualWorkingHoursPerWeek" value=""
                                                       class='short control-element form-control'
-                                                      ng-model="cert.workTime"> <span>timmar/vecka</span> <span wc-enable-tooltip field-help-text="fk7263.helptext.arbetsformaga.faktisk-tjanstgoringstid"></span>
+                                                      ng-model="cert.tjanstgoringstid"> <span>timmar/vecka</span> <span wc-enable-tooltip field-help-text="fk7263.helptext.arbetsformaga.faktisk-tjanstgoringstid"></span>
                     </div>
 
                     <!-- 25% -->
@@ -362,8 +362,8 @@
                             on-change="onChangeNedsattMed('nedsattMed25', 'tom')" dom-id="nedsattMed25enddate"
                             invalid="nedsattInvalid.nedsattMed25tom"></span>
                       <div class="indent pad10" ng-if="workState.nedsattMed25">
-                        <div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
-                          Arbetstid timmar/vecka: <strong>{{cert.workTime * 0.75}}</strong>
+                        <div class="workHoursPerWeek" ng-show="cert.tjanstgoringstid != '' && cert.tjanstgoringstid > 0">
+                          Arbetstid timmar/vecka: <strong id="arbetstid25">{{cert.tjanstgoringstid * 0.75}}</strong>
                         </div>
                         Arbetstidsförläggning (frivilligt) <input type="text"
                                                                   ng-model="form.ovrigt.nedsattMed25Beskrivning"
@@ -394,8 +394,8 @@
                             on-change="onChangeNedsattMed('nedsattMed50', 'tom')" dom-id="nedsattMed50enddate"
                             invalid="nedsattInvalid.nedsattMed50tom"></span>
                       <div class="indent pad10" ng-if="workState.nedsattMed50">
-                        <div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
-                          Arbetstid timmar/vecka: <strong>{{cert.workTime * 0.5}}</strong>
+                        <div class="workHoursPerWeek" ng-show="cert.tjanstgoringstid != '' && cert.tjanstgoringstid > 0">
+                          Arbetstid timmar/vecka: <strong id="arbetstid50">{{cert.tjanstgoringstid * 0.5}}</strong>
                         </div>
                         Arbetstidsförläggning (frivilligt) <input type="text"
                                                                   ng-model="form.ovrigt.nedsattMed50Beskrivning"
@@ -413,7 +413,6 @@
                     <div class="form-group form-inline">
                       <label class="checkbox" style="min-width: 250px"><input type="checkbox"
                                                                               id="nedsattMed75"
-                                                                              id="nedsattMed75"
                                                                               name="capacityForWork.work75"
                                                                               ng-change="onChangeWorkStateCheck('nedsattMed75')"
                                                                               ng-model="workState.nedsattMed75" /> 75%
@@ -426,8 +425,8 @@
                             on-change="onChangeNedsattMed('nedsattMed75', 'tom')" dom-id="nedsattMed75enddate"
                             invalid="nedsattInvalid.nedsattMed75tom"></span>
                       <div class="indent pad10" ng-if="workState.nedsattMed75">
-                        <div class="workHoursPerWeek" ng-show="cert.workTime != '' && cert.workTime > 0">
-                          Arbetstid timmar/vecka: <strong>{{cert.workTime * 0.25}}</strong>
+                        <div class="workHoursPerWeek" ng-show="cert.tjanstgoringstid != '' && cert.tjanstgoringstid > 0">
+                          Arbetstid timmar/vecka: <strong id="arbetstid75">{{cert.tjanstgoringstid * 0.25}}</strong>
                         </div>
                         Arbetstidsförläggning (frivilligt) <input type="text"
                                                                   ng-model="form.ovrigt.nedsattMed75Beskrivning"

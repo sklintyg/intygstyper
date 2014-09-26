@@ -6,18 +6,23 @@
     "skickatDatum":"2011-03-23T09:29:15.000",
     "patientNamn":"Test Testorsson",
     "patientPersonnummer":"19121212-1212",
-    "avstangningSmittskydd":true,
+    "avstangningSmittskydd":false,
 
-    "undersokningAvPatienten":"2011-01-26",
+    "telefonkontaktMedPatienten":"2006-01-01",
 
-    "nuvarandeArbete":true,
-    "nuvarandeArbetsuppgifter":"Arbetsuppgift",
+    "arbetsloshet":true,
 
-    "nedsattMed75":{
-        "from" :"2011-01-26",
-        "tom" :"2011-02-26"
+    "diagnosKod" : "S47",
+    "diagnosBeskrivning":"Medicinskttillstånd: Klämskada på överarm",
+
+    "funktionsnedsattning" : "Funktionsnedsättning",
+    "aktivitetsbegransning" : "Aktivitetsbegränsning",
+
+    "nedsattMed50":{
+        "from" :"2006-01-01",
+        "tom" :"2007-01-01"
     },
-    "tjanstgoringstid": "40",
+    "tjanstgoringstid": "a",
 
     "signeringsdatum":"2011-01-26T00:00:00.000",
     "vardperson":{

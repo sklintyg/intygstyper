@@ -62,6 +62,7 @@ public class Fk7263Intyg {
     private boolean arbetsloshet;
     private boolean foraldrarledighet;
 
+    private String tjanstgoringstid;
     private LocalDateInterval nedsattMed25;
     private LocalDateInterval nedsattMed50;
     private LocalDateInterval nedsattMed75;
@@ -92,6 +93,14 @@ public class Fk7263Intyg {
     private LocalDateTime signeringsdatum;
 
     private Vardperson vardperson;
+
+    public String getTjanstgoringstid() {
+        return tjanstgoringstid;
+    }
+
+    public void setTjanstgoringstid(String tjanstgoringstid) {
+        this.tjanstgoringstid = tjanstgoringstid;
+    }
 
     public String getNedsattMed25Beskrivning() {
         return nedsattMed25Beskrivning;

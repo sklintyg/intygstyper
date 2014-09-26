@@ -105,6 +105,9 @@ public class InternalDraftValidator {
         }
 
         // validate 8b - regardless of smittskydd
+        if (utlatande.getTjanstgoringstid() != null && !StringUtils.isNumeric(utlatande.getTjanstgoringstid())) {
+            addValidationError(validationMessages, "arbetsformaga", "fk7263.validation.arbetsformaga.tjanstgoringstid");
+        }
         validateIntervals(validationMessages, "arbetsformaga", utlatande.getNedsattMed100(), utlatande.getNedsattMed75(),
                 utlatande.getNedsattMed50(), utlatande.getNedsattMed25());
     }
