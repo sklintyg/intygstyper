@@ -28,7 +28,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.korkort.de': 'DE',
         'ts-diabetes.label.korkort.taxi': 'Taxi',
         'ts-diabetes.label.korkort.annat': 'Annat',
-        'ts-diabetes.label.makulera.confirmation': 'Transportstyrelsens läkarintyg, diabetes, utställt på ${namn} - ${personnummer} har rättats. Intyget kan inte längre visas av patienten.',
+        'ts-diabetes.label.makulera.confirmation': 'Transportstyrelsens läkarintyg, diabetes, utställt på ${namn} - ${personnummer} har makulerats. Intyget kan inte längre visas av patienten.',
 
         // Identitet styrkt genom
         'ts-diabetes.label.identitet.id_kort': 'ID-kort',

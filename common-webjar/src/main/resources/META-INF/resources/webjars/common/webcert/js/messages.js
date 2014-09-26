@@ -27,7 +27,7 @@ var commonMessages = {
         'cert.status.draft_incomplete': 'Utkast, ej komplett',
         'cert.status.draft_complete': 'Utkast, komplett',
         'cert.status.signed': 'Signerat',
-        'cert.status.cancelled': 'Rättat',
+        'cert.status.cancelled': 'Makulerat',
         'cert.status.unknown': 'Okänd',
         'cert.status.sent': 'Skickat',
         'cert.status.received': 'Mottaget',
@@ -55,7 +55,7 @@ var commonMessages = {
         'qa.amne.kontakt': 'Kontakt',
         'qa.amne.avstamningsmote': 'Avstämningsmöte',
         'qa.amne.komplettering_av_lakarintyg': 'Komplettering av läkarintyg',
-        'qa.amne.makulering_av_lakarintyg': 'Rättning av läkarintyg',
+        'qa.amne.makulering_av_lakarintyg': 'Makulering av läkarintyg',
         'qa.amne.ovrigt': 'Övrigt',
 
         'qa.measure.svarfranvarden': 'Svara',

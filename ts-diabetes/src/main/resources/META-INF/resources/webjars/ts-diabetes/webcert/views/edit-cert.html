@@ -65,13 +65,11 @@
                 <button id="skriv-ut-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="print()">
                   Skriv ut utkast
                 </button>
-                <button class="btn btn-default btn-secondary"
-                        ng-if="!widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">Visa vad som
-                  behöver kompletteras
+                <button class="btn btn-default btn-secondary" ng-if="!widgetState.showComplete && !isComplete"
+                        ng-click="toggleShowComplete()" title="Visar vilka obligatoriska fält i utkastet som inte är ifyllda. Alla obligatoriska fält måste vara ifyllda för att utkastet ska kunna signeras.">Visa vad som saknas
                 </button>
-                <button class="btn btn-default btn-secondary"
-                        ng-if="widgetState.showComplete && !isComplete" ng-click="toggleShowComplete()">
-                  Dölj vad som behöver kompletteras
+                <button class="btn btn-default btn-secondary" ng-if="widgetState.showComplete && !isComplete"
+                        ng-click="toggleShowComplete()" title="Visar vilka obligatoriska fält i utkastet som inte är ifyllda. Alla obligatoriska fält måste vara ifyllda för att utkastet ska kunna signeras.">Dölj vad som saknas
                 </button>
               </div>
               <div id="certificate-is-sent-to-it-message-text" ng-show="isSigned"><strong>Status:</strong> Intyget är
