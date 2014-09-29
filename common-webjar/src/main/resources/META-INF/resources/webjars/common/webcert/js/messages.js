@@ -33,8 +33,8 @@ var commonMessages = {
         'cert.status.received': 'Signerat',
 
         // draft form status messages
-        'draft.status.draft_incomplete': '<strong>Status:</strong> Intyget är signerat.',
-        'draft.status.draft_complete': '<strong>Status:</strong> Intyget är signerat.',
+        'draft.status.draft_incomplete': '<strong>Status:</strong> Utkastet är sparat, men obligatoriska uppgifter saknas.',
+        'draft.status.draft_complete': '<strong>Status:</strong> Utkastet är sparat och kan signeras.',
         'draft.status.signed': '<strong>Status:</strong> Intyget är signerat.',
         'draft.status.changed': '<strong>Status:</strong> Utkastet är ändrat sedan det senast sparades',
 
