@@ -278,12 +278,15 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                   <span message key="fk7263.label.kontakt-info"></span>
                 </h4>
                 <p>
-                  <span class="text" id="vardperson_namn">{{cert.vardperson.namn}}</span><br> <span class="text"
-                                                                                                    id="vardperson_enhetsnamn">{{cert.vardperson.enhetsnamn}}</span><br>
+                  <span class="text" id="vardperson_namn">{{cert.vardperson.namn}}</span><br>
+                  <span class="text" id="vardperson_enhetsnamn">{{cert.vardperson.enhetsnamn}}</span><br>
                   <span class="text">{{cert.vardperson.postadress}}</span><br>
                   <span class="text">{{cert.vardperson.postnummer}} {{cert.vardperson.postort}}</span><br>
                   <span class="text">{{cert.vardperson.telefonnummer}}</span><br>
+                  <!--
+                  WEBCERT-997 Remove epost from forfattarstod and views
                   <span class="text">{{cert.vardperson.epost}}</span><br>
+                  -->
                 </p>
               </div>
 

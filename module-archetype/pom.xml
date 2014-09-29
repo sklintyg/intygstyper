@@ -2,12 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>se.inera.certificate.modules</groupId>
-  <artifactId>module-archetype</artifactId>
-  <version>1.3-SNAPSHOT</version>
-  <packaging>maven-archetype</packaging>
+  <parent>
+    <groupId>se.inera.certificate.modules</groupId>
+    <artifactId>certificates</artifactId>
+    <version>1.3-SNAPSHOT</version>
+  </parent>
 
-  <name>Module arechetype</name>
+  <artifactId>module-archetype</artifactId>
+  <packaging>maven-archetype</packaging>
+  <name>Module Archetype</name>
 
   <build>
     <extensions>
@@ -33,10 +36,6 @@
     </pluginManagement>
   </build>
 
-  <scm>
-    <connection>scm:git:https://code.google.com/p/inera-certificate-modules/</connection>
-  </scm>
-
   <distributionManagement>
     <repository>
       <id>cloudbees-private-release-repository</id>
@@ -44,7 +43,9 @@
       <url>dav:https://repository-callistasoftware.forge.cloudbees.com/release</url>
     </repository>
   </distributionManagement>
+
   <description>För att skapa en ny intygsmodul:
 1. Ställ dig i den mapp där den nya maven-modulen ska skapas
-2. Kör 'mvn archetype:generate -DarchetypeGroupId=se.inera.certificate.modules -DarchetypeArtifactId=module-archetype -DarchetypeVersion=1.3-SNAPSHOT -DinteractiveMode=false -DartifactId=&lt;&lt;modul-namn&gt;&gt; -DgroupId=se.inera.certificate.modules'</description>
+2. Kör 'mvn archetype:generate -DarchetypeGroupId=se.inera.certificate.modules -DarchetypeArtifactId=module-archetype -DarchetypeVersion=1.3-SNAPSHOT -DinteractiveMode=false -DartifactId=&lt;&lt;modul-namn&gt;&gt; -DgroupId=se.inera.certificate.modules'
+	</description>
 </project>

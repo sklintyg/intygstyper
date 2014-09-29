@@ -43,6 +43,7 @@
   </properties>
 
   <modules>
+    <module>module-archetype</module>
     <module>module-support</module>
     <module>common-webjar</module>
     <module>integration-util</module>
