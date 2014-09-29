@@ -9,7 +9,7 @@ angular.module('common').directive('wcPrintHeader',
                 scope: {
                     titleId: '@',
                     printMessageId: '@',
-                    intygsId: '@'
+                    intygsId: '='
                 },
                 controller: function($scope) {
                     $scope.today = new Date();
