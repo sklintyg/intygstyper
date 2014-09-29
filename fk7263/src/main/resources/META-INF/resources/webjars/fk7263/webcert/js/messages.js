@@ -128,6 +128,8 @@ var fk7263Messages = {
 
         'fk7263.validation.funktionsnedsattning.missing': 'Fältet med funktionsnedsättning måste fyllas i. (Fält 4)',
 
+        'fk7263.validation.aktivitetsbegransning.missing': 'Fältet med aktivitetsbegränsning måste fyllas i. (Fält 5)',
+
         'fk7263.validation.sysselsattning.missing': 'Välj minst ett alternativ som arbetsförmågan bedöms i förhållande till. (Fält 8a)',
         'fk7263.validation.sysselsattning.arbetsuppgifter.missing': 'Aktuella arbetsuppgifter som hör till alternativet Nuvarande arbete under \'Arbete\' måste fyllas i. (Fält 8a)',
 

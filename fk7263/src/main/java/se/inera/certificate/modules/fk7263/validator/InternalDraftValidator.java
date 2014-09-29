@@ -30,7 +30,10 @@ public class InternalDraftValidator {
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
         validateDiagnose(utlatande, validationMessages);
+        //Falt 4
         validateFunktionsnedsattning(utlatande, validationMessages);
+        //Falt 5
+        validateAktivitetsbegransning(utlatande, validationMessages);
         validateArbetsformaga(utlatande, validationMessages);
         validatePrognos(utlatande, validationMessages);
         validateRessatt(utlatande, validationMessages);
@@ -40,6 +43,7 @@ public class InternalDraftValidator {
 
         return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
     }
+
 
     private void validateVardenhet(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
         if (isNullOrEmpty(utlatande.getVardperson().getPostadress())) {
@@ -112,6 +116,15 @@ public class InternalDraftValidator {
                 utlatande.getNedsattMed50(), utlatande.getNedsattMed25());
     }
 
+    private void validateAktivitetsbegransning(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
+        //Fält 5  Aktivitetsbegränsning relaterat till diagnos och funktionsnedsättning 
+        String aktivitetsbegransning = utlatande.getAktivitetsbegransning();
+        if (!utlatande.isAvstangningSmittskydd() && aktivitetsbegransning == null) {
+            addValidationError(validationMessages, "aktivitetsbegransning", "fk7263.validation.aktivitetsbegransning.missing");
+        }
+    }
+
+
     private void validateFunktionsnedsattning(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
         // Fält 4 - vänster Check that we got a funktionsnedsattning element
         String funktionsnedsattning = utlatande.getFunktionsnedsattning();
@@ -159,7 +172,6 @@ public class InternalDraftValidator {
     }
 
     private void validateDiagnosKod(String diagnosKod, String field, String msgKey, List<ValidationMessage> validationMessages) {
-        
         // if moduleService is not available, skip this validation
         if (moduleService == null) {
             LOG.warn("Forced to skip validation of diagnosKod since an implementation of ModuleService is not available");
