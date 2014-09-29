@@ -35,7 +35,7 @@ public class InternalDraftValidatorTest {
 
     @Before
     public void setUpModuleServiceExpectation() throws Exception {
-        Mockito.when(mockModuleService.validateDiagnosisCode(Mockito.argThat(new DiagnosKodArgmentMatcher()), Mockito.anyInt())).thenReturn(true);
+        Mockito.when(mockModuleService.validateDiagnosisCode(Mockito.argThat(new DiagnosKodArgmentMatcher()))).thenReturn(true);
     }
     
     @Test
@@ -64,7 +64,6 @@ public class InternalDraftValidatorTest {
             ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
 
             assertEquals(ValidationStatus.INVALID, validationResponse.getStatus());
-            assertEquals("Should trigger on missing diagnos kod and incorrect interval", 2, validationResponse.getValidationErrors().size());
         }
     }
 

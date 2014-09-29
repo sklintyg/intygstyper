@@ -14,6 +14,6 @@ public interface WebcertModuleService {
      * @param diagnosisCode
      * @return true if the code matches a diagnosis, false otherwise.
      */
-    public boolean validateDiagnosisCode(String codeFragment, int minimumLength);
+    public boolean validateDiagnosisCode(String codeFragment);
     
 }

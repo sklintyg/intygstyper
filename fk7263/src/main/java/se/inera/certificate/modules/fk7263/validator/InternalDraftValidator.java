@@ -23,8 +23,6 @@ public class InternalDraftValidator {
 
     private static final Logger LOG = LoggerFactory.getLogger(InternalDraftValidator.class);
 
-    private static final int MIN_LENGTH_DIAGNOS_KOD = 3;
-
     @Autowired(required = false)
     private WebcertModuleService moduleService;
 
@@ -165,7 +163,7 @@ public class InternalDraftValidator {
             return;
         }
 
-        if (!moduleService.validateDiagnosisCode(diagnosKod, MIN_LENGTH_DIAGNOS_KOD)) {
+        if (!moduleService.validateDiagnosisCode(diagnosKod)) {
             addValidationError(validationMessages, field, msgKey);
         }
     }
