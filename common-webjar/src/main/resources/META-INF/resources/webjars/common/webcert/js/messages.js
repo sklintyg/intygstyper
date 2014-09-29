@@ -79,10 +79,11 @@ var commonMessages = {
 
         // Common errors
         'common.error.unknown': '<strong>Tekniskt fel</strong>',
-        'common.error.cantconnect': 'Kunde inte kontakta servern',
-        'common.error.certificatenotfound': 'Intyget finns inte',
-        'common.error.certificateinvalid': 'Intyget är inte korrekt ifyllt',
-        'common.error.signerror': 'Intyget kunde inte signeras. Försök igen.',
+        'common.error.cantconnect': '<strong>Kunde inte kontakta servern</strong>',
+        'common.error.certificatenotfound': '<strong>Intyget finns inte</strong>',
+        'common.error.certificateinvalid': '<strong>Intyget är inte korrekt ifyllt</strong>',
+        'common.error.signerror': '<strong>Intyget kunde inte signeras.</strong><br>Försök igen senare.',
+        'common.error.unknown_internal_problem': '<strong>Tekniskt fel i Webcert.</strong><br>Försök igen senare.',
         'common.error.data_not_found': '<strong>Intyget kunde inte hittas.</strong><br>Intyget är borttaget eller så saknas behörighet.'
     },
     'en': {
