@@ -77,7 +77,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             };
 
             // 8b. Arbetsförmåga date management
-            var ISODATE_REGEXP = /^\d{4}-\d{2}-\d{2}$/;
             $scope.datesOutOfRange = false;
             $scope.datesPeriodTooLong = false;
             $scope.totalCertDays = false;
@@ -126,65 +125,71 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * @returns {*}
              */
             function isDate(date) {
-                return ISODATE_REGEXP.test(date);
+                return moment(date).isValid();
             }
 
+            function toMoment(date) {
+                if (date) {
+                    return moment(date);
+                } else {
+                    return null;
+                }
+            }
+
+
             /**
-             * Get earliest or latest date in a list of dates
-             * @param comparisonType
-             * @param dates
-             * @returns {boolean}
+             * 8b: find earliest and latest dates (as moment objects) for arbetsförmåga
+             * @returns {{minMoment: null, maxMoment: null}}
              */
-            function getMinMaxDate(comparisonType, dates) {
-                var i = 0;
-                var compareDate = false;
-                for (i = 0; i < dates.length; i++) {
-                    if (isDate(dates[i])) {
-                        if (!compareDate || // no valid date found yet
-                            (comparisonType === 'min' && dates[i] < compareDate) || // looking for min date
-                            (comparisonType === 'max' && dates[i] > compareDate)) { // looking for max date
-                            compareDate = dates[i];
-                        }
+            function findStartEndMoments() {
+                var moments = {
+                    minMoment: null,
+                    maxMoment: null
+                };
+                var startMoments = [];
+                var endMoments = [];
+
+                if ($scope.cert.nedsattMed25) {
+                    if ($scope.cert.nedsattMed25.from) {
+                        startMoments.push(toMoment($scope.cert.nedsattMed25.from));
+                    }
+                    if ($scope.cert.nedsattMed25.tom) {
+                        endMoments.push(toMoment($scope.cert.nedsattMed25.tom));
+                    }
+                }
+                if ($scope.cert.nedsattMed50) {
+                    if ($scope.cert.nedsattMed50.from) {
+                        startMoments.push(toMoment($scope.cert.nedsattMed50.from));
+                    }
+                    if ($scope.cert.nedsattMed50.tom) {
+                        endMoments.push(toMoment($scope.cert.nedsattMed50.tom));
+                    }
+                }
+                if ($scope.cert.nedsattMed75) {
+                    if ($scope.cert.nedsattMed75.from) {
+                        startMoments.push(toMoment($scope.cert.nedsattMed75.from));
+                    }
+                    if ($scope.cert.nedsattMed75.tom) {
+                        endMoments.push(toMoment($scope.cert.nedsattMed75.tom));
+                    }
+                }
+                if ($scope.cert.nedsattMed100) {
+                    if ($scope.cert.nedsattMed100.from) {
+                        startMoments.push(toMoment($scope.cert.nedsattMed100.from));
+                    }
+                    if ($scope.cert.nedsattMed100.tom) {
+                        endMoments.push(toMoment($scope.cert.nedsattMed100.tom));
                     }
                 }
 
-                // if no valid dates, compareDate is still false, otherwise contains the lowest/highest date
-                // sent depending on comparisonType
-                return compareDate;
-            }
-
-            /**
-             * 8b: find earliest and latest dates for arbetsförmåga
-             * @returns {{minDate: null, maxDate: null}}
-             */
-            function findStartEndDates() {
-                var dates = {
-                    minDate: null,
-                    maxDate: null
-                };
-                var startDates = [];
-                var endDates = [];
-
-                if ($scope.cert.nedsattMed25) {
-                    startDates.push($scope.cert.nedsattMed25.from);
-                    endDates.push($scope.cert.nedsattMed25.tom);
+                if (startMoments.length > 0) {
+                    moments.minMoment = moment.min(startMoments);
                 }
-                if ($scope.cert.nedsattMed50) {
-                    startDates.push($scope.cert.nedsattMed50.from);
-                    endDates.push($scope.cert.nedsattMed50.tom);
-                }
-                if ($scope.cert.nedsattMed75) {
-                    startDates.push($scope.cert.nedsattMed75.from);
-                    endDates.push($scope.cert.nedsattMed75.tom);
-                }
-                if ($scope.cert.nedsattMed100) {
-                    startDates.push($scope.cert.nedsattMed100.from);
-                    endDates.push($scope.cert.nedsattMed100.tom);
+                if (endMoments.length > 0) {
+                    moments.maxMoment = moment.max(endMoments);
                 }
 
-                dates.minDate = getMinMaxDate('min', startDates);
-                dates.maxDate = getMinMaxDate('max', endDates);
-                return dates;
+                return moments;
             }
 
             /**
@@ -193,25 +198,26 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             function onArbetsformagaDatesUpdated() {
                 $scope.updateTotalCertDays();
 
-                var rangeDates = findStartEndDates();
-                checkArbetsformagaDatesRange(rangeDates.minDate);
+                var rangeMoments = findStartEndMoments();
+                checkArbetsformagaDatesRange(rangeMoments.minMoment);
 
-                var periodDates = findStartEndDates();
-                checkArbetsformagaDatesPeriodLength(periodDates.minDate, periodDates.maxDate);
+                var periodMoments = findStartEndMoments();
+                checkArbetsformagaDatesPeriodLength(periodMoments.minMoment, periodMoments.maxMoment);
             }
 
             /**
              * 8b: Check that the earliest startdate in arbetsförmåga is no more than a week before today and no more than 6 months in the future
              * @type {boolean}
              */
-            function checkArbetsformagaDatesRange(startDate) {
-                if (!startDate) {
+            function checkArbetsformagaDatesRange(startMoment) {
+                if (!startMoment) {
                     $scope.datesOutOfRange = false;
                     return;
                 }
 
-                var olderThanAWeek = moment(startDate).isBefore(moment().subtract('days', 7));
-                var moreThanSixMonthsInFuture = moment(startDate).isAfter(moment().add('months', 6));
+                var now = moment();
+                var olderThanAWeek = startMoment.isBefore(now.subtract('days', 7));
+                var moreThanSixMonthsInFuture = startMoment.isAfter(now.add('months', 6));
                 $scope.datesOutOfRange = (olderThanAWeek || moreThanSixMonthsInFuture);
             }
 
@@ -219,23 +225,13 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * 8b: Check that the period between the earliest startdate and the latest end date is no more than 6 months in the future
              * @type {boolean}
              */
-            function checkArbetsformagaDatesPeriodLength(startDate, endDate) {
-                if (!startDate || !endDate) {
+            function checkArbetsformagaDatesPeriodLength(startMoment, endMoment) {
+                if (!startMoment || !endMoment) {
                     $scope.datesPeriodTooLong = false;
                     return;
                 }
 
-                $scope.datesPeriodTooLong = (Math.abs(moment(startDate).diff(endDate, 'months')) >= 6);
-            }
-
-            /**
-             * Convert a date into time ms since 1970-01-01
-             * @param date
-             * @returns {number}
-             */
-            function convertDateToTime(date) {
-                var splitDate = date.split('-');
-                return (new Date(splitDate[0], splitDate[1], splitDate[2])).getTime();
+                $scope.datesPeriodTooLong = (Math.abs(startMoment.diff(endMoment, 'months')) >= 6);
             }
 
             /**
@@ -473,7 +469,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
                 // Set todays date when a baserat pa field is checked
                 if ($scope.basedOnState.check[modelName]) {
-                    if ($scope.cert[modelName] === undefined || $scope.cert[modelName] === '') {
+                    if (!$scope.cert[modelName] || $scope.cert[modelName] === '') {
                         $scope.cert[modelName] = $filter('date')($scope.today, 'yyyy-MM-dd');
                     }
                 } else {
@@ -488,7 +484,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * @param baserasPaType
              */
             $scope.onChangeBaserasPaDate = function(baserasPaType) {
-                if ($scope.cert[baserasPaType] && $scope.cert[baserasPaType].length > 0) {
+                if ($scope.cert[baserasPaType] && $scope.cert[baserasPaType] !== '') {
                     $scope.basedOnState.check[baserasPaType] = true;
                 }
             };
@@ -528,7 +524,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              */
             $scope.getTotalOvrigtLength = function() {
                 function getLengthOrZero(value) {
-                    if (value === undefined || value === null) {
+                    if (!value) {
                         return 0;
                     } else {
                         return value.length;
@@ -553,17 +549,14 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * @type {boolean}
              */
             $scope.updateTotalCertDays = function() {
-                var oneDay = 24 * 60 * 60 * 1000;
-                var dates = findStartEndDates();
-                if (!dates.minDate || !dates.maxDate) {
+                var moments = findStartEndMoments();
+                if (!moments.minMoment || !moments.maxMoment) {
                     // return if there's no valid range span yet
                     $scope.totalCertDays = false;
                     return $scope.totalCertDays;
                 }
 
-                dates.minDate = convertDateToTime(dates.minDate);
-                dates.maxDate = convertDateToTime(dates.maxDate);
-                $scope.totalCertDays = Math.round(Math.abs((dates.minDate - dates.maxDate) / (oneDay))) + 1;
+                $scope.totalCertDays = moments.maxMoment.diff(moments.minMoment, 'days') + 1;
             };
 
             /**
@@ -581,21 +574,21 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         }
 
                         // Set from date
-                        var dates = findStartEndDates();
+                        var moments = findStartEndMoments();
                         if (!workstate.from || !isDate(workstate.from)) {
 
                             // find highest max date
-                            if (!dates.maxDate) {
-                                // if no maxdate is available, use today
+                            if (!moments.maxMoment) {
+                                // if no max moment is available, use today
                                 workstate.from = $filter('date')($scope.today, 'yyyy-MM-dd');
                             } else {
-                                workstate.from = moment(dates.maxDate).add('days', 1).format('YYYY-MM-DD');
+                                workstate.from = moments.maxMoment.add('days', 1).format('YYYY-MM-DD');
                             }
                         }
 
                         // Set tom date
                         if (!workstate.tom || !isDate(workstate.tom)) {
-                            workstate.tom = moment(workstate.from).add('days', 7).format('YYYY-MM-DD');
+                            workstate.tom = toMoment(workstate.from).add('days', 7).format('YYYY-MM-DD');
                         }
                     } else {
 
@@ -626,8 +619,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     return;
                 }
 
-                // if a valid date has been set
-                if (dateField !== undefined && isDate(dateField)) {
+                // if a date has been set
+                if (dateField && dateField !== '') {
 
                     // Check checkbox
                     $scope.workState[nedsattModelName] = true;
@@ -643,7 +636,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     var groups = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
                     for (i = 0; i < groups.length; i++) {
                         if ($scope.cert[groups[i]] && $scope.cert[groups[i]].from && $scope.cert[groups[i]].tom) {
-                            if (moment($scope.cert[groups[i]].from).isAfter(moment($scope.cert[groups[i]].tom))) {
+                            if (toMoment($scope.cert[groups[i]].from).isAfter(toMoment($scope.cert[groups[i]].tom))) {
                                 $scope.nedsattInvalid[groups[i] + 'from'] = true;
                                 $scope.nedsattInvalid[groups[i] + 'tom'] = true;
                             } else {
@@ -674,31 +667,31 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                                     !($scope.nedsattInvalid[groups[j] + 'from'] &&
                                         $scope.nedsattInvalid[groups[j] + 'tom'])) {
 
-                                    if (moment(nedsatt.from).isSame(nedsattCompare.from)) {
+                                    if (toMoment(nedsatt.from).isSame(nedsattCompare.from)) {
                                         $scope.nedsattInvalid[groups[i] + 'from'] = true;
                                         $scope.nedsattInvalid[groups[j] + 'from'] = true;
                                     }
-                                    if (moment(nedsatt.tom).isSame(nedsattCompare.from)) {
+                                    if (toMoment(nedsatt.tom).isSame(nedsattCompare.from)) {
                                         $scope.nedsattInvalid[groups[i] + 'tom'] = true;
                                         $scope.nedsattInvalid[groups[j] + 'from'] = true;
                                     }
-                                    if (moment(nedsatt.from).isSame(nedsattCompare.tom)) {
+                                    if (toMoment(nedsatt.from).isSame(nedsattCompare.tom)) {
                                         $scope.nedsattInvalid[groups[i] + 'from'] = true;
                                         $scope.nedsattInvalid[groups[j] + 'tom'] = true;
                                     }
-                                    if (moment(nedsatt.tom).isSame(nedsattCompare.tom)) {
+                                    if (toMoment(nedsatt.tom).isSame(nedsattCompare.tom)) {
                                         $scope.nedsattInvalid[groups[i] + 'tom'] = true;
                                         $scope.nedsattInvalid[groups[j] + 'tom'] = true;
                                     }
 
-                                    if ((moment(nedsatt.tom).isAfter(nedsattCompare.from) &&
-                                        moment(nedsatt.from).isBefore(nedsattCompare.from)) || // first group overlaps in front
-                                        (moment(nedsatt.from).isBefore(nedsattCompare.tom) &&
-                                            moment(nedsatt.tom).isAfter(nedsattCompare.tom)) || // first group overlaps behind
-                                        (moment(nedsatt.from).isBefore(nedsattCompare.from) &&
-                                            moment(nedsatt.tom).isAfter(nedsattCompare.tom)) || // first group wraps second group
-                                        (moment(nedsatt.from).isAfter(nedsattCompare.from) &&
-                                            moment(nedsatt.tom).isBefore(nedsattCompare.tom))) { // second group wraps first group
+                                    if ((toMoment(nedsatt.tom).isAfter(nedsattCompare.from) &&
+                                        toMoment(nedsatt.from).isBefore(nedsattCompare.from)) || // first group overlaps in front
+                                        (toMoment(nedsatt.from).isBefore(nedsattCompare.tom) &&
+                                            toMoment(nedsatt.tom).isAfter(nedsattCompare.tom)) || // first group overlaps behind
+                                        (toMoment(nedsatt.from).isBefore(nedsattCompare.from) &&
+                                            toMoment(nedsatt.tom).isAfter(nedsattCompare.tom)) || // first group wraps second group
+                                        (toMoment(nedsatt.from).isAfter(nedsattCompare.from) &&
+                                            toMoment(nedsatt.tom).isBefore(nedsattCompare.tom))) { // second group wraps first group
                                         $scope.nedsattInvalid[groups[i] + 'from'] = true;
                                         $scope.nedsattInvalid[groups[i] + 'tom'] = true;
                                         $scope.nedsattInvalid[groups[j] + 'from'] = true;
