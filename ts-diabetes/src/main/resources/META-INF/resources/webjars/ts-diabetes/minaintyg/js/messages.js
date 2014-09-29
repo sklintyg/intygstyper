@@ -111,7 +111,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.showevents.false': '<span class="glyphicon glyphicon-chevron-up"></span> Visa färre händelser',
         'ts-diabetes.label.showevents.true': '<span class="glyphicon glyphicon-chevron-down"></span> Visa alla händelser',
         'ts-diabetes.label.patientname': 'Patientens namn:',
-        'ts-diabetes.label.issued': 'Utfärdat:',
+        'ts-diabetes.label.issued': 'Inkom till Mina intyg',
         'ts-diabetes.label.civicnumber': 'Personnr:',
         'ts-diabetes.label.issuer': 'Utfärdare:',
         'ts-diabetes.label.period': 'Period:',

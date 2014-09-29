@@ -60,7 +60,7 @@ var fk7263Messages = {
         'fk7263.helptext.readpdfhelp': '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank">Adobe Reader</a>.',
         'fk7263.label.nedsattning': 'Jag bedömer att arbetsförmåga är (fält 8b)',
         'fk7263.label.patientname': 'Patientens namn',
-        'fk7263.label.issued': 'Utfärdat',
+        'fk7263.label.issued': 'Inkom till Mina intyg',
         'fk7263.label.civicnumber': 'Personnummer',
         'fk7263.label.issuer': 'Utfärdare',
         'fk7263.label.period': 'Period',

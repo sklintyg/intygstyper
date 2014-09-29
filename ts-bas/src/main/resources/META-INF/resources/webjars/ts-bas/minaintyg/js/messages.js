@@ -145,7 +145,7 @@ var tsBasMessages = {
         'ts-bas.label.showevents.false': '<span class="glyphicon glyphicon-chevron-up"></span> Visa färre händelser',
         'ts-bas.label.showevents.true': '<span class="glyphicon glyphicon-chevron-down"></span> Visa alla händelser',
         'ts-bas.label.patientname': 'Patientens namn:',
-        'ts-bas.label.issued': 'Utfärdat:',
+        'ts-bas.label.issued': 'Inkom till Mina intyg',
         'ts-bas.label.civicnumber': 'Personnr:',
         'ts-bas.label.issuer': 'Utfärdare:',
         'ts-bas.label.period': 'Period:',
