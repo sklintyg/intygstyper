@@ -81,10 +81,10 @@ angular.module('common').controller('common.SendCertWizardCtrl',
 
             $scope.alreadySentToRecipient = function() {
                 // check if selected recipient exists with SENT status in cert history
-                if (angular.isObject($scope.cert.status)) {
-                    for (var i = 0; i < $scope.cert.status.length; i++) {
-                        if (($scope.cert.status[i].type === 'SENT') &&
-                            ($scope.cert.status[i].target === $scope.selectedRecipientId)) {
+                if (angular.isObject($scope.cert.filteredStatuses)) {
+                    for (var i = 0; i < $scope.cert.filteredStatuses.length; i++) {
+                        if (($scope.cert.filteredStatuses[i].type === 'SENT') &&
+                            ($scope.cert.filteredStatuses[i].target === $scope.selectedRecipientId)) {
                             return true;
                         }
                     }

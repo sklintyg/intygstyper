@@ -13,7 +13,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             $scope.doneLoading = false;
 
             $scope.send = function() {
-                $location.path('/fk7263/recipients').search({ module: 'fk7263', defaultRecipient: 'fk'});
+                $location.path('/fk7263/recipients').search({ module: 'fk7263', defaultRecipient: 'FK'});
             };
 
             $scope.visibleStatuses = [ 'SENT' ];

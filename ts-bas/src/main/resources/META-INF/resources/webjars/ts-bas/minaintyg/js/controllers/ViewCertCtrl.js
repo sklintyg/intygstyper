@@ -21,7 +21,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             };
 
             $scope.send = function() {
-                $location.path('/ts-bas/recipients').search({ module: 'ts-bas', defaultRecipient: 'ts'});
+                $location.path('/ts-bas/recipients').search({ module: 'ts-bas', defaultRecipient: 'TS'});
             };
 
             $scope.opts = {

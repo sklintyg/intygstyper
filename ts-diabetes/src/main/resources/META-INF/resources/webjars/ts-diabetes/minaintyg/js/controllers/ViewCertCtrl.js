@@ -21,7 +21,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
             };
 
             $scope.send = function() {
-                $location.path('/ts-diabetes/recipients').search({ module: 'ts-diabetes', defaultRecipient: 'ts'});
+                $location.path('/ts-diabetes/recipients').search({ module: 'ts-diabetes', defaultRecipient: 'TS'});
             };
 
             $scope.opts = {
