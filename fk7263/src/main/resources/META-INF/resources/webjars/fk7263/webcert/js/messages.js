@@ -55,7 +55,6 @@ var fk7263Messages = {
         'fk7263.label.rekommendationer.kontakt.ovrigt': 'Övrigt: ',
         'fk7263.label.se-ovrigt': 'Se under Övriga upplysningar och förtydliganden',
         'fk7263.label.ovrigt': 'Övriga upplysningar och förtydliganden',
-        'fk7263.label.ovanstaende-har-bekraftats': 'Ovanstående uppgifter och bedömningar bekräftas',
         'fk7263.label.datum': 'Datum',
         'fk7263.label.kontakt-info': 'Namn och kontaktuppgifter till vårdenheten',
         'fk7263.label.atgarder': 'Åtgärder',

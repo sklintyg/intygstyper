@@ -156,7 +156,6 @@ var tsBasMessages = {
         'ts-bas.label.medicinering.stadigvarande-medicinering': 'Har patienten någon stadigvarande medicinering?',
         'ts-bas.label.medicinering.beskrivning': 'Vilken eller vilka mediciner?',
 
-        'ts-bas.label.ovanstaende-har-bekraftats': 'Ovanstående uppgifter och bedömningar har bekräftas',
         'ts-bas.label.kontakt-info': 'Namnförtydligande, mottagningens adress och telefon',
 
         'ts-bas.label.bedomning-info-alt-1': 'Patienten uppfyller kraven enligt Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2) för:',

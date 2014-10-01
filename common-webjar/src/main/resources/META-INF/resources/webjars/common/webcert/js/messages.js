@@ -32,6 +32,9 @@ var commonMessages = {
         'cert.status.sent': 'Mottaget',
         'cert.status.received': 'Signerat',
 
+        // common intyg view messages
+        'common.label.ovanstaende-har-bekraftats': 'Ovanstående uppgifter och bedömningar bekräftas',
+
         // draft form status messages
         'draft.status.draft_incomplete': '<strong>Status:</strong> Utkastet är sparat, men obligatoriska uppgifter saknas.',
         'draft.status.draft_complete': '<strong>Status:</strong> Utkastet är sparat och kan signeras.',

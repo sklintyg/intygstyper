@@ -88,7 +88,6 @@ var tsDiabetesMessages = {
 
         'ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid': 'g) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under vaken tid det senaste året?',
 
-        'ts-diabetes.label.ovanstaende-har-bekraftats': 'Ovanstående uppgifter och bedömningar har bekräftats',
         'ts-diabetes.label.kontakt-info': 'Namnförtydligande, mottagningens adress och telefon',
 
         'ts-diabetes.label.bedomning-info-alt-1': 'Patienten uppfyller kraven enligt Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2) för:',
