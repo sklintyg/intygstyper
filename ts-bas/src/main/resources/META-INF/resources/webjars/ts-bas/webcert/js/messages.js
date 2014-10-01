@@ -259,7 +259,7 @@ var tsBasMessages = {
         'ts-bas.validation.psykiskt.psykisksjukdom.missing': 'Har eller har patienten haft psykisk sjukdom eller störning, till exempel schizofreni, annan psykos eller bipolär (manodepressiv) sjukdom måste anges',
 
         'ts-bas.validation.somnvakenhet.missing': 'Sömn- och vakenhetsstörningar saknas',
-        'ts-bas.validation.somnvakenhet.teckensomnstorningar.missing': 'Har eller har patienten haft epilepsi, epileptiskt anfall eller annan medvetandestörningmåste anges',
+        'ts-bas.validation.somnvakenhet.teckensomnstorningar.missing': 'Finns tecken på, eller anamnestiska uppgifter som talar för sömn- eller vakenhetsstörning måste anges',
 
         'ts-bas.validation.njurar.missing': 'Njursjukdomar saknas',
         'ts-bas.validation.njurar.nedsattnjurfunktion.missing': 'Föreligger allvarligt nedsatt njurfunktion som kan innebära en trafiksäkerhetsrisk måste anges',
