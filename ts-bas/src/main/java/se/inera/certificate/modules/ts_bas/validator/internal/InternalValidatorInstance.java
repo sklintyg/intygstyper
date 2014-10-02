@@ -401,11 +401,6 @@ public class InternalValidatorInstance {
         if (medvetandestorning.getMedvetandestorning() == null) {
             addValidationError("medvetandestorning.medvetandestorning",
                     "ts-bas.validation.medvetandestorning.medvetandestorning.missing");
-            return;
-
-        } else if (medvetandestorning.getMedvetandestorning()) {
-            assertDescriptionNotEmpty(medvetandestorning.getBeskrivning(), "medvetandestorning.beskrivning",
-                    "ts-bas.validation.medvetandestorning.beskrivning.missing");
         }
     }
 

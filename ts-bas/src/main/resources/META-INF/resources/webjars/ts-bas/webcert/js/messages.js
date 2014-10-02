@@ -227,7 +227,6 @@ var tsBasMessages = {
 
         'ts-bas.validation.medvetandestorning.missing': 'Epilepsi, epileptiskt anfall och annan medvetandestörning saknas',
         'ts-bas.validation.medvetandestorning.medvetandestorning.missing': 'Epilepsi, epileptiskt anfall och annan medvetandestörning saknas',
-        'ts-bas.validation.medvetandestorning.beskrivning.missing': 'Beskrivning av annan medvetandestörning saknas',
 
         'ts-bas.validation.syn.missing': 'Synfunktioner saknas',
         'ts-bas.validation.syn.progressiv-ogonsjukdom.missing': 'Har patienten någon progressiv ögonsjukdom saknas',
