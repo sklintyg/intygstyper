@@ -24,7 +24,7 @@
   <div class="row">
     <div class="col-md-12 webcert-col webcert-col-single">
 
-      <div wc-print-header title-id="ts-diabetes.label.certtitle" print-message-id="print.label.draft" intygs-id="{{cert.id}}"></div>
+      <div wc-print-header title-id="ts-diabetes.label.certtitle" print-message-id="print.label.draft" intygs-id="cert.id"></div>
       <div class="print-show">
         <label class="control-label">{{cert.patient.fullstandigtNamn}} - {{cert.patient.personid}}</label>
       </div>
@@ -58,12 +58,12 @@
                 <label class="control-label">{{cert.patient.fullstandigtNamn}} - {{cert.patient.personid}}</label>
               </div>
               <div class="form-group buttonbar">
-                <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned">Spara</button>
+                <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned">Spara utkast</button>
                 <button id="ta-bort-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned"
                         ng-click="discard()"><i class="glyphicon glyphicon-trash"></i>
                 </button>
                 <button id="skriv-ut-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="print()">
-                  Skriv ut utkast
+                  Skriv ut
                 </button>
                 <button class="btn btn-default btn-secondary" ng-if="!widgetState.showComplete && !isComplete"
                         ng-click="toggleShowComplete()" title="Visar vilka obligatoriska fält i utkastet som inte är ifyllda. Alla obligatoriska fält måste vara ifyllda för att utkastet ska kunna signeras.">Visa vad som saknas

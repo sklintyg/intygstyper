@@ -5,19 +5,6 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             messageService, ManageCertificate) {
             'use strict';
 
-            // Copy dialog setup
-            var COPY_DIALOG_COOKIE = 'wc.dontShowCopyDialog';
-            var copyDialog = {
-                isOpen: false
-            };
-            $scope.dialog = {
-                acceptprogressdone: true,
-                focus: false,
-                errormessageid: 'error.failedtocopyintyg',
-                showerror: false,
-                dontShowCopyInfo: $cookieStore.get(COPY_DIALOG_COOKIE)
-            };
-
             // Page setup
             $scope.cert = {};
             $scope.cert.filledAlways = true;
@@ -105,9 +92,10 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                 });
             };
 
+            ManageCertificate.initCopyDialog($scope);
             $scope.copy = function(cert) {
                 cert.intygType = 'fk7263';
-                copyDialog = ManageCertificate.copy($scope, cert, copyDialog, COPY_DIALOG_COOKIE);
+                ManageCertificate.copy($scope, cert);
             };
 
             $scope.print = function(cert) {

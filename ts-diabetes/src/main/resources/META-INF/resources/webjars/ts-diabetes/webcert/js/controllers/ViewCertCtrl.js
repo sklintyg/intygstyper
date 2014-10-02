@@ -5,19 +5,6 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
             messageService, ManageCertificate) {
             'use strict';
 
-            // Copy dialog setup
-            var COPY_DIALOG_COOKIE = 'wc.dontShowCopyDialog';
-            var copyDialog = {
-                isOpen: false
-            };
-            $scope.dialog = {
-                acceptprogressdone: true,
-                focus: false,
-                errormessageid: 'error.failedtocopyintyg',
-                showerror: false,
-                dontShowCopyInfo: $cookieStore.get(COPY_DIALOG_COOKIE)
-            };
-
             /*********************************************************************
              * Page state
              *********************************************************************/
@@ -120,9 +107,10 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                 });
             };
 
+            ManageCertificate.initCopyDialog($scope);
             $scope.copy = function(cert) {
                 cert.intygType = 'ts-diabetes';
-                copyDialog = ManageCertificate.copy($scope, cert, COPY_DIALOG_COOKIE);
+                ManageCertificate.copy($scope, cert);
             };
 
             $scope.print = function(cert) {
