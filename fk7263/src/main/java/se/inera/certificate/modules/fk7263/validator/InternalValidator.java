@@ -96,7 +96,7 @@ public class InternalValidator extends AbstractValidator {
 
     private void validateOvrigaRekommendationer() {
         // Fält 6a - If Övrigt is checked, something must be entered.
-        if (utlatande.isRekommendationOvrigtCheck() && StringUtils.isEmpty(utlatande.getRekommendationOvrigt())) {
+        if (utlatande.isRekommendationOvrigtCheck() && utlatande.getRekommendationOvrigt() == null) {
             addValidationError("Field 6a: Övrigt must be entered if checkbox is checked");
         }
     }
