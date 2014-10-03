@@ -218,13 +218,10 @@ describe('ts-diabetes.EditCertCtrl', function() {
         $scope.cert.syn.separatOgonlakarintyg = true;
         $scope.$digest();
 
-        expect($scope.cert.syn.hoger.utanKorrektion).toBe('');
-        expect($scope.cert.syn.hoger.medKorrektion).toBe('');
-        expect($scope.cert.syn.vanster.utanKorrektion).toBe('');
-        expect($scope.cert.syn.vanster.medKorrektion).toBe('');
-        expect($scope.cert.syn.binokulart.utanKorrektion).toBe('');
-        expect($scope.cert.syn.binokulart.medKorrektion).toBe('');
-        expect($scope.cert.syn.diplopi).toBeNull();
+        expect($scope.cert.syn.hoger).toBeUndefined();
+        expect($scope.cert.syn.vanster).toBeUndefined();
+        expect($scope.cert.syn.binokulart).toBeUndefined();
+        expect($scope.cert.syn.diplopi).toBeUndefined();
     });
 
     it('should reset hidden fields when "allvarligForekomstVakenTid" is set to false', function() {
