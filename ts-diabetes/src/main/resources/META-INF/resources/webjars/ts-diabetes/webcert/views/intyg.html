@@ -2,7 +2,8 @@
   <div wc-spinner label="info.loadingcertificate" show-spinner="!widgetState.doneLoading"
        show-content="widgetState.doneLoading">
 
-    <div wc-print-header title-id="ts-diabetes.label.certtitle" print-message-id="print.label.{{widgetState.printStatus}}" intygs-id="cert.id"></div>
+    <div wc-print-header title-id="ts-diabetes.label.certtitle"
+         print-message-id="print.label.{{widgetState.printStatus}}" intygs-id="cert.id"></div>
 
     <!-- error message -->
     <div id="cert-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey"
@@ -17,19 +18,23 @@
 
           <form id="view-as-pdf" action="{{pdfUrl}}" method="get" target="_blank" name="pdfForm">
             <p class="btn-row">
-              <button id="sendBtn" class="btn btn-info" ng-if="!certProperties.isSent && !certProperties.isRevoked" ng-click="send(cert)">Skicka till Transportstyrelsen</button>
-              <button id="downloadprint" type="submit" value="submit" class="btn btn-info"
-                      ng-click="print(cert)">Skriv ut
+              <button id="sendBtn" class="btn btn-info" ng-if="!certProperties.isSent && !certProperties.isRevoked"
+                      ng-click="send(cert)">Skicka till Transportstyrelsen
               </button>
-              <button id="copyBtn" class="btn btn-info" ng-if="!certProperties.isRevoked" ng-click="copy(cert)"
-                      title="Kopiera intyg innebär att en kopia skapas av det befintliga intyget och med samma information.
+              <button id="downloadprint" type="submit" value="submit" class="btn btn-info" ng-click="print(cert)">Skriv
+                ut
+              </button>
+              <button id="copyBtn" class="btn btn-info" ng-if="!certProperties.isRevoked" ng-click="copy(cert)" title="Kopiera intyg innebär att en kopia skapas av det befintliga intyget och med samma information.
 I de fall patienten har ändrat namn eller adress så uppdateras den informationen.
 Uppgifterna i intygsutkastet går att ändra innan det signeras.
 Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                 Kopiera
               </button>
-              <button id="makuleraBtn" class="btn btn-inverse" ng-if="!certProperties.isRevoked" ng-click="makulera(cert)"
-                      title="Makulera intyg innebär att intyget återtas. Vid behov kan intyget ersättas med ett nytt.">Makulera</button>
+              <button id="makuleraBtn" class="btn btn-inverse" ng-if="!certProperties.isRevoked"
+                      ng-click="makulera(cert)"
+                      title="Makulera intyg innebär att intyget återtas. Vid behov kan intyget ersättas med ett nytt.">
+                Makulera
+              </button>
             </p>
           </form>
         </div>
@@ -65,7 +70,8 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
 
               <!-- Identiteten är styrkt genom -->
               <div wc-field field-label="ts-diabetes.label.identitet" filled="true">
-                <span class="ts-cert-answer" message key="ts-diabetes.label.identitet.{{cert.vardkontakt.idkontroll}}"></span>
+                <span class="ts-cert-answer" message
+                      key="ts-diabetes.label.identitet.{{cert.vardkontakt.idkontroll}}"></span>
               </div>
 
               <!-- 1. Allmänt diabetes -->
@@ -98,7 +104,8 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                 </p>
                 <p>
                   <span message key="ts-diabetes.label.diabetes.behandling.annan"></span><br>
-                  <span ng-show="cert.diabetes.annanBehandlingBeskrivning && cert.diabetes.annanBehandlingBeskrivning.length > 0">
+                  <span
+                      ng-show="cert.diabetes.annanBehandlingBeskrivning && cert.diabetes.annanBehandlingBeskrivning.length > 0">
                     <span class="ts-cert-answer">{{cert.diabetes.annanBehandlingBeskrivning}}</span>
                   </span>
                   <span class="ts-cert-answer" ng-show="!cert.diabetes.annanBehandlingBeskrivning">
@@ -151,7 +158,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                 </div>
                 <div class="form-group indent"
                      ng-show="cert.hypoglykemier.allvarligForekomstTrafikBeskrivning.length > 0">
-                    <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning"></span>
+                  <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning"></span>
                   <span class="ts-cert-answer">{{cert.hypoglykemier.allvarligForekomstTrafikBeskrivning}}</span>
                 </div>
 
@@ -232,27 +239,32 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                   </p>
                 </div>
                 <div ng-show="cert.bedomning.kanInteTaStallning">
-                  <span class="ts-cert-answer" message key="ts-diabetes.label.bedomning.kan-inte-ta-stallning"></span><br><br>
+                  <span class="ts-cert-answer" message
+                        key="ts-diabetes.label.bedomning.kan-inte-ta-stallning"></span><br><br>
                 </div>
 
                 <div class="form-group">
                   <span message key="ts-diabetes.label.bedomning.lamplighet-inneha"></span><br>
-                  <span class="ts-cert-answer" message key="{{cert.bedomning.lamplighetInnehaBehorighet | BoolToTextFilter}}"></span>
+                  <span class="ts-cert-answer" message
+                        key="{{cert.bedomning.lamplighetInnehaBehorighet | BoolToTextFilter}}"></span>
                 </div>
 
               </div>
 
               <div wc-field field-label="ts-diabetes.label.ovrigkommentar" filled="true">
-                <p ng-show="cert.kommentar.length > 0">
-                  <span>{{cert.kommentar}}</span>
-                </p>
-                <p class="ts-cert-answer" ng-show="!cert.kommentar">
+                <span ng-show="cert.kommentar.length > 0">
+                  {{cert.kommentar}}
+                </span>
+                <span ng-show="!cert.kommentar">
                   <span message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
-                </p>
+                </span>
               </div>
 
-              <div wc-field field-label="ts-diabetes.label.bedomning-info-undersokas-med-specialkompetens" filled="true">
-                <span ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">{{cert.bedomning.lakareSpecialKompetens}}</span><br>
+              <div wc-field field-label="ts-diabetes.label.bedomning-info-undersokas-med-specialkompetens"
+                   filled="true">
+                <span ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">
+                  {{cert.bedomning.lakareSpecialKompetens}}<br>
+                </span>
                   <span ng-show="!cert.bedomning.lakareSpecialKompetens" message
                         key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
               </div>
