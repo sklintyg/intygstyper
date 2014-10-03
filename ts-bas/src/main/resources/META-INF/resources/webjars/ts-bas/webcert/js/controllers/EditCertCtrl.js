@@ -3,6 +3,11 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
         function($anchorScroll, $location, $scope, $window, ManageCertView, User) {
             'use strict';
 
+            /**********************************************************************************
+             * Default state
+             **********************************************************************************/
+
+            $scope.cert = {};
             $scope.messages = [];
             $scope.isComplete = false;
             $scope.isSigned = false;
@@ -14,27 +19,8 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
                 doneLoading: false,
                 hasError: false,
                 showComplete: false,
-                collapsedHeader: false
-            };
-
-            // Get the certificate draft from the server.
-            $scope.cert = {};
-            ManageCertView.load($scope);
-
-            $scope.toggleHeader = function() {
-                $scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
-            };
-
-            $scope.toggleShowComplete = function() {
-                $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
-                if ($scope.widgetState.showComplete) {
-                    $scope.save();
-                    var old = $location.hash();
-                    $location.hash('top');
-                    $anchorScroll();
-                    // reset to old to keep any additional routing logic from kicking in
-                    $location.hash(old);
-                }
+                collapsedHeader: false,
+                hasInfoMissing: false
             };
 
             $scope.form = {
@@ -50,6 +36,47 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
                 'behorighet': true,
                 'anyTrue': false
             };
+
+            $scope.testerror = false;
+
+            // Input limit handling
+            $scope.inputLimits = {
+                'funktionsnedsattning': 180,
+                'beskrivningRiskfaktorer': 180,
+                'medvetandestorning': 180,
+                'lakemedelOchDos': 180,
+                'medicinering': 180,
+                'kommentar': 500,
+                'lakareSpecialKompetens': 130,
+                'sjukhusvardtidpunkt': 49,
+                'sjukhusvardvardinrattning': 45,
+                'sjukhusvardanledning': 63
+            };
+
+            /***************************************************************************
+             * Private controller support functions
+             ***************************************************************************/
+
+            function convertCertToForm($scope) {
+
+                // check if all info is available from HSA. If not, display the info message that someone needs to update it
+                if ($scope.cert.skapadAv.vardenhet.postadress === undefined ||
+                    $scope.cert.skapadAv.vardenhet.postnummer === undefined ||
+                    $scope.cert.skapadAv.vardenhet.postort === undefined ||
+                    $scope.cert.skapadAv.vardenhet.telefonnummer === undefined ||
+                    $scope.cert.skapadAv.vardenhet.postadress === '' ||
+                    $scope.cert.skapadAv.vardenhet.postnummer === '' ||
+                    $scope.cert.skapadAv.vardenhet.postort === '' ||
+                    $scope.cert.skapadAv.vardenhet.telefonnummer === '') {
+                    $scope.widgetState.hasInfoMissing = true;
+                } else {
+                    $scope.widgetState.hasInfoMissing = false;
+                }
+            }
+
+            /*************************************************************************
+             * Ng-change and watches updating behaviour in form (try to get rid of these or at least make them consistent)
+             *************************************************************************/
 
             // This is not so pretty, but necessary?
             $scope.$watch('cert', function() {
@@ -88,22 +115,6 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
                     $scope.form.anyTrue = false;
                 }
             }, true);
-
-            $scope.testerror = false;
-
-            // Input limit handling
-            $scope.inputLimits = {
-                'funktionsnedsattning': 180,
-                'beskrivningRiskfaktorer': 180,
-                'medvetandestorning': 180,
-                'lakemedelOchDos': 180,
-                'medicinering': 180,
-                'kommentar': 500,
-                'lakareSpecialKompetens': 130,
-                'sjukhusvardtidpunkt': 49,
-                'sjukhusvardvardinrattning': 45,
-                'sjukhusvardanledning': 63
-            };
 
             // ---------------------------------------------------------------------------------------------------------
 
@@ -229,6 +240,26 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
                 }
             });
 
+            /****************************************************************************
+             * Exposed interaction functions to view
+             ****************************************************************************/
+
+            $scope.toggleHeader = function() {
+                $scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
+            };
+
+            $scope.toggleShowComplete = function() {
+                $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
+                if ($scope.widgetState.showComplete) {
+                    $scope.save();
+                    var old = $location.hash();
+                    $location.hash('top');
+                    $anchorScroll();
+                    // reset to old to keep any additional routing logic from kicking in
+                    $location.hash(old);
+                }
+            };
+
             /**
              * Action to save the certificate draft to the server.
              */
@@ -257,4 +288,16 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
             $scope.print = function() {
                 ManageCertView.printDraft($scope.cert.id);
             };
+
+            /**************************************************************************
+             * Load certificate and setup form
+             **************************************************************************/
+
+            // Get the certificate draft from the server.
+            ManageCertView.load($scope, function(cert) {
+                // Decorate intygspecific default data
+                $scope.cert = cert;
+                convertCertToForm($scope);
+            });
+
         }]);

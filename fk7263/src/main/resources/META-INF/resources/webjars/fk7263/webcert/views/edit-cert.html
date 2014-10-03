@@ -3,7 +3,8 @@
   <div class="row">
     <div class="col-md-12 webcert-col webcert-col-single">
 
-      <div wc-print-header title-id="fk7263.label.certtitle" print-message-id="print.label.draft" intygs-id="cert.id"></div>
+      <div wc-print-header title-id="fk7263.label.certtitle" print-message-id="print.label.draft"
+           intygs-id="cert.id"></div>
 
       <div class="header-fix-top print-hide">
         <div class="header-wrapper" ng-hide="widgetState.collapsedHeader" ng-animate="'menucollapse'">
@@ -31,25 +32,35 @@
                 <label class="control-label">{{cert.patientNamn}} - {{cert.patientPersonnummer}}</label>
               </div>
               <div class="form-group buttonbar">
-                <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned" title="Sparar intyget som ett utkast.">Spara utkast</button>
-                <button id="ta-bort-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned"
-                        ng-click="discard()" title="Klicka på papperskorgen för att radera utkastet."><i class="glyphicon glyphicon-trash"></i>
+                <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned"
+                        title="Sparar intyget som ett utkast.">Spara utkast
                 </button>
-                <button id="skriv-ut-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="print()" title="Skriver ut utkastet.">
+                <button id="ta-bort-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="discard()"
+                        title="Klicka på papperskorgen för att radera utkastet."><i
+                    class="glyphicon glyphicon-trash"></i>
+                </button>
+                <button id="skriv-ut-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="print()"
+                        title="Skriver ut utkastet.">
                   Skriv ut
                 </button>
                 <button class="btn btn-default btn-secondary" ng-if="!widgetState.showComplete && !isComplete"
-                        ng-click="toggleShowComplete()" title="Visar vilka obligatoriska fält i utkastet som inte är ifyllda. Alla obligatoriska fält måste vara ifyllda för att utkastet ska kunna signeras.">Visa vad som saknas
+                        ng-click="toggleShowComplete()"
+                        title="Visar vilka obligatoriska fält i utkastet som inte är ifyllda. Alla obligatoriska fält måste vara ifyllda för att utkastet ska kunna signeras.">
+                  Visa vad som saknas
                 </button>
                 <button class="btn btn-default btn-secondary" ng-if="widgetState.showComplete && !isComplete"
-                        ng-click="toggleShowComplete()" title="Visar vilka obligatoriska fält i utkastet som inte är ifyllda. Alla obligatoriska fält måste vara ifyllda för att utkastet ska kunna signeras.">Dölj vad som saknas
+                        ng-click="toggleShowComplete()"
+                        title="Visar vilka obligatoriska fält i utkastet som inte är ifyllda. Alla obligatoriska fält måste vara ifyllda för att utkastet ska kunna signeras.">
+                  Dölj vad som saknas
                 </button>
               </div>
               <!-- Just in case -->
-              <div id="certificate-is-sent-to-it-message-text" ng-show="isSigned"><span message key="draft.status.signed"></span>
+              <div id="certificate-is-sent-to-it-message-text" ng-show="isSigned"><span message
+                                                                                        key="draft.status.signed"></span>
               </div>
               <!-- complete -->
-              <div ng-show="certForm.$pristine && isComplete && !isSigned"><span id="intyget-sparat-meddelande" message key="draft.status.draft_complete"></span>
+              <div ng-show="certForm.$pristine && isComplete && !isSigned"><span id="intyget-sparat-meddelande" message
+                                                                                 key="draft.status.draft_complete"></span>
               </div>
               <!-- incomplete -->
               <div ng-show="certForm.$pristine && !isComplete"><span message key="draft.status.draft_incomplete"></span>
@@ -78,7 +89,8 @@
             <div wc-spinner label="info.loadingdata" show-spinner="!widgetState.doneLoading"
                  show-content="widgetState.doneLoading">
 
-              <div class="alert alert-danger" ng-show="widgetState.showComplete && !isComplete" style="margin-right: 20px">
+              <div class="alert alert-danger" ng-show="widgetState.showComplete && !isComplete"
+                   style="margin-right: 20px">
                 <h3><span message key="draft.saknar-uppgifter"></span></h3>
                 <ul>
                   <li ng-repeat="message in validationMessages">
@@ -169,7 +181,8 @@
                       <div class="counter">
                         Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}
                       </div>
-                      <div class="info-transfer">Informationen överförs till "Övriga upplysningar" vid PDF-utskrift av blanketten.
+                      <div class="info-transfer">Informationen överförs till "Övriga upplysningar" vid PDF-utskrift av
+                        blanketten.
                       </div>
                     </div>
                   </div>
@@ -277,10 +290,10 @@
                        field-help-text="fk7263.helptext.aktivitetsbegransning" ng-hide="cert.avstangningSmittskydd"
                        ng-animate="'fade'" class="print-pagebreak-after">
 
-                  <div class="alert alert-danger" ng-if="validationMessagesGrouped.aktivitetsbegransning">
-                     <ul>
+                    <div class="alert alert-danger" ng-if="validationMessagesGrouped.aktivitetsbegransning">
+                      <ul>
                         <li ng-repeat="message in validationMessagesGrouped.aktivitetsbegransning">
-                        <span message key="{{message.message}}"></span>
+                          <span message key="{{message.message}}"></span>
                         </li>
                       </ul>
                     </div>
@@ -308,7 +321,8 @@
                     <div class="form-group form-inline">
                       <label class="control-label"><span message key="fk7263.label.arbetsformaga"></span></label>
                       <div class="controls form-inline">
-                        <label class="checkbox"><input type="checkbox" id="arbeteNuvarande" ng-model="cert.nuvarandeArbete"> Nuvarande
+                        <label class="checkbox"><input type="checkbox" id="arbeteNuvarande"
+                                                       ng-model="cert.nuvarandeArbete"> Nuvarande
                           arbete</label><span wc-enable-tooltip
                                               field-help-text="fk7263.helptext.sysselsattning.nuvarande"></span>
                         <div class="indent" ng-if="cert.nuvarandeArbete">
@@ -328,7 +342,8 @@
                                                                field-help-text="fk7263.helptext.sysselsattning.arbetsloshet"></span>
                     </div>
                     <div class="form-group form-inline">
-                      <label class="checkbox"><input type="checkbox" id="arbeteForaldraledig" ng-model="cert.foraldrarledighet">
+                      <label class="checkbox"><input type="checkbox" id="arbeteForaldraledig"
+                                                     ng-model="cert.foraldrarledighet">
                         Föräldraledighet med föräldrapenning -
                         att vårda sitt barn</label><span wc-enable-tooltip
                                                          field-help-text="fk7263.helptext.sysselsattning.foraldrarledighet"></span>
@@ -337,7 +352,8 @@
 
                   <!-- Arbetsförmåga -->
                   <div wc-field field-label="fk7263.label.nedsattning" field-number="8b"
-                       field-help-text="fk7263.helptext.arbetsformaga" class="arbetsformaga print-pagebreak-after" id="arbetsformagaForm">
+                       field-help-text="fk7263.helptext.arbetsformaga" class="arbetsformaga print-pagebreak-after"
+                       id="arbetsformagaForm">
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.arbetsformaga">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.arbetsformaga"><span message
@@ -351,13 +367,14 @@
                                                       id="capacityForWorkActualWorkingHoursPerWeek"
                                                       name="capacityForWork.actualWorkingHoursPerWeek" value=""
                                                       class='short control-element form-control'
-                                                      ng-model="cert.tjanstgoringstid"> <span>timmar/vecka</span> <span wc-enable-tooltip field-help-text="fk7263.helptext.arbetsformaga.faktisk-tjanstgoringstid"></span>
+                                                      ng-model="cert.tjanstgoringstid"> <span>timmar/vecka</span> <span
+                        wc-enable-tooltip
+                        field-help-text="fk7263.helptext.arbetsformaga.faktisk-tjanstgoringstid"></span>
                     </div>
 
                     <!-- 25% -->
                     <div class="form-group form-inline">
-                      <label class="checkbox" style="min-width: 250px"><input type="checkbox"
-                                                                              id="nedsattMed25"
+                      <label class="checkbox" style="min-width: 250px"><input type="checkbox" id="nedsattMed25"
                                                                               name="capacityForWork.work25"
                                                                               ng-change="onChangeWorkStateCheck('nedsattMed25')"
                                                                               ng-model="workState.nedsattMed25" />
@@ -371,7 +388,8 @@
                             on-change="onChangeNedsattMed('nedsattMed25', 'tom')" dom-id="nedsattMed25enddate"
                             invalid="nedsattInvalid.nedsattMed25tom"></span>
                       <div class="indent pad10" ng-if="workState.nedsattMed25">
-                        <div class="workHoursPerWeek" ng-show="cert.tjanstgoringstid != '' && cert.tjanstgoringstid > 0">
+                        <div class="workHoursPerWeek"
+                             ng-show="cert.tjanstgoringstid != '' && cert.tjanstgoringstid > 0">
                           Arbetstid timmar/vecka: <strong id="arbetstid25">{{cert.tjanstgoringstid * 0.75}}</strong>
                         </div>
                         Arbetstidsförläggning (frivilligt) <input type="text"
@@ -382,15 +400,15 @@
                                                                   value="" class='form-control otherInformation'
                                                                   ng-change="limitOtherField('nedsattMed25Beskrivning')">
                         <span class="counter">Tecken kvar:  {{inputLimits.ovrigt - getTotalOvrigtLength()}}</span>
-                        <div class="info-transfer">Informationen överförs till "Övriga upplysningar" vid PDF-utskrift av blanketten.
+                        <div class="info-transfer">Informationen överförs till "Övriga upplysningar" vid PDF-utskrift av
+                          blanketten.
                         </div>
                       </div>
                     </div>
 
                     <!-- 50% -->
                     <div class="form-group form-inline">
-                      <label class="checkbox" style="min-width: 250px"><input type="checkbox"
-                                                                              id="nedsattMed50"
+                      <label class="checkbox" style="min-width: 250px"><input type="checkbox" id="nedsattMed50"
                                                                               name="capacityForWork.work50"
                                                                               ng-change="onChangeWorkStateCheck('nedsattMed50')"
                                                                               ng-model="workState.nedsattMed50" /> 50%
@@ -403,7 +421,8 @@
                             on-change="onChangeNedsattMed('nedsattMed50', 'tom')" dom-id="nedsattMed50enddate"
                             invalid="nedsattInvalid.nedsattMed50tom"></span>
                       <div class="indent pad10" ng-if="workState.nedsattMed50">
-                        <div class="workHoursPerWeek" ng-show="cert.tjanstgoringstid != '' && cert.tjanstgoringstid > 0">
+                        <div class="workHoursPerWeek"
+                             ng-show="cert.tjanstgoringstid != '' && cert.tjanstgoringstid > 0">
                           Arbetstid timmar/vecka: <strong id="arbetstid50">{{cert.tjanstgoringstid * 0.5}}</strong>
                         </div>
                         Arbetstidsförläggning (frivilligt) <input type="text"
@@ -413,15 +432,15 @@
                                                                   value="" class='form-control otherInformation'
                                                                   ng-change="limitOtherField('nedsattMed50Beskrivning')">
                         <span class="counter">Tecken kvar:  {{inputLimits.ovrigt - getTotalOvrigtLength()}}</span>
-                        <div class="info-transfer">Informationen överförs till "Övriga upplysningar" vid PDF-utskrift av blanketten.
+                        <div class="info-transfer">Informationen överförs till "Övriga upplysningar" vid PDF-utskrift av
+                          blanketten.
                         </div>
                       </div>
                     </div>
 
                     <!-- 75% -->
                     <div class="form-group form-inline">
-                      <label class="checkbox" style="min-width: 250px"><input type="checkbox"
-                                                                              id="nedsattMed75"
+                      <label class="checkbox" style="min-width: 250px"><input type="checkbox" id="nedsattMed75"
                                                                               name="capacityForWork.work75"
                                                                               ng-change="onChangeWorkStateCheck('nedsattMed75')"
                                                                               ng-model="workState.nedsattMed75" /> 75%
@@ -434,7 +453,8 @@
                             on-change="onChangeNedsattMed('nedsattMed75', 'tom')" dom-id="nedsattMed75enddate"
                             invalid="nedsattInvalid.nedsattMed75tom"></span>
                       <div class="indent pad10" ng-if="workState.nedsattMed75">
-                        <div class="workHoursPerWeek" ng-show="cert.tjanstgoringstid != '' && cert.tjanstgoringstid > 0">
+                        <div class="workHoursPerWeek"
+                             ng-show="cert.tjanstgoringstid != '' && cert.tjanstgoringstid > 0">
                           Arbetstid timmar/vecka: <strong id="arbetstid75">{{cert.tjanstgoringstid * 0.25}}</strong>
                         </div>
                         Arbetstidsförläggning (frivilligt) <input type="text"
@@ -444,15 +464,15 @@
                                                                   value="" class='form-control otherInformation'
                                                                   ng-change="limitOtherField('nedsattMed75Beskrivning')">
                         <span class="counter">Tecken kvar:  {{inputLimits.ovrigt - getTotalOvrigtLength()}}</span>
-                        <div class="info-transfer">Informationen överförs till "Övriga upplysningar" vid PDF-utskrift av blanketten.
+                        <div class="info-transfer">Informationen överförs till "Övriga upplysningar" vid PDF-utskrift av
+                          blanketten.
                         </div>
                       </div>
                     </div>
 
                     <!-- 100% -->
                     <div class="form-group form-inline">
-                      <label class="checkbox" style="min-width: 250px"><input type="checkbox"
-                                                                              id="nedsattMed100"
+                      <label class="checkbox" style="min-width: 250px"><input type="checkbox" id="nedsattMed100"
                                                                               name="capacityForWork.workFull"
                                                                               ng-change="onChangeWorkStateCheck('nedsattMed100')"
                                                                               ng-model="workState.nedsattMed100" /> Helt
@@ -534,7 +554,8 @@
                                               ng-change="limitOtherField('arbetsformagaPrognosGarInteAttBedomaBeskrivning')"> <span
                           id="prognosis-counter">Tecken kvar:
                         {{inputLimits.ovrigt - getTotalOvrigtLength()}}</span>
-                        <div class="info-transfer">Informationen överförs till "Övriga upplysningar" vid PDF-utskrift av blanketten.
+                        <div class="info-transfer">Informationen överförs till "Övriga upplysningar" vid PDF-utskrift av
+                          blanketten.
                         </div>
                       </div>
                     </div>
@@ -567,14 +588,15 @@
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.rekommendationer">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.rekommendationer"><span message
-                                                                                           key="{{message.message}}"></span>
+                                                                                                    key="{{message.message}}"></span>
                         </li>
                       </ul>
                     </div>
 
                     <!-- 11 -->
                     <div class="form-group form-inline">
-                      <label class="checkbox"><input type="checkbox" id="rekommendationRessatt" name="recommendationsToFk.travel"
+                      <label class="checkbox"><input type="checkbox" id="rekommendationRessatt"
+                                                     name="recommendationsToFk.travel"
                                                      ng-model="form.ressattTillArbeteAktuellt"> Resor till och från
                         arbetet med annat färdmedel än normalt kan göra det möjligt för patienten att återgå i
                         arbete</label> <span wc-enable-tooltip
@@ -586,26 +608,30 @@
 
                       <!-- 6a -->
                       <div class="form-group form-inline">
-                        <label class="checkbox"><input type="checkbox" id="rekommendationKontaktAf" name="recommendationsToFk.contactAf"
+                        <label class="checkbox"><input type="checkbox" id="rekommendationKontaktAf"
+                                                       name="recommendationsToFk.contactAf"
                                                        ng-model="cert.rekommendationKontaktArbetsformedlingen">
                           Patienten
                           bör komma i kontakt med arbetsförmedlingen</label> <span wc-enable-tooltip
                                                                                    field-help-text="fk7263.helptext.rekommendationer.arbetsformedlingen"></span>
                       </div>
                       <div class="form-group form-inline">
-                        <label class="checkbox"><input type="checkbox" id="rekommendationKontaktForetagshalsovard" name="recommendationsToFk.contactCompanyCare"
+                        <label class="checkbox"><input type="checkbox" id="rekommendationKontaktForetagshalsovard"
+                                                       name="recommendationsToFk.contactCompanyCare"
                                                        ng-model="cert.rekommendationKontaktForetagshalsovarden">
                           Patienten
                           bör komma i kontakt med företagshälsovården</label> <span wc-enable-tooltip
                                                                                     field-help-text="fk7263.helptext.rekommendationer.foretagshalsovarden"></span>
                       </div>
                       <div class="form-group form-inline">
-                        <label class="checkbox"><input type="checkbox" id="rekommendationOvrigt" name="recommendationsToFk.other"
+                        <label class="checkbox"><input type="checkbox" id="rekommendationOvrigt"
+                                                       name="recommendationsToFk.other"
                                                        ng-model="cert.rekommendationOvrigtCheck" /> Övrigt (ange
                           vad)</label>
                         <div class="indent" ng-if="cert.rekommendationOvrigtCheck">
                           <input type="text" id="rekommendationOvrigtBeskrivning" name="recommendationsToFk.otherText"
-                                 value="" class='form-control maxwidth' ng-model="form.rekommendationOvrigt" maxlength="80">
+                                 value="" class='form-control maxwidth' ng-model="form.rekommendationOvrigt"
+                                 maxlength="80">
                           <span wc-enable-tooltip field-help-text="fk7263.helptext.rekommendationer.ovrigt"></span>
                         </div>
                       </div>
@@ -631,7 +657,8 @@
                       <!-- GÅR EJ ATT BEDÖMA -->
                       <div class="form-group">
                         <label class="radio-inline"><input type="radio" name="recommendationsToFkReabInQuestion"
-                                                           group="group3" value="GAREJ" ng-model="form.rehab"> Går inte att bedöma</label>
+                                                           group="group3" value="GAREJ" ng-model="form.rehab"> Går inte
+                          att bedöma</label>
                       </div>
                     </div>
                   </div>
@@ -644,8 +671,9 @@
 
                   <div wc-field field-label="fk7263.label.ovrigt" field-number="13"
                        field-help-text="fk7263.helptext.ovrigt" class="print-pagebreak-after">
-                    <textarea id="otherInformation" name="otherInformation" rows='10' class='form-control otherInformation'
-                              ng-model="cert.kommentar" ng-change="limitOtherField('kommentar')"></textarea>
+                    <textarea id="otherInformation" name="otherInformation" rows='10'
+                              class='form-control otherInformation' ng-model="cert.kommentar"
+                              ng-change="limitOtherField('kommentar')"></textarea>
                     <div class="counter">Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}</div>
                   </div>
 
@@ -659,7 +687,14 @@
                       </ul>
                     </div>
 
-                    <label class="control-label" ng-model="cert.vardperson.enhetsnamn"></label>
+                    <label class="control-label">{{cert.vardperson.enhetsnamn}}
+                      ({{cert.vardperson.enhetsId}}),
+                      {{cert.vardperson.vardgivarnamn}}</label>
+
+                    <div class="alert alert-info" ng-show="widgetState.hasInfoMissing">
+                      Information om vårdenheten saknas i HSA-katalogen. Be den på vårdenheten som är ansvarig för
+                      frågor om HSA att uppdatera informationen.
+                    </div>
 
                     <div class="form-horizontal">
                       <div class="form-group">
@@ -679,8 +714,8 @@
                       <div class="form-group">
                         <label class="col-xs-3 control-label">Postort</label>
                         <div class="col-xs-9">
-                          <input type="text" class="form-control" id="clinicInfoPostalCity"
-                                 name="clinicInfo.postalCity" ng-model="cert.vardperson.postort">
+                          <input type="text" class="form-control" id="clinicInfoPostalCity" name="clinicInfo.postalCity"
+                                 ng-model="cert.vardperson.postort">
                         </div>
                       </div>
                       <div class="form-group">

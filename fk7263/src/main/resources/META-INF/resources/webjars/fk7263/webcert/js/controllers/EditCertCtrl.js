@@ -17,7 +17,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 activeErrorMessageKey: null,
                 hasError: false,
                 showComplete: false,
-                collapsedHeader: false
+                collapsedHeader: false,
+                hasInfoMissing: false
             };
 
             // Intyg state
@@ -239,6 +240,20 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * @param $scope
              */
             function convertCertToForm($scope) {
+
+                // check if all info is available from HSA. If not, display the info message that someone needs to update it
+                if ($scope.cert.vardperson && ($scope.cert.vardperson.postadress === undefined ||
+                    $scope.cert.vardperson.postnummer === undefined ||
+                    $scope.cert.vardperson.postort === undefined ||
+                    $scope.cert.vardperson.telefonnummer === undefined ||
+                    $scope.cert.vardperson.postadress === '' ||
+                    $scope.cert.vardperson.postnummer === '' ||
+                    $scope.cert.vardperson.postort === '' ||
+                    $scope.cert.vardperson.telefonnummer === '')) {
+                    $scope.widgetState.hasInfoMissing = true;
+                } else {
+                    $scope.widgetState.hasInfoMissing = false;
+                }
 
                 // Fält 4b. AnnanReferensBeskrivning
                 $scope.basedOnState.check.undersokningAvPatienten = $scope.cert.undersokningAvPatienten !== undefined;
@@ -768,7 +783,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Load certificate and setup form
              **************************************************************************/
 
-                // Get the certificate draft from the server.
+            // Get the certificate draft from the server.
             ManageCertView.load($scope, function(cert) {
                 // Decorate intygspecific default data
                 $scope.cert = cert;

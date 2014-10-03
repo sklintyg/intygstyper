@@ -562,6 +562,11 @@
                         ({{cert.skapadAv.vardenhet.enhetsid}}),
                         {{cert.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</label>
 
+                      <div class="alert alert-info" ng-show="widgetState.hasInfoMissing">
+                        Information om vårdenheten saknas i HSA-katalogen. Be den på vårdenheten som är ansvarig för
+                        frågor om HSA att uppdatera informationen.
+                      </div>
+
                       <div class="form-horizontal">
                         <div class="form-group">
                           <label class="col-xs-3 control-label">Postadress</label>

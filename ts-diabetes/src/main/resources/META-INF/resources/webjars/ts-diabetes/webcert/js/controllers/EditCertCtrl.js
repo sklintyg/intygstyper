@@ -3,6 +3,11 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
         function($anchorScroll, $location, $log, $scope, $window, ManageCertView, User) {
             'use strict';
 
+            /**********************************************************************************
+             * Default state
+             **********************************************************************************/
+
+            $scope.cert = {};
             $scope.messages = [];
             $scope.isComplete = false;
             $scope.isSigned = false;
@@ -14,27 +19,8 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 doneLoading: false,
                 hasError: false,
                 showComplete: false,
-                collapsedHeader: false
-            };
-
-            // Get the certificate draft from the server.
-            $scope.cert = {};
-            ManageCertView.load($scope);
-
-            $scope.toggleHeader = function() {
-                $scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
-            };
-
-            $scope.toggleShowComplete = function() {
-                $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
-                if ($scope.widgetState.showComplete) {
-                    $scope.save();
-                    var old = $location.hash();
-                    $location.hash('top');
-                    $anchorScroll();
-                    // reset to old to keep any additional routing logic from kicking in
-                    $location.hash(old);
-                }
+                collapsedHeader: false,
+                hsaInfoMissing: false
             };
 
             $scope.form = {
@@ -55,6 +41,23 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
             /******************************************************************************************
              * Private support functions
              ******************************************************************************************/
+
+            function convertCertToForm($scope) {
+
+                // check if all info is available from HSA. If not, display the info message that someone needs to update it
+                if ($scope.cert.skapadAv.vardenhet.postadress === undefined ||
+                    $scope.cert.skapadAv.vardenhet.postnummer === undefined ||
+                    $scope.cert.skapadAv.vardenhet.postort === undefined ||
+                    $scope.cert.skapadAv.vardenhet.telefonnummer === undefined ||
+                    $scope.cert.skapadAv.vardenhet.postadress === '' ||
+                    $scope.cert.skapadAv.vardenhet.postnummer === '' ||
+                    $scope.cert.skapadAv.vardenhet.postort === '' ||
+                    $scope.cert.skapadAv.vardenhet.telefonnummer === '') {
+                    $scope.widgetState.hasInfoMissing = true;
+                } else {
+                    $scope.widgetState.hasInfoMissing = false;
+                }
+            }
 
             /**
              * Convert form data to internal model
@@ -194,6 +197,22 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
              * Exposed interaction
              ******************************************************************************************/
 
+            $scope.toggleHeader = function() {
+                $scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
+            };
+
+            $scope.toggleShowComplete = function() {
+                $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
+                if ($scope.widgetState.showComplete) {
+                    $scope.save();
+                    var old = $location.hash();
+                    $location.hash('top');
+                    $anchorScroll();
+                    // reset to old to keep any additional routing logic from kicking in
+                    $location.hash(old);
+                }
+            };
+
             /**
              * Action to save the certificate draft to the server.
              */
@@ -223,4 +242,15 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
             $scope.print = function() {
                 ManageCertView.printDraft($scope.cert.id);
             };
+
+            /**************************************************************************
+             * Load certificate and setup form
+             **************************************************************************/
+
+            // Get the certificate draft from the server.
+            ManageCertView.load($scope, function(cert) {
+                // Decorate intygspecific default data
+                $scope.cert = cert;
+                convertCertToForm($scope);
+            });
         }]);
