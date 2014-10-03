@@ -129,20 +129,11 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
             }, true);
             $scope.$watch('cert.syn.separatOgonlakarintyg', function(separatOgonlakarintyg) {
                 if (separatOgonlakarintyg && $scope.cert.syn) {
-                    $scope.cert.syn.synfaltsprovningUtanAnmarkning = null;
-                    if ($scope.cert.syn.hoger) {
-                        $scope.cert.syn.hoger.utanKorrektion = '';
-                        $scope.cert.syn.hoger.medKorrektion = '';
-                    }
-                    if ($scope.cert.syn.vanster) {
-                        $scope.cert.syn.vanster.utanKorrektion = '';
-                        $scope.cert.syn.vanster.medKorrektion = '';
-                    }
-                    if ($scope.cert.syn.binokulart) {
-                        $scope.cert.syn.binokulart.utanKorrektion = '';
-                        $scope.cert.syn.binokulart.medKorrektion = '';
-                    }
-                    $scope.cert.syn.diplopi = null;
+                    $scope.cert.syn.synfaltsprovningUtanAnmarkning = undefined;
+                    $scope.cert.syn.hoger = undefined;
+                    $scope.cert.syn.vanster = undefined;
+                    $scope.cert.syn.binokulart = undefined;
+                    $scope.cert.syn.diplopi = undefined;
                 }
             }, true);
             $scope.$watch('form.behorighet', function (uppfyllerKravForBehorighet) {
