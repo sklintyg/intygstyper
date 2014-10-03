@@ -594,6 +594,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
                         // Remove dates
                         delete $scope.cert[nedsattModelName];
+                        $scope.nedsattInvalid[nedsattModelName + 'from'] = false;
+                        $scope.nedsattInvalid[nedsattModelName + 'tom'] = false;
                     }
 
                     onArbetsformagaDatesUpdated();
@@ -667,19 +669,19 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                                     !($scope.nedsattInvalid[groups[j] + 'from'] &&
                                         $scope.nedsattInvalid[groups[j] + 'tom'])) {
 
-                                    if (toMoment(nedsatt.from).isSame(nedsattCompare.from)) {
+                                    if (toMoment(nedsatt.from).isSame(nedsattCompare.from, 'day')) {
                                         $scope.nedsattInvalid[groups[i] + 'from'] = true;
                                         $scope.nedsattInvalid[groups[j] + 'from'] = true;
                                     }
-                                    if (toMoment(nedsatt.tom).isSame(nedsattCompare.from)) {
+                                    if (toMoment(nedsatt.tom).isSame(nedsattCompare.from, 'day')) {
                                         $scope.nedsattInvalid[groups[i] + 'tom'] = true;
                                         $scope.nedsattInvalid[groups[j] + 'from'] = true;
                                     }
-                                    if (toMoment(nedsatt.from).isSame(nedsattCompare.tom)) {
+                                    if (toMoment(nedsatt.from).isSame(nedsattCompare.tom, 'day')) {
                                         $scope.nedsattInvalid[groups[i] + 'from'] = true;
                                         $scope.nedsattInvalid[groups[j] + 'tom'] = true;
                                     }
-                                    if (toMoment(nedsatt.tom).isSame(nedsattCompare.tom)) {
+                                    if (toMoment(nedsatt.tom).isSame(nedsattCompare.tom, 'day')) {
                                         $scope.nedsattInvalid[groups[i] + 'tom'] = true;
                                         $scope.nedsattInvalid[groups[j] + 'tom'] = true;
                                     }
