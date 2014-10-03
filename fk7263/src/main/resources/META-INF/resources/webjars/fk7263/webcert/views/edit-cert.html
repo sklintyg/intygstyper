@@ -78,7 +78,7 @@
             <div wc-spinner label="info.loadingdata" show-spinner="!widgetState.doneLoading"
                  show-content="widgetState.doneLoading">
 
-              <div class="alert alert-danger" ng-show="widgetState.showComplete" style="margin-right: 20px">
+              <div class="alert alert-danger" ng-show="widgetState.showComplete && !isComplete" style="margin-right: 20px">
                 <h3><span message key="draft.saknar-uppgifter"></span></h3>
                 <ul>
                   <li ng-repeat="message in validationMessages">
