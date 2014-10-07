@@ -2,6 +2,7 @@
 var commonMessages = {
     'sv': {
 
+        'common.continue': 'Fortsätt',
         'common.yes': 'Ja',
         'common.no': 'Nej',
         'common.yes.caps': 'JA',
