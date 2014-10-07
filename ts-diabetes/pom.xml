@@ -31,7 +31,7 @@
     <!-- Dependencies to projects inside Intygstjansten -->
     <dependency>
       <groupId>se.inera.certificate</groupId>
-      <artifactId>schemas</artifactId>
+      <artifactId>certificate-schemas</artifactId>
     </dependency>
     
     <dependency>

@@ -86,7 +86,7 @@
       </dependency>
       <dependency>
         <groupId>se.inera.certificate</groupId>
-        <artifactId>schemas</artifactId>
+        <artifactId>certificate-schemas</artifactId>
         <version>${inera.certificate.version}</version>
       </dependency>
       <dependency>
