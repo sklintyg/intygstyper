@@ -46,11 +46,10 @@ angular
                             }
                         });
 
-                        msgbox.result.then(function(result) {
+                        msgbox.result['finally'](function(result) {
                             if (callback) {
                                 callback(result);
                             }
-                        }, function() {
                         });
                     }
 
