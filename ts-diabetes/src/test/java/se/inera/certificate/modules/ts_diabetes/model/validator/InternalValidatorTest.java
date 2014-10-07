@@ -36,6 +36,7 @@ import se.inera.certificate.modules.ts_diabetes.validator.Validator;
 
 public class InternalValidatorTest {
 
+    private static final int T3 = 3;
     private Validator validator;
 
     @Before
@@ -95,8 +96,40 @@ public class InternalValidatorTest {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-missing-diabetes").asInternalModel();
         ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
-        assertEquals(3, validationResponse.getValidationErrors().size());
+        assertEquals(T3, validationResponse.getValidationErrors().size());
     }
+
+    @Test
+    public void testInvalidDiabetesInsulinperiod() throws Exception {
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-diabetes-insulinperiod").asInternalModel();
+        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+
+        assertEquals("diabetes.insulin",
+                getSingleElement(validationResponse.getValidationErrors()).getField());
+    }
+
+    @Test
+    public void testInvalidMutationsDiabetesInsulinperiod() throws Exception {
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-diabetes-insulinperiod").asInternalModel();
+        ValidateDraftResponse validationResponse;
+
+        utlatande.getDiabetes().setInsulinBehandlingsperiod("1111");
+        validationResponse = validator.validateInternal(utlatande);
+        assertEquals("diabetes.insulin",
+                getSingleElement(validationResponse.getValidationErrors()).getField());
+
+        utlatande.getDiabetes().setInsulinBehandlingsperiod("");
+        validationResponse = validator.validateInternal(utlatande);
+        assertEquals("diabetes.insulin",
+                getSingleElement(validationResponse.getValidationErrors()).getField());
+
+        utlatande.getDiabetes().setInsulinBehandlingsperiod("aaaaaaaaaaaaaaa");
+        validationResponse = validator.validateInternal(utlatande);
+        assertEquals("diabetes.insulin",
+                getSingleElement(validationResponse.getValidationErrors()).getField());
+
+    }
+
 
     @Test
     public void testInvalidHypoglykemierMissing() throws Exception {
@@ -109,8 +142,8 @@ public class InternalValidatorTest {
     }
 
     /**
-     * Utility method for getting a single element from a collection
-     * 
+     * Utility method for getting a single element from a collection.
+     *
      * @param collection
      *            the collection
      * @return a single element, throws IllegalArgumentException in case the collection contains more than one element
