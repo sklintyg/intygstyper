@@ -43,7 +43,7 @@
             },
             "namn": "Enhetsnamn",
             "postadress": "Enhetsadress",
-            "postnummer": "1337",
+            "postnummer": "31337",
             "postort": "Stockholm",
             "telefonnummer": "08-1337",
             "epost": "epost@enhet.se",

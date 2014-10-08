@@ -144,6 +144,7 @@ var fk7263Messages = {
         'fk7263.validation.vardenhet.telefonnummer.missing' : 'Telefonnummer för vårdenhet måste anges (Fält 15)',
         'fk7263.validation.vardenhet.postadress.missing' : 'Postadress för vårdenhet måste anges (Fält 15)',
         'fk7263.validation.vardenhet.postnummer.missing' : 'Postnummer för vårdenhet måste anges (Fält 15)',
+        'fk7263.validation.vardenhet.postnummer.incorrect-format' : 'Postnummer har fel format (Fält 15)',
         'fk7263.validation.vardenhet.postort.missing' : 'Postort för vårdenhet måste anges (Fält 15)',
 
 

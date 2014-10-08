@@ -14,6 +14,8 @@ import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.dto.ValidationMessage;
 import se.inera.certificate.modules.support.api.dto.ValidationStatus;
 
+import se.inera.certificate.validate.StringValidator;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,8 @@ public class InternalDraftValidator {
 
     @Autowired(required = false)
     private WebcertModuleService moduleService;
+
+    private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
     public ValidateDraftResponse validateDraft(Fk7263Intyg utlatande) {
         List<ValidationMessage> validationMessages = new ArrayList<>();
@@ -52,6 +56,8 @@ public class InternalDraftValidator {
 
         if (isNullOrEmpty(utlatande.getVardperson().getPostnummer())) {
             addValidationError(validationMessages, "vardperson.postnummer", "fk7263.validation.vardenhet.postnummer.missing");
+        } else if (!STRING_VALIDATOR.validateStringAsPostalCode(utlatande.getVardperson().getPostnummer())) {
+            addValidationError(validationMessages, "vardperson.postnummer", "fk7263.validation.vardenhet.postnummer.incorrect-format");
         }
 
         if (isNullOrEmpty(utlatande.getVardperson().getPostort())) {
@@ -109,7 +115,7 @@ public class InternalDraftValidator {
         }
 
         // validate 8b - regardless of smittskydd
-        if (utlatande.getTjanstgoringstid() != null && !StringUtils.isNumeric(utlatande.getTjanstgoringstid())) {
+        if (utlatande.getTjanstgoringstid() != null && !STRING_VALIDATOR.validateStringIsNumber(utlatande.getTjanstgoringstid())) {
             addValidationError(validationMessages, "arbetsformaga", "fk7263.validation.arbetsformaga.tjanstgoringstid");
         }
         validateIntervals(validationMessages, "arbetsformaga", utlatande.getNedsattMed100(), utlatande.getNedsattMed75(),
@@ -117,7 +123,7 @@ public class InternalDraftValidator {
     }
 
     private void validateAktivitetsbegransning(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
-        //Fält 5  Aktivitetsbegränsning relaterat till diagnos och funktionsnedsättning 
+        //Fält 5  Aktivitetsbegränsning relaterat till diagnos och funktionsnedsättning
         String aktivitetsbegransning = utlatande.getAktivitetsbegransning();
         if (!utlatande.isAvstangningSmittskydd() && aktivitetsbegransning == null) {
             addValidationError(validationMessages, "aktivitetsbegransning", "fk7263.validation.aktivitetsbegransning.missing");
