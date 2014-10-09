@@ -86,7 +86,7 @@
       </dependency>
       <dependency>
         <groupId>se.inera.certificate</groupId>
-        <artifactId>schemas</artifactId>
+        <artifactId>certificate-schemas</artifactId>
         <version>${inera.certificate.version}</version>
       </dependency>
       <dependency>
@@ -188,19 +188,7 @@
   </dependencyManagement>
 
   <dependencies>
-    <!-- Webjars -->
-    <dependency>
-      <groupId>org.webjars</groupId>
-      <artifactId>angularjs</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.webjars</groupId>
-      <artifactId>angular-ui-bootstrap</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.webjars</groupId>
-      <artifactId>momentjs</artifactId>
-    </dependency>
+
   </dependencies>
 
   <build>
@@ -215,10 +203,32 @@
             <id>unpack-webjar-dependencies</id>
             <phase>process-test-resources</phase>
             <goals>
-              <goal>unpack-dependencies</goal>
+              <goal>unpack</goal>
             </goals>
             <configuration>
-              <includeGroupIds>org.webjars</includeGroupIds>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.webjars</groupId>
+                  <artifactId>angularjs</artifactId>
+                  <version>${angularjs.version}</version>
+                  <type>jar</type>
+                  <overWrite>true</overWrite>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.webjars</groupId>
+                  <artifactId>angular-ui-bootstrap</artifactId>
+                  <version>${angular-ui-bootstrap.version}</version>
+                  <type>jar</type>
+                  <overWrite>true</overWrite>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.webjars</groupId>
+                  <artifactId>momentjs</artifactId>
+                  <version>${momentjs.version}</version>
+                  <type>jar</type>
+                  <overWrite>true</overWrite>
+                </artifactItem>
+              </artifactItems>
               <outputDirectory>${project.build.directory}/webjardependenciestemp</outputDirectory>
             </configuration>
           </execution>

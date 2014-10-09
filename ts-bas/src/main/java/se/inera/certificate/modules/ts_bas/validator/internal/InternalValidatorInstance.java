@@ -31,6 +31,7 @@ import se.inera.certificate.modules.ts_bas.model.internal.Syn;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.model.internal.Utvecklingsstorning;
 import se.inera.certificate.modules.ts_bas.model.internal.Vardkontakt;
+import se.inera.certificate.validate.StringValidator;
 
 /**
  * Class for validating drafts of the internal model.
@@ -39,9 +40,9 @@ import se.inera.certificate.modules.ts_bas.model.internal.Vardkontakt;
  */
 public class InternalValidatorInstance {
 
-    private static final String POSTNUMMER_FORMAT = "\\d{3}\\s?\\d{2}";
-
     private static final Logger LOG = LoggerFactory.getLogger(InternalValidatorInstance.class);
+
+    private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
     private List<ValidationMessage> validationMessages;
 
@@ -307,7 +308,7 @@ public class InternalValidatorInstance {
                 "ts-bas.validation.vardenhet.postadress.missing");
         if (assertDescriptionNotEmpty(skapadAv.getVardenhet().getPostnummer(), "vardenhet.postnummer",
                 "ts-bas.validation.vardenhet.postnummer.missing").success()) {
-            if (!skapadAv.getVardenhet().getPostnummer().matches(POSTNUMMER_FORMAT)) {
+            if (!STRING_VALIDATOR.validateStringAsPostalCode(skapadAv.getVardenhet().getPostnummer())) {
                 addValidationError("vardenhet.postnummer", "ts-bas.validation.vardenhet.postnummer.incorrect-format");
             }
         }

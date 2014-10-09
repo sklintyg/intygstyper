@@ -31,7 +31,7 @@
 				extension="123456" />
 			<enhetsnamn>Enhetsnamn</enhetsnamn>
 			<postadress>Enhetsadress</postadress>
-			<postnummer>1337</postnummer>
+			<postnummer>31337</postnummer>
 			<postort>Stockholm</postort>
 			<telefonnummer>08-1337</telefonnummer>
 			<epost>epost@enhet.se</epost>

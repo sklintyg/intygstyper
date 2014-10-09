@@ -5,6 +5,11 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             messageService, ManageCertificate) {
             'use strict';
 
+            // Check if the user used the special qa-link to get here.
+            if ($routeParams.qaOnly) {
+                $scope.isQaOnly = true;
+            }
+
             // Page setup
             $scope.cert = {};
             $scope.cert.filledAlways = true;

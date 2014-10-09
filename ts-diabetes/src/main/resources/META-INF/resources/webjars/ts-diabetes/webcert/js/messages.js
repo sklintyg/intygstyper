@@ -28,7 +28,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.korkort.de': 'DE',
         'ts-diabetes.label.korkort.taxi': 'Taxi',
         'ts-diabetes.label.korkort.annat': 'Annat',
-        'ts-diabetes.label.makulera.confirmation': 'Transportstyrelsens läkarintyg, diabetes, utställt på ${namn} - ${personnummer} har makulerats. Intyget kan inte längre visas av patienten.',
+        'ts-diabetes.label.makulera.confirmation': 'Transportstyrelsens läkarintyg, diabetes, utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
 
         // Identitet styrkt genom
         'ts-diabetes.label.identitet.id_kort': 'ID-kort',
@@ -137,9 +137,10 @@ var tsDiabetesMessages = {
         'ts-diabetes.validation.diabetes.missing': 'Diabetes saknas',
         'ts-diabetes.validation.diabetes.diabetestyp.missing': 'Diabetestyp måste anges',
         'ts-diabetes.validation.diabetes.observationsperiod.missing': 'År då diabetesdiagnos ställdes måste anges',
-        'ts-diabetes.validation.diabetes.observationsperiod.incorrect-format': 'År måste anges i formatet ÅÅÅÅ',
+        'ts-diabetes.validation.diabetes.observationsperiod.incorrect-format': 'År måste anges i formatet ÅÅÅÅ och inte vara senare än i år.',
         'ts-diabetes.validation.diabetes.behandling.missing': 'Minst en behandling måste väljas',
         'ts-diabetes.validation.diabetes.insulin.behandlingsperiod.missing' : 'Insulin sedan år måste anges',
+        'ts-diabetes.validation.diabetes.insulin.behandlingsperiod.incorrect-format' : 'Insulin sedan år måste anges i formatet ÅÅÅÅ och inte vara senare än i år.',
 
         'ts-diabetes.validation.intygavser.missing': 'Intyget avser körkortsbehörighet saknas',
         'ts-diabetes.validation.intygavser.must-choose-one': 'Minst en körkortsbehörighet måste väljas',

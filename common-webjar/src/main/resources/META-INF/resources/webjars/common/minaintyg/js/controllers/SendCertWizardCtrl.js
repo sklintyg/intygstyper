@@ -22,7 +22,7 @@ angular.module('common').controller('common.SendCertWizardCtrl',
                 return;
             }
             // expose calculated static link for pdf download
-            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $routeParams.certificateId + '/pdf';
+            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $scope.cert.id + '/pdf';
 
             // set selected recipeintID in rootscope to preserve state between
             // controller instance invocations

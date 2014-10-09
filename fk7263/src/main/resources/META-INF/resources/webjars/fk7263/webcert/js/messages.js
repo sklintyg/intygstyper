@@ -61,7 +61,7 @@ var fk7263Messages = {
         'fk7263.label.rekommendationer.fk': 'Rekommendationer till Försäkringskassan',
         'fk7263.label.fk-kontakt': 'Kontakt',
         'fk7263.label.vardenhet.adress': 'Vårdenhetens kontaktuppgifter',
-        'fk7263.label.makulera.confirmation': 'Läkarintyg FK 7263 utställt på ${namn} - ${personnummer} har makulerats. Intyget kan inte längre visas av patienten.',
+        'fk7263.label.makulera.confirmation': 'Läkarintyg FK 7263 utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
 
         'fk7263.vardkontakt.undersokning': 'Min undersökning av patienten den ',
         'fk7263.vardkontakt.telefonkontakt': 'Min telefonkontakt med patienten den ',
@@ -144,6 +144,7 @@ var fk7263Messages = {
         'fk7263.validation.vardenhet.telefonnummer.missing' : 'Telefonnummer för vårdenhet måste anges (Fält 15)',
         'fk7263.validation.vardenhet.postadress.missing' : 'Postadress för vårdenhet måste anges (Fält 15)',
         'fk7263.validation.vardenhet.postnummer.missing' : 'Postnummer för vårdenhet måste anges (Fält 15)',
+        'fk7263.validation.vardenhet.postnummer.incorrect-format' : 'Postnummer har fel format (Fält 15)',
         'fk7263.validation.vardenhet.postort.missing' : 'Postort för vårdenhet måste anges (Fält 15)',
 
 
