@@ -39,12 +39,5 @@
 
   <beans>
     <context:component-scan base-package="se.inera.certificate.modules.fk7263" />
-    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-      <property name="basenames">
-        <list>
-          <value>ui</value>
-        </list>
-      </property>
-    </bean>
   </beans>
 </beans>
