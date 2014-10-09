@@ -805,6 +805,7 @@
         background-color: #fff;
         float: left;
         margin: 0;
+        overflow: hidden;
         width: 100%;
     }
 
