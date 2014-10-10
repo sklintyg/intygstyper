@@ -1,16 +1,16 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import org.joda.time.LocalDate;
-import org.junit.Test;
-import org.springframework.core.io.ClassPathResource;
-import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.model.LocalDateInterval;
-import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import org.springframework.core.io.ClassPathResource;
+
+import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.certificate.model.InternalLocalDateInterval;
+import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 
 /**
  * @author andreaskaltenbach, marced
@@ -212,9 +212,9 @@ public class InternalValidatorTest {
         Fk7263Intyg utlatande = getValidUtlatande();
 
         // Screw up one of the intervals so from > tom
-        LocalDateInterval reversedPeriod = utlatande.getNedsattMed25();
-        reversedPeriod.setFrom(new LocalDate(2011, 4, 1));
-        reversedPeriod.setTom(new LocalDate(2011, 2, 1));
+        InternalLocalDateInterval reversedPeriod = utlatande.getNedsattMed25();
+        reversedPeriod.setFrom("2011-04-01");
+        reversedPeriod.setTom("2011-02-01");
 
         assertEquals(1, new InternalValidator(utlatande).validate().size());
     }
@@ -234,7 +234,7 @@ public class InternalValidatorTest {
         Fk7263Intyg utlatande = getValidUtlatande();
 
         // remove skickatdatum
-        utlatande.getNedsattMed100().setTom(utlatande.getNedsattMed100().getFrom().minusDays(1));
+        utlatande.getNedsattMed100().setTom(utlatande.getNedsattMed100().fromAsLocalDate().minusDays(1).toString());
 
         assertEquals(1, new InternalValidator(utlatande).validate().size());
     }

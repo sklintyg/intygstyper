@@ -1,13 +1,15 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import org.apache.commons.lang3.StringUtils;
-import org.joda.time.LocalDate;
-import se.inera.certificate.model.LocalDateInterval;
-import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 
 import java.util.List;
 
-import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
+import org.apache.commons.lang3.StringUtils;
+import org.joda.time.LocalDate;
+
+import se.inera.certificate.model.InternalLocalDateInterval;
+import se.inera.certificate.model.LocalDateInterval;
+import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 
 /**
  * Validates a fk7263 certificate's specific rules that's not covered by schema validation or external validation.
@@ -101,7 +103,7 @@ public class InternalValidator extends AbstractValidator {
         }
     }
 
-    protected boolean validateIntervals(String fieldId, LocalDateInterval... intervals) {
+    protected boolean validateIntervals(String fieldId, InternalLocalDateInterval... intervals) {
         if (intervals == null || allNulls(intervals)) {
             addValidationError(fieldId + ": At least 1 interval must be filled");
             return false;
@@ -109,7 +111,7 @@ public class InternalValidator extends AbstractValidator {
 
         for (int i = 0; i < intervals.length; i++) {
             if (intervals[i] != null) {
-                if (!isValidInterval(intervals[i].getFrom(), intervals[i].getTom())) {
+                if (!isValidInterval(intervals[i].fromAsLocalDate(), intervals[i].tomAsLocalDate())) {
                     addValidationError(fieldId + ": Invalid date interval (from " + intervals[i].getFrom() + ", tom "
                             + intervals[i].getTom());
                     return false;
@@ -120,8 +122,8 @@ public class InternalValidator extends AbstractValidator {
 
     }
 
-    private boolean allNulls(LocalDateInterval[] intervals) {
-        for (LocalDateInterval interval : intervals) {
+    private boolean allNulls(InternalLocalDateInterval[] intervals) {
+        for (InternalLocalDateInterval interval : intervals) {
             if (interval != null) {
                 return false;
             }

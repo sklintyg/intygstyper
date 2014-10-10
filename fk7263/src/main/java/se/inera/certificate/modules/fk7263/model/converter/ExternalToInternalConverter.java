@@ -1,5 +1,9 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
+import java.util.List;
+
+import se.inera.certificate.model.InternalDate;
+import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.PhysicalQuantity;
@@ -21,8 +25,6 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Referens;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
-
-import java.util.List;
 
 /**
  * @author andreaskaltenbach
@@ -107,14 +109,13 @@ public class ExternalToInternalConverter {
         }
     }
 
-    private void convertArbetsformaga(Fk7263Intyg intyg, Fk7263Utlatande source) {
+    private void convertArbetsformaga(Fk7263Intyg intyg, Fk7263Utlatande source) throws ConverterException {
         List<Fk7263Observation> arbetsformagor = source.getObservationsByKod(ObservationsKoder.ARBETSFORMAGA);
 
         for (Fk7263Observation arbetsformaga : arbetsformagor) {
 
             if (!arbetsformaga.getVarde().isEmpty()) {
-                LocalDateInterval interval = DateTimeConverter.toLocalDateInterval(arbetsformaga
-                        .getObservationsperiod());
+                InternalLocalDateInterval interval = DateTimeConverter.toInternalLocalDateInterval(arbetsformaga.getObservationsperiod());
                 PhysicalQuantity quantity = (PhysicalQuantity) arbetsformaga.getVarde().get(0);
 
                 switch (quantity.getQuantity().toString()) {
@@ -243,10 +244,10 @@ public class ExternalToInternalConverter {
         for (Vardkontakt vardkontakt : source.getVardkontakter()) {
             if (Vardkontakttypkoder.MIN_UNDERSOKNING_AV_PATIENTEN.equals(vardkontakt.getVardkontakttyp())
                     && vardkontakt.getVardkontaktstid() != null) {
-                intyg.setUndersokningAvPatienten(vardkontakt.getVardkontaktstid().getFrom());
+                intyg.setUndersokningAvPatienten(new InternalDate(vardkontakt.getVardkontaktstid().getFrom()));
             } else if (Vardkontakttypkoder.MIN_TELEFONKONTAKT_MED_PATIENTEN.equals(vardkontakt.getVardkontakttyp())
                     && vardkontakt.getVardkontaktstid() != null) {
-                intyg.setTelefonkontaktMedPatienten(vardkontakt.getVardkontaktstid().getTom());
+                intyg.setTelefonkontaktMedPatienten(new InternalDate(vardkontakt.getVardkontaktstid().getTom()));
             }
         }
     }
@@ -254,10 +255,10 @@ public class ExternalToInternalConverter {
     private void convertReferenser(Fk7263Intyg intyg, Fk7263Utlatande source) {
         for (Fk7263Referens referens : source.getReferenser()) {
             if (Referenstypkoder.JOURNALUPPGIFT.equals(referens.getReferenstyp())) {
-                intyg.setJournaluppgifter(referens.getDatum());
+                intyg.setJournaluppgifter(new InternalDate(referens.getDatum()));
             }
             if (Referenstypkoder.ANNAT.equals(referens.getReferenstyp())) {
-                intyg.setAnnanReferens(referens.getDatum());
+                intyg.setAnnanReferens(new InternalDate(referens.getDatum()));
                 intyg.setAnnanReferensBeskrivning(referens.getBeskrivning());
             }
         }

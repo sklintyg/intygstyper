@@ -26,10 +26,10 @@ import se.inera.certificate.modules.support.api.dto.ValidationStatus;
 
 @RunWith(MockitoJUnitRunner.class)
 public class InternalDraftValidatorTest {
-    
+
     @Mock
     private WebcertModuleService mockModuleService;
-    
+
     @InjectMocks
     private InternalDraftValidator validator = new InternalDraftValidator();
 
@@ -37,7 +37,7 @@ public class InternalDraftValidatorTest {
     public void setUpModuleServiceExpectation() throws Exception {
         Mockito.when(mockModuleService.validateDiagnosisCode(Mockito.argThat(new DiagnosKodArgmentMatcher()))).thenReturn(true);
     }
-    
+
     @Test
     public void testValidate() throws Exception {
         for (se.inera.certificate.modules.fk7263.utils.Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
@@ -80,17 +80,17 @@ public class InternalDraftValidatorTest {
         }
         return collection.iterator().next();
     }
-    
+
     /**
      * ArgumentMatcher that validates a supplied diagnos code argument. If its not in the list, it is invalid!
-     * 
+     *
      * @author npet
      *
      */
     class DiagnosKodArgmentMatcher extends ArgumentMatcher<String> {
-        
+
         private List<String> ALLOWED_CODES = Arrays.asList("S47", "TEST1", "TEST2", "TEST3");
-        
+
         @Override
         public boolean matches(Object arg) {
             if (arg instanceof String) {
@@ -98,7 +98,5 @@ public class InternalDraftValidatorTest {
             }
             return false;
         }
-        
     }
-    
 }

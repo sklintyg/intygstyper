@@ -1,5 +1,10 @@
 package se.inera.certificate.modules.fk7263.validator;
 
+import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -7,19 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.certificate.model.LocalDateInterval;
+import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.service.WebcertModuleService;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.dto.ValidationMessage;
 import se.inera.certificate.modules.support.api.dto.ValidationStatus;
-
 import se.inera.certificate.validate.StringValidator;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 
 public class InternalDraftValidator {
 
@@ -44,8 +43,30 @@ public class InternalDraftValidator {
         validateKommentar(utlatande, validationMessages);
         validateVardenhet(utlatande, validationMessages);
         validateOvrigaRekommendationer(utlatande, validationMessages);
+        validateReferenser(utlatande, validationMessages);
+        validateVardkontakter(utlatande, validationMessages);
 
         return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
+    }
+
+
+    private void validateVardkontakter(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
+        if (utlatande.getTelefonkontaktMedPatienten() != null) {
+           //VALIDATE
+        }
+        if (utlatande.getUndersokningAvPatienten() != null) {
+            //VALIDATE
+        }
+    }
+
+
+    private void validateReferenser(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
+        if (utlatande.getAnnanReferens() != null) {
+            //VALIDATE
+        }
+        if (utlatande.getJournaluppgifter() != null) {
+            //VALIDATE
+        }
     }
 
 
@@ -252,7 +273,7 @@ public class InternalDraftValidator {
      *            intervals
      * @return booleans
      */
-    protected boolean validateIntervals(List<ValidationMessage> validationMessages, String fieldId, LocalDateInterval... intervals) {
+    protected boolean validateIntervals(List<ValidationMessage> validationMessages, String fieldId, InternalLocalDateInterval... intervals) {
         if (intervals == null || allNulls(intervals)) {
             addValidationError(validationMessages, fieldId, "fk7263.validation.arbetsformaga.choose-at-least-one");
             return false;
@@ -260,14 +281,14 @@ public class InternalDraftValidator {
 
         for (int i = 0; i < intervals.length; i++) {
             if (intervals[i] != null) {
-                Interval oneInterval = createInterval(intervals[i].getFrom(), intervals[i].getTom());
+                Interval oneInterval = createInterval(intervals[i].fromAsLocalDate(), intervals[i].tomAsLocalDate());
                 if (oneInterval == null) {
                     addValidationError(validationMessages, fieldId, "fk7263.validation.arbetsformaga.incorrect-date-interval");
                     return false;
                 }
                 for (int j = i + 1; j < intervals.length; j++) {
                     if (intervals[j] != null) {
-                        Interval anotherInterval = createInterval(intervals[j].getFrom(), intervals[j].getTom());
+                        Interval anotherInterval = createInterval(intervals[j].fromAsLocalDate(), intervals[j].tomAsLocalDate());
                         if (anotherInterval == null) {
                             addValidationError(validationMessages, fieldId, "fk7263.validation.arbetsformaga.incorrect-date-interval");
                             return false;
@@ -290,8 +311,8 @@ public class InternalDraftValidator {
      *            intervals
      * @return boolean
      */
-    private boolean allNulls(LocalDateInterval[] intervals) {
-        for (LocalDateInterval interval : intervals) {
+    private boolean allNulls(InternalLocalDateInterval[] intervals) {
+        for (InternalLocalDateInterval interval : intervals) {
             if (interval != null) {
                 return false;
             }

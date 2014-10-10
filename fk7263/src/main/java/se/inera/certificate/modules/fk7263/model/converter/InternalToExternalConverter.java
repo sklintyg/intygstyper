@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.Id;
+import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.PhysicalQuantity;
@@ -124,16 +125,16 @@ public class InternalToExternalConverter {
 
         if (source.getUndersokningAvPatienten() != null) {
             Vardkontakt vardkontakt = new Vardkontakt();
-            vardkontakt.setVardkontaktstid(new LocalDateInterval(source.getUndersokningAvPatienten(),
-                    source.getUndersokningAvPatienten()));
+            vardkontakt.setVardkontaktstid(new LocalDateInterval(source.getUndersokningAvPatienten().asLocalDate(),
+                    source.getUndersokningAvPatienten().asLocalDate()));
             vardkontakt.setVardkontakttyp(Vardkontakttypkoder.MIN_UNDERSOKNING_AV_PATIENTEN);
             vardkontakter.add(vardkontakt);
         }
 
         if (source.getTelefonkontaktMedPatienten() != null) {
             Vardkontakt vardkontakt = new Vardkontakt();
-            vardkontakt.setVardkontaktstid(new LocalDateInterval(source.getTelefonkontaktMedPatienten(),
-                    source.getTelefonkontaktMedPatienten()));
+            vardkontakt.setVardkontaktstid(new LocalDateInterval(source.getTelefonkontaktMedPatienten().asLocalDate(),
+                    source.getTelefonkontaktMedPatienten().asLocalDate()));
             vardkontakt.setVardkontakttyp(Vardkontakttypkoder.MIN_TELEFONKONTAKT_MED_PATIENTEN);
             vardkontakter.add(vardkontakt);
         }
@@ -154,7 +155,7 @@ public class InternalToExternalConverter {
         if (source.getJournaluppgifter() != null) {
             Fk7263Referens referens = new Fk7263Referens();
             referens.setReferenstyp(Referenstypkoder.JOURNALUPPGIFT);
-            referens.setDatum(source.getJournaluppgifter());
+            referens.setDatum(source.getJournaluppgifter().asLocalDate());
             referenser.add(referens);
 
         }
@@ -162,7 +163,7 @@ public class InternalToExternalConverter {
         if (source.getAnnanReferens() != null) {
             Fk7263Referens referens = new Fk7263Referens();
             referens.setReferenstyp(Referenstypkoder.ANNAT);
-            referens.setDatum(source.getAnnanReferens());
+            referens.setDatum(source.getAnnanReferens().asLocalDate());
             referens.setBeskrivning(source.getAnnanReferensBeskrivning());
             referenser.add(referens);
         }
@@ -291,7 +292,7 @@ public class InternalToExternalConverter {
      *            {@link PhysicalQuantity}
      * @return {@link Fk7263Observation}
      */
-    private Fk7263Observation buildArbetsformageObservation(Kod kod, LocalDateInterval period, PhysicalQuantity varde, String beskrivning) {
+    private Fk7263Observation buildArbetsformageObservation(Kod kod, InternalLocalDateInterval period, PhysicalQuantity varde, String beskrivning) {
         Fk7263Observation obs = new Fk7263Observation();
 
         obs.setObservationskod(kod);

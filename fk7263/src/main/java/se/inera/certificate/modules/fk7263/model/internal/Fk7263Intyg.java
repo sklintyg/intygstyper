@@ -1,11 +1,13 @@
 package se.inera.certificate.modules.fk7263.model.internal;
 
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import se.inera.certificate.model.LocalDateInterval;
-
 import static se.inera.certificate.model.util.Strings.emptyToNull;
 import static se.inera.certificate.model.util.Strings.join;
+
+import org.joda.time.LocalDateTime;
+
+import se.inera.certificate.model.InternalDate;
+import se.inera.certificate.model.InternalLocalDateInterval;
+import se.inera.certificate.model.LocalDateInterval;
 
 /**
  * @author andreaskaltenbach
@@ -36,10 +38,10 @@ public class Fk7263Intyg {
 
     private String funktionsnedsattning;
 
-    private LocalDate undersokningAvPatienten;
-    private LocalDate telefonkontaktMedPatienten;
-    private LocalDate journaluppgifter;
-    private LocalDate annanReferens;
+    private InternalDate undersokningAvPatienten;
+    private InternalDate telefonkontaktMedPatienten;
+    private InternalDate journaluppgifter;
+    private InternalDate annanReferens;
 
     private String annanReferensBeskrivning;
 
@@ -63,10 +65,10 @@ public class Fk7263Intyg {
     private boolean foraldrarledighet;
 
     private String tjanstgoringstid;
-    private LocalDateInterval nedsattMed25;
-    private LocalDateInterval nedsattMed50;
-    private LocalDateInterval nedsattMed75;
-    private LocalDateInterval nedsattMed100;
+    private InternalLocalDateInterval nedsattMed25;
+    private InternalLocalDateInterval nedsattMed50;
+    private InternalLocalDateInterval nedsattMed75;
+    private InternalLocalDateInterval nedsattMed100;
 
     private String nedsattMed25Beskrivning;
     private String nedsattMed50Beskrivning;
@@ -214,35 +216,35 @@ public class Fk7263Intyg {
         this.funktionsnedsattning = funktionsnedsattning;
     }
 
-    public LocalDate getUndersokningAvPatienten() {
+    public InternalDate getUndersokningAvPatienten() {
         return undersokningAvPatienten;
     }
 
-    public void setUndersokningAvPatienten(LocalDate undersokningAvPatienten) {
+    public void setUndersokningAvPatienten(InternalDate undersokningAvPatienten) {
         this.undersokningAvPatienten = undersokningAvPatienten;
     }
 
-    public LocalDate getTelefonkontaktMedPatienten() {
+    public InternalDate getTelefonkontaktMedPatienten() {
         return telefonkontaktMedPatienten;
     }
 
-    public void setTelefonkontaktMedPatienten(LocalDate telefonkontaktMedPatienten) {
+    public void setTelefonkontaktMedPatienten(InternalDate telefonkontaktMedPatienten) {
         this.telefonkontaktMedPatienten = telefonkontaktMedPatienten;
     }
 
-    public LocalDate getJournaluppgifter() {
+    public InternalDate getJournaluppgifter() {
         return journaluppgifter;
     }
 
-    public void setJournaluppgifter(LocalDate journaluppgifter) {
+    public void setJournaluppgifter(InternalDate journaluppgifter) {
         this.journaluppgifter = journaluppgifter;
     }
 
-    public LocalDate getAnnanReferens() {
+    public InternalDate getAnnanReferens() {
         return annanReferens;
     }
 
-    public void setAnnanReferens(LocalDate annanReferens) {
+    public void setAnnanReferens(InternalDate annanReferens) {
         this.annanReferens = annanReferens;
     }
 
@@ -374,35 +376,35 @@ public class Fk7263Intyg {
         this.foraldrarledighet = foraldrarledighet;
     }
 
-    public LocalDateInterval getNedsattMed25() {
+    public InternalLocalDateInterval getNedsattMed25() {
         return nedsattMed25;
     }
 
-    public void setNedsattMed25(LocalDateInterval nedsattMed25) {
+    public void setNedsattMed25(InternalLocalDateInterval nedsattMed25) {
         this.nedsattMed25 = nedsattMed25;
     }
 
-    public LocalDateInterval getNedsattMed50() {
+    public InternalLocalDateInterval getNedsattMed50() {
         return nedsattMed50;
     }
 
-    public void setNedsattMed50(LocalDateInterval nedsattMed50) {
+    public void setNedsattMed50(InternalLocalDateInterval nedsattMed50) {
         this.nedsattMed50 = nedsattMed50;
     }
 
-    public LocalDateInterval getNedsattMed75() {
+    public InternalLocalDateInterval getNedsattMed75() {
         return nedsattMed75;
     }
 
-    public void setNedsattMed75(LocalDateInterval nedsattMed75) {
+    public void setNedsattMed75(InternalLocalDateInterval nedsattMed75) {
         this.nedsattMed75 = nedsattMed75;
     }
 
-    public LocalDateInterval getNedsattMed100() {
+    public InternalLocalDateInterval getNedsattMed100() {
         return nedsattMed100;
     }
 
-    public void setNedsattMed100(LocalDateInterval nedsattMed100) {
+    public void setNedsattMed100(InternalLocalDateInterval nedsattMed100) {
         this.nedsattMed100 = nedsattMed100;
     }
 
