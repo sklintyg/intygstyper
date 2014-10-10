@@ -1,17 +1,19 @@
 package se.inera.certificate.integration.json;
 
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.joda.time.Partial;
+
+import se.inera.certificate.model.InternalDate;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.joda.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.joda.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.joda.ser.LocalDateTimeSerializer;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.Partial;
 
 /**
  * Customized Jackson ObjectMapper for the inera-certificate projects.
@@ -35,6 +37,9 @@ public class CustomObjectMapper extends ObjectMapper {
         private Module() {
             addSerializer(Partial.class, new PartialSerializer());
             addDeserializer(Partial.class, new PartialDeserializer());
+
+            addSerializer(InternalDate.class, new InternalDateSerializer());
+            addDeserializer(InternalDate.class, new InternalDateDeserializer());
 
             addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
             addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
