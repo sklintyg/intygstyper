@@ -14,7 +14,7 @@
         </h1>
         <p>
           <div class="mi-text" message key="fk7263.label.pageingress"></div>
-          
+
           <div collapse="!isCollapsed1" class="collapse mi-text">
 	          <div message key="fk7263.label.pagedescription.sendcertificate.header"></div>
 			  <div message key="fk7263.label.pagedescription.sendcertificate"></div>
@@ -106,7 +106,7 @@
                   <span class="cert-titlebar-value">{{cert.signeringsdatum | date:'shortDate'}}</span> <span><span message key="fk7263.label.issued"></span></span>
                 </div>
 				<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 archive hidden-xs">
-                  <a href="#ng-click" role="button" data-toggle="modal" title="{{messageService.getProperty('modules.button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
+                  <a role="button" data-toggle="modal" id="archiveBtn" title="{{messageService.getProperty('modules.button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
 
                       <span class="glyphicon glyphicon-folder-close white"></span>
 					  <!-- <img alt="Arkivera intyg" src="/img/archive-icon.gif" /> -->

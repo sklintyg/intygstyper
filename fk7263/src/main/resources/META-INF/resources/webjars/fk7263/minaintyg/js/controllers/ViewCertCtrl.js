@@ -1,7 +1,7 @@
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
-    [ '$location', '$log', '$rootScope', '$routeParams', '$scope', 'fk7263.certificateService',
-        'minaintyg.listCertService', 'common.dialogService', 'common.messageService',
-        function($location, $log, $rootScope, $routeParams, $scope, certificateService, listCertService, dialogService,
+    [ '$location', '$log', '$rootScope', '$routeParams', '$scope', 'minaintyg.listCertService',
+        'common.certificateService', 'common.dialogService', 'common.messageService',
+        function($location, $log, $rootScope, $routeParams, $scope, listCertService, certificateService, dialogService,
             messageService) {
             'use strict';
 
@@ -22,6 +22,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                 acceptprogressdone: true,
                 focus: false
             };
+
             var archiveDialog = {};
 
             $scope.archiveSelected = function() {
