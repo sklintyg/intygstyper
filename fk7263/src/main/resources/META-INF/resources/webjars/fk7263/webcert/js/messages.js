@@ -115,6 +115,12 @@ var fk7263Messages = {
         'fk7263.helptext.adress': 'Vårdenhetens kontaktuppgifter inhämtas från HSA. Om vårdenhetens kontaktuppgifter inte stämmer kontakta HSA för att ändra dem.',
 
         //Validation messages
+        'fk7263.validation.vardkontakter.telefonkontakt.incorrect_format' : 'Fel datumformat för telefonkontakt med patient (Fält 4b)',
+        'fk7263.validation.vardkontakter.undersokning.incorrect_format' : 'Fel datumformat för undersökning av patient (Fält 4b)',
+
+        'fk7263.validation.referenser.annan.incorrect_format' : 'Fel datumformat för annan referens (Fält 4b)',
+        'fk7263.validation.referenser.journaluppgifter.incorrect_format' : 'Fel datumformat för journaluppgifter (Fält 4b)',
+
         'fk7263.validation.diagnos.missing': 'ICD-10 kod saknas på huvuddiagnosen. (Fält 2)',
         'fk7263.validation.diagnos.invalid': 'ICD-10 kod på huvuddiagnosen är ej giltig',
         'fk7263.validation.diagnos2.invalid': 'ICD-10 kod på ytterligare diagnoser rad 1, är ej giltig. (Fält 2)',
