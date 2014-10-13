@@ -126,6 +126,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * @returns {*}
              */
             function isDate(date) {
+                if (date === undefined || date === null) {
+                    return false;
+                }
+
                 return moment(date).isValid();
             }
 
@@ -327,6 +331,19 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             }
 
             /**
+             * Convert valid dates
+             * @param $scope
+             */
+            function convertValidDateToString(date) {
+                if (isDate(date)) {
+                    date = moment(date).format('YYYY-MM-DD');
+                    return date;
+                } else {
+                    return date;
+                }
+            }
+
+            /**
              * Convert form temporary bindings to internal model
              * @param $scope
              */
@@ -391,7 +408,13 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     }
                 }
 
-                // Fält 4b. AnnanReferensBeskrivning
+                // Fält 4b.
+                $scope.cert.undersokningAvPatienten = convertValidDateToString($scope.cert.undersokningAvPatienten);
+                $scope.cert.telefonkontaktMedPatienten = convertValidDateToString($scope.cert.telefonkontaktMedPatienten);
+                $scope.cert.journaluppgifter = convertValidDateToString($scope.cert.journaluppgifter);
+                $scope.cert.annanReferens = convertValidDateToString($scope.cert.annanReferens);
+
+                // AnnanReferensBeskrivning
                 if ($scope.basedOnState.check.annanReferens) {
                     $scope.cert.annanReferensBeskrivning = $scope.form.ovrigt.annanReferensBeskrivning;
                 } else {
