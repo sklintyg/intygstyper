@@ -483,6 +483,7 @@
         margin-left: 5px;
         color: #008391;
         /*position: absolute;*/
+        font-weight: 900;
     }
 
     .glyphicon-question-sign:hover {
