@@ -274,7 +274,7 @@ public final class TransportToExternalFk7263LegacyConverter {
 
         switch (source.getTypAvFunktionstillstand()) {
         case AKTIVITET:
-            if (source.getBeskrivning() != null) {
+            if (source.getBeskrivning() != null && !source.getBeskrivning().isEmpty()) {
                 observation.setObservationskategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
                 observation.setBeskrivning(EmptyStringUtil.escapeEmptyString(source.getBeskrivning()));
             } else {
@@ -282,7 +282,7 @@ public final class TransportToExternalFk7263LegacyConverter {
             }
             break;
         case KROPPSFUNKTION:
-            if (source.getBeskrivning() != null) {
+            if (source.getBeskrivning() != null && !source.getBeskrivning().isEmpty()) {
                 observation.setObservationskategori(ObservationsKoder.KROPPSFUNKTIONER);
                 observation.setBeskrivning(EmptyStringUtil.escapeEmptyString(source.getBeskrivning()));
             } else {
