@@ -59,13 +59,6 @@ public class ExternalValidator extends AbstractValidator {
             }
         }
 
-        // Field 5:
-        Fk7263Observation aktivitetsBegransning = externalUtlatande
-                .findObservationByKategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
-        if (aktivitetsBegransning != null && aktivitetsBegransning.getBeskrivning() == null) {
-            addValidationError("Field 5: beskrivning is mandatory for this observation.");
-        }
-
         // Field 6a:
         Fk7263Aktivitet ovrigtRekomendation = externalUtlatande.getAktivitet(Aktivitetskoder.OVRIGT);
         if (ovrigtRekomendation != null && ovrigtRekomendation.getBeskrivning() == null) {
