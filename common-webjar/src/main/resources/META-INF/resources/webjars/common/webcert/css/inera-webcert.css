@@ -362,9 +362,15 @@
         margin: 0;
     }
 
+
+
     .form-inline input[datepicker-popup],
     input[datepicker-popup] {
         width: 94px;
+    }
+
+    [datepicker] thead tr th {
+        padding-bottom: 10px;
     }
 
     .input-year {

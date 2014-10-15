@@ -120,6 +120,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Private controller support functions
              ***************************************************************************/
 
+            function isInvalid(data) {
+                return (data === undefined || data === null || data === '');
+            }
+
             /**
              * Does supplied date look like an iso date XXXX-XX-XX (not a complete validation)?
              * @param date
@@ -499,7 +503,9 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * @param baserasPaType
              */
             $scope.onChangeBaserasPaDate = function(baserasPaType) {
-                if ($scope.cert[baserasPaType] && $scope.cert[baserasPaType] !== '') {
+                if (isInvalid($scope.cert[baserasPaType])) {
+                    $scope.basedOnState.check[baserasPaType] = false;
+                } else {
                     $scope.basedOnState.check[baserasPaType] = true;
                 }
             };
@@ -627,8 +633,15 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
                 // Bail out if model hasn't been loaded yet
                 var nedsattModel = $scope.cert[nedsattModelName];
-                if (nedsattModel === undefined) {
+                if (nedsattModel === undefined || nedsattModel === '') {
+                    // Uncheck checkbox if both dates are empty
+                    $scope.workState[nedsattModelName] = false;
                     return;
+                }
+
+                if (isInvalid(nedsattModel.from) && isInvalid(nedsattModel.tom)) {
+                    // Uncheck checkbox if both dates are empty
+                    $scope.workState[nedsattModelName] = false;
                 }
 
                 var dateField = $scope.cert[nedsattModelName][fromTom];
