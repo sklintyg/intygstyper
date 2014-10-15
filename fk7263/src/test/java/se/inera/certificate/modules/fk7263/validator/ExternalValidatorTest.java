@@ -151,13 +151,13 @@ public class ExternalValidatorTest {
     }
 
     @Test
-    public void testInvalidObservationAktivitetsbegransningBeskrivning() throws Exception {
+    public void testValidObservationAktivitetsbegransningBeskrivning() throws Exception {
         Fk7263Utlatande utlatande = getValidUtlatande();
 
         Fk7263Observation observation = utlatande.findObservationByKategori(ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET);
         observation.setBeskrivning(null);
 
-        assertEquals(1, new ExternalValidator(utlatande).validate().size());
+        assertEquals(0, new ExternalValidator(utlatande).validate().size());
     }
 
     @Test
