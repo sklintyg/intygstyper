@@ -375,7 +375,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
               <!-- 16 ovrigt -->
               <div wc-field field-label="ts-bas.label.ovrigkommentar" filled="true">
                 <p ng-show="cert.kommentar.length > 0">
-                  <span id="kommentar">{{cert.kommentar}}</span>
+                  <span id="kommentar"><span class="ts-cert-answer">{{cert.kommentar}}</span></span>
                 </p>
 
                 <p class="ts-cert-answer" ng-show="!cert.kommentar" id="kommentarEjAngivet">

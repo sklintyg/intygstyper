@@ -253,10 +253,10 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
               <div wc-field field-label="ts-diabetes.label.ovrigkommentar" filled="true">
                 <div id="kommentar">
                   <span ng-show="cert.kommentar.length > 0">
-                    {{cert.kommentar}}
+                    <span class="ts-cert-answer">{{cert.kommentar}}</span>
                   </span>
                   <span ng-show="!cert.kommentar">
-                    <span message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
+                    <span class="ts-cert-answer" message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
                   </span>
                 </div>
               </div>
@@ -265,9 +265,9 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                    filled="true">
                 <div id="lakareSpecialKompetens">
                   <span ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">
-                    {{cert.bedomning.lakareSpecialKompetens}}<br>
+                    <span class="ts-cert-answer">{{cert.bedomning.lakareSpecialKompetens}}</span><br>
                   </span>
-                  <span ng-show="!cert.bedomning.lakareSpecialKompetens" message
+                  <span class="ts-cert-answer" ng-show="!cert.bedomning.lakareSpecialKompetens" message
                           key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
                 </div>
               </div>
