@@ -1,8 +1,8 @@
 [
     "/web/webjars/common/webcert/js/messages.js",
     "/web/webjars/common/webcert/js/directives/message.js",
+    "/web/webjars/common/webcert/js/directives/wcDecimal.js",
     "/web/webjars/common/webcert/js/directives/wcEnableTooltip.js",
-    "/web/webjars/common/webcert/js/directives/wcEyeDecimal.js",
     "/web/webjars/common/webcert/js/directives/wcField.js",
     "/web/webjars/common/webcert/js/directives/wcFieldSingle.js",
     "/web/webjars/common/webcert/js/directives/wcFocusMe.js",
