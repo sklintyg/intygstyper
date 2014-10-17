@@ -419,7 +419,19 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.cert.rekommendationOvrigt = null;
                 }
 
-                // Fält 8b.
+                // Fält 8b. convert dates to string from viewvalue (modelvalue is undefined for invalid dates from datepicker)
+                $scope.cert.nedsattMed25 = $scope.certForm.nedsattMed25startdate.$viewValue;
+                $scope.cert.nedsattMed25 = $scope.certForm.nedsattMed25enddate.$viewValue;
+
+                $scope.cert.nedsattMed50 = $scope.certForm.nedsattMed50startdate.$viewValue;
+                $scope.cert.nedsattMed50 = $scope.certForm.nedsattMed50enddate.$viewValue;
+
+                $scope.cert.nedsattMed75 = $scope.certForm.nedsattMed75startdate.$viewValue;
+                $scope.cert.nedsattMed75 = $scope.certForm.nedsattMed75enddate.$viewValue;
+
+                $scope.cert.nedsattMed100 = $scope.certForm.nedsattMed100startdate.$viewValue;
+                $scope.cert.nedsattMed100 = $scope.certForm.nedsattMed100enddate.$viewValue;
+
                 if ($scope.workState.nedsattMed25) {
                     $scope.cert.nedsattMed25Beskrivning = $scope.form.ovrigt.nedsattMed25Beskrivning;
                 } else {
