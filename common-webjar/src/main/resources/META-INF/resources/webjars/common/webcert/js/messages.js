@@ -88,7 +88,8 @@ var commonMessages = {
         'common.error.certificateinvalid': '<strong>Intyget är inte korrekt ifyllt</strong>',
         'common.error.signerror': '<strong>Intyget kunde inte signeras.</strong><br>Försök igen senare.',
         'common.error.unknown_internal_problem': '<strong>Tekniskt fel i Webcert.</strong><br>Försök igen senare.',
-        'common.error.data_not_found': '<strong>Intyget kunde inte hittas.</strong><br>Intyget är borttaget eller så saknas behörighet.'
+        'common.error.data_not_found': '<strong>Intyget kunde inte hittas.</strong><br>Intyget är borttaget eller så saknas behörighet.',
+        'common.error.module_problem': '<strong>Tekniskt fel i Webcert.</strong><br>Problem att kontakta intygsmodulen.'
     },
     'en': {
         'common.ok': 'OK',

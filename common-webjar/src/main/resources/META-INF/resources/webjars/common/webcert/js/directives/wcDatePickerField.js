@@ -22,7 +22,9 @@ angular.module('common').directive('wcDatePickerField',
                 }, false);
 
                 $scope.isOpen = false;
-                $scope.toggleOpen = function() {
+                $scope.toggleOpen = function($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
                     $timeout(function() {
                         $scope.isOpen = !$scope.isOpen;
                     });

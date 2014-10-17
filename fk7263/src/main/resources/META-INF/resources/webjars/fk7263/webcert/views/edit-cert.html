@@ -133,7 +133,7 @@
                         Min undersökning av patienten</label>
                       <span wc-date-picker-field target-model="cert.undersokningAvPatienten"
                             on-change="onChangeBaserasPaDate('undersokningAvPatienten')"
-                            dom-id="undersokningAvPatienten-date"></span>
+                            dom-id="undersokningAvPatientenDate"></span>
                     </div>
 
                     <!-- Telefonkontakt -->
@@ -146,7 +146,7 @@
                         Min telefonkontakt med patienten</label>
                       <span wc-date-picker-field target-model="cert.telefonkontaktMedPatienten"
                             on-change="onChangeBaserasPaDate('telefonkontaktMedPatienten')"
-                            dom-id="telefonkontaktMedPatienten-date"></span>
+                            dom-id="telefonkontaktMedPatientenDate"></span>
                     </div>
 
                     <!-- Journaluppgifter -->
@@ -158,7 +158,7 @@
                                                                                            ng-change="toggleBaseradPaDate('journaluppgifter')" />
                         Journaluppgifter</label>
                       <span wc-date-picker-field target-model="cert.journaluppgifter"
-                            on-change="onChangeBaserasPaDate('journaluppgifter')" dom-id="journaluppgifter-date"></span>
+                            on-change="onChangeBaserasPaDate('journaluppgifter')" dom-id="journaluppgifterDate"></span>
                     </div>
 
                     <!-- Annat -->
@@ -171,7 +171,7 @@
                         Annat<span wc-enable-tooltip field-help-text="fk7263.helptext.intyg-baserat-pa.annat" />
                       </label>
                       <span wc-date-picker-field target-model="cert.annanReferens"
-                            on-change="onChangeBaserasPaDate('annanReferens')" dom-id="annanReferens-date"></span>
+                            on-change="onChangeBaserasPaDate('annanReferens')" dom-id="annanReferensDate"></span>
                     </div>
                     <div class="otherText indent" ng-if="basedOnState.check.annanReferens">
                       <span>Ange vad:</span><br />

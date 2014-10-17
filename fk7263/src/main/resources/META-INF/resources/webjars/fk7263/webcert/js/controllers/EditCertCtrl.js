@@ -120,6 +120,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Private controller support functions
              ***************************************************************************/
 
+            function isInvalid(data) {
+                return (data === undefined || data === null || data === '');
+            }
+
             /**
              * Does supplied date look like an iso date XXXX-XX-XX (not a complete validation)?
              * @param date
@@ -331,19 +335,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             }
 
             /**
-             * Convert valid dates
-             * @param $scope
-             */
-            function convertValidDateToString(date) {
-                if (isDate(date)) {
-                    date = moment(date).format('YYYY-MM-DD');
-                    return date;
-                } else {
-                    return date;
-                }
-            }
-
-            /**
              * Convert form temporary bindings to internal model
              * @param $scope
              */
@@ -408,13 +399,13 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     }
                 }
 
-                // Fält 4b.
-                $scope.cert.undersokningAvPatienten = convertValidDateToString($scope.cert.undersokningAvPatienten);
-                $scope.cert.telefonkontaktMedPatienten = convertValidDateToString($scope.cert.telefonkontaktMedPatienten);
-                $scope.cert.journaluppgifter = convertValidDateToString($scope.cert.journaluppgifter);
-                $scope.cert.annanReferens = convertValidDateToString($scope.cert.annanReferens);
+                // Fält 4b. datum
+                var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter', 'annanReferens'];
+                angular.forEach(baserasPaTypes, function(type) {
+                    this[type] = $scope.certForm[type + 'Date'].$viewValue;
+                }, $scope.cert);
 
-                // AnnanReferensBeskrivning
+                // Fält 4b. AnnanReferensBeskrivning
                 if ($scope.basedOnState.check.annanReferens) {
                     $scope.cert.annanReferensBeskrivning = $scope.form.ovrigt.annanReferensBeskrivning;
                 } else {
@@ -522,7 +513,9 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * @param baserasPaType
              */
             $scope.onChangeBaserasPaDate = function(baserasPaType) {
-                if ($scope.cert[baserasPaType] && $scope.cert[baserasPaType] !== '') {
+                if (isInvalid($scope.certForm[baserasPaType + 'Date'].$viewValue)) {
+                    $scope.basedOnState.check[baserasPaType] = false;
+                } else {
                     $scope.basedOnState.check[baserasPaType] = true;
                 }
             };
