@@ -8,6 +8,10 @@ angular.module('common').factory('common.User',
                 this.userContext = null;
             },
 
+            getActiveFeatures: function() {
+                return this.userContext.aktivaFunktioner;
+            },
+
             /**
              * Set user context from api
              * @param userContext
