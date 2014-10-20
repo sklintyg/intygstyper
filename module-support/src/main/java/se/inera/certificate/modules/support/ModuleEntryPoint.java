@@ -1,6 +1,10 @@
 package se.inera.certificate.modules.support;
 
+import java.util.Map;
+import java.util.Set;
+
 import se.inera.certificate.modules.support.api.ModuleApi;
+import se.inera.certificate.modules.support.feature.ModuleFeature;
 
 /**
  * Defines the contract for modules so they can be discovered by an application.
@@ -45,6 +49,8 @@ public interface ModuleEntryPoint {
      * @return True if fraga/svar should be available.
      */
     boolean isModuleFragaSvarAvailable();
+    
+    Map<String, Boolean> getModuleFeatures();
 
     /**
      * Returns the module css path.

@@ -1,10 +1,13 @@
 package se.inera.certificate.modules.ts_diabetes.support;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.ModuleEntryPoint;
 import se.inera.certificate.modules.support.api.ModuleApi;
+import se.inera.certificate.modules.support.feature.ModuleFeaturesFactory;
 import se.inera.certificate.modules.ts_diabetes.rest.ModuleService;
 
 public class TsDiabetesEntryPoint implements ModuleEntryPoint {
@@ -42,6 +45,11 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
     @Override
     public boolean isModuleFragaSvarAvailable() {
         return false;
+    }
+
+    @Override
+    public Map<String, Boolean> getModuleFeatures() {
+        return ModuleFeaturesFactory.getFeatures("ts-diabetes-features.properties");
     }
 
     @Override

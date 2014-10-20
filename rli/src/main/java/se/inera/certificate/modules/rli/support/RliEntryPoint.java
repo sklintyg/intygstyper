@@ -1,5 +1,7 @@
 package se.inera.certificate.modules.rli.support;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.modules.rli.rest.ModuleService;
@@ -76,5 +78,11 @@ public class RliEntryPoint implements ModuleEntryPoint {
         default:
             return null;
         }
+    }
+
+    @Override
+    public Map<String, Boolean> getModuleFeatures() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
