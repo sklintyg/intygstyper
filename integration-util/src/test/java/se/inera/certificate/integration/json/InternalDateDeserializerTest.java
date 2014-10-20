@@ -48,108 +48,90 @@ public final class InternalDateDeserializerTest {
         
         // Deserialize JSON string
         InternalDate ld = deserializer.deserialize(jp, ctxt);
-        System.out.println(ld.getDate());
 
         // Assert that we have a correct date
         assertInternalDate(ld);
     }
 
-//    @Test
-//    public void deserializeWhenDateTimeIsLocal() throws JsonParseException, IOException {
-//        
-//        String date = "2014-09-22T00:00:00.000";
-//        String json = "{\"journalanteckningar\":\"" + date + "\"}";
-//
-//        JsonParser jp = factory.createParser(json);
-//        setJsonParserAtCorrectToken(jp);
-//        
-//        DeserializationContext ctxt = mock(DeserializationContext.class);
-//        when(ctxt.wrongTokenException(any(JsonParser.class), any(JsonToken.class), anyString())).
-//                thenReturn(JsonMappingException.from(jp, "Unexpected token (" + jp.getCurrentToken() + "), expected " + JsonToken.START_ARRAY + ": expected JSON Array, Number or String"));    // Mock implementation
-//        
-//        // Deserialize JSON string
-//        LocalDate ld = deserializer.deserialize(jp, ctxt);
-//
-//        // Assert that we have a correct date
-//        assertInternalDate(ld);
-//    }
-//
-//    @Test
-//    public void deserializeWhenOnlyDate() throws JsonParseException, IOException {
-//        
-//        String date = "2014-09-22";
-//        String json = "{\"journalanteckningar\":\"" + date + "\"}";
-//
-//        JsonParser jp = factory.createParser(json);
-//        setJsonParserAtCorrectToken(jp);
-//        
-//        DeserializationContext ctxt = mock(DeserializationContext.class);
-//        when(ctxt.wrongTokenException(any(JsonParser.class), any(JsonToken.class), anyString())).
-//                thenReturn(JsonMappingException.from(jp, "Unexpected token (" + jp.getCurrentToken() + "), expected " + JsonToken.START_ARRAY + ": expected JSON Array, Number or String"));    // Mock implementation
-//        
-//        // Deserialize JSON string
-//        LocalDate ld = deserializer.deserialize(jp, ctxt);
-//        
-//        // Assert that we have a correct date
-//        assertInternalDate(ld);
-//    }
-//
-//    @Test
-//    public void deserializeWhenDateTimeIsJsonArray() throws JsonParseException, IOException {
-//        
-//        String date = "[2014,9,22,00,00,00,000]";
-//        String json = "{\"journalanteckningar\":" + date + "}";
-//
-//        JsonParser jp = factory.createParser(json);
-//        setJsonParserAtCorrectToken(jp);
-//        
-//        DeserializationContext ctxt = mock(DeserializationContext.class);
-//        when(ctxt.wrongTokenException(any(JsonParser.class), any(JsonToken.class), anyString())).
-//                thenReturn(JsonMappingException.from(jp, "Unexpected token (" + jp.getCurrentToken() + "), expected " + JsonToken.START_ARRAY + ": expected JSON Array, Number or String"));    // Mock implementation
-//        
-//        // Deserialize JSON string
-//        LocalDate ld = deserializer.deserialize(jp, ctxt);
-//
-//        // Assert that we have a correct date
-//        assertInternalDate(ld);
-//    }
-//    
-//    @Test
-//    public void deserializeWhenDateTimeIsLong() throws JsonParseException, IOException {
-//        
-//        String date = "1411391603828";
-//        String json = "{\"journalanteckningar\":" + date + "}";
-//
-//        JsonParser jp = factory.createParser(json);
-//        setJsonParserAtCorrectToken(jp);
-//        
-//        DeserializationContext ctxt = mock(DeserializationContext.class);
-//        when(ctxt.wrongTokenException(any(JsonParser.class), any(JsonToken.class), anyString())).
-//                thenReturn(JsonMappingException.from(jp, "Unexpected token (" + jp.getCurrentToken() + "), expected " + JsonToken.START_ARRAY + ": expected JSON Array, Number or String"));    // Mock implementation
-//        
-//        // Deserialize JSON string
-//        LocalDate ld = deserializer.deserialize(jp, ctxt);
-//
-//        // Assert that we have a correct date
-//        assertInternalDate(ld);
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void failWhenDeserializationIsOnlyTime() throws JsonParseException, IOException {
-//        
-//        String date = "01:01:01";
-//        String json = "{\"journalanteckningar\":\"" + date + "\"}";
-//
-//        JsonParser jp = factory.createParser(json);
-//        setJsonParserAtCorrectToken(jp);
-//        
-//        DeserializationContext ctxt = mock(DeserializationContext.class);
-//        when(ctxt.wrongTokenException(any(JsonParser.class), any(JsonToken.class), anyString())).
-//                thenReturn(JsonMappingException.from(jp, "Unexpected token (" + jp.getCurrentToken() + "), expected " + JsonToken.START_ARRAY + ": expected JSON Array, Number or String"));    // Mock implementation
-//        
-//        // Deserialize JSON string
-//        LocalDate ld = deserializer.deserialize(jp, ctxt);
-//    }
+    @Test
+    public void deserializeWhenDateTimeIsLocal() throws JsonParseException, IOException {
+        
+        String date = "2014-09-22T00:00:00.000";
+        String json = "{\"journalanteckningar\":\"" + date + "\"}";
+
+        JsonParser jp = factory.createParser(json);
+        setJsonParserAtCorrectToken(jp);
+        
+        DeserializationContext ctxt = mock(DeserializationContext.class);
+        when(ctxt.wrongTokenException(any(JsonParser.class), any(JsonToken.class), anyString())).
+                thenReturn(JsonMappingException.from(jp, "Unexpected token (" + jp.getCurrentToken() + "), expected " + JsonToken.START_ARRAY + ": expected JSON Array, Number or String"));    // Mock implementation
+        
+        // Deserialize JSON string
+        InternalDate ld = deserializer.deserialize(jp, ctxt);
+
+        // Assert that we have a correct date
+        assertInternalDate(ld);
+    }
+
+    @Test
+    public void deserializeWhenOnlyDate() throws JsonParseException, IOException {
+        
+        String date = "2014-09-22";
+        String json = "{\"journalanteckningar\":\"" + date + "\"}";
+
+        JsonParser jp = factory.createParser(json);
+        setJsonParserAtCorrectToken(jp);
+        
+        DeserializationContext ctxt = mock(DeserializationContext.class);
+        when(ctxt.wrongTokenException(any(JsonParser.class), any(JsonToken.class), anyString())).
+                thenReturn(JsonMappingException.from(jp, "Unexpected token (" + jp.getCurrentToken() + "), expected " + JsonToken.START_ARRAY + ": expected JSON Array, Number or String"));    // Mock implementation
+        
+        // Deserialize JSON string
+        InternalDate ld = deserializer.deserialize(jp, ctxt);
+        
+        // Assert that we have a correct date
+        assertInternalDate(ld);
+    }
+
+    @Test
+    public void deserializeWhenDateTimeIsJsonArray() throws JsonParseException, IOException {
+        
+        String date = "[2014,9,22,00,00,00,000]";
+        String json = "{\"journalanteckningar\":" + date + "}";
+
+        JsonParser jp = factory.createParser(json);
+        setJsonParserAtCorrectToken(jp);
+        
+        DeserializationContext ctxt = mock(DeserializationContext.class);
+        when(ctxt.wrongTokenException(any(JsonParser.class), any(JsonToken.class), anyString())).
+                thenReturn(JsonMappingException.from(jp, "Unexpected token (" + jp.getCurrentToken() + "), expected " + JsonToken.START_ARRAY + ": expected JSON Array, Number or String"));    // Mock implementation
+        
+        // Deserialize JSON string
+        InternalDate ld = deserializer.deserialize(jp, ctxt);
+
+        // Assert that we have a correct date
+        assertInternalDate(ld);
+    }
+    
+    @Test
+    public void deserializeWhenDateTimeIsLong() throws JsonParseException, IOException {
+        
+        String date = "1411391603828";
+        String json = "{\"journalanteckningar\":" + date + "}";
+
+        JsonParser jp = factory.createParser(json);
+        setJsonParserAtCorrectToken(jp);
+        
+        DeserializationContext ctxt = mock(DeserializationContext.class);
+        when(ctxt.wrongTokenException(any(JsonParser.class), any(JsonToken.class), anyString())).
+                thenReturn(JsonMappingException.from(jp, "Unexpected token (" + jp.getCurrentToken() + "), expected " + JsonToken.START_ARRAY + ": expected JSON Array, Number or String"));    // Mock implementation
+        
+        // Deserialize JSON string
+        InternalDate ld = deserializer.deserialize(jp, ctxt);
+
+        // Assert that we have a correct date
+        assertInternalDate(ld);
+    }
 
     private void setJsonParserAtCorrectToken(JsonParser jp) throws IOException, JsonParseException {
         // loop over all fields in JSON object
