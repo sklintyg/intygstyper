@@ -1,5 +1,7 @@
 package se.inera.certificate.modules.ts_diabetes.model.internal;
 
+import se.inera.certificate.model.InternalDate;
+
 public class Hypoglykemier {
     private Boolean kunskapOmAtgarder;
 
@@ -17,7 +19,7 @@ public class Hypoglykemier {
 
     private Boolean allvarligForekomstVakenTid;
 
-    private String allvarligForekomstVakenTidObservationstid;
+    private InternalDate allvarligForekomstVakenTidObservationstid;
 
     private Boolean egenkontrollBlodsocker;
 
@@ -85,11 +87,11 @@ public class Hypoglykemier {
         this.allvarligForekomstVakenTid = allvarligForekomstVakenTid;
     }
 
-    public String getAllvarligForekomstVakenTidObservationstid() {
+    public InternalDate getAllvarligForekomstVakenTidObservationstid() {
         return allvarligForekomstVakenTidObservationstid;
     }
 
-    public void setAllvarligForekomstVakenTidObservationstid(String allvarligForekomstVakenTidObservationstid) {
+    public void setAllvarligForekomstVakenTidObservationstid(InternalDate allvarligForekomstVakenTidObservationstid) {
         this.allvarligForekomstVakenTidObservationstid = allvarligForekomstVakenTidObservationstid;
     }
 

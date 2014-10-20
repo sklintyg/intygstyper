@@ -348,7 +348,7 @@ public class InternalToExternalConverter {
             hypoglykemiVakenTid.setForekomst(source.getHypoglykemier().getAllvarligForekomstVakenTid());
 
             hypoglykemiVakenTid.setObservationstid(createLocalDateTimeFromString(source.getHypoglykemier()
-                    .getAllvarligForekomstVakenTidObservationstid()));
+                    .getAllvarligForekomstVakenTidObservationstid().getDate()));
 
             observationer.add(hypoglykemiVakenTid);
         }

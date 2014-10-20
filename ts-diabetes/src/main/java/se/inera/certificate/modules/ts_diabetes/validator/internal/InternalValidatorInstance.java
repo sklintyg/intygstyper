@@ -131,7 +131,7 @@ public class InternalValidatorInstance {
             if (hypoglykemier.getAllvarligForekomstVakenTidObservationstid() == null) {
                 addValidationError("hypoglykemier.allvarligForekomstVakenTidObservationstid",
                         "ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.missing");
-            } else if (!isValidDate(hypoglykemier.getAllvarligForekomstVakenTidObservationstid(), "yyyy-MM-dd")) {
+            } else if (!hypoglykemier.getAllvarligForekomstVakenTidObservationstid().isValidDate()) {
                 addValidationError("hypoglykemier.allvarligForekomstVakenTidObservationstid",
                         "ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.incorrect-date");
             }
