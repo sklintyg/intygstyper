@@ -69,6 +69,9 @@ public class InternalDate {
     }
 
     public boolean isValidDate() {
+        if (date == null) {
+            return false;
+        }
         return date.matches(DATE_FORMAT);
     }
 }

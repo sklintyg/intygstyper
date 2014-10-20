@@ -15,7 +15,8 @@ public final class DateTimeConverter {
     /**
      * Convert a PartialInterval to LocalDateInterval.
      *
-     * @param partialInterval the {@link PartialInterval} to convert
+     * @param partialInterval
+     *            the {@link PartialInterval} to convert
      * @return {@link LocalDateInterval}
      */
     public static LocalDateInterval toLocalDateInterval(PartialInterval partialInterval) {
@@ -30,13 +31,15 @@ public final class DateTimeConverter {
 
     /**
      * Convert an InternalLocalDateInterval to PartialInterval.
-     * @param localDateInterval the c to convert
+     *
+     * @param localDateInterval
+     *            the c to convert
      * @return {@link PartialInterval}
      */
     public static PartialInterval toPartialInterval(InternalLocalDateInterval localDateInterval) {
         if (localDateInterval != null) {
-        return new PartialInterval(new Partial(LocalDate.parse(localDateInterval.getFrom())),
-                new Partial(LocalDate.parse(localDateInterval.getTom())));
+            return new PartialInterval(new Partial(localDateInterval.getFrom().asLocalDate()),
+                    new Partial(localDateInterval.getTom().asLocalDate()));
         } else {
             return null;
         }
@@ -45,7 +48,8 @@ public final class DateTimeConverter {
     /**
      * Convert a LocalDateInterval to PartialInterval.
      *
-     * @param localDateInterval the {@link LocalDateInterval} to convert
+     * @param localDateInterval
+     *            the {@link LocalDateInterval} to convert
      * @return {@link PartialInterval}
      */
     public static PartialInterval toPartialInterval(LocalDateInterval localDateInterval) {
@@ -54,7 +58,9 @@ public final class DateTimeConverter {
 
     /**
      * Convert PartialInterval to InternalLocalDateInterval.
-     * @param partialInterval {@link PartialInterval}
+     *
+     * @param partialInterval
+     *            {@link PartialInterval}
      * @return {@link InternalLocalDateInterval}
      * @throws ConverterException
      */
@@ -62,10 +68,9 @@ public final class DateTimeConverter {
         if (partialInterval == null) {
             throw new ConverterException("Failed to convert PartialInterval to InternalLocalDateInterval, got null");
         } else if (partialInterval.getFrom() != null && partialInterval.getTom() != null) {
-           InternalLocalDateInterval interval = new InternalLocalDateInterval();
-           interval.setFrom(partialInterval.getFrom().toString());
-           interval.setTom(partialInterval.getTom().toString());
-           return interval;
+            InternalLocalDateInterval interval = new InternalLocalDateInterval(partialInterval.getFrom().toString(), partialInterval.getTom()
+                    .toString());
+            return interval;
         } else {
             throw new ConverterException("Failed to convert PartialInterval to InternalLocalDateInterval, one of from and tom was null");
         }

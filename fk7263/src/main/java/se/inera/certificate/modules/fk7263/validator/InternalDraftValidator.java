@@ -33,9 +33,9 @@ public class InternalDraftValidator {
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
         validateDiagnose(utlatande, validationMessages);
-        //Falt 4
+        // Falt 4
         validateFunktionsnedsattning(utlatande, validationMessages);
-        //Falt 5
+        // Falt 5
         validateAktivitetsbegransning(utlatande, validationMessages);
         validateArbetsformaga(utlatande, validationMessages);
         validatePrognos(utlatande, validationMessages);
@@ -49,7 +49,6 @@ public class InternalDraftValidator {
         return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
     }
 
-
     private void validateVardkontakter(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
         if (utlatande.getTelefonkontaktMedPatienten() != null && !utlatande.getTelefonkontaktMedPatienten().isValidDate()) {
             addValidationError(validationMessages, "vardkontakter.telefonkontakt", "fk7263.validation.vardkontakter.telefonkontakt.incorrect_format");
@@ -59,7 +58,6 @@ public class InternalDraftValidator {
         }
     }
 
-
     private void validateReferenser(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
         if (utlatande.getAnnanReferens() != null && !utlatande.getAnnanReferens().isValidDate()) {
             addValidationError(validationMessages, "referenser.annan", "fk7263.validation.referenser.annan.incorrect_format");
@@ -68,7 +66,6 @@ public class InternalDraftValidator {
             addValidationError(validationMessages, "referenser.journaluppgifter", "fk7263.validation.referenser.journaluppgifter.incorrect_format");
         }
     }
-
 
     private void validateVardenhet(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
         if (isNullOrEmpty(utlatande.getVardperson().getPostadress())) {
@@ -139,18 +136,38 @@ public class InternalDraftValidator {
         if (utlatande.getTjanstgoringstid() != null && !STRING_VALIDATOR.validateStringIsNumber(utlatande.getTjanstgoringstid())) {
             addValidationError(validationMessages, "arbetsformaga", "fk7263.validation.arbetsformaga.tjanstgoringstid");
         }
-        validateIntervals(validationMessages, "arbetsformaga", utlatande.getNedsattMed100(), utlatande.getNedsattMed75(),
-                utlatande.getNedsattMed50(), utlatande.getNedsattMed25());
+
+        // Check that from and tom is valid in all present intervals before doing more checks
+        if (isValidDateInIntervals(validationMessages, utlatande)) {
+            validateIntervals(validationMessages, "arbetsformaga", utlatande.getNedsattMed100(), utlatande.getNedsattMed75(),
+                    utlatande.getNedsattMed50(), utlatande.getNedsattMed25());
+        }
+    }
+
+    private boolean isValidDateInIntervals(List<ValidationMessage> validationMessages, Fk7263Intyg utlatande) {
+        boolean success = true;
+        InternalLocalDateInterval[] intervals = { utlatande.getNedsattMed100(), utlatande.getNedsattMed75(), utlatande.getNedsattMed50(),
+                utlatande.getNedsattMed25() };
+        if (allNulls(intervals)) {
+            return false;
+        }
+        // if the interval is not null and either from or tom is invalid, raise validation error
+        for (InternalLocalDateInterval interval : intervals) {
+            if (interval != null && !interval.isValid()) {
+                addValidationError(validationMessages, "arbetsformaga", "fk7263.validation.arbetsformaga.incorrect-format");
+                success = false;
+            }
+        }
+        return success;
     }
 
     private void validateAktivitetsbegransning(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
-        //Fält 5  Aktivitetsbegränsning relaterat till diagnos och funktionsnedsättning
+        // Fält 5 Aktivitetsbegränsning relaterat till diagnos och funktionsnedsättning
         String aktivitetsbegransning = utlatande.getAktivitetsbegransning();
         if (!utlatande.isAvstangningSmittskydd() && aktivitetsbegransning == null) {
             addValidationError(validationMessages, "aktivitetsbegransning", "fk7263.validation.aktivitetsbegransning.missing");
         }
     }
-
 
     private void validateFunktionsnedsattning(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
         // Fält 4 - vänster Check that we got a funktionsnedsattning element
@@ -219,7 +236,7 @@ public class InternalDraftValidator {
 
     /**
      * Check if there are validation errors.
-     *
+     * 
      * @param validationMessages
      *            list of validation messages
      * @return {@link se.inera.certificate.modules.support.api.dto.ValidationStatus#VALID} if there are no errors, and

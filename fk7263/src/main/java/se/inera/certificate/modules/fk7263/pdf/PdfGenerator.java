@@ -374,8 +374,8 @@ public class PdfGenerator {
             String toDateFieldName) {
         if (interval != null) {
             checkField(checkboxFieldName);
-            fillText(fromDateFieldName, interval.getFrom());
-            fillText(toDateFieldName, interval.getTom());
+            fillText(fromDateFieldName, interval.getFrom().getDate());
+            fillText(toDateFieldName, interval.getTom().getDate());
         }
     }
 

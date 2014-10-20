@@ -4,82 +4,100 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * A way of handling date intervals in our internal model that allows faulty user input,
- * this is needed at this stage because of the auto save function among other things.
- * <br/><br/>
- *
- * This class contains util methods for various things such as getting the start or end dates as {@link LocalDate}[s] etc.
+ * this is needed at this stage because of the auto save function among other things. <br/>
+ * <br/>
+ * 
+ * This class contains util methods for various things such as getting the start or end dates as {@link LocalDate}[s]
+ * etc.
+ * 
  * @author erik
  */
 public class InternalLocalDateInterval {
 
-    /**Parser used for parsing LocalDate[s] from Strings, uses {@code ISODateTimeFormat}. */
+    private static final String DATE_FORMAT = "[1-2][0-9]{3,3}(-((0[1-9])|(1[0-2]))(-((0[1-9])|([1-2][0-9])|(3[0-1]))))";
+
+    /** Parser used for parsing LocalDate[s] from Strings, uses {@code ISODateTimeFormat}. */
     private static final DateTimeFormatter PARSER = ISODateTimeFormat.dateTimeParser();
 
-    private String from;
-    private String tom;
+    private InternalDate from;
+    private InternalDate tom;
 
     public InternalLocalDateInterval() {
     }
 
     /**
      * Construct an InternalLocalDateInterval from strings
-     * @param from String representing start date 
-     * @param tom String representing end date
+     * 
+     * @param from
+     *            String representing start date
+     * @param tom
+     *            String representing end date
+     * @throws ModelException if from or tom is null
      */
     public InternalLocalDateInterval(String from, String tom) {
+        if (from == null || tom == null) {
+            throw new ModelException("Got null while trying to create InternalLocalDateInterval");
+        }
+        this.from = new InternalDate(from);
+        this.tom = new InternalDate(tom);
+    }    
+    public InternalLocalDateInterval(InternalDate from, InternalDate tom) {
+        if (from == null || tom == null) {
+            throw new ModelException("Got null while trying to create InternalLocalDateInterval");
+        }
         this.from = from;
         this.tom = tom;
     }
 
-    public String getFrom() {
+    public InternalDate getFrom() {
         return from;
     }
-    public void setFrom(String from) {
+
+    public void setFrom(InternalDate from) {
         this.from = from;
     }
-    public String getTom() {
+
+    public InternalDate getTom() {
         return tom;
     }
-    public void setTom(String tom) {
+
+    public void setTom(InternalDate tom) {
         this.tom = tom;
     }
 
     /**
      * Attempts to parse the String held as start date to a LocalDate.
-     * @return {@link LocalDate} if parsing was successful
-     * @throws {@link ModelException} if parsing failed
+     * 
+     * @return {@link LocalDate} if parsing was successful, or null otherwise
      */
     public LocalDate fromAsLocalDate() {
         if (from == null) {
             return null;
         }
-        LocalDate localDate;
-        try {
-            localDate = PARSER.parseLocalDate(from);
-        } catch (IllegalArgumentException ie) {
-            throw new ModelException(String.format("Could not parse %s to LocalDate, failed with message: %s", from, ie.getMessage()));
-        } 
-        return localDate;
+        return from.asLocalDate();
     }
 
     /**
      * Attempts to parse the String held as end date to a LocalDate.
-     * @return {@link LocalDate} if parsing was successful
-     * @throws {@link ModelException} if parsing failed
+     * 
+     * @return {@link LocalDate} if parsing was successful, or null otherwise
      */
     public LocalDate tomAsLocalDate() {
         if (tom == null) {
             return null;
         }
-        LocalDate localDate;
-        try {
-            localDate = PARSER.parseLocalDate(tom);
+        return tom.asLocalDate();
+    }
+
+    @JsonIgnore
+    public boolean isValid() {
+        if (this.from == null || this.tom == null) {
+            return false;
         }
-        catch (IllegalArgumentException ie) {
-            throw new ModelException(String.format("Could not parse %s to LocalDate, failed with message: %s", from, ie.getMessage()));
-        } 
-        return localDate;
+        return from.isValidDate() && tom.isValidDate();
     }
 }

@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 
@@ -213,8 +214,8 @@ public class InternalValidatorTest {
 
         // Screw up one of the intervals so from > tom
         InternalLocalDateInterval reversedPeriod = utlatande.getNedsattMed25();
-        reversedPeriod.setFrom("2011-04-01");
-        reversedPeriod.setTom("2011-02-01");
+        reversedPeriod.setFrom(new InternalDate("2011-04-01"));
+        reversedPeriod.setTom(new InternalDate("2011-02-01"));
 
         assertEquals(1, new InternalValidator(utlatande).validate().size());
     }
@@ -234,7 +235,7 @@ public class InternalValidatorTest {
         Fk7263Intyg utlatande = getValidUtlatande();
 
         // remove skickatdatum
-        utlatande.getNedsattMed100().setTom(utlatande.getNedsattMed100().fromAsLocalDate().minusDays(1).toString());
+        utlatande.getNedsattMed100().setTom(new InternalDate(utlatande.getNedsattMed100().fromAsLocalDate().minusDays(1).toString()));
 
         assertEquals(1, new InternalValidator(utlatande).validate().size());
     }
