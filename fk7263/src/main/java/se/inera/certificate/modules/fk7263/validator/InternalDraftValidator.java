@@ -51,19 +51,19 @@ public class InternalDraftValidator {
 
     private void validateVardkontakter(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
         if (utlatande.getTelefonkontaktMedPatienten() != null && !utlatande.getTelefonkontaktMedPatienten().isValidDate()) {
-            addValidationError(validationMessages, "vardkontakter.telefonkontakt", "fk7263.validation.vardkontakter.telefonkontakt.incorrect_format");
+            addValidationError(validationMessages, "intygbaseratpa.telefonkontakt", "fk7263.validation.intyg-baserat-pa.telefonkontakt.incorrect_format");
         }
         if (utlatande.getUndersokningAvPatienten() != null && !utlatande.getUndersokningAvPatienten().isValidDate()) {
-            addValidationError(validationMessages, "vardkontakter.undersokning", "fk7263.validation.vardkontakter.undersokning.incorrect_format");
+            addValidationError(validationMessages, "intygbaseratpa.undersokning", "fk7263.validation.intyg-baserat-pa.undersokning.incorrect_format");
         }
     }
 
     private void validateReferenser(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
         if (utlatande.getAnnanReferens() != null && !utlatande.getAnnanReferens().isValidDate()) {
-            addValidationError(validationMessages, "referenser.annan", "fk7263.validation.referenser.annan.incorrect_format");
+            addValidationError(validationMessages, "intygbaseratpa.referenser", "fk7263.validation.intyg-baserat-pa.annan.incorrect_format");
         }
         if (utlatande.getJournaluppgifter() != null && !utlatande.getJournaluppgifter().isValidDate()) {
-            addValidationError(validationMessages, "referenser.journaluppgifter", "fk7263.validation.referenser.journaluppgifter.incorrect_format");
+            addValidationError(validationMessages, "intygbaseratpa.journaluppgifter", "fk7263.validation.intyg-baserat-pa.journaluppgifter.incorrect_format");
         }
     }
 

@@ -420,17 +420,23 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
 
                 // Fält 8b. convert dates to string from viewvalue (modelvalue is undefined for invalid dates from datepicker)
-                $scope.cert.nedsattMed25.from = $scope.certForm.nedsattMed25startdate.$viewValue;
-                $scope.cert.nedsattMed25.tom = $scope.certForm.nedsattMed25enddate.$viewValue;
+                if ($scope.cert.nedsattMed25) {
+                    $scope.cert.nedsattMed25.from = $scope.certForm.nedsattMed25startdate.$viewValue;
+                    $scope.cert.nedsattMed25.tom = $scope.certForm.nedsattMed25enddate.$viewValue;
+                }
 
-                $scope.cert.nedsattMed50.from = $scope.certForm.nedsattMed50startdate.$viewValue;
-                $scope.cert.nedsattMed50.tom = $scope.certForm.nedsattMed50enddate.$viewValue;
-
-                $scope.cert.nedsattMed75.from = $scope.certForm.nedsattMed75startdate.$viewValue;
-                $scope.cert.nedsattMed75.tom = $scope.certForm.nedsattMed75enddate.$viewValue;
-
-                $scope.cert.nedsattMed100.from = $scope.certForm.nedsattMed100startdate.$viewValue;
-                $scope.cert.nedsattMed100.tom = $scope.certForm.nedsattMed100enddate.$viewValue;
+                if ($scope.cert.nedsattMed50) {
+                    $scope.cert.nedsattMed50.from = $scope.certForm.nedsattMed50startdate.$viewValue;
+                    $scope.cert.nedsattMed50.tom = $scope.certForm.nedsattMed50enddate.$viewValue;
+                }
+                if ($scope.cert.nedsattMed75) {
+                    $scope.cert.nedsattMed75.from = $scope.certForm.nedsattMed75startdate.$viewValue;
+                    $scope.cert.nedsattMed75.tom = $scope.certForm.nedsattMed75enddate.$viewValue;
+                }
+                if ($scope.cert.nedsattMed100) {
+                    $scope.cert.nedsattMed100.from = $scope.certForm.nedsattMed100startdate.$viewValue;
+                    $scope.cert.nedsattMed100.tom = $scope.certForm.nedsattMed100enddate.$viewValue;
+                }
 
                 if ($scope.workState.nedsattMed25) {
                     $scope.cert.nedsattMed25Beskrivning = $scope.form.ovrigt.nedsattMed25Beskrivning;
