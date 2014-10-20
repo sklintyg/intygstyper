@@ -62,6 +62,9 @@ public class InternalDateDeserializer extends StdDeserializer<InternalDate> {
             else if (isUtcDate(str)) {
                 return InternalDateAdapter.parseInternalDate(str.substring(0, 10));
             }
+            else {
+                return new InternalDate(str);
+            }
         }
         
         throw ctxt.wrongTokenException(jp, JsonToken.START_ARRAY, "expected JSON Array, Number or String");
