@@ -3,9 +3,6 @@ package se.inera.certificate.modules.ts_diabetes.validator.internal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -131,7 +128,7 @@ public class InternalValidatorInstance {
             if (hypoglykemier.getAllvarligForekomstVakenTidObservationstid() == null) {
                 addValidationError("hypoglykemier.allvarligForekomstVakenTidObservationstid",
                         "ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.missing");
-            } else if (!hypoglykemier.getAllvarligForekomstVakenTidObservationstid().isValidDate()) {
+            } else if (hypoglykemier.getAllvarligForekomstVakenTidObservationstid().invalidOrInFuture()) {
                 addValidationError("hypoglykemier.allvarligForekomstVakenTidObservationstid",
                         "ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.incorrect-date");
             }
@@ -192,8 +189,7 @@ public class InternalValidatorInstance {
 
         if (diabetes.getObservationsperiod() == null) {
             addValidationError("diabetes.observationsperiod", "ts-diabetes.validation.diabetes.observationsperiod.missing");
-        }
-        else if (!STRING_VALIDATOR.validateStringIsYear(diabetes.getObservationsperiod())) {
+        } else if (!STRING_VALIDATOR.validateStringIsYear(diabetes.getObservationsperiod())) {
             addValidationError("diabetes.observationsperiod", "ts-diabetes.validation.diabetes.observationsperiod.incorrect-format");
         }
 
@@ -206,8 +202,7 @@ public class InternalValidatorInstance {
         if (isTrue(diabetes.getInsulin())) {
             if (diabetes.getInsulinBehandlingsperiod() == null) {
                 addValidationError("diabetes.insulin", "ts-diabetes.validation.diabetes.insulin.behandlingsperiod.missing");
-            }
-            else if (!STRING_VALIDATOR.validateStringIsYear(diabetes.getInsulinBehandlingsperiod())) {
+            } else if (!STRING_VALIDATOR.validateStringIsYear(diabetes.getInsulinBehandlingsperiod())) {
                 addValidationError("diabetes.insulin", "ts-diabetes.validation.diabetes.insulin.behandlingsperiod.incorrect-format");
             }
         }
@@ -317,23 +312,6 @@ public class InternalValidatorInstance {
                 }
             }
         }
-    }
-
-    /**
-     * Make sure a string representing a date conforms to the desired format.
-     *
-     * @param dateString the date
-     * @param dateFormat the format
-     * @return true if it does, false otherwise
-     */
-    private boolean isValidDate(String dateString, String dateFormat) {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern(dateFormat);
-        try {
-            LocalDate.parse(dateString, formatter);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
     }
 
     private boolean isTrue(Boolean bool) {
