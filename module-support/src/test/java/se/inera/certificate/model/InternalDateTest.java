@@ -41,6 +41,26 @@ public class InternalDateTest {
         assertEquals(String.format("LocalDate %s did not match %s", localDate.toString(), valid), localDate.toString(), valid);
     }
 
+    @Test
+    public void testIsDateInFuture() {
+        InternalDate validNotFuture = new InternalDate("2012-12-12");
+        InternalDate validOneYearInFuture = new InternalDate(LocalDate.now().plusYears(1));
+        InternalDate validOneDayInFuture = new InternalDate(LocalDate.now().plusDays(1));
+        InternalDate validSameDate = new InternalDate(LocalDate.now());
+
+        InternalDate invalidDate = new InternalDate("2001-01");
+        
+
+        assertFalse(validNotFuture.invalidOrInFuture());
+        assertTrue(validOneYearInFuture.invalidOrInFuture());
+        assertTrue(validOneDayInFuture.invalidOrInFuture());
+        //Same date is not in the future right?
+        assertFalse(validSameDate.invalidOrInFuture());
+
+        //Should be invalid
+        assertTrue(invalidDate.invalidOrInFuture());
+    }
+
     @Test (expected = ModelException.class)
     public void testInvalidAsLocalDate() {
         String justText = "blörk";

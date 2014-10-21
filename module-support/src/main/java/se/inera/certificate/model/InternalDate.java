@@ -21,9 +21,12 @@ public class InternalDate {
 
     private String date;
 
+    /**
+     * Default constructor.
+     */
     public InternalDate() {
     }
-    
+
     /**
      * Constuct an {@link InternalDate} from a String.
      * @param date a String
@@ -36,7 +39,7 @@ public class InternalDate {
      * Constuct an {@link InternalDate} from a {@link LocalDate},
      * primarily used when converting from external to internal model.
      * @param date a {@link LocalDate}
-     * @throws {@link ModelException} if null is passed 
+     * @throws {@link ModelException} if null is passed
      */
     public InternalDate(LocalDate date) {
         if (date == null) {
@@ -45,6 +48,9 @@ public class InternalDate {
         this.date = date.toString(ISODateTimeFormat.date());
     }
 
+    /*
+     * Getters and setters
+     */
     public String getDate() {
         return date;
     }
@@ -68,10 +74,29 @@ public class InternalDate {
         return localDate;
     }
 
+    /**
+     * Check if the string held in this InternalDate matches expected dateformat (yyyy-MM-dd).
+     * @return true if it does, false otherwise
+     */
     public boolean isValidDate() {
         if (date == null) {
             return false;
         }
+        try {
+            ISODateTimeFormat.date().parseLocalDate(date);
+        } catch (Exception e) {
+            return false;
+        }
         return date.matches(DATE_FORMAT);
+    }
+
+    public boolean invalidOrInFuture() {
+        if (date == null) {
+            return true;
+        }
+        if (!this.isValidDate()) {
+            return true;
+        }
+        return this.asLocalDate().isAfter(LocalDate.now());
     }
 }

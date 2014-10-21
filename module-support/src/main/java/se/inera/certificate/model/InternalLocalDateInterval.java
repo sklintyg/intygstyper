@@ -1,8 +1,6 @@
 package se.inera.certificate.model;
 
 import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -10,18 +8,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * A way of handling date intervals in our internal model that allows faulty user input,
  * this is needed at this stage because of the auto save function among other things. <br/>
  * <br/>
- * 
+ *
  * This class contains util methods for various things such as getting the start or end dates as {@link LocalDate}[s]
  * etc.
- * 
+ *
  * @author erik
  */
 public class InternalLocalDateInterval {
 
-    private static final String DATE_FORMAT = "[1-2][0-9]{3,3}(-((0[1-9])|(1[0-2]))(-((0[1-9])|([1-2][0-9])|(3[0-1]))))";
-
-    /** Parser used for parsing LocalDate[s] from Strings, uses {@code ISODateTimeFormat}. */
-    private static final DateTimeFormatter PARSER = ISODateTimeFormat.dateTimeParser();
 
     private InternalDate from;
     private InternalDate tom;
@@ -30,8 +24,8 @@ public class InternalLocalDateInterval {
     }
 
     /**
-     * Construct an InternalLocalDateInterval from strings
-     * 
+     * Construct an InternalLocalDateInterval from strings.
+     *
      * @param from
      *            String representing start date
      * @param tom
@@ -44,7 +38,7 @@ public class InternalLocalDateInterval {
         }
         this.from = new InternalDate(from);
         this.tom = new InternalDate(tom);
-    }    
+    }
     public InternalLocalDateInterval(InternalDate from, InternalDate tom) {
         if (from == null || tom == null) {
             throw new ModelException("Got null while trying to create InternalLocalDateInterval");
@@ -71,7 +65,7 @@ public class InternalLocalDateInterval {
 
     /**
      * Attempts to parse the String held as start date to a LocalDate.
-     * 
+     *
      * @return {@link LocalDate} if parsing was successful, or null otherwise
      */
     public LocalDate fromAsLocalDate() {
@@ -83,7 +77,7 @@ public class InternalLocalDateInterval {
 
     /**
      * Attempts to parse the String held as end date to a LocalDate.
-     * 
+     *
      * @return {@link LocalDate} if parsing was successful, or null otherwise
      */
     public LocalDate tomAsLocalDate() {
