@@ -9,7 +9,11 @@ angular.module('common').factory('common.User',
             },
 
             getActiveFeatures: function() {
-                return this.userContext.aktivaFunktioner;
+                if (this.userContext) {
+                    return this.userContext.aktivaFunktioner;
+                } else {
+                    return null;
+                }
             },
 
             /**

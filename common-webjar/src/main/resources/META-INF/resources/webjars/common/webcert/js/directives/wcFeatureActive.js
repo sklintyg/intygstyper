@@ -16,7 +16,7 @@ angular.module('common').directive('wcFeatureActive',
                     throw new Error('\'wcFeatureActive\' kräver att du har angett attributet \'feature\' för att fungera.');
                 }
 
-                if (!featureService.isFeatureActive(scope.feature, scope.intygstype)) {
+                if (!featureService.isFeatureActive(scope.feature, scope.intygstyp)) {
                     element.remove();
                 }
             }
