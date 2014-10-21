@@ -42,14 +42,12 @@ public interface ModuleEntryPoint {
      * @return A module API implementation.
      */
     ModuleApi getModuleApi();
-
-    /**
-     * Returns true if fraga/svar should be available.
-     *
-     * @return True if fraga/svar should be available.
-     */
-    boolean isModuleFragaSvarAvailable();
     
+    /**
+     * Returns a Map containing which {@code se.inera.certificate.modules.support.feature.ModuleFeature} that this module will support and what state these have.
+     * 
+     * @return
+     */
     Map<String, Boolean> getModuleFeatures();
 
     /**

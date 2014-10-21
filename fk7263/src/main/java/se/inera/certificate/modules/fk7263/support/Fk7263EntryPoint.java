@@ -44,11 +44,6 @@ public class Fk7263EntryPoint implements ModuleEntryPoint {
     }
 
     @Override
-    public boolean isModuleFragaSvarAvailable() {
-        return true;
-    }
-
-    @Override
     public Map<String, Boolean> getModuleFeatures() {
         return ModuleFeaturesFactory.getFeatures("fk7263-features.properties");
     }

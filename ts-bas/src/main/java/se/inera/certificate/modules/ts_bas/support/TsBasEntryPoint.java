@@ -44,11 +44,6 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
     }
 
     @Override
-    public boolean isModuleFragaSvarAvailable() {
-        return false;
-    }
-
-    @Override
     public Map<String, Boolean> getModuleFeatures() {
         return ModuleFeaturesFactory.getFeatures("ts-bas-features.properties");
     }

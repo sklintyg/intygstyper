@@ -43,11 +43,6 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
     }
 
     @Override
-    public boolean isModuleFragaSvarAvailable() {
-        return false;
-    }
-
-    @Override
     public Map<String, Boolean> getModuleFeatures() {
         return ModuleFeaturesFactory.getFeatures("ts-diabetes-features.properties");
     }
