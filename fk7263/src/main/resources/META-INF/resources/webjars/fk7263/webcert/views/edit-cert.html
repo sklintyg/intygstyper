@@ -132,7 +132,6 @@
                                                                                            ng-change="toggleBaseradPaDate('undersokningAvPatienten')">
                         Min undersökning av patienten</label>
                       <span wc-date-picker-field target-model="cert.undersokningAvPatienten"
-                            on-change="onChangeBaserasPaDate('undersokningAvPatienten')"
                             dom-id="undersokningAvPatientenDate"></span>
                     </div>
 
@@ -145,7 +144,6 @@
                                                                                            ng-change="toggleBaseradPaDate('telefonkontaktMedPatienten')">
                         Min telefonkontakt med patienten</label>
                       <span wc-date-picker-field target-model="cert.telefonkontaktMedPatienten"
-                            on-change="onChangeBaserasPaDate('telefonkontaktMedPatienten')"
                             dom-id="telefonkontaktMedPatientenDate"></span>
                     </div>
 
@@ -158,7 +156,7 @@
                                                                                            ng-change="toggleBaseradPaDate('journaluppgifter')">
                         Journaluppgifter</label>
                       <span wc-date-picker-field target-model="cert.journaluppgifter"
-                            on-change="onChangeBaserasPaDate('journaluppgifter')" dom-id="journaluppgifterDate"></span>
+                            dom-id="journaluppgifterDate"></span>
                     </div>
 
                     <!-- Annat -->
@@ -171,7 +169,7 @@
                         Annat<span wc-enable-tooltip field-help-text="fk7263.helptext.intyg-baserat-pa.annat"></span>
                       </label>
                       <span wc-date-picker-field target-model="cert.annanReferens"
-                            on-change="onChangeBaserasPaDate('annanReferens')" dom-id="annanReferensDate"></span>
+                            dom-id="annanReferensDate"></span>
                     </div>
                     <div class="otherText indent" ng-if="basedOnState.check.annanReferens">
                       <span>Ange vad:</span><br>
@@ -381,11 +379,11 @@
                         25%
                         nedsatt arbetsförmåga från</label>
                       <span wc-date-picker-field target-model="cert.nedsattMed25.from"
-                            on-change="onChangeNedsattMed('nedsattMed25', 'from')" dom-id="nedsattMed25startdate"
+                            on-change="onChangeNedsattMed('nedsattMed25', 'from')" dom-id="nedsattMed25from"
                             invalid="nedsattInvalid.nedsattMed25from"></span>
                       <span>till</span>
                       <span wc-date-picker-field target-model="cert.nedsattMed25.tom"
-                            on-change="onChangeNedsattMed('nedsattMed25', 'tom')" dom-id="nedsattMed25enddate"
+                            on-change="onChangeNedsattMed('nedsattMed25', 'tom')" dom-id="nedsattMed25tom"
                             invalid="nedsattInvalid.nedsattMed25tom"></span>
                       <div class="indent pad10" ng-if="workState.nedsattMed25">
                         <div class="workHoursPerWeek"
@@ -414,11 +412,11 @@
                                                                               ng-model="workState.nedsattMed50"> 50%
                         nedsatt arbetsförmåga från</label>
                       <span wc-date-picker-field target-model="cert.nedsattMed50.from"
-                            on-change="onChangeNedsattMed('nedsattMed50', 'from')" dom-id="nedsattMed50startdate"
+                            on-change="onChangeNedsattMed('nedsattMed50', 'from')" dom-id="nedsattMed50from"
                             invalid="nedsattInvalid.nedsattMed50from"></span>
                       <span>till</span>
                       <span wc-date-picker-field target-model="cert.nedsattMed50.tom"
-                            on-change="onChangeNedsattMed('nedsattMed50', 'tom')" dom-id="nedsattMed50enddate"
+                            on-change="onChangeNedsattMed('nedsattMed50', 'tom')" dom-id="nedsattMed50tom"
                             invalid="nedsattInvalid.nedsattMed50tom"></span>
                       <div class="indent pad10" ng-if="workState.nedsattMed50">
                         <div class="workHoursPerWeek"
@@ -446,11 +444,11 @@
                                                                               ng-model="workState.nedsattMed75"> 75%
                         nedsatt arbetsförmåga från</label>
                       <span wc-date-picker-field target-model="cert.nedsattMed75.from"
-                            on-change="onChangeNedsattMed('nedsattMed75', 'from')" dom-id="nedsattMed75startdate"
+                            on-change="onChangeNedsattMed('nedsattMed75', 'from')" dom-id="nedsattMed75from"
                             invalid="nedsattInvalid.nedsattMed75from"></span>
                       <span>till</span>
                       <span wc-date-picker-field target-model="cert.nedsattMed75.tom"
-                            on-change="onChangeNedsattMed('nedsattMed75', 'tom')" dom-id="nedsattMed75enddate"
+                            on-change="onChangeNedsattMed('nedsattMed75', 'tom')" dom-id="nedsattMed75tom"
                             invalid="nedsattInvalid.nedsattMed75tom"></span>
                       <div class="indent pad10" ng-if="workState.nedsattMed75">
                         <div class="workHoursPerWeek"
@@ -478,11 +476,11 @@
                                                                               ng-model="workState.nedsattMed100"> Helt
                         nedsatt arbetsförmåga från</label>
                       <span wc-date-picker-field target-model="cert.nedsattMed100.from"
-                            on-change="onChangeNedsattMed('nedsattMed100', 'from')" dom-id="nedsattMed100startdate"
+                            on-change="onChangeNedsattMed('nedsattMed100', 'from')" dom-id="nedsattMed100from"
                             invalid="nedsattInvalid.nedsattMed100from"></span>
                       <span>till</span>
                       <span wc-date-picker-field target-model="cert.nedsattMed100.tom"
-                            on-change="onChangeNedsattMed('nedsattMed100', 'tom')" dom-id="nedsattMed100enddate"
+                            on-change="onChangeNedsattMed('nedsattMed100', 'tom')" dom-id="nedsattMed100tom"
                             invalid="nedsattInvalid.nedsattMed100tom"></span>
                     </div>
 

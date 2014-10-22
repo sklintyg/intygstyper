@@ -12,22 +12,20 @@ angular.module('common').directive('wcDatePickerField',
                 onChange: '&'
             },
             templateUrl: '/web/webjars/common/webcert/js/directives/wcDatePickerField.html',
-
-            link: function(scope, element, attrs, ctrl) {
-                ctrl.$parsers.unshift(function() { // hidden arg: viewValue
-                    // fire onChange whenever viewValue changes
-                    if (scope.onChange) {
-                        scope.onChange();
+            controller: function($scope) {
+/*
+                $scope.$watch('targetModel', function() {
+                    if ($scope.onChange) { MUST RENAME IF USED
+                        $scope.onChange();
                     }
                 });
-            },
-            controller: function(scope) {
-                scope.isOpen = false;
-                scope.toggleOpen = function($event) {
+*/
+                $scope.isOpen = false;
+                $scope.toggleOpen = function($event) {
                     $event.preventDefault();
                     $event.stopPropagation();
                     $timeout(function() {
-                        scope.isOpen = !scope.isOpen;
+                        $scope.isOpen = !$scope.isOpen;
                     });
                 };
             }
