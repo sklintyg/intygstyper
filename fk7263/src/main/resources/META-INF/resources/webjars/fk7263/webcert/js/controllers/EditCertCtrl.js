@@ -191,33 +191,49 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             }
 
             /**
+             * Convert date from string to a strict moment date
+             * @param date
+             * @returns {*}
+             */
+            function convertDateStrict(date) {
+
+                if (typeof date === 'string' && date.length < 10) {
+                    return null;
+                }
+
+                var momentDate = toMoment(date);
+                if (momentDate !== null) {
+                    // Format date strictly to 'YYYY-MM-DD'.
+                    momentDate = moment(momentDate.format('YYYY-MM-DD'), 'YYYY-MM-DD', true).format('YYYY-MM-DD');
+                    if (momentDate === 'invalid date') {
+                        // We don't want to handle invalid dates at all
+                        momentDate = null;
+                    }
+                }
+
+                return momentDate;
+            }
+
+
+            /**
              * Create a date range object
              * @param groupName
              * @returns {{fromName: string, tomName: string}}
              */
-            function createDateRangeGroup(groupName, strict) {
+            function createDateRangeGroup(groupName, strict, useModelValue) {
                 var dateRangeGroup = {
                     fromName: groupName + 'from',
                     tomName: groupName + 'tom'
                 };
 
-                function convertDateStrict(date) {
-
-                    if (typeof date === 'string' && date.length < 10) {
-                        return null;
+                if (useModelValue) {
+                    if ($scope.cert[groupName]) {
+                        dateRangeGroup.nedsattFrom = $scope.cert[groupName].from;
+                        dateRangeGroup.nedsattTom = $scope.cert[groupName].tom;
                     }
-
-                    var momentDate = toMoment(date);
-                    if (momentDate !== null) {
-                        // Format date strictly to 'YYYY-MM-DD'.
-                        momentDate = moment(momentDate.format('YYYY-MM-DD'), 'YYYY-MM-DD', true).format('YYYY-MM-DD');
-                        if (momentDate === 'invalid date') {
-                            // We don't want to handle invalid dates at all
-                            momentDate = null;
-                        }
-                    }
-
-                    return momentDate;
+                } else {
+                    dateRangeGroup.nedsattFrom = $scope.certForm[dateRangeGroup.fromName].$viewValue;
+                    dateRangeGroup.nedsattTom = $scope.certForm[dateRangeGroup.tomName].$viewValue;
                 }
 
                 if (strict === undefined || strict === true) {
@@ -259,21 +275,21 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             /**
              * Revalidate 8b dates
              */
-            function validateDates() {
+            function validateDates(useModelValue) {
                 resetDateInvalidStates();
-                validateDateRangeOrder(); // Set invalid if from dates are after tom dates
-                validateDatePeriods(); // Set invalid if date periods overlap
+                validateDateRangeOrder(useModelValue); // Set invalid if from dates are after tom dates
+                validateDatePeriods(useModelValue); // Set invalid if date periods overlap
             }
 
             /**
              * Validate order of dates within a group
              */
-            function validateDateRangeOrder() {
+            function validateDateRangeOrder(useModelValue) {
 
                 // Update others still marked as invalid as well if they previously conflicted with the changed one
                 var groups = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
                 for (var i = 0; i < groups.length; i++) {
-                    var dateGroup = createDateRangeGroup(groups[i]);
+                    var dateGroup = createDateRangeGroup(groups[i], false, useModelValue);
                     if (dateGroup.isValid()) {
                         var momentFrom = toMoment(dateGroup.nedsattFrom);
                         var momentTom = toMoment(dateGroup.nedsattTom);
@@ -335,20 +351,20 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             /**
              * Validate 8b date periods so they don't overlap or wrap in any way
              */
-            function validateDatePeriods() {
+            function validateDatePeriods(useModelValue) {
                 var groups = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
 
                 // for every nedsatt group
                 for (var i = 0; i < groups.length; i++) {
 
                     // where group is used, set and not already marked as invalid
-                    var dateGroup = createDateRangeGroup(groups[i]);
+                    var dateGroup = createDateRangeGroup(groups[i], false, useModelValue);
 
                     // check with all other period groups after nedsatt period if periods overlap
                     for (var j = i + 1; j < groups.length; j++) {
 
                         // dont check against unused dates and already invalid dates
-                        var compareNedsattGroup = createDateRangeGroup(groups[j]);
+                        var compareNedsattGroup = createDateRangeGroup(groups[j], false, useModelValue);
                         markOverlappingDates(dateGroup, compareNedsattGroup);
                     }
                 }
@@ -358,7 +374,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * 8b: find earliest and latest dates (as moment objects) for arbetsförmåga
              * @returns {{minMoment: null, maxMoment: null}}
              */
-            function findStartEndMoments() {
+            function findStartEndMoments(useModelValue) {
                 var moments = {
                     minMoment: null,
                     maxMoment: null
@@ -382,10 +398,25 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         }
                     }
 
-                    var dateValue = $scope.certForm[nedsattMed+'from'].$viewValue;
+                    var dateValue = null;
+
+                    if(useModelValue) {
+                        if($scope.cert[nedsattMed] && $scope.cert[nedsattMed].from) {
+                            dateValue = $scope.cert[nedsattMed].from;
+                        }
+                    } else {
+                        dateValue = $scope.certForm[nedsattMed+'from'].$viewValue;
+                    }
                     pushValidDate(startMoments, dateValue);
 
-                    dateValue = $scope.certForm[nedsattMed+'tom'].$viewValue;
+                    dateValue = null;
+                    if(useModelValue) {
+                        if($scope.cert[nedsattMed] && $scope.cert[nedsattMed].tom) {
+                            dateValue = $scope.cert[nedsattMed].tom;
+                        }
+                    } else {
+                        dateValue = $scope.certForm[nedsattMed+'tom'].$viewValue;
+                    }
                     pushValidDate(endMoments, dateValue);
                 });
 
@@ -402,10 +433,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             /**
              * 8b: Called when checks or dates for Arbetsförmåga are changed. Update dependency controls here
              */
-            function onArbetsformagaDatesUpdated() {
-                $scope.updateTotalCertDays();
+            function onArbetsformagaDatesUpdated(useModelValue) {
+                $scope.updateTotalCertDays(useModelValue);
 
-                var minMaxMoments = findStartEndMoments();
+                var minMaxMoments = findStartEndMoments(useModelValue);
                 checkArbetsformagaDatesRange(minMaxMoments.minMoment);
                 checkArbetsformagaDatesPeriodLength(minMaxMoments.minMoment, minMaxMoments.maxMoment);
             }
@@ -484,22 +515,57 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 var nedsattMedList = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
                 angular.forEach(nedsattMedList, function(nedsattMed) {
 
+                    function nedsattParser(viewValue) {
+
+                        viewValue = convertDateStrict(viewValue);
+
+                        var changedDateGroup = createDateRangeGroup(nedsattMed, false); // false = non-strict date conversion
+                        if (!isValidString(changedDateGroup.nedsattFrom) && !isValidString(changedDateGroup.nedsattTom)) {
+                            // uncheck check since both dates are undefined or empty
+                            $scope.workState[nedsattMed] = false;
+
+                        } else if (isValidString(changedDateGroup.nedsattFrom) || isValidString(changedDateGroup.nedsattTom)) {
+                            // One of the dates is valid
+                            $scope.workState[nedsattMed] = true; // Check nedsatt checkbox
+                        }
+
+                        if (viewValue === null) {
+                            viewValue = undefined;
+                        } else {
+                            validateDates(false);
+                            onArbetsformagaDatesUpdated(false);
+                        }
+
+                        return viewValue;
+                    }
+
                     // Register parsers so we can follow changes in the date inputs
                     if ($scope.certForm[nedsattMed+'from'].$parsers.length > 1) {
                         $scope.certForm[nedsattMed+'from'].$parsers.shift();
                     }
+                    $scope.certForm[nedsattMed+'from'].$parsers.unshift(nedsattParser);
 
-                    $scope.certForm[nedsattMed+'from'].$parsers.unshift(function(viewValue) {
-                        $scope.onChangeNedsattMed(nedsattMed, 'from', viewValue);
-                        return viewValue;
+                    if ($scope.certForm[nedsattMed+'from'].$formatters.length > 0) {
+                        $scope.certForm[nedsattMed+'from'].$formatters.shift();
+                    }
+                    $scope.certForm[nedsattMed+'from'].$formatters.unshift(function(modelValue) {
+                        validateDates(true);
+                        onArbetsformagaDatesUpdated(true);
+                        return modelValue;
                     });
 
                     if ($scope.certForm[nedsattMed+'tom'].$parsers.length > 1) {
                         $scope.certForm[nedsattMed+'tom'].$parsers.shift();
                     }
-                    $scope.certForm[nedsattMed+'tom'].$parsers.unshift(function(viewValue) {
-                        $scope.onChangeNedsattMed(nedsattMed, 'tom', viewValue);
-                        return viewValue;
+                    $scope.certForm[nedsattMed+'tom'].$parsers.unshift(nedsattParser);
+
+                    if ($scope.certForm[nedsattMed+'tom'].$formatters.length > 0) {
+                        $scope.certForm[nedsattMed+'tom'].$formatters.shift();
+                    }
+                    $scope.certForm[nedsattMed+'tom'].$formatters.unshift(function(modelValue) {
+                        validateDates(true);
+                        onArbetsformagaDatesUpdated(true);
+                        return modelValue;
                     });
 
                     if ($scope.cert[nedsattMed]) {
@@ -817,8 +883,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Calculate total days between the earliest and the latest dates supplied in the 8b controls
              * @type {boolean}
              */
-            $scope.updateTotalCertDays = function() {
-                var moments = findStartEndMoments();
+            $scope.updateTotalCertDays = function(useModelValue) {
+                var moments = findStartEndMoments(useModelValue);
                 if (!moments.minMoment || !moments.maxMoment) {
                     // return if there's no valid range span yet
                     $scope.totalCertDays = false;
@@ -860,41 +926,12 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         if (nedsatt.from && (!nedsatt.tom || !isDate(nedsatt.tom))) {
                             nedsatt.tom = toMoment(nedsatt.from).add('days', 7).format('YYYY-MM-DD');
                         }
-
-                        validateDates();
                     } else {
 
                         // Remove dates
                         delete $scope.cert[nedsattModelName];
-                        setDateInvalidState(nedsattModelName + 'from', false);
-                        setDateInvalidState(nedsattModelName + 'tom', false);
                     }
-
-                    onArbetsformagaDatesUpdated();
                 }
-            };
-
-            /**
-             * Set checkbox and non-selected date for arbetsformaga % when a date is changed
-             * @param nedsattModelName
-             * @param fromTom
-             */
-            $scope.onChangeNedsattMed = function(nedsattModelName, fromTom, newValue) {
-
-                var changedDateGroup = createDateRangeGroup(nedsattModelName, false); // false = non-strict date conversion
-                if (!isValidString(changedDateGroup.nedsattFrom) && !isValidString(changedDateGroup.nedsattTom)) {
-
-                    // uncheck check since both dates are undefined or empty
-                    $scope.workState[nedsattModelName] = false;
-
-                } else if (isValidString(changedDateGroup.nedsattFrom) || isValidString(changedDateGroup.nedsattTom)) {
-                    // One of the dates is valid
-
-                    $scope.workState[nedsattModelName] = true; // Check nedsatt checkbox
-                    validateDates();
-                }
-
-                onArbetsformagaDatesUpdated();
             };
 
             /****************************************************************************
