@@ -366,27 +366,23 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
                 angular.forEach(nedsattMedList, function(nedsattMed) {
 
+                    function pushValidDate(list, dateValue) {
+                        if ((typeof dateValue === 'string' && dateValue.length === 10) || dateValue instanceof Date) {
+                            var momentDate = toMoment(dateValue);
+                            if(momentDate !== null && momentDate.isValid()) {
+                                var formattedDate = moment(momentDate.format('YYYY-MM-DD'), 'YYYY-MM-DD', true);
+                                if (formattedDate.isValid()) {
+                                    list.push(formattedDate);
+                                }
+                            }
+                        }
+                    }
+
                     var dateValue = $scope.certForm[nedsattMed+'from'].$viewValue;
+                    pushValidDate(startMoments, dateValue);
 
-                    if ((typeof dateValue === 'string' && dateValue.length === 10) || dateValue instanceof Date) {
-                        var from = toMoment();
-                        if(from !== null && from.isValid()) {
-                            from = moment(from.format('YYYY-MM-DD'), 'YYYY-MM-DD', true);
-                            if (from.isValid()) {
-                                startMoments.push(from);
-                            }
-                        }
-                    }
-
-                    if ((typeof dateValue === 'string' && dateValue.length === 10) || dateValue instanceof Date) {
-                        var tom = toMoment($scope.certForm[nedsattMed+'tom'].$viewValue);
-                        if (tom !== null && tom.isValid()) {
-                            tom = moment(tom.format('YYYY-MM-DD'), 'YYYY-MM-DD', true);
-                            if (tom.isValid()) {
-                                endMoments.push(tom);
-                            }
-                        }
-                    }
+                    dateValue = $scope.certForm[nedsattMed+'tom'].$viewValue;
+                    pushValidDate(endMoments, dateValue);
                 });
 
                 if (startMoments.length > 0) {
@@ -485,12 +481,20 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 angular.forEach(nedsattMedList, function(nedsattMed) {
 
                     // Register parsers so we can follow changes in the date inputs
+                    if ($scope.certForm[nedsattMed+'from'].$parsers.length > 1) {
+                        $scope.certForm[nedsattMed+'from'].$parsers.shift();
+                    }
+
                     $scope.certForm[nedsattMed+'from'].$parsers.unshift(function(viewValue) {
-                        $scope.onChangeNedsattMed(nedsattMed, 'from');
+                        $scope.onChangeNedsattMed(nedsattMed, 'from', viewValue);
                         return viewValue;
                     });
+
+                    if ($scope.certForm[nedsattMed+'tom'].$parsers.length > 1) {
+                        $scope.certForm[nedsattMed+'tom'].$parsers.shift();
+                    }
                     $scope.certForm[nedsattMed+'tom'].$parsers.unshift(function(viewValue) {
-                        $scope.onChangeNedsattMed(nedsattMed, 'tom');
+                        $scope.onChangeNedsattMed(nedsattMed, 'tom', viewValue);
                         return viewValue;
                     });
 
@@ -635,14 +639,29 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 angular.forEach(nedsattMedList, function(nedsattMed) {
 
                     // convert dates to string from viewvalue (modelvalue is undefined for invalid dates from datepicker)
-                    if (this[nedsattMed] === undefined) {
-                        this[nedsattMed] = {
-                            from: '',
-                            tom: ''
-                        };
+                    var from = $scope.certForm[nedsattMed+'from'].$viewValue;
+                    var tom = $scope.certForm[nedsattMed+'tom'].$viewValue;
+                    if (this[nedsattMed] === undefined && (isValidString(from) || isValidString(tom))) {
+
+                        this[nedsattMed] = {};
+                        if (isValidString(from)) {
+                            this[nedsattMed].from = from;
+                        }
+                        if (isValidString(tom)) {
+                            this[nedsattMed].tom = tom;
+                        }
+                    } else if (this[nedsattMed]) {
+                        if (isValidString(from)) {
+                            this[nedsattMed].from = from;
+                        } else {
+                            this[nedsattMed].from = undefined;
+                        }
+                        if (isValidString(tom)) {
+                            this[nedsattMed].tom = tom;
+                        } else {
+                            this[nedsattMed].from = undefined;
+                        }
                     }
-                    this[nedsattMed].from = $scope.certForm[nedsattMed+'from'].$viewValue;
-                    this[nedsattMed].tom = $scope.certForm[nedsattMed+'tom'].$viewValue;
 
                     if ($scope.workState[nedsattMed]) {
                         this[nedsattMed+'Beskrivning'] = $scope.form.ovrigt[nedsattMed+'Beskrivning'];
@@ -856,7 +875,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * @param nedsattModelName
              * @param fromTom
              */
-            $scope.onChangeNedsattMed = function(nedsattModelName) {
+            $scope.onChangeNedsattMed = function(nedsattModelName, fromTom, newValue) {
 
                 var changedDateGroup = createDateRangeGroup(nedsattModelName, false); // false = non-strict date conversion
                 if (!isValidString(changedDateGroup.nedsattFrom) && !isValidString(changedDateGroup.nedsattTom)) {
