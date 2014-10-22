@@ -152,11 +152,21 @@ public class InternalDraftValidator {
             return false;
         }
         // if the interval is not null and either from or tom is invalid, raise validation error
-        for (InternalLocalDateInterval interval : intervals) {
-            if (interval != null && !interval.isValid()) {
-                addValidationError(validationMessages, "arbetsformaga", "fk7263.validation.arbetsformaga.incorrect-format");
-                success = false;
-            }
+        if (intervals[0] != null && !intervals[0].isValid()) {
+            addValidationError(validationMessages, "arbetsformaga.nedsattMed100", "fk7263.validation.arbetsformaga.nedsattmed100.incorrect-format");
+            success = false;
+        }
+        if (intervals[1] != null && !intervals[1].isValid()) {
+            addValidationError(validationMessages, "arbetsformaga.nedsattMed75", "fk7263.validation.arbetsformaga.nedsattmed75.incorrect-format");
+            success = false;
+        }
+        if (intervals[2] != null && !intervals[2].isValid()) {
+            addValidationError(validationMessages, "arbetsformaga.nedsattMed50", "fk7263.validation.arbetsformaga.nedsattmed50.incorrect-format");
+            success = false;
+        }
+        if (intervals[3] != null && !intervals[3].isValid()) {
+            addValidationError(validationMessages, "arbetsformaga.nedsattMed25", "fk7263.validation.arbetsformaga.nedsattmed25.incorrect-format");
+            success = false;
         }
         return success;
     }
