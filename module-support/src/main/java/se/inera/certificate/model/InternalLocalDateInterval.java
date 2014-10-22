@@ -66,25 +66,33 @@ public class InternalLocalDateInterval {
     /**
      * Attempts to parse the String held as start date to a LocalDate.
      *
-     * @return {@link LocalDate} if parsing was successful, or null otherwise
+     * @return {@link LocalDate} if parsing was successful
      */
     public LocalDate fromAsLocalDate() {
         if (from == null) {
             return null;
         }
-        return from.asLocalDate();
+        try {
+            return from.asLocalDate();
+        } catch (ModelException e) {
+            return null;
+        }
     }
 
     /**
      * Attempts to parse the String held as end date to a LocalDate.
      *
-     * @return {@link LocalDate} if parsing was successful, or null otherwise
+     * @return {@link LocalDate} if parsing was successful
      */
     public LocalDate tomAsLocalDate() {
         if (tom == null) {
             return null;
         }
-        return tom.asLocalDate();
+        try {
+            return tom.asLocalDate();
+        } catch (ModelException e) {
+            return null;
+        }
     }
 
     @JsonIgnore
@@ -92,6 +100,10 @@ public class InternalLocalDateInterval {
         if (this.from == null || this.tom == null) {
             return false;
         }
-        return from.isValidDate() && tom.isValidDate();
+        if (from.isValidDate() && tom.isValidDate()) {
+            return tom.asLocalDate().isAfter(from.asLocalDate());
+        } else {
+            return false;
+        }
     }
 }

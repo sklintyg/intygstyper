@@ -17,7 +17,7 @@ public class InternalDate {
     private static final String DATE_FORMAT = "[1-2][0-9]{3,3}(-((0[1-9])|(1[0-2]))(-((0[1-9])|([1-2][0-9])|(3[0-1]))))";
 
     /**Parser used for parsing LocalDate[s] from Strings, uses {@code ISODateTimeFormat}. */
-    private static final DateTimeFormatter PARSER = ISODateTimeFormat.dateTimeParser();
+    private static final DateTimeFormatter PARSER = ISODateTimeFormat.date();
 
     private String date;
 
@@ -65,6 +65,9 @@ public class InternalDate {
      * @throws ModelException if parsing failed
      */
     public LocalDate asLocalDate() {
+        if (date == null) {
+            throw new ModelException("Date was null");
+        }
         LocalDate localDate;
         try {
             localDate = PARSER.parseLocalDate(date);

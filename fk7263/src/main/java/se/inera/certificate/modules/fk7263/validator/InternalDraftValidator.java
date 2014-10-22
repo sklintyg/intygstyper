@@ -146,12 +146,13 @@ public class InternalDraftValidator {
 
     private boolean isValidDateInIntervals(List<ValidationMessage> validationMessages, Fk7263Intyg utlatande) {
         boolean success = true;
-        InternalLocalDateInterval[] intervals = { utlatande.getNedsattMed100(), utlatande.getNedsattMed75(), utlatande.getNedsattMed50(),
+        InternalLocalDateInterval[] intervals = {utlatande.getNedsattMed100(), utlatande.getNedsattMed75(), utlatande.getNedsattMed50(),
                 utlatande.getNedsattMed25() };
         if (allNulls(intervals)) {
             return false;
         }
         // if the interval is not null and either from or tom is invalid, raise validation error
+        // use independent conditions to check this to be able to give specific validation errors for each case
         if (intervals[0] != null && !intervals[0].isValid()) {
             addValidationError(validationMessages, "arbetsformaga.nedsattMed100", "fk7263.validation.arbetsformaga.nedsattmed100.incorrect-format");
             success = false;
@@ -246,7 +247,7 @@ public class InternalDraftValidator {
 
     /**
      * Check if there are validation errors.
-     * 
+     *
      * @param validationMessages
      *            list of validation messages
      * @return {@link se.inera.certificate.modules.support.api.dto.ValidationStatus#VALID} if there are no errors, and

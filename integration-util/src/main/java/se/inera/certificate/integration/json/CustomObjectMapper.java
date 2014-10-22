@@ -33,7 +33,6 @@ public class CustomObjectMapper extends ObjectMapper {
     }
 
     private static final class Module extends SimpleModule {
-
         private Module() {
             addSerializer(Partial.class, new PartialSerializer());
             addDeserializer(Partial.class, new PartialDeserializer());
@@ -46,10 +45,9 @@ public class CustomObjectMapper extends ObjectMapper {
 
             addSerializer(LocalDate.class, new LocalDateSerializer());
             //addDeserializer(LocalDate.class, new LocalDateDeserializer());
-            
             /*
              * Using a custom crafted deserializer that handles dates
-             * on the UTC format. The original LocalDateDeserializer class do not 
+             * on the UTC format. The original LocalDateDeserializer class do not
              * handle the UTC format.
              */
             addDeserializer(LocalDate.class, new CustomLocalDateDeserializer());

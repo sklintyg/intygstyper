@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 
-import org.joda.time.LocalDate;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

@@ -15,8 +15,6 @@ public class InternalDateTest {
 
         InternalDate date1 = new InternalDate(dateString);
         assertTrue(date1.isValidDate());
-
-        
     }
 
     @Test
@@ -49,7 +47,7 @@ public class InternalDateTest {
         InternalDate validSameDate = new InternalDate(LocalDate.now());
 
         InternalDate invalidDate = new InternalDate("2001-01");
-        
+
 
         assertFalse(validNotFuture.invalidOrInFuture());
         assertTrue(validOneYearInFuture.invalidOrInFuture());
@@ -63,14 +61,19 @@ public class InternalDateTest {
 
     @Test (expected = ModelException.class)
     public void testInvalidAsLocalDate() {
-        String justText = "blörk";
-        String dateButIncorrect = "2011-13-32";
-        InternalDate internalDate = new InternalDate();
+        InternalDate partialDate = new InternalDate("2001-");
+        partialDate.asLocalDate();
 
-        internalDate.setDate(justText);
-        internalDate.asLocalDate();
+        InternalDate justText = new InternalDate("blörk");
+        justText.asLocalDate();
 
-        internalDate.setDate(dateButIncorrect);
-        internalDate.asLocalDate();
+        InternalDate dateButIncorrect = new InternalDate("2011-13-32");
+        dateButIncorrect.asLocalDate();
+    }
+
+    @Test (expected = ModelException.class)
+    public void testInvalidEmpty() {
+        InternalDate empty = new InternalDate("");
+        empty.asLocalDate();
     }
 }
