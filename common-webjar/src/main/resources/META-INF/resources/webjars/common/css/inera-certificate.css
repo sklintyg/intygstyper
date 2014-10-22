@@ -313,10 +313,6 @@
         width: 100% !important;
     }
 
-    input[datepicker-popup] {
-        width: 94px;
-    }
-
     .qa-column {
         max-width: 600px;
         padding-right: 20px;
@@ -530,7 +526,7 @@
     }
 
     input[type=text].small-decimal {
-        width: 34px;
+        width: 38px;
     }
 
     .radio, .checkbox {

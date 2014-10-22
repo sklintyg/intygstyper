@@ -357,6 +357,10 @@
         width: 125px;
     }
 
+    [datepicker] thead tr th {
+        padding-bottom: 10px;
+    }
+
     .input-year {
         width: 4em;
     }

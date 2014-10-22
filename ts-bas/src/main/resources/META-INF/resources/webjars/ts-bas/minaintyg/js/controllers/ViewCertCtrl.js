@@ -97,9 +97,32 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
                 focus: false
             };
 
+            var archiveDialog = {};
+
+            $scope.archiveSelected = function() {
+                var item = $scope.cert;
+                $log.debug('archive ' + item.id);
+                $scope.dialog.acceptprogressdone = false;
+                listCertService.archiveCertificate(item, function(fromServer, oldItem) {
+                    $log.debug('statusUpdate callback:' + fromServer);
+                    if (fromServer !== null) {
+                        // Better way to update the object?
+                        oldItem.archived = fromServer.archived;
+                        oldItem.status = fromServer.status;
+                        oldItem.selected = false;
+                        archiveDialog.close();
+                        $scope.dialog.acceptprogressdone = true;
+                        $location.path('#/start');
+
+                    } else {
+                        // show error view
+                        $location.path('/fel/couldnotarchivecert');
+                    }
+                });
+            };
+
             // Archive dialog
             $scope.certToArchive = {};
-            var archiveDialog;
 
             $scope.openArchiveDialog = function(cert) {
                 $scope.certToArchive = cert;

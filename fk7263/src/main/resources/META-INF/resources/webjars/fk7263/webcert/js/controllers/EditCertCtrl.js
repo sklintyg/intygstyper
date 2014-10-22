@@ -120,6 +120,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Private controller support functions
              ***************************************************************************/
 
+            function isInvalid(data) {
+                return (data === undefined || data === null || data === '');
+            }
+
             /**
              * Check if variable is undefined, null, NaN or an empty string = invalid
              * @param data
