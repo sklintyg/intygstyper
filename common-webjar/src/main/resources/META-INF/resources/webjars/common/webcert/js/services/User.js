@@ -104,7 +104,7 @@ angular.module('common').factory('common.User',
                 var payload = vardenhet;
 
                 var self = this;
-                var restPath = '/api/user/changeunit';
+                var restPath = '/api/anvandare/andraenhet';
                 $http.post(restPath, payload).success(function(data) {
                     $log.debug('got callback data: ' + data);
 
