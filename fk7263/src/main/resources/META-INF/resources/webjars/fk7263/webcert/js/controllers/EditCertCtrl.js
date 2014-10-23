@@ -676,69 +676,95 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
                 } else {
 
+                    // Fält 4b. datum
+                    var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter', 'annanReferens'];
+                    angular.forEach(baserasPaTypes, function(type) {
+                        this[type] = $scope.certForm[type + 'Date'].$viewValue;
+                    }, $scope.cert);
+
+                    // Fält 4b. AnnanReferensBeskrivning
+                    if ($scope.basedOnState.check.annanReferens) {
+                        $scope.cert.annanReferensBeskrivning = $scope.form.ovrigt.annanReferensBeskrivning;
+                    } else {
+                        $scope.cert.annanReferensBeskrivning = null;
+                    }
+
                     // Fält 8a.
                     if ($scope.cert.nuvarandeArbete && $scope.form.nuvarandeArbetsuppgifter) {
                         $scope.cert.nuvarandeArbetsuppgifter = $scope.form.nuvarandeArbetsuppgifter;
                     } else {
                         $scope.cert.nuvarandeArbetsuppgifter = null;
                     }
-                }
 
-                // Fält 4b. datum
-                var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter', 'annanReferens'];
-                angular.forEach(baserasPaTypes, function(type) {
-                    this[type] = $scope.certForm[type + 'Date'].$viewValue;
-                }, $scope.cert);
-
-                // Fält 4b. AnnanReferensBeskrivning
-                if ($scope.basedOnState.check.annanReferens) {
-                    $scope.cert.annanReferensBeskrivning = $scope.form.ovrigt.annanReferensBeskrivning;
-                } else {
-                    $scope.cert.annanReferensBeskrivning = null;
-                }
-
-                // Fält 6a.
-                if ($scope.cert.rekommendationOvrigtCheck) {
-                    $scope.cert.rekommendationOvrigt = $scope.form.rekommendationOvrigt;
-                } else {
-                    $scope.cert.rekommendationOvrigt = null;
-                }
-
-                // Fält 8b.
-                var nedsattMedList = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
-                angular.forEach(nedsattMedList, function(nedsattMed) {
-
-                    // convert dates to string from viewvalue (modelvalue is undefined for invalid dates from datepicker)
-                    var from = $scope.certForm[nedsattMed+'from'].$viewValue;
-                    var tom = $scope.certForm[nedsattMed+'tom'].$viewValue;
-                    if (this[nedsattMed] === undefined && (isValidString(from) || isValidString(tom))) {
-
-                        this[nedsattMed] = {};
-                        if (isValidString(from)) {
-                            this[nedsattMed].from = from;
-                        }
-                        if (isValidString(tom)) {
-                            this[nedsattMed].tom = tom;
-                        }
-                    } else if (this[nedsattMed]) {
-                        if (isValidString(from)) {
-                            this[nedsattMed].from = from;
-                        } else {
-                            this[nedsattMed].from = undefined;
-                        }
-                        if (isValidString(tom)) {
-                            this[nedsattMed].tom = tom;
-                        } else {
-                            this[nedsattMed].from = undefined;
-                        }
-                    }
-
-                    if ($scope.workState[nedsattMed]) {
-                        this[nedsattMed+'Beskrivning'] = $scope.form.ovrigt[nedsattMed+'Beskrivning'];
+                    // Fält 6a.
+                    if ($scope.cert.rekommendationOvrigtCheck) {
+                        $scope.cert.rekommendationOvrigt = $scope.form.rekommendationOvrigt;
                     } else {
-                        this[nedsattMed+'Beskrivning'] = null;
+                        $scope.cert.rekommendationOvrigt = null;
                     }
-                }, $scope.cert);
+
+                    // Fält 8b.
+                    var nedsattMedList = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
+                    angular.forEach(nedsattMedList, function(nedsattMed) {
+
+                        // convert dates to string from viewvalue (modelvalue is undefined for invalid dates from datepicker)
+                        var from = $scope.certForm[nedsattMed+'from'].$viewValue;
+                        var tom = $scope.certForm[nedsattMed+'tom'].$viewValue;
+                        if (this[nedsattMed] === undefined && (isValidString(from) || isValidString(tom))) {
+
+                            this[nedsattMed] = {};
+                            if (isValidString(from)) {
+                                this[nedsattMed].from = from;
+                            }
+                            if (isValidString(tom)) {
+                                this[nedsattMed].tom = tom;
+                            }
+                        } else if (this[nedsattMed]) {
+                            if (isValidString(from)) {
+                                this[nedsattMed].from = from;
+                            } else {
+                                this[nedsattMed].from = undefined;
+                            }
+                            if (isValidString(tom)) {
+                                this[nedsattMed].tom = tom;
+                            } else {
+                                this[nedsattMed].from = undefined;
+                            }
+                        }
+
+                        if ($scope.workState[nedsattMed]) {
+                            this[nedsattMed+'Beskrivning'] = $scope.form.ovrigt[nedsattMed+'Beskrivning'];
+                        } else {
+                            this[nedsattMed+'Beskrivning'] = null;
+                        }
+                    }, $scope.cert);
+
+                    // Fält 7. Rehab radio conversions
+                    $scope.cert.rehabiliteringAktuell = false;
+                    $scope.cert.rehabiliteringEjAktuell = false;
+                    $scope.cert.rehabiliteringGarInteAttBedoma = false;
+
+                    switch ($scope.form.rehab) {
+                    case 'JA':
+                        $scope.cert.rehabiliteringAktuell = true;
+                        break;
+                    case 'NEJ':
+                        $scope.cert.rehabiliteringEjAktuell = true;
+                        break;
+                    case 'GAREJ':
+                        $scope.cert.rehabiliteringGarInteAttBedoma = true;
+                        break;
+                    }
+
+                    // Fält 11. Ressätt till arbete
+                    if ($scope.form.ressattTillArbeteAktuellt) {
+                        $scope.cert.ressattTillArbeteAktuellt = true;
+                        $scope.cert.ressattTillArbeteEjAktuellt = false;
+                    } else {
+                        $scope.cert.ressattTillArbeteAktuellt = false;
+                        $scope.cert.ressattTillArbeteEjAktuellt = true;
+                    }
+                }
 
                 // Fält 10. Går ej att bedöma and update backend model when view changes.
                 $scope.cert.arbetsformataPrognosJa = false;
@@ -761,32 +787,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning =
                         $scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
                     break;
-                }
-
-                // Fält 7. Rehab radio conversions
-                $scope.cert.rehabiliteringAktuell = false;
-                $scope.cert.rehabiliteringEjAktuell = false;
-                $scope.cert.rehabiliteringGarInteAttBedoma = false;
-
-                switch ($scope.form.rehab) {
-                case 'JA':
-                    $scope.cert.rehabiliteringAktuell = true;
-                    break;
-                case 'NEJ':
-                    $scope.cert.rehabiliteringEjAktuell = true;
-                    break;
-                case 'GAREJ':
-                    $scope.cert.rehabiliteringGarInteAttBedoma = true;
-                    break;
-                }
-
-                // Fält 11. Ressätt till arbete
-                if ($scope.form.ressattTillArbeteAktuellt) {
-                    $scope.cert.ressattTillArbeteAktuellt = true;
-                    $scope.cert.ressattTillArbeteEjAktuellt = false;
-                } else {
-                    $scope.cert.ressattTillArbeteAktuellt = false;
-                    $scope.cert.ressattTillArbeteEjAktuellt = true;
                 }
             }
 
