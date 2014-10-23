@@ -305,15 +305,12 @@
 
     .inline-block {
         display: inline-block !important;
+        vertical-align: middle;
     }
 
     .maxwidth {
         max-width: 100% !important;
         width: 100% !important;
-    }
-
-    input[datepicker-popup] {
-        width: 94px;
     }
 
     .qa-column {
@@ -529,7 +526,7 @@
     }
 
     input[type=text].small-decimal {
-        width: 34px;
+        width: 38px;
     }
 
     .radio, .checkbox {

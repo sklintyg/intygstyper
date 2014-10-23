@@ -118,6 +118,7 @@ var tsBasMessages = {
         'ts-bas.confirm.label.summarypagedesc': 'Du har valt att skicka följande intyg: ',
         'ts-bas.confirm.label.recipienttitle': 'Mottagare: ',
         'ts-bas.confirm.label.verifytext': 'Kontrollera att uppgifterna ovan stämmer och tryck på Skicka.',
+        'ts-bas.confirm.message.alreadysent': '<strong>Observera!</strong> Intyget har redan skickats till: <br>',
         'ts-bas.sent.label.pageinformation': 'Intyget har nu skickats och nedan presenteras försändelsen.',
 
         'ts-bas.typename': '',
@@ -137,7 +138,7 @@ var tsBasMessages = {
         'ts-bas.label.pagedescription.save.or.print.certificate': 'Klicka på knappen Ladda ner/Skriv ut för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
         'ts-bas.label.pagedescription.error.in.certificate.header': '<h2>Fel i intyget?</h2>',
         'ts-bas.label.pagedescription.error.in.certificate': 'Om någon uppgift är fel i läkarintyget så ska du kontakta den som utfärdat ditt läkarintyg.',
-        'ts-bas.label.pagedescription.archive.header': '<h2>Akrivera</h2>',
+        'ts-bas.label.pagedescription.archive.header': '<h2>Arkivera</h2>',
         'ts-bas.label.pagedescription.archive': 'För att arkivera intyget klickar du på symbolen Arkivera intyg <span class="glyphicon glyphicon-folder-close"></span>.',
 
         'ts-bas.label.status.false': '<span class="glyphicon glyphicon-chevron-up"></span> Visa mindre',

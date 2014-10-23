@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import org.apache.commons.lang3.StringUtils;
 
-import se.inera.certificate.model.LocalDateInterval;
+import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.support.ApplicationOrigin;
@@ -370,12 +370,12 @@ public class PdfGenerator {
         fillText(WORK_CAPACITY_TEXT, intyg.getArbetsformagaPrognos());
     }
 
-    private void fillNedsattning(LocalDateInterval interval, String checkboxFieldName, String fromDateFieldName,
+    private void fillNedsattning(InternalLocalDateInterval interval, String checkboxFieldName, String fromDateFieldName,
             String toDateFieldName) {
         if (interval != null) {
             checkField(checkboxFieldName);
-            fillText(fromDateFieldName, interval.getFrom().toString(DATE_PATTERN));
-            fillText(toDateFieldName, interval.getTom().toString(DATE_PATTERN));
+            fillText(fromDateFieldName, interval.getFrom().getDate());
+            fillText(toDateFieldName, interval.getTom().getDate());
         }
     }
 
@@ -455,22 +455,22 @@ public class PdfGenerator {
 
         if (intyg.getUndersokningAvPatienten() != null) {
             checkField(BASED_ON_EXAMINATION);
-            fillText(BASED_ON_EXAMINATION_TIME, intyg.getUndersokningAvPatienten().toString(DATE_PATTERN));
+            fillText(BASED_ON_EXAMINATION_TIME, intyg.getUndersokningAvPatienten().getDate());
         }
 
         if (intyg.getTelefonkontaktMedPatienten() != null) {
             checkField(BASED_ON_PHONE_CONTACT);
-            fillText(BASED_ON_PHONE_CONTACT_TIME, intyg.getTelefonkontaktMedPatienten().toString(DATE_PATTERN));
+            fillText(BASED_ON_PHONE_CONTACT_TIME, intyg.getTelefonkontaktMedPatienten().getDate());
         }
 
         if (intyg.getJournaluppgifter() != null) {
             checkField(BASED_ON_JOURNAL);
-            fillText(BASED_ON_JOURNAL_TIME, intyg.getJournaluppgifter().toString(DATE_PATTERN));
+            fillText(BASED_ON_JOURNAL_TIME, intyg.getJournaluppgifter().getDate());
         }
 
         if (intyg.getAnnanReferens() != null) {
             checkField(BASED_ON_OTHER);
-            fillText(BASED_ON_OTHER_DATE, intyg.getAnnanReferens().toString(DATE_PATTERN));
+            fillText(BASED_ON_OTHER_DATE, intyg.getAnnanReferens().getDate());
         }
     }
 

@@ -1,5 +1,10 @@
 package se.inera.certificate.modules.fk7263.validator;
 
+import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -7,19 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.certificate.model.LocalDateInterval;
+import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.service.WebcertModuleService;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.dto.ValidationMessage;
 import se.inera.certificate.modules.support.api.dto.ValidationStatus;
-
 import se.inera.certificate.validate.StringValidator;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 
 public class InternalDraftValidator {
 
@@ -34,9 +33,9 @@ public class InternalDraftValidator {
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
         validateDiagnose(utlatande, validationMessages);
-        //Falt 4
+        // Falt 4
         validateFunktionsnedsattning(utlatande, validationMessages);
-        //Falt 5
+        // Falt 5
         validateAktivitetsbegransning(utlatande, validationMessages);
         validateArbetsformaga(utlatande, validationMessages);
         validatePrognos(utlatande, validationMessages);
@@ -44,10 +43,29 @@ public class InternalDraftValidator {
         validateKommentar(utlatande, validationMessages);
         validateVardenhet(utlatande, validationMessages);
         validateOvrigaRekommendationer(utlatande, validationMessages);
+        validateReferenser(utlatande, validationMessages);
+        validateVardkontakter(utlatande, validationMessages);
 
         return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
     }
 
+    private void validateVardkontakter(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
+        if (utlatande.getTelefonkontaktMedPatienten() != null && !utlatande.getTelefonkontaktMedPatienten().isValidDate()) {
+            addValidationError(validationMessages, "intygbaseratpa.telefonkontakt", "fk7263.validation.intyg-baserat-pa.telefonkontakt.incorrect_format");
+        }
+        if (utlatande.getUndersokningAvPatienten() != null && !utlatande.getUndersokningAvPatienten().isValidDate()) {
+            addValidationError(validationMessages, "intygbaseratpa.undersokning", "fk7263.validation.intyg-baserat-pa.undersokning.incorrect_format");
+        }
+    }
+
+    private void validateReferenser(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
+        if (utlatande.getAnnanReferens() != null && !utlatande.getAnnanReferens().isValidDate()) {
+            addValidationError(validationMessages, "intygbaseratpa.referenser", "fk7263.validation.intyg-baserat-pa.annan.incorrect_format");
+        }
+        if (utlatande.getJournaluppgifter() != null && !utlatande.getJournaluppgifter().isValidDate()) {
+            addValidationError(validationMessages, "intygbaseratpa.journaluppgifter", "fk7263.validation.intyg-baserat-pa.journaluppgifter.incorrect_format");
+        }
+    }
 
     private void validateVardenhet(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
         if (isNullOrEmpty(utlatande.getVardperson().getPostadress())) {
@@ -118,18 +136,49 @@ public class InternalDraftValidator {
         if (utlatande.getTjanstgoringstid() != null && !STRING_VALIDATOR.validateStringIsNumber(utlatande.getTjanstgoringstid())) {
             addValidationError(validationMessages, "arbetsformaga", "fk7263.validation.arbetsformaga.tjanstgoringstid");
         }
-        validateIntervals(validationMessages, "arbetsformaga", utlatande.getNedsattMed100(), utlatande.getNedsattMed75(),
-                utlatande.getNedsattMed50(), utlatande.getNedsattMed25());
+
+        // Check that from and tom is valid in all present intervals before doing more checks
+        if (isValidDateInIntervals(validationMessages, utlatande)) {
+            validateIntervals(validationMessages, "arbetsformaga", utlatande.getNedsattMed100(), utlatande.getNedsattMed75(),
+                    utlatande.getNedsattMed50(), utlatande.getNedsattMed25());
+        }
+    }
+
+    private boolean isValidDateInIntervals(List<ValidationMessage> validationMessages, Fk7263Intyg utlatande) {
+        boolean success = true;
+        InternalLocalDateInterval[] intervals = {utlatande.getNedsattMed100(), utlatande.getNedsattMed75(), utlatande.getNedsattMed50(),
+                utlatande.getNedsattMed25() };
+        if (allNulls(intervals)) {
+            return false;
+        }
+        // if the interval is not null and either from or tom is invalid, raise validation error
+        // use independent conditions to check this to be able to give specific validation errors for each case
+        if (intervals[0] != null && !intervals[0].isValid()) {
+            addValidationError(validationMessages, "arbetsformaga.nedsattMed100", "fk7263.validation.arbetsformaga.nedsattmed100.incorrect-format");
+            success = false;
+        }
+        if (intervals[1] != null && !intervals[1].isValid()) {
+            addValidationError(validationMessages, "arbetsformaga.nedsattMed75", "fk7263.validation.arbetsformaga.nedsattmed75.incorrect-format");
+            success = false;
+        }
+        if (intervals[2] != null && !intervals[2].isValid()) {
+            addValidationError(validationMessages, "arbetsformaga.nedsattMed50", "fk7263.validation.arbetsformaga.nedsattmed50.incorrect-format");
+            success = false;
+        }
+        if (intervals[3] != null && !intervals[3].isValid()) {
+            addValidationError(validationMessages, "arbetsformaga.nedsattMed25", "fk7263.validation.arbetsformaga.nedsattmed25.incorrect-format");
+            success = false;
+        }
+        return success;
     }
 
     private void validateAktivitetsbegransning(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
-        //Fält 5  Aktivitetsbegränsning relaterat till diagnos och funktionsnedsättning
+        // Fält 5 Aktivitetsbegränsning relaterat till diagnos och funktionsnedsättning
         String aktivitetsbegransning = utlatande.getAktivitetsbegransning();
         if (!utlatande.isAvstangningSmittskydd() && aktivitetsbegransning == null) {
             addValidationError(validationMessages, "aktivitetsbegransning", "fk7263.validation.aktivitetsbegransning.missing");
         }
     }
-
 
     private void validateFunktionsnedsattning(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
         // Fält 4 - vänster Check that we got a funktionsnedsattning element
@@ -252,7 +301,7 @@ public class InternalDraftValidator {
      *            intervals
      * @return booleans
      */
-    protected boolean validateIntervals(List<ValidationMessage> validationMessages, String fieldId, LocalDateInterval... intervals) {
+    protected boolean validateIntervals(List<ValidationMessage> validationMessages, String fieldId, InternalLocalDateInterval... intervals) {
         if (intervals == null || allNulls(intervals)) {
             addValidationError(validationMessages, fieldId, "fk7263.validation.arbetsformaga.choose-at-least-one");
             return false;
@@ -260,14 +309,14 @@ public class InternalDraftValidator {
 
         for (int i = 0; i < intervals.length; i++) {
             if (intervals[i] != null) {
-                Interval oneInterval = createInterval(intervals[i].getFrom(), intervals[i].getTom());
+                Interval oneInterval = createInterval(intervals[i].fromAsLocalDate(), intervals[i].tomAsLocalDate());
                 if (oneInterval == null) {
                     addValidationError(validationMessages, fieldId, "fk7263.validation.arbetsformaga.incorrect-date-interval");
                     return false;
                 }
                 for (int j = i + 1; j < intervals.length; j++) {
                     if (intervals[j] != null) {
-                        Interval anotherInterval = createInterval(intervals[j].getFrom(), intervals[j].getTom());
+                        Interval anotherInterval = createInterval(intervals[j].fromAsLocalDate(), intervals[j].tomAsLocalDate());
                         if (anotherInterval == null) {
                             addValidationError(validationMessages, fieldId, "fk7263.validation.arbetsformaga.incorrect-date-interval");
                             return false;
@@ -290,8 +339,8 @@ public class InternalDraftValidator {
      *            intervals
      * @return boolean
      */
-    private boolean allNulls(LocalDateInterval[] intervals) {
-        for (LocalDateInterval interval : intervals) {
+    private boolean allNulls(InternalLocalDateInterval[] intervals) {
+        for (InternalLocalDateInterval interval : intervals) {
             if (interval != null) {
                 return false;
             }

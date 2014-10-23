@@ -271,7 +271,7 @@ public class PdfGenerator {
         ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND.setField(fields, hypoglykemier.getAllvarligForekomstVakenTid());
         if (hypoglykemier.getAllvarligForekomstVakenTidObservationstid() != null) {
             ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND_DATUM.setField(fields, hypoglykemier
-                    .getAllvarligForekomstVakenTidObservationstid().replace("-", ""));
+                    .getAllvarligForekomstVakenTidObservationstid().getDate().replace("-", ""));
         }
     }
 

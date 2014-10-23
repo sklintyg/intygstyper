@@ -23,7 +23,8 @@ angular.module('common').directive('wcEyeDecimal',
                             filtered += ',';
                         }
                     });
-                    return filtered.length <= 3 ? filtered : filtered.substring(3);
+                    var maxLength = (dec ? 3 : 2);
+                    return filtered.length <= maxLength ? filtered : filtered.substring(0,maxLength);
                 }
 
                 function format(value) {
