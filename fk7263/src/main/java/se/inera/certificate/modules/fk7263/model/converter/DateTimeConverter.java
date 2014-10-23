@@ -6,6 +6,7 @@ import org.joda.time.Partial;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.PartialInterval;
+import se.inera.certificate.model.converter.util.ConverterException;
 
 public final class DateTimeConverter {
 

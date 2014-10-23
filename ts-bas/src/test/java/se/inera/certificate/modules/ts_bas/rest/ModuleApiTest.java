@@ -175,8 +175,8 @@ public class ModuleApiTest {
             Utlatande expected = scenario.asInternalModel();
 
             // We need to issue a get in order to create an empty list (and make the test pass)
-            intUtlatande.getSkapadAv().getBefattningar();
-            intUtlatande.getSkapadAv().getSpecialiteter();
+            intUtlatande.getIntygMetadata().getSkapadAv().getBefattningar();
+            intUtlatande.getIntygMetadata().getSkapadAv().getSpecialiteter();
 
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, intUtlatande);
         }

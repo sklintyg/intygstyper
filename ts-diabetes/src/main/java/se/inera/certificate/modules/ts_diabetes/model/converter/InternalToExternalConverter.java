@@ -26,14 +26,13 @@ import org.slf4j.LoggerFactory;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.PartialInterval;
-import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.PhysicalQuantity;
-import se.inera.certificate.model.Vardgivare;
-import se.inera.certificate.model.converter.util.InternalConverterUtil;
+import se.inera.certificate.model.common.codes.CodeConverter;
+import se.inera.certificate.model.converter.util.ConverterException;
+import se.inera.certificate.model.converter.util.InternalToExternalConverterUtil;
+import se.inera.certificate.model.converter.util.PartialConverter;
 import se.inera.certificate.modules.ts_diabetes.model.codes.AktivitetKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.BilagaKod;
-import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
-import se.inera.certificate.modules.ts_diabetes.model.codes.HSpersonalKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IntygAvserKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.LateralitetsKod;
@@ -45,15 +44,12 @@ import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.VardkontakttypKod;
 import se.inera.certificate.modules.ts_diabetes.model.external.Aktivitet;
 import se.inera.certificate.modules.ts_diabetes.model.external.Bilaga;
-import se.inera.certificate.modules.ts_diabetes.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.external.Observation;
 import se.inera.certificate.modules.ts_diabetes.model.external.ObservationAktivitetRelation;
 import se.inera.certificate.modules.ts_diabetes.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_diabetes.model.external.Utlatande;
-import se.inera.certificate.modules.ts_diabetes.model.external.Vardenhet;
 import se.inera.certificate.modules.ts_diabetes.model.external.Vardkontakt;
 import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
-import se.inera.certificate.modules.ts_diabetes.model.internal.HoSPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvserKategori;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
 
@@ -91,10 +87,10 @@ public class InternalToExternalConverter {
         // TODO: Where does the codeSystem come from?! (i.e "1.2.752.129.2.1.2.1")
         utlatande.setId(new Id("1.2.752.129.2.1.2.1", source.getId()));
 
-        utlatande.setPatient(convertToExtPatient(source.getPatient()));
-        utlatande.setSigneringsdatum(source.getSigneringsdatum());
-        utlatande.setSkapadAv(convertToExtHosPersonal(source.getSkapadAv()));
-        utlatande.setSkickatdatum(source.getSkickatdatum());
+        utlatande.setPatient(InternalToExternalConverterUtil.convertToExtPatient(source.getIntygMetadata().getPatient()));
+        utlatande.setSigneringsdatum(source.getIntygMetadata().getSigneringsdatum());
+        utlatande.setSkapadAv(InternalToExternalConverterUtil.convertToExtHosPersonal(source.getIntygMetadata().getSkapadAv()));
+        utlatande.setSkickatdatum(source.getIntygMetadata().getSkickatdatum());
 
         UtlatandeKod utlatandeKod = UtlatandeKod.valueOf(source.getTyp());
         utlatande.setTyp(CodeConverter.toKod(utlatandeKod));
@@ -521,75 +517,5 @@ public class InternalToExternalConverter {
         }
 
         return aktiviteter;
-    }
-
-    /**
-     * Convert from internal to external Patient.
-     *
-     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Patient}
-     * @return external {@link Patient}
-     */
-    private Patient convertToExtPatient(se.inera.certificate.modules.ts_diabetes.model.internal.Patient source) {
-        Patient patient = new Patient();
-        patient.getFornamn().add(source.getFornamn());
-        if (source.getMellannamn() != null) {
-            patient.getMellannamn().add(source.getMellannamn());
-        }
-        patient.setEfternamn(source.getEfternamn());
-        patient.setId(InternalConverterUtil.createPersonId(source.getPersonid()));
-        patient.setPostadress(source.getPostadress());
-        patient.setPostnummer(source.getPostnummer());
-        patient.setPostort(source.getPostort());
-
-        return patient;
-    }
-
-    /**
-     * Convert from internal to external HosPersonal.
-     *
-     * @param source internal {@link HoSPersonal}
-     * @return external {@link HosPersonal}
-     */
-    private HosPersonal convertToExtHosPersonal(HoSPersonal source) {
-        HosPersonal hosPersonal = new HosPersonal();
-        hosPersonal.getBefattningar().addAll(source.getBefattningar());
-        hosPersonal.setId(new Id(HSpersonalKod.HSA_ID.getCodeSystem(), source.getPersonid()));
-        hosPersonal.setNamn(source.getFullstandigtNamn());
-        hosPersonal.setVardenhet(convertToExtVardenhet(source.getVardenhet()));
-        // TODO: IMPORTANT! change when specialiteter is implemented in internal model
-        hosPersonal.getSpecialiteter();
-        return hosPersonal;
-    }
-
-    /**
-     * Convert from internal to external Vardenhet.
-     *
-     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Vardenhet}
-     * @return external {@link Vardenhet}
-     */
-    private Vardenhet convertToExtVardenhet(se.inera.certificate.modules.ts_diabetes.model.internal.Vardenhet source) {
-        Vardenhet vardenhet = new Vardenhet();
-        vardenhet.setId(new Id(HSpersonalKod.HSA_ID.getCodeSystem(), source.getEnhetsid()));
-        vardenhet.setNamn(source.getEnhetsnamn());
-        vardenhet.setPostadress(source.getPostadress());
-        vardenhet.setPostnummer(source.getPostnummer());
-        vardenhet.setPostort(source.getPostort());
-        vardenhet.setTelefonnummer(source.getTelefonnummer());
-        vardenhet.setEpost(source.getEpost());
-        vardenhet.setVardgivare(convertToExtVardgivare(source.getVardgivare()));
-        return vardenhet;
-    }
-
-    /**
-     * Convert from internal to external Vardenhet.
-     *
-     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Vardgivare}
-     * @return external {@link Vardgivare}
-     */
-    private Vardgivare convertToExtVardgivare(se.inera.certificate.modules.ts_diabetes.model.internal.Vardgivare source) {
-        Vardgivare vardgivare = new Vardgivare();
-        vardgivare.setId(new Id(HSpersonalKod.HSA_ID.getCodeSystem(), source.getVardgivarid()));
-        vardgivare.setNamn(source.getVardgivarnamn());
-        return vardgivare;
     }
 }

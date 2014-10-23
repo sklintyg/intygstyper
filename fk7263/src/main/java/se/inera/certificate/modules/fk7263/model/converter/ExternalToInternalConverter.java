@@ -8,9 +8,9 @@ import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Sysselsattning;
-import se.inera.certificate.model.Vardenhet;
-import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
+import se.inera.certificate.model.converter.util.ConverterException;
+import se.inera.certificate.model.converter.util.ExternalToInternalConverterUtil;
 import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
 import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
 import se.inera.certificate.modules.fk7263.model.codes.Prognoskoder;
@@ -18,13 +18,11 @@ import se.inera.certificate.modules.fk7263.model.codes.Referenstypkoder;
 import se.inera.certificate.modules.fk7263.model.codes.Sysselsattningskoder;
 import se.inera.certificate.modules.fk7263.model.codes.Vardkontakttypkoder;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
-import se.inera.certificate.modules.fk7263.model.external.Fk7263HosPersonal;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Referens;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
-import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
 
 /**
  * @author andreaskaltenbach
@@ -36,7 +34,7 @@ public class ExternalToInternalConverter {
         Fk7263Intyg intyg = new Fk7263Intyg();
 
         intyg.setId(source.getId().getExtension() == null ? source.getId().getRoot() : source.getId().getExtension());
-        intyg.setSkickatDatum(source.getSkickatdatum());
+        intyg.getIntygMetadata().setSkickatdatum(source.getSkickatdatum());
         if (source.getValidFromDate() != null && source.getValidToDate() != null) {
             intyg.setGiltighet(new LocalDateInterval(source.getValidFromDate(), source.getValidToDate()));
         }
@@ -57,50 +55,13 @@ public class ExternalToInternalConverter {
         convertKommentar(intyg, source);
         convertSkapasAv(intyg, source);
 
-        intyg.setSigneringsdatum(source.getSigneringsdatum());
+        intyg.getIntygMetadata().setSigneringsdatum(source.getSigneringsdatum());
 
         return intyg;
     }
 
-    private void convertSkapasAv(Fk7263Intyg intyg, Fk7263Utlatande source) {
-        Fk7263HosPersonal personal = source.getSkapadAv();
-        Vardperson vardperson = new Vardperson();
-        if (personal != null) {
-            if (personal.getId() != null) {
-                vardperson.setHsaId(personal.getId().getExtension());
-            }
-
-            vardperson.setNamn(personal.getNamn());
-            vardperson.setForskrivarKod(personal.getForskrivarkod());
-
-            Vardenhet enhet = personal.getVardenhet();
-            if (enhet != null) {
-
-                if (enhet.getId() != null) {
-                    vardperson.setEnhetsId(enhet.getId().getExtension());
-                }
-
-                if (enhet.getArbetsplatskod() != null) {
-                    vardperson.setArbetsplatsKod(enhet.getArbetsplatskod().getExtension());
-                }
-
-                vardperson.setEnhetsnamn(enhet.getNamn());
-                vardperson.setPostadress(enhet.getPostadress());
-                vardperson.setPostnummer(enhet.getPostnummer());
-                vardperson.setPostort(enhet.getPostort());
-                vardperson.setTelefonnummer(enhet.getTelefonnummer());
-                vardperson.setEpost(enhet.getEpost());
-
-                Vardgivare vardgivare = enhet.getVardgivare();
-                if (vardgivare != null) {
-                    if (vardgivare.getId() != null) {
-                        vardperson.setVardgivarId(vardgivare.getId().getExtension());
-                    }
-                    vardperson.setVardgivarnamn(vardgivare.getNamn());
-                }
-            }
-        }
-        intyg.setVardperson(vardperson);
+    private void convertSkapasAv(Fk7263Intyg intyg, Fk7263Utlatande source) throws ConverterException {
+        intyg.getIntygMetadata().setSkapadAv(ExternalToInternalConverterUtil.convertToIntHoSPersonal(source.getSkapadAv()));
     }
 
     private void convertKommentar(Fk7263Intyg intyg, Fk7263Utlatande source) {
@@ -166,15 +127,14 @@ public class ExternalToInternalConverter {
         }
     }
 
-    private void convertPatient(Fk7263Intyg intyg, Fk7263Utlatande source) {
+    private void convertPatient(Fk7263Intyg intyg, Fk7263Utlatande source) throws ConverterException {
 
         Fk7263Patient patient = source.getPatient();
         if (patient == null) {
             return;
         }
 
-        intyg.setPatientNamn(patient.getFullstandigtNamn());
-        intyg.setPatientPersonnummer(patient.getId().getExtension());
+        intyg.getIntygMetadata().setPatient(ExternalToInternalConverterUtil.convertToIntPatient(patient));
 
         for (Sysselsattning sysselsattning : patient.getSysselsattningar()) {
             if (Sysselsattningskoder.NUVARANDE_ARBETE.equals(sysselsattning.getSysselsattningstyp())

@@ -1,33 +1,35 @@
 {
     "id": "987654321",
     "typ": "TS_BAS_U06_V06",
-    "signeringsdatum": "2013-08-12T15:57:00.000",
-    "skapadAv": {
-        "personid": "SE0000000000-1333",
-        "fullstandigtNamn": "Doktor Thompson",
-        "specialiteter" : ["SPECIALITET"],
-        "vardenhet": {
-            "enhetsid": "SE0000000000-1337",
-            "enhetsnamn": "Vårdenhet Väst",
-            "postadress": "Enhetsvägen 12",
-            "postnummer": "54321",
-            "postort": "Tumba",
-            "telefonnummer": "08-1337",
-            "vardgivare": {
-                "vardgivarid": "SE0000000000-HAHAHHSAA",
-                "vardgivarnamn": "Vårdgivarnamn"
-            }
+    "intygMetadata": {
+        "signeringsdatum": "2013-08-12T15:57:00.000",
+        "skapadAv": {
+            "personId": "SE0000000000-1333",
+            "fullstandigtNamn": "Doktor Thompson",
+            "specialiteter": ["SPECIALITET"],
+            "vardenhet": {
+                "enhetsid": "SE0000000000-1337",
+                "enhetsnamn": "Vårdenhet Väst",
+                "postadress": "Enhetsvägen 12",
+                "postnummer": "54321",
+                "postort": "Tumba",
+                "telefonnummer": "08-1337",
+                "vardgivare": {
+                    "vardgivarid": "SE0000000000-HAHAHHSAA",
+                    "vardgivarnamn": "Vårdgivarnamn"
+                }
+            },
+            "befattningar": []
         },
-        "befattningar" : []
-    },
-    "patient": {
-        "personid": "19121212-1212",
-        "fullstandigtNamn": "Johnny Appleseed",
-        "fornamn": "Johnny",
-        "efternamn": "Appleseed",
-        "postadress": "Testvägen 12",
-        "postnummer": "123456",
-        "postort": "Testort"
+        "patient": {
+            "personId": "19121212-1212",
+            "fullstandigtNamn": "Johnny Appleseed",
+            "fornamn": "Johnny",
+            "efternamn": "Appleseed",
+            "postadress": "Testvägen 12",
+            "postnummer": "123456",
+            "postort": "Testort"
+        }
     },
     "vardkontakt" : {
     	"typ" : "5880005", 

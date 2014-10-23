@@ -1,5 +1,6 @@
 package se.inera.certificate.modules.ts_diabetes.model.converter;
 
+import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 
 public class ExternalToInternalConverter {

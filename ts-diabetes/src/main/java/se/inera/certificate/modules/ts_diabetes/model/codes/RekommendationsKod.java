@@ -19,6 +19,8 @@
 package se.inera.certificate.modules.ts_diabetes.model.codes;
 
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.common.codes.CodeConverter;
+import se.inera.certificate.model.common.codes.CodeSystem;
 
 public enum RekommendationsKod implements CodeSystem {
 

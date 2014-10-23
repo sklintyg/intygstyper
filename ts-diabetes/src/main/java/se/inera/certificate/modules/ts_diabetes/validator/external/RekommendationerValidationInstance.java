@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
+import se.inera.certificate.model.common.codes.CodeConverter;
 import se.inera.certificate.modules.ts_diabetes.model.codes.RekommendationVardeKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.RekommendationsKod;
 import se.inera.certificate.modules.ts_diabetes.model.external.Rekommendation;

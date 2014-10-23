@@ -12,6 +12,7 @@ import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.Referens;
 import se.inera.certificate.model.Utlatande;
 import se.inera.certificate.model.Vardkontakt;
+import se.inera.certificate.model.common.external.HosPersonal;
 import se.inera.certificate.model.util.Predicate;
 import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
 import se.inera.certificate.modules.fk7263.model.converter.DateTimeConverter;
@@ -23,7 +24,7 @@ public class Fk7263Utlatande extends Utlatande {
 
     private Fk7263Patient patient;
 
-    private Fk7263HosPersonal skapadAv;
+    private HosPersonal skapadAv;
 
     private List<Fk7263Aktivitet> aktiviteter = new ArrayList<>();
 
@@ -43,11 +44,11 @@ public class Fk7263Utlatande extends Utlatande {
         this.patient = patient;
     }
 
-    public Fk7263HosPersonal getSkapadAv() {
+    public HosPersonal getSkapadAv() {
         return skapadAv;
     }
 
-    public void setSkapadAv(Fk7263HosPersonal skapadAv) {
+    public void setSkapadAv(HosPersonal skapadAv) {
         this.skapadAv = skapadAv;
     }
 

@@ -50,6 +50,9 @@ public class InternalToExternalConverterTest {
 
             Fk7263Utlatande expected = scenario.asExternalModel();
 
+            // We need to issue a get in order to create an empty list (and make the test pass)
+            expected.getSkapadAv().getBefattningar();
+            expected.getSkapadAv().getSpecialiteter();
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
     }

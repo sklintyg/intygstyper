@@ -18,7 +18,7 @@
  */
 package se.inera.certificate.modules.ts_bas.model.internal;
 
-import org.joda.time.LocalDateTime;
+import se.inera.certificate.model.common.internal.IntygMetadata;
 
 public class Utlatande {
 
@@ -26,15 +26,9 @@ public class Utlatande {
 
     private String typ;
 
+    private IntygMetadata intygMetadata = new IntygMetadata();
+
     private String kommentar;
-
-    private LocalDateTime signeringsdatum;
-
-    private LocalDateTime skickatdatum;
-
-    private HoSPersonal skapadAv;
-
-    private Patient patient;
 
     private Vardkontakt vardkontakt;
 
@@ -72,14 +66,6 @@ public class Utlatande {
 
     private Bedomning bedomning;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String utlatandeId) {
-        this.id = utlatandeId;
-    }
-
     public String getTyp() {
         return typ;
     }
@@ -96,43 +82,23 @@ public class Utlatande {
         this.kommentar = kommentar;
     }
 
-    public LocalDateTime getSigneringsdatum() {
-        return signeringsdatum;
-    }
-
-    public void setSigneringsdatum(LocalDateTime signeringsdatum) {
-        this.signeringsdatum = signeringsdatum;
-    }
-
-    public LocalDateTime getSkickatdatum() {
-        return skickatdatum;
-    }
-
-    public void setSkickatdatum(LocalDateTime skickatdatum) {
-        this.skickatdatum = skickatdatum;
-    }
-
-    public HoSPersonal getSkapadAv() {
-        return skapadAv;
-    }
-
-    public void setSkapadAv(HoSPersonal skapadAv) {
-        this.skapadAv = skapadAv;
-    }
-
-    public Patient getPatient() {
-        return patient;
-    }
-
-    public void setPatient(Patient patient) {
-        this.patient = patient;
-    }
-
     public Syn getSyn() {
         if (syn == null) {
             syn = new Syn();
         }
         return syn;
+    }
+
+    public String getId() { return id; }
+
+    public void setId(String id) { this.id = id; }
+
+    public IntygMetadata getIntygMetadata() {
+        return intygMetadata;
+    }
+
+    public void setIntygMetadata(IntygMetadata intygMetadata) {
+        this.intygMetadata = intygMetadata;
     }
 
     public HorselBalans getHorselBalans() {

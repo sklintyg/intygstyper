@@ -181,8 +181,8 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
                         $scope.cert.syn.progressivogonsjukdom === true) {
                         $scope.achelptext = true;
                     }
-                    $scope.befattningar = $scope.updateBefattningar($scope.cert.skapadAv.befattningar);
-                    $scope.specialiteter = $scope.updateSpecialiteter($scope.cert.skapadAv.specialiteter);
+                    $scope.befattningar = $scope.updateBefattningar($scope.cert.intygMetadata.skapadAv.befattningar);
+                    $scope.specialiteter = $scope.updateSpecialiteter($scope.cert.intygMetadata.skapadAv.specialiteter);
 
                     $scope.view.intygAvser = createKorkortstypListString($scope.cert.intygAvser.korkortstyp);
                     $scope.view.bedomning = createKorkortstypListString($scope.cert.bedomning.korkortstyp);

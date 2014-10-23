@@ -3,6 +3,7 @@ package se.inera.certificate.model.converter.util;
 import org.apache.commons.lang3.CharUtils;
 
 import se.inera.certificate.model.Id;
+import se.inera.certificate.model.Kod;
 
 public final class InternalConverterUtil {
 
@@ -24,5 +25,17 @@ public final class InternalConverterUtil {
     public static Id createPersonId(String patientPersonnummer) {
         return (InternalConverterUtil.detectIfSamordningsNummer(patientPersonnummer)) ? new Id(SAMORDNING_ROOT, patientPersonnummer)
                 : new Id(PERS_ID_ROOT, patientPersonnummer);
+    }
+
+    public static String getValueFromKod(Kod kod) {
+        return (kod != null) ? kod.getCode() : null;
+    }
+
+    public static String getExtensionFromId(Id id) {
+        return (id != null) ? id.getExtension() : null;
+    }
+
+    public static String getRootFromId(Id id) {
+        return (id != null) ? id.getRoot() : null;
     }
 }

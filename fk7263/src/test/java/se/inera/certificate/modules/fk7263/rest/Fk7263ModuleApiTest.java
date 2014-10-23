@@ -115,7 +115,9 @@ public class Fk7263ModuleApiTest {
     @Test
     public void testPdfFileName() {
         Fk7263Intyg intyg = new Fk7263Intyg();
-        intyg.setPatientPersonnummer("19121212-1212");
+        se.inera.certificate.model.common.internal.Patient patient = new se.inera.certificate.model.common.internal.Patient();
+        patient.setPersonId("19121212-1212");
+        intyg.getIntygMetadata().setPatient(patient);
         // TODO Create a proper test when model has been updated.
         // assertEquals("lakarutlatande_19121212-1212_20110124-20110331.pdf", fk7263ModuleApi.pdfFileName(intyg));
     }
@@ -134,11 +136,11 @@ public class Fk7263ModuleApiTest {
         InternalModelResponse updatedHolder = fk7263ModuleApi.updateInternal(holder, hosPerson, signingDate);
         Fk7263Intyg updatedIntyg = mapper.readValue(updatedHolder.getInternalModel(), Fk7263Intyg.class);
 
-        assertEquals(signingDate, updatedIntyg.getSigneringsdatum());
-        assertEquals("nyId", updatedIntyg.getVardperson().getHsaId());
-        assertEquals("nyNamn", updatedIntyg.getVardperson().getNamn());
-        assertEquals("nyForskrivarkod", updatedIntyg.getVardperson().getForskrivarKod());
-        assertEquals(utlatande.getSkapadAv().getVardenhet().getNamn(), updatedIntyg.getVardperson().getEnhetsnamn());
+        assertEquals(signingDate, updatedIntyg.getIntygMetadata().getSigneringsdatum());
+        assertEquals("nyId", updatedIntyg.getIntygMetadata().getSkapadAv().getPersonId());
+        assertEquals("nyNamn", updatedIntyg.getIntygMetadata().getSkapadAv().getFullstandigtNamn());
+        assertEquals("nyForskrivarkod", updatedIntyg.getIntygMetadata().getSkapadAv().getForskrivarKod());
+        assertEquals(utlatande.getSkapadAv().getVardenhet().getNamn(), updatedIntyg.getIntygMetadata().getSkapadAv().getVardenhet().getEnhetsnamn());
     }
 
     @Test

@@ -50,8 +50,8 @@ public class ExternalToInternalConverterTest {
 
             se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande expected = scenario.asInternalModel();
             // We need to issue a get in order to create an empty list (and make the test pass)
-            expected.getSkapadAv().getBefattningar();
-            expected.getSkapadAv().getSpecialiteter();
+            expected.getIntygMetadata().getSkapadAv().getBefattningar();
+            expected.getIntygMetadata().getSkapadAv().getSpecialiteter();
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
     }

@@ -26,6 +26,7 @@ import org.joda.time.LocalDate;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Status;
+import se.inera.certificate.model.common.external.HosPersonal;
 
 /**
  * The utlåtande used by ts-bas. This class extends the common external model with:

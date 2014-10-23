@@ -1,7 +1,7 @@
 package se.inera.certificate.modules.ts_bas.validator.external;
 
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
+import se.inera.certificate.model.common.codes.CodeConverter;
 import se.inera.certificate.modules.ts_bas.model.codes.IntygAvserKod;
 import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_bas.model.external.Observation;

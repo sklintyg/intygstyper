@@ -296,7 +296,7 @@ public class PdfGenerator {
     }
 
     public String generatePdfFilename() {
-        return String.format("lakarutlatande_%s_%s-%s.pdf", intyg.getPatientPersonnummer(), intyg.getGiltighet()
+        return String.format("lakarutlatande_%s_%s-%s.pdf", intyg.getIntygMetadata().getPatient().getPersonId(), intyg.getGiltighet()
                 .getFrom().toString(DATE_FORMAT), intyg.getGiltighet().getTom().toString(DATE_FORMAT));
     }
 
@@ -342,13 +342,13 @@ public class PdfGenerator {
     }
 
     private void fillPatientDetails() {
-        fillText(PATIENT_NAME, intyg.getPatientNamn());
-        fillText(PATIENT_SSN, intyg.getPatientPersonnummer());
+        fillText(PATIENT_NAME, intyg.getIntygMetadata().getPatient().getFullstandigtNamn());
+        fillText(PATIENT_SSN, intyg.getIntygMetadata().getPatient().getPersonId());
     }
 
     private void fillSignerNameAndAddress() {
         fillText(SIGN_NAME, intyg.getNamnfortydligandeOchAdress());
-        fillText(SIGN_DATE, intyg.getSigneringsdatum().toString(DATE_PATTERN));
+        fillText(SIGN_DATE, intyg.getIntygMetadata().getSigneringsdatum().toString(DATE_PATTERN));
     }
 
     private void fillTravel() {

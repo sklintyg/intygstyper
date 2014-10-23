@@ -1,33 +1,35 @@
 {
     "id": "987654321",
     "typ": "TS_DIABETES_U06_V02",
-    "kommentar" :  "Kommentarer av det viktiga slaget",
-    "signeringsdatum": "2013-08-12T15:57:00.000",
-    "skapadAv": {
-        "personid": "SE0000000000-1333",
-        "fullstandigtNamn": "Doktor Thompson",
-        "vardenhet": {
-            "enhetsid": "SE0000000000-1337",
-            "enhetsnamn": "Vårdenhet Väst",
-            "postadress": "Enhetsvägen 12",
-            "postnummer": "54321",
-            "postort": "Tumba",
-            "telefonnummer": "08-1337",
-            "vardgivare": {
-                "vardgivarid": "SE0000000000-HAHAHHSAA",
-                "vardgivarnamn": "Vårdgivarnamn"
+    "intygMetadata": {
+        "signeringsdatum": "2013-08-12T15:57:00.000",
+        "skapadAv": {
+            "personId": "SE0000000000-1333",
+            "fullstandigtNamn": "Doktor Thompson",
+            "vardenhet": {
+                "enhetsid": "SE0000000000-1337",
+                "enhetsnamn": "Vårdenhet Väst",
+                "postadress": "Enhetsvägen 12",
+                "postnummer": "54321",
+                "postort": "Tumba",
+                "telefonnummer": "08-1337",
+                "vardgivare": {
+                    "vardgivarid": "SE0000000000-HAHAHHSAA",
+                    "vardgivarnamn": "Vårdgivarnamn"
+                }
             }
+        },
+        "patient": {
+            "personId": "19121212-1212",
+            "fullstandigtNamn": "Herr Dundersjuk",
+            "fornamn": "Herr",
+            "efternamn": "Dundersjuk",
+            "postadress": "Testvägen 12",
+            "postnummer": "123456",
+            "postort": "Testort"
         }
     },
-    "patient": {
-        "personid": "19121212-1212",
-        "fullstandigtNamn": "Herr Dundersjuk",
-        "fornamn": "Herr",
-        "efternamn": "Dundersjuk",
-        "postadress": "Testvägen 12",
-        "postnummer": "123456",
-        "postort": "Testort"
-    },
+    "kommentar" :  "Kommentarer av det viktiga slaget",
     "vardkontakt" : {
         "typ" : "5880005", 
         "idkontroll" : "PASS"
