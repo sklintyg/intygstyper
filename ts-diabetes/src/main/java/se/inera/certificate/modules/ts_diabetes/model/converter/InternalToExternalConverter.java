@@ -346,10 +346,10 @@ public class InternalToExternalConverter {
             hypoglykemiVakenTid.setObservationskod(CodeConverter
                     .toKod(ObservationsKod.ALLVARLIG_HYPOGLYKEMI_VAKET_TILLSTAND));
             hypoglykemiVakenTid.setForekomst(source.getHypoglykemier().getAllvarligForekomstVakenTid());
-
-            hypoglykemiVakenTid.setObservationstid(createLocalDateTimeFromString(source.getHypoglykemier()
-                    .getAllvarligForekomstVakenTidObservationstid().getDate()));
-
+            if (source.getHypoglykemier().getAllvarligForekomstVakenTid()) {
+                hypoglykemiVakenTid.setObservationstid(createLocalDateTimeFromString(source.getHypoglykemier()
+                        .getAllvarligForekomstVakenTidObservationstid().getDate()));
+            }
             observationer.add(hypoglykemiVakenTid);
         }
         // Syn-related observations
