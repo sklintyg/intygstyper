@@ -283,6 +283,7 @@ public class ExternalToInternalConverter {
         if (huvudDiagnos != null) {
             if (huvudDiagnos.getObservationskod() != null) {
                 intyg.setDiagnosKod(huvudDiagnos.getObservationskod().getCode());
+                intyg.setDiagnosBeskrivning1(huvudDiagnos.getObservationskod().getDisplayName());
             }
             intyg.setDiagnosBeskrivning(huvudDiagnos.getBeskrivning());
         }
@@ -299,12 +300,12 @@ public class ExternalToInternalConverter {
 
         if (bidiagnos1 != null) {
             intyg.setDiagnosKod2((bidiagnoser.get(0).getObservationskod().getCode()));
-            intyg.setDiagnosBeskrivning2(bidiagnoser.get(0).getBeskrivning());
+            intyg.setDiagnosBeskrivning2(bidiagnoser.get(0).getObservationskod().getDisplayName());
         }
 
         if (bidiagnos2 != null) {
             intyg.setDiagnosKod3((bidiagnoser.get(1).getObservationskod().getCode()));
-            intyg.setDiagnosBeskrivning3(bidiagnoser.get(1).getBeskrivning());
+            intyg.setDiagnosBeskrivning3(bidiagnoser.get(1).getObservationskod().getDisplayName());
         }
 
         //If there are Observationssamband, set samsjuklighet = true

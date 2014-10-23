@@ -68,7 +68,7 @@ public final class IsoTypeConverter {
         if (cd == null) {
             return null;
         }
-        return new Kod(cd.getCodeSystem(), cd.getCodeSystemName(), cd.getCodeSystemVersion(), cd.getCode());
+        return new Kod(cd.getCodeSystem(), cd.getCodeSystemName(), cd.getCodeSystemVersion(), cd.getCode(), cd.getDisplayName());
     }
 
     public static <E extends CD> E toCD(Kod kod, E instance) {
@@ -79,6 +79,7 @@ public final class IsoTypeConverter {
         instance.setCodeSystem(kod.getCodeSystem());
         instance.setCodeSystemName(kod.getCodeSystemName());
         instance.setCodeSystemVersion(kod.getCodeSystemVersion());
+        instance.setDisplayName(kod.getDisplayName());
         return instance;
     }
 
