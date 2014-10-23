@@ -183,7 +183,7 @@ public class InternalToExternalConverter {
 
         // observation huvudDiagnos
         if (source.getDiagnosKod() != null) {
-            Fk7263Observation observation = buildObservation(buildDiagnoseCode(source.getDiagnosKod()),
+            Fk7263Observation observation = buildObservation(buildDiagnoseCode(source.getDiagnosKod(),  source.getDiagnosBeskrivning1()),
                     ObservationsKoder.DIAGNOS, source.getDiagnosBeskrivning());
             if (notNullAndTrue(source.getSamsjuklighet())) {
                 observation.setId(HUVUDDIAGNOS_ID);
@@ -193,8 +193,8 @@ public class InternalToExternalConverter {
 
         //Check for bi-diagnos 1
         if (source.getDiagnosKod2() != null) {
-            Fk7263Observation observation = buildObservation(buildDiagnoseCode(source.getDiagnosKod2()),
-                    ObservationsKoder.BIDIAGNOS, source.getDiagnosBeskrivning2());
+            Fk7263Observation observation = buildObservation(buildDiagnoseCode(source.getDiagnosKod2(), source.getDiagnosBeskrivning2()),
+                    ObservationsKoder.BIDIAGNOS, null);
             if (notNullAndTrue(source.getSamsjuklighet())) {
                 observation.setId(BIDIAGNOS_1_ID);
             }
@@ -203,8 +203,8 @@ public class InternalToExternalConverter {
 
         //Check for bi-diagnos 2
         if (source.getDiagnosKod3() != null) {
-            Fk7263Observation observation = buildObservation(buildDiagnoseCode(source.getDiagnosKod3()),
-                    ObservationsKoder.BIDIAGNOS, source.getDiagnosBeskrivning3());
+            Fk7263Observation observation = buildObservation(buildDiagnoseCode(source.getDiagnosKod3(), source.getDiagnosBeskrivning3()),
+                    ObservationsKoder.BIDIAGNOS, null);
             if (notNullAndTrue(source.getSamsjuklighet())) {
                 observation.setId(BIDIAGNOS_2_ID);
             }
@@ -363,7 +363,7 @@ public class InternalToExternalConverter {
      *            the code
      * @return {@link Kod} or null
      */
-    private Kod buildDiagnoseCode(String code) {
+    private Kod buildDiagnoseCode(String code, String displayName) {
         if (code == null) {
             return null;
         }
@@ -371,6 +371,7 @@ public class InternalToExternalConverter {
         kod.setCode(code);
         kod.setCodeSystem(ICD_10.getCodeSystem());
         kod.setCodeSystemName(ICD_10.getCodeSystemName());
+        kod.setDisplayName(displayName);
         return kod;
     }
 

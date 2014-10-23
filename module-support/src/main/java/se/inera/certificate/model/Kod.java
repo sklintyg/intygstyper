@@ -10,8 +10,17 @@ public final class Kod {
     private String codeSystemName;
     private String codeSystemVersion;
     private String code;
+    private String displayName;
 
     public Kod() {
+    }
+
+    public Kod(String codeSystem, String codeSystemName, String codeSystemVersion, String code, String displayName) {
+        this.codeSystem = codeSystem;
+        this.codeSystemName = codeSystemName;
+        this.codeSystemVersion = codeSystemVersion;
+        this.code = code;
+        this.displayName = displayName;
     }
 
     public Kod(String codeSystem, String codeSystemName, String codeSystemVersion, String code) {
@@ -60,6 +69,14 @@ public final class Kod {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     @Override

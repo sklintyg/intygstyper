@@ -149,7 +149,8 @@
             "observationskod" : {
             	"codeSystem" : "1.2.752.116.1.1.1.1.1",
                 "codeSystemName" : "ICD-10",
-                "code" : "S47"
+                "code" : "S47",
+                "displayName" : "beskrivning1"
             },
             "beskrivning" : "Medicinskttillstånd: Klämskada på överarm",
             "id" : {
@@ -167,9 +168,9 @@
             "observationskod" : {
                 "codeSystem" : "1.2.752.116.1.1.1.1.1",
                 "codeSystemName" : "ICD-10",
-                "code" : "TEST2"
+                "code" : "TEST2",
+                "displayName" : "beskrivning2"
             },
-            "beskrivning" : "beskrivning2",
             "id" : {
                 "root": "1.2.752.129.2.1.2.1",
                 "extension": "2"
@@ -185,9 +186,9 @@
             "observationskod" : {
                 "codeSystem" : "1.2.752.116.1.1.1.1.1",
                 "codeSystemName" : "ICD-10",
-                "code" : "TEST3"
+                "code" : "TEST3",
+                "displayName" : "beskrivning3"
             },
-            "beskrivning" : "beskrivning3",
             "id" : {
                 "root": "1.2.752.129.2.1.2.1",
                 "extension": "3"

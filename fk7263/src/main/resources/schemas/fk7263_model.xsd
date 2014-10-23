@@ -261,6 +261,7 @@
         <xs:attribute name="code" type="xs:string" use="required"/>
         <xs:attribute name="codeSystem" type="iso:Uid" use="optional"/>
         <xs:attribute name="codeSystemName" type="xs:string" use="required"/>
+        <xs:attribute name="displayName" type="xs:string" use="optional"/>
       </xs:restriction>
     </xs:complexContent>
   </xs:complexType>
