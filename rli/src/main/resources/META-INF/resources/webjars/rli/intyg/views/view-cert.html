@@ -103,7 +103,7 @@
                   </h2>
                 </div>
                 <div class="span5 issue">
-                  <span><message key="view.label.issued" /></span> <span class="cert-titlebar-value">{{cert.signeringsdatum | date:'longDate'}}</span>
+                  <span><message key="view.label.issued" /></span> <span class="cert-titlebar-value">{{cert.intygMetadata.signeringsdatum | date:'longDate'}}</span>
                 </div>
                 <div class="span1 archive">
                   <a href="#archiveModal" role="button" data-toggle="modal" onclick="return false"><img alt="Arkivera intyg" src="/img/archive-icon.gif" /></a>
@@ -113,18 +113,18 @@
             <div class="cert-header">
               <div class="row-fluid">
                 <div class="span6">
-                  <span class="tag"><message key="view.label.patientname" /></span> <span id="patient-name">{{cert.patient.fullstandigtNamn}}</span>
+                  <span class="tag"><message key="view.label.patientname" /></span> <span id="patient-name">{{cert.intygMetadata.patient.fullstandigtNamn}}</span>
                 </div>
                 <div class="span6">
-                  <span class="tag"><message key="view.label.unit" /></span> <span id="careunit">{{cert.skapadAv.vardenhet.enhetsnamn}}</span>
+                  <span class="tag"><message key="view.label.unit" /></span> <span id="careunit">{{cert.intygMetadata.skapadAv.vardenhet.enhetsnamn}}</span>
                 </div>
               </div>
               <div class="row-fluid">
                 <div class="span6">
-                  <span class="tag"><message key="view.label.civicnumber" /></span> <span id="patient-crn">{{cert.patient.personid}}</span>
+                  <span class="tag"><message key="view.label.civicnumber" /></span> <span id="patient-crn">{{cert.intygMetadata.patient.personId}}</span>
                 </div>
                 <div class="span6">
-                  <span class="tag"><message key="view.label.issuer" /></span> <span id="caregiver">{{cert.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</span>
+                  <span class="tag"><message key="view.label.issuer" /></span> <span id="caregiver">{{cert.intygMetadata.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</span>
                 </div>
               </div>
              
@@ -186,10 +186,10 @@
 	              
 	              <div class="body-row">
 	              	<h3>Utfärdare</h3>
-	              	<span class="title">Läkare</span> <span id="physician-name-id" class="text">{{cert.skapadAv.fullstandigtNamn}} ({{cert.skapadAv.personid}})</span><br/>
-	              	<span class="title">Vårdgivare</span> <span id="caregiver-name-id" class="text">{{cert.skapadAv.vardenhet.vardgivare.vardgivarnamn}} ({{cert.skapadAv.vardenhet.vardgivare.vardgivarid}})</span><br/>
-	                <span class="title">Vårdenhetens namn och id</span> <span id="careunit-name-id" class="text">{{cert.skapadAv.vardenhet.enhetsnamn}} ({{cert.skapadAv.vardenhet.enhetsid}})</span><br/>
-	                <span class="title">Postadress</span> <span id="careunit-postal_address" class="text">{{cert.skapadAv.vardenhet.postadress}}, {{cert.skapadAv.vardenhet.postnummer}} {{cert.skapadAv.vardenhet.postort}}</span>
+	              	<span class="title">Läkare</span> <span id="physician-name-id" class="text">{{cert.intygMetadata.skapadAv.fullstandigtNamn}} ({{cert.intygMetadata.skapadAv.personid}})</span><br/>
+	              	<span class="title">Vårdgivare</span> <span id="caregiver-name-id" class="text">{{cert.intygMetadata.skapadAv.vardenhet.vardgivare.vardgivarnamn}} ({{cert.intygMetadata.skapadAv.vardenhet.vardgivare.vardgivarid}})</span><br/>
+	                <span class="title">Vårdenhetens namn och id</span> <span id="careunit-name-id" class="text">{{cert.intygMetadata.skapadAv.vardenhet.enhetsnamn}} ({{cert.intygMetadata.skapadAv.vardenhet.enhetsid}})</span><br/>
+	                <span class="title">Postadress</span> <span id="careunit-postal_address" class="text">{{cert.intygMetadata.skapadAv.vardenhet.postadress}}, {{cert.intygMetadata.skapadAv.vardenhet.postnummer}} {{cert.intygMetadata.skapadAv.vardenhet.postort}}</span>
 	              </div>
 
             </div>

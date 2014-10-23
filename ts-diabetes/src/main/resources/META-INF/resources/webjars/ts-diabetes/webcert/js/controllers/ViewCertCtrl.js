@@ -101,7 +101,8 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
             ManageCertificate.initMakulera($scope);
             $scope.makulera = function(cert) {
                 var confirmationMessage = messageService.getProperty('ts-diabetes.label.makulera.confirmation', {
-                    namn: cert.patient.fullstandigtNamn, personnummer: cert.patient.personid });
+                    namn: cert.intygMetadata.patient.fullstandigtNamn, personnummer: cert.intygMetadata.patient.personId });
+
                 cert.intygType = 'ts-diabetes';
                 ManageCertificate.makulera($scope, cert, confirmationMessage, function() {
                     loadCertificate();

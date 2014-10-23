@@ -1,7 +1,7 @@
 package se.inera.certificate.modules.ts_diabetes.validator.external;
 
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
+import se.inera.certificate.model.common.codes.CodeConverter;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IntygAvserKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_diabetes.model.external.Observation;

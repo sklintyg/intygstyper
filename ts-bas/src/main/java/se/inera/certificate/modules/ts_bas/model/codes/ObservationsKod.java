@@ -4,6 +4,8 @@ import static se.inera.certificate.modules.ts_bas.model.codes.Kodverk.ICD_10;
 import static se.inera.certificate.modules.ts_bas.model.codes.Kodverk.OBSERVATIONER;
 import static se.inera.certificate.modules.ts_bas.model.codes.Kodverk.SNOMED_CT;
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.common.codes.CodeConverter;
+import se.inera.certificate.model.common.codes.CodeSystem;
 
 public enum ObservationsKod implements CodeSystem {
 

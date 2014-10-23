@@ -23,38 +23,34 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.util.Strings;
+import se.inera.certificate.model.converter.util.ConverterException;
+import se.inera.certificate.model.converter.util.ExternalToInternalConverterUtil;
+import se.inera.certificate.model.converter.util.InternalConverterUtil;
 import se.inera.certificate.modules.ts_diabetes.model.codes.AktivitetKod;
-import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
-import se.inera.certificate.modules.ts_diabetes.model.codes.CodeSystem;
+import se.inera.certificate.model.common.codes.CodeConverter;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IntygAvserKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.LateralitetsKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.RekommendationVardeKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.RekommendationsKod;
-import se.inera.certificate.modules.ts_diabetes.model.codes.SpecialitetKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_diabetes.model.external.Aktivitet;
-import se.inera.certificate.modules.ts_diabetes.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.external.Observation;
 import se.inera.certificate.modules.ts_diabetes.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Diabetes;
-import se.inera.certificate.modules.ts_diabetes.model.internal.HoSPersonal;
+import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Hypoglykemier;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvser;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvserKategori;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Patient;
+import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Vardenhet;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Vardgivare;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -102,19 +98,19 @@ public class ExternalToInternalConverterInstance {
 
         Utlatande intUtlatande = new Utlatande();
 
-        intUtlatande.setId(InternalModelConverterUtils.getExtensionFromId(extUtlatande.getId()));
+        intUtlatande.setId(InternalConverterUtil.getExtensionFromId(extUtlatande.getId()));
 
         intUtlatande.setTyp(UtlatandeKod.getVersionFromTSParams(extUtlatande.getTsUtgava(), extUtlatande.getTsVersion()).name());
 
-        intUtlatande.setSigneringsdatum(extUtlatande.getSigneringsdatum());
-        intUtlatande.setSkickatdatum(extUtlatande.getSkickatdatum());
+        intUtlatande.getIntygMetadata().setSigneringsdatum(extUtlatande.getSigneringsdatum());
+        intUtlatande.getIntygMetadata().setSkickatdatum(extUtlatande.getSkickatdatum());
         intUtlatande.setKommentarer(extUtlatande.getKommentarer().isEmpty() ? null : extUtlatande.getKommentarer().get(0));
 
-        HoSPersonal intHoSPersonal = convertToIntHoSPersonal(extUtlatande.getSkapadAv());
-        intUtlatande.setSkapadAv(intHoSPersonal);
+        HoSPersonal intHoSPersonal = ExternalToInternalConverterUtil.convertToIntHoSPersonal(extUtlatande.getSkapadAv());
+        intUtlatande.getIntygMetadata().setSkapadAv(intHoSPersonal);
 
-        Patient intPatient = convertToIntPatient(extUtlatande.getPatient());
-        intUtlatande.setPatient(intPatient);
+        Patient intPatient = ExternalToInternalConverterUtil.convertToIntPatient(extUtlatande.getPatient());
+        intUtlatande.getIntygMetadata().setPatient(intPatient);
 
         intUtlatande.setVardkontakt(convertToIntVardkontakt(extUtlatande.getVardkontakter().get(0)));
 
@@ -434,95 +430,6 @@ public class ExternalToInternalConverterInstance {
 
     }
 
-    private Vardenhet convertToIntVardenhet(se.inera.certificate.model.Vardenhet extVardenhet) throws ConverterException {
-
-        LOG.trace("Converting vardenhet");
-
-        if (extVardenhet == null) {
-            throw new ConverterException("External Vardenhet is null, can not convert");
-        }
-
-        Vardenhet intVardenhet = new Vardenhet();
-
-        intVardenhet.setEnhetsid(InternalModelConverterUtils.getExtensionFromId(extVardenhet.getId()));
-        intVardenhet.setEnhetsnamn(extVardenhet.getNamn());
-        intVardenhet.setPostadress(extVardenhet.getPostadress());
-        intVardenhet.setPostnummer(extVardenhet.getPostnummer());
-        intVardenhet.setPostort(extVardenhet.getPostort());
-        intVardenhet.setTelefonnummer(extVardenhet.getTelefonnummer());
-        intVardenhet.setEpost(extVardenhet.getEpost());
-
-        Vardgivare intVardgivare = convertToIntVardgivare(extVardenhet.getVardgivare());
-        intVardenhet.setVardgivare(intVardgivare);
-
-        return intVardenhet;
-    }
-
-    private Vardgivare convertToIntVardgivare(se.inera.certificate.model.Vardgivare extVardgivare) throws ConverterException {
-
-        LOG.trace("Converting vardgivare");
-
-        if (extVardgivare == null) {
-            throw new ConverterException("External vardgivare is null, can not convert");
-        }
-
-        Vardgivare intVardgivare = new Vardgivare();
-
-        intVardgivare.setVardgivarid(InternalModelConverterUtils.getExtensionFromId(extVardgivare.getId()));
-        intVardgivare.setVardgivarnamn(extVardgivare.getNamn());
-
-        return intVardgivare;
-    }
-
-    private HoSPersonal convertToIntHoSPersonal(HosPersonal extHoSPersonal) throws ConverterException {
-
-        LOG.trace("Converting HoSPersonal");
-
-        if (extHoSPersonal == null) {
-            throw new ConverterException("External HoSPersonal is null, can not convert");
-        }
-
-        HoSPersonal intHoSPersonal = new HoSPersonal();
-
-        intHoSPersonal.setPersonid(InternalModelConverterUtils.getExtensionFromId(extHoSPersonal.getId()));
-        intHoSPersonal.setFullstandigtNamn(extHoSPersonal.getNamn());
-
-        intHoSPersonal.getBefattningar().addAll(extHoSPersonal.getBefattningar());
-        intHoSPersonal.getSpecialiteter().addAll(
-                convertKodToString(extHoSPersonal.getSpecialiteter(), SpecialitetKod.class));
-
-        Vardenhet intVardenhet = convertToIntVardenhet(extHoSPersonal.getVardenhet());
-        intHoSPersonal.setVardenhet(intVardenhet);
-
-        return intHoSPersonal;
-    }
-
-    private Patient convertToIntPatient(se.inera.certificate.model.Patient extPatient) throws ConverterException {
-
-        LOG.trace("Converting patient");
-
-        if (extPatient == null) {
-            throw new ConverterException("No Patient found to convert");
-        }
-
-        Patient intPatient = new Patient();
-
-        intPatient.setPersonid(InternalModelConverterUtils.getExtensionFromId(extPatient.getId()));
-
-        intPatient.setFornamn(Strings.join(" ", extPatient.getFornamn()));
-        if (!extPatient.getMellannamn().isEmpty()) {
-            intPatient.setMellannamn(Strings.join(" ", extPatient.getMellannamn()));
-        }
-        intPatient.setEfternamn(extPatient.getEfternamn());
-        intPatient.setFullstandigtNamn(extPatient.getFullstandigtNamn());
-
-        intPatient.setPostadress(extPatient.getPostadress());
-        intPatient.setPostnummer(extPatient.getPostnummer());
-        intPatient.setPostort(extPatient.getPostort());
-
-        return intPatient;
-    }
-
     private boolean isObservationAndLateralitet(Observation obs, ObservationsKod observationskod, LateralitetsKod lateralitet) {
         if (CodeConverter.matches(observationskod, obs.getObservationskod())) {
             if (CodeConverter.matches(lateralitet, obs.getLateralitet())) {
@@ -530,14 +437,6 @@ public class ExternalToInternalConverterInstance {
             }
         }
         return false;
-    }
-
-    private Collection<String> convertKodToString(List<Kod> koder, Class<? extends CodeSystem> type) {
-        List<String> intKoder = new ArrayList<>();
-        for (Kod kod : koder) {
-            intKoder.add(CodeConverter.fromCode(kod, type).toString());
-        }
-        return intKoder;
     }
 
     /**

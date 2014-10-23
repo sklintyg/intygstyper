@@ -22,14 +22,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.PhysicalQuantity;
-import se.inera.certificate.model.Vardgivare;
-import se.inera.certificate.model.converter.util.InternalConverterUtil;
+import se.inera.certificate.model.converter.util.ConverterException;
+import se.inera.certificate.model.converter.util.InternalToExternalConverterUtil;
 import se.inera.certificate.modules.ts_bas.model.codes.AktivitetKod;
-import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
-import se.inera.certificate.modules.ts_bas.model.codes.CodeSystem;
-import se.inera.certificate.modules.ts_bas.model.codes.HSpersonalKod;
+import se.inera.certificate.model.common.codes.CodeConverter;
 import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_bas.model.codes.IntygAvserKod;
 import se.inera.certificate.modules.ts_bas.model.codes.LateralitetsKod;
@@ -37,19 +34,15 @@ import se.inera.certificate.modules.ts_bas.model.codes.MetodKod;
 import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_bas.model.codes.RekommendationVardeKod;
 import se.inera.certificate.modules.ts_bas.model.codes.RekommendationsKod;
-import se.inera.certificate.modules.ts_bas.model.codes.SpecialitetKod;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.codes.VardkontakttypKod;
 import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
-import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
 import se.inera.certificate.modules.ts_bas.model.external.Observation;
 import se.inera.certificate.modules.ts_bas.model.external.ObservationAktivitetRelation;
 import se.inera.certificate.modules.ts_bas.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
-import se.inera.certificate.modules.ts_bas.model.external.Vardenhet;
 import se.inera.certificate.modules.ts_bas.model.external.Vardkontakt;
 import se.inera.certificate.modules.ts_bas.model.internal.BedomningKorkortstyp;
-import se.inera.certificate.modules.ts_bas.model.internal.HoSPersonal;
 import se.inera.certificate.modules.ts_bas.model.internal.IntygAvserKategori;
 import se.inera.certificate.modules.ts_bas.model.internal.Syn;
 
@@ -80,9 +73,9 @@ public class InternalToExternalConverter {
      * @param source
      *            {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande}
      *
-     * @return {@link Utlatande}, unless the source is null in which case a {@link ConverterException} is thrown
+     * @return {@link Utlatande}, unless the source is null in which case a {@link se.inera.certificate.model.converter.util.ConverterException} is thrown
      *
-     * @throws ConverterException
+     * @throws se.inera.certificate.model.converter.util.ConverterException
      */
     public Utlatande convert(se.inera.certificate.modules.ts_bas.model.internal.Utlatande source)
             throws ConverterException {
@@ -96,10 +89,10 @@ public class InternalToExternalConverter {
 
         utlatande.setId(new Id("1.2.752.129.2.1.2.1", source.getId()));
 
-        utlatande.setPatient(convertToExtPatient(source.getPatient()));
-        utlatande.setSigneringsdatum(source.getSigneringsdatum());
-        utlatande.setSkapadAv(convertToExtHosPersonal(source.getSkapadAv()));
-        utlatande.setSkickatdatum(source.getSkickatdatum());
+        utlatande.setPatient(InternalToExternalConverterUtil.convertToExtPatient(source.getIntygMetadata().getPatient()));
+        utlatande.setSigneringsdatum(source.getIntygMetadata().getSigneringsdatum());
+        utlatande.setSkapadAv(InternalToExternalConverterUtil.convertToExtHosPersonal(source.getIntygMetadata().getSkapadAv()));
+        utlatande.setSkickatdatum(source.getIntygMetadata().getSkickatdatum());
 
         UtlatandeKod utlatandeKod = UtlatandeKod.valueOf(source.getTyp());
         utlatande.setTyp(CodeConverter.toKod(utlatandeKod));
@@ -565,103 +558,6 @@ public class InternalToExternalConverter {
         }
 
         return aktiviteter;
-    }
-
-    /**
-     * Convert from internal to external Patient.
-     *
-     * @param source
-     *            {@link se.inera.certificate.modules.ts_bas.model.internal.Patient}
-     * @return external {@link Patient}
-     */
-    private Patient convertToExtPatient(se.inera.certificate.modules.ts_bas.model.internal.Patient source) {
-        Patient patient = new Patient();
-        if (patient.getFornamn() != null) {
-            patient.getFornamn().add(source.getFornamn());
-        }
-        if (source.getMellannamn() != null) {
-            patient.getMellannamn().add(source.getMellannamn());
-        }
-        patient.setEfternamn(source.getEfternamn());
-        patient.setId(InternalConverterUtil.createPersonId(source.getPersonid()));
-        patient.setPostadress(source.getPostadress());
-        patient.setPostnummer(source.getPostnummer());
-        patient.setPostort(source.getPostort());
-
-        return patient;
-    }
-
-    /**
-     * Convert from internal to external HosPersonal.
-     *
-     * @param source
-     *            internal {@link HoSPersonal}
-     * @return external {@link HosPersonal}
-     */
-    private HosPersonal convertToExtHosPersonal(HoSPersonal source) {
-        HosPersonal hosPersonal = new HosPersonal();
-        hosPersonal.setId(new Id(HSpersonalKod.HSA_ID.getCodeSystem(), source.getPersonid()));
-        hosPersonal.setNamn(source.getFullstandigtNamn());
-        hosPersonal.setVardenhet(convertToExtVardenhet(source.getVardenhet()));
-        hosPersonal.getBefattningar().addAll(source.getBefattningar());
-        hosPersonal.getSpecialiteter().addAll(convertStringToCode(SpecialitetKod.class, source.getSpecialiteter()));
-
-        return hosPersonal;
-    }
-
-    /**
-     * Convert a String-representation (i.e the name of the enum constant representing that particular Kod) to a Kod
-     * object.
-     *
-     * @param type
-     *            the code enum (must extend {@link CodeSystem})
-     * @param strings
-     *            a list of Strings with the names of enum constants to convert
-     * @return a list of {@link Kod}
-     */
-    private <E extends CodeSystem> Collection<Kod> convertStringToCode(Class<E> type, List<String> strings) {
-        List<Kod> koder = new ArrayList<>();
-        for (E enumValue : type.getEnumConstants()) {
-            if (strings.contains(enumValue.toString())) {
-                koder.add(CodeConverter.toKod(enumValue));
-            }
-        }
-
-        return koder;
-    }
-
-    /**
-     * Convert from internal to external Vardenhet.
-     *
-     * @param source
-     *            {@link se.inera.certificate.modules.ts_bas.model.internal.Vardenhet}
-     * @return external {@link Vardenhet}
-     */
-    private Vardenhet convertToExtVardenhet(se.inera.certificate.modules.ts_bas.model.internal.Vardenhet source) {
-        Vardenhet vardenhet = new Vardenhet();
-        vardenhet.setId(new Id(HSpersonalKod.HSA_ID.getCodeSystem(), source.getEnhetsid()));
-        vardenhet.setNamn(source.getEnhetsnamn());
-        vardenhet.setPostadress(source.getPostadress());
-        vardenhet.setPostnummer(source.getPostnummer());
-        vardenhet.setPostort(source.getPostort());
-        vardenhet.setTelefonnummer(source.getTelefonnummer());
-        vardenhet.setEpost(source.getEpost());
-        vardenhet.setVardgivare(convertToExtVardgivare(source.getVardgivare()));
-        return vardenhet;
-    }
-
-    /**
-     * Convert from internal to external Vardenhet.
-     *
-     * @param source
-     *            {@link se.inera.certificate.modules.ts_bas.model.internal.Vardgivare}
-     * @return external {@link Vardgivare}
-     */
-    private Vardgivare convertToExtVardgivare(se.inera.certificate.modules.ts_bas.model.internal.Vardgivare source) {
-        Vardgivare vardgivare = new Vardgivare();
-        vardgivare.setId(new Id(HSpersonalKod.HSA_ID.getCodeSystem(), source.getVardgivarid()));
-        vardgivare.setNamn(source.getVardgivarnamn());
-        return vardgivare;
     }
 
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
-import se.inera.certificate.modules.ts_diabetes.model.codes.CodeConverter;
+import se.inera.certificate.model.common.codes.CodeConverter;
 import se.inera.certificate.modules.ts_diabetes.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_diabetes.model.external.Observation;
 

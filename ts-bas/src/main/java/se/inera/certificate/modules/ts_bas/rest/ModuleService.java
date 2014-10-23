@@ -59,9 +59,9 @@ import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
 import se.inera.certificate.modules.support.api.exception.ModuleVersionUnsupportedException;
-import se.inera.certificate.modules.ts_bas.model.codes.CodeConverter;
+import se.inera.certificate.model.common.codes.CodeConverter;
 import se.inera.certificate.modules.ts_bas.model.codes.IntygAvserKod;
-import se.inera.certificate.modules.ts_bas.model.converter.ConverterException;
+import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.ts_bas.model.converter.ExternalToInternalConverter;
 import se.inera.certificate.modules.ts_bas.model.converter.ExternalToTransportConverter;
 import se.inera.certificate.modules.ts_bas.model.converter.InternalToExternalConverter;
@@ -314,12 +314,12 @@ public class ModuleService implements ModuleApi {
     @Override
     public InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
         se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande = getInternal(internalModel);
-        utlatande.setSigneringsdatum(signingDate);
-        utlatande.getSkapadAv().setPersonid(hosPerson.getHsaId());
-        utlatande.getSkapadAv().setFullstandigtNamn(hosPerson.getNamn());
-        utlatande.getSkapadAv().getBefattningar().clear();
+        utlatande.getIntygMetadata().setSigneringsdatum(signingDate);
+        utlatande.getIntygMetadata().getSkapadAv().setPersonId(hosPerson.getHsaId());
+        utlatande.getIntygMetadata().getSkapadAv().setFullstandigtNamn(hosPerson.getNamn());
+        utlatande.getIntygMetadata().getSkapadAv().getBefattningar().clear();
         if (hosPerson.getBefattning() != null) {
-            utlatande.getSkapadAv().getBefattningar().add(hosPerson.getBefattning());
+            utlatande.getIntygMetadata().getSkapadAv().getBefattningar().add(hosPerson.getBefattning());
         }
         return toInteralModelResponse(utlatande);
     }

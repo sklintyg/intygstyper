@@ -29,7 +29,7 @@
               <h1 style="display: inline-block; margin-right: 20px;"><span message key="fk7263.label.certtitle"></span>
               </h1>
               <div class="inline-block">
-                <label class="control-label">{{cert.patientNamn}} - {{cert.patientPersonnummer}}</label>
+                <label class="control-label">{{cert.intygMetadata.patient.fullstandigtNamn}} - {{cert.intygMetadata.patient.personId}}</label>
               </div>
               <div class="form-group buttonbar">
                 <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned"
@@ -687,9 +687,9 @@
                       </ul>
                     </div>
 
-                    <label class="control-label">{{cert.vardperson.enhetsnamn}}
-                      ({{cert.vardperson.enhetsId}}),
-                      {{cert.vardperson.vardgivarnamn}}</label>
+                    <label class="control-label">{{cert.intygMetadata.skapadAv.vardenhet.enhetsnamn}}
+                      ({{cert.intygMetadata.skapadAv.vardenhet.enhetsid}}),
+                      {{cert.intygMetadata.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</label>
 
                     <div class="alert alert-info" ng-show="widgetState.hasInfoMissing">
                       Information om vårdenheten saknas i HSA-katalogen. Be den på vårdenheten som är ansvarig för
@@ -701,28 +701,28 @@
                         <label class="col-xs-3 control-label">Postadress</label>
                         <div class="col-xs-9">
                           <input type="text" class="form-control input-full" id="clinicInfoPostalAddress"
-                                 name="clinicInfo.postalAddress" ng-model="cert.vardperson.postadress">
+                                 name="clinicInfo.postalAddress" ng-model="cert.intygMetadata.skapadAv.vardenhet.postadress">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="col-xs-3 control-label">Postnummer</label>
                         <div class="col-xs-9">
                           <input type="text" class="form-control input-5" id="clinicInfoPostalCode"
-                                 name="clinicInfo.postalCode" ng-model="cert.vardperson.postnummer">
+                                 name="clinicInfo.postalCode" ng-model="cert.intygMetadata.skapadAv.vardenhet.postnummer">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="col-xs-3 control-label">Postort</label>
                         <div class="col-xs-9">
                           <input type="text" class="form-control" id="clinicInfoPostalCity" name="clinicInfo.postalCity"
-                                 ng-model="cert.vardperson.postort">
+                                 ng-model="cert.intygMetadata.skapadAv.vardenhet.postort">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="col-xs-3 control-label">Telefonnummer</label>
                         <div class="col-xs-9">
                           <input type="text" class="form-control" id="clinicInfoPhone" name="clinicInfo.phone"
-                                 ng-model="cert.vardperson.telefonnummer">
+                                 ng-model="cert.intygMetadata.skapadAv.vardenhet.telefonnummer">
                         </div>
                       </div>
                     </div>

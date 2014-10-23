@@ -13,8 +13,10 @@ import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.xml.sax.SAXException;
 import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.utils.ModelAssert;
 
 /**
  * @author andreaskaltenbach
@@ -42,7 +44,7 @@ public class ExternalToInternalConverterTest {
         JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
                 "ExternalToInternalConverterTest/utlatande_internal.json").getInputStream());
 
-        assertEquals("JSON does not match expectation. Resulting JSON is \n" + tree.toString() + "\n", expectedTree,
+        ModelAssert.assertEquals("JSON does not match expectation. Resulting JSON is \n" + tree.toString() + "\n", expectedTree,
                 tree);
     }
 

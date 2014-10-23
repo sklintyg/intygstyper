@@ -22,6 +22,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import org.junit.Before;
 import org.junit.Test;
+import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.Patient;
@@ -64,14 +65,14 @@ public class WebcertModelFactoryTest {
         assertNotNull(utlatande);
         assertNotNull(utlatande.getId());
         assertNotNull(utlatande.getTyp());
-        assertNotNull(utlatande.getSkapadAv());
-        assertNotNull(utlatande.getPatient());
+        assertNotNull(utlatande.getIntygMetadata().getSkapadAv());
+        assertNotNull(utlatande.getIntygMetadata().getPatient());
 
         /** Just verify some stuff from the json to make sure all is well.. */
         assertEquals("testID", utlatande.getId());
-        assertEquals("Johnny Jobs Appleseed", utlatande.getPatient().getFullstandigtNamn());
-        assertEquals("Testvägen 12", utlatande.getPatient().getPostadress());
-        assertEquals("13337", utlatande.getPatient().getPostnummer());
-        assertEquals("Huddinge", utlatande.getPatient().getPostort());
+        assertEquals("Johnny Jobs Appleseed", utlatande.getIntygMetadata().getPatient().getFullstandigtNamn());
+        assertEquals("Testvägen 12", utlatande.getIntygMetadata().getPatient().getPostadress());
+        assertEquals("13337", utlatande.getIntygMetadata().getPatient().getPostnummer());
+        assertEquals("Huddinge", utlatande.getIntygMetadata().getPatient().getPostort());
     }
 }
