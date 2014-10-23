@@ -70,7 +70,7 @@ public class InternalValidatorTest {
             Utlatande utlatande = scenario.asInternalModel();
             ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
-            assertEquals(ValidationStatus.INVALID, validationResponse.getStatus());
+            assertEquals(String.format("Error in test: %s",scenario.getName()), ValidationStatus.INVALID, validationResponse.getStatus());
         }
     }
 

@@ -177,7 +177,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning.missing': 'Information om episoder med allvarlig hypoglykemi i trafiken saknas',
         'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.missing': 'Allvarlig hypoglykemi under vaken tid saknas',
         'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.missing': 'Tidpunkt för allvarlig hypoglykemi under vaken tid saknas',
-        'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.incorrect-date': 'Tidpunkt för allvarlig hypoglykemi under vaken tid måste anges som åååå-mm-dd',
+        'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.incorrect-date': 'Tidpunkt för allvarlig hypoglykemi under vaken tid måste anges som åååå-mm-dd, och vara tidigare än dagens datum.',
         'ts-diabetes.validation.hypoglykemier.egenkontroll-blodsocker.missing': 'Genomför patienten egenkontroll av blodsocker måste anges för högre körkortsbehörigheter'
 
     },

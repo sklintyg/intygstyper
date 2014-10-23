@@ -66,10 +66,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
 
                 // 2g. if entered date is valid, convert it to string so backend validation is happy.
                 // otherwise leave it as an invalid Date so backend sends back a validation error
-                if($scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid !== undefined && moment($scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid).isValid()) {
-                    $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid =
-                        moment($scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid).format('YYYY-MM-DD');
-                }
+                $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = $scope.certForm.allvarligForekomstVakenTidObservationstid.$viewValue;
             }
 
             /******************************************************************************************

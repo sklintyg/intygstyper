@@ -20,6 +20,8 @@ package se.inera.certificate.modules.ts_diabetes.model.converter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.ts_diabetes.model.codes.AktivitetKod;
@@ -184,8 +186,8 @@ public class ExternalToInternalConverterInstance {
             hypoglykemier.setAllvarligForekomstVakenTid(allvarligHypoglykemiVaken.getForekomst());
 
             if (allvarligHypoglykemiVaken.getForekomst()) {
-                hypoglykemier.setAllvarligForekomstVakenTidObservationstid(allvarligHypoglykemiVaken
-                        .getObservationstid().toLocalDate().toString());
+                hypoglykemier.setAllvarligForekomstVakenTidObservationstid(new InternalDate(allvarligHypoglykemiVaken
+                        .getObservationstid().toLocalDate()));
             }
         }
 

@@ -104,7 +104,7 @@
                   <!-- 1. Smittskydd -->
                   <div wc-field-single field-number="1">
                     <input id="smittskydd" name="smittskydd" type="checkbox" ng-model="cert.avstangningSmittskydd"
-                           ng-change="onChangeSmittskydd()" />
+                           ng-change="onChangeSmittskydd()">
                     <label for="smittskydd" class="control-label title-single">
                       <span message key="fk7263.label.smittskydd"></span>
                     </label>
@@ -129,11 +129,10 @@
                                                                                            name="informationBasedOn.examination"
                                                                                            class="checkbox-inline"
                                                                                            ng-model="basedOnState.check.undersokningAvPatienten"
-                                                                                           ng-change="toggleBaseradPaDate('undersokningAvPatienten')" />
+                                                                                           ng-change="toggleBaseradPaDate('undersokningAvPatienten')">
                         Min undersökning av patienten</label>
                       <span wc-date-picker-field target-model="cert.undersokningAvPatienten"
-                            on-change="onChangeBaserasPaDate('undersokningAvPatienten')"
-                            dom-id="undersokningAvPatienten-date"></span>
+                            dom-id="undersokningAvPatientenDate"></span>
                     </div>
 
                     <!-- Telefonkontakt -->
@@ -142,11 +141,10 @@
                                                                                            id="basedOnPhoneContact"
                                                                                            name="informationBasedOn.phoneContact"
                                                                                            ng-model="basedOnState.check.telefonkontaktMedPatienten"
-                                                                                           ng-change="toggleBaseradPaDate('telefonkontaktMedPatienten')" />
+                                                                                           ng-change="toggleBaseradPaDate('telefonkontaktMedPatienten')">
                         Min telefonkontakt med patienten</label>
                       <span wc-date-picker-field target-model="cert.telefonkontaktMedPatienten"
-                            on-change="onChangeBaserasPaDate('telefonkontaktMedPatienten')"
-                            dom-id="telefonkontaktMedPatienten-date"></span>
+                            dom-id="telefonkontaktMedPatientenDate"></span>
                     </div>
 
                     <!-- Journaluppgifter -->
@@ -155,10 +153,10 @@
                                                                                            id="basedOnJournal"
                                                                                            name="informationBasedOn.journal"
                                                                                            ng-model="basedOnState.check.journaluppgifter"
-                                                                                           ng-change="toggleBaseradPaDate('journaluppgifter')" />
+                                                                                           ng-change="toggleBaseradPaDate('journaluppgifter')">
                         Journaluppgifter</label>
                       <span wc-date-picker-field target-model="cert.journaluppgifter"
-                            on-change="onChangeBaserasPaDate('journaluppgifter')" dom-id="journaluppgifter-date"></span>
+                            dom-id="journaluppgifterDate"></span>
                     </div>
 
                     <!-- Annat -->
@@ -167,14 +165,14 @@
                                                                                            id="basedOnOther"
                                                                                            name="informationBasedOn.other"
                                                                                            ng-model="basedOnState.check.annanReferens"
-                                                                                           ng-change="toggleBaseradPaDate('annanReferens')" />
-                        Annat<span wc-enable-tooltip field-help-text="fk7263.helptext.intyg-baserat-pa.annat" />
+                                                                                           ng-change="toggleBaseradPaDate('annanReferens')">
+                        Annat<span wc-enable-tooltip field-help-text="fk7263.helptext.intyg-baserat-pa.annat"></span>
                       </label>
                       <span wc-date-picker-field target-model="cert.annanReferens"
-                            on-change="onChangeBaserasPaDate('annanReferens')" dom-id="annanReferens-date"></span>
+                            dom-id="annanReferensDate"></span>
                     </div>
                     <div class="otherText indent" ng-if="basedOnState.check.annanReferens">
-                      <span>Ange vad:</span><br />
+                      <span>Ange vad:</span><br>
                       <textarea id="informationBasedOnOtherText" name="informationBasedOn.otherText" rows='2'
                                 class='form-control otherInformation' ng-model="form.ovrigt.annanReferensBeskrivning"
                                 ng-change="limitOtherField('annanReferensBeskrivning')"></textarea>
@@ -253,7 +251,7 @@
                     <div class="form-group form-inline">
                       <label class="checkbox">
                         <input type="checkbox" id="diagnoseMultipleDiagnoses" name="diagnose.multipleDiagnoses"
-                               ng-model="cert.samsjuklighet" />
+                               ng-model="cert.samsjuklighet">
                         Samsjuklighet föreligger</label><span wc-enable-tooltip
                                                               field-help-text="fk7263.helptext.diagnos.samsjuklighet"></span>
                     </div>
@@ -377,15 +375,15 @@
                       <label class="checkbox" style="min-width: 250px"><input type="checkbox" id="nedsattMed25"
                                                                               name="capacityForWork.work25"
                                                                               ng-change="onChangeWorkStateCheck('nedsattMed25')"
-                                                                              ng-model="workState.nedsattMed25" />
+                                                                              ng-model="workState.nedsattMed25">
                         25%
                         nedsatt arbetsförmåga från</label>
                       <span wc-date-picker-field target-model="cert.nedsattMed25.from"
-                            on-change="onChangeNedsattMed('nedsattMed25', 'from')" dom-id="nedsattMed25startdate"
+                            on-change="onChangeNedsattMed('nedsattMed25', 'from')" dom-id="nedsattMed25from"
                             invalid="nedsattInvalid.nedsattMed25from"></span>
                       <span>till</span>
                       <span wc-date-picker-field target-model="cert.nedsattMed25.tom"
-                            on-change="onChangeNedsattMed('nedsattMed25', 'tom')" dom-id="nedsattMed25enddate"
+                            on-change="onChangeNedsattMed('nedsattMed25', 'tom')" dom-id="nedsattMed25tom"
                             invalid="nedsattInvalid.nedsattMed25tom"></span>
                       <div class="indent pad10" ng-if="workState.nedsattMed25">
                         <div class="workHoursPerWeek"
@@ -411,14 +409,14 @@
                       <label class="checkbox" style="min-width: 250px"><input type="checkbox" id="nedsattMed50"
                                                                               name="capacityForWork.work50"
                                                                               ng-change="onChangeWorkStateCheck('nedsattMed50')"
-                                                                              ng-model="workState.nedsattMed50" /> 50%
+                                                                              ng-model="workState.nedsattMed50"> 50%
                         nedsatt arbetsförmåga från</label>
                       <span wc-date-picker-field target-model="cert.nedsattMed50.from"
-                            on-change="onChangeNedsattMed('nedsattMed50', 'from')" dom-id="nedsattMed50startdate"
+                            on-change="onChangeNedsattMed('nedsattMed50', 'from')" dom-id="nedsattMed50from"
                             invalid="nedsattInvalid.nedsattMed50from"></span>
                       <span>till</span>
                       <span wc-date-picker-field target-model="cert.nedsattMed50.tom"
-                            on-change="onChangeNedsattMed('nedsattMed50', 'tom')" dom-id="nedsattMed50enddate"
+                            on-change="onChangeNedsattMed('nedsattMed50', 'tom')" dom-id="nedsattMed50tom"
                             invalid="nedsattInvalid.nedsattMed50tom"></span>
                       <div class="indent pad10" ng-if="workState.nedsattMed50">
                         <div class="workHoursPerWeek"
@@ -443,14 +441,14 @@
                       <label class="checkbox" style="min-width: 250px"><input type="checkbox" id="nedsattMed75"
                                                                               name="capacityForWork.work75"
                                                                               ng-change="onChangeWorkStateCheck('nedsattMed75')"
-                                                                              ng-model="workState.nedsattMed75" /> 75%
+                                                                              ng-model="workState.nedsattMed75"> 75%
                         nedsatt arbetsförmåga från</label>
                       <span wc-date-picker-field target-model="cert.nedsattMed75.from"
-                            on-change="onChangeNedsattMed('nedsattMed75', 'from')" dom-id="nedsattMed75startdate"
+                            on-change="onChangeNedsattMed('nedsattMed75', 'from')" dom-id="nedsattMed75from"
                             invalid="nedsattInvalid.nedsattMed75from"></span>
                       <span>till</span>
                       <span wc-date-picker-field target-model="cert.nedsattMed75.tom"
-                            on-change="onChangeNedsattMed('nedsattMed75', 'tom')" dom-id="nedsattMed75enddate"
+                            on-change="onChangeNedsattMed('nedsattMed75', 'tom')" dom-id="nedsattMed75tom"
                             invalid="nedsattInvalid.nedsattMed75tom"></span>
                       <div class="indent pad10" ng-if="workState.nedsattMed75">
                         <div class="workHoursPerWeek"
@@ -475,14 +473,14 @@
                       <label class="checkbox" style="min-width: 250px"><input type="checkbox" id="nedsattMed100"
                                                                               name="capacityForWork.workFull"
                                                                               ng-change="onChangeWorkStateCheck('nedsattMed100')"
-                                                                              ng-model="workState.nedsattMed100" /> Helt
+                                                                              ng-model="workState.nedsattMed100"> Helt
                         nedsatt arbetsförmåga från</label>
                       <span wc-date-picker-field target-model="cert.nedsattMed100.from"
-                            on-change="onChangeNedsattMed('nedsattMed100', 'from')" dom-id="nedsattMed100startdate"
+                            on-change="onChangeNedsattMed('nedsattMed100', 'from')" dom-id="nedsattMed100from"
                             invalid="nedsattInvalid.nedsattMed100from"></span>
                       <span>till</span>
                       <span wc-date-picker-field target-model="cert.nedsattMed100.tom"
-                            on-change="onChangeNedsattMed('nedsattMed100', 'tom')" dom-id="nedsattMed100enddate"
+                            on-change="onChangeNedsattMed('nedsattMed100', 'tom')" dom-id="nedsattMed100tom"
                             invalid="nedsattInvalid.nedsattMed100tom"></span>
                     </div>
 
@@ -626,7 +624,7 @@
                       <div class="form-group form-inline">
                         <label class="checkbox"><input type="checkbox" id="rekommendationOvrigt"
                                                        name="recommendationsToFk.other"
-                                                       ng-model="cert.rekommendationOvrigtCheck" /> Övrigt (ange
+                                                       ng-model="cert.rekommendationOvrigtCheck"> Övrigt (ange
                           vad)</label>
                         <div class="indent" ng-if="cert.rekommendationOvrigtCheck">
                           <input type="text" id="rekommendationOvrigtBeskrivning" name="recommendationsToFk.otherText"
@@ -666,7 +664,7 @@
                   <div wc-field field-label="fk7263.label.fk-kontakt" field-number="12"
                        field-help-text="fk7263.helptext.kontakt">
                     <label class="checkbox"><input type="checkbox" id="kontaktFk" name="contactWithFkRequested"
-                                                   ng-model="cert.kontaktMedFk" /> Kontakt önskas med Försäkringskassan</label>
+                                                   ng-model="cert.kontaktMedFk"> Kontakt önskas med Försäkringskassan</label>
                   </div>
 
                   <div wc-field field-label="fk7263.label.ovrigt" field-number="13"
