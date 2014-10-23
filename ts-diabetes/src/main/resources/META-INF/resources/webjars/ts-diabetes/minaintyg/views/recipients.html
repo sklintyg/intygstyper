@@ -75,6 +75,11 @@
 	      	</span>
 	  	</p>
   	</div>
+    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+      <div class="alert alert-warning" id="already-sent-to-recipient-message" ng-show="alreadySentToRecipient()">
+        <span message key="ts-diabetes.confirm.message.alreadysent"></span> <span>{{getRecipientName(selectedRecipientId)}} {{cert.filteredStatuses[0].timestamp | date:'yyyy-MM-dd HH:mm'}}</span>
+      </div>
+    </div>
   </div>
   <div class="row">
   	<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">

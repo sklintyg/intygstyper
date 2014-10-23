@@ -16,7 +16,7 @@ var fk7263Messages = {
         'fk7263.confirm.label.recipienttitle': 'Mottagare',
         'fk7263.confirm.label.summarypagedesc': '<p><b>Du har valt att skicka det här intyget.</b></p>',
         'fk7263.confirm.label.verifytext': 'Kontrollera att uppgifterna ovan stämmer och tryck "Skicka"',
-        'fk7263.confirm.message.alreadysent': '<strong>Observera!</strong> Du har redan skickat detta intyg till: <br>',
+        'fk7263.confirm.message.alreadysent': '<strong>Observera!</strong> Intyget har redan skickats till: <br>',
 
         'fk7263.sent.label.pagetitle': 'Skicka intyg - steg 3 av 3',
         'fk7263.sent.label.pageinformation': 'Intyget har nu skickats och nedan presenteras försändelsen.',
@@ -54,7 +54,7 @@ var fk7263Messages = {
         'fk7263.label.pagedescription.sickness.benefit': 'Det gör du enklast på <a href="http://www.forsakringskassan.se/sjuk">www.forsakringskassan.se/sjuk</a>. Där kan du läsa mer om sjukpenning och hur du ansöker.<br>',
         'fk7263.label.pagedescription.error.in.certificate.header': '<h2>Fel i intyget?</h2>',
         'fk7263.label.pagedescription.error.in.certificate': 'Om någon uppgift är fel i läkarintyget så ska du kontakta den som utfärdat ditt läkarintyg.',
-        'fk7263.label.pagedescription.archive.header': '<h2>Akrivera</h2>',
+        'fk7263.label.pagedescription.archive.header': '<h2>Arkivera</h2>',
         'fk7263.label.pagedescription.archive': 'För att arkivera intyget klickar du på symbolen Arkivera intyg <span class="glyphicon glyphicon-folder-close"></span>.',
 
         'fk7263.helptext.readpdfhelp': '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank">Adobe Reader</a>.',

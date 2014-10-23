@@ -85,6 +85,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.confirm.label.summarypagedesc': 'Du har valt att skicka följande intyg: ',
         'ts-diabetes.confirm.label.recipienttitle': 'Mottagare: ',
         'ts-diabetes.confirm.label.verifytext': 'Kontrollera att uppgifterna ovan stämmer och tryck på "Skicka".',
+        'ts-diabetes.confirm.message.alreadysent': '<strong>Observera!</strong> Intyget har redan skickats till: <br>',
 
         'ts-diabetes.typename': ' - Diabetes',
         'ts-diabetes.label.pagetitle': 'Granska och skicka intyg',
@@ -103,7 +104,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.pagedescription.save.or.print.certificate': 'Klicka på knappen Ladda ner/Skriv ut för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
         'ts-diabetes.label.pagedescription.error.in.certificate.header': '<h2>Fel i intyget?</h2>',
         'ts-diabetes.label.pagedescription.error.in.certificate': 'Om någon uppgift är fel i läkarintyget så ska du kontakta den som utfärdat ditt läkarintyg.',
-        'ts-diabetes.label.pagedescription.archive.header': '<h2>Akrivera</h2>',
+        'ts-diabetes.label.pagedescription.archive.header': '<h2>Arkivera</h2>',
         'ts-diabetes.label.pagedescription.archive': 'För att arkivera intyget klickar du på symbolen Arkivera intyg <span class="glyphicon glyphicon-folder-close"></span>.',
 
         'ts-diabetes.label.status.false': '<span class="glyphicon glyphicon-chevron-up"></span> Visa mindre',
