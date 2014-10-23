@@ -53,7 +53,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
             }
 
             function loadCertificate() {
-                CertificateService.getCertificate($routeParams.certificateId, function(result) {
+                CertificateService.getCertificate($routeParams.certificateId, 'ts-diabetes', function(result) {
                     $scope.widgetState.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
@@ -70,7 +70,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                             $scope.widgetState.printStatus = 'signed';
                         }
 
-                        $scope.pdfUrl = '/moduleapi/intyg/signed/' + $scope.cert.id + '/pdf';
+                        $scope.pdfUrl = '/moduleapi/intyg/ts-diabetes/' + $scope.cert.id + '/pdf';
 
                     } else {
                         $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
@@ -92,6 +92,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
 
             ManageCertificate.initSend($scope);
             $scope.send = function(cert) {
+                cert.intygType = 'ts-diabetes';
                 ManageCertificate.send($scope, cert, 'TS', 'ts-diabetes.label.send', function() {
                         loadCertificate();
                     });
@@ -101,7 +102,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
             $scope.makulera = function(cert) {
                 var confirmationMessage = messageService.getProperty('ts-diabetes.label.makulera.confirmation', {
                     namn: cert.patient.fullstandigtNamn, personnummer: cert.patient.personid });
-
+                cert.intygType = 'ts-diabetes';
                 ManageCertificate.makulera($scope, cert, confirmationMessage, function() {
                     loadCertificate();
                 });
@@ -116,7 +117,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
             $scope.print = function(cert) {
 
                 if ($scope.certProperties.isRevoked) {
-                    ManageCertView.printDraft(cert.id);
+                    ManageCertView.printDraft(cert.id, 'ts-diabetes');
                 } else {
                     document.pdfForm.submit();
                 }
