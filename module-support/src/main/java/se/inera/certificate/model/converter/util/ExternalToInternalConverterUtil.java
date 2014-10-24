@@ -59,6 +59,7 @@ public class ExternalToInternalConverterUtil {
         HoSPersonal intHoSPersonal = new HoSPersonal();
 
         intHoSPersonal.setPersonId(InternalConverterUtil.getExtensionFromId(extHoSPersonal.getId()));
+        intHoSPersonal.setForskrivarKod(extHoSPersonal.getForskrivarkod());
         intHoSPersonal.setFullstandigtNamn(extHoSPersonal.getNamn());
 
         intHoSPersonal.getBefattningar().addAll(extHoSPersonal.getBefattningar());
