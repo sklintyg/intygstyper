@@ -12,7 +12,7 @@
 
     "undersokningAvPatienten" : "2011-01-26",
     "annanAtgard" : "Annan åtgärd - ange vilken",
-    "rehabiliteringAktuell" : true,
+    "rehabilitering" : "rehabiliteringAktuell",
     "ressattTillArbeteEjAktuellt" : true,
     "kontaktMedFk" : true,
     "rekommendationOvrigtCheck":true,

@@ -12,7 +12,7 @@
 
     "nuvarandeArbete":true,
     "nuvarandeArbetsuppgifter" : "Nuvarande arbetsuppgift",
-    "rehabiliteringAktuell" : true,
+    "rehabilitering" : "rehabiliteringAktuell",
     "ressattTillArbeteEjAktuellt" : true,
 
     "diagnosKod" : "S47",

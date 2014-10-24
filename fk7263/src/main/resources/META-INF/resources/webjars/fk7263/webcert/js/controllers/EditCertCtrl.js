@@ -602,12 +602,18 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
 
                 // Fält 7. Rehab radio conversions
-                if ($scope.cert.rehabiliteringAktuell) {
-                    $scope.form.rehab = 'JA';
-                } else if ($scope.cert.rehabiliteringEjAktuell) {
-                    $scope.form.rehab = 'NEJ';
-                } else if ($scope.cert.rehabiliteringGarInteAttBedoma) {
-                    $scope.form.rehab = 'GAREJ';
+                if ($scope.cert.rehabilitering != undefined) {
+                    switch ($scope.cert.rehabilitering) {
+                    case "rehabiliteringAktuell":
+                        $scope.form.rehab = 'JA';
+                        break;
+                    case "rehabiliteringEjAktuell":
+                        $scope.form.rehab = 'NEJ';
+                        break;
+                    case "rehabiliteringGarInteAttBedoma":
+                        $scope.form.rehab = 'GAREJ';
+                        break;
+                    }
                 }
 
                 // Fält 6a.
@@ -764,19 +770,19 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
 
                 // Fält 7. Rehab radio conversions
-                $scope.cert.rehabiliteringAktuell = false;
-                $scope.cert.rehabiliteringEjAktuell = false;
-                $scope.cert.rehabiliteringGarInteAttBedoma = false;
+//                $scope.cert.rehabiliteringAktuell = false;
+//                $scope.cert.rehabiliteringEjAktuell = false;
+//                $scope.cert.rehabiliteringGarInteAttBedoma = false;
 
                 switch ($scope.form.rehab) {
                 case 'JA':
-                    $scope.cert.rehabiliteringAktuell = true;
+                    $scope.cert.rehabilitering = "rehabiliteringAktuell";
                     break;
                 case 'NEJ':
-                    $scope.cert.rehabiliteringEjAktuell = true;
+                    $scope.cert.rehabilitering = "rehabiliteringEjAktuell";
                     break;
                 case 'GAREJ':
-                    $scope.cert.rehabiliteringGarInteAttBedoma = true;
+                    $scope.cert.rehabilitering = "rehabiliteringGarInteAttBedoma";
                     break;
                 }
 

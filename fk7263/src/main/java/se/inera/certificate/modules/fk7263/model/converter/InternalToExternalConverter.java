@@ -39,7 +39,7 @@ import se.inera.certificate.modules.support.api.exception.ModuleException;
 
 /**
  * Used to convert from internal to external model, i.e for converting input from webcert to a signable certificate.
- *
+ * 
  * @author erik
  */
 public class InternalToExternalConverter {
@@ -60,7 +60,7 @@ public class InternalToExternalConverter {
 
     /**
      * Converts from the internal to the external model.
-     *
+     * 
      * @param source
      *            {@link Fk7263Intyg}
      * @return {@link Fk7263Utlatande}
@@ -98,7 +98,7 @@ public class InternalToExternalConverter {
 
     /**
      * Build a List of {@link String}[s] from different fields in the internal model.
-     *
+     * 
      * @param source
      *            internal representation
      * @return List of {@link String} information was found going into the kommentarer fields
@@ -115,7 +115,7 @@ public class InternalToExternalConverter {
 
     /**
      * Create a List of {@link Vardkontakt} from the internal model.
-     *
+     * 
      * @param source
      *            internal representation
      * @return List of {@link Vardkontakt}
@@ -144,7 +144,7 @@ public class InternalToExternalConverter {
 
     /**
      * Create a List of {@link Referens} from the internal model.
-     *
+     * 
      * @param source
      *            internal representation
      * @return List of {@link Referens}
@@ -173,7 +173,7 @@ public class InternalToExternalConverter {
 
     /**
      * Create a List of {@link Fk7263Observation} from the internal model.
-     *
+     * 
      * @param source
      *            internal representation
      * @return List of {@link Fk7263Observation}
@@ -183,7 +183,7 @@ public class InternalToExternalConverter {
 
         // observation huvudDiagnos
         if (source.getDiagnosKod() != null) {
-            Fk7263Observation observation = buildObservation(buildDiagnoseCode(source.getDiagnosKod(),  source.getDiagnosBeskrivning1()),
+            Fk7263Observation observation = buildObservation(buildDiagnoseCode(source.getDiagnosKod(), source.getDiagnosBeskrivning1()),
                     ObservationsKoder.DIAGNOS, source.getDiagnosBeskrivning());
             if (notNullAndTrue(source.getSamsjuklighet())) {
                 observation.setId(HUVUDDIAGNOS_ID);
@@ -191,7 +191,7 @@ public class InternalToExternalConverter {
             observationer.add(observation);
         }
 
-        //Check for bi-diagnos 1
+        // Check for bi-diagnos 1
         if (source.getDiagnosKod2() != null) {
             Fk7263Observation observation = buildObservation(buildDiagnoseCode(source.getDiagnosKod2(), source.getDiagnosBeskrivning2()),
                     ObservationsKoder.BIDIAGNOS, null);
@@ -201,14 +201,14 @@ public class InternalToExternalConverter {
             observationer.add(observation);
         }
 
-        //Check for bi-diagnos 2
+        // Check for bi-diagnos 2
         if (source.getDiagnosKod3() != null) {
             Fk7263Observation observation = buildObservation(buildDiagnoseCode(source.getDiagnosKod3(), source.getDiagnosBeskrivning3()),
                     ObservationsKoder.BIDIAGNOS, null);
             if (notNullAndTrue(source.getSamsjuklighet())) {
                 observation.setId(BIDIAGNOS_2_ID);
             }
-                observationer.add(observation);
+            observationer.add(observation);
         }
 
         // observation sjukdomsforlopp
@@ -281,7 +281,7 @@ public class InternalToExternalConverter {
 
     /**
      * Creates the slightly more complex {@link Fk7263Observation}[s] regarding arbetsformaga.
-     *
+     * 
      * @param kod
      *            a {@link Kod} from {@link ObservationsKoder}
      * @param period
@@ -307,7 +307,7 @@ public class InternalToExternalConverter {
 
     /**
      * Creates a {@link Fk7263Prognos} from information in the internal model.
-     *
+     * 
      * @param source
      *            internal representation
      * @return {@link Fk7263Prognos}
@@ -334,7 +334,7 @@ public class InternalToExternalConverter {
 
     /**
      * Get the prognoskod that corresponds with the correct boolean in the internal model.
-     *
+     * 
      * @param source
      *            internal representation
      * @return {@link Kod}
@@ -358,7 +358,7 @@ public class InternalToExternalConverter {
 
     /**
      * Create an ICD-10 diagnose code from a code string.
-     *
+     * 
      * @param code
      *            the code
      * @return {@link Kod} or null
@@ -377,7 +377,7 @@ public class InternalToExternalConverter {
 
     /**
      * Create a single observation with kod, kategori and beskrivning.
-     *
+     * 
      * @param kod
      *            {@link Kod} Observationskod
      * @param kategori
@@ -433,16 +433,20 @@ public class InternalToExternalConverter {
             aktiviteter.add(buildAktivitet(Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD,
                     source.getAnnanAtgard()));
         }
-        if (source.isRehabiliteringAktuell()) {
-            aktiviteter.add(buildAktivitet(Aktivitetskoder.ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL, null));
-        }
-        if (source.isRehabiliteringEjAktuell()) {
-            aktiviteter.add(buildAktivitet(Aktivitetskoder.ARBETSLIVSINRIKTAD_REHABILITERING_AR_INTE_AKTUELL, null));
-        }
-        if (source.isRehabiliteringGarInteAttBedoma()) {
-            aktiviteter.add(buildAktivitet(
-                    Aktivitetskoder.GAR_EJ_ATT_BEDOMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL, null));
-        }
+            switch (source.getRehabilitering()) {
+            case rehabiliteringAktuell:
+                aktiviteter.add(buildAktivitet(Aktivitetskoder.ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL, null));
+                break;
+            case rehabiliteringEjAktuell:
+                aktiviteter.add(buildAktivitet(Aktivitetskoder.ARBETSLIVSINRIKTAD_REHABILITERING_AR_INTE_AKTUELL, null));
+                break;
+            case rehabiliteringGarInteAttBedoma:
+                aktiviteter.add(buildAktivitet(
+                        Aktivitetskoder.GAR_EJ_ATT_BEDOMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL, null));
+                break;
+            case notSet:
+                break;
+            }
         if (source.isRessattTillArbeteAktuellt()) {
             aktiviteter.add(buildAktivitet(Aktivitetskoder.FORANDRA_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT, null));
         }
@@ -458,7 +462,7 @@ public class InternalToExternalConverter {
 
     /**
      * Build singular Fk7263Aktivitet.
-     *
+     * 
      * @param kod
      *            {@link Kod} Aktivitetskod, always mandatory
      * @param beskrivning
@@ -479,7 +483,7 @@ public class InternalToExternalConverter {
 
     /**
      * Create a HosPersonal object from information in the internal model.
-     *
+     * 
      * @param source
      *            internal representation
      * @return {@link se.inera.certificate.model.HosPersonal}
@@ -498,7 +502,7 @@ public class InternalToExternalConverter {
 
     /**
      * Creates a Vardenhet from information in the internal model.
-     *
+     * 
      * @param intVardperson
      *            source of Vardenhet information
      * @return {@link se.inera.certificate.model.Vardenhet}
@@ -522,7 +526,7 @@ public class InternalToExternalConverter {
 
     /**
      * Creates a Vardgivare from information in the internal model.
-     *
+     * 
      * @param intVardperson
      *            source of Vardgivare information
      * @return {@link Vardgivare}
@@ -537,7 +541,7 @@ public class InternalToExternalConverter {
 
     /**
      * Create an {@link Fk7263Patient} from the internal model.
-     *
+     * 
      * @param source
      *            internal representation
      * @return {@link Fk7263Patient}
@@ -551,10 +555,9 @@ public class InternalToExternalConverter {
         return patient;
     }
 
-
     /**
      * Create a List of Sysselsattning for an {@link Fk7263Patient}.
-     *
+     * 
      * @param patient
      *            the {@link se.inera.certificate.modules.fk7263.model.external.Fk7263Patient}
      * @param source
@@ -589,7 +592,7 @@ public class InternalToExternalConverter {
 
     /**
      * Determine if the person connected with the personnummer is female or male.
-     *
+     * 
      * @param personnummer
      *            {@link String} containing the personnummer
      * @return true if the personnummer belongs to a female, and false otherwise
@@ -603,7 +606,7 @@ public class InternalToExternalConverter {
 
     /**
      * Build an Arbetsuppgift from a string.
-     *
+     * 
      * @param type
      *            string describing the Arbetsuppgift
      * @return {@link Arbetsuppgift}

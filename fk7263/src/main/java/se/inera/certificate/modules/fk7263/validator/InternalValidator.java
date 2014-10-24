@@ -28,7 +28,7 @@ public class InternalValidator extends AbstractValidator {
 
         validateDiagnose();
         validateFunktionsnedsattning();
-        validateRehabilitering();
+//        validateRehabilitering();
         validateArbetsformaga();
         validatePrognos();
         validateRessatt();
@@ -63,13 +63,13 @@ public class InternalValidator extends AbstractValidator {
         }
     }
 
-    private void validateRehabilitering() {
-        // Fält 7 - 3 optional checkboxes (but exclusive!)
-        if (!hasMaxOneTruth(utlatande.isRehabiliteringAktuell(), utlatande.isRehabiliteringEjAktuell(),
-                utlatande.isRehabiliteringGarInteAttBedoma())) {
-            addValidationError("Field 7: Only one rehabilitering field can be checked!");
-        }
-    }
+//    private void validateRehabilitering() {
+//        // Fält 7 - 3 optional checkboxes (but exclusive!)
+//        if (!hasMaxOneTruth(utlatande.isRehabiliteringAktuell(), utlatande.isRehabiliteringEjAktuell(),
+//                utlatande.isRehabiliteringGarInteAttBedoma())) {
+//            addValidationError("Field 7: Only one rehabilitering field can be checked!");
+//        }
+//    }
 
     private void validatePrognos() {
         // Fält 10 - 4 optional checkboxes (but exclusive!)

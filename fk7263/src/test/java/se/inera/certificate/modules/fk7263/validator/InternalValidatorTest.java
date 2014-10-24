@@ -102,16 +102,16 @@ public class InternalValidatorTest {
         assertEquals(1, new InternalValidator(utlatande).validate().size());
     }
 
-    @Test
-    public void testMultipleRehabilitering() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
-
-        // set conflicting values
-        utlatande.setRehabiliteringAktuell(true);
-        utlatande.setRehabiliteringEjAktuell(true);
-
-        assertEquals(1, new InternalValidator(utlatande).validate().size());
-    }
+//    @Test
+//    public void testMultipleRehabilitering() throws Exception {
+//        Fk7263Intyg utlatande = getValidUtlatande();
+//
+//        // set conflicting values
+//        utlatande.setRehabiliteringAktuell(true);
+//        utlatande.setRehabiliteringEjAktuell(true);
+//
+//        assertEquals(1, new InternalValidator(utlatande).validate().size());
+//    }
 
     @Test
     public void testMultiplearbetsformagaprognos() throws Exception {

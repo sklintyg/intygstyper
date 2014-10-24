@@ -55,9 +55,7 @@ public class Fk7263Intyg {
     private String atgardInomSjukvarden;
     private String annanAtgard;
 
-    private boolean rehabiliteringAktuell;
-    private boolean rehabiliteringEjAktuell;
-    private boolean rehabiliteringGarInteAttBedoma;
+    private RehabiliteringsStatus rehabilitering;
 
     private boolean nuvarandeArbete;
     private String nuvarandeArbetsuppgifter;
@@ -320,28 +318,15 @@ public class Fk7263Intyg {
         this.patientPersonnummer = patientPersonnummer;
     }
 
-    public boolean isRehabiliteringAktuell() {
-        return rehabiliteringAktuell;
+    public RehabiliteringsStatus getRehabilitering() {
+        if (rehabilitering == null) {
+            return RehabiliteringsStatus.notSet;
+        }
+        return rehabilitering;
     }
 
-    public void setRehabiliteringAktuell(boolean rehabiliteringAktuell) {
-        this.rehabiliteringAktuell = rehabiliteringAktuell;
-    }
-
-    public boolean isRehabiliteringEjAktuell() {
-        return rehabiliteringEjAktuell;
-    }
-
-    public void setRehabiliteringEjAktuell(boolean rehabiliteringEjAktuell) {
-        this.rehabiliteringEjAktuell = rehabiliteringEjAktuell;
-    }
-
-    public boolean isRehabiliteringGarInteAttBedoma() {
-        return rehabiliteringGarInteAttBedoma;
-    }
-
-    public void setRehabiliteringGarInteAttBedoma(boolean rehabiliteringGarInteAttBedoma) {
-        this.rehabiliteringGarInteAttBedoma = rehabiliteringGarInteAttBedoma;
+    public void setRehabilitering(RehabiliteringsStatus rehabilitering) {
+        this.rehabilitering = rehabilitering;
     }
 
     public boolean isNuvarandeArbete() {

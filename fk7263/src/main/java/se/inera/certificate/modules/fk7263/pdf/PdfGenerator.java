@@ -400,9 +400,19 @@ public class PdfGenerator {
     }
 
     private void fillRehabilitation() {
-        setField(RECOMMENDATION_REHAB_YES, intyg.isRehabiliteringAktuell());
-        setField(RECOMMENDATION_REHAB_NO, intyg.isRehabiliteringEjAktuell());
-        setField(RECOMMENDATION_REHAB_UNKNOWN, intyg.isRehabiliteringGarInteAttBedoma());
+        switch (intyg.getRehabilitering()) {
+        case rehabiliteringAktuell:
+            setField(RECOMMENDATION_REHAB_YES, true);
+            break;
+        case rehabiliteringEjAktuell:
+            setField(RECOMMENDATION_REHAB_NO, true);
+            break;
+        case rehabiliteringGarInteAttBedoma:
+            setField(RECOMMENDATION_REHAB_UNKNOWN, true);
+            break;
+        default:
+            break;
+        }
     }
 
     private void fillRecommendations() {

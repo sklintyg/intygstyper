@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.model.internal.RehabiliteringsStatus;
 import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
@@ -60,10 +61,7 @@ public class WebcertModelFactory {
             template.setAvstangningSmittskydd(false);
             template.setForaldrarledighet(false);
             template.setKontaktMedFk(false);
-            template.setRehabiliteringAktuell(false);
-            template.setRehabiliteringAktuell(false);
-            template.setRehabiliteringEjAktuell(false);
-            template.setRehabiliteringGarInteAttBedoma(false);
+            template.setRehabilitering(RehabiliteringsStatus.notSet);
             template.setRekommendationKontaktArbetsformedlingen(false);
             template.setRekommendationKontaktForetagshalsovarden(false);
             template.setRessattTillArbeteAktuellt(false);

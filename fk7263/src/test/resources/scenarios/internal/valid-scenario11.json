@@ -12,7 +12,7 @@
 
     "undersokningAvPatienten" : "2011-01-26",
     "atgardInomSjukvarden" : "Planerad aktivitet inom sjukvården",
-    "rehabiliteringEjAktuell" : true,
+    "rehabilitering" : "rehabiliteringEjAktuell",
     "kontaktMedFk" : true,
     "rekommendationKontaktArbetsformedlingen" : true,
 

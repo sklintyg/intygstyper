@@ -165,11 +165,11 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
               </div>
 
               <div wc-field field-number="7" field-label="fk7263.label.rehabilitering-aktuell"
-                   filled="{{cert.rehabiliteringAktuell||cert.rehabiliteringEjAktuell||cert.rehabiliteringGarInteAttBedoma}}"
+                   filled="{{cert.rehabilitering}}"
                    id="field7" class="print-pagebreak-after">
-                <span id="rehabiliteringAktuell" ng-show="cert.rehabiliteringAktuell"><span message key="fk7263.label.yes"></span></span>
-                <span id="rehabiliteringEjAktuell" ng-show="cert.rehabiliteringEjAktuell"><span message key="fk7263.label.no"></span></span>
-                <span id="rehabiliteringGarInteAttBedoma" ng-show="cert.rehabiliteringGarInteAttBedoma"><span message key="fk7263.label.gar-ej-att-bedomma"></span></span>
+                <span id="rehabiliteringAktuell" ng-show="cert.rehabilitering == 'rehabiliteringAktuell'"><span message key="fk7263.label.yes"></span></span>
+                <span id="rehabiliteringEjAktuell" ng-show="cert.rehabilitering == 'rehabiliteringEjAktuell'"><span message key="fk7263.label.no"></span></span>
+                <span id="rehabiliteringGarInteAttBedoma" ng-show="cert.rehabilitering == 'rehabiliteringGarInteAttBedoma'"><span message key="fk7263.label.gar-ej-att-bedomma"></span></span>
               </div>
 
               <div wc-field field-number="8a" field-label="fk7263.label.arbetsformaga"
