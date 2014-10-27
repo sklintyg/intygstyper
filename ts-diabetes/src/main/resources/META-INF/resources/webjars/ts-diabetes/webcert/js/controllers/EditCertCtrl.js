@@ -1,6 +1,6 @@
 angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
-    [ '$anchorScroll', '$location', '$log', '$scope', '$window', 'common.ManageCertView', 'common.User',
-        function($anchorScroll, $location, $log, $scope, $window, ManageCertView, User) {
+    [ '$anchorScroll', '$location', '$log', '$scope', '$window', 'common.ManageCertView', 'common.User', 'common.wcFocus',
+        function($anchorScroll, $location, $log, $scope, $window, ManageCertView, User, wcFocus) {
             'use strict';
 
             /**********************************************************************************
@@ -15,6 +15,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
             $scope.user = User;
 
             // init state
+            $scope.focusFirstInput = true;
             $scope.widgetState = {
                 doneLoading: false,
                 hasError: false,
@@ -240,5 +241,6 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 // Decorate intygspecific default data
                 $scope.cert = cert;
                 convertCertToForm($scope);
+                wcFocus('firstInput');
             });
         }]);

@@ -7,6 +7,7 @@
     "/web/webjars/common/webcert/js/directives/wcFieldSingle.js",
     "/web/webjars/common/webcert/js/directives/wcFeatureActive.js",
     "/web/webjars/common/webcert/js/directives/wcFocusMe.js",
+    "/web/webjars/common/webcert/js/directives/wcFocusOn.js",
     "/web/webjars/common/webcert/js/directives/wcHeader.js",
     "/web/webjars/common/webcert/js/directives/wcMaxLength.js",
     "/web/webjars/common/webcert/js/directives/wcPrintHeader.js",

@@ -1,6 +1,6 @@
 angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
-    [ '$anchorScroll', '$location', '$scope', '$window', 'common.ManageCertView', 'common.User',
-        function($anchorScroll, $location, $scope, $window, ManageCertView, User) {
+    [ '$anchorScroll', '$location', '$scope', '$window', 'common.ManageCertView', 'common.User', 'common.wcFocus',
+        function($anchorScroll, $location, $scope, $window, ManageCertView, User, wcFocus) {
             'use strict';
 
             /**********************************************************************************
@@ -15,6 +15,7 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
             $scope.user = User;
 
             // init state
+            $scope.focusFirstInput = true;
             $scope.widgetState = {
                 doneLoading: false,
                 hasError: false,
@@ -298,6 +299,7 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
                 // Decorate intygspecific default data
                 $scope.cert = cert;
                 convertCertToForm($scope);
+                wcFocus('firstInput');
             });
 
         }]);

@@ -1,17 +1,20 @@
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
-    [ '$anchorScroll', '$filter', '$location', '$scope', '$log', 'common.CertificateService',
-        'common.ManageCertView', 'common.User',
-        function($anchorScroll, $filter, $location, $scope, $log, CertificateService, ManageCertView, User) {
+    [ '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', 'common.CertificateService',
+        'common.ManageCertView', 'common.User', 'common.wcFocus',
+        function($anchorScroll, $filter, $location, $scope, $log, $timeout, CertificateService, ManageCertView, User, wcFocus) {
             'use strict';
 
             /**********************************************************************************
              * Default state
              **********************************************************************************/
 
-                // Page states
+            // Page states
             $scope.user = User;
             $scope.today = new Date();
             $scope.today.setHours(0, 0, 0, 0); // reset time to increase comparison accuracy (using new Date() also sets time)
+
+            // init state
+            $scope.focusFirstInput = false;
             $scope.widgetState = {
                 doneLoading: false,
                 activeErrorMessageKey: null,
@@ -471,48 +474,23 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             }
 
             /**
-             * Convert internal model to form temporary data bindings
+             * Register date parsers
              * @param $scope
              */
-            function convertCertToForm($scope) {
 
-                // check if all info is available from HSA. If not, display the info message that someone needs to update it
-                if (!$scope.cert.intygMetadata ||
-                    !$scope.cert.intygMetadata.skapadAv ||
-                    !$scope.cert.intygMetadata.skapadAv.vardenhet ||
-                     $scope.cert.intygMetadata.skapadAv.vardenhet.postadress === undefined ||
-                     $scope.cert.intygMetadata.skapadAv.vardenhet.postnummer === undefined ||
-                     $scope.cert.intygMetadata.skapadAv.vardenhet.postort === undefined ||
-                     $scope.cert.intygMetadata.skapadAv.vardenhet.telefonnummer === undefined ||
-                     $scope.cert.intygMetadata.skapadAv.vardenhet.postadress === '' ||
-                     $scope.cert.intygMetadata.skapadAv.vardenhet.postnummer === '' ||
-                     $scope.cert.intygMetadata.skapadAv.vardenhet.postort === '' ||
-                     $scope.cert.intygMetadata.skapadAv.vardenhet.telefonnummer === '') {
-                    $scope.widgetState.hasInfoMissing = true;
-                } else {
-                    $scope.widgetState.hasInfoMissing = false;
-                }
+            function registerDateParsers() {
 
-                // Fält 4b
                 // Register parse function for 4b date pickers
                 var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter', 'annanReferens'];
                 angular.forEach(baserasPaTypes, function(type) {
-                    this[type + 'Date'].$parsers.unshift(function() {
-                        $scope.onChangeBaserasPaDate(type);
-                    });
+                    if (this[type + 'Date']) {
+                        this[type + 'Date'].$parsers.unshift(function() {
+                            $scope.onChangeBaserasPaDate(type);
+                        });
+                    } else {
+                        $log.debug('Date controls not bound yet.');
+                    }
                 }, $scope.certForm);
-
-                // Fält 4b. AnnanReferensBeskrivning
-                $scope.basedOnState.check.undersokningAvPatienten = $scope.cert.undersokningAvPatienten !== undefined;
-                $scope.basedOnState.check.telefonkontaktMedPatienten =
-                    $scope.cert.telefonkontaktMedPatienten !== undefined;
-                $scope.basedOnState.check.journaluppgifter = $scope.cert.journaluppgifter !== undefined;
-                if ($scope.cert.annanReferensBeskrivning !== undefined) {
-                    $scope.form.ovrigt.annanReferensBeskrivning = $scope.cert.annanReferensBeskrivning;
-                    $scope.basedOnState.check.annanReferens = true;
-                } else {
-                    $scope.basedOnState.check.annanReferens = false;
-                }
 
                 // Fält 8b. nedsattMedXXBeskrivning
                 var nedsattMedList = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
@@ -543,38 +521,78 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     }
 
                     // Register parsers so we can follow changes in the date inputs
-                    if ($scope.certForm[nedsattMed+'from'].$parsers.length > 1) {
-                        $scope.certForm[nedsattMed+'from'].$parsers.shift();
-                    }
-                    $scope.certForm[nedsattMed+'from'].$parsers.unshift(nedsattParser);
+                    if ($scope.certForm[nedsattMed+'from']) {
+                        if ($scope.certForm[nedsattMed+'from'].$parsers.length > 1) {
+                            $scope.certForm[nedsattMed+'from'].$parsers.shift();
+                        }
+                        $scope.certForm[nedsattMed+'from'].$parsers.unshift(nedsattParser);
 
-                    if ($scope.certForm[nedsattMed+'from'].$formatters.length > 0) {
-                        $scope.certForm[nedsattMed+'from'].$formatters.shift();
+                        if ($scope.certForm[nedsattMed+'from'].$formatters.length > 0) {
+                            $scope.certForm[nedsattMed+'from'].$formatters.shift();
+                        }
+                        $scope.certForm[nedsattMed+'from'].$formatters.unshift(function(modelValue) {
+                            validateDates(true);
+                            onArbetsformagaDatesUpdated(true);
+                            return modelValue;
+                        });
                     }
-                    $scope.certForm[nedsattMed+'from'].$formatters.unshift(function(modelValue) {
-                        validateDates(true);
-                        onArbetsformagaDatesUpdated(true);
-                        return modelValue;
-                    });
 
-                    if ($scope.certForm[nedsattMed+'tom'].$parsers.length > 1) {
-                        $scope.certForm[nedsattMed+'tom'].$parsers.shift();
-                    }
-                    $scope.certForm[nedsattMed+'tom'].$parsers.unshift(nedsattParser);
+                    if ($scope.certForm[nedsattMed+'from']) {
+                        if ($scope.certForm[nedsattMed + 'tom'].$parsers.length > 1) {
+                            $scope.certForm[nedsattMed + 'tom'].$parsers.shift();
+                        }
+                        $scope.certForm[nedsattMed + 'tom'].$parsers.unshift(nedsattParser);
 
-                    if ($scope.certForm[nedsattMed+'tom'].$formatters.length > 0) {
-                        $scope.certForm[nedsattMed+'tom'].$formatters.shift();
+                        if ($scope.certForm[nedsattMed + 'tom'].$formatters.length > 0) {
+                            $scope.certForm[nedsattMed + 'tom'].$formatters.shift();
+                        }
+                        $scope.certForm[nedsattMed + 'tom'].$formatters.unshift(function(modelValue) {
+                            validateDates(true);
+                            onArbetsformagaDatesUpdated(true);
+                            return modelValue;
+                        });
                     }
-                    $scope.certForm[nedsattMed+'tom'].$formatters.unshift(function(modelValue) {
-                        validateDates(true);
-                        onArbetsformagaDatesUpdated(true);
-                        return modelValue;
-                    });
 
                     if ($scope.cert[nedsattMed]) {
                         $scope.workState[nedsattMed] = true;
                     }
                 }, $scope.cert);
+            }
+
+            /**
+             * Convert internal model to form temporary data bindings
+             * @param $scope
+             */
+            function convertCertToForm($scope) {
+
+                // check if all info is available from HSA. If not, display the info message that someone needs to update it
+                if (!$scope.cert.intygMetadata ||
+                    !$scope.cert.intygMetadata.skapadAv ||
+                    !$scope.cert.intygMetadata.skapadAv.vardenhet ||
+                     $scope.cert.intygMetadata.skapadAv.vardenhet.postadress === undefined ||
+                     $scope.cert.intygMetadata.skapadAv.vardenhet.postnummer === undefined ||
+                     $scope.cert.intygMetadata.skapadAv.vardenhet.postort === undefined ||
+                     $scope.cert.intygMetadata.skapadAv.vardenhet.telefonnummer === undefined ||
+                     $scope.cert.intygMetadata.skapadAv.vardenhet.postadress === '' ||
+                     $scope.cert.intygMetadata.skapadAv.vardenhet.postnummer === '' ||
+                     $scope.cert.intygMetadata.skapadAv.vardenhet.postort === '' ||
+                     $scope.cert.intygMetadata.skapadAv.vardenhet.telefonnummer === '') {
+                    $scope.widgetState.hasInfoMissing = true;
+                } else {
+                    $scope.widgetState.hasInfoMissing = false;
+                }
+
+                // Fält 4b. AnnanReferensBeskrivning
+                $scope.basedOnState.check.undersokningAvPatienten = $scope.cert.undersokningAvPatienten !== undefined;
+                $scope.basedOnState.check.telefonkontaktMedPatienten =
+                    $scope.cert.telefonkontaktMedPatienten !== undefined;
+                $scope.basedOnState.check.journaluppgifter = $scope.cert.journaluppgifter !== undefined;
+                if ($scope.cert.annanReferensBeskrivning !== undefined) {
+                    $scope.form.ovrigt.annanReferensBeskrivning = $scope.cert.annanReferensBeskrivning;
+                    $scope.basedOnState.check.annanReferens = true;
+                } else {
+                    $scope.basedOnState.check.annanReferens = false;
+                }
 
                 if ($scope.cert.nedsattMed25Beskrivning !== undefined) {
                     $scope.form.ovrigt.nedsattMed25Beskrivning = $scope.cert.nedsattMed25Beskrivning;
@@ -1033,6 +1051,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 // Decorate intygspecific default data
                 $scope.cert = cert;
                 convertCertToForm($scope);
+                $timeout(function() {
+                    registerDateParsers();
+                    wcFocus('firstInput');
+                }, 10);
             });
 
         }]);
