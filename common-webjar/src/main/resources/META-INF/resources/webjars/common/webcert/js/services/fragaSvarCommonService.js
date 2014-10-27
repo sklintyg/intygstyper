@@ -26,7 +26,8 @@ angular.module('common').factory('common.fragaSvarCommonService',
         function _buildMailToLink(qa) {
             var baseURL = $window.location.protocol + '//' + $window.location.hostname +
                 ($window.location.port ? ':' + $window.location.port : '');
-            var url = baseURL + '/m/fk7263/webcert/intyg/' + qa.intygsReferens.intygsId + '#/view';
+            var url = baseURL + '/webcert/web/user/certificate/' + qa.intygsReferens.intygsId + '/questions';
+
             var recipient = '';
             var subject = 'En fraga-svar ska besvaras i Webcert.';
             if (qa.vardperson.enhetsnamn !== undefined) {
