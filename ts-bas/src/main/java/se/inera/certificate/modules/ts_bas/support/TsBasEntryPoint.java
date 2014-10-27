@@ -1,10 +1,13 @@
 package se.inera.certificate.modules.ts_bas.support;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.ModuleEntryPoint;
 import se.inera.certificate.modules.support.api.ModuleApi;
+import se.inera.certificate.modules.support.feature.ModuleFeaturesFactory;
 import se.inera.certificate.modules.ts_bas.rest.ModuleService;
 
 public class TsBasEntryPoint implements ModuleEntryPoint {
@@ -41,8 +44,8 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
     }
 
     @Override
-    public boolean isModuleFragaSvarAvailable() {
-        return false;
+    public Map<String, Boolean> getModuleFeatures() {
+        return ModuleFeaturesFactory.getFeatures("ts-bas-features.properties");
     }
 
     @Override

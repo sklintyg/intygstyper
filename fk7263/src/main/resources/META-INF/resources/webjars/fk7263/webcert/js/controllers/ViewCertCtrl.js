@@ -30,7 +30,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
              */
             function loadCertificate() {
                 $log.debug('Loading certificate ' + $routeParams.certificateId);
-                CertificateService.getCertificate($routeParams.certificateId, function(result) {
+                CertificateService.getCertificate($routeParams.certificateId, 'fk7263', function(result) {
                     $scope.widgetState.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
@@ -43,7 +43,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                             $scope.widgetState.printStatus = 'signed';
                         }
 
-                        $scope.pdfUrl = '/moduleapi/intyg/signed/' + $scope.cert.id + '/pdf';
+                        $scope.pdfUrl = '/moduleapi/intyg/fk7263/' + $scope.cert.id + '/pdf';
 
                     } else {
                         $scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';
@@ -80,6 +80,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
              */
             ManageCertificate.initSend($scope);
             $scope.send = function(cert) {
+                cert.intygType = 'fk7263';
                 ManageCertificate.send($scope, cert, 'FK', 'fk7263.label.send', function() {
                     loadCertificate();
                 });
@@ -91,7 +92,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                     namn: cert.intygMetadata.patient.fullstandigtNamn,
                     personnummer: cert.intygMetadata.patient.personId
                 });
-
+                cert.intygType = 'fk7263';
                 ManageCertificate.makulera($scope, cert, confirmationMessage, function() {
                     loadCertificate();
                 });
@@ -106,7 +107,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             $scope.print = function(cert) {
 
                 if ($scope.certProperties.isRevoked) {
-                    ManageCertView.printDraft(cert.id);
+                    ManageCertView.printDraft(cert.id, 'fk7263');
                 } else {
                     document.pdfForm.submit();
                 }

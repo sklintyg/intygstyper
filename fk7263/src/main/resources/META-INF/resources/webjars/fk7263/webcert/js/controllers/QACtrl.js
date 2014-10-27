@@ -43,7 +43,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
             };
 
             // Request loading of QA's for this certificate
-            fragaSvarService.getQAForCertificate($routeParams.certificateId, function(result) {
+            fragaSvarService.getQAForCertificate($routeParams.certificateId, 'fk7263', function(result) {
                 $log.debug('getQAForCertificate:success data:' + result);
                 $scope.widgetState.doneLoading = true;
                 $scope.widgetState.activeErrorMessageKey = null;
@@ -95,7 +95,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 $log.debug('sendQuestion:' + newQuestion);
                 newQuestion.updateInProgress = true; // trigger local spinner
 
-                fragaSvarService.saveNewQuestion($routeParams.certificateId, newQuestion,
+                fragaSvarService.saveNewQuestion($routeParams.certificateId, 'fk7263', newQuestion,
                     function(result) {
                         $log.debug('Got saveNewQuestion result:' + result);
                         newQuestion.updateInProgress = false;
@@ -134,7 +134,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
             $scope.sendAnswer = function sendAnswer(qa) {
                 qa.updateInProgress = true; // trigger local spinner
 
-                fragaSvarService.saveAnswer(qa, function(result) {
+                fragaSvarService.saveAnswer(qa, 'fk7263', function(result) {
                     $log.debug('Got saveAnswer result:' + result);
                     qa.updateInProgress = false;
                     qa.activeErrorMessageKey = null;
@@ -159,7 +159,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
             $scope.onVidareBefordradChange = function(qa) {
                 qa.forwardInProgress = true;
 
-                fragaSvarCommonService.setVidareBefordradState(qa.internReferens, qa.vidarebefordrad,
+                fragaSvarCommonService.setVidareBefordradState(qa.internReferens, 'fk7263', qa.vidarebefordrad,
                     function(result) {
                         qa.forwardInProgress = false;
 
@@ -177,7 +177,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 $log.debug('updateAsHandled:' + qa);
                 qa.updateHandledStateInProgress = true;
 
-                fragaSvarService.closeAsHandled(qa, function(result) {
+                fragaSvarService.closeAsHandled(qa.internReferens, 'fk7263', function(result) {
                     $log.debug('Got updateAsHandled result:' + result);
                     qa.activeErrorMessageKey = null;
                     qa.updateHandledStateInProgress = false;
@@ -203,7 +203,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 $log.debug('updateAsUnHandled:' + qa);
                 qa.updateHandledStateInProgress = true; // trigger local
 
-                fragaSvarService.openAsUnhandled(qa, function(result) {
+                fragaSvarService.openAsUnhandled(qa.internReferens, 'fk7263', function(result) {
                     $log.debug('Got openAsUnhandled result:' + result);
                     qa.activeErrorMessageKey = null;
                     qa.updateHandledStateInProgress = false;

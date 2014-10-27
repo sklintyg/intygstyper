@@ -10,9 +10,9 @@ angular.module('common').factory('common.fragaSvarCommonService',
         /*
          * Toggle vidarebefordrad state of a fragasvar entity with given id
          */
-        function _setVidareBefordradState(id, isVidareBefordrad, callback) {
+        function _setVidareBefordradState(fragaSvarId, intygsTyp, isVidareBefordrad, callback) {
             $log.debug('_setVidareBefordradState');
-            var restPath = '/moduleapi/fragasvar/' + id + '/setDispatchState';
+            var restPath = '/moduleapi/fragasvar/' + intygsTyp + '/' + fragaSvarId + '/hanterad';
             $http.put(restPath, isVidareBefordrad.toString()).success(function(data) {
                 $log.debug('_setVidareBefordradState data:' + data);
                 callback(data);

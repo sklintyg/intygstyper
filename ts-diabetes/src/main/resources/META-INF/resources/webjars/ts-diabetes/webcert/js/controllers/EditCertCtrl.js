@@ -207,14 +207,14 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
             $scope.save = function() {
                 $scope.hasSavedThisSession = true;
                 convertFormToCert();
-                ManageCertView.save($scope);
+                ManageCertView.save($scope, 'ts-diabetes');
             };
 
             /**
              * Action to discard the certificate draft and return to WebCert again.
              */
             $scope.discard = function() {
-                ManageCertView.discard($scope);
+                ManageCertView.discard($scope, 'ts-diabetes');
             };
 
             /**
@@ -228,7 +228,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
              * Print draft
              */
             $scope.print = function() {
-                ManageCertView.printDraft($scope.cert.id);
+                ManageCertView.printDraft($scope.cert.id, 'ts-diabetes');
             };
 
             /**************************************************************************
@@ -236,7 +236,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
              **************************************************************************/
 
             // Get the certificate draft from the server.
-            ManageCertView.load($scope, function(cert) {
+            ManageCertView.load($scope, 'ts-diabetes', function(cert) {
                 // Decorate intygspecific default data
                 $scope.cert = cert;
                 convertCertToForm($scope);

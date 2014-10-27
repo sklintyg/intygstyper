@@ -23,7 +23,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             };
 
             // expose calculated static link for pdf download
-            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $routeParams.certificateId + '/pdf';
+            $scope.downloadAsPdfLink = '/moduleapi/intyg/ts-bas/' + $routeParams.certificateId + '/pdf';
 
             // Decide if helptext related to field 1.a) - 1.c)
             $scope.achelptext = false;
@@ -59,7 +59,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             }
 
             function loadCertificate() {
-                CertificateService.getCertificate($routeParams.certificateId, function(result) {
+                CertificateService.getCertificate($routeParams.certificateId, 'ts-bas', function(result) {
                     $scope.widgetState.doneLoading = true;
                     if (result !== null) {
                         $scope.cert = result.contents;
@@ -79,7 +79,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
                             $scope.widgetState.printStatus = 'signed';
                         }
 
-                        $scope.pdfUrl = '/moduleapi/intyg/signed/' + $scope.cert.id + '/pdf';
+                        $scope.pdfUrl = '/moduleapi/intyg/ts-bas/' + $scope.cert.id + '/pdf';
 
                     } else {
                         $log.debug('Got error while loading cert - invalid data');
@@ -103,6 +103,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
 
             ManageCertificate.initSend($scope);
             $scope.send = function(cert) {
+                cert.intygType = 'ts-bas';
                 ManageCertificate.send($scope, cert, 'TS', 'ts-bas.label.send', function() {
                         loadCertificate();
                     });
@@ -113,6 +114,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
                 var confirmationMessage = messageService.getProperty('ts-bas.label.makulera.confirmation', {
                     namn: cert.intygMetadata.patient.fullstandigtNamn, personnummer: cert.intygMetadata.patient.personId });
 
+                cert.intygType = 'ts-bas';
                 ManageCertificate.makulera($scope, cert, confirmationMessage, function() {
                     loadCertificate();
                 });
@@ -127,7 +129,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             $scope.print = function(cert) {
 
                 if ($scope.certProperties.isRevoked) {
-                    ManageCertView.printDraft(cert.id);
+                    ManageCertView.printDraft(cert.id, 'ts-bas');
                 } else {
                     document.pdfForm.submit();
                 }
