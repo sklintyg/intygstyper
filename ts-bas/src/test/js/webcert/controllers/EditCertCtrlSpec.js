@@ -3,12 +3,15 @@ describe('ts-bas.EditCertCtrl', function() {
 
     var ManageCertView;
     var User;
+    var wcFocus;
 
     beforeEach(angular.mock.module('ts-bas', function($provide) {
         ManageCertView = jasmine.createSpyObj('common.ManageCertView', [ 'load' ]);
         User = {};
+        wcFocus = {};
         $provide.value('common.ManageCertView', ManageCertView);
         $provide.value('common.User', User);
+        $provide.value('common.wcFocus', wcFocus);
     }));
 
     var $scope, ctrl;
