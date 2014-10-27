@@ -55,7 +55,7 @@ public class Fk7263Intyg {
     private String atgardInomSjukvarden;
     private String annanAtgard;
 
-    private RehabiliteringsStatus rehabilitering;
+    private Rehabilitering rehabilitering;
 
     private boolean nuvarandeArbete;
     private String nuvarandeArbetsuppgifter;
@@ -318,14 +318,14 @@ public class Fk7263Intyg {
         this.patientPersonnummer = patientPersonnummer;
     }
 
-    public RehabiliteringsStatus getRehabilitering() {
+    public Rehabilitering getRehabilitering() {
         if (rehabilitering == null) {
-            return RehabiliteringsStatus.notSet;
+            return null;
         }
         return rehabilitering;
     }
 
-    public void setRehabilitering(RehabiliteringsStatus rehabilitering) {
+    public void setRehabilitering(Rehabilitering rehabilitering) {
         this.rehabilitering = rehabilitering;
     }
 

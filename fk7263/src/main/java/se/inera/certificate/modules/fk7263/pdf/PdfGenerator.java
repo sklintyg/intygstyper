@@ -400,18 +400,20 @@ public class PdfGenerator {
     }
 
     private void fillRehabilitation() {
-        switch (intyg.getRehabilitering()) {
-        case rehabiliteringAktuell:
-            setField(RECOMMENDATION_REHAB_YES, true);
-            break;
-        case rehabiliteringEjAktuell:
-            setField(RECOMMENDATION_REHAB_NO, true);
-            break;
-        case rehabiliteringGarInteAttBedoma:
-            setField(RECOMMENDATION_REHAB_UNKNOWN, true);
-            break;
-        default:
-            break;
+        if (intyg.getRehabilitering() != null) {
+            switch (intyg.getRehabilitering()) {
+            case rehabiliteringAktuell:
+                setField(RECOMMENDATION_REHAB_YES, true);
+                break;
+            case rehabiliteringEjAktuell:
+                setField(RECOMMENDATION_REHAB_NO, true);
+                break;
+            case rehabiliteringGarInteAttBedoma:
+                setField(RECOMMENDATION_REHAB_UNKNOWN, true);
+                break;
+            default:
+                break;
+            }
         }
     }
 
@@ -510,7 +512,7 @@ public class PdfGenerator {
 
     private void fillDiagnose() {
         fillText(DIAGNOS_CODE, intyg.getDiagnosKod());
-        //  fillText(DIAGNOS, intyg.getDiagnosBeskrivning());
+        // fillText(DIAGNOS, intyg.getDiagnosBeskrivning());
         fillText(DIAGNOS, buildOtherDiagnoses());
     }
 

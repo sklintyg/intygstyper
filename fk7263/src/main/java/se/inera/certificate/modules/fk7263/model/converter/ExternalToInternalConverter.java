@@ -24,7 +24,7 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Referens;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
-import se.inera.certificate.modules.fk7263.model.internal.RehabiliteringsStatus;
+import se.inera.certificate.modules.fk7263.model.internal.Rehabilitering;
 import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
 
 /**
@@ -212,13 +212,13 @@ public class ExternalToInternalConverter {
                 intyg.setAnnanAtgard(aktivitet.getBeskrivning());
             } else if (Aktivitetskoder.ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL
                     .equals(aktivitet.getAktivitetskod())) {
-                intyg.setRehabilitering(RehabiliteringsStatus.rehabiliteringAktuell);
+                intyg.setRehabilitering(Rehabilitering.rehabiliteringAktuell);
             } else if (Aktivitetskoder.ARBETSLIVSINRIKTAD_REHABILITERING_AR_INTE_AKTUELL.equals(aktivitet
                     .getAktivitetskod())) {
-                intyg.setRehabilitering(RehabiliteringsStatus.rehabiliteringEjAktuell);
+                intyg.setRehabilitering(Rehabilitering.rehabiliteringEjAktuell);
             } else if (Aktivitetskoder.GAR_EJ_ATT_BEDOMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL
                     .equals(aktivitet.getAktivitetskod())) {
-                intyg.setRehabilitering(RehabiliteringsStatus.rehabiliteringGarInteAttBedoma);
+                intyg.setRehabilitering(Rehabilitering.rehabiliteringGarInteAttBedoma);
             } else if (Aktivitetskoder.FORANDRA_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT.equals(aktivitet
                     .getAktivitetskod())) {
                 intyg.setRessattTillArbeteAktuellt(true);

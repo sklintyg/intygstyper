@@ -433,6 +433,7 @@ public class InternalToExternalConverter {
             aktiviteter.add(buildAktivitet(Aktivitetskoder.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD,
                     source.getAnnanAtgard()));
         }
+        if (source.getRehabilitering() != null) {
             switch (source.getRehabilitering()) {
             case rehabiliteringAktuell:
                 aktiviteter.add(buildAktivitet(Aktivitetskoder.ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL, null));
@@ -444,9 +445,8 @@ public class InternalToExternalConverter {
                 aktiviteter.add(buildAktivitet(
                         Aktivitetskoder.GAR_EJ_ATT_BEDOMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL, null));
                 break;
-            case notSet:
-                break;
             }
+        }
         if (source.isRessattTillArbeteAktuellt()) {
             aktiviteter.add(buildAktivitet(Aktivitetskoder.FORANDRA_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT, null));
         }
