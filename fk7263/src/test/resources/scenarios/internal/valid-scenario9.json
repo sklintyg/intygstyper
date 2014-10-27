@@ -29,7 +29,7 @@
         "tom" :"2011-05-26"
     },
     "arbetsformagaPrognos":"Patientens förmåga bedöms nedsatt längre än vad som anges ovan pga:",
-    "arbetsformataPrognosJaDelvis":true,
+    "prognosBedomning" : "arbetsformagaPrognosJaDelvis",
 
 
     "signeringsdatum":"2011-01-26T00:00:00.000",

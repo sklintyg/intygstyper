@@ -74,11 +74,7 @@ public class Fk7263Intyg {
 
     private String arbetsformagaPrognos;
 
-    private boolean arbetsformataPrognosJa;
-    private boolean arbetsformataPrognosJaDelvis;
-    private boolean arbetsformataPrognosNej;
-    private boolean arbetsformataPrognosGarInteAttBedoma;
-
+    private PrognosBedomning prognosBedomning;
     private String prognosis;
 
     private String arbetsformagaPrognosGarInteAttBedomaBeskrivning;
@@ -401,38 +397,6 @@ public class Fk7263Intyg {
         this.arbetsformagaPrognos = arbetsformagaPrognos;
     }
 
-    public boolean isArbetsformataPrognosJa() {
-        return arbetsformataPrognosJa;
-    }
-
-    public void setArbetsformataPrognosJa(boolean arbetsformataPrognosJa) {
-        this.arbetsformataPrognosJa = arbetsformataPrognosJa;
-    }
-
-    public boolean isArbetsformataPrognosJaDelvis() {
-        return arbetsformataPrognosJaDelvis;
-    }
-
-    public void setArbetsformataPrognosJaDelvis(boolean arbetsformataPrognosJaDelvis) {
-        this.arbetsformataPrognosJaDelvis = arbetsformataPrognosJaDelvis;
-    }
-
-    public boolean isArbetsformataPrognosNej() {
-        return arbetsformataPrognosNej;
-    }
-
-    public void setArbetsformataPrognosNej(boolean arbetsformataPrognosNej) {
-        this.arbetsformataPrognosNej = arbetsformataPrognosNej;
-    }
-
-    public boolean isArbetsformataPrognosGarInteAttBedoma() {
-        return arbetsformataPrognosGarInteAttBedoma;
-    }
-
-    public void setArbetsformataPrognosGarInteAttBedoma(boolean arbetsformataPrognosGarInteAttBedoma) {
-        this.arbetsformataPrognosGarInteAttBedoma = arbetsformataPrognosGarInteAttBedoma;
-    }
-
     public boolean isRessattTillArbeteAktuellt() {
         return ressattTillArbeteAktuellt;
     }
@@ -540,5 +504,13 @@ public class Fk7263Intyg {
 
     public void setAnnanReferensBeskrivning(String annanReferensBeskrivning) {
         this.annanReferensBeskrivning = annanReferensBeskrivning;
+    }
+
+    public PrognosBedomning getPrognosBedomning() {
+        return prognosBedomning;
+    }
+
+    public void setPrognosBedomning(PrognosBedomning prognosBedomning) {
+        this.prognosBedomning = prognosBedomning;
     }
 }

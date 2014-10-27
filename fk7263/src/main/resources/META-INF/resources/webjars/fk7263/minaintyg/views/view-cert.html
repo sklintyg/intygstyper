@@ -243,9 +243,9 @@
                 </ul>
               </div>
 
-              <div mi-field field-label="fk7263.label.workrehab" filled="cert.rehabiliteringAktuell||cert.rehabiliteringEjAktuell||cert.rehabiliteringGarInteAttBedoma">
-                <span ng-show="cert.rehabiliteringAktuell"> <span message key="fk7263.label.yes"></span></span> <span ng-show="cert.rehabiliteringEjAktuell"> <span message key="fk7263.label.no"></span>
-                </span> <span ng-show="cert.rehabiliteringGarInteAttBedoma"> <span message key="fk7263.label.unjudgeable"></span></span>
+              <div mi-field field-label="fk7263.label.workrehab" filled="cert.rehabilitering">
+                <span ng-show="cert.rehabilitering == 'rehabiliteringAktuell'"> <span message key="fk7263.label.yes"></span></span> <span ng-show="cert.rehabilitering == 'rehabiliteringEjAktuell'"> <span message key="fk7263.label.no"></span>
+                </span> <span ng-show="cert.rehabilitering == 'rehabiliteringGarInteAttBedoma'"> <span message key="fk7263.label.unjudgeable"></span></span>
               </div>
 
               <div mi-field field-label="fk7263.label.patientworkcapacity" filled="cert.nuvarandeArbetsuppgifter||cert.arbetsloshet||cert.foraldrarledighet">
@@ -259,11 +259,11 @@
               <div mi-field field-label="fk7263.label.patientworkcapacityjudgement" filled="cert.arbetsformagaPrognos!=null">{{cert.arbetsformagaPrognos}}</div>
 
               <div mi-field field-label="fk7263.label.prognosis"
-                filled="cert.arbetsformataPrognosJa || cert.arbetsformataPrognosJaDelvis||cert.arbetsformataPrognosNej||cert.arbetsformataPrognosGarInteAttBedoma">
+                filled="cert.prognosBedomning">
 
-                <span ng-show="cert.arbetsformataPrognosJa"><span message key="fk7263.label.yes"></span></span> <span ng-show="cert.arbetsformataPrognosJaDelvis"><span message
-                  key="fk7263.label.partialyes"></span></span> <span ng-show="cert.arbetsformataPrognosNej"><span message key="fk7263.label.no"></span></span> <span
-                  ng-show="cert.arbetsformataPrognosGarInteAttBedoma"><span message key="fk7263.label.unjudgeable"></span>
+                <span ng-show="cert.prognosBedomning == 'arbetsformagaPrognosJa'"><span message key="fk7263.label.yes"></span></span> <span ng-show="cert.prognosBedomning == 'arbetsformagaPrognosJaDelvis'"><span message
+                  key="fk7263.label.partialyes"></span></span> <span ng-show="cert.prognosBedomning == 'arbetsformagaPrognosNej'"><span message key="fk7263.label.no"></span></span> <span
+                  ng-show="cert.prognosBedomning == 'arbetsformagaPrognosGarInteAttBedoma'"><span message key="fk7263.label.unjudgeable"></span>
                   <br>
                   <span class="tag">Förtydligande: {{cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning}}</span>
                 </span>

@@ -38,7 +38,6 @@ public class InternalDraftValidator {
         // Falt 5
         validateAktivitetsbegransning(utlatande, validationMessages);
         validateArbetsformaga(utlatande, validationMessages);
-        validatePrognos(utlatande, validationMessages);
         validateRessatt(utlatande, validationMessages);
         validateKommentar(utlatande, validationMessages);
         validateVardenhet(utlatande, validationMessages);
@@ -111,14 +110,6 @@ public class InternalDraftValidator {
         // Fält 11 - If set only one should be set
         if (inForandratRessatt && inEjForandratRessatt) {
             addValidationError(validationMessages, "forandrat-ressatt", "fk7263.validation.forandrat-ressatt.choose-one");
-        }
-    }
-
-    private void validatePrognos(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
-        // Fält 10 - 4 optional checkboxes (but exclusive!)
-        if (!hasMaxOneTruth(utlatande.isArbetsformataPrognosGarInteAttBedoma(), utlatande.isArbetsformataPrognosJa(),
-                utlatande.isArbetsformataPrognosJaDelvis(), utlatande.isArbetsformataPrognosNej())) {
-            addValidationError(validationMessages, "prognos", "fk7263.validation.prognos.choose-one");
         }
     }
 
@@ -271,24 +262,6 @@ public class InternalDraftValidator {
     private void addValidationError(List<ValidationMessage> validationMessages, String field, String msg) {
         validationMessages.add(new ValidationMessage(field, msg));
         LOG.debug(field + " " + msg);
-    }
-
-    /**
-     * @param values
-     *            values
-     * @return boolean
-     */
-    private boolean hasMaxOneTruth(boolean... values) {
-        boolean found = false;
-        for (boolean b : values) {
-            if (b) {
-                if (found) {
-                    return false;
-                }
-                found = true;
-            }
-        }
-        return true;
     }
 
     /**

@@ -334,31 +334,35 @@ public class InternalToExternalConverter {
 
     /**
      * Get the prognoskod that corresponds with the correct boolean in the internal model.
-     * 
+     *
      * @param source
      *            internal representation
      * @return {@link Kod}
      */
     private Kod getCorrespondingPrognosKod(Fk7263Intyg source) {
-        Kod kod;
-        if (source.isArbetsformataPrognosJa()) {
-            kod = Prognoskoder.ATERSTALLAS_HELT;
-        } else if (source.isArbetsformataPrognosJaDelvis()) {
-            kod = Prognoskoder.ATERSTALLAS_DELVIS;
-        } else if (source.isArbetsformataPrognosNej()) {
-            kod = Prognoskoder.INTE_ATERSTALLAS;
-        } else if (source.isArbetsformataPrognosGarInteAttBedoma()) {
-            kod = Prognoskoder.DET_GAR_INTE_ATT_BEDOMA;
-        } else {
-            kod = null;
+        Kod kod = null;
+        if (source.getPrognosBedomning() != null) {
+            switch(source.getPrognosBedomning()) {
+            case arbetsformagaPrognosJa:
+                kod = Prognoskoder.ATERSTALLAS_HELT;
+                break;
+            case arbetsformagaPrognosJaDelvis:
+                kod = Prognoskoder.ATERSTALLAS_DELVIS;
+                break;
+            case arbetsformagaPrognosNej:
+                kod = Prognoskoder.INTE_ATERSTALLAS;
+                break;
+            case arbetsformagaPrognosGarInteAttBedoma:
+                kod = Prognoskoder.DET_GAR_INTE_ATT_BEDOMA;
+                break;
+            }
         }
-
         return kod;
     }
 
     /**
      * Create an ICD-10 diagnose code from a code string.
-     * 
+     *
      * @param code
      *            the code
      * @return {@link Kod} or null

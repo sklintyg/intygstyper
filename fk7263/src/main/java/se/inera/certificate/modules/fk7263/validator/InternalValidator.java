@@ -28,9 +28,7 @@ public class InternalValidator extends AbstractValidator {
 
         validateDiagnose();
         validateFunktionsnedsattning();
-//        validateRehabilitering();
         validateArbetsformaga();
-        validatePrognos();
         validateRessatt();
         validateOvrigaRekommendationer();
 
@@ -60,22 +58,6 @@ public class InternalValidator extends AbstractValidator {
                     && utlatande.getJournaluppgifter() == null && utlatande.getAnnanReferens() == null) {
                 addValidationError("Field 4: At least 1 vardkontakt or referens element must be set!");
             }
-        }
-    }
-
-//    private void validateRehabilitering() {
-//        // Fält 7 - 3 optional checkboxes (but exclusive!)
-//        if (!hasMaxOneTruth(utlatande.isRehabiliteringAktuell(), utlatande.isRehabiliteringEjAktuell(),
-//                utlatande.isRehabiliteringGarInteAttBedoma())) {
-//            addValidationError("Field 7: Only one rehabilitering field can be checked!");
-//        }
-//    }
-
-    private void validatePrognos() {
-        // Fält 10 - 4 optional checkboxes (but exclusive!)
-        if (!hasMaxOneTruth(utlatande.isArbetsformataPrognosGarInteAttBedoma(), utlatande.isArbetsformataPrognosJa(),
-                utlatande.isArbetsformataPrognosJaDelvis(), utlatande.isArbetsformataPrognosNej())) {
-            addValidationError("Field 10: Only one arbetsformaga.prognos field can be checked!");
         }
     }
 
@@ -174,18 +156,5 @@ public class InternalValidator extends AbstractValidator {
         if (inForandratRessatt && inEjForandratRessatt) {
             addValidationError("Field 11: Only one forandrat ressatt could be set.");
         }
-    }
-
-    private boolean hasMaxOneTruth(boolean... values) {
-        boolean found = false;
-        for (boolean b : values) {
-            if (b) {
-                if (found) {
-                    return false;
-                }
-                found = true;
-            }
-        }
-        return true;
     }
 }

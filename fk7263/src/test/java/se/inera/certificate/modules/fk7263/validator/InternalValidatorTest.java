@@ -12,6 +12,7 @@ import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.model.internal.PrognosBedomning;
 
 /**
  * @author andreaskaltenbach, marced
@@ -57,7 +58,7 @@ public class InternalValidatorTest {
         Fk7263Intyg utlatande = getValidUtlatande();
         utlatande.setKommentar(null);
         utlatande.setAnnanReferens(null);
-        utlatande.setArbetsformataPrognosGarInteAttBedoma(false);
+        utlatande.setPrognosBedomning(PrognosBedomning.arbetsformagaPrognosGarInteAttBedoma);
         assertEquals(0, new InternalValidator(utlatande).validate().size());
     }
 
@@ -98,28 +99,6 @@ public class InternalValidatorTest {
         // set two activities with conflicting activity code
         utlatande.setRessattTillArbeteAktuellt(true);
         utlatande.setRessattTillArbeteEjAktuellt(true);
-
-        assertEquals(1, new InternalValidator(utlatande).validate().size());
-    }
-
-//    @Test
-//    public void testMultipleRehabilitering() throws Exception {
-//        Fk7263Intyg utlatande = getValidUtlatande();
-//
-//        // set conflicting values
-//        utlatande.setRehabiliteringAktuell(true);
-//        utlatande.setRehabiliteringEjAktuell(true);
-//
-//        assertEquals(1, new InternalValidator(utlatande).validate().size());
-//    }
-
-    @Test
-    public void testMultiplearbetsformagaprognos() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
-
-        // set conflicting values
-        utlatande.setArbetsformataPrognosGarInteAttBedoma(true);
-        utlatande.setArbetsformataPrognosJa(true);
 
         assertEquals(1, new InternalValidator(utlatande).validate().size());
     }

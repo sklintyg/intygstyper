@@ -44,10 +44,7 @@
         "tom" :"2011-02-13"
     },
     "arbetsformagaPrognos":"Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.",
-    "arbetsformataPrognosJa":false,
-    "arbetsformataPrognosJaDelvis":false,
-    "arbetsformataPrognosNej":false,
-    "arbetsformataPrognosGarInteAttBedoma":true,
+    "prognosBedomning" : "arbetsformagaPrognosGarInteAttBedoma",
     "ressattTillArbeteAktuellt":false,
     "ressattTillArbeteEjAktuellt":true,
     "kontaktMedFk":true,

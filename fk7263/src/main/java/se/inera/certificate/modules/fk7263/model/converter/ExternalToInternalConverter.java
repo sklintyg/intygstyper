@@ -24,6 +24,7 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Referens;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.model.internal.PrognosBedomning;
 import se.inera.certificate.modules.fk7263.model.internal.Rehabilitering;
 import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
 
@@ -152,13 +153,13 @@ public class ExternalToInternalConverter {
                 Kod prognosKod = (Kod) prognos.getVarde().get(0);
 
                 if (Prognoskoder.ATERSTALLAS_HELT.equals(prognosKod)) {
-                    intyg.setArbetsformataPrognosJa(true);
+                    intyg.setPrognosBedomning(PrognosBedomning.arbetsformagaPrognosJa);
                 } else if (Prognoskoder.ATERSTALLAS_DELVIS.equals(prognosKod)) {
-                    intyg.setArbetsformataPrognosJaDelvis(true);
+                    intyg.setPrognosBedomning(PrognosBedomning.arbetsformagaPrognosJaDelvis);
                 } else if (Prognoskoder.INTE_ATERSTALLAS.equals(prognosKod)) {
-                    intyg.setArbetsformataPrognosNej(true);
+                    intyg.setPrognosBedomning(PrognosBedomning.arbetsformagaPrognosNej);
                 } else if (Prognoskoder.DET_GAR_INTE_ATT_BEDOMA.equals(prognosKod)) {
-                    intyg.setArbetsformataPrognosGarInteAttBedoma(true);
+                    intyg.setPrognosBedomning(PrognosBedomning.arbetsformagaPrognosGarInteAttBedoma);
                     if (prognos.getKommentar() != null && !prognos.getKommentar().isEmpty()) {
                         intyg.setArbetsformagaPrognosGarInteAttBedomaBeskrivning(prognos.getKommentar());
                     }

@@ -51,10 +51,6 @@ public class WebcertModelFactory {
             LOG.trace("Creating draft with id {}", newDraftData.getCertificateId());
 
             template = new Fk7263Intyg();
-            template.setArbetsformataPrognosGarInteAttBedoma(false);
-            template.setArbetsformataPrognosJa(false);
-            template.setArbetsformataPrognosJaDelvis(false);
-            template.setArbetsformataPrognosNej(false);
             template.setNuvarandeArbete(true);
             template.setArbetsloshet(false);
 

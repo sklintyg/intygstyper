@@ -27,7 +27,7 @@
         "tom" :"2012-01-26"
     },
     "arbetsformagaPrognos":"Patientens förmåga bedöms nedsatt längre än vad som anges ovan pga:",
-    "arbetsformataPrognosJa":true,
+    "prognosBedomning" : "arbetsformagaPrognosJa",
     "rekommendationOvrigtCheck":true,
     "rekommendationOvrigt" : "övrig rekommendation",
 

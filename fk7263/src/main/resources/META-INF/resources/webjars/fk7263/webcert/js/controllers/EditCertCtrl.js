@@ -589,20 +589,26 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
 
                 // Fält 10. Går ej att bedöma and update backend model when view changes.
-                if ($scope.cert.arbetsformataPrognosJa) {
-                    $scope.form.prognos = 'YES';
-                } else if ($scope.cert.arbetsformataPrognosJaDelvis) {
-                    $scope.form.prognos = 'PARTLY';
-                } else if ($scope.cert.arbetsformataPrognosNej) {
-                    $scope.form.prognos = 'NO';
-                } else if ($scope.cert.arbetsformataPrognosGarInteAttBedoma) {
-                    $scope.form.prognos = 'UNKNOWN';
-                    $scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning =
-                        $scope.cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
+                if ($scope.cert.prognosBedomning !== undefined) {
+                    switch ($scope.cert.prognosBedomning) {
+                    case 'arbetsformagaPrognosJa':
+                        $scope.form.prognos = 'YES';
+                        break;
+                    case 'arbetsformagaPrognosJaDelvis':
+                        $scope.form.prognos = 'PARTLY';
+                        break;
+                    case 'arbetsformagaPrognosNej':
+                        $scope.form.prognos = 'NO';
+                        break;
+                    case 'arbetsformagaPrognosGarInteAttBedoma':
+                        $scope.form.prognos = 'UNKNOWN';
+                        $scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning =
+                            $scope.cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
+                        break;
+                    }
                 }
-
                 // Fält 7. Rehab radio conversions
-                if ($scope.cert.rehabilitering != undefined) {
+                if ($scope.cert.rehabilitering !== undefined) {
                     switch ($scope.cert.rehabilitering) {
                     case "rehabiliteringAktuell":
                         $scope.form.rehab = 'JA';
@@ -747,33 +753,26 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }, $scope.cert);
 
                 // Fält 10. Går ej att bedöma and update backend model when view changes.
-                $scope.cert.arbetsformataPrognosJa = false;
-                $scope.cert.arbetsformataPrognosJaDelvis = false;
-                $scope.cert.arbetsformataPrognosNej = false;
-                $scope.cert.arbetsformataPrognosGarInteAttBedoma = false;
                 $scope.cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning = null;
                 switch ($scope.form.prognos) {
                 case 'YES':
-                    $scope.cert.arbetsformataPrognosJa = true;
+                    $scope.cert.prognosBedomning = 'arbetsformagaPrognosJa';
                     break;
                 case 'PARTLY':
-                    $scope.cert.arbetsformataPrognosJaDelvis = true;
+                    $scope.cert.prognosBedomning = 'arbetsformagaPrognosJaDelvis';
                     break;
                 case 'NO':
-                    $scope.cert.arbetsformataPrognosNej = true;
+                    $scope.cert.prognosBedomning = 'arbetsformagaPrognosNej'; 
                     break;
                 case 'UNKNOWN':
-                    $scope.cert.arbetsformataPrognosGarInteAttBedoma = true;
+                    $scope.cert.prognosBedomning = 'arbetsformagaPrognosGarInteAttBedoma';
                     $scope.cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning =
+                        $scope.cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning =
                         $scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
                     break;
                 }
 
                 // Fält 7. Rehab radio conversions
-//                $scope.cert.rehabiliteringAktuell = false;
-//                $scope.cert.rehabiliteringEjAktuell = false;
-//                $scope.cert.rehabiliteringGarInteAttBedoma = false;
-
                 switch ($scope.form.rehab) {
                 case 'JA':
                     $scope.cert.rehabilitering = "rehabiliteringAktuell";

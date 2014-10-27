@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.util.Strings;
+import se.inera.certificate.modules.fk7263.model.codes.Prognoskoder;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 
@@ -361,13 +362,23 @@ public class PdfGenerator {
     }
 
     private void fillPrognose() {
-        setField(WORK_CAPACITY_FORECAST_YES, intyg.isArbetsformataPrognosJa());
-        setField(WORK_CAPACITY_FORECAST_PARTLY, intyg.isArbetsformataPrognosJaDelvis());
-        setField(WORK_CAPACITY_FORECAST_NO, intyg.isArbetsformataPrognosNej());
-        if (intyg.isArbetsformataPrognosGarInteAttBedoma()) {
-            checkField(WORK_CAPACITY_FORECAST_UNKNOWN);
+        if (intyg.getPrognosBedomning() != null) {
+            switch(intyg.getPrognosBedomning()) {
+            case arbetsformagaPrognosJa:
+                checkField(WORK_CAPACITY_FORECAST_YES);
+                break;
+            case arbetsformagaPrognosJaDelvis:
+                checkField(WORK_CAPACITY_FORECAST_PARTLY);
+                break;
+            case arbetsformagaPrognosNej:
+                checkField(WORK_CAPACITY_FORECAST_NO);
+                break;
+            case arbetsformagaPrognosGarInteAttBedoma:
+                checkField(WORK_CAPACITY_FORECAST_UNKNOWN);
+                break;
+            }
+            fillText(WORK_CAPACITY_TEXT, intyg.getArbetsformagaPrognos());
         }
-        fillText(WORK_CAPACITY_TEXT, intyg.getArbetsformagaPrognos());
     }
 
     private void fillNedsattning(InternalLocalDateInterval interval, String checkboxFieldName, String fromDateFieldName,
@@ -435,7 +446,18 @@ public class PdfGenerator {
     }
 
     private void fillOther() {
-        fillText(OTHER_INFORMATION, intyg.getKommentar());
+        fillText(OTHER_INFORMATION, buildOtherText());
+    }
+
+    private String buildOtherText() {
+        ArrayList<String> parts = new ArrayList<>();
+        if (isValidString(intyg.getKommentar())) {
+            parts.add(intyg.getKommentar());
+        }
+        if (isValidString(intyg.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
+            parts.add("Från fält 10: " + intyg.getArbetsformagaPrognosGarInteAttBedomaBeskrivning());
+        }
+        return StringUtils.trimToNull(Strings.join(", ", parts));
     }
 
     private String buildOtherDiagnoses() {
