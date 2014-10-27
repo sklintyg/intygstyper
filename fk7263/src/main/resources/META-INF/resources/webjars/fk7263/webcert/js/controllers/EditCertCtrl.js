@@ -1000,14 +1000,14 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.save = function() {
                 $scope.hasSavedThisSession = true;
                 convertFormToCert($scope);
-                ManageCertView.save($scope);
+                ManageCertView.save($scope, 'fk7263');
             };
 
             /**
              * Action to discard the certificate draft and return to WebCert again.
              */
             $scope.discard = function() {
-                ManageCertView.discard($scope);
+                ManageCertView.discard($scope, 'fk7263');
             };
 
             /**
@@ -1021,7 +1021,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Print draft
              */
             $scope.print = function() {
-                ManageCertView.printDraft($scope.cert.id);
+                ManageCertView.printDraft($scope.cert.id, 'fk7263');
             };
 
             /**************************************************************************
@@ -1029,7 +1029,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              **************************************************************************/
 
             // Get the certificate draft from the server.
-            ManageCertView.load($scope, function(cert) {
+            ManageCertView.load($scope, 'fk7263', function(cert) {
                 // Decorate intygspecific default data
                 $scope.cert = cert;
                 convertCertToForm($scope);

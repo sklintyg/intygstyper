@@ -5,9 +5,9 @@ angular.module('fk7263').factory('fk7263.fragaSvarService',
         /*
          * Load questions and answers data for a certificate
          */
-        function _getQAForCertificate(id, onSuccess, onError) {
-            $log.debug('_getQAForCertificate');
-            var restPath = '/moduleapi/fragasvar/' + id;
+        function _getQAForCertificate(intygsId, intygsTyp, onSuccess, onError) {
+            $log.debug('_getQAForCertificate: intygsId:' + intygsId + ' intygsTyp: ' + intygsTyp);
+            var restPath = '/moduleapi/fragasvar/' + intygsTyp + '/' + intygsId;
             $http.get(restPath).success(function(data) {
                 $log.debug('got data:' + data);
                 onSuccess(data);
@@ -21,10 +21,10 @@ angular.module('fk7263').factory('fk7263.fragaSvarService',
         /*
          * save new answer to a question
          */
-        function _saveAnswer(fragaSvar, onSuccess, onError) {
-            $log.debug('_saveAnswer');
+        function _saveAnswer(fragaSvar, intygsTyp, onSuccess, onError) {
+            $log.debug('_saveAnswer: fragaSvarId:' + fragaSvar.internReferens + ' intygsTyp: ' + intygsTyp);
 
-            var restPath = '/moduleapi/fragasvar/' + fragaSvar.internReferens + '/answer';
+            var restPath = '/moduleapi/fragasvar/' + intygsTyp + '/' + fragaSvar.internReferens + '/besvara';
             $http.put(restPath, fragaSvar.svarsText).success(function(data) {
                 $log.debug('got data:' + data);
                 onSuccess(data);
@@ -38,10 +38,10 @@ angular.module('fk7263').factory('fk7263.fragaSvarService',
         /*
          * update the handled status to handled ('Closed') of a QuestionAnswer
          */
-        function _closeAsHandled(fragaSvar, onSuccess, onError) {
-            $log.debug('_closeAsHandled');
+        function _closeAsHandled(fragaSvarId, intygsTyp, onSuccess, onError) {
+            $log.debug('_closeAsHandled: fragaSvarId:' + fragaSvarId + ' intygsTyp: ' + intygsTyp);
 
-            var restPath = '/moduleapi/fragasvar/close/' + fragaSvar.internReferens;
+            var restPath = '/moduleapi/fragasvar/' + intygsTyp + '/' + fragaSvarId + '/stang';
             $http.get(restPath).success(function(data) {
                 $log.debug('got data:' + data);
                 onSuccess(data);
@@ -56,10 +56,10 @@ angular.module('fk7263').factory('fk7263.fragaSvarService',
          * update the handled status to unhandled ('ANSWERED or PENDING_EXTERNAL_ACTION depending if the question has an
          * answer set or not') of a QuestionAnswer
          */
-        function _openAsUnhandled(fragaSvar, onSuccess, onError) {
-            $log.debug('_openAsUnhandled');
+        function _openAsUnhandled(fragaSvarId, intygsTyp, onSuccess, onError) {
+            $log.debug('_openAsUnhandled: fragaSvarId:' + fragaSvarId + ' intygsTyp: ' + intygsTyp);
 
-            var restPath = '/moduleapi/fragasvar/open/' + fragaSvar.internReferens;
+            var restPath = '/moduleapi/fragasvar/' + intygsTyp + '/' + fragaSvarId + '/oppna';
             $http.get(restPath).success(function(data) {
                 $log.debug('got data:' + data);
                 onSuccess(data);
@@ -73,13 +73,13 @@ angular.module('fk7263').factory('fk7263.fragaSvarService',
         /*
          * save new question
          */
-        function _saveNewQuestion(certId, question, onSuccess, onError) {
-            $log.debug('_saveNewQuestion');
+        function _saveNewQuestion(intygsId, intygsTyp, question, onSuccess, onError) {
+            $log.debug('_saveNewQuestion: intygsId:' + intygsId + ' intygsTyp: ' + intygsTyp);
             var payload = {};
             payload.amne = question.chosenTopic.value;
             payload.frageText = question.frageText;
 
-            var restPath = '/moduleapi/fragasvar/' + certId;
+            var restPath = '/moduleapi/fragasvar/' + intygsTyp + '/' + intygsId;
             $http.post(restPath, payload).success(function(data) {
                 $log.debug('got callback data:' + data);
                 onSuccess(data);

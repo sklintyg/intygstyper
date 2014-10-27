@@ -32,13 +32,14 @@
           <form id="view-as-pdf" action="{{pdfUrl}}" method="get" target="_blank" name="pdfForm">
             <p class="btn-row">
               <button id="sendBtn" class="btn btn-info" ng-if="!certProperties.isSent && !certProperties.isRevoked && !isQaOnly"
-                      ng-click="send(cert)">Skicka till
-                Försäkringskassan
+                      wc-feature-active feature="skickaIntyg" intygstyp="fk7263"
+                      ng-click="send(cert)">Skicka till Försäkringskassan
               </button>
               <button id="downloadprint" type="submit" value="submit" class="btn btn-info" ng-click="print(cert)">Skriv
                 ut
               </button>
               <button id="copyBtn" class="btn btn-info" ng-if="!certProperties.isRevoked && !isQaOnly" ng-click="copy(cert)"
+                      wc-feature-active feature="kopieraIntyg" intygstyp="fk7263"
                       title="Kopiera intyg innebär att en kopia skapas av det befintliga intyget och med samma information.
 I de fall patienten har ändrat namn eller adress så uppdateras den informationen.
 Uppgifterna i intygsutkastet går att ändra innan det signeras.
@@ -46,6 +47,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                 Kopiera
               </button>
               <button id="makuleraBtn" class="btn btn-inverse" ng-if="!certProperties.isRevoked && !isQaOnly" ng-click="makulera(cert)"
+                      wc-feature-active feature="makuleraIntyg" intygstyp="fk7263"
                       title="Makulera intyg innebär att intyget återtas. Vid behov kan intyget ersättas med ett nytt.">
                 Makulera
               </button>

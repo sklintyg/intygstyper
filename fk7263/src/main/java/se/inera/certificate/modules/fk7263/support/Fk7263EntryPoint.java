@@ -1,11 +1,14 @@
 package se.inera.certificate.modules.fk7263.support;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.modules.fk7263.rest.Fk7263ModuleApi;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.ModuleEntryPoint;
 import se.inera.certificate.modules.support.api.ModuleApi;
+import se.inera.certificate.modules.support.feature.ModuleFeaturesFactory;
 
 public class Fk7263EntryPoint implements ModuleEntryPoint {
 
@@ -41,8 +44,8 @@ public class Fk7263EntryPoint implements ModuleEntryPoint {
     }
 
     @Override
-    public boolean isModuleFragaSvarAvailable() {
-        return true;
+    public Map<String, Boolean> getModuleFeatures() {
+        return ModuleFeaturesFactory.getFeatures("fk7263-features.properties");
     }
 
     @Override

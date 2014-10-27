@@ -64,9 +64,9 @@ describe('ManageCertView', function() {
 
             var confirmDialog = jasmine.createSpyObj('confirmDialog', [ 'close' ]);
 
-            $httpBackend.expectPOST('/moduleapi/intyg/signera/server/' + intygId).
+            $httpBackend.expectPOST('/moduleapi/utkast/fk7263/' + intygId + '/signeraserver').
                 respond(200, { id: biljettId, status: 'BEARBETAR' });
-            $httpBackend.expectGET('/moduleapi/intyg/signeringsstatus/' + biljettId).
+            $httpBackend.expectGET('/moduleapi/utkast/fk7263/' + biljettId + '/signeringsstatus').
                 respond(200, { id: biljettId, status: 'SIGNERAD' });
 
             ManageCertView.__test__.confirmSignera($scope, 'fk7263', intygId, confirmDialog);
@@ -80,15 +80,15 @@ describe('ManageCertView', function() {
 
             var confirmDialog = jasmine.createSpyObj('confirmDialog', [ 'close' ]);
 
-            $httpBackend.expectPOST('/moduleapi/intyg/signera/server/' + intygId).
+            $httpBackend.expectPOST('/moduleapi/utkast/fk7263/' + intygId + '/signeraserver').
                 respond(200, { id: biljettId, status: 'BEARBETAR' });
-            $httpBackend.expectGET('/moduleapi/intyg/signeringsstatus/' + biljettId).
+            $httpBackend.expectGET('/moduleapi/utkast/fk7263/' + biljettId + '/signeringsstatus').
                 respond(200, { id: biljettId, status: 'BEARBETAR' });
 
             ManageCertView.__test__.confirmSignera($scope, 'fk7263', intygId, confirmDialog);
             $httpBackend.flush();
 
-            $httpBackend.expectGET('/moduleapi/intyg/signeringsstatus/' + biljettId).
+            $httpBackend.expectGET('/moduleapi/utkast/fk7263/' + biljettId + '/signeringsstatus').
                 respond(200, { id: biljettId, status: 'SIGNERAD' });
             $timeout.flush();
             $httpBackend.flush();
@@ -101,7 +101,7 @@ describe('ManageCertView', function() {
 
             var confirmDialog = jasmine.createSpyObj('confirmDialog', [ 'close' ]);
 
-            $httpBackend.expectPOST('/moduleapi/intyg/signera/server/' + intygId).
+            $httpBackend.expectPOST('/moduleapi/utkast/fk7263/' + intygId + '/signeraserver').
                 respond(500, { errorCode: 'DATA_NOT_FOUND' });
 
             ManageCertView.__test__.confirmSignera($scope, 'fk7263', intygId, confirmDialog);
@@ -117,9 +117,9 @@ describe('ManageCertView', function() {
 
             var confirmDialog = jasmine.createSpyObj('confirmDialog', [ 'close' ]);
 
-            $httpBackend.expectPOST('/moduleapi/intyg/signera/server/' + intygId).
+            $httpBackend.expectPOST('/moduleapi/utkast/fk7263/' + intygId + '/signeraserver').
                 respond(200, { id: biljettId, status: 'ERROR' });
-            $httpBackend.expectGET('/moduleapi/intyg/signeringsstatus/' + biljettId).
+            $httpBackend.expectGET('/moduleapi/utkast/fk7263/' + biljettId + '/signeringsstatus').
                 respond(200, { id: biljettId, status: 'ERROR' });
 
             ManageCertView.__test__.confirmSignera($scope, 'fk7263', intygId, confirmDialog);
@@ -157,13 +157,13 @@ describe('ManageCertView', function() {
 
         it('should redirect to "visa intyg" if the request to sign was successful', function() {
 
-            $httpBackend.expectPOST('/moduleapi/intyg/signeringshash/' + intygId).
+            $httpBackend.expectPOST('/moduleapi/utkast/fk7263/' + intygId + '/signeringshash').
                 respond(200, { id: biljettId, hash: 'abcd1234' });
 
             netIdSign.andReturn(0);
             netIdGetProperty.andReturn('4321dcba');
 
-            $httpBackend.expectPOST('/moduleapi/intyg/signera/klient/' + biljettId, { signatur: '4321dcba' }).
+            $httpBackend.expectPOST('/moduleapi/utkast/fk7263/' + biljettId + '/signeraklient', { signatur: '4321dcba' }).
                 respond(200, { id: biljettId, status: 'SIGNERAD' });
 
             ManageCertView.signera($scope, 'fk7263');
@@ -174,21 +174,21 @@ describe('ManageCertView', function() {
 
         it('should redirect to "visa intyg" if the request to sign was successful, even if delayed', function() {
 
-            $httpBackend.expectPOST('/moduleapi/intyg/signeringshash/' + intygId).
+            $httpBackend.expectPOST('/moduleapi/utkast/fk7263/' + intygId + '/signeringshash').
                 respond(200, { id: biljettId, hash: 'abcd1234' });
 
             netIdSign.andReturn(0);
             netIdGetProperty.andReturn('4321dcba');
 
-            $httpBackend.expectPOST('/moduleapi/intyg/signera/klient/' + biljettId, { signatur: '4321dcba' }).
+            $httpBackend.expectPOST('/moduleapi/utkast/fk7263/' + biljettId + '/signeraklient', { signatur: '4321dcba' }).
                 respond(200, { id: biljettId, status: 'BEARBETAD' });
-            $httpBackend.expectGET('/moduleapi/intyg/signeringsstatus/' + biljettId).
+            $httpBackend.expectGET('/moduleapi/utkast/fk7263/' + biljettId + '/signeringsstatus').
                 respond(200, { id: biljettId, status: 'BEARBETAR' });
 
             ManageCertView.signera($scope, 'fk7263');
             $httpBackend.flush();
 
-            $httpBackend.expectGET('/moduleapi/intyg/signeringsstatus/' + biljettId).
+            $httpBackend.expectGET('/moduleapi/utkast/fk7263/' + biljettId + '/signeringsstatus').
                 respond(200, { id: biljettId, status: 'SIGNERAD' });
             $timeout.flush();
             $httpBackend.flush();
@@ -198,7 +198,7 @@ describe('ManageCertView', function() {
 
         it('should show error if unable to get hash', function() {
 
-            $httpBackend.expectPOST('/moduleapi/intyg/signeringshash/' + intygId).respond(500);
+            $httpBackend.expectPOST('/moduleapi/utkast/fk7263/' + intygId + '/signeringshash').respond(500);
 
             ManageCertView.signera($scope, 'fk7263');
             $httpBackend.flush();
@@ -208,7 +208,7 @@ describe('ManageCertView', function() {
 
         it('should show error if the NetID client is not present', function() {
 
-            $httpBackend.expectPOST('/moduleapi/intyg/signeringshash/' + intygId).
+            $httpBackend.expectPOST('/moduleapi/utkast/fk7263/' + intygId + '/signeringshash').
                 respond(200, { id: biljettId, hash: 'abcd1234' });
 
             $document[0] = {};

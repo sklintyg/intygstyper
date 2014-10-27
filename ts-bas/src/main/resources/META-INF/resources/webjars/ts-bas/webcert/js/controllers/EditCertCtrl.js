@@ -265,14 +265,14 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
              */
             $scope.save = function() {
                 $scope.hasSavedThisSession = true;
-                ManageCertView.save($scope);
+                ManageCertView.save($scope, 'ts-bas');
             };
 
             /**
              * Action to discard the certificate draft and return to WebCert again.
              */
             $scope.discard = function() {
-                ManageCertView.discard($scope);
+                ManageCertView.discard($scope, 'ts-bas');
             };
 
             /**
@@ -286,7 +286,7 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
              * Print draft
              */
             $scope.print = function() {
-                ManageCertView.printDraft($scope.cert.id);
+                ManageCertView.printDraft($scope.cert.id, 'ts-bas');
             };
 
             /**************************************************************************
@@ -294,7 +294,7 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
              **************************************************************************/
 
             // Get the certificate draft from the server.
-            ManageCertView.load($scope, function(cert) {
+            ManageCertView.load($scope, 'ts-bas', function(cert) {
                 // Decorate intygspecific default data
                 $scope.cert = cert;
                 convertCertToForm($scope);

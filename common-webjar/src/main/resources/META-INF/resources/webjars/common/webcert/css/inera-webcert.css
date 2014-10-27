@@ -916,6 +916,10 @@
         padding: 0;
     }
 
+    .table-care-unit {
+        display: table;
+    }
+
     .unbreakable {
         white-space: nowrap;
     }
