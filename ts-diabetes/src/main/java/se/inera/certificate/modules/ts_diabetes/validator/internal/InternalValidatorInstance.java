@@ -10,10 +10,10 @@ import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.dto.ValidationMessage;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Diabetes;
-import se.inera.certificate.modules.ts_diabetes.model.internal.HoSPersonal;
+import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Hypoglykemier;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvser;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Patient;
+import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
@@ -57,12 +57,12 @@ public class InternalValidatorInstance {
             context = new ValidationContext(utlatande);
             validateBedomning(utlatande.getBedomning());
             validateDiabetes(utlatande.getDiabetes());
-            validateHoSPersonal(utlatande.getSkapadAv());
+            validateHoSPersonal(utlatande.getIntygMetadata().getSkapadAv());
             validateIntygAvser(utlatande.getIntygAvser());
             validateIdentitetStyrkt(utlatande.getVardkontakt());
             validateSyn(utlatande.getSyn());
             validateHypoglykemi(utlatande.getHypoglykemier());
-            validatePatient(utlatande.getPatient());
+            validatePatient(utlatande.getIntygMetadata().getPatient());
         }
 
         ValidateDraftResponse response = new ValidateDraftResponse(getValidationStatus(), validationMessages);

@@ -26,7 +26,7 @@
 
       <div wc-print-header title-id="ts-diabetes.label.certtitle" print-message-id="print.label.draft" intygs-id="cert.id"></div>
       <div class="print-show">
-        <label class="control-label">{{cert.patient.fullstandigtNamn}} - {{cert.patient.personid}}</label>
+        <label class="control-label">{{cert.intygMetadata.patient.fullstandigtNamn}} - {{cert.intygMetadata.patient.personId}}</label>
       </div>
 
       <div class="header-fix-top print-hide">
@@ -55,7 +55,7 @@
               </h1>
 
               <div class="inline-block">
-                <label class="control-label">{{cert.patient.fullstandigtNamn}} - {{cert.patient.personid}}</label>
+                <label class="control-label">{{cert.intygMetadata.patient.fullstandigtNamn}} - {{cert.intygMetadata.patient.personId}}</label>
               </div>
               <div class="form-group buttonbar">
                 <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned">Spara utkast</button>
@@ -131,7 +131,7 @@
                         <label class="col-xs-3 control-label"><span message key="ts-bas.form.postadress"></span></label>
                         <div class="col-xs-9">
                           <input type="text" class="form-control input-full" id="patientPostadress"
-                                 name="cert.patient.postadress" ng-model="cert.patient.postadress" maxlength="50">
+                                 name="cert.intygMetadata.patient.postadress" ng-model="cert.intygMetadata.patient.postadress" maxlength="50">
                         </div>
                       </div>
 
@@ -139,15 +139,15 @@
                         <label class="col-xs-3 control-label"><span message key="ts-bas.form.postnummer"></span></label>
                         <div class="col-xs-9">
                           <input type="text" class="form-control input-5" id="patientPostnummer"
-                                 name="cert.patient.postnummer" ng-model="cert.patient.postnummer" maxlength="6">
+                                 name="cert.intygMetadata.patient.postnummer" ng-model="cert.intygMetadata.patient.postnummer" maxlength="6">
                         </div>
                       </div>
 
                       <div class="form-group">
                         <label class="col-xs-3 control-label"><span message key="ts-bas.form.postort"></span></label>
                         <div class="col-xs-9">
-                          <input type="text" class="form-control" id="patientPostort" name="cert.patient.postort"
-                                 ng-model="cert.patient.postort" maxlength="25">
+                          <input type="text" class="form-control" id="patientPostort" name="cert.intygMetadata.patient.postort"
+                                 ng-model="cert.intygMetadata.patient.postort" maxlength="25">
                         </div>
                       </div>
                     </div>
@@ -445,23 +445,23 @@
                             </tr>
                             <tr>
                               <td>Höger öga</td>
-                              <td><input type="text" class="form-control small-decimal" wc-eye-decimal
+                              <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
                                          id="synHogerOgaUtanKorrektion" ng-model="cert.syn.hoger.utanKorrektion" maxlength="4"></td>
-                              <td><input type="text" class="form-control small-decimal" wc-eye-decimal
+                              <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
                                          id="synHogerOgaMedKorrektion" ng-model="cert.syn.hoger.medKorrektion" maxlength="4"></td>
                             </tr>
                             <tr>
                               <td>Vänster öga</td>
-                              <td><input type="text" class="form-control small-decimal" wc-eye-decimal
+                              <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
                                          id="synVansterOgaUtanKorrektion" ng-model="cert.syn.vanster.utanKorrektion" maxlength="4"></td>
-                              <td><input type="text" class="form-control small-decimal" wc-eye-decimal
+                              <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
                                          id="synVansterOgaMedKorrektion" ng-model="cert.syn.vanster.medKorrektion" maxlength="4"></td>
                             </tr>
                             <tr>
                               <td>Binokulärt</td>
-                              <td><input type="text" class="form-control small-decimal" wc-eye-decimal
+                              <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
                                          id="synBinokulartUtanKorrektion" ng-model="cert.syn.binokulart.utanKorrektion" maxlength="4"></td>
-                              <td><input type="text" class="form-control small-decimal" wc-eye-decimal
+                              <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
                                          id="synBinokulartMedKorrektion" ng-model="cert.syn.binokulart.medKorrektion" maxlength="4"></td>
                             </tr>
                           </table>
@@ -558,9 +558,9 @@
                           </li>
                         </ul>
                       </div>
-                      <label class="control-label">{{cert.skapadAv.vardenhet.enhetsnamn}}
-                        ({{cert.skapadAv.vardenhet.enhetsid}}),
-                        {{cert.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</label>
+                      <label class="control-label">{{cert.intygMetadata.skapadAv.vardenhet.enhetsnamn}}
+                        ({{cert.intygMetadata.skapadAv.vardenhet.enhetsid}}),
+                        {{cert.intygMetadata.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</label>
 
                       <div class="alert alert-info" ng-show="widgetState.hasInfoMissing">
                         Information om vårdenheten saknas i HSA-katalogen. Be den på vårdenheten som är ansvarig för
@@ -572,7 +572,7 @@
                           <label class="col-xs-3 control-label">Postadress</label>
                           <div class="col-xs-9">
                             <input type="text" class="form-control input-full" id="clinicInfoPostalAddress"
-                                   name="clinicInfo.postalAddress" ng-model="cert.skapadAv.vardenhet.postadress"
+                                   name="clinicInfo.postalAddress" ng-model="cert.intygMetadata.skapadAv.vardenhet.postadress"
                                    maxlength="70">
                           </div>
                         </div>
@@ -580,7 +580,7 @@
                           <label class="col-xs-3 control-label">Postnummer</label>
                           <div class="col-xs-9">
                             <input type="text" class="form-control input-5" id="clinicInfoPostalCode"
-                                   name="clinicInfo.postalCode" ng-model="cert.skapadAv.vardenhet.postnummer"
+                                   name="clinicInfo.postalCode" ng-model="cert.intygMetadata.skapadAv.vardenhet.postnummer"
                                    maxlength="6">
                           </div>
                         </div>
@@ -588,7 +588,7 @@
                           <label class="col-xs-3 control-label">Postort</label>
                           <div class="col-xs-9">
                             <input type="text" class="form-control" id="clinicInfoPostalCity"
-                                   name="clinicInfo.postalCity" ng-model="cert.skapadAv.vardenhet.postort"
+                                   name="clinicInfo.postalCity" ng-model="cert.intygMetadata.skapadAv.vardenhet.postort"
                                    maxlength="30">
                           </div>
                         </div>
@@ -596,7 +596,7 @@
                           <label class="col-xs-3 control-label">Telefonnummer</label>
                           <div class="col-xs-9">
                             <input type="text" class="form-control" id="clinicInfoPhone" name="clinicInfo.phone"
-                                   ng-model="cert.skapadAv.vardenhet.telefonnummer" maxlength="20">
+                                   ng-model="cert.intygMetadata.skapadAv.vardenhet.telefonnummer" maxlength="20">
                           </div>
                         </div>
                       </div>

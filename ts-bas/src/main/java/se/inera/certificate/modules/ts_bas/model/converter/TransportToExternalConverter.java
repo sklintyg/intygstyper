@@ -23,14 +23,15 @@ import org.slf4j.LoggerFactory;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardgivare;
+import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
-import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
+import se.inera.certificate.model.common.external.HosPersonal;
 import se.inera.certificate.modules.ts_bas.model.external.Observation;
 import se.inera.certificate.modules.ts_bas.model.external.ObservationAktivitetRelation;
 import se.inera.certificate.modules.ts_bas.model.external.Rekommendation;
 import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
-import se.inera.certificate.modules.ts_bas.model.external.Vardenhet;
+import se.inera.certificate.model.common.external.Vardenhet;
 import se.inera.certificate.modules.ts_bas.model.external.Vardkontakt;
 import se.inera.certificate.ts_bas.iso.v21090.dt.v1.CD;
 import se.inera.certificate.ts_bas.model.v1.AktivitetType;
@@ -60,7 +61,7 @@ public class TransportToExternalConverter {
      * @param source
      *            {@link Utlatande} in the transport format to be converted to external format
      * @return {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @throws ConverterException
+     * @throws se.inera.certificate.model.converter.util.ConverterException
      */
     public Utlatande convert(se.inera.certificate.ts_bas.model.v1.Utlatande source) throws ConverterException {
         LOG.trace("Converting transport model to external");

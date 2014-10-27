@@ -18,7 +18,9 @@ import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
+import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.model.converter.util.InternalConverterUtil;
+import se.inera.certificate.model.converter.util.InternalToExternalConverterUtil;
 import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
 import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
 import se.inera.certificate.modules.fk7263.model.codes.Prognoskoder;
@@ -26,15 +28,12 @@ import se.inera.certificate.modules.fk7263.model.codes.Referenstypkoder;
 import se.inera.certificate.modules.fk7263.model.codes.Sysselsattningskoder;
 import se.inera.certificate.modules.fk7263.model.codes.Vardkontakttypkoder;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
-import se.inera.certificate.modules.fk7263.model.external.Fk7263HosPersonal;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263ObservationsSamband;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Referens;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
-import se.inera.certificate.modules.fk7263.model.external.Fk7263Vardenhet;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
-import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 
 /**
@@ -89,9 +88,9 @@ public class InternalToExternalConverter {
         }
 
         utlatande.setPatient(buildExternalPatient(source));
-        utlatande.setSigneringsdatum(source.getSigneringsdatum());
-        utlatande.setSkickatdatum(source.getSkickatDatum());
-        utlatande.setSkapadAv(buildExternalHosPersonal(source));
+        utlatande.setSigneringsdatum(source.getIntygMetadata().getSigneringsdatum());
+        utlatande.setSkickatdatum(source.getIntygMetadata().getSkickatdatum());
+        utlatande.setSkapadAv(InternalToExternalConverterUtil.convertToExtHosPersonal(source.getIntygMetadata().getSkapadAv()));
         return utlatande;
 
     }
@@ -143,11 +142,16 @@ public class InternalToExternalConverter {
     }
 
     /**
+<<<<<<< HEAD
      * Create a List of {@link Referens} from the internal model.
      * 
+=======
+     * Create a List of {@link Fk7263Referens} from the internal model.
+     *
+>>>>>>> master
      * @param source
      *            internal representation
-     * @return List of {@link Referens}
+     * @return List of {@link Fk7263Referens}
      */
     private List<Fk7263Referens> buildExternalReferenser(Fk7263Intyg source) {
         List<Fk7263Referens> referenser = new ArrayList<>();
@@ -286,10 +290,10 @@ public class InternalToExternalConverter {
      *            a {@link Kod} from {@link ObservationsKoder}
      * @param period
      *            {@link LocalDateInterval}
-     * @param prognos
-     *            {@link Fk7263Prognos}
      * @param varde
      *            {@link PhysicalQuantity}
+     * @param beskrivning
+     *            {@link String}
      * @return {@link Fk7263Observation}
      */
     private Fk7263Observation buildArbetsformageObservation(Kod kod, InternalLocalDateInterval period, PhysicalQuantity varde, String beskrivning) {
@@ -306,11 +310,16 @@ public class InternalToExternalConverter {
     }
 
     /**
+<<<<<<< HEAD
      * Creates a {@link Fk7263Prognos} from information in the internal model.
      * 
+=======
+     * Creates a {@link Fk7263Observation} from information in the internal model.
+     *
+>>>>>>> master
      * @param source
      *            internal representation
-     * @return {@link Fk7263Prognos}
+     * @return {@link Fk7263Observation}
      */
     private Fk7263Observation buildPrognos(Fk7263Intyg source) {
         Fk7263Observation prognos = new Fk7263Observation();
@@ -486,64 +495,6 @@ public class InternalToExternalConverter {
     }
 
     /**
-     * Create a HosPersonal object from information in the internal model.
-     * 
-     * @param source
-     *            internal representation
-     * @return {@link se.inera.certificate.model.HosPersonal}
-     */
-    private Fk7263HosPersonal buildExternalHosPersonal(Fk7263Intyg source) {
-        Vardperson intVardperson = source.getVardperson();
-        Fk7263HosPersonal hosPersonal = new Fk7263HosPersonal();
-
-        hosPersonal.setNamn(intVardperson.getNamn());
-        hosPersonal.setForskrivarkod(intVardperson.getForskrivarKod());
-        hosPersonal.setId(new Id(HSA_ID_ROOT, intVardperson.getHsaId()));
-        hosPersonal.setVardenhet(buildExternalVardenhet(intVardperson));
-
-        return hosPersonal;
-    }
-
-    /**
-     * Creates a Vardenhet from information in the internal model.
-     * 
-     * @param intVardperson
-     *            source of Vardenhet information
-     * @return {@link se.inera.certificate.model.Vardenhet}
-     */
-    private Fk7263Vardenhet buildExternalVardenhet(Vardperson intVardperson) {
-        Fk7263Vardenhet vardenhet = new Fk7263Vardenhet();
-        if (intVardperson.getArbetsplatsKod() != null) {
-            vardenhet.setArbetsplatskod(new Id(ARBETSPLATSKOD_ROOT, intVardperson.getArbetsplatsKod()));
-        }
-        vardenhet.setEpost(intVardperson.getEpost());
-        vardenhet.setId(new Id(HSA_ID_ROOT, intVardperson.getEnhetsId()));
-        vardenhet.setNamn(intVardperson.getEnhetsnamn());
-        vardenhet.setPostadress(intVardperson.getPostadress());
-        vardenhet.setPostort(intVardperson.getPostort());
-        vardenhet.setPostnummer(intVardperson.getPostnummer());
-        vardenhet.setTelefonnummer(intVardperson.getTelefonnummer());
-        vardenhet.setVardgivare(buildExternalVardgivare(intVardperson));
-
-        return vardenhet;
-    }
-
-    /**
-     * Creates a Vardgivare from information in the internal model.
-     * 
-     * @param intVardperson
-     *            source of Vardgivare information
-     * @return {@link Vardgivare}
-     */
-    private Vardgivare buildExternalVardgivare(Vardperson intVardperson) {
-        Vardgivare vardgivare = new Vardgivare();
-        vardgivare.setId(new Id(HSA_ID_ROOT, intVardperson.getVardgivarId()));
-        vardgivare.setNamn(intVardperson.getVardgivarnamn());
-
-        return vardgivare;
-    }
-
-    /**
      * Create an {@link Fk7263Patient} from the internal model.
      * 
      * @param source
@@ -552,8 +503,10 @@ public class InternalToExternalConverter {
      */
     private Fk7263Patient buildExternalPatient(Fk7263Intyg source) {
         Fk7263Patient patient = new Fk7263Patient();
-        patient.setEfternamn(source.getPatientNamn());
-        patient.setId(InternalConverterUtil.createPersonId(source.getPatientPersonnummer()));
+
+        patient.setEfternamn(source.getIntygMetadata().getPatient().getFullstandigtNamn());
+        patient.setId(InternalConverterUtil.createPersonId(source.getIntygMetadata().getPatient().getPersonId()));
+
         buildPatientSysselsattningar(patient, source);
 
         return patient;

@@ -13,7 +13,7 @@
 
       <div class="print-hide">
         <div class="form-group buttonbar">
-          <label class="control-label">{{cert.patient.fullstandigtNamn}} - {{cert.patient.personid}}</label>
+          <label class="control-label">{{cert.intygMetadata.patient.fullstandigtNamn}} - {{cert.intygMetadata.patient.personId}}</label>
 
           <form id="view-as-pdf" action="{{pdfUrl}}" method="get" target="_blank" name="pdfForm">
             <p class="btn-row">
@@ -53,7 +53,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
 
               <!-- Patientens adressuppgifter -->
               <div wc-field field-label="ts-bas.label.patientadress" filled="true">
-                <span class="ts-cert-answer"><span id="patientpostadress">{{cert.patient.postadress}}</span><br><span id="patientpostnummer">{{cert.patient.postnummer}}</span> <span id="patientpostort">{{cert.patient.postort}}</span></span>
+                <span class="ts-cert-answer"><span id="patientpostadress">{{cert.intygMetadata.patient.postadress}}</span><br><span id="patientpostnummer">{{cert.intygMetadata.patient.postnummer}}</span> <span id="patientpostort">{{cert.intygMetadata.patient.postort}}</span></span>
               </div>
 
               <!-- Intyget avser -->
@@ -413,15 +413,15 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
                 <h4>
                   <span message key="common.date"></span>
                 </h4>
-                <p id="signeringsdatum">{{cert.signeringsdatum | date:'longDate'}}</p>
+                <p id="signeringsdatum">{{cert.intygMetadata.signeringsdatum | date:'longDate'}}</p>
                 <h4>
                   <span message key="ts-bas.label.kontakt-info"></span>
                 </h4>
-                <span id="vardperson_namn">{{cert.skapadAv.fullstandigtNamn}}</span><br>
-                <span id="vardperson_enhetsnamn">{{cert.skapadAv.vardenhet.enhetsnamn}}</span><br>
-                <span id="vardenhet_postadress">{{cert.skapadAv.vardenhet.postadress}}</span><br>
-                <span id="vardenhet_postnummer">{{cert.skapadAv.vardenhet.postnummer}}</span> <span id="vardenhet_postort">{{cert.skapadAv.vardenhet.postort}}</span><br>
-                <span id="vardenhet_telefonnummer">{{cert.skapadAv.vardenhet.telefonnummer}}</span><br>
+                <span id="vardperson_namn">{{cert.intygMetadata.skapadAv.fullstandigtNamn}}</span><br>
+                <span id="vardperson_enhetsnamn">{{cert.intygMetadata.skapadAv.vardenhet.enhetsnamn}}</span><br>
+                <span id="vardenhet_postadress">{{cert.intygMetadata.skapadAv.vardenhet.postadress}}</span><br>
+                <span id="vardenhet_postnummer">{{cert.intygMetadata.skapadAv.vardenhet.postnummer}}</span> <span id="vardenhet_postort">{{cert.intygMetadata.skapadAv.vardenhet.postort}}</span><br>
+                <span id="vardenhet_telefonnummer">{{cert.intygMetadata.skapadAv.vardenhet.telefonnummer}}</span><br>
               </div>
 
             </div>

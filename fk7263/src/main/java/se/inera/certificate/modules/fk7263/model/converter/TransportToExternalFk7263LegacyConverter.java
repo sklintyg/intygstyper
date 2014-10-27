@@ -34,6 +34,8 @@ import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Sysselsattning;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
+import se.inera.certificate.model.common.external.HosPersonal;
+import se.inera.certificate.model.common.external.Vardenhet;
 import se.inera.certificate.modules.fk7263.model.codes.Aktivitetskoder;
 import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
 import se.inera.certificate.modules.fk7263.model.codes.Prognoskoder;
@@ -42,12 +44,10 @@ import se.inera.certificate.modules.fk7263.model.codes.Sysselsattningskoder;
 import se.inera.certificate.modules.fk7263.model.codes.Vardkontakttypkoder;
 import se.inera.certificate.modules.fk7263.model.converter.util.IsoTypeConverter;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Aktivitet;
-import se.inera.certificate.modules.fk7263.model.external.Fk7263HosPersonal;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Patient;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Referens;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
-import se.inera.certificate.modules.fk7263.model.external.Fk7263Vardenhet;
 
 /**
  * Converts se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande Jaxb structure to
@@ -412,11 +412,11 @@ public final class TransportToExternalFk7263LegacyConverter {
         return observation;
     }
 
-    private static Fk7263HosPersonal convert(HosPersonalType source) {
+    private static HosPersonal convert(HosPersonalType source) {
         if (source == null) {
             return null;
         }
-        Fk7263HosPersonal hosPersonal = new Fk7263HosPersonal();
+        HosPersonal hosPersonal = new HosPersonal();
         hosPersonal.setId(IsoTypeConverter.toId(source.getPersonalId()));
         hosPersonal.setNamn(source.getFullstandigtNamn());
         hosPersonal.setForskrivarkod(source.getForskrivarkod());
@@ -446,11 +446,11 @@ public final class TransportToExternalFk7263LegacyConverter {
         return patient;
     }
 
-    private static Fk7263Vardenhet convert(EnhetType source) {
+    private static Vardenhet convert(EnhetType source) {
         if (source == null) {
             return null;
         }
-        Fk7263Vardenhet vardenhet = new Fk7263Vardenhet();
+        Vardenhet vardenhet = new Vardenhet();
         vardenhet.setId(IsoTypeConverter.toId(source.getEnhetsId()));
         vardenhet.setNamn(source.getEnhetsnamn());
         vardenhet.setArbetsplatskod(IsoTypeConverter.toId(source.getArbetsplatskod()));

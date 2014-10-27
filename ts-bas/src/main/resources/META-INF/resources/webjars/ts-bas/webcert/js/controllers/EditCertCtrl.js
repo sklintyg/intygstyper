@@ -60,14 +60,14 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
             function convertCertToForm($scope) {
 
                 // check if all info is available from HSA. If not, display the info message that someone needs to update it
-                if ($scope.cert.skapadAv.vardenhet.postadress === undefined ||
-                    $scope.cert.skapadAv.vardenhet.postnummer === undefined ||
-                    $scope.cert.skapadAv.vardenhet.postort === undefined ||
-                    $scope.cert.skapadAv.vardenhet.telefonnummer === undefined ||
-                    $scope.cert.skapadAv.vardenhet.postadress === '' ||
-                    $scope.cert.skapadAv.vardenhet.postnummer === '' ||
-                    $scope.cert.skapadAv.vardenhet.postort === '' ||
-                    $scope.cert.skapadAv.vardenhet.telefonnummer === '') {
+                if ($scope.cert.intygMetadata.skapadAv.vardenhet.postadress === undefined ||
+                    $scope.cert.intygMetadata.skapadAv.vardenhet.postnummer === undefined ||
+                    $scope.cert.intygMetadata.skapadAv.vardenhet.postort === undefined ||
+                    $scope.cert.intygMetadata.skapadAv.vardenhet.telefonnummer === undefined ||
+                    $scope.cert.intygMetadata.skapadAv.vardenhet.postadress === '' ||
+                    $scope.cert.intygMetadata.skapadAv.vardenhet.postnummer === '' ||
+                    $scope.cert.intygMetadata.skapadAv.vardenhet.postort === '' ||
+                    $scope.cert.intygMetadata.skapadAv.vardenhet.telefonnummer === '') {
                     $scope.widgetState.hasInfoMissing = true;
                 } else {
                     $scope.widgetState.hasInfoMissing = false;

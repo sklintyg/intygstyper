@@ -3,6 +3,8 @@ package se.inera.certificate.modules.ts_bas.model.codes;
 import java.util.EnumSet;
 
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.common.codes.CodeConverter;
+import se.inera.certificate.model.common.codes.CodeSystem;
 
 public enum IntygAvserKod implements CodeSystem {
 

@@ -67,21 +67,21 @@ public class InternalDraftValidator {
     }
 
     private void validateVardenhet(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
-        if (isNullOrEmpty(utlatande.getVardperson().getPostadress())) {
+        if (isNullOrEmpty(utlatande.getIntygMetadata().getSkapadAv().getVardenhet().getPostadress())) {
             addValidationError(validationMessages, "vardperson.postadress", "fk7263.validation.vardenhet.postadress.missing");
         }
 
-        if (isNullOrEmpty(utlatande.getVardperson().getPostnummer())) {
+        if (isNullOrEmpty(utlatande.getIntygMetadata().getSkapadAv().getVardenhet().getPostnummer())) {
             addValidationError(validationMessages, "vardperson.postnummer", "fk7263.validation.vardenhet.postnummer.missing");
-        } else if (!STRING_VALIDATOR.validateStringAsPostalCode(utlatande.getVardperson().getPostnummer())) {
+        } else if (!STRING_VALIDATOR.validateStringAsPostalCode(utlatande.getIntygMetadata().getSkapadAv().getVardenhet().getPostnummer())) {
             addValidationError(validationMessages, "vardperson.postnummer", "fk7263.validation.vardenhet.postnummer.incorrect-format");
         }
 
-        if (isNullOrEmpty(utlatande.getVardperson().getPostort())) {
+        if (isNullOrEmpty(utlatande.getIntygMetadata().getSkapadAv().getVardenhet().getPostort())) {
             addValidationError(validationMessages, "vardperson.postort", "fk7263.validation.vardenhet.postort.missing");
         }
 
-        if (isNullOrEmpty(utlatande.getVardperson().getTelefonnummer())) {
+        if (isNullOrEmpty(utlatande.getIntygMetadata().getSkapadAv().getVardenhet().getTelefonnummer())) {
             addValidationError(validationMessages, "vardperson.telefonnummer", "fk7263.validation.vardenhet.telefonnummer.missing");
         }
     }

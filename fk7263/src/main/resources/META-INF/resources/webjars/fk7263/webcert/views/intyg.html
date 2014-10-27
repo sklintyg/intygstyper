@@ -27,7 +27,7 @@
 
       <div class="print-hide">
         <div class="form-group buttonbar">
-          <label class="control-label">{{cert.patientNamn}} - {{cert.patientPersonnummer}}</label>
+          <label class="control-label">{{cert.intygMetadata.patient.fullstandigtNamn}} - {{cert.intygMetadata.patient.personId}}</label>
 
           <form id="view-as-pdf" action="{{pdfUrl}}" method="get" target="_blank" name="pdfForm">
             <p class="btn-row">
@@ -269,16 +269,16 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                 <h4>
                   <span message key="fk7263.label.datum"></span>
                 </h4>
-                <p id="signeringsdatum">{{cert.signeringsdatum | date:'longDate'}}</p>
+                <p id="signeringsdatum">{{cert.intygMetadata.signeringsdatum | date:'longDate'}}</p>
                 <h4>
                   <span message key="fk7263.label.kontakt-info"></span>
                 </h4>
                 <p>
-                  <span class="text" id="vardperson_namn">{{cert.vardperson.namn}}</span><br>
-                  <span class="text" id="vardperson_enhetsnamn">{{cert.vardperson.enhetsnamn}}</span><br>
-                  <span class="text" id="vardperson_postadress">{{cert.vardperson.postadress}}</span><br>
-                  <span class="text"><span id="vardperson_postnummer">{{cert.vardperson.postnummer}}</span> <span id="vardperson_postort">{{cert.vardperson.postort}}</span></span><br>
-                  <span class="text" id="vardperson_telefonnummer">{{cert.vardperson.telefonnummer}}</span><br>
+                  <span class="text" id="vardperson_namn">{{cert.intygMetadata.skapadAv.fullstandigtNamn}}</span><br>
+                  <span class="text" id="vardperson_enhetsnamn">{{cert.intygMetadata.skapadAv.vardenhet.enhetsnamn}}</span><br>
+                  <span class="text" id="vardperson_postadress">{{cert.intygMetadata.skapadAv.vardenhet.postadress}}</span><br>
+                  <span class="text"><span id="vardperson_postnummer">{{cert.intygMetadata.skapadAv.vardenhet.postnummer}}</span> <span id="vardperson_postort">{{cert.intygMetadata.skapadAv.vardenhet.postort}}</span></span><br>
+                  <span class="text" id="vardperson_telefonnummer">{{cert.intygMetadata.skapadAv.vardenhet.telefonnummer}}</span><br>
                 </p>
               </div>
 

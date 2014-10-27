@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
 import se.inera.certificate.fk7263.model.v1.Utlatande;
-import se.inera.certificate.modules.fk7263.model.converter.ConverterException;
+import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.converter.ExternalToInternalConverter;
 import se.inera.certificate.modules.fk7263.model.converter.ExternalToTransportConverter;
 import se.inera.certificate.modules.fk7263.model.converter.ExternalToTransportFk7263LegacyConverter;

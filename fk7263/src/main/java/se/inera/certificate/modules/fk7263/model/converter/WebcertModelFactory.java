@@ -22,9 +22,9 @@ import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import se.inera.certificate.model.converter.util.ConverterException;
+import se.inera.certificate.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
-import se.inera.certificate.modules.fk7263.model.internal.Rehabilitering;
-import se.inera.certificate.modules.fk7263.model.internal.Vardperson;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.Patient;
@@ -78,15 +78,12 @@ public class WebcertModelFactory {
         return template;
     }
 
-    private void populateWithPatientInfo(Fk7263Intyg utlatande,
-            Patient patient) throws ConverterException {
-
+    private void populateWithPatientInfo(Fk7263Intyg utlatande, Patient patient) throws ConverterException {
         if (patient == null) {
             throw new ConverterException("Got null while trying to populateWithPatientInfo");
         }
 
-        utlatande.setPatientNamn(patient.getFullstandigtNamn());
-        utlatande.setPatientPersonnummer(patient.getPersonnummer());
+        utlatande.getIntygMetadata().setPatient(WebcertModelFactoryUtil.convertPatientToEdit(patient));
     }
 
     private void populateWithSkapadAv(Fk7263Intyg utlatande, se.inera.certificate.modules.support.api.dto.HoSPersonal hoSPersonal)
@@ -95,35 +92,13 @@ public class WebcertModelFactory {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");
         }
 
-        utlatande.setVardperson(convertHosPersonalToEdit(hoSPersonal));
-    }
-
-    private Vardperson convertHosPersonalToEdit(se.inera.certificate.modules.support.api.dto.HoSPersonal hoSPersonal) throws ConverterException {
-        Vardperson vardperson = new Vardperson();
-        vardperson.setNamn(hoSPersonal.getNamn());
-        vardperson.setHsaId(hoSPersonal.getHsaId());
-        vardperson.setForskrivarKod(hoSPersonal.getForskrivarkod());
-
-        vardperson.setEnhetsId(hoSPersonal.getVardenhet().getHsaId());
-        vardperson.setEnhetsnamn(hoSPersonal.getVardenhet().getNamn());
-
-        vardperson.setPostadress(hoSPersonal.getVardenhet().getPostadress());
-        vardperson.setPostnummer(hoSPersonal.getVardenhet().getPostnummer());
-        vardperson.setPostort(hoSPersonal.getVardenhet().getPostort());
-        vardperson.setTelefonnummer(hoSPersonal.getVardenhet().getTelefonnummer());
-        vardperson.setEpost(hoSPersonal.getVardenhet().getEpost());
-        vardperson.setArbetsplatsKod(hoSPersonal.getVardenhet().getArbetsplatskod());
-
-        vardperson.setVardgivarId(hoSPersonal.getVardenhet().getVardgivare().getHsaId());
-        vardperson.setVardgivarnamn(hoSPersonal.getVardenhet().getVardgivare().getNamn());
-
-        return vardperson;
+        utlatande.getIntygMetadata().setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(hoSPersonal));
     }
 
     public void updateSkapadAv(Fk7263Intyg utlatande, HoSPersonal hosPerson, LocalDateTime signeringsdatum) {
-        utlatande.getVardperson().setHsaId(hosPerson.getHsaId());
-        utlatande.getVardperson().setNamn(hosPerson.getNamn());
-        utlatande.getVardperson().setForskrivarKod(hosPerson.getForskrivarkod());
-        utlatande.setSigneringsdatum(signeringsdatum);
+        utlatande.getIntygMetadata().getSkapadAv().setPersonId(hosPerson.getHsaId());
+        utlatande.getIntygMetadata().getSkapadAv().setFullstandigtNamn(hosPerson.getNamn());
+        utlatande.getIntygMetadata().getSkapadAv().setForskrivarKod(hosPerson.getForskrivarkod());
+        utlatande.getIntygMetadata().setSigneringsdatum(signeringsdatum);
     }
 }

@@ -14,7 +14,7 @@ describe('eyeSpec', function() {
 
         var el = angular
             .element('<form name="form"><input id="test" name="test" type="text" class="small-decimal" ' +
-                'wc-eye-decimal ng-model="model.test"></form>');
+                'wc-decimal-number wc-decimal-max-numbers="2" ng-model="model.test"></form>');
         form = $compile(el)($scope);
         $scope.$digest();
     }));

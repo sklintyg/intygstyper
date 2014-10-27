@@ -24,10 +24,11 @@ import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.Patient;
 import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
+import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
-import se.inera.certificate.modules.ts_bas.model.external.HosPersonal;
+import se.inera.certificate.model.common.external.HosPersonal;
 import se.inera.certificate.modules.ts_bas.model.external.Observation;
 import se.inera.certificate.modules.ts_bas.model.external.ObservationAktivitetRelation;
 import se.inera.certificate.modules.ts_bas.model.external.Rekommendation;
@@ -62,7 +63,7 @@ public class ExternalToTransportConverter {
      *            {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande} in the external format to be
      *            converted to transport format
      * @return {@link se.inera.certificate.modules.ts_bas.model.external.Utlatande}
-     * @throws ConverterException
+     * @throws se.inera.certificate.model.converter.util.ConverterException
      */
     public Utlatande convert(se.inera.certificate.modules.ts_bas.model.external.Utlatande source)
             throws ConverterException {

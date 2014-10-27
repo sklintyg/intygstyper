@@ -1,5 +1,10 @@
 package se.inera.certificate.modules.fk7263.model.internal;
 
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import se.inera.certificate.model.LocalDateInterval;
+import se.inera.certificate.model.common.internal.IntygMetadata;
+
 import static se.inera.certificate.model.util.Strings.emptyToNull;
 import static se.inera.certificate.model.util.Strings.join;
 
@@ -15,12 +20,10 @@ import se.inera.certificate.model.LocalDateInterval;
 public class Fk7263Intyg {
 
     private String id;
+
+    private IntygMetadata intygMetadata = new IntygMetadata();
+
     private LocalDateInterval giltighet;
-
-    private LocalDateTime skickatDatum;
-
-    private String patientNamn;
-    private String patientPersonnummer;
 
     private boolean avstangningSmittskydd;
 
@@ -86,9 +89,17 @@ public class Fk7263Intyg {
 
     private String kommentar;
 
-    private LocalDateTime signeringsdatum;
+    public String getId() { return id; }
 
-    private Vardperson vardperson;
+    public void setId(String id) { this.id = id; }
+
+    public IntygMetadata getIntygMetadata() {
+        return intygMetadata;
+    }
+
+    public void setIntygMetadata(IntygMetadata intygMetadata) {
+        this.intygMetadata = intygMetadata;
+    }
 
     public String getTjanstgoringstid() {
         return tjanstgoringstid;
@@ -298,27 +309,8 @@ public class Fk7263Intyg {
         this.annanAtgard = annanAtgard;
     }
 
-    public String getPatientNamn() {
-        return patientNamn;
-    }
-
-    public void setPatientNamn(String patientNamn) {
-        this.patientNamn = patientNamn;
-    }
-
-    public String getPatientPersonnummer() {
-        return patientPersonnummer;
-    }
-
-    public void setPatientPersonnummer(String patientPersonnummer) {
-        this.patientPersonnummer = patientPersonnummer;
-    }
-
     public Rehabilitering getRehabilitering() {
-        if (rehabilitering == null) {
-            return null;
-        }
-        return rehabilitering;
+        return this.rehabilitering;
     }
 
     public void setRehabilitering(Rehabilitering rehabilitering) {
@@ -429,48 +421,16 @@ public class Fk7263Intyg {
         this.kommentar = kommentar;
     }
 
-    public LocalDateTime getSigneringsdatum() {
-        return signeringsdatum;
-    }
-
-    public void setSigneringsdatum(LocalDateTime signeringsdatum) {
-        this.signeringsdatum = signeringsdatum;
-    }
-
-    public Vardperson getVardperson() {
-        return vardperson;
-    }
-
-    public void setVardperson(Vardperson vardperson) {
-        this.vardperson = vardperson;
-    }
-
     public String getForskrivarkodOchArbetsplatskod() {
-        return emptyToNull(join(" - ", vardperson.getForskrivarKod(), vardperson.getArbetsplatsKod()));
+        return emptyToNull(join(" - ", intygMetadata.getSkapadAv().getForskrivarKod(), intygMetadata.getSkapadAv().getVardenhet().getArbetsplatsKod()));
     }
 
     public String getNamnfortydligandeOchAdress() {
-        return join("\n", vardperson.getNamn(),
-                vardperson.getEnhetsnamn(),
-                vardperson.getPostadress(),
-                join(" ", vardperson.getPostnummer(), vardperson.getPostort()),
-                vardperson.getTelefonnummer());
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getSkickatDatum() {
-        return skickatDatum;
-    }
-
-    public void setSkickatDatum(LocalDateTime skickatDatum) {
-        this.skickatDatum = skickatDatum;
+        return join("\n", intygMetadata.getSkapadAv().getFullstandigtNamn(),
+                intygMetadata.getSkapadAv().getVardenhet().getEnhetsnamn(),
+                intygMetadata.getSkapadAv().getVardenhet().getPostadress(),
+                join(" ", intygMetadata.getSkapadAv().getVardenhet().getPostnummer(), intygMetadata.getSkapadAv().getVardenhet().getPostort()),
+                intygMetadata.getSkapadAv().getVardenhet().getTelefonnummer());
     }
 
     public LocalDateInterval getGiltighet() {

@@ -32,10 +32,10 @@ import se.inera.certificate.modules.ts_diabetes.model.internal.Diabetes;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Hypoglykemier;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvser;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvserKategori;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Patient;
+import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Vardenhet;
+import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
 
 import com.itextpdf.text.DocumentException;
@@ -164,8 +164,8 @@ public class PdfGenerator {
     }
 
     public String generatePdfFilename(Utlatande utlatande) {
-        String personId = utlatande.getPatient().getPersonid();
-        String certificateSignatureDate = utlatande.getSigneringsdatum().toString(DATEFORMAT_FOR_FILENAMES);
+        String personId = utlatande.getIntygMetadata().getPatient().getPersonId();
+        String certificateSignatureDate = utlatande.getIntygMetadata().getSigneringsdatum().toString(DATEFORMAT_FOR_FILENAMES);
 
         return String.format("lakarutlatande_%s_-%s.pdf", personId, certificateSignatureDate);
     }
@@ -199,7 +199,7 @@ public class PdfGenerator {
      * @throws IOException
      */
     private void populatePdfFields(Utlatande utlatande, AcroFields fields, ApplicationOrigin applicaionOrigin) throws IOException, DocumentException {
-        populatePatientInfo(utlatande.getPatient(), fields);
+        populatePatientInfo(utlatande.getIntygMetadata().getPatient(), fields);
         populateIntygAvser(utlatande.getIntygAvser(), fields);
         populateIdkontroll(utlatande.getVardkontakt(), fields);
         populateAllmant(utlatande.getDiabetes(), fields);
@@ -214,7 +214,7 @@ public class PdfGenerator {
         INVANARE_ADRESS_FALT1.setField(fields, patient.getFullstandigtNamn());
         INVANARE_ADRESS_FALT2.setField(fields, patient.getPostadress());
         INVANARE_ADRESS_FALT3.setField(fields, patient.getPostnummer() + " " + patient.getPostort());
-        INVANARE_PERSONNUMMER.setField(fields, patient.getPersonid().replace("-", ""));
+        INVANARE_PERSONNUMMER.setField(fields, patient.getPersonId().replace("-", ""));
     }
 
     private void populateIntygAvser(IntygAvser intygAvser, AcroFields fields) throws IOException, DocumentException {
@@ -310,15 +310,15 @@ public class PdfGenerator {
     }
 
     private void populateAvslut(Utlatande utlatande, AcroFields fields, ApplicationOrigin applicationOrigin) throws IOException, DocumentException {
-        INTYGSDATUM.setField(fields, utlatande.getSigneringsdatum().toString("yyMMdd"));
-        Vardenhet vardenhet = utlatande.getSkapadAv().getVardenhet();
+        INTYGSDATUM.setField(fields, utlatande.getIntygMetadata().getSigneringsdatum().toString("yyMMdd"));
+        Vardenhet vardenhet = utlatande.getIntygMetadata().getSkapadAv().getVardenhet();
         VARDINRATTNINGENS_NAMN.setField(fields, vardenhet.getEnhetsnamn());
         String adressOrt = String.format("%s, %s, %s", vardenhet.getPostort(), vardenhet.getPostadress(), vardenhet.getPostnummer());
         ADRESS_OCH_ORT.setField(fields, adressOrt);
         TELEFON.setField(fields, vardenhet.getTelefonnummer());
-        NAMNFORTYDLIGANDE.setField(fields, utlatande.getSkapadAv().getFullstandigtNamn());
+        NAMNFORTYDLIGANDE.setField(fields, utlatande.getIntygMetadata().getSkapadAv().getFullstandigtNamn());
 
-        List<String> specialiteter = utlatande.getSkapadAv().getSpecialiteter();
+        List<String> specialiteter = utlatande.getIntygMetadata().getSkapadAv().getSpecialiteter();
         if (specialiteter.size() > 0) {
             // TODO If 'Specialist i allmänmedicin' chose that one.
             // TODO Build text for 'beskrivning'

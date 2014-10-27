@@ -19,6 +19,8 @@
 package se.inera.certificate.modules.ts_bas.model.codes;
 
 import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.common.codes.CodeConverter;
+import se.inera.certificate.model.common.codes.CodeSystem;
 
 import static se.inera.certificate.modules.ts_bas.model.codes.Kodverk.ID_KONTROLL;
 

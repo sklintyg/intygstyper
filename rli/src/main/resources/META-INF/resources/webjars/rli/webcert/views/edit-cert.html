@@ -34,7 +34,7 @@
     <h1 style="display: inline-block; margin-right: 20px;"><span message key="ts.label.certtitle"></span></h1>
 
     <div class="inline-block">
-      <label class="control-label">{{cert.patient.fullstandigtNamn}} - {{cert.patient.personid}}</label>
+      <label class="control-label">{{cert.intygMetadata.patient.fullstandigtNamn}} - {{cert.intygMetadata.patient.personId}}</label>
     </div>
     <div class="form-group buttonbar">
       <button class="btn btn-info" ng-click="save()">Spara</button>
@@ -75,7 +75,7 @@
 
     <p>Specialistkompetens i:</p>
 
-    <div ng-repeat="spec in cert.skapadAv.specialiteter">
+    <div ng-repeat="spec in cert.intygMetadata.skapadAv.specialiteter">
       {{spec}}
     </div>
 
