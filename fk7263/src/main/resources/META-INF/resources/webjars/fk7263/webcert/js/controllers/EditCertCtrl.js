@@ -1050,9 +1050,9 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             ManageCertView.load($scope, 'fk7263', function(cert) {
                 // Decorate intygspecific default data
                 $scope.cert = cert;
+                registerDateParsers();
                 convertCertToForm($scope);
                 $timeout(function() {
-                    registerDateParsers();
                     wcFocus('firstInput');
                 }, 10);
             });
