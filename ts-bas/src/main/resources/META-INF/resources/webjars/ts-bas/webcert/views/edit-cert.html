@@ -63,10 +63,10 @@
                         ng-click="discard()"><i class="glyphicon glyphicon-trash"></i></button>
                 <button id="skriv-ut-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="print()">
                   <span message key="ts-bas.label.skriv-ut-utkast"></span></button>
-                <button class="btn btn-default btn-secondary" ng-if="!widgetState.showComplete && !isComplete"
+                <button class="btn btn-default btn-secondary" ng-if="!widgetState.showComplete" ng-disabled="isComplete"
                         ng-click="toggleShowComplete()" title="Visar vilka obligatoriska fält i utkastet som inte är ifyllda. Alla obligatoriska fält måste vara ifyllda för att utkastet ska kunna signeras.">Visa vad som saknas
                 </button>
-                <button class="btn btn-default btn-secondary" ng-if="widgetState.showComplete && !isComplete"
+                <button class="btn btn-default btn-secondary" ng-if="widgetState.showComplete" ng-disabled="isComplete"
                         ng-click="toggleShowComplete()" title="Visar vilka obligatoriska fält i utkastet som inte är ifyllda. Alla obligatoriska fält måste vara ifyllda för att utkastet ska kunna signeras.">Dölj vad som saknas
                 </button>
               </div>
