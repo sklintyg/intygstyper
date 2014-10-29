@@ -484,8 +484,14 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter', 'annanReferens'];
                 angular.forEach(baserasPaTypes, function(type) {
                     if (this[type + 'Date']) {
-                        this[type + 'Date'].$parsers.unshift(function() {
+                        this[type + 'Date'].$parsers.unshift(function(viewValue) {
                             $scope.onChangeBaserasPaDate(type);
+
+                            if (viewValue instanceof Date) {
+                                viewValue = moment(viewValue, 'YYYY-MM-DD', true).format('YYYY-MM-DD');
+                            }
+
+                            return viewValue;
                         });
                     } else {
                         $log.debug('Date controls not bound yet.');
@@ -498,7 +504,9 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
                     function nedsattParser(viewValue) {
 
-                        viewValue = convertDateStrict(viewValue);
+                        if (viewValue instanceof Date) {
+                            viewValue = moment(viewValue, 'YYYY-MM-DD', true).format('YYYY-MM-DD');
+                        }
 
                         var changedDateGroup = createDateRangeGroup(nedsattMed, false); // false = non-strict date conversion
                         if (!isValidString(changedDateGroup.nedsattFrom) && !isValidString(changedDateGroup.nedsattTom)) {
