@@ -8,7 +8,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Default state
              **********************************************************************************/
 
-            // Page states
+                // Page states
             $scope.user = User;
             $scope.today = new Date();
             $scope.today.setHours(0, 0, 0, 0); // reset time to increase comparison accuracy (using new Date() also sets time)
@@ -123,10 +123,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Private controller support functions
              ***************************************************************************/
 
-            function isInvalid(data) {
-                return (data === undefined || data === null || data === '');
-            }
-
             /**
              * Check if variable is undefined, null, NaN or an empty string = invalid
              * @param data
@@ -138,7 +134,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             }
 
             /**
-             * Does supplied date look like an iso date XXXX-XX-XX (not a complete validation)?
+             * Does supplied date look like an iso date XXXX-XX-XX
              * @param date
              * @returns {*}
              */
@@ -164,16 +160,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             }
 
             /**
-             * Return value of companion date field in 8b date ranges
-             * @param nedsattModelName
-             * @param mainFromTom
-             * @returns {b.$viewValue|*|locals.$viewValue|string|he.$viewValue|he.$setViewValue.$viewValue}
-             */
-            function getCompanionDateValue(nedsattModelName, mainFromTom) {
-                return (mainFromTom === 'from') ? $scope.certForm[nedsattModelName+'tom'].$viewValue : $scope.certForm[nedsattModelName+'from'].$viewValue;
-            }
-
-            /**
              * Set if date named fieldName should be marked as invalid
              * @param fieldName
              * @param value
@@ -192,6 +178,19 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     setDateInvalidState(groups[i], false);
                 }
             }
+
+            /**
+             * Convert Date object dates to ISO dates.
+             * @param viewValue
+             * @returns {*}
+             */
+            function convertDateToISOString(viewValue) {
+                if (viewValue instanceof Date && moment(moment(viewValue).format('YYYY-MM-DD'), 'YYYY-MM-DD', true).isValid()) {
+                    viewValue = moment(viewValue).format('YYYY-MM-DD');
+                }
+                return viewValue;
+            }
+
 
             /**
              * Convert date from string to a strict moment date
@@ -484,12 +483,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter', 'annanReferens'];
                 angular.forEach(baserasPaTypes, function(type) {
                     if (this[type + 'Date']) {
-                        this[type + 'Date'].$parsers.unshift(function(viewValue) {
+                        this[type + 'Date'].$parsers.push(function(viewValue) {
                             $scope.onChangeBaserasPaDate(type);
 
-                            if (viewValue instanceof Date) {
-                                viewValue = moment(viewValue, 'YYYY-MM-DD', true).format('YYYY-MM-DD');
-                            }
+                            viewValue = convertDateToISOString(viewValue);
 
                             return viewValue;
                         });
@@ -504,9 +501,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
                     function nedsattParser(viewValue) {
 
-                        if (viewValue instanceof Date) {
-                            viewValue = moment(viewValue, 'YYYY-MM-DD', true).format('YYYY-MM-DD');
-                        }
+                        viewValue = convertDateToISOString(viewValue);
 
                         var changedDateGroup = createDateRangeGroup(nedsattMed, false); // false = non-strict date conversion
                         if (!isValidString(changedDateGroup.nedsattFrom) && !isValidString(changedDateGroup.nedsattTom)) {
@@ -577,14 +572,14 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 if (!$scope.cert.intygMetadata ||
                     !$scope.cert.intygMetadata.skapadAv ||
                     !$scope.cert.intygMetadata.skapadAv.vardenhet ||
-                     $scope.cert.intygMetadata.skapadAv.vardenhet.postadress === undefined ||
-                     $scope.cert.intygMetadata.skapadAv.vardenhet.postnummer === undefined ||
-                     $scope.cert.intygMetadata.skapadAv.vardenhet.postort === undefined ||
-                     $scope.cert.intygMetadata.skapadAv.vardenhet.telefonnummer === undefined ||
-                     $scope.cert.intygMetadata.skapadAv.vardenhet.postadress === '' ||
-                     $scope.cert.intygMetadata.skapadAv.vardenhet.postnummer === '' ||
-                     $scope.cert.intygMetadata.skapadAv.vardenhet.postort === '' ||
-                     $scope.cert.intygMetadata.skapadAv.vardenhet.telefonnummer === '') {
+                    $scope.cert.intygMetadata.skapadAv.vardenhet.postadress === undefined ||
+                    $scope.cert.intygMetadata.skapadAv.vardenhet.postnummer === undefined ||
+                    $scope.cert.intygMetadata.skapadAv.vardenhet.postort === undefined ||
+                    $scope.cert.intygMetadata.skapadAv.vardenhet.telefonnummer === undefined ||
+                    $scope.cert.intygMetadata.skapadAv.vardenhet.postadress === '' ||
+                    $scope.cert.intygMetadata.skapadAv.vardenhet.postnummer === '' ||
+                    $scope.cert.intygMetadata.skapadAv.vardenhet.postort === '' ||
+                    $scope.cert.intygMetadata.skapadAv.vardenhet.telefonnummer === '') {
                     $scope.widgetState.hasInfoMissing = true;
                 } else {
                     $scope.widgetState.hasInfoMissing = false;
@@ -720,7 +715,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     // Fält 4b. datum
                     var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter', 'annanReferens'];
                     angular.forEach(baserasPaTypes, function(type) {
-                        this[type] = $scope.certForm[type + 'Date'].$viewValue;
+                        this[type] = convertDateToISOString($scope.certForm[type + 'Date'].$viewValue);
                     }, $scope.cert);
 
                     // Fält 4b. AnnanReferensBeskrivning
@@ -749,8 +744,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     angular.forEach(nedsattMedList, function(nedsattMed) {
 
                         // convert dates to string from viewvalue (modelvalue is undefined for invalid dates from datepicker)
-                        var from = $scope.certForm[nedsattMed+'from'].$viewValue;
-                        var tom = $scope.certForm[nedsattMed+'tom'].$viewValue;
+                        var from = convertDateToISOString($scope.certForm[nedsattMed+'from'].$viewValue);
+                        var tom = convertDateToISOString($scope.certForm[nedsattMed+'tom'].$viewValue);
                         if (this[nedsattMed] === undefined && (isValidString(from) || isValidString(tom))) {
 
                             this[nedsattMed] = {};
@@ -823,7 +818,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.cert.prognosBedomning = 'arbetsformagaPrognosGarInteAttBedoma';
                     $scope.cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning =
                         $scope.cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning =
-                        $scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
+                            $scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
                     break;
                 }
 
@@ -1054,7 +1049,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Load certificate and setup form
              **************************************************************************/
 
-            // Get the certificate draft from the server.
+                // Get the certificate draft from the server.
             ManageCertView.load($scope, 'fk7263', function(cert) {
                 // Decorate intygspecific default data
                 $scope.cert = cert;
