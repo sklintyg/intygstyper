@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -8,26 +8,24 @@
     <groupId>se.inera.intyg.intygstyper</groupId>
     <artifactId>intygstyper</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>ts-diabetes</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>Transportstyrelsen Diabetesintyg</name>
+
+  <name>Intygstyper Transportstyrelsens läkarintyg, diabets</name>
 
   <properties>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
   </properties>
 
   <dependencies>
-    <!-- Project dependencies -->
-    <dependency>
-      <groupId>${project.parent.groupId}</groupId>
-      <artifactId>support</artifactId>
-      <version>${project.parent.version}</version>
-    </dependency>
 
-    <!-- Dependencies to Common -->
+    <!-- Common -->
+    <dependency>
+      <groupId>se.inera.intyg.common</groupId>
+      <artifactId>common-support</artifactId>
+    </dependency>
     <dependency>
       <groupId>se.inera.intyg.common</groupId>
       <artifactId>common-web</artifactId>
@@ -37,7 +35,7 @@
       <artifactId>integration-util</artifactId>
     </dependency>
 
-    <!-- Dependencies to Schemas -->
+    <!-- Schemas -->
     <dependency>
       <groupId>se.inera.intyg.schemas</groupId>
       <artifactId>intygstjanst-schemas</artifactId>

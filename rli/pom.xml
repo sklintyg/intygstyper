@@ -1,39 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>se.inera.intyg.intygstyper</groupId>
     <artifactId>intygstyper</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>rli</artifactId>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.0-SNAPSHOT</version>
+
   <name>Intygstyper RLI</name>
 
-  <description>Intyg vid avbeställning av resa</description>
-  
   <properties>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
   </properties>
 
   <dependencies>
-    <!-- Project dependencies -->
-    <dependency>
-      <groupId>${project.parent.groupId}</groupId>
-      <artifactId>support</artifactId>
-      <version>${project.parent.version}</version>
-    </dependency>
 
-    <!-- Dependencies to Common -->
+    <!-- Common -->
+    <dependency>
+      <groupId>se.inera.intyg.common</groupId>
+      <artifactId>common-support</artifactId>
+    </dependency>
     <dependency>
       <groupId>se.inera.intyg.common</groupId>
       <artifactId>integration-util</artifactId>
     </dependency>
-    
-    <!-- Dependencies to Schemas -->
+
+    <!-- Schemas -->
     <dependency>
       <groupId>se.inera.intyg.schemas</groupId>
       <artifactId>intygstjanst-schemas</artifactId>
@@ -68,10 +66,10 @@
       <artifactId>commons-lang3</artifactId>
     </dependency>
 
-   <dependency>
-     <groupId>org.apache.cxf</groupId>
-     <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-   </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.springframework</groupId>
@@ -156,5 +154,5 @@
       </plugin>
     </plugins>
   </build>
-  
+
 </project>
