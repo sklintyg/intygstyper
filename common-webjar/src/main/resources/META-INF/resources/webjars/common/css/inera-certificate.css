@@ -245,7 +245,7 @@
         border-radius: 4px 4px 4px 4px;
     }
 
-    .cert-body .body-row .text ul > li {
+    ul.padded-list > li {
         padding-bottom: 5px;
         padding-left: 16px;
     }

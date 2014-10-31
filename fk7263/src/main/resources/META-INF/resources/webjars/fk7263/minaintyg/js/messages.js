@@ -72,6 +72,7 @@ var fk7263Messages = {
         'fk7263.label.diagnosis': 'Diagnos/diagnoser för sjukdom som orsakar nedsatt arbetsförmåga (fält 2)',
         'fk7263.label.diagnosiscode': 'Diagnoskod enligt ICD-10 (huvuddiagnos): ',
         'fk7263.label.ytterligarediagnoser': 'Ytterligare diagnoser',
+        'fk7263.label.diagnosfortydligande': 'Förtydligande av diagnos/diagnoser',
         'fk7263.label.samsjuklighet': 'Samsjuklighet föreligger',
         'fk7263.label.progressofdesease': 'Aktuellt sjukdomförlopp (fält 3)',
         'fk7263.label.disabilities': 'Funktionsnedsättning - observationer, undersökningsfynd och utredningsresultat (fält 4)',
