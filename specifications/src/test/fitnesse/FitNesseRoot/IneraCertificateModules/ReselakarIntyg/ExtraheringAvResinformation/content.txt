@@ -1,5 +1,0 @@
-!1 Extrahering av resinformation för ett reseläkarintyg.
-
-|Extrahera intygstillagg|
-|typ|resenar|resmal|tillag?|kommentar|
-|rli|Carl Bildt|Washington|{resenar=Carl Bildt, resmal=Washington}|Inga fel|
