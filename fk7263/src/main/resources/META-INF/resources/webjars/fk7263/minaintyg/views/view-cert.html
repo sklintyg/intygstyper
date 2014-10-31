@@ -193,7 +193,7 @@
 
               <div mi-field field-label="fk7263.label.diagnosis" filled="cert.diagnosKod">
                 <div class="form-group">
-                  {{cert.diagnosBeskrivning}} (<span class="tag"><span message key="fk7263.label.diagnosisCode"></span></span> {{cert.diagnosKod}} {{cert.diagnosBeskrivning1}})
+                  {{cert.diagnosBeskrivning}} (<span class="tag"><span message key="fk7263.label.diagnosisCode"></span></span> <span id="diagnosKod1">{{cert.diagnosKod}}</span> <span id="diagnosKlartext1">{{cert.diagnosBeskrivning1}})</span>
                 </div>
 
                 <div class="form-group">
@@ -201,8 +201,8 @@
                     <span message key="fk7263.label.ytterligarediagnoser"></span>
                   </label>
                   <div class="controls">
-                    <p ng-show="cert.diagnosKod2 != '' || cert.diagnosBeskrivning2 != ''">{{cert.diagnosKod2}} {{cert.diagnosBeskrivning2}}</p>
-                    <p ng-show="cert.diagnosKod3 != '' || cert.diagnosBeskrivning3 != ''">{{cert.diagnosKod3}} {{cert.diagnosBeskrivning3}}</p>
+                    <p ng-show="cert.diagnosKod2 != '' || cert.diagnosBeskrivning2 != ''"><span id="diagnosKod2">{{cert.diagnosKod2}}</span> <span id="diagnosKlartext2">{{cert.diagnosBeskrivning2}}</span></p>
+                    <p ng-show="cert.diagnosKod3 != '' || cert.diagnosBeskrivning3 != ''"><span id="diagnosKod3">{{cert.diagnosKod3}}</span> <span id="diagnosKlartext3">{{cert.diagnosBeskrivning3}}</span></p>
                     <div ng-show="cert.samsjuklighet" class="bold"><span message key="fk7263.label.samsjuklighet"></span></div>
                   </div>
                 </div>
