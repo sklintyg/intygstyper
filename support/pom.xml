@@ -5,14 +5,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>se.inera.certificate.modules</groupId>
-    <artifactId>certificates</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <groupId>se.inera.intyg.intygstyper</groupId>
+    <artifactId>intygstyper</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <artifactId>module-support</artifactId>
-  <packaging>jar</packaging>
-  <name>Module Support</name>
+  <artifactId>support</artifactId>
+  <name>Intygstyper Support</name>
 
   <properties>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>

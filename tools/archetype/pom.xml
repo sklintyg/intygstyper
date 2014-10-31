@@ -3,14 +3,15 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>se.inera.certificate.modules</groupId>
-    <artifactId>certificates</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <groupId>se.inera.intyg.intygstyper</groupId>
+    <artifactId>intygstyper</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
 
-  <artifactId>module-archetype</artifactId>
+  <artifactId>archetype</artifactId>
   <packaging>maven-archetype</packaging>
-  <name>Module Archetype</name>
+  <name>Maven Archetype for Intygstyper</name>
 
   <build>
     <extensions>

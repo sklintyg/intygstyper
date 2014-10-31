@@ -7,11 +7,14 @@
   <parent>
     <groupId>se.inera.intyg.intygstyper</groupId>
     <artifactId>intygstyper</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
 
+  <groupId>se.inera.intyg.common</groupId>
   <artifactId>common-web</artifactId>
-  <name>SKLIntyg Common Web</name>
+  <version>1.0-SNAPSHOT</version>
+  <name>Common Web</name>
 
   <dependencies>
     <!-- Webjars -->
