@@ -22,8 +22,8 @@
                       wc-feature-active feature="skickaIntyg" intygstyp="ts-diabetes"
                       ng-click="send(cert)">Skicka till Transportstyrelsen
               </button>
-              <button id="downloadprint" type="submit" value="submit" class="btn btn-info" ng-click="print(cert)">Skriv
-                ut
+              <button id="downloadprint" type="submit" value="submit" class="btn btn-info" ng-click="print(cert)">
+                Skriv ut
               </button>
               <button id="copyBtn" class="btn btn-info" ng-if="!certProperties.isRevoked" ng-click="copy(cert)"
                       wc-feature-active feature="kopieraIntyg" intygstyp="ts-diabetes"
@@ -63,54 +63,54 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
 
               <!-- Patientens uppgifter -->
               <div wc-field field-label="ts-bas.label.patientadress" filled="true">
-                <span class="ts-cert-answer"><span id="patientpostadress">{{cert.intygMetadata.patient.postadress}}</span><br><span id="patientpostnummer">{{cert.intygMetadata.patient.postnummer}}</span> <span id="patientpostort">{{cert.intygMetadata.patient.postort}}</span></span>
+                <span class="cert-answer"><span id="patientpostadress">{{cert.intygMetadata.patient.postadress}}</span><br><span id="patientpostnummer">{{cert.intygMetadata.patient.postnummer}}</span> <span id="patientpostort">{{cert.intygMetadata.patient.postort}}</span></span>
               </div>
 
               <!-- Intyget avser -->
               <div wc-field field-label="ts-diabetes.label.intygavser" filled="true">
-                <span class="ts-cert-answer" id="intygAvser">{{view.intygAvser}}</span>
+                <span class="cert-answer" id="intygAvser">{{view.intygAvser}}</span>
               </div>
 
               <!-- Identiteten är styrkt genom -->
               <div wc-field field-label="ts-diabetes.label.identitet" filled="true">
-                <span id="identitet"><span class="ts-cert-answer" message key="ts-diabetes.label.identitet.{{cert.vardkontakt.idkontroll}}"></span></span>
+                <span id="identitet"><span class="cert-answer" message key="ts-diabetes.label.identitet.{{cert.vardkontakt.idkontroll}}"></span></span>
               </div>
 
               <!-- 1. Allmänt diabetes -->
               <div wc-field field-label="ts-diabetes.label.allmant" filled="true">
                 <p>
                   <span message key="ts-diabetes.label.diabetes.vilket-ar"></span><br>
-                  <span id="observationsperiod"><span class="ts-cert-answer">{{cert.diabetes.observationsperiod}}</span></span>
+                  <span id="observationsperiod"><span class="cert-answer">{{cert.diabetes.observationsperiod}}</span></span>
                 </p>
                 <p>
                   <span message key="ts-diabetes.label.diabetes.diabetestyp"></span><br>
-                  <span id="diabetestyp"><span class="ts-cert-answer" message
+                  <span id="diabetestyp"><span class="cert-answer" message
                         key="ts-diabetes.label.diabetes.diabetestyp.{{cert.diabetes.diabetestyp}}"></span></span>
                 </p>
 
                 <h3 message key="ts-diabetes.label.diabetes.behandling"></h3>
                 <p>
                   <span message key="ts-diabetes.label.diabetes.behandling.endast-kost"></span>
-                  <span id="endastKost"><span class="ts-cert-answer" message key="{{cert.diabetes.endastKost | BoolToTextFilter}}"></span></span><br>
+                  <span id="endastKost"><span class="cert-answer" message key="{{cert.diabetes.endastKost | BoolToTextFilter}}"></span></span><br>
 
                   <span message key="ts-diabetes.label.diabetes.behandling.tabletter"></span>
-                  <span id="tabletter"><span class="ts-cert-answer" message key="{{cert.diabetes.tabletter | BoolToTextFilter}}"></span></span><br>
+                  <span id="tabletter"><span class="cert-answer" message key="{{cert.diabetes.tabletter | BoolToTextFilter}}"></span></span><br>
 
                   <span message key="ts-diabetes.label.diabetes.behandling.insulin"></span>
-                  <span id="insulin"><span class="ts-cert-answer" message key="{{cert.diabetes.insulin | BoolToTextFilter}}"></span></span><br>
+                  <span id="insulin"><span class="cert-answer" message key="{{cert.diabetes.insulin | BoolToTextFilter}}"></span></span><br>
                   <br>
                   <span ng-show="cert.diabetes.insulinBehandlingsperiod.length > 0">
                     <span message key="ts-diabetes.label.diabetes.behandling.insulin-period"></span><br>
-                    <span class="ts-cert-answer" id="insulinBehandlingsperiod">{{cert.diabetes.insulinBehandlingsperiod}}</span>
+                    <span class="cert-answer" id="insulinBehandlingsperiod">{{cert.diabetes.insulinBehandlingsperiod}}</span>
                   </span>
                 </p>
                 <p>
                   <span message key="ts-diabetes.label.diabetes.behandling.annan"></span><br>
                   <span id="annanBehandlingBeskrivning">
                     <span ng-show="cert.diabetes.annanBehandlingBeskrivning && cert.diabetes.annanBehandlingBeskrivning.length > 0">
-                      <span class="ts-cert-answer">{{cert.diabetes.annanBehandlingBeskrivning}}</span>
+                      <span class="cert-answer">{{cert.diabetes.annanBehandlingBeskrivning}}</span>
                     </span>
-                    <span class="ts-cert-answer" ng-show="!cert.diabetes.annanBehandlingBeskrivning">
+                    <span class="cert-answer" ng-show="!cert.diabetes.annanBehandlingBeskrivning">
                       <span message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
                     </span>
                   </span>
@@ -123,62 +123,62 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                 <!-- a -->
                 <p>
                   <span message key="ts-diabetes.label.hypoglykemier.har-patient-kannedom"></span>
-                  <span id="kunskapOmAtgarder"><span class="ts-cert-answer" message
+                  <span id="kunskapOmAtgarder"><span class="cert-answer" message
                         key="{{cert.hypoglykemier.kunskapOmAtgarder | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- b -->
                 <p>
                   <span message key="ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion"></span>
-                  <span id="teckenNedsattHjarnfunktion"><span class="ts-cert-answer" message
+                  <span id="teckenNedsattHjarnfunktion"><span class="cert-answer" message
                         key="{{cert.hypoglykemier.teckenNedsattHjarnfunktion | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- c -->
                 <p>
                   <span message key="ts-diabetes.label.hypoglykemier.saknar-formaga-kanna-varningstecken"></span>
-                  <span id="saknarFormagaKannaVarningstecken"><span class="ts-cert-answer" message
+                  <span id="saknarFormagaKannaVarningstecken"><span class="cert-answer" message
                         key="{{cert.hypoglykemier.saknarFormagaKannaVarningstecken | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- d -->
                 <div class="form-group">
                   <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst"></span>
-                  <span id="allvarligForekomst"><span class="ts-cert-answer" message
+                  <span id="allvarligForekomst"><span class="cert-answer" message
                         key="{{cert.hypoglykemier.allvarligForekomst | BoolToTextFilter}}"></span></span>
                 </div>
                 <div class="form-group indent" ng-show="cert.hypoglykemier.allvarligForekomstBeskrivning">
                   <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst.beskrivning"></span>
-                  <span id="allvarligForekomstBeskrivning"><span class="ts-cert-answer">{{cert.hypoglykemier.allvarligForekomstBeskrivning}}</span></span><br>
+                  <span id="allvarligForekomstBeskrivning"><span class="cert-answer">{{cert.hypoglykemier.allvarligForekomstBeskrivning}}</span></span><br>
                 </div>
 
                 <!-- e -->
                 <div class="form-group">
                   <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken"></span>
-                  <span id="allvarligForekomstTrafiken"><span class="ts-cert-answer" message
+                  <span id="allvarligForekomstTrafiken"><span class="cert-answer" message
                         key="{{cert.hypoglykemier.allvarligForekomstTrafiken | BoolToTextFilter}}"></span></span>
                 </div>
                 <div class="form-group indent"
                      ng-show="cert.hypoglykemier.allvarligForekomstTrafikBeskrivning.length > 0">
                   <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning"></span>
-                  <span id="allvarligForekomstTrafikBeskrivning"><span class="ts-cert-answer">{{cert.hypoglykemier.allvarligForekomstTrafikBeskrivning}}</span></span>
+                  <span id="allvarligForekomstTrafikBeskrivning"><span class="cert-answer">{{cert.hypoglykemier.allvarligForekomstTrafikBeskrivning}}</span></span>
                 </div>
 
                 <!-- f -->
                 <div class="form-group">
                   <span message key="ts-diabetes.label.hypoglykemier.egenkontroll-blodsocker"></span>
-                  <span id="egenkontrollBlodsocker"><span class="ts-cert-answer" message
+                  <span id="egenkontrollBlodsocker"><span class="cert-answer" message
                         key="{{cert.hypoglykemier.egenkontrollBlodsocker | BoolToTextFilter}}"></span></span>
                 </div>
 
                 <!-- g -->
                 <div class="form-group">
                   <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid"></span>
-                  <span id="allvarligForekomstVakenTid"><span class="ts-cert-answer" message
+                  <span id="allvarligForekomstVakenTid"><span class="cert-answer" message
                         key="{{cert.hypoglykemier.allvarligForekomstVakenTid | BoolToTextFilter}}"></span></span><br>
                   <p ng-show="cert.hypoglykemier.allvarligForekomstVakenTidObservationstid.length > 0">
                     <span message key="common.when"></span>
-                    <span id="allvarligForekomstVakenTidObservationstid"><span class="ts-cert-answer">{{cert.hypoglykemier.allvarligForekomstVakenTidObservationstid}}</span></span>
+                    <span id="allvarligForekomstVakenTidObservationstid"><span class="cert-answer">{{cert.hypoglykemier.allvarligForekomstVakenTidObservationstid}}</span></span>
                   </p>
                 </div>
               </div>
@@ -187,14 +187,14 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
               <div wc-field field-label="ts-diabetes.label.syn" filled="true">
                 <p>
                   <span message key="ts-diabetes.label.syn.separat-ogonlakarintyg"></span>
-                  <span id="separatOgonlakarintyg"><span class="ts-cert-answer" message
+                  <span id="separatOgonlakarintyg"><span class="cert-answer" message
                         key="{{cert.syn.separatOgonlakarintyg | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <div ng-hide="cert.syn.separatOgonlakarintyg">
                   <p>
                     <span message key="ts-diabetes.label.syn.synfaltsprovning-utan-anmarkning"></span>
-                    <span id="synfaltsprovningUtanAnmarkning"><span class="ts-cert-answer" message
+                    <span id="synfaltsprovningUtanAnmarkning"><span class="cert-answer" message
                           key="{{cert.syn.synfaltsprovningUtanAnmarkning | BoolToTextFilter}}"></span></span>
                   </p>
                   <p>
@@ -226,7 +226,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                   </div>
                   <p>
                     <span message key="ts-diabetes.label.syn.diplopi"></span>
-                    <span id="diplopi"><span class="ts-cert-answer" message key="{{cert.syn.diplopi | BoolToTextFilter}}"></span></span>
+                    <span id="diplopi"><span class="cert-answer" message key="{{cert.syn.diplopi | BoolToTextFilter}}"></span></span>
                   </p>
                 </div>
               </div>
@@ -237,17 +237,17 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                 <div ng-show="!cert.bedomning.kanInteTaStallning">
                   <span message key="ts-diabetes.label.bedomning-info-alt-1"></span>
                   <p>
-                    <span id="bedomning"><span class="ts-cert-answer">{{view.bedomning}}</span></span>
+                    <span id="bedomning"><span class="cert-answer">{{view.bedomning}}</span></span>
                   </p>
                 </div>
                 <div ng-show="cert.bedomning.kanInteTaStallning">
-                  <span id="bedomningKanInteTaStallning"><span class="ts-cert-answer" message
+                  <span id="bedomningKanInteTaStallning"><span class="cert-answer" message
                         key="ts-diabetes.label.bedomning.kan-inte-ta-stallning"></span></span><br><br>
                 </div>
 
                 <div class="form-group">
                   <span message key="ts-diabetes.label.bedomning.lamplighet-inneha"></span><br>
-                  <span id="lamplighetInnehaBehorighet"><span class="ts-cert-answer" message
+                  <span id="lamplighetInnehaBehorighet"><span class="cert-answer" message
                         key="{{cert.bedomning.lamplighetInnehaBehorighet | BoolToTextFilter}}"></span></span>
                 </div>
 
@@ -256,10 +256,10 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
               <div wc-field field-label="ts-diabetes.label.ovrigkommentar" filled="true">
                 <div id="kommentar">
                   <span ng-show="cert.kommentar.length > 0">
-                    <span class="ts-cert-answer">{{cert.kommentar}}</span>
+                    <span class="cert-answer">{{cert.kommentar}}</span>
                   </span>
                   <span ng-show="!cert.kommentar">
-                    <span class="ts-cert-answer" message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
+                    <span class="cert-answer" message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
                   </span>
                 </div>
               </div>
@@ -268,9 +268,9 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                    filled="true">
                 <div id="lakareSpecialKompetens">
                   <span ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">
-                    <span class="ts-cert-answer">{{cert.bedomning.lakareSpecialKompetens}}</span><br>
+                    <span class="cert-answer">{{cert.bedomning.lakareSpecialKompetens}}</span><br>
                   </span>
-                  <span class="ts-cert-answer" ng-show="!cert.bedomning.lakareSpecialKompetens" message
+                  <span class="cert-answer" ng-show="!cert.bedomning.lakareSpecialKompetens" message
                           key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
                 </div>
               </div>

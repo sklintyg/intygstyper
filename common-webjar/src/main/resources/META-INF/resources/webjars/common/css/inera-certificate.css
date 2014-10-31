@@ -245,6 +245,11 @@
         border-radius: 4px 4px 4px 4px;
     }
 
+    .cert-body .body-row .text ul > li {
+        padding-bottom: 5px;
+        padding-left: 16px;
+    }
+
     .cert-body .body-row .unfilled {
         color: #888;
         -webkit-border-radius: 4px 4px 4px 4px;
@@ -558,4 +563,8 @@
         font-weight: bold !important;
     }
 
+    .cert-answer {
+        font-weight: bold;
+        white-space: pre-line;
+    }
 }

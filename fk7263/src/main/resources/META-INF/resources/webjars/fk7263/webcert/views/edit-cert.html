@@ -240,7 +240,7 @@
 
                     <div class="form-group">
                       <div>
-                        <label class="control-label">Förtydligande av diagnos/diagnoser</label><span wc-enable-tooltip
+                        <label class="control-label"><span message key="fk7263.label.diagnosfortydligande"></span></label><span wc-enable-tooltip
                                                                                                      field-help-text="fk7263.helptext.diagnos.fortydligande"></span>
                       </div>
                       <textarea id="diagnoseClarification" class="form-control" name="diagnose.clarification" rows='5'
@@ -568,14 +568,14 @@
                     <div class="form-group">
                       <label class="control-label">Planerad eller pågående behandling eller åtgärd inom sjukvården (ange
                         vilken)</label>
-                      <textarea id="measuresCurrent" class="form-control" name="measures.current" rows='1'
+                      <textarea id="measuresCurrent" class="form-control" name="measures.current" rows='2'
                                 ng-model="cert.atgardInomSjukvarden" wc-maxlength ng-trim="false"
                                 maxlength="{{inputLimits.atgardInomSjukvarden}}"></textarea>
                     </div>
 
                     <div class="form-group">
                       <label class="control-label">Annan åtgärd (ange vilken)</label>
-                      <textarea id="measuresOther" class="form-control" name="measures.other" rows='1'
+                      <textarea id="measuresOther" class="form-control" name="measures.other" rows='2'
                                 ng-model="cert.annanAtgard" wc-maxlength ng-trim="false"
                                 maxlength="{{inputLimits.annanAtgard}}"></textarea>
                     </div>
@@ -627,12 +627,12 @@
                         <label class="checkbox"><input type="checkbox" id="rekommendationOvrigt"
                                                        name="recommendationsToFk.other"
                                                        ng-model="cert.rekommendationOvrigtCheck"> Övrigt (ange
-                          vad)</label>
+                          vad)</label><span wc-enable-tooltip field-help-text="fk7263.helptext.rekommendationer.ovrigt"></span>
                         <div class="indent" ng-if="cert.rekommendationOvrigtCheck">
                           <input type="text" id="rekommendationOvrigtBeskrivning" name="recommendationsToFk.otherText"
                                  value="" class='form-control maxwidth' ng-model="form.rekommendationOvrigt"
                                  maxlength="80">
-                          <span wc-enable-tooltip field-help-text="fk7263.helptext.rekommendationer.ovrigt"></span>
+
                         </div>
                       </div>
 

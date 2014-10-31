@@ -57,17 +57,17 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
 
               <!-- Patientens adressuppgifter -->
               <div wc-field field-label="ts-bas.label.patientadress" filled="true">
-                <span class="ts-cert-answer"><span id="patientpostadress">{{cert.intygMetadata.patient.postadress}}</span><br><span id="patientpostnummer">{{cert.intygMetadata.patient.postnummer}}</span> <span id="patientpostort">{{cert.intygMetadata.patient.postort}}</span></span>
+                <span class="cert-answer"><span id="patientpostadress">{{cert.intygMetadata.patient.postadress}}</span><br><span id="patientpostnummer">{{cert.intygMetadata.patient.postnummer}}</span> <span id="patientpostort">{{cert.intygMetadata.patient.postort}}</span></span>
               </div>
 
               <!-- Intyget avser -->
               <div wc-field field-label="ts-bas.label.intygavser" filled="true">
-                <span class="ts-cert-answer" id="intygAvser">{{view.intygAvser}}</span>
+                <span class="cert-answer" id="intygAvser">{{view.intygAvser}}</span>
               </div>
 
               <!-- Identitet -->
               <div wc-field field-label="ts-diabetes.label.identitet" filled="true">
-                <span id="identitet"><span class="ts-cert-answer" message key="ts-diabetes.label.identitet.{{cert.vardkontakt.idkontroll}}"></span></span>
+                <span id="identitet"><span class="cert-answer" message key="ts-diabetes.label.identitet.{{cert.vardkontakt.idkontroll}}"></span></span>
               </div>
 
               <!-- 1 syn -->
@@ -75,19 +75,19 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
                 <!-- a -->
                 <p>
                   <span message key="ts-bas.label.syn.synfaltsdefekter"></span>
-                  <span id="synfaltsdefekter"><span class="ts-cert-answer" message key="{{cert.syn.synfaltsdefekter | BoolToTextFilter}}"></span></span>
+                  <span id="synfaltsdefekter"><span class="cert-answer" message key="{{cert.syn.synfaltsdefekter | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- b -->
                 <p>
                   <span message key="ts-bas.label.syn.nattblindhet"></span>
-                  <span id="nattblindhet"><span class="ts-cert-answer" message key="{{cert.syn.nattblindhet | BoolToTextFilter}}"></span></span>
+                  <span id="nattblindhet"><span class="cert-answer" message key="{{cert.syn.nattblindhet | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- c -->
                 <p>
                   <span message key="ts-bas.label.syn.progressivogonsjukdom"></span>
-                  <span id="progressivOgonsjukdom"><span class="ts-cert-answer" message key="{{cert.syn.progressivOgonsjukdom | BoolToTextFilter}}"></span></span>
+                  <span id="progressivOgonsjukdom"><span class="cert-answer" message key="{{cert.syn.progressivOgonsjukdom | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- a-c message -->
@@ -98,13 +98,13 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
                 <!-- d -->
                 <p>
                   <span message key="ts-bas.label.syn.diplopi"></span>
-                  <span id="diplopi"><span class="ts-cert-answer" message key="{{cert.syn.diplopi | BoolToTextFilter}}"></span></span>
+                  <span id="diplopi"><span class="cert-answer" message key="{{cert.syn.diplopi | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- e -->
                 <p>
                   <span message key="ts-bas.label.syn.nystagmus"></span>
-                  <span id="nystagmus"><span class="ts-cert-answer" message key="{{cert.syn.nystagmus | BoolToTextFilter}}"></span></span>
+                  <span id="nystagmus"><span class="cert-answer" message key="{{cert.syn.nystagmus | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- f -->
@@ -143,7 +143,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
 
                 <h3>Korrektionsglasens styrka</h3>
                 <span message key="ts-bas.label.syn.8-dioptrier"></span>
-                <span id="korrektionsglasensStyrka"><span class="ts-cert-answer" message
+                <span id="korrektionsglasensStyrka"><span class="cert-answer" message
                       key="{{cert.syn.korrektionsglasensStyrka | BoolToTextFilter}}"></span></span>
                 <div class="alert alert-info" ng-show="cert.syn.korrektionsglasensStyrka == true">
                   <span message key="ts-bas.helptext.synfunktioner.8-dioptrier"></span>
@@ -154,31 +154,34 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
               <div wc-field field-label="ts-bas.label.horselbalans" filled="true">
                 <p>
                   <span message key="ts-bas.label.horselbalans.balansrubbningar"></span>
-                  <span id="horselBalansbalansrubbningar"><span class="ts-cert-answer" message
+                  <span id="horselBalansbalansrubbningar"><span class="cert-answer" message
                         key="{{cert.horselBalans.balansrubbningar | BoolToTextFilter}}"></span></span>
                 </p>
                 <p ng-show="cert.horselBalans.svartUppfattaSamtal4Meter">
                   <span message key="ts-bas.label.horselbalans.uppfatta-vanlig-samtalsstamma"></span>
-                  <span id="horselBalanssvartUppfattaSamtal4Meter"><span class="ts-cert-answer" message
+                  <span id="horselBalanssvartUppfattaSamtal4Meter"><span class="cert-answer" message
                         key="{{cert.horselBalans.svartUppfattaSamtal4Meter | BoolToTextFilter}}"></span></span>
                 </p>
               </div>
 
               <!-- 3 -->
               <div wc-field field-label="ts-bas.label.funktionsnedsattning" filled="true" class="print-pagebreak-after">
+
+                <!-- a -->
                 <p>
                   <span message key="ts-bas.label.funktionsnedsattning.funktionsnedsattning"></span>
-            			<span id="funktionsnedsattning"><span class="ts-cert-answer" message
+            			<span id="funktionsnedsattning"><span class="cert-answer" message
                         key="{{cert.funktionsnedsattning.funktionsnedsattning | BoolToTextFilter}}"></span></span>
                 </p>
                 <p class="indent" ng-show="cert.funktionsnedsattning.funktionsnedsattning">
                   <span message key="ts-bas.label.view.funktionsnedsattning.beskrivning"></span><br />
-                  <span id="funktionsnedsattningbeskrivning"><span class="ts-cert-answer">{{cert.funktionsnedsattning.beskrivning}}</span></span>
+                  <span id="funktionsnedsattningbeskrivning"><span class="cert-answer">{{cert.funktionsnedsattning.beskrivning}}</span></span>
                 </p>
 
+                <!-- b -->
                 <p ng-show="cert.funktionsnedsattning.otillrackligRorelseformaga">
                   <span message key="ts-bas.label.funktionsnedsattning.rorelsformaga"></span>
-            			<span id="funktionsnedsattningotillrackligRorelseformaga"><span class="ts-cert-answer" message
+            			<span id="funktionsnedsattningotillrackligRorelseformaga"><span class="cert-answer" message
                         key="{{cert.funktionsnedsattning.otillrackligRorelseformaga | BoolToTextFilter}}"></span></span>
                 </p>
 
@@ -188,22 +191,22 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
               <div wc-field field-label="ts-bas.label.hjartkarl" filled="true">
                 <p>
                   <span message key="ts-bas.label.hjartkarl.hjart-karlsjukdom"></span><br>
-            			<span id="hjartKarlSjukdom"><span class="ts-cert-answer" message
+            			<span id="hjartKarlSjukdom"><span class="cert-answer" message
                         key="{{cert.hjartKarl.hjartKarlSjukdom | BoolToTextFilter}}"></span></span>
                 </p>
                 <p>
                   <span message key="ts-bas.label.hjartkarl.hjarnskada-efter-trauma"></span><br>
-            			<span id="hjarnskadaEfterTrauma"><span class="ts-cert-answer" message
+            			<span id="hjarnskadaEfterTrauma"><span class="cert-answer" message
                         key="{{cert.hjartKarl.hjarnskadaEfterTrauma | BoolToTextFilter}}"></span></span>
                 </p>
                 <p>
                   <span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke"></span><br>
-            			<span id="riskfaktorerStroke"><span class="ts-cert-answer" message
+            			<span id="riskfaktorerStroke"><span class="cert-answer" message
                         key="{{cert.hjartKarl.riskfaktorerStroke | BoolToTextFilter}}"></span></span>
                 </p>
                 <p class="indent" ng-show="cert.hjartKarl.riskfaktorerStroke">
                   <span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning"></span><br />
-                  <span id="beskrivningRiskfaktorer"><span class="ts-cert-answer">{{cert.hjartKarl.beskrivningRiskfaktorer}}</span></span>
+                  <span id="beskrivningRiskfaktorer"><span class="cert-answer">{{cert.hjartKarl.beskrivningRiskfaktorer}}</span></span>
                 </p>
 
               </div>
@@ -212,21 +215,21 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
               <div wc-field field-label="ts-bas.label.diabetes" filled="true">
                 <p>
                   <span message key="ts-bas.label.diabetes.har-diabetes"></span>
-                  <span id="harDiabetes"><span class="ts-cert-answer" message key="{{cert.diabetes.harDiabetes | BoolToTextFilter}}"></span></span>
+                  <span id="harDiabetes"><span class="cert-answer" message key="{{cert.diabetes.harDiabetes | BoolToTextFilter}}"></span></span>
                 </p>
                 <div ng-show="cert.diabetes.harDiabetes">
                   <p>
                     <span message key="ts-bas.label.diabetes.diabetestyp"></span>
-            			  <span id="diabetesTyp"><span class="ts-cert-answer" message
+            			  <span id="diabetesTyp"><span class="cert-answer" message
                             key="ts-bas.label.diabetes.diabetestyp.{{cert.diabetes.diabetesTyp}}"></span></span>
                   </p>
                   <p ng-show="cert.diabetes.kost || cert.diabetes.tabletter || cert.diabetes.insulin">
                     <span message key="ts-bas.label.diabetes.view.behandling"></span><br>
-                    <span id="kost"><span class="ts-cert-answer" ng-show="cert.diabetes.kost" message
+                    <span id="kost"><span class="cert-answer" ng-show="cert.diabetes.kost" message
                           key="ts-bas.label.diabetes.behandling.kost"></span></span>
-                    <span id="tabletter"><span class="ts-cert-answer" ng-show="cert.diabetes.tabletter" message
+                    <span id="tabletter"><span class="cert-answer" ng-show="cert.diabetes.tabletter" message
                           key="ts-bas.label.diabetes.behandling.tabletter"></span></span>
-                    <span id="insulin"><span class="ts-cert-answer" ng-show="cert.diabetes.insulin" message
+                    <span id="insulin"><span class="cert-answer" ng-show="cert.diabetes.insulin" message
                           key="ts-bas.label.diabetes.behandling.insulin"></span></span>
                   </p>
                   <div class="alert alert-info" ng-show="cert.diabetes.insulin || cert.diabetes.tabletter">
@@ -240,7 +243,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
               <div wc-field field-label="ts-bas.label.neurologi" filled="true">
                 <p>
                   <span message key="ts-bas.label.neurologi.neurologisksjukdom"></span>
-            			<span id="neurologiskSjukdom"><span class="ts-cert-answer" message
+            			<span id="neurologiskSjukdom"><span class="cert-answer" message
                         key="{{cert.neurologi.neurologiskSjukdom | BoolToTextFilter}}"></span></span>
                 </p>
 
@@ -250,20 +253,20 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
               <div wc-field field-label="ts-bas.label.medvetandestorning" filled="true">
                 <p>
                   <span message key="ts-bas.label.medvetandestorning.medvetandestorning"></span>
-            			<span id="medvetandestorning"><span class="ts-cert-answer" message
+            			<span id="medvetandestorning"><span class="cert-answer" message
                         key="{{cert.medvetandestorning.medvetandestorning | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <p class="indent" ng-show="cert.medvetandestorning.medvetandestorning">
                   <span message key="ts-bas.label.medvetandestorning.beskrivning"></span><br />
-                  <span id="medvetandestorningbeskrivning"><span class="ts-cert-answer">{{cert.medvetandestorning.beskrivning}}</span></span>
+                  <span id="medvetandestorningbeskrivning"><span class="cert-answer">{{cert.medvetandestorning.beskrivning}}</span></span>
                 </p>
               </div>
 
               <!-- 8 -->
               <div wc-field field-label="ts-bas.label.njurar" filled="true">
                 <span message key="ts-bas.label.njurar.nedsatt-njurfunktion"></span>
-                <span id="nedsattNjurfunktion"><span class="ts-cert-answer" message
+                <span id="nedsattNjurfunktion"><span class="cert-answer" message
                       key="{{cert.njurar.nedsattNjurfunktion | BoolToTextFilter}}"></span></span>
 
               </div>
@@ -271,7 +274,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
               <!-- 9 -->
               <div wc-field field-label="ts-bas.label.kognitivt" filled="true">
                 <span message key="ts-bas.label.kognitivt.sviktande-kognitiv-funktion"></span>
-                <span id="sviktandeKognitivFunktion"><span class="ts-cert-answer" message
+                <span id="sviktandeKognitivFunktion"><span class="cert-answer" message
                       key="{{cert.kognitivt.sviktandeKognitivFunktion | BoolToTextFilter}}"></span></span>
 
               </div>
@@ -279,7 +282,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
               <!-- 10 -->
               <div wc-field field-label="ts-bas.label.somn-vakenhet" filled="true">
                 <span message key="ts-bas.label.somn-vakenhet.tecken-somnstorningar"></span>
-                <span id="teckenSomnstorningar"><span class="ts-cert-answer" message
+                <span id="teckenSomnstorningar"><span class="cert-answer" message
                       key="{{cert.somnVakenhet.teckenSomnstorningar | BoolToTextFilter}}"></span></span>
 
               </div>
@@ -288,20 +291,20 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
               <div wc-field field-label="ts-bas.label.narkotika-lakemedel" filled="true">
                 <p>
                   <span message key="ts-bas.label.narkotika-lakemedel.tecken-missbruk"></span>
-            			<span id="teckenMissbruk"><span class="ts-cert-answer" message
+            			<span id="teckenMissbruk"><span class="cert-answer" message
                         key="{{cert.narkotikaLakemedel.teckenMissbruk | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <p>
                   <span message key="ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats"></span>
-            			<span id="foremalForVardinsats"><span class="ts-cert-answer" message
+            			<span id="foremalForVardinsats"><span class="cert-answer" message
                         key="{{cert.narkotikaLakemedel.foremalForVardinsats | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <div ng-show="cert.narkotikaLakemedel.foremalForVardinsats || cert.narkotikaLakemedel.teckenMissbruk">
                   <p>
                     <span message key="ts-bas.label.narkotika-lakemedel.behov-provtagning"></span>
-	            			<span id="provtagningBehovs"><span class="ts-cert-answer" message
+	            			<span id="provtagningBehovs"><span class="cert-answer" message
                           key="{{cert.narkotikaLakemedel.provtagningBehovs | BoolToTextFilter}}"></span></span>
                   </p>
                   <p>
@@ -313,13 +316,13 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
 
                 <p>
                   <span message key="ts-bas.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk"></span>
-            			<span id="lakarordineratLakemedelsbruk"><span class="ts-cert-answer" message
+            			<span id="lakarordineratLakemedelsbruk"><span class="cert-answer" message
                         key="{{cert.narkotikaLakemedel.lakarordineratLakemedelsbruk | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <p class="indent" ng-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk">
                   <span message key="ts-bas.label.narkotika-lakemedel.beskrivning"></span><br />
-                  <span id="lakemedelOchDos"><span class="ts-cert-answer">{{cert.narkotikaLakemedel.lakemedelOchDos}}</span></span>
+                  <span id="lakemedelOchDos"><span class="cert-answer">{{cert.narkotikaLakemedel.lakemedelOchDos}}</span></span>
                 </p>
 
               </div>
@@ -327,19 +330,19 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
               <!-- 12 -->
               <div wc-field field-label="ts-bas.label.psykiskt" filled="true">
                 <span message key="ts-bas.label.psykiskt.psykisksjukdom"></span>
-                <span id="psykiskSjukdom"><span class="ts-cert-answer" message key="{{cert.psykiskt.psykiskSjukdom | BoolToTextFilter}}"></span></span>
+                <span id="psykiskSjukdom"><span class="cert-answer" message key="{{cert.psykiskt.psykiskSjukdom | BoolToTextFilter}}"></span></span>
               </div>
 
               <!-- 13 -->
               <div wc-field field-label="ts-bas.label.utvecklingsstorning" filled="true">
                 <p>
                   <span message key="ts-bas.label.utvecklingsstorning.psykisk-utvecklingsstorning"></span>
-            			<span id="psykiskUtvecklingsstorning"><span class="ts-cert-answer" message
+            			<span id="psykiskUtvecklingsstorning"><span class="cert-answer" message
                         key="{{cert.utvecklingsstorning.psykiskUtvecklingsstorning | BoolToTextFilter}}"></span></span>
                 </p>
                 <p>
                   <span message key="ts-bas.label.utvecklingsstorning.har-syndrom"></span>
-            			<span id="harSyndrom"><span class="ts-cert-answer" message
+            			<span id="harSyndrom"><span class="cert-answer" message
                         key="{{cert.utvecklingsstorning.harSyndrom | BoolToTextFilter}}"></span></span>
                 </p>
               </div>
@@ -348,18 +351,18 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
               <div wc-field field-label="ts-bas.label.sjukhusvard" filled="true">
                 <p>
                   <span message key="ts-bas.label.sjukhusvard.sjukhus-eller-lakarkontakt"></span>
-            		  <span id="sjukhusEllerLakarkontakt"><span class="ts-cert-answer" message
+            		  <span id="sjukhusEllerLakarkontakt"><span class="cert-answer" message
                           key="{{cert.sjukhusvard.sjukhusEllerLakarkontakt | BoolToTextFilter}}"></span></span>
                 </p>
                 <p class="indent" ng-show="cert.sjukhusvard.sjukhusEllerLakarkontakt">
                   <span message key="ts-bas.label.sjukhusvard.tidpunkt"></span>
-                  <span class="ts-cert-answer" id="tidpunkt">{{cert.sjukhusvard.tidpunkt}}</span><br />
+                  <span class="cert-answer" id="tidpunkt">{{cert.sjukhusvard.tidpunkt}}</span><br />
 
                   <span message key="ts-bas.label.sjukhusvard.vardinrattning"></span>
-                  <span class="ts-cert-answer" id="vardinrattning">{{cert.sjukhusvard.vardinrattning}}</span><br />
+                  <span class="cert-answer" id="vardinrattning">{{cert.sjukhusvard.vardinrattning}}</span><br />
 
                   <span message key="ts-bas.label.sjukhusvard.anledning"></span>
-                  <span class="ts-cert-answer" id="sjukhusvardanledning">{{cert.sjukhusvard.anledning}}</span><br />
+                  <span class="cert-answer" id="sjukhusvardanledning">{{cert.sjukhusvard.anledning}}</span><br />
                 </p>
               </div>
 
@@ -367,22 +370,22 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
               <div wc-field field-label="ts-bas.label.medicinering" filled="true">
                 <p>
                   <span message key="ts-bas.label.medicinering.stadigvarande-medicinering"></span>
-            		  <span id="stadigvarandeMedicinering"><span class="ts-cert-answer" message
+            		  <span id="stadigvarandeMedicinering"><span class="cert-answer" message
                           key="{{cert.medicinering.stadigvarandeMedicinering | BoolToTextFilter}}"></span></span>
                 </p>
                 <p class="indent" ng-show="cert.medicinering.stadigvarandeMedicinering">
                   <span message key="ts-bas.label.medicinering.beskrivning"></span><br />
-                  <span id="medicineringbeskrivning"><span class="ts-cert-answer">{{cert.medicinering.beskrivning}}</span></span>
+                  <span id="medicineringbeskrivning"><span class="cert-answer">{{cert.medicinering.beskrivning}}</span></span>
                 </p>
               </div>
 
               <!-- 16 ovrigt -->
               <div wc-field field-label="ts-bas.label.ovrigkommentar" filled="true">
                 <p ng-show="cert.kommentar.length > 0">
-                  <span id="kommentar"><span class="ts-cert-answer">{{cert.kommentar}}</span></span>
+                  <span id="kommentar"><span class="cert-answer">{{cert.kommentar}}</span></span>
                 </p>
 
-                <p class="ts-cert-answer" ng-show="!cert.kommentar" id="kommentarEjAngivet">
+                <p class="cert-answer" ng-show="!cert.kommentar" id="kommentarEjAngivet">
                   <span message key="ts-bas.label.bedomning-info-ej-angivet"></span>
                 </p>
               </div>
@@ -393,18 +396,18 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">K
                   <span message key="ts-bas.label.bedomning-info-alt-1"></span>
 
                   <p>
-                    <span class="ts-cert-answer" id="bedomning">{{view.bedomning}}</span>
+                    <span class="cert-answer" id="bedomning">{{view.bedomning}}</span>
                   </p>
                 </div>
 
                 <div ng-show="cert.bedomning.kanInteTaStallning">
-                  <span id="bedomningKanInteTaStallning"><span class="ts-cert-answer" message key="ts-bas.label.bedomning.kan-inte-ta-stallning"></span></span><br><br>
+                  <span id="bedomningKanInteTaStallning"><span class="cert-answer" message key="ts-bas.label.bedomning.kan-inte-ta-stallning"></span></span><br><br>
                 </div>
 
                 <div>
                   <span message key="ts-bas.label.bedomning-info-undersokas-med-specialkompetens"></span><br>
-                  <span class="ts-cert-answer" ng-show="cert.bedomning.lakareSpecialKompetens.length > 0" id="lakareSpecialKompetens">{{cert.bedomning.lakareSpecialKompetens}}</span>
-                  <span id="lakareSpecialKompetensEjAngivet"><span class="ts-cert-answer" ng-show="!cert.bedomning.lakareSpecialKompetens" message
+                  <span class="cert-answer" ng-show="cert.bedomning.lakareSpecialKompetens.length > 0" id="lakareSpecialKompetens">{{cert.bedomning.lakareSpecialKompetens}}</span>
+                  <span id="lakareSpecialKompetensEjAngivet"><span class="cert-answer" ng-show="!cert.bedomning.lakareSpecialKompetens" message
                         key="ts-bas.label.bedomning-info-ej-angivet"></span></span>
                 </div>
               </div>

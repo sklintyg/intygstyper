@@ -82,9 +82,8 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
               <div wc-field field-number="2" field-label="fk7263.label.diagnos"
                    filled="{{cert.diagnosKod!=null}}" id="field2">
                 <div class="form-group">
-                  <span id="diagnosBeskrivning">{{cert.diagnosBeskrivning}}</span> (<span class="tag"><span message
-                                                                       key="fk7263.label.diagnoskod"></span></span>
-                  <span id="diagnosKod">{{cert.diagnosKod}}</span><span id="diagnosBeskrivning1"> {{cert.diagnosBeskrivning1}}</span>)
+                  <span message key="fk7263.label.diagnoskod"></span>
+                  <span id="diagnosKod">{{cert.diagnosKod}}</span> <span id="diagnosBeskrivning1">{{cert.diagnosBeskrivning1}}</span>
                 </div>
                 <div class="form-group">
                   <label class="control-label bold"
@@ -100,14 +99,22 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                                                                          key="fk7263.label.samsjuklighet"></span></div>
                   </div>
                 </div>
+                <div class="form-group" ng-show="cert.diagnosBeskrivning">
+                  <label class="control-label bold">
+                    <span message key="fk7263.label.diagnosfortydligande"></span>
+                  </label>
+                  <div class="controls">
+                    <span id="diagnosBeskrivning" class="multiline">{{cert.diagnosBeskrivning}}</span>
+                  </div>
+                </div>
               </div>
 
               <div wc-field field-number="3" field-label="fk7263.label.aktuellt-sjukdomsforlopp"
-                   filled="{{cert.sjukdomsforlopp!=null}}"><span id="sjukdomsforlopp">{{cert.sjukdomsforlopp}}</span>
+                   filled="{{cert.sjukdomsforlopp!=null}}"><span id="sjukdomsforlopp" class="multiline">{{cert.sjukdomsforlopp}}</span>
               </div>
 
               <div wc-field field-number="4" field-label="fk7263.label.funktionsnedsattningar"
-                   filled="{{cert.funktionsnedsattning!=null}}"><span id="funktionsnedsattning">{{cert.funktionsnedsattning}}</span>
+                   filled="{{cert.funktionsnedsattning!=null}}"><span id="funktionsnedsattning" class="multiline">{{cert.funktionsnedsattning}}</span>
               </div>
 
               <div wc-field field-number="4b" field-label="fk7263.label.intyg-baserat-pa" id="field4b"
@@ -128,13 +135,13 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                   <li ng-show="cert.annanReferens!=null">
                     <!-- Annat -->
                     <span message key="fk7263.referens.annat"></span> {{cert.annanReferens | date:'longDate'}}:
-                    <span id="annanReferensBeskrivning">{{cert.annanReferensBeskrivning}}</span>
+                    <span id="annanReferensBeskrivning" class="multiline">{{cert.annanReferensBeskrivning}}</span>
                   </li>
                 </ul>
               </div>
 
               <div wc-field field-number="5" field-label="fk7263.label.aktivitetsbegransning"
-                   filled="{{cert.aktivitetsbegransning!=null}}"><span id="aktivitetsbegransning">{{cert.aktivitetsbegransning}}</span>
+                   filled="{{cert.aktivitetsbegransning!=null}}"><span id="aktivitetsbegransning" class="multiline">{{cert.aktivitetsbegransning}}</span>
               </div>
 
               <div wc-field field-number="6a" field-label="fk7263.label.rekommendationer" id="field6a"
@@ -156,12 +163,13 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
               <div wc-field field-number="6b" field-label="fk7263.label.planerad-atgard"
                    filled="{{cert.atgardInomSjukvarden!=null||cert.annanAtgard!=null}}" id="field6b">
                 <ul>
-                  <li ng-show="cert.atgardInomSjukvarden != null"><span message
-                                                                        key="fk7263.label.planerad-atgard.sjukvarden"></span>
-                    <span id="atgardInomSjukvarden">{{cert.atgardInomSjukvarden}}</span>
+                  <li ng-show="cert.atgardInomSjukvarden != null">
+                    <span message key="fk7263.label.planerad-atgard.sjukvarden"></span>
+                    <span id="atgardInomSjukvarden" class="multiline">{{cert.atgardInomSjukvarden}}</span>
                   </li>
-                  <li ng-show="cert.annanAtgard != null"><span message key="fk7263.label.planerad-atgard.annat"></span>
-                    <span id="annanAtgard">{{cert.annanAtgard}}</span>
+                  <li ng-show="cert.annanAtgard != null">
+                    <span message key="fk7263.label.planerad-atgard.annat"></span>
+                    <span id="annanAtgard" class="multiline">{{cert.annanAtgard}}</span>
                   </li>
                 </ul>
               </div>
@@ -179,7 +187,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                 <ul>
                   <li ng-show="cert.nuvarandeArbetsuppgifter"><span message
                                                                     key="fk7263.label.arbetsformaga.nuvarande-arbete"></span>
-                    <span id="nuvarandeArbetsuppgifter">{{cert.nuvarandeArbetsuppgifter}}</span>
+                    <span id="nuvarandeArbetsuppgifter" class="multiline">{{cert.nuvarandeArbetsuppgifter}}</span>
                   </li>
                   <li id="arbetsloshet" ng-show="cert.arbetsloshet"><span message key="fk7263.label.arbetsformaga.arbetslos"></span></li>
                   <li id="foraldrarledighet" ng-show="cert.foraldrarledighet"><span message
@@ -196,7 +204,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                   <strong><span message key="fk7263.nedsattningsgrad.nedsatt_med_1_4"></span></strong><br> Från och med
                   <span id="nedsattMed25from">{{cert.nedsattMed25.from | date:'longDate'}}</span> &ndash; längst till och med
                   <span id="nedsattMed25tom">{{cert.nedsattMed25.tom | date:'longDate'}}</span>
-                  <div id="nedsattMed25Beskrivning" ng-show="cert.nedsattMed25Beskrivning">Arbetstidsförläggning: {{cert.nedsattMed25Beskrivning}}
+                  <div id="nedsattMed25Beskrivning" ng-show="cert.nedsattMed25Beskrivning" class="multiline">Arbetstidsförläggning: {{cert.nedsattMed25Beskrivning}}
                   </div>
                 </div>
 
@@ -204,7 +212,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                   <strong><span message key="fk7263.nedsattningsgrad.nedsatt_med_1_2"></span></strong><br> Från och med
                   <span id="nedsattMed50from">{{cert.nedsattMed50.from | date:'longDate'}}</span> &ndash; längst till och med
                   <span id="nedsattMed50tom">{{cert.nedsattMed50.tom | date:'longDate'}}</span>
-                  <div id="nedsattMed50Beskrivning" ng-show="cert.nedsattMed50Beskrivning">Arbetstidsförläggning: {{cert.nedsattMed50Beskrivning}}
+                  <div id="nedsattMed50Beskrivning" ng-show="cert.nedsattMed50Beskrivning" class="multiline">Arbetstidsförläggning: {{cert.nedsattMed50Beskrivning}}
                   </div>
                 </div>
 
@@ -212,7 +220,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                   <strong><span message key="fk7263.nedsattningsgrad.nedsatt_med_3_4"></span></strong><br> Från och med
                   <span id="nedsattMed75from">{{cert.nedsattMed75.from | date:'longDate'}}</span> &ndash; längst till och med
                   <span id="nedsattMed75tom">{{cert.nedsattMed75.tom | date:'longDate'}}</span>
-                  <div id="nedsattMed75Beskrivning" ng-show="cert.nedsattMed75Beskrivning">Arbetstidsförläggning: {{cert.nedsattMed75Beskrivning}}
+                  <div id="nedsattMed75Beskrivning" ng-show="cert.nedsattMed75Beskrivning" class="multiline">Arbetstidsförläggning: {{cert.nedsattMed75Beskrivning}}
                   </div>
                 </div>
 
@@ -225,7 +233,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
               </div>
 
               <div wc-field field-number="9" field-label="fk7263.label.arbetsformaga.bedomning"
-                   filled="{{cert.arbetsformagaPrognos!=null}}"><span id="arbetsformagaPrognos">{{cert.arbetsformagaPrognos}}</span>
+                   filled="{{cert.arbetsformagaPrognos!=null}}"><span id="arbetsformagaPrognos" class="multiline">{{cert.arbetsformagaPrognos}}</span>
               </div>
 
               <div wc-field field-number="10" field-label="fk7263.label.prognos"
@@ -238,7 +246,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                 <span id="arbetsformataPrognosGarInteAttBedoma" ng-show="cert.prognosBedomning == 'arbetsformagaPrognosGarInteAttBedoma'">
                   <span message key="fk7263.label.gar-ej-att-bedomma"></span>
                   <br>
-                  <span class="tag">Förtydligande: <span id="arbetsformagaPrognosGarInteAttBedomaBeskrivning">{{cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning}}</span></span>
+                  Förtydligande: <span id="arbetsformagaPrognosGarInteAttBedomaBeskrivning" class="multiline">{{cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning}}</span>
                 </span>
               </div>
 
@@ -255,7 +263,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
 
               <div wc-field field-number="13" field-label="fk7263.label.ovrigt" filled="{{cert.kommentar}}"
                    id="field13">
-                <div class="tag" id="kommentar">{{cert.kommentar}}</div>
+                <div id="kommentar" class="multiline">{{cert.kommentar}}</div>
               </div>
 
               <div wc-field field-label="fk7263.label.arbetsplatskod" field-number="17"
@@ -284,13 +292,10 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                 </p>
               </div>
 
-            </div>
-            <!-- cert body -->
+            </div><!-- cert body -->
           </div>
         </div>
       </div>
-    </div>
-    <!-- entire cert -->
-  </div>
-  <!--  spinner end -->
+    </div><!-- entire cert -->
+  </div><!--  spinner end -->
 </div>
