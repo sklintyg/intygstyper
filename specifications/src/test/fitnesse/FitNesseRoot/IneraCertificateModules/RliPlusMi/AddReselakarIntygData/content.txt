@@ -1,6 +1,0 @@
-!1 Add Data
-
-|RLIntyg|
-|rad|personnr|utfärdat|utfärdare|enhet|resmål|mall|
-|1|19121212-1212|2013-08-28|Borje Dengroth|Sundbybergs vårdcentral|New York|rli-sjuk-1|
-|2|19121212-1212|2013-04-12|Johan Steen|Saltö Sjukstuga|Paris|rli-gravid-1|

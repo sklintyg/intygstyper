@@ -1,98 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (C) 2013 Inera AB (http://www.inera.se) This file is part 
-  of Inera Certificate Web (http://code.google.com/p/inera-certificate-web). 
-  Inera Certificate Web is free software: you can redistribute it and/or modify 
-  it under the terms of the GNU Affero General Public License as published 
-  by the Free Software Foundation, either version 3 of the License, or (at 
-  your option) any later version. Inera Certificate Web is distributed in the 
-  hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied 
-  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
-  GNU Affero General Public License for more details. You should have received 
-  a copy of the GNU Affero General Public License along with this program. 
-  If not, see <http://www.gnu.org/licenses />. -->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>se.inera.intyg</groupId>
-    <artifactId>intyg-parent</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <groupId>se.inera.intyg.common</groupId>
+    <artifactId>common-pom</artifactId>
+    <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>se.inera.certificate.modules</groupId>
-  <artifactId>certificates</artifactId>
+  <groupId>se.inera.intyg.intygstyper</groupId>
+  <artifactId>intygstyper</artifactId>
+  <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Inera Certificate Modules</name>
+
+  <name>Intygstyper</name>
 
   <properties>
-    <!-- Project properties -->
-    <repository.host>repository-callistasoftware.forge.cloudbees.com</repository.host>
 
-    <!-- Dependencies to Intygstjansten -->
-    <inera.certificate.version>1.3-SNAPSHOT</inera.certificate.version>
-    <!--<inera.certificate.certificate-specifications.version>1.1.1</inera.certificate.certificate-specifications.version> -->
+    <!-- Common -->
+    <common-support.version>1.0-SNAPSHOT</common-support.version>
+    <common-web.version>1.0-SNAPSHOT</common-web.version>
+    <integration-util.version>1.0-SNAPSHOT</integration-util.version>
+    <logging-util.version>1.1.3-SNAPSHOT</logging-util.version>
 
-    <!-- Dependencies to Netcare -->
+    <!-- Schemas -->
+    <schemas.version>1.0-SNAPSHOT</schemas.version>
+
+    <!-- Netcare -->
     <mvkintegration.version>1.2-SNAPSHOT</mvkintegration.version>
 
     <checkstyle.basedir>${project.basedir}</checkstyle.basedir>
-    <!-- <requirejs-plugin.version>2.0.4</requirejs-plugin.version> -->
   </properties>
 
   <modules>
-    <module>module-archetype</module>
-    <module>module-support</module>
-    <module>common-webjar</module>
-    <module>integration-util</module>
     <module>fk7263</module>
-    <module>rli</module>
-    <module>specifications</module>
+    <!--<module>rli</module>-->
     <module>ts-bas</module>
     <module>ts-diabetes</module>
+    <module>tools/archetype</module>
   </modules>
 
   <scm>
-    <connection>scm:git:https://${scm.host}/p/inera-certificate-modules/</connection>
+    <connection>scm:git:https://github.com/sklintyg/intygstyper/</connection>
     <tag>HEAD</tag>
   </scm>
 
   <dependencyManagement>
     <dependencies>
-      <!-- Project dependencies -->
+
+      <!-- Common -->
       <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>common-webjar</artifactId>
-        <version>${project.parent.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>integration-util</artifactId>
-        <version>${project.parent.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>module-support</artifactId>
-        <version>${project.parent.version}</version>
+        <groupId>se.inera.intyg.common</groupId>
+        <artifactId>common-support</artifactId>
+        <version>${common-support.version}</version>
       </dependency>
 
-      <!-- Dependencies to Intygstjansten -->
       <dependency>
-        <groupId>se.inera.certificate</groupId>
-        <artifactId>module-api</artifactId>
-        <version>${inera.certificate.version}</version>
+        <groupId>se.inera.intyg.common</groupId>
+        <artifactId>common-web</artifactId>
+        <version>${common-web.version}</version>
       </dependency>
+
       <dependency>
-        <groupId>se.inera.certificate</groupId>
-        <artifactId>certificate-schemas</artifactId>
-        <version>${inera.certificate.version}</version>
+        <groupId>se.inera.intyg.common</groupId>
+        <artifactId>integration-util</artifactId>
+        <version>${integration-util.version}</version>
       </dependency>
+
       <dependency>
-        <groupId>se.inera.certificate</groupId>
-        <artifactId>certificate-specifications</artifactId>
-        <version>${inera.certificate.version}</version>
+        <groupId>se.inera.intyg.common</groupId>
+        <artifactId>logging-util</artifactId>
+        <version>${logging-util.version}</version>
+      </dependency>
+
+      <!-- Schemas -->
+      <dependency>
+        <groupId>se.inera.intyg.schemas</groupId>
+        <artifactId>intygstjanst-schemas</artifactId>
+        <version>${schemas.version}</version>
       </dependency>
 
       <!-- Netcare dependencies -->
@@ -187,10 +174,6 @@
     </dependencies>
   </dependencyManagement>
 
-  <dependencies>
-
-  </dependencies>
-
   <build>
     <plugins>
 
@@ -243,11 +226,11 @@
             <configuration>
               <target>
                 <copy todir="${project.build.directory}/webjardependencies"
-                  verbose="false">
+                    verbose="false">
                   <regexpmapper from="^(.*)[/\\].*[/\\](.*)$$"
-                    to="\1/\2" />
+                      to="\1/\2"/>
                   <fileset
-                    dir="${project.build.directory}/webjardependenciestemp/META-INF/resources/webjars/">
+                      dir="${project.build.directory}/webjardependenciestemp/META-INF/resources/webjars/">
                   </fileset>
                 </copy>
               </target>

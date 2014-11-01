@@ -1,39 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
-  
+
   <parent>
-    <groupId>se.inera.certificate.modules</groupId>
-    <artifactId>certificates</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <groupId>se.inera.intyg.intygstyper</groupId>
+    <artifactId>intygstyper</artifactId>
+    <version>1.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>fk7263</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>FK7263</name>
+
+  <name>Intygstyper Läkarintyg FK 7263</name>
 
   <properties>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
   </properties>
 
   <dependencies>
+
+    <!-- Common -->
     <dependency>
-      <groupId>se.inera.certificate</groupId>
-      <artifactId>certificate-schemas</artifactId>
-    </dependency>
-  
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>common-webjar</artifactId>
-      <scope>provided</scope>
+      <groupId>se.inera.intyg.common</groupId>
+      <artifactId>common-support</artifactId>
     </dependency>
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>se.inera.intyg.common</groupId>
+      <artifactId>common-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>se.inera.intyg.common</groupId>
       <artifactId>integration-util</artifactId>
     </dependency>
+
+    <!-- Schemas -->
     <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>module-support</artifactId>
+      <groupId>se.inera.intyg.schemas</groupId>
+      <artifactId>intygstjanst-schemas</artifactId>
     </dependency>
 
     <dependency>
@@ -63,7 +68,7 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
     </dependency>
-    
+
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>

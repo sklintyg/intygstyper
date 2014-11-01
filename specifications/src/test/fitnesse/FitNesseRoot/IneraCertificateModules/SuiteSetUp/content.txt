@@ -1,9 +1,0 @@
-|Import|
-|se.inera.certificate.spec|
-|se.inera.certificate.spec.util|
-|se.inera.certificate.modules.spec|
-
-!|Config|
-|property|value|
-|modules.baseUrl|${modules.baseUrl}|
-|certificate.baseUrl|${certificate.baseUrl}|
