@@ -3,3 +3,10 @@
     background-repeat: no-repeat;
     padding-left: 25px;
 }
+
+.qa-block-body.komplettera-block {
+    white-space: normal;
+}
+.qa-block-body.komplettera-block div span {
+    white-space: pre-line;
+}

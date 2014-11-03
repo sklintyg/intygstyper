@@ -162,7 +162,7 @@
                             </div>
 
                             <div class="qa-block-body" id="qa-fragetext-{{qa.internReferens}}">{{qa.frageText}}</div>
-                            <div class="qa-block-body" id="fkKompletteringar-{{qa.internReferens}}"
+                            <div class="qa-block-body komplettera-block" id="fkKompletteringar-{{qa.internReferens}}"
                                  ng-repeat="komplettering in qa.kompletteringar">
                                 <strong><span>{{komplettering.falt}}</span></strong>
 
@@ -432,11 +432,11 @@
                             </div>
 
                             <div wc-cert-field field-number="3" field-label="view.label.progressofdisease"
-                                 filled="cert.sjukdomsforlopp!=null" id="field3">{{cert.sjukdomsforlopp}}
+                                 filled="cert.sjukdomsforlopp!=null" id="field3"><div class="multiline">{{cert.sjukdomsforlopp}}</div>
                             </div>
 
                             <div wc-cert-field field-number="4" field-label="view.label.disabilities"
-                                 filled="cert.funktionsnedsattning!=null" id="field4">{{cert.funktionsnedsattning}}
+                                 filled="cert.funktionsnedsattning!=null" id="field4"><div class="multiline">{{cert.funktionsnedsattning}}</div>
                             </div>
 
                             <div wc-cert-field field-number="4b" field-label="view.label.basedon" id="field4b"
@@ -457,8 +457,8 @@
 
 
                                     <li ng-show="cert.annanReferens!=null">
-                                        <!-- Annat --> <span message key="referens.annat"> </span>{{cert.annanReferens |
-                                        date:'longDate' }}
+                                        <!-- Annat --> <span message key="referens.annat"> </span><div class="multiline">{{cert.annanReferens |
+                                        date:'longDate' }}</div>
                                         <div>
                                             <span class="tag" message key="view.label.reference.to.field13"></span>
                                         </div>
@@ -467,7 +467,7 @@
                             </div>
 
                             <div wc-cert-field field-number="5" field-label="view.label.limitation"
-                                 filled="cert.aktivitetsbegransning!=null" id="field5">{{cert.aktivitetsbegransning}}
+                                 filled="cert.aktivitetsbegransning!=null" id="field5"><div class="multiline">{{cert.aktivitetsbegransning}}</div>
                             </div>
 
                             <div wc-cert-field field-number="6a" field-label="view.label.recommendations" id="field6a"
@@ -491,11 +491,11 @@
                                 <ul>
                                     <li ng-show="cert.atgardInomSjukvarden != null"><span message
                                                                                           key="view.label.plannedtreatment.healthcare"></span>
-                                        {{cert.atgardInomSjukvarden}}
+                                        <div class="multiline">{{cert.atgardInomSjukvarden}}</div>
                                     </li>
                                     <li ng-show="cert.annanAtgard != null"><span message
                                                                                  key="view.label.plannedtreatment.other"></span>
-                                        {{cert.annanAtgard}}
+                                        <div class="multiline">{{cert.annanAtgard}}</div>
                                     </li>
                                 </ul>
                             </div>
@@ -516,7 +516,7 @@
                                 <ul>
                                     <li ng-show="cert.nuvarandeArbetsuppgifter"><span message
                                                                                       key="view.label.patientworkcapacity.currentwork"></span>
-                                        {{cert.nuvarandeArbetsuppgifter}}
+                                        <div class="multiline">{{cert.nuvarandeArbetsuppgifter}}</div>
                                     </li>
                                     <li ng-show="cert.arbetsloshet"><span message
                                                                           key="view.label.patientworkcapacity.unemployed"></span>
@@ -558,7 +558,7 @@
                             </div>
 
                             <div wc-cert-field field-number="9" field-label="view.label.patientworkcapacityjudgement"
-                                 filled="cert.arbetsformagaPrognos!=null" id="field9">{{cert.arbetsformagaPrognos}}
+                                 filled="cert.arbetsformagaPrognos!=null" id="field9"><div class="multiline">{{cert.arbetsformagaPrognos}}</div>
                             </div>
 
                             <div wc-cert-field field-number="10" field-label="view.label.prognosis"
@@ -597,7 +597,7 @@
 
                             <div wc-cert-field field-number="13" field-label="view.label.otherinformation"
                                  filled="cert.kommentar" id="field13">
-                                <div class="tag">{{cert.kommentar}}</div>
+                                <div class="tag"><div class="multiline">{{cert.kommentar}}</div></div>
                             </div>
 
                             <div wc-cert-field field-label="view.label.workcodes" field-number="17"
