@@ -141,12 +141,12 @@
 
               <div mi-field field-label="view.label.diagnosis" filled="cert.diagnosBeskrivning">
                 <span class="tag"><span message key="view.label.diagnosisCode"></span></span> {{cert.diagnosKod}}
-                <span class="multiline">{{cert.diagnosBeskrivning}}</span>
+                <div class="multiline">{{cert.diagnosBeskrivning}}</div>
               </div>
 
-              <div mi-field field-label="view.label.progressofdesease" filled="cert.sjukdomsforlopp!=null"><span class="multiline">{{cert.sjukdomsforlopp}}</span></div>
+              <div mi-field field-label="view.label.progressofdesease" filled="cert.sjukdomsforlopp!=null"><div class="multiline">{{cert.sjukdomsforlopp}}</div></div>
 
-              <div mi-field field-label="view.label.disabilities" filled="cert.funktionsnedsattning!=null"><span class="multiline">{{cert.funktionsnedsattning}}</span></div>
+              <div mi-field field-label="view.label.disabilities" filled="cert.funktionsnedsattning!=null"><div class="multiline">{{cert.funktionsnedsattning}}</div></div>
 
               <div mi-field field-label="view.label.basedon" filled="cert.undersokningAvPatienten!=null || telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null">
                 <ul>
@@ -160,7 +160,7 @@
                 </ul>
               </div>
 
-              <div mi-field field-label="view.label.limitation" filled="cert.aktivitetsbegransning!=null"><span class="multiline">{{cert.aktivitetsbegransning}}</span></div>
+              <div mi-field field-label="view.label.limitation" filled="cert.aktivitetsbegransning!=null"><div class="multiline">{{cert.aktivitetsbegransning}}</div></div>
 
               <div mi-field field-label="view.label.recommendations"
                 filled="cert.rekommendationKontaktArbetsformedlingen|| cert.rekommendationKontaktForetagshalsovarden || cert.rekommendationOvrigt!=null">
@@ -173,8 +173,8 @@
 
               <div mi-field field-label="view.label.plannedtreatment" filled="cert.atgardInomSjukvarden||cert.annanAtgard">
                 <ul>
-                  <li ng-show="cert.atgardInomSjukvarden != null"><span message key="view.label.plannedtreatment.healthcare"></span> <span class="multiline">{{cert.atgardInomSjukvarden}}</span></li>
-                  <li ng-show="cert.annanAtgard != null"><span message key="view.label.plannedtreatment.other"></span> <span class="multiline">{{cert.annanAtgard}}</span></li>
+                  <li ng-show="cert.atgardInomSjukvarden != null"><span message key="view.label.plannedtreatment.healthcare"></span> <div class="multiline">{{cert.atgardInomSjukvarden}}</div></li>
+                  <li ng-show="cert.annanAtgard != null"><span message key="view.label.plannedtreatment.other"></span> <div class="multiline">{{cert.annanAtgard}}</div></li>
                 </ul>
               </div>
 
@@ -185,13 +185,13 @@
 
               <div mi-field field-label="view.label.patientworkcapacity" filled="cert.nuvarandeArbetsuppgifter||cert.arbetsloshet||cert.foraldrarledighet">
                 <ul>
-                  <li ng-show="cert.nuvarandeArbetsuppgifter"><span message key="view.label.patientworkcapacity.currentwork"></span> <span class="multiline">{{cert.nuvarandeArbetsuppgifter}}</span></li>
+                  <li ng-show="cert.nuvarandeArbetsuppgifter"><span message key="view.label.patientworkcapacity.currentwork"></span> <div class="multiline">{{cert.nuvarandeArbetsuppgifter}}</div></li>
                   <li ng-show="cert.arbetsloshet"><span message key="view.label.patientworkcapacity.unemployed"></span></li>
                   <li ng-show="cert.foraldrarledighet"><span message key="view.label.patientworkcapacity.parentalleave"></span></li>
                 </ul>
               </div>
 
-              <div mi-field field-label="view.label.patientworkcapacityjudgement" filled="cert.arbetsformagaPrognos!=null"><span class="multiline">{{cert.arbetsformagaPrognos}}</span></div>
+              <div mi-field field-label="view.label.patientworkcapacityjudgement" filled="cert.arbetsformagaPrognos!=null"><div class="multiline">{{cert.arbetsformagaPrognos}}</div></div>
 
               <div mi-field field-label="view.label.prognosis"
                 filled="cert.arbetsformataPrognosJa || cert.arbetsformataPrognosJaDelvis||cert.arbetsformataPrognosNej||cert.arbetsformataPrognosGarInteAttBedoma">
@@ -214,7 +214,7 @@
 
               <div mi-field field-label="view.label.otherinformation" filled="cert.kommentar">
                 <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
-                <div class="tag" ng-show="cert.kommentar.length > 0"><span class="multiline">{{cert.kommentar}}</span></div>
+                <div class="tag" ng-show="cert.kommentar.length > 0"><div class="multiline">{{cert.kommentar}}</div></div>
               </div>
 
               <div mi-field field-label="view.label.workcodes" filled="cert.forskrivarkodOchArbetsplatskod">
