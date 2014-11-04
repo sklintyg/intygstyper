@@ -13,7 +13,7 @@
   <artifactId>ts-bas</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>Intygstyper Transportstyrelsens läkarintyg</name>
+  <name>Intygstyper (TS Läkarintyg)</name>
 
   <properties>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
@@ -38,7 +38,7 @@
     <!-- Schemas -->
     <dependency>
       <groupId>se.inera.intyg.schemas</groupId>
-      <artifactId>intygstjanst-schemas</artifactId>
+      <artifactId>schemas-intygstjanst</artifactId>
     </dependency>
 
     <dependency>

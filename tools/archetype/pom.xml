@@ -12,7 +12,7 @@
   <artifactId>archetype</artifactId>
   <packaging>maven-archetype</packaging>
 
-  <name>Intygstyper Maven Archetype</name>
+  <name>Intygstyper (Maven Archetype)</name>
 
   <build>
     <extensions>

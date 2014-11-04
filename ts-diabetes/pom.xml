@@ -13,7 +13,7 @@
   <artifactId>ts-diabetes</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>Intygstyper Transportstyrelsens läkarintyg, diabets</name>
+  <name>Intygstyper (TS Läkarintyg, diabetes)</name>
 
   <properties>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
@@ -38,7 +38,7 @@
     <!-- Schemas -->
     <dependency>
       <groupId>se.inera.intyg.schemas</groupId>
-      <artifactId>intygstjanst-schemas</artifactId>
+      <artifactId>schemas-intygstjanst</artifactId>
     </dependency>
 
     <dependency>

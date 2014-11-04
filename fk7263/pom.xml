@@ -13,7 +13,7 @@
   <artifactId>fk7263</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>Intygstyper Läkarintyg FK 7263</name>
+  <name>Intygstyper (FK7263 Läkarintyg)</name>
 
   <properties>
     <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
@@ -38,7 +38,7 @@
     <!-- Schemas -->
     <dependency>
       <groupId>se.inera.intyg.schemas</groupId>
-      <artifactId>intygstjanst-schemas</artifactId>
+      <artifactId>schemas-intygstjanst</artifactId>
     </dependency>
 
     <dependency>
