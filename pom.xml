@@ -17,7 +17,7 @@
   <packaging>pom</packaging>
   <name>Inera Certificate Modules</name>
   <scm>
-    <connection>scm:git:https://code.google.com/p/inera-certificate-modules/</connection>
+    <connection>scm:git:https://github.com/intygstyper.git/</connection>
     <tag>HEAD</tag>
   </scm>
   <distributionManagement>
