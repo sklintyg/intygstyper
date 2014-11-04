@@ -15,7 +15,7 @@
   <parent>
     <groupId>se.inera.certificate.modules</groupId>
     <artifactId>certificates</artifactId>
-    <version>WC-0.5.2-SNAPSHOT</version>
+    <version>WC-0.5.2</version>
   </parent>
 
   <artifactId>fk7263</artifactId>
