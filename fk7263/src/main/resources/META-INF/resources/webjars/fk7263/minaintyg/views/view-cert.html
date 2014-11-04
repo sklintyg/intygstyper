@@ -212,15 +212,15 @@
                     <span message key="fk7263.label.diagnosfortydligande"></span>
                   </label>
                   <div class="controls">
-                    <span id="diagnosBeskrivning" class="multiline">{{cert.diagnosBeskrivning}}</span>
+                    <div id="diagnosBeskrivning" class="multiline">{{cert.diagnosBeskrivning}}</div>
                   </div>
                 </div>
 
               </div>
 
-              <div mi-field field-label="fk7263.label.progressofdesease" filled="cert.sjukdomsforlopp!=null"><span class="multiline">{{cert.sjukdomsforlopp}}</span></div>
+              <div mi-field field-label="fk7263.label.progressofdesease" filled="cert.sjukdomsforlopp!=null"><div class="multiline">{{cert.sjukdomsforlopp}}</div></div>
 
-              <div mi-field field-label="fk7263.label.disabilities" filled="cert.funktionsnedsattning!=null"><span class="multiline">{{cert.funktionsnedsattning}}</span></div>
+              <div mi-field field-label="fk7263.label.disabilities" filled="cert.funktionsnedsattning!=null"><div class="multiline">{{cert.funktionsnedsattning}}</div></div>
 
               <div mi-field field-label="fk7263.label.basedon" filled="cert.undersokningAvPatienten!=null || telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null">
                 <ul class="padded-list">
@@ -233,21 +233,21 @@
                 </ul>
               </div>
 
-              <div mi-field field-label="fk7263.label.limitation" filled="cert.aktivitetsbegransning!=null"><span class="multiline">{{cert.aktivitetsbegransning}}</span></div>
+              <div mi-field field-label="fk7263.label.limitation" filled="cert.aktivitetsbegransning!=null"><div class="multiline">{{cert.aktivitetsbegransning}}</div></div>
 
               <div mi-field field-label="fk7263.label.recommendations"
                 filled="cert.rekommendationKontaktArbetsformedlingen|| cert.rekommendationKontaktForetagshalsovarden || cert.rekommendationOvrigt!=null">
                 <ul class="padded-list">
                   <li ng-show="cert.rekommendationKontaktArbetsformedlingen"><span message key="fk7263.label.recommendations.contact.jobcenter"></span></li>
                   <li ng-show="cert.rekommendationKontaktForetagshalsovarden"><span message key="fk7263.label.recommendations.contact.healthdepartment"></span></li>
-                  <li ng-show="cert.rekommendationOvrigt.length > 0"><span message key="fk7263.label.recommendations.contact.other"></span> <span class="multiline">{{cert.rekommendationOvrigt}}</span></li>
+                  <li ng-show="cert.rekommendationOvrigt.length > 0"><span message key="fk7263.label.recommendations.contact.other"></span> <div class="multiline">{{cert.rekommendationOvrigt}}</div></li>
                 </ul>
               </div>
 
               <div mi-field field-label="fk7263.label.plannedtreatment" filled="cert.atgardInomSjukvarden||cert.annanAtgard">
                 <ul class="padded-list">
-                  <li ng-show="cert.atgardInomSjukvarden != null"><span message key="fk7263.label.plannedtreatment.healthcare"></span> <span class="multiline">{{cert.atgardInomSjukvarden}}</span></li>
-                  <li ng-show="cert.annanAtgard != null"><span message key="fk7263.label.plannedtreatment.other"></span> <span class="multiline">{{cert.annanAtgard}}</span></li>
+                  <li ng-show="cert.atgardInomSjukvarden != null"><span message key="fk7263.label.plannedtreatment.healthcare"></span> <div class="multiline">{{cert.atgardInomSjukvarden}}</div></li>
+                  <li ng-show="cert.annanAtgard != null"><span message key="fk7263.label.plannedtreatment.other"></span> <div class="multiline">{{cert.annanAtgard}}</div></li>
                 </ul>
               </div>
 
@@ -258,13 +258,13 @@
 
               <div mi-field field-label="fk7263.label.patientworkcapacity" filled="cert.nuvarandeArbetsuppgifter||cert.arbetsloshet||cert.foraldrarledighet">
                 <ul class="padded-list">
-                  <li ng-show="cert.nuvarandeArbetsuppgifter"><span message key="fk7263.label.patientworkcapacity.currentwork"></span> <span class="multiline">{{cert.nuvarandeArbetsuppgifter}}</span></li>
+                  <li ng-show="cert.nuvarandeArbetsuppgifter"><span message key="fk7263.label.patientworkcapacity.currentwork"></span> <div class="multiline">{{cert.nuvarandeArbetsuppgifter}}</div></li>
                   <li ng-show="cert.arbetsloshet"><span message key="fk7263.label.patientworkcapacity.unemployed"></span></li>
                   <li ng-show="cert.foraldrarledighet"><span message key="fk7263.label.patientworkcapacity.parentalleave"></span></li>
                 </ul>
               </div>
 
-              <div mi-field field-label="fk7263.label.patientworkcapacityjudgement" filled="cert.arbetsformagaPrognos!=null"><span class="multiline">{{cert.arbetsformagaPrognos}}</span></div>
+              <div mi-field field-label="fk7263.label.patientworkcapacityjudgement" filled="cert.arbetsformagaPrognos!=null"><div class="multiline">{{cert.arbetsformagaPrognos}}</div></div>
 
               <div mi-field field-label="fk7263.label.prognosis"
                 filled="cert.prognosBedomning">
@@ -273,7 +273,7 @@
                   key="fk7263.label.partialyes"></span></span> <span ng-show="cert.prognosBedomning == 'arbetsformagaPrognosNej'"><span message key="fk7263.label.no"></span></span> <span
                   ng-show="cert.prognosBedomning == 'arbetsformagaPrognosGarInteAttBedoma'"><span message key="fk7263.label.unjudgeable"></span>
                   <br>
-                  <span class="tag">Förtydligande: <span class="multiline">{{cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning}}</span></span>
+                  <span class="tag">Förtydligande: <div class="multiline">{{cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning}}</div></span>
                 </span>
               </div>
 

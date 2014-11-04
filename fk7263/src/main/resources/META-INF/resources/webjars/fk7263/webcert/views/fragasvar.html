@@ -117,7 +117,7 @@
                   </div>
 
                   <div class="qa-block-body" id="qa-fragetext-{{qa.internReferens}}">{{qa.frageText}}</div>
-                  <div class="qa-block-body" id="fkKompletteringar-{{qa.internReferens}}" ng-repeat="komplettering in qa.kompletteringar">
+                  <div class="qa-block-body komplettera-block" id="fkKompletteringar-{{qa.internReferens}}" ng-repeat="komplettering in qa.kompletteringar">
                     <strong><span>{{komplettering.falt}}</span></strong>
                     <div>
                       <span>{{komplettering.text}}</span>
@@ -232,7 +232,7 @@
                   </div>
                 </div>
                 <div class="qa-block-body">{{qa.frageText}}</div>
-                <div class="qa-block-body" ng-repeat="komplettering in qa.kompletteringar">
+                <div class="qa-block-body komplettera-block" ng-repeat="komplettering in qa.kompletteringar">
                   <strong><span>{{komplettering.falt}}</span></strong>
                   <div>
                     <span>{{komplettering.text}}</span>
