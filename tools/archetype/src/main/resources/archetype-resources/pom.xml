@@ -15,10 +15,6 @@
 
   <name>&lt;namn på intyg&gt;</name>
 
-  <properties>
-    <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
-  </properties>
-
   <dependencies>
 
     <!-- Common -->

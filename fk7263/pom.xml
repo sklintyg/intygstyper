@@ -15,10 +15,6 @@
 
   <name>Intygstyper (FK7263 Läkarintyg)</name>
 
-  <properties>
-    <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
-  </properties>
-
   <dependencies>
 
     <!-- Common -->

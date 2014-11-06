@@ -15,10 +15,6 @@
 
   <name>Intygstyper (TS Läkarintyg, diabetes)</name>
 
-  <properties>
-    <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
-  </properties>
-
   <dependencies>
 
     <!-- Common -->

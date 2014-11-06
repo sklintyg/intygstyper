@@ -30,8 +30,6 @@
 
     <!-- Netcare -->
     <mvkintegration.version>1.2-SNAPSHOT</mvkintegration.version>
-
-    <checkstyle.basedir>${project.basedir}</checkstyle.basedir>
   </properties>
 
   <modules>

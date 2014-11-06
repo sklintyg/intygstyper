@@ -15,10 +15,6 @@
 
   <name>Intygstyper (RLI)</name>
 
-  <properties>
-    <checkstyle.basedir>${project.basedir}/..</checkstyle.basedir>
-  </properties>
-
   <dependencies>
 
     <!-- Common -->
