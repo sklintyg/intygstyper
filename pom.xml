@@ -29,7 +29,7 @@
     <schemas.version>1.0.0</schemas.version>
 
     <!-- Netcare -->
-    <mvkintegration.version>1.2</mvkintegration.version>
+    <mvkintegration.version>1.2.2</mvkintegration.version>
 
     <checkstyle.basedir>${project.basedir}</checkstyle.basedir>
   </properties>
