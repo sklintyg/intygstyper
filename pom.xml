@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -34,7 +34,7 @@
 
   <modules>
     <module>fk7263</module>
-    <!--<module>rli</module>-->
+    <!--<module>rli</module> -->
     <module>ts-bas</module>
     <module>ts-diabetes</module>
     <module>tools/archetype</module>
@@ -75,11 +75,11 @@
 
       <!-- Schemas -->
       <dependency>
-        <groupId>se.inera.intyg.schemas</groupId>
-        <artifactId>schemas-intygstjanst</artifactId>
+        <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
+        <artifactId>clinicalprocess-healthcond-certificate-core</artifactId>
         <version>${schemas.version}</version>
       </dependency>
-
+      
       <!-- Netcare dependencies -->
       <dependency>
         <groupId>org.callistasoftware.netcare.commons</groupId>
@@ -224,11 +224,11 @@
             <configuration>
               <target>
                 <copy todir="${project.build.directory}/webjardependencies"
-                    verbose="false">
+                  verbose="false">
                   <regexpmapper from="^(.*)[/\\].*[/\\](.*)$$"
-                      to="\1/\2"/>
+                    to="\1/\2" />
                   <fileset
-                      dir="${project.build.directory}/webjardependenciestemp/META-INF/resources/webjars/">
+                    dir="${project.build.directory}/webjardependenciestemp/META-INF/resources/webjars/">
                   </fileset>
                 </copy>
               </target>

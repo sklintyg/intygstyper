@@ -33,8 +33,8 @@
 
     <!-- Schemas -->
     <dependency>
-      <groupId>se.inera.intyg.schemas</groupId>
-      <artifactId>schemas-intygstjanst</artifactId>
+      <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
+      <artifactId>clinicalprocess-healthcond-certificate-core</artifactId>
     </dependency>
 
     <dependency>
