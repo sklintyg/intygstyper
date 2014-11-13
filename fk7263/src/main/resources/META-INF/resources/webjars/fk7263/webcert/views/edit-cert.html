@@ -24,7 +24,7 @@
                   </button>
                 </div>
               </div>
-              <a wc-feature-not-active feature="franJournalsystem" class="backlink-icon" href="/web/dashboard#/create/choose-cert-type/index"
+              <a id="tillbakaButton" wc-feature-not-active feature="franJournalsystem" class="backlink-icon" href="/web/dashboard#/create/choose-cert-type/index"
                  title="Tillbaka till Skriv intyg"></a>
               <h1 style="display: inline-block; margin-right: 20px;"><span message key="fk7263.label.certtitle"></span>
               </h1>
@@ -74,7 +74,7 @@
       <!-- top end -->
 
       <!-- Total fail error messages -->
-      <div class="cert-error-panel" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey">
+      <div id="error-panel" class="cert-error-panel" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey">
         <div class="alert alert-danger">
           <span message key="{{widgetState.activeErrorMessageKey}}"></span>
         </div>
