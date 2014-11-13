@@ -26,7 +26,7 @@
     <logging-util.version>0-SNAPSHOT</logging-util.version>
 
     <!-- Schemas -->
-    <schemas.version>0-SNAPSHOT</schemas.version>
+    <clinicalprocess-healthcond-certificate.version>0-SNAPSHOT</clinicalprocess-healthcond-certificate.version>
 
     <!-- Netcare -->
     <mvkintegration.version>0-SNAPSHOT</mvkintegration.version>
@@ -76,7 +76,7 @@
       <dependency>
         <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
         <artifactId>clinicalprocess-healthcond-certificate-core</artifactId>
-        <version>${schemas.version}</version>
+        <version>${clinicalprocess-healthcond-certificate.version}</version>
       </dependency>
       
       <!-- Netcare dependencies -->
