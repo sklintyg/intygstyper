@@ -36,18 +36,9 @@
 		</vardkontakt>
 
 		<medicinsktTillstand>
-			<beskrivning>Klämskada på överarm</beskrivning>
 			<tillstandskod code="S47" />
 		</medicinsktTillstand>
-
-		<aktivitet>
-			<aktivitetskod>Arbetslivsinriktad_rehabilitering_ar_aktuell</aktivitetskod>
-		</aktivitet>
 		
-		<aktivitet>
-			<aktivitetskod>Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt</aktivitetskod>
-		</aktivitet>
-
 		<funktionstillstand>
 			<beskrivning>Kraftigt nedsatt rörlighet i överarmen pga skadan.
 Böj- och sträckförmågan är mycket dålig.
@@ -61,10 +52,8 @@ Skadan förvärras vid för tidigt påtvingad belastning.
 Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning.</beskrivning>
 			<typAvFunktionstillstand>Aktivitet</typAvFunktionstillstand>
 			<arbetsformaga>
-				<motivering>Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.</motivering>
-				<prognosangivelse>Aterstallas_helt</prognosangivelse>
 				<arbetsuppgift>
-				    <typAvArbetsuppgift>Dirigent Dirigerar en för större orkester på deltid</typAvArbetsuppgift>
+				<typAvArbetsuppgift>Dirigent Dirigerar en för större orkester på deltid</typAvArbetsuppgift>
 				</arbetsuppgift>
 				<arbetsformagaNedsattning>
 					<varaktighetFrom>2013-03-17</varaktighetFrom>
@@ -73,29 +62,4 @@ Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast lä
 				</arbetsformagaNedsattning>
 			</arbetsformaga>
 		</funktionstillstand>
-
-		<!-- Remove this as soon as converter is fixed -->
-		<bedomtTillstand>
-			<beskrivning>Placeholder</beskrivning>
-		</bedomtTillstand>
-
-		<funktionstillstand>
-			<typAvFunktionstillstand>Aktivitet</typAvFunktionstillstand>
-			<arbetsformaga>
-				<arbetsuppgift>
-				    <typAvArbetsuppgift>Dirigent Dirigerar en för större orkester på deltid</typAvArbetsuppgift>
-				</arbetsuppgift>
-
-				<arbetsformagaNedsattning>
-					<varaktighetFrom>2013-03-17</varaktighetFrom>
-					<varaktighetTom>2013-04-07</varaktighetTom>
-					<nedsattningsgrad>Helt_nedsatt</nedsattningsgrad>
-				</arbetsformagaNedsattning>
-
-				<sysselsattning>
-					<typAvSysselsattning>Nuvarande_arbete</typAvSysselsattning>
-				</sysselsattning>
-			</arbetsformaga>
-		</funktionstillstand>
-
 	</lakarutlatande>

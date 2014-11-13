@@ -36,18 +36,9 @@
 		</vardkontakt>
 
 		<medicinsktTillstand>
+			<beskrivning>Klämskada på överarm</beskrivning>
 			<tillstandskod code="S47" />
 		</medicinsktTillstand>
-		
-		<!-- Ignore -->
-		<bedomtTillstand>
-			<beskrivning>placeholder</beskrivning>
-		</bedomtTillstand>
-		<!-- to here -->
-
-		<aktivitet>
-			<aktivitetskod>Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt</aktivitetskod>
-		</aktivitet>
 		
 		<funktionstillstand>
 			<beskrivning>Kraftigt nedsatt rörlighet i överarmen pga skadan.
@@ -57,13 +48,13 @@ Smärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt 
 		</funktionstillstand>
 
 		<funktionstillstand>
-			<beskrivning>Aktivitetsnedsättning: Patienten bör/kan inte använda armen förrän skadan läkt.
+			<beskrivning>Patienten bör/kan inte använda armen förrän skadan läkt.
 Skadan förvärras vid för tidigt påtvingad belastning.
 Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning.</beskrivning>
 			<typAvFunktionstillstand>Aktivitet</typAvFunktionstillstand>
 			<arbetsformaga>
 				<arbetsuppgift>
-				    <typAvArbetsuppgift>Dirigent Dirigerar en för större orkester på deltid</typAvArbetsuppgift>
+				<typAvArbetsuppgift>Dirigent Dirigerar en för större orkester på deltid</typAvArbetsuppgift>
 				</arbetsuppgift>
 				<arbetsformagaNedsattning>
 					<varaktighetFrom>2013-03-17</varaktighetFrom>

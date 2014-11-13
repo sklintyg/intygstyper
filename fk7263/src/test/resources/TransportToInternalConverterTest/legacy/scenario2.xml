@@ -39,11 +39,6 @@
 		<aktivitetskod>Avstangning_enligt_SmL_pga_smitta</aktivitetskod>
 	</aktivitet>
 
-	<!-- Remove this as soon as converter is fixed -->
-	<bedomtTillstand>
-		<beskrivning>Placeholder</beskrivning>
-	</bedomtTillstand>
-
 	<funktionstillstand>
 		<typAvFunktionstillstand>Aktivitet</typAvFunktionstillstand>
 		<arbetsformaga>

@@ -33,7 +33,7 @@ public class TransportToInternalConverterTest {
     private JAXBContext jaxbContext;
     private Unmarshaller unmarshaller;
     private ObjectMapper objectMapper;
-    private static final String RESOURCE_ROOT = "TransportToExternalFk7263LegacyConverterTest/";
+    private static final String RESOURCE_ROOT = "TransportToInternalConverterTest/";
 
     private JAXBElement<Lakarutlatande> readUtlatandeTypeFromFile(String file)
             throws JAXBException, IOException {

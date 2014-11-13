@@ -2,6 +2,9 @@
 	xmlns:ns2="urn:riv:insuranceprocess:healthreporting:2" xmlns="urn:riv:insuranceprocess:healthreporting:mu7263:3">
 	<lakarutlatande-id>6ea04fd0-5fef-4809-823b-efeddf8a4d55</lakarutlatande-id>
 	<typAvUtlatande>Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring</typAvUtlatande>
+		
+		<kommentar>Annat kontaktsätt</kommentar>
+		
 		<signeringsdatum>2013-03-17T00:00:00</signeringsdatum>
 		<skickatDatum>2013-03-17T00:00:00</skickatDatum>
 		<patient>
@@ -39,11 +42,13 @@
 			<tillstandskod code="S47" />
 		</medicinsktTillstand>
 		
-		<!--  Remove this as soon as converter is fixed -->
-		<bedomtTillstand>
-			<beskrivning>Placeholder</beskrivning>
-		</bedomtTillstand>
-		<!-- remove to here -->
+		<aktivitet>
+			<aktivitetskod>Patienten_behover_fa_kontakt_med_Arbetsformedlingen</aktivitetskod>
+		</aktivitet>
+		
+		<aktivitet>
+			<aktivitetskod>Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt</aktivitetskod>
+		</aktivitet>
 		
 		<funktionstillstand>
 			<beskrivning>Kraftigt nedsatt rörlighet i överarmen pga skadan.
@@ -51,9 +56,15 @@ Böj- och sträckförmågan är mycket dålig.
 Smärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket.</beskrivning>
 			<typAvFunktionstillstand>Kroppsfunktion</typAvFunktionstillstand>
 		</funktionstillstand>
+		
+	
+   	 	<referens>
+    		<referenstyp>Annat</referenstyp>
+     		<datum>2013-03-10</datum>
+   		</referens>
 
 		<funktionstillstand>
-			<beskrivning>Patienten bör/kan inte använda armen förrän skadan läkt.
+			<beskrivning>Aktivitetsnedsättning: Patienten bör/kan inte använda armen förrän skadan läkt.
 Skadan förvärras vid för tidigt påtvingad belastning.
 Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning.</beskrivning>
 			<typAvFunktionstillstand>Aktivitet</typAvFunktionstillstand>
@@ -68,4 +79,5 @@ Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast lä
 				</arbetsformagaNedsattning>
 			</arbetsformaga>
 		</funktionstillstand>
+
 	</lakarutlatande>

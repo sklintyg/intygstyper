@@ -2,9 +2,6 @@
 	xmlns:ns2="urn:riv:insuranceprocess:healthreporting:2" xmlns="urn:riv:insuranceprocess:healthreporting:mu7263:3">
 	<lakarutlatande-id>6ea04fd0-5fef-4809-823b-efeddf8a4d55</lakarutlatande-id>
 	<typAvUtlatande>Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring</typAvUtlatande>
-		
-		<kommentar>Annat kontaktsätt</kommentar>
-		
 		<signeringsdatum>2013-03-17T00:00:00</signeringsdatum>
 		<skickatDatum>2013-03-17T00:00:00</skickatDatum>
 		<patient>
@@ -42,16 +39,6 @@
 			<tillstandskod code="S47" />
 		</medicinsktTillstand>
 		
-		<!-- Ignore -->
-		<bedomtTillstand>
-			<beskrivning>placeholder</beskrivning>
-		</bedomtTillstand>
-		<!-- to here -->
-		
-		<aktivitet>
-			<aktivitetskod>Patienten_behover_fa_kontakt_med_Arbetsformedlingen</aktivitetskod>
-		</aktivitet>
-		
 		<aktivitet>
 			<aktivitetskod>Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt</aktivitetskod>
 		</aktivitet>
@@ -62,12 +49,6 @@ Böj- och sträckförmågan är mycket dålig.
 Smärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket.</beskrivning>
 			<typAvFunktionstillstand>Kroppsfunktion</typAvFunktionstillstand>
 		</funktionstillstand>
-		
-	
-   	 	<referens>
-    		<referenstyp>Annat</referenstyp>
-     		<datum>2013-03-10</datum>
-   		</referens>
 
 		<funktionstillstand>
 			<beskrivning>Aktivitetsnedsättning: Patienten bör/kan inte använda armen förrän skadan läkt.
@@ -76,7 +57,7 @@ Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast lä
 			<typAvFunktionstillstand>Aktivitet</typAvFunktionstillstand>
 			<arbetsformaga>
 				<arbetsuppgift>
-				<typAvArbetsuppgift>Dirigent Dirigerar en för större orkester på deltid</typAvArbetsuppgift>
+				    <typAvArbetsuppgift>Dirigent Dirigerar en för större orkester på deltid</typAvArbetsuppgift>
 				</arbetsuppgift>
 				<arbetsformagaNedsattning>
 					<varaktighetFrom>2013-03-17</varaktighetFrom>
