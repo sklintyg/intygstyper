@@ -28,7 +28,7 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 /**
  * @author marced, andreaskaltenbach
  */
-public class ExternalToTransportFk7263LegacyConverterTest {
+public class InternalToTransportConverterTest {
 
     @Test
     public void testConversion() throws JAXBException, IOException, SAXException {
@@ -37,7 +37,7 @@ public class ExternalToTransportFk7263LegacyConverterTest {
         Fk7263Utlatande externalFormat = objectMapper.readValue(new ClassPathResource("ExternalToTransportFk7263LegacyConverterTest/maximalt-fk7263.json").getInputStream(), Fk7263Utlatande.class);
 
 
-        RegisterMedicalCertificate registerMedicalCertificate = ExternalToTransportFk7263LegacyConverter.getJaxbObject(externalFormat);
+        RegisterMedicalCertificate registerMedicalCertificate = InternalToTransport.getJaxbObject(externalFormat);
 
         JAXBContext jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificate.class, Lakarutlatande.class);
         StringWriter stringWriter = new StringWriter();
@@ -61,7 +61,7 @@ public class ExternalToTransportFk7263LegacyConverterTest {
         Fk7263Utlatande externalFormat = objectMapper.readValue(new ClassPathResource("ExternalToTransportFk7263LegacyConverterTest/minimalt-SmiL-fk7263.json").getInputStream(), Fk7263Utlatande.class);
 
 
-        RegisterMedicalCertificate registerMedicalCertificateType = ExternalToTransportFk7263LegacyConverter.getJaxbObject(externalFormat);
+        RegisterMedicalCertificate registerMedicalCertificateType = InternalToTransport.getJaxbObject(externalFormat);
 
         JAXBContext jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificate.class, Lakarutlatande.class);
         StringWriter stringWriter = new StringWriter();

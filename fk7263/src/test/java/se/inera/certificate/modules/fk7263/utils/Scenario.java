@@ -31,20 +31,11 @@ public interface Scenario {
     Utlatande asTransportModel() throws ScenarioNotFoundException;
 
     /**
-     * Returns the scenario as a external model.
-     *
-     * @return The scenario as a external model.
-     * @throws ScenarioNotFoundException
-     *             if the scenario wasn't found.
-     */
-    se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande asExternalModel() throws ScenarioNotFoundException;
-
-    /**
      * Returns the scenario as a internal Mina Intyg model.
      *
      * @return The scenario as a internal Mina Intyg model.
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
      */
-    se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg asInternalModel() throws ScenarioNotFoundException;
+    se.inera.certificate.modules.fk7263.model.internal.Utlatande asInternalModel() throws ScenarioNotFoundException;
 }

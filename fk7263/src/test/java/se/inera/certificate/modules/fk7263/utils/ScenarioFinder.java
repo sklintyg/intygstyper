@@ -18,13 +18,9 @@ public class ScenarioFinder {
 
     private static final File TRANSPORT_MODEL_PATH = new File("src/test/resources/scenarios/transport");
 
-    private static final File EXTERNAL_MODEL_PATH = new File("src/test/resources/scenarios/external");
-
     private static final File INTERNAL_MODEL_PATH = new File("src/test/resources/scenarios/internal");
 
     private static final String TRANSPORT_MODEL_EXT = ".xml";
-
-    private static final String EXTERNAL_MODEL_EXT = ".json";
 
     private static final String INTERNAL_MODEL_EXT = ".json";
 
@@ -39,19 +35,6 @@ public class ScenarioFinder {
      */
     public static List<Scenario> getTransportScenarios(String scenarioWithWildcards) throws ScenarioNotFoundException {
         return getScenarios(scenarioWithWildcards + TRANSPORT_MODEL_EXT, TRANSPORT_MODEL_PATH, "transport");
-    }
-
-    /**
-     * Finds the specified external scenarios that matches the wildcard string.
-     *
-     * @param scenarioWithWildcards
-     *            A wildcard string matching scenarios. '*' and '?' can be used.
-     * @return A list of matching external scenarios.
-     * @throws ScenarioNotFoundException
-     *             If no scenarios could be found.
-     */
-    public static List<Scenario> getExternalScenarios(String scenarioWithWildcards) throws ScenarioNotFoundException {
-        return getScenarios(scenarioWithWildcards + EXTERNAL_MODEL_EXT, EXTERNAL_MODEL_PATH, "external");
     }
 
     /**
@@ -93,19 +76,6 @@ public class ScenarioFinder {
      */
     public static Scenario getTransportScenario(String filename) throws ScenarioNotFoundException {
         return getScenario(filename + TRANSPORT_MODEL_EXT, TRANSPORT_MODEL_PATH, "transport");
-    }
-
-    /**
-     * Finds the specified external scenario matching the name.
-     *
-     * @param filename
-     *            A name matching a scenario.
-     * @return A matching external scenario.
-     * @throws ScenarioNotFoundException
-     *             If no scenario could be found.
-     */
-    public static Scenario getExternalScenario(String filename) throws ScenarioNotFoundException {
-        return getScenario(filename + EXTERNAL_MODEL_EXT, EXTERNAL_MODEL_PATH, "external");
     }
 
     /**
@@ -162,26 +132,11 @@ public class ScenarioFinder {
                 throw new ScenarioNotFoundException(scenarioFile.getName(), "transport", e);
             }
         }
-
         /**
          * {@inheritDoc}
          */
         @Override
-        public se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande asExternalModel()
-                throws ScenarioNotFoundException {
-            try {
-                return ResourceConverterUtils.toExternal(getExternalModelFor(scenarioFile));
-            } catch (IOException e) {
-                throw new ScenarioNotFoundException(scenarioFile.getName(), "external", e);
-            }
-        }
-
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg asInternalModel()
+        public se.inera.certificate.modules.fk7263.model.internal.Utlatande asInternalModel()
                 throws ScenarioNotFoundException {
             try {
                 return ResourceConverterUtils.toInternal(getInternalModelFor(scenarioFile));
@@ -195,11 +150,6 @@ public class ScenarioFinder {
     private static File getTransportModelFor(File otherModel) {
         String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());
         return new File(TRANSPORT_MODEL_PATH, filenameWithoutExt + TRANSPORT_MODEL_EXT);
-    }
-
-    private static File getExternalModelFor(File otherModel) {
-        String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());
-        return new File(EXTERNAL_MODEL_PATH, filenameWithoutExt + EXTERNAL_MODEL_EXT);
     }
 
     private static File getInternalModelFor(File otherModel) {
