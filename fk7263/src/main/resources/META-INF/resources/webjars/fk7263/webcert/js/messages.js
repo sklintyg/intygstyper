@@ -30,7 +30,7 @@ var fk7263Messages = {
         'fk7263.label.ytterligarediagnoser': 'Ytterligare diagnoser',
         'fk7263.label.diagnosfortydligande': 'Förtydligande av diagnos/diagnoser',
         'fk7263.label.samsjuklighet': 'Samsjuklighet föreligger',
-        'fk7263.label.aktuellt-sjukdomsforlopp': 'Aktuellt sjukdomförlopp',
+        'fk7263.label.aktuellt-sjukdomsforlopp': 'Aktuellt sjukdomsförlopp',
         'fk7263.label.funktionsnedsattningar': 'Funktionsnedsättning - observationer, undersökningsfynd och utredningsresultat',
         'fk7263.label.intyg-baserat-pa': 'Intyget baseras på',
         'fk7263.label.kommentar': 'Kommentar:',
