@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.model.InternalLocalDateInterval;
-import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.service.WebcertModuleService;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.dto.ValidationMessage;
@@ -29,7 +29,7 @@ public class InternalDraftValidator {
 
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
-    public ValidateDraftResponse validateDraft(Fk7263Intyg utlatande) {
+    public ValidateDraftResponse validateDraft(Utlatande utlatande) {
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
         validateDiagnose(utlatande, validationMessages);
@@ -48,7 +48,7 @@ public class InternalDraftValidator {
         return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
     }
 
-    private void validateVardkontakter(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
+    private void validateVardkontakter(Utlatande utlatande, List<ValidationMessage> validationMessages) {
         if (utlatande.getTelefonkontaktMedPatienten() != null && !utlatande.getTelefonkontaktMedPatienten().isValidDate()) {
             addValidationError(validationMessages, "intygbaseratpa.telefonkontakt", "fk7263.validation.intyg-baserat-pa.telefonkontakt.incorrect_format");
         }
@@ -57,7 +57,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateReferenser(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
+    private void validateReferenser(Utlatande utlatande, List<ValidationMessage> validationMessages) {
         if (utlatande.getAnnanReferens() != null && !utlatande.getAnnanReferens().isValidDate()) {
             addValidationError(validationMessages, "intygbaseratpa.referenser", "fk7263.validation.intyg-baserat-pa.annan.incorrect_format");
         }
@@ -66,7 +66,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateVardenhet(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
+    private void validateVardenhet(Utlatande utlatande, List<ValidationMessage> validationMessages) {
         if (isNullOrEmpty(utlatande.getIntygMetadata().getSkapadAv().getVardenhet().getPostadress())) {
             addValidationError(validationMessages, "vardperson.postadress", "fk7263.validation.vardenhet.postadress.missing");
         }
@@ -86,7 +86,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateKommentar(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
+    private void validateKommentar(Utlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 13 - Upplysningar - optional
         // If field 4 annat satt or field 10 går ej att bedömma is set then
         // field 13 should contain data.
@@ -102,7 +102,7 @@ public class InternalDraftValidator {
 
     }
 
-    private void validateRessatt(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
+    private void validateRessatt(Utlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 11 - optional
         boolean inForandratRessatt = utlatande.isRessattTillArbeteAktuellt();
         boolean inEjForandratRessatt = utlatande.isRessattTillArbeteEjAktuellt();
@@ -113,7 +113,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateArbetsformaga(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
+    private void validateArbetsformaga(Utlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 8a - arbetsformoga - sysselsattning - applies of not smittskydd is set
         if (!utlatande.isAvstangningSmittskydd()) {
             if (!utlatande.isNuvarandeArbete() && !utlatande.isArbetsloshet() && !utlatande.isForaldrarledighet()) {
@@ -135,7 +135,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private boolean isValidDateInIntervals(List<ValidationMessage> validationMessages, Fk7263Intyg utlatande) {
+    private boolean isValidDateInIntervals(List<ValidationMessage> validationMessages, Utlatande utlatande) {
         boolean success = true;
         InternalLocalDateInterval[] intervals = {utlatande.getNedsattMed100(), utlatande.getNedsattMed75(), utlatande.getNedsattMed50(),
                 utlatande.getNedsattMed25() };
@@ -163,7 +163,7 @@ public class InternalDraftValidator {
         return success;
     }
 
-    private void validateAktivitetsbegransning(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
+    private void validateAktivitetsbegransning(Utlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 5 Aktivitetsbegränsning relaterat till diagnos och funktionsnedsättning
         String aktivitetsbegransning = utlatande.getAktivitetsbegransning();
         if (!utlatande.isAvstangningSmittskydd() && aktivitetsbegransning == null) {
@@ -171,7 +171,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateFunktionsnedsattning(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
+    private void validateFunktionsnedsattning(Utlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 4 - vänster Check that we got a funktionsnedsattning element
         String funktionsnedsattning = utlatande.getFunktionsnedsattning();
         if (!utlatande.isAvstangningSmittskydd() && (funktionsnedsattning == null)) {
@@ -190,7 +190,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateDiagnose(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
+    private void validateDiagnose(Utlatande utlatande, List<ValidationMessage> validationMessages) {
 
         // Fält 3 - always optional regardless of smittskydd
 
@@ -229,7 +229,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateOvrigaRekommendationer(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
+    private void validateOvrigaRekommendationer(Utlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 6a - If Övrigt is checked, something must be entered.
         if (utlatande.isRekommendationOvrigtCheck() && StringUtils.isEmpty(utlatande.getRekommendationOvrigt())) {
             addValidationError(validationMessages, "rekommendationer", "fk7263.validation.rekommendationer.ovriga");

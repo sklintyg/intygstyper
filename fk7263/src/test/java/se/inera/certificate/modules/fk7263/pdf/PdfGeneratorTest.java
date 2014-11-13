@@ -13,7 +13,7 @@ import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.utils.Scenario;
 import se.inera.certificate.modules.fk7263.utils.ScenarioFinder;
 import se.inera.certificate.modules.support.ApplicationOrigin;
@@ -38,7 +38,7 @@ public class PdfGeneratorTest {
     @Test
     public void testPdfGeneration() throws IOException, PdfGeneratorException {
 
-        Fk7263Intyg intyg = new CustomObjectMapper().readValue(fk7263_json, Fk7263Intyg.class);
+        Utlatande intyg = new CustomObjectMapper().readValue(fk7263_json, Utlatande.class);
 
         // generate PDF
         byte[] generatorResult = new PdfGenerator(intyg, false, ApplicationOrigin.WEBCERT).getBytes();
@@ -58,7 +58,7 @@ public class PdfGeneratorTest {
     @Test
     public void testPdfGenerationWithMasking() throws Exception {
 
-        Fk7263Intyg intyg = new CustomObjectMapper().readValue(fk7263_json, Fk7263Intyg.class);
+        Utlatande intyg = new CustomObjectMapper().readValue(fk7263_json, Utlatande.class);
         // generate PDF
         byte[] generatorResult = new PdfGenerator(intyg, true, ApplicationOrigin.MINA_INTYG).getBytes();
         writePdfToFile(generatorResult, "Mina-intyg");
@@ -66,7 +66,7 @@ public class PdfGeneratorTest {
 
     @Test
     public void testPdfGenerationFromWebcert() throws Exception {
-        Fk7263Intyg intyg = new CustomObjectMapper().readValue(fk7263_json, Fk7263Intyg.class);
+        Utlatande intyg = new CustomObjectMapper().readValue(fk7263_json, Utlatande.class);
         // generate PDF
         byte[] generatorResult = new PdfGenerator(intyg, true, ApplicationOrigin.WEBCERT).getBytes();
         writePdfToFile(generatorResult, "Webcert");
@@ -74,7 +74,7 @@ public class PdfGeneratorTest {
 
     @Test
     public void pdfGenerationRemovesFormFields() throws IOException, PdfGeneratorException {
-        Fk7263Intyg intyg = new CustomObjectMapper().readValue(fk7263_json, Fk7263Intyg.class);
+        Utlatande intyg = new CustomObjectMapper().readValue(fk7263_json, Utlatande.class);
         byte[] generatorResult = new PdfGenerator(intyg, ApplicationOrigin.WEBCERT).getBytes();
 
         PdfReader reader = new PdfReader(generatorResult);

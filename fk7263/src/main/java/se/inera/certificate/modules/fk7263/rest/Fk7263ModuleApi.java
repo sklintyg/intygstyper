@@ -22,13 +22,13 @@ import se.inera.certificate.fk7263.model.v1.Utlatande;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.converter.ExternalToInternalConverter;
 import se.inera.certificate.modules.fk7263.model.converter.ExternalToTransportConverter;
-import se.inera.certificate.modules.fk7263.model.converter.ExternalToTransportFk7263LegacyConverter;
+import se.inera.certificate.modules.fk7263.model.converter.InternalToTransport;
 import se.inera.certificate.modules.fk7263.model.converter.InternalToExternalConverter;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToExternalConverter;
-import se.inera.certificate.modules.fk7263.model.converter.TransportToExternalFk7263LegacyConverter;
+import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
 import se.inera.certificate.modules.fk7263.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
-import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
 import se.inera.certificate.modules.fk7263.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.fk7263.validator.ExternalValidator;
@@ -106,7 +106,7 @@ public class Fk7263ModuleApi implements ModuleApi {
             // Convert and validate legacy transport model
             LOG.debug("Converting {} to external model", jaxbObject.getClass().getCanonicalName());
             Lakarutlatande utlatande = ((RegisterMedicalCertificate) jaxbObject).getLakarutlatande();
-            externalModel = TransportToExternalFk7263LegacyConverter.convert(utlatande);
+            externalModel = TransportToInternal.convert(utlatande);
 
             validateLegacySchema(externalModel);
 
@@ -143,7 +143,7 @@ public class Fk7263ModuleApi implements ModuleApi {
             validateExternal(utlatande);
             validateLegacySchema(utlatande);
 
-            RegisterMedicalCertificate registerMedicalCertificateJaxb = ExternalToTransportFk7263LegacyConverter.getJaxbObject(utlatande);
+            RegisterMedicalCertificate registerMedicalCertificateJaxb = InternalToTransport.getJaxbObject(utlatande);
 
             return toTransportModelResponse(registerMedicalCertificateJaxb);
         }
@@ -174,7 +174,7 @@ public class Fk7263ModuleApi implements ModuleApi {
         // If no validation errors so far, continue with internal validation...
         if (validationErrors.isEmpty()) {
             try {
-                Fk7263Intyg internalModel = externalToInternalConverter.convert(externalModel);
+                Utlatande internalModel = externalToInternalConverter.convert(externalModel);
                 validationErrors.addAll((new InternalValidator(internalModel).validate()));
             } catch (ConverterException e) {
                 validationErrors.add("Failed to convert utlatande to internal model");
@@ -209,7 +209,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     @Override
     public PdfResponse pdf(ExternalModelHolder externalModel, ApplicationOrigin applicationOrigin) throws ModuleException {
         try {
-            Fk7263Intyg intyg = externalToInternalConverter.convert(getExternal(externalModel));
+            Utlatande intyg = externalToInternalConverter.convert(getExternal(externalModel));
             PdfGenerator pdfGenerator = new PdfGenerator(intyg, applicationOrigin);
             return new PdfResponse(pdfGenerator.getBytes(), pdfGenerator.generatePdfFilename());
 
@@ -266,7 +266,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     @Override
     public InternalModelResponse createNewInternalFromTemplate(CreateNewDraftHolder draftCertificateHolder, ExternalModelHolder template) throws ModuleException {
         try {
-            se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg internal = externalToInternalConverter.convert(getExternal(template));
+            se.inera.certificate.modules.fk7263.model.internal.Utlatande internal = externalToInternalConverter.convert(getExternal(template));
             return toInteralModelResponse(webcertModelFactory.createNewWebcertDraft(draftCertificateHolder, internal));
         } catch (ConverterException e) {
             LOG.error("Could not create a new internal Webcert model", e);
@@ -287,11 +287,11 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
     }
 
-    private se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg getInternal(InternalModelHolder internalModel)
+    private se.inera.certificate.modules.fk7263.model.internal.Utlatande getInternal(InternalModelHolder internalModel)
             throws ModuleException {
         try {
             return objectMapper.readValue(internalModel.getInternalModel(),
-                    se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg.class);
+                    se.inera.certificate.modules.fk7263.model.internal.Utlatande.class);
 
         } catch (IOException e) {
             throw new ModuleSystemException("Failed to deserialize internal model", e);
@@ -326,7 +326,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     private InternalModelResponse toInteralModelResponse(
-            se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg internalModel) throws ModuleException {
+            se.inera.certificate.modules.fk7263.model.internal.Utlatande internalModel) throws ModuleException {
         try {
             StringWriter writer = new StringWriter();
             objectMapper.writeValue(writer, internalModel);
@@ -346,7 +346,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     @Override
     public InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
         try {
-            Fk7263Intyg intyg = getInternal(internalModel);
+            Utlatande intyg = getInternal(internalModel);
             webcertModelFactory.updateSkapadAv(intyg, hosPerson, signingDate);
             return toInteralModelResponse(intyg);
 

@@ -20,8 +20,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
-import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.utils.ResourceConverterUtils;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
@@ -114,7 +113,7 @@ public class Fk7263ModuleApiTest {
 
     @Test
     public void testPdfFileName() {
-        Fk7263Intyg intyg = new Fk7263Intyg();
+        Utlatande intyg = new Utlatande();
         se.inera.certificate.model.common.internal.Patient patient = new se.inera.certificate.model.common.internal.Patient();
         patient.setPersonId("19121212-1212");
         intyg.getIntygMetadata().setPatient(patient);
@@ -134,7 +133,7 @@ public class Fk7263ModuleApiTest {
         HoSPersonal hosPerson = new HoSPersonal("nyId", "nyNamn", "nyForskrivarkod", "nyBefattning", null, vardenhet);
         LocalDateTime signingDate = LocalDateTime.parse("2014-08-01");
         InternalModelResponse updatedHolder = fk7263ModuleApi.updateInternal(holder, hosPerson, signingDate);
-        Fk7263Intyg updatedIntyg = mapper.readValue(updatedHolder.getInternalModel(), Fk7263Intyg.class);
+        Utlatande updatedIntyg = mapper.readValue(updatedHolder.getInternalModel(), Utlatande.class);
 
         assertEquals(signingDate, updatedIntyg.getIntygMetadata().getSigneringsdatum());
         assertEquals("nyId", updatedIntyg.getIntygMetadata().getSkapadAv().getPersonId());
@@ -150,7 +149,7 @@ public class Fk7263ModuleApiTest {
         InternalModelResponse holder = fk7263ModuleApi.createNewInternalFromTemplate(createNewDraftHolder(), createExternalHolder(utlatande));
 
         assertNotNull(holder);
-        Fk7263Intyg creatededUtlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
+        Utlatande creatededUtlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
         assertEquals("2011-03-07", creatededUtlatande.getNedsattMed50().getFrom().getDate());
     }
 

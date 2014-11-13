@@ -17,7 +17,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.utils.Scenario;
 import se.inera.certificate.modules.fk7263.utils.ScenarioFinder;
 import se.inera.certificate.modules.service.WebcertModuleService;
@@ -41,7 +41,7 @@ public class InternalDraftValidatorTest {
     @Test
     public void testValidate() throws Exception {
         for (se.inera.certificate.modules.fk7263.utils.Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
-            Fk7263Intyg utlatande = scenario.asInternalModel();
+            Utlatande utlatande = scenario.asInternalModel();
             ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
             assertEquals(
                     "Error in scenario " + scenario.getName() + "\n"
@@ -60,7 +60,7 @@ public class InternalDraftValidatorTest {
     public void testValidateWithErrors() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("invalid-*")) {
 
-            Fk7263Intyg utlatande = scenario.asInternalModel();
+            Utlatande utlatande = scenario.asInternalModel();
             ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
 
             assertEquals(ValidationStatus.INVALID, validationResponse.getStatus());

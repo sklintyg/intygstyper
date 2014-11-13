@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.model.converter.util.WebcertModelFactoryUtil;
-import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.Patient;
@@ -43,14 +43,14 @@ public class WebcertModelFactory {
      * @param template
      *            A template to use as a base, or <code>null</code> if an empty internal model should be used.
      *
-     * @return {@link Fk7263Intyg} or throws a ConverterException if something unforeseen happens
+     * @return {@link Utlatande} or throws a ConverterException if something unforeseen happens
      * @throws ConverterException
      */
-    public Fk7263Intyg createNewWebcertDraft(CreateNewDraftHolder newDraftData, Fk7263Intyg template) throws ConverterException {
+    public Utlatande createNewWebcertDraft(CreateNewDraftHolder newDraftData, Utlatande template) throws ConverterException {
         if (template == null) {
             LOG.trace("Creating draft with id {}", newDraftData.getCertificateId());
 
-            template = new Fk7263Intyg();
+            template = new Utlatande();
             template.setNuvarandeArbete(true);
             template.setArbetsloshet(false);
 
@@ -78,7 +78,7 @@ public class WebcertModelFactory {
         return template;
     }
 
-    private void populateWithPatientInfo(Fk7263Intyg utlatande, Patient patient) throws ConverterException {
+    private void populateWithPatientInfo(Utlatande utlatande, Patient patient) throws ConverterException {
         if (patient == null) {
             throw new ConverterException("Got null while trying to populateWithPatientInfo");
         }
@@ -86,7 +86,7 @@ public class WebcertModelFactory {
         utlatande.getIntygMetadata().setPatient(WebcertModelFactoryUtil.convertPatientToEdit(patient));
     }
 
-    private void populateWithSkapadAv(Fk7263Intyg utlatande, se.inera.certificate.modules.support.api.dto.HoSPersonal hoSPersonal)
+    private void populateWithSkapadAv(Utlatande utlatande, se.inera.certificate.modules.support.api.dto.HoSPersonal hoSPersonal)
             throws ConverterException {
         if (hoSPersonal == null) {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");
@@ -95,7 +95,7 @@ public class WebcertModelFactory {
         utlatande.getIntygMetadata().setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(hoSPersonal));
     }
 
-    public void updateSkapadAv(Fk7263Intyg utlatande, HoSPersonal hosPerson, LocalDateTime signeringsdatum) {
+    public void updateSkapadAv(Utlatande utlatande, HoSPersonal hosPerson, LocalDateTime signeringsdatum) {
         utlatande.getIntygMetadata().getSkapadAv().setPersonId(hosPerson.getHsaId());
         utlatande.getIntygMetadata().getSkapadAv().setFullstandigtNamn(hosPerson.getNamn());
         utlatande.getIntygMetadata().getSkapadAv().setForskrivarKod(hosPerson.getForskrivarkod());

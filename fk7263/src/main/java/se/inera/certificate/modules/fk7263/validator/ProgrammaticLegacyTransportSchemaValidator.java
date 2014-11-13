@@ -16,7 +16,7 @@ import se.inera.certificate.model.Vardenhet;
 import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.codes.ObservationsKoder;
-import se.inera.certificate.modules.fk7263.model.converter.TransportToExternalFk7263LegacyConverter;
+import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Observation;
 import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 
@@ -70,13 +70,13 @@ public class ProgrammaticLegacyTransportSchemaValidator extends AbstractValidato
 
         Kod typ = externalutlatande.getTyp();
 
-        if (typ == null || !TransportToExternalFk7263LegacyConverter.FK_7263.equals(typ.getCode())) {
+        if (typ == null || !TransportToInternal.FK_7263.equals(typ.getCode())) {
             addValidationError("Head: Invalid utlatandetyp - must be "
-                    + TransportToExternalFk7263LegacyConverter.FK_7263);
+                    + TransportToInternal.FK_7263);
         }
-        if (typ == null || !TransportToExternalFk7263LegacyConverter.UTLATANDE_TYP_OID.equals(typ.getCodeSystem())) {
+        if (typ == null || !TransportToInternal.UTLATANDE_TYP_OID.equals(typ.getCodeSystem())) {
             addValidationError("Head: Invalid utlatandetyp code system - must be "
-                    + TransportToExternalFk7263LegacyConverter.UTLATANDE_TYP_OID);
+                    + TransportToInternal.UTLATANDE_TYP_OID);
         }
 
         Id id = externalutlatande.getId();

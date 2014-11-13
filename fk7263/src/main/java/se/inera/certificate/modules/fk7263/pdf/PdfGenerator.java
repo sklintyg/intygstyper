@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.codes.Prognoskoder;
-import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 
 import com.itextpdf.text.DocumentException;
@@ -179,15 +179,15 @@ public class PdfGenerator {
 
     private static final String DATE_FORMAT = "yyyyMMdd";
 
-    private Fk7263Intyg intyg;
+    private Utlatande intyg;
     private ByteArrayOutputStream outputStream;
     private AcroFields fields;
 
-    public PdfGenerator(Fk7263Intyg intyg, ApplicationOrigin applicationOrigin) throws PdfGeneratorException {
+    public PdfGenerator(Utlatande intyg, ApplicationOrigin applicationOrigin) throws PdfGeneratorException {
         this(intyg, true, applicationOrigin);
     }
 
-    public PdfGenerator(Fk7263Intyg intyg, boolean flatten, ApplicationOrigin applicationOrigin) throws PdfGeneratorException {
+    public PdfGenerator(Utlatande intyg, boolean flatten, ApplicationOrigin applicationOrigin) throws PdfGeneratorException {
         try {
             this.intyg = intyg;
 

@@ -9,7 +9,7 @@ import org.joda.time.LocalDate;
 
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.LocalDateInterval;
-import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 
 /**
  * Validates a fk7263 certificate's specific rules that's not covered by schema validation or external validation.
@@ -18,9 +18,9 @@ import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
  */
 public class InternalValidator extends AbstractValidator {
 
-    private Fk7263Intyg utlatande;
+    private Utlatande utlatande;
 
-    public InternalValidator(Fk7263Intyg utlatande) {
+    public InternalValidator(Utlatande utlatande) {
         this.utlatande = utlatande;
     }
 
