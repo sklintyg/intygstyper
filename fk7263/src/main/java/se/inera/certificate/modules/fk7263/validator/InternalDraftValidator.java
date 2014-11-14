@@ -93,13 +93,6 @@ public class InternalDraftValidator {
         if (utlatande.getAnnanReferens() != null && isNullOrEmpty(utlatande.getAnnanReferensBeskrivning())) {
             addValidationError(validationMessages, "intygbaseratpa.annat", "fk7263.validation.intyg-baserat-pa.annat.beskrivning.missing");
         }
-
-        if ((utlatande.getPrognosis() != null && utlatande.getPrognosis().equals("UNKNOWN"))
-                && isNullOrEmpty(utlatande.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
-            addValidationError(validationMessages, "prognos.gar-ej-att-bedomma.beskrivning",
-                    "fk7263.validation.prognos.gar-ej-att-bedomma.beskrivning.missing");
-        }
-
     }
 
     private void validateRessatt(Utlatande utlatande, List<ValidationMessage> validationMessages) {
