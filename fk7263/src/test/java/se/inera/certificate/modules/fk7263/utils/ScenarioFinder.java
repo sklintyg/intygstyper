@@ -9,7 +9,7 @@ import java.util.List;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 
-import se.inera.certificate.fk7263.model.v1.Utlatande;
+import se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
 
 /**
  * Finds and creates scenarios based on scenario files placed in src/test/resources.
@@ -125,7 +125,7 @@ public class ScenarioFinder {
          * {@inheritDoc}
          */
         @Override
-        public Utlatande asTransportModel() throws ScenarioNotFoundException {
+        public RegisterMedicalCertificate asTransportModel() throws ScenarioNotFoundException {
             try {
                 return ResourceConverterUtils.toTransport(getTransportModelFor(scenarioFile));
             } catch (IOException e) {
