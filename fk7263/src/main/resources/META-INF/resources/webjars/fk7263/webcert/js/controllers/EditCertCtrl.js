@@ -706,7 +706,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.cert.ressattTillArbeteEjAktuellt = false;
                     $scope.cert.rekommendationKontaktArbetsformedlingen = false;
                     $scope.cert.rekommendationKontaktForetagshalsovarden = false;
-                    $scope.form.rehab = 'NEJ';
+                    $scope.form.rehab = undefined;
                     $scope.cert.rekommendationOvrigtCheck = false;
                     $scope.cert.rekommendationOvrigt = undefined;
 
@@ -988,6 +988,15 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     }
                 }
             };
+
+            $scope.$watch('cert.avstangningSmittskydd', function(newVal) {
+
+                // Remove defaults not applicable when smittskydd is active
+                if (newVal === true) {
+                    $scope.form.prognos = undefined;
+                    $scope.form.rehab = undefined;
+                }
+            });
 
             /****************************************************************************
              * Exposed interaction functions to view
