@@ -764,7 +764,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                             if (isValidString(tom)) {
                                 this[nedsattMed].tom = tom;
                             } else {
-                                this[nedsattMed].from = undefined;
+                                this[nedsattMed].tom = undefined;
                             }
                         }
 
