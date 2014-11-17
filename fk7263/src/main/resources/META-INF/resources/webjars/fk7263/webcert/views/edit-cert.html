@@ -24,12 +24,13 @@
                   </button>
                 </div>
               </div>
-              <a id="tillbakaButton" wc-feature-not-active feature="franJournalsystem" class="backlink-icon" href="/web/dashboard#/create/choose-cert-type/index"
-                 title="Tillbaka till Skriv intyg"></a>
+              <a id="tillbakaButton" wc-feature-not-active feature="franJournalsystem" class="backlink-icon"
+                 href="/web/dashboard#/create/choose-cert-type/index" title="Tillbaka till Skriv intyg"></a>
               <h1 style="display: inline-block; margin-right: 20px;"><span message key="fk7263.label.certtitle"></span>
               </h1>
               <div class="inline-block">
-                <label class="control-label">{{cert.intygMetadata.patient.fullstandigtNamn}} - {{cert.intygMetadata.patient.personId}}</label>
+                <label class="control-label">{{cert.intygMetadata.patient.fullstandigtNamn}} -
+                  {{cert.intygMetadata.patient.personId}}</label>
               </div>
               <div class="form-group buttonbar">
                 <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned"
@@ -74,7 +75,8 @@
       <!-- top end -->
 
       <!-- Total fail error messages -->
-      <div id="error-panel" class="cert-error-panel" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey">
+      <div id="error-panel" class="cert-error-panel"
+           ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey">
         <div class="alert alert-danger">
           <span message key="{{widgetState.activeErrorMessageKey}}"></span>
         </div>
@@ -168,8 +170,7 @@
                                                                                            ng-change="toggleBaseradPaDate('annanReferens')">
                         Annat<span wc-enable-tooltip field-help-text="fk7263.helptext.intyg-baserat-pa.annat"></span>
                       </label>
-                      <span wc-date-picker-field target-model="cert.annanReferens"
-                            dom-id="annanReferensDate"></span>
+                      <span wc-date-picker-field target-model="cert.annanReferens" dom-id="annanReferensDate"></span>
                     </div>
                     <div class="otherText indent" ng-if="basedOnState.check.annanReferens">
                       <span>Ange vad:</span><br>
@@ -240,8 +241,9 @@
 
                     <div class="form-group">
                       <div>
-                        <label class="control-label"><span message key="fk7263.label.diagnosfortydligande"></span></label><span wc-enable-tooltip
-                                                                                                     field-help-text="fk7263.helptext.diagnos.fortydligande"></span>
+                        <label class="control-label"><span message
+                                                           key="fk7263.label.diagnosfortydligande"></span></label><span
+                          wc-enable-tooltip field-help-text="fk7263.helptext.diagnos.fortydligande"></span>
                       </div>
                       <textarea id="diagnoseClarification" class="form-control" name="diagnose.clarification" rows='5'
                                 ng-model="cert.diagnosBeskrivning" wc-maxlength ng-trim="false"
@@ -361,12 +363,10 @@
                     </div>
 
                     <div class="form-group form-inline">
-                      Faktisk tjänstgöringstid <input style="width: 3em;" type="text"
-                                                      wc-decimal-number
+                      Faktisk tjänstgöringstid <input style="width: 3em;" type="text" wc-decimal-number
                                                       id="capacityForWorkActualWorkingHoursPerWeek"
                                                       name="capacityForWork.actualWorkingHoursPerWeek" value=""
-                                                      class='short control-element form-control'
-                                                      maxlength="5"
+                                                      class='short control-element form-control' maxlength="5"
                                                       ng-model="cert.tjanstgoringstid"> <span>timmar/vecka</span> <span
                         wc-enable-tooltip
                         field-help-text="fk7263.helptext.arbetsformaga.faktisk-tjanstgoringstid"></span>
@@ -390,7 +390,8 @@
                       <div class="indent pad10" ng-if="workState.nedsattMed25">
                         <div class="workHoursPerWeek"
                              ng-show="cert.tjanstgoringstid != '' && cert.tjanstgoringstid > 0">
-                          Arbetstid timmar/vecka: <strong id="arbetstid25">{{cert.tjanstgoringstid * 0.75 | number}}</strong>
+                          Arbetstid timmar/vecka: <strong id="arbetstid25">{{cert.tjanstgoringstid * 0.75 |
+                          number}}</strong>
                         </div>
                         Arbetstidsförläggning (frivilligt) <input type="text"
                                                                   ng-model="form.ovrigt.nedsattMed25Beskrivning"
@@ -423,7 +424,8 @@
                       <div class="indent pad10" ng-if="workState.nedsattMed50">
                         <div class="workHoursPerWeek"
                              ng-show="cert.tjanstgoringstid != '' && cert.tjanstgoringstid > 0">
-                          Arbetstid timmar/vecka: <strong id="arbetstid50">{{cert.tjanstgoringstid * 0.5 | number}}</strong>
+                          Arbetstid timmar/vecka: <strong id="arbetstid50">{{cert.tjanstgoringstid * 0.5 |
+                          number}}</strong>
                         </div>
                         Arbetstidsförläggning (frivilligt) <input type="text"
                                                                   ng-model="form.ovrigt.nedsattMed50Beskrivning"
@@ -455,7 +457,8 @@
                       <div class="indent pad10" ng-if="workState.nedsattMed75">
                         <div class="workHoursPerWeek"
                              ng-show="cert.tjanstgoringstid != '' && cert.tjanstgoringstid > 0">
-                          Arbetstid timmar/vecka: <strong id="arbetstid75">{{cert.tjanstgoringstid * 0.25 | number}}</strong>
+                          Arbetstid timmar/vecka: <strong id="arbetstid75">{{cert.tjanstgoringstid * 0.25 |
+                          number}}</strong>
                         </div>
                         Arbetstidsförläggning (frivilligt) <input type="text"
                                                                   ng-model="form.ovrigt.nedsattMed75Beskrivning"
@@ -594,13 +597,18 @@
                     </div>
 
                     <!-- 11 -->
+                    <div>Resor till och från arbetet med annat färdmedel än normalt kan göra det möjligt för patienten
+                      att återgå i arbete</label> <span wc-enable-tooltip
+                                                        field-help-text="fk7263.helptext.rekommendationer.resor"></span>
+                    </div>
+
                     <div class="form-group form-inline">
-                      <label class="checkbox"><input type="checkbox" id="rekommendationRessatt"
-                                                     name="recommendationsToFk.travel"
-                                                     ng-model="form.ressattTillArbeteAktuellt"> Resor till och från
-                        arbetet med annat färdmedel än normalt kan göra det möjligt för patienten att återgå i
-                        arbete</label> <span wc-enable-tooltip
-                                             field-help-text="fk7263.helptext.rekommendationer.resor"></span>
+                      <label class="radio-inline">
+                        <input type="radio" id="rekommendationRessatt" name="recommendationsToFk.travel" value="JA"
+                               ng-model="form.ressattTillArbeteAktuellt"> Ja</label>
+                      <label class="radio-inline">
+                        <input type="radio" id="rekommendationRessattEj" name="recommendationsToFk.travel" value="NEJ"
+                               ng-model="form.ressattTillArbeteAktuellt"> Nej</label>
                     </div>
 
                     <!-- 6a, 7 -->
@@ -627,7 +635,8 @@
                         <label class="checkbox"><input type="checkbox" id="rekommendationOvrigt"
                                                        name="recommendationsToFk.other"
                                                        ng-model="cert.rekommendationOvrigtCheck"> Övrigt (ange
-                          vad)</label><span wc-enable-tooltip field-help-text="fk7263.helptext.rekommendationer.ovrigt"></span>
+                          vad)</label><span wc-enable-tooltip
+                                            field-help-text="fk7263.helptext.rekommendationer.ovrigt"></span>
                         <div class="indent" ng-if="cert.rekommendationOvrigtCheck">
                           <input type="text" id="rekommendationOvrigtBeskrivning" name="recommendationsToFk.otherText"
                                  value="" class='form-control maxwidth' ng-model="form.rekommendationOvrigt"
@@ -666,7 +675,8 @@
                   <div wc-field field-label="fk7263.label.fk-kontakt" field-number="12"
                        field-help-text="fk7263.helptext.kontakt">
                     <label class="checkbox"><input type="checkbox" id="kontaktFk" name="contactWithFkRequested"
-                                                   ng-model="cert.kontaktMedFk"> Kontakt önskas med Försäkringskassan</label>
+                                                   ng-model="cert.kontaktMedFk"> Kontakt önskas med
+                      Försäkringskassan</label>
                   </div>
 
                   <div wc-field field-label="fk7263.label.ovrigt" field-number="13"
@@ -701,14 +711,16 @@
                         <label class="col-xs-3 control-label">Postadress</label>
                         <div class="col-xs-9">
                           <input type="text" class="form-control input-full" id="clinicInfoPostalAddress"
-                                 name="clinicInfo.postalAddress" ng-model="cert.intygMetadata.skapadAv.vardenhet.postadress">
+                                 name="clinicInfo.postalAddress"
+                                 ng-model="cert.intygMetadata.skapadAv.vardenhet.postadress">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="col-xs-3 control-label">Postnummer</label>
                         <div class="col-xs-9">
                           <input type="text" class="form-control input-5" id="clinicInfoPostalCode"
-                                 name="clinicInfo.postalCode" ng-model="cert.intygMetadata.skapadAv.vardenhet.postnummer">
+                                 name="clinicInfo.postalCode"
+                                 ng-model="cert.intygMetadata.skapadAv.vardenhet.postnummer">
                         </div>
                       </div>
                       <div class="form-group">
