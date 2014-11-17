@@ -34,7 +34,7 @@ import se.inera.certificate.modules.fk7263.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.fk7263.validator.ExternalValidator;
 import se.inera.certificate.modules.fk7263.validator.InternalDraftValidator;
 import se.inera.certificate.modules.fk7263.validator.InternalValidator;
-import se.inera.certificate.modules.fk7263.validator.ProgrammaticLegacyTransportSchemaValidator;
+import se.inera.certificate.modules.fk7263.validator.ProgrammaticTransportValidator;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
@@ -187,7 +187,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     private void validateLegacySchema(Fk7263Utlatande externalModel) throws ModuleValidationException {
-        List<String> validationErrors = new ProgrammaticLegacyTransportSchemaValidator(externalModel).validate();
+        List<String> validationErrors = new ProgrammaticTransportValidator(externalModel).validate();
 
         if (!validationErrors.isEmpty()) {
             throw new ModuleValidationException(validationErrors);

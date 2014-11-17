@@ -44,6 +44,7 @@ public final class TransportToInternal {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportToInternal.class);
 
     public static final String FK_7263 = "fk7263";
+    public static final String LEGACY_TYP = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
     public static final String UTLATANDE_TYP_OID = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
     public static final String UTLATANDE_CODE_SYSTEM_NAME = "kv_utlåtandetyp_intyg";
     public static final String UTLATANDE_CODE_SYSTEM_VERSION = null;
@@ -58,7 +59,7 @@ public final class TransportToInternal {
         LOGGER.debug("Converting transport to internal model");
         Utlatande utlatande = new Utlatande();
         utlatande.setId(source.getLakarutlatandeId());
-        utlatande.setTyp(source.getTypAvUtlatande());
+        utlatande.setTyp(FK_7263);
 
         if (source.getKommentar() != null && !source.getKommentar().isEmpty()) {
             utlatande.setKommentar(source.getKommentar());
