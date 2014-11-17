@@ -1,7 +1,5 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
-import static se.inera.certificate.model.util.Iterables.addAll;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +80,7 @@ public final class InternalToTransport {
 
         convertReferenser(register, source);
 
-        addAll(register.getLakarutlatande().getVardkontakts(), convertVardkontakter(source));
+        convertVardkontakter(register, source);
 
         if (!isNullOrEmpty(source.getFunktionsnedsattning())) {
             register.getLakarutlatande().getFunktionstillstands()
@@ -215,9 +213,9 @@ public final class InternalToTransport {
         return sysselsattningTypes;
     }
 
-    private static List<VardkontaktType> convertVardkontakter(Utlatande source) {
+    private static void convertVardkontakter(RegisterMedicalCertificate register, Utlatande source) {
         if (source == null) {
-            return null;
+            return;
         }
 
         List<VardkontaktType> vardkontaktTypes = new ArrayList<>();
@@ -234,8 +232,9 @@ public final class InternalToTransport {
             vardkontaktType.setVardkontakttyp(Vardkontakttyp.MIN_TELEFONKONTAKT_MED_PATIENTEN);
             vardkontaktTypes.add(vardkontaktType);
         }
-
-        return vardkontaktTypes;
+        if (!vardkontaktTypes.isEmpty()) {
+            register.getLakarutlatande().getVardkontakts().addAll(vardkontaktTypes);
+        }
     }
 
     private static void convertReferenser(RegisterMedicalCertificate register, Utlatande source) {
