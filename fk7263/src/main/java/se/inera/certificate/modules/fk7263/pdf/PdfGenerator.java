@@ -457,6 +457,9 @@ public class PdfGenerator {
         if (isValidString(intyg.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
             parts.add("Från fält 10: " + intyg.getArbetsformagaPrognosGarInteAttBedomaBeskrivning());
         }
+        if (isValidString(intyg.getAnnanReferensBeskrivning())) {
+            parts.add("Från fält 4b: " + intyg.getAnnanReferensBeskrivning());
+        }
         return StringUtils.trimToNull(Strings.join(", ", parts));
     }
 

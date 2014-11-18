@@ -37,7 +37,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 arbete: true,
                 prognos: 'YES',
                 rehab: 'NEJ',
-                ressattTillArbeteAktuellt: false,
+                ressattTillArbeteAktuellt: undefined,
                 ovrigt: {
                     'annanReferensBeskrivning': null,
                     'nedsattMed25Beskrivning': null,
@@ -652,7 +652,13 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
 
                 // Fält 11. Ressätt till arbete
-                $scope.form.ressattTillArbeteAktuellt = $scope.cert.ressattTillArbeteAktuellt;
+                $scope.form.ressattTillArbeteAktuellt = undefined;
+                if ($scope.cert.ressattTillArbeteAktuellt) {
+                    $scope.form.ressattTillArbeteAktuellt = 'JA';
+                }
+                if ($scope.cert.ressattTillArbeteEjAktuellt) {
+                    $scope.form.ressattTillArbeteAktuellt = 'NEJ';
+                }
             }
 
             /**
@@ -702,11 +708,9 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.cert.annanAtgard = undefined;
 
                     // 6a, 7, 11
-                    $scope.cert.ressattTillArbeteAktuellt = false;
-                    $scope.cert.ressattTillArbeteEjAktuellt = false;
                     $scope.cert.rekommendationKontaktArbetsformedlingen = false;
                     $scope.cert.rekommendationKontaktForetagshalsovarden = false;
-                    $scope.form.rehab = 'NEJ';
+                    $scope.form.rehab = undefined;
                     $scope.cert.rekommendationOvrigtCheck = false;
                     $scope.cert.rekommendationOvrigt = undefined;
 
@@ -764,7 +768,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                             if (isValidString(tom)) {
                                 this[nedsattMed].tom = tom;
                             } else {
-                                this[nedsattMed].from = undefined;
+                                this[nedsattMed].tom = undefined;
                             }
                         }
 
@@ -776,30 +780,18 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     }, $scope.cert);
 
                     // Fält 7. Rehab radio conversions
-                    $scope.cert.rehabiliteringAktuell = false;
-                    $scope.cert.rehabiliteringEjAktuell = false;
-                    $scope.cert.rehabiliteringGarInteAttBedoma = false;
-
                     switch ($scope.form.rehab) {
                     case 'JA':
-                        $scope.cert.rehabiliteringAktuell = true;
+                        $scope.cert.rehabilitering = "rehabiliteringAktuell";
                         break;
                     case 'NEJ':
-                        $scope.cert.rehabiliteringEjAktuell = true;
+                        $scope.cert.rehabilitering = "rehabiliteringEjAktuell";
                         break;
                     case 'GAREJ':
-                        $scope.cert.rehabiliteringGarInteAttBedoma = true;
+                        $scope.cert.rehabilitering = "rehabiliteringGarInteAttBedoma";
                         break;
                     }
 
-                    // Fält 11. Ressätt till arbete
-                    if ($scope.form.ressattTillArbeteAktuellt) {
-                        $scope.cert.ressattTillArbeteAktuellt = true;
-                        $scope.cert.ressattTillArbeteEjAktuellt = false;
-                    } else {
-                        $scope.cert.ressattTillArbeteAktuellt = false;
-                        $scope.cert.ressattTillArbeteEjAktuellt = true;
-                    }
                 }
 
                 // Fält 10. Går ej att bedöma and update backend model when view changes.
@@ -822,27 +814,17 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     break;
                 }
 
-                // Fält 7. Rehab radio conversions
-                switch ($scope.form.rehab) {
-                case 'JA':
-                    $scope.cert.rehabilitering = "rehabiliteringAktuell";
-                    break;
-                case 'NEJ':
-                    $scope.cert.rehabilitering = "rehabiliteringEjAktuell";
-                    break;
-                case 'GAREJ':
-                    $scope.cert.rehabilitering = "rehabiliteringGarInteAttBedoma";
-                    break;
-                }
-
                 // Fält 11. Ressätt till arbete
-                if ($scope.form.ressattTillArbeteAktuellt) {
+                $scope.cert.ressattTillArbeteAktuellt = false;
+                $scope.cert.ressattTillArbeteEjAktuellt = false;
+                if ($scope.form.ressattTillArbeteAktuellt === 'JA') {
                     $scope.cert.ressattTillArbeteAktuellt = true;
                     $scope.cert.ressattTillArbeteEjAktuellt = false;
                 } else {
                     $scope.cert.ressattTillArbeteAktuellt = false;
                     $scope.cert.ressattTillArbeteEjAktuellt = true;
                 }
+
             }
 
             /*************************************************************************
@@ -988,6 +970,15 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     }
                 }
             };
+
+            $scope.$watch('cert.avstangningSmittskydd', function(newVal) {
+
+                // Remove defaults not applicable when smittskydd is active
+                if (newVal === true) {
+                    $scope.form.prognos = undefined;
+                    $scope.form.rehab = undefined;
+                }
+            });
 
             /****************************************************************************
              * Exposed interaction functions to view

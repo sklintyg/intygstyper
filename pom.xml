@@ -7,7 +7,7 @@
   <parent>
     <groupId>se.inera.intyg.common</groupId>
     <artifactId>common-pom</artifactId>
-    <version>0-SNAPSHOT</version>
+    <version>1.0.0</version>
   </parent>
 
   <groupId>se.inera.intyg.intygstyper</groupId>
@@ -20,21 +20,18 @@
   <properties>
 
     <!-- Common -->
-    <common-support.version>0-SNAPSHOT</common-support.version>
-    <common-web.version>0-SNAPSHOT</common-web.version>
-    <integration-util.version>0-SNAPSHOT</integration-util.version>
-    <logging-util.version>0-SNAPSHOT</logging-util.version>
+    <common.version>0-SNAPSHOT</common.version>
 
     <!-- Schemas -->
-    <schemas.version>0-SNAPSHOT</schemas.version>
+    <clinicalprocess-healthcond-certificate.version>0-SNAPSHOT</clinicalprocess-healthcond-certificate.version>
 
     <!-- Netcare -->
-    <mvkintegration.version>0-SNAPSHOT</mvkintegration.version>
+    <mvkintegration.version>1.2.2</mvkintegration.version>
   </properties>
 
   <modules>
     <module>fk7263</module>
-    <!--<module>rli</module>-->
+    <!--<module>rli</module> -->
     <module>ts-bas</module>
     <module>ts-diabetes</module>
     <module>tools/archetype</module>
@@ -51,32 +48,32 @@
       <dependency>
         <groupId>se.inera.intyg.common</groupId>
         <artifactId>common-support</artifactId>
-        <version>${common-support.version}</version>
+        <version>${common.version}</version>
       </dependency>
 
       <dependency>
         <groupId>se.inera.intyg.common</groupId>
         <artifactId>common-web</artifactId>
-        <version>${common-web.version}</version>
+        <version>${common.version}</version>
       </dependency>
 
       <dependency>
         <groupId>se.inera.intyg.common</groupId>
         <artifactId>integration-util</artifactId>
-        <version>${integration-util.version}</version>
+        <version>${common.version}</version>
       </dependency>
 
       <dependency>
         <groupId>se.inera.intyg.common</groupId>
         <artifactId>logging-util</artifactId>
-        <version>${logging-util.version}</version>
+        <version>${common.version}</version>
       </dependency>
 
       <!-- Schemas -->
       <dependency>
-        <groupId>se.inera.intyg.schemas</groupId>
-        <artifactId>schemas-intygstjanst</artifactId>
-        <version>${schemas.version}</version>
+        <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
+        <artifactId>clinicalprocess-healthcond-certificate-core</artifactId>
+        <version>${clinicalprocess-healthcond-certificate.version}</version>
       </dependency>
 
       <!-- Netcare dependencies -->
@@ -241,10 +238,11 @@
 
     </plugins>
   </build>
+
   <repositories>
     <repository>
       <id>callista-release</id>
-      <url>https://${repository.host}/release/</url>
+      <url>http://repository-callistasoftware.forge.cloudbees.com/release/</url>
       <releases>
         <enabled>true</enabled>
       </releases>
@@ -254,9 +252,9 @@
     </repository>
     <repository>
       <id>callista-snapshot</id>
-      <url>https://${repository.host}/snapshot/</url>
+      <url>http://repository-callistasoftware.forge.cloudbees.com/snapshot/</url>
       <releases>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
       </releases>
       <snapshots>
         <enabled>true</enabled>
@@ -264,7 +262,7 @@
     </repository>
     <repository>
       <id>thirdparty</id>
-      <url>https://${repository.host}/3rdparty</url>
+      <url>http://repository-callistasoftware.forge.cloudbees.com/3rdparty</url>
       <releases>
         <enabled>true</enabled>
       </releases>

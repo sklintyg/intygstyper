@@ -133,6 +133,7 @@ public class InternalDraftValidator {
         InternalLocalDateInterval[] intervals = {utlatande.getNedsattMed100(), utlatande.getNedsattMed75(), utlatande.getNedsattMed50(),
                 utlatande.getNedsattMed25() };
         if (allNulls(intervals)) {
+            addValidationError(validationMessages, "arbetsformaga", "fk7263.validation.arbetsformaga.choose-at-least-one");
             return false;
         }
         // if the interval is not null and either from or tom is invalid, raise validation error

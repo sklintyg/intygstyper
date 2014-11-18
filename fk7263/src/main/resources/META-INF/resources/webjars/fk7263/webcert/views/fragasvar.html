@@ -81,7 +81,7 @@
                     <p>
                       Åtgärd: <strong><span message key="qa.measure.{{qa.measureResKey}}"></span></strong>
                     </p>
-                    <div wc-feature-not-active feature="franJournalsystem" class="form-inline">
+                    <div wc-feature-not-active feature="franJournalsystem" class="form-inline" ng-show="!certProperties.isRevoked">
                       <label for="mark-as-forwarded-{{qa.internReferens}}" class="checkbox-inline">
                         <input id="mark-as-forwarded-{{qa.internReferens}}" type="checkbox" ng-disabled="qa.forwardInProgress" ng-model="qa.vidarebefordrad" ng-change="onVidareBefordradChange(qa)" /> Vidarebefordrad</label> <span ng-if="qa.forwardInProgress"> <img src="/img/ajax-loader-kit-16x16.gif">
                           </span>
@@ -91,8 +91,8 @@
 
                 <div wc-feature-not-active feature="franJournalsystem" class="col-xs-3">
                   <!--  status header -->
-                  <button class="btn pull-right" ng-class="{'btn-info': !qa.vidarebefordrad, 'btn-default btn-secondary' : qa.vidarebefordrad}"
-                          title="Skicka mejl med en länk till intyget för att informera den som ska hantera frågan-svaret." ng-click="openMailDialog(qa)">
+                  <button id="vidarebefordraEjHanterad" class="btn pull-right" ng-class="{'btn-info': !qa.vidarebefordrad, 'btn-default btn-secondary' : qa.vidarebefordrad}"
+                          title="Skicka mejl med en länk till intyget för att informera den som ska hantera frågan-svaret." ng-click="openMailDialog(qa)" ng-show="!certProperties.isRevoked">
                     <img ng-if="!qa.vidarebefordrad" src="/img/mail.png"> <img ng-if="qa.vidarebefordrad" src="/img/mail_dark.png">
                   </button>
                 </div>
