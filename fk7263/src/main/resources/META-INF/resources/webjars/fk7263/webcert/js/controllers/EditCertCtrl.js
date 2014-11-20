@@ -22,16 +22,20 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 showComplete: false,
                 collapsedHeader: false,
                 hasInfoMissing: false,
-                forwardInProgress: false
+                vidarebefordraInProgress: false
             };
 
             // Intyg state
             $scope.cert = {};
-            $scope.intygType = 'fk7263';
             $scope.hasSavedThisSession = false;
             $scope.messages = [];
             $scope.isComplete = false;
             $scope.isSigned = false;
+            $scope.certMeta = {
+                intygId: null,
+                intygType: 'fk7263',
+                vidarebefordrad: false
+            };
 
             // Keeps track of in-form interactions which is converted to internal model on save,
             // and converted from internal model on load
@@ -1014,28 +1018,28 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.save = function() {
                 $scope.hasSavedThisSession = true;
                 convertFormToCert($scope);
-                ManageCertView.save($scope, $scope.intygType);
+                ManageCertView.save($scope, $scope.certMeta.intygType);
             };
 
             /**
              * Action to discard the certificate draft and return to WebCert again.
              */
             $scope.discard = function() {
-                ManageCertView.discard($scope, $scope.intygType);
+                ManageCertView.discard($scope, $scope.certMeta.intygType);
             };
 
             /**
              * Action to sign the certificate draft and return to Webcert again.
              */
             $scope.sign = function() {
-                ManageCertView.signera($scope, $scope.intygType);
+                ManageCertView.signera($scope, $scope.certMeta.intygType);
             };
 
             /**
              * Print draft
              */
             $scope.print = function() {
-                ManageCertView.printDraft($scope.cert.id, $scope.intygType);
+                ManageCertView.printDraft($scope.cert.id, $scope.certMeta.intygType);
             };
 
 
@@ -1044,12 +1048,12 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              *
              * @param cert
              */
-            $scope.openMailDialog = function(cert) {
-                intygNotifyService.forwardIntyg(cert, $scope.cert.id, $scope.intygType, $scope.widgetState);
+            $scope.openMailDialog = function() {
+                intygNotifyService.forwardIntyg($scope.certMeta, $scope.widgetState);
             };
 
-            $scope.onVidarebefordradChange = function(cert) {
-                intygNotifyService.onForwardedChange(cert, $scope.cert.id, $scope.intygType, $scope.widgetState);
+            $scope.onVidarebefordradChange = function() {
+                intygNotifyService.onForwardedChange($scope.certMeta, $scope.widgetState);
             };
 
             /**************************************************************************
@@ -1057,7 +1061,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              **************************************************************************/
 
             // Get the certificate draft from the server.
-            ManageCertView.load($scope, 'fk7263', function(cert) {
+            ManageCertView.load($scope, $scope.certMeta.intygType, function(cert) {
                 // Decorate intygspecific default data
                 $scope.cert = cert;
                 registerDateParsers();
