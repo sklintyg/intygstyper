@@ -424,37 +424,62 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
         if (nedsatt14del == null && nedsatthalften == null && nedsatt34delar == null && heltNedsatt == null) {
             addValidationError("No arbetsformaganedsattning element found 8b!.");
         }
+
         // Fält 8b - kryssruta 1 - varaktighet From
-        if (nedsatt14del != null && nedsatt14del.getVaraktighetFrom() == null) {
-            addValidationError("No or wrong date for nedsatt 1/4 from date found!");
+        if (nedsatt14del != null) {
+            if(nedsatt14del.getVaraktighetFrom() == null) {
+                addValidationError("No or wrong date for nedsatt 1/4 from date found!");
+            }
+            if (nedsatt14del.getVaraktighetTom() == null) {
+                addValidationError("No or wrong date for nedsatt 1/4 tom date found!");
+            }
+            if((nedsatt14del.getVaraktighetFrom() != null && nedsatt14del.getVaraktighetTom() != null) 
+                    && nedsatt14del.getVaraktighetFrom().isAfter(nedsatt14del.getVaraktighetTom())) {
+                addValidationError("Invalid date interval for 1/4, from is after tom.");
+            }
         }
-        // Fält 8b - kryssruta 1 - varaktighet Tom
-        if (nedsatt14del != null && nedsatt14del.getVaraktighetTom() == null) {
-            addValidationError("No or wrong date for nedsatt 1/4 tom date found!");
+
+        // Fält 8b - kryssruta 2 
+        if (nedsatthalften != null) {
+            if(nedsatthalften.getVaraktighetFrom() == null) {
+                addValidationError("No or wrong date for nedsatt 1/2 from date found!");
+            }
+            if (nedsatthalften.getVaraktighetTom() == null) {
+                addValidationError("No or wrong date for nedsatt 1/2 tom date found!");
+            }
+            if((nedsatthalften.getVaraktighetFrom() != null && nedsatthalften.getVaraktighetTom() != null) 
+                    && nedsatthalften.getVaraktighetFrom().isAfter(nedsatthalften.getVaraktighetTom())) {
+                addValidationError("Invalid date interval for nedsatt 1/2 , from is after tom.");
+            }
+
         }
-        // Fält 8b - kryssruta 2 - varaktighet From
-        if (nedsatthalften != null && nedsatthalften.getVaraktighetFrom() == null) {
-            addValidationError("No or wrong date for nedsatt 1/2 from date found!");
+    
+        // Fält 8b - kryssruta 3 
+        if (nedsatt34delar != null) {
+            if(nedsatt34delar.getVaraktighetFrom() == null) {
+                addValidationError("No or wrong date for nedsatt 3/4 from date found!");
+            }
+            if (nedsatt34delar.getVaraktighetTom() == null) {
+                addValidationError("No or wrong date for nedsatt 3/4 tom date found!");
+            }
+            if((nedsatt34delar.getVaraktighetFrom() != null && nedsatt34delar.getVaraktighetTom() != null) 
+                    && nedsatt34delar.getVaraktighetFrom().isAfter(nedsatt34delar.getVaraktighetTom())) {
+                    addValidationError("Invalid date interval for heltNedsatt, from is after tom.");
+            }
         }
-        // Fält 8b - kryssruta 2 - varaktighet Tom
-        if (nedsatthalften != null && nedsatthalften.getVaraktighetTom() == null) {
-            addValidationError("No or wrong date for nedsatt 1/2 tom date found!");
-        }
-        // Fält 8b - kryssruta 3 - varaktighet From
-        if (nedsatt34delar != null && nedsatt34delar.getVaraktighetFrom() == null) {
-            addValidationError("No or wrong date for nedsatt 3/4 from date found!");
-        }
-        // Fält 8b - kryssruta 3 - varaktighet Tom
-        if (nedsatt34delar != null && nedsatt34delar.getVaraktighetTom() == null) {
-            addValidationError("No or wrong date for nedsatt 3/4 tom date found!");
-        }
-        // Fält 8b - kryssruta 4 - varaktighet From
-        if (heltNedsatt != null && heltNedsatt.getVaraktighetFrom() == null) {
-            addValidationError("No or wrong date for helt nedsatt from date found!");
-        }
-        // Fält 8b - kryssruta 4 - varaktighet Tom
-        if (heltNedsatt != null && heltNedsatt.getVaraktighetTom() == null) {
-            addValidationError("No or wrong date for helt nedsatt tom date found!");
+
+        // Fält 8b - kryssruta 4
+        if (heltNedsatt != null) {
+            if (heltNedsatt.getVaraktighetFrom() == null) {
+                addValidationError("No or wrong date for helt nedsatt from date found!");
+            }
+            if (heltNedsatt.getVaraktighetTom() == null) {
+                addValidationError("No or wrong date for helt nedsatt tom date found!");
+            }
+            if ((heltNedsatt.getVaraktighetFrom() != null && heltNedsatt.getVaraktighetTom() != null) 
+                    && heltNedsatt.getVaraktighetFrom().isAfter(heltNedsatt.getVaraktighetTom())) {
+                    addValidationError("Invalid date interval for heltNedsatt, from is after tom.");
+            }
         }
     }
 
