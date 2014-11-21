@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.xml.ws.WebServiceProvider;
 
 import org.slf4j.Logger;
@@ -13,14 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3.wsaddressing10.AttributedURIType;
 
-import se.inera.certificate.integration.module.ModuleApiFactory;
-import se.inera.certificate.integration.module.exception.ModuleNotFoundException;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.validator.InternalValidator;
 import se.inera.certificate.modules.fk7263.validator.ProgrammaticTransportValidator;
-import se.inera.certificate.modules.support.api.ModuleApi;
+import se.inera.certificate.modules.registry.IntygModuleRegistry;
 import se.inera.certificate.validate.CertificateValidationException;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
@@ -35,21 +32,9 @@ import se.inera.ifv.insuranceprocess.healthreporting.utils.ResultOfCallUtil;
 public class RegisterMedicalCertificateResponderStub implements RegisterMedicalCertificateResponderInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterMedicalCertificateResponderStub.class);
-    private static final String FK7263 = "fk7263";
     
-    private ModuleApi moduleApi;
-
     @Autowired
     private FkMedicalCertificatesStore fkMedicalCertificatesStore;
-
-    @Autowired
-    private ModuleApiFactory moduleApiFactory;
-
-    @PostConstruct
-    public void initializeJModuleApi() throws ModuleNotFoundException {
-        // Since only FK7263 uses RegisterMedicalCertificateType we can hard code it here.
-        moduleApi = moduleApiFactory.getModuleEntryPoint(FK7263).getModuleApi();
-    }
 
     @Override
     public RegisterMedicalCertificateResponseType registerMedicalCertificate(AttributedURIType logicalAddress, RegisterMedicalCertificateType request) {
