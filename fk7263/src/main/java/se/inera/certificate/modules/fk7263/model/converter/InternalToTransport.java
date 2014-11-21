@@ -1,33 +1,11 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
+import iso.v21090.dt.v1.CD;
+import iso.v21090.dt.v1.II;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsuppgiftType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.BedomtTillstandType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.FunktionstillstandType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Nedsattningsgrad;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Prognosangivelse;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ReferensType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Referenstyp;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.TypAvFunktionstillstand;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.TypAvSysselsattning;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Vardkontakttyp;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.EnhetType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.HosPersonalType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.PatientType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.VardgivareType;
-import se.inera.certificate.fk7263.iso.v21090.dt.v1.CD;
-import se.inera.certificate.fk7263.iso.v21090.dt.v1.II;
 import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
@@ -35,6 +13,29 @@ import se.inera.certificate.model.common.internal.Vardgivare;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.codes.Kodverk;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsuppgiftType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.BedomtTillstandType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.FunktionstillstandType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Nedsattningsgrad;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Prognosangivelse;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ReferensType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Referenstyp;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvFunktionstillstand;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvSysselsattning;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Vardkontakttyp;
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 
 public final class InternalToTransport {
 
@@ -50,9 +51,9 @@ public final class InternalToTransport {
     private InternalToTransport() {
     }
 
-    public static RegisterMedicalCertificate getJaxbObject(Utlatande source) throws ConverterException {
-        RegisterMedicalCertificate register = new RegisterMedicalCertificate();
-        register.setLakarutlatande(new Lakarutlatande());
+    public static RegisterMedicalCertificateType getJaxbObject(Utlatande source) throws ConverterException {
+        RegisterMedicalCertificateType register = new RegisterMedicalCertificateType();
+        register.setLakarutlatande(new LakarutlatandeType());
         if (source.getId() != null) {
             register.getLakarutlatande().setLakarutlatandeId(source.getId());
         }
@@ -83,7 +84,7 @@ public final class InternalToTransport {
         convertVardkontakter(register, source);
 
         if (!isNullOrEmpty(source.getFunktionsnedsattning())) {
-            register.getLakarutlatande().getFunktionstillstands()
+            register.getLakarutlatande().getFunktionstillstand()
                     .add(toFunktionstillstand(source.getFunktionsnedsattning(), TypAvFunktionstillstand.KROPPSFUNKTION));
         }
 
@@ -93,7 +94,7 @@ public final class InternalToTransport {
             FunktionstillstandType aktivitetsbegransing = toFunktionstillstand(source.getAktivitetsbegransning(), TypAvFunktionstillstand.AKTIVITET);
             aktivitetsbegransing.setArbetsformaga(toArbetsformaga(source));
 
-            register.getLakarutlatande().getFunktionstillstands().add(aktivitetsbegransing);
+            register.getLakarutlatande().getFunktionstillstand().add(aktivitetsbegransing);
 
         } else if (source.isAvstangningSmittskydd()) {
             // If no ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET is found,
@@ -101,7 +102,7 @@ public final class InternalToTransport {
             FunktionstillstandType aktivitetsbegransing = new FunktionstillstandType();
             aktivitetsbegransing.setTypAvFunktionstillstand(TypAvFunktionstillstand.AKTIVITET);
             aktivitetsbegransing.setArbetsformaga(toArbetsformaga(source));
-            register.getLakarutlatande().getFunktionstillstands().add(aktivitetsbegransing);
+            register.getLakarutlatande().getFunktionstillstand().add(aktivitetsbegransing);
         }
         return register;
     }
@@ -148,7 +149,7 @@ public final class InternalToTransport {
                 arbetsformagaType.setArbetsuppgift(arbetsuppgift);
             }
 
-            arbetsformagaType.getSysselsattnings().addAll(convertSysselsattnings(source));
+            arbetsformagaType.getSysselsattning().addAll(convertSysselsattnings(source));
         }
         if (source.getNedsattMed25() != null) {
             ArbetsformagaNedsattningType nedsattningType = new ArbetsformagaNedsattningType();
@@ -157,7 +158,7 @@ public final class InternalToTransport {
                 nedsattningType.setVaraktighetFrom(source.getNedsattMed25().fromAsLocalDate());
                 nedsattningType.setVaraktighetTom(source.getNedsattMed25().tomAsLocalDate());
             }
-            arbetsformagaType.getArbetsformagaNedsattnings().add(nedsattningType);
+            arbetsformagaType.getArbetsformagaNedsattning().add(nedsattningType);
         }   
         if (source.getNedsattMed50() != null) {
             ArbetsformagaNedsattningType nedsattningType = new ArbetsformagaNedsattningType();
@@ -166,7 +167,7 @@ public final class InternalToTransport {
                 nedsattningType.setVaraktighetFrom(source.getNedsattMed50().fromAsLocalDate());
                 nedsattningType.setVaraktighetTom(source.getNedsattMed50().tomAsLocalDate());
             }
-            arbetsformagaType.getArbetsformagaNedsattnings().add(nedsattningType);
+            arbetsformagaType.getArbetsformagaNedsattning().add(nedsattningType);
         }   
         if (source.getNedsattMed75() != null) {
             ArbetsformagaNedsattningType nedsattningType = new ArbetsformagaNedsattningType();
@@ -175,7 +176,7 @@ public final class InternalToTransport {
                 nedsattningType.setVaraktighetFrom(source.getNedsattMed75().fromAsLocalDate());
                 nedsattningType.setVaraktighetTom(source.getNedsattMed75().tomAsLocalDate());
             }
-            arbetsformagaType.getArbetsformagaNedsattnings().add(nedsattningType);
+            arbetsformagaType.getArbetsformagaNedsattning().add(nedsattningType);
         }   
         if (source.getNedsattMed100() != null) {
             ArbetsformagaNedsattningType nedsattningType = new ArbetsformagaNedsattningType();
@@ -184,7 +185,7 @@ public final class InternalToTransport {
                 nedsattningType.setVaraktighetFrom(source.getNedsattMed100().fromAsLocalDate());
                 nedsattningType.setVaraktighetTom(source.getNedsattMed100().tomAsLocalDate());
             }
-            arbetsformagaType.getArbetsformagaNedsattnings().add(nedsattningType);
+            arbetsformagaType.getArbetsformagaNedsattning().add(nedsattningType);
         }   
 
         return arbetsformagaType;
@@ -213,7 +214,7 @@ public final class InternalToTransport {
         return sysselsattningTypes;
     }
 
-    private static void convertVardkontakter(RegisterMedicalCertificate register, Utlatande source) {
+    private static void convertVardkontakter(RegisterMedicalCertificateType register, Utlatande source) {
         if (source == null) {
             return;
         }
@@ -233,11 +234,11 @@ public final class InternalToTransport {
             vardkontaktTypes.add(vardkontaktType);
         }
         if (!vardkontaktTypes.isEmpty()) {
-            register.getLakarutlatande().getVardkontakts().addAll(vardkontaktTypes);
+            register.getLakarutlatande().getVardkontakt().addAll(vardkontaktTypes);
         }
     }
 
-    private static void convertReferenser(RegisterMedicalCertificate register, Utlatande source) {
+    private static void convertReferenser(RegisterMedicalCertificateType register, Utlatande source) {
         if (source == null) {
             return;
         }
@@ -268,7 +269,7 @@ public final class InternalToTransport {
      *            Utlatande
      * @return List of AktivitetType
      */
-    private static void convertAktiviteter(RegisterMedicalCertificate register, Utlatande source) {
+    private static void convertAktiviteter(RegisterMedicalCertificateType register, Utlatande source) {
         if (source == null) {
             return;
         }
@@ -351,7 +352,7 @@ public final class InternalToTransport {
         }
 
         if (!aktivitets.isEmpty()) {
-            register.getLakarutlatande().getAktivitets().addAll(aktivitets);
+            register.getLakarutlatande().getAktivitet().addAll(aktivitets);
         }
     }
 

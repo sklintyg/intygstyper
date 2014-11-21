@@ -6,28 +6,28 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsuppgiftType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.FunktionstillstandType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Nedsattningsgrad;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Prognosangivelse;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ReferensType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Referenstyp;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.TypAvFunktionstillstand;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.TypAvSysselsattning;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Vardkontakttyp;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.EnhetType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.HosPersonalType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.PatientType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.VardgivareType;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
 import se.inera.certificate.validate.PersonnummerValidator;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsuppgiftType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.FunktionstillstandType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Nedsattningsgrad;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Prognosangivelse;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ReferensType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Referenstyp;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvFunktionstillstand;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvSysselsattning;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Vardkontakttyp;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 
 /**
  * Validates presence and validity of formal external model properties such as OID's. Preferably this validation should
@@ -38,7 +38,7 @@ import se.inera.certificate.validate.PersonnummerValidator;
  */
 public class ProgrammaticTransportValidator extends AbstractValidator {
 
-    private Lakarutlatande utlatande;
+    private LakarutlatandeType utlatande;
 
     private static final List<String> PATIENT_ID_OIDS = asList("1.2.752.129.2.1.3.1", "1.2.752.129.2.1.3.3");
 
@@ -63,7 +63,7 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
         PERSONNUMMER_VALIDATOR = new PersonnummerValidator();
     }
 
-    public ProgrammaticTransportValidator(Lakarutlatande utlatande) {
+    public ProgrammaticTransportValidator(LakarutlatandeType utlatande) {
         this.utlatande = utlatande;
     }
 
@@ -92,18 +92,18 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
     }
 
     private void validateRekommendationer() {
-        AktivitetType ovrigt = findAktivitetWithCode(utlatande.getAktivitets(), Aktivitetskod.OVRIGT);
+        AktivitetType ovrigt = findAktivitetWithCode(utlatande.getAktivitet(), Aktivitetskod.OVRIGT);
         if (ovrigt != null && isNullOrEmpty(ovrigt.getBeskrivning())) {
             addValidationError("Beskrivning must be set for Aktivitet Rekommendation Ovrigt");
         }
 
-        AktivitetType atgardSjukvarden = findAktivitetWithCode(utlatande.getAktivitets(),
+        AktivitetType atgardSjukvarden = findAktivitetWithCode(utlatande.getAktivitet(),
                 Aktivitetskod.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN);
         if (atgardSjukvarden != null && isNullOrEmpty(atgardSjukvarden.getBeskrivning())) {
             addValidationError("Beskrivning must be set for Aktivitet Rekommendation Planerad eller pågående åtgärd inom sjukvården");
         }
 
-        AktivitetType atgardAnnan = findAktivitetWithCode(utlatande.getAktivitets(), Aktivitetskod.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD);
+        AktivitetType atgardAnnan = findAktivitetWithCode(utlatande.getAktivitet(), Aktivitetskod.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD);
         if (atgardAnnan != null && isNullOrEmpty(atgardAnnan.getBeskrivning())) {
             addValidationError("Beskrivning must be set for Aktivitet Rekommendation Planerad eller pågående annan atgärd");
         }
@@ -274,12 +274,12 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
 
     private void validateSmittskyddRelated() {
         // Fält 1 - no rule
-        inSmittskydd = findAktivitetWithCode(utlatande.getAktivitets(), Aktivitetskod.AVSTANGNING_ENLIGT_SM_L_PGA_SMITTA) != null ? true : false;
+        inSmittskydd = findAktivitetWithCode(utlatande.getAktivitet(), Aktivitetskod.AVSTANGNING_ENLIGT_SM_L_PGA_SMITTA) != null ? true : false;
 
         // Must be set as this element contains a lot of mandatory
         // information
         FunktionstillstandType inAktivitetFunktion = findFunktionsTillstandType(
-                utlatande.getFunktionstillstands(), TypAvFunktionstillstand.AKTIVITET);
+                utlatande.getFunktionstillstand(), TypAvFunktionstillstand.AKTIVITET);
         if (inAktivitetFunktion == null) {
             addValidationError("No funktionstillstand - aktivitet element found!");
         }
@@ -307,7 +307,7 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
             // Fält 4 - vänster Check that we got a funktionstillstand -
             // kroppsfunktion element
             FunktionstillstandType inKroppsFunktion = findFunktionsTillstandType(
-                    utlatande.getFunktionstillstands(), TypAvFunktionstillstand.KROPPSFUNKTION);
+                    utlatande.getFunktionstillstand(), TypAvFunktionstillstand.KROPPSFUNKTION);
             if (inKroppsFunktion == null) {
                 addValidationError("No funktionstillstand - kroppsfunktion element found!");
             }
@@ -318,11 +318,11 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
             }
 
             // Fält 4 - höger översta kryssrutan
-            VardkontaktType inUndersokning = findVardkontaktTyp(utlatande.getVardkontakts(),
+            VardkontaktType inUndersokning = findVardkontaktTyp(utlatande.getVardkontakt(),
                     Vardkontakttyp.MIN_UNDERSOKNING_AV_PATIENTEN);
 
             // Fält 4 - höger näst översta kryssrutan
-            VardkontaktType telefonkontakt = findVardkontaktTyp(utlatande.getVardkontakts(),
+            VardkontaktType telefonkontakt = findVardkontaktTyp(utlatande.getVardkontakt(),
                     Vardkontakttyp.MIN_TELEFONKONTAKT_MED_PATIENTEN);
 
             // Fält 4 - höger näst nedersta kryssrutan
@@ -365,7 +365,7 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
 
     private void validateSysselsattning() {
         FunktionstillstandType inAktivitetFunktion = findFunktionsTillstandType(
-                utlatande.getFunktionstillstands(), TypAvFunktionstillstand.AKTIVITET);
+                utlatande.getFunktionstillstand(), TypAvFunktionstillstand.AKTIVITET);
 
         // Fält 8a - Check that we got a arbetsformaga element, needs to be present even if smittskydd is set.
         if (inAktivitetFunktion.getArbetsformaga() == null) {
@@ -374,11 +374,11 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
 
         // Fält 8a
         SysselsattningType inArbete = findTypAvSysselsattning(inAktivitetFunktion.getArbetsformaga()
-                .getSysselsattnings(), TypAvSysselsattning.NUVARANDE_ARBETE);
+                .getSysselsattning(), TypAvSysselsattning.NUVARANDE_ARBETE);
         SysselsattningType inArbetslos = findTypAvSysselsattning(inAktivitetFunktion.getArbetsformaga()
-                .getSysselsattnings(), TypAvSysselsattning.ARBETSLOSHET);
+                .getSysselsattning(), TypAvSysselsattning.ARBETSLOSHET);
         SysselsattningType inForaldraledig = findTypAvSysselsattning(inAktivitetFunktion.getArbetsformaga()
-                .getSysselsattnings(), TypAvSysselsattning.FORALDRALEDIGHET);
+                .getSysselsattning(), TypAvSysselsattning.FORALDRALEDIGHET);
         // Fält 8a - Check that we at least got one choice
         if (inArbete == null && inArbetslos == null && inForaldraledig == null) {
             addValidationError("No sysselsattning element found for field 8a! Nuvarande arbete, arbestloshet or foraldraledig should be set.");
@@ -398,26 +398,26 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
 
     private void validateNedsattning() {
         FunktionstillstandType inAktivitetFunktion = findFunktionsTillstandType(
-                utlatande.getFunktionstillstands(), TypAvFunktionstillstand.AKTIVITET);
+                utlatande.getFunktionstillstand(), TypAvFunktionstillstand.AKTIVITET);
 
         // Fält 8b - kryssruta 1
         ArbetsformagaNedsattningType nedsatt14del = findArbetsformaga(inAktivitetFunktion.getArbetsformaga()
-                .getArbetsformagaNedsattnings(),
+                .getArbetsformagaNedsattning(),
                 Nedsattningsgrad.NEDSATT_MED_1_4);
 
         // Fält 8b - kryssruta 2
         ArbetsformagaNedsattningType nedsatthalften = findArbetsformaga(inAktivitetFunktion.getArbetsformaga()
-                .getArbetsformagaNedsattnings(),
+                .getArbetsformagaNedsattning(),
                 Nedsattningsgrad.NEDSATT_MED_1_2);
 
         // Fält 8b - kryssruta 3
         ArbetsformagaNedsattningType nedsatt34delar = findArbetsformaga(inAktivitetFunktion.getArbetsformaga()
-                .getArbetsformagaNedsattnings(),
+                .getArbetsformagaNedsattning(),
                 Nedsattningsgrad.NEDSATT_MED_3_4);
 
         // Fält 8b - kryssruta 4
         ArbetsformagaNedsattningType heltNedsatt = findArbetsformaga(inAktivitetFunktion.getArbetsformaga()
-                .getArbetsformagaNedsattnings(),
+                .getArbetsformagaNedsattning(),
                 Nedsattningsgrad.HELT_NEDSATT);
 
         // Check that we at least got one choice
@@ -485,7 +485,7 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
 
     private void validatePrognosAngivelse() {
         FunktionstillstandType inAktivitetFunktion = findFunktionsTillstandType(
-                utlatande.getFunktionstillstands(), TypAvFunktionstillstand.AKTIVITET);
+                utlatande.getFunktionstillstand(), TypAvFunktionstillstand.AKTIVITET);
 
         boolean inArbetsformagaAterstallasHelt = false;
         boolean inArbetsformagaAterstallasDelvis = false;
@@ -527,9 +527,9 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
 
     private void validateRessatt() {
         // Fält 11 - optional
-        AktivitetType inForandratRessatt = findAktivitetWithCode(utlatande.getAktivitets(),
+        AktivitetType inForandratRessatt = findAktivitetWithCode(utlatande.getAktivitet(),
                 Aktivitetskod.FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_AKTUELLT);
-        AktivitetType inEjForandratRessatt = findAktivitetWithCode(utlatande.getAktivitets(),
+        AktivitetType inEjForandratRessatt = findAktivitetWithCode(utlatande.getAktivitet(),
                 Aktivitetskod.FORANDRAT_RESSATT_TILL_ARBETSPLATSEN_AR_EJ_AKTUELLT);
 
         // Fält 11 - If set only one should be set

@@ -23,13 +23,13 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.utils.ModelAssert;
 import se.inera.certificate.modules.fk7263.utils.Scenario;
 import se.inera.certificate.modules.fk7263.utils.ScenarioFinder;
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -45,9 +45,9 @@ public class InternalToTransportConverterTest {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("*")) {
             Utlatande intUtlatande = scenario.asInternalModel();
 
-            RegisterMedicalCertificate actual = InternalToTransport.getJaxbObject(intUtlatande);
+            RegisterMedicalCertificateType actual = InternalToTransport.getJaxbObject(intUtlatande);
 
-            RegisterMedicalCertificate expected = scenario.asTransportModel();
+            RegisterMedicalCertificateType expected = scenario.asTransportModel();
 
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
@@ -60,14 +60,14 @@ public class InternalToTransportConverterTest {
         Utlatande internalFormat = objectMapper.readValue(new ClassPathResource("InternalToTransportConverterTest/maximalt-fk7263-internal.json").getInputStream(), Utlatande.class);
 
 
-        RegisterMedicalCertificate registerMedicalCertificate = InternalToTransport.getJaxbObject(internalFormat);
+        RegisterMedicalCertificateType registerMedicalCertificate = InternalToTransport.getJaxbObject(internalFormat);
 
-        JAXBContext jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificate.class, Lakarutlatande.class);
+        JAXBContext jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class, Lakarutlatande.class);
         StringWriter stringWriter = new StringWriter();
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.marshal(wrapJaxb(registerMedicalCertificate), stringWriter);
 
-        // read expected XML and compare with resulting RegisterMedicalCertificate
+        // read expected XML and compare with resulting RegisterMedicalCertificateType
         String expectation = FileUtils.readFileToString(new ClassPathResource("InternalToTransportConverterTest/maximalt-fk7263-transport.xml").getFile());
 
         XMLUnit.setIgnoreWhitespace(true);
@@ -85,14 +85,14 @@ public class InternalToTransportConverterTest {
         Utlatande externalFormat = objectMapper.readValue(new ClassPathResource("InternalToTransportConverterTest/minimalt-fk7263-internal.json").getInputStream(), Utlatande.class);
         
         
-        RegisterMedicalCertificate registerMedicalCertificateType = InternalToTransport.getJaxbObject(externalFormat);
+        RegisterMedicalCertificateType registerMedicalCertificateType = InternalToTransport.getJaxbObject(externalFormat);
         
-        JAXBContext jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificate.class, Lakarutlatande.class);
+        JAXBContext jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class, Lakarutlatande.class);
         StringWriter stringWriter = new StringWriter();
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.marshal(wrapJaxb(registerMedicalCertificateType), stringWriter);
         
-        // read expected XML and compare with resulting RegisterMedicalCertificate
+        // read expected XML and compare with resulting RegisterMedicalCertificateType
         String expectation = FileUtils.readFileToString(new ClassPathResource("InternalToTransportConverterTest/minimalt-fk7263-transport.xml").getFile());
         
         XMLUnit.setIgnoreWhitespace(true);
@@ -107,14 +107,14 @@ public class InternalToTransportConverterTest {
         Utlatande externalFormat = objectMapper.readValue(new ClassPathResource("InternalToTransportConverterTest/minimalt-SmiL-fk7263-internal.json").getInputStream(), Utlatande.class);
 
 
-        RegisterMedicalCertificate registerMedicalCertificateType = InternalToTransport.getJaxbObject(externalFormat);
+        RegisterMedicalCertificateType registerMedicalCertificateType = InternalToTransport.getJaxbObject(externalFormat);
 
-        JAXBContext jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificate.class, Lakarutlatande.class);
+        JAXBContext jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class, Lakarutlatande.class);
         StringWriter stringWriter = new StringWriter();
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.marshal(wrapJaxb(registerMedicalCertificateType), stringWriter);
 
-        // read expected XML and compare with resulting RegisterMedicalCertificate
+        // read expected XML and compare with resulting RegisterMedicalCertificateType
         String expectation = FileUtils.readFileToString(new ClassPathResource("InternalToTransportConverterTest/minimalt-SmiL-fk7263-transport.xml").getFile());
 
         XMLUnit.setIgnoreWhitespace(true);
@@ -123,10 +123,10 @@ public class InternalToTransportConverterTest {
         Assert.assertTrue(diff.toString(), diff.similar());
     }
 
-    private JAXBElement<?> wrapJaxb(RegisterMedicalCertificate ws) {
-            JAXBElement<?> jaxbElement = new JAXBElement<RegisterMedicalCertificate>(
-                    new QName("urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3", "RegisterMedicalCertificate"),
-                    RegisterMedicalCertificate.class, ws);
+    private JAXBElement<?> wrapJaxb(RegisterMedicalCertificateType ws) {
+            JAXBElement<?> jaxbElement = new JAXBElement<RegisterMedicalCertificateType>(
+                    new QName("urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3", "RegisterMedicalCertificateType"),
+                    RegisterMedicalCertificateType.class, ws);
             return jaxbElement;
         }
 

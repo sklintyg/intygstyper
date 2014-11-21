@@ -19,6 +19,11 @@
 
     <!-- Common -->
     <dependency>
+      <groupId>se.inera.intyg.schemas.insuranceprocess.healthreporting.v1</groupId>
+      <artifactId>insuranceprocess-healthreporting-interactions</artifactId>
+      <version>0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
       <groupId>se.inera.intyg.common</groupId>
       <artifactId>common-support</artifactId>
     </dependency>
@@ -68,6 +73,16 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
     </dependency>
 
     <!-- Test dependencies -->

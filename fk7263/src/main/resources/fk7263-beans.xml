@@ -18,17 +18,10 @@
 
   <bean class="se.inera.certificate.modules.fk7263.rest.Fk7263ModuleApi" />
 
+  <bean class="se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil" />
+
   <bean
     class="se.inera.certificate.modules.fk7263.validator.InternalDraftValidator" />
-
-  <bean
-    class="se.inera.certificate.modules.fk7263.model.converter.InternalToExternalConverter" />
-
-  <bean
-    class="se.inera.certificate.modules.fk7263.model.converter.ExternalToTransportConverter" />
-
-  <bean
-    class="se.inera.certificate.modules.fk7263.model.converter.ExternalToInternalConverter" />
 
   <bean id="Fk7263EntryPoint"
     class="se.inera.certificate.modules.fk7263.support.Fk7263EntryPoint" />

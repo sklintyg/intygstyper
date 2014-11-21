@@ -5,8 +5,8 @@ import java.io.IOException;
 
 import javax.xml.bind.JAXB;
 
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
 import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -17,8 +17,8 @@ public final class ResourceConverterUtils {
 
     private static final ObjectMapper OBJECT_MAPPER = new CustomObjectMapper();
 
-    public static RegisterMedicalCertificate toTransport(File resource) throws IOException {
-        return JAXB.unmarshal(resource, RegisterMedicalCertificate.class);
+    public static RegisterMedicalCertificateType toTransport(File resource) throws IOException {
+        return JAXB.unmarshal(resource, RegisterMedicalCertificateType.class);
     }
 
     public static se.inera.certificate.modules.fk7263.model.internal.Utlatande toInternal(File resource)

@@ -9,7 +9,7 @@ import java.util.List;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.registermedicalcertificate.v3.RegisterMedicalCertificate;
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 
 /**
  * Finds and creates scenarios based on scenario files placed in src/test/resources.
@@ -125,7 +125,7 @@ public class ScenarioFinder {
          * {@inheritDoc}
          */
         @Override
-        public RegisterMedicalCertificate asTransportModel() throws ScenarioNotFoundException {
+        public RegisterMedicalCertificateType asTransportModel() throws ScenarioNotFoundException {
             try {
                 return ResourceConverterUtils.toTransport(getTransportModelFor(scenarioFile));
             } catch (IOException e) {

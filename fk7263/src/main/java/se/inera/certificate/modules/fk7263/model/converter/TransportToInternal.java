@@ -7,19 +7,6 @@ import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.FunktionstillstandType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.ReferensType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.EnhetType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.HosPersonalType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.PatientType;
-import se.inera.certificate.fk7263.insuranceprocess.healthreporting.v2.VardgivareType;
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.LocalDateInterval;
@@ -32,6 +19,19 @@ import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.internal.PrognosBedomning;
 import se.inera.certificate.modules.fk7263.model.internal.Rehabilitering;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.FunktionstillstandType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ReferensType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 
 /**
  * Converts se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande Jaxb structure to
@@ -55,7 +55,7 @@ public final class TransportToInternal {
     private TransportToInternal() {
     }
 
-    public static Utlatande convert(Lakarutlatande source) throws ConverterException {
+    public static Utlatande convert(LakarutlatandeType source) throws ConverterException {
         LOGGER.debug("Converting transport to internal model");
         Utlatande utlatande = new Utlatande();
         utlatande.setId(source.getLakarutlatandeId());
@@ -75,10 +75,10 @@ public final class TransportToInternal {
         // Initiate list of ArbetsformagaNedsattningType for building Gilitighet later
         List<ArbetsformagaNedsattningType> nedsattningar = new ArrayList<ArbetsformagaNedsattningType>();
 
-        for (FunktionstillstandType funktionstillstand : source.getFunktionstillstands()) {
+        for (FunktionstillstandType funktionstillstand : source.getFunktionstillstand()) {
             if (funktionstillstand.getArbetsformaga() != null) {
                 // Populate list of ArbetsformagaNedsattningType
-                nedsattningar.addAll(funktionstillstand.getArbetsformaga().getArbetsformagaNedsattnings());
+                nedsattningar.addAll(funktionstillstand.getArbetsformaga().getArbetsformagaNedsattning());
 
                 populateWithArbetsformaga(utlatande, funktionstillstand);
 
@@ -86,8 +86,8 @@ public final class TransportToInternal {
                     utlatande.setNuvarandeArbetsuppgifter(funktionstillstand.getArbetsformaga().getArbetsuppgift().getTypAvArbetsuppgift());
                     utlatande.setNuvarandeArbete(true);
                 }
-                if (funktionstillstand.getArbetsformaga().getSysselsattnings() != null) {
-                    populateWithSysselsattning(utlatande, funktionstillstand.getArbetsformaga().getSysselsattnings());
+                if (funktionstillstand.getArbetsformaga().getSysselsattning() != null) {
+                    populateWithSysselsattning(utlatande, funktionstillstand.getArbetsformaga().getSysselsattning());
                 }
                 populateWithPrognos(utlatande, funktionstillstand.getArbetsformaga());
             }
@@ -98,7 +98,7 @@ public final class TransportToInternal {
         // Finally determine Giltighet using the list
         utlatande.setGiltighet(buildGiltighet(nedsattningar));
 
-        for (AktivitetType aktivitetType : source.getAktivitets()) {
+        for (AktivitetType aktivitetType : source.getAktivitet()) {
             populateWithAktivitetType(utlatande, aktivitetType);
         }
 
@@ -106,7 +106,7 @@ public final class TransportToInternal {
             populateWithReferens(utlatande, referensType);
         }
 
-        for (VardkontaktType vardkontaktType : source.getVardkontakts()) {
+        for (VardkontaktType vardkontaktType : source.getVardkontakt()) {
             populateWithVardkontakt(utlatande, vardkontaktType);
         }
 
@@ -175,7 +175,7 @@ public final class TransportToInternal {
         }
         switch (source.getAktivitetskod()) {
         case PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN:
-                utlatande.setAtgardInomSjukvarden(source.getBeskrivning());
+            utlatande.setAtgardInomSjukvarden(source.getBeskrivning());
             break;
         case PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD:
             utlatande.setAnnanAtgard(source.getBeskrivning());
@@ -248,10 +248,10 @@ public final class TransportToInternal {
      * Create IntyMetadata object with information regarding Patient, SkapadAv and Skickat- and SkapatDatum
      * 
      * @param source
-     *            {@link Lakarutlatande}
+     *            {@link LakarutlatandeType}
      * @return {@link IntygMetadata}
      */
-    private static IntygMetadata populateWithMetaData(Lakarutlatande source) {
+    private static IntygMetadata populateWithMetaData(LakarutlatandeType source) {
         IntygMetadata metadata = new IntygMetadata();
         metadata.setPatient(convertPatient(source.getPatient()));
         metadata.setSigneringsdatum(source.getSigneringsdatum());
@@ -378,7 +378,7 @@ public final class TransportToInternal {
      * @return Fk7263Observation
      */
     private static void populateWithArbetsformaga(Utlatande utlatande, FunktionstillstandType source) {
-        for (ArbetsformagaNedsattningType nedsattning : source.getArbetsformaga().getArbetsformagaNedsattnings()) {
+        for (ArbetsformagaNedsattningType nedsattning : source.getArbetsformaga().getArbetsformagaNedsattning()) {
             if (nedsattning.getNedsattningsgrad() != null && (nedsattning.getVaraktighetFrom() != null && nedsattning.getVaraktighetTom() != null)) {
                 switch (nedsattning.getNedsattningsgrad()) {
                 case HELT_NEDSATT:
