@@ -1,20 +1,14 @@
 angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
-    [ '$anchorScroll', '$location', '$scope', '$window', 'common.ManageCertView', 'common.User', 'common.wcFocus',
-        function($anchorScroll, $location, $scope, $window, ManageCertView, User, wcFocus) {
+    [ '$anchorScroll', '$location', '$scope', '$window', 'common.ManageCertView', 'common.User', 'common.wcFocus', 'common.intygNotifyService',
+        function($anchorScroll, $location, $scope, $window, ManageCertView, User, wcFocus, intygNotifyService) {
             'use strict';
 
             /**********************************************************************************
              * Default state
              **********************************************************************************/
 
-            $scope.cert = {};
-            $scope.messages = [];
-            $scope.isComplete = false;
-            $scope.isSigned = false;
-            $scope.hasSavedThisSession = false;
-            $scope.user = User;
-
             // init state
+            $scope.user = User;
             $scope.focusFirstInput = true;
             $scope.widgetState = {
                 doneLoading: false,
@@ -24,6 +18,19 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
                 hasInfoMissing: false
             };
 
+            // intyg state
+            $scope.cert = {};
+            $scope.hasSavedThisSession = false;
+            $scope.messages = [];
+            $scope.isComplete = false;
+            $scope.isSigned = false;
+            $scope.certMeta = {
+                intygId: null,
+                intygType: 'ts-bas',
+                vidarebefordrad: false
+            };
+
+            // form model (extends intyg model where necessary)
             $scope.form = {
                 'identity': [
                     {label: 'ID-kort *', id: 'ID_KORT'},
@@ -266,28 +273,41 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
              */
             $scope.save = function() {
                 $scope.hasSavedThisSession = true;
-                ManageCertView.save($scope, 'ts-bas');
+                ManageCertView.save($scope, $scope.certMeta.intygType);
             };
 
             /**
              * Action to discard the certificate draft and return to WebCert again.
              */
             $scope.discard = function() {
-                ManageCertView.discard($scope, 'ts-bas');
+                ManageCertView.discard($scope, $scope.certMeta.intygType);
             };
 
             /**
              * Action to sign the certificate draft and return to Webcert again.
              */
             $scope.sign = function() {
-                ManageCertView.signera($scope, 'ts-bas');
+                ManageCertView.signera($scope, $scope.certMeta.intygType);
             };
 
             /**
              * Print draft
              */
             $scope.print = function() {
-                ManageCertView.printDraft($scope.cert.id, 'ts-bas');
+                ManageCertView.printDraft($scope.cert.id, $scope.certMeta.intygType);
+            };
+
+            /**
+             * Handle vidarebefordra dialog
+             *
+             * @param cert
+             */
+            $scope.openMailDialog = function() {
+                intygNotifyService.forwardIntyg($scope.certMeta, $scope.widgetState);
+            };
+
+            $scope.onVidarebefordradChange = function() {
+                intygNotifyService.onForwardedChange($scope.certMeta, $scope.widgetState);
             };
 
             /**************************************************************************
@@ -295,7 +315,7 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
              **************************************************************************/
 
             // Get the certificate draft from the server.
-            ManageCertView.load($scope, 'ts-bas', function(cert) {
+            ManageCertView.load($scope, $scope.certMeta.intygType, function(cert) {
                 // Decorate intygspecific default data
                 $scope.cert = cert;
                 convertCertToForm($scope);

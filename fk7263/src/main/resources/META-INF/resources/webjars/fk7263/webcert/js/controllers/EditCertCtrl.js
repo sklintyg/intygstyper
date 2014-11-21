@@ -12,8 +12,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.user = User;
             $scope.today = new Date();
             $scope.today.setHours(0, 0, 0, 0); // reset time to increase comparison accuracy (using new Date() also sets time)
-
-            // init state
             $scope.focusFirstInput = false;
             $scope.widgetState = {
                 doneLoading: false,
@@ -1041,7 +1039,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.print = function() {
                 ManageCertView.printDraft($scope.cert.id, $scope.certMeta.intygType);
             };
-
 
             /**
              * Handle vidarebefordra dialog
