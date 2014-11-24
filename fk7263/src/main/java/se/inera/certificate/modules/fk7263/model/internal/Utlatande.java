@@ -1,23 +1,15 @@
 package se.inera.certificate.modules.fk7263.model.internal;
 
-import se.inera.certificate.model.LocalDateInterval;
-import se.inera.certificate.model.common.internal.IntygMetadata;
-
 import static se.inera.certificate.model.util.Strings.emptyToNull;
 import static se.inera.certificate.model.util.Strings.join;
-
-
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.InternalLocalDateInterval;
+import se.inera.certificate.model.LocalDateInterval;
+
 /**
  * @author andreaskaltenbach
  */
-public class Utlatande {
-
-    private String id;
-    private String typ;
-
-    private IntygMetadata intygMetadata = new IntygMetadata();
+public class Utlatande extends se.inera.certificate.model.common.internal.Utlatande {
 
     private LocalDateInterval giltighet;
 
@@ -83,26 +75,6 @@ public class Utlatande {
     private boolean kontaktMedFk;
 
     private String kommentar;
-
-    public String getId() { return id; }
-
-    public void setId(String id) { this.id = id; }
-
-    public String getTyp() {
-        return typ;
-    }
-
-    public void setTyp(String typ) {
-        this.typ = typ;
-    }
-
-    public IntygMetadata getIntygMetadata() {
-        return intygMetadata;
-    }
-
-    public void setIntygMetadata(IntygMetadata intygMetadata) {
-        this.intygMetadata = intygMetadata;
-    }
 
     public String getTjanstgoringstid() {
         return tjanstgoringstid;
@@ -425,15 +397,15 @@ public class Utlatande {
     }
 
     public String getForskrivarkodOchArbetsplatskod() {
-        return emptyToNull(join(" - ", intygMetadata.getSkapadAv().getForskrivarKod(), intygMetadata.getSkapadAv().getVardenhet().getArbetsplatsKod()));
+        return emptyToNull(join(" - ", getIntygMetadata().getSkapadAv().getForskrivarKod(), getIntygMetadata().getSkapadAv().getVardenhet().getArbetsplatsKod()));
     }
 
     public String getNamnfortydligandeOchAdress() {
-        return join("\n", intygMetadata.getSkapadAv().getFullstandigtNamn(),
-                intygMetadata.getSkapadAv().getVardenhet().getEnhetsnamn(),
-                intygMetadata.getSkapadAv().getVardenhet().getPostadress(),
-                join(" ", intygMetadata.getSkapadAv().getVardenhet().getPostnummer(), intygMetadata.getSkapadAv().getVardenhet().getPostort()),
-                intygMetadata.getSkapadAv().getVardenhet().getTelefonnummer());
+        return join("\n", getIntygMetadata().getSkapadAv().getFullstandigtNamn(),
+                getIntygMetadata().getSkapadAv().getVardenhet().getEnhetsnamn(),
+                getIntygMetadata().getSkapadAv().getVardenhet().getPostadress(),
+                join(" ", getIntygMetadata().getSkapadAv().getVardenhet().getPostnummer(), getIntygMetadata().getSkapadAv().getVardenhet().getPostort()),
+                getIntygMetadata().getSkapadAv().getVardenhet().getTelefonnummer());
     }
 
     public LocalDateInterval getGiltighet() {

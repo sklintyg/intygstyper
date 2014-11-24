@@ -45,7 +45,7 @@ public class ConverterUtil {
         certificateHolder.setType(Fk7263EntryPoint.FK_7263);
         certificateHolder.setValidFromDate(utlatande.getGiltighet().getFrom().toString());
         certificateHolder.setValidToDate(utlatande.getGiltighet().getTom().toString());
-        certificateHolder.setAdditionalInfo(utlatande.getGiltighet().toString());
+        certificateHolder.setAdditionalInfo(utlatande.getGiltighet().getFrom().toString() + " - " + utlatande.getGiltighet().getTom().toString());
         certificateHolder.setDocument(toJsonString(utlatande));
         return certificateHolder;
     }

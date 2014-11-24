@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
 import se.inera.certificate.validate.PersonnummerValidator;
+import se.inera.ifv.insuranceprocess.healthreporting.Constants;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
@@ -40,13 +41,7 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
 
     private LakarutlatandeType utlatande;
 
-    private static final List<String> PATIENT_ID_OIDS = asList("1.2.752.129.2.1.3.1", "1.2.752.129.2.1.3.3");
-
-    private static final String ENHET_OID = "1.2.752.129.2.1.4.1";
-
-    private static final String HOS_PERSONAL_OID = "1.2.752.129.2.1.4.1";
-
-    private static final String ARBETSPLATS_CODE_OID = "1.2.752.29.4.71";
+    private static final List<String> PATIENT_ID_OIDS = asList(Constants.PERSON_ID_OID, Constants.SAMORDNING_ID_OID);
 
     private static final PersonnummerValidator PERSONNUMMER_VALIDATOR;
 
@@ -192,8 +187,8 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
         }
         // Check lakar id o.i.d.
         if (inHoSP.getPersonalId() == null || inHoSP.getPersonalId().getRoot() == null
-                || !inHoSP.getPersonalId().getRoot().equalsIgnoreCase(HOS_PERSONAL_OID)) {
-            addValidationError("Wrong o.i.d. for personalId! Should be " + HOS_PERSONAL_OID);
+                || !inHoSP.getPersonalId().getRoot().equalsIgnoreCase(Constants.HSA_ID_OID)) {
+            addValidationError("Wrong o.i.d. for personalId! Should be " + Constants.HSA_ID_OID);
         }
 
         // Check lakarnamn - mandatory
@@ -221,8 +216,8 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
         }
         // Check enhets o.i.d
         if (inEnhet.getEnhetsId() == null || inEnhet.getEnhetsId().getRoot() == null
-                || !inEnhet.getEnhetsId().getRoot().equalsIgnoreCase(ENHET_OID)) {
-            addValidationError("Wrong o.i.d. for enhetsId! Should be " + ENHET_OID);
+                || !inEnhet.getEnhetsId().getRoot().equalsIgnoreCase(Constants.HSA_ID_OID)) {
+            addValidationError("Wrong o.i.d. for enhetsId! Should be " + Constants.HSA_ID_OID);
         }
 
         // Check enhetsnamn - mandatory
@@ -230,8 +225,8 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
             addValidationError("No enhetsnamn found!");
         }
 
-        if (inEnhet.getArbetsplatskod() == null || !inEnhet.getArbetsplatskod().getRoot().equalsIgnoreCase(ARBETSPLATS_CODE_OID)) {
-            addValidationError("Wrong o.i.d for arbetsplatskod, should be " + ARBETSPLATS_CODE_OID);
+        if (inEnhet.getArbetsplatskod() == null || !inEnhet.getArbetsplatskod().getRoot().equalsIgnoreCase(Constants.ARBETSPLATS_KOD_OID)) {
+            addValidationError("Wrong o.i.d for arbetsplatskod, should be " + Constants.ARBETSPLATS_KOD_OID);
         }
 
         // Check enhetsadress - mandatory
@@ -262,8 +257,8 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
         }
         // Check vardgivare o.i.d.
         if (inVardgivare.getVardgivareId() == null || inVardgivare.getVardgivareId().getRoot() == null
-                || !inVardgivare.getVardgivareId().getRoot().equalsIgnoreCase(HOS_PERSONAL_OID)) {
-            addValidationError("Wrong o.i.d. for vardgivareId! Should be " + HOS_PERSONAL_OID);
+                || !inVardgivare.getVardgivareId().getRoot().equalsIgnoreCase(Constants.HSA_ID_OID)) {
+            addValidationError("Wrong o.i.d. for vardgivareId! Should be " + Constants.HSA_ID_OID);
         }
 
         // Check vardgivarename - mandatory

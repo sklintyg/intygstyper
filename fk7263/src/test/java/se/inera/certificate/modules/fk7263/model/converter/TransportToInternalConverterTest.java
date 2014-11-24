@@ -117,7 +117,7 @@ public class TransportToInternalConverterTest {
         // serialize utlatande to JSON and compare with expected JSON
         JsonNode tree = objectMapper.valueToTree(internalModel);
         JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
-                RESOURCE_ROOT + "legacy-fk7263-without-prognoskod-external.json")
+                RESOURCE_ROOT + "legacy-fk7263-without-prognoskod-internal.json")
                 .getInputStream());
 
         JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);

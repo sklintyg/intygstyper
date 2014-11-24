@@ -2,9 +2,9 @@ package se.inera.certificate.modules.fk7263.validator;
 
 import java.util.List;
 
-import se.inera.certificate.schema.validate.PatientValidator;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
+import se.inera.ifv.insuranceprocess.healthreporting.validate.PatientValidator;
 
 /**
  * @author andreaskaltenbach

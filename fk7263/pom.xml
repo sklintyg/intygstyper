@@ -191,37 +191,6 @@
       </plugin>
 
       <plugin>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-xjc-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>xsdtojava</goal>
-            </goals>
-            <phase>generate-sources</phase>
-            <configuration>
-              <xsdOptions>
-                <xsdOption>
-                  <xsd>src/main/resources/schemas/fk7263_model.xsd</xsd>
-                  <extension>true</extension>
-                  <bindingFile>${basedir}/src/main/resources/schemas/binding.xjb</bindingFile>
-                </xsdOption>
-                <xsdOption>
-                  <xsd>
-                    src/main/resources/schemas/v3/RegisterMedicalCertificateInteraction/RegisterMedicalCertificate_3.0.xsd
-                  </xsd>
-                  <extension>true</extension>
-                  <bindingFile>
-                    ${basedir}/src/main/resources/schemas/v3/RegisterMedicalCertificateInteraction/binding.xjb
-                  </bindingFile>
-                </xsdOption>
-              </xsdOptions>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>

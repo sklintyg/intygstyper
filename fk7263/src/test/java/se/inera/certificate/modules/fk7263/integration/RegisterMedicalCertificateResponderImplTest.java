@@ -20,7 +20,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.integration.module.ModuleApiFactory;
 import se.inera.certificate.integration.module.exception.CertificateAlreadyExistsException;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
 import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
@@ -42,9 +41,6 @@ public class RegisterMedicalCertificateResponderImplTest {
     private CustomObjectMapper objectMapper = new CustomObjectMapper();
     private ConverterUtil converterUtil = new ConverterUtil();
     
-    @Mock
-    private ModuleApiFactory moduleApiFactory = mock(ModuleApiFactory.class);
-
     @Mock
     private ModuleEntryPoint moduleEntryPoint = mock(ModuleEntryPoint.class);
 

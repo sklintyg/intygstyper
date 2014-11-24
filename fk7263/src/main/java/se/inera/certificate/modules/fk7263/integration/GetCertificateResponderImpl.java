@@ -31,12 +31,12 @@ import se.inera.certificate.modules.fk7263.model.converter.InternalToTransport;
 import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.fk7263.rest.Fk7263ModuleApi;
 import se.inera.certificate.modules.support.api.CertificateHolder;
-import se.inera.certificate.schema.util.ModelConverter;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificate.v1.rivtabp20.GetCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.CertificateType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
+import se.inera.ifv.insuranceprocess.healthreporting.util.ModelConverter;
 import se.inera.ifv.insuranceprocess.healthreporting.utils.ResultOfCallUtil;
 
 import com.google.common.base.Throwables;

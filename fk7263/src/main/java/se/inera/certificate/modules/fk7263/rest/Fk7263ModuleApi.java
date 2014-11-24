@@ -32,10 +32,10 @@ import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.exception.ModuleConverterException;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
-import se.inera.certificate.schema.util.ExternalWebServiceCallFailedException;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
+import se.inera.ifv.insuranceprocess.healthreporting.util.ExternalWebServiceCallFailedException;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -57,14 +57,6 @@ public class Fk7263ModuleApi implements ModuleApi {
     @Qualifier("fk7263-objectMapper")
     private ObjectMapper objectMapper;
 
-    @Autowired
-    @Qualifier("fk7263-jaxbContext")
-    private JAXBContext jaxbContext;
-
-    @Autowired
-    @Qualifier("fk7263-jaxbContext-legacy")
-    private JAXBContext jaxbContextLegacy;
-    
     @Autowired
     @Qualifier("registerMedicalCertificateClient")
     private RegisterMedicalCertificateResponderInterface registerMedicalCertificateClient;

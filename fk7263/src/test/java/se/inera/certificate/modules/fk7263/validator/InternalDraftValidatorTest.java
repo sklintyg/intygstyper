@@ -40,7 +40,7 @@ public class InternalDraftValidatorTest {
 
     @Test
     public void testValidate() throws Exception {
-        for (se.inera.certificate.modules.fk7263.utils.Scenario scenario : ScenarioFinder.getInternalScenarios("*")) {
+        for (se.inera.certificate.modules.fk7263.utils.Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
             Utlatande utlatande = scenario.asInternalModel();
             ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
             assertEquals(
