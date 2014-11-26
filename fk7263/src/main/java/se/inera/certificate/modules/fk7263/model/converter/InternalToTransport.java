@@ -63,10 +63,10 @@ public final class InternalToTransport {
             register.getLakarutlatande().setKommentar(source.getKommentar());
         }
 
-        register.getLakarutlatande().setSigneringsdatum(source.getIntygMetadata().getSigneringsdatum());
-        register.getLakarutlatande().setSkickatDatum(source.getIntygMetadata().getSkickatdatum());
-        register.getLakarutlatande().setPatient(patientToJaxb(source.getIntygMetadata().getPatient()));
-        register.getLakarutlatande().setSkapadAvHosPersonal(hosPersonalToJaxb(source.getIntygMetadata().getSkapadAv()));
+        register.getLakarutlatande().setSigneringsdatum(source.getGrundData().getSigneringsdatum());
+        register.getLakarutlatande().setSkickatDatum(source.getGrundData().getSkickatdatum());
+        register.getLakarutlatande().setPatient(patientToJaxb(source.getGrundData().getPatient()));
+        register.getLakarutlatande().setSkapadAvHosPersonal(hosPersonalToJaxb(source.getGrundData().getSkapadAv()));
         register.getLakarutlatande().setKommentar(source.getKommentar());
         
         if (!isNullOrEmpty(source.getSjukdomsforlopp())) {

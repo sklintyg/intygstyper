@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.util.Strings;
-import se.inera.certificate.modules.fk7263.model.codes.Prognoskoder;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 
@@ -297,7 +296,7 @@ public class PdfGenerator {
     }
 
     public String generatePdfFilename() {
-        return String.format("lakarutlatande_%s_%s-%s.pdf", intyg.getIntygMetadata().getPatient().getPersonId(), intyg.getGiltighet()
+        return String.format("lakarutlatande_%s_%s-%s.pdf", intyg.getGrundData().getPatient().getPersonId(), intyg.getGiltighet()
                 .getFrom().toString(DATE_FORMAT), intyg.getGiltighet().getTom().toString(DATE_FORMAT));
     }
 
@@ -343,13 +342,13 @@ public class PdfGenerator {
     }
 
     private void fillPatientDetails() {
-        fillText(PATIENT_NAME, intyg.getIntygMetadata().getPatient().getFullstandigtNamn());
-        fillText(PATIENT_SSN, intyg.getIntygMetadata().getPatient().getPersonId());
+        fillText(PATIENT_NAME, intyg.getGrundData().getPatient().getFullstandigtNamn());
+        fillText(PATIENT_SSN, intyg.getGrundData().getPatient().getPersonId());
     }
 
     private void fillSignerNameAndAddress() {
         fillText(SIGN_NAME, intyg.getNamnfortydligandeOchAdress());
-        fillText(SIGN_DATE, intyg.getIntygMetadata().getSigneringsdatum().toString(DATE_PATTERN));
+        fillText(SIGN_DATE, intyg.getGrundData().getSigneringsdatum().toString(DATE_PATTERN));
     }
 
     private void fillTravel() {

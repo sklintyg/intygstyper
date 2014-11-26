@@ -11,7 +11,7 @@ import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.common.internal.HoSPersonal;
-import se.inera.certificate.model.common.internal.IntygMetadata;
+import se.inera.certificate.model.common.internal.GrundData;
 import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.common.internal.Vardgivare;
@@ -64,7 +64,7 @@ public final class TransportToInternal {
         if (source.getKommentar() != null && !source.getKommentar().isEmpty()) {
             utlatande.setKommentar(source.getKommentar());
         }
-        utlatande.setIntygMetadata(populateWithMetaData(source));
+        utlatande.setGrundData(populateWithMetaData(source));
 
         populateWithDiagnose(utlatande, source.getMedicinsktTillstand());
 
@@ -249,10 +249,10 @@ public final class TransportToInternal {
      * 
      * @param source
      *            {@link LakarutlatandeType}
-     * @return {@link IntygMetadata}
+     * @return {@link GrundData}
      */
-    private static IntygMetadata populateWithMetaData(LakarutlatandeType source) {
-        IntygMetadata metadata = new IntygMetadata();
+    private static GrundData populateWithMetaData(LakarutlatandeType source) {
+        GrundData metadata = new GrundData();
         metadata.setPatient(convertPatient(source.getPatient()));
         metadata.setSigneringsdatum(source.getSigneringsdatum());
         metadata.setSkickatdatum(source.getSkickatDatum());

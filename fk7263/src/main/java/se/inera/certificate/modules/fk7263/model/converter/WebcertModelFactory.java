@@ -83,7 +83,7 @@ public class WebcertModelFactory {
             throw new ConverterException("Got null while trying to populateWithPatientInfo");
         }
 
-        utlatande.getIntygMetadata().setPatient(WebcertModelFactoryUtil.convertPatientToEdit(patient));
+        utlatande.getGrundData().setPatient(WebcertModelFactoryUtil.convertPatientToEdit(patient));
     }
 
     private void populateWithSkapadAv(Utlatande utlatande, se.inera.certificate.modules.support.api.dto.HoSPersonal hoSPersonal)
@@ -92,13 +92,13 @@ public class WebcertModelFactory {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");
         }
 
-        utlatande.getIntygMetadata().setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(hoSPersonal));
+        utlatande.getGrundData().setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(hoSPersonal));
     }
 
     public void updateSkapadAv(Utlatande utlatande, HoSPersonal hosPerson, LocalDateTime signeringsdatum) {
-        utlatande.getIntygMetadata().getSkapadAv().setPersonId(hosPerson.getHsaId());
-        utlatande.getIntygMetadata().getSkapadAv().setFullstandigtNamn(hosPerson.getNamn());
-        utlatande.getIntygMetadata().getSkapadAv().setForskrivarKod(hosPerson.getForskrivarkod());
-        utlatande.getIntygMetadata().setSigneringsdatum(signeringsdatum);
+        utlatande.getGrundData().getSkapadAv().setPersonId(hosPerson.getHsaId());
+        utlatande.getGrundData().getSkapadAv().setFullstandigtNamn(hosPerson.getNamn());
+        utlatande.getGrundData().getSkapadAv().setForskrivarKod(hosPerson.getForskrivarkod());
+        utlatande.getGrundData().setSigneringsdatum(signeringsdatum);
     }
 }

@@ -397,15 +397,15 @@ public class Utlatande extends se.inera.certificate.model.common.internal.Utlata
     }
 
     public String getForskrivarkodOchArbetsplatskod() {
-        return emptyToNull(join(" - ", getIntygMetadata().getSkapadAv().getForskrivarKod(), getIntygMetadata().getSkapadAv().getVardenhet().getArbetsplatsKod()));
+        return emptyToNull(join(" - ", getGrundData().getSkapadAv().getForskrivarKod(), getGrundData().getSkapadAv().getVardenhet().getArbetsplatsKod()));
     }
 
     public String getNamnfortydligandeOchAdress() {
-        return join("\n", getIntygMetadata().getSkapadAv().getFullstandigtNamn(),
-                getIntygMetadata().getSkapadAv().getVardenhet().getEnhetsnamn(),
-                getIntygMetadata().getSkapadAv().getVardenhet().getPostadress(),
-                join(" ", getIntygMetadata().getSkapadAv().getVardenhet().getPostnummer(), getIntygMetadata().getSkapadAv().getVardenhet().getPostort()),
-                getIntygMetadata().getSkapadAv().getVardenhet().getTelefonnummer());
+        return join("\n", getGrundData().getSkapadAv().getFullstandigtNamn(),
+                getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn(),
+                getGrundData().getSkapadAv().getVardenhet().getPostadress(),
+                join(" ", getGrundData().getSkapadAv().getVardenhet().getPostnummer(), getGrundData().getSkapadAv().getVardenhet().getPostort()),
+                getGrundData().getSkapadAv().getVardenhet().getTelefonnummer());
     }
 
     public LocalDateInterval getGiltighet() {

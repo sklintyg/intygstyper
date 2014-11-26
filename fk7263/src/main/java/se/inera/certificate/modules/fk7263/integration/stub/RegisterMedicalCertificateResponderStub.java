@@ -48,7 +48,7 @@ public class RegisterMedicalCertificateResponderStub implements RegisterMedicalC
             String id = utlatande.getId();
 
             Map<String, String> props = new HashMap<>();
-            props.put("Personnummer", utlatande.getIntygMetadata().getPatient().getPersonId());
+            props.put("Personnummer", utlatande.getGrundData().getPatient().getPersonId());
             props.put("Makulerad", "NEJ");
 
             LOGGER.info("STUB Received request");

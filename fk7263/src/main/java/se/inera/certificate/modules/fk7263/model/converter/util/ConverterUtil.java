@@ -37,11 +37,11 @@ public class ConverterUtil {
     public  CertificateHolder toCertificateHolder(Utlatande utlatande, String document) throws ModuleException {
         CertificateHolder certificateHolder = new CertificateHolder();
         certificateHolder.setId(utlatande.getId());
-        certificateHolder.setCareUnitId(utlatande.getIntygMetadata().getSkapadAv().getVardenhet().getEnhetsid());
-        certificateHolder.setCareUnitName(utlatande.getIntygMetadata().getSkapadAv().getVardenhet().getEnhetsnamn());
-        certificateHolder.setSigningDoctorName(utlatande.getIntygMetadata().getSkapadAv().getFullstandigtNamn());
-        certificateHolder.setCivicRegistrationNumber(utlatande.getIntygMetadata().getPatient().getPersonId());
-        certificateHolder.setSignedDate(utlatande.getIntygMetadata().getSigneringsdatum());
+        certificateHolder.setCareUnitId(utlatande.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
+        certificateHolder.setCareUnitName(utlatande.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
+        certificateHolder.setSigningDoctorName(utlatande.getGrundData().getSkapadAv().getFullstandigtNamn());
+        certificateHolder.setCivicRegistrationNumber(utlatande.getGrundData().getPatient().getPersonId());
+        certificateHolder.setSignedDate(utlatande.getGrundData().getSigneringsdatum());
         certificateHolder.setType(Fk7263EntryPoint.FK_7263);
         certificateHolder.setValidFromDate(utlatande.getGiltighet().getFrom().toString());
         certificateHolder.setValidToDate(utlatande.getGiltighet().getTom().toString());

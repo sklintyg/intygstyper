@@ -3,17 +3,20 @@ package se.inera.certificate.modules.fk7263.rest;
 import java.io.IOException;
 import java.io.StringWriter;
 
-import javax.xml.bind.JAXBContext;
-
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.w3.wsaddressing10.AttributedURIType;
 
+import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareRequestType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponderInterface;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponseType;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.converter.InternalToTransport;
+import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
 import se.inera.certificate.modules.fk7263.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
@@ -23,6 +26,8 @@ import se.inera.certificate.modules.fk7263.validator.InternalDraftValidator;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.ModuleContainerApi;
+import se.inera.certificate.modules.support.api.dto.CertificateMetaData;
+import se.inera.certificate.modules.support.api.dto.CertificateResponse;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
@@ -32,6 +37,7 @@ import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.exception.ModuleConverterException;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
+import se.inera.certificate.schema.util.ClinicalProcessCertificateMetaTypeConverter;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
@@ -47,7 +53,10 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(Fk7263ModuleApi.class);
 
-    @Autowired
+    @Value("${intygstjanst.logicaladdress}")
+    private String intygstjanstLogicalAddress;
+
+   @Autowired
     private WebcertModelFactory webcertModelFactory;
 
     @Autowired
@@ -63,6 +72,14 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     public void setRegisterMedicalCertificateClient(RegisterMedicalCertificateResponderInterface registerMedicalCertificateClient) {
         this.registerMedicalCertificateClient = registerMedicalCertificateClient;
+    }
+    
+    @Autowired
+    private GetMedicalCertificateForCareResponderInterface getMedicalCertificateForCareResponderInterface;
+
+    public void setGetMedicalCertificateForCareResponderInterface(
+            GetMedicalCertificateForCareResponderInterface getMedicalCertificateForCareResponderInterface) {
+        this.getMedicalCertificateForCareResponderInterface = getMedicalCertificateForCareResponderInterface;
     }
 
     @Autowired
@@ -185,5 +202,47 @@ public class Fk7263ModuleApi implements ModuleApi {
         } catch (ConverterException e) {
             throw new ModuleException(e);
         }
+    }
+
+    @Override
+    public CertificateResponse getCertificate(String certificateId) throws ModuleException {
+        GetMedicalCertificateForCareRequestType request = new GetMedicalCertificateForCareRequestType();
+        request.setCertificateId(certificateId);
+
+        GetMedicalCertificateForCareResponseType response = getMedicalCertificateForCareResponderInterface.getMedicalCertificateForCare(intygstjanstLogicalAddress,
+                request);
+        
+        switch (response.getResult().getResultCode()) {
+        case INFO:
+        case OK:
+            return convert(response, false);
+        case ERROR:
+            switch (response.getResult().getErrorId()) {
+            case REVOKED:
+                return convert(response, true);
+            case VALIDATION_ERROR:
+                throw new ModuleException("getMedicalCertificateForCare WS call: VALIDATION_ERROR :" + response.getResult().getResultText());
+            default:
+                throw new ModuleException("getMedicalCertificateForCare WS call: ERROR :" + response.getResult().getResultText());
+            }
+        default:
+            throw new ModuleException("getMedicalCertificateForCare WS call: ERROR :" + response.getResult().getResultText());
+        }
+    }
+    
+    private CertificateResponse convert(GetMedicalCertificateForCareResponseType response, boolean revoked) throws ModuleException {
+        try {
+            Utlatande utlatande = TransportToInternal.convert(response.getLakarutlatande());
+            String internalModel = objectMapper.writeValueAsString(utlatande);
+            CertificateMetaData metaData = ClinicalProcessCertificateMetaTypeConverter.toCertificateMetaData(response.getMeta());
+            return new CertificateResponse(internalModel, utlatande, metaData, revoked);
+        } catch (Exception e) {
+            throw new ModuleException(e);
+        }
+    }
+
+    @Override
+    public void registerCertificate(InternalModelHolder internalModel) throws ModuleException {
+        sendCertificate(internalModel, intygstjanstLogicalAddress);
     }
 }
