@@ -17,7 +17,8 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                 doneLoading: false,
                 activeErrorMessageKey: null,
                 showTemplate: true,
-                printStatus: 'notloaded'
+                printStatus: 'notloaded',
+                newPatientId: false
             };
 
             $scope.certProperties = {
@@ -44,6 +45,12 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                         }
 
                         $scope.pdfUrl = '/moduleapi/intyg/fk7263/' + $scope.cert.id + '/pdf';
+
+                        if ($routeParams.patientId !== undefined && $routeParams.patientId !== '') { // also make sure patient ids are valid and in the same format? shouldn't need to since the source is a journalsystem.
+                            if ($scope.cert.intygMetadata.patient.personId !== $routeParams.patientId) {
+                                $scope.widgetState.newPatientId = true;
+                            }
+                        }
 
                     } else {
                         $scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';

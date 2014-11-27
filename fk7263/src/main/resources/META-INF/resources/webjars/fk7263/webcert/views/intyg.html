@@ -55,6 +55,9 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
           </form>
         </div>
 
+        <div class="alert alert-info alert-column" ng-show="widgetState.newPatientId">
+          <span message key="common.alert.newPersonId"></span>
+        </div>
 
         <div class="alert alert-info alert-column" ng-if="!certProperties.isRevoked">
           <strong>Status:</strong>

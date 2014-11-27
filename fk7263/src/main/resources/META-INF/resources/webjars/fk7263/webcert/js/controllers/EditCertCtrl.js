@@ -20,7 +20,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 showComplete: false,
                 collapsedHeader: false,
                 hasInfoMissing: false,
-                vidarebefordraInProgress: false
+                vidarebefordraInProgress: false,
+                hospName: $routeParams.hospName
             };
 
             // Intyg state

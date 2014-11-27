@@ -32,6 +32,13 @@
                 <label class="control-label">{{cert.intygMetadata.patient.fullstandigtNamn}} -
                   {{cert.intygMetadata.patient.personId}}</label>
               </div>
+
+              <div class="form-group" ng-show="widgetState.newPatientId">
+                <div class="alert alert-info">
+                  <span message key="common.alert.newPersonId"></span>
+                </div>
+              </div>
+
               <div class="form-group buttonbar">
                 <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned"
                         title="Sparar intyget som ett utkast.">Spara utkast
@@ -738,6 +745,10 @@
                         </div>
                       </div>
                     </div>
+                  </div>
+
+                  <div wc-field field-label="draft.signingdoctor" field-help-text="draft.helptext.signingdoctor" id="signingDoctor">
+                    {{widgetState.hospName}}
                   </div>
 
                 </div>
