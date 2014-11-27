@@ -21,7 +21,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 collapsedHeader: false,
                 hasInfoMissing: false,
                 vidarebefordraInProgress: false,
-                hospName: $routeParams.hospName
+                hospName: $routeParams.hospName,
+                newPatientId: false
             };
 
             // Intyg state
@@ -572,6 +573,12 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * @param $scope
              */
             function convertCertToForm($scope) {
+
+                if ($routeParams.patientId !== undefined && $routeParams.patientId !== '') { // also make sure patient ids are valid and in the same format? shouldn't need to since the source is a journalsystem.
+                    if ($scope.cert.intygMetadata.patient.personId !== $routeParams.patientId) {
+                        $scope.widgetState.newPatientId = true;
+                    }
+                }
 
                 // check if all info is available from HSA. If not, display the info message that someone needs to update it
                 if (!$scope.cert.intygMetadata ||
