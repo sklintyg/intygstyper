@@ -1,7 +1,7 @@
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
-    [ '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', 'common.CertificateService',
+    [ '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$routeParams', 'common.CertificateService',
         'common.ManageCertView', 'common.User', 'common.wcFocus', 'common.intygNotifyService',
-        function($anchorScroll, $filter, $location, $scope, $log, $timeout, CertificateService, ManageCertView, User, wcFocus, intygNotifyService) {
+        function($anchorScroll, $filter, $location, $scope, $log, $timeout, $routeParams, CertificateService, ManageCertView, User, wcFocus, intygNotifyService) {
             'use strict';
 
             /**********************************************************************************
