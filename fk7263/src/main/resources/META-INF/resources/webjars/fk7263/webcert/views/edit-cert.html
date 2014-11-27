@@ -747,7 +747,7 @@
                     </div>
                   </div>
 
-                  <div wc-field field-label="draft.signingdoctor" field-help-text="draft.helptext.signingdoctor" id="signingDoctor">
+                  <div ng-show="widgetState.hospName != undefined && widgetState.hospName != ''" wc-field field-label="draft.signingdoctor" field-help-text="draft.helptext.signingdoctor" id="signingDoctor">
                     {{widgetState.hospName}}
                   </div>
 
