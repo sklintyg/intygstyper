@@ -7,8 +7,8 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
+import se.inera.certificate.schema.Constants;
 import se.inera.certificate.validate.PersonnummerValidator;
-import se.inera.ifv.insuranceprocess.healthreporting.Constants;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;

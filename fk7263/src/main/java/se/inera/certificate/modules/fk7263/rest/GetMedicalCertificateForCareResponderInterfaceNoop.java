@@ -4,6 +4,9 @@ import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcer
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponseType;
 
+/**
+ * Noop implementation of WS client interface, needed for autowiring by other components but not relevant in all contexts.
+ */
 public class GetMedicalCertificateForCareResponderInterfaceNoop implements GetMedicalCertificateForCareResponderInterface {
 
     @Override

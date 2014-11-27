@@ -34,6 +34,7 @@ import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.PdfResponse;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.certificate.modules.support.api.exception.ExternalServiceCallException;
 import se.inera.certificate.modules.support.api.exception.ModuleConverterException;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
@@ -41,7 +42,6 @@ import se.inera.certificate.schema.util.ClinicalProcessCertificateMetaTypeConver
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
-import se.inera.ifv.insuranceprocess.healthreporting.util.ExternalWebServiceCallFailedException;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -196,7 +196,10 @@ public class Fk7263ModuleApi implements ModuleApi {
 
             // check whether call was successful or not
             if (response.getResult().getResultCode() != ResultCodeEnum.OK) {
-                throw new ExternalWebServiceCallFailedException(response.getResult());
+                String message = response.getResult().getResultCode() == ResultCodeEnum.INFO ?
+                        response.getResult().getInfoText() :
+                            response.getResult().getErrorId() + " : " + response.getResult().getErrorText();
+                throw new ExternalServiceCallException(message);
             }
 
         } catch (ConverterException e) {
