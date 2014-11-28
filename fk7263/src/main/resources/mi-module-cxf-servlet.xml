@@ -4,8 +4,4 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <!-- ws clients -->
-  <bean id="registerMedicalCertificateClient" class="se.inera.certificate.modules.fk7263.rest.RegisterMedicalCertificateResponderInterfaceNoop" />
-  <bean id="getMedicalCertificateForCareResponder"  class="se.inera.certificate.modules.fk7263.rest.GetMedicalCertificateForCareResponderInterfaceNoop" />
-
 </beans>
