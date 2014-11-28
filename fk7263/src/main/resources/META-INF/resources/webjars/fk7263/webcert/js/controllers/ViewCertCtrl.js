@@ -36,6 +36,8 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
                         $rootScope.$emit('fk7263.ViewCertCtrl.load', result.metaData);
+                        $rootScope.$broadcast('intyg.loaded', $scope.cert);
+
                         $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'FK');
                         $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
                         if ($scope.certProperties.isRevoked) {
@@ -45,12 +47,6 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                         }
 
                         $scope.pdfUrl = '/moduleapi/intyg/fk7263/' + $scope.cert.id + '/pdf';
-
-                        if ($routeParams.patientId !== undefined && $routeParams.patientId !== '') { // also make sure patient ids are valid and in the same format? shouldn't need to since the source is a journalsystem.
-                            if ($scope.cert.intygMetadata.patient.personId !== $routeParams.patientId) {
-                                $scope.widgetState.newPatientId = true;
-                            }
-                        }
 
                     } else {
                         $scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';

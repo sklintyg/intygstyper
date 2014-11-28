@@ -1,7 +1,7 @@
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
-    [ '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$routeParams', 'common.CertificateService',
+    [ '$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$routeParams', 'common.CertificateService',
         'common.ManageCertView', 'common.User', 'common.wcFocus', 'common.intygNotifyService',
-        function($anchorScroll, $filter, $location, $scope, $log, $timeout, $routeParams, CertificateService, ManageCertView, User, wcFocus, intygNotifyService) {
+        function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $routeParams, CertificateService, ManageCertView, User, wcFocus, intygNotifyService) {
             'use strict';
 
             /**********************************************************************************
@@ -21,8 +21,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 collapsedHeader: false,
                 hasInfoMissing: false,
                 vidarebefordraInProgress: false,
-                hospName: $routeParams.hospName,
-                newPatientId: false
+                hospName: $routeParams.hospName
             };
 
             // Intyg state
@@ -574,12 +573,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              */
             function convertCertToForm($scope) {
 
-                if ($routeParams.patientId !== undefined && $routeParams.patientId !== '') { // also make sure patient ids are valid and in the same format? shouldn't need to since the source is a journalsystem.
-                    if ($scope.cert.intygMetadata.patient.personId !== $routeParams.patientId) {
-                        $scope.widgetState.newPatientId = true;
-                    }
-                }
-
                 // check if all info is available from HSA. If not, display the info message that someone needs to update it
                 if (!$scope.cert.intygMetadata ||
                     !$scope.cert.intygMetadata.skapadAv ||
@@ -1071,6 +1064,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 $scope.cert = cert;
                 registerDateParsers();
                 convertCertToForm($scope);
+                $rootScope.$broadcast('intyg.loaded', $scope.cert);
                 $timeout(function() {
                     wcFocus('firstInput');
                 }, 10);

@@ -33,11 +33,7 @@
                   {{cert.intygMetadata.patient.personId}}</label>
               </div>
 
-              <div class="form-group" ng-show="widgetState.newPatientId">
-                <div class="alert alert-info alert-column">
-                  <span message key="common.alert.newPersonId"></span>
-                </div>
-              </div>
+              <div wc-new-person-id-message></div>
 
               <div class="form-group buttonbar">
                 <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned"
@@ -747,9 +743,7 @@
                     </div>
                   </div>
 
-                  <div ng-show="widgetState.hospName != undefined && widgetState.hospName != ''" wc-field field-label="draft.signingdoctor" field-help-text="draft.helptext.signingdoctor" id="signingDoctor">
-                    {{widgetState.hospName}}
-                  </div>
+                  <div wc-field-signing-doctor></div>
 
                 </div>
                 <!-- cert body -->
