@@ -62,8 +62,6 @@
                   address="${registermedicalcertificatev3.endpoint.url}">
   </jaxws:client>
 
-  <bean id="getMedicalCertificateForCareResponder"  class="se.inera.certificate.modules.fk7263.rest.GetMedicalCertificateForCareResponderInterfaceNoop" />
-
   <beans profile="qa,prod">
     <http:conduit
             name="{urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificate:3:rivtabp20}RegisterMedicalCertificateResponderInterfacePort.http-conduit">
