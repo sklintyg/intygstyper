@@ -2,7 +2,6 @@
  "typ": "fk7263",
     "grundData": {
         "signeringsdatum": "2013-03-17T00:00:00.000",
-        "skickatdatum": "2013-03-17T00:00:00.000",
         "skapadAv": {
             "personId": "Personal HSA-ID",
             "fullstandigtNamn": "En Läkare",

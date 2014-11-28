@@ -64,7 +64,7 @@ public final class InternalToTransport {
         }
 
         register.getLakarutlatande().setSigneringsdatum(source.getGrundData().getSigneringsdatum());
-        register.getLakarutlatande().setSkickatDatum(source.getGrundData().getSkickatdatum());
+        register.getLakarutlatande().setSkickatDatum(source.getGrundData().getSigneringsdatum());
         register.getLakarutlatande().setPatient(patientToJaxb(source.getGrundData().getPatient()));
         register.getLakarutlatande().setSkapadAvHosPersonal(hosPersonalToJaxb(source.getGrundData().getSkapadAv()));
         register.getLakarutlatande().setKommentar(source.getKommentar());

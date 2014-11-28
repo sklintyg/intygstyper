@@ -255,7 +255,6 @@ public final class TransportToInternal {
         GrundData metadata = new GrundData();
         metadata.setPatient(convertPatient(source.getPatient()));
         metadata.setSigneringsdatum(source.getSigneringsdatum());
-        metadata.setSkickatdatum(source.getSkickatDatum());
         metadata.setSkapadAv(convertSkapadAv(source.getSkapadAvHosPersonal()));
         return metadata;
     }
