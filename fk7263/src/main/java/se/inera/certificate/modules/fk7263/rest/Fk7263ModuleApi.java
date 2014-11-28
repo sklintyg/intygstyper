@@ -56,7 +56,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     @Value("${intygstjanst.logicaladdress}")
     private String intygstjanstLogicalAddress;
 
-   @Autowired
+    @Autowired
     private WebcertModelFactory webcertModelFactory;
 
     @Autowired
@@ -66,7 +66,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     @Qualifier("fk7263-objectMapper")
     private ObjectMapper objectMapper;
 
-    @Autowired
+    @Autowired(required=false)
     @Qualifier("registerMedicalCertificateClient")
     private RegisterMedicalCertificateResponderInterface registerMedicalCertificateClient;
 
@@ -74,7 +74,7 @@ public class Fk7263ModuleApi implements ModuleApi {
         this.registerMedicalCertificateClient = registerMedicalCertificateClient;
     }
     
-    @Autowired
+    @Autowired(required=false)
     private GetMedicalCertificateForCareResponderInterface getMedicalCertificateForCareResponderInterface;
 
     public void setGetMedicalCertificateForCareResponderInterface(
