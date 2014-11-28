@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDate;
 
 import se.inera.certificate.model.InternalLocalDateInterval;
-import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 
 /**
@@ -115,36 +114,6 @@ public class InternalValidator extends AbstractValidator {
 
     private boolean isValidInterval(LocalDate start, LocalDate end) {
         return (start != null && end != null && !start.isAfter(end));
-    }
-
-    /**
-     * Checks that the given Observation is about arbetsformaga and has a period where tom>from.
-     *
-     * @param nedsattning
-     *            nedsattning
-     * @return boolean
-     */
-    private boolean validArbetsformageNedsattning(LocalDateInterval nedsattning) {
-
-        if (nedsattning == null) {
-            return true;
-        }
-
-        if (nedsattning.getFrom() != null && nedsattning.getTom() != null) {
-            if (nedsattning.getTom().isBefore(nedsattning.getFrom())) {
-                // Must be something wrong with the observationPeriod:
-                addValidationError("Field 8b: Invalid date interval (from " + nedsattning.getFrom() + ", tom "
-                        + nedsattning.getTom());
-            } else {
-                return true;
-            }
-
-        } else {
-            // No period given
-            addValidationError("Field 8b: No date interval given");
-        }
-
-        return false;
     }
 
     private void validateRessatt() {

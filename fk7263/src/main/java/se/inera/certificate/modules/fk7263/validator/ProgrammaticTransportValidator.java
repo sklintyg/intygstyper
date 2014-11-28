@@ -374,10 +374,14 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
                 .getSysselsattning(), TypAvSysselsattning.ARBETSLOSHET);
         SysselsattningType inForaldraledig = findTypAvSysselsattning(inAktivitetFunktion.getArbetsformaga()
                 .getSysselsattning(), TypAvSysselsattning.FORALDRALEDIGHET);
+
         // Fält 8a - Check that we at least got one choice
-        if (inArbete == null && inArbetslos == null && inForaldraledig == null) {
-            addValidationError("No sysselsattning element found for field 8a! Nuvarande arbete, arbestloshet or foraldraledig should be set.");
+        if (!inSmittskydd) {
+            if (inArbete == null && inArbetslos == null && inForaldraledig == null) {
+                addValidationError("No sysselsattning element found for field 8a! Nuvarande arbete, arbestloshet or foraldraledig should be set.");
+            }
         }
+
         ArbetsuppgiftType inArbetsBeskrivning = inAktivitetFunktion.getArbetsformaga().getArbetsuppgift();
 
         // Fält 8a - Check that we got a arbetsuppgift element if arbete

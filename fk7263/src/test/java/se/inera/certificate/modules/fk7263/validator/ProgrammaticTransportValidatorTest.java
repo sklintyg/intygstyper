@@ -211,7 +211,7 @@ public class ProgrammaticTransportValidatorTest {
         FunktionstillstandType inAktivitetFunktion = findFunktionsTillstandType(utlatande.getFunktionstillstand(), TypAvFunktionstillstand.AKTIVITET);
         inAktivitetFunktion.getArbetsformaga().getSysselsattning().clear();
 
-        assertEquals(1, new ProgrammaticTransportValidator(utlatande).validate().size());
+        assertEquals(0, new ProgrammaticTransportValidator(utlatande).validate().size());
     }
 
     @Test
