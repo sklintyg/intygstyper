@@ -17,7 +17,8 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                 doneLoading: false,
                 activeErrorMessageKey: null,
                 showTemplate: true,
-                printStatus: 'notloaded'
+                printStatus: 'notloaded',
+                newPatientId: false
             };
 
             $scope.certProperties = {
@@ -35,6 +36,8 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
                         $rootScope.$emit('fk7263.ViewCertCtrl.load', result.metaData);
+                        $rootScope.$broadcast('intyg.loaded', $scope.cert);
+
                         $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'FK');
                         $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
                         if ($scope.certProperties.isRevoked) {

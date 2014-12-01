@@ -1,7 +1,7 @@
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
-    [ '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', 'common.CertificateService',
+    [ '$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$routeParams', 'common.CertificateService',
         'common.ManageCertView', 'common.User', 'common.wcFocus', 'common.intygNotifyService',
-        function($anchorScroll, $filter, $location, $scope, $log, $timeout, CertificateService, ManageCertView, User, wcFocus, intygNotifyService) {
+        function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $routeParams, CertificateService, ManageCertView, User, wcFocus, intygNotifyService) {
             'use strict';
 
             /**********************************************************************************
@@ -20,7 +20,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 showComplete: false,
                 collapsedHeader: false,
                 hasInfoMissing: false,
-                vidarebefordraInProgress: false
+                vidarebefordraInProgress: false,
+                hospName: $routeParams.hospName
             };
 
             // Intyg state
@@ -1063,6 +1064,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 $scope.cert = cert;
                 registerDateParsers();
                 convertCertToForm($scope);
+                $rootScope.$broadcast('intyg.loaded', $scope.cert);
                 $timeout(function() {
                     wcFocus('firstInput');
                 }, 10);
