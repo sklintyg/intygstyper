@@ -37,7 +37,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                     $scope.widgetState.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
-                        $rootScope.$emit('fk7263.ViewCertCtrl.load', result.metaData);
+                        $rootScope.$emit('fk7263.ViewCertCtrl.load', result.metaData, result.contents);
                         $rootScope.$broadcast('intyg.loaded', $scope.cert);
 
                         $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'FK');

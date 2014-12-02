@@ -33,6 +33,7 @@
             <p class="btn-row">
               <button id="sendBtn" class="btn btn-info" ng-if="!certProperties.isSent && !certProperties.isRevoked && !isQaOnly"
                       wc-feature-active feature="skickaIntyg" intygstyp="fk7263"
+                      wc-check-vardenhet vardenhet="{{cert.intygMetadata.skapadAv.vardenhet.enhetsid}}"
                       ng-click="send(cert)">Skicka till Försäkringskassan
               </button>
               <button id="downloadprint" type="submit" value="submit" class="btn btn-info" ng-click="print(cert)">Skriv
@@ -48,6 +49,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
               </button>
               <button id="makuleraBtn" class="btn btn-inverse" ng-if="!certProperties.isRevoked && !isQaOnly && user.lakare" ng-click="makulera(cert)"
                       wc-feature-active feature="makuleraIntyg" intygstyp="fk7263"
+                      wc-check-vardenhet vardenhet="{{cert.intygMetadata.skapadAv.vardenhet.enhetsid}}"
                       title="Makulera intyg innebär att intyget återtas. Vid behov kan intyget ersättas med ett nytt.">
                 Makulera
               </button>

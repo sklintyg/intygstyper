@@ -52,7 +52,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
 
                 // Tell viewcertctrl about the intyg in case cert load fails
                 if (result.length > 0) {
-                    $rootScope.$emit('fk7263.ViewCertCtrl.load.failed', result[0].intygsReferens);
+                    $rootScope.$emit('fk7263.QACtrl.load', result[0].intygsReferens);
                 }
 
             }, function(errorData) {
@@ -61,16 +61,24 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 $scope.widgetState.activeErrorMessageKey = errorData.errorCode;
             });
 
+            $scope.cert = {};
             $scope.certProperties = {
                 isSent: false,
                 isRevoked: false
             };
 
-            var unbindFastEvent = $rootScope.$on('fk7263.ViewCertCtrl.load', function(event, metaData) {
+            var unbindFastEvent = $rootScope.$on('fk7263.ViewCertCtrl.load', function(event, metaData, cert) {
+                $scope.cert = cert;
                 $scope.certProperties.isSent = ManageCertView.isSentToTarget(metaData.statuses, 'FK');
                 $scope.certProperties.isRevoked = ManageCertView.isRevoked(metaData.statuses);
             });
             $scope.$on('$destroy', unbindFastEvent);
+
+            var certFailedEvent = $rootScope.$on('fk7263.ViewCertCtrl.fail', function() {
+                $scope.certProperties.isLoaded = true;
+                $scope.cert.intygMetadata.skapadAv.vardenhet.enhetsid = '';
+            });
+            $scope.$on('$destroy', certFailedEvent);
 
             $scope.openIssuesFilter = function(qa) {
                 return qa.status !== 'CLOSED';
