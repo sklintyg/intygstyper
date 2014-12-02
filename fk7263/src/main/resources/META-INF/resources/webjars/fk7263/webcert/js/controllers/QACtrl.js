@@ -63,12 +63,14 @@ angular.module('fk7263').controller('fk7263.QACtrl',
 
             $scope.cert = {};
             $scope.certProperties = {
+                isLoaded: false,
                 isSent: false,
                 isRevoked: false
             };
 
             var unbindFastEvent = $rootScope.$on('fk7263.ViewCertCtrl.load', function(event, metaData, cert) {
                 $scope.cert = cert;
+                $scope.certProperties.isLoaded = true;
                 $scope.certProperties.isSent = ManageCertView.isSentToTarget(metaData.statuses, 'FK');
                 $scope.certProperties.isRevoked = ManageCertView.isRevoked(metaData.statuses);
             });
