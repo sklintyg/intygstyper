@@ -1,14 +1,11 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import static java.util.Arrays.asList;
-
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
 import se.inera.certificate.schema.Constants;
-import se.inera.certificate.validate.PersonnummerValidator;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
@@ -29,6 +26,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
+import se.inera.ifv.insuranceprocess.healthreporting.validate.PatientValidator;
 
 /**
  * Validates presence and validity of formal external model properties such as OID's. Preferably this validation should
@@ -41,10 +39,6 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
 
     private LakarutlatandeType utlatande;
 
-    private static final List<String> PATIENT_ID_OIDS = asList(Constants.PERSON_ID_OID, Constants.SAMORDNING_ID_OID);
-
-    private static final PersonnummerValidator PERSONNUMMER_VALIDATOR;
-
     // Fält 1
     private boolean inSmittskydd = false;
 
@@ -53,10 +47,6 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
     private ReferensType inAnnat = null;
     // Fält 10
     private boolean inArbetsformagaGarEjAttBedomma = false;
-
-    static {
-        PERSONNUMMER_VALIDATOR = new PersonnummerValidator();
-    }
 
     public ProgrammaticTransportValidator(LakarutlatandeType utlatande) {
         this.utlatande = utlatande;
@@ -142,33 +132,13 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
     }
 
     private void validatePatient() {
-        if (utlatande.getPatient() == null) {
-            addValidationError("No Patient element found!");
-            return;
-        }
         PatientType inPatient = utlatande.getPatient();
-
-        // Check patient id - mandatory
-        if (inPatient.getPersonId() == null || inPatient.getPersonId().getExtension() == null
-                || inPatient.getPersonId().getExtension().length() < 1) {
-            addValidationError("No Patient Id found!");
+        // Validate personnummer with PatientValidator
+        for (String s : PatientValidator.validateAndCorrect(inPatient)) {
+            addValidationError(s);
         }
-        // Check patient o.i.d.
-        if (inPatient.getPersonId() == null
-                || inPatient.getPersonId().getRoot() == null
-                || (!PATIENT_ID_OIDS.contains(inPatient.getPersonId().getRoot()))) {
-            addValidationError("Wrong o.i.d. for Patient Id! Should be 1.2.752.129.2.1.3.1 or 1.2.752.129.2.1.3.3");
-        }
-        // Validate personnummer with PersonnummerValidator
-        if (inPatient.getPersonId() != null) {
-            String inPersonnummer = inPatient.getPersonId().getExtension();
-            for (String s : PERSONNUMMER_VALIDATOR.validateExtension(inPersonnummer)) {
-                addValidationError(s);
-            }
-        }
-
         // Get namn for patient - mandatory
-        if (inPatient.getFullstandigtNamn() == null || inPatient.getFullstandigtNamn().length() < 1) {
+        if (inPatient != null && (inPatient.getFullstandigtNamn() == null || inPatient.getFullstandigtNamn().length() < 1)) {
             addValidationError("No Patient fullstandigtNamn elements found or set!");
         }
     }
@@ -426,44 +396,44 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
 
         // Fält 8b - kryssruta 1 - varaktighet From
         if (nedsatt14del != null) {
-            if(nedsatt14del.getVaraktighetFrom() == null) {
+            if (nedsatt14del.getVaraktighetFrom() == null) {
                 addValidationError("No or wrong date for nedsatt 1/4 from date found!");
             }
             if (nedsatt14del.getVaraktighetTom() == null) {
                 addValidationError("No or wrong date for nedsatt 1/4 tom date found!");
             }
-            if((nedsatt14del.getVaraktighetFrom() != null && nedsatt14del.getVaraktighetTom() != null) 
+            if ((nedsatt14del.getVaraktighetFrom() != null && nedsatt14del.getVaraktighetTom() != null)
                     && nedsatt14del.getVaraktighetFrom().isAfter(nedsatt14del.getVaraktighetTom())) {
                 addValidationError("Invalid date interval for 1/4, from is after tom.");
             }
         }
 
-        // Fält 8b - kryssruta 2 
+        // Fält 8b - kryssruta 2
         if (nedsatthalften != null) {
-            if(nedsatthalften.getVaraktighetFrom() == null) {
+            if (nedsatthalften.getVaraktighetFrom() == null) {
                 addValidationError("No or wrong date for nedsatt 1/2 from date found!");
             }
             if (nedsatthalften.getVaraktighetTom() == null) {
                 addValidationError("No or wrong date for nedsatt 1/2 tom date found!");
             }
-            if((nedsatthalften.getVaraktighetFrom() != null && nedsatthalften.getVaraktighetTom() != null) 
+            if ((nedsatthalften.getVaraktighetFrom() != null && nedsatthalften.getVaraktighetTom() != null)
                     && nedsatthalften.getVaraktighetFrom().isAfter(nedsatthalften.getVaraktighetTom())) {
                 addValidationError("Invalid date interval for nedsatt 1/2 , from is after tom.");
             }
 
         }
-    
-        // Fält 8b - kryssruta 3 
+
+        // Fält 8b - kryssruta 3
         if (nedsatt34delar != null) {
-            if(nedsatt34delar.getVaraktighetFrom() == null) {
+            if (nedsatt34delar.getVaraktighetFrom() == null) {
                 addValidationError("No or wrong date for nedsatt 3/4 from date found!");
             }
             if (nedsatt34delar.getVaraktighetTom() == null) {
                 addValidationError("No or wrong date for nedsatt 3/4 tom date found!");
             }
-            if((nedsatt34delar.getVaraktighetFrom() != null && nedsatt34delar.getVaraktighetTom() != null) 
+            if ((nedsatt34delar.getVaraktighetFrom() != null && nedsatt34delar.getVaraktighetTom() != null)
                     && nedsatt34delar.getVaraktighetFrom().isAfter(nedsatt34delar.getVaraktighetTom())) {
-                    addValidationError("Invalid date interval for heltNedsatt, from is after tom.");
+                addValidationError("Invalid date interval for heltNedsatt, from is after tom.");
             }
         }
 
@@ -475,9 +445,9 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
             if (heltNedsatt.getVaraktighetTom() == null) {
                 addValidationError("No or wrong date for helt nedsatt tom date found!");
             }
-            if ((heltNedsatt.getVaraktighetFrom() != null && heltNedsatt.getVaraktighetTom() != null) 
+            if ((heltNedsatt.getVaraktighetFrom() != null && heltNedsatt.getVaraktighetTom() != null)
                     && heltNedsatt.getVaraktighetFrom().isAfter(heltNedsatt.getVaraktighetTom())) {
-                    addValidationError("Invalid date interval for heltNedsatt, from is after tom.");
+                addValidationError("Invalid date interval for heltNedsatt, from is after tom.");
             }
         }
     }

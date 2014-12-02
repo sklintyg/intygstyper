@@ -97,7 +97,7 @@ public class ProgrammaticTransportValidatorTest {
         LakarutlatandeType utlatande = getValidUtlatande();
 
         utlatande.getPatient().setPersonId(null);
-        assertEquals(2, new ProgrammaticTransportValidator(utlatande).validate().size());
+        assertEquals(1, new ProgrammaticTransportValidator(utlatande).validate().size());
     }
 
     @Test
@@ -105,9 +105,10 @@ public class ProgrammaticTransportValidatorTest {
         LakarutlatandeType utlatande = getValidUtlatande();
         II ii = new II();
         ii.setRoot("1111111");
-        ii.setExtension("19121212+1212");
+        ii.setExtension("19121212-1212");
         utlatande.getPatient().setPersonId(ii);
 
+        System.out.println(new ProgrammaticTransportValidator(utlatande).validate());
         assertEquals(1, new ProgrammaticTransportValidator(utlatande).validate().size());
     }
 

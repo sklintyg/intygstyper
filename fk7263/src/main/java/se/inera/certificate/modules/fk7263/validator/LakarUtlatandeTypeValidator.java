@@ -28,7 +28,7 @@ public class LakarUtlatandeTypeValidator {
 
     private void validateAndCorrectPatient() {
         PatientType patient = lakarUtlatandeType.getPatient();
-        PatientValidator.validateAndCorrect(lakarUtlatandeType.getLakarutlatandeId(), patient, validationErrors);
+        validationErrors.addAll(PatientValidator.validateAndCorrect(patient));
     }
 
 }
