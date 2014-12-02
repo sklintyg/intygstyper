@@ -46,7 +46,7 @@ Uppgifterna i intygsutkastet går att ändra innan det signeras.
 Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                 Kopiera
               </button>
-              <button id="makuleraBtn" class="btn btn-inverse" ng-if="!certProperties.isRevoked && !isQaOnly" ng-click="makulera(cert)"
+              <button id="makuleraBtn" class="btn btn-inverse" ng-if="!certProperties.isRevoked && !isQaOnly && user.lakare" ng-click="makulera(cert)"
                       wc-feature-active feature="makuleraIntyg" intygstyp="fk7263"
                       title="Makulera intyg innebär att intyget återtas. Vid behov kan intyget ersättas med ett nytt.">
                 Makulera

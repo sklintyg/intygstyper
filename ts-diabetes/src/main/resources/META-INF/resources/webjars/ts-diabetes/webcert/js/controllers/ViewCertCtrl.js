@@ -1,14 +1,15 @@
 angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
     [ '$location', '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', 'common.CertificateService',
-        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate',
+        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate','common.User',
         function($location, $log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView,
-            messageService, ManageCertificate) {
+            messageService, ManageCertificate, User) {
             'use strict';
 
             /*********************************************************************
              * Page state
              *********************************************************************/
 
+            $scope.user = { lakare: User.userContext.lakare };
             $scope.cert = {};
             $scope.widgetState = {
                 doneLoading: false,

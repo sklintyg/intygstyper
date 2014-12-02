@@ -1,8 +1,8 @@
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
     [ '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', 'common.CertificateService',
-        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate',
+        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate', 'common.User',
         function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView,
-            messageService, ManageCertificate) {
+            messageService, ManageCertificate, User) {
             'use strict';
 
             // Check if the user used the special qa-link to get here.
@@ -11,6 +11,8 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             }
 
             // Page setup
+            $scope.user = { lakare: User.userContext.lakare };
+
             $scope.cert = {};
             $scope.cert.filledAlways = true;
             $scope.widgetState = {

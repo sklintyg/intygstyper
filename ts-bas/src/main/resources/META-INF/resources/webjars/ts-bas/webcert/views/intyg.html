@@ -29,7 +29,7 @@
 I de fall patienten har ändrat namn eller adress så uppdateras den informationen.
 Uppgifterna i intygsutkastet går att ändra innan det signeras.
 Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">Kopiera</button>
-              <button id="makuleraBtn" class="btn btn-inverse" ng-if="!certProperties.isRevoked" ng-click="makulera(cert)"
+              <button id="makuleraBtn" class="btn btn-inverse" ng-if="!certProperties.isRevoked && user.lakare" ng-click="makulera(cert)"
                       wc-feature-active feature="makuleraIntyg" intygstyp="ts-bas"
                       title="Makulera intyg innebär att intyget återtas. Vid behov kan intyget ersättas med ett nytt.">Makulera</button>
             </p>
