@@ -21,7 +21,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 collapsedHeader: false,
                 hasInfoMissing: false,
                 vidarebefordraInProgress: false,
-                hospName: $routeParams.hospName
+                hospName: $routeParams.hospName,
+                deleted: false
             };
 
             // Intyg state
@@ -1062,12 +1063,18 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             ManageCertView.load($scope, $scope.certMeta.intygType, function(cert) {
                 // Decorate intygspecific default data
                 $scope.cert = cert;
-                registerDateParsers();
                 convertCertToForm($scope);
-                $rootScope.$broadcast('intyg.loaded', $scope.cert);
                 $timeout(function() {
+                    registerDateParsers();
                     wcFocus('firstInput');
+                    $rootScope.$broadcast('intyg.loaded', $scope.cert);
                 }, 10);
+            });
+
+            $rootScope.$on('intyg.deleted', function(intygId) {
+                $scope.widgetState.deleted = true;
+                $scope.widgetState.activeErrorMessageKey = "error";
+                $scope.cert = undefined;
             });
 
         }]);

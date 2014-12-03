@@ -79,9 +79,16 @@
 
       <!-- Total fail error messages -->
       <div id="error-panel" class="cert-error-panel"
-           ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey">
+           ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey && !widgetState.deleted">
         <div class="alert alert-danger">
           <span message key="{{widgetState.activeErrorMessageKey}}"></span>
+        </div>
+      </div>
+
+      <!-- Integration deleted message -->
+      <div id="integration-deleted" ng-if="widgetState.deleted">
+        <div class="alert alert-info banner-margin">
+          Utkastet är raderat och borttaget från Webcert.
         </div>
       </div>
 
@@ -89,7 +96,7 @@
       <div class="edit-form" ng-class="{'collapsed' : widgetState.collapsedHeader}">
 
         <form name="certForm" novalidate autocomplete="off">
-          <div ng-hide="widgetState.activeErrorMessageKey">
+          <div ng-hide="widgetState.activeErrorMessageKey || widgetState.deleted">
 
             <div wc-spinner label="info.loadingdata" show-spinner="!widgetState.doneLoading"
                  show-content="widgetState.doneLoading">
