@@ -55,6 +55,10 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
           </form>
         </div>
 
+        <div id="cert-inline-error" ng-show="widgetState.inlineErrorMessageKey" class="alert alert-danger alert-column print-hide">
+            <span message key="{{widgetState.inlineErrorMessageKey}}"></span>
+        </div>
+
         <div wc-new-person-id-message></div>
 
         <div class="alert alert-info alert-column" ng-if="!certProperties.isRevoked">
