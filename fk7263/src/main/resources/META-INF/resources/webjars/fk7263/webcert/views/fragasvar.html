@@ -12,10 +12,14 @@
             <button class="btn btn-success" ng-click="toggleQuestionForm()" id="askQuestionBtn">Ny fråga till Försäkringskassan</button>
           </div>
         </div>
-        <div ng-if="certProperties.isSent === false && (qaList.length<1)" class="alert alert-info" id="certificate-is-not-sent-to-fk-message-text">
+        <div ng-if="certProperties.isSent === false && (qaList.length<1)"
+             wc-check-vardenhet vardenhet="{{cert.intygMetadata.skapadAv.vardenhet.enhetsid}}"
+             class="alert alert-info" id="certificate-is-not-sent-to-fk-message-text">
           <strong>Intyget är inte skickat till Försäkringskassan.</strong><br> Det går därför inte att ställa frågor om intyget.
         </div>
-        <div ng-if="certProperties.isSent === undefined && (qaList.length<1)" class="alert alert-info" id="certificate-is-not-available">
+        <div ng-if="certProperties.isSent === undefined && (qaList.length<1)"
+             wc-check-vardenhet vardenhet="{{cert.intygMetadata.skapadAv.vardenhet.enhetsid}}"
+             class="alert alert-info" id="certificate-is-not-available">
           <strong>Det finns inga frågor och svar.</strong>
         </div>
 
