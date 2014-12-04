@@ -37,6 +37,7 @@ import se.inera.certificate.modules.fk7263.rest.Fk7263ModuleApi;
 import se.inera.certificate.modules.support.api.CertificateHolder;
 import se.inera.certificate.schema.util.ModelConverter;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
+import se.inera.ifv.insuranceprocess.healthreporting.utils.ResultOfCallUtil;
 
 import com.google.common.base.Throwables;
 
@@ -70,18 +71,24 @@ public class GetMedicalCertificateForCareResponderImpl implements
         CertificateHolder certificate = null;
         
         try {
-            certificate = moduleApi.getModuleContainer().getCertificate(certificateId, nationalIdentityNumber);
+            certificate = moduleApi.getModuleContainer().getCertificate(certificateId, nationalIdentityNumber, false);
             if (nationalIdentityNumber == null || nationalIdentityNumber.length() == 0 && !certificate.getCivicRegistrationNumber().equals(nationalIdentityNumber)) {
                 response.setResult(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "nationalIdentityNumber mismatch"));
                 return response;
             }
-            response.setMeta(ModelConverter.toCertificateMetaType(certificate));
-            attachCertificateDocument(certificate, response);
-            response.setResult(ResultTypeUtil.okResult());
-        } catch (InvalidCertificateException | MissingConsentException e) {
-            response.setResult(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, e.getMessage()));
-        } catch (CertificateRevokedException e) {
-            response.setResult(ResultTypeUtil.infoResult(e.getMessage()));
+            if (certificate.isDeletedByCareGiver()) {
+                response.setResult(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, String.format("Certificate '%s' has been deleted by care giver", certificateId)));
+            } else {
+                response.setMeta(ModelConverter.toCertificateMetaType(certificate));
+                attachCertificateDocument(certificate, response);
+                if (certificate.isRevoked()) {
+                    response.setResult(ResultTypeUtil.errorResult(ErrorIdType.REVOKED, String.format("Certificate '%s' has been revoked", certificateId)));
+                } else {
+                    response.setResult(ResultTypeUtil.okResult());
+                }
+            }
+        } catch (InvalidCertificateException e) {
+            response.setResult(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, e.getMessage()));
         }
         return response;
 

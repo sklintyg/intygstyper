@@ -18,10 +18,19 @@
  */
 package se.inera.certificate.modules.fk7263.integration;
 
+import javax.annotation.PostConstruct;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3.wsaddressing10.AttributedURIType;
+import org.w3c.dom.Document;
 
 import se.inera.certificate.integration.module.exception.CertificateRevokedException;
 import se.inera.certificate.integration.module.exception.InvalidCertificateException;
@@ -35,6 +44,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.getcertificate.v1.rivtabp20
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.CertificateType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateResponseType;
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.ObjectFactory;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.ifv.insuranceprocess.healthreporting.util.ModelConverter;
 import se.inera.ifv.insuranceprocess.healthreporting.utils.ResultOfCallUtil;
@@ -49,6 +59,15 @@ public class GetCertificateResponderImpl implements
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(GetCertificateResponderImpl.class);
 
+    private JAXBContext jaxbContext;
+    private ObjectFactory objectFactory;
+
+    @PostConstruct
+    public void initializeJaxbContext() throws JAXBException {
+        jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class);
+        objectFactory = new ObjectFactory();
+    }
+    
     @Autowired
     private Fk7263ModuleApi moduleApi;
 
@@ -66,23 +85,31 @@ public class GetCertificateResponderImpl implements
         String certificateId = request.getCertificateId();
         String nationalIdentityNumber = request.getNationalIdentityNumber();
 
+        if (certificateId == null || certificateId.length() == 0) {
+            LOGGER.info(LogMarkers.VALIDATION, "Tried to get certificate with non-existing certificateId '.");
+            response.setResult(ResultOfCallUtil.failResult("Validation error: missing certificateId"));
+            return response;
+        }
+
         if (nationalIdentityNumber == null || nationalIdentityNumber.length() == 0) {
             LOGGER.info(LogMarkers.VALIDATION, "Tried to get certificate with non-existing nationalIdentityNumber '.");
-            response.setResult(ResultOfCallUtil.failResult("Validation error: missing  nationalIdentityNumber"));
+            response.setResult(ResultOfCallUtil.failResult("Validation error: missing nationalIdentityNumber"));
             return response;
         }
 
         CertificateHolder certificate = null;
         
         try {
-            certificate = moduleApi.getModuleContainer().getCertificate(certificateId, nationalIdentityNumber);
-            response.setMeta(ModelConverter.toCertificateMetaType(certificate));
-            attachCertificateDocument(certificate, response);
-            response.setResult(ResultOfCallUtil.okResult());
+            certificate = moduleApi.getModuleContainer().getCertificate(certificateId, nationalIdentityNumber, true);
+            if (certificate.isRevoked()) {
+                response.setResult(ResultOfCallUtil.infoResult(String.format("Certificate '%s' has been revoked", certificateId)));
+            } else {
+                response.setMeta(ModelConverter.toCertificateMetaType(certificate));
+                attachCertificateDocument(certificate, response);
+                response.setResult(ResultOfCallUtil.okResult());
+            }
         } catch (InvalidCertificateException | MissingConsentException e) {
             response.setResult(ResultOfCallUtil.failResult(e.getMessage()));
-        } catch (CertificateRevokedException e) {
-            response.setResult(ResultOfCallUtil.infoResult(e.getMessage()));
         }
 
         return response;
@@ -91,9 +118,20 @@ public class GetCertificateResponderImpl implements
     protected void attachCertificateDocument(CertificateHolder certificate, GetCertificateResponseType response) {
         try {
             
-            RegisterMedicalCertificateType jaxbObject = InternalToTransport.getJaxbObject(converterUtil.fromJsonString(certificate.getDocument()));
+            // Create the Document
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document document = db.newDocument();
+
+            RegisterMedicalCertificateType registerMedicalCertificate = InternalToTransport.getJaxbObject(converterUtil.fromJsonString(certificate.getDocument()));
+            JAXBElement<RegisterMedicalCertificateType> registerMedicalCertificateElement = objectFactory
+                    .createRegisterMedicalCertificate(registerMedicalCertificate);
+
+            // Marshal the Object to a Document
+            Marshaller marshaller = jaxbContext.createMarshaller();
+            marshaller.marshal(registerMedicalCertificateElement, document);
             CertificateType certificateType = new CertificateType();
-            certificateType.getAny().add(jaxbObject.getLakarutlatande());
+            certificateType.getAny().add(document.getDocumentElement());
             response.setCertificate(certificateType);
 
         } catch (Exception e) {
@@ -101,4 +139,5 @@ public class GetCertificateResponderImpl implements
         }
     }
 
+    
 }

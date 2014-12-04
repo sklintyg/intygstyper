@@ -70,26 +70,26 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
     }
 
     private void validateAktuelltSjukdomsforlopp() {
-        if (utlatande.getBedomtTillstand() != null && isNullOrEmpty(utlatande.getBedomtTillstand().getBeskrivning())) {
-            addValidationError("Beskrivning muste be set for Falt3 Aktuellt Sjukdomsforlopp");
+        if (utlatande.getBedomtTillstand() != null && utlatande.getBedomtTillstand().getBeskrivning() == null) {
+            addValidationError("Beskrivning must be set for Falt3 Aktuellt Sjukdomsforlopp");
         }
 
     }
 
     private void validateRekommendationer() {
         AktivitetType ovrigt = findAktivitetWithCode(utlatande.getAktivitet(), Aktivitetskod.OVRIGT);
-        if (ovrigt != null && isNullOrEmpty(ovrigt.getBeskrivning())) {
+        if (ovrigt != null && ovrigt.getBeskrivning() == null) {
             addValidationError("Beskrivning must be set for Aktivitet Rekommendation Ovrigt");
         }
 
         AktivitetType atgardSjukvarden = findAktivitetWithCode(utlatande.getAktivitet(),
                 Aktivitetskod.PLANERAD_ELLER_PAGAENDE_BEHANDLING_ELLER_ATGARD_INOM_SJUKVARDEN);
-        if (atgardSjukvarden != null && isNullOrEmpty(atgardSjukvarden.getBeskrivning())) {
+        if (atgardSjukvarden != null && atgardSjukvarden.getBeskrivning() == null) {
             addValidationError("Beskrivning must be set for Aktivitet Rekommendation Planerad eller pågående åtgärd inom sjukvården");
         }
 
         AktivitetType atgardAnnan = findAktivitetWithCode(utlatande.getAktivitet(), Aktivitetskod.PLANERAD_ELLER_PAGAENDE_ANNAN_ATGARD);
-        if (atgardAnnan != null && isNullOrEmpty(atgardAnnan.getBeskrivning())) {
+        if (atgardAnnan != null && atgardAnnan.getBeskrivning() == null) {
             addValidationError("Beskrivning must be set for Aktivitet Rekommendation Planerad eller pågående annan atgärd");
         }
 
@@ -147,6 +147,7 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
         // Check that we got a skapadAvHosPersonal element
         if (utlatande.getSkapadAvHosPersonal() == null) {
             addValidationError("No SkapadAvHosPersonal element found!");
+            return;
         }
         HosPersonalType inHoSP = utlatande.getSkapadAvHosPersonal();
 
@@ -167,15 +168,13 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
         }
 
         validateHosPersonalEnhet(inHoSP);
-
-        validateVardgivare(inHoSP.getEnhet());
-
     }
 
     private void validateHosPersonalEnhet(HosPersonalType inHoSP) {
         // Check that we got a enhet element
         if (inHoSP.getEnhet() == null) {
             addValidationError("No enhet element found!");
+            return;
         }
 
         EnhetType inEnhet = inHoSP.getEnhet();
@@ -195,8 +194,15 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
             addValidationError("No enhetsnamn found!");
         }
 
-        if (inEnhet.getArbetsplatskod() == null || !inEnhet.getArbetsplatskod().getRoot().equalsIgnoreCase(Constants.ARBETSPLATS_KOD_OID)) {
-            addValidationError("Wrong o.i.d for arbetsplatskod, should be " + Constants.ARBETSPLATS_KOD_OID);
+        if (inEnhet.getArbetsplatskod() == null) {
+            addValidationError("No arbetsplatskod element found!");
+        } else {
+            if (!inEnhet.getArbetsplatskod().getRoot().equalsIgnoreCase(Constants.ARBETSPLATS_KOD_OID)) {
+                addValidationError("Wrong o.i.d for arbetsplatskod, should be " + Constants.ARBETSPLATS_KOD_OID);
+            }
+            if (isNullOrEmpty(inEnhet.getArbetsplatskod().getExtension())) {
+                addValidationError("No arbetsplatskod found!");
+            }
         }
 
         // Check enhetsadress - mandatory
@@ -212,12 +218,15 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
         if (isNullOrEmpty(inEnhet.getTelefonnummer())) {
             addValidationError("No telefonnummer found for enhet!");
         }
+
+        validateVardgivare(inEnhet);
     }
 
     private void validateVardgivare(EnhetType inEnhet) {
         // Check that we got a vardgivare element
         if (inEnhet.getVardgivare() == null) {
             addValidationError("No vardgivare element found!");
+            return;
         }
         VardgivareType inVardgivare = inEnhet.getVardgivare();
 
@@ -253,6 +262,7 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
             // Fält 2 - Check that we got a medicinsktTillstand element
             if (utlatande.getMedicinsktTillstand() == null) {
                 addValidationError("No medicinsktTillstand element found!");
+                return;
             }
             // Fält 2 - Medicinskt tillstånd kod - mandatory
             MedicinsktTillstandType medTillstand = utlatande.getMedicinsktTillstand();
@@ -275,6 +285,7 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
                     utlatande.getFunktionstillstand(), TypAvFunktionstillstand.KROPPSFUNKTION);
             if (inKroppsFunktion == null) {
                 addValidationError("No funktionstillstand - kroppsfunktion element found!");
+                return;
             }
             // Fält 4 - vänster Funktionstillstand - kroppsfunktion
             // beskrivning - mandatory
@@ -333,8 +344,9 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
                 utlatande.getFunktionstillstand(), TypAvFunktionstillstand.AKTIVITET);
 
         // Fält 8a - Check that we got a arbetsformaga element, needs to be present even if smittskydd is set.
-        if (inAktivitetFunktion.getArbetsformaga() == null) {
+        if (inAktivitetFunktion == null || inAktivitetFunktion.getArbetsformaga() == null) {
             addValidationError("No arbetsformaga element found for field 8a!");
+            return;
         }
 
         // Fält 8a
@@ -356,12 +368,18 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
 
         // Fält 8a - Check that we got a arbetsuppgift element if arbete
         // is set
-        if (inArbete != null && inArbetsBeskrivning == null) {
-            addValidationError("No arbetsuppgift element found when arbete set in field 8a!.");
-        }
-        // Fält 8a - 1:a kryssrutan - beskrivning (Note that this may be empty when Smittskydd is active!)
-        if (!inSmittskydd && (inArbete != null && isNullOrEmpty(inArbetsBeskrivning.getTypAvArbetsuppgift()))) {
-            addValidationError("No typAvArbetsuppgift found when arbete set in field 8a!.");
+        if (inArbete != null) {
+            if(inArbetsBeskrivning == null) {
+                if (!inSmittskydd) {
+                    addValidationError("No arbetsuppgift element found when arbete set in field 8a!.");
+                }
+            } else {
+                if (inArbetsBeskrivning.getTypAvArbetsuppgift() == null) {
+                    addValidationError("No typAvArbetsuppgift element found!");
+                } else if (!inSmittskydd && isNullOrEmpty(inArbetsBeskrivning.getTypAvArbetsuppgift())) {
+                    addValidationError("No typAvArbetsuppgift found when arbete set in field 8a!.");
+                }
+            }
         }
     }
 
@@ -369,6 +387,11 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
         FunktionstillstandType inAktivitetFunktion = findFunktionsTillstandType(
                 utlatande.getFunktionstillstand(), TypAvFunktionstillstand.AKTIVITET);
 
+        if (inAktivitetFunktion == null || inAktivitetFunktion.getArbetsformaga() == null) {
+            addValidationError("No arbetsformaga element found 8b!.");
+            return;
+        }
+        
         // Fält 8b - kryssruta 1
         ArbetsformagaNedsattningType nedsatt14del = findArbetsformaga(inAktivitetFunktion.getArbetsformaga()
                 .getArbetsformagaNedsattning(),
@@ -456,41 +479,43 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
         FunktionstillstandType inAktivitetFunktion = findFunktionsTillstandType(
                 utlatande.getFunktionstillstand(), TypAvFunktionstillstand.AKTIVITET);
 
-        boolean inArbetsformagaAterstallasHelt = false;
-        boolean inArbetsformagaAterstallasDelvis = false;
-        boolean inArbetsformagaEjAterstallas = false;
-        boolean inArbetsformagaGarEjAttBedomma = false;
-
-        if (inAktivitetFunktion.getArbetsformaga().getPrognosangivelse() != null) {
-            inArbetsformagaAterstallasHelt = inAktivitetFunktion.getArbetsformaga().getPrognosangivelse()
-                    .compareTo(Prognosangivelse.ATERSTALLAS_HELT) == 0;
-            inArbetsformagaAterstallasDelvis = inAktivitetFunktion.getArbetsformaga().getPrognosangivelse()
-                    .compareTo(Prognosangivelse.ATERSTALLAS_DELVIS) == 0;
-            inArbetsformagaEjAterstallas = inAktivitetFunktion.getArbetsformaga().getPrognosangivelse()
-                    .compareTo(Prognosangivelse.INTE_ATERSTALLAS) == 0;
-            inArbetsformagaGarEjAttBedomma = inAktivitetFunktion.getArbetsformaga().getPrognosangivelse()
-                    .compareTo(Prognosangivelse.DET_GAR_INTE_ATT_BEDOMMA) == 0;
-        }
-
-        // If we got more then one prognoselement these will not be read as
-        // only the first is set!
-        int inPrognosCount = 0;
-        if (inArbetsformagaAterstallasHelt) {
-            inPrognosCount++;
-        }
-        if (inArbetsformagaAterstallasDelvis) {
-            inPrognosCount++;
-        }
-        if (inArbetsformagaEjAterstallas) {
-            inPrognosCount++;
-        }
-        if (inArbetsformagaGarEjAttBedomma) {
-            inPrognosCount++;
-        }
-
-        // Fält 10 - Prognosangivelse - Check that we only got one choice
-        if (inPrognosCount > 2) {
-            addValidationError("Only one prognosangivelse should be set for field 10.");
+        if (inAktivitetFunktion != null && inAktivitetFunktion.getArbetsformaga() != null) {
+            boolean inArbetsformagaAterstallasHelt = false;
+            boolean inArbetsformagaAterstallasDelvis = false;
+            boolean inArbetsformagaEjAterstallas = false;
+            boolean inArbetsformagaGarEjAttBedomma = false;
+    
+            if (inAktivitetFunktion.getArbetsformaga().getPrognosangivelse() != null) {
+                inArbetsformagaAterstallasHelt = inAktivitetFunktion.getArbetsformaga().getPrognosangivelse()
+                        .compareTo(Prognosangivelse.ATERSTALLAS_HELT) == 0;
+                inArbetsformagaAterstallasDelvis = inAktivitetFunktion.getArbetsformaga().getPrognosangivelse()
+                        .compareTo(Prognosangivelse.ATERSTALLAS_DELVIS) == 0;
+                inArbetsformagaEjAterstallas = inAktivitetFunktion.getArbetsformaga().getPrognosangivelse()
+                        .compareTo(Prognosangivelse.INTE_ATERSTALLAS) == 0;
+                inArbetsformagaGarEjAttBedomma = inAktivitetFunktion.getArbetsformaga().getPrognosangivelse()
+                        .compareTo(Prognosangivelse.DET_GAR_INTE_ATT_BEDOMMA) == 0;
+            }
+    
+            // If we got more then one prognoselement these will not be read as
+            // only the first is set!
+            int inPrognosCount = 0;
+            if (inArbetsformagaAterstallasHelt) {
+                inPrognosCount++;
+            }
+            if (inArbetsformagaAterstallasDelvis) {
+                inPrognosCount++;
+            }
+            if (inArbetsformagaEjAterstallas) {
+                inPrognosCount++;
+            }
+            if (inArbetsformagaGarEjAttBedomma) {
+                inPrognosCount++;
+            }
+    
+            // Fält 10 - Prognosangivelse - Check that we only got one choice
+            if (inPrognosCount > 2) {
+                addValidationError("Only one prognosangivelse should be set for field 10.");
+            }
         }
     }
 

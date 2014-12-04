@@ -28,6 +28,9 @@ import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.ER
 import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.INFO;
 import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,6 +50,7 @@ import se.inera.certificate.modules.support.api.CertificateHolder;
 import se.inera.certificate.modules.support.api.ModuleContainerApi;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateResponseType;
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.ObjectFactory;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ErrorIdEnum;
 
 /**
@@ -70,11 +74,21 @@ public class GetCertificateResponderImplTest {
     @Mock
     private Fk7263ModuleApi moduleRestApi = mock(Fk7263ModuleApi.class);
 
+    @Mock
+    private JAXBContext jaxbContext = mock(JAXBContext.class);
+
+    @Mock
+    private ObjectFactory objectFactory = mock(ObjectFactory.class);
+
+    @Mock
+    private Marshaller marshaller = mock(Marshaller.class);
+    
     @Before
     public void setUpMocks() throws Exception {
         converterUtil.setObjectMapper(objectMapper);
         responder.setConverterUtil(converterUtil);
         when(moduleRestApi.getModuleContainer()).thenReturn(moduleContainer);
+        when(jaxbContext.createMarshaller()).thenReturn(marshaller);
     }
     
     @Test
@@ -82,13 +96,13 @@ public class GetCertificateResponderImplTest {
         String document = FileUtils.readFileToString(new ClassPathResource("GetCertificateResponderImplTest/maximalt-fk7263-internal.json").getFile());
         CertificateHolder certificate = converterUtil.toCertificateHolder(document);
 
-        when(moduleContainer.getCertificate(certificateId, civicRegistrationNumber)).thenReturn(certificate);
+        when(moduleContainer.getCertificate(certificateId, civicRegistrationNumber, true)).thenReturn(certificate);
 
         GetCertificateRequestType parameters = createGetCertificateRequest(civicRegistrationNumber, certificateId);
 
         GetCertificateResponseType response = responder.getCertificate(null, parameters);
 
-        verify(moduleContainer).getCertificate(certificateId, civicRegistrationNumber);
+        verify(moduleContainer).getCertificate(certificateId, civicRegistrationNumber, true);
 
         assertNotNull(response.getMeta());
         assertEquals(OK, response.getResult().getResultCode());
@@ -97,7 +111,7 @@ public class GetCertificateResponderImplTest {
     @Test
     public void getCertificateWithUnknownCertificateId() throws Exception {
 
-        when(moduleContainer.getCertificate(certificateId, civicRegistrationNumber)).thenThrow(new InvalidCertificateException("123456", null));
+        when(moduleContainer.getCertificate(certificateId, civicRegistrationNumber, true)).thenThrow(new InvalidCertificateException("123456", null));
 
         GetCertificateRequestType parameters = createGetCertificateRequest(civicRegistrationNumber, certificateId);
 
@@ -114,7 +128,7 @@ public class GetCertificateResponderImplTest {
     @SuppressWarnings("unchecked")
     public void getCertificateWithoutConsent() throws Exception {
 
-        when(moduleContainer.getCertificate(certificateId, civicRegistrationNumber)).thenThrow(MissingConsentException.class);
+        when(moduleContainer.getCertificate(certificateId, civicRegistrationNumber, true)).thenThrow(MissingConsentException.class);
 
         GetCertificateRequestType parameters = createGetCertificateRequest(civicRegistrationNumber, certificateId);
 
@@ -129,7 +143,11 @@ public class GetCertificateResponderImplTest {
     @Test
     public void getRevokedCertificate() throws Exception {
 
-        when(moduleContainer.getCertificate(certificateId, civicRegistrationNumber)).thenThrow(new CertificateRevokedException("123456"));
+        String document = FileUtils.readFileToString(new ClassPathResource("GetCertificateResponderImplTest/maximalt-fk7263-internal.json").getFile());
+        CertificateHolder certificate = converterUtil.toCertificateHolder(document);
+        certificate.setRevoked(true);
+
+        when(moduleContainer.getCertificate(certificateId, civicRegistrationNumber, true)).thenReturn(certificate);
 
         GetCertificateRequestType parameters = createGetCertificateRequest(civicRegistrationNumber, certificateId);
 
