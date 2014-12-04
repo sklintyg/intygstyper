@@ -1,7 +1,7 @@
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
     [ '$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$routeParams', 'common.CertificateService',
-        'common.ManageCertView', 'common.User', 'common.wcFocus', 'common.intygNotifyService',
-        function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $routeParams, CertificateService, ManageCertView, User, wcFocus, intygNotifyService) {
+        'common.ManageCertView', 'common.User', 'common.wcFocus', 'common.intygNotifyService', 'fk7263.diagnosService',
+        function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $routeParams, CertificateService, ManageCertView, User, wcFocus, intygNotifyService, diagnosService) {
             'use strict';
 
             /**********************************************************************************
@@ -53,18 +53,53 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
             };
 
-            // Fält 2. Diagnose handling Typeahead is implemented in a future story
-            $scope.diagnoseCodes = [
-                /*                {
-                 value: 'J44.0',
-                 label: 'J44.0 Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion'
-                 },
-                 {
-                 value: 'K92.2',
-                 label: 'K92.2 Gastrointestinal blödning, ospecificerad'
-                 }*/
-            ];
+            $scope.getDiagnoseCodes = function(val) {
+                return diagnosService.searchByCode(val)
+                    .then(function(response) {
+                        if (response && response.data && response.data.resultat == "OK") {
+                            return response.data.diagnoser.map(function(item) {
+                                return {
+                                    value: item.kod,
+                                    beskrivning: item.beskrivning,
+                                    label: item.kod + " | " + item.beskrivning
+                                };
+                            })
+                        }
+                        else {
+                            return [];
+                        }
+                    },function(response) {
+                        $log.debug('Error searching diagnose code');
+                        $log.debug(response);
+                        return [];
+                    });
+            }
+            $scope.onDiagnoseCode1Select = function($item) {
+                $scope.cert.diagnosBeskrivning1 = $item.beskrivning;
+            }
+            $scope.onDiagnoseCode2Select = function($item) {
+                $scope.cert.diagnosBeskrivning2 = $item.beskrivning;
+            }
+            $scope.onDiagnoseCode3Select = function($item) {
+                $scope.cert.diagnosBeskrivning3 = $item.beskrivning;
+            }
+            $scope.$watch('cert.diagnosKod', function(newVal) {
+                if (!$scope.cert.diagnosKod) {
+                    $scope.cert.diagnosBeskrivning1 = "";
+                }
+            });
+            $scope.$watch('cert.diagnosKod2', function(newVal) {
+                if (!$scope.cert.diagnosKod2) {
+                    $scope.cert.diagnosBeskrivning2 = "";
+                }
+            });
+            $scope.$watch('cert.diagnosKod3', function(newVal) {
+                if (!$scope.cert.diagnosKod3) {
+                    $scope.cert.diagnosBeskrivning3 = "";
+                }
+            });
 
+            // Fält 2. Diagnose description Typeahead is implemented in a future story
             $scope.diagnoses = [
                 /*                {
                  value: 'Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion',
