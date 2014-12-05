@@ -72,7 +72,7 @@ public class GetMedicalCertificateForCareResponderImpl implements
         
         try {
             certificate = moduleApi.getModuleContainer().getCertificate(certificateId, nationalIdentityNumber, false);
-            if (nationalIdentityNumber == null || nationalIdentityNumber.length() == 0 && !certificate.getCivicRegistrationNumber().equals(nationalIdentityNumber)) {
+            if (nationalIdentityNumber != null && !certificate.getCivicRegistrationNumber().equals(nationalIdentityNumber)) {
                 response.setResult(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "nationalIdentityNumber mismatch"));
                 return response;
             }
