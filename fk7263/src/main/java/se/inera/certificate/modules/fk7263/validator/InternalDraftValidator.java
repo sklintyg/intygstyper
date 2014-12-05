@@ -1,17 +1,11 @@
 package se.inera.certificate.modules.fk7263.validator;
 
-import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.service.WebcertModuleService;
@@ -19,6 +13,11 @@ import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.dto.ValidationMessage;
 import se.inera.certificate.modules.support.api.dto.ValidationStatus;
 import se.inera.certificate.validate.StringValidator;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
 
 public class InternalDraftValidator {
 
@@ -50,7 +49,8 @@ public class InternalDraftValidator {
 
     private void validateVardkontakter(Fk7263Intyg utlatande, List<ValidationMessage> validationMessages) {
         if (utlatande.getTelefonkontaktMedPatienten() != null && !utlatande.getTelefonkontaktMedPatienten().isValidDate()) {
-            addValidationError(validationMessages, "intygbaseratpa.telefonkontakt", "fk7263.validation.intyg-baserat-pa.telefonkontakt.incorrect_format");
+            addValidationError(validationMessages, "intygbaseratpa.telefonkontakt",
+                    "fk7263.validation.intyg-baserat-pa.telefonkontakt.incorrect_format");
         }
         if (utlatande.getUndersokningAvPatienten() != null && !utlatande.getUndersokningAvPatienten().isValidDate()) {
             addValidationError(validationMessages, "intygbaseratpa.undersokning", "fk7263.validation.intyg-baserat-pa.undersokning.incorrect_format");
@@ -62,7 +62,8 @@ public class InternalDraftValidator {
             addValidationError(validationMessages, "intygbaseratpa.referenser", "fk7263.validation.intyg-baserat-pa.annan.incorrect_format");
         }
         if (utlatande.getJournaluppgifter() != null && !utlatande.getJournaluppgifter().isValidDate()) {
-            addValidationError(validationMessages, "intygbaseratpa.journaluppgifter", "fk7263.validation.intyg-baserat-pa.journaluppgifter.incorrect_format");
+            addValidationError(validationMessages, "intygbaseratpa.journaluppgifter",
+                    "fk7263.validation.intyg-baserat-pa.journaluppgifter.incorrect_format");
         }
     }
 
@@ -137,7 +138,7 @@ public class InternalDraftValidator {
 
     private boolean isValidDateInIntervals(List<ValidationMessage> validationMessages, Fk7263Intyg utlatande) {
         boolean success = true;
-        InternalLocalDateInterval[] intervals = {utlatande.getNedsattMed100(), utlatande.getNedsattMed75(), utlatande.getNedsattMed50(),
+        InternalLocalDateInterval[] intervals = { utlatande.getNedsattMed100(), utlatande.getNedsattMed75(), utlatande.getNedsattMed50(),
                 utlatande.getNedsattMed25() };
         if (allNulls(intervals)) {
             addValidationError(validationMessages, "arbetsformaga", "fk7263.validation.arbetsformaga.choose-at-least-one");

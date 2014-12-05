@@ -104,10 +104,10 @@ public enum UtlatandeKod implements CodeSystem {
 
         return null;
     }
-    
+
     /**
      * Returns the specific version that new intygs should use when created.
-     * 
+     *
      * @return the current version of utlatande.
      */
     public static UtlatandeKod getCurrentVersion() {

@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.util.Strings;
-import se.inera.certificate.modules.fk7263.model.codes.Prognoskoder;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 
@@ -363,7 +362,7 @@ public class PdfGenerator {
 
     private void fillPrognose() {
         if (intyg.getPrognosBedomning() != null) {
-            switch(intyg.getPrognosBedomning()) {
+            switch (intyg.getPrognosBedomning()) {
             case arbetsformagaPrognosJa:
                 checkField(WORK_CAPACITY_FORECAST_YES);
                 break;
@@ -376,6 +375,7 @@ public class PdfGenerator {
             case arbetsformagaPrognosGarInteAttBedoma:
                 checkField(WORK_CAPACITY_FORECAST_UNKNOWN);
                 break;
+            default:
             }
             fillText(WORK_CAPACITY_TEXT, intyg.getArbetsformagaPrognos());
         }

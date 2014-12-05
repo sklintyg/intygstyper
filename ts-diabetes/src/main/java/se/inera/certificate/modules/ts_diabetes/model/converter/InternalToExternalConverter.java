@@ -70,7 +70,8 @@ public class InternalToExternalConverter {
     /**
      * Takes an internal Utlatande and converts it to the external model.
      *
-     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
+     * @param source
+     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
      * @return {@link Utlatande}, unless the source is null in which case a {@link ConverterException} is thrown
      * @throws ConverterException
      */
@@ -121,7 +122,8 @@ public class InternalToExternalConverter {
         return utlatande;
     }
 
-    private void buildAktivitetEgenkontrollBlodsocker(List<Aktivitet> aktiviteter, se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande source) {
+    private void buildAktivitetEgenkontrollBlodsocker(List<Aktivitet> aktiviteter,
+            se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande source) {
         if (source.getHypoglykemier().getEgenkontrollBlodsocker() == null) {
             return;
         }
@@ -142,7 +144,8 @@ public class InternalToExternalConverter {
     /**
      * Creates a List of Vardkontakt[er] from and Internal Utlatande.
      *
-     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
+     * @param source
+     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
      * @return a List of {@link Vardkontakt}
      */
     private Collection<? extends Vardkontakt> buildVardkontakt(
@@ -167,7 +170,8 @@ public class InternalToExternalConverter {
     /**
      * Creates a List of {@link Kod}[er] concerning what type of permissions this Utlatande concerns.
      *
-     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
+     * @param source
+     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
      * @return List of {@link Kod}
      */
     private Collection<? extends Kod> buildIntygAvser(
@@ -183,7 +187,8 @@ public class InternalToExternalConverter {
     /**
      * Creates a List of ObservationAktivitetRelation (this will always consist of the same fixed relations).
      *
-     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
+     * @param source
+     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
      * @return a List of {@link ObservationAktivitetRelation}
      */
     private Collection<? extends ObservationAktivitetRelation> buildObsAktRelationer(
@@ -206,7 +211,8 @@ public class InternalToExternalConverter {
     /**
      * Creates a List of Rekommendation[er].
      *
-     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
+     * @param source
+     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
      * @return a List of {@link Rekommendation}
      */
     private Collection<? extends Rekommendation> buildRekommendationer(
@@ -254,7 +260,8 @@ public class InternalToExternalConverter {
     /**
      * Create a List of {@link Observation}[er] from internal model.
      *
-     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
+     * @param source
+     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
      * @return a List of {@link Observation}
      */
     private Collection<? extends Observation> buildObservationer(
@@ -303,7 +310,7 @@ public class InternalToExternalConverter {
                     .getTabletter()));
         }
 
-        if (source.getDiabetes().getAnnanBehandlingBeskrivning() != null && 
+        if (source.getDiabetes().getAnnanBehandlingBeskrivning() != null &&
                 !source.getDiabetes().getAnnanBehandlingBeskrivning().isEmpty()) {
             observationer.add(createObservationWithBeskrivning(ObservationsKod.DIABETIKER_ANNAN_BEHANDLING, true,
                     source.getDiabetes().getAnnanBehandlingBeskrivning()));
@@ -370,7 +377,8 @@ public class InternalToExternalConverter {
      * Creates a List with Observation[er] for right, left and both eyes without visual aid (utan korrektion) and with
      * aid (if applicable).
      *
-     * @param syn {@link Syn} object with data to be used
+     * @param syn
+     *            {@link Syn} object with data to be used
      * @return a List of {@link Observation}[er]
      */
     private List<Observation> createSynRelatedObservations(Syn syn) {
@@ -443,9 +451,12 @@ public class InternalToExternalConverter {
     /**
      * Create Observation with ObservationsKod, forekomst and beskrivning.
      *
-     * @param obsKod      {@link ObservationsKod}
-     * @param forekomst   {@link Boolean}
-     * @param beskrivning {@link String}
+     * @param obsKod
+     *            {@link ObservationsKod}
+     * @param forekomst
+     *            {@link Boolean}
+     * @param beskrivning
+     *            {@link String}
      * @return An {@link Observation} constructed from the parameters provided
      */
     private Observation createObservationWithBeskrivning(ObservationsKod obsKod, Boolean forekomst, String beskrivning) {
@@ -460,9 +471,12 @@ public class InternalToExternalConverter {
     /**
      * Create an Observation with Id, ObservationsKod and Boolean (forekomst).
      *
-     * @param id        String with the {@link Id} extension
-     * @param obsKod    {@link ObservationsKod}
-     * @param forekomst {@link Boolean}
+     * @param id
+     *            String with the {@link Id} extension
+     * @param obsKod
+     *            {@link ObservationsKod}
+     * @param forekomst
+     *            {@link Boolean}
      * @return An {@link Observation} constructed from the parameters provided
      */
     private Observation createObservationWithId(ObservationsKod obsKod, Boolean forekomst, Id id) {
@@ -477,8 +491,10 @@ public class InternalToExternalConverter {
     /**
      * Create a "basic" observation i.e an observation consisting of only an ObservationsKod and a boolean.
      *
-     * @param obsKod    {@link ObservationsKod}
-     * @param forekomst {@link Boolean}
+     * @param obsKod
+     *            {@link ObservationsKod}
+     * @param forekomst
+     *            {@link Boolean}
      * @return An {@link Observation} constructed from the parameters provided
      */
     private Observation createBasicObservation(ObservationsKod obsKod, Boolean forekomst) {
@@ -491,7 +507,8 @@ public class InternalToExternalConverter {
     /**
      * Create mandatory Aktivitet[er] from internal objects.
      *
-     * @param source {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
+     * @param source
+     *            {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande}
      * @return List of {@link Aktivitet}
      */
     private Collection<? extends Aktivitet> buildAktiviteter(

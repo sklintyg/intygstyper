@@ -1,18 +1,12 @@
 package se.inera.certificate.modules.fk7263.model.internal;
 
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
+import se.inera.certificate.model.InternalDate;
+import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.common.internal.IntygMetadata;
 
 import static se.inera.certificate.model.util.Strings.emptyToNull;
 import static se.inera.certificate.model.util.Strings.join;
-
-import org.joda.time.LocalDateTime;
-
-import se.inera.certificate.model.InternalDate;
-import se.inera.certificate.model.InternalLocalDateInterval;
-import se.inera.certificate.model.LocalDateInterval;
 
 /**
  * @author andreaskaltenbach
@@ -89,9 +83,13 @@ public class Fk7263Intyg {
 
     private String kommentar;
 
-    public String getId() { return id; }
+    public String getId() {
+        return id;
+    }
 
-    public void setId(String id) { this.id = id; }
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public IntygMetadata getIntygMetadata() {
         return intygMetadata;

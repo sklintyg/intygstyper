@@ -138,7 +138,7 @@ public final class IsoTypeConverter {
     public static Metod toMetodKod(Kod kod) {
         return toCD(kod, new Metod());
     }
-    
+
     public static BilagaKod toBilagaKod(Kod kod) {
         return toCD(kod, new BilagaKod());
     }
@@ -165,4 +165,3 @@ public final class IsoTypeConverter {
         return pq;
     }
 }
-

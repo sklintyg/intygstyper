@@ -56,7 +56,7 @@ public class Utlatande extends se.inera.certificate.model.Utlatande {
     private List<Status> status;
 
     private Bilaga bilaga;
-    
+
     private String tsUtgava;
 
     private String tsVersion;

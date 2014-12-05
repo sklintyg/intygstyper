@@ -1,14 +1,8 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
-import static se.inera.certificate.modules.fk7263.model.codes.Kodverk.ICD_10;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import se.inera.certificate.model.Arbetsuppgift;
 import se.inera.certificate.model.Id;
 import se.inera.certificate.model.InternalLocalDateInterval;
@@ -16,7 +10,6 @@ import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.PhysicalQuantity;
 import se.inera.certificate.model.Sysselsattning;
-import se.inera.certificate.model.Vardgivare;
 import se.inera.certificate.model.Vardkontakt;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.model.converter.util.InternalConverterUtil;
@@ -36,9 +29,14 @@ import se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static se.inera.certificate.modules.fk7263.model.codes.Kodverk.ICD_10;
+
 /**
  * Used to convert from internal to external model, i.e for converting input from webcert to a signable certificate.
- * 
+ *
  * @author erik
  */
 public class InternalToExternalConverter {
@@ -59,7 +57,7 @@ public class InternalToExternalConverter {
 
     /**
      * Converts from the internal to the external model.
-     * 
+     *
      * @param source
      *            {@link Fk7263Intyg}
      * @return {@link Fk7263Utlatande}
@@ -97,7 +95,7 @@ public class InternalToExternalConverter {
 
     /**
      * Build a List of {@link String}[s] from different fields in the internal model.
-     * 
+     *
      * @param source
      *            internal representation
      * @return List of {@link String} information was found going into the kommentarer fields
@@ -114,7 +112,7 @@ public class InternalToExternalConverter {
 
     /**
      * Create a List of {@link Vardkontakt} from the internal model.
-     * 
+     *
      * @param source
      *            internal representation
      * @return List of {@link Vardkontakt}
@@ -142,13 +140,14 @@ public class InternalToExternalConverter {
     }
 
     /**
-<<<<<<< HEAD
-     * Create a List of {@link Referens} from the internal model.
-     * 
-=======
+     * <<<<<<< HEAD
+     * Create a List of {@link se.inera.certificate.model.Referens} from the internal model.
+     *
+     * =======
      * Create a List of {@link Fk7263Referens} from the internal model.
      *
->>>>>>> master
+     * >>>>>>> master
+     *
      * @param source
      *            internal representation
      * @return List of {@link Fk7263Referens}
@@ -177,7 +176,7 @@ public class InternalToExternalConverter {
 
     /**
      * Create a List of {@link Fk7263Observation} from the internal model.
-     * 
+     *
      * @param source
      *            internal representation
      * @return List of {@link Fk7263Observation}
@@ -285,7 +284,7 @@ public class InternalToExternalConverter {
 
     /**
      * Creates the slightly more complex {@link Fk7263Observation}[s] regarding arbetsformaga.
-     * 
+     *
      * @param kod
      *            a {@link Kod} from {@link ObservationsKoder}
      * @param period
@@ -310,13 +309,8 @@ public class InternalToExternalConverter {
     }
 
     /**
-<<<<<<< HEAD
-     * Creates a {@link Fk7263Prognos} from information in the internal model.
-     * 
-=======
      * Creates a {@link Fk7263Observation} from information in the internal model.
      *
->>>>>>> master
      * @param source
      *            internal representation
      * @return {@link Fk7263Observation}
@@ -351,7 +345,7 @@ public class InternalToExternalConverter {
     private Kod getCorrespondingPrognosKod(Fk7263Intyg source) {
         Kod kod = null;
         if (source.getPrognosBedomning() != null) {
-            switch(source.getPrognosBedomning()) {
+            switch (source.getPrognosBedomning()) {
             case arbetsformagaPrognosJa:
                 kod = Prognoskoder.ATERSTALLAS_HELT;
                 break;
@@ -364,6 +358,7 @@ public class InternalToExternalConverter {
             case arbetsformagaPrognosGarInteAttBedoma:
                 kod = Prognoskoder.DET_GAR_INTE_ATT_BEDOMA;
                 break;
+            default:
             }
         }
         return kod;
@@ -390,7 +385,7 @@ public class InternalToExternalConverter {
 
     /**
      * Create a single observation with kod, kategori and beskrivning.
-     * 
+     *
      * @param kod
      *            {@link Kod} Observationskod
      * @param kategori
@@ -458,6 +453,7 @@ public class InternalToExternalConverter {
                 aktiviteter.add(buildAktivitet(
                         Aktivitetskoder.GAR_EJ_ATT_BEDOMA_OM_ARBETSLIVSINRIKTAD_REHABILITERING_AR_AKTUELL, null));
                 break;
+            default:
             }
         }
         if (source.isRessattTillArbeteAktuellt()) {
@@ -475,7 +471,7 @@ public class InternalToExternalConverter {
 
     /**
      * Build singular Fk7263Aktivitet.
-     * 
+     *
      * @param kod
      *            {@link Kod} Aktivitetskod, always mandatory
      * @param beskrivning
@@ -496,7 +492,7 @@ public class InternalToExternalConverter {
 
     /**
      * Create an {@link Fk7263Patient} from the internal model.
-     * 
+     *
      * @param source
      *            internal representation
      * @return {@link Fk7263Patient}
@@ -514,7 +510,7 @@ public class InternalToExternalConverter {
 
     /**
      * Create a List of Sysselsattning for an {@link Fk7263Patient}.
-     * 
+     *
      * @param patient
      *            the {@link se.inera.certificate.modules.fk7263.model.external.Fk7263Patient}
      * @param source
@@ -549,7 +545,7 @@ public class InternalToExternalConverter {
 
     /**
      * Determine if the person connected with the personnummer is female or male.
-     * 
+     *
      * @param personnummer
      *            {@link String} containing the personnummer
      * @return true if the personnummer belongs to a female, and false otherwise
@@ -563,7 +559,7 @@ public class InternalToExternalConverter {
 
     /**
      * Build an Arbetsuppgift from a string.
-     * 
+     *
      * @param type
      *            string describing the Arbetsuppgift
      * @return {@link Arbetsuppgift}
@@ -578,5 +574,4 @@ public class InternalToExternalConverter {
     private boolean isNullOrEmpty(String string) {
         return string == null || string.isEmpty();
     }
-
 }
