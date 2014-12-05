@@ -33,7 +33,7 @@ Uppgifterna i intygsutkastet går att ändra innan det signeras.
 Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                 Kopiera
               </button>
-              <button id="makuleraBtn" class="btn btn-inverse" ng-if="!certProperties.isRevoked" ng-click="makulera(cert)"
+              <button id="makuleraBtn" class="btn btn-inverse" ng-if="!certProperties.isRevoked && user.lakare" ng-click="makulera(cert)"
                       wc-feature-active feature="makuleraIntyg" intygstyp="ts-diabetes"
                       title="Makulera intyg innebär att intyget återtas. Vid behov kan intyget ersättas med ett nytt.">
                 Makulera
@@ -42,14 +42,18 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
           </form>
         </div>
 
+        <div id="cert-inline-error" ng-show="widgetState.inlineErrorMessageKey" class="alert alert-danger alert-column print-hide">
+          <span message key="{{widgetState.inlineErrorMessageKey}}"></span>
+        </div>
+
         <div class="alert alert-info alert-column" ng-if="!certProperties.isRevoked">
           <strong>Status:</strong>
           <span ng-if="certProperties.isSent" id="certificate-is-sent-to-recipient-message-text">Intyget är signerat och mottaget av Transportstyrelsens system.</span>
-              <span ng-if="!certProperties.isSent" id="certificate-is-sent-to-it-message-text">
-                Intyget är signerat och är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se.
-                Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till
-                Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.
-              </span>
+          <span ng-if="!certProperties.isSent" id="certificate-is-sent-to-it-message-text">
+            Intyget är signerat och är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se.
+            Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till
+            Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.
+          </span>
         </div>
         <div ng-if="certProperties.isRevoked" id="certificate-is-revoked-message-text" class="alert alert-warning"
              style="margin-right: 20px; max-width: 530px;">Intyget är makulerat

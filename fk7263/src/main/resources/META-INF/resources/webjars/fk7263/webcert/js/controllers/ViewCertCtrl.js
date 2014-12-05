@@ -1,8 +1,8 @@
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
     [ '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', 'common.CertificateService',
-        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate',
+        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate', 'common.User',
         function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView,
-            messageService, ManageCertificate) {
+            messageService, ManageCertificate, User) {
             'use strict';
 
             // Check if the user used the special qa-link to get here.
@@ -11,13 +11,16 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             }
 
             // Page setup
+            $scope.user = { lakare: User.userContext.lakare };
+
             $scope.cert = {};
             $scope.cert.filledAlways = true;
             $scope.widgetState = {
                 doneLoading: false,
                 activeErrorMessageKey: null,
                 showTemplate: true,
-                printStatus: 'notloaded'
+                printStatus: 'notloaded',
+                newPatientId: false
             };
 
             $scope.certProperties = {
@@ -34,7 +37,9 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                     $scope.widgetState.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
-                        $rootScope.$emit('fk7263.ViewCertCtrl.load', result.metaData);
+                        $rootScope.$emit('fk7263.ViewCertCtrl.load', result.metaData, result.contents);
+                        $rootScope.$broadcast('intyg.loaded', $scope.cert);
+
                         $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'FK');
                         $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
                         if ($scope.certProperties.isRevoked) {

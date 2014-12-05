@@ -29,9 +29,12 @@
               <h1 style="display: inline-block; margin-right: 20px;"><span message key="fk7263.label.certtitle"></span>
               </h1>
               <div class="inline-block">
-                <label class="control-label">{{cert.intygMetadata.patient.fullstandigtNamn}} -
+                <label class="control-label" id="patientNamnPersonnummer">{{cert.intygMetadata.patient.fullstandigtNamn}} -
                   {{cert.intygMetadata.patient.personId}}</label>
               </div>
+
+              <div wc-new-person-id-message></div>
+
               <div class="form-group buttonbar">
                 <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned"
                         title="Sparar intyget som ett utkast.">Spara utkast
@@ -76,9 +79,16 @@
 
       <!-- Total fail error messages -->
       <div id="error-panel" class="cert-error-panel"
-           ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey">
+           ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey && !widgetState.deleted">
         <div class="alert alert-danger">
           <span message key="{{widgetState.activeErrorMessageKey}}"></span>
+        </div>
+      </div>
+
+      <!-- Integration deleted message -->
+      <div id="integration-deleted" ng-if="widgetState.deleted">
+        <div class="alert alert-info banner-margin">
+          Utkastet är raderat och borttaget från Webcert.
         </div>
       </div>
 
@@ -86,7 +96,7 @@
       <div class="edit-form" ng-class="{'collapsed' : widgetState.collapsedHeader}">
 
         <form name="certForm" novalidate autocomplete="off">
-          <div ng-hide="widgetState.activeErrorMessageKey">
+          <div ng-hide="widgetState.activeErrorMessageKey || widgetState.deleted">
 
             <div wc-spinner label="info.loadingdata" show-spinner="!widgetState.doneLoading"
                  show-content="widgetState.doneLoading">
@@ -201,12 +211,15 @@
                         <label class="control-label unbreakable">ICD 10</label>
                         <input type="text" class="form-control" id="diagnoseCode" name="diagnose.code" value=""
                                class='diagnose-code col-xs-11 form-control' ng-model="cert.diagnosKod"
-                               typeahead="d.value as d.label for d in diagnoseCodes | filter:$viewValue | limitTo:8">
+                               typeahead="d.value as d.label for d in getDiagnoseCodes($viewValue) | filter:$viewValue | limitTo:10"
+                               typeahead-min-length="3"
+                               typeahead-on-select="onDiagnoseCode1Select($item)">
                       </div>
                       <div class='col-xs-9'>
                         <label class="control-label">Diagnos</label>
                         <input type="text" class="form-control maxwidth" id="diagnoseDescription"
                                class="col-xs-12 form-control" name="diagnose.description" value=""
+                               ng-disabled="true"
                                ng-model="cert.diagnosBeskrivning1"
                                typeahead="d.value as d.label for d in diagnoses | filter:$viewValue | limitTo:8">
                       </div>
@@ -217,10 +230,16 @@
                         <div class="controls">
                           <div class="bottom-padding-small clearfix">
                             <input type="text" id="diagnoseCodeOpt1" name="diagnose.codeOpt1" value=""
-                                   ng-model="cert.diagnosKod2" class="col-xs-11 form-control">
+                                   ng-model="cert.diagnosKod2" class="col-xs-11 form-control"
+                                   typeahead="d.value as d.label for d in getDiagnoseCodes($viewValue) | filter:$viewValue | limitTo:10"
+                                   typeahead-min-length="3"
+                                   typeahead-on-select="onDiagnoseCode2Select($item)">
                           </div>
                           <input type="text" id="diagnoseCodeOpt2" name="diagnose.codeOpt2" value=""
-                                 ng-model="cert.diagnosKod3" class="col-xs-11 form-control">
+                                 ng-model="cert.diagnosKod3" class="col-xs-11 form-control"
+                                 typeahead="d.value as d.label for d in getDiagnoseCodes($viewValue) | filter:$viewValue | limitTo:10"
+                                 typeahead-min-length="3"
+                                 typeahead-on-select="onDiagnoseCode3Select($item)">
                         </div>
                       </div>
                       <div class='col-xs-9 unbreakable'>
@@ -231,10 +250,12 @@
                         <div class="controls">
                           <div class="bottom-padding-small clearfix">
                             <input type="text" id="diagnoseDescriptionOpt1" name="diagnose.descriptionOpt1" value=""
-                                   ng-model="cert.diagnosBeskrivning2" class="block col-xs-12 form-control maxwidth">
+                                   ng-model="cert.diagnosBeskrivning2" class="block col-xs-12 form-control maxwidth"
+                                   ng-disabled="true">
                           </div>
                           <input type="text" id="diagnoseDescriptionOpt2" name="diagnose.descriptionOpt2" value=""
-                                 ng-model="cert.diagnosBeskrivning3" class="block col-xs-12 form-control maxwidth">
+                                 ng-model="cert.diagnosBeskrivning3" class="block col-xs-12 form-control maxwidth"
+                                 ng-disabled="true">
                         </div>
                       </div>
                     </div>
@@ -740,6 +761,8 @@
                     </div>
                   </div>
 
+                  <div wc-field-signing-doctor></div>
+
                 </div>
                 <!-- cert body -->
 
@@ -748,7 +771,7 @@
 
               <div ng-if="!isSigned" class="print-hide">
 
-                <h3>Signera</h3>
+                <h3><span message key="common.sign.intyg"></span></h3>
 
                 <div ng-if="!user.userContext.lakare">
                   <div id="sign-requires-doctor-message-text" class="alert alert-info">
@@ -775,7 +798,7 @@
                 </div>
 
                 <button id="signera-utkast-button" class="btn btn-success" ng-disabled="!isComplete || certForm.$dirty"
-                        ng-click="sign()" ng-show="user.userContext.lakare">Signera
+                        ng-click="sign()" ng-show="user.userContext.lakare"><span message key="common.sign"></span>
                 </button>
 
               </div>

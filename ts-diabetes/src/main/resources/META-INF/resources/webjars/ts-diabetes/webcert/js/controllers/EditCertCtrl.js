@@ -1,20 +1,14 @@
 angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
-    [ '$anchorScroll', '$location', '$log', '$scope', '$window', 'common.ManageCertView', 'common.User', 'common.wcFocus',
-        function($anchorScroll, $location, $log, $scope, $window, ManageCertView, User, wcFocus) {
+    [ '$anchorScroll', '$location', '$log', '$scope', '$window', 'common.ManageCertView', 'common.User', 'common.wcFocus', 'common.intygNotifyService',
+        function($anchorScroll, $location, $log, $scope, $window, ManageCertView, User, wcFocus, intygNotifyService) {
             'use strict';
 
             /**********************************************************************************
              * Default state
              **********************************************************************************/
 
-            $scope.cert = {};
-            $scope.messages = [];
-            $scope.isComplete = false;
-            $scope.isSigned = false;
-            $scope.hasSavedThisSession = false;
+            // Page state
             $scope.user = User;
-
-            // init state
             $scope.focusFirstInput = true;
             $scope.widgetState = {
                 doneLoading: false,
@@ -24,6 +18,19 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 hsaInfoMissing: false
             };
 
+            // Intyg state
+            $scope.cert = {};
+            $scope.messages = [];
+            $scope.isComplete = false;
+            $scope.isSigned = false;
+            $scope.hasSavedThisSession = false;
+            $scope.certMeta = {
+                intygId: null,
+                intygType: 'ts-diabetes',
+                vidarebefordrad: false
+            };
+
+            // form model (extends intyg model where necessary)
             $scope.form = {
                 'identity': [
                     {label: 'ID-kort *', id: 'ID_KORT'},
@@ -208,28 +215,41 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
             $scope.save = function() {
                 $scope.hasSavedThisSession = true;
                 convertFormToCert();
-                ManageCertView.save($scope, 'ts-diabetes');
+                ManageCertView.save($scope, $scope.certMeta.intygType);
             };
 
             /**
              * Action to discard the certificate draft and return to WebCert again.
              */
             $scope.discard = function() {
-                ManageCertView.discard($scope, 'ts-diabetes');
+                ManageCertView.discard($scope, $scope.certMeta.intygType);
             };
 
             /**
              * Action to sign the certificate draft and return to Webcert again.
              */
             $scope.sign = function() {
-                ManageCertView.signera($scope, 'ts-diabetes');
+                ManageCertView.signera($scope, $scope.certMeta.intygType);
             };
 
             /**
              * Print draft
              */
             $scope.print = function() {
-                ManageCertView.printDraft($scope.cert.id, 'ts-diabetes');
+                ManageCertView.printDraft($scope.cert.id, $scope.certMeta.intygType);
+            };
+
+            /**
+             * Handle vidarebefordra dialog
+             *
+             * @param cert
+             */
+            $scope.openMailDialog = function() {
+                intygNotifyService.forwardIntyg($scope.certMeta, $scope.widgetState);
+            };
+
+            $scope.onVidarebefordradChange = function() {
+                intygNotifyService.onForwardedChange($scope.certMeta, $scope.widgetState);
             };
 
             /**************************************************************************
@@ -237,7 +257,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
              **************************************************************************/
 
             // Get the certificate draft from the server.
-            ManageCertView.load($scope, 'ts-diabetes', function(cert) {
+            ManageCertView.load($scope, $scope.certMeta.intygType, function(cert) {
                 // Decorate intygspecific default data
                 $scope.cert = cert;
                 convertCertToForm($scope);
