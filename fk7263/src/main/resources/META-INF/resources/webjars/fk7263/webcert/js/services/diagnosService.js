@@ -7,10 +7,10 @@ angular.module('fk7263').factory('fk7263.diagnosService',
          */
         function _getByCode(code, onSuccess, onError) {
             $window.doneLoading = false;
-            $log.debug('_searchByCode: codeFragment:' + codeFragment);
+            $log.debug('_searchByCode: codeFragment:' + code);
             var restPath = '/moduleapi/diagnos/kod';
             $http.post(restPath, code.toUpperCase()).success(function(response) {
-                if (response && response.resultat == "OK") {
+                if (response && response.resultat === 'OK') {
                     onSuccess(response);
                 }
                 else {
@@ -30,7 +30,10 @@ angular.module('fk7263').factory('fk7263.diagnosService',
         function _searchByCode(codeFragment) {
             $log.debug('_searchByCode: codeFragment:' + codeFragment);
             var restPath = '/moduleapi/diagnos/kod/sok';
-            var data = {"codeFragment":codeFragment.toUpperCase(),"nbrOfResults":10};
+            var data = {
+                codeFragment: codeFragment.toUpperCase(),
+                nbrOfResults: 10
+            };
             return $http.post(restPath, data);
         }
 

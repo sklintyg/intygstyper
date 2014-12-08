@@ -1,5 +1,6 @@
 angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
-    [ '$anchorScroll', '$location', '$log', '$scope', '$window', 'common.ManageCertView', 'common.User', 'common.wcFocus', 'common.intygNotifyService',
+    ['$anchorScroll', '$location', '$log', '$scope', '$window', 'common.ManageCertView', 'common.User',
+        'common.wcFocus', 'common.intygNotifyService',
         function($anchorScroll, $location, $log, $scope, $window, ManageCertView, User, wcFocus, intygNotifyService) {
             'use strict';
 
@@ -7,7 +8,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
              * Default state
              **********************************************************************************/
 
-            // Page state
+                // Page state
             $scope.user = User;
             $scope.focusFirstInput = true;
             $scope.widgetState = {
@@ -74,15 +75,16 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
 
                 // 2g. if entered date is valid, convert it to string so backend validation is happy.
                 // otherwise leave it as an invalid Date so backend sends back a validation error
-                $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = $scope.certForm.allvarligForekomstVakenTidObservationstid.$viewValue;
+                $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid =
+                    $scope.certForm.allvarligForekomstVakenTidObservationstid.$viewValue;
             }
 
             /******************************************************************************************
              * Watches
              ******************************************************************************************/
 
-            // Watch changes to the form and make sure that other form elements that are dependent on the changed
-            // element is updated correctly.
+                // Watch changes to the form and make sure that other form elements that are dependent on the changed
+                // element is updated correctly.
 
             $scope.$watch('cert.intygAvser.korkortstyp', function(valdaKorkortstyper) {
                 if ($scope.cert.intygAvser && $scope.cert.intygAvser.korkortstyp) {
@@ -141,11 +143,11 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                     $scope.cert.syn.diplopi = undefined;
                 }
             }, true);
-            $scope.$watch('form.behorighet', function (uppfyllerKravForBehorighet) {
+            $scope.$watch('form.behorighet', function(uppfyllerKravForBehorighet) {
                 if ($scope.cert.bedomning) {
                     $scope.cert.bedomning.kanInteTaStallning = !uppfyllerKravForBehorighet;
                     if (!uppfyllerKravForBehorighet) {
-                        angular.forEach($scope.cert.bedomning.korkortstyp, function (korkortstyp) {
+                        angular.forEach($scope.cert.bedomning.korkortstyp, function(korkortstyp) {
                             korkortstyp.selected = false;
                         });
                     }
@@ -256,7 +258,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
              * Load certificate and setup form
              **************************************************************************/
 
-            // Get the certificate draft from the server.
+                // Get the certificate draft from the server.
             ManageCertView.load($scope, $scope.certMeta.intygType, function(cert) {
                 // Decorate intygspecific default data
                 $scope.cert = cert;
