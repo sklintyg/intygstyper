@@ -34,12 +34,12 @@ public class WebcertModelFactory {
 
     /**
      * Create a new TS-diabetes draft pre-populated with the attached data.
-     * 
+     *
      * @param newDraftData
      *            {@link CreateNewDraftHolder}
      * @param template
      *            A template to use as a base, or <code>null</code> if an empty internal model should be used.
-     * 
+     *
      * @return {@link Utlatande} or throws a ConverterException if something unforeseen happens
      * @throws ConverterException
      */
@@ -81,5 +81,4 @@ public class WebcertModelFactory {
 
         utlatande.getIntygMetadata().setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(skapadAv));
     }
-
 }

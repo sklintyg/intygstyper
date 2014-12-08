@@ -162,7 +162,7 @@ public class InternalToExternalConverter {
         return vardkontakter;
     }
 
-    // TODO: There might be a better way to do this..
+    // TODO: There might be a better way to do this.
     private Kod createIdKontrollKod(String code) {
         return CodeConverter.toKod(IdKontrollKod.valueOf(code));
     }
@@ -310,8 +310,8 @@ public class InternalToExternalConverter {
                     .getTabletter()));
         }
 
-        if (source.getDiabetes().getAnnanBehandlingBeskrivning() != null &&
-                !source.getDiabetes().getAnnanBehandlingBeskrivning().isEmpty()) {
+        if (source.getDiabetes().getAnnanBehandlingBeskrivning() != null
+                && !source.getDiabetes().getAnnanBehandlingBeskrivning().isEmpty()) {
             observationer.add(createObservationWithBeskrivning(ObservationsKod.DIABETIKER_ANNAN_BEHANDLING, true,
                     source.getDiabetes().getAnnanBehandlingBeskrivning()));
         }
