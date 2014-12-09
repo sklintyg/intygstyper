@@ -182,7 +182,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
               </div>
 
               <div wc-field field-number="7" field-label="fk7263.label.rehabilitering-aktuell"
-                   filled="{{cert.rehabilitering}}"
+                   filled="{{cert.rehabilitering!=null}}"
                    id="field7" class="print-pagebreak-after">
                 <span id="rehabiliteringAktuell" ng-show="cert.rehabilitering == 'rehabiliteringAktuell'"><span message key="fk7263.label.yes"></span></span>
                 <span id="rehabiliteringEjAktuell" ng-show="cert.rehabilitering == 'rehabiliteringEjAktuell'"><span message key="fk7263.label.no"></span></span>
@@ -244,7 +244,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
               </div>
 
               <div wc-field field-number="10" field-label="fk7263.label.prognos"
-                   filled="{{cert.prognosBedomning}}"
+                   filled="{{cert.prognosBedomning!=null}}"
                    id="field10">
 
                 <span id="arbetsformataPrognosJa" ng-show="cert.prognosBedomning == 'arbetsformagaPrognosJa'"><span message key="fk7263.label.yes"></span></span>
@@ -268,7 +268,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                 <span ng-show="!cert.kontaktMedFk"> <span message key="fk7263.label.no"></span></span>
               </div>
 
-              <div wc-field field-number="13" field-label="fk7263.label.ovrigt" filled="{{cert.kommentar}}"
+              <div wc-field field-number="13" field-label="fk7263.label.ovrigt" filled="{{cert.kommentar!=null&&cert.kommentar!=''&&cert.kommentar!=undefined}}"
                    id="field13">
                 <div id="kommentar" class="multiline">{{cert.kommentar}}</div>
               </div>
