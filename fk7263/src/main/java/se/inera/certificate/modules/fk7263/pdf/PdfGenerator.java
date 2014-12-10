@@ -20,6 +20,7 @@ public class PdfGenerator {
 
     private static final String PATIENT_NAME = "form1[0].subform[0].flt_PatNamn[0]";
     private static final String PATIENT_SSN = "form1[0].subform[0].flt_PatPersonnummer[0]";
+    private static final String PATIENT_SSN_2 = "form1[0].subform[1].flt_PatPersonnummer[1]";
 
     private static final String DIAGNOS = "form1[0].subform[0].flt_DiagnosDiagnoser_flt2[0]";
 
@@ -211,6 +212,7 @@ public class PdfGenerator {
     private void fillPatientDetails() {
         fillText(PATIENT_NAME, intyg.getPatientNamn());
         fillText(PATIENT_SSN, intyg.getPatientPersonnummer());
+        fillText(PATIENT_SSN_2, intyg.getPatientPersonnummer());
     }
 
     private void fillSignerNameAndAddress() {
