@@ -114,11 +114,10 @@
                 <div class="col-md-12 cert-body">
 
                   <!-- 1. Smittskydd -->
-                  <div wc-field-single field-number="1">
-                    <input id="smittskydd" name="smittskydd" type="checkbox" ng-model="cert.avstangningSmittskydd"
-                           ng-change="onChangeSmittskydd()" wc-focus-on="firstInput">
+                  <div wc-field-single field-number="1" field-help-text="fk7263.helptext.smittskydd">
                     <label for="smittskydd" class="control-label title-single">
-                      <span message key="fk7263.label.smittskydd"></span>
+                      <input id="smittskydd" name="smittskydd" type="checkbox" ng-model="cert.avstangningSmittskydd"
+                           ng-change="onChangeSmittskydd()" wc-focus-on="firstInput">&nbsp;<span message key="fk7263.label.smittskydd"></span>
                     </label>
                   </div>
 
@@ -695,7 +694,7 @@
 
                   <div wc-field field-label="fk7263.label.fk-kontakt" field-number="12"
                        field-help-text="fk7263.helptext.kontakt">
-                    <label class="checkbox"><input type="checkbox" id="kontaktFk" name="contactWithFkRequested"
+                    <label><input type="checkbox" id="kontaktFk" name="contactWithFkRequested"
                                                    ng-model="cert.kontaktMedFk"> Kontakt önskas med
                       Försäkringskassan</label>
                   </div>
