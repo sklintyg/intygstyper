@@ -27,13 +27,13 @@
 
       <div class="print-hide">
         <div class="form-group buttonbar">
-          <label class="control-label">{{cert.intygMetadata.patient.fullstandigtNamn}} - {{cert.intygMetadata.patient.personId}}</label>
+          <label class="control-label">{{cert.grundData.patient.fullstandigtNamn}} - {{cert.grundData.patient.personId}}</label>
 
           <form id="view-as-pdf" action="{{pdfUrl}}" method="get" target="_blank" name="pdfForm">
             <p class="btn-row">
               <button id="sendBtn" class="btn btn-info" ng-if="!certProperties.isSent && !certProperties.isRevoked && !isQaOnly"
                       wc-feature-active feature="skickaIntyg" intygstyp="fk7263"
-                      wc-check-vardenhet vardenhet="{{cert.intygMetadata.skapadAv.vardenhet.enhetsid}}"
+                      wc-check-vardenhet vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}"
                       ng-click="send(cert)">Skicka till Försäkringskassan
               </button>
               <button id="downloadprint" type="submit" value="submit" class="btn btn-info" ng-click="print(cert)">Skriv
@@ -49,7 +49,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
               </button>
               <button id="makuleraBtn" class="btn btn-inverse" ng-if="!certProperties.isRevoked && !isQaOnly && user.lakare" ng-click="makulera(cert)"
                       wc-feature-active feature="makuleraIntyg" intygstyp="fk7263"
-                      wc-check-vardenhet vardenhet="{{cert.intygMetadata.skapadAv.vardenhet.enhetsid}}"
+                      wc-check-vardenhet vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}"
                       title="Makulera intyg innebär att intyget återtas. Vid behov kan intyget ersättas med ett nytt.">
                 Makulera
               </button>
@@ -286,16 +286,16 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                 <h4>
                   <span message key="fk7263.label.datum"></span>
                 </h4>
-                <p id="signeringsdatum">{{cert.intygMetadata.signeringsdatum | date:'longDate'}}</p>
+                <p id="signeringsdatum">{{cert.grundData.signeringsdatum | date:'longDate'}}</p>
                 <h4>
                   <span message key="fk7263.label.kontakt-info"></span>
                 </h4>
                 <p>
-                  <span class="text" id="vardperson_namn">{{cert.intygMetadata.skapadAv.fullstandigtNamn}}</span><br>
-                  <span class="text" id="vardperson_enhetsnamn">{{cert.intygMetadata.skapadAv.vardenhet.enhetsnamn}}</span><br>
-                  <span class="text" id="vardperson_postadress">{{cert.intygMetadata.skapadAv.vardenhet.postadress}}</span><br>
-                  <span class="text"><span id="vardperson_postnummer">{{cert.intygMetadata.skapadAv.vardenhet.postnummer}}</span> <span id="vardperson_postort">{{cert.intygMetadata.skapadAv.vardenhet.postort}}</span></span><br>
-                  <span class="text" id="vardperson_telefonnummer">{{cert.intygMetadata.skapadAv.vardenhet.telefonnummer}}</span><br>
+                  <span class="text" id="vardperson_namn">{{cert.grundData.skapadAv.fullstandigtNamn}}</span><br>
+                  <span class="text" id="vardperson_enhetsnamn">{{cert.grundData.skapadAv.vardenhet.enhetsnamn}}</span><br>
+                  <span class="text" id="vardperson_postadress">{{cert.grundData.skapadAv.vardenhet.postadress}}</span><br>
+                  <span class="text"><span id="vardperson_postnummer">{{cert.grundData.skapadAv.vardenhet.postnummer}}</span> <span id="vardperson_postort">{{cert.grundData.skapadAv.vardenhet.postort}}</span></span><br>
+                  <span class="text" id="vardperson_telefonnummer">{{cert.grundData.skapadAv.vardenhet.telefonnummer}}</span><br>
                 </p>
               </div>
 

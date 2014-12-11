@@ -103,7 +103,7 @@
                   </h2>
                 </div>
                 <div class="col-xs-6 col-sm-5 col-md-5 col-lg-5 issue">
-                  <span class="cert-titlebar-value">{{cert.intygMetadata.signeringsdatum | date:'shortDate'}}</span> <span><span message key="fk7263.label.issued"></span></span>
+                  <span class="cert-titlebar-value">{{cert.grundData.signeringsdatum | date:'shortDate'}}</span> <span><span message key="fk7263.label.issued"></span></span>
                 </div>
 				<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 archive hidden-xs">
                   <a role="button" data-toggle="modal" id="archiveBtn" title="{{messageService.getProperty('modules.button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
@@ -121,11 +121,11 @@
                   <h3 class="tag">
                     <span message key="fk7263.label.patientname"></span>
                   </h3>
-                  <span id="patient-name">{{cert.intygMetadata.patient.fullstandigtNamn}}</span><br />
+                  <span id="patient-name">{{cert.grundData.patient.fullstandigtNamn}}</span><br />
                   <h3 class="tag">
                     <span message key="fk7263.label.civicnumber"></span>
                   </h3>
-                  <span id="patient-crn">{{cert.intygMetadata.patient.personId}}</span>
+                  <span id="patient-crn">{{cert.grundData.patient.personId}}</span>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                   <h3 class="tag">
@@ -163,13 +163,13 @@
                   <h3 class="tag">
                     <span message key="fk7263.label.unit"></span>
                   </h3>
-                  <span id="careunit">{{cert.intygMetadata.skapadAv.vardenhet.enhetsnamn}}</span>
+                  <span id="careunit">{{cert.grundData.skapadAv.vardenhet.enhetsnamn}}</span>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                   <h3 class="tag">
                     <span message key="fk7263.label.issuer"></span>
                   </h3>
-                  <span id="caregiver">{{cert.intygMetadata.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</span>
+                  <span id="caregiver">{{cert.grundData.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</span>
                 </div>
               </div>
               <div class="row ">
@@ -306,13 +306,13 @@
                     <h4>
                       <span message key="fk7263.label.date"></span>
                     </h4>
-                    <p>{{cert.intygMetadata.signeringsdatum | date:'longDate'}}</p>
+                    <p>{{cert.grundData.signeringsdatum | date:'longDate'}}</p>
                     <h4>
                       <span message key="fk7263.label.contactinfo"></span>
                     </h4>
                     <p>
-                      <span class="text">{{cert.intygMetadata.skapadAv.fullstandigtNamn}}</span><br /> <span class="text">{{cert.intygMetadata.skapadAv.vardenhet.enhetsnamn}}</span><br /> <span class="text">{{cert.intygMetadata.skapadAv.vardenhet.postadress}}</span><br />
-                      <span class="text">{{cert.intygMetadata.skapadAv.vardenhet.postnummer}} {{cert.intygMetadata.skapadAv.vardenhet.postort}}</span><br /> <span class="text">{{cert.intygMetadata.skapadAv.vardenhet.telefonnummer}}</span><br />
+                      <span class="text">{{cert.grundData.skapadAv.fullstandigtNamn}}</span><br /> <span class="text">{{cert.grundData.skapadAv.vardenhet.enhetsnamn}}</span><br /> <span class="text">{{cert.grundData.skapadAv.vardenhet.postadress}}</span><br />
+                      <span class="text">{{cert.grundData.skapadAv.vardenhet.postnummer}} {{cert.grundData.skapadAv.vardenhet.postort}}</span><br /> <span class="text">{{cert.grundData.skapadAv.vardenhet.telefonnummer}}</span><br />
                     </p>
                   </div>
                 </div>
