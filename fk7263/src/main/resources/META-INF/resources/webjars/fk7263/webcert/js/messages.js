@@ -75,6 +75,8 @@ var fk7263Messages = {
         'fk7263.nedsattningsgrad.nedsatt_med_1_4': 'Nedsatt med 1/4',
 
         //Help texts
+        'fk7263.helptext.smittskydd': 'Ange om patienten är avstängd enligt smittskyddslagen på grund av smitta.',
+
         'fk7263.helptext.intyg-baserat-pa': 'Ange vad uppgifterna i intyget baseras på. Flera alternativ kan väljas.',
         'fk7263.helptext.intyg-baserat-pa.annat': 'Detta alternativ kan användas för annan professions bedömning, till exempel för kuratorsanteckning, sjukgymnastanteckning eller teamkonferens.',
 
