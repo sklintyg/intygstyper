@@ -27,7 +27,7 @@ module.exports = function(grunt) {
 
         csslint: {
             options: {
-                csslintrc: '../src/main/resources/.csslintrc',
+                csslintrc: '../target/build-tools/csslint/.csslintrc',
                 force: true
             },
             minaintyg: {
@@ -51,7 +51,7 @@ module.exports = function(grunt) {
 
         jshint: {
             options: {
-                jshintrc: '../src/main/resources/.jshintrc',
+                jshintrc: '../target/build-tools/jshint/.jshintrc',
                 force: true
             },
             minaintyg: {
