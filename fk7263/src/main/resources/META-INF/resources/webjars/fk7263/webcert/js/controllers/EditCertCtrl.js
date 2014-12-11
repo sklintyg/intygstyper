@@ -1041,7 +1041,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             };
 
             /**
-             * Toggle "Visa vad som behöver kompletteras
+             * Toggle "Visa vad som behöver kompletteras"
              */
             $scope.toggleShowComplete = function() {
                 $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
