@@ -1,6 +1,6 @@
 package se.inera.certificate.modules.fk7263.utils;
 
-import se.inera.certificate.fk7263.model.v1.Utlatande;
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 
 /**
  * Defines a scenario that can be tested. The following models (as POJOs) can be extracted from a scenario:
@@ -28,16 +28,7 @@ public interface Scenario {
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
      */
-    Utlatande asTransportModel() throws ScenarioNotFoundException;
-
-    /**
-     * Returns the scenario as a external model.
-     *
-     * @return The scenario as a external model.
-     * @throws ScenarioNotFoundException
-     *             if the scenario wasn't found.
-     */
-    se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande asExternalModel() throws ScenarioNotFoundException;
+    RegisterMedicalCertificateType asTransportModel() throws ScenarioNotFoundException;
 
     /**
      * Returns the scenario as a internal Mina Intyg model.
@@ -46,5 +37,5 @@ public interface Scenario {
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
      */
-    se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg asInternalModel() throws ScenarioNotFoundException;
+    se.inera.certificate.modules.fk7263.model.internal.Utlatande asInternalModel() throws ScenarioNotFoundException;
 }

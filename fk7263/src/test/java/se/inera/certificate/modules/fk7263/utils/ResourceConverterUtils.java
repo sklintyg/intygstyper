@@ -5,8 +5,8 @@ import java.io.IOException;
 
 import javax.xml.bind.JAXB;
 
-import se.inera.certificate.fk7263.model.v1.Utlatande;
 import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -17,22 +17,17 @@ public final class ResourceConverterUtils {
 
     private static final ObjectMapper OBJECT_MAPPER = new CustomObjectMapper();
 
-    public static Utlatande toTransport(File resource) throws IOException {
-        return JAXB.unmarshal(resource, Utlatande.class);
+    public static RegisterMedicalCertificateType toTransport(File resource) throws IOException {
+        return JAXB.unmarshal(resource, RegisterMedicalCertificateType.class);
     }
 
-    public static se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande toExternal(File resource)
+    public static se.inera.certificate.modules.fk7263.model.internal.Utlatande toInternal(File resource)
             throws IOException {
-        return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.fk7263.model.external.Fk7263Utlatande.class);
+        return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.fk7263.model.internal.Utlatande.class);
     }
 
-    public static se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg toInternal(File resource)
+    public static se.inera.certificate.modules.fk7263.model.internal.Utlatande toInternal(String resource)
             throws IOException {
-        return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg.class);
-    }
-
-    public static se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg toInternal(String resource)
-            throws IOException {
-        return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg.class);
+        return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.fk7263.model.internal.Utlatande.class);
     }
 }

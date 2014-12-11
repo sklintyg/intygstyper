@@ -12,6 +12,7 @@ import se.inera.certificate.modules.support.feature.ModuleFeaturesFactory;
 
 public class Fk7263EntryPoint implements ModuleEntryPoint {
 
+    public static final String FK_7263 = "fk7263";
     private static final String FORSAKRINGSKASSAN_LOGICAL_ADDRESS = "FK";
 
     @Autowired

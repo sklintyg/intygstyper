@@ -23,6 +23,8 @@
   
   <import resource="fk7263-model-config.xml"/>
 
+  <import resource="fk7263-ws-stub.xml"/>
+
   <context:annotation-config />
 
   <beans profile="dev">

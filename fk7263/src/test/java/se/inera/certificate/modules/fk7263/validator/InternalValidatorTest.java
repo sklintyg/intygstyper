@@ -11,7 +11,7 @@ import org.springframework.core.io.ClassPathResource;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.InternalLocalDateInterval;
-import se.inera.certificate.modules.fk7263.model.internal.Fk7263Intyg;
+import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.model.internal.PrognosBedomning;
 
 /**
@@ -19,10 +19,10 @@ import se.inera.certificate.modules.fk7263.model.internal.PrognosBedomning;
  */
 public class InternalValidatorTest {
 
-    private Fk7263Intyg getValidUtlatande() throws IOException {
+    private Utlatande getValidUtlatande() throws IOException {
         // read valid certificate from file
         return new CustomObjectMapper().readValue(
-                new ClassPathResource("InternalValidatorTest/utlatande.json").getFile(), Fk7263Intyg.class);
+                new ClassPathResource("InternalValidatorTest/utlatande.json").getFile(), Utlatande.class);
     }
 
     @Test
@@ -32,7 +32,7 @@ public class InternalValidatorTest {
 
     @Test
     public void testSmittskyddRelaxesOtherMandatoryInfo() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
+        Utlatande utlatande = getValidUtlatande();
         utlatande.setAvstangningSmittskydd(true);
         utlatande.setDiagnosKod("");
         // remove all vardkontakter
@@ -46,7 +46,7 @@ public class InternalValidatorTest {
 
     @Test
     public void testNoSmittskyddDiagnoseMandatory() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
+        Utlatande utlatande = getValidUtlatande();
         utlatande.setAvstangningSmittskydd(false);
         utlatande.setDiagnosKod("");
 
@@ -55,7 +55,7 @@ public class InternalValidatorTest {
 
     @Test
     public void testMissingCommentOkIfField4And10NotFilled() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
+        Utlatande utlatande = getValidUtlatande();
         utlatande.setKommentar(null);
         utlatande.setAnnanReferens(null);
         utlatande.setPrognosBedomning(PrognosBedomning.arbetsformagaPrognosGarInteAttBedoma);
@@ -64,7 +64,7 @@ public class InternalValidatorTest {
 
     @Test
     public void testMissingVardkontaktOrReferens() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
+        Utlatande utlatande = getValidUtlatande();
 
         // remove all vardkontakter
         utlatande.setUndersokningAvPatienten(null);
@@ -79,7 +79,7 @@ public class InternalValidatorTest {
 
     @Test
     public void testSmittskyddMissingVardkontaktOrReferens() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
+        Utlatande utlatande = getValidUtlatande();
         utlatande.setAvstangningSmittskydd(true);
         // remove all vardkontakter
         utlatande.setUndersokningAvPatienten(null);
@@ -94,7 +94,7 @@ public class InternalValidatorTest {
 
     @Test
     public void testDoubleRessatt() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
+        Utlatande utlatande = getValidUtlatande();
 
         // set two activities with conflicting activity code
         utlatande.setRessattTillArbeteAktuellt(true);
@@ -105,7 +105,7 @@ public class InternalValidatorTest {
 
     @Test
     public void testNoArbetsformaga() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
+        Utlatande utlatande = getValidUtlatande();
         utlatande.setAvstangningSmittskydd(false);
         // set conflicting values
         utlatande.setNuvarandeArbete(false);
@@ -118,7 +118,7 @@ public class InternalValidatorTest {
 
     @Test
     public void testNoArbetsuppgifter() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
+        Utlatande utlatande = getValidUtlatande();
         utlatande.setAvstangningSmittskydd(false);
         // set conflicting values
         utlatande.setNuvarandeArbete(true);
@@ -131,7 +131,7 @@ public class InternalValidatorTest {
 
     @Test
     public void testNoArbetsuppgifterAndOthersChecked() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
+        Utlatande utlatande = getValidUtlatande();
         utlatande.setAvstangningSmittskydd(false);
         // set conflicting values
         utlatande.setNuvarandeArbete(true);
@@ -145,7 +145,7 @@ public class InternalValidatorTest {
 
     @Test
     public void testRessattTillArbeteAktuellt() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
+        Utlatande utlatande = getValidUtlatande();
 
         utlatande.setRessattTillArbeteAktuellt(true);
         utlatande.setRessattTillArbeteEjAktuellt(false);
@@ -155,7 +155,7 @@ public class InternalValidatorTest {
 
     @Test
     public void testRessattTillArbeteEjAktuellt() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
+        Utlatande utlatande = getValidUtlatande();
 
         utlatande.setRessattTillArbeteAktuellt(false);
         utlatande.setRessattTillArbeteEjAktuellt(true);
@@ -166,7 +166,7 @@ public class InternalValidatorTest {
 
     @Test
     public void testRekommendationOvrigtIngenBeskrivning() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
+        Utlatande utlatande = getValidUtlatande();
 
         utlatande.setRekommendationOvrigtCheck(true);
         utlatande.setRekommendationOvrigt(null);
@@ -176,7 +176,7 @@ public class InternalValidatorTest {
 
     @Test
     public void testAtLeastOneNedsattArbetsformagaExists() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
+        Utlatande utlatande = getValidUtlatande();
 
         // remove all arbetsformage observations
         utlatande.setNedsattMed100(null);
@@ -189,7 +189,7 @@ public class InternalValidatorTest {
 
     @Test
     public void testNedsattArbetsformagaInvalidIntervalStartEnd() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
+        Utlatande utlatande = getValidUtlatande();
 
         // Screw up one of the intervals so from > tom
         InternalLocalDateInterval reversedPeriod = utlatande.getNedsattMed25();
@@ -201,7 +201,7 @@ public class InternalValidatorTest {
 
     @Test
     public void testDatumIntervallSammaDag() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
+        Utlatande utlatande = getValidUtlatande();
 
         // remove skickatdatum
         utlatande.getNedsattMed100().setTom(utlatande.getNedsattMed100().getFrom());
@@ -211,7 +211,7 @@ public class InternalValidatorTest {
 
     @Test
     public void testFelaktigtDatumIntervall() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
+        Utlatande utlatande = getValidUtlatande();
 
         // remove skickatdatum
         utlatande.getNedsattMed100().setTom(new InternalDate(utlatande.getNedsattMed100().fromAsLocalDate().minusDays(1).toString()));
@@ -220,7 +220,7 @@ public class InternalValidatorTest {
     }
     @Test
     public void testFelaktigtDatumIntervallNoEndDate() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
+        Utlatande utlatande = getValidUtlatande();
 
         // remove skickatdatum
         utlatande.getNedsattMed100().setTom(null);
@@ -230,7 +230,7 @@ public class InternalValidatorTest {
 
     @Test
     public void testNedsattArbetsformagaInvalidIntervalStart() throws Exception {
-        Fk7263Intyg utlatande = getValidUtlatande();
+        Utlatande utlatande = getValidUtlatande();
 
         // remove end date
         utlatande.getNedsattMed100().setTom(null);
