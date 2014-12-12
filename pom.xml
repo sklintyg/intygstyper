@@ -32,8 +32,8 @@
   <modules>
     <module>fk7263</module>
     <!--<module>rli</module> -->
-    <module>ts-bas</module>
-    <module>ts-diabetes</module>
+    <!--<module>ts-bas</module> -->
+    <!--<module>ts-diabetes</module> -->
     <module>tools/archetype</module>
   </modules>
 
