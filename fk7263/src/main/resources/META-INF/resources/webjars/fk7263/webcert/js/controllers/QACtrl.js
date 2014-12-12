@@ -78,7 +78,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
 
             var certFailedEvent = $rootScope.$on('fk7263.ViewCertCtrl.fail', function() {
                 $scope.certProperties.isLoaded = true;
-                $scope.cert.intygMetadata.skapadAv.vardenhet.enhetsid = '';
+                $scope.cert.grundData.skapadAv.vardenhet.enhetsid = '';
             });
             $scope.$on('$destroy', certFailedEvent);
 

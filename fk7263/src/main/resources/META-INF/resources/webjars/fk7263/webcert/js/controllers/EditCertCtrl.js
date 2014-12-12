@@ -618,16 +618,16 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             function convertCertToForm($scope) {
 
                 // check if all info is available from HSA. If not, display the info message that someone needs to update it
-                if (!$scope.cert.intygMetadata || !$scope.cert.intygMetadata.skapadAv ||
-                    !$scope.cert.intygMetadata.skapadAv.vardenhet ||
-                    $scope.cert.intygMetadata.skapadAv.vardenhet.postadress === undefined ||
-                    $scope.cert.intygMetadata.skapadAv.vardenhet.postnummer === undefined ||
-                    $scope.cert.intygMetadata.skapadAv.vardenhet.postort === undefined ||
-                    $scope.cert.intygMetadata.skapadAv.vardenhet.telefonnummer === undefined ||
-                    $scope.cert.intygMetadata.skapadAv.vardenhet.postadress === '' ||
-                    $scope.cert.intygMetadata.skapadAv.vardenhet.postnummer === '' ||
-                    $scope.cert.intygMetadata.skapadAv.vardenhet.postort === '' ||
-                    $scope.cert.intygMetadata.skapadAv.vardenhet.telefonnummer === '') {
+                if (!$scope.cert.grundData || !$scope.cert.grundData.skapadAv ||
+                    !$scope.cert.grundData.skapadAv.vardenhet ||
+                    $scope.cert.grundData.skapadAv.vardenhet.postadress === undefined ||
+                    $scope.cert.grundData.skapadAv.vardenhet.postnummer === undefined ||
+                    $scope.cert.grundData.skapadAv.vardenhet.postort === undefined ||
+                    $scope.cert.grundData.skapadAv.vardenhet.telefonnummer === undefined ||
+                    $scope.cert.grundData.skapadAv.vardenhet.postadress === '' ||
+                    $scope.cert.grundData.skapadAv.vardenhet.postnummer === '' ||
+                    $scope.cert.grundData.skapadAv.vardenhet.postort === '' ||
+                    $scope.cert.grundData.skapadAv.vardenhet.telefonnummer === '') {
                     $scope.widgetState.hasInfoMissing = true;
                 } else {
                     $scope.widgetState.hasInfoMissing = false;

@@ -94,8 +94,8 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             ManageCertificate.initMakulera($scope);
             $scope.makulera = function(cert) {
                 var confirmationMessage = messageService.getProperty('fk7263.label.makulera.confirmation', {
-                    namn: cert.intygMetadata.patient.fullstandigtNamn,
-                    personnummer: cert.intygMetadata.patient.personId
+                    namn: cert.grundData.patient.fullstandigtNamn,
+                    personnummer: cert.grundData.patient.personId
                 });
                 cert.intygType = 'fk7263';
                 ManageCertificate.makulera($scope, cert, confirmationMessage, function() {
