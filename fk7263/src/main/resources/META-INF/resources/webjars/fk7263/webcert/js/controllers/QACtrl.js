@@ -5,7 +5,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
         function($log, $rootScope, $routeParams, $scope, $timeout, $window, $filter, dialogService, fragaSvarService,
             fragaSvarCommonService, ManageCertView, statService, User) {
             'use strict';
-
+            console.debug('module fk7263.QACtrl instantiated!');
             // init state
             $scope.qaList = {};
             $scope.widgetState = {
@@ -197,7 +197,8 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 }
                 for (var i = 0, len = $scope.qaList.length; i < len; i++) {
                     var qa = $scope.qaList[i];
-                    if(fragaSvarCommonService.isUnhandled(qa)){
+                    var isUnhandled = fragaSvarCommonService.isUnhandled(qa);
+                    if(isUnhandled){
                         return true;
                     }
                 }
