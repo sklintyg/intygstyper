@@ -37,11 +37,11 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                     $scope.widgetState.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
-                        $rootScope.$emit('fk7263.ViewCertCtrl.load', result.metaData, result.contents);
+                        $rootScope.$emit('fk7263.ViewCertCtrl.load', result.revoked, result.statuses, result.contents);
                         $rootScope.$broadcast('intyg.loaded', $scope.cert);
 
-                        $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'FK');
-                        $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
+                        $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.statuses, 'FK');
+                        $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.statuses);
                         if ($scope.certProperties.isRevoked) {
                             $scope.widgetState.printStatus = 'revoked';
                         } else {
