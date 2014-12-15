@@ -36,7 +36,7 @@
               <div wc-new-person-id-message></div>
 
               <div class="form-group buttonbar">
-                <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned"
+                <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned" ng-disabled="!certForm.$dirty"
                         title="Sparar intyget som ett utkast.">Spara utkast
                 </button>
                 <button id="ta-bort-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="discard()"
@@ -95,7 +95,7 @@
       <!-- FK 7263 -->
       <div class="edit-form" ng-class="{'collapsed' : widgetState.collapsedHeader}">
 
-        <form name="certForm" novalidate autocomplete="off">
+        <form name="certForm" novalidate autocomplete="off" wc-auto-save="save(true)" >
           <div ng-hide="widgetState.activeErrorMessageKey || widgetState.deleted">
 
             <div wc-spinner label="info.loadingdata" show-spinner="!widgetState.doneLoading"

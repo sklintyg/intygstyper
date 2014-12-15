@@ -1058,10 +1058,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             /**
              * Action to save the certificate draft to the server.
              */
-            $scope.save = function() {
+            $scope.save = function(autoSave) {
                 $scope.hasSavedThisSession = true;
                 convertFormToCert($scope);
-                ManageCertView.save($scope, $scope.certMeta.intygType);
+                return ManageCertView.save($scope, $scope.certMeta.intygType, autoSave);
             };
 
             /**
