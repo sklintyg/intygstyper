@@ -103,14 +103,14 @@ public class Fk7263ModuleApiTest {
     }
     
     @Test
-    public void testSendCertificate() throws Exception {
+    public void testSendCertificateToRecipient() throws Exception {
         InternalModelHolder internalModel = new InternalModelHolder(FileUtils.readFileToString(new ClassPathResource("Fk7263ModuleApiTest/utlatande.json").getFile()));
         AttributedURIType address = new AttributedURIType();
         address.setValue("logicalAddress");
         RegisterMedicalCertificateResponseType response = new RegisterMedicalCertificateResponseType();
         response.setResult(ResultOfCallUtil.okResult());
         Mockito.when(registerMedicalCertificateClient.registerMedicalCertificate(Mockito.any(AttributedURIType.class), Mockito.any(RegisterMedicalCertificateType.class))).thenReturn(response);
-        fk7263ModuleApi.sendCertificate(internalModel, "logicalAddress");
+        fk7263ModuleApi.sendCertificateToRecipient(internalModel, "logicalAddress");
         verify(registerMedicalCertificateClient).registerMedicalCertificate(Mockito.eq(address), Mockito.any(RegisterMedicalCertificateType.class));
     }
 
