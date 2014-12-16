@@ -11,6 +11,7 @@ import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.common.internal.Vardgivare;
 import se.inera.certificate.model.converter.util.ConverterException;
+import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.codes.Kodverk;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
@@ -59,15 +60,12 @@ public final class InternalToTransport {
         }
         register.getLakarutlatande().setTypAvUtlatande(FK7263);
 
-        if (!isNullOrEmpty(source.getKommentar())) {
-            register.getLakarutlatande().setKommentar(source.getKommentar());
-        }
+        register.getLakarutlatande().setKommentar(buildKommentar(source));
 
         register.getLakarutlatande().setSigneringsdatum(source.getGrundData().getSigneringsdatum());
         register.getLakarutlatande().setSkickatDatum(source.getGrundData().getSigneringsdatum());
         register.getLakarutlatande().setPatient(patientToJaxb(source.getGrundData().getPatient()));
         register.getLakarutlatande().setSkapadAvHosPersonal(hosPersonalToJaxb(source.getGrundData().getSkapadAv()));
-        register.getLakarutlatande().setKommentar(source.getKommentar());
         
         if (!isNullOrEmpty(source.getSjukdomsforlopp())) {
             register.getLakarutlatande().setBedomtTillstand(sjukdomsforloppToJaxb(source.getSjukdomsforlopp()));
@@ -105,6 +103,44 @@ public final class InternalToTransport {
             register.getLakarutlatande().getFunktionstillstand().add(aktivitetsbegransing);
         }
         return register;
+    }
+
+    private static String buildKommentar(Utlatande source) {
+        String diagnoser = null;
+        String annanRef = null;
+        String prognosBedomning = null;
+        String ovrigKommentar = null;
+
+        if (!isNullOrEmpty(buildDiagnoser(source))) {
+            diagnoser = buildDiagnoser(source);
+        }
+
+        if (!isNullOrEmpty(source.getAnnanReferensBeskrivning())) {
+            annanRef = "Annan referensbeskrivning: " + source.getAnnanReferensBeskrivning();
+        }
+
+        if (!isNullOrEmpty(source.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
+            prognosBedomning = "Arbetsförmåga går inte att bedöma: " +source.getArbetsformagaPrognosGarInteAttBedomaBeskrivning();
+        }
+        if (!isNullOrEmpty(source.getKommentar())) {
+            ovrigKommentar = source.getKommentar();
+        }
+        String ret = Strings.join("\n", diagnoser, annanRef, prognosBedomning, ovrigKommentar);
+        return !isNullOrEmpty(ret) ? ret : null;
+    }
+
+    private static String buildDiagnoser(Utlatande source) {
+        String diagnos1 = new String();
+        String diagnos2 = new String();
+        
+        if (!isNullOrEmpty(source.getDiagnosKod2()) && !isNullOrEmpty(source.getDiagnosBeskrivning2())) {
+            diagnos1 = "Bidiagnos 1: " + source.getDiagnosKod2() + " " + source.getDiagnosBeskrivning2(); 
+        }
+
+        if (!isNullOrEmpty(source.getDiagnosKod3()) && !isNullOrEmpty(source.getDiagnosBeskrivning3())) {
+            diagnos2 = "Bidiagnos 2: " + source.getDiagnosKod3() + " " + source.getDiagnosBeskrivning3(); 
+        }
+        return Strings.join(", ", diagnos1, diagnos2);
     }
 
     private static FunktionstillstandType toFunktionstillstand(String source, TypAvFunktionstillstand tillstand) {
