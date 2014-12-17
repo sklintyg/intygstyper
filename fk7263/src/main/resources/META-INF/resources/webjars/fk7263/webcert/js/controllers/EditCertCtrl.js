@@ -56,6 +56,27 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
             };
 
+            $scope.searchDiagnoseByDescription = function(val) {
+                return diagnosService.searchByDescription(val)
+                    .then(function(response) {
+                        if (response && response.data && response.data.resultat === 'OK') {
+                            return response.data.diagnoser.map(function(item) {
+                                return {
+                                    value: item.kod,
+                                    beskrivning: item.beskrivning,
+                                    label: item.kod + ' | ' + item.beskrivning
+                                };
+                            });
+                        }
+                        else {
+                            return [];
+                        }
+                    }, function(response) {
+                        $log.debug('Error searching diagnose code');
+                        $log.debug(response);
+                        return [];
+                    });
+            };
             $scope.getDiagnoseCodes = function(val) {
                 return diagnosService.searchByCode(val)
                     .then(function(response) {
@@ -86,6 +107,19 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.onDiagnoseCode3Select = function($item) {
                 $scope.cert.diagnosBeskrivning3 = $item.beskrivning;
             };
+            $scope.onDiagnoseDescription1Select = function($item) {
+                $scope.cert.diagnosKod = $item.value;
+                $scope.cert.diagnosBeskrivning1 = $item.beskrivning;
+            };
+            $scope.onDiagnoseDescription2Select = function($item) {
+                $scope.cert.diagnosKod2 = $item.value;
+                $scope.cert.diagnosBeskrivning2 = $item.beskrivning;
+            };
+            $scope.onDiagnoseDescription3Select = function($item) {
+                $scope.cert.diagnosKod3 = $item.value;
+                $scope.cert.diagnosBeskrivning3 = $item.beskrivning;
+            };
+            /* Clear diagnosBeskrivning if diagnosKod is emptied */
             $scope.$watch('cert.diagnosKod', function() {
                 if (!$scope.cert.diagnosKod) {
                     $scope.cert.diagnosBeskrivning1 = '';
@@ -99,6 +133,22 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.$watch('cert.diagnosKod3', function() {
                 if (!$scope.cert.diagnosKod3) {
                     $scope.cert.diagnosBeskrivning3 = '';
+                }
+            });
+            /* Clear diagnosKod if diagnosBeskrivning is emptied */
+            $scope.$watch('cert.diagnosBeskrivning1', function() {
+                if (!$scope.cert.diagnosBeskrivning1) {
+                    $scope.cert.diagnosKod = '';
+                }
+            });
+            $scope.$watch('cert.diagnosBeskrivning2', function() {
+                if (!$scope.cert.diagnosBeskrivning2) {
+                    $scope.cert.diagnosKod2 = '';
+                }
+            });
+            $scope.$watch('cert.diagnosBeskrivning3', function() {
+                if (!$scope.cert.diagnosBeskrivning3) {
+                    $scope.cert.diagnosKod3 = '';
                 }
             });
 

@@ -37,10 +37,24 @@ angular.module('fk7263').factory('fk7263.diagnosService',
             return $http.post(restPath, data);
         }
 
+        /*
+         * Search diagnosis by description
+         */
+        function _searchByDescription(searchString) {
+            $log.debug('_searchByDescription: ' + searchString);
+            var restPath = '/moduleapi/diagnos/beskrivning/sok';
+            var data = {
+                descriptionSearchString: searchString,
+                nbrOfResults: 10
+            };
+            return $http.post(restPath, data);
+        }
+
         // Return public API for the service
         return {
             getByCode: _getByCode,
-            searchByCode: _searchByCode
+            searchByCode: _searchByCode,
+            searchByDescription: _searchByDescription
         };
     });
 
