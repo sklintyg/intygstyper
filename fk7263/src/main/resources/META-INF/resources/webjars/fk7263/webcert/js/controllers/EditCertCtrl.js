@@ -18,6 +18,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.widgetState = {
                 doneLoading: false,
                 activeErrorMessageKey: null,
+                saveErrorMessageKey: null,
                 hasError: false,
                 showComplete: false,
                 collapsedHeader: false,
