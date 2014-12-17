@@ -75,7 +75,7 @@ var fk7263Messages = {
         'fk7263.nedsattningsgrad.nedsatt_med_1_4': 'Nedsatt med 1/4',
 
         //Help texts
-        'fk7263.helptext.smittskydd': 'Ange om patienten är avstängd enligt smittskyddslagen på grund av smitta.',
+        'fk7263.helptext.smittskydd': 'Fylls i om patienten har rätt till smittbärarsjukpenning om hon eller han måste avstå från arbete på grund av:<ul><li>Beslut enligt smittskyddslagen eller livsmedelslagen</li><li>Läkarundersökning eller hälsokontroll som klarlagt att hon eller han är smittad av en allmänfarlig sjukdom eller om den anställda har en sjukdom, en smitta, ett sår eller annan skada som gör att hon eller han inte får hantera livsmedel.</li>',
 
         'fk7263.helptext.intyg-baserat-pa': 'Ange vad uppgifterna i intyget baseras på. Flera alternativ kan väljas.',
         'fk7263.helptext.intyg-baserat-pa.annat': 'Detta alternativ kan användas för annan professions bedömning, till exempel för kuratorsanteckning, sjukgymnastanteckning eller teamkonferens.',
