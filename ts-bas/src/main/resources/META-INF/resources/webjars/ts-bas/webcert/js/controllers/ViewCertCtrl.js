@@ -113,7 +113,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             ManageCertificate.initMakulera($scope);
             $scope.makulera = function(cert) {
                 var confirmationMessage = messageService.getProperty('ts-bas.label.makulera.confirmation', {
-                    namn: cert.intygMetadata.patient.fullstandigtNamn, personnummer: cert.intygMetadata.patient.personId });
+                    namn: cert.grundData.patient.fullstandigtNamn, personnummer: cert.grundData.patient.personId });
 
                 cert.intygType = 'ts-bas';
                 ManageCertificate.makulera($scope, cert, confirmationMessage, function() {

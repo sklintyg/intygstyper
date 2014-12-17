@@ -173,8 +173,8 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                     $scope.cert.status = $scope.filterStatuses(result.meta.statuses);
                     $rootScope.cert = $scope.cert;
 
-                    $scope.view.befattningar = $scope.updateBefattningar($scope.cert.intygMetadata.skapadAv.befattningar);
-                    $scope.view.specialiteter = $scope.updateSpecialiteter($scope.cert.intygMetadata.skapadAv.specialiteter);
+                    $scope.view.befattningar = $scope.updateBefattningar($scope.cert.grundData.skapadAv.befattningar);
+                    $scope.view.specialiteter = $scope.updateSpecialiteter($scope.cert.grundData.skapadAv.specialiteter);
 
                     $scope.view.intygAvser = createKorkortstypListString($scope.cert.intygAvser.korkortstyp);
                     $scope.view.bedomning = createKorkortstypListString($scope.cert.bedomning.korkortstyp);

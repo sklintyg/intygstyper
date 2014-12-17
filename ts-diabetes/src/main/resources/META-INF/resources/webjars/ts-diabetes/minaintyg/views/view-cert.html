@@ -136,7 +136,7 @@
                   </h2>
                 </div>
                 <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 issue">
-	                <span class="cert-titlebar-value">{{cert.intygMetadata.signeringsdatum | date:'shortDate'}}</span> <span><span message key="ts-diabetes.label.issued"></span></span>
+	                <span class="cert-titlebar-value">{{cert.grundData.signeringsdatum | date:'shortDate'}}</span> <span><span message key="ts-diabetes.label.issued"></span></span>
                 </div>
                 <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 archive hidden-xs">
                   <a role="button" data-toggle="modal" id="archiveBtn" title="{{messageService.getProperty('button.alt.archive')}}"
@@ -150,10 +150,10 @@
             <div class="cert-header">
               <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                  <span class="tag"><message key="ts-diabetes.label.patientname" /></span> <span id="patient-name">{{cert.intygMetadata.patient.fullstandigtNamn}}</span>
+                  <span class="tag"><message key="ts-diabetes.label.patientname" /></span> <span id="patient-name">{{cert.grundData.patient.fullstandigtNamn}}</span>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                  <span class="tag"><message key="ts-diabetes.label.civicnumber" /></span> <span id="patient-crn">{{cert.intygMetadata.patient.personId}}</span>
+                  <span class="tag"><message key="ts-diabetes.label.civicnumber" /></span> <span id="patient-crn">{{cert.grundData.patient.personId}}</span>
                 </div>
                 <div
                     class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-6 col-sm-offset-6 col-md-offset-6 col-lg-offset-6 margin-top-5px">
@@ -164,10 +164,10 @@
               </div>
               <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                  <span class="tag"><message key="ts-diabetes.label.unit" /></span> <span id="careunit">{{cert.intygMetadata.skapadAv.vardenhet.enhetsnamn}}</span>
+                  <span class="tag"><message key="ts-diabetes.label.unit" /></span> <span id="careunit">{{cert.grundData.skapadAv.vardenhet.enhetsnamn}}</span>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                  <span class="tag"><message key="ts-diabetes.label.issuer" /></span> <span id="caregiver">{{cert.intygMetadata.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</span>
+                  <span class="tag"><message key="ts-diabetes.label.issuer" /></span> <span id="caregiver">{{cert.grundData.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</span>
                 </div>
               </div>
               <div class="row">
@@ -398,18 +398,18 @@
                   <div class="infobox">
                     <h3><span message key="ts-diabetes.label.confirmedby">{{ts-diabetes.label.confirmedby}}</span></h3>
                     <h4><span message key="ts-diabetes.label.date">{{ts-diabetes.label.date}}</span></h4>
-                    <p>{{cert.intygMetadata.signeringsdatum | date:'longDate'}}</p>
+                    <p>{{cert.grundData.signeringsdatum | date:'longDate'}}</p>
                     <h4><span message key="ts-diabetes.label.contactinfo"></span></h4>
                     <p>
-                      <span id="physician-name-id" class="text">{{cert.intygMetadata.skapadAv.fullstandigtNamn}}</span><br />
-                      <!-- <span id=caregiver-name-id" class="text">cert.intygMetadata.skapadAv.vardenhet.vardgivare.vardgivarnamn}} ({{cert.skapadAv.intygMetadata.vardenhet.vardgivare.vardgivarid}})</span><br/> -->
+                      <span id="physician-name-id" class="text">{{cert.grundData.skapadAv.fullstandigtNamn}}</span><br />
+                      <!-- <span id=caregiver-name-id" class="text">cert.grundData.skapadAv.vardenhet.vardgivare.vardgivarnamn}} ({{cert.skapadAv.grundData.vardenhet.vardgivare.vardgivarid}})</span><br/> -->
                       <span ng-if="befattningar.length > 0" id="physician-position" class="text">Befattning: {{befattningar}}<br /></span>
                       <span ng-if="specialiteter.length > 0" id="physician-speciality" class="text">Specialistkompetens i: {{specialiteter}}<br /><br /></span>
 
-                      <span id="careunit-name-id" class="text">{{cert.intygMetadata.skapadAv.vardenhet.enhetsnamn}}</span><br />
-            					<span id="careunit-postal_address" class="text">{{cert.intygMetadata.skapadAv.vardenhet.postadress}}<br />
-            					{{cert.intygMetadata.skapadAv.vardenhet.postnummer}} {{cert.intygMetadata.skapadAv.vardenhet.postort}}</span><br />
-                      <span id="careunit-postal_phone" class="text">{{cert.intygMetadata.skapadAv.vardenhet.telefonnummer}}, {{cert.intygMetadata.skapadAv.vardenhet.telefonnummer}}</span>
+                      <span id="careunit-name-id" class="text">{{cert.grundData.skapadAv.vardenhet.enhetsnamn}}</span><br />
+            					<span id="careunit-postal_address" class="text">{{cert.grundData.skapadAv.vardenhet.postadress}}<br />
+            					{{cert.grundData.skapadAv.vardenhet.postnummer}} {{cert.grundData.skapadAv.vardenhet.postort}}</span><br />
+                      <span id="careunit-postal_phone" class="text">{{cert.grundData.skapadAv.vardenhet.telefonnummer}}, {{cert.grundData.skapadAv.vardenhet.telefonnummer}}</span>
                     </p>
                   </div>
                 </div>
