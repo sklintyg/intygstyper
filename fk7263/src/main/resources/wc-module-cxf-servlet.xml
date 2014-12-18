@@ -30,7 +30,7 @@
       address="${intygstjanst.getmedicalcertificateforcare.endpoint.url}">
     </jaxws:client>
 
-  <beans profile="qa,prod">
+  <beans profile="wc-security-test,wc-security-prod">
     <http:conduit
             name="{urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificate:3:rivtabp20}RegisterMedicalCertificateResponderInterfacePort.http-conduit">
       <http:client AllowChunking="false" AutoRedirect="true" Connection="Keep-Alive"/>

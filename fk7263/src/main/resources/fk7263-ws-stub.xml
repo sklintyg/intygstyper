@@ -11,8 +11,7 @@
         http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd"
         profile="dev,test,local">
 
-  <!-- ws endpoints -->
-
+  <!-- Simulates FK recieving -->
   <jaxws:endpoint address="/register-medical-certificate-stub" implementor="se.inera.certificate.modules.fk7263.integration.stub.RegisterMedicalCertificateResponderStub" />
 
 </beans>
