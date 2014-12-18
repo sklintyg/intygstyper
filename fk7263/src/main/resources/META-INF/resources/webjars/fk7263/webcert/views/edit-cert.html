@@ -234,7 +234,7 @@
                                typeahead-wait-ms="100">
                       </div>
                     </div>
-                    <div class="row bottom-padding-small">
+                    <div class="row bottom-padding-tiny">
                       <div class='col-xs-3'>
                         <label class="control-label unbreakable">ICD 10</label>
                         <div class="controls">
@@ -244,25 +244,31 @@
                                    typeahead="d.value as d.label for d in getDiagnoseCodes($viewValue) | filter:$viewValue | limitTo:10"
                                    typeahead-min-length="3" typeahead-on-select="onDiagnoseCode2Select($item)">
                           </div>
-                          <input type="text" id="diagnoseCodeOpt2" name="diagnose.codeOpt2" value=""
-                                 ng-model="cert.diagnosKod3" class="col-xs-11 form-control"
-                                 typeahead="d.value as d.label for d in getDiagnoseCodes($viewValue) | filter:$viewValue | limitTo:10"
-                                 typeahead-min-length="3" typeahead-on-select="onDiagnoseCode3Select($item)">
                         </div>
                       </div>
-                      <div class='col-xs-9 unbreakable'>
+                      <div class='col-xs-9'>
                         <label class="control-label inline-block"><span message
                                                                         key="fk7263.label.ytterligarediagnoser"></span>
                           (frivilligt)</label><span wc-enable-tooltip class="absolute"
                                                     field-help-text="fk7263.helptext.diagnos.ytterligare"></span>
+                        <div class="bottom-padding-small clearfix">
+                          <input type="text" id="diagnoseDescriptionOpt1" name="diagnose.descriptionOpt1" value=""
+                                 ng-model="cert.diagnosBeskrivning2" class="block col-xs-12 form-control maxwidth"
+                                 typeahead="d.value as d.label for d in searchDiagnoseByDescription($viewValue) | filter:$viewValue "
+                                 typeahead-on-select="onDiagnoseDescription2Select($item)"
+                                 typeahead-wait-ms="100">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row bottom-padding-small">
+                      <div class='col-xs-3'>
+                        <input type="text" id="diagnoseCodeOpt2" name="diagnose.codeOpt2" value=""
+                               ng-model="cert.diagnosKod3" class="col-xs-11 form-control"
+                               typeahead="d.value as d.label for d in getDiagnoseCodes($viewValue) | filter:$viewValue | limitTo:10"
+                               typeahead-min-length="3" typeahead-on-select="onDiagnoseCode3Select($item)">
+                      </div>
+                      <div class='col-xs-9 unbreakable'>
                         <div class="controls">
-                          <div class="bottom-padding-small clearfix">
-                            <input type="text" id="diagnoseDescriptionOpt1" name="diagnose.descriptionOpt1" value=""
-                                   ng-model="cert.diagnosBeskrivning2" class="block col-xs-12 form-control maxwidth"
-                                   typeahead="d.value as d.label for d in searchDiagnoseByDescription($viewValue) | filter:$viewValue "
-                                   typeahead-on-select="onDiagnoseDescription2Select($item)"
-                                   typeahead-wait-ms="100">
-                          </div>
                           <input type="text" id="diagnoseDescriptionOpt2" name="diagnose.descriptionOpt2" value=""
                                  ng-model="cert.diagnosBeskrivning3" class="block col-xs-12 form-control maxwidth"
                                  typeahead="d.value as d.label for d in searchDiagnoseByDescription($viewValue) | filter:$viewValue "
