@@ -34,7 +34,7 @@
                   implementor="se.inera.certificate.modules.fk7263.integration.GetMedicalCertificateForCareResponderImpl">
     <jaxws:outFaultInterceptors>
       <bean class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
-        <constructor-arg value="transform/get-certificate-transform.xslt"/>
+        <constructor-arg value="transform/get-medical-certificate-for-care-transform.xslt"/>
       </bean>
     </jaxws:outFaultInterceptors>
 
