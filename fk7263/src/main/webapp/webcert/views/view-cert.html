@@ -325,8 +325,10 @@
                         <!-- frågan har en svarstext -->
                         <div class="qa-block-head clearfix">
                             <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
-                                Från: <span class="qa-sender" ng-switch-when="wc"><span message
-                                                                                        key="qa.fragestallare.{{qa.frageStallare | lowercase}}"></span></span> <span
+                                Från: <span class="qa-sender" ng-switch-when="wc">
+                                    <!-- We can assume FK here -->
+                                    <span message key="qa.fragestallare.fk"></span>
+                                </span> <span
                                     id="svar-vard-aktor-namn-{{qa.internReferens}}" ng-switch-default>{{qa.vardAktorNamn}}</span>
                             </div>
                             <div class="pull-right" ng-switch="qa.frageStallare | lowercase">
