@@ -163,18 +163,6 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
-    public InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
-        try {
-            Utlatande intyg = getInternal(internalModel);
-            webcertModelFactory.updateSkapadAv(intyg, hosPerson, signingDate);
-            return toInteralModelResponse(intyg);
-
-        } catch (ModuleException e) {
-            throw new ModuleException("Convert error of internal model", e);
-        }
-    }
-
-    @Override
     public void setModuleContainer(ModuleContainerApi moduleContainer) {
         this.moduleContainer = moduleContainer;
     }
@@ -251,6 +239,26 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
+    public InternalModelResponse updateBeforeSave(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException {
+        return updateInternal(internalModel, hosPerson, null);
+    }
+
+    @Override
+    public InternalModelResponse updateBeforeSigning(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
+        return updateInternal(internalModel, hosPerson, signingDate);
+    }
+
+    private InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
+        try{
+            Utlatande intyg = getInternal(internalModel);
+            webcertModelFactory.updateSkapadAv(intyg, hosPerson, signingDate);
+            return toInteralModelResponse(intyg);
+        } catch (ModuleException e) {
+            throw new ModuleException("Error while updating internal model", e);
+        }
+    }
+
+    @Override
     public boolean isModelChanged(String persistedState, String currentState) throws ModuleException  {
         Utlatande oldUtlatande;
         Utlatande newUtlatande;
@@ -268,5 +276,6 @@ public class Fk7263ModuleApi implements ModuleApi {
             return false;
         }
     }
+
 
 }

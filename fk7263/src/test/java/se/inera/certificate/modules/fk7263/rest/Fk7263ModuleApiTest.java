@@ -85,7 +85,7 @@ public class Fk7263ModuleApiTest {
         Vardenhet vardenhet = new Vardenhet("enhetId", "enhetNamn", "", "", "", "", "", "", vardgivare);
         HoSPersonal hosPerson = new HoSPersonal("nyId", "nyNamn", "nyForskrivarkod", "nyBefattning", null, vardenhet);
         LocalDateTime signingDate = LocalDateTime.parse("2014-08-01");
-        InternalModelResponse updatedHolder = fk7263ModuleApi.updateInternal(holder, hosPerson, signingDate);
+        InternalModelResponse updatedHolder = fk7263ModuleApi.updateBeforeSigning(holder, hosPerson, signingDate);
         Utlatande updatedIntyg = mapper.readValue(updatedHolder.getInternalModel(), Utlatande.class);
 
         assertEquals(signingDate, updatedIntyg.getGrundData().getSigneringsdatum());
