@@ -36,8 +36,8 @@
               <div wc-new-person-id-message></div>
 
               <div class="form-group buttonbar">
-                <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned" ng-disabled="!certForm.$dirty"
-                        title="Sparar intyget som ett utkast.">Spara utkast
+                <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned"
+                        ng-disabled="!certForm.$dirty" title="Sparar intyget som ett utkast.">Spara utkast
                 </button>
                 <button id="ta-bort-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="discard()"
                         title="Klicka på papperskorgen för att radera utkastet."><i
@@ -58,6 +58,16 @@
                   Dölj vad som saknas
                 </button>
               </div>
+
+              <!-- Show save errors here to spare user from retyping everything for intermittent errors -->
+              <div class="row">
+                <div ng-show="widgetState.saveErrorMessageKey != null" class="col-md-7">
+                  <div class="alert alert-danger">
+                    <span message key="{{widgetState.saveErrorMessageKey}}"></span>
+                  </div>
+                </div>
+              </div>
+
               <!-- Just in case -->
               <div id="certificate-is-sent-to-it-message-text" ng-show="isSigned"><span message
                                                                                         key="draft.status.signed"></span>
@@ -95,7 +105,7 @@
       <!-- FK 7263 -->
       <div class="edit-form" ng-class="{'collapsed' : widgetState.collapsedHeader}">
 
-        <form name="certForm" novalidate autocomplete="off" wc-auto-save="save(true)" >
+        <form name="certForm" novalidate autocomplete="off" wc-auto-save="save(true)">
           <div ng-hide="widgetState.activeErrorMessageKey || widgetState.deleted">
 
             <div wc-spinner label="info.loadingdata" show-spinner="!widgetState.doneLoading"
@@ -117,7 +127,8 @@
                   <div wc-field-single field-number="1" field-help-text="fk7263.helptext.smittskydd">
                     <label for="smittskydd" class="control-label title-single">
                       <input id="smittskydd" name="smittskydd" type="checkbox" ng-model="cert.avstangningSmittskydd"
-                           ng-change="onChangeSmittskydd()" wc-focus-on="firstInput">&nbsp;<span message key="fk7263.label.smittskydd"></span>
+                             ng-change="onChangeSmittskydd()" wc-focus-on="firstInput">&nbsp;<span message
+                                                                                                   key="fk7263.label.smittskydd"></span>
                     </label>
                   </div>
 
@@ -211,19 +222,19 @@
                         <input type="text" class="form-control" id="diagnoseCode" name="diagnose.code" value=""
                                class='diagnose-code col-xs-11 form-control' ng-model="cert.diagnosKod"
                                typeahead="d.value as d.label for d in getDiagnoseCodes($viewValue) | filter:$viewValue | limitTo:10"
-                               typeahead-min-length="3"
-                               typeahead-on-select="onDiagnoseCode1Select($item)">
+                               typeahead-min-length="3" typeahead-on-select="onDiagnoseCode1Select($item)">
                       </div>
                       <div class='col-xs-9'>
                         <label class="control-label">Diagnos</label>
                         <input type="text" class="form-control maxwidth" id="diagnoseDescription"
                                class="col-xs-12 form-control" name="diagnose.description" value=""
-                               ng-disabled="true"
                                ng-model="cert.diagnosBeskrivning1"
-                               typeahead="d.value as d.label for d in diagnoses | filter:$viewValue | limitTo:8">
+                               typeahead="d.value as d.label for d in searchDiagnoseByDescription($viewValue) | filter:$viewValue "
+                               typeahead-on-select="onDiagnoseDescription1Select($item)"
+                               typeahead-wait-ms="100">
                       </div>
                     </div>
-                    <div class="row bottom-padding-small">
+                    <div class="row bottom-padding-tiny">
                       <div class='col-xs-3'>
                         <label class="control-label unbreakable">ICD 10</label>
                         <div class="controls">
@@ -231,30 +242,38 @@
                             <input type="text" id="diagnoseCodeOpt1" name="diagnose.codeOpt1" value=""
                                    ng-model="cert.diagnosKod2" class="col-xs-11 form-control"
                                    typeahead="d.value as d.label for d in getDiagnoseCodes($viewValue) | filter:$viewValue | limitTo:10"
-                                   typeahead-min-length="3"
-                                   typeahead-on-select="onDiagnoseCode2Select($item)">
+                                   typeahead-min-length="3" typeahead-on-select="onDiagnoseCode2Select($item)">
                           </div>
-                          <input type="text" id="diagnoseCodeOpt2" name="diagnose.codeOpt2" value=""
-                                 ng-model="cert.diagnosKod3" class="col-xs-11 form-control"
-                                 typeahead="d.value as d.label for d in getDiagnoseCodes($viewValue) | filter:$viewValue | limitTo:10"
-                                 typeahead-min-length="3"
-                                 typeahead-on-select="onDiagnoseCode3Select($item)">
                         </div>
                       </div>
-                      <div class='col-xs-9 unbreakable'>
+                      <div class='col-xs-9'>
                         <label class="control-label inline-block"><span message
                                                                         key="fk7263.label.ytterligarediagnoser"></span>
                           (frivilligt)</label><span wc-enable-tooltip class="absolute"
                                                     field-help-text="fk7263.helptext.diagnos.ytterligare"></span>
+                        <div class="bottom-padding-small clearfix">
+                          <input type="text" id="diagnoseDescriptionOpt1" name="diagnose.descriptionOpt1" value=""
+                                 ng-model="cert.diagnosBeskrivning2" class="block col-xs-12 form-control maxwidth"
+                                 typeahead="d.value as d.label for d in searchDiagnoseByDescription($viewValue) | filter:$viewValue "
+                                 typeahead-on-select="onDiagnoseDescription2Select($item)"
+                                 typeahead-wait-ms="100">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row bottom-padding-small">
+                      <div class='col-xs-3'>
+                        <input type="text" id="diagnoseCodeOpt2" name="diagnose.codeOpt2" value=""
+                               ng-model="cert.diagnosKod3" class="col-xs-11 form-control"
+                               typeahead="d.value as d.label for d in getDiagnoseCodes($viewValue) | filter:$viewValue | limitTo:10"
+                               typeahead-min-length="3" typeahead-on-select="onDiagnoseCode3Select($item)">
+                      </div>
+                      <div class='col-xs-9 unbreakable'>
                         <div class="controls">
-                          <div class="bottom-padding-small clearfix">
-                            <input type="text" id="diagnoseDescriptionOpt1" name="diagnose.descriptionOpt1" value=""
-                                   ng-model="cert.diagnosBeskrivning2" class="block col-xs-12 form-control maxwidth"
-                                   ng-disabled="true">
-                          </div>
                           <input type="text" id="diagnoseDescriptionOpt2" name="diagnose.descriptionOpt2" value=""
                                  ng-model="cert.diagnosBeskrivning3" class="block col-xs-12 form-control maxwidth"
-                                 ng-disabled="true">
+                                 typeahead="d.value as d.label for d in searchDiagnoseByDescription($viewValue) | filter:$viewValue "
+                                 typeahead-on-select="onDiagnoseDescription3Select($item)"
+                                 typeahead-wait-ms="100">
                         </div>
                       </div>
                     </div>
@@ -695,7 +714,7 @@
                   <div wc-field field-label="fk7263.label.fk-kontakt" field-number="12"
                        field-help-text="fk7263.helptext.kontakt">
                     <label><input type="checkbox" id="kontaktFk" name="contactWithFkRequested"
-                                                   ng-model="cert.kontaktMedFk"> Kontakt önskas med
+                                  ng-model="cert.kontaktMedFk"> Kontakt önskas med
                       Försäkringskassan</label>
                   </div>
 
@@ -739,8 +758,7 @@
                         <label class="col-xs-3 control-label">Postnummer</label>
                         <div class="col-xs-9">
                           <input type="text" class="form-control input-5" id="clinicInfoPostalCode"
-                                 name="clinicInfo.postalCode"
-                                 ng-model="cert.grundData.skapadAv.vardenhet.postnummer">
+                                 name="clinicInfo.postalCode" ng-model="cert.grundData.skapadAv.vardenhet.postnummer">
                         </div>
                       </div>
                       <div class="form-group">
@@ -779,21 +797,21 @@
 
                   <h4>Notifiera läkare</h4>
                   <div class="form-group">
-                    <button id="vidarebefordraEjHanterad"
-                            class="btn"
+                    <button id="vidarebefordraEjHanterad" class="btn"
                             ng-class="{'btn-info': !certMeta.vidarebefordrad, 'btn-default btn-secondary' : certMeta.vidarebefordrad}"
                             title="Skicka mejl med en länk till utkastet för att informera den läkare som ska signera det."
                             ng-click="openMailDialog()">
-                      <img ng-if="!certMeta.vidarebefordrad" src="/img/mail.png"> <img ng-if="certMeta.vidarebefordrad" src="/img/mail_dark.png">
+                      <img ng-if="!certMeta.vidarebefordrad" src="/img/mail.png"> <img ng-if="certMeta.vidarebefordrad"
+                                                                                       src="/img/mail_dark.png">
                     </button>
                   </div>
 
                   <label for="mark-as-vidarebefordrad" class="checkbox-inline">
                     <input id="mark-as-vidarebefordrad" type="checkbox"
-                           ng-disabled="widgetState.vidarebefordraInProgress"
-                           ng-model="certMeta.vidarebefordrad"
+                           ng-disabled="widgetState.vidarebefordraInProgress" ng-model="certMeta.vidarebefordrad"
                            ng-change="onVidarebefordradChange()" /> Vidarebefordrad
-                  </label> <span ng-if="widgetState.vidarebefordraInProgress"> <img src="/img/ajax-loader-kit-16x16.gif"></span>
+                  </label> <span ng-if="widgetState.vidarebefordraInProgress"> <img
+                    src="/img/ajax-loader-kit-16x16.gif"></span>
                 </div>
 
                 <button id="signera-utkast-button" class="btn btn-success" ng-disabled="!isComplete || certForm.$dirty"

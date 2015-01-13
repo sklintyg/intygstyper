@@ -19,7 +19,6 @@ import org.springframework.core.io.ClassPathResource;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
-import se.inera.certificate.modules.fk7263.validator.InternalValidator;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -59,8 +58,12 @@ public class TransportToInternalConverterTest {
         Utlatande internalModel = TransportToInternal
                 .convert(utlatandeElement.getValue());
 
-        InternalValidator internalValidator = new InternalValidator(internalModel);
-        assertTrue(internalValidator.validate().isEmpty());
+        // serialize utlatande to JSON and compare with expected JSON
+        JsonNode tree = objectMapper.valueToTree(internalModel);
+        JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+                RESOURCE_ROOT + "intyg-med-blanksteg.json")
+                .getInputStream());
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
     }
 
     @Test
@@ -165,8 +168,7 @@ public class TransportToInternalConverterTest {
                 + "legacy/scenario2.xml");
         Utlatande internalModel = TransportToInternal
                 .convert(utlatandeElement.getValue());
-        InternalValidator intVal = new InternalValidator(internalModel);
-        intVal.validate();
+
         // serialize utlatande to JSON and compare with expected JSON
         JsonNode tree = objectMapper.valueToTree(internalModel);
         JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(

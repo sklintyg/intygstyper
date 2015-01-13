@@ -15,11 +15,11 @@ import org.w3.wsaddressing10.AttributedURIType;
 
 import se.inera.certificate.integration.module.exception.CertificateAlreadyExistsException;
 import se.inera.certificate.logging.LogMarkers;
+import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
 import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.rest.Fk7263ModuleApi;
-import se.inera.certificate.modules.fk7263.validator.InternalValidator;
 import se.inera.certificate.modules.fk7263.validator.ProgrammaticTransportValidator;
 import se.inera.certificate.modules.support.api.CertificateHolder;
 import se.inera.certificate.validate.CertificateValidationException;
@@ -78,7 +78,7 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
         try {
             validateTransport(registerMedicalCertificate);
             Utlatande utlatande = TransportToInternal.convert(registerMedicalCertificate.getLakarutlatande());
-            validateInternal(utlatande);
+
             String xml = xmlToString(registerMedicalCertificate);
             CertificateHolder certificateHolder = converterUtil.toCertificateHolder(utlatande);
             certificateHolder.setOriginalCertificate(xml);
@@ -91,6 +91,10 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
             LOGGER.warn(LogMarkers.VALIDATION, "Validation warning for intyg " + certificateId + " issued by " + issuedBy + ": Certificate already exists - ignored.");
 
         } catch (CertificateValidationException e) {
+            response.setResult(ResultOfCallUtil.failResult(e.getMessage()));
+            LOGGER.error(LogMarkers.VALIDATION, e.getMessage());
+
+        } catch (ConverterException e) {
             response.setResult(ResultOfCallUtil.failResult(e.getMessage()));
             LOGGER.error(LogMarkers.VALIDATION, e.getMessage());
 
@@ -108,13 +112,6 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
 
     private void validateTransport(RegisterMedicalCertificateType registerMedicalCertificate) throws CertificateValidationException {
         List<String> validationErrors = new ProgrammaticTransportValidator(registerMedicalCertificate.getLakarutlatande()).validate();
-        if (!validationErrors.isEmpty()) {
-            throw new CertificateValidationException(validationErrors);
-        }
-    }
-
-    private void validateInternal(Utlatande utlatande) throws CertificateValidationException {
-        List<String> validationErrors = new InternalValidator(utlatande).validate();
         if (!validationErrors.isEmpty()) {
             throw new CertificateValidationException(validationErrors);
         }

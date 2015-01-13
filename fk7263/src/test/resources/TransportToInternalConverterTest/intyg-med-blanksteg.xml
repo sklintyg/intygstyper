@@ -12,28 +12,20 @@
   </patient>
   <skapadAvHosPersonal>
     <ns2:personal-id extension=" " root="1.2.752.129.2.1.4.1" />
-    <ns2:fullstandigtNamn>
-    </ns2:fullstandigtNamn>
-    <ns2:forskrivarkod>
-    </ns2:forskrivarkod>
+    <ns2:fullstandigtNamn> </ns2:fullstandigtNamn>
+    <ns2:forskrivarkod> </ns2:forskrivarkod>
     <ns2:enhet>
       <ns2:enhets-id extension=" " root="1.2.752.129.2.1.4.1" />
       <ns2:arbetsplatskod extension=" " root="1.2.752.29.4.71" />
-      <ns2:enhetsnamn>
-      </ns2:enhetsnamn>
-      <ns2:postadress>
-      </ns2:postadress>
-      <ns2:postnummer>
-      </ns2:postnummer>
-      <ns2:postort>
-      </ns2:postort>
-      <ns2:telefonnummer>
-      </ns2:telefonnummer>
+      <ns2:enhetsnamn> </ns2:enhetsnamn>
+      <ns2:postadress> </ns2:postadress>
+      <ns2:postnummer> </ns2:postnummer>
+      <ns2:postort> </ns2:postort>
+      <ns2:telefonnummer> </ns2:telefonnummer>
       <ns2:vardgivare>
         <ns2:vardgivare-id extension=" "
           root="1.2.752.129.2.1.4.1" />
-        <ns2:vardgivarnamn>
-        </ns2:vardgivarnamn>
+        <ns2:vardgivarnamn> </ns2:vardgivarnamn>
       </ns2:vardgivare>
     </ns2:enhet>
   </skapadAvHosPersonal>
@@ -61,18 +53,15 @@
   </aktivitet>
   <aktivitet>
     <aktivitetskod>Ovrigt</aktivitetskod>
-    <beskrivning>
-    </beskrivning>
+    <beskrivning> </beskrivning>
   </aktivitet>
   <aktivitet>
     <aktivitetskod>Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden</aktivitetskod>
-    <beskrivning>
-    </beskrivning>
+    <beskrivning> </beskrivning>
   </aktivitet>
   <aktivitet>
     <aktivitetskod>Planerad_eller_pagaende_annan_atgard</aktivitetskod>
-    <beskrivning>
-    </beskrivning>
+    <beskrivning> </beskrivning>
   </aktivitet>
   <aktivitet>
     <aktivitetskod>Gar_ej_att_bedomma_om_arbetslivsinriktad_rehabilitering_ar_aktuell</aktivitetskod>

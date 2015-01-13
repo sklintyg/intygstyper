@@ -7,7 +7,7 @@
   <parent>
     <groupId>se.inera.intyg.common</groupId>
     <artifactId>common-pom</artifactId>
-    <version>0-SNAPSHOT</version>
+    <version>1.0.4</version>
   </parent>
 
   <groupId>se.inera.intyg.intygstyper</groupId>
@@ -29,6 +29,9 @@
       (,1.0.0]
     </clinicalprocess-healthcond-certificate.version.range>
 
+    <insuranceprocess-healthreporting.version>0-SNAPSHOT</insuranceprocess-healthreporting.version>
+    <insuranceprocess-healthreporting.version.range>(,1.0.0]</insuranceprocess-healthreporting.version.range>
+
     <!-- Netcare -->
     <mvkintegration.version>1.2.2</mvkintegration.version>
 
@@ -36,7 +39,9 @@
 
   <modules>
     <module>fk7263</module>
-    <!--<module>rli</module> --><!--<module>ts-bas</module> --><!--<module>ts-diabetes</module> -->
+    <!--<module>rli</module> -->
+    <!--<module>ts-bas</module> -->
+    <!--<module>ts-diabetes</module> -->
     <module>tools/archetype</module>
   </modules>
 
@@ -77,6 +82,18 @@
         <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
         <artifactId>clinicalprocess-healthcond-certificate-core</artifactId>
         <version>${clinicalprocess-healthcond-certificate.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
+        <artifactId>clinicalprocess-healthcond-certificate-interactions</artifactId>
+        <version>${clinicalprocess-healthcond-certificate.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>se.inera.intyg.schemas.insuranceprocess.healthreporting.v1</groupId>
+        <artifactId>insuranceprocess-healthreporting-interactions</artifactId>
+        <version>${insuranceprocess-healthreporting.version}</version>
       </dependency>
 
       <!-- Netcare dependencies -->
@@ -177,7 +194,7 @@
         <artifactId>versions-maven-plugin</artifactId>
         <configuration>
           <includeProperties>
-            common.version, clinicalprocess-healthcond-certificate.version
+            common.version, clinicalprocess-healthcond-certificate.version, insuranceprocess-healthreporting.version
           </includeProperties>
           <properties>
             <property>
@@ -187,6 +204,10 @@
             <property>
               <name>clinicalprocess-healthcond-certificate.version</name>
               <version>${clinicalprocess-healthcond-certificate.version.range}</version>
+            </property>
+            <property>
+              <name>insuranceprocess-healthreporting.version</name>
+              <version>${insuranceprocess-healthreporting.version.range}</version>
             </property>
           </properties>
         </configuration>
