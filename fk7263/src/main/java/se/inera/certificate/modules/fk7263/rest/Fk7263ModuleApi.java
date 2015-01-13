@@ -20,6 +20,7 @@ import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
 import se.inera.certificate.modules.fk7263.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
+import se.inera.certificate.modules.fk7263.model.util.ModelCompareUtil;
 import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
 import se.inera.certificate.modules.fk7263.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.fk7263.validator.InternalDraftValidator;
@@ -248,4 +249,24 @@ public class Fk7263ModuleApi implements ModuleApi {
     public void registerCertificate(InternalModelHolder internalModel) throws ModuleException {
         sendCertificateToRecipient(internalModel, intygstjanstLogicalAddress);
     }
+
+    @Override
+    public boolean isModelChanged(String persistedState, String currentState) throws ModuleException  {
+        Utlatande oldUtlatande;
+        Utlatande newUtlatande;
+        try {
+            oldUtlatande = objectMapper.readValue(persistedState, Utlatande.class);
+            newUtlatande = objectMapper.readValue(currentState, Utlatande.class);
+        } catch (IOException e) {
+            throw new ModuleException(e);
+        }
+
+        if (ModelCompareUtil.modelDiffers(oldUtlatande, newUtlatande)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 }
