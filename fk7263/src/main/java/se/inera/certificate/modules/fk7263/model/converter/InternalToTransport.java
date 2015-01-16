@@ -395,7 +395,7 @@ public final class InternalToTransport {
     private static MedicinsktTillstandType toMedicinsktTillstand(String diagnoskod, String diagnosbeskrivning) {
         MedicinsktTillstandType tillstand = new MedicinsktTillstandType();
         tillstand.setBeskrivning(diagnosbeskrivning);
-        tillstand.setTillstandskod(createCD(diagnoskod, null, Kodverk.ICD_10.getCodeSystemName()));
+        tillstand.setTillstandskod(createCD(diagnoskod, null, Kodverk.ICD_10_SE.getCodeSystemName()));
         return tillstand;
     }
 

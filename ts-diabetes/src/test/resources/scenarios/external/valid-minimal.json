@@ -99,7 +99,7 @@
          {
             "observationskod": {
                 "codeSystem": "1.2.752.116.1.1.1.1.1",
-                "codeSystemName": "ICD-10",
+                "codeSystemName": "ICD-10-SE",
                 "code": "E11"
             },
             "observationsperiod" : {

@@ -38,7 +38,7 @@
 
 		<medicinsktTillstand>
 			<beskrivning>Klämskada på överarm</beskrivning>
-			<tillstandskod code="S47" codeSystemName="ICD-10"/>
+			<tillstandskod code="S47" codeSystemName="ICD-10-SE"/>
 		</medicinsktTillstand>
 
 		<aktivitet>

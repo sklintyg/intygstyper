@@ -4,7 +4,7 @@ public enum Kodverk {
 
     SNOMED_CT("1.2.752.116.2.1.1.1", "SNOMED-CT", null),
 
-    ICD_10("1.2.752.116.1.1.1.1.1", "ICD-10", null);
+    ICD_10_SE("1.2.752.116.1.1.1.1.3", "ICD-10-SE", null);
 
     private Kodverk(String codeSystem, String codeSystemName, String codeSystemVersion) {
         this.codeSystem = codeSystem;

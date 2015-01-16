@@ -36,7 +36,7 @@
 		</vardkontakt>
 
 		<medicinsktTillstand>
-			<tillstandskod code="S47" codeSystemName="ICD-10"/>
+			<tillstandskod code="S47" codeSystemName="ICD-10-SE"/>
 		</medicinsktTillstand>
 		
 		<aktivitet>

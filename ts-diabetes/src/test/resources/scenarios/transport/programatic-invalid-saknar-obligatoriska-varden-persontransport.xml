@@ -74,7 +74,7 @@
 
   <observation>
     <observationskod code="E11" codeSystem="1.2.752.116.1.1.1.1.1"
-      codeSystemName="ICD-10" />
+      codeSystemName="ICD-10-SE" />
     <observationsperiod>
       <from>2012</from>
     </observationsperiod>
