@@ -183,10 +183,10 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                     });
             };
 
-            $scope.updateAllAsHandled = function(){
+            $scope.updateAllAsHandled = function(deferred){
                 angular.forEach($scope.qaList, function(qa) {
                     if(fragaSvarCommonService.isUnhandled(qa)){
-                        $scope.updateAsHandled(qa);
+                        $scope.updateAsHandled(qa, deferred);
                     }
                 });
             };
@@ -205,11 +205,12 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 return false;
             };
 
-            $scope.updateAsHandled = function(qa) {
+            $scope.updateAsHandled = function(qa, deferred) {
                 $log.debug('updateAsHandled:' + qa);
                 qa.updateHandledStateInProgress = true;
 
                 fragaSvarService.closeAsHandled(qa.internReferens, 'fk7263', function(result) {
+
                     $log.debug('Got updateAsHandled result:' + result);
                     qa.activeErrorMessageKey = null;
                     qa.updateHandledStateInProgress = false;
@@ -224,10 +225,18 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                         $scope.activeQA = qa.internReferens;
                         statService.refreshStat();
                     }
+                    $window.doneLoading = true;
+                    if(deferred) {
+                        deferred.resolve();
+                    }
                 }, function(errorData) {
                     // show error view
                     qa.updateHandledStateInProgress = false;
                     qa.activeErrorMessageKey = errorData.errorCode;
+                    $window.doneLoading = true;
+                    if(deferred) {
+                        deferred.resolve();
+                    }
                 });
             };
 
@@ -312,8 +321,8 @@ angular.module('fk7263').controller('fk7263.QACtrl',
             $scope.initQuestionForm();
 
             // listeners - interscope communication
-            var unbindMarkAllAsHandledEvent = $scope.$on('markAllAsHandledEvent', function($event) {
-                $scope.updateAllAsHandled();
+            var unbindMarkAllAsHandledEvent = $scope.$on('markAllAsHandledEvent', function($event, deferred) {
+                $scope.updateAllAsHandled(deferred);
             });
 
             $scope.$on('$destroy', unbindMarkAllAsHandledEvent);
