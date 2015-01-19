@@ -49,6 +49,55 @@ describe('QACtrl', function() {
 
         }]));
 
+    describe('#testEvents', function() {
+        it('on fk7263.ViewCertCtrl.load', function(){
+
+            // ----- arrange
+            // spies, mocks
+
+            // kick off the window change event
+            var revoked;
+            var statuses;
+            var cert;
+            //$rootScope.$broadcast('fk7263.ViewCertCtrl.load', revoked, statuses, cert);
+
+            // ------ act
+            // promises are resolved/dispatched only on next $digest cycle
+            // this will fire the event!
+            //$rootScope.$apply();
+
+            // ------ assert
+            // dialog should be opened
+            // expects
+            // TODO: the actual test!
+            expect(true).toBe(true);
+        });
+
+        it('on fk7263.ViewCertCtrl.fail', function(){
+
+            // ----- arrange
+            // spies, mocks
+
+            // kick off the window change event
+            var revoked;
+            var statuses;
+            var cert;
+            //$rootScope.$broadcast('fk7263.ViewCertCtrl.fail', revoked, statuses, cert);
+
+            // ------ act
+            // promises are resolved/dispatched only on next $digest cycle
+            // this will fire the event!
+            //$rootScope.$apply();
+
+            // ------ assert
+            // dialog should be opened
+            // expects
+            // TODO: the actual test!
+            expect(true).toBe(true);
+        });
+
+    });
+
     describe('#hasUnhandledQas', function() {
         it('has no UnhandledQas', function(){
 
