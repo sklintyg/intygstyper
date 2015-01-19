@@ -30,11 +30,13 @@ module.exports = function(config) {
 
             // Load these first
                 SRC_DIR + 'messages.js',
-                SRC_DIR + 'module.js',
+                TEST_DIR + 'module-test.js',
 
             { pattern: SRC_DIR + '**/*' },
             { pattern: TEST_DIR + '**/*Spec.js' }
         ],
+
+        exclude: [ SRC_DIR + 'module.js' ],
 
         // web server port
         port: 9876,

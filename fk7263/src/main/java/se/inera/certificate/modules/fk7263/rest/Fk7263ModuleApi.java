@@ -20,6 +20,7 @@ import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
 import se.inera.certificate.modules.fk7263.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
+import se.inera.certificate.modules.fk7263.model.util.ModelCompareUtil;
 import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
 import se.inera.certificate.modules.fk7263.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.fk7263.validator.InternalDraftValidator;
@@ -162,18 +163,6 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
-    public InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
-        try {
-            Utlatande intyg = getInternal(internalModel);
-            webcertModelFactory.updateSkapadAv(intyg, hosPerson, signingDate);
-            return toInteralModelResponse(intyg);
-
-        } catch (ModuleException e) {
-            throw new ModuleException("Convert error of internal model", e);
-        }
-    }
-
-    @Override
     public void setModuleContainer(ModuleContainerApi moduleContainer) {
         this.moduleContainer = moduleContainer;
     }
@@ -248,4 +237,45 @@ public class Fk7263ModuleApi implements ModuleApi {
     public void registerCertificate(InternalModelHolder internalModel) throws ModuleException {
         sendCertificateToRecipient(internalModel, intygstjanstLogicalAddress);
     }
+
+    @Override
+    public InternalModelResponse updateBeforeSave(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException {
+        return updateInternal(internalModel, hosPerson, null);
+    }
+
+    @Override
+    public InternalModelResponse updateBeforeSigning(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
+        return updateInternal(internalModel, hosPerson, signingDate);
+    }
+
+    private InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
+        try{
+            Utlatande intyg = getInternal(internalModel);
+            webcertModelFactory.updateSkapadAv(intyg, hosPerson, signingDate);
+            return toInteralModelResponse(intyg);
+        } catch (ModuleException e) {
+            throw new ModuleException("Error while updating internal model", e);
+        }
+    }
+
+    @Override
+    public boolean isModelChanged(String persistedState, String currentState) throws ModuleException  {
+        Utlatande oldUtlatande;
+        Utlatande newUtlatande;
+        try {
+            oldUtlatande = objectMapper.readValue(persistedState, Utlatande.class);
+            newUtlatande = objectMapper.readValue(currentState, Utlatande.class);
+        } catch (IOException e) {
+            throw new ModuleException(e);
+        }
+
+        if (ModelCompareUtil.modelDiffers(oldUtlatande, newUtlatande)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
 }
