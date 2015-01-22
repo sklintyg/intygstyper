@@ -689,7 +689,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 $scope.basedOnState.check.telefonkontaktMedPatienten =
                     $scope.cert.telefonkontaktMedPatienten !== undefined;
                 $scope.basedOnState.check.journaluppgifter = $scope.cert.journaluppgifter !== undefined;
-                if ($scope.cert.annanReferensBeskrivning !== undefined) {
+                if ($scope.cert.annanReferens !== undefined) {
                     $scope.form.ovrigt.annanReferensBeskrivning = $scope.cert.annanReferensBeskrivning;
                     $scope.basedOnState.check.annanReferens = true;
                 } else {
