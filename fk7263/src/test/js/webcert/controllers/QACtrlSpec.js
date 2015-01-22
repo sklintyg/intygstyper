@@ -111,7 +111,7 @@ describe('QACtrl', function() {
             // in arrange we setup our spies with expected return values
             var qaAnswered = {status: 'ANSWERED'};
             $scope.qaList = [qaAnswered];
-            fragaSvarCommonService.isUnhandled.andReturn(true);
+            fragaSvarCommonService.isUnhandled.and.returnValue(true);
 
             // ----- act
             var hasUnhandled = $scope.hasUnhandledQas();
@@ -142,7 +142,7 @@ describe('QACtrl', function() {
             // ----- arrange
             var qaAnswered = {status: 'ANSWERED'};
             $scope.qaList = [qaAnswered];
-            fragaSvarCommonService.isUnhandled.andReturn(true);
+            fragaSvarCommonService.isUnhandled.and.returnValue(true);
 
             // ----- act
             $scope.updateAllAsHandled();
