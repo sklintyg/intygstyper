@@ -5,7 +5,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
         function($log, $rootScope, $routeParams, $scope, $timeout, $window, $filter, dialogService, fragaSvarService,
             fragaSvarCommonService, ManageCertView, statService, User) {
             'use strict';
-            console.debug('module fk7263.QACtrl instantiated!');
+
             // init state
             $scope.qaList = {};
             $scope.widgetState = {
