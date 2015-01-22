@@ -82,8 +82,6 @@ define([ 'angular' ], function(angular) {
                         valForModel = Number(valForView[0] + '.' + valForView[2]);
                     }
 
-                    // console.log('format(' + value + ') -> V(' + valForView + '), M(' + valForModel + ')');
-
                     return {
                         valForView: valForView,
                         valForModel: valForModel
