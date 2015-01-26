@@ -806,12 +806,14 @@
                     </button>
                   </div>
 
-                  <label for="mark-as-vidarebefordrad" class="checkbox-inline">
-                    <input id="mark-as-vidarebefordrad" type="checkbox"
-                           ng-disabled="widgetState.vidarebefordraInProgress" ng-model="certMeta.vidarebefordrad"
-                           ng-change="onVidarebefordradChange()" /> Vidarebefordrad
-                  </label> <span ng-if="widgetState.vidarebefordraInProgress"> <img
-                    src="/img/ajax-loader-kit-16x16.gif"></span>
+                  <div class="body-row form-inline form-group">
+                    <label for="mark-as-vidarebefordrad" class="checkbox-inline">
+                      <input id="mark-as-vidarebefordrad" type="checkbox"
+                             ng-disabled="widgetState.vidarebefordraInProgress" ng-model="certMeta.vidarebefordrad"
+                             ng-change="onVidarebefordradChange()" /> Vidarebefordrad
+                    </label> <span ng-if="widgetState.vidarebefordraInProgress"> <img
+                      src="/img/ajax-loader-kit-16x16.gif"></span>
+                  </div>
                 </div>
 
                 <button id="signera-utkast-button" class="btn btn-success" ng-disabled="!isComplete || certForm.$dirty"
