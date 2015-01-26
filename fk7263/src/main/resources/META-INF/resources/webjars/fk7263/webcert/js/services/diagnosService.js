@@ -41,7 +41,7 @@ angular.module('fk7263').factory('fk7263.diagnosService',
          * Search diagnosis by description
          */
         function _searchByDescription(searchString) {
-            $log.debug('_searchByDescription: ' + searchString);
+            //$log.debug('_searchByDescription: ' + searchString);
             var restPath = '/moduleapi/diagnos/beskrivning/sok';
             var data = {
                 descriptionSearchString: searchString,
