@@ -38,7 +38,7 @@
 
           <!-- error message occuring when inteacting with server for this FragaSvar-->
           <div id="newQuestion-load-error" ng-show="newQuestion.activeErrorMessageKey" class="alert alert-danger">
-            <span message key="error.{{newQuestion.activeErrorMessageKey}}"></span>
+            <span message key="fk7263.error.{{newQuestion.activeErrorMessageKey}}"></span>
           </div>
 
           <!-- Form button group -->
@@ -164,7 +164,7 @@
                   <div class="webcert-top-padding-section">
                     <!-- error message occuring when inteacting with server for this FragaSvar-->
                     <div id="{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey" class="alert alert-danger">
-                      <span message key="error.{{qa.activeErrorMessageKey}}"></span>
+                      <span message key="fk7263.error.{{qa.activeErrorMessageKey}}"></span>
                     </div>
                     <button class="btn btn-success" ng-click="sendAnswer(qa)" ng-disabled="!qa.svarsText || qa.updateInProgress" ng-show="!qa.answerDisabled && !certProperties.isRevoked"
                             wc-check-vardenhet vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}"
@@ -183,7 +183,7 @@
                 <!--  fått svar eller väntar på svar från FK, skall kunna klarmarkera manuellt ändå -->
                 <!-- error message occuring when inteacting with server for this FragaSvar-->
                 <div id="{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey" class="alert alert-danger">
-                  <span message key="error.{{qa.activeErrorMessageKey}}"></span>
+                  <span message key="fk7263.error.{{qa.activeErrorMessageKey}}"></span>
                 </div>
                 <div class="controls" wc-check-vardenhet vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}">
                   <button class="btn btn-default btn-secondary" ng-click="updateAsHandled(qa)" id="markAsHandledWcOriginBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress"
@@ -269,7 +269,7 @@
 
             <!-- error message occuring when inteacting with server for this FragaSvar-->
             <div id="{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey" class="alert alert-danger">
-              <span message key="error.{{qa.activeErrorMessageKey}}"></span>
+              <span message key="fk7263.error.{{qa.activeErrorMessageKey}}"></span>
             </div>
             <div class="form-group">
               <!--  Oavsett hur frågan stänged skall man kunna 'öppna' den igen -->
