@@ -53,7 +53,8 @@
     "sjukdomsforlopp" : "Bedömttillstånd: Patienten klämde höger överarm vid olycka i hemmet.\nProblemen har pågått en längre tid.",
 
     "diagnosKod" : "S47",
-    "diagnosBeskrivning": "Medicinskttillstånd: Klämskada på överarm",
+    "diagnosBeskrivning1": "Klämskada på skuldra och överarm",
+    "diagnosBeskrivning": "Förtydligande: extra klämd",
 
     "nuvarandeArbete":true,
     "nuvarandeArbetsuppgifter":"Dirigent. Dirigerar en större orkester på deltid",

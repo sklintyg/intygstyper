@@ -6,6 +6,8 @@ import iso.v21090.dt.v1.II;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
@@ -72,7 +74,7 @@ public final class InternalToTransport {
         }
 
         if (!isNullOrEmpty(source.getDiagnosKod())) {
-            register.getLakarutlatande().setMedicinsktTillstand(toMedicinsktTillstand(source.getDiagnosKod(), source.getDiagnosBeskrivning()));
+            register.getLakarutlatande().setMedicinsktTillstand(toMedicinsktTillstand(source.getDiagnosKod(), source.getDiagnosBeskrivning1(), source.getDiagnosBeskrivning()));
         }
 
         convertAktiviteter(register, source);
@@ -392,9 +394,18 @@ public final class InternalToTransport {
         }
     }
 
-    private static MedicinsktTillstandType toMedicinsktTillstand(String diagnoskod, String diagnosbeskrivning) {
+    private static MedicinsktTillstandType toMedicinsktTillstand(String diagnoskod, String diagnosbeskrivning, String fortydligande) {
         MedicinsktTillstandType tillstand = new MedicinsktTillstandType();
-        tillstand.setBeskrivning(diagnosbeskrivning);
+        ArrayList<String> beskrivning = new ArrayList<>();
+        if (!StringUtils.isBlank(diagnosbeskrivning)) {
+            beskrivning.add(diagnosbeskrivning);
+        }
+        if (!StringUtils.isBlank(fortydligande)) {
+            beskrivning.add(fortydligande);
+        }
+        if (!beskrivning.isEmpty()) {
+            tillstand.setBeskrivning(StringUtils.join(beskrivning, ", "));
+        }
         tillstand.setTillstandskod(createCD(diagnoskod, null, Kodverk.ICD_10_SE.getCodeSystemName()));
         return tillstand;
     }
