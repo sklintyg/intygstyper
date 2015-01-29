@@ -843,41 +843,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         $scope.cert.rekommendationOvrigt = null;
                     }
 
-                    // Fält 8b.
-                    var nedsattMedList = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
-                    angular.forEach(nedsattMedList, function(nedsattMed) {
-
-                        // convert dates to string from viewvalue (modelvalue is undefined for invalid dates from datepicker)
-                        var from = convertDateToISOString($scope.certForm[nedsattMed + 'from'].$viewValue);
-                        var tom = convertDateToISOString($scope.certForm[nedsattMed + 'tom'].$viewValue);
-                        if (this[nedsattMed] === undefined && (isValidString(from) || isValidString(tom))) {
-
-                            this[nedsattMed] = {};
-                            if (isValidString(from)) {
-                                this[nedsattMed].from = from;
-                            }
-                            if (isValidString(tom)) {
-                                this[nedsattMed].tom = tom;
-                            }
-                        } else if (this[nedsattMed]) {
-                            if (isValidString(from)) {
-                                this[nedsattMed].from = from;
-                            } else {
-                                this[nedsattMed].from = undefined;
-                            }
-                            if (isValidString(tom)) {
-                                this[nedsattMed].tom = tom;
-                            } else {
-                                this[nedsattMed].tom = undefined;
-                            }
-                        }
-
-                        if ($scope.workState[nedsattMed]) {
-                            this[nedsattMed + 'Beskrivning'] = $scope.form.ovrigt[nedsattMed + 'Beskrivning'];
-                        } else {
-                            this[nedsattMed + 'Beskrivning'] = null;
-                        }
-                    }, $scope.cert);
 
                     // Fält 7. Rehab radio conversions
                     switch ($scope.form.rehab) {
@@ -893,6 +858,42 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     }
 
                 }
+
+                // Fält 8b.
+                var nedsattMedList = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
+                angular.forEach(nedsattMedList, function(nedsattMed) {
+
+                    // convert dates to string from viewvalue (modelvalue is undefined for invalid dates from datepicker)
+                    var from = convertDateToISOString($scope.certForm[nedsattMed + 'from'].$viewValue);
+                    var tom = convertDateToISOString($scope.certForm[nedsattMed + 'tom'].$viewValue);
+                    if (this[nedsattMed] === undefined && (isValidString(from) || isValidString(tom))) {
+
+                        this[nedsattMed] = {};
+                        if (isValidString(from)) {
+                            this[nedsattMed].from = from;
+                        }
+                        if (isValidString(tom)) {
+                            this[nedsattMed].tom = tom;
+                        }
+                    } else if (this[nedsattMed]) {
+                        if (isValidString(from)) {
+                            this[nedsattMed].from = from;
+                        } else {
+                            this[nedsattMed].from = undefined;
+                        }
+                        if (isValidString(tom)) {
+                            this[nedsattMed].tom = tom;
+                        } else {
+                            this[nedsattMed].tom = undefined;
+                        }
+                    }
+
+                    if ($scope.workState[nedsattMed]) {
+                        this[nedsattMed + 'Beskrivning'] = $scope.form.ovrigt[nedsattMed + 'Beskrivning'];
+                    } else {
+                        this[nedsattMed + 'Beskrivning'] = null;
+                    }
+                }, $scope.cert);
 
                 // Fält 10. Går ej att bedöma and update backend model when view changes.
                 $scope.cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning = null;
