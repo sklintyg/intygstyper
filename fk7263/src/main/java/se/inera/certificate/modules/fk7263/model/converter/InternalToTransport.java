@@ -66,7 +66,7 @@ public final class InternalToTransport {
         register.getLakarutlatande().setSkickatDatum(source.getGrundData().getSigneringsdatum());
         register.getLakarutlatande().setPatient(patientToJaxb(source.getGrundData().getPatient()));
         register.getLakarutlatande().setSkapadAvHosPersonal(hosPersonalToJaxb(source.getGrundData().getSkapadAv()));
-        
+
         if (!isNullOrEmpty(source.getSjukdomsforlopp())) {
             register.getLakarutlatande().setBedomtTillstand(sjukdomsforloppToJaxb(source.getSjukdomsforlopp()));
         }
@@ -120,7 +120,7 @@ public final class InternalToTransport {
         }
 
         if (!isNullOrEmpty(source.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
-            prognosBedomning = "Arbetsförmåga går inte att bedöma: " +source.getArbetsformagaPrognosGarInteAttBedomaBeskrivning();
+            prognosBedomning = "Arbetsförmåga går inte att bedöma: " + source.getArbetsformagaPrognosGarInteAttBedomaBeskrivning();
         }
         if (!isNullOrEmpty(source.getKommentar())) {
             ovrigKommentar = source.getKommentar();
@@ -132,13 +132,13 @@ public final class InternalToTransport {
     private static String buildDiagnoser(Utlatande source) {
         String diagnos1 = new String();
         String diagnos2 = new String();
-        
+
         if (!isNullOrEmpty(source.getDiagnosKod2()) && !isNullOrEmpty(source.getDiagnosBeskrivning2())) {
-            diagnos1 = "Bidiagnos 1: " + source.getDiagnosKod2() + " " + source.getDiagnosBeskrivning2(); 
+            diagnos1 = "Bidiagnos 1: " + source.getDiagnosKod2() + " " + source.getDiagnosBeskrivning2();
         }
 
         if (!isNullOrEmpty(source.getDiagnosKod3()) && !isNullOrEmpty(source.getDiagnosBeskrivning3())) {
-            diagnos2 = "Bidiagnos 2: " + source.getDiagnosKod3() + " " + source.getDiagnosBeskrivning3(); 
+            diagnos2 = "Bidiagnos 2: " + source.getDiagnosKod3() + " " + source.getDiagnosBeskrivning3();
         }
         return Strings.join(", ", diagnos1, diagnos2);
     }
@@ -195,7 +195,7 @@ public final class InternalToTransport {
                 nedsattningType.setVaraktighetTom(source.getNedsattMed25().tomAsLocalDate());
             }
             arbetsformagaType.getArbetsformagaNedsattning().add(nedsattningType);
-        }   
+        }
         if (source.getNedsattMed50() != null) {
             ArbetsformagaNedsattningType nedsattningType = new ArbetsformagaNedsattningType();
             nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_1_2);
@@ -204,7 +204,7 @@ public final class InternalToTransport {
                 nedsattningType.setVaraktighetTom(source.getNedsattMed50().tomAsLocalDate());
             }
             arbetsformagaType.getArbetsformagaNedsattning().add(nedsattningType);
-        }   
+        }
         if (source.getNedsattMed75() != null) {
             ArbetsformagaNedsattningType nedsattningType = new ArbetsformagaNedsattningType();
             nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_3_4);
@@ -213,7 +213,7 @@ public final class InternalToTransport {
                 nedsattningType.setVaraktighetTom(source.getNedsattMed75().tomAsLocalDate());
             }
             arbetsformagaType.getArbetsformagaNedsattning().add(nedsattningType);
-        }   
+        }
         if (source.getNedsattMed100() != null) {
             ArbetsformagaNedsattningType nedsattningType = new ArbetsformagaNedsattningType();
             nedsattningType.setNedsattningsgrad(Nedsattningsgrad.HELT_NEDSATT);
@@ -222,7 +222,7 @@ public final class InternalToTransport {
                 nedsattningType.setVaraktighetTom(source.getNedsattMed100().tomAsLocalDate());
             }
             arbetsformagaType.getArbetsformagaNedsattning().add(nedsattningType);
-        }   
+        }
 
         return arbetsformagaType;
     }
@@ -299,8 +299,8 @@ public final class InternalToTransport {
     }
 
     /**
-     * Build AktivitetTypes from internal model
-     * 
+     * Build AktivitetTypes from internal model.
+     *
      * @param source
      *            Utlatande
      * @return List of AktivitetType
