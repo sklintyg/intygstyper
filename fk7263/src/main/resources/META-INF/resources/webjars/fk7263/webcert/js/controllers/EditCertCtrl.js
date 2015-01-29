@@ -744,7 +744,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         $scope.cert.rekommendationOvrigt = null;
                     }
 
-
                     // Fält 7. Rehab radio conversions
                     switch ($scope.form.rehab) {
                     case 'JA':
