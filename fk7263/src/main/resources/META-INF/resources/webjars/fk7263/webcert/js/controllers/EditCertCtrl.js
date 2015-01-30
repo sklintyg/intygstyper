@@ -411,18 +411,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
                 angular.forEach(nedsattMedList, function(nedsattMed) {
 
-                    function pushValidDate(list, dateValue) {
-                        if ((typeof dateValue === 'string' && dateValue.length === 10) || dateValue instanceof Date) {
-                            var momentDate = dateUtils.toMoment(dateValue);
-                            if (momentDate !== null && momentDate.isValid()) {
-                                var formattedDate = moment(momentDate.format('YYYY-MM-DD'), 'YYYY-MM-DD', true);
-                                if (formattedDate.isValid()) {
-                                    list.push(formattedDate);
-                                }
-                            }
-                        }
-                    }
-
                     var dateValue = null;
 
                     if (useModelValue) {
@@ -432,7 +420,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     } else {
                         dateValue = $scope.certForm[nedsattMed + 'from'].$viewValue;
                     }
-                    pushValidDate(startMoments, dateValue);
+                    dateUtils.pushValidDate(startMoments, dateValue);
 
                     dateValue = null;
                     if (useModelValue) {
@@ -442,7 +430,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     } else {
                         dateValue = $scope.certForm[nedsattMed + 'tom'].$viewValue;
                     }
-                    pushValidDate(endMoments, dateValue);
+                    dateUtils.pushValidDate(endMoments, dateValue);
                 });
 
                 if (startMoments.length > 0) {
