@@ -475,12 +475,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * @type {boolean}
              */
             function checkArbetsformagaDatesPeriodLength(startMoment, endMoment) {
-                if (startMoment === null || endMoment === null) {
-                    $scope.datesPeriodTooLong = false;
-                    return;
-                }
-
-                $scope.datesPeriodTooLong = (Math.abs(startMoment.diff(endMoment, 'months')) >= 6);
+                $scope.datesPeriodTooLong = !dateUtils.areDatesWithinMonthRange(startMoment, endMoment);
             }
 
             /**
