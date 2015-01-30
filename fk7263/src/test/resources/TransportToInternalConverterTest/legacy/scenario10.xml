@@ -38,7 +38,7 @@
 
   <medicinsktTillstand>
     <beskrivning>Klämskada på överarm</beskrivning>
-    <tillstandskod code="S47" />
+    <tillstandskod code="S47" codeSystem="1.2.752.116.1.1.1.1.3"/>
   </medicinsktTillstand>
 
   <bedomtTillstand>

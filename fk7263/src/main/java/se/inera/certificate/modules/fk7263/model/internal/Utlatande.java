@@ -16,12 +16,16 @@ public class Utlatande extends se.inera.certificate.model.common.internal.Utlata
     private boolean avstangningSmittskydd;
 
     private String diagnosKod;
+    private String diagnosKodsystem1;
     private String diagnosBeskrivning;
 
     private String diagnosBeskrivning1;
     private String diagnosKod2;
+    private String diagnosKodsystem2;
     private String diagnosBeskrivning2;
+
     private String diagnosKod3;
+    private String diagnosKodsystem3;
     private String diagnosBeskrivning3;
     private Boolean samsjuklighet;
 
@@ -170,6 +174,30 @@ public class Utlatande extends se.inera.certificate.model.common.internal.Utlata
 
     public void setDiagnosBeskrivning3(String diagnosBeskrivning3) {
         this.diagnosBeskrivning3 = diagnosBeskrivning3;
+    }
+
+    public String getDiagnosKodsystem1() {
+        return diagnosKodsystem1;
+    }
+
+    public void setDiagnosKodsystem1(String diagnosKodsystem1) {
+        this.diagnosKodsystem1 = diagnosKodsystem1;
+    }
+
+    public String getDiagnosKodsystem2() {
+        return diagnosKodsystem2;
+    }
+
+    public void setDiagnosKodsystem2(String diagnosKodsystem2) {
+        this.diagnosKodsystem2 = diagnosKodsystem2;
+    }
+
+    public String getDiagnosKodsystem3() {
+        return diagnosKodsystem3;
+    }
+
+    public void setDiagnosKodsystem3(String diagnosKodsystem3) {
+        this.diagnosKodsystem3 = diagnosKodsystem3;
     }
 
     public Boolean getSamsjuklighet() {

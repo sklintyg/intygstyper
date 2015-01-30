@@ -242,6 +242,7 @@ public final class TransportToInternal {
         }
         utlatande.setDiagnosBeskrivning(source.getBeskrivning());
         utlatande.setDiagnosKod(source.getTillstandskod().getCode());
+        utlatande.setDiagnosKodsystem1(source.getTillstandskod().getCodeSystem());
     }
 
     /**

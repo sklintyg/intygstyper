@@ -36,6 +36,7 @@
 
     "diagnosKod" : "S47",
     "diagnosBeskrivning": "Klämskada på överarm",
+    "diagnosKodsystem1" : "ICD_10_SE",
 
     "sjukdomsforlopp" : "Aktuellt sjukdomsförlopp",
 
