@@ -1,15 +1,15 @@
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$routeParams',
         'common.CertificateService', 'common.ManageCertView', 'common.User', 'common.wcFocus',
-        'common.intygNotifyService', 'fk7263.diagnosService',
+        'common.intygNotifyService', 'fk7263.diagnosService', 'common.DateUtilsService', 'common.UtilsService',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $routeParams,
-            CertificateService, ManageCertView, User, wcFocus, intygNotifyService, diagnosService) {
+            CertificateService, ManageCertView, User, wcFocus, intygNotifyService, diagnosService, dateUtils, utils) {
             'use strict';
 
             /**********************************************************************************
              * Default state
              **********************************************************************************/
-
+            // the below state needs to be moved to models xxxx
                 // Page states
             $scope.user = User;
             $scope.today = new Date();
@@ -217,41 +217,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Private controller support functions
              ***************************************************************************/
 
-            /**
-             * Check if variable is undefined, null, NaN or an empty string = invalid
-             * @param data
-             * @returns {boolean}
-             */
-            function isValidString(data) {
-                // data !== data from underscore.js: 'NaN' is the only value for which '===' is not reflexive.
-                return (data !== undefined && data !== null && data === data && data !== '');
-            }
-
-            /**
-             * Does supplied date look like an iso date XXXX-XX-XX
-             * @param date
-             * @returns {*}
-             */
-            function isDate(date) {
-                if (date === undefined || date === null) {
-                    return false;
-                }
-
-                return moment(date, 'YYYY-MM-DD', true).isValid();
-            }
-
-            /**
-             * Convert date to a moment date
-             * @param date
-             * @returns {*}
-             */
-            function toMoment(date) {
-                if (date) {
-                    return moment(date);
-                } else {
-                    return null;
-                }
-            }
 
             /**
              * Set if date named fieldName should be marked as invalid
@@ -299,7 +264,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     return null;
                 }
 
-                var momentDate = toMoment(date);
+                var momentDate = dateUtils.toMoment(date);
                 if (momentDate !== null) {
                     // Format date strictly to 'YYYY-MM-DD'.
                     momentDate = moment(momentDate.format('YYYY-MM-DD'), 'YYYY-MM-DD', true).format('YYYY-MM-DD');
@@ -356,7 +321,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 };
 
                 dateRangeGroup.hasValidDates = function() {
-                    return (isValidString(dateRangeGroup.nedsattFrom) && isValidString(dateRangeGroup.nedsattTom));
+                    return (utils.isValidString(dateRangeGroup.nedsattFrom) && utils.isValidString(dateRangeGroup.nedsattTom));
                 };
 
                 dateRangeGroup.isValid = function() {
@@ -389,10 +354,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 for (var i = 0; i < groups.length; i++) {
                     var dateGroup = createDateRangeGroup(groups[i], false, useModelValue);
                     if (dateGroup.isValid()) {
-                        var momentFrom = toMoment(dateGroup.nedsattFrom);
-                        var momentTom = toMoment(dateGroup.nedsattTom);
+                        var momentFrom = dateUtils.toMoment(dateGroup.nedsattFrom);
+                        var momentTom = dateUtils.toMoment(dateGroup.nedsattTom);
                         if (momentFrom.isValid() && momentTom.isValid() &&
-                            toMoment(dateGroup.nedsattFrom).isAfter(toMoment(dateGroup.nedsattTom))) {
+                            dateUtils.toMoment(dateGroup.nedsattFrom).isAfter(dateUtils.toMoment(dateGroup.nedsattTom))) {
                             setDateInvalidState(dateGroup.fromName, true);
                             setDateInvalidState(dateGroup.tomName, true);
                         } else {
@@ -414,31 +379,31 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             function markOverlappingDates(nedsattGroup1, nedsattGroup2) {
 
                 if (nedsattGroup1.hasValidDates() && nedsattGroup2.hasValidDates()) {
-                    if (toMoment(nedsattGroup1.nedsattFrom).isSame(nedsattGroup2.nedsattFrom, 'day')) {
+                    if (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isSame(nedsattGroup2.nedsattFrom, 'day')) {
                         setDateInvalidState(nedsattGroup1.fromName, true);
                         setDateInvalidState(nedsattGroup2.fromName, true);
                     }
-                    if (toMoment(nedsattGroup1.nedsattTom).isSame(nedsattGroup2.nedsattFrom, 'day')) {
+                    if (dateUtils.toMoment(nedsattGroup1.nedsattTom).isSame(nedsattGroup2.nedsattFrom, 'day')) {
                         setDateInvalidState(nedsattGroup1.tomName, true);
                         setDateInvalidState(nedsattGroup2.fromName, true);
                     }
-                    if (toMoment(nedsattGroup1.nedsattFrom).isSame(nedsattGroup2.nedsattTom, 'day')) {
+                    if (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isSame(nedsattGroup2.nedsattTom, 'day')) {
                         setDateInvalidState(nedsattGroup1.fromName, true);
                         setDateInvalidState(nedsattGroup2.tomName, true);
                     }
-                    if (toMoment(nedsattGroup1.nedsattTom).isSame(nedsattGroup2.nedsattTom, 'day')) {
+                    if (dateUtils.toMoment(nedsattGroup1.nedsattTom).isSame(nedsattGroup2.nedsattTom, 'day')) {
                         setDateInvalidState(nedsattGroup1.tomName, true);
                         setDateInvalidState(nedsattGroup2.tomName, true);
                     }
 
-                    if ((toMoment(nedsattGroup1.nedsattTom).isAfter(nedsattGroup2.nedsattFrom) &&
-                        toMoment(nedsattGroup1.nedsattFrom).isBefore(nedsattGroup2.nedsattFrom)) || // first group overlaps in front
-                        (toMoment(nedsattGroup1.nedsattFrom).isBefore(nedsattGroup2.nedsattTom) &&
-                        toMoment(nedsattGroup1.nedsattTom).isAfter(nedsattGroup2.nedsattTom)) || // first group overlaps behind
-                        (toMoment(nedsattGroup1.nedsattFrom).isBefore(nedsattGroup2.nedsattFrom) &&
-                        toMoment(nedsattGroup1.nedsattTom).isAfter(nedsattGroup2.nedsattTom)) || // first group wraps second group
-                        (toMoment(nedsattGroup1.nedsattFrom).isAfter(nedsattGroup2.nedsattFrom) &&
-                        toMoment(nedsattGroup1.nedsattTom).isBefore(nedsattGroup2.nedsattTom))) { // second group wraps first group
+                    if ((dateUtils.toMoment(nedsattGroup1.nedsattTom).isAfter(nedsattGroup2.nedsattFrom) &&
+                        dateUtils.toMoment(nedsattGroup1.nedsattFrom).isBefore(nedsattGroup2.nedsattFrom)) || // first group overlaps in front
+                        (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isBefore(nedsattGroup2.nedsattTom) &&
+                        dateUtils.toMoment(nedsattGroup1.nedsattTom).isAfter(nedsattGroup2.nedsattTom)) || // first group overlaps behind
+                        (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isBefore(nedsattGroup2.nedsattFrom) &&
+                        dateUtils.toMoment(nedsattGroup1.nedsattTom).isAfter(nedsattGroup2.nedsattTom)) || // first group wraps second group
+                        (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isAfter(nedsattGroup2.nedsattFrom) &&
+                        dateUtils.dateUtils.toMoment(nedsattGroup1.nedsattTom).isBefore(nedsattGroup2.nedsattTom))) { // second group wraps first group
                         setDateInvalidState(nedsattGroup1.fromName, true);
                         setDateInvalidState(nedsattGroup1.tomName, true);
                         setDateInvalidState(nedsattGroup2.fromName, true);
@@ -487,7 +452,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
                     function pushValidDate(list, dateValue) {
                         if ((typeof dateValue === 'string' && dateValue.length === 10) || dateValue instanceof Date) {
-                            var momentDate = toMoment(dateValue);
+                            var momentDate = dateUtils.toMoment(dateValue);
                             if (momentDate !== null && momentDate.isValid()) {
                                 var formattedDate = moment(momentDate.format('YYYY-MM-DD'), 'YYYY-MM-DD', true);
                                 if (formattedDate.isValid()) {
@@ -602,13 +567,13 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         viewValue = convertDateToISOString(viewValue);
 
                         var changedDateGroup = createDateRangeGroup(nedsattMed, false); // false = non-strict date conversion
-                        if (!isValidString(changedDateGroup.nedsattFrom) &&
-                            !isValidString(changedDateGroup.nedsattTom)) {
+                        if (!utils.isValidString(changedDateGroup.nedsattFrom) &&
+                            !utils.isValidString(changedDateGroup.nedsattTom)) {
                             // uncheck check since both dates are undefined or empty
                             $scope.workState[nedsattMed] = false;
 
-                        } else if (isValidString(changedDateGroup.nedsattFrom) ||
-                            isValidString(changedDateGroup.nedsattTom)) {
+                        } else if (utils.isValidString(changedDateGroup.nedsattFrom) ||
+                            utils.isValidString(changedDateGroup.nedsattTom)) {
                             // One of the dates is valid
                             $scope.workState[nedsattMed] = true; // Check nedsatt checkbox
                         }
@@ -866,22 +831,22 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     // convert dates to string from viewvalue (modelvalue is undefined for invalid dates from datepicker)
                     var from = convertDateToISOString($scope.certForm[nedsattMed + 'from'].$viewValue);
                     var tom = convertDateToISOString($scope.certForm[nedsattMed + 'tom'].$viewValue);
-                    if (this[nedsattMed] === undefined && (isValidString(from) || isValidString(tom))) {
+                    if (this[nedsattMed] === undefined && (utils.isValidString(from) || utils.isValidString(tom))) {
 
                         this[nedsattMed] = {};
-                        if (isValidString(from)) {
+                        if (utils.isValidString(from)) {
                             this[nedsattMed].from = from;
                         }
-                        if (isValidString(tom)) {
+                        if (utils.isValidString(tom)) {
                             this[nedsattMed].tom = tom;
                         }
                     } else if (this[nedsattMed]) {
-                        if (isValidString(from)) {
+                        if (utils.isValidString(from)) {
                             this[nedsattMed].from = from;
                         } else {
                             this[nedsattMed].from = undefined;
                         }
-                        if (isValidString(tom)) {
+                        if (utils.isValidString(tom)) {
                             this[nedsattMed].tom = tom;
                         } else {
                             this[nedsattMed].tom = undefined;
@@ -955,7 +920,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * @param baserasPaType
              */
             $scope.onChangeBaserasPaDate = function(baserasPaType) {
-                if (isValidString($scope.certForm[baserasPaType + 'Date'].$viewValue)) {
+                if (utils.isValidString($scope.certForm[baserasPaType + 'Date'].$viewValue)) {
                     $scope.basedOnState.check[baserasPaType] = true;
                 } else {
                     $scope.basedOnState.check[baserasPaType] = false;
@@ -1049,7 +1014,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         // Set from date
                         // find highest max date
                         var moments = findStartEndMoments();
-                        if (!nedsatt.from || !isDate(nedsatt.from)) {
+                        if (!nedsatt.from || !dateUtils.isDate(nedsatt.from)) {
 
                             if (moments.maxMoment !== null && moments.maxMoment.isValid()) {
                                 nedsatt.from = moments.maxMoment.add('days', 1).format('YYYY-MM-DD');
@@ -1061,8 +1026,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         }
 
                         // Set tom date
-                        if (nedsatt.from && (!nedsatt.tom || !isDate(nedsatt.tom))) {
-                            nedsatt.tom = toMoment(nedsatt.from).add('days', 7).format('YYYY-MM-DD');
+                        if (nedsatt.from && (!nedsatt.tom || !dateUtils.isDate(nedsatt.tom))) {
+                            nedsatt.tom = dateUtils.toMoment(nedsatt.from).add('days', 7).format('YYYY-MM-DD');
                         }
                     } else {
 
