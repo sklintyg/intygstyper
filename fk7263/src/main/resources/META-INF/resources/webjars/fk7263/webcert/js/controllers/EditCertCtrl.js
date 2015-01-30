@@ -240,20 +240,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             }
 
             /**
-             * Convert Date object dates to ISO dates.
-             * @param viewValue
-             * @returns {*}
-             */
-            function convertDateToISOString(viewValue) {
-                if (viewValue instanceof Date &&
-                    moment(moment(viewValue).format('YYYY-MM-DD'), 'YYYY-MM-DD', true).isValid()) {
-                    viewValue = moment(viewValue).format('YYYY-MM-DD');
-                }
-                return viewValue;
-            }
-
-
-            /**
              * Convert date from string to a strict moment date
              * @param date
              * @returns {*}
@@ -549,7 +535,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         this[type + 'Date'].$parsers.push(function(viewValue) {
                             $scope.onChangeBaserasPaDate(type);
 
-                            viewValue = convertDateToISOString(viewValue);
+                            viewValue = dateUtils.convertDateToISOString(viewValue);
 
                             return viewValue;
                         });
@@ -564,7 +550,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
                     function nedsattParser(viewValue) {
 
-                        viewValue = convertDateToISOString(viewValue);
+                        viewValue = dateUtils.convertDateToISOString(viewValue);
 
                         var changedDateGroup = createDateRangeGroup(nedsattMed, false); // false = non-strict date conversion
                         if (!utils.isValidString(changedDateGroup.nedsattFrom) &&
@@ -784,7 +770,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter',
                         'annanReferens'];
                     angular.forEach(baserasPaTypes, function(type) {
-                        this[type] = convertDateToISOString($scope.certForm[type + 'Date'].$viewValue);
+                        this[type] = dateUtils.convertDateToISOString($scope.certForm[type + 'Date'].$viewValue);
                     }, $scope.cert);
 
                     // Fält 4b. AnnanReferensBeskrivning
@@ -829,8 +815,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 angular.forEach(nedsattMedList, function(nedsattMed) {
 
                     // convert dates to string from viewvalue (modelvalue is undefined for invalid dates from datepicker)
-                    var from = convertDateToISOString($scope.certForm[nedsattMed + 'from'].$viewValue);
-                    var tom = convertDateToISOString($scope.certForm[nedsattMed + 'tom'].$viewValue);
+                    var from = dateUtils.convertDateToISOString($scope.certForm[nedsattMed + 'from'].$viewValue);
+                    var tom = dateUtils.convertDateToISOString($scope.certForm[nedsattMed + 'tom'].$viewValue);
                     if (this[nedsattMed] === undefined && (utils.isValidString(from) || utils.isValidString(tom))) {
 
                         this[nedsattMed] = {};
