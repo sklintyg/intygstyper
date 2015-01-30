@@ -459,15 +459,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * @type {boolean}
              */
             function checkArbetsformagaDatesRange(startMoment) {
-                if (startMoment === null) {
-                    $scope.datesOutOfRange = false;
-                    return;
-                }
-
-                var now = moment();
-                var olderThanAWeek = startMoment.isBefore(now.subtract('days', 7));
-                var moreThanSixMonthsInFuture = startMoment.isAfter(now.add('months', 6));
-                $scope.datesOutOfRange = (olderThanAWeek || moreThanSixMonthsInFuture);
+                $scope.datesOutOfRange = (dateUtils.olderThanAWeek(startMoment) || dateUtils.isDateOutOfRange(startMoment));
             }
 
             /**
