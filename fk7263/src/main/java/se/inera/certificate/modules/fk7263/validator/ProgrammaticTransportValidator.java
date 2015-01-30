@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import se.inera.certificate.modules.fk7263.model.codes.Kodverk;
+import se.inera.certificate.codes.Diagnoskodverk;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
 import se.inera.certificate.schema.Constants;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
@@ -273,7 +273,7 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
             // Fält 2 - Medicinskt tillstånd kodsystemnamn - mandatory
             if (medTillstand.getTillstandskod() == null
                     || medTillstand.getTillstandskod().getCodeSystemName() == null
-                    || !medTillstand.getTillstandskod().getCodeSystemName().equalsIgnoreCase(Kodverk.ICD_10_SE.getCodeSystemName())) {
+                    || !medTillstand.getTillstandskod().getCodeSystemName().equalsIgnoreCase(Diagnoskodverk.ICD_10_SE.getCodeSystemName())) {
                 addValidationError("Wrong code system name for medicinskt tillstand - tillstandskod (diagnoskod)! Should be ICD-10");
             }
             // Fält 2 - Medicinskt tillstånd beskrivning - optional

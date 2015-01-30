@@ -6,6 +6,7 @@ import iso.v21090.dt.v1.II;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.inera.certificate.codes.Diagnoskodverk;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import se.inera.certificate.model.common.internal.HoSPersonal;
@@ -14,7 +15,6 @@ import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.common.internal.Vardgivare;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.model.util.Strings;
-import se.inera.certificate.modules.fk7263.model.codes.Kodverk;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
@@ -406,7 +406,7 @@ public final class InternalToTransport {
         if (!beskrivning.isEmpty()) {
             tillstand.setBeskrivning(StringUtils.join(beskrivning, ", "));
         }
-        tillstand.setTillstandskod(createCD(diagnoskod, null, Kodverk.ICD_10_SE.getCodeSystemName()));
+        tillstand.setTillstandskod(createCD(diagnoskod, null, Diagnoskodverk.ICD_10_SE.getCodeSystemName()));
         return tillstand;
     }
 
