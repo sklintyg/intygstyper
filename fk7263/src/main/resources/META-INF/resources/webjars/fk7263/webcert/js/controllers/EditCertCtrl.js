@@ -240,31 +240,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             }
 
             /**
-             * Convert date from string to a strict moment date
-             * @param date
-             * @returns {*}
-             */
-            function convertDateStrict(date) {
-
-                if (typeof date === 'string' && date.length < 10) {
-                    return null;
-                }
-
-                var momentDate = dateUtils.toMoment(date);
-                if (momentDate !== null) {
-                    // Format date strictly to 'YYYY-MM-DD'.
-                    momentDate = moment(momentDate.format('YYYY-MM-DD'), 'YYYY-MM-DD', true).format('YYYY-MM-DD');
-                    if (momentDate === 'invalid date') {
-                        // We don't want to handle invalid dates at all
-                        momentDate = null;
-                    }
-                }
-
-                return momentDate;
-            }
-
-
-            /**
              * Create a date range object
              * @param groupName
              * @returns {{fromName: string, tomName: string}}
@@ -286,8 +261,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
 
                 if (strict === undefined || strict === true) {
-                    dateRangeGroup.nedsattFrom = convertDateStrict($scope.certForm[dateRangeGroup.fromName].$viewValue);
-                    dateRangeGroup.nedsattTom = convertDateStrict($scope.certForm[dateRangeGroup.tomName].$viewValue);
+                    dateRangeGroup.nedsattFrom = dateUtils.convertDateStrict($scope.certForm[dateRangeGroup.fromName].$viewValue);
+                    dateRangeGroup.nedsattTom = dateUtils.convertDateStrict($scope.certForm[dateRangeGroup.tomName].$viewValue);
                 } else {
                     dateRangeGroup.nedsattFrom = $scope.certForm[dateRangeGroup.fromName].$viewValue;
                     dateRangeGroup.nedsattTom = $scope.certForm[dateRangeGroup.tomName].$viewValue;
