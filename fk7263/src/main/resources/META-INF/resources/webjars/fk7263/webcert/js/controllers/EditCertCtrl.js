@@ -924,13 +924,11 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              */
             $scope.updateTotalCertDays = function(useModelValue) {
                 var moments = findStartEndMoments(useModelValue);
-                if (!moments.minMoment || !moments.maxMoment) {
-                    // return if there's no valid range span yet
+                if(!moments){
                     $scope.totalCertDays = false;
-                    return $scope.totalCertDays;
+                    return;
                 }
-
-                $scope.totalCertDays = moments.maxMoment.diff(moments.minMoment, 'days') + 1;
+                $scope.totalCertDays = dateUtils.daysBetween(moments.minMoment, moments.maxMoment);
             };
 
             /**
