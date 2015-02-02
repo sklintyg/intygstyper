@@ -63,6 +63,7 @@ var fk7263Messages = {
         'fk7263.label.fk-kontakt': 'Kontakt',
         'fk7263.label.vardenhet.adress': 'Vårdenhetens kontaktuppgifter',
         'fk7263.label.makulera.confirmation': 'Läkarintyg FK 7263 utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
+        'fk7263.label.valjkodverk': 'Välj kodverk:',
 
         'fk7263.vardkontakt.undersokning': 'Min undersökning av patienten den ',
         'fk7263.vardkontakt.telefonkontakt': 'Min telefonkontakt med patienten den ',

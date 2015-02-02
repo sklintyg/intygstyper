@@ -56,8 +56,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
             };
 
-            $scope.searchDiagnoseByDescription = function(val) {
-                return diagnosService.searchByDescription(val)
+            $scope.searchDiagnoseByDescription = function(codeSystem, val) {
+                return diagnosService.searchByDescription(codeSystem, val)
                     .then(function(response) {
                         if (response && response.data && response.data.resultat === 'OK') {
                             return response.data.diagnoser.map(function(item) {
@@ -77,8 +77,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         return [];
                     });
             };
-            $scope.getDiagnoseCodes = function(val) {
-                return diagnosService.searchByCode(val)
+            $scope.getDiagnoseCodes = function(codeSystem, val) {
+                return diagnosService.searchByCode(codeSystem, val)
                     .then(function(response) {
                         if (response && response.data && response.data.resultat === 'OK') {
                             return response.data.diagnoser.map(function(item) {
@@ -684,6 +684,14 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.widgetState.hasInfoMissing = false;
                 }
 
+                // Fält 2. diagnos
+                if ($scope.cert.diagnosKodsystem1) {
+                    $scope.form.diagnosKodverk = $scope.cert.diagnosKodsystem1;
+                }
+                else {
+                    $scope.form.diagnosKodverk = "ICD_10_SE";
+                }
+
                 // Fält 4b. AnnanReferensBeskrivning
                 $scope.basedOnState.check.undersokningAvPatienten = $scope.cert.undersokningAvPatienten !== undefined;
                 $scope.basedOnState.check.telefonkontaktMedPatienten =
@@ -782,6 +790,9 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.basedOnState.check.annanReferens = false;
 
                     // 2. Diagnos
+                    $scope.cert.diagnosKodverk1 = undefined;
+                    $scope.cert.diagnosKodverk2 = undefined;
+                    $scope.cert.diagnosKodverk3 = undefined;
                     $scope.cert.diagnosKod = undefined;
                     $scope.cert.diagnosKod2 = undefined;
                     $scope.cert.diagnosKod3 = undefined;
@@ -821,6 +832,11 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     angular.forEach(baserasPaTypes, function(type) {
                         this[type] = convertDateToISOString($scope.certForm[type + 'Date'].$viewValue);
                     }, $scope.cert);
+
+                    // Fält 2. diagnos
+                    $scope.cert.diagnosKodsystem1 = $scope.form.diagnosKodverk;
+                    $scope.cert.diagnosKodsystem2 = $scope.form.diagnosKodverk;
+                    $scope.cert.diagnosKodsystem3 = $scope.form.diagnosKodverk;
 
                     // Fält 4b. AnnanReferensBeskrivning
                     if ($scope.basedOnState.check.annanReferens) {

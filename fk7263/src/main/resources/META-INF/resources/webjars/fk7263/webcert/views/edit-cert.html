@@ -217,11 +217,24 @@
                       </ul>
                     </div>
                     <div class="row bottom-padding-small">
+                      <div class='col-xs-12'>
+                        <span message key="fk7263.label.valjkodverk"></span>
+                        <label class="radio-inline">
+                          <input type="radio" id="diagnoseKodverk_ICD_10_SE" name="diagnosKodverk" value="ICD_10_SE"
+                                 ng-model="form.diagnosKodverk" checked="checked"> ICD 10
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" id="diagnoseKodverk_KSH_97_P" name="diagnosKodverk" value="KSH_97_P"
+                                 ng-model="form.diagnosKodverk"> Primärvårdskoder
+                        </label>
+                      </div>
+                    </div>
+                    <div class="row bottom-padding-small">
                       <div class='col-xs-3'>
                         <label class="control-label unbreakable">ICD 10</label>
                         <input type="text" class="form-control" id="diagnoseCode" name="diagnose.code" value=""
                                class='diagnose-code col-xs-11 form-control' ng-model="cert.diagnosKod"
-                               typeahead="d.value as d.label for d in getDiagnoseCodes($viewValue) | filter:$viewValue | limitTo:10"
+                               typeahead="d.value as d.label for d in getDiagnoseCodes(form.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
                                typeahead-min-length="3" typeahead-on-select="onDiagnoseCode1Select($item)">
                       </div>
                       <div class='col-xs-9'>
@@ -229,7 +242,7 @@
                         <input type="text" class="form-control maxwidth" id="diagnoseDescription"
                                class="col-xs-12 form-control" name="diagnose.description" value=""
                                ng-model="cert.diagnosBeskrivning1"
-                               typeahead="d.value as d.label for d in searchDiagnoseByDescription($viewValue) | filter:$viewValue "
+                               typeahead="d.value as d.label for d in searchDiagnoseByDescription(form.diagnosKodverk, $viewValue) | filter:$viewValue "
                                typeahead-on-select="onDiagnoseDescription1Select($item)"
                                typeahead-wait-ms="100">
                       </div>
@@ -241,7 +254,7 @@
                           <div class="bottom-padding-small clearfix">
                             <input type="text" id="diagnoseCodeOpt1" name="diagnose.codeOpt1" value=""
                                    ng-model="cert.diagnosKod2" class="col-xs-11 form-control"
-                                   typeahead="d.value as d.label for d in getDiagnoseCodes($viewValue) | filter:$viewValue | limitTo:10"
+                                   typeahead="d.value as d.label for d in getDiagnoseCodes(form.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
                                    typeahead-min-length="3" typeahead-on-select="onDiagnoseCode2Select($item)">
                           </div>
                         </div>
@@ -254,7 +267,7 @@
                         <div class="bottom-padding-small clearfix">
                           <input type="text" id="diagnoseDescriptionOpt1" name="diagnose.descriptionOpt1" value=""
                                  ng-model="cert.diagnosBeskrivning2" class="block col-xs-12 form-control maxwidth"
-                                 typeahead="d.value as d.label for d in searchDiagnoseByDescription($viewValue) | filter:$viewValue "
+                                 typeahead="d.value as d.label for d in searchDiagnoseByDescription(form.diagnosKodverk, $viewValue) | filter:$viewValue "
                                  typeahead-on-select="onDiagnoseDescription2Select($item)"
                                  typeahead-wait-ms="100">
                         </div>
@@ -264,14 +277,14 @@
                       <div class='col-xs-3'>
                         <input type="text" id="diagnoseCodeOpt2" name="diagnose.codeOpt2" value=""
                                ng-model="cert.diagnosKod3" class="col-xs-11 form-control"
-                               typeahead="d.value as d.label for d in getDiagnoseCodes($viewValue) | filter:$viewValue | limitTo:10"
+                               typeahead="d.value as d.label for d in getDiagnoseCodes(form.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
                                typeahead-min-length="3" typeahead-on-select="onDiagnoseCode3Select($item)">
                       </div>
                       <div class='col-xs-9 unbreakable'>
                         <div class="controls">
                           <input type="text" id="diagnoseDescriptionOpt2" name="diagnose.descriptionOpt2" value=""
                                  ng-model="cert.diagnosBeskrivning3" class="block col-xs-12 form-control maxwidth"
-                                 typeahead="d.value as d.label for d in searchDiagnoseByDescription($viewValue) | filter:$viewValue "
+                                 typeahead="d.value as d.label for d in searchDiagnoseByDescription(form.diagnosKodverk, $viewValue) | filter:$viewValue "
                                  typeahead-on-select="onDiagnoseDescription3Select($item)"
                                  typeahead-wait-ms="100">
                         </div>
