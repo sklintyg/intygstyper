@@ -27,6 +27,8 @@ var fk7263Messages = {
         'fk7263.label.delvis': 'Ja, delvis',
         'fk7263.label.diagnos': 'Diagnos/diagnoser för sjukdom som orsakar nedsatt arbetsförmåga',
         'fk7263.label.diagnoskod': 'Diagnoskod enligt ICD-10 (huvuddiagnos): ',
+        'fk7263.label.diagnoskodverk.icd_10_se': 'ICD 10',
+        'fk7263.label.diagnoskodverk.ksh_97_p': 'KSH97-P (Primärvård)',
         'fk7263.label.ytterligarediagnoser': 'Ytterligare diagnoser',
         'fk7263.label.diagnosfortydligande': 'Förtydligande av diagnos/diagnoser',
         'fk7263.label.samsjuklighet': 'Samsjuklighet föreligger',
