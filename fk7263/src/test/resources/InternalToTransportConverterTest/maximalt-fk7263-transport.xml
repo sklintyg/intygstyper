@@ -77,7 +77,7 @@ Problemen har pågått en längre tid.</beskrivning>
     </bedomtTillstand>
     <medicinsktTillstand>
       <beskrivning>Klämskada på skuldra och överarm, Förtydligande: extra klämd</beskrivning>
-      <tillstandskod codeSystemName="ICD-10-SE" code="S47" />
+      <tillstandskod codeSystemName="ICD-10" code="S47" />
     </medicinsktTillstand>
     <funktionstillstand>
       <beskrivning>Funktionstillstånd-Kroppsfunktion: Kraftigt nedsatt rörlighet i överarmen pga skadan.

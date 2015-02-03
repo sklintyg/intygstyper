@@ -4,7 +4,7 @@ public enum Kodverk {
 
     SNOMED_CT("1.2.752.116.2.1.1.1", "SNOMED-CT", null),
 
-    ICD_10("1.2.752.116.1.1.1.1.1", "ICD-10", null),
+    ICD_10("1.2.752.116.1.1.1.1.3", "ICD-10", null),
 
     AKTIVITETER("8040b4d1-67dc-42e1-a938-de5374e9526a", "kv_aktiviteter_intyg", null),
 
