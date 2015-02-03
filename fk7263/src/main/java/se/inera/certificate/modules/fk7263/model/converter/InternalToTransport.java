@@ -397,10 +397,10 @@ public final class InternalToTransport {
     private static MedicinsktTillstandType toMedicinsktTillstand(String diagnoskod, String diagnosbeskrivning, String fortydligande) {
         MedicinsktTillstandType tillstand = new MedicinsktTillstandType();
         ArrayList<String> beskrivning = new ArrayList<>();
-        if (!StringUtils.isBlank(diagnosbeskrivning)) {
+        if (!StringUtils.isEmpty(diagnosbeskrivning)) {
             beskrivning.add(diagnosbeskrivning);
         }
-        if (!StringUtils.isBlank(fortydligande)) {
+        if (!StringUtils.isEmpty(fortydligande)) {
             beskrivning.add(fortydligande);
         }
         if (!beskrivning.isEmpty()) {
