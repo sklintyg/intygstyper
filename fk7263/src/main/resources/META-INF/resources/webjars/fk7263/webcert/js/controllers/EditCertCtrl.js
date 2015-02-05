@@ -1,9 +1,9 @@
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$routeParams',
         'common.CertificateService', 'common.ManageCertView', 'common.User', 'common.wcFocus',
-        'common.intygNotifyService', 'fk7263.diagnosService', 'common.DateUtilsService', 'common.UtilsService',
+        'common.intygNotifyService', 'fk7263.diagnosService', 'common.DateUtilsService', 'common.UtilsService','fk7263.EditCertCtrl.DateRangeGroupModel',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $routeParams,
-            CertificateService, ManageCertView, User, wcFocus, intygNotifyService, diagnosService, dateUtils, utils) {
+            CertificateService, ManageCertView, User, wcFocus, intygNotifyService, diagnosService, dateUtils, utils, DateRangeGroupModel) {
             'use strict';
 
             /**********************************************************************************
@@ -217,265 +217,12 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Private controller support functions
              ***************************************************************************/
 
-
-            /**
-             * Set if date named fieldName should be marked as invalid
-             * @param fieldName
-             * @param value
-             */
-            function setDateInvalidState(fieldName, value) {
-                $scope.nedsattInvalid[fieldName] = value;
-                $scope.certForm[fieldName].$setValidity(fieldName, value);
-            }
-
-            /**
-             * Reset date invalid states to not invalid
-             */
-            function resetDateInvalidStates() {
-                var groups = ['nedsattMed25from', 'nedsattMed25tom', 'nedsattMed50from', 'nedsattMed50tom',
-                    'nedsattMed75from', 'nedsattMed75tom', 'nedsattMed100from', 'nedsattMed100tom'];
-                for (var i = 0; i < groups.length; i++) {
-                    setDateInvalidState(groups[i], false);
-                }
-            }
-
-            /**
-             * Create a date range object
-             * @param groupName
-             * @returns {{fromName: string, tomName: string}}
-             */
-            function createDateRangeGroup(groupName, strict, useModelValue) {
-                var dateRangeGroup = {
-                    fromName: groupName + 'from',
-                    tomName: groupName + 'tom'
-                };
-
-                if (useModelValue) {
-                    if ($scope.cert[groupName]) {
-                        dateRangeGroup.nedsattFrom = $scope.cert[groupName].from;
-                        dateRangeGroup.nedsattTom = $scope.cert[groupName].tom;
-                    }
-                } else {
-                    dateRangeGroup.nedsattFrom = $scope.certForm[dateRangeGroup.fromName].$viewValue;
-                    dateRangeGroup.nedsattTom = $scope.certForm[dateRangeGroup.tomName].$viewValue;
-                }
-
-                if (strict === undefined || strict === true) {
-                    dateRangeGroup.nedsattFrom = dateUtils.convertDateStrict($scope.certForm[dateRangeGroup.fromName].$viewValue);
-                    dateRangeGroup.nedsattTom = dateUtils.convertDateStrict($scope.certForm[dateRangeGroup.tomName].$viewValue);
-                } else {
-                    dateRangeGroup.nedsattFrom = $scope.certForm[dateRangeGroup.fromName].$viewValue;
-                    dateRangeGroup.nedsattTom = $scope.certForm[dateRangeGroup.tomName].$viewValue;
-                }
-
-                /**
-                 * Check if dateFieldName is marked as invalid
-                 * @param group
-                 * @returns {*}
-                 */
-                function isMarkedInvalid(dateFieldName) {
-                    return $scope.nedsattInvalid[dateFieldName];
-                }
-
-                dateRangeGroup.isMarkedInvalid = function() {
-                    return isMarkedInvalid(dateRangeGroup.fromName) || isMarkedInvalid(dateRangeGroup.tomName);
-                };
-
-                dateRangeGroup.hasValidDates = function() {
-                    return (utils.isValidString(dateRangeGroup.nedsattFrom) && utils.isValidString(dateRangeGroup.nedsattTom));
-                };
-
-                dateRangeGroup.isValid = function() {
-                    return (dateRangeGroup.hasValidDates() && !dateRangeGroup.isMarkedInvalid());
-                };
-
-                dateRangeGroup.isSame = function(otherGroup) {
-                    return (dateRangeGroup.fromName === otherGroup.fromName);
-                };
-
-                return dateRangeGroup;
-            }
-
-            /**
-             * Revalidate 8b dates
-             */
-            function validateDates(useModelValue) {
-                resetDateInvalidStates();
-                validateDateRangeOrder(useModelValue); // Set invalid if from dates are after tom dates
-                validateDatePeriods(useModelValue); // Set invalid if date periods overlap
-            }
-
-            /**
-             * Validate order of dates within a group
-             */
-            function validateDateRangeOrder(useModelValue) {
-
-                // Update others still marked as invalid as well if they previously conflicted with the changed one
-                var groups = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
-                for (var i = 0; i < groups.length; i++) {
-                    var dateGroup = createDateRangeGroup(groups[i], false, useModelValue);
-                    if (dateGroup.isValid()) {
-                        var momentFrom = dateUtils.toMoment(dateGroup.nedsattFrom);
-                        var momentTom = dateUtils.toMoment(dateGroup.nedsattTom);
-                        if (momentFrom.isValid() && momentTom.isValid() &&
-                            dateUtils.toMoment(dateGroup.nedsattFrom).isAfter(dateUtils.toMoment(dateGroup.nedsattTom))) {
-                            setDateInvalidState(dateGroup.fromName, true);
-                            setDateInvalidState(dateGroup.tomName, true);
-                        } else {
-                            setDateInvalidState(dateGroup.fromName, false);
-                            setDateInvalidState(dateGroup.tomName, false);
-                        }
-                    } else {
-                        setDateInvalidState(dateGroup.fromName, false);
-                        setDateInvalidState(dateGroup.tomName, false);
-                    }
-                }
-            }
-
-            /**
-             * Mark overlapping dates as invalid comparing the provided dates
-             * @param nedsattGroup1
-             * @param nedsattGroup2
-             */
-            function markOverlappingDates(nedsattGroup1, nedsattGroup2) {
-
-                if (nedsattGroup1.hasValidDates() && nedsattGroup2.hasValidDates()) {
-                    if (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isSame(nedsattGroup2.nedsattFrom, 'day')) {
-                        setDateInvalidState(nedsattGroup1.fromName, true);
-                        setDateInvalidState(nedsattGroup2.fromName, true);
-                    }
-                    if (dateUtils.toMoment(nedsattGroup1.nedsattTom).isSame(nedsattGroup2.nedsattFrom, 'day')) {
-                        setDateInvalidState(nedsattGroup1.tomName, true);
-                        setDateInvalidState(nedsattGroup2.fromName, true);
-                    }
-                    if (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isSame(nedsattGroup2.nedsattTom, 'day')) {
-                        setDateInvalidState(nedsattGroup1.fromName, true);
-                        setDateInvalidState(nedsattGroup2.tomName, true);
-                    }
-                    if (dateUtils.toMoment(nedsattGroup1.nedsattTom).isSame(nedsattGroup2.nedsattTom, 'day')) {
-                        setDateInvalidState(nedsattGroup1.tomName, true);
-                        setDateInvalidState(nedsattGroup2.tomName, true);
-                    }
-
-                    if ((dateUtils.toMoment(nedsattGroup1.nedsattTom).isAfter(nedsattGroup2.nedsattFrom) &&
-                        dateUtils.toMoment(nedsattGroup1.nedsattFrom).isBefore(nedsattGroup2.nedsattFrom)) || // first group overlaps in front
-                        (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isBefore(nedsattGroup2.nedsattTom) &&
-                        dateUtils.toMoment(nedsattGroup1.nedsattTom).isAfter(nedsattGroup2.nedsattTom)) || // first group overlaps behind
-                        (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isBefore(nedsattGroup2.nedsattFrom) &&
-                        dateUtils.toMoment(nedsattGroup1.nedsattTom).isAfter(nedsattGroup2.nedsattTom)) || // first group wraps second group
-                        (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isAfter(nedsattGroup2.nedsattFrom) &&
-                        dateUtils.dateUtils.toMoment(nedsattGroup1.nedsattTom).isBefore(nedsattGroup2.nedsattTom))) { // second group wraps first group
-                        setDateInvalidState(nedsattGroup1.fromName, true);
-                        setDateInvalidState(nedsattGroup1.tomName, true);
-                        setDateInvalidState(nedsattGroup2.fromName, true);
-                        setDateInvalidState(nedsattGroup2.tomName, true);
-                    }
-                }
-            }
-
-            /**
-             * Validate 8b date periods so they don't overlap or wrap in any way
-             */
-            function validateDatePeriods(useModelValue) {
-                var groups = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
-
-                // for every nedsatt group
-                for (var i = 0; i < groups.length; i++) {
-
-                    // where group is used, set and not already marked as invalid
-                    var dateGroup = createDateRangeGroup(groups[i], false, useModelValue);
-
-                    // check with all other period groups after nedsatt period if periods overlap
-                    for (var j = i + 1; j < groups.length; j++) {
-
-                        // dont check against unused dates and already invalid dates
-                        var compareNedsattGroup = createDateRangeGroup(groups[j], false, useModelValue);
-                        markOverlappingDates(dateGroup, compareNedsattGroup);
-                    }
-                }
-            }
-
-            /**
-             * 8b: find earliest and latest dates (as moment objects) for arbetsförmåga
-             * @returns {{minMoment: null, maxMoment: null}}
-             */
-            function findStartEndMoments(useModelValue) {
-                var moments = {
-                    minMoment: null,
-                    maxMoment: null
-                };
-                var startMoments = [];
-                var endMoments = [];
-
-                var nedsattMedList = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
-
-                angular.forEach(nedsattMedList, function(nedsattMed) {
-
-                    var dateValue = null;
-
-                    if (useModelValue) {
-                        if ($scope.cert[nedsattMed] && $scope.cert[nedsattMed].from) {
-                            dateValue = $scope.cert[nedsattMed].from;
-                        }
-                    } else {
-                        dateValue = $scope.certForm[nedsattMed + 'from'].$viewValue;
-                    }
-                    dateUtils.pushValidDate(startMoments, dateValue);
-
-                    dateValue = null;
-                    if (useModelValue) {
-                        if ($scope.cert[nedsattMed] && $scope.cert[nedsattMed].tom) {
-                            dateValue = $scope.cert[nedsattMed].tom;
-                        }
-                    } else {
-                        dateValue = $scope.certForm[nedsattMed + 'tom'].$viewValue;
-                    }
-                    dateUtils.pushValidDate(endMoments, dateValue);
-                });
-
-                if (startMoments.length > 0) {
-                    moments.minMoment = moment.min(startMoments);
-                }
-                if (endMoments.length > 0) {
-                    moments.maxMoment = moment.max(endMoments);
-                }
-
-                return moments;
-            }
-
-            /**
-             * 8b: Called when checks or dates for Arbetsförmåga are changed. Update dependency controls here
-             */
-            function onArbetsformagaDatesUpdated(useModelValue) {
-                $scope.updateTotalCertDays(useModelValue);
-
-                var minMaxMoments = findStartEndMoments(useModelValue);
-                checkArbetsformagaDatesRange(minMaxMoments.minMoment);
-                checkArbetsformagaDatesPeriodLength(minMaxMoments.minMoment, minMaxMoments.maxMoment);
-            }
-
-            /**
-             * 8b: Check that the earliest startdate in arbetsförmåga is no more than a week before today and no more than 6 months in the future
-             * @type {boolean}
-             */
-            function checkArbetsformagaDatesRange(startMoment) {
-                $scope.datesOutOfRange = (dateUtils.olderThanAWeek(startMoment) || dateUtils.isDateOutOfRange(startMoment));
-            }
-
-            /**
-             * 8b: Check that the period between the earliest startdate and the latest end date is no more than 6 months in the future
-             * @type {boolean}
-             */
-            function checkArbetsformagaDatesPeriodLength(startMoment, endMoment) {
-                $scope.datesPeriodTooLong = !dateUtils.areDatesWithinMonthRange(startMoment, endMoment);
-            }
-
+            // -- start registerDateParsers
             /**
              * Register date parsers
              * @param $scope
              */
-
-            function registerDateParsers() {
+            function registerDateParsers(_$scope) {
 
                 // Register parse function for 4b date pickers
                 var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter',
@@ -562,6 +309,224 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     }
                 }, $scope.cert);
             }
+
+            // ---- start validate dates
+            /**
+             * Revalidate 8b dates
+             */
+            function validateDates(useModelValue) {
+                resetDateInvalidStates();
+                validateDateRangeOrder(useModelValue); // Set invalid if from dates are after tom dates
+                validateDatePeriods(useModelValue); // Set invalid if date periods overlap
+            }
+
+            /**
+             * Reset date invalid states to not invalid
+             */
+            function resetDateInvalidStates() {
+                var groups = ['nedsattMed25from', 'nedsattMed25tom', 'nedsattMed50from', 'nedsattMed50tom',
+                    'nedsattMed75from', 'nedsattMed75tom', 'nedsattMed100from', 'nedsattMed100tom'];
+                for (var i = 0; i < groups.length; i++) {
+                    setDateInvalidState(groups[i], false);
+                }
+            }
+
+            /**
+             * Validate order of dates within a group
+             */
+            function validateDateRangeOrder(useModelValue) {
+
+                // Update others still marked as invalid as well if they previously conflicted with the changed one
+                var groups = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
+                for (var i = 0; i < groups.length; i++) {
+                    var dateGroup = createDateRangeGroup(groups[i], false, useModelValue);
+                    if (dateGroup.isValid()) {
+                        var momentFrom = dateUtils.toMoment(dateGroup.nedsattFrom);
+                        var momentTom = dateUtils.toMoment(dateGroup.nedsattTom);
+                        if (momentFrom.isValid() && momentTom.isValid() &&
+                            dateUtils.toMoment(dateGroup.nedsattFrom).isAfter(dateUtils.toMoment(dateGroup.nedsattTom))) {
+                            setDateInvalidState(dateGroup.fromName, true);
+                            setDateInvalidState(dateGroup.tomName, true);
+                        } else {
+                            setDateInvalidState(dateGroup.fromName, false);
+                            setDateInvalidState(dateGroup.tomName, false);
+                        }
+                    } else {
+                        setDateInvalidState(dateGroup.fromName, false);
+                        setDateInvalidState(dateGroup.tomName, false);
+                    }
+                }
+            }
+
+            // ------ start validateDatePeriods
+            /**
+             * Validate 8b date periods so they don't overlap or wrap in any way
+             */
+            function validateDatePeriods(useModelValue) {
+                var groups = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
+
+                // for every nedsatt group
+                for (var i = 0; i < groups.length; i++) {
+
+                    // where group is used, set and not already marked as invalid
+                    var dateGroup = createDateRangeGroup(groups[i], false, useModelValue);
+
+                    // check with all other period groups after nedsatt period if periods overlap
+                    for (var j = i + 1; j < groups.length; j++) {
+
+                        // dont check against unused dates and already invalid dates
+                        var compareNedsattGroup = createDateRangeGroup(groups[j], false, useModelValue);
+                        markOverlappingDates(dateGroup, compareNedsattGroup);
+                    }
+                }
+            }
+
+            /**
+             *
+             * @param groupName
+             * @param strict
+             * @param useModelValue
+             * @returns {DateRangeGroup}
+             */
+            function createDateRangeGroup(groupName, strict, useModelValue) {
+                return DateRangeGroupModel.build($scope.cert, $scope.certForm, $scope.nedsattInvalid, groupName, strict, useModelValue);
+            }
+
+            /**
+             * Mark overlapping dates as invalid comparing the provided dates
+             * @param nedsattGroup1
+             * @param nedsattGroup2
+             */
+            function markOverlappingDates(nedsattGroup1, nedsattGroup2) {
+
+                if (nedsattGroup1.hasValidDates() && nedsattGroup2.hasValidDates()) {
+                    if (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isSame(nedsattGroup2.nedsattFrom, 'day')) {
+                        setDateInvalidState(nedsattGroup1.fromName, true);
+                        setDateInvalidState(nedsattGroup2.fromName, true);
+                    }
+                    if (dateUtils.toMoment(nedsattGroup1.nedsattTom).isSame(nedsattGroup2.nedsattFrom, 'day')) {
+                        setDateInvalidState(nedsattGroup1.tomName, true);
+                        setDateInvalidState(nedsattGroup2.fromName, true);
+                    }
+                    if (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isSame(nedsattGroup2.nedsattTom, 'day')) {
+                        setDateInvalidState(nedsattGroup1.fromName, true);
+                        setDateInvalidState(nedsattGroup2.tomName, true);
+                    }
+                    if (dateUtils.toMoment(nedsattGroup1.nedsattTom).isSame(nedsattGroup2.nedsattTom, 'day')) {
+                        setDateInvalidState(nedsattGroup1.tomName, true);
+                        setDateInvalidState(nedsattGroup2.tomName, true);
+                    }
+
+                    if ((dateUtils.toMoment(nedsattGroup1.nedsattTom).isAfter(nedsattGroup2.nedsattFrom) &&
+                        dateUtils.toMoment(nedsattGroup1.nedsattFrom).isBefore(nedsattGroup2.nedsattFrom)) || // first group overlaps in front
+                        (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isBefore(nedsattGroup2.nedsattTom) &&
+                        dateUtils.toMoment(nedsattGroup1.nedsattTom).isAfter(nedsattGroup2.nedsattTom)) || // first group overlaps behind
+                        (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isBefore(nedsattGroup2.nedsattFrom) &&
+                        dateUtils.toMoment(nedsattGroup1.nedsattTom).isAfter(nedsattGroup2.nedsattTom)) || // first group wraps second group
+                        (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isAfter(nedsattGroup2.nedsattFrom) &&
+                        dateUtils.toMoment(nedsattGroup1.nedsattTom).isBefore(nedsattGroup2.nedsattTom))) { // second group wraps first group
+                        setDateInvalidState(nedsattGroup1.fromName, true);
+                        setDateInvalidState(nedsattGroup1.tomName, true);
+                        setDateInvalidState(nedsattGroup2.fromName, true);
+                        setDateInvalidState(nedsattGroup2.tomName, true);
+                    }
+                }
+            }
+
+
+            // ------ end validateDatePeriods
+
+            /**
+             * Set if date named fieldName should be marked as invalid.
+             * This is used by resetDateInvalidStates, validateDateRangeOrder and markOverlappingDates.
+             * @param fieldName
+             * @param value
+             */
+            function setDateInvalidState(fieldName, value) {
+                $scope.nedsattInvalid[fieldName] = value;
+                $scope.certForm[fieldName].$setValidity(fieldName, value);
+            }
+
+
+            // ---- end validate dates
+
+            /**
+             * 8b: Called when checks or dates for Arbetsförmåga are changed. Update dependency controls here
+             */
+            function onArbetsformagaDatesUpdated(useModelValue) {
+                $scope.updateTotalCertDays(useModelValue);
+
+                var minMaxMoments = findStartEndMoments(useModelValue);
+                checkArbetsformagaDatesRange(minMaxMoments.minMoment);
+                checkArbetsformagaDatesPeriodLength(minMaxMoments.minMoment, minMaxMoments.maxMoment);
+            }
+
+            /**
+             * 8b: find earliest and latest dates (as moment objects) for arbetsförmåga
+             * @returns {{minMoment: null, maxMoment: null}}
+             */
+            function findStartEndMoments(useModelValue) {
+                var moments = {
+                    minMoment: null,
+                    maxMoment: null
+                };
+                var startMoments = [];
+                var endMoments = [];
+
+                var nedsattMedList = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
+
+                angular.forEach(nedsattMedList, function(nedsattMed) {
+
+                    var dateValue = null;
+
+                    if (useModelValue) {
+                        if ($scope.cert[nedsattMed] && $scope.cert[nedsattMed].from) {
+                            dateValue = $scope.cert[nedsattMed].from;
+                        }
+                    } else {
+                        dateValue = $scope.certForm[nedsattMed + 'from'].$viewValue;
+                    }
+                    dateUtils.pushValidDate(startMoments, dateValue);
+
+                    dateValue = null;
+                    if (useModelValue) {
+                        if ($scope.cert[nedsattMed] && $scope.cert[nedsattMed].tom) {
+                            dateValue = $scope.cert[nedsattMed].tom;
+                        }
+                    } else {
+                        dateValue = $scope.certForm[nedsattMed + 'tom'].$viewValue;
+                    }
+                    dateUtils.pushValidDate(endMoments, dateValue);
+                });
+
+                if (startMoments.length > 0) {
+                    moments.minMoment = moment.min(startMoments);
+                }
+                if (endMoments.length > 0) {
+                    moments.maxMoment = moment.max(endMoments);
+                }
+
+                return moments;
+            }
+
+            /**
+             * 8b: Check that the earliest startdate in arbetsförmåga is no more than a week before today and no more than 6 months in the future
+             * @type {boolean}
+             */
+            function checkArbetsformagaDatesRange(startMoment) {
+                $scope.datesOutOfRange = (dateUtils.olderThanAWeek(startMoment) || dateUtils.isDateOutOfRange(startMoment));
+            }
+
+            /**
+             * 8b: Check that the period between the earliest startdate and the latest end date is no more than 6 months in the future
+             * @type {boolean}
+             */
+            function checkArbetsformagaDatesPeriodLength(startMoment, endMoment) {
+                $scope.datesPeriodTooLong = !dateUtils.areDatesWithinMonthRange(startMoment, endMoment);
+            }
+
+            // -- end registerDateParsers
+
 
             /**
              * Convert internal model to form temporary data bindings
@@ -1056,7 +1021,9 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             ManageCertView.load($scope, $scope.certMeta.intygType, function(cert) {
                 // Decorate intygspecific default data
                 $scope.cert = cert;
-                registerDateParsers();
+
+                registerDateParsers($scope);
+
                 convertCertToForm($scope);
                 $timeout(function() {
                     wcFocus('firstInput');
