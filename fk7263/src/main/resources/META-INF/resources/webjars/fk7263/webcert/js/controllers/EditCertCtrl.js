@@ -1019,6 +1019,12 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
                 // Get the certificate draft from the server.
             ManageCertView.load($scope, $scope.certMeta.intygType, function(cert) {
+                // check that the certs status is not signed
+                if($scope.isSigned){
+                    // just change straight to the intyg
+                    $location.url('/intyg/' + $scope.certMeta.intygType + '/' + $scope.certMeta.intygId);
+                }
+
                 // Decorate intygspecific default data
                 $scope.cert = cert;
 
