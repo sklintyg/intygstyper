@@ -79,7 +79,7 @@
   <medicinsktTillstand>
     <beskrivning>
     </beskrivning>
-    <tillstandskod codeSystemName="ICD-10-SE" code="S47" />
+    <tillstandskod codeSystemName="ICD-10" code="S47" />
   </medicinsktTillstand>
   <funktionstillstand>
     <beskrivning>

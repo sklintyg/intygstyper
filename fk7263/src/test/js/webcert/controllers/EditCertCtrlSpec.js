@@ -24,6 +24,8 @@ describe('EditCertCtrl', function() {
         $provide.value('common.wcFocus', {});
         $provide.value('common.intygNotifyService', {});
         $provide.value('common.diagnosService', {});
+        $provide.value('common.DateUtilsService', {});
+        $provide.value('common.UtilsService', {});
     }));
 
     // Get references to the object we want to test from the context.
