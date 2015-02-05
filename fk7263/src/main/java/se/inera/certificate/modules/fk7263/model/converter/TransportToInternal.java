@@ -243,8 +243,9 @@ public final class TransportToInternal {
         }
         utlatande.setDiagnosBeskrivning(source.getBeskrivning());
         utlatande.setDiagnosKod(source.getTillstandskod().getCode());
-        if (source.getTillstandskod().getCodeSystem() != null) {
-            utlatande.setDiagnosKodsystem1(source.getTillstandskod().getCodeSystem());
+        Diagnoskodverk kodverk = Diagnoskodverk.getEnumByCodeSystem(source.getTillstandskod().getCodeSystem());
+        if (source.getTillstandskod().getCodeSystem() != null &&  kodverk != null) {
+            utlatande.setDiagnosKodsystem1(kodverk.name());
         } else {
             utlatande.setDiagnosKodsystem1(Diagnoskodverk.ICD_10_SE.name());
         }
