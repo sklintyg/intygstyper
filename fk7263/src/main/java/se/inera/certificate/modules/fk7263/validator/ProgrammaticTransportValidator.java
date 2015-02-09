@@ -273,8 +273,9 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
             // Fält 2 - Medicinskt tillstånd kodsystemnamn - mandatory
             if (medTillstand.getTillstandskod() == null
                     || medTillstand.getTillstandskod().getCodeSystemName() == null
-                    || !medTillstand.getTillstandskod().getCodeSystemName().equalsIgnoreCase(Diagnoskodverk.ICD_10_SE.getCodeSystemName())) {
-                addValidationError("Wrong code system name for medicinskt tillstand - tillstandskod (diagnoskod)! Should be ICD-10");
+                    || !(medTillstand.getTillstandskod().getCodeSystemName().equalsIgnoreCase(Diagnoskodverk.ICD_10_SE.getCodeSystemName())
+                    ||   medTillstand.getTillstandskod().getCodeSystemName().equalsIgnoreCase(Diagnoskodverk.KSH_97_P.getCodeSystemName()))) {
+                addValidationError("Wrong code system name for medicinskt tillstand - tillstandskod (diagnoskod)! Should be ICD-10 OR KSH97P");
             }
             // Fält 2 - Medicinskt tillstånd beskrivning - optional
 

@@ -35,7 +35,7 @@ public class InternalDraftValidatorTest {
 
     @Before
     public void setUpModuleServiceExpectation() throws Exception {
-        Mockito.when(mockModuleService.validateDiagnosisCode(Mockito.argThat(new DiagnosKodArgmentMatcher()))).thenReturn(true);
+        Mockito.when(mockModuleService.validateDiagnosisCode(Mockito.argThat(new DiagnosKodArgmentMatcher()), Mockito.anyString())).thenReturn(true);
     }
 
     @Test

@@ -55,6 +55,7 @@
     "diagnosKod" : "S47",
     "diagnosBeskrivning1": "Klämskada på skuldra och överarm",
     "diagnosBeskrivning": "Förtydligande: extra klämd",
+    "diagnosKodsystem1" : "ICD_10_SE",
 
     "nuvarandeArbete":true,
     "nuvarandeArbetsuppgifter":"Dirigent. Dirigerar en större orkester på deltid",

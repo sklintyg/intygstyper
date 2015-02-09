@@ -39,7 +39,7 @@
 		</vardkontakt>
 
 		<medicinsktTillstand>
-			<tillstandskod code="S47" />
+			<tillstandskod code="S47"/>
 		</medicinsktTillstand>
 		
 		<aktivitet>

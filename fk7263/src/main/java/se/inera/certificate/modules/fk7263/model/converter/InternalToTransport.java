@@ -6,9 +6,9 @@ import iso.v21090.dt.v1.II;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.inera.certificate.codes.Diagnoskodverk;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import se.inera.certificate.codes.Diagnoskodverk;
 import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
@@ -74,7 +74,7 @@ public final class InternalToTransport {
         }
 
         if (!isNullOrEmpty(source.getDiagnosKod())) {
-            register.getLakarutlatande().setMedicinsktTillstand(toMedicinsktTillstand(source.getDiagnosKod(), source.getDiagnosBeskrivning1(), source.getDiagnosBeskrivning()));
+            register.getLakarutlatande().setMedicinsktTillstand(toMedicinsktTillstand(source.getDiagnosKod(), source.getDiagnosBeskrivning1(), source.getDiagnosKodsystem1(), source.getDiagnosBeskrivning()));
         }
 
         convertAktiviteter(register, source);
@@ -394,7 +394,7 @@ public final class InternalToTransport {
         }
     }
 
-    private static MedicinsktTillstandType toMedicinsktTillstand(String diagnoskod, String diagnosbeskrivning, String fortydligande) {
+    private static MedicinsktTillstandType toMedicinsktTillstand(String diagnoskod, String diagnosbeskrivning, String diagnosKodsystem, String fortydligande) {
         MedicinsktTillstandType tillstand = new MedicinsktTillstandType();
         ArrayList<String> beskrivning = new ArrayList<>();
         if (!StringUtils.isEmpty(diagnosbeskrivning)) {
@@ -406,7 +406,10 @@ public final class InternalToTransport {
         if (!beskrivning.isEmpty()) {
             tillstand.setBeskrivning(StringUtils.join(beskrivning, ", "));
         }
-        tillstand.setTillstandskod(createCD(diagnoskod, null, Diagnoskodverk.ICD_10_SE.getCodeSystemName()));
+        String codeSystem = diagnosKodsystem != null ? Diagnoskodverk.valueOf(diagnosKodsystem).getCodeSystem() : null;
+        String codeSystemName = diagnosKodsystem != null ? Diagnoskodverk.valueOf(diagnosKodsystem).getCodeSystemName() : null;
+        
+        tillstand.setTillstandskod(createCD(diagnoskod, codeSystem, codeSystemName));
         return tillstand;
     }
 
@@ -415,9 +418,14 @@ public final class InternalToTransport {
         cd.setCode(code);
         if (codeSystem != null) {
             cd.setCodeSystem(codeSystem);
-        }
+        } 
+//        else {
+//            cd.setCodeSystem(Kodverk.ICD_10_SE.getCodeSystem());
+//        }
         if (codeSystemName != null) {
             cd.setCodeSystemName(codeSystemName);
+        } else {
+            cd.setCodeSystemName(Diagnoskodverk.ICD_10_SE.getCodeSystemName());
         }
         return cd;
     }

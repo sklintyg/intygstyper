@@ -6,6 +6,8 @@ import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import se.inera.certificate.codes.Diagnoskodverk;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.service.WebcertModuleService;
@@ -195,31 +197,46 @@ public class InternalDraftValidator {
         }
 
         if (!isNullOrEmpty(utlatande.getDiagnosKod())) {
-            validateDiagnosKod(utlatande.getDiagnosKod(), "diagnos", "fk7263.validation.diagnos.invalid", validationMessages);
+            String kodsystem = utlatande.getDiagnosKodsystem1();
+            if (isNullOrEmpty(kodsystem)) {
+                //Default to ICD-10
+                kodsystem = Diagnoskodverk.ICD_10_SE.name();
+            }
+            validateDiagnosKod(utlatande.getDiagnosKod(), kodsystem, "diagnos", "fk7263.validation.diagnos.invalid", validationMessages);
         } else {
             addValidationError(validationMessages, "diagnos", "fk7263.validation.diagnos.missing");
         }
 
         // Validate bidiagnos 1
         if (!isNullOrEmpty(utlatande.getDiagnosKod2())) {
-            validateDiagnosKod(utlatande.getDiagnosKod2(), "diagnos", "fk7263.validation.diagnos2.invalid", validationMessages);
+            String kodsystem = utlatande.getDiagnosKodsystem2();
+            if (isNullOrEmpty(kodsystem)) {
+                //Default to ICD-10
+                kodsystem = Diagnoskodverk.ICD_10_SE.name();
+            }
+            validateDiagnosKod(utlatande.getDiagnosKod2(), kodsystem, "diagnos", "fk7263.validation.diagnos2.invalid", validationMessages);
         }
 
         // Validate bidiagnos 2
         if (!isNullOrEmpty(utlatande.getDiagnosKod3())) {
-            validateDiagnosKod(utlatande.getDiagnosKod3(), "diagnos", "fk7263.validation.diagnos3.invalid", validationMessages);
+            String kodsystem = utlatande.getDiagnosKodsystem3();
+            if (isNullOrEmpty(kodsystem)) {
+                //Default to ICD-10
+                kodsystem = Diagnoskodverk.ICD_10_SE.name();
+            }
+            validateDiagnosKod(utlatande.getDiagnosKod3(), kodsystem, "diagnos", "fk7263.validation.diagnos3.invalid", validationMessages);
         }
 
     }
 
-    private void validateDiagnosKod(String diagnosKod, String field, String msgKey, List<ValidationMessage> validationMessages) {
+    private void validateDiagnosKod(String diagnosKod, String kodsystem, String field, String msgKey, List<ValidationMessage> validationMessages) {
         // if moduleService is not available, skip this validation
         if (moduleService == null) {
             LOG.warn("Forced to skip validation of diagnosKod since an implementation of ModuleService is not available");
             return;
         }
 
-        if (!moduleService.validateDiagnosisCode(diagnosKod)) {
+        if (!moduleService.validateDiagnosisCode(diagnosKod, kodsystem)) {
             addValidationError(validationMessages, field, msgKey);
         }
     }

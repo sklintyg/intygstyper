@@ -7,6 +7,7 @@ import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import se.inera.certificate.codes.Diagnoskodverk;
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.LocalDateInterval;
@@ -242,6 +243,12 @@ public final class TransportToInternal {
         }
         utlatande.setDiagnosBeskrivning(source.getBeskrivning());
         utlatande.setDiagnosKod(source.getTillstandskod().getCode());
+        Diagnoskodverk kodverk = Diagnoskodverk.getEnumByCodeSystem(source.getTillstandskod().getCodeSystem());
+        if (source.getTillstandskod().getCodeSystem() != null &&  kodverk != null) {
+            utlatande.setDiagnosKodsystem1(kodverk.name());
+        } else {
+            utlatande.setDiagnosKodsystem1(Diagnoskodverk.ICD_10_SE.name());
+        }
     }
 
     /**
