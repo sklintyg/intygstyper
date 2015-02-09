@@ -831,8 +831,8 @@
                   </div>
                 </div>
 
-                <button id="signera-utkast-button" class="btn btn-success" ng-disabled="!isComplete || certForm.$dirty"
-                        ng-click="sign()" ng-show="user.userContext.lakare"><span message key="common.sign"></span>
+                <button id="signera-utkast-button" class="btn btn-success" ng-disabled="!isComplete || certForm.$dirty || signingWithSITHSInProgress"
+                        ng-click="sign()" ng-show="user.userContext.lakare"><img ng-show="signingWithSITHSInProgress" ng-src="/img/ajax-loader-small-green.gif"/> <span message key="common.sign"></span>
                 </button>
 
               </div>
