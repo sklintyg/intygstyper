@@ -75,15 +75,23 @@ public class WebcertModelFactory {
     public Utlatande createCopy(CreateDraftCopyHolder copyData, Utlatande template) throws ConverterException {
 
         LOG.trace("Creating copy with id {} from {}", copyData.getCertificateId(), template.getId());
-        
+
         populateWithId(template, copyData.getCertificateId());
         populateWithSkapadAv(template, copyData.getSkapadAv());
-        
+
         if (copyData.hasPatient()) {
             populateWithPatientInfo(template, copyData.getPatient());
         }
-        
+
+        if (copyData.hasNewPersonnummer()) {
+            populateWithNewPersonnummer(template, copyData.getNewPersonnummer());
+        }
+
         return template;
+    }
+
+    private void populateWithNewPersonnummer(Utlatande template, String newPersonnummer) {
+        template.getGrundData().getPatient().setPersonId(newPersonnummer);
     }
 
     private void populateWithId(Utlatande utlatande, String utlatandeId) throws ConverterException {
