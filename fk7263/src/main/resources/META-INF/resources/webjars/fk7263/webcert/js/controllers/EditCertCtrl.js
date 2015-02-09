@@ -100,6 +100,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             };
             $scope.onDiagnoseCode1Select = function($item) {
                 $scope.cert.diagnosBeskrivning1 = $item.beskrivning;
+
             };
             $scope.onDiagnoseCode2Select = function($item) {
                 $scope.cert.diagnosBeskrivning2 = $item.beskrivning;

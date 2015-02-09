@@ -787,7 +787,7 @@
                         <label class="col-xs-3 control-label">Telefonnummer</label>
                         <div class="col-xs-9">
                           <input type="text" class="form-control" id="clinicInfoPhone" name="clinicInfo.phone"
-                                 ng-model="cert.grundData.skapadAv.vardenhet.telefonnummer">
+                                 ng-model="cert.grundData.skapadAv.vardenhet.telefonnummer" >
                         </div>
                       </div>
                     </div>
@@ -839,6 +839,8 @@
 
             </div>
           </div>
+
+          <span wc-disable-key-down wc-disable-key-down-elements=":text,:checkbox,:radio" wc-disable-key-down-done-loading="widgetState.doneLoading"/>
         </form>
       </div>
 
