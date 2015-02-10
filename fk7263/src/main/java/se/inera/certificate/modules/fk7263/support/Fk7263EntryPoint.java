@@ -1,42 +1,46 @@
 package se.inera.certificate.modules.fk7263.support;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import se.inera.certificate.modules.fk7263.rest.Fk7263ModuleApi;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.ModuleEntryPoint;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.feature.ModuleFeaturesFactory;
 
+import java.util.Map;
+
 public class Fk7263EntryPoint implements ModuleEntryPoint {
 
     public static final String FK_7263 = "fk7263";
-    private static final String FORSAKRINGSKASSAN_LOGICAL_ADDRESS = "FKORG";
+
+    public static final String DEFAULT_RECIPIENT_ID = "FK";
+
+    public static final String MODULE_ID = "fk7263";
+    public static final String MODULE_NAME = "Läkarintyg FK 7263";
+    public static final String MODULE_DESCRIPTION = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
+
 
     @Autowired
     private Fk7263ModuleApi moduleApi;
 
     @Override
+    public String getDefaultRecipient() {
+        return DEFAULT_RECIPIENT_ID;
+    }
+
+    @Override
     public String getModuleId() {
-        return "fk7263";
+        return MODULE_ID;
     }
 
     @Override
     public String getModuleName() {
-        return "Läkarintyg FK 7263";
+        return MODULE_NAME;
     }
 
     @Override
     public String getModuleDescription() {
-        // TODO
-        return "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
-    }
-
-    @Override
-    public String getDefaultRecieverLogicalAddress() {
-        return FORSAKRINGSKASSAN_LOGICAL_ADDRESS;
+        return MODULE_DESCRIPTION;
     }
 
     @Override

@@ -175,12 +175,14 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
-    public void sendCertificateToRecipient(InternalModelHolder internalModel, String recipient) throws ModuleException {
+    public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
         try {
             Utlatande utlatande = converterUtil.fromJsonString(internalModel.getInternalModel());
             Object request = InternalToTransport.getJaxbObject(utlatande);
+
             AttributedURIType address = new AttributedURIType();
-            address.setValue(recipient);
+            address.setValue(logicalAddress);
+
             RegisterMedicalCertificateResponseType response = registerMedicalCertificateClient
                     .registerMedicalCertificate(address, (RegisterMedicalCertificateType) request);
 
