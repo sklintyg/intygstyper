@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.codes.Diagnoskodverk;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
+import se.inera.certificate.modules.fk7263.support.Fk7263EntryPoint;
 import se.inera.certificate.schema.Constants;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
@@ -33,7 +34,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.validate.PatientValidator;
  * Validates presence and validity of formal external model properties such as OID's. Preferably this validation should
  * have been implemented using Schema Validation, but since this is not an option we perform this pre-validation in
  * code. more specific business rules should subsequently validated in {@see UtlatandeValidator}
- * 
+ *
  * @author marced
  */
 public class ProgrammaticTransportValidator extends AbstractValidator {
@@ -111,9 +112,9 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
 
         String typ = utlatande.getTypAvUtlatande();
 
-        if (typ == null || !TransportToInternal.LEGACY_TYP.equals(typ)) {
+        if (typ == null || !Fk7263EntryPoint.MODULE_DESCRIPTION.equals(typ)) {
             addValidationError("Head: Invalid utlatandetyp - must be "
-                    + TransportToInternal.LEGACY_TYP);
+                    + Fk7263EntryPoint.MODULE_DESCRIPTION);
         }
 
         String id = utlatande.getLakarutlatandeId();
@@ -371,7 +372,7 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
         // Fält 8a - Check that we got a arbetsuppgift element if arbete
         // is set
         if (inArbete != null) {
-            if(inArbetsBeskrivning == null) {
+            if (inArbetsBeskrivning == null) {
                 if (!inSmittskydd) {
                     addValidationError("No arbetsuppgift element found when arbete set in field 8a!.");
                 }
