@@ -109,7 +109,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             ManageCertificate.initCopyDialog($scope);
             $scope.copy = function(cert) {
 
-                if (cert === undefined || cert.grundData !== undefined) {
+                if (cert === undefined || cert.grundData === undefined) {
                     $log.debug('cert or cert.grundData is undefined. Aborting copy.');
                     return;
                 }
@@ -117,7 +117,12 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                 var isOtherCareUnit = User.getValdVardenhet() !== cert.grundData.skapadAv.vardenhet.enhetsid;
 
                 ManageCertificate.copy($scope,
-                    IntygCopyRequestModel.build({intygId: cert.id, intygType: intygType, patientPersonnummer: cert.grundData.patient.personId}),
+                    IntygCopyRequestModel.build({
+                        intygId: cert.id,
+                        intygType: intygType,
+                        patientPersonnummer: cert.grundData.patient.personId,
+                        nyttPatientPersonnummer: $routeParams.patientId
+                    }),
                     isOtherCareUnit);
             };
 
