@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
+import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.Patient;
@@ -46,36 +47,60 @@ public class WebcertModelFactory {
      * @return {@link Utlatande} or throws a ConverterException if something unforeseen happens
      * @throws ConverterException
      */
-    public Utlatande createNewWebcertDraft(CreateNewDraftHolder newDraftData, Utlatande template) throws ConverterException {
-        if (template == null) {
-            LOG.trace("Creating draft with id {}", newDraftData.getCertificateId());
+    public Utlatande createNewWebcertDraft(CreateNewDraftHolder newDraftData) throws ConverterException {
 
-            template = new Utlatande();
-            template.setNuvarandeArbete(true);
-            template.setArbetsloshet(false);
+        LOG.trace("Creating draft with id {}", newDraftData.getCertificateId());
 
-            template.setAvstangningSmittskydd(false);
-            template.setForaldrarledighet(false);
-            template.setKontaktMedFk(false);
-            template.setRekommendationKontaktArbetsformedlingen(false);
-            template.setRekommendationKontaktForetagshalsovarden(false);
-            template.setRessattTillArbeteAktuellt(false);
-            template.setRessattTillArbeteEjAktuellt(false);
+        Utlatande template = new Utlatande();
 
-        } else {
-            LOG.trace("Creating copy with id {} from {}", newDraftData.getCertificateId(), template.getId());
-        }
+        populateWithId(template, newDraftData.getCertificateId());
 
-        if (newDraftData.getCertificateId() == null) {
-            throw new ConverterException("No certificateID found");
-        }
+        template.setNuvarandeArbete(true);
+        template.setArbetsloshet(false);
 
-        template.setId(newDraftData.getCertificateId());
+        template.setAvstangningSmittskydd(false);
+        template.setForaldrarledighet(false);
+        template.setKontaktMedFk(false);
+        template.setRekommendationKontaktArbetsformedlingen(false);
+        template.setRekommendationKontaktForetagshalsovarden(false);
+        template.setRessattTillArbeteAktuellt(false);
+        template.setRessattTillArbeteEjAktuellt(false);
 
         populateWithSkapadAv(template, newDraftData.getSkapadAv());
         populateWithPatientInfo(template, newDraftData.getPatient());
 
         return template;
+    }
+
+    public Utlatande createCopy(CreateDraftCopyHolder copyData, Utlatande template) throws ConverterException {
+
+        LOG.trace("Creating copy with id {} from {}", copyData.getCertificateId(), template.getId());
+
+        populateWithId(template, copyData.getCertificateId());
+        populateWithSkapadAv(template, copyData.getSkapadAv());
+
+        if (copyData.hasPatient()) {
+            populateWithPatientInfo(template, copyData.getPatient());
+        }
+
+        if (copyData.hasNewPersonnummer()) {
+            populateWithNewPersonnummer(template, copyData.getNewPersonnummer());
+        }
+
+        return template;
+    }
+
+    private void populateWithNewPersonnummer(Utlatande template, String newPersonnummer) {
+        template.getGrundData().getPatient().setPersonId(newPersonnummer);
+    }
+
+    private void populateWithId(Utlatande utlatande, String utlatandeId) throws ConverterException {
+
+        if (utlatandeId == null) {
+            throw new ConverterException("No certificateID found");
+        }
+
+        utlatande.setId(utlatandeId);
     }
 
     private void populateWithPatientInfo(Utlatande utlatande, Patient patient) throws ConverterException {
