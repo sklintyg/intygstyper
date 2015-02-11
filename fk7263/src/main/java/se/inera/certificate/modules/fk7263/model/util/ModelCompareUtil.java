@@ -65,26 +65,76 @@ public class ModelCompareUtil {
     }
 
     private boolean diagnoseDiffers(Utlatande oldUtlatande, Utlatande newUtlatande) {
-        boolean differs = false;
-        String[] diagnoskoderOld = {oldUtlatande.getDiagnosKod(), oldUtlatande.getDiagnosKod2(), oldUtlatande.getDiagnosKod3()}; 
-        String[] diagnoskoderNew = {newUtlatande.getDiagnosKod(), newUtlatande.getDiagnosKod2(), newUtlatande.getDiagnosKod3()}; 
+        DiagnoseCode[] diagnoskoderOld = {new DiagnoseCode(oldUtlatande.getDiagnosKod(), oldUtlatande.getDiagnosKodsystem1()),
+                new DiagnoseCode(oldUtlatande.getDiagnosKod2(), oldUtlatande.getDiagnosKodsystem2()),
+                new DiagnoseCode(oldUtlatande.getDiagnosKod3(), oldUtlatande.getDiagnosKodsystem3())};
+        DiagnoseCode[] diagnoskoderNew = {new DiagnoseCode(newUtlatande.getDiagnosKod(), newUtlatande.getDiagnosKodsystem1()),
+                new DiagnoseCode(newUtlatande.getDiagnosKod2(), newUtlatande.getDiagnosKodsystem2()),
+                new DiagnoseCode(newUtlatande.getDiagnosKod3(), newUtlatande.getDiagnosKodsystem3())};
 
         String[] diagnosbeskrivningOld = {oldUtlatande.getDiagnosBeskrivning1(), oldUtlatande.getDiagnosBeskrivning2(), oldUtlatande.getDiagnosBeskrivning3()}; 
         String[] diagnosbeskrivningNew = {newUtlatande.getDiagnosBeskrivning1(), newUtlatande.getDiagnosBeskrivning2(), newUtlatande.getDiagnosBeskrivning3()}; 
 
-        differs = checkStringArray(diagnoskoderOld, diagnoskoderNew) || checkStringArray(diagnosbeskrivningOld, diagnosbeskrivningNew);
-
-        return differs;
+        return diagnoseCodesDiffer(diagnoskoderOld, diagnoskoderNew) || diagnoseBeskrivningsDiffer(diagnosbeskrivningOld, diagnosbeskrivningNew);
     }
 
-    private boolean checkStringArray(String[] oldArray, String[] newArray) {
+    private boolean diagnoseCodesDiffer(DiagnoseCode[] oldArray, DiagnoseCode[] newArray) {
+        for (int i = 0; i < oldArray.length; i++) {
+            DiagnoseCode oldDiagnoseCode = oldArray[i];
+            DiagnoseCode newDiagnoseCode = newArray[i];
+            boolean oldValid = moduleService.validateDiagnosisCode(oldDiagnoseCode.diagnosKod, oldDiagnoseCode.diagnosKodSystem);
+            boolean newValid = moduleService.validateDiagnosisCode(newDiagnoseCode.diagnosKod, newDiagnoseCode.diagnosKodSystem);
+
+            if (oldValid != newValid) {
+                return true;
+            }
+            if (oldValid && newValid && !oldDiagnoseCode.equals(newDiagnoseCode)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean diagnoseBeskrivningsDiffer(String[] oldArray, String[] newArray) {
         for (int i = 0; i < oldArray.length; i++) {
             if ((!StringUtils.isEmpty(oldArray[i]) && StringUtils.isEmpty(newArray[i])) || (StringUtils.isEmpty(oldArray[i]) && !StringUtils.isEmpty(newArray[i]))) {
                 return true;
             } else if (oldArray[i] != null && newArray[i] != null) {
                 return oldArray[i].equals(newArray[i]) ? false : true;
-            } 
+            }
         }
         return false;
     }
+
+    private static final class DiagnoseCode {
+        public final String diagnosKod;
+        public final String diagnosKodSystem;
+
+        public DiagnoseCode(String diagnosKod, String diagnosKodSystem) {
+            this.diagnosKod = diagnosKod;
+            this.diagnosKodSystem = diagnosKodSystem;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            DiagnoseCode that = (DiagnoseCode) o;
+
+            if (diagnosKod != null ? !diagnosKod.equals(that.diagnosKod) : that.diagnosKod != null) return false;
+            if (diagnosKodSystem != null ? !diagnosKodSystem.equals(that.diagnosKodSystem) : that.diagnosKodSystem != null)
+                return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = diagnosKod != null ? diagnosKod.hashCode() : 0;
+            result = 31 * result + (diagnosKodSystem != null ? diagnosKodSystem.hashCode() : 0);
+            return result;
+        }
+    }
+
 }

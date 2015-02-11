@@ -197,6 +197,6 @@ public class Fk7263ModuleApiTest {
 
     private InternalModelHolder createInternalHolder(Utlatande internalModel)
             throws JsonProcessingException {
-        return new InternalModelHolder(mapper.writeValueAsString(internalModel));
+        return new InternalModelHolder(objectMapper.writeValueAsString(internalModel));
     }
 }
