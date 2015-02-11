@@ -952,6 +952,15 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
             };
 
+            $scope.stopEnter = function($event){
+                var code = $event.keyCode || $event.which;
+                if (code === 13) {
+                    if (!$event.shiftKey) {
+                        $event.preventDefault();
+                    }
+                }
+            };
+
             $scope.$watch('cert.avstangningSmittskydd', function(newVal) {
 
                 // Remove defaults not applicable when smittskydd is active
