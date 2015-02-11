@@ -75,7 +75,7 @@ var tsBasMessages = {
         'ts-bas.helptext.narkotika-lakemedel.provtagning': 'Om ja på ovanstående ska resultatet redovisas separat.',
         'ts-bas.helptext.bedomning': '<span style="text-align:left">C1 - medeltung lastbil och enbart ett lätt släpfordon<br/>C1E - medeltung lastbil och ett eller flera släpfordon oavsett vikt<br/>C - tung lastbil och enbart ett lätt släpfordon<br/>CE - tung lastbil och ett eller flera släpfordon oavsett vikt<br/>D1 - mellanstor buss och enbart ett lätt släpfordon<br/>D1E - mellanstor buss och ett eller flera släpfordon oavsett vikt<br/>D - buss och enbart ett lätt släpfordon<br/>DE - buss och ett eller flera släpfordon oavsett vikt<br/>Taxi = taxiförarlegitimation<br/>Taxi = taxiförarlegitimation<br/>Annat = AM,A1,A2,A,B,BE eller traktor<br/>',
 
-        'ts-bas.label.spara-utkast': 'Spara utkast',
+        'ts-bas.label.spara-utkast': 'Spara',
         'ts-bas.label.ta-bort-utkast': 'Ta bort utkast',
         'ts-bas.label.skriv-ut-utkast': 'Skriv ut',
         'ts-bas.label.visa-kompletteras': 'Visa vad som behöver kompletteras',
