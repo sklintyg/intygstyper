@@ -4,8 +4,10 @@ import java.util.Arrays;
 
 import org.apache.commons.lang3.StringUtils;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
+import se.inera.certificate.modules.service.WebcertModuleService;
 
 /**
  * Util for checking a models consistency in different states.
@@ -13,6 +15,9 @@ import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
  *
  */
 public class ModelCompareUtil {
+
+    @Autowired(required = false)
+    private WebcertModuleService moduleService;
 
     /**
      * Check if two models differ.

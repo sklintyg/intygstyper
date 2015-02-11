@@ -21,7 +21,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.w3.wsaddressing10.AttributedURIType;
 
-import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.utils.ResourceConverterUtils;
@@ -50,14 +49,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Fk7263ModuleApiTest {
 
     private RegisterMedicalCertificateResponderInterface registerMedicalCertificateClient;
+
     @Autowired
     private Fk7263ModuleApi fk7263ModuleApi;
 
     @Autowired
-    private ObjectMapper mapper;
-
-    @Autowired
-    private CustomObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @Before
     public void setUpMocks() {
@@ -77,8 +74,7 @@ public class Fk7263ModuleApiTest {
 
     @Test
     public void updateChangesHosPersonalInfo() throws IOException, ModuleException {
-        Utlatande utlatande = new CustomObjectMapper().readValue(new ClassPathResource(
-                "Fk7263ModuleApiTest/utlatande.json").getFile(), Utlatande.class);
+        Utlatande utlatande = getUtlatandeFromFile();
 
         InternalModelHolder holder = createInternalHolder(utlatande);
         Vardgivare vardgivare = new Vardgivare("vardgivarId", "vardgivarNamn");
@@ -86,7 +82,7 @@ public class Fk7263ModuleApiTest {
         HoSPersonal hosPerson = new HoSPersonal("nyId", "nyNamn", "nyForskrivarkod", "nyBefattning", null, vardenhet);
         LocalDateTime signingDate = LocalDateTime.parse("2014-08-01");
         InternalModelResponse updatedHolder = fk7263ModuleApi.updateBeforeSigning(holder, hosPerson, signingDate);
-        Utlatande updatedIntyg = mapper.readValue(updatedHolder.getInternalModel(), Utlatande.class);
+        Utlatande updatedIntyg = objectMapper.readValue(updatedHolder.getInternalModel(), Utlatande.class);
 
         assertEquals(signingDate, updatedIntyg.getGrundData().getSigneringsdatum());
         assertEquals("nyId", updatedIntyg.getGrundData().getSkapadAv().getPersonId());
@@ -95,9 +91,14 @@ public class Fk7263ModuleApiTest {
         assertEquals(utlatande.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn(), updatedIntyg.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
     }
 
+    private Utlatande getUtlatandeFromFile() throws IOException {
+        return objectMapper.readValue(new ClassPathResource(
+                "Fk7263ModuleApiTest/utlatande.json").getFile(), Utlatande.class);
+    }
+
     @Test
     public void copyContainsOriginalData() throws IOException, ModuleException {
-        Utlatande utlatande = new CustomObjectMapper().readValue(new ClassPathResource("Fk7263ModuleApiTest/utlatande.json").getFile(), Utlatande.class);
+        Utlatande utlatande = getUtlatandeFromFile();
 
         InternalModelResponse holder = fk7263ModuleApi.createNewInternalFromTemplate(createNewDraftHolder(), createInternalHolder(utlatande));
 
@@ -120,8 +121,7 @@ public class Fk7263ModuleApiTest {
 
     @Test
     public void testModelIsNotChanged() throws Exception {
-        String utlatandeOldString = toJsonString(new CustomObjectMapper().readValue(new ClassPathResource(
-                "Fk7263ModuleApiTest/utlatande.json").getFile(), Utlatande.class));
+        String utlatandeOldString = toJsonString(getUtlatandeFromFile());
         String utlatandeNewString = utlatandeOldString;
         assertFalse(fk7263ModuleApi.isModelChanged(utlatandeOldString, utlatandeNewString));
 
@@ -129,10 +129,8 @@ public class Fk7263ModuleApiTest {
 
     @Test
     public void testModelIsChangedNedsattningsgradNull() throws Exception {
-        Utlatande utlatandeOld = new CustomObjectMapper().readValue(new ClassPathResource(
-                "Fk7263ModuleApiTest/utlatande.json").getFile(), Utlatande.class);
-        Utlatande utlatandeNew = new CustomObjectMapper().readValue(new ClassPathResource(
-                "Fk7263ModuleApiTest/utlatande.json").getFile(), Utlatande.class);
+        Utlatande utlatandeOld = getUtlatandeFromFile();
+        Utlatande utlatandeNew = getUtlatandeFromFile();
         utlatandeNew.setNedsattMed100(null);
 
         String utlatandeOldString = toJsonString(utlatandeOld);
@@ -142,10 +140,8 @@ public class Fk7263ModuleApiTest {
 
     @Test
     public void testModelIsChangedNedsattningsgradDate() throws Exception {
-        Utlatande utlatandeOld = new CustomObjectMapper().readValue(new ClassPathResource(
-                "Fk7263ModuleApiTest/utlatande.json").getFile(), Utlatande.class);
-        Utlatande utlatandeNew = new CustomObjectMapper().readValue(new ClassPathResource(
-                "Fk7263ModuleApiTest/utlatande.json").getFile(), Utlatande.class);
+        Utlatande utlatandeOld = getUtlatandeFromFile();
+        Utlatande utlatandeNew = getUtlatandeFromFile();
 
         // Change the date and ensure this is recognized as a change in the model
         utlatandeNew.setNedsattMed100(new InternalLocalDateInterval("2011-03-03", "2011-04-04"));
@@ -157,10 +153,8 @@ public class Fk7263ModuleApiTest {
 
     @Test
     public void testModelIsChangedDiagnoskod() throws Exception {
-        Utlatande utlatandeOld = new CustomObjectMapper().readValue(new ClassPathResource(
-                "Fk7263ModuleApiTest/utlatande.json").getFile(), Utlatande.class);
-        Utlatande utlatandeNew = new CustomObjectMapper().readValue(new ClassPathResource(
-                "Fk7263ModuleApiTest/utlatande.json").getFile(), Utlatande.class);
+        Utlatande utlatandeOld = getUtlatandeFromFile();
+        Utlatande utlatandeNew = getUtlatandeFromFile();
         
         // Mess with the diagnose and make sure the change registers
         utlatandeNew.setDiagnosKod("BLAH");
@@ -172,10 +166,8 @@ public class Fk7263ModuleApiTest {
 
     @Test
     public void testModelIsChangedDiagnosbeskrivning() throws Exception {
-        Utlatande utlatandeOld = new CustomObjectMapper().readValue(new ClassPathResource(
-                "Fk7263ModuleApiTest/utlatande.json").getFile(), Utlatande.class);
-        Utlatande utlatandeNew = new CustomObjectMapper().readValue(new ClassPathResource(
-                "Fk7263ModuleApiTest/utlatande.json").getFile(), Utlatande.class);
+        Utlatande utlatandeOld = getUtlatandeFromFile();
+        Utlatande utlatandeNew = getUtlatandeFromFile();
         
         // Mess with the diagnose and make sure the change registers
         utlatandeNew.setDiagnosBeskrivning1("BLAH");
