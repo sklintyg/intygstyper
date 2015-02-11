@@ -362,6 +362,10 @@ public class PdfGenerator {
         }
     }
 
+    private String stripNewlines(String text) {
+        return text.replace("\n", " ");
+    }
+
     private void fillPrognose() {
         if (intyg.getPrognosBedomning() != null) {
             switch (intyg.getPrognosBedomning()) {
@@ -379,7 +383,7 @@ public class PdfGenerator {
                 break;
             default:
             }
-            fillText(WORK_CAPACITY_TEXT, intyg.getArbetsformagaPrognos());
+            fillText(WORK_CAPACITY_TEXT, stripNewlines(intyg.getArbetsformagaPrognos()));
         }
     }
 
@@ -406,7 +410,7 @@ public class PdfGenerator {
     private void fillCapacityRelativeTo() {
         if (intyg.getNuvarandeArbetsuppgifter() != null) {
             checkField(CURRENT_WORK);
-            fillText(CURRENT_WORK_TEXT_1, intyg.getNuvarandeArbetsuppgifter());
+            fillText(CURRENT_WORK_TEXT_1, stripNewlines(intyg.getNuvarandeArbetsuppgifter()));
         }
         setField(UNEMPLOYMENT, intyg.isArbetsloshet());
         setField(PARENTAL_LEAVE, intyg.isForaldrarledighet());
@@ -435,20 +439,20 @@ public class PdfGenerator {
         setField(RECOMMENDATIONS_CONTACT_COMPANY_CARE, intyg.isRekommendationKontaktForetagshalsovarden());
         if (intyg.getRekommendationOvrigt() != null) {
             checkField(RECOMMENDATIONS_OTHER);
-            fillText(RECOMMENDATIONS_OTHER_TEXT, intyg.getRekommendationOvrigt());
+            fillText(RECOMMENDATIONS_OTHER_TEXT, stripNewlines(intyg.getRekommendationOvrigt()));
         }
     }
 
     private void fillActivityLimitation() {
-        fillText(ACTIVITY_LIMITATION, intyg.getAktivitetsbegransning());
+        fillText(ACTIVITY_LIMITATION, stripNewlines(intyg.getAktivitetsbegransning()));
     }
 
     private void fillDisability() {
-        fillText(DISABILITIES, intyg.getFunktionsnedsattning());
+        fillText(DISABILITIES, stripNewlines(intyg.getFunktionsnedsattning()));
     }
 
     private void fillOther() {
-        fillText(OTHER_INFORMATION, buildOtherText());
+        fillText(OTHER_INFORMATION, stripNewlines(buildOtherText()));
     }
 
     private String buildOtherText() {
@@ -462,14 +466,14 @@ public class PdfGenerator {
         if (isValidString(intyg.getAnnanReferensBeskrivning())) {
             parts.add("Från fält 4b: " + intyg.getAnnanReferensBeskrivning());
         }
-        return StringUtils.trimToNull(Strings.join(", ", parts));
+        return StringUtils.trimToNull(Strings.join(";", parts));
     }
 
     private String buildOtherDiagnoses() {
         ArrayList<String> parts = new ArrayList<>();
 
         if (isValidString(intyg.getDiagnosBeskrivning())) {
-            parts.add(intyg.getDiagnosBeskrivning());
+            parts.add(stripNewlines(intyg.getDiagnosBeskrivning()));
         }
         if (isValidString(intyg.getDiagnosBeskrivning1())) {
             parts.add(intyg.getDiagnosBeskrivning1());
@@ -516,17 +520,17 @@ public class PdfGenerator {
     private void fillMeasures() {
         if (intyg.getAtgardInomSjukvarden() != null) {
             checkField(MEASURES_CURRENT);
-            fillText(MEASURES_CURRENT_TEXT, intyg.getAtgardInomSjukvarden());
+            fillText(MEASURES_CURRENT_TEXT, stripNewlines(intyg.getAtgardInomSjukvarden()));
         }
 
         if (intyg.getAnnanAtgard() != null) {
             checkField(MEASURES_OTHER);
-            fillText(MEASURES_OTHER_TEXT, intyg.getAnnanAtgard());
+            fillText(MEASURES_OTHER_TEXT, stripNewlines(intyg.getAnnanAtgard()));
         }
     }
 
     private void fillDiseaseCause() {
-        fillText(DISEASE_CAUSE, intyg.getSjukdomsforlopp());
+        fillText(DISEASE_CAUSE, stripNewlines(intyg.getSjukdomsforlopp()));
     }
 
     private void fillIsSuspenseDueToInfection() {
