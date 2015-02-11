@@ -1,13 +1,10 @@
 package se.inera.certificate.modules.fk7263.rest;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 
 import java.io.IOException;
-import java.io.StringWriter;
 
 import org.apache.commons.io.FileUtils;
 import org.joda.time.LocalDateTime;
@@ -21,16 +18,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.w3.wsaddressing10.AttributedURIType;
 
-import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.utils.ResourceConverterUtils;
-import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.certificate.modules.support.api.dto.HoSPersonal;
-import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
-import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
-import se.inera.certificate.modules.support.api.dto.Patient;
-import se.inera.certificate.modules.support.api.dto.Vardenhet;
-import se.inera.certificate.modules.support.api.dto.Vardgivare;
+import se.inera.certificate.modules.support.api.dto.*;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
@@ -117,74 +107,6 @@ public class Fk7263ModuleApiTest {
         Mockito.when(registerMedicalCertificateClient.registerMedicalCertificate(Mockito.any(AttributedURIType.class), Mockito.any(RegisterMedicalCertificateType.class))).thenReturn(response);
         fk7263ModuleApi.sendCertificateToRecipient(internalModel, "logicalAddress");
         verify(registerMedicalCertificateClient).registerMedicalCertificate(Mockito.eq(address), Mockito.any(RegisterMedicalCertificateType.class));
-    }
-
-    @Test
-    public void testModelIsNotChanged() throws Exception {
-        String utlatandeOldString = toJsonString(getUtlatandeFromFile());
-        String utlatandeNewString = utlatandeOldString;
-        assertFalse(fk7263ModuleApi.isModelChanged(utlatandeOldString, utlatandeNewString));
-
-    }
-
-    @Test
-    public void testModelIsChangedNedsattningsgradNull() throws Exception {
-        Utlatande utlatandeOld = getUtlatandeFromFile();
-        Utlatande utlatandeNew = getUtlatandeFromFile();
-        utlatandeNew.setNedsattMed100(null);
-
-        String utlatandeOldString = toJsonString(utlatandeOld);
-        String utlatandeNewString = toJsonString(utlatandeNew);
-        assertTrue(fk7263ModuleApi.isModelChanged(utlatandeOldString, utlatandeNewString));
-    }
-
-    @Test
-    public void testModelIsChangedNedsattningsgradDate() throws Exception {
-        Utlatande utlatandeOld = getUtlatandeFromFile();
-        Utlatande utlatandeNew = getUtlatandeFromFile();
-
-        // Change the date and ensure this is recognized as a change in the model
-        utlatandeNew.setNedsattMed100(new InternalLocalDateInterval("2011-03-03", "2011-04-04"));
-        
-        String utlatandeOldString = toJsonString(utlatandeOld);
-        String utlatandeNewString = toJsonString(utlatandeNew);
-        assertTrue(fk7263ModuleApi.isModelChanged(utlatandeOldString, utlatandeNewString));
-    }
-
-    @Test
-    public void testModelIsChangedDiagnoskod() throws Exception {
-        Utlatande utlatandeOld = getUtlatandeFromFile();
-        Utlatande utlatandeNew = getUtlatandeFromFile();
-        
-        // Mess with the diagnose and make sure the change registers
-        utlatandeNew.setDiagnosKod("BLAH");
-        
-        String utlatandeOldString = toJsonString(utlatandeOld);
-        String utlatandeNewString = toJsonString(utlatandeNew);
-        assertTrue(fk7263ModuleApi.isModelChanged(utlatandeOldString, utlatandeNewString));
-    }
-
-    @Test
-    public void testModelIsChangedDiagnosbeskrivning() throws Exception {
-        Utlatande utlatandeOld = getUtlatandeFromFile();
-        Utlatande utlatandeNew = getUtlatandeFromFile();
-        
-        // Mess with the diagnose and make sure the change registers
-        utlatandeNew.setDiagnosBeskrivning1("BLAH");
-        
-        String utlatandeOldString = toJsonString(utlatandeOld);
-        String utlatandeNewString = toJsonString(utlatandeNew);
-        assertTrue(fk7263ModuleApi.isModelChanged(utlatandeOldString, utlatandeNewString));
-    }
-
-    private String toJsonString(Utlatande utlatande) throws ModuleException {
-        StringWriter writer = new StringWriter();
-        try {
-            objectMapper.writeValue(writer, utlatande);
-        } catch (IOException e) {
-            throw new ModuleException("Failed to serialize internal model", e);
-        }
-        return writer.toString();
     }
 
     private CreateNewDraftHolder createNewDraftHolder() {
