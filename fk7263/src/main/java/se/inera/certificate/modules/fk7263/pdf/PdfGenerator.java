@@ -363,7 +363,7 @@ public class PdfGenerator {
     }
 
     private String stripNewlines(String text) {
-        return text.replace("\n", " ");
+        return (text != null) ? text.replace("\n", " "): null;
     }
 
     private void fillPrognose() {
