@@ -204,14 +204,13 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.inputLimits = {
                 diagnosBeskrivning: 100,
                 sjukdomsforlopp: 270,
-                funktionsnedsattning: 560,
+                funktionsnedsattning: 360,
                 aktivitetsbegransning: 1100,
                 nuvarandeArbetsuppgifter: 120,
                 arbetsformagaPrognos: 600,
                 atgardInomSjukvarden: 66,
                 annanAtgard: 66,
-                ovrigt: 420
-                // 420 = combined field 13 (and dependencies) limit
+                ovrigt: 380 // = combined field 13 (and dependencies that end up in field 13) limit
             };
 
             /***************************************************************************
