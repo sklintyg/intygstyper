@@ -17,6 +17,8 @@
 
   <bean class="se.inera.certificate.modules.fk7263.rest.Fk7263ModuleApi" />
 
+  <bean class="se.inera.certificate.modules.fk7263.model.util.ModelCompareUtil" />
+
   <bean class="se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil" />
 
   <bean class="se.inera.certificate.modules.fk7263.validator.InternalDraftValidator" />

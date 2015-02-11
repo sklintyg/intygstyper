@@ -20,19 +20,19 @@ public class ModelCompareUtil {
      * @param newUtlatande
      * @return true if they do, false otherwise
      */
-    public static boolean modelDiffers(Utlatande oldUtlatande, Utlatande newUtlatande) {
+    public boolean modelDiffers(Utlatande oldUtlatande, Utlatande newUtlatande) {
         return diagnoseDiffers(oldUtlatande, newUtlatande)
         || sjukskrivningsperiodDiffers(oldUtlatande, newUtlatande)
         || sjukskrivningsgradDiffers(oldUtlatande, newUtlatande);
     }
     
-    private static boolean sjukskrivningsgradDiffers(Utlatande oldUtlatande, Utlatande newUtlatande) {
+    private boolean sjukskrivningsgradDiffers(Utlatande oldUtlatande, Utlatande newUtlatande) {
         int[] oldSjukskrivningsgrad = makeIntMatrix(oldUtlatande);
         int[] newSjukskrivningsgrad = makeIntMatrix(newUtlatande);
         return Arrays.equals(oldSjukskrivningsgrad,newSjukskrivningsgrad) ? false : true;
     }
 
-    private static int[] makeIntMatrix(Utlatande source) {
+    private int[] makeIntMatrix(Utlatande source) {
         int[] matrix = new int[4];
         matrix[0] = source.getNedsattMed100() != null ? 1 : 0; 
         matrix[1] = source.getNedsattMed75() != null ? 1 : 0; 
@@ -41,7 +41,7 @@ public class ModelCompareUtil {
         return matrix;
     }
 
-    private static boolean sjukskrivningsperiodDiffers(Utlatande oldUtlatande, Utlatande newUtlatande) {
+    private boolean sjukskrivningsperiodDiffers(Utlatande oldUtlatande, Utlatande newUtlatande) {
         return checkPerioderDiffers(oldUtlatande.getNedsattMed100(), newUtlatande.getNedsattMed100())
             || checkPerioderDiffers(oldUtlatande.getNedsattMed75(),newUtlatande.getNedsattMed75())
             || checkPerioderDiffers(oldUtlatande.getNedsattMed50(),newUtlatande.getNedsattMed50())
@@ -49,7 +49,7 @@ public class ModelCompareUtil {
         
     }
 
-    private static boolean checkPerioderDiffers(InternalLocalDateInterval oldPeriod, InternalLocalDateInterval newPeriod) {
+    private boolean checkPerioderDiffers(InternalLocalDateInterval oldPeriod, InternalLocalDateInterval newPeriod) {
         if (oldPeriod != null && newPeriod != null) {
             return oldPeriod.equals(newPeriod) ? false : true;
         } else if ((oldPeriod == null && newPeriod != null) || (oldPeriod != null && newPeriod == null)) {
@@ -59,7 +59,7 @@ public class ModelCompareUtil {
         }
     }
 
-    private static boolean diagnoseDiffers(Utlatande oldUtlatande, Utlatande newUtlatande) {
+    private boolean diagnoseDiffers(Utlatande oldUtlatande, Utlatande newUtlatande) {
         boolean differs = false;
         String[] diagnoskoderOld = {oldUtlatande.getDiagnosKod(), oldUtlatande.getDiagnosKod2(), oldUtlatande.getDiagnosKod3()}; 
         String[] diagnoskoderNew = {newUtlatande.getDiagnosKod(), newUtlatande.getDiagnosKod2(), newUtlatande.getDiagnosKod3()}; 
@@ -72,7 +72,7 @@ public class ModelCompareUtil {
         return differs;
     }
 
-    private static boolean checkStringArray(String[] oldArray, String[] newArray) {
+    private boolean checkStringArray(String[] oldArray, String[] newArray) {
         for (int i = 0; i < oldArray.length; i++) {
             if ((!StringUtils.isEmpty(oldArray[i]) && StringUtils.isEmpty(newArray[i])) || (StringUtils.isEmpty(oldArray[i]) && !StringUtils.isEmpty(newArray[i]))) {
                 return true;
