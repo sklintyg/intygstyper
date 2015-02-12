@@ -166,7 +166,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 arbetsformagaPrognos: 600,
                 atgardInomSjukvarden: 66,
                 annanAtgard: 66,
-                ovrigt: 380 // = combined field 13 (and dependencies that end up in field 13) limit
+                ovrigt: 400 // = combined field 13 (and dependencies that end up in field 13) limit
             };
 
             /***************************************************************************
