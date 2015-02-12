@@ -170,6 +170,67 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             };
 
             /***************************************************************************
+             * Model property watches
+             ***************************************************************************/
+
+            $scope.$watchCollection(
+                'form.ovrigt',
+                // This is the change handler
+                function(newValue, oldValue) {
+                    // get the comments after -----------
+                    var searchValue = '---';
+                    var delimeter = '----------------'
+                    var comments = '';
+                    var noKommentarDel = true;
+                    if($scope.cert.kommentar){
+                        var li = $scope.cert.kommentar.lastIndexOf(searchValue);
+                        if(li > -1) li = li + 3;
+
+                        noKommentarDel = li <= 0;
+
+                        if(noKommentarDel && $scope.cert.kommentar.length > 0){
+                            comments = $scope.cert.kommentar;
+                        } else {
+                            comments = $scope.cert.kommentar.slice(li + 1);
+                        }
+
+                    }
+                    // add the ovrigt text to the comment
+                    var friviligt = '';
+                    friviligt = ammendText(friviligt, newValue.annanReferensBeskrivning, '\n');
+                    friviligt = ammendText(friviligt, newValue.nedsattMed25Beskrivning, '\n');
+                    friviligt = ammendText(friviligt, newValue.nedsattMed50Beskrivning, '\n');
+                    friviligt = ammendText(friviligt, newValue.nedsattMed75Beskrivning, '\n');
+                    friviligt = ammendText(friviligt, newValue.arbetsformagaPrognosGarInteAttBedomaBeskrivning, '\n');
+
+                    if( noKommentarDel && friviligt.length > 0){
+                        comments = delimeter + '\n' + comments;
+                    }
+
+                    $scope.cert.kommentar = friviligt + comments;
+                    console.log("comments : " + $scope.cert.kommentar);
+                }
+            );
+
+            function ammendText(text, textToAmmend, endText){
+                if(textToAmmend && textToAmmend.length > 0 ) {
+                    text += textToAmmend;
+                    if (endText && endText.length > 0) {
+                        text += endText;
+                    }
+                }
+                return text;
+            }
+
+            /*$scope.$watch(
+                'cert.kommentar',
+                // This is the change handler
+                function(newValue, oldValue) {
+
+                }
+            );*/
+
+            /***************************************************************************
              * Private controller support functions
              ***************************************************************************/
 
