@@ -1,9 +1,12 @@
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
     [ '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', 'common.CertificateService',
         'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate', 'common.User',
+        'common.IntygCopyRequestModel',
         function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView,
-            messageService, ManageCertificate, User) {
+            messageService, ManageCertificate, User, IntygCopyRequestModel) {
             'use strict';
+
+            var intygType = 'fk7263';
 
             // Check if the user used the special qa-link to get here.
             if ($routeParams.qaOnly) {
@@ -33,7 +36,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
              */
             function loadCertificate() {
                 $log.debug('Loading certificate ' + $routeParams.certificateId);
-                CertificateService.getCertificate($routeParams.certificateId, 'fk7263', function(result) {
+                CertificateService.getCertificate($routeParams.certificateId, intygType, function(result) {
                     $scope.widgetState.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
@@ -48,7 +51,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                             $scope.widgetState.printStatus = 'signed';
                         }
 
-                        $scope.pdfUrl = '/moduleapi/intyg/fk7263/' + $scope.cert.id + '/pdf';
+                        $scope.pdfUrl = '/moduleapi/intyg/'+ intygType +'/' + $scope.cert.id + '/pdf';
 
                     } else {
                         $scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';
@@ -85,7 +88,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
              */
             ManageCertificate.initSend($scope);
             $scope.send = function(cert) {
-                cert.intygType = 'fk7263';
+                cert.intygType = intygType;
                 ManageCertificate.send($scope, cert, 'FK', 'fk7263.label.send', function() {
                     loadCertificate();
                 });
@@ -97,7 +100,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                     namn: cert.grundData.patient.fullstandigtNamn,
                     personnummer: cert.grundData.patient.personId
                 });
-                cert.intygType = 'fk7263';
+                cert.intygType = intygType;
                 ManageCertificate.makulera($scope, cert, confirmationMessage, function() {
                     loadCertificate();
                 });
@@ -105,14 +108,28 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
 
             ManageCertificate.initCopyDialog($scope);
             $scope.copy = function(cert) {
-                cert.intygType = 'fk7263';
-                ManageCertificate.copy($scope, cert);
+
+                if (cert === undefined || cert.grundData === undefined) {
+                    $log.debug('cert or cert.grundData is undefined. Aborting copy.');
+                    return;
+                }
+
+                var isOtherCareUnit = User.getValdVardenhet() !== cert.grundData.skapadAv.vardenhet.enhetsid;
+
+                ManageCertificate.copy($scope,
+                    IntygCopyRequestModel.build({
+                        intygId: cert.id,
+                        intygType: intygType,
+                        patientPersonnummer: cert.grundData.patient.personId,
+                        nyttPatientPersonnummer: $routeParams.patientId
+                    }),
+                    isOtherCareUnit);
             };
 
             $scope.print = function(cert) {
 
                 if ($scope.certProperties.isRevoked) {
-                    ManageCertView.printDraft(cert.id, 'fk7263');
+                    ManageCertView.printDraft(cert.id, intygType);
                 } else {
                     document.pdfForm.submit();
                 }

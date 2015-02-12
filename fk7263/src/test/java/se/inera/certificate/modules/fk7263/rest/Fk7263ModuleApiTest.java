@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.verify;
 
 import java.io.IOException;
+import java.io.StringWriter;
 
 import org.apache.commons.io.FileUtils;
 import org.joda.time.LocalDateTime;
@@ -18,6 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.w3.wsaddressing10.AttributedURIType;
 
+import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.utils.ResourceConverterUtils;
 import se.inera.certificate.modules.support.api.dto.*;
@@ -51,7 +53,7 @@ public class Fk7263ModuleApiTest {
         registerMedicalCertificateClient = Mockito.mock(RegisterMedicalCertificateResponderInterface.class);
         fk7263ModuleApi.setRegisterMedicalCertificateClient(registerMedicalCertificateClient);
     }
-    
+
     @Test
     public void testPdfFileName() {
         Utlatande intyg = new Utlatande();
@@ -78,11 +80,12 @@ public class Fk7263ModuleApiTest {
         assertEquals("nyId", updatedIntyg.getGrundData().getSkapadAv().getPersonId());
         assertEquals("nyNamn", updatedIntyg.getGrundData().getSkapadAv().getFullstandigtNamn());
         assertEquals("nyForskrivarkod", updatedIntyg.getGrundData().getSkapadAv().getForskrivarKod());
-        assertEquals(utlatande.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn(), updatedIntyg.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
+        assertEquals(utlatande.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn(), updatedIntyg.getGrundData().getSkapadAv().getVardenhet()
+                .getEnhetsnamn());
     }
 
     private Utlatande getUtlatandeFromFile() throws IOException {
-        return objectMapper.readValue(new ClassPathResource(
+        return new CustomObjectMapper().readValue(new ClassPathResource(
                 "Fk7263ModuleApiTest/utlatande.json").getFile(), Utlatande.class);
     }
 
@@ -90,29 +93,96 @@ public class Fk7263ModuleApiTest {
     public void copyContainsOriginalData() throws IOException, ModuleException {
         Utlatande utlatande = getUtlatandeFromFile();
 
-        InternalModelResponse holder = fk7263ModuleApi.createNewInternalFromTemplate(createNewDraftHolder(), createInternalHolder(utlatande));
+        Patient patient = new Patient("Kalle", null, "Kula", "19121212-1212", null, null, null);
+        CreateDraftCopyHolder copyHolder = createDraftCopyHolder(patient);
+        
+        InternalModelResponse holder = fk7263ModuleApi.createNewInternalFromTemplate(copyHolder, createInternalHolder(utlatande));
 
         assertNotNull(holder);
         Utlatande creatededUtlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
         assertEquals("2011-03-07", creatededUtlatande.getNedsattMed50().getFrom().getDate());
+        assertEquals("Kalle", creatededUtlatande.getGrundData().getPatient().getFornamn());
+        assertEquals("Kula", creatededUtlatande.getGrundData().getPatient().getEfternamn());
     }
     
     @Test
+    public void copyContainsOriginalPersondetails() throws IOException, ModuleException {
+        Utlatande utlatande = getUtlatandeFromFile();
+
+        // create copyholder without Patient in it
+        CreateDraftCopyHolder copyHolder = createDraftCopyHolder(null);
+        
+        InternalModelResponse holder = fk7263ModuleApi.createNewInternalFromTemplate(copyHolder, createInternalHolder(utlatande));
+
+        assertNotNull(holder);
+        Utlatande creatededUtlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
+        assertEquals("Test Testorsson", creatededUtlatande.getGrundData().getPatient().getEfternamn());
+    }
+    
+    @Test
+    public void copyContainsNewPersonnummer() throws IOException, ModuleException {
+        
+        String newSSN = "19121212-1414";
+
+        Utlatande utlatande = getUtlatandeFromFile();
+
+        Patient patient = new Patient("Kalle", null, "Kula", "19121212-1212", null, null, null);
+        CreateDraftCopyHolder copyHolder = createDraftCopyHolder(patient);
+        copyHolder.setNewPersonnummer(newSSN);
+        
+        InternalModelResponse holder = fk7263ModuleApi.createNewInternalFromTemplate(copyHolder, createInternalHolder(utlatande));
+
+        assertNotNull(holder);
+        Utlatande creatededUtlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
+        assertEquals("Kalle", creatededUtlatande.getGrundData().getPatient().getFornamn());
+        assertEquals("Kula", creatededUtlatande.getGrundData().getPatient().getEfternamn());
+        assertEquals(newSSN, creatededUtlatande.getGrundData().getPatient().getPersonId());
+        
+    }
+
+    @Test
     public void testSendCertificateToRecipient() throws Exception {
-        InternalModelHolder internalModel = new InternalModelHolder(FileUtils.readFileToString(new ClassPathResource("Fk7263ModuleApiTest/utlatande.json").getFile()));
+        InternalModelHolder internalModel = new InternalModelHolder(FileUtils.readFileToString(new ClassPathResource(
+                "Fk7263ModuleApiTest/utlatande.json").getFile()));
         AttributedURIType address = new AttributedURIType();
         address.setValue("logicalAddress");
         RegisterMedicalCertificateResponseType response = new RegisterMedicalCertificateResponseType();
         response.setResult(ResultOfCallUtil.okResult());
-        Mockito.when(registerMedicalCertificateClient.registerMedicalCertificate(Mockito.any(AttributedURIType.class), Mockito.any(RegisterMedicalCertificateType.class))).thenReturn(response);
+        Mockito.when(
+                registerMedicalCertificateClient.registerMedicalCertificate(Mockito.any(AttributedURIType.class),
+                        Mockito.any(RegisterMedicalCertificateType.class))).thenReturn(response);
         fk7263ModuleApi.sendCertificateToRecipient(internalModel, "logicalAddress");
         verify(registerMedicalCertificateClient).registerMedicalCertificate(Mockito.eq(address), Mockito.any(RegisterMedicalCertificateType.class));
+    }
+
+    private String toJsonString(Utlatande utlatande) throws ModuleException {
+        StringWriter writer = new StringWriter();
+        try {
+            objectMapper.writeValue(writer, utlatande);
+        } catch (IOException e) {
+            throw new ModuleException("Failed to serialize internal model", e);
+        }
+        return writer.toString();
+    }
+
+    private CreateDraftCopyHolder createDraftCopyHolder(Patient patient) {
+        Vardgivare vardgivare = new Vardgivare("hsaId0", "vardgivare");
+        Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
+        HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", null, vardenhet);
+
+        CreateDraftCopyHolder holder = new CreateDraftCopyHolder("Id1", hosPersonal);
+
+        if (patient != null) {
+            holder.setPatient(patient);
+        }
+
+        return holder;
     }
 
     private CreateNewDraftHolder createNewDraftHolder() {
         Vardgivare vardgivare = new Vardgivare("hsaId0", "vardgivare");
         Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
-        HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", null,  vardenhet);
+        HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", null, vardenhet);
         Patient patient = new Patient("Kalle", null, "Kula", "19121212-1212", null, null, null);
         return new CreateNewDraftHolder("Id1", hosPersonal, patient);
     }

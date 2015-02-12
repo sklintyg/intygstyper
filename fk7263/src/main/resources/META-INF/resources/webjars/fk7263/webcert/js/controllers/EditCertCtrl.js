@@ -120,50 +120,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 $scope.cert.diagnosKod3 = $item.value;
                 $scope.cert.diagnosBeskrivning3 = $item.beskrivning;
             };
-            /* Clear diagnosBeskrivning if diagnosKod is emptied */
-            $scope.$watch('cert.diagnosKod', function() {
-                if (!$scope.cert.diagnosKod) {
-                    $scope.cert.diagnosBeskrivning1 = '';
-                }
-            });
-            $scope.$watch('cert.diagnosKod2', function() {
-                if (!$scope.cert.diagnosKod2) {
-                    $scope.cert.diagnosBeskrivning2 = '';
-                }
-            });
-            $scope.$watch('cert.diagnosKod3', function() {
-                if (!$scope.cert.diagnosKod3) {
-                    $scope.cert.diagnosBeskrivning3 = '';
-                }
-            });
-            /* Clear diagnosKod if diagnosBeskrivning is emptied */
-            $scope.$watch('cert.diagnosBeskrivning1', function() {
-                if (!$scope.cert.diagnosBeskrivning1) {
-                    $scope.cert.diagnosKod = '';
-                }
-            });
-            $scope.$watch('cert.diagnosBeskrivning2', function() {
-                if (!$scope.cert.diagnosBeskrivning2) {
-                    $scope.cert.diagnosKod2 = '';
-                }
-            });
-            $scope.$watch('cert.diagnosBeskrivning3', function() {
-                if (!$scope.cert.diagnosBeskrivning3) {
-                    $scope.cert.diagnosKod3 = '';
-                }
-            });
-
-            // Fält 2. Diagnose description Typeahead is implemented in a future story
-            $scope.diagnoses = [
-                /*                {
-                 value: 'Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion',
-                 label: 'J44.0 Kroniskt obstruktiv lungsjukdom med akut nedre luftvägsinfektion'
-                 },
-                 {
-                 value: 'Gastrointestinal blödning, ospecificerad',
-                 label: 'K92.2 Gastrointestinal blödning, ospecificerad'
-                 }*/
-            ];
 
             // Fält 4b. Based on handling
             $scope.basedOnState = {
@@ -202,16 +158,15 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
             // Text input limits for different fields
             $scope.inputLimits = {
-                diagnosBeskrivning: 100,
+                diagnosBeskrivning: 180,
                 sjukdomsforlopp: 270,
-                funktionsnedsattning: 560,
+                funktionsnedsattning: 450,
                 aktivitetsbegransning: 1100,
                 nuvarandeArbetsuppgifter: 120,
                 arbetsformagaPrognos: 600,
                 atgardInomSjukvarden: 66,
                 annanAtgard: 66,
-                ovrigt: 420
-                // 420 = combined field 13 (and dependencies) limit
+                ovrigt: 380 // = combined field 13 (and dependencies that end up in field 13) limit
             };
 
             /***************************************************************************
