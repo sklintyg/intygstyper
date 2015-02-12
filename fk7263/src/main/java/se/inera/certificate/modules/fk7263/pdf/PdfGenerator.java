@@ -466,7 +466,7 @@ public class PdfGenerator {
         if (isValidString(intyg.getAnnanReferensBeskrivning())) {
             parts.add("Från fält 4b: " + intyg.getAnnanReferensBeskrivning());
         }
-        return StringUtils.trimToNull(Strings.join(";", parts));
+        return StringUtils.trimToNull(Strings.join(". ", parts));
     }
 
     private String buildOtherDiagnoses() {
