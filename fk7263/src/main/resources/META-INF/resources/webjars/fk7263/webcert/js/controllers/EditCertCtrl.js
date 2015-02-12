@@ -160,7 +160,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.inputLimits = {
                 diagnosBeskrivning: 180,
                 sjukdomsforlopp: 270,
-                funktionsnedsattning: 360,
+                funktionsnedsattning: 450,
                 aktivitetsbegransning: 1100,
                 nuvarandeArbetsuppgifter: 120,
                 arbetsformagaPrognos: 600,
