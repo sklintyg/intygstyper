@@ -3,6 +3,7 @@ package se.inera.certificate.modules.fk7263.model.util;
 import java.util.Arrays;
 import java.util.Objects;
 
+import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class ModelCompareUtil {
     @Autowired(required = false)
     private WebcertModuleService moduleService;
 
+    @VisibleForTesting
     void setModuleService(WebcertModuleService moduleService) {
         this.moduleService = moduleService;
     }
