@@ -793,8 +793,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 case 'UNKNOWN':
                     $scope.cert.prognosBedomning = 'arbetsformagaPrognosGarInteAttBedoma';
                     $scope.cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning =
-                        $scope.cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning =
-                            $scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
+                        $scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
                     break;
                 }
 
