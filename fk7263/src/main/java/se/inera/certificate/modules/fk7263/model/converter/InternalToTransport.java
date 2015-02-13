@@ -152,19 +152,40 @@ public final class InternalToTransport {
         String annanRef = null;
         String prognosBedomning = null;
         String ovrigKommentar = null;
+        String arbetstidsforlaggning = null;
 
+        //Falt4b
         if (!isNullOrEmpty(source.getAnnanReferensBeskrivning())) {
-            annanRef = "Annan referensbeskrivning: " + source.getAnnanReferensBeskrivning();
+            annanRef = "Fält 4b, annat " + source.getAnnanReferensBeskrivning();
         }
-
+        //Falt8b
+        
+        if (!buildArbetstidsforlaggning(source).isEmpty()) {
+            arbetstidsforlaggning = "Fält 8b, arbetstidsförläggning " + buildArbetstidsforlaggning(source); 
+        }
+        //Falt10
         if (!isNullOrEmpty(source.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
-            prognosBedomning = "Arbetsförmåga går inte att bedöma: " + source.getArbetsformagaPrognosGarInteAttBedomaBeskrivning();
+            prognosBedomning = "Fält 10, går ej att bedöma, förtydligande " + source.getArbetsformagaPrognosGarInteAttBedomaBeskrivning();
         }
         if (!isNullOrEmpty(source.getKommentar())) {
             ovrigKommentar = source.getKommentar();
         }
-        String ret = Strings.join("\n", annanRef, prognosBedomning, ovrigKommentar);
+        String ret = Strings.join(". ", annanRef, arbetstidsforlaggning, prognosBedomning, ovrigKommentar);
         return !isNullOrEmpty(ret) ? ret : null;
+    }
+
+    private static String buildArbetstidsforlaggning(Utlatande source) {
+        List<String> parts = new ArrayList<String>();
+        if (!StringUtils.isEmpty(source.getNedsattMed25Beskrivning())) {
+            parts.add(source.getNedsattMed25Beskrivning());
+        }
+        if (!StringUtils.isEmpty(source.getNedsattMed50Beskrivning())) {
+            parts.add(source.getNedsattMed50Beskrivning());
+        }
+        if (!StringUtils.isEmpty(source.getNedsattMed75Beskrivning())) {
+            parts.add(source.getNedsattMed75Beskrivning());
+        }
+        return Strings.join(". ", parts);
     }
 
     private static FunktionstillstandType toFunktionstillstand(String source, TypAvFunktionstillstand tillstand) {
