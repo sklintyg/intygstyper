@@ -76,7 +76,7 @@ Han kommer att kunna återgå till sitt arbete efter genomförd behandling.</kom
 Problemen har pågått en längre tid.</beskrivning>
     </bedomtTillstand>
     <medicinsktTillstand>
-      <beskrivning>Klämskada på skuldra och överarm, Förtydligande: extra klämd</beskrivning>
+      <beskrivning>Klämskada på skuldra och överarm. Förtydligande: extra klämd</beskrivning>
       <tillstandskod codeSystemName="ICD-10" code="S47" codeSystem="1.2.752.116.1.1.1.1.3"/>
     </medicinsktTillstand>
     <funktionstillstand>

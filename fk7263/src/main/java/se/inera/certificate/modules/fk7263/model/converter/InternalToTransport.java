@@ -42,6 +42,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 
 public final class InternalToTransport {
 
+    private static final String SAMSJUKLIGHET_FORELIGGER = "Samsjuklighet föreligger";
     private static final String FK7263 = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
     private static final String PERS_ID_ROOT = "1.2.752.129.2.1.3.1";
     private static final String HSA_ID_ROOT = "1.2.752.129.2.1.4.1";
@@ -74,7 +75,8 @@ public final class InternalToTransport {
         }
 
         if (!isNullOrEmpty(source.getDiagnosKod())) {
-            register.getLakarutlatande().setMedicinsktTillstand(toMedicinsktTillstand(source.getDiagnosKod(), source.getDiagnosBeskrivning1(), source.getDiagnosKodsystem1(), source.getDiagnosBeskrivning()));
+            register.getLakarutlatande().setMedicinsktTillstand(toMedicinsktTillstand(source.getDiagnosKod(), source.getDiagnosKodsystem1()));
+            buildMedicinsktTillstandBeskrivning(register.getLakarutlatande().getMedicinsktTillstand(), source);
         }
 
         convertAktiviteter(register, source);
@@ -107,15 +109,49 @@ public final class InternalToTransport {
         return register;
     }
 
+    private static void buildMedicinsktTillstandBeskrivning(MedicinsktTillstandType tillstand, Utlatande source) {
+        List<String> parts = new ArrayList<String>();
+        // Beskrivning huvuddiagnos
+        if (!StringUtils.isEmpty(source.getDiagnosBeskrivning1())) {
+            parts.add(source.getDiagnosBeskrivning1());
+        }
+        if (source.getSamsjuklighet() != null && source.getSamsjuklighet()) {
+            parts.add(SAMSJUKLIGHET_FORELIGGER);
+        }
+        //Bidiagnoser
+        String bidiagnoser = buildDiagnoser(source);
+        if (!StringUtils.isEmpty(bidiagnoser)){
+            parts.add(bidiagnoser);
+        }
+        //Text från fält2 
+        if (!StringUtils.isEmpty(source.getDiagnosBeskrivning())) {
+            parts.add(source.getDiagnosBeskrivning());
+        }
+        if (!parts.isEmpty()) {
+            tillstand.setBeskrivning(Strings.join(". ", parts));
+        } else {
+            tillstand.setBeskrivning(null);
+        }
+    }
+
+    private static String buildDiagnoser(Utlatande source) {
+        String diagnos1 = new String();
+        String diagnos2 = new String();
+
+        if (!isNullOrEmpty(source.getDiagnosKod2()) && !isNullOrEmpty(source.getDiagnosBeskrivning2())) {
+            diagnos1 = source.getDiagnosKod2() + " " + source.getDiagnosBeskrivning2();
+        }
+
+        if (!isNullOrEmpty(source.getDiagnosKod3()) && !isNullOrEmpty(source.getDiagnosBeskrivning3())) {
+            diagnos2 = source.getDiagnosKod3() + " " + source.getDiagnosBeskrivning3();
+        }
+        return Strings.join(". ", diagnos1, diagnos2);
+    }
+
     private static String buildKommentar(Utlatande source) {
-        String diagnoser = null;
         String annanRef = null;
         String prognosBedomning = null;
         String ovrigKommentar = null;
-
-        if (!isNullOrEmpty(buildDiagnoser(source))) {
-            diagnoser = buildDiagnoser(source);
-        }
 
         if (!isNullOrEmpty(source.getAnnanReferensBeskrivning())) {
             annanRef = "Annan referensbeskrivning: " + source.getAnnanReferensBeskrivning();
@@ -127,22 +163,8 @@ public final class InternalToTransport {
         if (!isNullOrEmpty(source.getKommentar())) {
             ovrigKommentar = source.getKommentar();
         }
-        String ret = Strings.join("\n", diagnoser, annanRef, prognosBedomning, ovrigKommentar);
+        String ret = Strings.join("\n", annanRef, prognosBedomning, ovrigKommentar);
         return !isNullOrEmpty(ret) ? ret : null;
-    }
-
-    private static String buildDiagnoser(Utlatande source) {
-        String diagnos1 = new String();
-        String diagnos2 = new String();
-
-        if (!isNullOrEmpty(source.getDiagnosKod2()) && !isNullOrEmpty(source.getDiagnosBeskrivning2())) {
-            diagnos1 = "Bidiagnos 1: " + source.getDiagnosKod2() + " " + source.getDiagnosBeskrivning2();
-        }
-
-        if (!isNullOrEmpty(source.getDiagnosKod3()) && !isNullOrEmpty(source.getDiagnosBeskrivning3())) {
-            diagnos2 = "Bidiagnos 2: " + source.getDiagnosKod3() + " " + source.getDiagnosBeskrivning3();
-        }
-        return Strings.join(", ", diagnos1, diagnos2);
     }
 
     private static FunktionstillstandType toFunktionstillstand(String source, TypAvFunktionstillstand tillstand) {
@@ -394,21 +416,11 @@ public final class InternalToTransport {
         }
     }
 
-    private static MedicinsktTillstandType toMedicinsktTillstand(String diagnoskod, String diagnosbeskrivning, String diagnosKodsystem, String fortydligande) {
+    private static MedicinsktTillstandType toMedicinsktTillstand(String diagnoskod, String diagnosKodsystem) {
         MedicinsktTillstandType tillstand = new MedicinsktTillstandType();
-        ArrayList<String> beskrivning = new ArrayList<>();
-        if (!StringUtils.isEmpty(diagnosbeskrivning)) {
-            beskrivning.add(diagnosbeskrivning);
-        }
-        if (!StringUtils.isEmpty(fortydligande)) {
-            beskrivning.add(fortydligande);
-        }
-        if (!beskrivning.isEmpty()) {
-            tillstand.setBeskrivning(StringUtils.join(beskrivning, ", "));
-        }
         String codeSystem = diagnosKodsystem != null ? Diagnoskodverk.valueOf(diagnosKodsystem).getCodeSystem() : null;
         String codeSystemName = diagnosKodsystem != null ? Diagnoskodverk.valueOf(diagnosKodsystem).getCodeSystemName() : null;
-        
+
         tillstand.setTillstandskod(createCD(diagnoskod, codeSystem, codeSystemName));
         return tillstand;
     }
