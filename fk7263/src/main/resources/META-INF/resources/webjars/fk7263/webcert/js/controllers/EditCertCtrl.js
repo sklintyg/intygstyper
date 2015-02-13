@@ -100,25 +100,30 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             };
             $scope.onDiagnoseCode1Select = function($item) {
                 $scope.cert.diagnosBeskrivning1 = $item.beskrivning;
-
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
             };
             $scope.onDiagnoseCode2Select = function($item) {
                 $scope.cert.diagnosBeskrivning2 = $item.beskrivning;
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
             };
             $scope.onDiagnoseCode3Select = function($item) {
                 $scope.cert.diagnosBeskrivning3 = $item.beskrivning;
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
             };
             $scope.onDiagnoseDescription1Select = function($item) {
                 $scope.cert.diagnosKod = $item.value;
                 $scope.cert.diagnosBeskrivning1 = $item.beskrivning;
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
             };
             $scope.onDiagnoseDescription2Select = function($item) {
                 $scope.cert.diagnosKod2 = $item.value;
                 $scope.cert.diagnosBeskrivning2 = $item.beskrivning;
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
             };
             $scope.onDiagnoseDescription3Select = function($item) {
                 $scope.cert.diagnosKod3 = $item.value;
                 $scope.cert.diagnosBeskrivning3 = $item.beskrivning;
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
             };
 
             // Fält 4b. Based on handling
@@ -158,7 +163,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
             // Text input limits for different fields
             $scope.inputLimits = {
-                diagnosBeskrivning: 180,
+                diagnosBeskrivning: 300, // combined field 2 diagnoses (and förtydligande)
                 sjukdomsforlopp: 270,
                 funktionsnedsattning: 450,
                 aktivitetsbegransning: 1100,
@@ -765,6 +770,14 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
             }
 
+            function getLengthOrZero(value) {
+                if (typeof (value) !== 'string') {
+                    return 0;
+                } else {
+                    return value.length;
+                }
+            }
+
             /*************************************************************************
              * Ng-change and watches updating behaviour in form (try to get rid of these or at least make them consistent)
              *************************************************************************/
@@ -808,6 +821,39 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             };
 
             /**
+             * Limit length of field dependent on field 2 in the external model
+             * @param field
+             */
+            $scope.limitDiagnosBeskrivningField = function(field) {
+                function limitDiagnoseLength(val) {
+                    var totalLength = $scope.getTotalDiagnosBeskrivningLength();
+                    if (totalLength > $scope.inputLimits.diagnosBeskrivning) {
+                        // Remove characters over limit from current field
+                        return val.substr(0, val.length - (totalLength - $scope.inputLimits.diagnosBeskrivning));
+                    }
+                    return val;
+                }
+
+                if ($scope.cert[field]) {
+                    $scope.cert[field] = limitDiagnoseLength($scope.cert[field]);
+                }
+            };
+
+            /**
+             * Calculate total length of all fields ending up in diagnosBeskrivning in the external model
+             * @returns {*}
+             */
+            $scope.getTotalDiagnosBeskrivningLength = function() {
+                var totalLength = getLengthOrZero($scope.cert.diagnosBeskrivning) +
+                        getLengthOrZero($scope.cert.diagnosKod2) +
+                        getLengthOrZero($scope.cert.diagnosKod3) +
+                        getLengthOrZero($scope.cert.diagnosBeskrivning1) +
+                        getLengthOrZero($scope.cert.diagnosBeskrivning2) +
+                        getLengthOrZero($scope.cert.diagnosBeskrivning3);
+                return totalLength;
+            };
+
+            /**
              * Limit length of field dependent on field 13 in the external model
              * @param field
              */
@@ -833,13 +879,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * @returns {*}
              */
             $scope.getTotalOvrigtLength = function() {
-                function getLengthOrZero(value) {
-                    if (!value) {
-                        return 0;
-                    } else {
-                        return value.length;
-                    }
-                }
 
                 var totalOvrigtLength = getLengthOrZero($scope.cert.kommentar);
 
