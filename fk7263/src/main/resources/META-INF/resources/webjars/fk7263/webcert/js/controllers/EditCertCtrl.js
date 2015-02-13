@@ -811,39 +811,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
             }
 
-            function copyFriviligtText($scope){
-                var comments = $scope.cert.kommentar === undefined ? '' : $scope.cert.kommentar;
-
-                // backup comments on scope
-                $scope.stash.cert.kommentar = angular.copy($scope.cert.kommentar);
-
-                // add the ovrigt text to the comment
-                var friviligt = '';
-                friviligt = ammendText(friviligt, $scope.form.ovrigt.annanReferensBeskrivning, '\n');
-                friviligt = ammendText(friviligt, $scope.form.ovrigt.nedsattMed25Beskrivning, '\n');
-                friviligt = ammendText(friviligt, $scope.form.ovrigt.nedsattMed50Beskrivning, '\n');
-                friviligt = ammendText(friviligt, $scope.form.ovrigt.nedsattMed75Beskrivning, '\n');
-                friviligt = ammendText(friviligt, $scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning, '\n');
-
-                $scope.cert.kommentar = friviligt + comments;
-                console.log("copyFriviligtText : " + $scope.cert.kommentar);
-            }
-
-            function ammendText(text, textToAmmend, endText){
-                if(textToAmmend && textToAmmend.length > 0 ) {
-                    text += textToAmmend;
-                    if (endText && endText.length > 0) {
-                        text += endText;
-                    }
-                }
-                return text;
-            }
-
-            function resetKommentarText(){
-                $scope.cert.kommentar = angular.copy($scope.stash.cert.kommentar);
-                console.log("resetKommentarText : " + $scope.cert.kommentar);
-            }
-
             /*************************************************************************
              * Ng-change and watches updating behaviour in form (try to get rid of these or at least make them consistent)
              *************************************************************************/
@@ -1048,21 +1015,9 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Print draft
              */
             $scope.print = function() {
-                copyFriviligtText($scope)
-                $timeout(function(){
-                    //function to call if you want to print
-                    var onPrintFinished=function(printed){
-                        resetKommentarText()
-                    }
-
-                    onPrintFinished( ManageCertView.printDraft( $scope.cert.id, $scope.certMeta.intygType ))
-                })
+                ManageCertView.printDraft( $scope.cert.id, $scope.certMeta.intygType );
             };
 
-            $scope.$on('print', function(event, args) {
-
-            });
-''
             /**
              * Handle vidarebefordra dialog
              *
