@@ -56,6 +56,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
             };
 
+            $scope.stash = {
+                cert : { kommentar : ''}
+            }
+
             $scope.searchDiagnoseByDescription = function(codeSystem, val) {
                 return diagnosService.searchByDescription(codeSystem, val)
                     .then(function(response) {
@@ -173,27 +177,25 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Model property watches
              ***************************************************************************/
 
-            $scope.$watchCollection(
+            /*$scope.$watchCollection(
                 'form.ovrigt',
                 // This is the change handler
                 function(newValue, oldValue) {
                     // get the comments after -----------
-                    var searchValue = '---';
-                    var delimeter = '----------------'
+                    var searchValue = '\n*\n';
                     var comments = '';
                     var noKommentarDel = true;
                     if($scope.cert.kommentar){
                         var li = $scope.cert.kommentar.lastIndexOf(searchValue);
-                        if(li > -1) li = li + 3;
+                        if(li > -1) li = li + searchValue.length;
 
                         noKommentarDel = li <= 0;
 
                         if(noKommentarDel && $scope.cert.kommentar.length > 0){
                             comments = $scope.cert.kommentar;
                         } else {
-                            comments = $scope.cert.kommentar.slice(li + 1);
+                            comments = $scope.cert.kommentar.slice(li);
                         }
-
                     }
                     // add the ovrigt text to the comment
                     var friviligt = '';
@@ -203,32 +205,15 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     friviligt = ammendText(friviligt, newValue.nedsattMed75Beskrivning, '\n');
                     friviligt = ammendText(friviligt, newValue.arbetsformagaPrognosGarInteAttBedomaBeskrivning, '\n');
 
-                    if( noKommentarDel && friviligt.length > 0){
-                        comments = delimeter + '\n' + comments;
+                    if( friviligt.length > 0 ){
+                        comments = searchValue + comments;
                     }
 
                     $scope.cert.kommentar = friviligt + comments;
                     console.log("comments : " + $scope.cert.kommentar);
                 }
-            );
-
-            function ammendText(text, textToAmmend, endText){
-                if(textToAmmend && textToAmmend.length > 0 ) {
-                    text += textToAmmend;
-                    if (endText && endText.length > 0) {
-                        text += endText;
-                    }
-                }
-                return text;
-            }
-
-            /*$scope.$watch(
-                'cert.kommentar',
-                // This is the change handler
-                function(newValue, oldValue) {
-
-                }
             );*/
+
 
             /***************************************************************************
              * Private controller support functions
@@ -826,6 +811,39 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
             }
 
+            function copyFriviligtText($scope){
+                var comments = $scope.cert.kommentar === undefined ? '' : $scope.cert.kommentar;
+
+                // backup comments on scope
+                $scope.stash.cert.kommentar = angular.copy($scope.cert.kommentar);
+
+                // add the ovrigt text to the comment
+                var friviligt = '';
+                friviligt = ammendText(friviligt, $scope.form.ovrigt.annanReferensBeskrivning, '\n');
+                friviligt = ammendText(friviligt, $scope.form.ovrigt.nedsattMed25Beskrivning, '\n');
+                friviligt = ammendText(friviligt, $scope.form.ovrigt.nedsattMed50Beskrivning, '\n');
+                friviligt = ammendText(friviligt, $scope.form.ovrigt.nedsattMed75Beskrivning, '\n');
+                friviligt = ammendText(friviligt, $scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning, '\n');
+
+                $scope.cert.kommentar = friviligt + comments;
+                console.log("copyFriviligtText : " + $scope.cert.kommentar);
+            }
+
+            function ammendText(text, textToAmmend, endText){
+                if(textToAmmend && textToAmmend.length > 0 ) {
+                    text += textToAmmend;
+                    if (endText && endText.length > 0) {
+                        text += endText;
+                    }
+                }
+                return text;
+            }
+
+            function resetKommentarText(){
+                $scope.cert.kommentar = angular.copy($scope.stash.cert.kommentar);
+                console.log("resetKommentarText : " + $scope.cert.kommentar);
+            }
+
             /*************************************************************************
              * Ng-change and watches updating behaviour in form (try to get rid of these or at least make them consistent)
              *************************************************************************/
@@ -1030,9 +1048,21 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Print draft
              */
             $scope.print = function() {
-                ManageCertView.printDraft($scope.cert.id, $scope.certMeta.intygType);
+                copyFriviligtText($scope)
+                $timeout(function(){
+                    //function to call if you want to print
+                    var onPrintFinished=function(printed){
+                        resetKommentarText()
+                    }
+
+                    onPrintFinished( ManageCertView.printDraft( $scope.cert.id, $scope.certMeta.intygType ))
+                })
             };
 
+            $scope.$on('print', function(event, args) {
+
+            });
+''
             /**
              * Handle vidarebefordra dialog
              *

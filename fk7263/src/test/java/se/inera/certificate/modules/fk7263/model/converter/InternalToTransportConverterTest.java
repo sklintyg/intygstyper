@@ -100,6 +100,21 @@ public class InternalToTransportConverterTest {
         diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
         Assert.assertTrue(diff.toString(), diff.similar());
     }
+
+    @Test
+    public void testConversionKommentar() throws JAXBException, IOException, SAXException, ConverterException {
+
+        ObjectMapper objectMapper = new CustomObjectMapper();
+        Utlatande externalFormat = objectMapper.readValue(new ClassPathResource("InternalToTransportConverterTest/friviligttext-fk7263-internal.json").getInputStream(), Utlatande.class);
+        RegisterMedicalCertificateType registerMedicalCertificateType = InternalToTransport.getJaxbObject(externalFormat);
+        String expected = "kommentar\n" +
+                "nedsattMed25Beskrivning\n" +
+                "nedsattMed50Beskrivning\n" +
+                "nedsattMed75Beskrivning";
+        String result = registerMedicalCertificateType.getLakarutlatande().getKommentar();
+        Assert.assertEquals(expected, result);
+    }
+
     @Test
     public void testConversionMinimalSmiL() throws JAXBException, IOException, SAXException, ConverterException {
 

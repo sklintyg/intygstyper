@@ -112,6 +112,9 @@ public final class InternalToTransport {
         String annanRef = null;
         String prognosBedomning = null;
         String ovrigKommentar = null;
+        String nedsattMed25Beskrivning = null;
+        String nedsattMed50Beskrivning = null;
+        String nedsattMed75Beskrivning = null;
 
         if (!isNullOrEmpty(buildDiagnoser(source))) {
             diagnoser = buildDiagnoser(source);
@@ -127,7 +130,21 @@ public final class InternalToTransport {
         if (!isNullOrEmpty(source.getKommentar())) {
             ovrigKommentar = source.getKommentar();
         }
-        String ret = Strings.join("\n", diagnoser, annanRef, prognosBedomning, ovrigKommentar);
+        // lägga till friviligt kommentar
+        if (!isNullOrEmpty(source.getNedsattMed25Beskrivning())) {
+            nedsattMed25Beskrivning = source.getNedsattMed25Beskrivning();
+        }
+
+        if (!isNullOrEmpty(source.getNedsattMed50Beskrivning())) {
+            nedsattMed50Beskrivning = source.getNedsattMed50Beskrivning();
+        }
+
+        if (!isNullOrEmpty(source.getNedsattMed75Beskrivning())) {
+            nedsattMed75Beskrivning = source.getNedsattMed75Beskrivning();
+        }
+        // ------
+
+        String ret = Strings.join("\n", diagnoser, annanRef, prognosBedomning, ovrigKommentar, nedsattMed25Beskrivning, nedsattMed50Beskrivning, nedsattMed75Beskrivning);
         return !isNullOrEmpty(ret) ? ret : null;
     }
 
