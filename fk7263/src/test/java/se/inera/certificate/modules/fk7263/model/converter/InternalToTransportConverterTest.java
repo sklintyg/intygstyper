@@ -107,10 +107,7 @@ public class InternalToTransportConverterTest {
         ObjectMapper objectMapper = new CustomObjectMapper();
         Utlatande externalFormat = objectMapper.readValue(new ClassPathResource("InternalToTransportConverterTest/friviligttext-fk7263-internal.json").getInputStream(), Utlatande.class);
         RegisterMedicalCertificateType registerMedicalCertificateType = InternalToTransport.getJaxbObject(externalFormat);
-        String expected = "kommentar\n" +
-                "nedsattMed25Beskrivning\n" +
-                "nedsattMed50Beskrivning\n" +
-                "nedsattMed75Beskrivning";
+        String expected = "Fält 8b, arbetstidsförläggning "+ "nedsattMed25Beskrivning. " + "nedsattMed50Beskrivning. " + "nedsattMed75Beskrivning. kommentar";
         String result = registerMedicalCertificateType.getLakarutlatande().getKommentar();
         Assert.assertEquals(expected, result);
     }
