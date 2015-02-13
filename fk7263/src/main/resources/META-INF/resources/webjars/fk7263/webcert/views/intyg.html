@@ -252,8 +252,9 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
                 <span id="arbetsformataPrognosNej" ng-show="cert.prognosBedomning == 'arbetsformagaPrognosNej'"><span message key="fk7263.label.no"></span></span>
                 <span id="arbetsformataPrognosGarInteAttBedoma" ng-show="cert.prognosBedomning == 'arbetsformagaPrognosGarInteAttBedoma'">
                   <span message key="fk7263.label.gar-ej-att-bedomma"></span>
-                  <br>
-                  Förtydligande: <div id="arbetsformagaPrognosGarInteAttBedomaBeskrivning" class="multiline">{{cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning}}</div>
+                  <div ng-show="cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning">
+                    Förtydligande: <div id="arbetsformagaPrognosGarInteAttBedomaBeskrivning" class="multiline">{{cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning}}</div>
+                  </div>
                 </span>
               </div>
 
