@@ -1,18 +1,16 @@
 package se.inera.certificate.modules.fk7263.model.converter.util;
 
-import java.io.IOException;
-import java.io.StringWriter;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
+import se.inera.certificate.modules.fk7263.support.Fk7263EntryPoint;
 import se.inera.certificate.modules.support.api.CertificateHolder;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
-import se.inera.certificate.modules.fk7263.support.Fk7263EntryPoint;
+
+import java.io.IOException;
+import java.io.StringWriter;
 
 public class ConverterUtil {
 
@@ -42,7 +40,7 @@ public class ConverterUtil {
         certificateHolder.setSigningDoctorName(utlatande.getGrundData().getSkapadAv().getFullstandigtNamn());
         certificateHolder.setCivicRegistrationNumber(utlatande.getGrundData().getPatient().getPersonId());
         certificateHolder.setSignedDate(utlatande.getGrundData().getSigneringsdatum());
-        certificateHolder.setType(Fk7263EntryPoint.FK_7263);
+        certificateHolder.setType(Fk7263EntryPoint.MODULE_ID);
         certificateHolder.setValidFromDate(utlatande.getGiltighet().getFrom().toString());
         certificateHolder.setValidToDate(utlatande.getGiltighet().getTom().toString());
         certificateHolder.setAdditionalInfo(utlatande.getGiltighet().getFrom().toString() + " - " + utlatande.getGiltighet().getTom().toString());

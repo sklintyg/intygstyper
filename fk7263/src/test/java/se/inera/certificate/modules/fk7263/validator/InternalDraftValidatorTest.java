@@ -89,7 +89,7 @@ public class InternalDraftValidatorTest {
      */
     class DiagnosKodArgmentMatcher extends ArgumentMatcher<String> {
 
-        private List<String> ALLOWED_CODES = Arrays.asList("S47", "TEST1", "TEST2", "TEST3");
+        private List<String> ALLOWED_CODES = Arrays.asList("S47", "TEST1", "TEST2", "TEST3", "Z233", "A000");
 
         @Override
         public boolean matches(Object arg) {

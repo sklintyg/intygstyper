@@ -20,6 +20,7 @@ import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.internal.PrognosBedomning;
 import se.inera.certificate.modules.fk7263.model.internal.Rehabilitering;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
+import se.inera.certificate.modules.fk7263.support.Fk7263EntryPoint;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType;
@@ -44,23 +45,24 @@ public final class TransportToInternal {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportToInternal.class);
 
-    public static final String FK_7263 = "fk7263";
-    public static final String LEGACY_TYP = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
+    /*
     public static final String UTLATANDE_TYP_OID = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
     public static final String UTLATANDE_CODE_SYSTEM_NAME = "kv_utlåtandetyp_intyg";
     public static final String UTLATANDE_CODE_SYSTEM_VERSION = null;
     public static final double FORMOGA_3_4 = 75;
     public static final double FORMOGA_1_2 = 50;
     public static final double FORMOGA_1_4 = 25;
+    */
 
     private TransportToInternal() {
     }
 
     public static Utlatande convert(LakarutlatandeType source) throws ConverterException {
         LOGGER.debug("Converting transport to internal model");
+
         Utlatande utlatande = new Utlatande();
         utlatande.setId(source.getLakarutlatandeId());
-        utlatande.setTyp(FK_7263);
+        utlatande.setTyp(Fk7263EntryPoint.MODULE_ID);
 
         if (source.getKommentar() != null && !source.getKommentar().isEmpty()) {
             utlatande.setKommentar(source.getKommentar());

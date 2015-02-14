@@ -56,6 +56,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
             };
 
+            $scope.stash = {
+                cert : { kommentar : ''}
+            }
+
             $scope.searchDiagnoseByDescription = function(codeSystem, val) {
                 return diagnosService.searchByDescription(codeSystem, val)
                     .then(function(response) {
@@ -100,25 +104,30 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             };
             $scope.onDiagnoseCode1Select = function($item) {
                 $scope.cert.diagnosBeskrivning1 = $item.beskrivning;
-
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
             };
             $scope.onDiagnoseCode2Select = function($item) {
                 $scope.cert.diagnosBeskrivning2 = $item.beskrivning;
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
             };
             $scope.onDiagnoseCode3Select = function($item) {
                 $scope.cert.diagnosBeskrivning3 = $item.beskrivning;
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
             };
             $scope.onDiagnoseDescription1Select = function($item) {
                 $scope.cert.diagnosKod = $item.value;
                 $scope.cert.diagnosBeskrivning1 = $item.beskrivning;
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
             };
             $scope.onDiagnoseDescription2Select = function($item) {
                 $scope.cert.diagnosKod2 = $item.value;
                 $scope.cert.diagnosBeskrivning2 = $item.beskrivning;
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
             };
             $scope.onDiagnoseDescription3Select = function($item) {
                 $scope.cert.diagnosKod3 = $item.value;
                 $scope.cert.diagnosBeskrivning3 = $item.beskrivning;
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
             };
 
             // Fält 4b. Based on handling
@@ -158,7 +167,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
             // Text input limits for different fields
             $scope.inputLimits = {
-                diagnosBeskrivning: 180,
+                diagnosBeskrivning: 300, // combined field 2 diagnoses (and förtydligande)
                 sjukdomsforlopp: 270,
                 funktionsnedsattning: 450,
                 aktivitetsbegransning: 1100,
@@ -168,6 +177,48 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 annanAtgard: 66,
                 ovrigt: 400 // = combined field 13 (and dependencies that end up in field 13) limit
             };
+
+            /***************************************************************************
+             * Model property watches
+             ***************************************************************************/
+
+            /*$scope.$watchCollection(
+                'form.ovrigt',
+                // This is the change handler
+                function(newValue, oldValue) {
+                    // get the comments after -----------
+                    var searchValue = '\n*\n';
+                    var comments = '';
+                    var noKommentarDel = true;
+                    if($scope.cert.kommentar){
+                        var li = $scope.cert.kommentar.lastIndexOf(searchValue);
+                        if(li > -1) li = li + searchValue.length;
+
+                        noKommentarDel = li <= 0;
+
+                        if(noKommentarDel && $scope.cert.kommentar.length > 0){
+                            comments = $scope.cert.kommentar;
+                        } else {
+                            comments = $scope.cert.kommentar.slice(li);
+                        }
+                    }
+                    // add the ovrigt text to the comment
+                    var friviligt = '';
+                    friviligt = ammendText(friviligt, newValue.annanReferensBeskrivning, '\n');
+                    friviligt = ammendText(friviligt, newValue.nedsattMed25Beskrivning, '\n');
+                    friviligt = ammendText(friviligt, newValue.nedsattMed50Beskrivning, '\n');
+                    friviligt = ammendText(friviligt, newValue.nedsattMed75Beskrivning, '\n');
+                    friviligt = ammendText(friviligt, newValue.arbetsformagaPrognosGarInteAttBedomaBeskrivning, '\n');
+
+                    if( friviligt.length > 0 ){
+                        comments = searchValue + comments;
+                    }
+
+                    $scope.cert.kommentar = friviligt + comments;
+                    console.log("comments : " + $scope.cert.kommentar);
+                }
+            );*/
+
 
             /***************************************************************************
              * Private controller support functions
@@ -747,8 +798,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 case 'UNKNOWN':
                     $scope.cert.prognosBedomning = 'arbetsformagaPrognosGarInteAttBedoma';
                     $scope.cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning =
-                        $scope.cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning =
-                            $scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
+                        $scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
                     break;
                 }
 
@@ -763,6 +813,14 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.cert.ressattTillArbeteEjAktuellt = true;
                 }
 
+            }
+
+            function getLengthOrZero(value) {
+                if (typeof (value) !== 'string') {
+                    return 0;
+                } else {
+                    return value.length;
+                }
             }
 
             /*************************************************************************
@@ -808,6 +866,39 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             };
 
             /**
+             * Limit length of field dependent on field 2 in the external model
+             * @param field
+             */
+            $scope.limitDiagnosBeskrivningField = function(field) {
+                function limitDiagnoseLength(val) {
+                    var totalLength = $scope.getTotalDiagnosBeskrivningLength();
+                    if (totalLength > $scope.inputLimits.diagnosBeskrivning) {
+                        // Remove characters over limit from current field
+                        return val.substr(0, val.length - (totalLength - $scope.inputLimits.diagnosBeskrivning));
+                    }
+                    return val;
+                }
+
+                if ($scope.cert[field]) {
+                    $scope.cert[field] = limitDiagnoseLength($scope.cert[field]);
+                }
+            };
+
+            /**
+             * Calculate total length of all fields ending up in diagnosBeskrivning in the external model
+             * @returns {*}
+             */
+            $scope.getTotalDiagnosBeskrivningLength = function() {
+                var totalLength = getLengthOrZero($scope.cert.diagnosBeskrivning) +
+                        getLengthOrZero($scope.cert.diagnosKod2) +
+                        getLengthOrZero($scope.cert.diagnosKod3) +
+                        getLengthOrZero($scope.cert.diagnosBeskrivning1) +
+                        getLengthOrZero($scope.cert.diagnosBeskrivning2) +
+                        getLengthOrZero($scope.cert.diagnosBeskrivning3);
+                return totalLength;
+            };
+
+            /**
              * Limit length of field dependent on field 13 in the external model
              * @param field
              */
@@ -833,13 +924,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * @returns {*}
              */
             $scope.getTotalOvrigtLength = function() {
-                function getLengthOrZero(value) {
-                    if (!value) {
-                        return 0;
-                    } else {
-                        return value.length;
-                    }
-                }
 
                 var totalOvrigtLength = getLengthOrZero($scope.cert.kommentar);
 
@@ -969,7 +1053,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Print draft
              */
             $scope.print = function() {
-                ManageCertView.printDraft($scope.cert.id, $scope.certMeta.intygType);
+                ManageCertView.printDraft( $scope.cert.id, $scope.certMeta.intygType );
             };
 
             /**

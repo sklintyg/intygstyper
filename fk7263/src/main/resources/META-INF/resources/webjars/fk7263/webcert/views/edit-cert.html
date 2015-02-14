@@ -246,7 +246,8 @@
                                ng-model="cert.diagnosBeskrivning1"
                                typeahead="d.value as d.label for d in searchDiagnoseByDescription(form.diagnosKodverk, $viewValue) | filter:$viewValue "
                                typeahead-on-select="onDiagnoseDescription1Select($item)"
-                               typeahead-wait-ms="100">
+                               typeahead-wait-ms="100" ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning1')">
+                        <span class="counter">Tecken kvar: {{inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
                       </div>
                     </div>
                     <div class="row bottom-padding-tiny">
@@ -257,7 +258,8 @@
                             <input type="text" id="diagnoseCodeOpt1" name="diagnose.codeOpt1" value=""
                                    ng-model="cert.diagnosKod2" class="col-xs-11 form-control"
                                    typeahead="d.value as d.label for d in getDiagnoseCodes(form.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
-                                   typeahead-min-length="3" typeahead-on-select="onDiagnoseCode2Select($item)">
+                                   typeahead-min-length="3" typeahead-on-select="onDiagnoseCode2Select($item)"
+                                   ng-change="limitDiagnosBeskrivningField('diagnosKod2')">
                           </div>
                         </div>
                       </div>
@@ -271,7 +273,8 @@
                                  ng-model="cert.diagnosBeskrivning2" class="block col-xs-12 form-control maxwidth"
                                  typeahead="d.value as d.label for d in searchDiagnoseByDescription(form.diagnosKodverk, $viewValue) | filter:$viewValue "
                                  typeahead-on-select="onDiagnoseDescription2Select($item)"
-                                 typeahead-wait-ms="100">
+                                 typeahead-wait-ms="100" ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning2')">
+                          <span class="counter">Tecken kvar: {{inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
                         </div>
                       </div>
                     </div>
@@ -280,34 +283,38 @@
                         <input type="text" id="diagnoseCodeOpt2" name="diagnose.codeOpt2" value=""
                                ng-model="cert.diagnosKod3" class="col-xs-11 form-control"
                                typeahead="d.value as d.label for d in getDiagnoseCodes(form.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
-                               typeahead-min-length="3" typeahead-on-select="onDiagnoseCode3Select($item)">
+                               typeahead-min-length="3" typeahead-on-select="onDiagnoseCode3Select($item)"
+                               ng-change="limitDiagnosBeskrivningField('diagnosKod3')">
                       </div>
-                      <div class='col-xs-9 unbreakable'>
+                      <div class='col-xs-9'>
                         <div class="controls">
                           <input type="text" id="diagnoseDescriptionOpt2" name="diagnose.descriptionOpt2" value=""
                                  ng-model="cert.diagnosBeskrivning3" class="block col-xs-12 form-control maxwidth"
                                  typeahead="d.value as d.label for d in searchDiagnoseByDescription(form.diagnosKodverk, $viewValue) | filter:$viewValue "
                                  typeahead-on-select="onDiagnoseDescription3Select($item)"
-                                 typeahead-wait-ms="100">
+                                 typeahead-wait-ms="100"
+                                 ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning3')">
+                          <span class="counter">Tecken kvar: {{inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
                         </div>
                       </div>
                     </div>
 
                     <div class="form-group">
                       <div>
-                        <label class="control-label"><span message
-                                                           key="fk7263.label.diagnosfortydligande"></span></label><span
-                          wc-enable-tooltip field-help-text="fk7263.helptext.diagnos.fortydligande"></span>
+                        <label class="control-label"><span message key="fk7263.label.diagnosfortydligande"></span></label>
+                        <span wc-enable-tooltip field-help-text="fk7263.helptext.diagnos.fortydligande"></span>
                       </div>
                       <textarea id="diagnoseClarification" class="form-control" name="diagnose.clarification" rows='5'
-                                ng-model="cert.diagnosBeskrivning" wc-maxlength ng-trim="false"
-                                maxlength="{{inputLimits.diagnosBeskrivning}}"></textarea>
+                                ng-model="cert.diagnosBeskrivning" ng-trim="false"
+                                ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning')"></textarea>
+                      <span class="counter">Tecken kvar: {{inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
                     </div>
 
                     <div class="form-group form-inline">
                       <label class="checkbox">
                         <input type="checkbox" id="diagnoseMultipleDiagnoses" name="diagnose.multipleDiagnoses"
-                               ng-model="cert.samsjuklighet">
+                               ng-model="cert.samsjuklighet"
+                               ng-change="limitDiagnosBeskrivningField('samsjuklighet')">
                         Samsjuklighet föreligger</label><span wc-enable-tooltip
                                                               field-help-text="fk7263.helptext.diagnos.samsjuklighet"></span>
                     </div>

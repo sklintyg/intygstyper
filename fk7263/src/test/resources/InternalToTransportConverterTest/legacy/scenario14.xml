@@ -1,10 +1,7 @@
-<ns3:RegisterMedicalCertificate xmlns="urn:riv:insuranceprocess:healthreporting:mu7263:3" xmlns:ns2="urn:riv:insuranceprocess:healthreporting:2" xmlns:ns3="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3" xmlns:ns4="http://www.w3.org/2005/08/addressing">
-         <ns3:lakarutlatande xmlns:ns2="urn:riv:insuranceprocess:healthreporting:2" xmlns="urn:riv:insuranceprocess:healthreporting:mu7263:3">
+<lakarutlatande xmlns:ns1="urn:riv:insuranceprocess:healthreporting:mu7263:3"
+	xmlns:ns2="urn:riv:insuranceprocess:healthreporting:2" xmlns="urn:riv:insuranceprocess:healthreporting:mu7263:3">
 	<lakarutlatande-id>6ea04fd0-5fef-4809-823b-efeddf8a4d55</lakarutlatande-id>
 	<typAvUtlatande>Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring</typAvUtlatande>
-		
-		<kommentar>Fält 4b, annat Annat kontaktsätt</kommentar>
-		
 		<signeringsdatum>2013-03-17T00:00:00</signeringsdatum>
 		<skickatDatum>2013-03-17T00:00:00</skickatDatum>
 		<patient>
@@ -39,16 +36,9 @@
 		</vardkontakt>
 
 		<medicinsktTillstand>
-			<tillstandskod code="S47" codeSystemName="ICD-10"/>
+			<beskrivning>Klämskada på överarm</beskrivning>
+			<tillstandskod code="S47" />
 		</medicinsktTillstand>
-		
-		<aktivitet>
-			<aktivitetskod>Patienten_behover_fa_kontakt_med_Arbetsformedlingen</aktivitetskod>
-		</aktivitet>
-		
-		<aktivitet>
-			<aktivitetskod>Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt</aktivitetskod>
-		</aktivitet>
 		
 		<funktionstillstand>
 			<beskrivning>Kraftigt nedsatt rörlighet i överarmen pga skadan.
@@ -56,15 +46,9 @@ Böj- och sträckförmågan är mycket dålig.
 Smärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket.</beskrivning>
 			<typAvFunktionstillstand>Kroppsfunktion</typAvFunktionstillstand>
 		</funktionstillstand>
-		
-	
-   	 	<referens>
-    		<referenstyp>Annat</referenstyp>
-     		<datum>2013-03-10</datum>
-   		</referens>
 
 		<funktionstillstand>
-			<beskrivning>Aktivitetsnedsättning: Patienten bör/kan inte använda armen förrän skadan läkt.
+			<beskrivning>Patienten bör/kan inte använda armen förrän skadan läkt.
 Skadan förvärras vid för tidigt påtvingad belastning.
 Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning.</beskrivning>
 			<typAvFunktionstillstand>Aktivitet</typAvFunktionstillstand>
@@ -77,11 +61,7 @@ Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast lä
 					<varaktighetTom>2013-04-07</varaktighetTom>
 					<nedsattningsgrad>Helt_nedsatt</nedsattningsgrad>
 				</arbetsformagaNedsattning>
-                <sysselsattning>
-                    <typAvSysselsattning>Nuvarande_arbete</typAvSysselsattning>
-                </sysselsattning>
 			</arbetsformaga>
 		</funktionstillstand>
 
-	</ns3:lakarutlatande>
-</ns3:RegisterMedicalCertificate>
+	</lakarutlatande>

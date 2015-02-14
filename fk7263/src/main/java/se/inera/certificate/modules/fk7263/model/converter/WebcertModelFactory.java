@@ -31,7 +31,7 @@ import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.Patient;
 
 /**
- * Factory for creating a editable model.
+ * Factory for creating an editable model.
  */
 public class WebcertModelFactory {
     private static final Logger LOG = LoggerFactory.getLogger(WebcertModelFactory.class);

@@ -1,16 +1,12 @@
 package se.inera.certificate.modules.fk7263.rest;
 
-import java.io.IOException;
-import java.io.StringWriter;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.w3.wsaddressing10.AttributedURIType;
-
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareRequestType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponseType;
@@ -46,7 +42,8 @@ import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificater
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.io.StringWriter;
 
 /**
  * @author andreaskaltenbach, marced
@@ -54,9 +51,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Fk7263ModuleApi implements ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(Fk7263ModuleApi.class);
-
-    @Value("${intygstjanst.logicaladdress}")
-    private String intygstjanstLogicalAddress;
 
     @Autowired
     private WebcertModelFactory webcertModelFactory;
@@ -68,29 +62,25 @@ public class Fk7263ModuleApi implements ModuleApi {
     @Qualifier("fk7263-objectMapper")
     private ObjectMapper objectMapper;
 
-    @Autowired(required=false)
+    @Autowired(required = false)
     @Qualifier("registerMedicalCertificateClient")
     private RegisterMedicalCertificateResponderInterface registerMedicalCertificateClient;
 
     @Autowired
     private ModelCompareUtil modelCompareUtil;
 
-    public void setRegisterMedicalCertificateClient(RegisterMedicalCertificateResponderInterface registerMedicalCertificateClient) {
-        this.registerMedicalCertificateClient = registerMedicalCertificateClient;
-    }
-    
-    @Autowired(required=false)
+    @Autowired(required = false)
     private GetMedicalCertificateForCareResponderInterface getMedicalCertificateForCareResponderInterface;
-
-    public void setGetMedicalCertificateForCareResponderInterface(
-            GetMedicalCertificateForCareResponderInterface getMedicalCertificateForCareResponderInterface) {
-        this.getMedicalCertificateForCareResponderInterface = getMedicalCertificateForCareResponderInterface;
-    }
 
     @Autowired
     private ConverterUtil converterUtil;
 
     private ModuleContainerApi moduleContainer;
+
+    // This method seem to be here just for test purpose. Isn't used in real code
+    public void setRegisterMedicalCertificateClient(RegisterMedicalCertificateResponderInterface registerMedicalCertificateClient) {
+        this.registerMedicalCertificateClient = registerMedicalCertificateClient;
+    }
 
     /**
      * {@inheritDoc}
@@ -141,6 +131,112 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
     }
 
+    @Override
+    public ModuleContainerApi getModuleContainer() {
+        return moduleContainer;
+    }
+
+    @Override
+    public void setModuleContainer(ModuleContainerApi moduleContainer) {
+        this.moduleContainer = moduleContainer;
+    }
+
+    @Override
+    public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
+        try {
+            Utlatande utlatande = converterUtil.fromJsonString(internalModel.getInternalModel());
+            Object request = InternalToTransport.getJaxbObject(utlatande);
+
+            AttributedURIType address = new AttributedURIType();
+            address.setValue(logicalAddress);
+
+            RegisterMedicalCertificateResponseType response = registerMedicalCertificateClient
+                    .registerMedicalCertificate(address, (RegisterMedicalCertificateType) request);
+
+            // check whether call was successful or not
+            if (response.getResult().getResultCode() != ResultCodeEnum.OK) {
+                String message = response.getResult().getResultCode() == ResultCodeEnum.INFO
+                        ? response.getResult().getInfoText()
+                        : response.getResult().getErrorId() + " : " + response.getResult().getErrorText();
+                throw new ExternalServiceCallException(message);
+            }
+
+        } catch (ConverterException e) {
+            throw new ModuleException(e);
+        }
+    }
+
+    @Override
+    public CertificateResponse getCertificate(String certificateId, String logicalAddress) throws ModuleException {
+        GetMedicalCertificateForCareRequestType request = new GetMedicalCertificateForCareRequestType();
+        request.setCertificateId(certificateId);
+
+        GetMedicalCertificateForCareResponseType response = getMedicalCertificateForCareResponderInterface.
+                getMedicalCertificateForCare(logicalAddress, request);
+        
+        switch (response.getResult().getResultCode()) {
+            case INFO:
+            case OK:
+                return convert(response, false);
+            case ERROR:
+                switch (response.getResult().getErrorId()) {
+                case REVOKED:
+                    return convert(response, true);
+                case VALIDATION_ERROR:
+                    throw new ModuleException("getMedicalCertificateForCare WS call: VALIDATION_ERROR :" + response.getResult().getResultText());
+                default:
+                    throw new ModuleException("getMedicalCertificateForCare WS call: ERROR :" + response.getResult().getResultText());
+                }
+            default:
+                throw new ModuleException("getMedicalCertificateForCare WS call: ERROR :" + response.getResult().getResultText());
+        }
+    }
+
+    @Override
+    public void registerCertificate(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
+        sendCertificateToRecipient(internalModel, logicalAddress);
+    }
+
+    @Override
+    public InternalModelResponse updateBeforeSave(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException {
+        return updateInternal(internalModel, hosPerson, null);
+    }
+
+    @Override
+    public InternalModelResponse updateBeforeSigning(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
+        return updateInternal(internalModel, hosPerson, signingDate);
+    }
+
+    @Override
+    public boolean isModelChanged(String persistedState, String currentState) throws ModuleException  {
+        Utlatande oldUtlatande;
+        Utlatande newUtlatande;
+
+        try {
+            oldUtlatande = objectMapper.readValue(persistedState, Utlatande.class);
+            newUtlatande = objectMapper.readValue(currentState, Utlatande.class);
+        } catch (IOException e) {
+            throw new ModuleException(e);
+        }
+
+        if (modelCompareUtil.modelDiffers(oldUtlatande, newUtlatande)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private CertificateResponse convert(GetMedicalCertificateForCareResponseType response, boolean revoked) throws ModuleException {
+        try {
+            Utlatande utlatande = TransportToInternal.convert(response.getLakarutlatande());
+            String internalModel = objectMapper.writeValueAsString(utlatande);
+            CertificateMetaData metaData = ClinicalProcessCertificateMetaTypeConverter.toCertificateMetaData(response.getMeta());
+            return new CertificateResponse(internalModel, utlatande, metaData, revoked);
+        } catch (Exception e) {
+            throw new ModuleException(e);
+        }
+    }
+
     // Private transformation methods for building responses
 
     private se.inera.certificate.modules.fk7263.model.internal.Utlatande getInternal(InternalModelHolder internalModel)
@@ -166,94 +262,8 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
     }
 
-    @Override
-    public void setModuleContainer(ModuleContainerApi moduleContainer) {
-        this.moduleContainer = moduleContainer;
-    }
-
-
-    @Override
-    public ModuleContainerApi getModuleContainer() {
-        return moduleContainer;
-    }
-
-    @Override
-    public void sendCertificateToRecipient(InternalModelHolder internalModel, String recipient) throws ModuleException {
-        try {
-            Utlatande utlatande = converterUtil.fromJsonString(internalModel.getInternalModel());
-            Object request = InternalToTransport.getJaxbObject(utlatande);
-            AttributedURIType address = new AttributedURIType();
-            address.setValue(recipient);
-            RegisterMedicalCertificateResponseType response = registerMedicalCertificateClient
-                    .registerMedicalCertificate(address, (RegisterMedicalCertificateType) request);
-
-            // check whether call was successful or not
-            if (response.getResult().getResultCode() != ResultCodeEnum.OK) {
-                String message = response.getResult().getResultCode() == ResultCodeEnum.INFO ?
-                        response.getResult().getInfoText() :
-                            response.getResult().getErrorId() + " : " + response.getResult().getErrorText();
-                throw new ExternalServiceCallException(message);
-            }
-
-        } catch (ConverterException e) {
-            throw new ModuleException(e);
-        }
-    }
-
-    @Override
-    public CertificateResponse getCertificate(String certificateId) throws ModuleException {
-        GetMedicalCertificateForCareRequestType request = new GetMedicalCertificateForCareRequestType();
-        request.setCertificateId(certificateId);
-
-        GetMedicalCertificateForCareResponseType response = getMedicalCertificateForCareResponderInterface.getMedicalCertificateForCare(intygstjanstLogicalAddress,
-                request);
-        
-        switch (response.getResult().getResultCode()) {
-        case INFO:
-        case OK:
-            return convert(response, false);
-        case ERROR:
-            switch (response.getResult().getErrorId()) {
-            case REVOKED:
-                return convert(response, true);
-            case VALIDATION_ERROR:
-                throw new ModuleException("getMedicalCertificateForCare WS call: VALIDATION_ERROR :" + response.getResult().getResultText());
-            default:
-                throw new ModuleException("getMedicalCertificateForCare WS call: ERROR :" + response.getResult().getResultText());
-            }
-        default:
-            throw new ModuleException("getMedicalCertificateForCare WS call: ERROR :" + response.getResult().getResultText());
-        }
-    }
-    
-    private CertificateResponse convert(GetMedicalCertificateForCareResponseType response, boolean revoked) throws ModuleException {
-        try {
-            Utlatande utlatande = TransportToInternal.convert(response.getLakarutlatande());
-            String internalModel = objectMapper.writeValueAsString(utlatande);
-            CertificateMetaData metaData = ClinicalProcessCertificateMetaTypeConverter.toCertificateMetaData(response.getMeta());
-            return new CertificateResponse(internalModel, utlatande, metaData, revoked);
-        } catch (Exception e) {
-            throw new ModuleException(e);
-        }
-    }
-
-    @Override
-    public void registerCertificate(InternalModelHolder internalModel) throws ModuleException {
-        sendCertificateToRecipient(internalModel, intygstjanstLogicalAddress);
-    }
-
-    @Override
-    public InternalModelResponse updateBeforeSave(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException {
-        return updateInternal(internalModel, hosPerson, null);
-    }
-
-    @Override
-    public InternalModelResponse updateBeforeSigning(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
-        return updateInternal(internalModel, hosPerson, signingDate);
-    }
-
     private InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
-        try{
+        try {
             Utlatande intyg = getInternal(internalModel);
             webcertModelFactory.updateSkapadAv(intyg, hosPerson, signingDate);
             return toInteralModelResponse(intyg);
@@ -261,25 +271,5 @@ public class Fk7263ModuleApi implements ModuleApi {
             throw new ModuleException("Error while updating internal model", e);
         }
     }
-
-    @Override
-    public boolean isModelChanged(String persistedState, String currentState) throws ModuleException  {
-        Utlatande oldUtlatande;
-        Utlatande newUtlatande;
-        try {
-            oldUtlatande = objectMapper.readValue(persistedState, Utlatande.class);
-            newUtlatande = objectMapper.readValue(currentState, Utlatande.class);
-        } catch (IOException e) {
-            throw new ModuleException(e);
-        }
-
-        if (modelCompareUtil.modelDiffers(oldUtlatande, newUtlatande)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
 
 }
