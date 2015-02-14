@@ -66,6 +66,9 @@ public class Fk7263ModuleApi implements ModuleApi {
     @Qualifier("registerMedicalCertificateClient")
     private RegisterMedicalCertificateResponderInterface registerMedicalCertificateClient;
 
+    @Autowired
+    private ModelCompareUtil modelCompareUtil;
+
     @Autowired(required = false)
     private GetMedicalCertificateForCareResponderInterface getMedicalCertificateForCareResponderInterface;
 
@@ -216,7 +219,7 @@ public class Fk7263ModuleApi implements ModuleApi {
             throw new ModuleException(e);
         }
 
-        if (ModelCompareUtil.modelDiffers(oldUtlatande, newUtlatande)) {
+        if (modelCompareUtil.modelDiffers(oldUtlatande, newUtlatande)) {
             return true;
         }
 
