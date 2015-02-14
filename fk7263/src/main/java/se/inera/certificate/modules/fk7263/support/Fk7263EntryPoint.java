@@ -11,8 +11,6 @@ import java.util.Map;
 
 public class Fk7263EntryPoint implements ModuleEntryPoint {
 
-    public static final String FK_7263 = "fk7263";
-
     public static final String DEFAULT_RECIPIENT_ID = "FK";
 
     public static final String MODULE_ID = "fk7263";
