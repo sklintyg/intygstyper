@@ -51,6 +51,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Fk7263ModuleApiTest {
 
     private RegisterMedicalCertificateResponderInterface registerMedicalCertificateClient;
+
     @Autowired
     private Fk7263ModuleApi fk7263ModuleApi;
 
