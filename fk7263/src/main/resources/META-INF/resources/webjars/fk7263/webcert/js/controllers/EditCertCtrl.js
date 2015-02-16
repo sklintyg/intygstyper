@@ -60,76 +60,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 cert : { kommentar : ''}
             }
 
-            $scope.searchDiagnoseByDescription = function(codeSystem, val) {
-                return diagnosService.searchByDescription(codeSystem, val)
-                    .then(function(response) {
-                        if (response && response.data && response.data.resultat === 'OK') {
-                            return response.data.diagnoser.map(function(item) {
-                                return {
-                                    value: item.kod,
-                                    beskrivning: item.beskrivning,
-                                    label: item.kod + ' | ' + item.beskrivning
-                                };
-                            });
-                        }
-                        else {
-                            return [];
-                        }
-                    }, function(response) {
-                        $log.debug('Error searching diagnose code');
-                        $log.debug(response);
-                        return [];
-                    });
-            };
-            $scope.getDiagnoseCodes = function(codeSystem, val) {
-                return diagnosService.searchByCode(codeSystem, val)
-                    .then(function(response) {
-                        if (response && response.data && response.data.resultat === 'OK') {
-                            return response.data.diagnoser.map(function(item) {
-                                return {
-                                    value: item.kod,
-                                    beskrivning: item.beskrivning,
-                                    label: item.kod + ' | ' + item.beskrivning
-                                };
-                            });
-                        }
-                        else {
-                            return [];
-                        }
-                    }, function(response) {
-                        $log.debug('Error searching diagnose code');
-                        $log.debug(response);
-                        return [];
-                    });
-            };
-            $scope.onDiagnoseCode1Select = function($item) {
-                $scope.cert.diagnosBeskrivning1 = $item.beskrivning;
-                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
-            };
-            $scope.onDiagnoseCode2Select = function($item) {
-                $scope.cert.diagnosBeskrivning2 = $item.beskrivning;
-                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
-            };
-            $scope.onDiagnoseCode3Select = function($item) {
-                $scope.cert.diagnosBeskrivning3 = $item.beskrivning;
-                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
-            };
-            $scope.onDiagnoseDescription1Select = function($item) {
-                $scope.cert.diagnosKod = $item.value;
-                $scope.cert.diagnosBeskrivning1 = $item.beskrivning;
-                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
-            };
-            $scope.onDiagnoseDescription2Select = function($item) {
-                $scope.cert.diagnosKod2 = $item.value;
-                $scope.cert.diagnosBeskrivning2 = $item.beskrivning;
-                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
-            };
-            $scope.onDiagnoseDescription3Select = function($item) {
-                $scope.cert.diagnosKod3 = $item.value;
-                $scope.cert.diagnosBeskrivning3 = $item.beskrivning;
-                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
-            };
-
             // Fält 4b. Based on handling
             $scope.basedOnState = {
                 check: {
@@ -1000,6 +930,67 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
             });
 
+            /**
+             *  Remove choices related to diagnoskoder when the choice changes to make sure
+             */
+            $scope.onChangeKodverk = function() {
+                $scope.cert.diagnosKod = '';
+                $scope.cert.diagnosBeskrivning1 = '';
+                $scope.cert.diagnosKod2 = '';
+                $scope.cert.diagnosBeskrivning2 = '';
+                $scope.cert.diagnosKod3 = '';
+                $scope.cert.diagnosBeskrivning3 = '';
+            };
+
+            /**
+             *
+             * @param codeSystem
+             * @param val
+             * @returns {*}
+             */
+            $scope.searchDiagnoseByDescription = function(codeSystem, val) {
+                return diagnosService.searchByDescription(codeSystem, val)
+                    .then(function(response) {
+                        if (response && response.data && response.data.resultat === 'OK') {
+                            return response.data.diagnoser.map(function(item) {
+                                return {
+                                    value: item.kod,
+                                    beskrivning: item.beskrivning,
+                                    label: item.kod + ' | ' + item.beskrivning
+                                };
+                            });
+                        }
+                        else {
+                            return [];
+                        }
+                    }, function(response) {
+                        $log.debug('Error searching diagnose code');
+                        $log.debug(response);
+                        return [];
+                    });
+            };
+            $scope.getDiagnoseCodes = function(codeSystem, val) {
+                return diagnosService.searchByCode(codeSystem, val)
+                    .then(function(response) {
+                        if (response && response.data && response.data.resultat === 'OK') {
+                            return response.data.diagnoser.map(function(item) {
+                                return {
+                                    value: item.kod,
+                                    beskrivning: item.beskrivning,
+                                    label: item.kod + ' | ' + item.beskrivning
+                                };
+                            });
+                        }
+                        else {
+                            return [];
+                        }
+                    }, function(response) {
+                        $log.debug('Error searching diagnose code');
+                        $log.debug(response);
+                        return [];
+                    });
+            };
+
             /****************************************************************************
              * Exposed interaction functions to view
              ****************************************************************************/
@@ -1057,9 +1048,42 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             };
 
             /**
+             * User selects a diagnose code
+             */
+            $scope.onDiagnoseCode1Select = function($item) {
+                $scope.cert.diagnosBeskrivning1 = $item.beskrivning;
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
+            };
+            $scope.onDiagnoseCode2Select = function($item) {
+                $scope.cert.diagnosBeskrivning2 = $item.beskrivning;
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
+            };
+            $scope.onDiagnoseCode3Select = function($item) {
+                $scope.cert.diagnosBeskrivning3 = $item.beskrivning;
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
+            };
+
+            /**
+             * User selects a diagnose description
+             */
+            $scope.onDiagnoseDescription1Select = function($item) {
+                $scope.cert.diagnosKod = $item.value;
+                $scope.cert.diagnosBeskrivning1 = $item.beskrivning;
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
+            };
+            $scope.onDiagnoseDescription2Select = function($item) {
+                $scope.cert.diagnosKod2 = $item.value;
+                $scope.cert.diagnosBeskrivning2 = $item.beskrivning;
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
+            };
+            $scope.onDiagnoseDescription3Select = function($item) {
+                $scope.cert.diagnosKod3 = $item.value;
+                $scope.cert.diagnosBeskrivning3 = $item.beskrivning;
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
+            };
+
+            /**
              * Handle vidarebefordra dialog
-             *
-             * @param cert
              */
             $scope.openMailDialog = function() {
                 intygNotifyService.forwardIntyg($scope.certMeta, $scope.widgetState);

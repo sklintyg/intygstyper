@@ -222,11 +222,11 @@
                           <span message key="fk7263.label.valjkodverk"></span>
                           <label class="radio-inline">
                             <input type="radio" id="diagnoseKodverk_ICD_10_SE" name="diagnosKodverk" value="ICD_10_SE"
-                                   ng-model="form.diagnosKodverk" checked="checked"><span message key="fk7263.label.diagnoskodverk.icd_10_se"></span>
+                                   ng-model="form.diagnosKodverk" checked="checked" ng-change="onChangeKodverk()"><span message key="fk7263.label.diagnoskodverk.icd_10_se"></span>
                           </label>
                           <label class="radio-inline">
                             <input type="radio" id="diagnoseKodverk_KSH_97_P" name="diagnosKodverk" value="KSH_97_P"
-                                   ng-model="form.diagnosKodverk"><span message key="fk7263.label.diagnoskodverk.ksh_97_p"></span>
+                                   ng-model="form.diagnosKodverk" ng-change="onChangeKodverk()"><span message key="fk7263.label.diagnoskodverk.ksh_97_p"></span>
                           </label>
                         </div>
                       </div>
