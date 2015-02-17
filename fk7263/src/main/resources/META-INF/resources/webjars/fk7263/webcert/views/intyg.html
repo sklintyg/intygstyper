@@ -89,10 +89,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
               <div wc-field field-number="2" field-label="fk7263.label.diagnos"
                    filled="{{cert.diagnosKod!=null}}" id="field2">
                 <div class="form-group">
-                  <span ng-switch="cert.diagnosKodsystem1 == 'KSH_97_P'">
-                    <span message key="fk7263.label.diagnoskod.ksh" ng-switch-when="true"></span>
-                    <span message key="fk7263.label.diagnoskod.icd" ng-switch-default></span>
-                  </span>
+                  <span message key="fk7263.label.diagnoskod.icd"></span>
                   <span id="diagnosKod">{{cert.diagnosKod}}</span> <span id="diagnosBeskrivning1">{{cert.diagnosBeskrivning1}}</span>
                 </div>
                 <div class="form-group">
