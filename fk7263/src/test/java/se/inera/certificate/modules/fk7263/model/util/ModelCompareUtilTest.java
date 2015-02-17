@@ -12,6 +12,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import se.inera.certificate.codes.Diagnoskodverk;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.service.WebcertModuleService;
@@ -36,6 +37,15 @@ public class ModelCompareUtilTest extends TestCase {
         WebcertModuleService mockModuleService = new WebcertModuleService() {
             @Override
             public boolean validateDiagnosisCode(String codeFragment, String codeSystem) {
+                return compareCodes(codeFragment);
+            }
+
+            @Override
+            public boolean validateDiagnosisCode(String codeFragment, Diagnoskodverk codeSystem) {
+                return compareCodes(codeFragment);
+            }
+            
+            private boolean compareCodes(String codeFragment) {
                 return CORRECT_DIAGNOSKOD_FROM_FILE.equals(codeFragment) || CORRECT_DIAGNOSKOD2.equals(codeFragment);
             }
         };
