@@ -3,10 +3,13 @@ package se.inera.certificate.modules.fk7263.pdf;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.InternalLocalDateInterval;
+import se.inera.certificate.model.Status;
 import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.support.ApplicationOrigin;
@@ -183,11 +186,11 @@ public class PdfGenerator {
     private ByteArrayOutputStream outputStream;
     private AcroFields fields;
 
-    public PdfGenerator(Utlatande intyg, ApplicationOrigin applicationOrigin) throws PdfGeneratorException {
-        this(intyg, true, applicationOrigin);
+    public PdfGenerator(Utlatande intyg, List<Status> statuses, ApplicationOrigin applicationOrigin) throws PdfGeneratorException {
+        this(intyg, statuses, true, applicationOrigin);
     }
 
-    public PdfGenerator(Utlatande intyg, boolean flatten, ApplicationOrigin applicationOrigin) throws PdfGeneratorException {
+    public PdfGenerator(Utlatande intyg, List<Status> statuses, boolean flatten, ApplicationOrigin applicationOrigin) throws PdfGeneratorException {
         try {
             this.intyg = intyg;
 
@@ -207,6 +210,10 @@ public class PdfGenerator {
                 createRightMarginText(pdfStamper, pdfReader.getNumberOfPages(), intyg.getId(), MINA_INTYG_MARGIN_TEXT);
                 break;
             case WEBCERT:
+                if (isCertificateSentToFK(statuses)) {
+                    maskSendToFkInformation(pdfStamper);
+                    markAsElectronicCopy(pdfStamper, WATERMARK_TEXT);
+                }
                 createRightMarginText(pdfStamper, pdfReader.getNumberOfPages(), intyg.getId(), WEBCERT_MARGIN_TEXT);
                 createSignatureNotRequiredField(pdfStamper, pdfReader.getNumberOfPages());
                 break;
@@ -220,6 +227,17 @@ public class PdfGenerator {
         } catch (Exception e) {
             throw new PdfGeneratorException(e);
         }
+    }
+
+    private boolean isCertificateSentToFK(List<Status> statuses) {
+        if (statuses != null) {
+            for (Status status : statuses) {
+                if (status.getTarget().equals("FK") && status.getType() == CertificateState.SENT) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void createSignatureNotRequiredField(PdfStamper pdfStamper, int lastPage) throws DocumentException, IOException {
@@ -363,7 +381,7 @@ public class PdfGenerator {
     }
 
     private String stripNewlines(String text) {
-        return (text != null) ? text.replace("\n", " "): null;
+        return (text != null) ? text.replace("\n", " ") : null;
     }
 
     private void fillPrognose() {

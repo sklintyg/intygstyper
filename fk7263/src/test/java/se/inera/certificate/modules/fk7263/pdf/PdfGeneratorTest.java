@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.joda.time.LocalDateTime;
@@ -18,6 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.certificate.model.Status;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.utils.Scenario;
 import se.inera.certificate.modules.fk7263.utils.ScenarioFinder;
@@ -57,7 +59,7 @@ public class PdfGeneratorTest {
         Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
 
         // generate PDF
-        byte[] generatorResult = new PdfGenerator(intyg, false, ApplicationOrigin.WEBCERT).getBytes();
+        byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), false, ApplicationOrigin.WEBCERT).getBytes();
         AcroFields expectedFields = readExpectedFields();
 
         // read expected PDF fields
@@ -78,7 +80,7 @@ public class PdfGeneratorTest {
 
         Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
         // generate PDF
-        byte[] generatorResult = new PdfGenerator(intyg, true, ApplicationOrigin.MINA_INTYG).getBytes();
+        byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.MINA_INTYG).getBytes();
         writePdfToFile(generatorResult, "Mina-intyg");
     }
 
@@ -86,14 +88,14 @@ public class PdfGeneratorTest {
     public void testPdfGenerationFromWebcert() throws Exception {
         Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
         // generate PDF
-        byte[] generatorResult = new PdfGenerator(intyg, true, ApplicationOrigin.WEBCERT).getBytes();
+        byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT).getBytes();
         writePdfToFile(generatorResult, "Webcert");
     }
 
     @Test
     public void pdfGenerationRemovesFormFields() throws IOException, PdfGeneratorException {
         Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
-        byte[] generatorResult = new PdfGenerator(intyg, ApplicationOrigin.WEBCERT).getBytes();
+        byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT).getBytes();
 
         PdfReader reader = new PdfReader(generatorResult);
         AcroFields generatedFields = reader.getAcroFields();
@@ -110,7 +112,7 @@ public class PdfGeneratorTest {
     @Test
     public void testGeneratePdf() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
-            byte[] pdf = new PdfGenerator(scenario.asInternalModel(), ApplicationOrigin.WEBCERT).getBytes();
+            byte[] pdf = new PdfGenerator(scenario.asInternalModel(), new ArrayList<Status>(), ApplicationOrigin.WEBCERT).getBytes();
             assertNotNull("Error in scenario " + scenario.getName(), pdf);
             writePdfToFile(pdf, scenario);
         }

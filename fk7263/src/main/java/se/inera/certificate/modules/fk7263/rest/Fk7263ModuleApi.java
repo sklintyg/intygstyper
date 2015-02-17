@@ -10,6 +10,7 @@ import org.w3.wsaddressing10.AttributedURIType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareRequestType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponseType;
+import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.converter.InternalToTransport;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
@@ -44,6 +45,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.List;
 
 /**
  * @author andreaskaltenbach, marced
@@ -95,10 +97,10 @@ public class Fk7263ModuleApi implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public PdfResponse pdf(InternalModelHolder internalModel, ApplicationOrigin applicationOrigin) throws ModuleException {
+    public PdfResponse pdf(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
         try {
             Utlatande intyg = getInternal(internalModel);
-            PdfGenerator pdfGenerator = new PdfGenerator(intyg, applicationOrigin);
+            PdfGenerator pdfGenerator = new PdfGenerator(intyg, statuses, applicationOrigin);
             return new PdfResponse(pdfGenerator.getBytes(), pdfGenerator.generatePdfFilename());
         } catch (PdfGeneratorException e) {
             LOG.error("Failed to generate PDF for certificate!", e);
@@ -173,7 +175,7 @@ public class Fk7263ModuleApi implements ModuleApi {
 
         GetMedicalCertificateForCareResponseType response = getMedicalCertificateForCareResponderInterface.
                 getMedicalCertificateForCare(logicalAddress, request);
-        
+
         switch (response.getResult().getResultCode()) {
             case INFO:
             case OK:
