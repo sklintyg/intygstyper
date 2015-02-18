@@ -156,16 +156,16 @@ public final class InternalToTransport {
 
         //Falt4b
         if (!isNullOrEmpty(source.getAnnanReferensBeskrivning())) {
-            annanRef = "Fält 4b, annat " + source.getAnnanReferensBeskrivning();
+            annanRef = "4b: " + source.getAnnanReferensBeskrivning();
         }
         //Falt8b
         
         if (!buildArbetstidsforlaggning(source).isEmpty()) {
-            arbetstidsforlaggning = "Fält 8b, arbetstidsförläggning " + buildArbetstidsforlaggning(source); 
+            arbetstidsforlaggning = "8b: " + buildArbetstidsforlaggning(source);
         }
         //Falt10
         if (!isNullOrEmpty(source.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
-            prognosBedomning = "Fält 10, går ej att bedöma, förtydligande " + source.getArbetsformagaPrognosGarInteAttBedomaBeskrivning();
+            prognosBedomning = "10: " + source.getArbetsformagaPrognosGarInteAttBedomaBeskrivning();
         }
         if (!isNullOrEmpty(source.getKommentar())) {
             ovrigKommentar = source.getKommentar();
