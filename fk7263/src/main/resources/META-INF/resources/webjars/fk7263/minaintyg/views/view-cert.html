@@ -135,19 +135,16 @@
                   <div ng-if="cert.nedsattMed25 != null" id="nedsattMed25">
                     <span message key="fk7263.nedsattningsgrad.nedsatt_med_1_4"></span><br> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed25.from |
                       date:'longDate'}} &ndash; längst till och med {{cert.nedsattMed25.tom | date:'longDate'}} </span>
-                    <div ng-show="cert.nedsattMed25Beskrivning" style="font-weight: normal; font-size: 13px; color: #333">Arbetstidsförläggning: {{cert.nedsattMed25Beskrivning}}</div>
                   </div>
 
                   <div ng-if="cert.nedsattMed50 != null" id="nedsattMed50">
                     <span message key="fk7263.nedsattningsgrad.nedsatt_med_1_2"></span><br> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed50.from
                       | date:'longDate'}} &ndash; längst till och med {{cert.nedsattMed50.tom | date:'longDate'}} </span>
-                    <div ng-show="cert.nedsattMed50Beskrivning" style="font-weight: normal; font-size: 13px; color: #333">Arbetstidsförläggning: {{cert.nedsattMed50Beskrivning}}</div>
                   </div>
 
                   <div ng-if="cert.nedsattMed75 != null" id="nedsattMed75">
                     <span message key="fk7263.nedsattningsgrad.nedsatt_med_3_4"></span><br> <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed75.from |
                       date:'longDate'}} &ndash; längst till och med {{cert.nedsattMed75.tom | date:'longDate'}} </span>
-                    <div ng-show="cert.nedsattMed75Beskrivning" style="font-weight: normal; font-size: 13px; color: #333">Arbetstidsförläggning: {{cert.nedsattMed75Beskrivning}}</div>
                   </div>
 
                   <div ng-if="cert.nedsattMed100 != null" id="nedsattMed100">
@@ -193,18 +190,7 @@
 
               <div mi-field field-label="fk7263.label.diagnosis" filled="cert.diagnosKod">
                 <div class="form-group">
-                  <span class="tag"><span message key="fk7263.label.diagnosisCode"></span></span> <span id="diagnosKod1">{{cert.diagnosKod}}</span> <span id="diagnosKlartext1">{{cert.diagnosBeskrivning1}})</span>
-                </div>
-
-                <div class="form-group">
-                  <label class="control-label bold" ng-show="cert.diagnosKod2 || cert.diagnosBeskrivning2 || cert.diagnosKod3 || cert.diagnosBeskrivning3">
-                    <span message key="fk7263.label.ytterligarediagnoser"></span>
-                  </label>
-                  <div class="controls">
-                    <p ng-show="cert.diagnosKod2 != '' || cert.diagnosBeskrivning2 != ''"><span id="diagnosKod2">{{cert.diagnosKod2}}</span> <span id="diagnosKlartext2">{{cert.diagnosBeskrivning2}}</span></p>
-                    <p ng-show="cert.diagnosKod3 != '' || cert.diagnosBeskrivning3 != ''"><span id="diagnosKod3">{{cert.diagnosKod3}}</span> <span id="diagnosKlartext3">{{cert.diagnosBeskrivning3}}</span></p>
-                    <div ng-show="cert.samsjuklighet" class="bold"><span message key="fk7263.label.samsjuklighet"></span></div>
-                  </div>
+                  <span class="tag"><span message key="fk7263.label.diagnosisCode"></span></span> <span id="diagnosKod1">{{cert.diagnosKod}}</span>
                 </div>
 
                 <div class="form-group" ng-show="cert.diagnosBeskrivning">
@@ -228,7 +214,7 @@
                   <li ng-show="cert.telefonkontaktMedPatienten!=null"><span message key="fk7263.vardkontakt.telefonkontakt"></span>{{cert.telefonkontaktMedPatienten | date:'longDate' }}</li>
                   <li ng-show="cert.journaluppgifter!=null"><span message key="fk7263.referens.journal"></span>{{cert.journaluppgifter | date:'longDate' }}</li>
                   <li ng-show="cert.annanReferens!=null">
-                    <!-- Annat --> <span message key="fk7263.referens.annat"> </span>{{cert.annanReferens | date:'longDate' }}: {{cert.annanReferensBeskrivning}}
+                    <!-- Annat --> <span message key="fk7263.referens.annat"> </span>{{cert.annanReferens | date:'longDate' }}
                   </li>
                 </ul>
               </div>
@@ -272,8 +258,6 @@
                 <span ng-show="cert.prognosBedomning == 'arbetsformagaPrognosJa'"><span message key="fk7263.label.yes"></span></span> <span ng-show="cert.prognosBedomning == 'arbetsformagaPrognosJaDelvis'"><span message
                   key="fk7263.label.partialyes"></span></span> <span ng-show="cert.prognosBedomning == 'arbetsformagaPrognosNej'"><span message key="fk7263.label.no"></span></span> <span
                   ng-show="cert.prognosBedomning == 'arbetsformagaPrognosGarInteAttBedoma'"><span message key="fk7263.label.unjudgeable"></span>
-                  <br>
-                  <span class="tag">Förtydligande: <div class="multiline">{{cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning}}</div></span>
                 </span>
               </div>
 
