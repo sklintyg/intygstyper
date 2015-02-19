@@ -226,15 +226,14 @@ public class InternalToNotification {
             return;
         }
         
+        if (nedsattningsPeriod.getFrom() == null || nedsattningsPeriod.getTom() == null) {
+            LOG.debug("Found nedsattning for {}%, but either tom or from date is missing", nedsattningMed);
+            return;
+        }
+        
         DatumPeriod datumPeriod = new DatumPeriod();
-        
-        if (nedsattningsPeriod.getFrom() != null) {
-            datumPeriod.setFrom(nedsattningsPeriod.getFrom().asLocalDate());
-        }
-        
-        if (nedsattningsPeriod.getTom() != null) {
-            datumPeriod.setTom(nedsattningsPeriod.getTom().asLocalDate());
-        }
+        datumPeriod.setFrom(nedsattningsPeriod.fromAsLocalDate());
+        datumPeriod.setTom(nedsattningsPeriod.tomAsLocalDate());
         
         // Calculates the REMAINING arbetsformaga based on the nedsattning of arbetsformaga
         PQ arbestformagaVarde = new PQ();

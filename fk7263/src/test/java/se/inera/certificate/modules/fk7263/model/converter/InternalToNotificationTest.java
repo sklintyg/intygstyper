@@ -187,10 +187,32 @@ public class InternalToNotificationTest {
         assertNull(res.getUtlatande().getDiagnos());
         
         assertEquals(1, res.getUtlatande().getArbetsformaga().size());
+        assertNotNull(res.getUtlatande().getArbetsformaga().get(0).getPeriod().getFrom());
+        assertNotNull(res.getUtlatande().getArbetsformaga().get(0).getPeriod().getTom());
+        assertNotNull(res.getUtlatande().getArbetsformaga().get(0).getVarde());
         
         assertNotNull(res.getUtlatande().getFragorOchSvar());
         assertEquals(1, res.getUtlatande().getFragorOchSvar().getAntalFragor());
         assertEquals(0, res.getUtlatande().getFragorOchSvar().getAntalSvar());
+    }
+    
+    @Test
+    public void testWithIncompleteNedsattning() throws Exception {
+        String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-4.json");
+        
+        NotificationMessage msg = new NotificationMessage("intyg-4", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS, json, FragaSvar.getEmpty());
+        CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
+        
+        assertNotNull(res.getUtlatande());
+        
+        assertEquals(HandelsekodKodRestriktion.HAN_11.value(), res.getUtlatande().getHandelse().getHandelsekod().getCode());
+        assertEquals(HandelseType.INTYGSUTKAST_ANDRAT.toString(), res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
+        
+        // no diagnosis in this one
+        assertNull(res.getUtlatande().getDiagnos());
+        
+        // should contain zero since it is incomplete
+        assertEquals(0, res.getUtlatande().getArbetsformaga().size());
     }
     
     private ConverterUtil setupConverterUtil() {
