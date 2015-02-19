@@ -14,6 +14,7 @@ import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcer
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponseType;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
+import se.inera.certificate.modules.fk7263.model.converter.InternalToNotification;
 import se.inera.certificate.modules.fk7263.model.converter.InternalToTransport;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
 import se.inera.certificate.modules.fk7263.model.converter.WebcertModelFactory;
@@ -62,6 +63,9 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Autowired
     private InternalDraftValidator internalDraftValidator;
+    
+    @Autowired
+    private InternalToNotification internalToNotficationConverter;
 
     @Autowired
     @Qualifier("fk7263-objectMapper")
@@ -279,10 +283,7 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Override
     public Object createNotification(NotificationMessage notificationMessage) throws ModuleException {
-        
-        
-        
-        return null;
+        return internalToNotficationConverter.createCertificateStatusUpdateForCareType(notificationMessage);
     }
 
 }
