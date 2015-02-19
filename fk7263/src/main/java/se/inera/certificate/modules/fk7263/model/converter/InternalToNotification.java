@@ -186,13 +186,15 @@ public class InternalToNotification {
         String diagnosBeskrivning = utlatandeSource.getDiagnosBeskrivning1();
         diagnosBeskrivning = (StringUtils.isNotBlank(diagnosBeskrivning)) ? diagnosBeskrivning : "";
 
-        Diagnos dt = new Diagnos();
-        dt.setCode(diagnosKod);
-        dt.setCodeSystem(diagnosKodverk.getCodeSystem());
-        dt.setCodeSystemName(diagnosKodverk.getCodeSystemName());
-        dt.setDisplayName(diagnosBeskrivning);
+        Diagnos diagnos = new Diagnos();
+        diagnos.setCode(diagnosKod);
+        diagnos.setCodeSystem(diagnosKodverk.getCodeSystem());
+        diagnos.setCodeSystemName(diagnosKodverk.getCodeSystemName());
+        diagnos.setDisplayName(diagnosBeskrivning);
 
-        LOG.debug("Adding diagnos '{}, {}'", dt.getCode(), dt.getDisplayName());
+        LOG.debug("Adding diagnos '{}, {}' from {}", diagnos.getCode(), diagnos.getDisplayName(), diagnosKodverk.getCodeSystemName());
+        
+        utlatandeType.setDiagnos(diagnos);
     }
 
     private void decorateWithOptionalArbetsformagor(UtlatandeType utlatandeType, Utlatande utlatandeSource) {
@@ -280,7 +282,8 @@ public class InternalToNotification {
         case SVAR_FRAN_FK_HANTERAD:
             return HandelsekodKodRestriktion.HAN_10;
         default:
-            return null;
+            LOG.error("Could not translate event '{}' to a valid HandelsekodKodRestriktion", handelse);
+            throw new IllegalArgumentException("Could not translate event " + handelse + " to a valid HandelsekodKodRestriktion");
         }
     }
 }
