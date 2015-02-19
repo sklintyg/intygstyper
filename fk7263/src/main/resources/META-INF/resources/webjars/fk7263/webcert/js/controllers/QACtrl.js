@@ -183,10 +183,28 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                     });
             };
 
-            $scope.updateAllAsHandled = function(deferred){
-                angular.forEach($scope.qaList, function(qa) {
-                    if(fragaSvarCommonService.isUnhandled(qa)){
-                        $scope.updateAsHandled(qa, deferred);
+            $scope.updateAnsweredAsHandled = function(deferred, unhandledQas){
+                if(unhandledQas === undefined || unhandledQas.length == 0 ){
+                    return;
+                }
+                fragaSvarService.closeAllAsHandled(unhandledQas,
+                function(qas){
+                    if(qas) {
+                        angular.forEach(qas, function(qa, key) {
+                            decorateSingleItem(qa);
+                            qa.proxyMessage = 'fk7263.fragasvar.marked.as.hanterad';
+                        });
+                        statService.refreshStat();
+                    }
+                    $window.doneLoading = true;
+                    if(deferred) {
+                        deferred.resolve();
+                    }
+                },function(errorData) {
+                    // show error view
+                    $window.doneLoading = true;
+                    if(deferred) {
+                        deferred.resolve();
                     }
                 });
             };
@@ -198,7 +216,8 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 for (var i = 0, len = $scope.qaList.length; i < len; i++) {
                     var qa = $scope.qaList[i];
                     var isUnhandled = fragaSvarCommonService.isUnhandled(qa);
-                    if(isUnhandled){
+                    var fromFk = fragaSvarCommonService.fromFk(qa);
+                    if(isUnhandled && fromFk){
                         return true;
                     }
                 }
@@ -210,8 +229,6 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 qa.updateHandledStateInProgress = true;
 
                 fragaSvarService.closeAsHandled(qa.internReferens, 'fk7263', function(result) {
-
-                    $log.debug('Got updateAsHandled result:' + result);
                     qa.activeErrorMessageKey = null;
                     qa.updateHandledStateInProgress = false;
                     if (result !== null) {
@@ -321,14 +338,14 @@ angular.module('fk7263').controller('fk7263.QACtrl',
             $scope.initQuestionForm();
 
             // listeners - interscope communication
-            var unbindMarkAllAsHandledEvent = $scope.$on('markAllAsHandledEvent', function($event, deferred) {
-                $scope.updateAllAsHandled(deferred);
+            var unbindmarkAnsweredAsHandledEvent = $scope.$on('markAnsweredAsHandledEvent', function($event, deferred, unhandledQas) {
+                $scope.updateAnsweredAsHandled(deferred, unhandledQas);
             });
 
-            $scope.$on('$destroy', unbindMarkAllAsHandledEvent);
+            $scope.$on('$destroy', unbindmarkAnsweredAsHandledEvent);
 
             var unbindHasUnhandledQasEvent = $scope.$on('hasUnhandledQasEvent', function($event, deferred) {
-                deferred.resolve($scope.hasUnhandledQas());
+                deferred.resolve(fragaSvarCommonService.getUnhandledQas($scope.qaList));
             });
 
             $scope.$on('$destroy', unbindHasUnhandledQasEvent);

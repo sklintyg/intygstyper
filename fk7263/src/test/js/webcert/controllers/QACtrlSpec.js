@@ -8,6 +8,7 @@ describe('QACtrl', function() {
     var $rootScope;
     var fragaSvarCommonService;
     var fragaSvarService;
+    var deferred;
 
     // Load the webcert module and mock away everything that is not necessary.
     beforeEach(angular.mock.module('fk7263', function($provide) {
@@ -18,13 +19,14 @@ describe('QACtrl', function() {
             isFeatureActive: jasmine.createSpy('isFeatureActive')
         };
         $provide.value('common.dialogService', {});
-        fragaSvarCommonService = jasmine.createSpyObj('common.fragaSvarCommonService', [ 'isUnhandled' ]);
+        fragaSvarCommonService = jasmine.createSpyObj('common.fragaSvarCommonService', [ 'isUnhandled', 'fromFk' ]);
         $provide.value('common.fragaSvarCommonService',fragaSvarCommonService);
         $provide.value('common.ManageCertView',{});
         $provide.value('common.statService', {});
         $provide.value('common.User', {});
-        fragaSvarService = jasmine.createSpyObj('cfk7263.fragaSvarService', [ 'getQAForCertificate', 'closeAsHandled' ]);
+        fragaSvarService = jasmine.createSpyObj('cfk7263.fragaSvarService', [ 'getQAForCertificate', 'closeAsHandled', 'closeAllAsHandled']);
         $provide.value('fk7263.fragaSvarService',fragaSvarService);
+        deferred = jasmine.createSpyObj('def', ['resolve']);
     }));
 
     // Get references to the object we want to test from the context.
@@ -112,12 +114,15 @@ describe('QACtrl', function() {
             var qaAnswered = {status: 'ANSWERED'};
             $scope.qaList = [qaAnswered];
             fragaSvarCommonService.isUnhandled.and.returnValue(true);
+            fragaSvarCommonService.fromFk.and.returnValue(true);
 
             // ----- act
             var hasUnhandled = $scope.hasUnhandledQas();
 
             // ----- assert
             expect(fragaSvarCommonService.isUnhandled).toHaveBeenCalledWith(qaAnswered);
+            expect(fragaSvarCommonService.fromFk).toHaveBeenCalledWith(qaAnswered);
+
 
             expect(hasUnhandled).toBeTruthy();
 
@@ -125,32 +130,30 @@ describe('QACtrl', function() {
 
     });
 
-    describe('#updateAllAsHandled', function() {
+    describe('#updateAnsweredAsHandled', function() {
         it('has no UnhandledQas so shouldnt update qas', function(){
             // ----- arrange
-            $scope.qaList = [];
+            var qaList = [];
 
             // ----- act
-            $scope.updateAllAsHandled();
+            $scope.updateAnsweredAsHandled(deferred, qaList);
 
             // ----- assert
-            expect($scope.hasUnhandledQas()).toBeFalsy();
-            expect(fragaSvarCommonService.isUnhandled).not.toHaveBeenCalled();
+            expect(fragaSvarService.closeAllAsHandled).not.toHaveBeenCalled();
         });
 
         it('has UnhandledQas so should update qas', function(){
             // ----- arrange
-            var qaAnswered = {status: 'ANSWERED'};
-            $scope.qaList = [qaAnswered];
+            var qaAnswered = {};
+            var qaList = [qaAnswered];
             fragaSvarCommonService.isUnhandled.and.returnValue(true);
+            fragaSvarCommonService.fromFk.and.returnValue(true);
 
             // ----- act
-            $scope.updateAllAsHandled();
+            $scope.updateAnsweredAsHandled(deferred, qaList);
 
             // ----- assert
-            expect($scope.hasUnhandledQas()).toBeTruthy();
-            expect(fragaSvarCommonService.isUnhandled).toHaveBeenCalledWith(qaAnswered);
-            expect(fragaSvarService.closeAsHandled).toHaveBeenCalled();
+            expect(fragaSvarService.closeAllAsHandled).toHaveBeenCalled();
         });
 
     });

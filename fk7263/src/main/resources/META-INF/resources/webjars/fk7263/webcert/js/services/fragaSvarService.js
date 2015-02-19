@@ -39,10 +39,28 @@ angular.module('fk7263').factory('fk7263.fragaSvarService',
          * update the handled status to handled ('Closed') of a QuestionAnswer
          */
         function _closeAsHandled(fragaSvarId, intygsTyp, onSuccess, onError) {
-            $log.debug('_closeAsHandled: fragaSvarId:' + fragaSvarId + ' intygsTyp: ' + intygsTyp);
-
             var restPath = '/moduleapi/fragasvar/' + intygsTyp + '/' + fragaSvarId + '/stang';
             $http.get(restPath).success(function(data) {
+                $log.debug('got data:' + data);
+                onSuccess(data);
+            }).error(function(data, status) {
+                $log.error('error ' + status);
+                // Let calling code handle the error of no data response
+                onError(data);
+            });
+        }
+
+        /*
+         * update the handled status to handled ('Closed') of a QuestionAnswer
+         */
+        function _closeAllAsHandled(qas, onSuccess, onError) {
+            var restPath = '/moduleapi/fragasvar/stang';
+            var fs = [];
+            angular.forEach(qas, function(qa, key) {
+                this.push({ intygsTyp : qa.intygsReferens.intygsTyp, fragaSvarId:qa.internReferens });
+            }, fs);
+
+            $http.put(restPath, fs).success(function(data) {
                 $log.debug('got data:' + data);
                 onSuccess(data);
             }).error(function(data, status) {
@@ -97,6 +115,7 @@ angular.module('fk7263').factory('fk7263.fragaSvarService',
             saveAnswer: _saveAnswer,
             saveNewQuestion: _saveNewQuestion,
             closeAsHandled: _closeAsHandled,
+            closeAllAsHandled: _closeAllAsHandled,
             openAsUnhandled: _openAsUnhandled
         };
     });
