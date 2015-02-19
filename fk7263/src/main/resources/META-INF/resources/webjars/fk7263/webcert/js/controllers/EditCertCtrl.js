@@ -145,7 +145,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     }
 
                     $scope.cert.kommentar = friviligt + comments;
-                    console.log("comments : " + $scope.cert.kommentar);
                 }
             );*/
 
