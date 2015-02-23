@@ -112,42 +112,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Model property watches
              ***************************************************************************/
 
-            /*$scope.$watchCollection(
-                'form.ovrigt',
-                // This is the change handler
-                function(newValue, oldValue) {
-                    // get the comments after -----------
-                    var searchValue = '\n*\n';
-                    var comments = '';
-                    var noKommentarDel = true;
-                    if($scope.cert.kommentar){
-                        var li = $scope.cert.kommentar.lastIndexOf(searchValue);
-                        if(li > -1) li = li + searchValue.length;
-
-                        noKommentarDel = li <= 0;
-
-                        if(noKommentarDel && $scope.cert.kommentar.length > 0){
-                            comments = $scope.cert.kommentar;
-                        } else {
-                            comments = $scope.cert.kommentar.slice(li);
-                        }
-                    }
-                    // add the ovrigt text to the comment
-                    var friviligt = '';
-                    friviligt = ammendText(friviligt, newValue.annanReferensBeskrivning, '\n');
-                    friviligt = ammendText(friviligt, newValue.nedsattMed25Beskrivning, '\n');
-                    friviligt = ammendText(friviligt, newValue.nedsattMed50Beskrivning, '\n');
-                    friviligt = ammendText(friviligt, newValue.nedsattMed75Beskrivning, '\n');
-                    friviligt = ammendText(friviligt, newValue.arbetsformagaPrognosGarInteAttBedomaBeskrivning, '\n');
-
-                    if( friviligt.length > 0 ){
-                        comments = searchValue + comments;
-                    }
-
-                    $scope.cert.kommentar = friviligt + comments;
-                }
-            );*/
-
 
             /***************************************************************************
              * Private controller support functions
