@@ -118,6 +118,32 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              ***************************************************************************/
 
             // -- start registerDateParsers
+
+            function addParser(model, attributes, fn){
+                var modelProperty;
+                angular.forEach(attributes, function(type) {
+                    modelProperty = this[type + 'Date'];
+                    if (modelProperty) {
+                        modelProperty.$parsers.push(function(viewValue) {
+                            fn(type);
+                        });
+                    }
+                }, model);
+            }
+
+            function addDateToISOParser(model, attributes){
+                var modelProperty;
+                angular.forEach(attributes, function(type) {
+                    modelProperty = this[type + 'Date'];
+                    if (modelProperty) {
+                        modelProperty.$parsers.push(function(viewValue) {
+                            viewValue = dateUtils.convertDateToISOString(viewValue);
+                            return viewValue;
+                        });
+                    }
+                }, model);
+            }
+
             /**
              * Register date parsers
              * @param $scope
@@ -127,19 +153,11 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 // Register parse function for 4b date pickers
                 var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter',
                     'annanReferens'];
-                angular.forEach(baserasPaTypes, function(type) {
-                    if (this[type + 'Date']) {
-                        this[type + 'Date'].$parsers.push(function(viewValue) {
-                            $scope.onChangeBaserasPaDate(type);
 
-                            viewValue = dateUtils.convertDateToISOString(viewValue);
+                addParser(_$scope.certForm, baserasPaTypes, _$scope.onChangeBaserasPaDate );
 
-                            return viewValue;
-                        });
-                    } else {
-                        $log.debug('Date controls not bound yet.');
-                    }
-                }, $scope.certForm);
+                addDateToISOParser(_$scope.certForm, baserasPaTypes);
+
 
                 // Fält 8b. nedsattMedXXBeskrivning
                 var nedsattMedList = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
@@ -153,12 +171,12 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         if (!utils.isValidString(changedDateGroup.nedsattFrom) &&
                             !utils.isValidString(changedDateGroup.nedsattTom)) {
                             // uncheck check since both dates are undefined or empty
-                            $scope.workState[nedsattMed] = false;
+                            _$scope.workState[nedsattMed] = false;
 
                         } else if (utils.isValidString(changedDateGroup.nedsattFrom) ||
                             utils.isValidString(changedDateGroup.nedsattTom)) {
                             // One of the dates is valid
-                            $scope.workState[nedsattMed] = true; // Check nedsatt checkbox
+                            _$scope.workState[nedsattMed] = true; // Check nedsatt checkbox
                         }
 
                         if (viewValue === null) {
@@ -172,42 +190,42 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     }
 
                     // Register parsers so we can follow changes in the date inputs
-                    if ($scope.certForm[nedsattMed + 'from']) {
-                        if ($scope.certForm[nedsattMed + 'from'].$parsers.length > 1) {
-                            $scope.certForm[nedsattMed + 'from'].$parsers.shift();
+                    if (_$scope.certForm[nedsattMed + 'from']) {
+                        if (_$scope.certForm[nedsattMed + 'from'].$parsers.length > 1) {
+                            _$scope.certForm[nedsattMed + 'from'].$parsers.shift();
                         }
-                        $scope.certForm[nedsattMed + 'from'].$parsers.unshift(nedsattParser);
+                        _$scope.certForm[nedsattMed + 'from'].$parsers.unshift(nedsattParser);
 
-                        if ($scope.certForm[nedsattMed + 'from'].$formatters.length > 0) {
-                            $scope.certForm[nedsattMed + 'from'].$formatters.shift();
+                        if (_$scope.certForm[nedsattMed + 'from'].$formatters.length > 0) {
+                            _$scope.certForm[nedsattMed + 'from'].$formatters.shift();
                         }
-                        $scope.certForm[nedsattMed + 'from'].$formatters.unshift(function(modelValue) {
+                        _$scope.certForm[nedsattMed + 'from'].$formatters.unshift(function(modelValue) {
                             validateDates(true);
                             onArbetsformagaDatesUpdated(true);
                             return modelValue;
                         });
                     }
 
-                    if ($scope.certForm[nedsattMed + 'from']) {
-                        if ($scope.certForm[nedsattMed + 'tom'].$parsers.length > 1) {
-                            $scope.certForm[nedsattMed + 'tom'].$parsers.shift();
+                    if (_$scope.certForm[nedsattMed + 'from']) {
+                        if (_$scope.certForm[nedsattMed + 'tom'].$parsers.length > 1) {
+                            _$scope.certForm[nedsattMed + 'tom'].$parsers.shift();
                         }
-                        $scope.certForm[nedsattMed + 'tom'].$parsers.unshift(nedsattParser);
+                        _$scope.certForm[nedsattMed + 'tom'].$parsers.unshift(nedsattParser);
 
-                        if ($scope.certForm[nedsattMed + 'tom'].$formatters.length > 0) {
-                            $scope.certForm[nedsattMed + 'tom'].$formatters.shift();
+                        if (_$scope.certForm[nedsattMed + 'tom'].$formatters.length > 0) {
+                            _$scope.certForm[nedsattMed + 'tom'].$formatters.shift();
                         }
-                        $scope.certForm[nedsattMed + 'tom'].$formatters.unshift(function(modelValue) {
+                        _$scope.certForm[nedsattMed + 'tom'].$formatters.unshift(function(modelValue) {
                             validateDates(true);
                             onArbetsformagaDatesUpdated(true);
                             return modelValue;
                         });
                     }
 
-                    if ($scope.cert[nedsattMed]) {
-                        $scope.workState[nedsattMed] = true;
+                    if (_$scope.cert[nedsattMed]) {
+                        _$scope.workState[nedsattMed] = true;
                     }
-                }, $scope.cert);
+                }, _$scope.cert);
             }
 
             // ---- start validate dates

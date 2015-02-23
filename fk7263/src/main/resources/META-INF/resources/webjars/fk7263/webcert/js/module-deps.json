@@ -1,7 +1,7 @@
 [
     "/web/webjars/fk7263/webcert/js/messages.js",
     "/web/webjars/fk7263/webcert/js/controllers/EditCertCtrl.js",
-    "/web/webjars/fk7263/webcert/js/controllers/EditCertCtrl/DateRangeGroupModel.js",
+    "/web/webjars/fk7263/webcert/js/controllers/EditCertCtrl/dateRangeGroupModel.js",
     "/web/webjars/fk7263/webcert/js/controllers/QACtrl.js",
     "/web/webjars/fk7263/webcert/js/controllers/ViewCertCtrl.js",
     "/web/webjars/fk7263/webcert/js/services/fragaSvarService.js",
