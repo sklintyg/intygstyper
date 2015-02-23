@@ -76,12 +76,6 @@ angular.module('fk7263').controller('fk7263.QACtrl',
             });
             $scope.$on('$destroy', unbindFastEvent);
 
-            var certFailedEvent = $rootScope.$on('fk7263.ViewCertCtrl.fail', function() {
-                $scope.certProperties.isLoaded = true;
-                $scope.cert.grundData.skapadAv.vardenhet.enhetsid = '';
-            });
-            $scope.$on('$destroy', certFailedEvent);
-
             $scope.openIssuesFilter = function(qa) {
                 return qa.status !== 'CLOSED';
             };
@@ -101,7 +95,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
             /**
              * Functions bound to individual fragasvar entities's
              */
-            $scope.sendQuestion = function sendQuestion(newQuestion) {
+            $scope.sendQuestion = function (newQuestion) {
                 $log.debug('sendQuestion:' + newQuestion);
                 newQuestion.updateInProgress = true; // trigger local spinner
 
