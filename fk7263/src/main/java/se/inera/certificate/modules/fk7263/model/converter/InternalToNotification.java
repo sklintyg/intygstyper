@@ -31,7 +31,6 @@ import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.service.WebcertModuleService;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
-import se.inera.certificate.modules.support.api.notification.FragaSvar;
 import se.inera.certificate.modules.support.api.notification.HandelseType;
 import se.inera.certificate.modules.support.api.notification.NotificationMessage;
 
@@ -208,7 +207,8 @@ public class InternalToNotification {
     }
 
     private void decorateWithFragorOchSvar(UtlatandeType utlatandeType, NotificationMessage notificationMessage) {
-        FragaSvar fragaSvar = notificationMessage.getFragaSvar();
+        
+        se.inera.certificate.modules.support.api.notification.FragorOchSvar fragaSvar = notificationMessage.getFragaSvar();
 
         FragorOchSvar fosType = new FragorOchSvar();
         fosType.setAntalFragor(fragaSvar.getAntalFragor());

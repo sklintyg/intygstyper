@@ -31,7 +31,7 @@ import se.inera.certificate.codes.Diagnoskodverk;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.service.WebcertModuleService;
-import se.inera.certificate.modules.support.api.notification.FragaSvar;
+import se.inera.certificate.modules.support.api.notification.FragorOchSvar;
 import se.inera.certificate.modules.support.api.notification.HandelseType;
 import se.inera.certificate.modules.support.api.notification.NotificationMessage;
 
@@ -86,7 +86,7 @@ public class InternalToNotificationTest {
     public void testWithFullyPopulatedUtlatande() throws Exception {
         String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-1.json");
         
-        NotificationMessage msg = new NotificationMessage(INTYGS_ID, FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS, json, FragaSvar.getEmpty());
+        NotificationMessage msg = new NotificationMessage(INTYGS_ID, FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS, json, FragorOchSvar.getEmpty());
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
         
         assertNotNull(res.getUtlatande());
@@ -131,7 +131,7 @@ public class InternalToNotificationTest {
     public void testWithSignedMinimal() throws Exception {
         String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-2.json");
         
-        NotificationMessage msg = new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_SIGNERAT, LOGISK_ADRESS, json, FragaSvar.getEmpty());
+        NotificationMessage msg = new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_SIGNERAT, LOGISK_ADRESS, json, FragorOchSvar.getEmpty());
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
         
         assertNotNull(res.getUtlatande());
@@ -152,7 +152,7 @@ public class InternalToNotificationTest {
     public void testWithInvalidDiagnosisCode() throws Exception {
         String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-3.json");
         
-        NotificationMessage msg = new NotificationMessage("intyg-3", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS, json, FragaSvar.getEmpty());
+        NotificationMessage msg = new NotificationMessage("intyg-3", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS, json, FragorOchSvar.getEmpty());
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
         
         assertNotNull(res.getUtlatande());
@@ -171,7 +171,7 @@ public class InternalToNotificationTest {
     public void testWithQuestionFromFK() throws Exception {
         String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-2.json");
         
-        FragaSvar fs = new FragaSvar(1, 0, 0, 0);
+        FragorOchSvar fs = new FragorOchSvar(1, 0, 0, 0);
         NotificationMessage msg = new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelseType.FRAGA_FRAN_FK, LOGISK_ADRESS, json, fs);
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
         
@@ -200,7 +200,7 @@ public class InternalToNotificationTest {
     public void testWithIncompleteNedsattning() throws Exception {
         String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-4.json");
         
-        NotificationMessage msg = new NotificationMessage("intyg-4", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS, json, FragaSvar.getEmpty());
+        NotificationMessage msg = new NotificationMessage("intyg-4", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS, json, FragorOchSvar.getEmpty());
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
         
         assertNotNull(res.getUtlatande());
