@@ -1,17 +1,20 @@
 package se.inera.certificate.modules.fk7263.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.w3.wsaddressing10.AttributedURIType;
+
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareRequestType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponseType;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
+import se.inera.certificate.modules.fk7263.model.converter.InternalToNotification;
 import se.inera.certificate.modules.fk7263.model.converter.InternalToTransport;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
 import se.inera.certificate.modules.fk7263.model.converter.WebcertModelFactory;
@@ -37,6 +40,7 @@ import se.inera.certificate.modules.support.api.exception.ExternalServiceCallExc
 import se.inera.certificate.modules.support.api.exception.ModuleConverterException;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
+import se.inera.certificate.modules.support.api.notification.NotificationMessage;
 import se.inera.certificate.schema.util.ClinicalProcessCertificateMetaTypeConverter;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
@@ -59,6 +63,9 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Autowired
     private InternalDraftValidator internalDraftValidator;
+    
+    @Autowired
+    private InternalToNotification internalToNotficationConverter;
 
     @Autowired
     @Qualifier("fk7263-objectMapper")
@@ -272,6 +279,11 @@ public class Fk7263ModuleApi implements ModuleApi {
         } catch (ModuleException e) {
             throw new ModuleException("Error while updating internal model", e);
         }
+    }
+
+    @Override
+    public Object createNotification(NotificationMessage notificationMessage) throws ModuleException {
+        return internalToNotficationConverter.createCertificateStatusUpdateForCareType(notificationMessage);
     }
 
 }

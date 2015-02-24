@@ -1,0 +1,42 @@
+{"id": "80832895-5a9c-450a-bd74-08af43750788",
+    "grundData": {
+        "skapadAv": {
+            "personId": "Personal HSA-ID",
+            "fullstandigtNamn": "Dr Doktor",
+            "vardenhet": {
+                "enhetsid": "enhetsid",
+                "enhetsnamn": "Enhetsnamn",
+                "postadress": "Enhetsadress",
+                "postnummer": "31337",
+                "postort": "Stockholm",
+                "telefonnummer": "08-1337",
+                "epost": "epost@enhet.se",
+                "vardgivare": {
+                    "vardgivarid": "VardgivarId",
+                    "vardgivarnamn": "Testvårdgivare"
+                },
+                "arbetsplatsKod": "123456"
+            }
+        },
+        "patient": {
+            "personId": "19121212-1212",
+            "fullstandigtNamn": "Test Testorsson",
+            "efternamn": "Test Testorsson"
+        }
+    },
+    "giltighet": {
+        "from": "2011-01-26",
+        "tom": "2011-05-31"
+    },
+
+    "avstangningSmittskydd": false,
+    "undersokningAvPatienten": "2011-01-26",
+
+    "nedsattMed75":{
+        "from" :"2011-01-26",
+        "tom": "2011-05-31"
+    },
+    "prognosBedomning" : "arbetsformagaPrognosJa",
+    "nuvarandeArbete": true,
+    "nuvarandeArbetsuppgifter": "Arbetsuppgift"
+}
