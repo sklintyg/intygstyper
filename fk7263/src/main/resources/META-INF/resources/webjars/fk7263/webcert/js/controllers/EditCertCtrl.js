@@ -455,7 +455,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.form.diagnosKodverk = $scope.cert.diagnosKodsystem1;
                 }
                 else {
-                    $scope.form.diagnosKodverk = "ICD_10_SE";
+                    $scope.form.diagnosKodverk = 'ICD_10_SE';
                 }
 
                 // Fält 4b. AnnanReferensBeskrivning
@@ -884,6 +884,9 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
                         // Remove dates
                         delete $scope.cert[nedsattModelName];
+                        if($scope.certForm[nedsattModelName]) {
+                            $scope.certForm[nedsattModelName].$setViewValue('');
+                        }
                     }
                 }
             };
@@ -963,14 +966,14 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              ****************************************************************************/
 
             /**
-             * Toggle header part ("Dölj meny"-knapp)
+             * Toggle header part ('Dölj meny'-knapp)
              */
             $scope.toggleHeader = function() {
                 $scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
             };
 
             /**
-             * Toggle "Visa vad som behöver kompletteras"
+             * Toggle 'Visa vad som behöver kompletteras'
              */
             $scope.toggleShowComplete = function() {
                 $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
