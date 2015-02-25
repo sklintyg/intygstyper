@@ -667,6 +667,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         } else {
                             this[nedsattMed].tom = undefined;
                         }
+
+                        if(this[nedsattMed].from === undefined && this[nedsattMed].tom === undefined) {
+                            delete this[nedsattMed];
+                        }
                     }
 
                     if ($scope.workState[nedsattMed]) {
