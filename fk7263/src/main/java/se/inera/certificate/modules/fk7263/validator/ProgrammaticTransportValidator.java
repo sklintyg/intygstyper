@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import se.inera.certificate.codes.Diagnoskodverk;
-import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
+import se.inera.certificate.common.enumerations.Diagnoskodverk;
 import se.inera.certificate.modules.fk7263.support.Fk7263EntryPoint;
 import se.inera.certificate.schema.Constants;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
@@ -68,6 +67,7 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
         validateKommentar();
         validateRekommendationer();
         validateAktuelltSjukdomsforlopp();
+
         return getValidationErrors();
     }
 
@@ -266,11 +266,13 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
                 addValidationError("No medicinsktTillstand element found!");
                 return;
             }
+
             // Fält 2 - Medicinskt tillstånd kod - mandatory
             MedicinsktTillstandType medTillstand = utlatande.getMedicinsktTillstand();
             if (medTillstand.getTillstandskod() == null || isNullOrEmpty(medTillstand.getTillstandskod().getCode())) {
                 addValidationError("No tillstandskod in medicinsktTillstand found!");
             }
+
             // Fält 2 - Medicinskt tillstånd kodsystemnamn - mandatory
             if (medTillstand.getTillstandskod() == null
                     || medTillstand.getTillstandskod().getCodeSystemName() == null
@@ -290,6 +292,7 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
                 addValidationError("No funktionstillstand - kroppsfunktion element found!");
                 return;
             }
+
             // Fält 4 - vänster Funktionstillstand - kroppsfunktion
             // beskrivning - mandatory
             if (isNullOrEmpty(inKroppsFunktion.getBeskrivning())) {
