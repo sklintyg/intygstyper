@@ -4,11 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
 import static org.mockito.Matchers.anyString;
-
-import java.io.IOException;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 
 import org.apache.commons.io.IOUtils;
 import org.joda.time.LocalDateTime;
@@ -24,16 +22,17 @@ import org.mockito.stubbing.Answer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
-
 import se.inera.certificate.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.CertificateStatusUpdateForCareType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.HandelsekodKodRestriktion;
-import se.inera.certificate.codes.Diagnoskodverk;
+import se.inera.certificate.common.enumerations.Diagnoskodverk;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.service.WebcertModuleService;
 import se.inera.certificate.modules.support.api.notification.FragorOchSvar;
 import se.inera.certificate.modules.support.api.notification.HandelseType;
 import se.inera.certificate.modules.support.api.notification.NotificationMessage;
+
+import java.io.IOException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class InternalToNotificationTest {

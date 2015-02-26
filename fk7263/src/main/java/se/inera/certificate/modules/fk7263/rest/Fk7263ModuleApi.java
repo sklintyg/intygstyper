@@ -2,8 +2,10 @@ package se.inera.certificate.modules.fk7263.rest;
 
 import static se.inera.certificate.common.enumerations.Recipients.FK;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import iso.v21090.dt.v1.CD;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.List;
+
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,9 +52,8 @@ import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificater
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.List;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import iso.v21090.dt.v1.CD;
 
 /**
  * @author andreaskaltenbach, marced
@@ -254,17 +255,26 @@ public class Fk7263ModuleApi implements ModuleApi {
      * It should be removed when Forsakringskassan can handle code system name correctly.
      */
     RegisterMedicalCertificateType whenFkIsRecipientThenSetCodeSystemToICD10(final RegisterMedicalCertificateType request) {
-        LOG.info(LogMarkers.MONITORING, "Mottagare av certifikat är Försäkringskassan - 'codeSystemName' sätts till värde ICD-10");
+        LOG.info(LogMarkers.MONITORING, "Mottagare av certifikat är Försäkringskassan - 'lakarutlatande/medicinsktTillstand/tillstandsKod/codeSystemName' sätts till värde ICD-10");
 
-        // Change the code system name
-        CD tillstandsKod = request.getLakarutlatande().getMedicinsktTillstand().getTillstandskod();
-        tillstandsKod.setCodeSystemName(CODESYSTEMNAME_ICD10);
+        try {
+            // Change the code system name
+            CD tillstandsKod = request.getLakarutlatande().getMedicinsktTillstand().getTillstandskod();
+            tillstandsKod.setCodeSystemName(CODESYSTEMNAME_ICD10);
 
-        // Update request
-        request.getLakarutlatande().getMedicinsktTillstand().setTillstandskod(tillstandsKod);
+            // Update request
+            request.getLakarutlatande().getMedicinsktTillstand().setTillstandskod(tillstandsKod);
+
+        } catch(NullPointerException npe) {
+            LOG.info(LogMarkers.MONITORING,
+                    "Det gick inte att sätta 'lakarutlatande/medicinsktTillstand/tillstandsKod/codeSystemName' pga " +
+                    "ett kastat NullPointerException. T.ex behöver 'medicinsktTillstand' inte finnas med i 'lakarutlatande'");
+
+        }
 
         return request;
     }
+
 
     // - - - - - Private scope - - - - - //
 

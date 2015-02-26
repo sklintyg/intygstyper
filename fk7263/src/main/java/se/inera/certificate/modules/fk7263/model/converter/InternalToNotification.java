@@ -24,7 +24,7 @@ import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.PQ;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.PersonId;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.TypAvUtlatande;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.UtlatandeId;
-import se.inera.certificate.codes.Diagnoskodverk;
+import se.inera.certificate.common.enumerations.Diagnoskodverk;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
