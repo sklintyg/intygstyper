@@ -1,5 +1,7 @@
 package se.inera.certificate.modules.fk7263.support;
 
+import static se.inera.certificate.common.enumerations.Recipients.FK;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.modules.fk7263.rest.Fk7263ModuleApi;
 import se.inera.certificate.modules.support.ApplicationOrigin;
@@ -11,7 +13,7 @@ import java.util.Map;
 
 public class Fk7263EntryPoint implements ModuleEntryPoint {
 
-    public static final String DEFAULT_RECIPIENT_ID = "FK";
+    public static final String DEFAULT_RECIPIENT_ID = FK.toString();
 
     public static final String MODULE_ID = "fk7263";
     public static final String MODULE_NAME = "Läkarintyg FK 7263";

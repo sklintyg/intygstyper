@@ -1,7 +1,9 @@
 package se.inera.certificate.modules.fk7263.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static se.inera.certificate.common.enumerations.Recipients.FK;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import iso.v21090.dt.v1.CD;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import org.w3.wsaddressing10.AttributedURIType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareRequestType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponseType;
+import se.inera.certificate.logging.LogMarkers;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.converter.InternalToNotification;
@@ -57,6 +60,13 @@ import java.util.List;
 public class Fk7263ModuleApi implements ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(Fk7263ModuleApi.class);
+
+    /* (non-Javadoc)
+     *
+     * Must only be used to set the code system name when certificate
+     * is sent to Försäkringskassan. See JIRA issue WEBCERT-1442
+     */
+    static final String CODESYSTEMNAME_ICD10 = "ICD-10";
 
     @Autowired
     private WebcertModelFactory webcertModelFactory;
@@ -150,25 +160,24 @@ public class Fk7263ModuleApi implements ModuleApi {
         this.moduleContainer = moduleContainer;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
+        sendCertificateToRecipient(internalModel, logicalAddress, null);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
+        Utlatande utlatande = converterUtil.fromJsonString(internalModel.getInternalModel());
+
         try {
-            Utlatande utlatande = converterUtil.fromJsonString(internalModel.getInternalModel());
             Object request = InternalToTransport.getJaxbObject(utlatande);
-
-            AttributedURIType address = new AttributedURIType();
-            address.setValue(logicalAddress);
-
-            RegisterMedicalCertificateResponseType response = registerMedicalCertificateClient
-                    .registerMedicalCertificate(address, (RegisterMedicalCertificateType) request);
-
-            // check whether call was successful or not
-            if (response.getResult().getResultCode() != ResultCodeEnum.OK) {
-                String message = response.getResult().getResultCode() == ResultCodeEnum.INFO
-                        ? response.getResult().getInfoText()
-                        : response.getResult().getErrorId() + " : " + response.getResult().getErrorText();
-                throw new ExternalServiceCallException(message);
-            }
+            sendCertificateToRecipient((RegisterMedicalCertificateType) request, logicalAddress, recipientId);
 
         } catch (ConverterException e) {
             throw new ModuleException(e);
@@ -235,6 +244,30 @@ public class Fk7263ModuleApi implements ModuleApi {
         return false;
     }
 
+    // - - - - - Package scope - - - - - //
+
+    /* (non-Javadoc)
+     *
+     * Hard code code system name to ICD-10.
+     *
+     * This is a special case to solve JIRA issue https://inera-certificate.atlassian.net/browse/WEBCERT-1442.
+     * It should be removed when Forsakringskassan can handle code system name correctly.
+     */
+    RegisterMedicalCertificateType whenFkIsRecipientThenSetCodeSystemToICD10(final RegisterMedicalCertificateType request) {
+        LOG.info(LogMarkers.MONITORING, "Mottagare av certifikat är Försäkringskassan - 'codeSystemName' sätts till värde ICD-10");
+
+        // Change the code system name
+        CD tillstandsKod = request.getLakarutlatande().getMedicinsktTillstand().getTillstandskod();
+        tillstandsKod.setCodeSystemName(CODESYSTEMNAME_ICD10);
+
+        // Update request
+        request.getLakarutlatande().getMedicinsktTillstand().setTillstandskod(tillstandsKod);
+
+        return request;
+    }
+
+    // - - - - - Private scope - - - - - //
+
     private CertificateResponse convert(GetMedicalCertificateForCareResponseType response, boolean revoked) throws ModuleException {
         try {
             Utlatande utlatande = TransportToInternal.convert(response.getLakarutlatande());
@@ -246,10 +279,40 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
     }
 
-    // Private transformation methods for building responses
+    private void sendCertificateToRecipient(final RegisterMedicalCertificateType request, final String logicalAddress, final String recipientId) throws ModuleException {
+
+        RegisterMedicalCertificateType rmct = null;
+
+        // This is a special case when recipient is Forsakringskassan.
+        // See JIRA issue WEBCERT-1442.
+        if (recipientId != null && recipientId.equalsIgnoreCase(FK.toString())) {
+            rmct = whenFkIsRecipientThenSetCodeSystemToICD10(request);
+        } else {
+            rmct = request;
+        }
+
+        AttributedURIType address = new AttributedURIType();
+        address.setValue(logicalAddress);
+
+        RegisterMedicalCertificateResponseType response =
+                registerMedicalCertificateClient.registerMedicalCertificate(address, rmct);
+
+        // check whether call was successful or not
+        if (response.getResult().getResultCode() != ResultCodeEnum.OK) {
+            String message = response.getResult().getResultCode() == ResultCodeEnum.INFO
+                    ? response.getResult().getInfoText()
+                    : response.getResult().getErrorId() + " : " + response.getResult().getErrorText();
+            throw new ExternalServiceCallException(message);
+        }
+
+    }
+
+
+    // - - - - - Private transformation methods for building responses - - - - - //
 
     private se.inera.certificate.modules.fk7263.model.internal.Utlatande getInternal(InternalModelHolder internalModel)
             throws ModuleException {
+
         try {
             return objectMapper.readValue(internalModel.getInternalModel(),
                     se.inera.certificate.modules.fk7263.model.internal.Utlatande.class);

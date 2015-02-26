@@ -82,8 +82,11 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
             String xml = xmlToString(registerMedicalCertificate);
             CertificateHolder certificateHolder = converterUtil.toCertificateHolder(utlatande);
             certificateHolder.setOriginalCertificate(xml);
+
             moduleApi.getModuleContainer().certificateReceived(certificateHolder, wireTapped);
+
             response.setResult(ResultOfCallUtil.okResult());
+
         } catch (CertificateAlreadyExistsException e) {
             response.setResult(ResultOfCallUtil.infoResult("Certificate already exists"));
             String certificateId = registerMedicalCertificate.getLakarutlatande().getLakarutlatandeId();

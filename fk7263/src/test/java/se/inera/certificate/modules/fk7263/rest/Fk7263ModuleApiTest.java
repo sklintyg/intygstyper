@@ -1,8 +1,13 @@
 package se.inera.certificate.modules.fk7263.rest;
 
+import static se.inera.certificate.common.enumerations.Recipients.FK;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -20,16 +25,17 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.w3.wsaddressing10.AttributedURIType;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.certificate.modules.fk7263.model.converter.InternalToTransport;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.utils.ResourceConverterUtils;
 import se.inera.certificate.modules.support.api.dto.*;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
+import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.ifv.insuranceprocess.healthreporting.utils.ResultOfCallUtil;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -39,6 +45,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @ContextConfiguration(locations = ("/fk7263-test-config.xml"))
 @RunWith(SpringJUnit4ClassRunner.class)
 public class Fk7263ModuleApiTest {
+
+    public static final String TESTFILE_UTLATANDE = "Fk7263ModuleApiTest/utlatande.json";
 
     private RegisterMedicalCertificateResponderInterface registerMedicalCertificateClient;
 
@@ -84,11 +92,6 @@ public class Fk7263ModuleApiTest {
                 .getEnhetsnamn());
     }
 
-    private Utlatande getUtlatandeFromFile() throws IOException {
-        return new CustomObjectMapper().readValue(new ClassPathResource(
-                "Fk7263ModuleApiTest/utlatande.json").getFile(), Utlatande.class);
-    }
-
     @Test
     public void copyContainsOriginalData() throws IOException, ModuleException {
         Utlatande utlatande = getUtlatandeFromFile();
@@ -131,28 +134,86 @@ public class Fk7263ModuleApiTest {
         copyHolder.setNewPersonnummer(newSSN);
         
         InternalModelResponse holder = fk7263ModuleApi.createNewInternalFromTemplate(copyHolder, createInternalHolder(utlatande));
-
         assertNotNull(holder);
+
         Utlatande creatededUtlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
         assertEquals("Kalle", creatededUtlatande.getGrundData().getPatient().getFornamn());
         assertEquals("Kula", creatededUtlatande.getGrundData().getPatient().getEfternamn());
         assertEquals(newSSN, creatededUtlatande.getGrundData().getPatient().getPersonId());
-        
     }
 
     @Test
-    public void testSendCertificateToRecipient() throws Exception {
+    public void testSendCertificateWhenRecipientIsOtherThanFk() throws Exception {
         InternalModelHolder internalModel = new InternalModelHolder(FileUtils.readFileToString(new ClassPathResource(
-                "Fk7263ModuleApiTest/utlatande.json").getFile()));
+                TESTFILE_UTLATANDE).getFile()));
+
         AttributedURIType address = new AttributedURIType();
         address.setValue("logicalAddress");
+
         RegisterMedicalCertificateResponseType response = new RegisterMedicalCertificateResponseType();
         response.setResult(ResultOfCallUtil.okResult());
-        Mockito.when(
-                registerMedicalCertificateClient.registerMedicalCertificate(Mockito.any(AttributedURIType.class),
-                        Mockito.any(RegisterMedicalCertificateType.class))).thenReturn(response);
+
+        // Wen
+        when(registerMedicalCertificateClient.registerMedicalCertificate(
+                any(AttributedURIType.class), any(RegisterMedicalCertificateType.class))).thenReturn(response);
+
+        // Then
         fk7263ModuleApi.sendCertificateToRecipient(internalModel, "logicalAddress");
-        verify(registerMedicalCertificateClient).registerMedicalCertificate(Mockito.eq(address), Mockito.any(RegisterMedicalCertificateType.class));
+
+        // Verify
+        verify(registerMedicalCertificateClient).registerMedicalCertificate(eq(address), Mockito.any(RegisterMedicalCertificateType.class));
+    }
+
+    @Test
+    public void testSendCertificateWhenRecipientIsFk() throws Exception {
+
+        // Given
+        InternalModelHolder internalModel = new InternalModelHolder(FileUtils.readFileToString(new ClassPathResource(
+                TESTFILE_UTLATANDE).getFile()));
+
+        Utlatande utlatande = getUtlatandeFromFile();
+
+        AttributedURIType address = new AttributedURIType();
+        address.setValue("logicalAddress");
+
+        RegisterMedicalCertificateResponseType response = new RegisterMedicalCertificateResponseType();
+        response.setResult(ResultOfCallUtil.okResult());
+
+        // When
+        when(registerMedicalCertificateClient.registerMedicalCertificate(
+                any(AttributedURIType.class), any(RegisterMedicalCertificateType.class))).thenReturn(response);
+
+        // Then
+        fk7263ModuleApi.sendCertificateToRecipient(internalModel, "logicalAddress", FK.toString());
+
+        // Verify
+//        verify(fk7263ModuleApi, times(1)).whenFkIsRecipientThenSetCodeSystemToICD10(utlatande);
+        verify(registerMedicalCertificateClient).registerMedicalCertificate(Mockito.eq(address), any(RegisterMedicalCertificateType.class));
+    }
+
+    @Test
+    public void testWhenFkIsRecipientThenSetCodeSystemToICD10() throws Exception {
+        Utlatande utlatande = getUtlatandeFromFile();
+        RegisterMedicalCertificateType request = (RegisterMedicalCertificateType) InternalToTransport.getJaxbObject(utlatande);
+
+        request = fk7263ModuleApi.whenFkIsRecipientThenSetCodeSystemToICD10(request);
+
+        String expected = Fk7263ModuleApi.CODESYSTEMNAME_ICD10;
+        String actual = request.getLakarutlatande().getMedicinsktTillstand().getTillstandskod().getCodeSystemName();
+        assertEquals(expected, actual);
+    }
+
+    private Utlatande getUtlatandeFromFile() throws IOException {
+        return new CustomObjectMapper().readValue(new ClassPathResource(
+                TESTFILE_UTLATANDE).getFile(), Utlatande.class);
+    }
+
+    private Utlatande fromJsonString(String s) throws ModuleException {
+        try {
+            return objectMapper.readValue(s, Utlatande.class);
+        } catch (IOException e) {
+            throw new ModuleSystemException("Failed to deserialize internal model", e);
+        }
     }
 
     private String toJsonString(Utlatande utlatande) throws ModuleException {
@@ -187,8 +248,8 @@ public class Fk7263ModuleApiTest {
         return new CreateNewDraftHolder("Id1", hosPersonal, patient);
     }
 
-    private InternalModelHolder createInternalHolder(Utlatande internalModel)
-            throws JsonProcessingException {
-        return new InternalModelHolder(objectMapper.writeValueAsString(internalModel));
+    private InternalModelHolder createInternalHolder(Utlatande utlatande) throws ModuleException {
+        //return new InternalModelHolder(objectMapper.writeValueAsString(utlatande));
+        return new InternalModelHolder(toJsonString(utlatande));
     }
 }
