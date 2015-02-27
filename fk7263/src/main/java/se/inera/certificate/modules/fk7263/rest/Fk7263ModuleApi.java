@@ -265,10 +265,10 @@ public class Fk7263ModuleApi implements ModuleApi {
             // Update request
             request.getLakarutlatande().getMedicinsktTillstand().setTillstandskod(tillstandsKod);
 
-        } catch(NullPointerException npe) {
+        } catch (NullPointerException npe) {
             LOG.info(LogMarkers.MONITORING,
-                    "Det gick inte att sätta 'lakarutlatande/medicinsktTillstand/tillstandsKod/codeSystemName' pga " +
-                    "ett kastat NullPointerException. T.ex behöver 'medicinsktTillstand' inte finnas med i 'lakarutlatande'");
+                    "Det gick inte att sätta 'lakarutlatande/medicinsktTillstand/tillstandsKod/codeSystemName' pga "
+                     + "ett kastat NullPointerException. T.ex behöver 'medicinsktTillstand' inte finnas med i 'lakarutlatande'");
 
         }
 
