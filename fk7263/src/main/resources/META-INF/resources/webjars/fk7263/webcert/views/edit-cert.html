@@ -441,7 +441,7 @@
                                                                               ng-change="onChangeWorkStateCheck('nedsattMed25')"
                                                                               ng-model="workState.nedsattMed25">
                         25%
-                        nedsatt arbetsförmåga från</label>
+                        nedsatt arbetsförmåga från {{nedsattInvalid.nedsattMed25from}}</label>
                       <span wc-date-picker-field target-model="cert.nedsattMed25.from"
                             on-change="onChangeNedsattMed('nedsattMed25', 'from')" dom-id="nedsattMed25from"
                             invalid="nedsattInvalid.nedsattMed25from"></span>

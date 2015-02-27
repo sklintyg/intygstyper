@@ -1,9 +1,9 @@
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$routeParams',
         'common.CertificateService', 'common.ManageCertView', 'common.User', 'common.wcFocus',
-        'common.intygNotifyService', 'fk7263.diagnosService', 'common.DateUtilsService', 'common.UtilsService','fk7263.EditCertCtrl.DateRangeGroupModel',
+        'common.intygNotifyService', 'fk7263.diagnosService', 'common.DateUtilsService', 'common.UtilsService','fk7263.EditCertCtrl.DateRangeGroupsService',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $routeParams,
-            CertificateService, ManageCertView, User, wcFocus, intygNotifyService, diagnosService, dateUtils, utils, DateRangeGroupModel) {
+            CertificateService, ManageCertView, User, wcFocus, intygNotifyService, diagnosService, dateUtils, utils, DateRangeGroupsService ) {
             'use strict';
 
             /**********************************************************************************
@@ -119,6 +119,26 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
             // -- start registerDateParsers
 
+            /**
+             * Register date parsers
+             * @param $scope
+             */
+            function registerDateParsers(_$scope) {
+                registerDateParsersFor4b(_$scope);
+                registerDateParsersFor8b(_$scope);
+            }
+
+
+            // 4b ---------------------------------------------
+
+            function registerDateParsersFor4b(_$scope) {
+                // Register parse function for 4b date pickers
+                var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter',
+                    'annanReferens'];
+                addParser(_$scope.certForm, baserasPaTypes, _$scope.onChangeBaserasPaDate );
+                addDateToISOParser(_$scope.certForm, baserasPaTypes);
+            }
+
             function addParser(model, attributes, fn){
                 var modelProperty;
                 angular.forEach(attributes, function(type) {
@@ -126,15 +146,15 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     if (modelProperty) {
                         modelProperty.$parsers.push(function(viewValue) {
                             fn(type);
+                            return viewValue;
                         });
                     }
                 }, model);
             }
 
             function addDateToISOParser(model, attributes){
-                var modelProperty;
                 angular.forEach(attributes, function(type) {
-                    modelProperty = this[type + 'Date'];
+                    var modelProperty = this[type + 'Date'];
                     if (modelProperty) {
                         modelProperty.$parsers.push(function(viewValue) {
                             viewValue = dateUtils.convertDateToISOString(viewValue);
@@ -144,307 +164,16 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }, model);
             }
 
-            /**
-             * Register date parsers
-             * @param $scope
-             */
-            function registerDateParsers(_$scope) {
+            // 4b ---------------------------------------------
 
-                // Register parse function for 4b date pickers
-                var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter',
-                    'annanReferens'];
-
-                addParser(_$scope.certForm, baserasPaTypes, _$scope.onChangeBaserasPaDate );
-
-                addDateToISOParser(_$scope.certForm, baserasPaTypes);
-
-
-                // Fält 8b. nedsattMedXXBeskrivning
-                var nedsattMedList = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
-                angular.forEach(nedsattMedList, function(nedsattMed) {
-
-                    function nedsattParser(viewValue) {
-
-                        viewValue = dateUtils.convertDateToISOString(viewValue);
-
-                        var changedDateGroup = createDateRangeGroup(nedsattMed, false); // false = non-strict date conversion
-                        if (!utils.isValidString(changedDateGroup.nedsattFrom) &&
-                            !utils.isValidString(changedDateGroup.nedsattTom)) {
-                            // uncheck check since both dates are undefined or empty
-                            _$scope.workState[nedsattMed] = false;
-
-                        } else if (utils.isValidString(changedDateGroup.nedsattFrom) ||
-                            utils.isValidString(changedDateGroup.nedsattTom)) {
-                            // One of the dates is valid
-                            _$scope.workState[nedsattMed] = true; // Check nedsatt checkbox
-                        }
-
-                        if (viewValue === null) {
-                            viewValue = undefined;
-                        } else {
-                            validateDates(false);
-                            onArbetsformagaDatesUpdated(false);
-                        }
-
-                        return viewValue;
-                    }
-
-                    // Register parsers so we can follow changes in the date inputs
-                    if (_$scope.certForm[nedsattMed + 'from']) {
-                        if (_$scope.certForm[nedsattMed + 'from'].$parsers.length > 1) {
-                            _$scope.certForm[nedsattMed + 'from'].$parsers.shift();
-                        }
-                        _$scope.certForm[nedsattMed + 'from'].$parsers.unshift(nedsattParser);
-
-                        if (_$scope.certForm[nedsattMed + 'from'].$formatters.length > 0) {
-                            _$scope.certForm[nedsattMed + 'from'].$formatters.shift();
-                        }
-                        _$scope.certForm[nedsattMed + 'from'].$formatters.unshift(function(modelValue) {
-                            validateDates(true);
-                            onArbetsformagaDatesUpdated(true);
-                            return modelValue;
-                        });
-                    }
-
-                    if (_$scope.certForm[nedsattMed + 'from']) {
-                        if (_$scope.certForm[nedsattMed + 'tom'].$parsers.length > 1) {
-                            _$scope.certForm[nedsattMed + 'tom'].$parsers.shift();
-                        }
-                        _$scope.certForm[nedsattMed + 'tom'].$parsers.unshift(nedsattParser);
-
-                        if (_$scope.certForm[nedsattMed + 'tom'].$formatters.length > 0) {
-                            _$scope.certForm[nedsattMed + 'tom'].$formatters.shift();
-                        }
-                        _$scope.certForm[nedsattMed + 'tom'].$formatters.unshift(function(modelValue) {
-                            validateDates(true);
-                            onArbetsformagaDatesUpdated(true);
-                            return modelValue;
-                        });
-                    }
-
-                    if (_$scope.cert[nedsattMed]) {
-                        _$scope.workState[nedsattMed] = true;
-                    }
-                }, _$scope.cert);
-            }
-
-            // ---- start validate dates
-            /**
-             * Revalidate 8b dates
-             */
-            function validateDates(useModelValue) {
-                resetDateInvalidStates();
-                validateDateRangeOrder(useModelValue); // Set invalid if from dates are after tom dates
-                validateDatePeriods(useModelValue); // Set invalid if date periods overlap
-            }
-
-            /**
-             * Reset date invalid states to not invalid
-             */
-            function resetDateInvalidStates() {
-                var groups = ['nedsattMed25from', 'nedsattMed25tom', 'nedsattMed50from', 'nedsattMed50tom',
-                    'nedsattMed75from', 'nedsattMed75tom', 'nedsattMed100from', 'nedsattMed100tom'];
-                for (var i = 0; i < groups.length; i++) {
-                    setDateInvalidState(groups[i], false);
+            function registerDateParsersFor8b(_$scope) {
+                if(_dateRangeGroups === undefined){
+                    _dateRangeGroups = DateRangeGroupsService.build(_$scope);
+                } else {
+                    // just reset the cert
+                    _dateRangeGroups.setCert(_$scope.cert);
                 }
             }
-
-            /**
-             * Validate order of dates within a group
-             */
-            function validateDateRangeOrder(useModelValue) {
-
-                // Update others still marked as invalid as well if they previously conflicted with the changed one
-                var groups = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
-                for (var i = 0; i < groups.length; i++) {
-                    var dateGroup = createDateRangeGroup(groups[i], false, useModelValue);
-                    if (dateGroup.isValid()) {
-                        var momentFrom = dateUtils.toMoment(dateGroup.nedsattFrom);
-                        var momentTom = dateUtils.toMoment(dateGroup.nedsattTom);
-                        if (momentFrom.isValid() && momentTom.isValid() &&
-                            dateUtils.toMoment(dateGroup.nedsattFrom).isAfter(dateUtils.toMoment(dateGroup.nedsattTom))) {
-                            setDateInvalidState(dateGroup.fromName, true);
-                            setDateInvalidState(dateGroup.tomName, true);
-                        } else {
-                            setDateInvalidState(dateGroup.fromName, false);
-                            setDateInvalidState(dateGroup.tomName, false);
-                        }
-                    } else {
-                        setDateInvalidState(dateGroup.fromName, false);
-                        setDateInvalidState(dateGroup.tomName, false);
-                    }
-                }
-            }
-
-            // ------ start validateDatePeriods
-            /**
-             * Validate 8b date periods so they don't overlap or wrap in any way
-             */
-            function validateDatePeriods(useModelValue) {
-                var groups = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
-
-                // for every nedsatt group
-                for (var i = 0; i < groups.length; i++) {
-
-                    // where group is used, set and not already marked as invalid
-                    var dateGroup = createDateRangeGroup(groups[i], false, useModelValue);
-
-                    // check with all other period groups after nedsatt period if periods overlap
-                    for (var j = i + 1; j < groups.length; j++) {
-
-                        // dont check against unused dates and already invalid dates
-                        var compareNedsattGroup = createDateRangeGroup(groups[j], false, useModelValue);
-                        markOverlappingDates(dateGroup, compareNedsattGroup);
-                    }
-                }
-            }
-
-            /**
-             *
-             * @param groupName
-             * @param strict
-             * @param useModelValue
-             * @returns {DateRangeGroup}
-             */
-            function createDateRangeGroup(groupName, strict, useModelValue) {
-                return DateRangeGroupModel.build($scope.cert, $scope.certForm, $scope.nedsattInvalid, groupName, strict, useModelValue);
-            }
-
-            /**
-             * Mark overlapping dates as invalid comparing the provided dates
-             * @param nedsattGroup1
-             * @param nedsattGroup2
-             */
-            function markOverlappingDates(nedsattGroup1, nedsattGroup2) {
-
-                if (nedsattGroup1.hasValidDates() && nedsattGroup2.hasValidDates()) {
-                    if (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isSame(nedsattGroup2.nedsattFrom, 'day')) {
-                        setDateInvalidState(nedsattGroup1.fromName, true);
-                        setDateInvalidState(nedsattGroup2.fromName, true);
-                    }
-                    if (dateUtils.toMoment(nedsattGroup1.nedsattTom).isSame(nedsattGroup2.nedsattFrom, 'day')) {
-                        setDateInvalidState(nedsattGroup1.tomName, true);
-                        setDateInvalidState(nedsattGroup2.fromName, true);
-                    }
-                    if (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isSame(nedsattGroup2.nedsattTom, 'day')) {
-                        setDateInvalidState(nedsattGroup1.fromName, true);
-                        setDateInvalidState(nedsattGroup2.tomName, true);
-                    }
-                    if (dateUtils.toMoment(nedsattGroup1.nedsattTom).isSame(nedsattGroup2.nedsattTom, 'day')) {
-                        setDateInvalidState(nedsattGroup1.tomName, true);
-                        setDateInvalidState(nedsattGroup2.tomName, true);
-                    }
-
-                    if ((dateUtils.toMoment(nedsattGroup1.nedsattTom).isAfter(nedsattGroup2.nedsattFrom) &&
-                        dateUtils.toMoment(nedsattGroup1.nedsattFrom).isBefore(nedsattGroup2.nedsattFrom)) || // first group overlaps in front
-                        (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isBefore(nedsattGroup2.nedsattTom) &&
-                        dateUtils.toMoment(nedsattGroup1.nedsattTom).isAfter(nedsattGroup2.nedsattTom)) || // first group overlaps behind
-                        (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isBefore(nedsattGroup2.nedsattFrom) &&
-                        dateUtils.toMoment(nedsattGroup1.nedsattTom).isAfter(nedsattGroup2.nedsattTom)) || // first group wraps second group
-                        (dateUtils.toMoment(nedsattGroup1.nedsattFrom).isAfter(nedsattGroup2.nedsattFrom) &&
-                        dateUtils.toMoment(nedsattGroup1.nedsattTom).isBefore(nedsattGroup2.nedsattTom))) { // second group wraps first group
-                        setDateInvalidState(nedsattGroup1.fromName, true);
-                        setDateInvalidState(nedsattGroup1.tomName, true);
-                        setDateInvalidState(nedsattGroup2.fromName, true);
-                        setDateInvalidState(nedsattGroup2.tomName, true);
-                    }
-                }
-            }
-
-
-            // ------ end validateDatePeriods
-
-            /**
-             * Set if date named fieldName should be marked as invalid.
-             * This is used by resetDateInvalidStates, validateDateRangeOrder and markOverlappingDates.
-             * @param fieldName
-             * @param value
-             */
-            function setDateInvalidState(fieldName, value) {
-                $scope.nedsattInvalid[fieldName] = value;
-                $scope.certForm[fieldName].$setValidity(fieldName, value);
-            }
-
-
-            // ---- end validate dates
-
-            /**
-             * 8b: Called when checks or dates for Arbetsförmåga are changed. Update dependency controls here
-             */
-            function onArbetsformagaDatesUpdated(useModelValue) {
-                $scope.updateTotalCertDays(useModelValue);
-
-                var minMaxMoments = findStartEndMoments(useModelValue);
-                checkArbetsformagaDatesRange(minMaxMoments.minMoment);
-                checkArbetsformagaDatesPeriodLength(minMaxMoments.minMoment, minMaxMoments.maxMoment);
-            }
-
-            /**
-             * 8b: find earliest and latest dates (as moment objects) for arbetsförmåga
-             * @returns {{minMoment: null, maxMoment: null}}
-             */
-            function findStartEndMoments(useModelValue) {
-                var moments = {
-                    minMoment: null,
-                    maxMoment: null
-                };
-                var startMoments = [];
-                var endMoments = [];
-
-                var nedsattMedList = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
-
-                angular.forEach(nedsattMedList, function(nedsattMed) {
-
-                    var dateValue = null;
-
-                    if (useModelValue) {
-                        if ($scope.cert[nedsattMed] && $scope.cert[nedsattMed].from) {
-                            dateValue = $scope.cert[nedsattMed].from;
-                        }
-                    } else {
-                        dateValue = $scope.certForm[nedsattMed + 'from'].$viewValue;
-                    }
-                    dateUtils.pushValidDate(startMoments, dateValue);
-
-                    dateValue = null;
-                    if (useModelValue) {
-                        if ($scope.cert[nedsattMed] && $scope.cert[nedsattMed].tom) {
-                            dateValue = $scope.cert[nedsattMed].tom;
-                        }
-                    } else {
-                        dateValue = $scope.certForm[nedsattMed + 'tom'].$viewValue;
-                    }
-                    dateUtils.pushValidDate(endMoments, dateValue);
-                });
-
-                if (startMoments.length > 0) {
-                    moments.minMoment = moment.min(startMoments);
-                }
-                if (endMoments.length > 0) {
-                    moments.maxMoment = moment.max(endMoments);
-                }
-
-                return moments;
-            }
-
-            /**
-             * 8b: Check that the earliest startdate in arbetsförmåga is no more than a week before today and no more than 6 months in the future
-             * @type {boolean}
-             */
-            function checkArbetsformagaDatesRange(startMoment) {
-                $scope.datesOutOfRange = (dateUtils.olderThanAWeek(startMoment) || dateUtils.isDateOutOfRange(startMoment));
-            }
-
-            /**
-             * 8b: Check that the period between the earliest startdate and the latest end date is no more than 6 months in the future
-             * @type {boolean}
-             */
-            function checkArbetsformagaDatesPeriodLength(startMoment, endMoment) {
-                $scope.datesPeriodTooLong = !dateUtils.areDatesWithinMonthRange(startMoment, endMoment);
-            }
-
-            // -- end registerDateParsers
-
 
             /**
              * Convert internal model to form temporary data bindings
@@ -854,19 +583,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             };
 
             /**
-             * Calculate total days between the earliest and the latest dates supplied in the 8b controls
-             * @type {boolean}
-             */
-            $scope.updateTotalCertDays = function(useModelValue) {
-                var moments = findStartEndMoments(useModelValue);
-                if(!moments){
-                    $scope.totalCertDays = false;
-                    return;
-                }
-                $scope.totalCertDays = dateUtils.daysBetween(moments.minMoment, moments.maxMoment);
-            };
-
-            /**
              * Update arbetsformaga dates when checkbox is updated
              * @param nedsattModelName
              */
@@ -1082,6 +798,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             };
 
             /**************************************************************************
+             * Private vars
+             */
+            var _dateRangeGroups;
+            /**************************************************************************
              * Load certificate and setup form
              **************************************************************************/
 
@@ -1096,9 +816,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 // Decorate intygspecific default data
                 $scope.cert = cert;
 
+                convertCertToForm($scope);
+
                 registerDateParsers($scope);
 
-                convertCertToForm($scope);
                 $timeout(function() {
                     wcFocus('firstInput');
                     $rootScope.$broadcast('intyg.loaded', $scope.cert);

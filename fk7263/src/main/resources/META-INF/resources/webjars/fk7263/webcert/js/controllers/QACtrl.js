@@ -211,7 +211,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                     var qa = $scope.qaList[i];
                     var isUnhandled = fragaSvarCommonService.isUnhandled(qa);
                     var fromFk = fragaSvarCommonService.fromFk(qa);
-                    if(isUnhandled && fromFk){
+                    if(qa.status === 'ANSWERED' || (isUnhandled && fromFk)){
                         return true;
                     }
                 }
