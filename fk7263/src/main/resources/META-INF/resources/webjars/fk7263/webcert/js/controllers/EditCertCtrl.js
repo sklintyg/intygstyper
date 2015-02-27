@@ -6,6 +6,11 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             CertificateService, ManageCertView, User, wcFocus, intygNotifyService, diagnosService, dateUtils, utils, DateRangeGroupsService ) {
             'use strict';
 
+            /**************************************************************************
+             * Private vars
+             */
+            var _dateRangeGroups;
+
             /**********************************************************************************
              * Default state
              **********************************************************************************/
@@ -797,10 +802,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 intygNotifyService.onForwardedChange($scope.certMeta, $scope.widgetState);
             };
 
-            /**************************************************************************
-             * Private vars
-             */
-            var _dateRangeGroups;
             /**************************************************************************
              * Load certificate and setup form
              **************************************************************************/

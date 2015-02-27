@@ -23,8 +23,11 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
             // add the parser and formatter...
             this.addNedsattFormatters();
 
+            this.setUseCert(true);
             this.validateDates();
             this.onArbetsformagaDatesUpdated();
+            this.setUseCert(false);
+
         };
 
         DateRangeGroupsService.prototype.addNedsattFormatters = function addNedsattFormatters(){
@@ -48,10 +51,10 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
                 if (from) {
 
                     // add formatters
-                    if (from.$formatters.length > 0) {
+                    /*if (from.$formatters.length > 0) {
                         from.$formatters.shift();
-                    }
-                    from.$formatters.push(function(modelValue) {
+                    }*/
+                    from.$parsers.push(function(modelValue) {
                         return nedsattFormatter(self, modelValue);
                     });
 
@@ -60,10 +63,10 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
                 if (from) {
 
                     // add formatters
-                    if (tom.$formatters.length > 0) {
+                    /*if (tom.$formatters.length > 0) {
                         tom.$formatters.shift();
-                    }
-                    tom.$formatters.push(function(modelValue) {
+                    }*/
+                    tom.$parsers.push(function(modelValue) {
                         return nedsattFormatter(self, modelValue);
                     });
                 }
@@ -78,6 +81,12 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
             this.resetDateInvalidStates();
             this.validateDateRangeOrder(); // Set invalid if from dates are after tom dates
             this.validateDatePeriods(); // Set invalid if date periods overlap
+        };
+
+        DateRangeGroupsService.prototype.setUseCert = function setUseCert(value) {
+            angular.forEach(this.dateRangeGroups, function(dateRangeGroup){
+                dateRangeGroup.setUseCert(value);
+            });
         };
 
         DateRangeGroupsService.prototype.resetDateInvalidStates = function resetDateInvalidStates() {

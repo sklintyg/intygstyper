@@ -9,7 +9,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             // Public properties, assigned to the instance ('this')
             this.workState = workState;
             this.certFormModel = certFormModel;
-
+            this.certModel = _$scope.cert;
             this.groupName = groupName;
             this.fromName = groupName + 'from';
             this.tomName = groupName + 'tom';
@@ -17,10 +17,14 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             this.nedsattFormFrom = this.certFormModel[this.fromName];
             this.nedsattFormTom = this.certFormModel[this.tomName];
 
+
             this._$scope = _$scope;
+            this.nedsattInvalidValueFromName;
+            this.nedsattInvalidValueTomName;
             this.addNedsattParser();
             this.id = id;
 
+            this.useCert = false;
         }
 
         // parsers
@@ -77,8 +81,24 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             }
         };
 
+        DateRangeGroupModel.prototype.setUseCert = function(val) {
+            this.useCert = val;
+        };
+
         DateRangeGroupModel.prototype.nedsattFrom = function() {
-            return this.nedsattFormFrom ? this.nedsattFormFrom.$viewValue : null;
+            if(this.useCert){
+                return this.certModel[this.groupName] ? this.certModel[this.groupName].from : null;
+            } else {
+                return this.nedsattFormFrom ? this.nedsattFormFrom.$viewValue : null;
+            }
+        };
+
+        DateRangeGroupModel.prototype.nedsattTom = function() {
+            if(this.useCert){
+                return this.certModel[this.groupName] ? this.certModel[this.groupName].tom : null;
+            } else {
+                return this.nedsattFormTom ? this.nedsattFormTom.$viewValue : null;
+            }
         };
 
         DateRangeGroupModel.prototype.nedsattInvalidFrom = function(val) {
@@ -93,10 +113,6 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
                 this._$scope.nedsattInvalid[this.tomName] = val;
             }
             return this._$scope.nedsattInvalid[this.tomName];
-        };
-
-        DateRangeGroupModel.prototype.nedsattTom = function() {
-            return this.nedsattFormTom ? this.nedsattFormTom.$viewValue : null;
         };
 
         DateRangeGroupModel.prototype.momentStrictFrom = function() {
@@ -134,14 +150,6 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
                 fromThat = dateRangeGroup.momentFrom(),
                 tomThat = dateRangeGroup.momentTom();
 
-            // this from and tom
-            // from and tom on same date
-            if(dateUtils.isSame(fromThis, tomThis)){
-                this.setDateInvalidState(true);
-            }
-            if(dateUtils.isSame(fromThat, tomThat)){
-                dateRangeGroup.setDateInvalidState(true);
-            }
             //          |       |
             //      |               |
             if( dateUtils.isBeforeOrEqual(fromThat, fromThis) && dateUtils.isAfterOrEqual(tomThat, tomThis) ){
@@ -204,9 +212,14 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
 
         DateRangeGroupModel.prototype.setDateValidity = function() {
             if (this.isValid()) {
+                var fromThis = this.momentFrom(),
+                    tomThis = this.momentTom();
                 if (this.isFromAfterTom()) {
                     this.setDateInvalidState(true);
-                } else {
+                } else if(dateUtils.isSame(fromThis, tomThis)){
+                    this.setDateInvalidState(true);
+                }
+                else {
                     this.setDateInvalidState(false);
                 }
             } else {
