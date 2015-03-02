@@ -7,10 +7,10 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import se.inera.certificate.common.util.StringUtil;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.Status;
-import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 
@@ -484,7 +484,7 @@ public class PdfGenerator {
         if (isValidString(intyg.getAnnanReferensBeskrivning())) {
             parts.add("Från fält 4b: " + intyg.getAnnanReferensBeskrivning());
         }
-        return StringUtils.trimToNull(Strings.join(". ", parts));
+        return StringUtils.trimToNull(StringUtil.join(". ", parts));
     }
 
     private String buildOtherDiagnoses() {
@@ -505,7 +505,7 @@ public class PdfGenerator {
         if (intyg.getSamsjuklighet() != null && intyg.getSamsjuklighet()) {
             parts.add("Samsjuklighet föreligger");
         }
-        return StringUtils.trimToNull(Strings.join(", ", parts));
+        return StringUtils.trimToNull(StringUtil.join(", ", parts));
     }
 
     private boolean isValidString(String string) {

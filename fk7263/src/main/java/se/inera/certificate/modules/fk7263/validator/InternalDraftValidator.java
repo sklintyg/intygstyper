@@ -19,7 +19,7 @@ import se.inera.certificate.validate.StringValidator;
 import java.util.ArrayList;
 import java.util.List;
 
-import static se.inera.certificate.model.util.Strings.isNullOrEmpty;
+import static se.inera.certificate.common.util.StringUtil.isNullOrEmpty;
 
 public class InternalDraftValidator {
 

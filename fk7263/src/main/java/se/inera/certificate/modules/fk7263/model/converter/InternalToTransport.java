@@ -9,12 +9,12 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.common.enumerations.Diagnoskodverk;
+import se.inera.certificate.common.util.StringUtil;
 import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.common.internal.Vardgivare;
 import se.inera.certificate.model.converter.util.ConverterException;
-import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
@@ -128,7 +128,7 @@ public final class InternalToTransport {
             parts.add(source.getDiagnosBeskrivning());
         }
         if (!parts.isEmpty()) {
-            tillstand.setBeskrivning(Strings.join(". ", parts));
+            tillstand.setBeskrivning(StringUtil.join(". ", parts));
         } else {
             tillstand.setBeskrivning(null);
         }
@@ -145,7 +145,7 @@ public final class InternalToTransport {
         if (!isNullOrEmpty(source.getDiagnosKod3()) && !isNullOrEmpty(source.getDiagnosBeskrivning3())) {
             diagnos2 = source.getDiagnosKod3() + " " + source.getDiagnosBeskrivning3();
         }
-        return Strings.join(". ", diagnos1, diagnos2);
+        return StringUtil.join(". ", diagnos1, diagnos2);
     }
 
     private static String buildKommentar(Utlatande source) {
@@ -170,7 +170,7 @@ public final class InternalToTransport {
         if (!isNullOrEmpty(source.getKommentar())) {
             ovrigKommentar = source.getKommentar();
         }
-        String ret = Strings.join(". ", annanRef, arbetstidsforlaggning, prognosBedomning, ovrigKommentar);
+        String ret = StringUtil.join(". ", annanRef, arbetstidsforlaggning, prognosBedomning, ovrigKommentar);
         return !isNullOrEmpty(ret) ? ret : null;
     }
 
@@ -185,7 +185,7 @@ public final class InternalToTransport {
         if (!StringUtils.isEmpty(source.getNedsattMed75Beskrivning())) {
             parts.add(source.getNedsattMed75Beskrivning());
         }
-        return Strings.join(". ", parts);
+        return StringUtil.join(". ", parts);
     }
 
     private static FunktionstillstandType toFunktionstillstand(String source, TypAvFunktionstillstand tillstand) {

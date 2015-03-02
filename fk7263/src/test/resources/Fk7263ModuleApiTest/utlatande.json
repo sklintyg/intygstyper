@@ -53,6 +53,7 @@
     "sjukdomsforlopp" : "Bedömttillstånd: Patienten klämde höger överarm vid olycka i hemmet.\nProblemen har pågått en längre tid.",
 
     "diagnosKod" : "S47",
+    "diagnosKodsystem1" : "ICD_10_SE",
     "diagnosBeskrivning": "Medicinskttillstånd: Klämskada på överarm",
 
     "nuvarandeArbete":true,
