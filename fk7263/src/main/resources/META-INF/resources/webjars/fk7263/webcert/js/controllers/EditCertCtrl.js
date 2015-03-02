@@ -715,14 +715,20 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.onDiagnoseCode1Select = function($item) {
                 $scope.cert.diagnosBeskrivning1 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
+                $scope.certForm.$dirty = true;
+                $scope.certForm.$pristine = false;
             };
             $scope.onDiagnoseCode2Select = function($item) {
                 $scope.cert.diagnosBeskrivning2 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
+                $scope.certForm.$dirty = true;
+                $scope.certForm.$pristine = false;
             };
             $scope.onDiagnoseCode3Select = function($item) {
                 $scope.cert.diagnosBeskrivning3 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
+                $scope.certForm.$dirty = true;
+                $scope.certForm.$pristine = false;
             };
 
             /**
@@ -732,16 +738,22 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 $scope.cert.diagnosKod = $item.value;
                 $scope.cert.diagnosBeskrivning1 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
+                $scope.certForm.$dirty = true;
+                $scope.certForm.$pristine = false;
             };
             $scope.onDiagnoseDescription2Select = function($item) {
                 $scope.cert.diagnosKod2 = $item.value;
                 $scope.cert.diagnosBeskrivning2 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
+                $scope.certForm.$dirty = true;
+                $scope.certForm.$pristine = false;
             };
             $scope.onDiagnoseDescription3Select = function($item) {
                 $scope.cert.diagnosKod3 = $item.value;
                 $scope.cert.diagnosBeskrivning3 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
+                $scope.certForm.$dirty = true;
+                $scope.certForm.$pristine = false;
             };
 
             /**
