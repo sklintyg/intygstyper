@@ -5,10 +5,11 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
         /**
          * Constructor, with class name
          */
-        function DateRangeGroupModel(_$scope, workState, certFormModel, nedsattInvalidModel, groupName, id) {
+        function DateRangeGroupModel(_$scope, groupName, id) {
             // Public properties, assigned to the instance ('this')
-            this.workState = workState;
-            this.certFormModel = certFormModel;
+
+            this._$scope = _$scope;
+            this.certFormModel = _$scope.certForm;
             this.certModel = _$scope.cert;
             this.groupName = groupName;
             this.fromName = groupName + 'from';
@@ -17,13 +18,17 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             this.nedsattFormFrom = this.certFormModel[this.fromName];
             this.nedsattFormTom = this.certFormModel[this.tomName];
 
+            this.nedsattInvalidFrom = false;
+            this.nedsattInvalidTom = false;
+            this.workState = false;
 
-            this._$scope = _$scope;
-            this.nedsattInvalidValueFromName;
-            this.nedsattInvalidValueTomName;
-            this.addNedsattParser();
             this.id = id;
 
+            this.addNedsattParser();
+
+            // on creation the cert model is used and then there after the certForm ( the form model ) is used.
+            // this is a bit weird but it's to do with validation etc and the crazy angular stuff thats put on the ng-model attributes.
+            // it's much easier in other more complete frameworks ...
             this.useCert = false;
         }
 
@@ -36,13 +41,13 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
 
                 viewValue = dateUtils.convertDateToISOString(viewValue);
 
-                if (!dateRangeGroup.hasAValidDate()) {
+                if (!dateRangeGroup.isValid()) {
                     // uncheck check since both dates are undefined or empty
-                    dateRangeGroup.setWorkState(false);
+                    dateRangeGroup.workState = false;
 
-                } else if (dateRangeGroup.hasAValidDate()) {
+                } else {
                     // One of the dates is valid
-                    dateRangeGroup.setWorkState(true); // Check nedsatt checkbox
+                    dateRangeGroup.workState = true; // Check nedsatt checkbox
                 }
 
                 return viewValue;
@@ -81,38 +86,67 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             }
         };
 
+
+        DateRangeGroupModel.prototype.setCert = function(cert) {
+            this.certModel = cert;
+        };
+
         DateRangeGroupModel.prototype.setUseCert = function(val) {
             this.useCert = val;
         };
 
-        DateRangeGroupModel.prototype.nedsattFrom = function() {
-            if(this.useCert){
-                return this.certModel[this.groupName] ? this.certModel[this.groupName].from : null;
+        DateRangeGroupModel.prototype.nedsattFrom = function(val) {
+            if(val){
+                if (this.useCert) {
+                    this.certModel[this.groupName].from = val;
+                } else {
+                    this.nedsattFormFrom.$viewValue = val;
+                }
             } else {
-                return this.nedsattFormFrom ? this.nedsattFormFrom.$viewValue : null;
+                if (this.useCert) {
+                    return this.certModel[this.groupName] ? this.certModel[this.groupName].from : null;
+                } else {
+                    return this.nedsattFormFrom ? this.nedsattFormFrom.$viewValue : null;
+                }
             }
         };
 
-        DateRangeGroupModel.prototype.nedsattTom = function() {
-            if(this.useCert){
-                return this.certModel[this.groupName] ? this.certModel[this.groupName].tom : null;
+        DateRangeGroupModel.prototype.nedsattTom = function(val) {
+            if(val){
+                if (this.useCert) {
+                    this.certModel[this.groupName].tom = val;
+                } else {
+                    this.nedsattFormTom.$viewValue = val;
+                }
             } else {
-                return this.nedsattFormTom ? this.nedsattFormTom.$viewValue : null;
+                if (this.useCert) {
+                    return this.certModel[this.groupName] ? this.certModel[this.groupName].tom : null;
+                } else {
+                    return this.nedsattFormTom ? this.nedsattFormTom.$viewValue : null;
+                }
             }
         };
 
-        DateRangeGroupModel.prototype.nedsattInvalidFrom = function(val) {
-            if(val !== undefined){
-                this._$scope.nedsattInvalid[this.fromName] = val;
-            }
-            return this._$scope.nedsattInvalid[this.fromName];
+        DateRangeGroupModel.prototype.certFrom = function(val) {
+            return this.certModel[this.groupName] ? this.certModel[this.groupName].from : null;
+        }
+
+        DateRangeGroupModel.prototype.certTom = function(val) {
+            return this.certModel[this.groupName] ? this.certModel[this.groupName].tom : null;
         };
 
-        DateRangeGroupModel.prototype.nedsattInvalidTom = function(val) {
-            if(val !== undefined){
-                this._$scope.nedsattInvalid[this.tomName] = val;
+        DateRangeGroupModel.prototype.setCertFrom = function(val) {
+            if(!this.certModel[this.groupName]){
+                this.certModel[this.groupName] = {from:null, tom:null};
             }
-            return this._$scope.nedsattInvalid[this.tomName];
+            this.certModel[this.groupName].from = val;
+        }
+
+        DateRangeGroupModel.prototype.setCertTom = function(val) {
+            if(!this.certModel[this.groupName]){
+                this.certModel[this.groupName] = {from:null, tom:null};
+            }
+            this.certModel[this.groupName].tom = val;
         };
 
         DateRangeGroupModel.prototype.momentStrictFrom = function() {
@@ -222,13 +256,15 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
                 else {
                     this.setDateInvalidState(false);
                 }
+                this.workState = true;
             } else {
                 this.setDateInvalidState(false);
+                this.workState = false;
             }
         };
 
         DateRangeGroupModel.prototype.isMarkedInvalid = function() {
-            return this.nedsattInvalidFrom() || this.nedsattInvalidTom();
+            return this.nedsattInvalidFrom || this.nedsattInvalidTom;
         };
 
         DateRangeGroupModel.prototype.hasValidDates = function() {
@@ -247,27 +283,27 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             return (this.fromName === otherGroup.fromName);
         };
 
-        DateRangeGroupModel.prototype.setWorkState = function(val) {
-            this.workState[this.groupName] = val;
-        };
-
         DateRangeGroupModel.prototype.setDateInvalidState = function (value) {
             this.setDateInvalidStateFrom(value);
             this.setDateInvalidStateTom(value);
         };
 
         DateRangeGroupModel.prototype.setDateInvalidStateFrom = function (value) {
-            this.nedsattInvalidFrom(value);
-            this.nedsattFormFrom.$setValidity(this.fromName, value);
+            this.nedsattInvalidFrom = value;
+            if(this.nedsattFormFrom) {
+                this.nedsattFormFrom.$setValidity(this.fromName, value);
+            }
         };
 
         DateRangeGroupModel.prototype.setDateInvalidStateTom = function (value) {
-            this.nedsattInvalidTom(value);
-            this.nedsattFormTom.$setValidity(this.tomName, value);
+            this.nedsattInvalidTom = value;
+            if (this.nedsattFormTom) {
+                this.nedsattFormTom.$setValidity(this.tomName, value);
+            }
         }
 
-        DateRangeGroupModel.build = function(workState, certModel, certFormModel, nedsattInvalidModel, groupName, strict, useModelValue) {
-            return new DateRangeGroupModel(workState, certModel, certFormModel, nedsattInvalidModel, groupName, strict, useModelValue);
+        DateRangeGroupModel.build = function(_$scope, groupName, id) {
+            return new DateRangeGroupModel(_$scope, groupName, id);
         };
 
         /**

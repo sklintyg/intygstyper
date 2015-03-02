@@ -76,29 +76,21 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             };
 
             // 8b. Arbetsförmåga date management
+            $scope.field8b = {
+                nedsattMed25 : null,
+                nedsattMed50 : null,
+                nedsattMed75 : null,
+                nedsattMed100 : null,
+                onChangeWorkStateCheck : function(nedsattModelName) {
+                    if(_dateRangeGroups){
+                        _dateRangeGroups.onChangeWorkStateCheck(nedsattModelName);
+                    }
+                }
+            };
+
             $scope.datesOutOfRange = false;
             $scope.datesPeriodTooLong = false;
             $scope.totalCertDays = false;
-
-            // 8b. Arbetsförmåga checks
-            $scope.workState = {
-                nedsattMed25: false,
-                nedsattMed50: false,
-                nedsattMed75: false,
-                nedsattMed100: false
-            };
-
-            // 8b. Arbetsförmåga date field invalid states. Keeps track of which nedsatt date fields that are invalid from onChange checks
-            $scope.nedsattInvalid = {
-                nedsattMed25from: false,
-                nedsattMed25tom: false,
-                nedsattMed50from: false,
-                nedsattMed50tom: false,
-                nedsattMed75from: false,
-                nedsattMed75tom: false,
-                nedsattMed100from: false,
-                nedsattMed100tom: false
-            };
 
             // Text input limits for different fields
             $scope.inputLimits = {
@@ -174,10 +166,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             function registerDateParsersFor8b(_$scope) {
                 if(_dateRangeGroups === undefined){
                     _dateRangeGroups = DateRangeGroupsService.build(_$scope);
-                } else {
-                    // just reset the cert
-                    _dateRangeGroups.setCert(_$scope.cert);
                 }
+                _dateRangeGroups.validateDatesWithCert(_$scope.cert);
             }
 
             /**
@@ -425,7 +415,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         }
                     }
 
-                    if ($scope.workState[nedsattMed]) {
+                    if ($scope.field8b[nedsattMed].workState) {
                         this[nedsattMed + 'Beskrivning'] = $scope.form.ovrigt[nedsattMed + 'Beskrivning'];
                     } else {
                         this[nedsattMed + 'Beskrivning'] = null;
@@ -587,55 +577,18 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 return totalOvrigtLength;
             };
 
-            /**
-             * Update arbetsformaga dates when checkbox is updated
-             * @param nedsattModelName
-             */
-            $scope.onChangeWorkStateCheck = function(nedsattModelName) {
-                if ($scope.cert !== undefined) {
-                    if ($scope.workState[nedsattModelName]) {
-
-                        // Set suggested dates
-                        var nedsatt = $scope.cert[nedsattModelName];
-                        if (!nedsatt) {
-                            nedsatt = $scope.cert[nedsattModelName] = {};
-                        }
-
-                        // Set from date
-                        // find highest max date
-                        var moments = findStartEndMoments();
-                        if (!nedsatt.from || !dateUtils.isDate(nedsatt.from)) {
-
-                            if (moments.maxMoment !== null && moments.maxMoment.isValid()) {
-                                nedsatt.from = moments.maxMoment.add('days', 1).format('YYYY-MM-DD');
-                            } else {
-                                // if no max moment is available, use today
-                                nedsatt.from = $filter('date')($scope.today, 'yyyy-MM-dd');
-                            }
-
-                        }
-
-                        // Set tom date
-                        if (nedsatt.from && (!nedsatt.tom || !dateUtils.isDate(nedsatt.tom))) {
-                            nedsatt.tom = dateUtils.toMoment(nedsatt.from).add('days', 7).format('YYYY-MM-DD');
-                        }
-                    } else {
-
-                        // Remove dates
-                        delete $scope.cert[nedsattModelName];
-                        if($scope.certForm[nedsattModelName]) {
-                            $scope.certForm[nedsattModelName].$setViewValue('');
-                        }
-                    }
-                }
-            };
-
             $scope.$watch('cert.avstangningSmittskydd', function(newVal) {
 
                 // Remove defaults not applicable when smittskydd is active
                 if (newVal === true) {
                     $scope.form.prognos = undefined;
                     $scope.form.rehab = undefined;
+
+                    // turn off resor till och from jobbet
+                    // Fält 11. Ressätt till arbete
+                    $scope.cert.ressattTillArbeteAktuellt = false;
+                    $scope.form.ressattTillArbeteAktuellt = undefined;
+
                 }
             });
 
@@ -803,7 +756,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             };
 
             /**************************************************************************
-             * Load certificate and setup form
+             * Load certificate and setup form / Constructor ...
              **************************************************************************/
 
                 // Get the certificate draft from the server.
@@ -818,8 +771,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 $scope.cert = cert;
 
                 convertCertToForm($scope);
-
                 registerDateParsers($scope);
+                _dateRangeGroups.validateDatesWithCert($scope.cert);
 
                 $timeout(function() {
                     wcFocus('firstInput');

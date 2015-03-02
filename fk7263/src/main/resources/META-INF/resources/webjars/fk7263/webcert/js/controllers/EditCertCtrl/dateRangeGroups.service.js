@@ -1,4 +1,4 @@
-angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
+angular.module('fk7263').service('fk7263.EditCertCtrl.DateRangeGroupsService',
     ['common.DateUtilsService', 'common.UtilsService','fk7263.EditCertCtrl.DateRangeGroupModel', '$log', function( dateUtils, utils, DateRangeGroupModel, $log) {
         'use strict';
 
@@ -11,22 +11,26 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
             this.datesOutOfRange = _$scope.datesOutOfRange;
             this.datesPeriodTooLong = _$scope.datesPeriodTooLong;
 
-            this.nedsattMed25 = DateRangeGroupModel.build(_$scope, _$scope.workState, _$scope.certForm, _$scope.nedsattInvalid, 'nedsattMed25', '25');
-            this.nedsattMed50 = DateRangeGroupModel.build(_$scope, _$scope.workState, _$scope.certForm, _$scope.nedsattInvalid,  'nedsattMed50', '50');
-            this.nedsattMed75 = DateRangeGroupModel.build(_$scope, _$scope.workState, _$scope.certForm, _$scope.nedsattInvalid,  'nedsattMed75', '75');
-            this.nedsattMed100 = DateRangeGroupModel.build(_$scope, _$scope.workState, _$scope.certForm, _$scope.nedsattInvalid, 'nedsattMed100', '100');
+            this.nedsattMed25 = DateRangeGroupModel.build(_$scope, 'nedsattMed25', '25');
+            _$scope.field8b.nedsattMed25 = this.nedsattMed25;
+
+            this.nedsattMed50 = DateRangeGroupModel.build(_$scope, 'nedsattMed50', '50');
+            _$scope.field8b.nedsattMed50 = this.nedsattMed50;
+
+            this.nedsattMed75 = DateRangeGroupModel.build(_$scope, 'nedsattMed75', '75');
+            _$scope.field8b.nedsattMed75 = this.nedsattMed75;
+
+            this.nedsattMed100 = DateRangeGroupModel.build(_$scope, 'nedsattMed100', '100');
+            _$scope.field8b.nedsattMed100 = this.nedsattMed100;
 
             this.dateRangeGroups = [this.nedsattMed25,this.nedsattMed50,this.nedsattMed75,this.nedsattMed100];
 
             this._$scope = _$scope;
 
+            this.certModel = _$scope.cert;
+
             // add the parser and formatter...
             this.addNedsattFormatters();
-
-            this.setUseCert(true);
-            this.validateDates();
-            this.onArbetsformagaDatesUpdated();
-            this.setUseCert(false);
 
         };
 
@@ -73,6 +77,20 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
 
             }, self);
         }
+
+        DateRangeGroupsService.prototype.validateDatesWithCert = function validateDatesWithCert(cert) {
+            this.setCert(cert);
+            this.setUseCert(true);
+            this.validateDates();
+            this.onArbetsformagaDatesUpdated();
+            this.setUseCert(false);
+        };
+
+        DateRangeGroupsService.prototype.setCert = function setCert(cert) {
+            angular.forEach(this.dateRangeGroups, function(dateRangeGroup){
+                dateRangeGroup.setCert(cert);
+            });
+        };
 
         /**
          * Revalidate 8b dates
@@ -129,9 +147,9 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
         /**
          * 8b: Called when checks or dates for Arbetsförmåga are changed. Update dependency controls here
          */
-        DateRangeGroupsService.prototype.onArbetsformagaDatesUpdated = function onArbetsformagaDatesUpdated(useModelValue) {
+        DateRangeGroupsService.prototype.onArbetsformagaDatesUpdated = function onArbetsformagaDatesUpdated() {
 
-            var startEndMoments = this.findStartEndMoments(useModelValue);
+            var startEndMoments = this.findStartEndMoments();
 
             this.updateTotalCertDays(startEndMoments);
             this.checkArbetsformagaDatesRange(startEndMoments.minMoment);
@@ -143,7 +161,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
          * 8b: find earliest and latest dates (as moment objects) for arbetsförmåga
          * @returns {{minMoment: null, maxMoment: null}}
          */
-        DateRangeGroupsService.prototype.findStartEndMoments = function findStartEndMoments(useModelValue) {
+        DateRangeGroupsService.prototype.findStartEndMoments = function findStartEndMoments() {
             var moments = {
                 minMoment: null,
                 maxMoment: null
@@ -189,7 +207,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
          */
         DateRangeGroupsService.prototype.checkArbetsformagaDatesRange = function checkArbetsformagaDatesRange(startMoment) {
             this.datesOutOfRange = (dateUtils.olderThanAWeek(startMoment) || dateUtils.isDateOutOfRange(startMoment));
-        }
+        };
 
         /**
          * 8b: Check that the period between the earliest startdate and the latest end date is no more than 6 months in the future
@@ -197,9 +215,42 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
          */
         DateRangeGroupsService.prototype.checkArbetsformagaDatesPeriodLength = function checkArbetsformagaDatesPeriodLength(startMoment, endMoment) {
             this.datesPeriodTooLong = !dateUtils.areDatesWithinMonthRange(startMoment, endMoment);
-        }
+        };
 
-        // static build
+        DateRangeGroupsService.prototype.onChangeWorkStateCheck = function(nedsattModelName) {
+            if (this.certModel !== undefined) {
+                var nedsatt = this[nedsattModelName];
+                if (nedsatt.workState) {
+
+                    // Set from date
+                    // find highest max date
+                    var moments = this.findStartEndMoments();
+                    if (!nedsatt.certFrom() || !dateUtils.isDate(nedsatt.certFrom())) {
+
+                        if (moments.maxMoment !== null && moments.maxMoment.isValid()) {
+                            nedsatt.setCertFrom(moments.maxMoment.add('days', 1).format('YYYY-MM-DD'));
+                        } else {
+                            // if no max moment is available, use today
+                            nedsatt.setCertFrom($filter('date')($scope.today, 'yyyy-MM-dd'));
+                        }
+
+                    }
+
+                    // Set tom date
+                    if (nedsatt.certFrom() && (!nedsatt.certTom() || !dateUtils.isDate(nedsatt.certTom()))) {
+                        nedsatt.setCertTom( dateUtils.toMoment(nedsatt.certFrom()).add('days', 7).format('YYYY-MM-DD') );
+                    }
+                } else {
+                    // Remove dates
+                    nedsatt.setCertFrom( undefined );
+                    nedsatt.setCertTom( undefined );
+                    nedsatt.nedsattFrom('');
+                    nedsatt.nedsattTom('');
+                }
+            }
+        };
+
+        // static build ************************************************************************************************
         DateRangeGroupsService.build = function(_$scope){
             return new DateRangeGroupsService(_$scope);
         }
