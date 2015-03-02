@@ -1,5 +1,5 @@
 angular.module('fk7263').service('fk7263.EditCertCtrl.DateRangeGroupsService',
-    ['common.DateUtilsService', 'common.UtilsService','fk7263.EditCertCtrl.DateRangeGroupModel', '$log', function( dateUtils, utils, DateRangeGroupModel, $log) {
+    ['common.DateUtilsService', 'common.UtilsService','fk7263.EditCertCtrl.DateRangeGroupModel', '$log', '$filter', function( dateUtils, utils, DateRangeGroupModel, $log, $filter) {
         'use strict';
 
         /**
@@ -7,7 +7,7 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.DateRangeGroupsService',
          */
         // 8b ---------------------------------------------
         function DateRangeGroupsService(_$scope){
-            this.totalCertDays = _$scope.totalCertDays;
+
             this.datesOutOfRange = _$scope.datesOutOfRange;
             this.datesPeriodTooLong = _$scope.datesPeriodTooLong;
 
@@ -28,6 +28,9 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.DateRangeGroupsService',
             this._$scope = _$scope;
 
             this.certModel = _$scope.cert;
+
+            this.today = new Date();
+            this.today.setHours(0, 0, 0, 0);
 
             // add the parser and formatter...
             this.addNedsattFormatters();
@@ -195,10 +198,10 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.DateRangeGroupsService',
          */
         DateRangeGroupsService.prototype.updateTotalCertDays = function(moments) {
             if(!moments){
-                this.totalCertDays = false;
+                this._$scope.totalCertDays = 0;
                 return;
             }
-            this.totalCertDays = dateUtils.daysBetween(moments.minMoment, moments.maxMoment);
+            this._$scope.totalCertDays = dateUtils.daysBetween(moments.minMoment, moments.maxMoment);
         };
 
         /**
@@ -231,7 +234,7 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.DateRangeGroupsService',
                             nedsatt.setCertFrom(moments.maxMoment.add('days', 1).format('YYYY-MM-DD'));
                         } else {
                             // if no max moment is available, use today
-                            nedsatt.setCertFrom($filter('date')($scope.today, 'yyyy-MM-dd'));
+                            nedsatt.setCertFrom($filter('date')(this.today, 'yyyy-MM-dd'));
                         }
 
                     }
@@ -247,6 +250,11 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.DateRangeGroupsService',
                     nedsatt.nedsattFrom('');
                     nedsatt.nedsattTom('');
                 }
+                // re validate dates
+                this.setUseCert(true);
+                this.validateDates();
+                this.onArbetsformagaDatesUpdated();
+                this.setUseCert(false);
             }
         };
 
