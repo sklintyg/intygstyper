@@ -65,14 +65,18 @@
       </div>
 
       <div class="webcert-col-section" ng-show="(qaList | filter:openIssuesFilter).length > 0" id="unhandledQACol">
+
         <h2 class="col-head">Ej hanterade frågor och svar</h2>
+
         <div ng-repeat="qa in qaList | filter:openIssuesFilter | orderBy:'senasteHandelseDatum':true">
+
           <div ng-if="qa.proxyMessage">
             <div alert type="info" close="dismissProxy(qa)">
               <span message key="{{qa.proxyMessage}}"></span>
             </div>
           </div>
 
+          <!-- QA panel -->
           <div ng-class="{'panel-container': true, 'revoked-certificate' : certProperties.isRevoked}">
 
             <div class="qa-panel" id="qaunhandled-{{qa.internReferens}}" ng-show="!qa.proxyMessage" ng-animate="'collapse'">
@@ -197,6 +201,7 @@
             <!-- qa panel -->
           </div>
           <!-- qa panel container -->
+
         </div>
       </div>
 
