@@ -1,7 +1,7 @@
 package se.inera.certificate.modules.fk7263.model.internal;
 
-import static se.inera.certificate.model.util.Strings.emptyToNull;
-import static se.inera.certificate.model.util.Strings.join;
+import static se.inera.certificate.common.util.StringUtil.emptyToNull;
+import static se.inera.certificate.common.util.StringUtil.join;
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.LocalDateInterval;

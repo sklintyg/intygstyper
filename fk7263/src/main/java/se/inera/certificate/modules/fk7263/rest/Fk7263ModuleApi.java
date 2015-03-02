@@ -1,6 +1,7 @@
 package se.inera.certificate.modules.fk7263.rest;
 
 import static se.inera.certificate.common.enumerations.Recipients.FK;
+import static se.inera.certificate.common.util.StringUtil.isNullOrEmpty;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -16,7 +17,6 @@ import org.w3.wsaddressing10.AttributedURIType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareRequestType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponseType;
-import se.inera.certificate.logging.LogMarkers;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.converter.InternalToNotification;
@@ -47,6 +47,10 @@ import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.modules.support.api.notification.NotificationMessage;
 import se.inera.certificate.schema.util.ClinicalProcessCertificateMetaTypeConverter;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
@@ -108,7 +112,6 @@ public class Fk7263ModuleApi implements ModuleApi {
     @Override
     public ValidateDraftResponse validateDraft(InternalModelHolder internalModel) throws ModuleException {
         return internalDraftValidator.validateDraft(getInternal(internalModel));
-
     }
 
     /**
@@ -152,6 +155,11 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
+    public Object createNotification(NotificationMessage notificationMessage) throws ModuleException {
+        return internalToNotficationConverter.createCertificateStatusUpdateForCareType(notificationMessage);
+    }
+
+    @Override
     public ModuleContainerApi getModuleContainer() {
         return moduleContainer;
     }
@@ -174,6 +182,19 @@ public class Fk7263ModuleApi implements ModuleApi {
      */
     @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
+
+        // Check that we got any data at all
+        if (internalModel == null ) {
+            throw new ModuleException("No InternalModelHolder found in call to sendCertificateToRecipient!");
+        }
+
+        // Check that we got any data at all
+        if (logicalAddress == null || logicalAddress.length() == 0) {
+            throw new ModuleException("No LogicalAddress found in call to sendCertificateToRecipient!");
+        }
+
+        // NOTE: We don't need to check for recipientId
+
         Utlatande utlatande = converterUtil.fromJsonString(internalModel.getInternalModel());
 
         try {
@@ -254,27 +275,55 @@ public class Fk7263ModuleApi implements ModuleApi {
      * This is a special case to solve JIRA issue https://inera-certificate.atlassian.net/browse/WEBCERT-1442.
      * It should be removed when Forsakringskassan can handle code system name correctly.
      */
-    RegisterMedicalCertificateType whenFkIsRecipientThenSetCodeSystemToICD10(final RegisterMedicalCertificateType request) {
-        LOG.info(LogMarkers.MONITORING, "Mottagare av certifikat är Försäkringskassan - 'lakarutlatande/medicinsktTillstand/tillstandsKod/codeSystemName' sätts till värde ICD-10");
+    RegisterMedicalCertificateType whenFkIsRecipientThenSetCodeSystemToICD10(final RegisterMedicalCertificateType request) throws ModuleException {
 
-        try {
-            // Change the code system name
-            CD tillstandsKod = request.getLakarutlatande().getMedicinsktTillstand().getTillstandskod();
-            tillstandsKod.setCodeSystemName(CODESYSTEMNAME_ICD10);
+        LOG.debug("Recipient of RegisterMedicalCertificate certificate is Försäkringskassan");
+        LOG.debug("Set element 'lakarutlatande/medicinsktTillstand/tillstandsKod/codeSystemName' to value 'ICD-10'");
+
+        // Check that we got a lakarutlatande element
+        if (request.getLakarutlatande() == null) {
+            throw new ModuleException("No Lakarutlatande element found in request data!");
+        }
+
+        LakarutlatandeType lakarutlatande = request.getLakarutlatande();
+
+        // Decide if this certificate has smittskydd checked
+        boolean inSmittskydd = findAktivitetWithCode(request.getLakarutlatande().getAktivitet(),
+                Aktivitetskod.AVSTANGNING_ENLIGT_SM_L_PGA_SMITTA) != null ? true : false;
+
+        if (!inSmittskydd) {
+            // Check that we got a medicinsktTillstand element
+            if (isNull(lakarutlatande.getMedicinsktTillstand())) {
+                throw new ModuleException("No medicinsktTillstand element found in request data. Cannot set codeSystemName to 'ICD-10'!");
+            }
+
+            MedicinsktTillstandType medicinsktTillstand = lakarutlatande.getMedicinsktTillstand();
+
+            // Check that we got a tillstandskod element
+            if (isNull(medicinsktTillstand.getTillstandskod())) {
+                throw new ModuleException("No tillstandskod element found in request data. Cannot set codeSystemName to 'ICD-10'!");
+            }
+
+            CD tillstandskod = medicinsktTillstand.getTillstandskod();
+            tillstandskod.setCodeSystemName(CODESYSTEMNAME_ICD10);
 
             // Update request
-            request.getLakarutlatande().getMedicinsktTillstand().setTillstandskod(tillstandsKod);
+            request.getLakarutlatande().getMedicinsktTillstand().setTillstandskod(tillstandskod);
 
-        } catch (NullPointerException npe) {
-            LOG.info(LogMarkers.MONITORING,
-                    "Det gick inte att sätta 'lakarutlatande/medicinsktTillstand/tillstandsKod/codeSystemName' pga "
-                     + "ett kastat NullPointerException. T.ex behöver 'medicinsktTillstand' inte finnas med i 'lakarutlatande'");
+        } else {
+            try {
+                // tillstandskod is not mandatory when smittskydd is true, just try to set it.
+                request.getLakarutlatande().getMedicinsktTillstand().getTillstandskod().setCodeSystemName(CODESYSTEMNAME_ICD10);
 
+            } catch (NullPointerException npe) {
+                LOG.debug("No tillstandskod element found in request data. "
+                        + "Element is not mandatory when Smittskydd is checked. "
+                        + "Cannot set codeSystemName to 'ICD-10'");
+            }
         }
 
         return request;
     }
-
 
     // - - - - - Private scope - - - - - //
 
@@ -289,23 +338,46 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
     }
 
-    private void sendCertificateToRecipient(final RegisterMedicalCertificateType request, final String logicalAddress, final String recipientId) throws ModuleException {
+    private AktivitetType findAktivitetWithCode(List<AktivitetType> aktiviteter, Aktivitetskod aktivitetskod) throws ModuleException {
+        AktivitetType foundAktivitet = null;
 
-        RegisterMedicalCertificateType rmct = null;
+        try {
+            if (aktiviteter != null) {
+                for (int i = 0; i < aktiviteter.size(); i++) {
+                    AktivitetType listAktivitet = (AktivitetType) aktiviteter.get(i);
+                    if (!isNull(listAktivitet.getAktivitetskod()) && listAktivitet.getAktivitetskod().compareTo(aktivitetskod) == 0) {
+                        foundAktivitet = listAktivitet;
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new ModuleException(e.getMessage(), e);
+        }
 
-        // This is a special case when recipient is Forsakringskassan.
-        // See JIRA issue WEBCERT-1442.
-        if (recipientId != null && recipientId.equalsIgnoreCase(FK.toString())) {
-            rmct = whenFkIsRecipientThenSetCodeSystemToICD10(request);
-        } else {
-            rmct = request;
+        return foundAktivitet;
+    }
+
+    private boolean isNull(Object obj) {
+        if (obj == null) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void sendCertificateToRecipient(RegisterMedicalCertificateType request, final String logicalAddress, final String recipientId) throws ModuleException {
+
+        // This is a special case when recipient is Forsakringskassan. See JIRA issue WEBCERT-1442.
+        if (!isNullOrEmpty(recipientId) && recipientId.equalsIgnoreCase(FK.toString())) {
+            request = whenFkIsRecipientThenSetCodeSystemToICD10(request);
         }
 
         AttributedURIType address = new AttributedURIType();
         address.setValue(logicalAddress);
 
         RegisterMedicalCertificateResponseType response =
-                registerMedicalCertificateClient.registerMedicalCertificate(address, rmct);
+                registerMedicalCertificateClient.registerMedicalCertificate(address, request);
 
         // check whether call was successful or not
         if (response.getResult().getResultCode() != ResultCodeEnum.OK) {
@@ -332,18 +404,6 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
     }
 
-    private InternalModelResponse toInteralModelResponse(
-            se.inera.certificate.modules.fk7263.model.internal.Utlatande internalModel) throws ModuleException {
-        try {
-            StringWriter writer = new StringWriter();
-            objectMapper.writeValue(writer, internalModel);
-            return new InternalModelResponse(writer.toString());
-
-        } catch (IOException e) {
-            throw new ModuleSystemException("Failed to serialize internal model", e);
-        }
-    }
-
     private InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
         try {
             Utlatande intyg = getInternal(internalModel);
@@ -354,9 +414,16 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
     }
 
-    @Override
-    public Object createNotification(NotificationMessage notificationMessage) throws ModuleException {
-        return internalToNotficationConverter.createCertificateStatusUpdateForCareType(notificationMessage);
+    private InternalModelResponse toInteralModelResponse(
+            se.inera.certificate.modules.fk7263.model.internal.Utlatande internalModel) throws ModuleException {
+        try {
+            StringWriter writer = new StringWriter();
+            objectMapper.writeValue(writer, internalModel);
+            return new InternalModelResponse(writer.toString());
+
+        } catch (IOException e) {
+            throw new ModuleSystemException("Failed to serialize internal model", e);
+        }
     }
 
 }
