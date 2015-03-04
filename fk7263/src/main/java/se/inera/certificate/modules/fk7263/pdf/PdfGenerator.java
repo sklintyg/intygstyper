@@ -401,8 +401,8 @@ public class PdfGenerator {
                 break;
             default:
             }
-            fillText(WORK_CAPACITY_TEXT, stripNewlines(intyg.getArbetsformagaPrognos()));
         }
+        fillText(WORK_CAPACITY_TEXT, stripNewlines(intyg.getArbetsformagaPrognos()));
     }
 
     private void fillNedsattning(InternalLocalDateInterval interval, String checkboxFieldName, String fromDateFieldName,
