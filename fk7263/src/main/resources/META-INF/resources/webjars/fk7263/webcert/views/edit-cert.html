@@ -821,24 +821,28 @@
                     <span message key="draft.onlydoctorscansign"></span>
                   </div>
 
-                  <h4>Notifiera läkare</h4>
-                  <div class="form-group">
-                    <button id="vidarebefordraEjHanterad" class="btn"
-                            ng-class="{'btn-info': !certMeta.vidarebefordrad, 'btn-default btn-secondary' : certMeta.vidarebefordrad}"
-                            title="Skicka mejl med en länk till utkastet för att informera den läkare som ska signera det."
-                            ng-click="openMailDialog()">
-                      <img ng-if="!certMeta.vidarebefordrad" src="/img/mail.png"> <img ng-if="certMeta.vidarebefordrad"
-                                                                                       src="/img/mail_dark.png">
-                    </button>
-                  </div>
+                  <div wc-feature-not-active feature="franJournalsystem">
+                    <p>
+                      <span message key="draft.notifydoctor"></span>
+                    </p>
+                    <div class="form-group">
+                      <button id="vidarebefordraEjHanterad" class="btn"
+                              ng-class="{'btn-info': !certMeta.vidarebefordrad, 'btn-default btn-secondary' : certMeta.vidarebefordrad}"
+                              title="Skicka mejl med en länk till utkastet för att informera den läkare som ska signera det."
+                              ng-click="openMailDialog()">
+                        <img ng-if="!certMeta.vidarebefordrad" src="/img/mail.png"> <img ng-if="certMeta.vidarebefordrad"
+                                                                                         src="/img/mail_dark.png">
+                      </button>
+                    </div>
 
-                  <div class="body-row">
-                    <label for="mark-as-vidarebefordrad">
-                      <input id="mark-as-vidarebefordrad" type="checkbox"
-                             ng-disabled="widgetState.vidarebefordraInProgress" ng-model="certMeta.vidarebefordrad"
-                             ng-change="onVidarebefordradChange()" /> Vidarebefordrad
-                    </label> <span ng-if="widgetState.vidarebefordraInProgress"> <img
-                      src="/img/ajax-loader-kit-16x16.gif"></span>
+                    <div class="body-row">
+                      <label for="mark-as-vidarebefordrad">
+                        <input id="mark-as-vidarebefordrad" type="checkbox"
+                               ng-disabled="widgetState.vidarebefordraInProgress" ng-model="certMeta.vidarebefordrad"
+                               ng-change="onVidarebefordradChange()" /> Vidarebefordrad
+                      </label> <span ng-if="widgetState.vidarebefordraInProgress"> <img
+                        src="/img/ajax-loader-kit-16x16.gif"></span>
+                    </div>
                   </div>
                 </div>
 
