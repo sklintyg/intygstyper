@@ -1,0 +1,41 @@
+{"id": "f765394f-5a97-4907-b1c8-d5623ad14252", "typ": "fk7263", "grundData": {
+    "signeringsdatum": "2015-03-04T11:19:30.000",
+    "skapadAv": {
+        "personId": "IFV1239877878-1049",
+        "fullstandigtNamn": "Jan Nilsson",
+        "forskrivarKod": "2481632",
+        "vardenhet": {
+            "enhetsid": "IFV1239877878-1042",
+            "enhetsnamn": "WebCert-Enhet1",
+            "postadress": "Mottagningsgatan 1",
+            "postnummer": "10001",
+            "postort": "Storhamn",
+            "telefonnummer": "0912",
+            "epost": "enhet1@webcert.invalid.se",
+            "vardgivare": {
+                "vardgivarid": "IFV1239877878-1041",
+                "vardgivarnamn": "WebCert-VÃ¥rdgivare1"
+            },
+            "arbetsplatsKod": "1234567890123"
+        }
+    },
+    "patient": {
+        "personId": "19260123-9243",
+        "fullstandigtNamn": "NrRLTbvy bGUghn qDx aZScZMDO",
+        "efternamn": "NrRLTbvy bGUghn qDx aZScZMDO",
+        "samordningsNummer": false
+    }
+},
+    "giltighet": {
+        "from": "2015-03-04",
+        "tom": "2015-03-11"
+    },
+    "avstangningSmittskydd": true,
+    "rekommendationKontaktArbetsformedlingen": false, "rekommendationKontaktForetagshalsovarden": false, "rekommendationOvrigtCheck": false,
+    "nuvarandeArbete": false, "arbetsloshet": false, "foraldrarledighet": false, "nedsattMed25": {
+    "from": "2015-03-04",
+    "tom": "2015-03-11"
+},
+    "arbetsformagaPrognos": "Nu ska vi se om fÃ¤lt 9 Ã¤r med", "ressattTillArbeteAktuellt": false,
+    "ressattTillArbeteEjAktuellt": true, "kontaktMedFk": false, "kommentar": "FÃ¤lt 13",
+    "forskrivarkodOchArbetsplatskod": "2481632 - 1234567890123", "namnfortydligandeOchAdress": "Jan Nilsson\nWebCert-Enhet1\nMottagningsgatan 1\n10001 Storhamn\n0912"}

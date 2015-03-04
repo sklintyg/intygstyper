@@ -38,6 +38,7 @@ public class PdfGeneratorTest {
 
     private static File fk7263Pdf;
     private static File fk7263Json;
+    private static File fk7263falt9bortaJson;
     private static File expectedPdfContent;
 
     @Autowired
@@ -47,6 +48,7 @@ public class PdfGeneratorTest {
     public static void readFiles() throws IOException {
         fk7263Pdf = new ClassPathResource("PdfGeneratorTest/utlatande.pdf").getFile();
         fk7263Json = new ClassPathResource("PdfGeneratorTest/utlatande.json").getFile();
+        fk7263falt9bortaJson = new ClassPathResource("PdfGeneratorTest/falt9borta.json").getFile();
         expectedPdfContent = new ClassPathResource("PdfGeneratorTest/expectedPdfContent.json").getFile();
     }
 
@@ -87,6 +89,14 @@ public class PdfGeneratorTest {
     @Test
     public void testPdfGenerationFromWebcert() throws Exception {
         Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
+        // generate PDF
+        byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT).getBytes();
+        writePdfToFile(generatorResult, "Webcert");
+    }
+
+    @Test
+    public void testPdfGenerationFromWebcertWidthFalt9Borta() throws Exception {
+        Utlatande intyg = new CustomObjectMapper().readValue(fk7263falt9bortaJson, Utlatande.class);
         // generate PDF
         byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT).getBytes();
         writePdfToFile(generatorResult, "Webcert");
