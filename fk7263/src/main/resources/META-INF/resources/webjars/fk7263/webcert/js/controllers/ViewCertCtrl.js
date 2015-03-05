@@ -53,15 +53,15 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                         $scope.pdfUrl = '/moduleapi/intyg/'+ intygType +'/' + $scope.cert.id + '/pdf';
 
                     } else {
-                        $scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';
+                        $scope.widgetState.activeErrorMessageKey = 'fk7263.error.could_not_load_cert';
                     }
                     $scope.intygBackup.showBackupInfo = false;
                 }, function(error) {
                     $scope.widgetState.doneLoading = true;
                     if (error.errorCode === 'DATA_NOT_FOUND') {
-                        $scope.widgetState.activeErrorMessageKey = 'error.data_not_found';
+                        $scope.widgetState.activeErrorMessageKey = 'fk7263.error.data_not_found';
                     } else {
-                        $scope.widgetState.activeErrorMessageKey = 'error.could_not_load_cert';
+                        $scope.widgetState.activeErrorMessageKey = 'fk7263.error.could_not_load_cert';
                     }
                     $log.debug('Got error while loading cert');
                     $log.debug(error.message);
