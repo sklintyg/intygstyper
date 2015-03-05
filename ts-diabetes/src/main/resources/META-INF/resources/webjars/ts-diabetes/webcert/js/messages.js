@@ -1,6 +1,7 @@
 /* jshint maxlen: false, unused: false */
 var tsDiabetesMessages = {
     'sv': {
+        'ts-diabetes.button.send': 'Skicka till Transportstyrelsen',
         'ts-diabetes.label.empty': '',
         'ts-diabetes.label.certtitle': 'Transportstyrelsens läkarintyg, diabetes',
         'ts-diabetes.label.send': 'Skicka intyg till Transportstyrelsen',
@@ -29,6 +30,9 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.korkort.taxi': 'Taxi',
         'ts-diabetes.label.korkort.annat': 'Annat',
         'ts-diabetes.label.makulera.confirmation': 'Transportstyrelsens läkarintyg, diabetes, utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
+
+        'ts-diabetes.label.status.sent': 'Intyget är signerat och mottaget av Transportstyrelsens system.',
+        'ts-diabetes.label.status.signed': 'Intyget är signerat och är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se. Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.',
 
         // Identitet styrkt genom
         'ts-diabetes.label.identitet.id_kort': 'ID-kort',

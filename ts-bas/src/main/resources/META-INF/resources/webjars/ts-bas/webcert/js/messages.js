@@ -1,6 +1,7 @@
 /* jshint maxlen: false, unused: false */
 var tsBasMessages = {
     'sv': {
+        'ts-bas.button.send': 'Skicka till Transportstyrelsen',
         'ts-bas.label.certtitle': 'Transportstyrelsens läkarintyg',
         'ts-bas.label.patientadress': 'Patientens adressuppgifter',
         'ts-bas.label.intygavser': 'Intyget avser',
@@ -25,6 +26,9 @@ var tsBasMessages = {
         'ts-bas.label.unit': 'Vårdenhet',
         'ts-bas.label.send': 'Skicka intyg till Transportstyrelsen',
         'ts-bas.label.makulera.confirmation': 'Transportstyrelsens läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
+
+        'ts-bas.label.status.sent': 'Intyget är signerat och mottaget av Transportstyrelsens system.',
+        'ts-bas.label.status.signed': 'Intyget är signerat och är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se. Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.',
 
         // Identitet styrkt genom
         'ts-bas.label.identitet.id_kort': 'ID-kort',
