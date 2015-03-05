@@ -1,9 +1,8 @@
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore', 'common.CertificateService',
         'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate', 'common.User',
-        'common.IntygCopyRequestModel',
         function($log, $rootScope, $stateParams, $scope, $cookieStore, CertificateService, ManageCertView,
-            messageService, ManageCertificate, User, IntygCopyRequestModel) {
+            messageService, ManageCertificate, User) {
             'use strict';
 
             var intygType = 'fk7263';
@@ -82,56 +81,5 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             });
             $scope.$on('$destroy', unbindFastEventFail);
 
-            /**
-             * Exposed functions
-             * @param cert
-             */
-            ManageCertificate.initSend($scope);
-            $scope.send = function(cert) {
-                cert.intygType = intygType;
-                ManageCertificate.send($scope, cert, 'FK', 'fk7263.label.send', function() {
-                    loadCertificate();
-                });
-            };
-
-            ManageCertificate.initMakulera($scope);
-            $scope.makulera = function(cert) {
-                var confirmationMessage = messageService.getProperty('fk7263.label.makulera.confirmation', {
-                    namn: cert.grundData.patient.fullstandigtNamn,
-                    personnummer: cert.grundData.patient.personId
-                });
-                cert.intygType = intygType;
-                ManageCertificate.makulera($scope, cert, confirmationMessage, function() {
-                    loadCertificate();
-                });
-            };
-
-            ManageCertificate.initCopyDialog($scope);
-            $scope.copy = function(cert) {
-
-                if (cert === undefined || cert.grundData === undefined) {
-                    $log.debug('cert or cert.grundData is undefined. Aborting copy.');
-                    return;
-                }
-
-                var isOtherCareUnit = User.getValdVardenhet() !== cert.grundData.skapadAv.vardenhet.enhetsid;
-
-                ManageCertificate.copy($scope,
-                    IntygCopyRequestModel.build({
-                        intygId: cert.id,
-                        intygType: intygType,
-                        patientPersonnummer: cert.grundData.patient.personId,
-                        nyttPatientPersonnummer: $stateParams.patientId
-                    }),
-                    isOtherCareUnit);
-            };
-
-            $scope.print = function(cert) {
-
-                if ($scope.certProperties.isRevoked) {
-                    ManageCertView.printDraft(cert.id, intygType);
-                } else {
-                    document.pdfForm.submit();
-                }
-            };
+            $scope.$on('loadCertificate', loadCertificate);
         }]);

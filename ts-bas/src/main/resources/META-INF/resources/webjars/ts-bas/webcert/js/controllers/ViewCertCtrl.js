@@ -98,41 +98,5 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             }
             loadCertificate();
 
-            /*********************************************************************
-             * Exposed scope interaction functions
-             *********************************************************************/
-
-            ManageCertificate.initSend($scope);
-            $scope.send = function(cert) {
-                cert.intygType = 'ts-bas';
-                ManageCertificate.send($scope, cert, 'TS', 'ts-bas.label.send', function() {
-                        loadCertificate();
-                    });
-            };
-
-            ManageCertificate.initMakulera($scope);
-            $scope.makulera = function(cert) {
-                var confirmationMessage = messageService.getProperty('ts-bas.label.makulera.confirmation', {
-                    namn: cert.grundData.patient.fullstandigtNamn, personnummer: cert.grundData.patient.personId });
-
-                cert.intygType = 'ts-bas';
-                ManageCertificate.makulera($scope, cert, confirmationMessage, function() {
-                    loadCertificate();
-                });
-            };
-
-            ManageCertificate.initCopyDialog($scope);
-            $scope.copy = function(cert) {
-                cert.intygType = 'ts-bas';
-                ManageCertificate.copy($scope, cert);
-            };
-
-            $scope.print = function(cert) {
-
-                if ($scope.certProperties.isRevoked) {
-                    ManageCertView.printDraft(cert.id, 'ts-bas');
-                } else {
-                    document.pdfForm.submit();
-                }
-            };
+            $scope.$on('loadCertificate', loadCertificate);
         }]);
