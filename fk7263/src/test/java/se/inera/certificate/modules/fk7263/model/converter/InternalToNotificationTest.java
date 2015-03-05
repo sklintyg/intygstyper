@@ -72,7 +72,7 @@ public class InternalToNotificationTest {
                     return Boolean.FALSE;
                 }
                 
-                if (diagnoskod.equals("S47")) {
+                if (diagnoskod.equals("S47") || diagnoskod.equals("M51-")) {
                     return Boolean.TRUE;
                 }
                 
@@ -118,8 +118,30 @@ public class InternalToNotificationTest {
         assertNotNull(res.getUtlatande().getSkapadAv().getEnhet().getEnhetsnamn());
         
         assertEquals("S47", res.getUtlatande().getDiagnos().getCode());
+        assertEquals(Diagnoskodverk.ICD_10_SE.getCodeSystem(), res.getUtlatande().getDiagnos().getCodeSystem());
+        assertEquals(Diagnoskodverk.ICD_10_SE.getCodeSystemName(), res.getUtlatande().getDiagnos().getCodeSystemName());
         assertNotNull(res.getUtlatande().getDiagnos().getDisplayName());
         assertTrue(res.getUtlatande().getDiagnos().getDisplayName().contains("Klämskada"));
+        
+        assertEquals(2, res.getUtlatande().getArbetsformaga().size());
+        
+        assertNotNull(res.getUtlatande().getFragorOchSvar());
+    }
+    
+    @Test
+    public void testWithFullyPopulatedUtlatandeButDifferentDiagnosisCode() throws Exception {
+        String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-1b.json");
+        
+        NotificationMessage msg = new NotificationMessage("intyg-1b", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS, json, FragorOchSvar.getEmpty());
+        CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
+        
+        assertNotNull(res.getUtlatande());
+        
+        assertEquals("M51-", res.getUtlatande().getDiagnos().getCode());
+        assertEquals(Diagnoskodverk.KSH_97_P.getCodeSystem(), res.getUtlatande().getDiagnos().getCodeSystem());
+        assertEquals(Diagnoskodverk.KSH_97_P.getCodeSystemName(), res.getUtlatande().getDiagnos().getCodeSystemName());
+        assertNotNull(res.getUtlatande().getDiagnos().getDisplayName());
+        assertTrue(res.getUtlatande().getDiagnos().getDisplayName().contains("Diskbråck"));
         
         assertEquals(2, res.getUtlatande().getArbetsformaga().size());
         
@@ -148,10 +170,29 @@ public class InternalToNotificationTest {
     }
     
     @Test
-    public void testWithInvalidDiagnosisCode() throws Exception {
+    public void testWithMissingDiagnosis() throws Exception {
         String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-3.json");
         
         NotificationMessage msg = new NotificationMessage("intyg-3", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS, json, FragorOchSvar.getEmpty());
+        CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
+        
+        assertNotNull(res.getUtlatande());
+        
+        assertEquals(HandelsekodKodRestriktion.HAN_11.value(), res.getUtlatande().getHandelse().getHandelsekod().getCode());
+        assertEquals(HandelseType.INTYGSUTKAST_ANDRAT.toString(), res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
+        
+        // is not signed
+        assertNull(res.getUtlatande().getSigneringsdatum());
+        
+        // no diagnosis in this one since it is missing in the input data
+        assertNull(res.getUtlatande().getDiagnos());
+    }
+    
+    @Test
+    public void testWithInvalidDiagnosisCode() throws Exception {
+        String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-3b.json");
+        
+        NotificationMessage msg = new NotificationMessage("intyg-3b", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS, json, FragorOchSvar.getEmpty());
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
         
         assertNotNull(res.getUtlatande());

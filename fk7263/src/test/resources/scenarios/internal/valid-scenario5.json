@@ -36,6 +36,7 @@
     "undersokningAvPatienten":"2013-03-17",
 
     "diagnosKod" : "S47",
+    "diagnosKodsystem1" : "ICD_10_SE",
     "diagnosBeskrivning":"Klämskada på överarm",
 
     "nuvarandeArbete":true,

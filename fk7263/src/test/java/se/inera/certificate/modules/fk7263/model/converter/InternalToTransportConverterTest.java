@@ -38,8 +38,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class InternalToTransportConverterTest {
 
-    
-
     @Test
     public void testConvertUtlatande() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
@@ -57,8 +55,8 @@ public class InternalToTransportConverterTest {
     public void testConversionMaximal() throws JAXBException, IOException, SAXException, ConverterException {
 
         ObjectMapper objectMapper = new CustomObjectMapper();
-        Utlatande internalFormat = objectMapper.readValue(new ClassPathResource("InternalToTransportConverterTest/maximalt-fk7263-internal.json").getInputStream(), Utlatande.class);
-
+        Utlatande internalFormat = objectMapper.readValue(
+                new ClassPathResource("InternalToTransportConverterTest/maximalt-fk7263-internal.json").getInputStream(), Utlatande.class);
 
         RegisterMedicalCertificateType registerMedicalCertificate = InternalToTransport.getJaxbObject(internalFormat);
 
@@ -68,7 +66,34 @@ public class InternalToTransportConverterTest {
         marshaller.marshal(wrapJaxb(registerMedicalCertificate), stringWriter);
 
         // read expected XML and compare with resulting RegisterMedicalCertificateType
-        String expectation = FileUtils.readFileToString(new ClassPathResource("InternalToTransportConverterTest/maximalt-fk7263-transport.xml").getFile());
+        String expectation = FileUtils.readFileToString(new ClassPathResource("InternalToTransportConverterTest/maximalt-fk7263-transport.xml")
+                .getFile());
+
+        XMLUnit.setIgnoreWhitespace(true);
+        XMLUnit.setIgnoreAttributeOrder(true);
+        Diff diff = XMLUnit.compareXML(expectation, stringWriter.toString());
+        diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
+        diff.overrideElementQualifier(new ElementNameAndTextQualifier());
+        Assert.assertTrue(diff.toString(), diff.similar());
+    }
+    
+    @Test
+    public void testConversionWithDiagnosisAsKSH97() throws JAXBException, IOException, SAXException, ConverterException {
+
+        ObjectMapper objectMapper = new CustomObjectMapper();
+        Utlatande internalFormat = objectMapper.readValue(
+                new ClassPathResource("InternalToTransportConverterTest/maximalt-fk7263-with-ksh97.json").getInputStream(), Utlatande.class);
+
+        RegisterMedicalCertificateType registerMedicalCertificate = InternalToTransport.getJaxbObject(internalFormat);
+
+        JAXBContext jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class, LakarutlatandeType.class);
+        StringWriter stringWriter = new StringWriter();
+        Marshaller marshaller = jaxbContext.createMarshaller();
+        marshaller.marshal(wrapJaxb(registerMedicalCertificate), stringWriter);
+
+        // read expected XML and compare with resulting RegisterMedicalCertificateType
+        String expectation = FileUtils.readFileToString(new ClassPathResource("InternalToTransportConverterTest/maximalt-fk7263-with-ksh97.xml")
+                .getFile());
 
         XMLUnit.setIgnoreWhitespace(true);
         XMLUnit.setIgnoreAttributeOrder(true);
@@ -80,21 +105,22 @@ public class InternalToTransportConverterTest {
 
     @Test
     public void testConversionMinimal() throws JAXBException, IOException, SAXException, ConverterException {
-        
+
         ObjectMapper objectMapper = new CustomObjectMapper();
-        Utlatande externalFormat = objectMapper.readValue(new ClassPathResource("InternalToTransportConverterTest/minimalt-fk7263-internal.json").getInputStream(), Utlatande.class);
-        
-        
+        Utlatande externalFormat = objectMapper.readValue(
+                new ClassPathResource("InternalToTransportConverterTest/minimalt-fk7263-internal.json").getInputStream(), Utlatande.class);
+
         RegisterMedicalCertificateType registerMedicalCertificateType = InternalToTransport.getJaxbObject(externalFormat);
-        
+
         JAXBContext jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class, LakarutlatandeType.class);
         StringWriter stringWriter = new StringWriter();
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.marshal(wrapJaxb(registerMedicalCertificateType), stringWriter);
-        
+
         // read expected XML and compare with resulting RegisterMedicalCertificateType
-        String expectation = FileUtils.readFileToString(new ClassPathResource("InternalToTransportConverterTest/minimalt-fk7263-transport.xml").getFile());
-        
+        String expectation = FileUtils.readFileToString(new ClassPathResource("InternalToTransportConverterTest/minimalt-fk7263-transport.xml")
+                .getFile());
+
         XMLUnit.setIgnoreWhitespace(true);
         Diff diff = new Diff(expectation, stringWriter.toString());
         diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
@@ -105,7 +131,8 @@ public class InternalToTransportConverterTest {
     public void testConversionKommentar() throws JAXBException, IOException, SAXException, ConverterException {
 
         ObjectMapper objectMapper = new CustomObjectMapper();
-        Utlatande externalFormat = objectMapper.readValue(new ClassPathResource("InternalToTransportConverterTest/friviligttext-fk7263-internal.json").getInputStream(), Utlatande.class);
+        Utlatande externalFormat = objectMapper.readValue(
+                new ClassPathResource("InternalToTransportConverterTest/friviligttext-fk7263-internal.json").getInputStream(), Utlatande.class);
         RegisterMedicalCertificateType registerMedicalCertificateType = InternalToTransport.getJaxbObject(externalFormat);
         String expected = "8b: " + "nedsattMed25Beskrivning. " + "nedsattMed50Beskrivning. " + "nedsattMed75Beskrivning. kommentar";
         String result = registerMedicalCertificateType.getLakarutlatande().getKommentar();
@@ -116,8 +143,8 @@ public class InternalToTransportConverterTest {
     public void testConversionMinimalSmiL() throws JAXBException, IOException, SAXException, ConverterException {
 
         ObjectMapper objectMapper = new CustomObjectMapper();
-        Utlatande externalFormat = objectMapper.readValue(new ClassPathResource("InternalToTransportConverterTest/minimalt-SmiL-fk7263-internal.json").getInputStream(), Utlatande.class);
-
+        Utlatande externalFormat = objectMapper.readValue(
+                new ClassPathResource("InternalToTransportConverterTest/minimalt-SmiL-fk7263-internal.json").getInputStream(), Utlatande.class);
 
         RegisterMedicalCertificateType registerMedicalCertificateType = InternalToTransport.getJaxbObject(externalFormat);
 
@@ -127,7 +154,8 @@ public class InternalToTransportConverterTest {
         marshaller.marshal(wrapJaxb(registerMedicalCertificateType), stringWriter);
 
         // read expected XML and compare with resulting RegisterMedicalCertificateType
-        String expectation = FileUtils.readFileToString(new ClassPathResource("InternalToTransportConverterTest/minimalt-SmiL-fk7263-transport.xml").getFile());
+        String expectation = FileUtils.readFileToString(new ClassPathResource("InternalToTransportConverterTest/minimalt-SmiL-fk7263-transport.xml")
+                .getFile());
 
         XMLUnit.setIgnoreWhitespace(true);
         Diff diff = new Diff(expectation, stringWriter.toString());
@@ -136,16 +164,17 @@ public class InternalToTransportConverterTest {
     }
 
     private JAXBElement<?> wrapJaxb(RegisterMedicalCertificateType ws) {
-            JAXBElement<?> jaxbElement = new JAXBElement<RegisterMedicalCertificateType>(
-                    new QName("urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3", "RegisterMedicalCertificate"),
-                    RegisterMedicalCertificateType.class, ws);
-            return jaxbElement;
-        }
+        JAXBElement<?> jaxbElement = new JAXBElement<RegisterMedicalCertificateType>(
+                new QName("urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3", "RegisterMedicalCertificate"),
+                RegisterMedicalCertificateType.class, ws);
+        return jaxbElement;
+    }
 
     private class NamespacePrefixNameIgnoringListener implements DifferenceListener {
         public int differenceFound(Difference difference) {
             if (DifferenceConstants.NAMESPACE_PREFIX_ID == difference.getId()) {
-                // differences in namespace prefix IDs are ok (eg. 'ns1' vs 'ns2'), as long as the namespace URI is the same
+                // differences in namespace prefix IDs are ok (eg. 'ns1' vs 'ns2'), as long as the namespace URI is the
+                // same
                 return RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
             } else {
                 return RETURN_ACCEPT_DIFFERENCE;

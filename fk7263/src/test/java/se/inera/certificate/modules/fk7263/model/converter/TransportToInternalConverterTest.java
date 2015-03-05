@@ -125,6 +125,26 @@ public class TransportToInternalConverterTest {
 
         JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
     }
+    
+    @Test
+    public void testConversionWithKSH97PAsCodeSystem() throws JAXBException,
+            IOException, JSONException, ConverterException {
+
+        // read utlatandeType from file
+        JAXBElement<LakarutlatandeType> utlatandeElement = readUtlatandeTypeFromFile(RESOURCE_ROOT
+                + "legacy-fk7263-with-ksh97.xml");
+
+        Utlatande internalModel = TransportToInternal
+                .convert(utlatandeElement.getValue());
+
+        // serialize utlatande to JSON and compare with expected JSON
+        JsonNode tree = objectMapper.valueToTree(internalModel);
+        JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+                RESOURCE_ROOT + "legacy-fk7263-with-ksh97.json")
+                .getInputStream());
+
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
+    }
 //
 //    // Below are tests for different ways of filling out an FK7263-form,
 //    // see readme in
