@@ -18,11 +18,15 @@
  */
 package se.inera.certificate.modules.ts_bas.model.converter;
 
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.model.converter.util.WebcertModelFactoryUtil;
+import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 
@@ -81,6 +85,22 @@ public class WebcertModelFactory {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");
         }
 
-        utlatande.getIntygMetadata().setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(skapadAv));
+        utlatande.getGrundData().setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(skapadAv));
+    }
+
+    public Utlatande createCopy(CreateDraftCopyHolder draftCertificateHolder, Utlatande internal) throws ConverterException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public void updateSkapadAv(Utlatande utlatande, HoSPersonal hosPerson, LocalDateTime signeringsdatum) {
+        utlatande.getGrundData().getSkapadAv().setPersonId(hosPerson.getHsaId());
+        utlatande.getGrundData().getSkapadAv().setFullstandigtNamn(hosPerson.getNamn());
+        utlatande.getGrundData().getSkapadAv().setForskrivarKod(hosPerson.getForskrivarkod());
+        utlatande.getGrundData().setSigneringsdatum(signeringsdatum);
+        utlatande.getGrundData().getSkapadAv().getBefattningar().clear();
+        if (hosPerson.getBefattning() != null) {
+            utlatande.getGrundData().getSkapadAv().getBefattningar().add(hosPerson.getBefattning());
+        }
     }
 }

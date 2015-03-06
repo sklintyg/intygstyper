@@ -34,11 +34,6 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
     }
 
     @Override
-    public String getDefaultRecieverLogicalAddress() {
-        return TRANSPORTSTYRELSEN_LOGICAL_ADRESS;
-    }
-
-    @Override
     public ModuleApi getModuleApi() {
         return moduleService;
     }
@@ -82,5 +77,10 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
         default:
             return null;
         }
+    }
+
+    @Override
+    public String getDefaultRecipient() {
+        return TRANSPORTSTYRELSEN_LOGICAL_ADRESS;
     }
 }

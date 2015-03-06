@@ -18,15 +18,11 @@
  */
 package se.inera.certificate.modules.ts_bas.model.internal;
 
-import se.inera.certificate.model.common.internal.IntygMetadata;
-
-public class Utlatande {
+public class Utlatande extends se.inera.certificate.model.common.internal.Utlatande {
 
     private String id;
 
     private String typ;
-
-    private IntygMetadata intygMetadata = new IntygMetadata();
 
     private String kommentar;
 
@@ -92,14 +88,6 @@ public class Utlatande {
     public String getId() { return id; }
 
     public void setId(String id) { this.id = id; }
-
-    public IntygMetadata getIntygMetadata() {
-        return intygMetadata;
-    }
-
-    public void setIntygMetadata(IntygMetadata intygMetadata) {
-        this.intygMetadata = intygMetadata;
-    }
 
     public HorselBalans getHorselBalans() {
         if (horselBalans == null) {
