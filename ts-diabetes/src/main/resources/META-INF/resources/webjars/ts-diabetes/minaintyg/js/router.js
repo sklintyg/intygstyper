@@ -4,24 +4,24 @@
 angular.module('ts-diabetes.router', ['ui.router']).config(function($stateProvider) {
     'use strict';
     $stateProvider.
-        state('ts-diabetes.view', {
+        state('ts-diabetes-view', {
             url :'/ts-diabetes/view/:certificateId',
             templateUrl: '/web/webjars/ts-diabetes/minaintyg/views/view-cert.html',
             controller: 'ts-diabetes.ViewCertCtrl',
             data:{title: 'Läkarintyg Transportstyrelsen diabetes'}
         }).
-        state('ts-diabetes.recipients', {
+        state('ts-diabetes-recipients', {
             url :'/ts-diabetes/recipients',
             templateUrl: '/web/webjars/ts-diabetes/minaintyg/views/recipients.html',
             controller: 'common.SendCertWizardCtrl'
         }).
-        state('ts-diabetes.summary', {
+        state('ts-diabetes-summary', {
             url : '/ts-diabetes/summary',
             templateUrl: '/web/webjars/ts-diabetes/minaintyg/views/send-summary.html',
             controller: 'common.SendCertWizardCtrl',
             data:{title: 'Kontrollera och skicka intyget'}
         }).
-        state('ts-diabetes.sent', {
+        state('ts-diabetes-sent', {
             url : '/ts-diabetes/sent',
             templateUrl: '/web/webjars/ts-diabetes/minaintyg/views/sent-cert.html',
             controller: 'common.SendCertWizardCtrl',
