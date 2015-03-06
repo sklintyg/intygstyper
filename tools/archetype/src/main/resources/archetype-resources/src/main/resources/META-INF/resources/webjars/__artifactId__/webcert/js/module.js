@@ -1,9 +1,9 @@
 #set( $symbol_pound = '#' )
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
-angular.module('${artifactId}', [ 'ui.bootstrap', 'ngCookies', 'ngRoute', 'ngSanitize', 'common' ]);
+angular.module('${artifactId}', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common' ]);
 
-angular.module('${artifactId}').config(['$routeProvider', function($routeProvider) {
+angular.module('${artifactId}').config(['$stateProvider', function($stateProvider) {
     'use strict';
 
     // TODO: Configure $routeProvider

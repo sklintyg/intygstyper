@@ -1,8 +1,8 @@
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
-    ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$routeParams',
+    ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams',
         'common.CertificateService', 'common.ManageCertView', 'common.User', 'common.wcFocus',
         'common.intygNotifyService', 'fk7263.diagnosService', 'common.DateUtilsService', 'common.UtilsService','fk7263.EditCertCtrl.DateRangeGroupsService',
-        function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $routeParams,
+        function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams,
             CertificateService, ManageCertView, User, wcFocus, intygNotifyService, diagnosService, dateUtils, utils, DateRangeGroupsService ) {
             'use strict';
 
@@ -29,7 +29,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 collapsedHeader: false,
                 hasInfoMissing: false,
                 vidarebefordraInProgress: false,
-                hospName: $routeParams.hospName,
+                hospName: $stateParams.hospName,
                 deleted: false
             };
 

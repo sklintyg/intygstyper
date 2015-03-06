@@ -1,7 +1,7 @@
 angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
-    [ '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', 'common.CertificateService',
+    [ '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore', 'common.CertificateService',
         'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate','common.User',
-        function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView,
+        function($log, $rootScope, $stateParams, $scope, $cookieStore, CertificateService, ManageCertView,
             messageService, ManageCertificate, User) {
             'use strict';
 
@@ -24,7 +24,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             };
 
             // expose calculated static link for pdf download
-            $scope.downloadAsPdfLink = '/moduleapi/intyg/ts-bas/' + $routeParams.certificateId + '/pdf';
+            $scope.downloadAsPdfLink = '/moduleapi/intyg/ts-bas/' + $stateParams.certificateId + '/pdf';
 
             // Decide if helptext related to field 1.a) - 1.c)
             $scope.achelptext = false;
@@ -60,7 +60,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             }
 
             function loadCertificate() {
-                CertificateService.getCertificate($routeParams.certificateId, 'ts-bas', function(result) {
+                CertificateService.getCertificate($stateParams.certificateId, 'ts-bas', function(result) {
                     $scope.widgetState.doneLoading = true;
                     if (result !== null) {
                         $scope.cert = result.contents;

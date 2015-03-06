@@ -1,15 +1,15 @@
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
-    [ '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', 'common.CertificateService',
+    [ '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore', 'common.CertificateService',
         'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate', 'common.User',
         'common.IntygCopyRequestModel',
-        function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView,
+        function($log, $rootScope, $stateParams, $scope, $cookieStore, CertificateService, ManageCertView,
             messageService, ManageCertificate, User, IntygCopyRequestModel) {
             'use strict';
 
             var intygType = 'fk7263';
 
             // Check if the user used the special qa-link to get here.
-            if ($routeParams.qaOnly) {
+            if ($stateParams.qaOnly) {
                 $scope.isQaOnly = true;
             }
 
@@ -35,8 +35,8 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
              * Private
              */
             function loadCertificate() {
-                $log.debug('Loading certificate ' + $routeParams.certificateId);
-                CertificateService.getCertificate($routeParams.certificateId, intygType, function(result) {
+                $log.debug('Loading certificate ' + $stateParams.certificateId);
+                CertificateService.getCertificate($stateParams.certificateId, intygType, function(result) {
                     $scope.widgetState.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
@@ -121,7 +121,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                         intygId: cert.id,
                         intygType: intygType,
                         patientPersonnummer: cert.grundData.patient.personId,
-                        nyttPatientPersonnummer: $routeParams.patientId
+                        nyttPatientPersonnummer: $stateParams.patientId
                     }),
                     isOtherCareUnit);
             };

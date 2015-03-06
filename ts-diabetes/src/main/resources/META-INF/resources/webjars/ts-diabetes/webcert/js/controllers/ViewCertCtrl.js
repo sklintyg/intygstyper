@@ -1,7 +1,7 @@
 angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
-    [ '$location', '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', 'common.CertificateService',
+    [ '$location', '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore', 'common.CertificateService',
         'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate','common.User',
-        function($location, $log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView,
+        function($location, $log, $rootScope, $stateParams, $scope, $cookieStore, CertificateService, ManageCertView,
             messageService, ManageCertificate, User) {
             'use strict';
 
@@ -54,7 +54,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
             }
 
             function loadCertificate() {
-                CertificateService.getCertificate($routeParams.certificateId, 'ts-diabetes', function(result) {
+                CertificateService.getCertificate($stateParams.certificateId, 'ts-diabetes', function(result) {
                     $scope.widgetState.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;

@@ -1,8 +1,8 @@
 angular.module('fk7263').controller('fk7263.QACtrl',
-    [ '$log', '$rootScope', '$routeParams', '$scope', '$timeout', '$window', '$filter', 'common.dialogService',
+    [ '$log', '$rootScope', '$stateParams', '$scope', '$timeout', '$window', '$filter', 'common.dialogService',
         'fk7263.fragaSvarService', 'common.fragaSvarCommonService', 'common.ManageCertView', 'common.statService',
         'common.User',
-        function($log, $rootScope, $routeParams, $scope, $timeout, $window, $filter, dialogService, fragaSvarService,
+        function($log, $rootScope, $stateParams, $scope, $timeout, $window, $filter, dialogService, fragaSvarService,
             fragaSvarCommonService, ManageCertView, statService, User) {
             'use strict';
 
@@ -43,7 +43,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
             };
 
             // Request loading of QA's for this certificate
-            fragaSvarService.getQAForCertificate($routeParams.certificateId, 'fk7263', function(result) {
+            fragaSvarService.getQAForCertificate($stateParams.certificateId, 'fk7263', function(result) {
                 $log.debug('getQAForCertificate:success data:' + result);
                 $scope.widgetState.doneLoading = true;
                 $scope.widgetState.activeErrorMessageKey = null;
@@ -99,7 +99,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 $log.debug('sendQuestion:' + newQuestion);
                 newQuestion.updateInProgress = true; // trigger local spinner
 
-                fragaSvarService.saveNewQuestion($routeParams.certificateId, 'fk7263', newQuestion,
+                fragaSvarService.saveNewQuestion($stateParams.certificateId, 'fk7263', newQuestion,
                     function(result) {
                         $log.debug('Got saveNewQuestion result:' + result);
                         newQuestion.updateInProgress = false;
