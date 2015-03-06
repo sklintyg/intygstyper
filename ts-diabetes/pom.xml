@@ -35,6 +35,11 @@
       <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
       <artifactId>clinicalprocess-healthcond-certificate-core</artifactId>
     </dependency>
+    
+    <dependency>
+    	<groupId>se.inera.intyg.schemas.intygstjanster.ts.services</groupId>
+    	<artifactId>se-intygstjanster-ts-services-core</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>ch.qos.logback</groupId>

@@ -32,6 +32,7 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,14 +40,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.xml.sax.SAXException;
 
-import se.inera.certificate.model.Kod;
+import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
-import se.inera.certificate.model.util.Strings;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
+import se.inera.certificate.modules.support.api.ModuleContainerApi;
+import se.inera.certificate.modules.support.api.dto.CertificateResponse;
+import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
-import se.inera.certificate.modules.support.api.dto.ExternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
@@ -60,14 +61,14 @@ import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
 import se.inera.certificate.modules.support.api.exception.ModuleVersionUnsupportedException;
-import se.inera.certificate.model.common.codes.CodeConverter;
+import se.inera.certificate.modules.support.api.notification.NotificationMessage;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IntygAvserKod;
 import se.inera.certificate.modules.ts_diabetes.model.converter.ExternalToInternalConverter;
 import se.inera.certificate.modules.ts_diabetes.model.converter.ExternalToTransportConverter;
 import se.inera.certificate.modules.ts_diabetes.model.converter.InternalToExternalConverter;
 import se.inera.certificate.modules.ts_diabetes.model.converter.TransportToExternalConverter;
 import se.inera.certificate.modules.ts_diabetes.model.converter.WebcertModelFactory;
-import se.inera.certificate.modules.ts_diabetes.model.external.Utlatande;
+import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.pdf.PdfGenerator;
 import se.inera.certificate.modules.ts_diabetes.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.ts_diabetes.validator.Validator;
@@ -115,6 +116,8 @@ public class ModuleService implements ModuleApi {
 
     private final Schema transportSchema;
 
+	private ModuleContainerApi moduleContainer;
+
     public ModuleService() throws Exception {
         SchemaValidatorBuilder builder = new SchemaValidatorBuilder();
         Source rootSource = builder.registerResource("schemas/ts-diabetes_model.xsd");
@@ -125,169 +128,16 @@ public class ModuleService implements ModuleApi {
         transportSchema = builder.build(rootSource);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @throws ModuleException
-     */
     @Override
-    public ExternalModelResponse unmarshall(TransportModelHolder transportModel) throws ModuleException {
-        try {
-            se.inera.certificate.ts_diabetes.model.v1.Utlatande utlatande = getTransport(transportModel);
-
-            // Perform validation agains XML schema
-            validateSchema(transportModel.getTransportModel());
-            // Convert to external model
-            Utlatande externalUtlatande = transportToExternalConverter.convert(utlatande);
-            // Validate external model
-            validate(externalUtlatande);
-
-            return toExternalModelResponse(externalUtlatande);
-
-        } catch (ConverterException e) {
-            LOG.error("Could not unmarshall transport model to external model", e);
-            throw new ModuleConverterException("Could not unmarshall transport model to external model", e);
-        }
-    }
-
-    /**
-     * Validates the XML of a {@link Utlatande}.
-     *
-     * @param utlatandeXml The xml as a string.
-     * @throws ModuleValidationException
-     */
-    private void validateSchema(String utlatandeXml) throws ModuleValidationException {
-        try {
-            javax.xml.validation.Validator validator = transportSchema.newValidator();
-            validator.validate(new StreamSource(new StringReader(utlatandeXml)));
-
-        } catch (SAXException e) {
-            throw new ModuleValidationException(Collections.singletonList(e.getMessage()), e);
-
-        } catch (IOException e) {
-            LOG.error("Failed to validate message against schema", e);
-            throw new RuntimeException("Failed to validate message against schema", e);
-        }
+    public ValidateDraftResponse validateDraft(InternalModelHolder internalModel) throws ModuleException {
+        return validator.validateInternal(getInternal(internalModel));
     }
 
     /**
      * {@inheritDoc}
-     *
-     * @throws ModuleException
      */
     @Override
-    public TransportModelResponse marshall(ExternalModelHolder externalModel, TransportModelVersion version)
-            throws ModuleException {
-        if (!version.equals(TransportModelVersion.UTLATANDE_V1)) {
-            throw new ModuleVersionUnsupportedException("ts-diabetes does not support transport model version "
-                    + version);
-        }
-
-        try {
-            // Validate external model
-            validate(externalModel);
-            // Convert to transport model
-            TransportModelResponse response = toTransportModelResponse(externalToTransportConverter.convert(getExternal(externalModel)));
-            // Perform validation against XML schema
-            validateSchema(response.getTransportModel());
-
-            return response;
-
-        } catch (ConverterException e) {
-            LOG.error("Could not marshall external model to transport model", e);
-            throw new ModuleConverterException("Could not marshall external model to transport model", e);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @throws ModuleException
-     */
-    @Override
-    public void validate(ExternalModelHolder externalModelHolder) throws ModuleException {
-        validate(getExternal(externalModelHolder));
-    }
-
-    private void validate(Utlatande utlatande) throws ModuleException {
-        List<String> validationErrors = validator.validateExternal(utlatande);
-
-        if (!validationErrors.isEmpty()) {
-            throw new ModuleValidationException(validationErrors);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @throws ModuleException
-     */
-    @Override
-    public ValidateDraftResponse validateDraft(InternalModelHolder internalModelHolder) throws ModuleException {
-        return validator.validateInternal(getInternal(internalModelHolder));
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @throws ModuleException
-     */
-    @Override
-    public PdfResponse pdf(ExternalModelHolder externalModel, ApplicationOrigin applicationOrigin) throws ModuleException {
-        try {
-            se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande internalUtlatande = externalToInternalConverter
-                    .convert(getExternal(externalModel));
-            return new PdfResponse(pdfGenerator.generatePDF(internalUtlatande, applicationOrigin),
-                    pdfGenerator.generatePdfFilename(internalUtlatande));
-
-        } catch (ConverterException e) {
-            LOG.error("Failed to generate PDF - conversion to internal model failed", e);
-            throw new ModuleConverterException("Failed to generate PDF - conversion to internal model failed", e);
-
-        } catch (PdfGeneratorException e) {
-            LOG.error("Failed to generate PDF for certificate!", e);
-            throw new ModuleSystemException("Failed to generate PDF for certificate!", e);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     * @throws ModuleException
-     */
-    @Override
-    public InternalModelResponse convertExternalToInternal(
-            ExternalModelHolder externalModelHolder) throws ModuleException {
-        try {
-            return toInteralModelResponse(externalToInternalConverter.convert(getExternal(externalModelHolder)));
-
-        } catch (ConverterException e) {
-            LOG.error("Could not convert external model to internal model", e);
-            throw new ModuleConverterException("Could not convert external model to internal model", e);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     * @throws ModuleException
-     */
-    @Override
-    public ExternalModelResponse convertInternalToExternal(
-            InternalModelHolder internalModelHolder) throws ModuleException {
-        try {
-            return toExternalModelResponse(internalToExternalConverter.convert(getInternal(internalModelHolder)));
-        } catch (ConverterException e) {
-            LOG.error("Could not convert external model to internal model", e);
-            throw new ModuleConverterException("Could not convert external model to internal model", e);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     * @throws ModuleException
-     */
-    @Override
-    public InternalModelResponse createNewInternal(
-            CreateNewDraftHolder draftCertificateHolder) throws ModuleException {
+    public InternalModelResponse createNewInternal(CreateNewDraftHolder draftCertificateHolder) throws ModuleException {
         try {
             return toInteralModelResponse(webcertModelFactory.createNewWebcertDraft(draftCertificateHolder, null));
 
@@ -297,81 +147,109 @@ public class ModuleService implements ModuleApi {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public InternalModelResponse createNewInternalFromTemplate(CreateNewDraftHolder draftCertificateHolder, ExternalModelHolder template) throws ModuleException {
+    public InternalModelResponse createNewInternalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, InternalModelHolder template)
+            throws ModuleException {
         try {
-            se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande internal = externalToInternalConverter.convert(getExternal(template));
-            return toInteralModelResponse(webcertModelFactory.createNewWebcertDraft(draftCertificateHolder, internal));
+            Utlatande internal = getInternal(template);
+            return toInteralModelResponse(webcertModelFactory.createCopy(draftCertificateHolder, internal));
         } catch (ConverterException e) {
             LOG.error("Could not create a new internal Webcert model", e);
             throw new ModuleConverterException("Could not create a new internal Webcert model", e);
         }
     }
 
-    // Private stuff
-    private se.inera.certificate.ts_diabetes.model.v1.Utlatande getTransport(TransportModelHolder transportModel)
+    @Override
+    public InternalModelResponse updateBeforeSave(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException {
+        return updateInternal(internalModel, hosPerson, null);
+    }
+
+    @Override
+    public InternalModelResponse updateBeforeSigning(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
+            throws ModuleException {
+        return updateInternal(internalModel, hosPerson, signingDate);
+    }
+
+    @Override
+    public void setModuleContainer(ModuleContainerApi moduleContainer) {
+        this.moduleContainer = moduleContainer;
+
+    }
+
+    @Override
+    public ModuleContainerApi getModuleContainer() {
+        return moduleContainer;
+    }
+
+    @Override
+    public PdfResponse pdf(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
+        try {
+            return new PdfResponse(pdfGenerator.generatePDF(getInternal(internalModel), applicationOrigin),
+                    pdfGenerator.generatePdfFilename(getInternal(internalModel)));
+        } catch (PdfGeneratorException e) {
+            LOG.error("Failed to generate PDF for certificate!", e);
+            throw new ModuleSystemException("Failed to generate PDF for certificate!", e);
+        }
+    }
+
+    @Override
+    public void registerCertificate(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public CertificateResponse getCertificate(String certificateId, String logicalAddress) throws ModuleException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public Object createNotification(NotificationMessage notificationMessage) throws ModuleException {
+        throw new NotImplementedException();
+    }
+
+    // - - - - - Private scope - - - - - //
+    private InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
+            throws ModuleException {
+        Utlatande utlatande = getInternal(internalModel);
+        webcertModelFactory.updateSkapadAv(utlatande, hosPerson, signingDate);
+        return toInteralModelResponse(utlatande);
+    }
+
+    private Utlatande getInternal(InternalModelHolder internalModel)
             throws ModuleException {
         try {
-            return (se.inera.certificate.ts_diabetes.model.v1.Utlatande) jaxbContext.createUnmarshaller().unmarshal(
-                    new StringReader(transportModel.getTransportModel()));
-
-        } catch (ValidationException e) {
-            throw new ModuleValidationException(Collections.singletonList(e.getMessage()),
-                    "XML validation of transport model failed", e);
-
-        } catch (JAXBException e) {
-            throw new ModuleSystemException("Failed to unmarshall transport model", e);
-        }
-    }
-
-    private se.inera.certificate.modules.ts_diabetes.model.external.Utlatande getExternal(
-            ExternalModelHolder externalModel) throws ModuleException {
-        try {
-            return objectMapper.readValue(externalModel.getExternalModel(),
-                    se.inera.certificate.modules.ts_diabetes.model.external.Utlatande.class);
-
-        } catch (IOException e) {
-            throw new ModuleSystemException("Failed to deserialize external model", e);
-        }
-    }
-
-    private se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande getInternal(
-            InternalModelHolder internalModel) throws ModuleException {
-        try {
             return objectMapper.readValue(internalModel.getInternalModel(),
-                    se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande.class);
+                    Utlatande.class);
 
         } catch (IOException e) {
             throw new ModuleSystemException("Failed to deserialize internal model", e);
         }
     }
 
-    private TransportModelResponse toTransportModelResponse(
-            se.inera.certificate.ts_diabetes.model.v1.Utlatande transportModel) throws ModuleException {
-        try {
-            StringWriter writer = new StringWriter();
-            jaxbContext.createMarshaller().marshal(transportModel, writer);
-            return new TransportModelResponse(writer.toString());
-
-        } catch (JAXBException e) {
-            throw new ModuleSystemException("Failed to marshall transport model", e);
-        }
-    }
-
-    private ExternalModelResponse toExternalModelResponse(
-            se.inera.certificate.modules.ts_diabetes.model.external.Utlatande externalModel) throws ModuleException {
-        try {
-            StringWriter writer = new StringWriter();
-            objectMapper.writeValue(writer, externalModel);
-            return new ExternalModelResponse(writer.toString(), externalModel);
-
-        } catch (IOException e) {
-            throw new ModuleSystemException("Failed to serialize external model", e);
-        }
-    }
-
     private InternalModelResponse toInteralModelResponse(
-            se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande internalModel) throws ModuleException {
+            Utlatande internalModel) throws ModuleException {
         try {
             StringWriter writer = new StringWriter();
             objectMapper.writeValue(writer, internalModel);
@@ -382,32 +260,4 @@ public class ModuleService implements ModuleApi {
         }
     }
 
-    @Override
-    public String getComplementaryInfo(ExternalModelHolder externalModel) throws ModuleException {
-        Utlatande utlatande = getExternal(externalModel);
-
-        ArrayList<String> intygAvser = new ArrayList<>();
-        for (Kod intygAvserKod : utlatande.getIntygAvser()) {
-            intygAvser.add(CodeConverter.fromCode(intygAvserKod, IntygAvserKod.class).name());
-        }
-        return Strings.join(", ", intygAvser);
-    }
-
-    @Override
-    public InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
-        try {
-            se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande utlatande = getInternal(internalModel);
-            utlatande.getIntygMetadata().setSigneringsdatum(signingDate);
-            utlatande.getIntygMetadata().getSkapadAv().setPersonId(hosPerson.getHsaId());
-            utlatande.getIntygMetadata().getSkapadAv().setFullstandigtNamn(hosPerson.getNamn());
-            utlatande.getIntygMetadata().getSkapadAv().getBefattningar().clear();
-            if (hosPerson.getBefattning() != null) {
-                utlatande.getIntygMetadata().getSkapadAv().getBefattningar().add(hosPerson.getBefattning());
-            }
-            return toInteralModelResponse(utlatande);
-
-        } catch (ModuleException e) {
-            throw new ModuleException("Convert error of internal model", e);
-        }
-    }
 }
