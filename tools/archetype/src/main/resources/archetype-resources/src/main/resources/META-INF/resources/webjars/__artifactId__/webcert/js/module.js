@@ -6,7 +6,7 @@ angular.module('${artifactId}', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngS
 angular.module('${artifactId}').config(['$stateProvider', function($stateProvider) {
     'use strict';
 
-    // TODO: Configure $routeProvider
+    // TODO: Configure $stateProvider
 }]);
 
 // Inject language resources
