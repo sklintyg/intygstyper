@@ -582,13 +582,12 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 // Remove defaults not applicable when smittskydd is active
                 if (newVal === true) {
                     $scope.form.prognos = undefined;
-                    $scope.form.rehab = undefined;
-
-                    // turn off resor till och from jobbet
-                    // Fält 11. Ressätt till arbete
-                    $scope.cert.ressattTillArbeteAktuellt = false;
                     $scope.form.ressattTillArbeteAktuellt = undefined;
-
+                    $scope.form.rehab = undefined;
+                } else {
+                    $scope.form.prognos = 'YES';
+                    $scope.form.ressattTillArbeteAktuellt = 'NEJ';
+                    $scope.form.rehab = 'NEJ';
                 }
             });
 
