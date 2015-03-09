@@ -24,75 +24,7 @@
   <div class="row">
     <div class="col-md-12 webcert-col webcert-col-single">
 
-      <div wc-print-header title-id="ts-bas.label.certtitle" print-message-id="print.label.draft" intygs-id="cert.id"></div>
-      <div class="print-show">
-        <label class="control-label">{{cert.grundData.patient.fullstandigtNamn}} - {{cert.grundData.patient.personId}}</label>
-      </div>
-
-      <div class="header-fix-top print-hide">
-        <div class="header-wrapper" ng-hide="widgetState.collapsedHeader" ng-animate="'menucollapse'">
-          <div id="wcHeader" wc-header default-active="index"></div>
-        </div>
-
-        <div ng-hide="widgetState.activeErrorMessageKey">
-          <div wc-spinner label="info.loadingdata" show-spinner="!widgetState.doneLoading"
-               show-content="widgetState.doneLoading">
-
-            <div class="header-fix-panel">
-              <div class="header-fix-top-expand">
-                <div class="header-fix-top-expand-wrapper">
-                  <button class="btn btn-link" ng-click="toggleHeader()"><span
-                      ng-if="widgetState.collapsedHeader">Visa</span><span
-                      ng-if="!widgetState.collapsedHeader">Dölj</span> meny
-                  </button>
-                </div>
-              </div>
-              <a wc-feature-not-active feature="franJournalsystem" class="backlink-icon" href="/web/dashboard#/create/choose-cert-type/index" title="Tillbaka till Skriv intyg"></a>
-
-              <h1 style="display: inline-block; margin-right: 20px;"><span message key="ts-bas.label.certtitle"></span>
-              </h1>
-
-              <div class="inline-block">
-                <label class="control-label">{{cert.grundData.patient.fullstandigtNamn}} - {{cert.grundData.patient.personId}}</label>
-              </div>
-              <div class="form-group buttonbar">
-                <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned"><span message
-                                                                                                         key="ts-bas.label.spara-utkast"></span>
-                </button>
-                <button id="ta-bort-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned"
-                        ng-click="discard()"><i class="glyphicon glyphicon-trash"></i></button>
-                <button id="skriv-ut-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="print()">
-                  <span message key="ts-bas.label.skriv-ut-utkast"></span></button>
-                <button class="btn btn-default btn-secondary" ng-if="!widgetState.showComplete" ng-disabled="isComplete"
-                        ng-click="toggleShowComplete()" title="Visar vilka obligatoriska fält i utkastet som inte är ifyllda. Alla obligatoriska fält måste vara ifyllda för att utkastet ska kunna signeras.">Visa vad som saknas
-                </button>
-                <button class="btn btn-default btn-secondary" ng-if="widgetState.showComplete" ng-disabled="isComplete"
-                        ng-click="toggleShowComplete()" title="Visar vilka obligatoriska fält i utkastet som inte är ifyllda. Alla obligatoriska fält måste vara ifyllda för att utkastet ska kunna signeras.">Dölj vad som saknas
-                </button>
-              </div>
-              <!-- Just in case -->
-              <div id="certificate-is-sent-to-it-message-text" ng-show="isSigned"><span message key="draft.status.signed"></span>
-              </div>
-              <!-- complete -->
-              <div ng-show="certForm.$pristine && isComplete && !isSigned"><span id="intyget-sparat-meddelande" message key="draft.status.draft_complete"></span>
-              </div>
-              <!-- incomplete -->
-              <div ng-show="certForm.$pristine && !isComplete"><span message key="draft.status.draft_incomplete"></span>
-              </div>
-              <!-- form changed -->
-              <div ng-show="certForm.$dirty"><span message key="draft.status.changed"></span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- top end -->
-
-      <!-- Total fail error messages -->
-      <div class="cert-error-panel" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey">
-        <div class="alert alert-danger">
-          <span message key="{{widgetState.activeErrorMessageKey}}"></span>
-        </div>
-      </div>
+      <div wc-intyg-edit-header></div>
 
       <!-- TS-BAS -->
       <div class="edit-form" ng-class="{'collapsed' : widgetState.collapsedHeader}">

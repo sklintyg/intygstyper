@@ -3,116 +3,25 @@
   <div class="row">
     <div class="col-md-12 webcert-col webcert-col-single">
 
-      <div wc-print-header title-id="fk7263.label.certtitle" print-message-id="print.label.draft"
-           intygs-id="cert.id"></div>
-
-      <div class="header-fix-top print-hide">
-        <div class="header-wrapper" ng-hide="widgetState.collapsedHeader" ng-animate="'menucollapse'">
-          <div id="wcHeader" wc-header default-active="index"></div>
-        </div>
-
-        <div ng-hide="widgetState.activeErrorMessageKey">
-          <div wc-spinner label="info.loadingdata" show-spinner="!widgetState.doneLoading"
-               show-content="widgetState.doneLoading">
-
-            <div class="header-fix-panel">
-              <div class="header-fix-top-expand">
-                <div class="header-fix-top-expand-wrapper">
-                  <button class="btn btn-link" ng-click="toggleHeader()"><span
-                      ng-if="widgetState.collapsedHeader">Visa</span><span
-                      ng-if="!widgetState.collapsedHeader">Dölj</span> meny
-                  </button>
-                </div>
-              </div>
-              <a id="tillbakaButton" wc-feature-not-active feature="franJournalsystem" class="backlink-icon"
-                 href="/web/dashboard#/create/choose-cert-type/index" title="Tillbaka till Skriv intyg"></a>
-              <h1 style="display: inline-block; margin-right: 20px;"><span message key="fk7263.label.certtitle"></span>
-              </h1>
-              <div class="inline-block">
-                <label class="control-label" id="patientNamnPersonnummer">{{cert.grundData.patient.fullstandigtNamn}} -
-                  {{cert.grundData.patient.personId}}</label>
-              </div>
-
-              <div wc-new-person-id-message></div>
-
-              <div class="form-group buttonbar">
-                <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned"
-                        ng-disabled="!certForm.$dirty" title="Sparar intyget som ett utkast.">Spara
-                </button>
-                <button id="ta-bort-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="discard()"
-                        title="Klicka på papperskorgen för att radera utkastet."><i
-                    class="glyphicon glyphicon-trash"></i>
-                </button>
-                <button id="skriv-ut-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="print()"
-                        title="Skriver ut utkastet.">
-                  Skriv ut
-                </button>
-                <button class="btn btn-default btn-secondary" ng-if="!widgetState.showComplete" ng-disabled="isComplete"
-                        ng-click="toggleShowComplete()" id="showCompleteButton"
-                        title="Visar vilka obligatoriska fält i utkastet som inte är ifyllda. Alla obligatoriska fält måste vara ifyllda för att utkastet ska kunna signeras.">
-                  Visa vad som saknas
-                </button>
-                <button class="btn btn-default btn-secondary" ng-if="widgetState.showComplete" ng-disabled="isComplete"
-                        ng-click="toggleShowComplete()" id="hideCompleteButton"
-                        title="Visar vilka obligatoriska fält i utkastet som inte är ifyllda. Alla obligatoriska fält måste vara ifyllda för att utkastet ska kunna signeras.">
-                  Dölj vad som saknas
-                </button>
-              </div>
-
-              <!-- Show save errors here to spare user from retyping everything for intermittent errors -->
-              <div class="row">
-                <div ng-show="widgetState.saveErrorMessageKey != null" class="col-md-7">
-                  <div class="alert alert-danger">
-                    <span message key="{{widgetState.saveErrorMessageKey}}"></span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Just in case -->
-              <div id="certificate-is-sent-to-it-message-text" ng-show="isSigned"><span message
-                                                                                        key="draft.status.signed"></span>
-              </div>
-              <!-- complete -->
-              <div ng-show="certForm.$pristine && isComplete && !isSigned"><span id="intyget-sparat-meddelande" message
-                                                                                 key="draft.status.draft_complete"></span>
-              </div>
-              <!-- incomplete -->
-              <div ng-show="certForm.$pristine && !isComplete"><span id="intyget-ej-komplett-meddelande" message
-                                                                     key="draft.status.draft_incomplete"></span>
-              </div>
-              <!-- form changed -->
-              <div ng-show="certForm.$dirty"><span message key="draft.status.changed"></span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- top end -->
-
-      <!-- Total fail error messages -->
-      <div id="error-panel" class="cert-error-panel"
-           ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey && !widgetState.deleted">
-        <div class="alert alert-danger">
-          <span message key="{{widgetState.activeErrorMessageKey}}"></span>
-        </div>
-      </div>
+      <div wc-intyg-edit-header></div>
 
       <!-- Integration deleted message -->
-      <div id="integration-deleted" ng-if="widgetState.deleted">
+      <div id="integration-deleted" ng-if="viewState.deleted">
         <div class="alert alert-info banner-margin">
           Utkastet är raderat och borttaget från Webcert.
         </div>
       </div>
 
       <!-- FK 7263 -->
-      <div class="edit-form" ng-class="{'collapsed' : widgetState.collapsedHeader}">
+      <div class="edit-form" ng-class="{'collapsed' : viewState.collapsedHeader}">
 
         <form name="certForm" novalidate autocomplete="off" wc-auto-save="save(true)">
-          <div ng-hide="widgetState.activeErrorMessageKey || widgetState.deleted">
+          <div ng-hide="viewState.error.activeErrorMessageKey || viewState.deleted">
 
-            <div wc-spinner label="info.loadingdata" show-spinner="!widgetState.doneLoading"
-                 show-content="widgetState.doneLoading">
+            <div wc-spinner label="info.loadingdata" show-spinner="!viewState.doneLoading"
+                 show-content="viewState.doneLoading">
 
-              <div class="alert alert-danger" ng-show="widgetState.showComplete && !isComplete"
+              <div class="alert alert-danger" ng-show="viewState.showComplete && !isComplete"
                    style="margin-right: 20px">
                 <h3><span message key="draft.saknar-uppgifter"></span></h3>
                 <ul>
@@ -768,7 +677,7 @@
                       ({{cert.grundData.skapadAv.vardenhet.enhetsid}}),
                       {{cert.grundData.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</label>
 
-                    <div class="alert alert-info" ng-show="widgetState.hasInfoMissing">
+                    <div class="alert alert-info" ng-show="viewState.hsaInfoMissing">
                       Information om vårdenheten saknas i HSA-katalogen. Be den på vårdenheten som är ansvarig för
                       frågor om HSA att uppdatera informationen.
                     </div>
@@ -840,9 +749,9 @@
                     <div class="body-row">
                       <label for="mark-as-vidarebefordrad">
                         <input id="mark-as-vidarebefordrad" type="checkbox"
-                               ng-disabled="widgetState.vidarebefordraInProgress" ng-model="certMeta.vidarebefordrad"
+                               ng-disabled="viewState.vidarebefordraInProgress" ng-model="certMeta.vidarebefordrad"
                                ng-change="onVidarebefordradChange()" /> Vidarebefordrad
-                      </label> <span ng-if="widgetState.vidarebefordraInProgress"> <img
+                      </label> <span ng-if="viewState.vidarebefordraInProgress"> <img
                         src="/img/ajax-loader-kit-16x16.gif"></span>
                     </div>
                   </div>
@@ -857,7 +766,7 @@
             </div>
           </div>
 
-          <wc-disable-key-down wc-disable-key-down-elements=":text,:checkbox,:radio" wc-disable-key-down-done-loading="widgetState.doneLoading" />
+          <wc-disable-key-down wc-disable-key-down-elements=":text,:checkbox,:radio" wc-disable-key-down-done-loading="viewState.doneLoading" />
 
         </form>
       </div>

@@ -195,52 +195,6 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
              * Exposed interaction
              ******************************************************************************************/
 
-            $scope.toggleHeader = function() {
-                $scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
-            };
-
-            $scope.toggleShowComplete = function() {
-                $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
-                if ($scope.widgetState.showComplete) {
-                    $scope.save();
-                    var old = $location.hash();
-                    $location.hash('top');
-                    $anchorScroll();
-                    // reset to old to keep any additional routing logic from kicking in
-                    $location.hash(old);
-                }
-            };
-
-            /**
-             * Action to save the certificate draft to the server.
-             */
-            $scope.save = function() {
-                $scope.hasSavedThisSession = true;
-                convertFormToCert();
-                ManageCertView.save($scope, $scope.certMeta.intygType);
-            };
-
-            /**
-             * Action to discard the certificate draft and return to WebCert again.
-             */
-            $scope.discard = function() {
-                ManageCertView.discard($scope, $scope.certMeta.intygType);
-            };
-
-            /**
-             * Action to sign the certificate draft and return to Webcert again.
-             */
-            $scope.sign = function() {
-                ManageCertView.signera($scope, $scope.certMeta.intygType);
-            };
-
-            /**
-             * Print draft
-             */
-            $scope.print = function() {
-                ManageCertView.printDraft($scope.cert.id, $scope.certMeta.intygType);
-            };
-
             /**
              * Handle vidarebefordra dialog
              *
@@ -265,4 +219,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 convertCertToForm($scope);
                 wcFocus('firstInput');
             });
+
+            $scope.$on('convertFormToCert', convertFormToCert);
+
         }]);
