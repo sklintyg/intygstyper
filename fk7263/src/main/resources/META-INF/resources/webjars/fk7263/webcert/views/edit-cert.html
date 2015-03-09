@@ -667,13 +667,13 @@
                                                         field-help-text="fk7263.helptext.rekommendationer.resor"></span>
                     </div>
 
-                    <div class="form-group form-inline">
+                    <div class="form-group form-inline" id="rekommendationRessattRadioGroup">
                       <label class="radio-inline">
-                        <input type="radio" id="rekommendationRessatt" name="recommendationsToFk.travel" value="JA"
-                               ng-model="form.ressattTillArbeteAktuellt"> Ja</label>
+                        <input type="radio" id="rekommendationRessatt" name="recommendationsToFkTravel" value="JA"
+                               ng-model="form.ressattTillArbeteAktuellt" > Ja</label>
                       <label class="radio-inline">
-                        <input type="radio" id="rekommendationRessattEj" name="recommendationsToFk.travel" value="NEJ"
-                               ng-model="form.ressattTillArbeteAktuellt"> Nej</label>
+                        <input type="radio" id="rekommendationRessattEj" name="recommendationsToFkTravel" value="NEJ"
+                               ng-model="form.ressattTillArbeteAktuellt" checked="checked"> Nej</label>
                     </div>
 
                     <!-- 6a, 7 -->
@@ -711,6 +711,7 @@
                       </div>
 
                       <!-- 7 -->
+                      <span id="recommendationsToFkReabInQuestionRadioGroup">
                       <h4 class="inline-block">Är arbetslivsinriktad rehabilitering aktuell?</h4><span wc-enable-tooltip
                                                                                                        field-help-text="fk7263.helptext.rekommendationer.arbetslivsinriktad-rehabilitering"></span>
 
@@ -734,6 +735,7 @@
                                                            group="group3" value="GAREJ" ng-model="form.rehab" id="garej"> Går inte
                           att bedöma</label>
                       </div>
+                      </span>
                     </div>
                   </div>
 
