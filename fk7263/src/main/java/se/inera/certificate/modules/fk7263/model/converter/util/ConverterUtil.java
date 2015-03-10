@@ -45,7 +45,7 @@ public class ConverterUtil {
         certificateHolder.setValidFromDate(utlatande.getGiltighet().getFrom().toString());
         certificateHolder.setValidToDate(utlatande.getGiltighet().getTom().toString());
         certificateHolder.setAdditionalInfo(utlatande.getGiltighet().getFrom().toString() + " - " + utlatande.getGiltighet().getTom().toString());
-        certificateHolder.setDocument(toJsonString(utlatande));
+        certificateHolder.setDocument(document);
         return certificateHolder;
     }
 
