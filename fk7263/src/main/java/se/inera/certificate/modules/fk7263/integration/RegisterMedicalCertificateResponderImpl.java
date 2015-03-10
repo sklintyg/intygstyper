@@ -38,8 +38,6 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterMedicalCertificateResponderImpl.class);
 
-    private static final String FK7263 = "fk7263";
-
     private boolean wireTapped = false;
     
     private ObjectFactory objectFactory;
