@@ -7,7 +7,7 @@ import se.inera.certificate.model.Kod;
 import se.inera.certificate.model.common.codes.CodeConverter;
 import se.inera.certificate.modules.ts_bas.model.codes.RekommendationVardeKod;
 import se.inera.certificate.modules.ts_bas.model.codes.RekommendationsKod;
-import se.inera.certificate.modules.ts_bas.model.external.Rekommendation;
+import se.inera.certificate.modules.ts_bas.utils.model.external.Rekommendation;
 
 public class RekommendationerValidationInstance extends ExternalValidatorInstance {
 

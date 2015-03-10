@@ -76,7 +76,7 @@ public class WebcertModelFactory {
             throw new ConverterException("Got null while trying to populateWithPatientInfo");
         }
 
-        utlatande.getIntygMetadata().setPatient(WebcertModelFactoryUtil.convertPatientToEdit(patient));
+        utlatande.getGrundData().setPatient(WebcertModelFactoryUtil.convertPatientToEdit(patient));
     }
 
     private void populateWithSkapadAv(Utlatande utlatande,

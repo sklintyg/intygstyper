@@ -38,8 +38,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
-import se.inera.certificate.modules.support.api.dto.ExternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
@@ -54,6 +52,7 @@ import se.inera.certificate.modules.ts_bas.utils.ModelAssert;
 import se.inera.certificate.modules.ts_bas.utils.ResourceConverterUtils;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
+import se.intygstjanster.ts.services.v1.TSBasIntyg;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -76,123 +75,66 @@ public class ModuleApiTest {
     @Autowired
     private ObjectMapper mapper;
 
-    @Test
-    public void testUnmarshallScenarios() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
-            moduleApi.unmarshall(createTransportHolder(scenario.asTransportModel()));
-        }
-    }
+    
+//    public void testValidate() throws Exception {
+//        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
+//            moduleApi.validate(createExternalHolder(scenario.asExternalModel()));
+//        }
+//    }
 
-    @Test
-    public void testUnmarshallBroken() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getTransportScenarios("invalid-*")) {
-            try {
-                moduleApi.unmarshall(createTransportHolder(scenario.asTransportModel()));
-            } catch (ModuleValidationException ignore) {
-            }
-        }
-    }
-
-    @Test
-    public void testMarshall() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            moduleApi.marshall(createExternalHolder(scenario.asExternalModel()), UTLATANDE_V1);
-        }
-
-    }
-
-    @Test
-    public void testValidate() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            moduleApi.validate(createExternalHolder(scenario.asExternalModel()));
-        }
-    }
-
-    @Test
-    public void testValidateWithErrors() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {
-            try {
-                moduleApi.validate(createExternalHolder(scenario.asExternalModel()));
-                Assert.fail("Expected ModuleValidationException, running scenario " + scenario.getName());
-
-            } catch (ModuleValidationException e) {
-                Assert.assertFalse("Error in scenario " + scenario.getName(), e.getValidationEntries().isEmpty());
-            }
-        }
-    }
+//    @Test
+//    public void testValidateWithErrors() throws Exception {
+//        for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {
+//            try {
+//                moduleApi.validate(createExternalHolder(scenario.asExternalModel()));
+//                Assert.fail("Expected ModuleValidationException, running scenario " + scenario.getName());
+//
+//            } catch (ModuleValidationException e) {
+//                Assert.assertFalse("Error in scenario " + scenario.getName(), e.getValidationEntries().isEmpty());
+//            }
+//        }
+//    }
 
     @Test
     public void testPdf() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            moduleApi.pdf(createExternalHolder(scenario.asExternalModel()), ApplicationOrigin.MINA_INTYG);
-
-            // String contentDisposition = getClientResponse().getHeaderString("Content-Disposition");
-            // Assert.assertTrue("Error in scenario " + scenario.getName(),
-            // contentDisposition.startsWith("filename=lakarutlatande"));
-        }
-    }
-
-    @Test
-    public void testConvertExternalToInternal() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            se.inera.certificate.modules.ts_bas.model.external.Utlatande externalModel = scenario.asExternalModel();
-            moduleApi.convertExternalToInternal(createExternalHolder(externalModel));
-        }
-    }
-
-    @Test
-    public void testConvertInternalToExternal() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
-
-            ExternalModelResponse externalModelReponse = moduleApi
-                    .convertInternalToExternal(createInternalHolder(scenario.asInternalModel()));
-            se.inera.certificate.modules.ts_bas.model.external.Utlatande actual = mapper.readValue(
-                    externalModelReponse.getExternalModelJson(),
-                    se.inera.certificate.modules.ts_bas.model.external.Utlatande.class);
-
-            se.inera.certificate.modules.ts_bas.model.external.Utlatande expected = scenario.asExternalModel();
-
-            // We need to issue a get in order to create an empty list (and make the test pass)
-            actual.getSkapadAv().getBefattningar();
-            actual.getSkapadAv().getSpecialiteter();
-
-            ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
+            moduleApi.pdf(createInternalHolder(scenario.asInternalModel()), null, ApplicationOrigin.MINA_INTYG);
         }
     }
 
-    @Test
-    public void testRegisterCertificateRoundtrip() throws Exception {
-        se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande;
-        Utlatande intUtlatande;
-        for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
-            extUtlatande = (se.inera.certificate.modules.ts_bas.model.external.Utlatande) moduleApi.unmarshall(
-                    createTransportHolder(scenario.asTransportModel())).getExternalModel();
-            moduleApi.validate(createExternalHolder(extUtlatande));
-            String intUtlatandeString = moduleApi.convertExternalToInternal(createExternalHolder(extUtlatande))
-                    .getInternalModel();
-            intUtlatande = mapper.readValue(intUtlatandeString, Utlatande.class);
+//    @Test
+//    public void testRegisterCertificateRoundtrip() throws Exception {
+//        se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande;
+//        Utlatande intUtlatande;
+//        for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
+//            extUtlatande = (se.inera.certificate.modules.ts_bas.model.external.Utlatande) moduleApi.unmarshall(
+//                    createTransportHolder(scenario.asTransportModel())).getExternalModel();
+//            moduleApi.validate(createExternalHolder(extUtlatande));
+//            String intUtlatandeString = moduleApi.convertExternalToInternal(createExternalHolder(extUtlatande))
+//                    .getInternalModel();
+//            intUtlatande = mapper.readValue(intUtlatandeString, Utlatande.class);
+//
+//            Utlatande expected = scenario.asInternalModel();
+//
+//            // We need to issue a get in order to create an empty list (and make the test pass)
+//            intUtlatande.getGrundData().getSkapadAv().getBefattningar();
+//            intUtlatande.getGrundData().getSkapadAv().getSpecialiteter();
+//
+//            ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, intUtlatande);
+//        }
+//    }
 
-            Utlatande expected = scenario.asInternalModel();
-
-            // We need to issue a get in order to create an empty list (and make the test pass)
-            intUtlatande.getIntygMetadata().getSkapadAv().getBefattningar();
-            intUtlatande.getIntygMetadata().getSkapadAv().getSpecialiteter();
-
-            ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, intUtlatande);
-        }
-    }
-
-    @Test
-    public void copyCreatesBlank() throws Exception {
-        Scenario scenario = ScenarioFinder.getExternalScenario("valid-korrigerad-synskarpa");
-        ExternalModelHolder internalHolder = createExternalHolder(scenario.asExternalModel());
-
-        InternalModelResponse holder = moduleApi.createNewInternalFromTemplate(createNewDraftHolder(), internalHolder);
-
-        assertNotNull(holder);
-        Utlatande utlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
-        assertEquals(true, utlatande.getSyn().getSynfaltsdefekter());
-    }
+//    @Test
+//    public void copyCreatesBlank() throws Exception {
+//        Scenario scenario = ScenarioFinder.getExternalScenario("valid-korrigerad-synskarpa");
+//        ExternalModelHolder internalHolder = createExternalHolder(scenario.asExternalModel());
+//
+//        InternalModelResponse holder = moduleApi.createNewInternalFromTemplate(createNewDraftHolder(), internalHolder);
+//
+//        assertNotNull(holder);
+//        Utlatande utlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
+//        assertEquals(true, utlatande.getSyn().getSynfaltsdefekter());
+//    }
 
     @Test
     public void createNewInternal() throws ModuleException {
@@ -211,17 +153,13 @@ public class ModuleApiTest {
         return new CreateNewDraftHolder("Id1", hosPersonal, patient);
     }
 
-    private TransportModelHolder createTransportHolder(se.inera.certificate.ts_bas.model.v1.Utlatande transportModel)
+    private TransportModelHolder createTransportHolder(TSBasIntyg transportModel)
             throws JAXBException {
         StringWriter writer = new StringWriter();
         jaxbContext.createMarshaller().marshal(transportModel, writer);
         return new TransportModelHolder(writer.toString());
     }
 
-    private ExternalModelHolder createExternalHolder(
-            se.inera.certificate.modules.ts_bas.model.external.Utlatande externalModel) throws JsonProcessingException {
-        return new ExternalModelHolder(mapper.writeValueAsString(externalModel));
-    }
 
     private InternalModelHolder createInternalHolder(Utlatande internalModel) throws JsonProcessingException {
         return new InternalModelHolder(mapper.writeValueAsString(internalModel));

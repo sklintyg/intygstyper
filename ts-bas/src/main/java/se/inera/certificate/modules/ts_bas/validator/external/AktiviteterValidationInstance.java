@@ -7,7 +7,7 @@ import se.inera.certificate.model.Id;
 import se.inera.certificate.model.Kod;
 import se.inera.certificate.modules.ts_bas.model.codes.AktivitetKod;
 import se.inera.certificate.model.common.codes.CodeConverter;
-import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
+import se.inera.certificate.modules.ts_bas.utils.model.external.Aktivitet;
 
 public class AktiviteterValidationInstance extends ExternalValidatorInstance {
 

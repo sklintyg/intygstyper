@@ -26,9 +26,9 @@ import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
-import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
+import se.inera.certificate.modules.ts_bas.utils.model.external.Utlatande;
 import se.inera.certificate.modules.ts_bas.validator.Validator;
 
 public class ExternalValidatorTest {

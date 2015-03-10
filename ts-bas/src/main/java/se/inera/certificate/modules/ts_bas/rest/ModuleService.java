@@ -36,6 +36,7 @@ import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.ModuleContainerApi;
+import se.inera.certificate.modules.support.api.dto.CertificateMetaData;
 import se.inera.certificate.modules.support.api.dto.CertificateResponse;
 import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
@@ -48,15 +49,16 @@ import se.inera.certificate.modules.support.api.exception.ModuleConverterExcepti
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.modules.support.api.notification.NotificationMessage;
-import se.inera.certificate.modules.ts_bas.model.converter.ExternalToInternalConverter;
-import se.inera.certificate.modules.ts_bas.model.converter.ExternalToTransportConverter;
-import se.inera.certificate.modules.ts_bas.model.converter.InternalToExternalConverter;
-import se.inera.certificate.modules.ts_bas.model.converter.TransportToExternalConverter;
+import se.inera.certificate.modules.ts_bas.model.converter.TransportToInternal;
+import se.inera.certificate.modules.ts_bas.model.converter.TsBasMetaDataConverter;
 import se.inera.certificate.modules.ts_bas.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGenerator;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.ts_bas.validator.Validator;
+import se.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
+import se.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
+import se.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -68,20 +70,11 @@ public class ModuleService implements ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(ModuleService.class);
 
-    @Autowired
-    private TransportToExternalConverter transportToExternalConverter;
-
-    @Autowired
-    private ExternalToTransportConverter externalToTransportConverter;
+    @Autowired(required = false)
+    private GetTSBasResponderInterface getTSBasResponderInterface;
 
     @Autowired
     private Validator validator;
-
-    @Autowired
-    private ExternalToInternalConverter externalToInternalConverter;
-
-    @Autowired
-    private InternalToExternalConverter internalToExternalConverter;
 
     @Autowired
     private PdfGenerator pdfGenerator;
@@ -186,8 +179,27 @@ public class ModuleService implements ModuleApi {
 
     @Override
     public CertificateResponse getCertificate(String certificateId, String logicalAddress) throws ModuleException {
-        // TODO Auto-generated method stub
-        return null;
+        GetTSBasType request = new GetTSBasType();
+        request.setIntygsId(certificateId);
+
+        GetTSBasResponseType response = getTSBasResponderInterface.getTSBas(logicalAddress, request);
+
+        switch (response.getResultat().getResultCode()) {
+            case INFO:
+            case OK:
+                return convert(response, false);
+            case ERROR:
+                switch (response.getResultat().getErrorId()) {
+                case REVOKED:
+                    return convert(response, true);
+                case VALIDATION_ERROR:
+                    throw new ModuleException("getTSBas WS call: VALIDATION_ERROR :" + response.getResultat().getResultText());
+                default:
+                    throw new ModuleException("getTSBas WS call: ERROR :" + response.getResultat().getResultText());
+                }
+            default:
+                throw new ModuleException("getTSBas WS call: ERROR :" + response.getResultat().getResultText());
+        }
     }
 
     @Override
@@ -201,6 +213,18 @@ public class ModuleService implements ModuleApi {
     }
 
     // - - - - - Private scope - - - - - //
+    private CertificateResponse convert(GetTSBasResponseType response, boolean revoked) throws ModuleException {
+        try {
+            Utlatande utlatande = TransportToInternal.convert(response.getIntyg());
+            String internalModel = objectMapper.writeValueAsString(utlatande);
+            
+            CertificateMetaData metaData = TsBasMetaDataConverter.toCertificateMetaData(response.getMeta(), response.getIntyg());
+            return new CertificateResponse(internalModel, utlatande, metaData, revoked);
+        } catch (Exception e) {
+            throw new ModuleException(e);
+        }
+    }
+
     private InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
             throws ModuleException {
         Utlatande utlatande = getInternal(internalModel);

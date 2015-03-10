@@ -63,14 +63,14 @@ public class WebcertModelFactoryTest {
         assertNotNull(utlatande);
         assertNotNull(utlatande.getId());
         assertNotNull(utlatande.getTyp());
-        assertNotNull(utlatande.getIntygMetadata().getSkapadAv());
-        assertNotNull(utlatande.getIntygMetadata().getPatient());
+        assertNotNull(utlatande.getGrundData().getSkapadAv());
+        assertNotNull(utlatande.getGrundData().getPatient());
 
         /** Just verify some stuff from the json to make sure all is well.. */
         assertEquals("testID", utlatande.getId());
-        assertEquals("Johnny Jobs Appleseed", utlatande.getIntygMetadata().getPatient().getFullstandigtNamn());
-        assertEquals("Testvägen 12", utlatande.getIntygMetadata().getPatient().getPostadress());
-        assertEquals("13337", utlatande.getIntygMetadata().getPatient().getPostnummer());
-        assertEquals("Huddinge", utlatande.getIntygMetadata().getPatient().getPostort());
+        assertEquals("Johnny Jobs Appleseed", utlatande.getGrundData().getPatient().getFullstandigtNamn());
+        assertEquals("Testvägen 12", utlatande.getGrundData().getPatient().getPostadress());
+        assertEquals("13337", utlatande.getGrundData().getPatient().getPostnummer());
+        assertEquals("Huddinge", utlatande.getGrundData().getPatient().getPostort());
     }
 }

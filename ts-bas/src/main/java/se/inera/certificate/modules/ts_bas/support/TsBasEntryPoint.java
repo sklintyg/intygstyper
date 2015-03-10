@@ -14,23 +14,26 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
 
     private static final String TRANSPORTSTYRELSEN_LOGICAL_ADRESS = "TS";
 
+    public static final String MODULE_ID = "ts-bas";
+    public static final String MODULE_NAME = "Transportstyrelsens läkarintyg";
+    public static final String MODULE_DESCRIPTION = "Läkarintyg - avseende högre körkortsbehörigheter eller taxiförarlegitimation - på begäran av Transportstyrelsen";
+
     @Autowired
     private ModuleService moduleService;
 
     @Override
     public String getModuleId() {
-        return "ts-bas";
+        return MODULE_ID;
     }
 
     @Override
     public String getModuleName() {
-        return "Transportstyrelsens läkarintyg";
+        return MODULE_NAME;
     }
 
     @Override
     public String getModuleDescription() {
-        // TODO
-        return "Läkarintyg - avseende högre körkortsberhörigheter eller taxiförarlegitimation - på begäran från Transportstyrelsen";
+        return MODULE_DESCRIPTION;
     }
 
     @Override

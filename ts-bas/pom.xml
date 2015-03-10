@@ -29,11 +29,20 @@
       <groupId>se.inera.intyg.common</groupId>
       <artifactId>integration-util</artifactId>
     </dependency>
-
     <!-- Schemas -->
     <dependency>
       <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
       <artifactId>clinicalprocess-healthcond-certificate-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
+      <artifactId>se-intygstjanster-ts-services-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
+      <artifactId>se-intygstjanster-ts-services-interactions</artifactId>
     </dependency>
 
     <dependency>

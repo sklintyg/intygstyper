@@ -37,12 +37,12 @@ import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
 import se.inera.certificate.model.common.codes.SpecialitetKod;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.codes.VardkontakttypKod;
-import se.inera.certificate.modules.ts_bas.model.external.Aktivitet;
 import se.inera.certificate.model.common.external.HosPersonal;
-import se.inera.certificate.modules.ts_bas.model.external.Observation;
-import se.inera.certificate.modules.ts_bas.model.external.ObservationAktivitetRelation;
-import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
-import se.inera.certificate.modules.ts_bas.model.external.Vardkontakt;
+import se.inera.certificate.modules.ts_bas.utils.model.external.Aktivitet;
+import se.inera.certificate.modules.ts_bas.utils.model.external.Observation;
+import se.inera.certificate.modules.ts_bas.utils.model.external.ObservationAktivitetRelation;
+import se.inera.certificate.modules.ts_bas.utils.model.external.Utlatande;
+import se.inera.certificate.modules.ts_bas.utils.model.external.Vardkontakt;
 import se.inera.certificate.validate.IdValidator;
 import se.inera.certificate.validate.SimpleIdValidatorBuilder;
 

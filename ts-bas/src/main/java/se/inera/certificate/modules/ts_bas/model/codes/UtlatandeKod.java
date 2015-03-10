@@ -18,16 +18,12 @@
  */
 package se.inera.certificate.modules.ts_bas.model.codes;
 
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.common.codes.CodeConverter;
-import se.inera.certificate.model.common.codes.CodeSystem;
-
 /**
  * Represents the code used by this module to define the Utlåtandetyp.
  */
-public enum UtlatandeKod implements CodeSystem {
+public enum UtlatandeKod {
 
-    TS_BAS_U06_V06("ts-bas", "06", "06",
+    TS_BAS_U06_V06("TSTRK1007", "06", "06",
             "Läkarintyg- avseende högre körkortsbehörigheter eller taxiförarlegitimation- på begäran från Transportstyrelsen"),
 
     // NOTE: USED FOR TESTING ONLY
@@ -65,17 +61,14 @@ public enum UtlatandeKod implements CodeSystem {
         return description;
     }
 
-    @Override
     public String getCodeSystem() {
         return codeSystem;
     }
 
-    @Override
     public String getCodeSystemName() {
         return codeSystemName;
     }
 
-    @Override
     public String getCodeSystemVersion() {
         return codeSystemVersion;
     }
@@ -88,9 +81,8 @@ public enum UtlatandeKod implements CodeSystem {
         return tsVersion;
     }
 
-    @Override
-    public boolean matches(Kod kod) {
-        return CodeConverter.matches(this, kod);
+    public String getTypForTransportConvertion() {
+        return this.code + " (U" + this.tsUtgava + ", V" + this.tsVersion + ")";
     }
 
     public void assertVersion(String tsUtgava, String tsVersion) {
