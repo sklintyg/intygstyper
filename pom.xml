@@ -100,13 +100,13 @@
       </dependency>
 
   	<dependency>
-  		<groupId>se.inera.intyg.schemas.intygstjanster.ts.services</groupId>
+  		<groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
   		<artifactId>se-intygstjanster-ts-services-core</artifactId>
   		<version>${se-intygstjanster-ts-services.version}</version>
   	</dependency>
   	
     <dependency>
-  		<groupId>se.inera.intyg.schemas.intygstjanster.ts.services</groupId>
+  		<groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
   		<artifactId>se-intygstjanster-ts-services-interactions</artifactId>
   		<version>${se-intygstjanster-ts-services.version}</version>
   	</dependency>	
@@ -209,7 +209,7 @@
         <artifactId>versions-maven-plugin</artifactId>
         <configuration>
           <includeProperties>
-            common.version, clinicalprocess-healthcond-certificate.version, insuranceprocess-healthreporting.version
+            common.version, clinicalprocess-healthcond-certificate.version, insuranceprocess-healthreporting.version, se-intygstjanster-ts-services.version
           </includeProperties>
           <properties>
             <property>
@@ -223,6 +223,10 @@
             <property>
               <name>insuranceprocess-healthreporting.version</name>
               <version>${insuranceprocess-healthreporting.version.range}</version>
+            </property>
+            <property>
+              <name>se-intygstjanster-ts-services.version</name>
+              <version>${se-intygstjanster-ts-services.version.range}</version>
             </property>
           </properties>
         </configuration>
