@@ -82,8 +82,9 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
             String xml = xmlToString(registerMedicalCertificate);
             CertificateHolder certificateHolder = converterUtil.toCertificateHolder(utlatande);
             certificateHolder.setOriginalCertificate(xml);
+            certificateHolder.setWireTapped(wireTapped);
 
-            moduleApi.getModuleContainer().certificateReceived(certificateHolder, wireTapped);
+            moduleApi.getModuleContainer().certificateReceived(certificateHolder);
 
             response.setResult(ResultOfCallUtil.okResult());
 
