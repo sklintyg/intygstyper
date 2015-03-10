@@ -1,22 +1,29 @@
 package se.inera.certificate.modules.ts_diabetes.model.converter;
 
+import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvser;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvserKategori;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
+import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
 import se.inera.certificate.schema.Constants;
 import se.intygstjanster.ts.services.types.v1.II;
 import se.intygstjanster.ts.services.v1.BedomningTypDiabetes;
 import se.intygstjanster.ts.services.v1.Diabetes;
 import se.intygstjanster.ts.services.v1.GrundData;
 import se.intygstjanster.ts.services.v1.Hypoglykemier;
+import se.intygstjanster.ts.services.v1.IdentifieringsVarden;
+import se.intygstjanster.ts.services.v1.IdentitetStyrkt;
 import se.intygstjanster.ts.services.v1.IntygsAvserTypDiabetes;
 import se.intygstjanster.ts.services.v1.Korkortsbehorighet;
 import se.intygstjanster.ts.services.v1.KorkortsbehorighetTsDiabetes;
 import se.intygstjanster.ts.services.v1.Patient;
+import se.intygstjanster.ts.services.v1.SkapadAv;
 import se.intygstjanster.ts.services.v1.SynfunktionDiabetes;
 import se.intygstjanster.ts.services.v1.TSDiabetesIntyg;
+import se.intygstjanster.ts.services.v1.Vardenhet;
+import se.intygstjanster.ts.services.v1.Vardgivare;
 
 public class InternalToTransportConverter {
 	public static TSDiabetesIntyg convert(Utlatande utlatande) {
@@ -27,20 +34,27 @@ public class InternalToTransportConverter {
 		result.setGrundData(readGrundData(utlatande.getGrundData()));
 		result.setHypoglykemier(readHypoglykemier(utlatande.getHypoglykemier()));
 		//TODO:
-		//result.setIdentitetStyrkt(readIdentitetStyrkt(utlatande.get));
+		result.setIdentitetStyrkt(readIdentitetStyrkt(utlatande.getVardkontakt()));
 		result.setIntygAvser(readIntygAvser(utlatande.getIntygAvser()));
 		result.setIntygsId(utlatande.getId());
-		result.setIntygsTyp(utlatande.getTyp());
+		//TODO: temp, force type
+		result.setIntygsTyp("TSTRK1031 (U06, V06)");
 		result.setSeparatOgonLakarintygKommerSkickas(utlatande.getSyn().getSeparatOgonlakarintyg());
 		result.setSynfunktion(readSynfunktionDiabetes(utlatande.getSyn()));
-		//TODO: 
-		result.setUtgava("asdas");
-		//TODO:
-		result.setVersion("asdasd");
+		//TODO: temp, force utgåva
+		result.setUtgava("06");
+		//TODO: temp, force version
+		result.setVersion("02");
 		return result;
 	}
 
-	private static SynfunktionDiabetes readSynfunktionDiabetes(Syn syn) {
+	private static IdentitetStyrkt readIdentitetStyrkt(Vardkontakt vardkontakt) {
+	    IdentitetStyrkt result = new IdentitetStyrkt();
+        result.getIdkontroll().add(IdentifieringsVarden.fromValue(vardkontakt.getIdkontroll()));
+	    return result;
+    }
+
+    private static SynfunktionDiabetes readSynfunktionDiabetes(Syn syn) {
 		SynfunktionDiabetes result = new SynfunktionDiabetes();
 		result.setHarDiplopi(syn.getDiplopi());
 		result.setHarSynfaltsdefekt(syn.getSynfaltsprovningUtanAnmarkning() == false);
@@ -79,10 +93,52 @@ public class InternalToTransportConverter {
 	private static GrundData readGrundData(se.inera.certificate.model.common.internal.GrundData grundData) {
 		GrundData result = new GrundData();
 		result.setPatient(readPatient(grundData.getPatient()));
+		result.setSigneringsTidstampel(grundData.getSigneringsdatum().toString("yyyyMMdd'T'HHmmss"));
+		result.setSkapadAv(readSkapadAv(grundData.getSkapadAv()));
 		return result;
 	}
 
-	private static Patient readPatient(
+	private static SkapadAv readSkapadAv(HoSPersonal skapadAv) {
+	    SkapadAv result = new SkapadAv();
+	    
+	    II ii = new II();
+	    ii.setRoot(Constants.HSA_ID_OID);
+	    ii.setExtension(skapadAv.getPersonId());
+	    
+        result.setPersonId(ii);
+        result.setFullstandigtNamn(skapadAv.getFullstandigtNamn());
+        result.setVardenhet(readVardenhet(skapadAv.getVardenhet()));
+	    return result;
+    }
+
+    private static Vardenhet readVardenhet(se.inera.certificate.model.common.internal.Vardenhet vardenhet) {
+        Vardenhet result = new Vardenhet();
+        II ii = new II();
+        ii.setRoot(Constants.HSA_ID_OID);
+        ii.setExtension(vardenhet.getEnhetsid());
+        
+        result.setEnhetsId(ii);
+        result.setEnhetsnamn(vardenhet.getEnhetsnamn());
+        result.setPostadress(vardenhet.getPostadress());
+        result.setPostnummer(vardenhet.getPostnummer());
+        result.setPostort(vardenhet.getPostort());
+        result.setTelefonnummer(vardenhet.getTelefonnummer());
+        result.setVardgivare(readVardgivare(vardenhet.getVardgivare()));
+        return result;
+    }
+
+    private static Vardgivare readVardgivare(se.inera.certificate.model.common.internal.Vardgivare vardgivare) {
+        Vardgivare result = new Vardgivare();
+        II ii = new II();
+        ii.setRoot(Constants.HSA_ID_OID);
+        ii.setExtension(vardgivare.getVardgivarid());
+        
+        result.setVardgivarid(ii);
+        result.setVardgivarnamn(vardgivare.getVardgivarnamn());
+        return result;
+    }
+
+    private static Patient readPatient(
 			se.inera.certificate.model.common.internal.Patient patient) {
 		Patient result = new Patient();
 		result.setEfternamn(patient.getEfternamn());

@@ -40,8 +40,8 @@ public class InternalToTransportConverterTest {
 
     @Before
     public void setUp() throws Exception {
-        internalStream = getClass().getResourceAsStream("/scenarios/internal/valid-maximal.json");
-        transportStream = getClass().getResourceAsStream("/scenarios/transport/valid-maximal.xml");
+        internalStream = getClass().getResourceAsStream("/diabetes-test.json");
+        transportStream = getClass().getResourceAsStream("/diabetes-test.xml");
 
         ObjectMapper mapper = new CustomObjectMapper();
         utlatande = mapper.readValue(internalStream, Utlatande.class);
@@ -58,6 +58,8 @@ public class InternalToTransportConverterTest {
         
         StringWriter actual = new StringWriter();
         marshaller.marshal(wrapJaxb(converted), actual);
+        
+        System.out.println(actual.toString());
         
         XMLUnit.setIgnoreWhitespace(true);
         XMLUnit.setIgnoreAttributeOrder(true);

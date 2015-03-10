@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <ns1:TSBasIntyg xmlns:ns1="urn:local:se:intygstjanster:services:1"
+        xmlns:ns2="urn:local:se:intygstjanster:services:RegisterTSBasResponder:1"
+        xmlns:ns3="urn:local:se:intygstjanster:services:types:1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <ns1:intygsId>intygsId0</ns1:intygsId>
+        <ns1:intygsTyp>TSTRK1007 (U06, V06)</ns1:intygsTyp>
+        <ns1:version>06</ns1:version>
+        <ns1:utgava>06</ns1:utgava>
+        <ns1:grundData>
+            <ns1:signeringsTidstampel>2013-08-12T15:57:00.000</ns1:signeringsTidstampel>
+            <ns1:skapadAv>
+                <ns1:personId>
+                    <ns3:extension>SE0000000000-1333</ns3:extension>
+                    <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
+                </ns1:personId>
+                <ns1:fullstandigtNamn>Doktor Thompson</ns1:fullstandigtNamn>
+                <ns1:vardenhet>
+                    <ns1:enhetsId>
+                        <ns3:extension>SE0000000000-1337</ns3:extension>
+                        <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
+                    </ns1:enhetsId>
+                    <ns1:enhetsnamn>Vårdenhet Väst</ns1:enhetsnamn>
+                    <ns1:postadress>Enhetsvägen 12</ns1:postadress>
+                    <ns1:postnummer>54321</ns1:postnummer>
+                    <ns1:postort>Tumba</ns1:postort>
+                    <ns1:telefonnummer>08-1337</ns1:telefonnummer>
+                    <ns1:vardgivare>
+                        <ns1:vardgivarid>
+                            <ns3:extension>SE0000000000-HAHAHHSAA</ns3:extension>
+                            <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
+                        </ns1:vardgivarid>
+                        <ns1:vardgivarnamn>Vårdgivarnamn</ns1:vardgivarnamn>
+                    </ns1:vardgivare>
+                </ns1:vardenhet>
+                <ns1:specialiteter>SPECIALITET</ns1:specialiteter>
+                <ns1:befattningar>ST_LAKARE</ns1:befattningar>
+                <ns1:atLakare>false</ns1:atLakare>
+            </ns1:skapadAv>
+            <ns1:patient>
+                <ns1:personId>
+                    <ns3:root>1.2.752.129.2.1.3.1</ns3:root>
+                    <ns3:extension>19121212-1212</ns3:extension>
+                </ns1:personId>
+                <ns1:fullstandigtNamn>Herr Dundersjuk</ns1:fullstandigtNamn>
+                <ns1:fornamn>Herr</ns1:fornamn>
+                <ns1:efternamn>Dundersjuk</ns1:efternamn>
+                <ns1:postadress>Testvägen 12</ns1:postadress>
+                <ns1:postnummer>123456</ns1:postnummer>
+                <ns1:postort>Testort</ns1:postort>
+            </ns1:patient>
+        </ns1:grundData>
+        <ns1:intygAvser>
+            <ns1:korkortstyp>C</ns1:korkortstyp>
+            <ns1:korkortstyp>C1E</ns1:korkortstyp>
+            <ns1:korkortstyp>C1</ns1:korkortstyp>
+            <ns1:korkortstyp>CE</ns1:korkortstyp>
+            <ns1:korkortstyp>D1</ns1:korkortstyp>
+            <ns1:korkortstyp>D1E</ns1:korkortstyp>
+            <ns1:korkortstyp>D</ns1:korkortstyp>
+            <ns1:korkortstyp>DE</ns1:korkortstyp>
+            <ns1:korkortstyp>TAXI</ns1:korkortstyp>
+            <ns1:korkortstyp>ANNAT</ns1:korkortstyp>
+        </ns1:intygAvser>
+        <ns1:identitetStyrkt>
+            <ns1:idkontroll>IDK6</ns1:idkontroll>
+        </ns1:identitetStyrkt>
+        <ns1:synfunktion>
+            <ns1:harSynfaltsdefekt>true</ns1:harSynfaltsdefekt>
+            <ns1:harNattblindhet>true</ns1:harNattblindhet>
+            <ns1:harProgressivOgonsjukdom>true</ns1:harProgressivOgonsjukdom>
+            <ns1:harDiplopi>true</ns1:harDiplopi>
+            <ns1:harNystagmus>true</ns1:harNystagmus>
+            <ns1:harGlasStyrkaOver8Dioptrier>true</ns1:harGlasStyrkaOver8Dioptrier>
+            <ns1:synskarpaUtanKorrektion>
+                <ns1:hogerOga>0</ns1:hogerOga>
+                <ns1:vansterOga>0</ns1:vansterOga>
+                <ns1:binokulart>0</ns1:binokulart>
+            </ns1:synskarpaUtanKorrektion>
+            <ns1:synskarpaMedKorrektion>
+                <ns1:hogerOga>0</ns1:hogerOga>
+                <ns1:vansterOga>0</ns1:vansterOga>
+                <ns1:binokulart>0</ns1:binokulart>
+            </ns1:synskarpaMedKorrektion>
+        </ns1:synfunktion>
+        <ns1:horselBalanssinne>
+            <ns1:harBalansrubbningYrsel>true</ns1:harBalansrubbningYrsel>
+            <ns1:harSvartUppfattaSamtal4Meter>true</ns1:harSvartUppfattaSamtal4Meter>
+        </ns1:horselBalanssinne>
+        <ns1:rorelseorganensFunktioner>
+            <ns1:harRorelsebegransning>true</ns1:harRorelsebegransning>
+            <ns1:rorelsebegransningBeskrivning>Spik i foten</ns1:rorelsebegransningBeskrivning>
+            <ns1:harOtillrackligRorelseformagaPassagerare>true</ns1:harOtillrackligRorelseformagaPassagerare>
+        </ns1:rorelseorganensFunktioner>
+        <ns1:hjartKarlSjukdomar>
+            <ns1:harRiskForsamradHjarnFunktion>true</ns1:harRiskForsamradHjarnFunktion>
+            <ns1:harHjarnskadaICNS>true</ns1:harHjarnskadaICNS>
+            <ns1:harRiskfaktorerStroke>true</ns1:harRiskfaktorerStroke>
+            <ns1:riskfaktorerStrokeBeskrivning>Förkärlek för Elvismackor</ns1:riskfaktorerStrokeBeskrivning>
+        </ns1:hjartKarlSjukdomar>
+        <ns1:diabetes>
+            <ns1:harDiabetes>true</ns1:harDiabetes>
+            <ns1:diabetesTyp>TYP2</ns1:diabetesTyp>
+            <ns1:harBehandlingKost>true</ns1:harBehandlingKost>
+        </ns1:diabetes>
+        <ns1:neurologiskaSjukdomar>true</ns1:neurologiskaSjukdomar>
+        <ns1:medvetandestorning>
+            <ns1:harMedvetandestorning>true</ns1:harMedvetandestorning>
+            <ns1:medvetandestorningBeskrivning>Beskrivning</ns1:medvetandestorningBeskrivning>
+        </ns1:medvetandestorning>
+        <ns1:harNjurSjukdom>true</ns1:harNjurSjukdom>
+        <ns1:harKognitivStorning>true</ns1:harKognitivStorning>
+        <ns1:harSomnVakenhetStorning>true</ns1:harSomnVakenhetStorning>
+        <ns1:alkoholNarkotikaLakemedel>
+            <ns1:harTeckenMissbruk>true</ns1:harTeckenMissbruk>
+            <ns1:harVardinsats>true</ns1:harVardinsats>
+            <ns1:harLakarordineratLakemedelsbruk>true</ns1:harLakarordineratLakemedelsbruk>
+            <ns1:lakarordineratLakemedelOchDos>Läkemedel och dos</ns1:lakarordineratLakemedelOchDos>
+            <ns1:harVardinsatsProvtagningBehov>true</ns1:harVardinsatsProvtagningBehov>
+        </ns1:alkoholNarkotikaLakemedel>
+        <ns1:harPsykiskStorning>true</ns1:harPsykiskStorning>
+        <ns1:utvecklingsstorning>
+            <ns1:harPsykiskUtvecklingsstorning>true</ns1:harPsykiskUtvecklingsstorning>
+            <ns1:harAndrayndrom>true</ns1:harAndrayndrom>
+        </ns1:utvecklingsstorning>
+        <ns1:sjukhusvard>
+           <ns1:harSjukhusvardEllerLakarkontakt>true</ns1:harSjukhusvardEllerLakarkontakt>
+           <ns1:sjukhusvardEllerLakarkontaktDatum>20 Januari</ns1:sjukhusvardEllerLakarkontaktDatum>
+           <ns1:sjukhusvardEllerLakarkontaktVardinrattning>Vårdcentralen</ns1:sjukhusvardEllerLakarkontaktVardinrattning>
+           <ns1:sjukhusvardEllerLakarkontaktAnledning>Akut lungsot</ns1:sjukhusvardEllerLakarkontaktAnledning>
+        </ns1:sjukhusvard>
+        <ns1:ovrigMedicinering>
+            <ns1:harStadigvarandeMedicinering>true</ns1:harStadigvarandeMedicinering>
+            <ns1:stadigvarandeMedicineringBeskrivning>Alvedon</ns1:stadigvarandeMedicineringBeskrivning>
+        </ns1:ovrigMedicinering>
+        <ns1:ovrigKommentar>Här kommer en övrig kommentar</ns1:ovrigKommentar>
+        <ns1:bedomning>
+            <ns1:korkortstyp>C</ns1:korkortstyp>
+            <ns1:korkortstyp>C1E</ns1:korkortstyp>
+            <ns1:korkortstyp>C1</ns1:korkortstyp>
+            <ns1:korkortstyp>CE</ns1:korkortstyp>
+            <ns1:korkortstyp>D1</ns1:korkortstyp>
+            <ns1:korkortstyp>D1E</ns1:korkortstyp>
+            <ns1:korkortstyp>D</ns1:korkortstyp>
+            <ns1:korkortstyp>DE</ns1:korkortstyp>
+            <ns1:korkortstyp>TAXI</ns1:korkortstyp>
+            <ns1:korkortstyp>ANNAT</ns1:korkortstyp>
+            <ns1:kanInteTaStallning>false</ns1:kanInteTaStallning>
+            <ns1:behovAvLakareSpecialistKompetens>Spektralanalys</ns1:behovAvLakareSpecialistKompetens>"
+        </ns1:bedomning>
+    </ns1:TSBasIntyg>
