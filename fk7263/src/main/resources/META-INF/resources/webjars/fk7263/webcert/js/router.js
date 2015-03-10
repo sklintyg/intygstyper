@@ -6,7 +6,7 @@ angular.module('fk7263').config(function($stateProvider) {
     $stateProvider.
         state('fk7263-edit', {
             url : '/fk7263/edit/:certificateId',
-            templateUrl: '/web/webjars/fk7263/webcert/views/edit-cert.html',
+            templateUrl: '/web/webjars/fk7263/webcert/js/intyg/edit/intyg-edit.html',
             controller: 'fk7263.EditCertCtrl'
         });
 });

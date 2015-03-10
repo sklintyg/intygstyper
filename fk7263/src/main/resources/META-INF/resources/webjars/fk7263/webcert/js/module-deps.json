@@ -1,11 +1,11 @@
 [
     "/web/webjars/fk7263/webcert/js/router.js",
     "/web/webjars/fk7263/webcert/js/messages.js",
-    "/web/webjars/fk7263/webcert/js/controllers/EditCertCtrl.js",
-    "/web/webjars/fk7263/webcert/js/controllers/EditCertCtrl/dateRangeGroup.model.js",
-    "/web/webjars/fk7263/webcert/js/controllers/EditCertCtrl/dateRangeGroups.service.js",
+    "/web/webjars/fk7263/webcert/js/intyg/edit/intyg-edit.controller.js",
+    "/web/webjars/fk7263/webcert/js/intyg/edit/dateRangeGroup.model.js",
+    "/web/webjars/fk7263/webcert/js/intyg/edit/dateRangeGroups.service.js",
+    "/web/webjars/fk7263/webcert/js/intyg/view/intyg-view.controller.js",
     "/web/webjars/fk7263/webcert/js/controllers/QACtrl.js",
-    "/web/webjars/fk7263/webcert/js/controllers/ViewCertCtrl.js",
     "/web/webjars/fk7263/webcert/js/services/fragaSvarService.js",
     "/web/webjars/fk7263/webcert/js/services/diagnosService.js"
 ]
