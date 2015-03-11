@@ -1,0 +1,18 @@
+<div wc-field field-label="fk7263.label.atgarder" field-number="6b"
+     ng-hide="cert.avstangningSmittskydd" field-help-text="fk7263.helptext.atgarder"
+     class="print-pagebreak-after">
+  <div class="form-group">
+    <label class="control-label">Planerad eller pågående behandling eller åtgärd inom sjukvården (ange
+      vilken)</label>
+                      <textarea id="measuresCurrent" class="form-control" name="measures.current" rows='2'
+                                ng-model="cert.atgardInomSjukvarden" wc-maxlength ng-trim="false"
+                                maxlength="{{inputLimits.atgardInomSjukvarden}}"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Annan åtgärd (ange vilken)</label>
+                      <textarea id="measuresOther" class="form-control" name="measures.other" rows='2'
+                                ng-model="cert.annanAtgard" wc-maxlength ng-trim="false"
+                                maxlength="{{inputLimits.annanAtgard}}"></textarea>
+  </div>
+</div>

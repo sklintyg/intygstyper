@@ -1,0 +1,18 @@
+<div wc-field field-label="fk7263.label.funktionsnedsattningar" field-number="4"
+     field-help-text="fk7263.helptext.funktionsnedsattning" ng-hide="cert.avstangningSmittskydd"
+     ng-animate="'fade'">
+  <div class="alert alert-danger" ng-if="validationMessagesGrouped.funktionsnedsattning" id="validationMessages_funktionsnedsattning">
+    <ul>
+      <li ng-repeat="message in validationMessagesGrouped.funktionsnedsattning"><span message
+                                                                                      key="{{message.message}}"></span>
+      </li>
+    </ul>
+  </div>
+
+  <a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod"
+     target="_blank" title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
+    försäkringsmedicinska beslutstöd</a>
+                    <textarea id="disabilities" class="form-control" name="disabilities" rows='6'
+                              ng-model="cert.funktionsnedsattning" wc-maxlength ng-trim="false"
+                              maxlength="{{inputLimits.funktionsnedsattning}}"></textarea>
+</div>

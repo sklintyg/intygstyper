@@ -1,0 +1,51 @@
+<div wc-field field-label="fk7263.label.vardenhet.adress" field-number="15"
+     field-help-text="fk7263.helptext.adress" id="vardenhetForm">
+  <div class="alert alert-danger" ng-if="validationMessagesGrouped.vardperson" id="validationMessages_vardperson">
+    <ul>
+      <li ng-repeat="message in validationMessagesGrouped.vardperson"><span message
+                                                                            key="{{message.message}}"></span>
+      </li>
+    </ul>
+  </div>
+
+  <label class="control-label">{{cert.grundData.skapadAv.vardenhet.enhetsnamn}}
+    ({{cert.grundData.skapadAv.vardenhet.enhetsid}}),
+    {{cert.grundData.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</label>
+
+  <div class="alert alert-info" ng-show="widgetState.hasInfoMissing">
+    Information om vårdenheten saknas i HSA-katalogen. Be den på vårdenheten som är ansvarig för
+    frågor om HSA att uppdatera informationen.
+  </div>
+
+  <div class="form-horizontal">
+    <div class="form-group">
+      <label class="col-xs-3 control-label">Postadress</label>
+      <div class="col-xs-9">
+        <input type="text" class="form-control input-full" id="clinicInfoPostalAddress"
+               name="clinicInfo.postalAddress"
+               ng-model="cert.grundData.skapadAv.vardenhet.postadress">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-3 control-label">Postnummer</label>
+      <div class="col-xs-9">
+        <input type="text" class="form-control input-5" id="clinicInfoPostalCode"
+               name="clinicInfo.postalCode" ng-model="cert.grundData.skapadAv.vardenhet.postnummer">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-3 control-label">Postort</label>
+      <div class="col-xs-9">
+        <input type="text" class="form-control" id="clinicInfoPostalCity" name="clinicInfo.postalCity"
+               ng-model="cert.grundData.skapadAv.vardenhet.postort">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-3 control-label">Telefonnummer</label>
+      <div class="col-xs-9">
+        <input type="text" class="form-control" id="clinicInfoPhone" name="clinicInfo.phone"
+               ng-model="cert.grundData.skapadAv.vardenhet.telefonnummer" >
+      </div>
+    </div>
+  </div>
+</div>

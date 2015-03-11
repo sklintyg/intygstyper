@@ -786,6 +786,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 $timeout(function() {
                     wcFocus('firstInput');
                     $rootScope.$broadcast('intyg.loaded', $scope.cert);
+                    $scope.widgetState.doneLoading = true;
                 }, 10);
             });
 
