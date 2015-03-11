@@ -16,23 +16,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.ts_bas.validator;
+package se.inera.certificate.modules.ts_bas.model.codes;
 
-import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.certificate.modules.ts_bas.validator.internal.InternalValidatorInstance;
+/**
+ * Represents all the codes used by this module to define HoSPersonal.
+ */
+public enum DiabetesKod {
 
-public class Validator {
+    /** Donders konfrontationsmetod (används vid synfältsprövning). */
+    DIABETES_TYP_1("TYP1"),
+    DIABETES_TYP_2("TYP2");
 
-    /**
-     * Validates an external Utlatande.
-     *
-     * @param utlatande
-     *            se.inera.certificate.modules.ts_bas.model.external.Utlatande
-     * @return List of validation errors, or an empty string if validated correctly
-     */
-    public ValidateDraftResponse validateInternal(
-            se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande) {
-        InternalValidatorInstance instance = new InternalValidatorInstance();
-        return instance.validate(utlatande);
+    private String code;
+
+
+    private DiabetesKod(String code) {
+        this.code = code;
+    }
+
+    public String getCode() {
+        return this.code;
     }
 }

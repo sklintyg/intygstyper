@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:http="http://cxf.apache.org/transports/http/configuration"
+       xmlns:cxf="http://cxf.apache.org/core" xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:sec="http://cxf.apache.org/configuration/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://cxf.apache.org/core
+        http://cxf.apache.org/schemas/core.xsd
+        http://cxf.apache.org/transports/http/configuration
+        http://cxf.apache.org/schemas/configuration/http-conf.xsd
+        http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+        http://cxf.apache.org/configuration/security http://cxf.apache.org/schemas/configuration/security.xsd">
+
+  <cxf:bus>
+    <cxf:features>
+      <cxf:logging/>
+    </cxf:features>
+  </cxf:bus>
+
+  <!-- ws endpoints -->
+  <jaxws:endpoint address="/get-certificate/v1.0"
+                  implementor="se.inera.certificate.modules.ts-bas.integration.GetTSBasResponderImpl">
+    <jaxws:outFaultInterceptors>
+      <bean class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
+        <constructor-arg value="transform/get-certificate-transform.xslt"/>
+      </bean>
+    </jaxws:outFaultInterceptors>
+
+  </jaxws:endpoint>
+
+  <bean id="registerCertificateEndPoint" class="se.inera.certificate.modules.ts-bas.integration.RegisterTSBasResponderImpl">
+      <property name="wireTapped" value="false" />
+  </bean>
+  
+  <jaxws:endpoint address="/register-certificate/v3.0"
+                  implementor="#registerCertificateEndPoint">
+    <jaxws:outFaultInterceptors>
+      <bean class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
+        <constructor-arg value="transform/register-medical-certificate-transform.xslt"/>
+      </bean>
+    </jaxws:outFaultInterceptors>
+  </jaxws:endpoint>
+
+</beans>

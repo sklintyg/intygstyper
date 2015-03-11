@@ -22,9 +22,6 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
 
-import javax.xml.bind.JAXBContext;
-
-import org.apache.commons.lang.NotImplementedException;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,9 +53,9 @@ import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGenerator;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.ts_bas.validator.Validator;
-import se.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
-import se.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
-import se.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
+import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
+import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
+import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -81,10 +78,6 @@ public class ModuleService implements ModuleApi {
 
     @Autowired
     private WebcertModelFactory webcertModelFactory;
-
-    @Autowired
-    @Qualifier("ts-bas-jaxbContext")
-    private JAXBContext jaxbContext;
 
     @Autowired
     @Qualifier("ts-bas-objectMapper")
@@ -204,12 +197,12 @@ public class ModuleService implements ModuleApi {
 
     @Override
     public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException("Unsupported for this module");
     }
 
     @Override
     public Object createNotification(NotificationMessage notificationMessage) throws ModuleException {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException("Unsupported for this module");
     }
 
     // - - - - - Private scope - - - - - //

@@ -18,16 +18,12 @@
  */
 package se.inera.certificate.modules.ts_bas.rest;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static se.inera.certificate.modules.support.api.dto.TransportModelVersion.UTLATANDE_V1;
 
 import java.io.StringWriter;
 
-import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXB;
 import javax.xml.bind.JAXBException;
-
-import junit.framework.Assert;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,13 +42,10 @@ import se.inera.certificate.modules.support.api.dto.TransportModelHolder;
 import se.inera.certificate.modules.support.api.dto.Vardenhet;
 import se.inera.certificate.modules.support.api.dto.Vardgivare;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
-import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_bas.utils.ModelAssert;
-import se.inera.certificate.modules.ts_bas.utils.ResourceConverterUtils;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
-import se.intygstjanster.ts.services.v1.TSBasIntyg;
+import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -68,9 +61,6 @@ public class ModuleApiTest {
     /** An HTTP client proxy wired to the test HTTP server. */
     @Autowired
     private se.inera.certificate.modules.support.api.ModuleApi moduleApi;
-
-    @Autowired
-    private JAXBContext jaxbContext;
 
     @Autowired
     private ObjectMapper mapper;
@@ -156,7 +146,7 @@ public class ModuleApiTest {
     private TransportModelHolder createTransportHolder(TSBasIntyg transportModel)
             throws JAXBException {
         StringWriter writer = new StringWriter();
-        jaxbContext.createMarshaller().marshal(transportModel, writer);
+        JAXB.marshal(transportModel, writer);
         return new TransportModelHolder(writer.toString());
     }
 

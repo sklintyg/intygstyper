@@ -30,7 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.utils.ModelAssert;
-import se.intygstjanster.ts.services.v1.TSBasIntyg;
+import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 /**
  * Test class for TransportToExternal, contains methods for setting up Utlatande using both the transport model and the

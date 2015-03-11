@@ -18,22 +18,22 @@ import se.inera.certificate.modules.ts_bas.model.internal.BedomningKorkortstyp;
 import se.inera.certificate.modules.ts_bas.model.internal.IntygAvserKategori;
 import se.inera.certificate.modules.ts_bas.model.internal.Synskarpevarden;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
-import se.intygstjanster.ts.services.v1.AlkoholNarkotikaLakemedel;
-import se.intygstjanster.ts.services.v1.BedomningTypBas;
-import se.intygstjanster.ts.services.v1.DiabetesTypBas;
-import se.intygstjanster.ts.services.v1.HjartKarlSjukdomar;
-import se.intygstjanster.ts.services.v1.HorselBalanssinne;
-import se.intygstjanster.ts.services.v1.IdentitetStyrkt;
-import se.intygstjanster.ts.services.v1.IntygsAvserTypBas;
-import se.intygstjanster.ts.services.v1.KorkortsbehorighetTsBas;
-import se.intygstjanster.ts.services.v1.Medvetandestorning;
-import se.intygstjanster.ts.services.v1.OvrigMedicinering;
-import se.intygstjanster.ts.services.v1.RorelseorganenFunktioner;
-import se.intygstjanster.ts.services.v1.Sjukhusvard;
-import se.intygstjanster.ts.services.v1.SkapadAv;
-import se.intygstjanster.ts.services.v1.SynfunktionBas;
-import se.intygstjanster.ts.services.v1.TSBasIntyg;
-import se.intygstjanster.ts.services.v1.Utvecklingsstorning;
+import se.inera.intygstjanster.ts.services.v1.AlkoholNarkotikaLakemedel;
+import se.inera.intygstjanster.ts.services.v1.BedomningTypBas;
+import se.inera.intygstjanster.ts.services.v1.DiabetesTypBas;
+import se.inera.intygstjanster.ts.services.v1.HjartKarlSjukdomar;
+import se.inera.intygstjanster.ts.services.v1.HorselBalanssinne;
+import se.inera.intygstjanster.ts.services.v1.IdentitetStyrkt;
+import se.inera.intygstjanster.ts.services.v1.IntygsAvserTypBas;
+import se.inera.intygstjanster.ts.services.v1.KorkortsbehorighetTsBas;
+import se.inera.intygstjanster.ts.services.v1.Medvetandestorning;
+import se.inera.intygstjanster.ts.services.v1.OvrigMedicinering;
+import se.inera.intygstjanster.ts.services.v1.RorelseorganenFunktioner;
+import se.inera.intygstjanster.ts.services.v1.Sjukhusvard;
+import se.inera.intygstjanster.ts.services.v1.SkapadAv;
+import se.inera.intygstjanster.ts.services.v1.SynfunktionBas;
+import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
+import se.inera.intygstjanster.ts.services.v1.Utvecklingsstorning;
 
 public class TransportToInternal {
 
@@ -233,7 +233,7 @@ public class TransportToInternal {
     }
 
     // Grunddata
-    private static GrundData convertGrundData(se.intygstjanster.ts.services.v1.GrundData source) {
+    private static GrundData convertGrundData(se.inera.intygstjanster.ts.services.v1.GrundData source) {
         GrundData grundData = new GrundData();
         grundData.setPatient(convertPatient(source.getPatient()));
         grundData.setSigneringsdatum(LocalDateTime.parse(source.getSigneringsTidstampel()));
@@ -251,7 +251,7 @@ public class TransportToInternal {
         return hosPersonal;
     }
 
-    private static Vardenhet convertVardenhet(se.intygstjanster.ts.services.v1.Vardenhet source) {
+    private static Vardenhet convertVardenhet(se.inera.intygstjanster.ts.services.v1.Vardenhet source) {
         Vardenhet vardenhet = new Vardenhet();
         vardenhet.setEnhetsid(source.getEnhetsId().getExtension());
         vardenhet.setEnhetsnamn(source.getEnhetsnamn());
@@ -263,14 +263,14 @@ public class TransportToInternal {
         return vardenhet;
     }
 
-    private static Vardgivare convertVardgivare(se.intygstjanster.ts.services.v1.Vardgivare source) {
+    private static Vardgivare convertVardgivare(se.inera.intygstjanster.ts.services.v1.Vardgivare source) {
         Vardgivare vardgivare = new Vardgivare();
         vardgivare.setVardgivarid(source.getVardgivarid().getExtension());
         vardgivare.setVardgivarnamn(source.getVardgivarnamn());
         return vardgivare;
     }
 
-    private static Patient convertPatient(se.intygstjanster.ts.services.v1.Patient source) {
+    private static Patient convertPatient(se.inera.intygstjanster.ts.services.v1.Patient source) {
         Patient patient = new Patient();
         patient.setEfternamn(source.getEfternamn());
         patient.setFornamn(source.getFornamn());

@@ -9,7 +9,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 
-import se.intygstjanster.ts.services.v1.TSBasIntyg;
+import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 /**
  * Finds and creates scenarios based on scenario files placed in src/test/resources.

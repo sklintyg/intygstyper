@@ -23,13 +23,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.converter.util.ConverterException;
+import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
+import se.inera.certificate.modules.ts_bas.model.codes.KorkortsKod;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_bas.model.internal.BedomningKorkortstyp;
@@ -43,34 +45,34 @@ import se.inera.certificate.modules.ts_bas.model.internal.Medicinering;
 import se.inera.certificate.modules.ts_bas.model.internal.NarkotikaLakemedel;
 import se.inera.certificate.modules.ts_bas.model.internal.Syn;
 import se.inera.certificate.schema.Constants;
-import se.intygstjanster.ts.services.types.v1.II;
-import se.intygstjanster.ts.services.v1.AlkoholNarkotikaLakemedel;
-import se.intygstjanster.ts.services.v1.BedomningTypBas;
-import se.intygstjanster.ts.services.v1.DiabetesTypBas;
-import se.intygstjanster.ts.services.v1.DiabetesTypVarden;
-import se.intygstjanster.ts.services.v1.GrundData;
-import se.intygstjanster.ts.services.v1.HjartKarlSjukdomar;
-import se.intygstjanster.ts.services.v1.HorselBalanssinne;
-import se.intygstjanster.ts.services.v1.IdentifieringsVarden;
-import se.intygstjanster.ts.services.v1.IdentitetStyrkt;
-import se.intygstjanster.ts.services.v1.IntygsAvserTypBas;
-import se.intygstjanster.ts.services.v1.KorkortsbehorighetTsBas;
-import se.intygstjanster.ts.services.v1.Medvetandestorning;
-import se.intygstjanster.ts.services.v1.OvrigMedicinering;
-import se.intygstjanster.ts.services.v1.Patient;
-import se.intygstjanster.ts.services.v1.RorelseorganenFunktioner;
-import se.intygstjanster.ts.services.v1.Sjukhusvard;
-import se.intygstjanster.ts.services.v1.SkapadAv;
-import se.intygstjanster.ts.services.v1.SynfunktionBas;
-import se.intygstjanster.ts.services.v1.SynskarpaMedKorrektion;
-import se.intygstjanster.ts.services.v1.SynskarpaUtanKorrektion;
-import se.intygstjanster.ts.services.v1.TSBasIntyg;
-import se.intygstjanster.ts.services.v1.Utvecklingsstorning;
-import se.intygstjanster.ts.services.v1.Vardenhet;
-import se.intygstjanster.ts.services.v1.Vardgivare;
+import se.inera.intygstjanster.ts.services.types.v1.II;
+import se.inera.intygstjanster.ts.services.v1.AlkoholNarkotikaLakemedel;
+import se.inera.intygstjanster.ts.services.v1.BedomningTypBas;
+import se.inera.intygstjanster.ts.services.v1.DiabetesTypBas;
+import se.inera.intygstjanster.ts.services.v1.DiabetesTypVarden;
+import se.inera.intygstjanster.ts.services.v1.GrundData;
+import se.inera.intygstjanster.ts.services.v1.HjartKarlSjukdomar;
+import se.inera.intygstjanster.ts.services.v1.HorselBalanssinne;
+import se.inera.intygstjanster.ts.services.v1.IdentifieringsVarden;
+import se.inera.intygstjanster.ts.services.v1.IdentitetStyrkt;
+import se.inera.intygstjanster.ts.services.v1.IntygsAvserTypBas;
+import se.inera.intygstjanster.ts.services.v1.KorkortsbehorighetTsBas;
+import se.inera.intygstjanster.ts.services.v1.Medvetandestorning;
+import se.inera.intygstjanster.ts.services.v1.OvrigMedicinering;
+import se.inera.intygstjanster.ts.services.v1.Patient;
+import se.inera.intygstjanster.ts.services.v1.RorelseorganenFunktioner;
+import se.inera.intygstjanster.ts.services.v1.Sjukhusvard;
+import se.inera.intygstjanster.ts.services.v1.SkapadAv;
+import se.inera.intygstjanster.ts.services.v1.SynfunktionBas;
+import se.inera.intygstjanster.ts.services.v1.SynskarpaMedKorrektion;
+import se.inera.intygstjanster.ts.services.v1.SynskarpaUtanKorrektion;
+import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
+import se.inera.intygstjanster.ts.services.v1.Utvecklingsstorning;
+import se.inera.intygstjanster.ts.services.v1.Vardenhet;
+import se.inera.intygstjanster.ts.services.v1.Vardgivare;
 
 /**
- * Convert from {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande} to the external {@link Utlatande}
+ * Convert from {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande} to the external {@link TSBasIntyg}
  * model.
  *
  * @author erik
@@ -86,7 +88,7 @@ public class InternalToTransport {
      * @param source
      *            {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande}
      *
-     * @return {@link Utlatande}, unless the source is null in which case a
+     * @return {@link TSBasIntyg}, unless the source is null in which case a
      *         {@link se.inera.certificate.model.converter.util.ConverterException} is thrown
      *
      * @throws se.inera.certificate.model.converter.util.ConverterException
@@ -156,36 +158,9 @@ public class InternalToTransport {
     private static Collection<? extends KorkortsbehorighetTsBas> convertToKorkortsbehorighetTsBas(Set<BedomningKorkortstyp> source) {
         List<KorkortsbehorighetTsBas> behorigheter = new ArrayList<KorkortsbehorighetTsBas>();
         for (BedomningKorkortstyp typ : source) {
-            behorigheter.add(KorkortsbehorighetTsBas.valueOf(mapToKorkortsbehorighetTsBas(typ.name())));
+            behorigheter.add(KorkortsbehorighetTsBas.valueOf(KorkortsKod.valueOf(typ.name()).getCode()));
         }
         return behorigheter;
-    }
-
-    private static String mapToKorkortsbehorighetTsBas(String name) {
-        switch(name) {
-        case "C":
-            return "C";
-        case "C1":
-            return "C_1";
-        case "C1E":
-            return "C_1_E";
-        case "D1":
-            return "D_1";
-        case "D1E":
-            return "D_1_E";
-        case "D":
-            return "D";
-        case "DE":
-            return "DE";
-        case "CE":
-            return "CE";
-        case "TAXI":
-            return "TAXI";
-        case "ANNAT":
-            return "ANNAT";
-        default:
-            return null;
-        }
     }
 
     private static DiabetesTypBas buildDiabetesTypBas(Diabetes source) {
@@ -220,34 +195,15 @@ public class InternalToTransport {
 
     private static IdentitetStyrkt buildIdentitetStyrkt(se.inera.certificate.modules.ts_bas.model.internal.Vardkontakt source) {
         IdentitetStyrkt identitetStyrkt = new IdentitetStyrkt();
-        identitetStyrkt.getIdkontroll().add(IdentifieringsVarden.valueOf(mapToIdentifieringsVarde(source.getIdkontroll())));
+        identitetStyrkt.getIdkontroll().add(IdentifieringsVarden.valueOf(IdKontrollKod.valueOf(source.getIdkontroll()).getCode()));
         return identitetStyrkt;
-    }
-
-    private static String mapToIdentifieringsVarde(String idkontroll) {
-        switch (idkontroll) {
-        case "ID_KORT":
-            return "IDK_1";
-        case "FORETAG_ELLER_TJANSTEKORT":
-            return "IDK_2";
-        case "KORKORT":
-            return "IDK_3";
-        case "PERS_KANNEDOM":
-            return "IDK_4";
-        case "FORSAKRAN_KAP18":
-            return "IDK_5";
-        case "PASS":
-            return "IDK_6";
-        default:
-            return null;
-        }
     }
 
     private static IntygsAvserTypBas buildIntygAvser(IntygAvser source) {
         
         IntygsAvserTypBas intygAvser = new IntygsAvserTypBas();
         for (IntygAvserKategori kat : source.getKorkortstyp()) {
-            intygAvser.getKorkortstyp().add(KorkortsbehorighetTsBas.valueOf(mapToKorkortsbehorighetTsBas(kat.name())));
+            intygAvser.getKorkortstyp().add(KorkortsbehorighetTsBas.valueOf(KorkortsKod.valueOf(kat.name()).getCode()));
         }
         return intygAvser;
     }
@@ -312,6 +268,8 @@ public class InternalToTransport {
         synMedKorrektion.setHogerOga(hoger);
         synMedKorrektion.setVansterOga(vanster);
         synMedKorrektion.setBinokulart(binokulart);
+        synMedKorrektion.setHarKontaktlinsHogerOga(kontaktlinsHoger);
+        synMedKorrektion.setHarKontaktlinsVansterOga(kontaktlinsVanster);
         return synMedKorrektion;
     }
 

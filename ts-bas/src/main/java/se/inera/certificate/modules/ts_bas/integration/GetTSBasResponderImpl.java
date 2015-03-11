@@ -19,13 +19,13 @@ import se.inera.certificate.modules.support.api.CertificateHolder;
 import se.inera.certificate.modules.ts_bas.model.converter.InternalToTransport;
 import se.inera.certificate.modules.ts_bas.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.ts_bas.rest.ModuleService;
-import se.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
-import se.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
-import se.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
-import se.intygstjanster.ts.services.utils.ResultTypeUtil;
-import se.intygstjanster.ts.services.v1.ErrorIdType;
-import se.intygstjanster.ts.services.v1.IntygMeta;
-import se.intygstjanster.ts.services.v1.TSBasIntyg;
+import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
+import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
+import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
+import se.inera.intygstjanster.ts.services.utils.ResultTypeUtil;
+import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
+import se.inera.intygstjanster.ts.services.v1.IntygMeta;
+import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 import com.google.common.base.Throwables;
 

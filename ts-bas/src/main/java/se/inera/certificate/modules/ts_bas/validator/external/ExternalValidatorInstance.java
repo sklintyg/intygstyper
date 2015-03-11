@@ -22,51 +22,31 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import se.inera.certificate.model.Id;
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Patient;
-import se.inera.certificate.model.Vardenhet;
-import se.inera.certificate.model.Vardgivare;
-import se.inera.certificate.modules.ts_bas.model.codes.AktivitetKod;
-import se.inera.certificate.model.common.codes.CodeConverter;
-import se.inera.certificate.model.common.codes.CodeSystem;
-import se.inera.certificate.model.common.codes.HSpersonalKod;
-import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
-import se.inera.certificate.modules.ts_bas.model.codes.IntygAvserKod;
-import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
-import se.inera.certificate.model.common.codes.SpecialitetKod;
-import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
-import se.inera.certificate.modules.ts_bas.model.codes.VardkontakttypKod;
-import se.inera.certificate.model.common.external.HosPersonal;
-import se.inera.certificate.modules.ts_bas.utils.model.external.Aktivitet;
-import se.inera.certificate.modules.ts_bas.utils.model.external.Observation;
-import se.inera.certificate.modules.ts_bas.utils.model.external.ObservationAktivitetRelation;
-import se.inera.certificate.modules.ts_bas.utils.model.external.Utlatande;
-import se.inera.certificate.modules.ts_bas.utils.model.external.Vardkontakt;
-import se.inera.certificate.validate.IdValidator;
-import se.inera.certificate.validate.SimpleIdValidatorBuilder;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.HosPersonal;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Vardkontakt;
+import se.inera.certificate.schema.Constants;
+import se.inera.certificate.validate.PersonnummerValidator;
+import se.inera.intygstjanster.ts.services.types.v1.II;
+import se.inera.intygstjanster.ts.services.v1.IdentitetStyrkt;
+import se.inera.intygstjanster.ts.services.v1.Patient;
+import se.inera.intygstjanster.ts.services.v1.SkapadAv;
+import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
+import se.inera.intygstjanster.ts.services.v1.Vardenhet;
+import se.inera.intygstjanster.ts.services.v1.Vardgivare;
+
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 public class ExternalValidatorInstance {
+
+    private static PersonnummerValidator ID_VALIDATOR;
 
     private final List<String> validationErrors;
 
     private ValidationContext context;
 
-    private AktiviteterValidationInstance aktivitetInstance;
-    private ObservationerValidationInstance observationInstance;
-
-    private static final IdValidator ID_VALIDATOR;
-
-    static {
-        SimpleIdValidatorBuilder builder = new SimpleIdValidatorBuilder();
-        builder.withPersonnummerValidator(false);
-        builder.withSamordningsnummerValidator(false);
-
-        ID_VALIDATOR = builder.build();
-    }
-
     public ExternalValidatorInstance() {
         validationErrors = new ArrayList<>();
+        ID_VALIDATOR = new PersonnummerValidator();
     }
 
     ExternalValidatorInstance(List<String> validationErrors, ValidationContext context) {
@@ -74,20 +54,18 @@ public class ExternalValidatorInstance {
         this.context = context;
     }
 
-    public List<String> validate(Utlatande utlatande) {
+    public List<String> validate(TSBasIntyg utlatande) {
         context = new ValidationContext(utlatande);
-        aktivitetInstance = new AktiviteterValidationInstance(this, utlatande.getAktiviteter());
-        observationInstance = new ObservationerValidationInstance(this, utlatande.getObservationer());
-        RekommendationerValidationInstance rekommendationInstance = new RekommendationerValidationInstance(this, utlatande.getRekommendationer());
 
         validateUtlatande(utlatande);
-        validatePatient(utlatande.getPatient());
-        validateHosPersonal(utlatande.getSkapadAv());
-        aktivitetInstance.validateAktiviteter();
-        validateVardkontakter(utlatande.getVardkontakter());
-        rekommendationInstance.validateRekommendationer();
-        observationInstance.validateObservationer();
-        validateObservationAktivitetRelation(utlatande.getObservationAktivitetRelationer());
+        validatePatient(utlatande.getGrundData().getPatient());
+        validateHosPersonal(utlatande.getGrundData().getSkapadAv());
+        validateVardkontakter(utlatande.getIdentitetStyrkt());
+
+        // Do context related validation
+        if (context.isPersontransportContext()) {
+            // TODO Put context based stuff here
+        }
 
         return validationErrors;
     }
@@ -103,13 +81,10 @@ public class ExternalValidatorInstance {
     /**
      * Validates that required attributes connected with the actual class Utlatande are present.
      */
-    private void validateUtlatande(Utlatande utlatande) {
-        assertNotNull(utlatande.getId(), "id");
-        assertKodInEnum(utlatande.getTyp(), UtlatandeKod.class, "utlatandetyp");
-        assertNotNull(utlatande.getSigneringsdatum(), "signeringsdatum");
-        for (Kod intygAvser : utlatande.getIntygAvser()) {
-            assertKodInEnum(intygAvser, IntygAvserKod.class, "intygAvser");
-        }
+    private void validateUtlatande(TSBasIntyg utlatande) {
+        assertNotNull(utlatande.getIntygsId(), "id");
+        assertNotNull(utlatande.getIntygsTyp(), "utlatandetyp");
+        assertNotNull(utlatande.getGrundData().getSigneringsTidstampel(), "signeringsdatum");
     }
 
     /**
@@ -119,17 +94,9 @@ public class ExternalValidatorInstance {
         if (assertNotNull(patient, "patient").failed()) {
             return;
         }
-
-        assertValidPersonId(patient.getId(), "patient.id");
-
-        if (patient.getFornamn().size() < 1) {
-            validationError("patient.fornamn must contain at least one name");
-        }
-        for (String fornamn : patient.getFornamn()) {
-            assertNotEmpty(fornamn, "patient.fornamn");
-        }
+        assertValidPersonId(patient.getPersonId(), "patient.id");
+        assertNotEmpty(patient.getFornamn(), "patient.fornamn");
         assertNotEmpty(patient.getEfternamn(), "patient.efternamn");
-
         assertNotEmpty(patient.getPostadress(), "patient.postadress");
         assertNotEmpty(patient.getPostnummer(), "patient.postnummer");
         assertNotEmpty(patient.getPostort(), "patient.postort");
@@ -139,22 +106,23 @@ public class ExternalValidatorInstance {
      * Validate HosPersonal, includes validating the HsaId, making sure a name is supplied and that a valid Vardenhet is
      * present.
      *
-     * @param skapadAv {@link HosPersonal}
+     * @param skapadAv
+     *            {@link HosPersonal}
      */
-    private void validateHosPersonal(HosPersonal skapadAv) {
+    private void validateHosPersonal(SkapadAv skapadAv) {
         if (assertNotNull(skapadAv, "skapadAv").failed()) {
             return;
         }
 
-        assertValidHsaId(skapadAv.getId(), "skapadAv.id");
+        assertValidHsaId(skapadAv.getPersonId(), "skapadAv.id");
 
-        assertNotEmpty(skapadAv.getNamn(), "skapadAv.fullstandigtNamn");
+        assertNotEmpty(skapadAv.getFullstandigtNamn(), "skapadAv.fullstandigtNamn");
         // for (Kod befattning : skapadAv.getBefattning()) {
         // assertKodInEnum(befattning, BefattningKod.class, "skapadAv.befattning");
         // }
-        for (Kod specialitet : skapadAv.getSpecialiteter()) {
-            assertKodInEnum(specialitet, SpecialitetKod.class, "skapadAv.specialitet");
-        }
+        // for (String specialitet : skapadAv.getSpecialiteter()) {
+        // assertKodInEnum(specialitet, SpecialitetKod.class, "skapadAv.specialitet");
+        // }
 
         validateVardenhet(skapadAv.getVardenhet(), "skapadAv");
     }
@@ -162,17 +130,19 @@ public class ExternalValidatorInstance {
     /**
      * Validates Vardenhet contains required information.
      *
-     * @param vardenhet {@link Vardenhet}
-     * @param prefix    {@link String} indicates where this instance of vardenhet is used in the model (i.e
-     *                  skapadAv.vardenhet...)
+     * @param vardenhet
+     *            {@link Vardenhet}
+     * @param prefix
+     *            {@link String} indicates where this instance of vardenhet is used in the model (i.e
+     *            skapadAv.vardenhet...)
      */
     private void validateVardenhet(Vardenhet vardenhet, String prefix) {
         if (assertNotNull(vardenhet, prefix + ".vardenhet").failed()) {
             return;
         }
 
-        assertValidHsaId(vardenhet.getId(), prefix + ".vardenhet.id");
-        assertNotEmpty(vardenhet.getNamn(), prefix + ".vardenhet.namn");
+        assertValidHsaId(vardenhet.getEnhetsId(), prefix + ".vardenhet.id");
+        assertNotEmpty(vardenhet.getEnhetsnamn(), prefix + ".vardenhet.namn");
         assertNotEmpty(vardenhet.getPostadress(), prefix + ".vardenhet.portadress");
         assertNotEmpty(vardenhet.getPostort(), prefix + ".vardenhet.postort");
         assertNotEmpty(vardenhet.getPostnummer(), prefix + ".vardenhet.postnummer");
@@ -184,100 +154,28 @@ public class ExternalValidatorInstance {
     /**
      * Validate vardgivare.
      *
-     * @param vardgivare {@link Vardgivare}
-     * @param prefix     {@link String} prefix, where in the model this instance is used
+     * @param vardgivare
+     *            {@link Vardgivare}
+     * @param prefix
+     *            {@link String} prefix, where in the model this instance is used
      */
     private void validateVardgivare(Vardgivare vardgivare, String prefix) {
         if (assertNotNull(vardgivare, prefix + ".vardgivare").failed()) {
             return;
         }
 
-        assertValidHsaId(vardgivare.getId(), prefix + ".vardgivare.id");
-        assertNotEmpty(vardgivare.getNamn(), prefix + ".vardgivare.namn");
+        assertValidHsaId(vardgivare.getVardgivarid(), prefix + ".vardgivare.id");
+        assertNotEmpty(vardgivare.getVardgivarnamn(), prefix + ".vardgivare.namn");
     }
 
     /**
      * Validate a list of Vardkontakter.
      *
-     * @param vardkontakter List of {@link Vardkontakt}
+     * @param vardkontakter
+     *            List of {@link Vardkontakt}
      */
-    private void validateVardkontakter(List<Vardkontakt> vardkontakter) {
-        if (vardkontakter.size() != 1) {
-            validationError("Expected only one vardkontakt");
-            return;
-        }
-
-        Vardkontakt vardkontakt = vardkontakter.get(0);
-        assertKodInEnum(vardkontakt.getVardkontakttyp(), VardkontakttypKod.class, "vardkontakt.vardkontakttyp");
-        assertKodInEnum(vardkontakt.getIdkontroll(), IdKontrollKod.class, "vardkontakt.idkontroll");
-    }
-
-    /**
-     * Validates and ensures that all ObservationAktivitetRelation's that are required are present, also raises
-     * validation errors if incorrect relations are found.
-     *
-     * @param observationAktivitetRelationer List of {@link ObservationAktivitetRelation}
-     */
-    private void validateObservationAktivitetRelation(List<ObservationAktivitetRelation> observationAktivitetRelationer) {
-        boolean synfaltsdefekterRelation = false;
-        boolean diplopiRelation = false;
-
-        for (ObservationAktivitetRelation relation : observationAktivitetRelationer) {
-            String element = String.format("observationAktivitetRelation[%s, %s]", relation.getObservationsid()
-                    .getExtension(), relation.getAktivitetsid().getExtension());
-
-            Id obsId = relation.getObservationsid();
-            Observation obs = observationInstance.getObservationWithId(obsId);
-            if (assertNotNull(obs, String.format("observation %s in %s", obsId.getExtension(), element)).failed()) {
-                break;
-            }
-
-            Id aktId = relation.getAktivitetsid();
-            Aktivitet akt = aktivitetInstance.getAktivitetWithId(aktId);
-            if (assertNotNull(akt, String.format("aktivitet %s in %s", aktId.getExtension(), element)).failed()) {
-                break;
-            }
-
-            if (obs.getObservationskod().equals(CodeConverter.toKod(ObservationsKod.SYNFALTSDEFEKTER))) {
-                if (!akt.getAktivitetskod().equals(CodeConverter.toKod(AktivitetKod.SYNFALTSUNDERSOKNING))) {
-                    validationError("Observation H53.4 must relate to aktivitet 86944008");
-                } else {
-                    synfaltsdefekterRelation = true;
-                }
-
-            } else if (obs.getObservationskod().equals(CodeConverter.toKod(ObservationsKod.DIPLOPI))) {
-                if (!akt.getAktivitetskod().equals(CodeConverter.toKod(AktivitetKod.PROVNING_AV_OGATS_RORLIGHET))) {
-                    validationError("Observation H53.2 must relate to aktivitet AKT18");
-                } else {
-                    diplopiRelation = true;
-                }
-
-            } else {
-                validationError(String.format("Observation %s should not relate to aktivitet %s", obsId.getExtension(),
-                        aktId.getExtension()));
-            }
-        }
-
-        if (!synfaltsdefekterRelation) {
-            validationError("Expected an observationAktivitetRelation between observation H53.4 and aktivitet 86944008");
-        }
-        if (!diplopiRelation) {
-            validationError("Expected an observationAktivitetRelation between observation H53.2 and aktivitet AKT18");
-        }
-    }
-
-    /**
-     * Util method for pretty-printing a Kod.
-     *
-     * @param kod {@link Kod}
-     * @return a nicely formatted {@link String} containing the {@link Kod}
-     */
-    protected String getDisplayCode(Kod kod) {
-        if (kod == null || kod.getCode() == null) {
-            return "[?]";
-        }
-
-        return "[" + kod.getCode() + "]";
+    private void validateVardkontakter(IdentitetStyrkt identitetStyrkt) {
+        // assertKodInEnum(identitetStyrkt.getIdkontroll(), IdKontrollKod.class, "vardkontakt.idkontroll");
     }
 
     protected void validationError(String error) {
@@ -287,8 +185,10 @@ public class ExternalValidatorInstance {
     /**
      * Assert that the value of Object is not null.
      *
-     * @param value   {@link Object}
-     * @param element {@link String} identifying element the under scrutiny
+     * @param value
+     *            {@link Object}
+     * @param element
+     *            {@link String} identifying element the under scrutiny
      * @return {@link AssertionResult}
      */
     protected AssertionResult assertNotNull(Object value, String element) {
@@ -304,8 +204,10 @@ public class ExternalValidatorInstance {
      * "should not be empty" is raised, if its not and the object is null, the validationError "should not be defined"
      * is raised.
      *
-     * @param value   {@link Object}
-     * @param element {@link String} identifying the element
+     * @param value
+     *            {@link Object}
+     * @param element
+     *            {@link String} identifying the element
      * @return {@link AssertionResult}
      */
     protected AssertionResult assertNull(Object value, String element) {
@@ -325,10 +227,12 @@ public class ExternalValidatorInstance {
     /**
      * Assert if a String is not empty.
      *
-     * @param value   {@link String}
-     * @param element {@link String} identifying the examined string
-     * @return {@link AssertionResult}.SUCCESS if the String was not empty or null, {@link AssertionResult}
-     * .FAILURE if it was
+     * @param value
+     *            {@link String}
+     * @param element
+     *            {@link String} identifying the examined string
+     * @return {@link AssertionResult}.SUCCESS if the String was not empty or null, {@link AssertionResult} .FAILURE if
+     *         it was
      */
     protected AssertionResult assertNotEmpty(String value, String element) {
         if (value == null || value.isEmpty()) {
@@ -339,84 +243,34 @@ public class ExternalValidatorInstance {
     }
 
     /**
-     * Assert that a Kod is present in a specified Enum.
-     *
-     * @param kod          the {@link Kod} to check
-     * @param expectedEnum the enum-class extending {@link CodeSystem} against which the check is performed
-     * @param element      {@link String} identifying the element
-     * @return {@link AssertionResult}
-     */
-    protected AssertionResult assertKodInEnum(Kod kod, Class<? extends CodeSystem> expectedEnum, String element) {
-        if (assertNotNull(kod, element).success()) {
-            try {
-                CodeConverter.fromCode(kod, expectedEnum);
-                return AssertionResult.SUCCESS;
-            } catch (Exception e) {
-                validationError(String.format("Kod '%s' in %s was unknown", kod.getCode(), element));
-            }
-        }
-        return AssertionResult.FAILURE;
-    }
-
-    /**
-     * Assert that a certain Kod is present a specified number of times.
-     *
-     * @param kodSet     an {@link Iterable} of {@link Kod}'s
-     * @param kodToCount the {@link Kod} to check against the kodSet
-     * @param minCount   required number of occurrences
-     * @param maxCount   maximum number of occurrences
-     * @param element    String identifying the context
-     * @return {@link AssertionResult}
-     */
-    protected AssertionResult assertKodCountBetween(Iterable<Kod> kodSet, Kod kodToCount, int minCount, int maxCount,
-                                                    String element) {
-        int count = 0;
-        for (Kod kod : kodSet) {
-            if (kod.equals(kodToCount)) {
-                count++;
-            }
-        }
-
-        if (maxCount < count || count < minCount) {
-            if (minCount == maxCount) {
-                validationError(String.format("%s%s must exist %s times; existed %s times",
-                        element, getDisplayCode(kodToCount), minCount, count));
-            } else {
-                validationError(String.format("%s%s must exist between %s and %s times; existed %s times",
-                        element, getDisplayCode(kodToCount), minCount, maxCount, count));
-            }
-            return AssertionResult.FAILURE;
-        }
-
-        return AssertionResult.SUCCESS;
-    }
-
-    /**
      * Assert the supplied personId has the correct code root.
      *
-     * @param id      {@link Id} the id to check
-     * @param element string identifying the context
+     * @param id
+     *            {@link Id} the id to check
+     * @param element
+     *            string identifying the context
      */
-    protected void assertValidPersonId(Id id, String element) {
+    protected void assertValidPersonId(II id, String element) {
         if (assertNotNull(id, element).success()) {
             if (!id.getRoot().equals("1.2.752.129.2.1.3.1") && !id.getRoot().equals("1.2.752.129.2.1.3.3")) {
                 validationError(element + " should be a personnummer or samordningsnummer");
             }
-            validationErrors.addAll(ID_VALIDATOR.validate(id));
+            validationErrors.addAll(ID_VALIDATOR.validateExtension(id.getExtension()));
         }
     }
 
     /**
      * Assert the supplied HsaId has the correct code root.
      *
-     * @param id      {@link Id} the id to check
-     * @param element string identifying the context
+     * @param id
+     *            {@link Id} the id to check
+     * @param element
+     *            string identifying the context
      */
-    protected void assertValidHsaId(Id id, String element) {
+    protected void assertValidHsaId(II id, String element) {
         if (assertNotNull(id, element).success()) {
-            if (!id.getRoot().equals(HSpersonalKod.HSA_ID.getCode())) {
-                validationError(element + " should be an HSA-ID with root: " + HSpersonalKod.HSA_ID.getCode());
-            }
+            if (!id.getRoot().equals(Constants.HSA_ID_OID))
+                validationError(element + " should be an HSA-ID with root: " + Constants.HSA_ID_OID);
         }
     }
 
@@ -425,7 +279,7 @@ public class ExternalValidatorInstance {
      * result. This might be used to implement conditional logic based on if an assertion {@link #failed()} or was
      * {@link #success()}ful.
      */
-    protected static enum AssertionResult {
+    enum AssertionResult {
         SUCCESS(true), FAILURE(false);
 
         private AssertionResult(boolean assertSuccessfull) {

@@ -12,7 +12,7 @@ import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.dto.ValidationMessage;
 import se.inera.certificate.modules.support.api.dto.ValidationMessageType;
 import se.inera.certificate.modules.support.api.dto.ValidationStatus;
-import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
+import se.inera.certificate.modules.ts_bas.model.codes.DiabetesKod;
 import se.inera.certificate.modules.ts_bas.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_bas.model.internal.Diabetes;
 import se.inera.certificate.modules.ts_bas.model.internal.Funktionsnedsattning;
@@ -227,7 +227,7 @@ public class InternalValidatorInstance {
             if (diabetes.getDiabetesTyp() == null) {
                 addValidationError("diabetes.diabetesTyp", "ts-bas.validation.diabetes.diabetesTyp.missing");
 
-            } else if (diabetes.getDiabetesTyp().equals(ObservationsKod.DIABETES_TYP_2.name())) {
+            } else if (diabetes.getDiabetesTyp().equals(DiabetesKod.DIABETES_TYP_2.name())) {
                 if (diabetes.getInsulin() == null && diabetes.getKost() == null && diabetes.getTabletter() == null) {
                     addValidationError("diabetes.diabetesTyp", "ts-bas.validation.diabetes.diabetesTyp.must-choose-one");
                 }

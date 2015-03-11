@@ -27,8 +27,8 @@ import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.ts_bas.model.codes.BefattningKod;
+import se.inera.certificate.modules.ts_bas.model.codes.DiabetesKod;
 import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
-import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_bas.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_bas.model.internal.BedomningKorkortstyp;
 import se.inera.certificate.modules.ts_bas.model.internal.Diabetes;
@@ -321,9 +321,9 @@ public class PdfGenerator {
     private void populateDiabetes(Diabetes diabetes, AcroFields fields) throws IOException, DocumentException {
         HAR_DIABETES.setField(fields, diabetes.getHarDiabetes());
         if (diabetes.getDiabetesTyp() != null) {
-            if (diabetes.getDiabetesTyp().equals(ObservationsKod.DIABETES_TYP_1.name())) {
+            if (diabetes.getDiabetesTyp().equals(DiabetesKod.DIABETES_TYP_1.name())) {
                 DIABETES_TYP_1.setField(fields, true);
-            } else if (diabetes.getDiabetesTyp().equals(ObservationsKod.DIABETES_TYP_2.name())) {
+            } else if (diabetes.getDiabetesTyp().equals(DiabetesKod.DIABETES_TYP_2.name())) {
                 DIABETES_TYP_2.setField(fields, true);
             }
         }

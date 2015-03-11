@@ -1,6 +1,6 @@
 package se.inera.certificate.modules.ts_bas.utils;
 
-import se.intygstjanster.ts.services.v1.TSBasIntyg;
+import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 /**
  * Defines a scenario that can be tested. The following models (as POJOs) can be extracted from a scenario:

@@ -8,9 +8,9 @@ import org.joda.time.LocalDateTime;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.modules.support.api.dto.CertificateMetaData;
-import se.intygstjanster.ts.services.v1.IntygMeta;
-import se.intygstjanster.ts.services.v1.IntygStatus;
-import se.intygstjanster.ts.services.v1.TSBasIntyg;
+import se.inera.intygstjanster.ts.services.v1.IntygMeta;
+import se.inera.intygstjanster.ts.services.v1.IntygStatus;
+import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 public class TsBasMetaDataConverter {
     public static CertificateMetaData toCertificateMetaData(IntygMeta intygMeta, TSBasIntyg intyg) {

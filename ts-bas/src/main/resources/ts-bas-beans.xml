@@ -15,15 +15,11 @@
 
   <bean class="se.inera.certificate.modules.ts_bas.rest.ModuleService" />
 
-  <bean class="se.inera.certificate.modules.ts_bas.model.converter.TransportToExternalConverter" />
-
-  <bean class="se.inera.certificate.modules.ts_bas.model.converter.ExternalToTransportConverter" />
+  <bean class="se.inera.certificate.modules.ts_bas.model.converter.TransportToInternal" />
 
   <bean class="se.inera.certificate.modules.ts_bas.validator.Validator" />
 
-  <bean class="se.inera.certificate.modules.ts_bas.model.converter.ExternalToInternalConverter" />
-
-  <bean class="se.inera.certificate.modules.ts_bas.model.converter.InternalToExternalConverter" />
+  <bean class="se.inera.certificate.modules.ts_bas.model.converter.InternalToTransport" />
 
   <bean class="se.inera.certificate.modules.ts_bas.pdf.PdfGenerator">
     <constructor-arg value="true" />
