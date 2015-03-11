@@ -5,7 +5,7 @@ angular.module('fk7263').config(function($stateProvider) {
     'use strict';
     $stateProvider.
         state('fk7263-edit', {
-            url: '/fk7263/edit/:certificateId',
+            url: '/fk7263/edit/:certificateId?patientId&hospName',
             views: {
                 '' : {
                     templateUrl: '/web/webjars/fk7263/webcert/js/intyg/edit/intyg-edit.html',
