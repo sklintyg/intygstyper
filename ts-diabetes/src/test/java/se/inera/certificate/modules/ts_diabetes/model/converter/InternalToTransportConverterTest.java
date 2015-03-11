@@ -59,8 +59,6 @@ public class InternalToTransportConverterTest {
         StringWriter actual = new StringWriter();
         marshaller.marshal(wrapJaxb(converted), actual);
         
-        System.out.println(actual.toString());
-        
         XMLUnit.setIgnoreWhitespace(true);
         XMLUnit.setIgnoreAttributeOrder(true);
         Diff diff = XMLUnit.compareXML(expected, actual.toString());

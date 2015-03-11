@@ -1,7 +1,10 @@
 package se.inera.certificate.modules.ts_diabetes.model.converter;
 
+import java.util.Iterator;
+
 import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
+import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvser;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvserKategori;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
@@ -11,6 +14,7 @@ import se.inera.certificate.schema.Constants;
 import se.intygstjanster.ts.services.types.v1.II;
 import se.intygstjanster.ts.services.v1.BedomningTypDiabetes;
 import se.intygstjanster.ts.services.v1.Diabetes;
+import se.intygstjanster.ts.services.v1.DiabetesTypVarden;
 import se.intygstjanster.ts.services.v1.GrundData;
 import se.intygstjanster.ts.services.v1.Hypoglykemier;
 import se.intygstjanster.ts.services.v1.IdentifieringsVarden;
@@ -21,6 +25,8 @@ import se.intygstjanster.ts.services.v1.KorkortsbehorighetTsDiabetes;
 import se.intygstjanster.ts.services.v1.Patient;
 import se.intygstjanster.ts.services.v1.SkapadAv;
 import se.intygstjanster.ts.services.v1.SynfunktionDiabetes;
+import se.intygstjanster.ts.services.v1.SynskarpaMedKorrektion;
+import se.intygstjanster.ts.services.v1.SynskarpaUtanKorrektion;
 import se.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 import se.intygstjanster.ts.services.v1.Vardenhet;
 import se.intygstjanster.ts.services.v1.Vardgivare;
@@ -33,7 +39,6 @@ public class InternalToTransportConverter {
 		result.setDiabetes(readDiabetes(utlatande.getDiabetes()));
 		result.setGrundData(readGrundData(utlatande.getGrundData()));
 		result.setHypoglykemier(readHypoglykemier(utlatande.getHypoglykemier()));
-		//TODO:
 		result.setIdentitetStyrkt(readIdentitetStyrkt(utlatande.getVardkontakt()));
 		result.setIntygAvser(readIntygAvser(utlatande.getIntygAvser()));
 		result.setIntygsId(utlatande.getId());
@@ -58,13 +63,28 @@ public class InternalToTransportConverter {
 		SynfunktionDiabetes result = new SynfunktionDiabetes();
 		result.setHarDiplopi(syn.getDiplopi());
 		result.setHarSynfaltsdefekt(syn.getSynfaltsprovningUtanAnmarkning() == false);
-		//TODO:
-		//result.setSynskarpaMedKorrektion(value);
-		//result.setSynskarpaUtanKorrektion(value);
+		result.setSynskarpaMedKorrektion(readMedKorrektion(syn));
+		result.setSynskarpaUtanKorrektion(readUtanKorrektion(syn));
 		return result;
 	}
 
-	private static IntygsAvserTypDiabetes readIntygAvser(IntygAvser intygAvser) {
+	private static SynskarpaUtanKorrektion readUtanKorrektion(Syn syn) {
+        SynskarpaUtanKorrektion result = new SynskarpaUtanKorrektion();
+        result.setBinokulart(syn.getBinokulart().getUtanKorrektion());
+        result.setHogerOga(syn.getHoger().getUtanKorrektion());
+        result.setVansterOga(syn.getVanster().getUtanKorrektion());
+        return result;
+    }
+
+    private static SynskarpaMedKorrektion readMedKorrektion(Syn syn) {
+	    SynskarpaMedKorrektion result = new SynskarpaMedKorrektion();
+	    result.setBinokulart(syn.getBinokulart().getMedKorrektion());
+	    result.setHogerOga(syn.getHoger().getMedKorrektion());
+	    result.setVansterOga(syn.getVanster().getMedKorrektion());
+	    return result;
+    }
+
+    private static IntygsAvserTypDiabetes readIntygAvser(IntygAvser intygAvser) {
 		IntygsAvserTypDiabetes result = new IntygsAvserTypDiabetes();
 		
 		for(IntygAvserKategori kat : intygAvser.getKorkortstyp()){
@@ -164,6 +184,8 @@ public class InternalToTransportConverter {
 		result.setHarBehandlingKost(diabetes.getEndastKost());
 		result.setHarBehandlingTabletter(diabetes.getTabletter());
 		result.setInsulinBehandlingSedanAr(diabetes.getInsulinBehandlingsperiod());
+		
+		result.getDiabetesTyp().add(DiabetesTypVarden.fromValue(diabetes.getDiabetestyp()));
 		return result;
 	}
 
@@ -173,6 +195,11 @@ public class InternalToTransportConverter {
 		result.setKanInteTaStallning(bedomning.getKanInteTaStallning());
 		result.setLamplighetInnehaBehorighetSpecial(bedomning.getLamplighetInnehaBehorighet());
 		result.setOvrigKommentar(bedomning.getKommentarer());
+		
+		for (BedomningKorkortstyp typ : bedomning.getKorkortstyp()) {
+            result.getKorkortstyp().add(KorkortsbehorighetTsDiabetes.fromValue(Korkortsbehorighet.fromValue(typ.name())));
+        }
+		
 		return result;
 	}
 }

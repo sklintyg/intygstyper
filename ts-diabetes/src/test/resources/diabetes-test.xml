@@ -97,6 +97,7 @@
 		<ns1:allvarligForekomstVakenTidAr>2012-12-12
 		</ns1:allvarligForekomstVakenTidAr>
 	</ns1:hypoglykemier>
+	<ns1:separatOgonLakarintygKommerSkickas>false</ns1:separatOgonLakarintygKommerSkickas>
 	<ns1:synfunktion>
 		<ns1:harSynfaltsdefekt>false</ns1:harSynfaltsdefekt>
 		<ns1:synskarpaUtanKorrektion>
