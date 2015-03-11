@@ -90,22 +90,23 @@ public class RegisterMedicalCertificateResponderImplTest {
         RegisterMedicalCertificateResponseType response = responder.registerMedicalCertificate(null, request);
 
         assertEquals(ResultCodeEnum.OK, response.getResult().getResultCode());
-        Mockito.verify(moduleContainer, Mockito.only()).certificateReceived(certificateHolder, false);
+        Mockito.verify(moduleContainer, Mockito.only()).certificateReceived(certificateHolder);
     }
 
     @Test
     public void testReceiveCertificateWiretapped() throws Exception {
 
         responder.setWireTapped(true);
+        certificateHolder.setWireTapped(true);
         RegisterMedicalCertificateResponseType response = responder.registerMedicalCertificate(null, request);
 
         assertEquals(ResultCodeEnum.OK, response.getResult().getResultCode());
-        Mockito.verify(moduleContainer, Mockito.only()).certificateReceived(certificateHolder, true);
+        Mockito.verify(moduleContainer, Mockito.only()).certificateReceived(certificateHolder);
     }
 
     @Test
     public void testWithExistingCertificate() throws Exception {
-        Mockito.doThrow(new CertificateAlreadyExistsException(request.getLakarutlatande().getLakarutlatandeId())).when(moduleContainer).certificateReceived(certificateHolder, false);
+        Mockito.doThrow(new CertificateAlreadyExistsException(request.getLakarutlatande().getLakarutlatandeId())).when(moduleContainer).certificateReceived(certificateHolder);
 
         RegisterMedicalCertificateResponseType response = responder.registerMedicalCertificate(null, request);
         assertEquals(ResultCodeEnum.INFO, response.getResult().getResultCode());

@@ -38,8 +38,6 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterMedicalCertificateResponderImpl.class);
 
-    private static final String FK7263 = "fk7263";
-
     private boolean wireTapped = false;
     
     private ObjectFactory objectFactory;
@@ -82,8 +80,9 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
             String xml = xmlToString(registerMedicalCertificate);
             CertificateHolder certificateHolder = converterUtil.toCertificateHolder(utlatande);
             certificateHolder.setOriginalCertificate(xml);
+            certificateHolder.setWireTapped(wireTapped);
 
-            moduleApi.getModuleContainer().certificateReceived(certificateHolder, wireTapped);
+            moduleApi.getModuleContainer().certificateReceived(certificateHolder);
 
             response.setResult(ResultOfCallUtil.okResult());
 

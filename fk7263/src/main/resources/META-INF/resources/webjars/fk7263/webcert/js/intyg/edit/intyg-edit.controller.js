@@ -575,9 +575,17 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.form.ressattTillArbeteAktuellt = undefined;
                     $scope.form.rehab = undefined;
                 } else {
-                    $scope.form.prognos = 'YES';
-                    $scope.form.ressattTillArbeteAktuellt = 'NEJ';
-                    $scope.form.rehab = 'NEJ';
+                    if(!$scope.form.prognos || $scope.form.prognos.length == 0){
+                        $scope.form.prognos = 'YES';
+                    }
+
+                    if(!$scope.form.ressattTillArbeteAktuellt || $scope.form.ressattTillArbeteAktuellt.length == 0){
+                        $scope.form.ressattTillArbeteAktuellt = 'NEJ';
+                    }
+
+                    if(!$scope.form.rehab || $scope.form.rehab.length == 0){
+                        $scope.form.rehab = 'NEJ';
+                    }
                 }
             });
 

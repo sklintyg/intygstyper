@@ -17,28 +17,11 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 showTemplate: true
             };
 
-            var decorateSingleItem = function(qa) {
-                if (qa.amne === 'PAMINNELSE') {
-                    // RE-020 Påminnelser is never
-                    // answerable
-                    qa.answerDisabled = true;
-                    qa.answerDisabledReason = undefined; // Påminnelser kan inte besvaras men det behöver vi inte säga
-                } else if (qa.amne === 'KOMPLETTERING_AV_LAKARINTYG' && !User.userContext.lakare) {
-                    // RE-005, RE-006
-                    qa.answerDisabled = true;
-                    qa.answerDisabledReason = 'Kompletteringar kan endast besvaras av läkare.';
-                } else {
-                    qa.answerDisabled = false;
-                    qa.answerDisabledReason = undefined;
-                }
-                fragaSvarCommonService.decorateSingleItemMeasure(qa);
-            };
-
             var decorateWithGUIParameters = function(list) {
                 // answerDisabled
                 // answerButtonToolTip
                 angular.forEach(list, function(qa) {
-                    decorateSingleItem(qa);
+                    fragaSvarCommonService.decorateSingleItem(qa);
                 });
             };
 
@@ -105,10 +88,10 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                         newQuestion.updateInProgress = false;
                         newQuestion.activeErrorMessageKey = null;
                         if (result !== null) {
-                            decorateSingleItem(result);
+                            fragaSvarCommonService.decorateSingleItem(result);
                             // result is a new FragaSvar Instance: add it to our local repo
                             $scope.qaList.push(result);
-                            $scope.activeQA = result.internReferens;
+                            //$scope.activeQA = result.internReferens;
                             // close question form
                             $scope.toggleQuestionForm();
                             // show sent message
@@ -120,172 +103,6 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                         newQuestion.updateInProgress = false;
                         newQuestion.activeErrorMessageKey = errorData.errorCode;
                     });
-            };
-
-            $scope.dismissProxy = function(qa) {
-                if (qa === undefined) {
-                    $scope.widgetState.sentMessage = false;
-                    return;
-                }
-                for (var i = 0; i < $scope.qaList.length; i++) {
-                    if (qa === $scope.qaList[i]) {
-                        $scope.qaList.splice(i, 1);
-                        return;
-                    }
-                }
-            };
-
-            $scope.sendAnswer = function sendAnswer(qa) {
-                qa.updateInProgress = true; // trigger local spinner
-
-                fragaSvarService.saveAnswer(qa, 'fk7263', function(result) {
-                    $log.debug('Got saveAnswer result:' + result);
-                    qa.updateInProgress = false;
-                    qa.activeErrorMessageKey = null;
-                    if (result !== null) {
-                        decorateSingleItem(result);
-                        // Create a proxyCopy
-                        var proxyCopy = angular.copy(qa);
-                        proxyCopy.proxyMessage = 'fk7263.fragasvar.answer.is.sent';
-                        $scope.qaList.push(proxyCopy);
-                        // update real item
-                        angular.copy(result, qa);
-                        $scope.activeQA = qa.internReferens;
-                        statService.refreshStat();
-                    }
-                }, function(errorData) {
-                    // show error view
-                    qa.updateInProgress = false;
-                    qa.activeErrorMessageKey = errorData.errorCode;
-                });
-            };
-
-            $scope.onVidareBefordradChange = function(qa) {
-                qa.forwardInProgress = true;
-
-                fragaSvarCommonService.setVidareBefordradState(qa.internReferens, 'fk7263', qa.vidarebefordrad,
-                    function(result) {
-                        qa.forwardInProgress = false;
-
-                        if (result !== null) {
-                            qa.vidarebefordrad = result.vidarebefordrad;
-                        } else {
-                            qa.vidarebefordrad = !qa.vidarebefordrad;
-                            dialogService.showErrorMessageDialog('Kunde inte markera/avmarkera frågan som vidarebefordrad. ' +
-                                'Försök gärna igen för att se om felet är tillfälligt. Annars kan du kontakta supporten');
-                        }
-                    });
-            };
-
-            $scope.updateAnsweredAsHandled = function(deferred, unhandledQas){
-                if(unhandledQas === undefined || unhandledQas.length == 0 ){
-                    return;
-                }
-                fragaSvarService.closeAllAsHandled(unhandledQas,
-                function(qas){
-                    if(qas) {
-                        angular.forEach(qas, function(qa, key) {
-                            decorateSingleItem(qa);
-                            qa.proxyMessage = 'fk7263.fragasvar.marked.as.hanterad';
-                        });
-                        statService.refreshStat();
-                    }
-                    $window.doneLoading = true;
-                    if(deferred) {
-                        deferred.resolve();
-                    }
-                },function(errorData) {
-                    // show error view
-                    $window.doneLoading = true;
-                    if(deferred) {
-                        deferred.resolve();
-                    }
-                });
-            };
-
-            $scope.hasUnhandledQas = function(){
-                if(!$scope.qaList || $scope.qaList.length === 0){
-                    return false;
-                }
-                for (var i = 0, len = $scope.qaList.length; i < len; i++) {
-                    var qa = $scope.qaList[i];
-                    var isUnhandled = fragaSvarCommonService.isUnhandled(qa);
-                    var fromFk = fragaSvarCommonService.fromFk(qa);
-                    if(qa.status === 'ANSWERED' || (isUnhandled && fromFk)){
-                        return true;
-                    }
-                }
-                return false;
-            };
-
-            $scope.updateAsHandled = function(qa, deferred) {
-                $log.debug('updateAsHandled:' + qa);
-                qa.updateHandledStateInProgress = true;
-
-                fragaSvarService.closeAsHandled(qa.internReferens, 'fk7263', function(result) {
-                    qa.activeErrorMessageKey = null;
-                    qa.updateHandledStateInProgress = false;
-                    if (result !== null) {
-                        decorateSingleItem(result);
-                        // Create a proxyCopy
-                        var proxyCopy = angular.copy(qa);
-                        proxyCopy.proxyMessage = 'fk7263.fragasvar.marked.as.hanterad';
-                        $scope.qaList.push(proxyCopy);
-
-                        angular.copy(result, qa);
-                        $scope.activeQA = qa.internReferens;
-                        statService.refreshStat();
-                    }
-                    $window.doneLoading = true;
-                    if(deferred) {
-                        deferred.resolve();
-                    }
-                }, function(errorData) {
-                    // show error view
-                    qa.updateHandledStateInProgress = false;
-                    qa.activeErrorMessageKey = errorData.errorCode;
-                    $window.doneLoading = true;
-                    if(deferred) {
-                        deferred.resolve();
-                    }
-                });
-            };
-
-            $scope.updateAsUnHandled = function(qa) {
-                $log.debug('updateAsUnHandled:' + qa);
-                qa.updateHandledStateInProgress = true; // trigger local
-
-                fragaSvarService.openAsUnhandled(qa.internReferens, 'fk7263', function(result) {
-                    $log.debug('Got openAsUnhandled result:' + result);
-                    qa.activeErrorMessageKey = null;
-                    qa.updateHandledStateInProgress = false;
-
-                    if (result !== null) {
-                        decorateSingleItem(result);
-                        // Create a proxyCopy
-                        var proxyCopy = angular.copy(qa);
-                        proxyCopy.proxyMessage = 'fk7263.fragasvar.marked.as.ohanterad';
-                        $scope.qaList.push(proxyCopy);
-
-                        angular.copy(result, qa);
-                        $scope.activeQA = qa.internReferens;
-                        statService.refreshStat();
-                    }
-                }, function(errorData) {
-                    // show error view
-                    qa.updateHandledStateInProgress = false;
-                    qa.activeErrorMessageKey = errorData.errorCode;
-                });
-            };
-
-            // Handle vidarebefordra dialog
-            $scope.openMailDialog = function(qa) {
-                // use timeout so that external mail client has a chance to start before showing dialog
-                $timeout(function() {
-                    fragaSvarCommonService.handleVidareBefodradToggle(qa, $scope.onVidareBefordradChange);
-                }, 1000);
-                // Launch mail client
-                $window.location = fragaSvarCommonService.buildMailToLink(qa);
             };
 
             $scope.questionValidForSubmit = function(newQuestion) {

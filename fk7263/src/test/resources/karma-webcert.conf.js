@@ -14,6 +14,21 @@ module.exports = function(config) {
         // frameworks to use
         frameworks: [ 'jasmine' ],
 
+        // generate js files from html templates to expose them during testing.
+        preprocessors: {
+            'src/main/resources/META-INF/resources/webjars/fk7263/webcert/js/**/*.html': ['ng-html2js']
+        },
+
+        ngHtml2JsPreprocessor: {
+            // If your build process changes the path to your templates,
+            // use stripPrefix and prependPrefix to adjust it.
+            stripPrefix: 'src/main/resources/META-INF/resources/',
+            prependPrefix: '/web/',
+
+            // the name of the Angular module to create
+            moduleName: 'htmlTemplates'
+        },
+
         // list of files / patterns to load in the browser
         files: [
 
@@ -73,7 +88,8 @@ module.exports = function(config) {
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-phantomjs-launcher',
-            'karma-mocha-reporter'
+            'karma-mocha-reporter',
+            'karma-ng-html2js-preprocessor'
         ],
 
         reporters: [ 'progress' ]

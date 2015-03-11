@@ -36,6 +36,9 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.status.sent': 'Intyget är signerat och mottaget av Transportstyrelsens system.',
         'ts-diabetes.label.status.signed': 'Intyget är signerat och är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se. Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.',
 
+        'ts-diabetes.label.status.sent': 'Intyget är signerat och mottaget av Transportstyrelsens system.',
+        'ts-diabetes.label.status.signed': 'Intyget är signerat och är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se. Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.',
+
         // Identitet styrkt genom
         'ts-diabetes.label.identitet.id_kort': 'ID-kort',
         'ts-diabetes.label.identitet.foretag_eller_tjanstekort': 'Företagskort eller tjänstekort.',
