@@ -48,6 +48,8 @@ module.exports = function(config) {
                 TEST_DIR + 'module-test.js',
 
             { pattern: SRC_DIR + '**/*' },
+            { pattern: SRC_DIR + '**/*.spec.js' },
+            { pattern: TEST_DIR + '**/*.spec.js' },
             { pattern: TEST_DIR + '**/*Spec.js' }
         ],
 
