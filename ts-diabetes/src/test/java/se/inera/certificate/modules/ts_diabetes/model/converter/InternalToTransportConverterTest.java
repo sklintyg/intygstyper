@@ -40,8 +40,8 @@ public class InternalToTransportConverterTest {
 
     @Before
     public void setUp() throws Exception {
-        internalStream = getClass().getResourceAsStream("/scenarios/internal/valid-maximal.json");
-        transportStream = getClass().getResourceAsStream("/scenarios/transport/valid-maximal.xml");
+        internalStream = getClass().getResourceAsStream("/diabetes-test.json");
+        transportStream = getClass().getResourceAsStream("/diabetes-test.xml");
 
         ObjectMapper mapper = new CustomObjectMapper();
         utlatande = mapper.readValue(internalStream, Utlatande.class);
