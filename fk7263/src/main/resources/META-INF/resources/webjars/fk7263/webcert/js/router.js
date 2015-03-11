@@ -11,7 +11,7 @@ angular.module('fk7263').config(function($stateProvider) {
             //templateUrl: '/web/webjars/fk7263/webcert/js/intyg/edit/intyg-edit-main.html'
             views : {
                 '' : {
-                    templateUrl: '/web/webjars/fk7263/webcert/js/intyg/edit/intyg-edit-main.html',
+                    templateUrl: '/web/webjars/fk7263/webcert/js/intyg/edit/intyg-edit.html',
                     controller: 'fk7263.EditCertCtrl' },
                 
                 'header@fk7263-edit' : {
