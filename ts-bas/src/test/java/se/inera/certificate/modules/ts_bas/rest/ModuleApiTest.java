@@ -18,6 +18,7 @@
  */
 package se.inera.certificate.modules.ts_bas.rest;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.StringWriter;
@@ -33,6 +34,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
+import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
@@ -43,6 +45,7 @@ import se.inera.certificate.modules.support.api.dto.Vardenhet;
 import se.inera.certificate.modules.support.api.dto.Vardgivare;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
+import se.inera.certificate.modules.ts_bas.utils.ResourceConverterUtils;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
@@ -66,25 +69,6 @@ public class ModuleApiTest {
     private ObjectMapper mapper;
 
     
-//    public void testValidate() throws Exception {
-//        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-//            moduleApi.validate(createExternalHolder(scenario.asExternalModel()));
-//        }
-//    }
-
-//    @Test
-//    public void testValidateWithErrors() throws Exception {
-//        for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {
-//            try {
-//                moduleApi.validate(createExternalHolder(scenario.asExternalModel()));
-//                Assert.fail("Expected ModuleValidationException, running scenario " + scenario.getName());
-//
-//            } catch (ModuleValidationException e) {
-//                Assert.assertFalse("Error in scenario " + scenario.getName(), e.getValidationEntries().isEmpty());
-//            }
-//        }
-//    }
-
     @Test
     public void testPdf() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
@@ -92,39 +76,18 @@ public class ModuleApiTest {
         }
     }
 
-//    @Test
-//    public void testRegisterCertificateRoundtrip() throws Exception {
-//        se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande;
-//        Utlatande intUtlatande;
-//        for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
-//            extUtlatande = (se.inera.certificate.modules.ts_bas.model.external.Utlatande) moduleApi.unmarshall(
-//                    createTransportHolder(scenario.asTransportModel())).getExternalModel();
-//            moduleApi.validate(createExternalHolder(extUtlatande));
-//            String intUtlatandeString = moduleApi.convertExternalToInternal(createExternalHolder(extUtlatande))
-//                    .getInternalModel();
-//            intUtlatande = mapper.readValue(intUtlatandeString, Utlatande.class);
-//
-//            Utlatande expected = scenario.asInternalModel();
-//
-//            // We need to issue a get in order to create an empty list (and make the test pass)
-//            intUtlatande.getGrundData().getSkapadAv().getBefattningar();
-//            intUtlatande.getGrundData().getSkapadAv().getSpecialiteter();
-//
-//            ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, intUtlatande);
-//        }
-//    }
+    @Test
+    public void copyCreatesBlank() throws Exception {
+        Scenario scenario = ScenarioFinder.getInternalScenario("valid-maximal");
+        InternalModelHolder internalHolder = createInternalHolder(scenario.asInternalModel());
 
-//    @Test
-//    public void copyCreatesBlank() throws Exception {
-//        Scenario scenario = ScenarioFinder.getExternalScenario("valid-korrigerad-synskarpa");
-//        ExternalModelHolder internalHolder = createExternalHolder(scenario.asExternalModel());
-//
-//        InternalModelResponse holder = moduleApi.createNewInternalFromTemplate(createNewDraftHolder(), internalHolder);
-//
-//        assertNotNull(holder);
-//        Utlatande utlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
-//        assertEquals(true, utlatande.getSyn().getSynfaltsdefekter());
-//    }
+        InternalModelResponse holder = moduleApi.createNewInternalFromTemplate(createNewDraftCopyHolder(), internalHolder);
+
+        assertNotNull(holder);
+        Utlatande utlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
+        System.out.println(holder.getInternalModel());
+        assertEquals(true, utlatande.getSyn().getSynfaltsdefekter());
+    }
 
     @Test
     public void createNewInternal() throws ModuleException {
@@ -141,6 +104,13 @@ public class ModuleApiTest {
         HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", null, vardenhet);
         Patient patient = new Patient("Kalle", null, "Kula", "19121212-1212", null, null, null);
         return new CreateNewDraftHolder("Id1", hosPersonal, patient);
+    }
+
+    private CreateDraftCopyHolder createNewDraftCopyHolder() {
+        Vardgivare vardgivare = new Vardgivare("hsaId0", "vardgivare");
+        Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
+        HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", null, vardenhet);
+        return new CreateDraftCopyHolder("Id1", hosPersonal);
     }
 
     private TransportModelHolder createTransportHolder(TSBasIntyg transportModel)

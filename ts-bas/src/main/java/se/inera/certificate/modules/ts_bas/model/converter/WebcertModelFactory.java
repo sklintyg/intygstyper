@@ -27,6 +27,7 @@ import se.inera.certificate.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
+import se.inera.certificate.modules.support.api.dto.Patient;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 
@@ -88,9 +89,34 @@ public class WebcertModelFactory {
         utlatande.getGrundData().setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(skapadAv));
     }
 
-    public Utlatande createCopy(CreateDraftCopyHolder draftCertificateHolder, Utlatande internal) throws ConverterException {
-        // TODO Auto-generated method stub
-        return null;
+    public Utlatande createCopy(CreateDraftCopyHolder copyData, Utlatande template) throws ConverterException {
+        LOG.trace("Creating copy with id {} from {}", copyData.getCertificateId(), template.getId());
+
+        populateWithId(template, copyData.getCertificateId());
+        populateWithSkapadAv(template, copyData.getSkapadAv());
+
+        if (copyData.hasPatient()) {
+            populateWithPatientInfo(template, copyData.getPatient());
+        }
+
+        if (copyData.hasNewPersonnummer()) {
+            populateWithNewPersonnummer(template, copyData.getNewPersonnummer());
+        }
+
+        return template;
+    }
+
+    private void populateWithNewPersonnummer(Utlatande template, String newPersonnummer) {
+        template.getGrundData().getPatient().setPersonId(newPersonnummer);
+    }
+
+    private void populateWithId(Utlatande utlatande, String utlatandeId) throws ConverterException {
+
+        if (utlatandeId == null) {
+            throw new ConverterException("No certificateID found");
+        }
+
+        utlatande.setId(utlatandeId);
     }
 
     public void updateSkapadAv(Utlatande utlatande, HoSPersonal hosPerson, LocalDateTime signeringsdatum) {

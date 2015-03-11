@@ -18,21 +18,36 @@
  */
 package se.inera.certificate.modules.ts_bas.validator;
 
+import java.util.List;
+
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
+import se.inera.certificate.modules.ts_bas.validator.external.TransportValidatorInstance;
 import se.inera.certificate.modules.ts_bas.validator.internal.InternalValidatorInstance;
+import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 public class Validator {
 
     /**
-     * Validates an external Utlatande.
+     * Validates an internal Utlatande.
      *
      * @param utlatande
-     *            se.inera.certificate.modules.ts_bas.model.external.Utlatande
+     *            se.inera.certificate.modules.ts_bas.model.internal.Utlatande
      * @return List of validation errors, or an empty string if validated correctly
      */
-    public ValidateDraftResponse validateInternal(
-            se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande) {
+    public ValidateDraftResponse validateInternal(Utlatande utlatande) {
         InternalValidatorInstance instance = new InternalValidatorInstance();
         return instance.validate(utlatande);
+    }
+
+    /**
+     * Validates a TSBasIntyg on the transport format.
+     *
+     * @param TSBasIntyg
+     * @return List of validation errors, or an empty string if validated correctly
+     */
+    public List<String> validateTransport(TSBasIntyg intyg) {
+        TransportValidatorInstance instance = new TransportValidatorInstance();
+        return instance.validate(intyg);
     }
 }

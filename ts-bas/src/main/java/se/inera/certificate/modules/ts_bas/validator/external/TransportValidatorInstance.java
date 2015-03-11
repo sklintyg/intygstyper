@@ -36,7 +36,7 @@ import se.inera.intygstjanster.ts.services.v1.Vardgivare;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
-public class ExternalValidatorInstance {
+public class TransportValidatorInstance {
 
     private static PersonnummerValidator ID_VALIDATOR;
 
@@ -44,12 +44,12 @@ public class ExternalValidatorInstance {
 
     private ValidationContext context;
 
-    public ExternalValidatorInstance() {
+    public TransportValidatorInstance() {
         validationErrors = new ArrayList<>();
         ID_VALIDATOR = new PersonnummerValidator();
     }
 
-    ExternalValidatorInstance(List<String> validationErrors, ValidationContext context) {
+    TransportValidatorInstance(List<String> validationErrors, ValidationContext context) {
         this.validationErrors = validationErrors;
         this.context = context;
     }
