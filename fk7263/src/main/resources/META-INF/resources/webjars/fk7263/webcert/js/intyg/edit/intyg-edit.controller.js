@@ -177,9 +177,9 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.cert.grundData.skapadAv.vardenhet.postnummer === '' ||
                     $scope.cert.grundData.skapadAv.vardenhet.postort === '' ||
                     $scope.cert.grundData.skapadAv.vardenhet.telefonnummer === '') {
-                    $scope.viewState.hsaInfoMissing = true;
+                    CertViewState.viewState.hsaInfoMissing = true;
                 } else {
-                    $scope.viewState.hsaInfoMissing = false;
+                    CertViewState.viewState.hsaInfoMissing = false;
                 }
 
                 // Fält 2. diagnos
@@ -697,11 +697,18 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Handle vidarebefordra dialog
              */
             $scope.openMailDialog = function() {
-                intygNotifyService.forwardIntyg($scope.certMeta, $scope.viewState);
+                intygNotifyService.forwardIntyg($scope.certMeta, CertViewState.viewState);
             };
 
             $scope.onVidarebefordradChange = function() {
-                intygNotifyService.onForwardedChange($scope.certMeta, $scope.viewState);
+                intygNotifyService.onForwardedChange($scope.certMeta, CertViewState.viewState);
+            };
+
+            /**
+             * Action to sign the certificate draft and return to Webcert again.
+             */
+            $scope.sign = function() {
+                ManageCertView.signera($scope.certMeta.intygType);
             };
 
             /**************************************************************************
@@ -730,8 +737,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             });
 
             $rootScope.$on('intyg.deleted', function() {
-                $scope.viewState.deleted = true;
-                $scope.viewState.activeErrorMessageKey = 'error';
+                CertViewState.viewState.deleted = true;
+                CertViewState.viewState.activeErrorMessageKey = 'error';
                 $scope.cert = undefined;
             });
 
@@ -753,11 +760,11 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.isComplete = result.isComplete;
                     $scope.validationMessages = result.validationMessages;
                     $scope.validationMessagesGrouped = result.validationMessagesGrouped;
-                    $scope.viewState.saveErrorMessageKey = null;
+                    CertViewState.viewState.saveErrorMessageKey = null;
                 }, function(result) {
                     // save failed
                     $scope.certForm.$setDirty();
-                    $scope.viewState.saveErrorMessageKey = result.errorMessageKey;
+                    CertViewState.viewState.saveErrorMessageKey = result.errorMessageKey;
                 });
 
                 deferred.resolve(intygSaveRequest);

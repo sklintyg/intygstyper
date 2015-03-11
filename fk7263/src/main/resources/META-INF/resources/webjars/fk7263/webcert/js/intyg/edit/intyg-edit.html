@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-12 webcert-col webcert-col-single">
 
-      <div wc-intyg-edit-header></div>
+      <div ui-view="header"></div>
 
       <!-- Integration deleted message -->
       <div id="integration-deleted" ng-if="viewState.deleted">
@@ -21,7 +21,7 @@
             <div wc-spinner label="info.loadingdata" show-spinner="!viewState.doneLoading"
                  show-content="viewState.doneLoading">
 
-              <div class="alert alert-danger" ng-show="viewState.showComplete && !isComplete"
+              <div class="alert alert-danger" ng-show="viewState.showComplete && !viewState.intyg.isComplete"
                    style="margin-right: 20px">
                 <h3><span message key="draft.saknar-uppgifter"></span></h3>
                 <ul>
@@ -757,7 +757,7 @@
                   </div>
                 </div>
 
-                <button id="signera-utkast-button" class="btn btn-success" ng-disabled="!isComplete || certForm.$dirty || signingWithSITHSInProgress"
+                <button id="signera-utkast-button" class="btn btn-success" ng-disabled="!viewState.intyg.isComplete || certForm.$dirty || signingWithSITHSInProgress"
                         ng-click="sign()" ng-show="user.userContext.lakare"><img ng-show="signingWithSITHSInProgress" ng-src="/img/ajax-loader-small-green.gif"/> <span message key="common.sign"></span>
                 </button>
 

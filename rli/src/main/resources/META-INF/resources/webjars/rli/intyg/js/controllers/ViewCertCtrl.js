@@ -50,10 +50,11 @@ define(['angular'], function(angular) {
                     }
                 }, true);
 
-                $scope.dialog = {
+                var dialogRequestModel = {
                     acceptprogressdone: true,
                     focus: false
                 };
+
 
                 // Archive dialog
                 $scope.certToArchive = {};
@@ -61,7 +62,7 @@ define(['angular'], function(angular) {
 
                 $scope.openArchiveDialog = function(cert) {
                     $scope.certToArchive = cert;
-                    $scope.dialog.focus = true;
+                    dialogRequestModel.focus = true;
                     archiveDialog = dialogService.showDialog($scope, {
                         dialogId: 'archive-confirmation-dialog',
                         titleId: 'inbox.archivemodal.header',
@@ -72,7 +73,8 @@ define(['angular'], function(angular) {
                         },
                         button1id: 'archive-button',
                         button1text: 'button.archive',
-                        autoClose: false
+                        autoClose: false,
+                        dialogRequestModel: dialogRequestModel
                     });
                 };
 

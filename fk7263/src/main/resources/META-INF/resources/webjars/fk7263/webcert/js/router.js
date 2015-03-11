@@ -5,8 +5,19 @@ angular.module('fk7263').config(function($stateProvider) {
     'use strict';
     $stateProvider.
         state('fk7263-edit', {
-            url : '/fk7263/edit/:certificateId',
-            templateUrl: '/web/webjars/fk7263/webcert/js/intyg/edit/intyg-edit.html',
-            controller: 'fk7263.EditCertCtrl'
+            url: '/fk7263/edit/:certificateId',
+            views: {
+                '' : {
+                    templateUrl: '/web/webjars/fk7263/webcert/js/intyg/edit/intyg-edit.html',
+                    controller: 'fk7263.EditCertCtrl'
+                },
+                'header@fk7263-edit' : {
+                    templateUrl: '/web/webjars/common/webcert/intyg/edit/intyg-edit-header/intyg-edit-header.html',
+                    controller: 'common.IntygEditHeader',
+                    data : {
+                        intygsTyp : 'fk7263'
+                    }
+                }
+            }
         });
 });
