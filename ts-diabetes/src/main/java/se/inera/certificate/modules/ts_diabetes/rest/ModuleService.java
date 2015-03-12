@@ -19,17 +19,11 @@
 package se.inera.certificate.modules.ts_diabetes.rest;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.ValidationException;
 import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 
 import org.apache.commons.lang.NotImplementedException;
@@ -38,7 +32,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.xml.sax.SAXException;
 
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
@@ -52,21 +45,11 @@ import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.PdfResponse;
-import se.inera.certificate.modules.support.api.dto.TransportModelHolder;
-import se.inera.certificate.modules.support.api.dto.TransportModelResponse;
-import se.inera.certificate.modules.support.api.dto.TransportModelVersion;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.exception.ModuleConverterException;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
-import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
-import se.inera.certificate.modules.support.api.exception.ModuleVersionUnsupportedException;
 import se.inera.certificate.modules.support.api.notification.NotificationMessage;
-import se.inera.certificate.modules.ts_diabetes.model.codes.IntygAvserKod;
-import se.inera.certificate.modules.ts_diabetes.model.converter.ExternalToInternalConverter;
-import se.inera.certificate.modules.ts_diabetes.model.converter.ExternalToTransportConverter;
-import se.inera.certificate.modules.ts_diabetes.model.converter.InternalToExternalConverter;
-import se.inera.certificate.modules.ts_diabetes.model.converter.TransportToExternalConverter;
 import se.inera.certificate.modules.ts_diabetes.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.pdf.PdfGenerator;
@@ -86,19 +69,7 @@ public class ModuleService implements ModuleApi {
     private static final Logger LOG = LoggerFactory.getLogger(ModuleService.class);
 
     @Autowired
-    private TransportToExternalConverter transportToExternalConverter;
-
-    @Autowired
-    private ExternalToTransportConverter externalToTransportConverter;
-
-    @Autowired
     private Validator validator;
-
-    @Autowired
-    private ExternalToInternalConverter externalToInternalConverter;
-
-    @Autowired
-    private InternalToExternalConverter internalToExternalConverter;
 
     @Autowired
     private PdfGenerator pdfGenerator;

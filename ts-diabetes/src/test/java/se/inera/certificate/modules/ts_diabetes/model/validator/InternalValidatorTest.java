@@ -94,7 +94,7 @@ public class InternalValidatorTest {
     @Test
     public void testInvalidDiabetesMissing() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-missing-diabetes").asInternalModel();
-        ValidateDraftResponhttp://theync.com/se validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
         assertEquals(T3, validationResponse.getValidationErrors().size());
     }
