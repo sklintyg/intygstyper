@@ -18,5 +18,14 @@
       <cxf:logging/>
     </cxf:features>
   </cxf:bus>
+  <!-- ws clients -->
+  <jaxws:client id="registerTSBasReponderInterface"
+                  serviceClass="se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponderInterface"
+                  address="${intygstjanst.registermedicalcertificate.endpoint.url}">
+  </jaxws:client>
 
+    <jaxws:client id="getTSBasResponderInterface"
+      serviceClass="se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface"
+      address="${intygstjanst.getmedicalcertificateforcare.endpoint.url}">
+    </jaxws:client>
 </beans>

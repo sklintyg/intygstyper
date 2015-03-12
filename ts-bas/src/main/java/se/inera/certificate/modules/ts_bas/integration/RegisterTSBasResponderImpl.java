@@ -19,7 +19,7 @@ import se.inera.certificate.modules.support.api.CertificateHolder;
 import se.inera.certificate.modules.ts_bas.model.converter.TransportToInternal;
 import se.inera.certificate.modules.ts_bas.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_bas.rest.ModuleService;
+import se.inera.certificate.modules.ts_bas.rest.TsBasModuleApi;
 import se.inera.certificate.modules.ts_bas.validator.Validator;
 import se.inera.certificate.validate.CertificateValidationException;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.ObjectFactory;
@@ -40,7 +40,7 @@ public class RegisterTSBasResponderImpl implements RegisterTSBasResponderInterfa
     private ConverterUtil converterUtil;
 
     @Autowired 
-    private ModuleService moduleApi;
+    private TsBasModuleApi moduleApi;
 
     private ObjectFactory objectFactory;
     private JAXBContext jaxbContext;

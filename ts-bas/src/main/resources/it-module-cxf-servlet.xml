@@ -30,12 +30,12 @@
 
   </jaxws:endpoint>
 
-  <bean id="registerCertificateEndPoint" class="se.inera.certificate.modules.ts-bas.integration.RegisterTSBasResponderImpl">
+  <bean id="registerTsBasEndPoint" class="se.inera.certificate.modules.ts-bas.integration.RegisterTSBasResponderImpl">
       <property name="wireTapped" value="false" />
   </bean>
   
-  <jaxws:endpoint address="/register-certificate/v3.0"
-                  implementor="#registerCertificateEndPoint">
+  <jaxws:endpoint address="/register-certificate/v1.0"
+                  implementor="#registerTsBasEndPoint">
     <jaxws:outFaultInterceptors>
       <bean class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
         <constructor-arg value="transform/register-medical-certificate-transform.xslt"/>

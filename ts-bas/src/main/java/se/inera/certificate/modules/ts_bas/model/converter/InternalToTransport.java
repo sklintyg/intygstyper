@@ -23,8 +23,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -80,6 +80,7 @@ import se.inera.intygstjanster.ts.services.v1.Vardgivare;
  */
 public class InternalToTransport {
 
+    private static final String SIGNERINGS_TIDSTAMPEL_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     private static final Logger LOG = LoggerFactory.getLogger(InternalToTransport.class);
 
     /**
@@ -165,10 +166,13 @@ public class InternalToTransport {
 
     private static DiabetesTypBas buildDiabetesTypBas(Diabetes source) {
         DiabetesTypBas diabetes = new DiabetesTypBas();
+        diabetes.setHarDiabetes(source.getHarDiabetes());
+        if (!source.getHarDiabetes()) {
+            return diabetes;
+        }
         diabetes.setHarBehandlingInsulin(source.getInsulin());
         diabetes.setHarBehandlingKost(source.getKost());
         diabetes.setHarBehandlingTabletter(source.getTabletter());
-        diabetes.setHarDiabetes(source.getHarDiabetes());
         if (source.getDiabetesTyp().equals("DIABETES_TYP_1")) {
             diabetes.getDiabetesTyp().add(DiabetesTypVarden.fromValue("TYP1"));
         } else if (source.getDiabetesTyp().equals("DIABETES_TYP_2")) {
@@ -200,7 +204,7 @@ public class InternalToTransport {
     }
 
     private static IntygsAvserTypBas buildIntygAvser(IntygAvser source) {
-        
+
         IntygsAvserTypBas intygAvser = new IntygsAvserTypBas();
         for (IntygAvserKategori kat : source.getKorkortstyp()) {
             intygAvser.getKorkortstyp().add(KorkortsbehorighetTsBas.valueOf(KorkortsKod.valueOf(kat.name()).getCode()));
@@ -262,14 +266,27 @@ public class InternalToTransport {
         return synUtanKorrektion;
     }
 
-    private static SynskarpaMedKorrektion buildSynskarpaMedKorrektion(Double hoger, Double vanster, Double binokulart, boolean kontaktlinsHoger,
-            boolean kontaktlinsVanster) {
+    private static SynskarpaMedKorrektion buildSynskarpaMedKorrektion(Double hoger, Double vanster, Double binokulart, Boolean kontaktlinsHoger,
+            Boolean kontaktlinsVanster) {
+        if (hoger == null && vanster == null && binokulart == null && kontaktlinsHoger == null && kontaktlinsVanster == null) {
+            return null;
+        }
         SynskarpaMedKorrektion synMedKorrektion = new SynskarpaMedKorrektion();
-        synMedKorrektion.setHogerOga(hoger);
-        synMedKorrektion.setVansterOga(vanster);
-        synMedKorrektion.setBinokulart(binokulart);
-        synMedKorrektion.setHarKontaktlinsHogerOga(kontaktlinsHoger);
-        synMedKorrektion.setHarKontaktlinsVansterOga(kontaktlinsVanster);
+        if (hoger != null) {
+            synMedKorrektion.setHogerOga(hoger);
+        }
+        if (vanster != null) {
+            synMedKorrektion.setVansterOga(vanster);
+        }
+        if (binokulart != null) {
+            synMedKorrektion.setBinokulart(binokulart);
+        }
+        if (kontaktlinsHoger != null) { 
+            synMedKorrektion.setHarKontaktlinsHogerOga(kontaktlinsHoger);
+        }
+        if (kontaktlinsVanster != null) {
+            synMedKorrektion.setHarKontaktlinsVansterOga(kontaktlinsVanster);
+        }
         return synMedKorrektion;
     }
 
@@ -285,7 +302,7 @@ public class InternalToTransport {
     private static GrundData buildGrundData(se.inera.certificate.model.common.internal.GrundData source) {
         GrundData grundData = new GrundData();
         grundData.setPatient(buildPatient(source.getPatient()));
-        grundData.setSigneringsTidstampel(source.getSigneringsdatum().toString());
+        grundData.setSigneringsTidstampel(source.getSigneringsdatum().toString(SIGNERINGS_TIDSTAMPEL_FORMAT));
         grundData.setSkapadAv(buildSkapadAv(source.getSkapadAv()));
         return grundData;
     }
@@ -306,7 +323,9 @@ public class InternalToTransport {
         SkapadAv skapadAv = new SkapadAv();
         // TODO Find out how this actually looks in Befattningar
         skapadAv.setAtLakare(source.getBefattningar().contains("AT-läkare"));
-        skapadAv.setBefattningar(StringUtils.join(source.getBefattningar(), ", "));
+        if (!source.getBefattningar().isEmpty()) {
+            skapadAv.setBefattningar(StringUtils.join(source.getBefattningar(), ", "));
+        }
         skapadAv.setFullstandigtNamn(source.getFullstandigtNamn());
         skapadAv.setPersonId(buildII(Constants.HSA_ID_OID, source.getPersonId()));
         skapadAv.setVardenhet(buildVardenhet(source.getVardenhet()));
@@ -316,7 +335,7 @@ public class InternalToTransport {
 
     private static Vardenhet buildVardenhet(se.inera.certificate.model.common.internal.Vardenhet source) {
         Vardenhet vardenhet = new Vardenhet();
-        vardenhet.setEnhetsId(buildII(Constants.HSA_ID_OID,source.getEnhetsid()));
+        vardenhet.setEnhetsId(buildII(Constants.HSA_ID_OID, source.getEnhetsid()));
         vardenhet.setEnhetsnamn(source.getEnhetsnamn());
         vardenhet.setPostadress(source.getPostadress());
         vardenhet.setPostnummer(source.getPostnummer());
@@ -330,7 +349,7 @@ public class InternalToTransport {
         Vardgivare vardgivare = new Vardgivare();
         vardgivare.setVardgivarid(buildII(Constants.HSA_ID_OID, source.getVardgivarid()));
         vardgivare.setVardgivarnamn(source.getVardgivarnamn());
-        return vardgivare ;
+        return vardgivare;
     }
 
     private static II buildII(String root, String extension) {

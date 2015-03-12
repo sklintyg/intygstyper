@@ -8,7 +8,7 @@ import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.ModuleEntryPoint;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.feature.ModuleFeaturesFactory;
-import se.inera.certificate.modules.ts_bas.rest.ModuleService;
+import se.inera.certificate.modules.ts_bas.rest.TsBasModuleApi;
 
 public class TsBasEntryPoint implements ModuleEntryPoint {
 
@@ -19,7 +19,7 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
     public static final String MODULE_DESCRIPTION = "Läkarintyg - avseende högre körkortsbehörigheter eller taxiförarlegitimation - på begäran av Transportstyrelsen";
 
     @Autowired
-    private ModuleService moduleService;
+    private TsBasModuleApi moduleService;
 
     @Override
     public String getModuleId() {

@@ -18,16 +18,13 @@
  */
 package se.inera.certificate.modules.ts_bas.model.converter;
 
-import java.io.File;
-
-import javax.xml.bind.JAXB;
-
 import org.junit.Test;
-import org.springframework.core.io.ClassPathResource;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.utils.ModelAssert;
+import se.inera.certificate.modules.ts_bas.utils.Scenario;
+import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,14 +41,23 @@ public class InternalToTransportTest {
 
     @Test
     public void testConvertUtlatandeFromInternalToExternal() throws Exception {
-        Utlatande intUtlatande = objectMapper.readValue(
-                new ClassPathResource("InternalToTransport/ts-bas-max.json").getInputStream(), Utlatande.class);
-        TSBasIntyg actual = InternalToTransport.convert(intUtlatande);
-        File resource = new ClassPathResource("InternalToTransport/ts-bas-max.xml").getFile();
+//        Utlatande intUtlatande = objectMapper.readValue(
+//                new ClassPathResource("InternalToTransport/ts-bas-max.json").getInputStream(), Utlatande.class);
+//        TSBasIntyg actual = InternalToTransport.convert(intUtlatande);
+//        File resource = new ClassPathResource("InternalToTransport/ts-bas-max.xml").getFile();
+//
+//        TSBasIntyg expected = JAXB.unmarshal(resource, TSBasIntyg.class); 
+//
+//        ModelAssert.assertEquals("Error", expected, actual);
+        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
+            Utlatande intUtlatande = scenario.asInternalModel();
 
-        TSBasIntyg expected = JAXB.unmarshal(resource, TSBasIntyg.class); 
+            TSBasIntyg actual = InternalToTransport.convert(intUtlatande);
 
-        ModelAssert.assertEquals("Error", expected, actual);
+            TSBasIntyg expected = scenario.asTransportModel();
+
+            ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
+        }
     }
 
 }

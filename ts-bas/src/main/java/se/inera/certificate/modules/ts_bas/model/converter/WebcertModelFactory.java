@@ -27,7 +27,6 @@ import se.inera.certificate.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
-import se.inera.certificate.modules.support.api.dto.Patient;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 

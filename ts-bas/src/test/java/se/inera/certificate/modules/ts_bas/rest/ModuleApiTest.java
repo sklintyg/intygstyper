@@ -119,7 +119,6 @@ public class ModuleApiTest {
         return new TransportModelHolder(writer.toString());
     }
 
-
     private InternalModelHolder createInternalHolder(Utlatande internalModel) throws JsonProcessingException {
         return new InternalModelHolder(mapper.writeValueAsString(internalModel));
     }

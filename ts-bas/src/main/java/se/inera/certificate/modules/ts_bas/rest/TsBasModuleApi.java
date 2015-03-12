@@ -42,13 +42,16 @@ import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.PdfResponse;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.certificate.modules.support.api.exception.ExternalServiceCallException;
 import se.inera.certificate.modules.support.api.exception.ModuleConverterException;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.modules.support.api.notification.NotificationMessage;
+import se.inera.certificate.modules.ts_bas.model.converter.InternalToTransport;
 import se.inera.certificate.modules.ts_bas.model.converter.TransportToInternal;
 import se.inera.certificate.modules.ts_bas.model.converter.TsBasMetaDataConverter;
 import se.inera.certificate.modules.ts_bas.model.converter.WebcertModelFactory;
+import se.inera.certificate.modules.ts_bas.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGenerator;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGeneratorException;
@@ -56,6 +59,10 @@ import se.inera.certificate.modules.ts_bas.validator.Validator;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
+import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponderInterface;
+import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponseType;
+import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
+import se.inera.intygstjanster.ts.services.v1.ResultCodeType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -63,12 +70,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * The contract between the certificate module and the generic components (Intygstjänsten, Mina-Intyg & Webcert).
  *
  */
-public class ModuleService implements ModuleApi {
+public class TsBasModuleApi implements ModuleApi {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ModuleService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TsBasModuleApi.class);
 
     @Autowired(required = false)
     private GetTSBasResponderInterface getTSBasResponderInterface;
+
+    @Autowired(required = false)
+    private RegisterTSBasResponderInterface registerTSBasResponderInterface;
 
     @Autowired
     private Validator validator;
@@ -78,6 +88,10 @@ public class ModuleService implements ModuleApi {
 
     @Autowired
     private WebcertModelFactory webcertModelFactory;
+
+    @Autowired
+    @Qualifier("tsBasConverterUtil")
+    private ConverterUtil converterUtil;
 
     @Autowired
     @Qualifier("ts-bas-objectMapper")
@@ -154,8 +168,25 @@ public class ModuleService implements ModuleApi {
 
     @Override
     public void registerCertificate(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
-        // TODO Auto-generated method stub
 
+        RegisterTSBasType request = new RegisterTSBasType();
+        try {
+            request.setIntyg(InternalToTransport.convert(converterUtil.fromJsonString(internalModel.getInternalModel())));
+        } catch (ConverterException e) {
+            LOG.error("Failed to convert to transport format during registerTSBas", e);
+            throw new ExternalServiceCallException("Failed to convert to transport format during registerTSBas", e);
+        }
+
+        RegisterTSBasResponseType response=
+                registerTSBasResponderInterface.registerTSBas(logicalAddress, request);
+
+        // check whether call was successful or not
+        if (response.getResultat().getResultCode() != ResultCodeType.OK) {
+            String message = response.getResultat().getResultCode() == ResultCodeType.INFO
+                    ? response.getResultat().getResultText()
+                    : response.getResultat().getErrorId() + " : " + response.getResultat().getResultText();
+            throw new ExternalServiceCallException(message);
+        }
     }
 
     @Override
@@ -197,7 +228,8 @@ public class ModuleService implements ModuleApi {
 
     @Override
     public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
-        throw new UnsupportedOperationException("Unsupported for this module");
+        return true;
+        //throw new UnsupportedOperationException("Unsupported for this module");
     }
 
     @Override

@@ -18,7 +18,7 @@ import se.inera.certificate.logging.LogMarkers;
 import se.inera.certificate.modules.support.api.CertificateHolder;
 import se.inera.certificate.modules.ts_bas.model.converter.InternalToTransport;
 import se.inera.certificate.modules.ts_bas.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.ts_bas.rest.ModuleService;
+import se.inera.certificate.modules.ts_bas.rest.TsBasModuleApi;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
@@ -44,7 +44,7 @@ public class GetTSBasResponderImpl implements GetTSBasResponderInterface{
     }
 
     @Autowired
-    ModuleService moduleApi;
+    TsBasModuleApi moduleApi;
 
     @Override
     public GetTSBasResponseType getTSBas(String logicalAddress, GetTSBasType request) {
