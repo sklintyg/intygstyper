@@ -5,6 +5,6 @@ angular.module('fk7263').controller('fk7263.EditCert.Form1Ctrl',
             $scope.model = {
                 avstangningSmittskydd :false
             }
-            $
+
 
         }]);
