@@ -85,7 +85,6 @@ public class ModuleApiTest {
 
         assertNotNull(holder);
         Utlatande utlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
-        System.out.println(holder.getInternalModel());
         assertEquals(true, utlatande.getSyn().getSynfaltsdefekter());
     }
 
