@@ -53,7 +53,11 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                         $scope.pdfUrl = '/moduleapi/intyg/'+ intygType +'/' + $scope.cert.id + '/pdf';
 
                     } else {
-                        $scope.widgetState.activeErrorMessageKey = 'fk7263.error.could_not_load_cert';
+                        if ($routeParams.signed) {
+                            $scope.widgetState.activeErrorMessageKey = 'common.error.signed_but_not_ready';
+                        } else {
+                            $scope.widgetState.activeErrorMessageKey = 'fk7263.error.could_not_load_cert';
+                        }
                     }
                     $scope.intygBackup.showBackupInfo = false;
                 }, function(error) {
@@ -61,7 +65,11 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                     if (error.errorCode === 'DATA_NOT_FOUND') {
                         $scope.widgetState.activeErrorMessageKey = 'fk7263.error.data_not_found';
                     } else {
-                        $scope.widgetState.activeErrorMessageKey = 'fk7263.error.could_not_load_cert';
+                        if ($routeParams.signed) {
+                            $scope.widgetState.activeErrorMessageKey = 'common.error.signed_but_not_ready';
+                        } else {
+                            $scope.widgetState.activeErrorMessageKey = 'fk7263.error.could_not_load_cert';
+                        }
                     }
                     $log.debug('Got error while loading cert');
                     $log.debug(error.message);
