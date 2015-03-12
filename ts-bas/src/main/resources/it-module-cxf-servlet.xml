@@ -20,8 +20,8 @@
   </cxf:bus>
 
   <!-- ws endpoints -->
-  <jaxws:endpoint address="/get-certificate/v1.0"
-                  implementor="se.inera.certificate.modules.ts-bas.integration.GetTSBasResponderImpl">
+  <jaxws:endpoint address="/get-ts-bas/v1.0"
+                  implementor="se.inera.certificate.modules.ts_bas.integration.GetTSBasResponderImpl">
     <jaxws:outFaultInterceptors>
       <bean class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
         <constructor-arg value="transform/get-certificate-transform.xslt"/>
@@ -29,13 +29,8 @@
     </jaxws:outFaultInterceptors>
 
   </jaxws:endpoint>
-
-  <bean id="registerTsBasEndPoint" class="se.inera.certificate.modules.ts-bas.integration.RegisterTSBasResponderImpl">
-      <property name="wireTapped" value="false" />
-  </bean>
-  
-  <jaxws:endpoint address="/register-certificate/v1.0"
-                  implementor="#registerTsBasEndPoint">
+  <jaxws:endpoint address="/register-ts-bas/v1.0"
+                  implementor="se.inera.certificate.modules.ts_bas.integration.RegisterTSBasResponderImpl">
     <jaxws:outFaultInterceptors>
       <bean class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
         <constructor-arg value="transform/register-medical-certificate-transform.xslt"/>
