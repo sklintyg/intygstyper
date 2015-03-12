@@ -24,7 +24,7 @@ angular.module('fk7263').config(function($stateProvider) {
             
                 'form1@fk7263-edit' : {
                     templateUrl: '/web/webjars/fk7263/webcert/js/intyg/edit/form/intyg-edit-main-form1.html',
-                    controller: 'fk7263.EditCert.Form1Ctrl'
+                    //controller: 'fk7263.EditCert.Form1Ctrl'
                 },
 
                 'form4b@fk7263-edit' : {

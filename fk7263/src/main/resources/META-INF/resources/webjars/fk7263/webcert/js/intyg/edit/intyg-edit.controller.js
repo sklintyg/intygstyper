@@ -1,8 +1,9 @@
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
-    ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$routeParams',
-        'common.CertificateService', 'common.ManageCertView', 'common.User', 'common.wcFocus',
-        'common.intygNotifyService', 'fk7263.diagnosService', 'common.DateUtilsService', 'common.UtilsService','fk7263.EditCertCtrl.DateRangeGroupsService',
-        function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $routeParams,
+    ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
+        'common.CertViewState', 'common.CertificateService', 'common.ManageCertView', 'common.User', 'common.wcFocus',
+        'common.intygNotifyService', 'fk7263.diagnosService', 'common.DateUtilsService', 'common.UtilsService',
+        'fk7263.EditCertCtrl.DateRangeGroupsService',
+        function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q, CertViewState,
             CertificateService, ManageCertView, User, wcFocus, intygNotifyService, diagnosService, dateUtils, utils, DateRangeGroupsService ) {
             'use strict';
 
@@ -176,9 +177,9 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.cert.grundData.skapadAv.vardenhet.postnummer === '' ||
                     $scope.cert.grundData.skapadAv.vardenhet.postort === '' ||
                     $scope.cert.grundData.skapadAv.vardenhet.telefonnummer === '') {
-                    $scope.widgetState.hasInfoMissing = true;
+                    CertViewState.viewState.hsaInfoMissing = true;
                 } else {
-                    $scope.widgetState.hasInfoMissing = false;
+                    CertViewState.viewState.hsaInfoMissing = false;
                 }
 
                 // Fält 2. diagnos
@@ -269,7 +270,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Convert form temporary bindings to internal model
              * @param $scope
              */
-            function convertFormToCert($scope) {
+            function convertFormToCert() {
 
                 // Fält 1. Smittskydd. Vid sparning: ta bort data på alla fält före 8b som döljs när smittskydd är icheckat.
                 if ($scope.cert.avstangningSmittskydd) {
@@ -585,7 +586,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     if(!$scope.form.rehab || $scope.form.rehab.length == 0){
                         $scope.form.rehab = 'NEJ';
                     }
-
                 }
             });
 
@@ -655,58 +655,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              ****************************************************************************/
 
             /**
-             * Toggle header part ('Dölj meny'-knapp)
-             */
-            $scope.toggleHeader = function() {
-                $scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
-            };
-
-            /**
-             * Toggle 'Visa vad som behöver kompletteras'
-             */
-            $scope.toggleShowComplete = function() {
-                $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
-                if ($scope.widgetState.showComplete) {
-                    $scope.save();
-                    var old = $location.hash();
-                    $location.hash('top');
-                    $anchorScroll();
-                    // reset to old to keep any additional routing logic from kicking in
-                    $location.hash(old);
-                }
-            };
-
-            /**
-             * Action to save the certificate draft to the server.
-             */
-            $scope.save = function(autoSave) {
-                $scope.hasSavedThisSession = true;
-                convertFormToCert($scope);
-                return ManageCertView.save($scope, $scope.certMeta.intygType, autoSave);
-            };
-
-            /**
-             * Action to discard the certificate draft and return to WebCert again.
-             */
-            $scope.discard = function() {
-                ManageCertView.discard($scope, $scope.certMeta.intygType);
-            };
-
-            /**
-             * Action to sign the certificate draft and return to Webcert again.
-             */
-            $scope.sign = function() {
-                ManageCertView.signera($scope, $scope.certMeta.intygType);
-            };
-
-            /**
-             * Print draft
-             */
-            $scope.print = function() {
-                ManageCertView.printDraft( $scope.cert.id, $scope.certMeta.intygType );
-            };
-
-            /**
              * User selects a diagnose code
              */
             $scope.onDiagnoseCode1Select = function($item) {
@@ -757,11 +705,18 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Handle vidarebefordra dialog
              */
             $scope.openMailDialog = function() {
-                intygNotifyService.forwardIntyg($scope.certMeta, $scope.widgetState);
+                intygNotifyService.forwardIntyg($scope.certMeta, CertViewState.viewState);
             };
 
             $scope.onVidarebefordradChange = function() {
-                intygNotifyService.onForwardedChange($scope.certMeta, $scope.widgetState);
+                intygNotifyService.onForwardedChange($scope.certMeta, CertViewState.viewState);
+            };
+
+            /**
+             * Action to sign the certificate draft and return to Webcert again.
+             */
+            $scope.sign = function() {
+                ManageCertView.signera($scope.certMeta.intygType);
             };
 
             /**************************************************************************
@@ -786,14 +741,42 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 $timeout(function() {
                     wcFocus('firstInput');
                     $rootScope.$broadcast('intyg.loaded', $scope.cert);
-                    $scope.widgetState.doneLoading = true;
+                    CertViewState.viewState.doneLoading = true;
                 }, 10);
             });
 
             $rootScope.$on('intyg.deleted', function() {
-                $scope.widgetState.deleted = true;
-                $scope.widgetState.activeErrorMessageKey = 'error';
+                CertViewState.viewState.deleted = true;
+                CertViewState.viewState.activeErrorMessageKey = 'error';
                 $scope.cert = undefined;
+            });
+
+            $rootScope.$on('saveRequest', function($event, deferred) {
+
+                // Mark form as saved, will be marked as not saved if saving fails.
+                $scope.certForm.$setPristine();
+
+                convertFormToCert();
+                var intygSaveRequest = {
+                    intygsId      : $scope.certMeta.intygId,
+                    intygsTyp     : $scope.certMeta.intygType,
+                    cert          : $scope.cert,
+                    saveComplete  : $q.defer()
+                };
+
+                intygSaveRequest.saveComplete.promise.then(function(result) {
+                    // save success
+                    $scope.isComplete = result.isComplete;
+                    $scope.validationMessages = result.validationMessages;
+                    $scope.validationMessagesGrouped = result.validationMessagesGrouped;
+                    CertViewState.viewState.saveErrorMessageKey = null;
+                }, function(result) {
+                    // save failed
+                    $scope.certForm.$setDirty();
+                    CertViewState.viewState.saveErrorMessageKey = result.errorMessageKey;
+                });
+
+                deferred.resolve(intygSaveRequest);
             });
 
         }]);
