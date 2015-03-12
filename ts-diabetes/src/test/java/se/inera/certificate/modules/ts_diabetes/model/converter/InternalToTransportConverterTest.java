@@ -27,7 +27,7 @@ import org.xml.sax.SAXException;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
-import se.intygstjanster.ts.services.v1.TSDiabetesIntyg;
+import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -58,6 +58,9 @@ public class InternalToTransportConverterTest {
         
         StringWriter actual = new StringWriter();
         marshaller.marshal(wrapJaxb(converted), actual);
+        
+        System.out.println(actual);
+        System.out.println(expected);
         
         XMLUnit.setIgnoreWhitespace(true);
         XMLUnit.setIgnoreAttributeOrder(true);

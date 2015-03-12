@@ -7,7 +7,8 @@ import javax.xml.transform.dom.DOMSource;
 
 import org.w3c.dom.Node;
 
-import se.inera.certificate.ts_diabetes.model.v1.Utlatande;
+import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
+
 
 public final class JAXBUtils {
 
