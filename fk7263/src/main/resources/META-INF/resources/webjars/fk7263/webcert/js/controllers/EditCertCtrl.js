@@ -639,6 +639,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         return [];
                     });
             };
+
             $scope.getDiagnoseCodes = function(codeSystem, val) {
                 return diagnosService.searchByCode(codeSystem, val)
                     .then(function(response) {
@@ -725,6 +726,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
                 $scope.certForm.$dirty = true;
                 $scope.certForm.$pristine = false;
+
             };
             $scope.onDiagnoseCode2Select = function($item) {
                 $scope.cert.diagnosBeskrivning2 = $item.beskrivning;
