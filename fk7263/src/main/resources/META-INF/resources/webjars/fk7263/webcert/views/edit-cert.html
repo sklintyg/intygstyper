@@ -238,7 +238,9 @@
                         <input type="text" class="form-control" id="diagnoseCode" name="diagnose.code" value=""
                                class='diagnose-code col-xs-11 form-control' ng-model="cert.diagnosKod"
                                typeahead="d.value as d.label for d in getDiagnoseCodes(form.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
-                               typeahead-min-length="3" typeahead-on-select="onDiagnoseCode1Select($item)">
+                               typeahead-min-length="3" typeahead-on-select="onDiagnoseCode1Select($item)"
+                               wc-to-uppercase
+                            >
                       </div>
                       <div class='col-xs-9'>
                         <label class="control-label">Diagnos</label>
@@ -260,7 +262,8 @@
                                    ng-model="cert.diagnosKod2" class="col-xs-11 form-control"
                                    typeahead="d.value as d.label for d in getDiagnoseCodes(form.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
                                    typeahead-min-length="3" typeahead-on-select="onDiagnoseCode2Select($item)"
-                                   ng-change="limitDiagnosBeskrivningField('diagnosKod2')">
+                                   ng-change="limitDiagnosBeskrivningField('diagnosKod2')"
+                                   wc-to-uppercase>
                           </div>
                         </div>
                       </div>
@@ -285,7 +288,8 @@
                                ng-model="cert.diagnosKod3" class="col-xs-11 form-control"
                                typeahead="d.value as d.label for d in getDiagnoseCodes(form.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
                                typeahead-min-length="3" typeahead-on-select="onDiagnoseCode3Select($item)"
-                               ng-change="limitDiagnosBeskrivningField('diagnosKod3')">
+                               ng-change="limitDiagnosBeskrivningField('diagnosKod3')"
+                               wc-to-uppercase>
                       </div>
                       <div class='col-xs-9'>
                         <div class="controls">
