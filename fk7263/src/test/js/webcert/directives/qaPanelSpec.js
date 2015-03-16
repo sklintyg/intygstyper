@@ -59,7 +59,7 @@ describe('qaPanel', function() {
     describe('#dismissProxy', function() {
         it('should dismiss a message for a question', function() {
 
-            var qaAnswered = {status: 'ANSWERED'};
+            var qaAnswered = {status: 'ANSWERED', proxyMessage: 'Error'};
             $scope.qaList = [qaAnswered];
             expect($scope.qaList.length).toBe(1);
             $scope.dismissProxy(qaAnswered);

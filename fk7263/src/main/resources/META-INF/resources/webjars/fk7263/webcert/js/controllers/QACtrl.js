@@ -60,11 +60,14 @@ angular.module('fk7263').controller('fk7263.QACtrl',
             $scope.$on('$destroy', unbindFastEvent);
 
             $scope.openIssuesFilter = function(qa) {
-                return qa.status !== 'CLOSED';
+                return (qa.proxyMessage === undefined && qa.status !== 'CLOSED') ||
+                    (qa.proxyMessage !== undefined && qa.messageStatus !== 'CLOSED' && qa.messageStatus !== 'HIDDEN');
+
             };
 
             $scope.closedIssuesFilter = function(qa) {
-                return qa.status === 'CLOSED';
+                return (qa.proxyMessage === undefined && qa.status === 'CLOSED') ||
+                    (qa.proxyMessage !== undefined && qa.messageStatus === 'CLOSED');
             };
 
             $scope.toggleQuestionForm = function() {

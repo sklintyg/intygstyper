@@ -7,7 +7,7 @@
            intygs-id="cert.id"></div>
 
       <div class="header-fix-top print-hide">
-        <div class="header-wrapper" ng-hide="widgetState.collapsedHeader" ng-animate="'menucollapse'">
+        <div class="header-wrapper menucollapse" ng-hide="widgetState.collapsedHeader">
           <div id="wcHeader" wc-header default-active="index"></div>
         </div>
 
@@ -135,8 +135,7 @@
 
                   <!-- 4b. Intyger baseras på -->
                   <div id="intygetbaseraspa" wc-field field-label="fk7263.label.intyg-baserat-pa" field-number="4b"
-                       field-help-text="fk7263.helptext.intyg-baserat-pa" ng-hide="cert.avstangningSmittskydd"
-                       ng-animate="'fade'">
+                       field-help-text="fk7263.helptext.intyg-baserat-pa" ng-hide="cert.avstangningSmittskydd" class="field-fade">
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.intygbaseratpa" id="validationMessages_intygbaseratpa">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.intygbaseratpa"><span message
@@ -209,7 +208,7 @@
 
                   <div wc-field field-label="fk7263.label.diagnos" field-number="2"
                        field-help-text="fk7263.helptext.diagnos" ng-hide="cert.avstangningSmittskydd"
-                       ng-animate="'fade'" class="print-pagebreak-after" id="diagnoseForm">
+                       class="print-pagebreak-after field-fade" id="diagnoseForm">
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.diagnos" id="validationMessages_diagnos">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.diagnos"><span message
@@ -326,16 +325,14 @@
                   </div>
 
                   <div wc-field field-label="fk7263.label.aktuellt-sjukdomsforlopp" field-number="3"
-                       field-help-text="fk7263.helptext.aktuellt-sjukdomsforlopp" ng-hide="cert.avstangningSmittskydd"
-                       ng-animate="fade">
+                       field-help-text="fk7263.helptext.aktuellt-sjukdomsforlopp" ng-hide="cert.avstangningSmittskydd" class="field-fade">
                     <textarea id="diseaseCause" class="form-control" name="diseaseCause" rows='5'
                               ng-model="cert.sjukdomsforlopp" wc-maxlength ng-trim="false"
                               maxlength="{{inputLimits.sjukdomsforlopp}}"></textarea>
                   </div>
 
                   <div wc-field field-label="fk7263.label.funktionsnedsattningar" field-number="4"
-                       field-help-text="fk7263.helptext.funktionsnedsattning" ng-hide="cert.avstangningSmittskydd"
-                       ng-animate="'fade'">
+                       field-help-text="fk7263.helptext.funktionsnedsattning" ng-hide="cert.avstangningSmittskydd" class="field-fade">
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.funktionsnedsattning" id="validationMessages_funktionsnedsattning">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.funktionsnedsattning"><span message
@@ -353,8 +350,7 @@
                   </div>
 
                   <div wc-field field-label="fk7263.label.aktivitetsbegransning" field-number="5"
-                       field-help-text="fk7263.helptext.aktivitetsbegransning" ng-hide="cert.avstangningSmittskydd"
-                       ng-animate="'fade'" class="print-pagebreak-after">
+                       field-help-text="fk7263.helptext.aktivitetsbegransning" ng-hide="cert.avstangningSmittskydd" class="print-pagebreak-after field-fade">
 
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.aktivitetsbegransning" id="validationMessages_aktivitetsbegransning">
                       <ul>
@@ -374,8 +370,7 @@
 
                   <!-- Arbete -->
                   <div wc-field field-label="fk7263.label.arbete" field-number="8a"
-                       field-help-text="fk7263.helptext.sysselsattning" ng-hide="cert.avstangningSmittskydd"
-                       ng-animate="'fade'" id="arbeteForm">
+                       field-help-text="fk7263.helptext.sysselsattning" ng-hide="cert.avstangningSmittskydd" id="arbeteForm" class="field-fade">
                     <div class="alert alert-danger" ng-if="validationMessagesGrouped.sysselsattning" id="validationMessages_sysselsattning">
                       <ul>
                         <li ng-repeat="message in validationMessagesGrouped.sysselsattning"><span message

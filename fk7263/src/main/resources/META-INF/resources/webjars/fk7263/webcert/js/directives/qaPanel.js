@@ -27,6 +27,36 @@ angular.module('fk7263').directive('qaPanel',
 
                     $scope.handledPanel = $attrs.type === 'handled';
 
+                    function delayFindMessageAndAct(timeout, qaList, message, onFound) {
+                        $timeout(function() {
+                            var i;
+                            for(i = 0; i < qaList.length; i++){
+                                if(qaList[i].id === message.id && qaList[i].proxyMessage !== undefined) {
+                                    onFound(i);
+                                    break;
+                                }
+                            }
+                        }, timeout);
+
+                        $log.debug('Message not found:' + message.id);
+                    }
+
+                    function addListMessage(qaList, qa, messageId) {
+                        var messageProxy = {}; // = angular.copy(qa);
+                        messageProxy.proxyMessage = messageId;
+                        messageProxy.id = qa.id;
+                        messageProxy.senasteHandelseDatum = qa.senasteHandelseDatum;
+                        messageProxy.messageStatus = qa.status;
+                        qaList.push(messageProxy);
+
+                        delayFindMessageAndAct(5000, qaList, messageProxy, function(index) {
+                            qaList[index].messageStatus = 'HIDDEN';
+                            delayFindMessageAndAct(2000, qaList, messageProxy, function(index) {
+                                qaList.splice(index, 1);
+                            });
+                        });
+                    }
+
                     $scope.sendAnswer = function sendAnswer(qa) {
                         qa.updateInProgress = true; // trigger local spinner
 
@@ -36,10 +66,8 @@ angular.module('fk7263').directive('qaPanel',
                             qa.activeErrorMessageKey = null;
                             if (result !== null) {
                                 fragaSvarCommonService.decorateSingleItem(result);
-                                // Create a proxyCopy
-                                var proxyCopy = angular.copy(qa);
-                                proxyCopy.proxyMessage = 'fk7263.fragasvar.answer.is.sent';
-                                $scope.qaList.push(proxyCopy);
+                                addListMessage($scope.qaList, qa, 'fk7263.fragasvar.answer.is.sent');
+
                                 // update real item
                                 angular.copy(result, qa);
                                 //$scope.activeQA = qa.internReferens;
@@ -76,9 +104,9 @@ angular.module('fk7263').directive('qaPanel',
                         fragaSvarService.closeAllAsHandled(unhandledQas,
                             function(qas){
                                 if(qas) {
-                                    angular.forEach(qas, function(qa, key) {
+                                    angular.forEach(qas, function(qa) { //unused parameter , key
                                         fragaSvarCommonService.decorateSingleItem(qa);
-                                        qa.proxyMessage = 'fk7263.fragasvar.marked.as.hanterad';
+                                        addListMessage(qas, qa, 'fk7263.fragasvar.marked.as.hanterad'); // TODOOOOOOOO TEST !!!!!!!!!!
                                     });
                                     statService.refreshStat();
                                 }
@@ -86,7 +114,7 @@ angular.module('fk7263').directive('qaPanel',
                                 if(deferred) {
                                     deferred.resolve();
                                 }
-                            },function(errorData) {
+                            },function() { // unused parameter: errorData
                                 // show error view
                                 $window.doneLoading = true;
                                 if(deferred) {
@@ -119,10 +147,7 @@ angular.module('fk7263').directive('qaPanel',
                             qa.updateHandledStateInProgress = false;
                             if (result !== null) {
                                 fragaSvarCommonService.decorateSingleItem(result);
-                                // Create a proxyCopy
-                                var proxyCopy = angular.copy(qa);
-                                proxyCopy.proxyMessage = 'fk7263.fragasvar.marked.as.hanterad';
-                                $scope.qaList.push(proxyCopy);
+                                addListMessage($scope.qaList, qa, 'fk7263.fragasvar.marked.as.hanterad');
 
                                 angular.copy(result, qa);
                                 //$scope.activeQA = qa.internReferens;
@@ -154,10 +179,7 @@ angular.module('fk7263').directive('qaPanel',
 
                             if (result !== null) {
                                 fragaSvarCommonService.decorateSingleItem(result);
-                                // Create a proxyCopy
-                                var proxyCopy = angular.copy(qa);
-                                proxyCopy.proxyMessage = 'fk7263.fragasvar.marked.as.ohanterad';
-                                $scope.qaList.push(proxyCopy);
+                                addListMessage($scope.qaList, qa, 'fk7263.fragasvar.marked.as.ohanterad');
 
                                 angular.copy(result, qa);
                                 //$scope.activeQA = qa.internReferens;
@@ -186,7 +208,7 @@ angular.module('fk7263').directive('qaPanel',
                             return;
                         }
                         for (var i = 0; i < $scope.qaList.length; i++) {
-                            if (qa === $scope.qaList[i]) {
+                            if (qa.proxyMessage !== undefined && qa.id === $scope.qaList[i].id) {
                                 $scope.qaList.splice(i, 1);
                                 return;
                             }
