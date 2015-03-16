@@ -39,8 +39,6 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                     $scope.widgetState.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
-                        $rootScope.$emit('fk7263.ViewCertCtrl.load', result.revoked, result.statuses, result.contents);
-                        $rootScope.$broadcast('intyg.loaded', $scope.cert);
 
                         $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.statuses, 'FK');
                         $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.statuses);
@@ -51,6 +49,9 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                         }
 
                         $scope.pdfUrl = '/moduleapi/intyg/'+ intygType +'/' + $scope.cert.id + '/pdf';
+
+                        $rootScope.$emit('fk7263.ViewCertCtrl.load', $scope.cert, $scope.certProperties);
+                        $rootScope.$broadcast('intyg.loaded', $scope.cert);
 
                     } else {
                         if ($routeParams.signed) {
