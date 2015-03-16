@@ -58,6 +58,4 @@ public class ScenarioTest {
         
         throw new IllegalArgumentException("No such scenario found");
     }
-
-
 }

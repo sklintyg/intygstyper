@@ -18,16 +18,12 @@
  */
 package se.inera.certificate.modules.ts_diabetes.model.codes;
 
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.common.codes.CodeConverter;
-import se.inera.certificate.model.common.codes.CodeSystem;
-
 import static se.inera.certificate.modules.ts_diabetes.model.codes.Kodverk.ID_KONTROLL;
 
 /**
  * Represents the code used by this module to define id-kontroll, Needs to be updated when proper codes are delivered..
  */
-public enum IdKontrollKod implements CodeSystem {
+public enum IdKontrollKod  {
 
     /** ID-kort (IDK1). */
     ID_KORT("IDK1", "SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.",
@@ -80,23 +76,16 @@ public enum IdKontrollKod implements CodeSystem {
         return description;
     }
 
-    @Override
     public String getCodeSystem() {
         return codeSystem;
     }
 
-    @Override
     public String getCodeSystemName() {
         return codeSystemName;
     }
 
-    @Override
     public String getCodeSystemVersion() {
         return codeSystemVersion;
     }
 
-    @Override
-    public boolean matches(Kod kod) {
-        return CodeConverter.matches(this, kod);
-    }
 }

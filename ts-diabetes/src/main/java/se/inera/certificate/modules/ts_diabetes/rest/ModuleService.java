@@ -85,18 +85,10 @@ public class ModuleService implements ModuleApi {
     @Qualifier("ts-diabetes-objectMapper")
     private ObjectMapper objectMapper;
 
-    private final Schema transportSchema;
 
 	private ModuleContainerApi moduleContainer;
 
     public ModuleService() throws Exception {
-        SchemaValidatorBuilder builder = new SchemaValidatorBuilder();
-        Source rootSource = builder.registerResource("schemas/ts-diabetes_model.xsd");
-        builder.registerResource("schemas/ts-diabetes_model_extension.xsd");
-        builder.registerResource("schemas/core_components/clinicalprocess_healthcond_certificate_types_1.0.xsd");
-        builder.registerResource("schemas/core_components/iso_dt_subset_1.0.xsd");
-
-        transportSchema = builder.build(rootSource);
     }
 
     @Override
