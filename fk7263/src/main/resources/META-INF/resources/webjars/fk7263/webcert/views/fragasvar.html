@@ -79,7 +79,7 @@
           <!-- QA panel -->
           <div ng-class="{'panel-container': true, 'revoked-certificate' : certProperties.isRevoked}">
 
-            <div class="qa-panel" id="qaunhandled-{{qa.internReferens}}" ng-show="!qa.proxyMessage" ng-animate="'collapse'">
+            <div class="qa-panel" id="qaunhandled-{{qa.internReferens}}" ng-show="!qa.proxyMessage">
 
               <div class="row">
                 <div class="col-xs-9">
@@ -214,13 +214,13 @@
       <div ng-repeat="qa in qaList | filter:closedIssuesFilter | orderBy:'senasteHandelseDatum':true">
 
         <div ng-if="qa.proxyMessage">
-          <div alert type="'info'" close="dismissProxy(qa)">
+          <div alert type="info" close="dismissProxy(qa)">
             <span message key="{{qa.proxyMessage}}"></span>
           </div>
         </div>
 
         <div class="panel-container" ng-class="{'panel-container': true, 'revoked-certificate' : certProperties.isRevoked}">
-          <div class="qa-panel" id="qahandled-{{qa.internReferens}}" ng-show="!qa.proxyMessage" ng-animate="'collapse'">
+          <div class="qa-panel" id="qahandled-{{qa.internReferens}}" ng-show="!qa.proxyMessage">
 
             <!--  status header: hanterade har bara status closed, så vi kan inte visa så mycket mer info, ev skulle vi kunna visa "stängd utan att svar fanns"  -->
             <h3>
