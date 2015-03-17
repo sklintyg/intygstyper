@@ -1,5 +1,9 @@
 package se.inera.certificate.modules.ts_diabetes.model.converter;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
@@ -30,6 +34,17 @@ import se.inera.intygstjanster.ts.services.v1.Vardenhet;
 import se.inera.intygstjanster.ts.services.v1.Vardgivare;
 
 public class InternalToTransportConverter {
+    
+    public static final Map<String, DiabetesTypVarden> typVardenMap;
+    
+    static {
+        Map<String, DiabetesTypVarden> tempMap = new HashMap<>();
+        tempMap.put("DIABETES_TYP_2", DiabetesTypVarden.TYP_2);
+        tempMap.put("DIABETES_TYP_1", DiabetesTypVarden.TYP_1);
+        
+        typVardenMap = Collections.unmodifiableMap(tempMap);
+    }
+    
 	public static TSDiabetesIntyg convert(Utlatande utlatande) {
 		TSDiabetesIntyg result = new TSDiabetesIntyg();
 		
@@ -186,7 +201,7 @@ public class InternalToTransportConverter {
 		result.setHarBehandlingTabletter(diabetes.getTabletter());
 		result.setInsulinBehandlingSedanAr(diabetes.getInsulinBehandlingsperiod());
 		
-		result.getDiabetesTyp().add(DiabetesTypVarden.fromValue(diabetes.getDiabetestyp()));
+		result.getDiabetesTyp().add(typVardenMap.get(diabetes.getDiabetestyp()));
 		return result;
 	}
 
