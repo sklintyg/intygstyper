@@ -18,14 +18,11 @@
  */
 package se.inera.certificate.modules.ts_diabetes.model.codes;
 
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.common.codes.CodeConverter;
-import se.inera.certificate.model.common.codes.CodeSystem;
 
 /**
  * Represents the code used by this module to define the Utlåtandetyp.
  */
-public enum UtlatandeKod implements CodeSystem {
+public enum UtlatandeKod  {
 
     TS_DIABETES_U06_V02("ts-diabetes", "06", "02", "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.");
 
@@ -58,17 +55,14 @@ public enum UtlatandeKod implements CodeSystem {
         return description;
     }
 
-    @Override
     public String getCodeSystem() {
         return CODE_SYSTEM;
     }
 
-    @Override
     public String getCodeSystemName() {
         return CODE_SYSTEM_NAME;
     }
 
-    @Override
     public String getCodeSystemVersion() {
         return CODE_SYSTEM_VERSION;
     }
@@ -81,10 +75,6 @@ public enum UtlatandeKod implements CodeSystem {
         return tsVersion;
     }
 
-    @Override
-    public boolean matches(Kod kod) {
-        return CodeConverter.matches(this, kod);
-    }
 
     public void assertVersion(String tsUtgava, String tsVersion) {
         if (!this.tsUtgava.equals(tsUtgava)) {
