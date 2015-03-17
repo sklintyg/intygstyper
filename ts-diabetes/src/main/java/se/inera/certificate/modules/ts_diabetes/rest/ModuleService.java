@@ -23,10 +23,7 @@ import java.io.StringWriter;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.transform.Source;
-import javax.xml.validation.Schema;
 
-import org.apache.commons.lang.NotImplementedException;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +35,7 @@ import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.ModuleContainerApi;
+import se.inera.certificate.modules.support.api.dto.CertificateMetaData;
 import se.inera.certificate.modules.support.api.dto.CertificateResponse;
 import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
@@ -50,12 +48,21 @@ import se.inera.certificate.modules.support.api.exception.ModuleConverterExcepti
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.modules.support.api.notification.NotificationMessage;
+import se.inera.certificate.modules.ts_diabetes.model.converter.InternalToTransportConverter;
+import se.inera.certificate.modules.ts_diabetes.model.converter.TransportToInternalConverter;
 import se.inera.certificate.modules.ts_diabetes.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.pdf.PdfGenerator;
 import se.inera.certificate.modules.ts_diabetes.pdf.PdfGeneratorException;
+import se.inera.certificate.modules.ts_diabetes.util.TSDiabetesCertificateMetaTypeConverter;
 import se.inera.certificate.modules.ts_diabetes.validator.Validator;
-import se.inera.certificate.xml.SchemaValidatorBuilder;
+import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponderInterface;
+import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponseType;
+import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesType;
+import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesResponderInterface;
+import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesResponseType;
+import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
+import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -85,8 +92,15 @@ public class ModuleService implements ModuleApi {
     @Qualifier("ts-diabetes-objectMapper")
     private ObjectMapper objectMapper;
 
+    @Autowired
+    @Qualifier("diabetesGetClient")
+    private GetTSDiabetesResponderInterface diabetesGetClient;
 
-	private ModuleContainerApi moduleContainer;
+    @Autowired
+    @Qualifier("diabetesGetClient")
+    private RegisterTSDiabetesResponderInterface diabetesRegisterClient;
+
+    private ModuleContainerApi moduleContainer;
 
     public ModuleService() throws Exception {
     }
@@ -160,36 +174,92 @@ public class ModuleService implements ModuleApi {
 
     @Override
     public void registerCertificate(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
-        // TODO Auto-generated method stub
-
+        sendCertificateToRecipient(internalModel, logicalAddress);
     }
 
     @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
-        // TODO Auto-generated method stub
-
+        sendCertificateToRecipient(internalModel, logicalAddress, null);
     }
 
     @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
-        // TODO Auto-generated method stub
+        // Check that we got any data at all
+        if (internalModel == null ) {
+            throw new ModuleException("No InternalModelHolder found in call to sendCertificateToRecipient!");
+        }
 
+        // Check that we got any data at all
+        if (logicalAddress == null || logicalAddress.length() == 0) {
+            throw new ModuleException("No LogicalAddress found in call to sendCertificateToRecipient!");
+        }
+
+        // NOTE: We don't need to check for recipientId
+
+
+        try {
+            Utlatande utlatande = objectMapper.readValue(internalModel.getInternalModel(), Utlatande.class);
+            TSDiabetesIntyg request = InternalToTransportConverter.convert(utlatande);
+            
+            sendCertificateToRecipient(request, logicalAddress, recipientId);
+
+        } catch (IOException e) {
+            throw new ModuleException(e);
+        }
+    }
+
+    private void sendCertificateToRecipient(TSDiabetesIntyg request, String logicalAddress, String recipientId) {
+        RegisterTSDiabetesType parameters = new RegisterTSDiabetesType();
+        parameters.setIntyg(request);
+        RegisterTSDiabetesResponseType response = diabetesRegisterClient.registerTSDiabetes(logicalAddress, parameters);
     }
 
     @Override
     public CertificateResponse getCertificate(String certificateId, String logicalAddress) throws ModuleException {
-        // TODO Auto-generated method stub
-        return null;
+
+        GetTSDiabetesType type = new GetTSDiabetesType();
+        type.setIntygsId(certificateId);
+
+        GetTSDiabetesResponseType diabetesResponseType = diabetesGetClient.getTSDiabetes(logicalAddress, type);
+
+        switch (diabetesResponseType.getResultat().getResultCode()) {
+        case INFO:
+        case OK:
+            return convert(diabetesResponseType, false);
+        case ERROR:
+            switch (diabetesResponseType.getResultat().getErrorId()) {
+            case REVOKED:
+                return convert(diabetesResponseType, true);
+            case VALIDATION_ERROR:
+                throw new ModuleException("getMedicalCertificateForCare WS call: VALIDATION_ERROR :"
+                        + diabetesResponseType.getResultat().getResultText());
+            default:
+                throw new ModuleException("getMedicalCertificateForCare WS call: ERROR :" + diabetesResponseType.getResultat().getResultText());
+            }
+        default:
+            throw new ModuleException("getMedicalCertificateForCare WS call: ERROR :" + diabetesResponseType.getResultat().getResultText());
+        }
+    }
+
+    private CertificateResponse convert(GetTSDiabetesResponseType diabetesResponseType, boolean revoked) throws ModuleException {
+        try {
+            Utlatande utlatande = TransportToInternalConverter.convert(diabetesResponseType.getIntyg());
+            String internalModel = objectMapper.writeValueAsString(utlatande);
+            CertificateMetaData metaData = TSDiabetesCertificateMetaTypeConverter.toCertificateMetaData(diabetesResponseType.getMeta());
+            return new CertificateResponse(internalModel, utlatande, metaData, revoked);
+        } catch (Exception e) {
+            throw new ModuleException(e);
+        }
     }
 
     @Override
     public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Object createNotification(NotificationMessage notificationMessage) throws ModuleException {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     // - - - - - Private scope - - - - - //

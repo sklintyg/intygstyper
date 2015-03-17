@@ -20,7 +20,7 @@ package se.inera.certificate.modules.ts_diabetes.model.internal;
 
 import se.inera.certificate.model.common.internal.GrundData;
 
-public class Utlatande {
+public class Utlatande extends se.inera.certificate.model.common.internal.Utlatande {
 
     private String id;
 
