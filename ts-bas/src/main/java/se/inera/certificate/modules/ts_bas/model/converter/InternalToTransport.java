@@ -44,6 +44,7 @@ import se.inera.certificate.modules.ts_bas.model.internal.IntygAvserKategori;
 import se.inera.certificate.modules.ts_bas.model.internal.Medicinering;
 import se.inera.certificate.modules.ts_bas.model.internal.NarkotikaLakemedel;
 import se.inera.certificate.modules.ts_bas.model.internal.Syn;
+import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.schema.Constants;
 import se.inera.intygstjanster.ts.services.types.v1.II;
 import se.inera.intygstjanster.ts.services.v1.AlkoholNarkotikaLakemedel;
@@ -94,7 +95,7 @@ public class InternalToTransport {
      *
      * @throws se.inera.certificate.model.converter.util.ConverterException
      */
-    public static TSBasIntyg convert(se.inera.certificate.modules.ts_bas.model.internal.Utlatande source)
+    public static TSBasIntyg convert(Utlatande source)
             throws ConverterException {
         LOG.trace("Converting internal model to transport");
 
@@ -251,14 +252,19 @@ public class InternalToTransport {
         syn.setHarNystagmus(source.getNystagmus());
         syn.setHarProgressivOgonsjukdom(source.getProgressivOgonsjukdom());
         syn.setHarSynfaltsdefekt(source.getSynfaltsdefekter());
+
         syn.setSynskarpaMedKorrektion(buildSynskarpaMedKorrektion(source.getHogerOga().getMedKorrektion(), source.getVansterOga().getMedKorrektion(),
                 source.getBinokulart().getMedKorrektion(), source.getHogerOga().getKontaktlins(), source.getVansterOga().getKontaktlins()));
+
         syn.setSynskarpaUtanKorrektion(buildSynskarpaUtanKorrektion(source.getHogerOga().getUtanKorrektion(), source.getVansterOga()
                 .getUtanKorrektion(), source.getBinokulart().getUtanKorrektion()));
         return syn;
     }
 
     private static SynskarpaUtanKorrektion buildSynskarpaUtanKorrektion(Double hoger, Double vanster, Double binokulart) {
+        if (hoger == null && vanster == null && binokulart == null) {
+            return null;
+        }
         SynskarpaUtanKorrektion synUtanKorrektion = new SynskarpaUtanKorrektion();
         synUtanKorrektion.setHogerOga(hoger);
         synUtanKorrektion.setVansterOga(vanster);

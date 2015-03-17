@@ -111,12 +111,13 @@ public class TransportToInternal {
     }
 
     private static void buildDiabetes(DiabetesTypBas source) {
-        internal.getDiabetes().setDiabetesTyp(source.getDiabetesTyp().get(0).name().equals("TYP_1") ? "DIABETES_TYP_1" : "DIABETES_TYP_2");
-
         internal.getDiabetes().setHarDiabetes(source.isHarDiabetes());
-        internal.getDiabetes().setInsulin(source.isHarBehandlingInsulin());
-        internal.getDiabetes().setKost(source.isHarBehandlingKost());
-        internal.getDiabetes().setTabletter(source.isHarBehandlingTabletter());
+        if (source.isHarDiabetes()) {
+            internal.getDiabetes().setDiabetesTyp(source.getDiabetesTyp().get(0).name().equals("TYP_1") ? "DIABETES_TYP_1" : "DIABETES_TYP_2");
+            internal.getDiabetes().setInsulin(source.isHarBehandlingInsulin());
+            internal.getDiabetes().setKost(source.isHarBehandlingKost());
+            internal.getDiabetes().setTabletter(source.isHarBehandlingTabletter());
+        }
     }
 
     private static void buildHjartKarl(HjartKarlSjukdomar source) {

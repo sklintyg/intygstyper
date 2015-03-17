@@ -11,6 +11,7 @@ import javax.xml.bind.JAXBException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import se.inera.certificate.integration.module.exception.CertificateAlreadyExistsException;
 import se.inera.certificate.logging.LogMarkers;
@@ -37,6 +38,7 @@ public class RegisterTSBasResponderImpl implements RegisterTSBasResponderInterfa
     Validator validator;
 
     @Autowired
+    @Qualifier("tsBasModelConverterUtil")
     private ConverterUtil converterUtil;
 
     @Autowired 

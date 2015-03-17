@@ -31,8 +31,12 @@ public class TsBasMetaDataConverter {
 
     public static List<Status> toStatusList(List<IntygStatus> certificateStatuses) {
         List<Status> statuses = new ArrayList<>(certificateStatuses.size());
-        for (IntygStatus certificateStatus : certificateStatuses) {
-            statuses.add(toStatus(certificateStatus));
+        if (certificateStatuses != null) {
+            for (IntygStatus certificateStatus : certificateStatuses) {
+                if (certificateStatus != null) {
+                    statuses.add(toStatus(certificateStatus));
+                }
+            }
         }
         return statuses;
     }

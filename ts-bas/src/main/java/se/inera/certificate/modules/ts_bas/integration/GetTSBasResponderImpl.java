@@ -1,21 +1,20 @@
 package se.inera.certificate.modules.ts_bas.integration;
 
-import javax.annotation.PostConstruct;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.w3c.dom.Document;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import se.inera.certificate.integration.module.exception.InvalidCertificateException;
 import se.inera.certificate.integration.module.exception.MissingConsentException;
 import se.inera.certificate.logging.LogMarkers;
+import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.modules.support.api.CertificateHolder;
+import se.inera.certificate.modules.support.api.CertificateStateHolder;
 import se.inera.certificate.modules.ts_bas.model.converter.InternalToTransport;
 import se.inera.certificate.modules.ts_bas.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.ts_bas.rest.TsBasModuleApi;
@@ -25,6 +24,8 @@ import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
 import se.inera.intygstjanster.ts.services.utils.ResultTypeUtil;
 import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
 import se.inera.intygstjanster.ts.services.v1.IntygMeta;
+import se.inera.intygstjanster.ts.services.v1.IntygStatus;
+import se.inera.intygstjanster.ts.services.v1.Status;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 import com.google.common.base.Throwables;
@@ -33,15 +34,9 @@ public class GetTSBasResponderImpl implements GetTSBasResponderInterface{
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(GetTSBasResponderImpl.class);
 
-    private JAXBContext jaxbContext;
-
+    @Autowired
+    @Qualifier("tsBasModelConverterUtil")
     private ConverterUtil converterUtil;
-
-    @PostConstruct
-    public void initializeJaxbContext() throws JAXBException {
-        jaxbContext = JAXBContext.newInstance(TSBasIntyg.class);
-        converterUtil =  new ConverterUtil();
-    }
 
     @Autowired
     TsBasModuleApi moduleApi;
@@ -51,24 +46,22 @@ public class GetTSBasResponderImpl implements GetTSBasResponderInterface{
         GetTSBasResponseType response = new GetTSBasResponseType();
 
         String certificateId = request.getIntygsId();
-        String personNummer = request.getPersonId().getExtension();
+        String personNummer = request.getPersonId() != null ? request.getPersonId().getExtension() : null; 
 
         if (certificateId == null || certificateId.length() == 0) {
             LOGGER.info(LogMarkers.VALIDATION, "Tried to get certificate with non-existing certificateId '.");
             response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, "non-existing certificateId"));
             return response;
         }
-
-        if (personNummer == null || personNummer.length() == 0) {
-            LOGGER.info(LogMarkers.VALIDATION, "Tried to get certificate with non-existing nationalIdentityNumber '.");
-            response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "nationalIdentityNumber mismatch"));
-            return response;
-        }
-
+        
         CertificateHolder certificate = null;
         
         try {
-            certificate = moduleApi.getModuleContainer().getCertificate(certificateId, personNummer, true);
+            certificate = moduleApi.getModuleContainer().getCertificate(certificateId, personNummer, false);
+            if (personNummer != null && !certificate.getCivicRegistrationNumber().equals(personNummer)) {
+                response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "nationalIdentityNumber mismatch"));
+                return response;
+            }
             if (certificate.isRevoked()) {
                 LOGGER.info("Certificate {} has been revoked", certificateId);
                 response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.REVOKED, String.format("Certificate '%s' has been revoked", certificateId)));
@@ -88,28 +81,39 @@ public class GetTSBasResponderImpl implements GetTSBasResponderInterface{
 
     private void attachCertificateDocument(CertificateHolder certificate, GetTSBasResponseType response) {
         try {
-            
-            // Create the Document
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            Document document = db.newDocument();
-
             TSBasIntyg tsBasIntyg = InternalToTransport.convert(converterUtil.fromJsonString(certificate.getDocument()));
-
-            // Marshal the Object to a Document
-            Marshaller marshaller = jaxbContext.createMarshaller();
-            marshaller.marshal(tsBasIntyg, document);
-            tsBasIntyg.getAny().add(document.getDocumentElement());
             response.setIntyg(tsBasIntyg);
-
         } catch (Exception e) {
             Throwables.propagate(e);
         }
     }
 
     private IntygMeta createCertificateMetaType(CertificateHolder certificate) {
-        
+        IntygMeta intygMeta = new IntygMeta();
+        intygMeta.setAdditionalInfo(certificate.getAdditionalInfo());
+        intygMeta.setAvailable(certificate.isDeleted() ? "false" : "true");
+        intygMeta.getStatus().addAll(convertToStatuses(certificate.getCertificateStates()));
+        return intygMeta;
+    }
+
+    private Collection<? extends IntygStatus> convertToStatuses(List<CertificateStateHolder> certificateStates) {
+        List<IntygStatus> statuses = new ArrayList<IntygStatus>();
+        for (CertificateStateHolder csh : certificateStates) {
+            statuses.add(convert(csh));
+        }
+        return statuses;
+    }
+
+    private IntygStatus convert(CertificateStateHolder source) {
+        IntygStatus status = new IntygStatus();
+        status.setTarget(source.getTarget());
+        status.setTimestamp(source.getTimestamp().toString());
+        status.setType(mapToStatus(source.getState()));
         return null;
+    }
+
+    private Status mapToStatus(CertificateState state) {
+        return Status.valueOf(state.name());
     }
 
 }

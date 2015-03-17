@@ -24,7 +24,7 @@
                   implementor="se.inera.certificate.modules.ts_bas.integration.GetTSBasResponderImpl">
     <jaxws:outFaultInterceptors>
       <bean class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
-        <constructor-arg value="transform/get-certificate-transform.xslt"/>
+        <constructor-arg value="transform/se-intygstjanster-ts-services/get-ts-bas-transform.xslt"/>
       </bean>
     </jaxws:outFaultInterceptors>
 
@@ -33,7 +33,7 @@
                   implementor="se.inera.certificate.modules.ts_bas.integration.RegisterTSBasResponderImpl">
     <jaxws:outFaultInterceptors>
       <bean class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
-        <constructor-arg value="transform/register-medical-certificate-transform.xslt"/>
+        <constructor-arg value="transform/se-intygstjanster-ts-services/register-ts-bas-transform.xslt"/>
       </bean>
     </jaxws:outFaultInterceptors>
   </jaxws:endpoint>

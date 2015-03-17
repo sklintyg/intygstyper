@@ -89,13 +89,14 @@ public class TsBasModuleApi implements ModuleApi {
     @Autowired
     private WebcertModelFactory webcertModelFactory;
 
-    @Autowired
-    @Qualifier("tsBasConverterUtil")
+    @Autowired(required = true)
+    @Qualifier("tsBasObjectMapper")
+    private ObjectMapper objectMapper;
+
+    @Autowired(required = true)
+    @Qualifier("tsBasModelConverterUtil")
     private ConverterUtil converterUtil;
 
-    @Autowired
-    @Qualifier("ts-bas-objectMapper")
-    private ObjectMapper objectMapper;
 
     private ModuleContainerApi moduleContainer;
 

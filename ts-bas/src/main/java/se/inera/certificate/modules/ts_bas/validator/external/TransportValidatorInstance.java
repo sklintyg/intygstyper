@@ -47,6 +47,7 @@ public class TransportValidatorInstance {
     public TransportValidatorInstance() {
         validationErrors = new ArrayList<>();
         ID_VALIDATOR = new PersonnummerValidator();
+        ID_VALIDATOR.setStrictSeparatorCheck(false);
     }
 
     TransportValidatorInstance(List<String> validationErrors, ValidationContext context) {

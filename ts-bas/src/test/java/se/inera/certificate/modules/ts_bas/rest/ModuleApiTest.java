@@ -21,14 +21,10 @@ package se.inera.certificate.modules.ts_bas.rest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.io.StringWriter;
-
-import javax.xml.bind.JAXB;
-import javax.xml.bind.JAXBException;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -40,7 +36,6 @@ import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.Patient;
-import se.inera.certificate.modules.support.api.dto.TransportModelHolder;
 import se.inera.certificate.modules.support.api.dto.Vardenhet;
 import se.inera.certificate.modules.support.api.dto.Vardgivare;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
@@ -48,7 +43,6 @@ import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.utils.ResourceConverterUtils;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
-import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -66,6 +60,7 @@ public class ModuleApiTest {
     private se.inera.certificate.modules.support.api.ModuleApi moduleApi;
 
     @Autowired
+    @Qualifier("tsBasObjectMapper")
     private ObjectMapper mapper;
 
     
@@ -110,13 +105,6 @@ public class ModuleApiTest {
         Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
         HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", null, vardenhet);
         return new CreateDraftCopyHolder("Id1", hosPersonal);
-    }
-
-    private TransportModelHolder createTransportHolder(TSBasIntyg transportModel)
-            throws JAXBException {
-        StringWriter writer = new StringWriter();
-        JAXB.marshal(transportModel, writer);
-        return new TransportModelHolder(writer.toString());
     }
 
     private InternalModelHolder createInternalHolder(Utlatande internalModel) throws JsonProcessingException {
