@@ -1,4 +1,4 @@
-angular.module('fk7263').service('fk7263.EditCertCtrl.DateRangeGroupsService',
+angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
     ['common.DateUtilsService', 'common.UtilsService','fk7263.EditCertCtrl.DateRangeGroupModel', '$log', '$filter', function( dateUtils, utils, DateRangeGroupModel, $log, $filter) {
         'use strict';
 

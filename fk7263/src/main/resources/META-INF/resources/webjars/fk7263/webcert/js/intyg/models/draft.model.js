@@ -1,11 +1,19 @@
-angular.module('fk7263').factory('fk7263.Domain.IntygModel',
-    ['common.DateUtilsService', 'common.UtilsService', '$log', function( dateUtils, utils, $log) {
+angular.module('fk7263').factory('fk7263.Domain.DraftModel',
+    ['fk7263.Domain.IntygModel',  function( intygModel ) {
         'use strict';
+
+        // the actual model
+        var _intygModel;
 
         /**
          * Constructor, with class name
          */
-        function IntygModel() {
+        function DraftModel() {
+            this.vidarebefordrad;
+            this.status;
+            this.content = intygModel;
+
+            /*
             // ---------------------------------------------------------
             // 1. Smittskydd. Vid sparning: ta bort data på alla fält före 8b som döljs när smittskydd är icheckat.
             this.avstangningSmittskydd
@@ -140,30 +148,36 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
             // view state = 'JA', 'NEJ' we should just use the model values!!
             this.ressattTillArbeteAktuellt = false;
             this.ressattTillArbeteEjAktuellt = false;
-            /*if (this.form.ressattTillArbeteAktuellt === 'JA') {
-                this.ressattTillArbeteAktuellt = true;
-                this.ressattTillArbeteEjAktuellt = false;
-            } else {
-                this.ressattTillArbeteAktuellt = false;
-                this.ressattTillArbeteEjAktuellt = true;
-            }*/
+            //if (this.form.ressattTillArbeteAktuellt === 'JA') {
+            //    this.ressattTillArbeteAktuellt = true;
+            //    this.ressattTillArbeteEjAktuellt = false;
+            //} else {
+            //    this.ressattTillArbeteAktuellt = false;
+            //    this.ressattTillArbeteEjAktuellt = true;
+            //}
             // ---------------------------------------------------------
-
+            */
         }
 
         
 
-        IntygModel.prototype.refresh = function (cert) {
+        DraftModel.prototype.update = function (cert) {
             // refresh the model data
+            if(cert === undefined) return;
+            this.vidarebefordrad = cert.vidarebefordrad;
+            this.status = cert.status;
+            this.content.update(cert.content);
         }
 
-        IntygModel.build = function() {
-            return new IntygModel();
+        DraftModel.build = function() {
+            return new DraftModel();
         };
 
+        _intygModel = DraftModel.build();
+
         /**
-         * Return the constructor function IntygModel
+         * Return the constructor function DraftModel
          */
-        return IntygModel;
+        return _intygModel;
 
     }]);

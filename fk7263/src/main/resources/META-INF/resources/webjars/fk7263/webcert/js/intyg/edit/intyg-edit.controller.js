@@ -3,8 +3,11 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
         'common.CertViewState', 'common.CertificateService', 'common.ManageCertView', 'common.User', 'common.wcFocus',
         'common.intygNotifyService', 'fk7263.diagnosService', 'common.DateUtilsService', 'common.UtilsService',
         'fk7263.EditCertCtrl.DateRangeGroupsService',
+        'fk7263.Domain.IntygModel','fk7263.EditCertCtrl.ViewStateService',
+        'fk7263.EditCertCtrl.Helper',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q, CertViewState,
-            CertificateService, ManageCertView, User, wcFocus, intygNotifyService, diagnosService, dateUtils, utils, DateRangeGroupsService ) {
+            CertificateService, ManageCertView, User, wcFocus, intygNotifyService, diagnosService, dateUtils, utils, DateRangeGroupsService, intygModel,
+            viewState, helper) {
             'use strict';
 
             /**************************************************************************
@@ -15,7 +18,9 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             /**********************************************************************************
              * Default state
              **********************************************************************************/
-            // the below state needs to be moved to models xxxx
+            $scope.viewState = viewState;
+
+            // the below state needs to be moved to models
                 // Page states
             $scope.user = User;
             $scope.today = new Date();
@@ -332,9 +337,11 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     }, $scope.cert);
 
                     // Fält 2. diagnos
+                    /* this is now done directly in form2Controller
                     $scope.cert.diagnosKodsystem1 = $scope.form.diagnosKodverk;
                     $scope.cert.diagnosKodsystem2 = $scope.form.diagnosKodverk;
                     $scope.cert.diagnosKodsystem3 = $scope.form.diagnosKodverk;
+                    */
 
                     // Fält 4b. AnnanReferensBeskrivning
                     if ($scope.basedOnState.check.annanReferens) {
@@ -444,14 +451,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
             }
 
-            function getLengthOrZero(value) {
-                if (typeof (value) !== 'string') {
-                    return 0;
-                } else {
-                    return value.length;
-                }
-            }
-
             /*************************************************************************
              * Ng-change and watches updating behaviour in form (try to get rid of these or at least make them consistent)
              *************************************************************************/
@@ -494,38 +493,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 $scope.cert[field] = $scope.cert[field].substr(0, $scope.inputLimits[field]);
             };
 
-            /**
-             * Limit length of field dependent on field 2 in the external model
-             * @param field
-             */
-            $scope.limitDiagnosBeskrivningField = function(field) {
-                function limitDiagnoseLength(val) {
-                    var totalLength = $scope.getTotalDiagnosBeskrivningLength();
-                    if (totalLength > $scope.inputLimits.diagnosBeskrivning) {
-                        // Remove characters over limit from current field
-                        return val.substr(0, val.length - (totalLength - $scope.inputLimits.diagnosBeskrivning));
-                    }
-                    return val;
-                }
-
-                if ($scope.cert[field]) {
-                    $scope.cert[field] = limitDiagnoseLength($scope.cert[field]);
-                }
-            };
-
-            /**
-             * Calculate total length of all fields ending up in diagnosBeskrivning in the external model
-             * @returns {*}
-             */
-            $scope.getTotalDiagnosBeskrivningLength = function() {
-                var totalLength = getLengthOrZero($scope.cert.diagnosBeskrivning) +
-                        getLengthOrZero($scope.cert.diagnosKod2) +
-                        getLengthOrZero($scope.cert.diagnosKod3) +
-                        getLengthOrZero($scope.cert.diagnosBeskrivning1) +
-                        getLengthOrZero($scope.cert.diagnosBeskrivning2) +
-                        getLengthOrZero($scope.cert.diagnosBeskrivning3);
-                return totalLength;
-            };
 
             /**
              * Limit length of field dependent on field 13 in the external model
@@ -554,14 +521,14 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              */
             $scope.getTotalOvrigtLength = function() {
 
-                var totalOvrigtLength = getLengthOrZero($scope.cert.kommentar);
+                var totalOvrigtLength = helper.getLengthOrZero($scope.cert.kommentar);
 
                 if ($scope.form.ovrigt !== undefined) {
-                    totalOvrigtLength += getLengthOrZero($scope.form.ovrigt.annanReferensBeskrivning) +
-                    getLengthOrZero($scope.form.ovrigt.nedsattMed25Beskrivning) +
-                    getLengthOrZero($scope.form.ovrigt.nedsattMed50Beskrivning) +
-                    getLengthOrZero($scope.form.ovrigt.nedsattMed75Beskrivning) +
-                    getLengthOrZero($scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning);
+                    totalOvrigtLength += helper.getLengthOrZero($scope.form.ovrigt.annanReferensBeskrivning) +
+                    helper.getLengthOrZero($scope.form.ovrigt.nedsattMed25Beskrivning) +
+                    helper.getLengthOrZero($scope.form.ovrigt.nedsattMed50Beskrivning) +
+                    helper.getLengthOrZero($scope.form.ovrigt.nedsattMed75Beskrivning) +
+                    helper.getLengthOrZero($scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning);
                 }
 
                 return totalOvrigtLength;
@@ -589,117 +556,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
             });
 
-            /**
-             *  Remove choices related to diagnoskoder when the choice changes to make sure
-             */
-            $scope.onChangeKodverk = function() {
-                $scope.cert.diagnosKod = '';
-                $scope.cert.diagnosBeskrivning1 = '';
-                $scope.cert.diagnosKod2 = '';
-                $scope.cert.diagnosBeskrivning2 = '';
-                $scope.cert.diagnosKod3 = '';
-                $scope.cert.diagnosBeskrivning3 = '';
-            };
-
-            /**
-             *
-             * @param codeSystem
-             * @param val
-             * @returns {*}
-             */
-            $scope.searchDiagnoseByDescription = function(codeSystem, val) {
-                return diagnosService.searchByDescription(codeSystem, val)
-                    .then(function(response) {
-                        if (response && response.data && response.data.resultat === 'OK') {
-                            return response.data.diagnoser.map(function(item) {
-                                return {
-                                    value: item.kod,
-                                    beskrivning: item.beskrivning,
-                                    label: item.kod + ' | ' + item.beskrivning
-                                };
-                            });
-                        }
-                        else {
-                            return [];
-                        }
-                    }, function(response) {
-                        $log.debug('Error searching diagnose code');
-                        $log.debug(response);
-                        return [];
-                    });
-            };
-            $scope.getDiagnoseCodes = function(codeSystem, val) {
-                return diagnosService.searchByCode(codeSystem, val)
-                    .then(function(response) {
-                        if (response && response.data && response.data.resultat === 'OK') {
-                            return response.data.diagnoser.map(function(item) {
-                                return {
-                                    value: item.kod,
-                                    beskrivning: item.beskrivning,
-                                    label: item.kod + ' | ' + item.beskrivning
-                                };
-                            });
-                        }
-                        else {
-                            return [];
-                        }
-                    }, function(response) {
-                        $log.debug('Error searching diagnose code');
-                        $log.debug(response);
-                        return [];
-                    });
-            };
 
             /****************************************************************************
              * Exposed interaction functions to view
              ****************************************************************************/
-
-            /**
-             * User selects a diagnose code
-             */
-            $scope.onDiagnoseCode1Select = function($item) {
-                $scope.cert.diagnosBeskrivning1 = $item.beskrivning;
-                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
-                $scope.certForm.$dirty = true;
-                $scope.certForm.$pristine = false;
-            };
-            $scope.onDiagnoseCode2Select = function($item) {
-                $scope.cert.diagnosBeskrivning2 = $item.beskrivning;
-                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
-                $scope.certForm.$dirty = true;
-                $scope.certForm.$pristine = false;
-            };
-            $scope.onDiagnoseCode3Select = function($item) {
-                $scope.cert.diagnosBeskrivning3 = $item.beskrivning;
-                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
-                $scope.certForm.$dirty = true;
-                $scope.certForm.$pristine = false;
-            };
-
-            /**
-             * User selects a diagnose description
-             */
-            $scope.onDiagnoseDescription1Select = function($item) {
-                $scope.cert.diagnosKod = $item.value;
-                $scope.cert.diagnosBeskrivning1 = $item.beskrivning;
-                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
-                $scope.certForm.$dirty = true;
-                $scope.certForm.$pristine = false;
-            };
-            $scope.onDiagnoseDescription2Select = function($item) {
-                $scope.cert.diagnosKod2 = $item.value;
-                $scope.cert.diagnosBeskrivning2 = $item.beskrivning;
-                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
-                $scope.certForm.$dirty = true;
-                $scope.certForm.$pristine = false;
-            };
-            $scope.onDiagnoseDescription3Select = function($item) {
-                $scope.cert.diagnosKod3 = $item.value;
-                $scope.cert.diagnosBeskrivning3 = $item.beskrivning;
-                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
-                $scope.certForm.$dirty = true;
-                $scope.certForm.$pristine = false;
-            };
 
             /**
              * Handle vidarebefordra dialog
@@ -724,7 +584,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              **************************************************************************/
 
                 // Get the certificate draft from the server.
-            ManageCertView.load($scope, $scope.certMeta.intygType, function(cert) {
+            ManageCertView.load( $scope.certMeta.intygType, function(draftModel) {
+
+                //intygModel.update(cert);
+
                 // check that the certs status is not signed
                 if($scope.isSigned){
                     // just change straight to the intyg
@@ -732,7 +595,12 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
 
                 // Decorate intygspecific default data
-                $scope.cert = cert;
+                $scope.cert = intygModel;
+                //$scope.cert = data.content;
+                $scope.certMeta.intygId = intygModel.id;
+                $scope.certMeta.vidarebefordrad = draftModel.vidarebefordrad;
+                CertViewState.viewState.isSigned = draftModel.status === 'SIGNED';
+                CertViewState.viewState.intyg.isComplete = $scope.isSigned || draftModel.status === 'DRAFT_COMPLETE';
 
                 convertCertToForm($scope);
                 registerDateParsers($scope);
@@ -753,10 +621,12 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
             $rootScope.$on('saveRequest', function($event, deferred) {
 
+
                 // Mark form as saved, will be marked as not saved if saving fails.
                 $scope.certForm.$setPristine();
 
                 convertFormToCert();
+
                 var intygSaveRequest = {
                     intygsId      : $scope.certMeta.intygId,
                     intygsTyp     : $scope.certMeta.intygType,
@@ -765,15 +635,17 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 };
 
                 intygSaveRequest.saveComplete.promise.then(function(result) {
+
                     // save success
-                    $scope.isComplete = result.isComplete;
-                    $scope.validationMessages = result.validationMessages;
-                    $scope.validationMessagesGrouped = result.validationMessagesGrouped;
-                    CertViewState.viewState.saveErrorMessageKey = null;
+                    viewState.isComplete = result.isComplete;
+                    viewState.common.viewState.validationMessages = result.validationMessages;
+                    viewState.common.viewState.validationMessagesGrouped = result.validationMessagesGrouped;
+                    viewState.common.viewState.saveErrorMessageKey = null;
+
                 }, function(result) {
                     // save failed
                     $scope.certForm.$setDirty();
-                    CertViewState.viewState.saveErrorMessageKey = result.errorMessageKey;
+                    viewState.common.viewState.saveErrorMessageKey = result.errorMessageKey;
                 });
 
                 deferred.resolve(intygSaveRequest);
