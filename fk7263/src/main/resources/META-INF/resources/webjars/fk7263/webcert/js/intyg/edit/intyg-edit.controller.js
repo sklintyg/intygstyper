@@ -89,9 +89,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
             // Text input limits for different fields
             $scope.inputLimits = {
-                diagnosBeskrivning: 220, // combined field 2 diagnoses (and förtydligande)
-                sjukdomsforlopp: 270,
-                funktionsnedsattning: 450,
                 aktivitetsbegransning: 1100,
                 nuvarandeArbetsuppgifter: 120,
                 arbetsformagaPrognos: 600,
