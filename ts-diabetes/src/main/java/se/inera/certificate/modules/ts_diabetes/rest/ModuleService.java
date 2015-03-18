@@ -98,7 +98,7 @@ public class ModuleService implements ModuleApi {
     private GetTSDiabetesResponderInterface diabetesGetClient;
 
     @Autowired(required=false)
-    @Qualifier("diabetesGetClient")
+    @Qualifier("diabetesRegisterClient")
     private RegisterTSDiabetesResponderInterface diabetesRegisterClient;
 
     private ModuleContainerApi moduleContainer;
