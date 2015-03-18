@@ -87,5 +87,14 @@ public enum IdKontrollKod  {
     public String getCodeSystemVersion() {
         return codeSystemVersion;
     }
+    
+    public static IdKontrollKod fromCode(String code){
+        for (IdKontrollKod idKontrollKod : IdKontrollKod.values()) {
+            if(idKontrollKod.code.equals(code)){
+                return idKontrollKod;
+            }
+        }
+        throw new IllegalArgumentException();
+    }
 
 }

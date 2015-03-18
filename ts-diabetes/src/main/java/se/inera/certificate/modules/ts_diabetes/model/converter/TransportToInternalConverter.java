@@ -12,6 +12,7 @@ import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.common.internal.Vardgivare;
+import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Diabetes;
@@ -65,7 +66,7 @@ public class TransportToInternalConverter {
         Vardkontakt result = new Vardkontakt();
         //TODO: Vart kommer denna ifrån?
         result.setTyp(VARDKONTAKT_TYP);
-        result.setIdkontroll(identitetStyrkt.getIdkontroll().get(0).value());
+        result.setIdkontroll(IdKontrollKod.fromCode(identitetStyrkt.getIdkontroll().get(0).value()).name());
         return result;
     }
 
