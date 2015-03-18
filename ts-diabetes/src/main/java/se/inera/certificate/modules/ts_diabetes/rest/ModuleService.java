@@ -27,6 +27,7 @@ import javax.xml.bind.JAXBContext;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -92,11 +93,11 @@ public class ModuleService implements ModuleApi {
     @Qualifier("ts-diabetes-objectMapper")
     private ObjectMapper objectMapper;
 
-    @Autowired
+    @Autowired(required=false)
     @Qualifier("diabetesGetClient")
     private GetTSDiabetesResponderInterface diabetesGetClient;
 
-    @Autowired
+    @Autowired(required=false)
     @Qualifier("diabetesGetClient")
     private RegisterTSDiabetesResponderInterface diabetesRegisterClient;
 
@@ -254,7 +255,7 @@ public class ModuleService implements ModuleApi {
 
     @Override
     public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
-        throw new UnsupportedOperationException();
+        return persistedState.equals(currentState) == false;
     }
 
     @Override

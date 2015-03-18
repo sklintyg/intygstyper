@@ -1,5 +1,9 @@
 package se.inera.certificate.modules.ts_diabetes.model.converter;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 
@@ -8,6 +12,7 @@ import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.common.internal.Vardgivare;
+import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Diabetes;
@@ -20,6 +25,7 @@ import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
 import se.inera.certificate.schema.adapter.InternalDateAdapter;
 import se.inera.intygstjanster.ts.services.v1.BedomningTypDiabetes;
+import se.inera.intygstjanster.ts.services.v1.DiabetesTypVarden;
 import se.inera.intygstjanster.ts.services.v1.IdentitetStyrkt;
 import se.inera.intygstjanster.ts.services.v1.IntygsAvserTypDiabetes;
 import se.inera.intygstjanster.ts.services.v1.KorkortsbehorighetTsDiabetes;
@@ -30,6 +36,16 @@ import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 public class TransportToInternalConverter {
     private static final String VARDKONTAKT_TYP = "5880005";
     private static final String TYPE = "TS_DIABETES_U06_V02";
+    
+    public static final Map<DiabetesTypVarden, String> typVardenMap;
+    
+    static {
+        Map<DiabetesTypVarden, String> tempMap = new HashMap<>();
+        tempMap.put(DiabetesTypVarden.TYP_2, "DIABETES_TYP_2");
+        tempMap.put(DiabetesTypVarden.TYP_1, "DIABETES_TYP_1");
+        
+        typVardenMap = Collections.unmodifiableMap(tempMap);
+    }
     
     public static Utlatande convert(TSDiabetesIntyg transport){
         Utlatande result = new Utlatande();
@@ -50,7 +66,7 @@ public class TransportToInternalConverter {
         Vardkontakt result = new Vardkontakt();
         //TODO: Vart kommer denna ifrån?
         result.setTyp(VARDKONTAKT_TYP);
-        result.setIdkontroll(identitetStyrkt.getIdkontroll().get(0).value());
+        result.setIdkontroll(IdKontrollKod.fromCode(identitetStyrkt.getIdkontroll().get(0).value()).name());
         return result;
     }
 
@@ -118,7 +134,7 @@ public class TransportToInternalConverter {
 
     private static void readDiabetes(Diabetes diabetes, se.inera.intygstjanster.ts.services.v1.Diabetes diabetes2) {
         diabetes.setAnnanBehandlingBeskrivning(diabetes2.getAnnanBehandlingBeskrivning());
-        diabetes.setDiabetestyp(diabetes2.getDiabetesTyp().get(0).value());
+        diabetes.setDiabetestyp(typVardenMap.get(diabetes2.getDiabetesTyp().get(0)));
         diabetes.setEndastKost(diabetes2.isHarBehandlingKost());
         diabetes.setInsulin(diabetes2.isHarBehandlingInsulin());
         diabetes.setInsulinBehandlingsperiod(diabetes2.getInsulinBehandlingSedanAr());

@@ -31,7 +31,7 @@
     },
     "vardkontakt" : {
         "typ" : "5880005", 
-        "idkontroll" : "IDK6"
+        "idkontroll" : "ID_KORT"
     },
     "intygAvser" : {
         "korkortstyp" : [
@@ -54,7 +54,7 @@
         ]
     },
     "diabetes" : {
-        "diabetestyp" : "TYP2",
+        "diabetestyp" : "DIABETES_TYP_2",
         "observationsperiod" : "2012-01-01",
         "endastKost" : true,
         "tabletter" : true,

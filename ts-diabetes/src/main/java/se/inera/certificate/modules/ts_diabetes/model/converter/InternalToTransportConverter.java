@@ -1,6 +1,11 @@
 package se.inera.certificate.modules.ts_diabetes.model.converter;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import se.inera.certificate.model.common.internal.HoSPersonal;
+import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvser;
@@ -30,6 +35,17 @@ import se.inera.intygstjanster.ts.services.v1.Vardenhet;
 import se.inera.intygstjanster.ts.services.v1.Vardgivare;
 
 public class InternalToTransportConverter {
+    
+    public static final Map<String, DiabetesTypVarden> typVardenMap;
+    
+    static {
+        Map<String, DiabetesTypVarden> tempMap = new HashMap<>();
+        tempMap.put("DIABETES_TYP_2", DiabetesTypVarden.TYP_2);
+        tempMap.put("DIABETES_TYP_1", DiabetesTypVarden.TYP_1);
+        
+        typVardenMap = Collections.unmodifiableMap(tempMap);
+    }
+    
 	public static TSDiabetesIntyg convert(Utlatande utlatande) {
 		TSDiabetesIntyg result = new TSDiabetesIntyg();
 		
@@ -43,7 +59,10 @@ public class InternalToTransportConverter {
 		//TODO: temp, force type
 		result.setIntygsTyp("TSTRK1031 (U06, V06)");
 		result.setSeparatOgonLakarintygKommerSkickas(utlatande.getSyn().getSeparatOgonlakarintyg());
-		result.setSynfunktion(readSynfunktionDiabetes(utlatande.getSyn()));
+		
+		if(result.isSeparatOgonLakarintygKommerSkickas() == null || result.isSeparatOgonLakarintygKommerSkickas() == false){
+		    result.setSynfunktion(readSynfunktionDiabetes(utlatande.getSyn()));
+		}
 		//TODO: temp, force utgåva
 		result.setUtgava("06");
 		//TODO: temp, force version
@@ -53,35 +72,39 @@ public class InternalToTransportConverter {
 
 	private static IdentitetStyrkt readIdentitetStyrkt(Vardkontakt vardkontakt) {
 	    IdentitetStyrkt result = new IdentitetStyrkt();
-        result.getIdkontroll().add(IdentifieringsVarden.fromValue(vardkontakt.getIdkontroll()));
+        result.getIdkontroll().add(IdentifieringsVarden.fromValue(IdKontrollKod.valueOf(vardkontakt.getIdkontroll()).getCode()));
 	    return result;
     }
 
     private static SynfunktionDiabetes readSynfunktionDiabetes(Syn syn) {
 		SynfunktionDiabetes result = new SynfunktionDiabetes();
-		result.setHarDiplopi(syn.getDiplopi());
-		result.setHarSynfaltsdefekt(syn.getSynfaltsprovningUtanAnmarkning() == false);
-		result.setSynskarpaMedKorrektion(readMedKorrektion(syn));
-		result.setSynskarpaUtanKorrektion(readUtanKorrektion(syn));
-		result.setFinnsSynfaltsprovning(syn.getSynfaltsprovning());
-		result.setSynfaltsprovningUtanAnmarkning(syn.getSynfaltsprovningUtanAnmarkning());
-		result.setFinnsProvningOgatsRorlighet(syn.getProvningOgatsRorlighet());
+		result.setHarDiplopi(syn.getDiplopi() != null && syn.getDiplopi());
+		result.setFinnsSeparatOgonlakarintyg(syn.getSeparatOgonlakarintyg() != null && syn.getSeparatOgonlakarintyg());
+		
+		if(!result.isFinnsSeparatOgonlakarintyg()){
+		    result.setSynskarpaMedKorrektion(readMedKorrektion(syn));
+		    result.setSynskarpaUtanKorrektion(readUtanKorrektion(syn));
+		    result.setFinnsSynfaltsprovning(syn.getSynfaltsprovning() != null && syn.getSynfaltsprovning());
+		    result.setSynfaltsprovningUtanAnmarkning(syn.getSynfaltsprovningUtanAnmarkning() != null && syn.getSynfaltsprovningUtanAnmarkning());
+		}
+		
+		result.setFinnsProvningOgatsRorlighet(syn.getProvningOgatsRorlighet() != null && syn.getProvningOgatsRorlighet());
 		return result;
 	}
 
 	private static SynskarpaUtanKorrektion readUtanKorrektion(Syn syn) {
         SynskarpaUtanKorrektion result = new SynskarpaUtanKorrektion();
-        result.setBinokulart(syn.getBinokulart().getUtanKorrektion());
-        result.setHogerOga(syn.getHoger().getUtanKorrektion());
-        result.setVansterOga(syn.getVanster().getUtanKorrektion());
+        result.setBinokulart(syn.getBinokulart() != null ? syn.getBinokulart().getUtanKorrektion() : null);
+        result.setHogerOga(syn.getHoger() != null ? syn.getHoger().getUtanKorrektion() : null);
+        result.setVansterOga(syn.getVanster() != null ? syn.getVanster().getUtanKorrektion() : null);
         return result;
     }
 
     private static SynskarpaMedKorrektion readMedKorrektion(Syn syn) {
 	    SynskarpaMedKorrektion result = new SynskarpaMedKorrektion();
-	    result.setBinokulart(syn.getBinokulart().getMedKorrektion());
-	    result.setHogerOga(syn.getHoger().getMedKorrektion());
-	    result.setVansterOga(syn.getVanster().getMedKorrektion());
+	    result.setBinokulart(syn.getBinokulart() != null ? syn.getBinokulart().getMedKorrektion() : null);
+	    result.setHogerOga(syn.getHoger() != null ? syn.getHoger().getMedKorrektion() : null);
+	    result.setVansterOga(syn.getVanster() != null ? syn.getVanster().getMedKorrektion() : null);
 	    return result;
     }
 
@@ -100,14 +123,14 @@ public class InternalToTransportConverter {
 		Hypoglykemier result = new Hypoglykemier();
 		result.setAllvarligForekomstBeskrivning(hypoglykemier.getAllvarligForekomstBeskrivning());
 		result.setAllvarligForekomstTrafikBeskrivning(hypoglykemier.getAllvarligForekomstTrafikBeskrivning());
-		result.setAllvarligForekomstVakenTidAr(hypoglykemier.getAllvarligForekomstVakenTidObservationstid().getDate());
-		result.setGenomforEgenkontrollBlodsocker(hypoglykemier.getEgenkontrollBlodsocker());
-		result.setHarAllvarligForekomst(hypoglykemier.getAllvarligForekomst());
-		result.setHarAllvarligForekomstTrafiken(hypoglykemier.getAllvarligForekomstTrafiken());
-		result.setHarAllvarligForekomstVakenTid(hypoglykemier.getAllvarligForekomstVakenTid());
-		result.setHarKunskapOmAtgarder(hypoglykemier.getKunskapOmAtgarder());
-		result.setHarTeckenNedsattHjarnfunktion(hypoglykemier.getTeckenNedsattHjarnfunktion());
-		result.setSaknarFormagaKannaVarningstecken(hypoglykemier.getSaknarFormagaKannaVarningstecken());
+		result.setAllvarligForekomstVakenTidAr(hypoglykemier.getAllvarligForekomstVakenTidObservationstid() != null ? hypoglykemier.getAllvarligForekomstVakenTidObservationstid().getDate() : null);
+		result.setGenomforEgenkontrollBlodsocker(hypoglykemier.getEgenkontrollBlodsocker() != null && hypoglykemier.getEgenkontrollBlodsocker());
+		result.setHarAllvarligForekomst(hypoglykemier.getAllvarligForekomst() != null && hypoglykemier.getAllvarligForekomst());
+		result.setHarAllvarligForekomstTrafiken(hypoglykemier.getAllvarligForekomstTrafiken() != null && hypoglykemier.getAllvarligForekomstTrafiken());
+		result.setHarAllvarligForekomstVakenTid(hypoglykemier.getAllvarligForekomstVakenTid() != null && hypoglykemier.getAllvarligForekomstVakenTid());
+		result.setHarKunskapOmAtgarder(hypoglykemier.getKunskapOmAtgarder() != null && hypoglykemier.getKunskapOmAtgarder());
+		result.setHarTeckenNedsattHjarnfunktion(hypoglykemier.getTeckenNedsattHjarnfunktion() != null && hypoglykemier.getTeckenNedsattHjarnfunktion());
+		result.setSaknarFormagaKannaVarningstecken(hypoglykemier.getSaknarFormagaKannaVarningstecken() != null && hypoglykemier.getSaknarFormagaKannaVarningstecken());
 		return result;
 	}
 
@@ -186,7 +209,7 @@ public class InternalToTransportConverter {
 		result.setHarBehandlingTabletter(diabetes.getTabletter());
 		result.setInsulinBehandlingSedanAr(diabetes.getInsulinBehandlingsperiod());
 		
-		result.getDiabetesTyp().add(DiabetesTypVarden.fromValue(diabetes.getDiabetestyp()));
+		result.getDiabetesTyp().add(typVardenMap.get(diabetes.getDiabetestyp()));
 		return result;
 	}
 
@@ -194,7 +217,7 @@ public class InternalToTransportConverter {
 		BedomningTypDiabetes result = new BedomningTypDiabetes();
 		result.setBehovAvLakareSpecialistKompetens(bedomning.getLakareSpecialKompetens());
 		result.setKanInteTaStallning(bedomning.getKanInteTaStallning());
-		result.setLamplighetInnehaBehorighetSpecial(bedomning.getLamplighetInnehaBehorighet());
+		result.setLamplighetInnehaBehorighetSpecial(bedomning.getLamplighetInnehaBehorighet() != null && bedomning.getLamplighetInnehaBehorighet());
 		result.setOvrigKommentar(bedomning.getKommentarer());
 		
 		for (BedomningKorkortstyp typ : bedomning.getKorkortstyp()) {
