@@ -70,6 +70,7 @@ public class RegisterTSBasResponderImpl implements RegisterTSBasResponderInterfa
             moduleApi.getModuleContainer().certificateReceived(certificateHolder);
 
             response.setResultat(ResultTypeUtil.okResult());
+            LOGGER.debug("Registered intyg with id: {}",registerTsBas.getIntyg().getIntygsId());
 
         } catch (CertificateAlreadyExistsException e) {
             response.setResultat(ResultTypeUtil.infoResult("Certificate already exists"));
