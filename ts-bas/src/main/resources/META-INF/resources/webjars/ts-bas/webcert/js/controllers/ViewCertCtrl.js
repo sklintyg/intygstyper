@@ -1,13 +1,16 @@
 angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
     [ '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', 'common.CertificateService',
         'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate','common.User',
+        'common.IntygCopyRequestModel',
         function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView,
-            messageService, ManageCertificate, User) {
+            messageService, ManageCertificate, User, IntygCopyRequestModel) {
             'use strict';
 
             /*********************************************************************
              * Page state
              *********************************************************************/
+            
+            var intygType = 'ts-bas';
 
             $scope.user = { lakare: User.userContext.lakare };
             $scope.cert = {};
@@ -60,7 +63,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             }
 
             function loadCertificate() {
-                CertificateService.getCertificate($routeParams.certificateId, 'ts-bas', function(result) {
+                CertificateService.getCertificate($routeParams.certificateId, intygType, function(result) {
                     $scope.widgetState.doneLoading = true;
                     if (result !== null) {
                         $scope.cert = result.contents;
@@ -71,9 +74,9 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
                         $scope.view.intygAvser = createKorkortstypListString($scope.cert.intygAvser.korkortstyp);
                         $scope.view.bedomning = createKorkortstypListString($scope.cert.bedomning.korkortstyp);
 
-                        $rootScope.$emit('ts-bas.ViewCertCtrl.load', result.metaData);
-                        $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'TS');
-                        $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
+                        $rootScope.$emit('ts-bas.ViewCertCtrl.load', result);
+                        $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.statuses, 'TS');
+                        $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.statuses);
                         if($scope.certProperties.isRevoked) {
                             $scope.widgetState.printStatus = 'revoked';
                         } else {
@@ -123,14 +126,28 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
 
             ManageCertificate.initCopyDialog($scope);
             $scope.copy = function(cert) {
-                cert.intygType = 'ts-bas';
-                ManageCertificate.copy($scope, cert);
+
+                if (cert === undefined || cert.grundData === undefined) {
+                    $log.debug('cert or cert.grundData is undefined. Aborting copy.');
+                    return;
+                }
+
+                var isOtherCareUnit = User.getValdVardenhet() !== cert.grundData.skapadAv.vardenhet.enhetsid;
+
+                ManageCertificate.copy($scope,
+                    IntygCopyRequestModel.build({
+                        intygId: cert.id,
+                        intygType: intygType,
+                        patientPersonnummer: cert.grundData.patient.personId,
+                        nyttPatientPersonnummer: $routeParams.patientId
+                    }),
+                    isOtherCareUnit);
             };
 
             $scope.print = function(cert) {
 
                 if ($scope.certProperties.isRevoked) {
-                    ManageCertView.printDraft(cert.id, 'ts-bas');
+                    ManageCertView.printDraft(cert.id, intygType);
                 } else {
                     document.pdfForm.submit();
                 }
