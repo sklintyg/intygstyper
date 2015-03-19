@@ -36,7 +36,9 @@ import se.inera.intygstjanster.ts.services.v1.Vardgivare;
 
 public class InternalToTransportConverter {
     
+    private static final String SIGNERINGS_TIDSTAMPEL_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     public static final Map<String, DiabetesTypVarden> typVardenMap;
+    
     
     static {
         Map<String, DiabetesTypVarden> tempMap = new HashMap<>();
@@ -137,7 +139,7 @@ public class InternalToTransportConverter {
 	private static GrundData readGrundData(se.inera.certificate.model.common.internal.GrundData grundData) {
 		GrundData result = new GrundData();
 		result.setPatient(readPatient(grundData.getPatient()));
-		result.setSigneringsTidstampel(grundData.getSigneringsdatum().toString("yyyyMMdd'T'HHmmss"));
+		result.setSigneringsTidstampel(grundData.getSigneringsdatum() != null ? grundData.getSigneringsdatum().toString(SIGNERINGS_TIDSTAMPEL_FORMAT) : null);
 		result.setSkapadAv(readSkapadAv(grundData.getSkapadAv()));
 		return result;
 	}

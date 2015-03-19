@@ -145,7 +145,7 @@ public class TransportToInternalConverter {
     private static GrundData readGrundData(se.inera.intygstjanster.ts.services.v1.GrundData grundData) {
         GrundData result = new GrundData();
         result.setPatient(readPatient(grundData.getPatient()));
-        result.setSigneringsdatum(LocalDateTime.parse(grundData.getSigneringsTidstampel(), DateTimeFormat.forPattern("yyyyMMdd'T'HHmmss")));
+        result.setSigneringsdatum(grundData.getSigneringsTidstampel() != null ? LocalDateTime.parse(grundData.getSigneringsTidstampel()) : null);
         result.setSkapadAv(readSkapadAv(grundData.getSkapadAv()));
         return result;
     }

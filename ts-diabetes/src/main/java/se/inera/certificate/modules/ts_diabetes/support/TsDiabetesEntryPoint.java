@@ -13,6 +13,7 @@ import se.inera.certificate.modules.ts_diabetes.rest.ModuleService;
 public class TsDiabetesEntryPoint implements ModuleEntryPoint {
 
     private static final String TRANSPORTSTYRELSEN_LOGICAL_ADRESS = "TS";
+    public static final String MODULE_ID = "ts-diabetes";
 
     @Autowired
     private ModuleService tsDiabetesModuleService;

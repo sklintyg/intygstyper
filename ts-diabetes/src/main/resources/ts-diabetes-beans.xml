@@ -16,6 +16,8 @@
   <bean class="se.inera.certificate.modules.ts_diabetes.rest.ModuleService" />
 
   <bean class="se.inera.certificate.modules.ts_diabetes.validator.Validator" />
+  
+  <bean class="se.inera.certificate.modules.ts_diabetes.util.ConverterUtil" />
 
   <bean class="se.inera.certificate.modules.ts_diabetes.pdf.PdfGenerator">
     <constructor-arg value="true" />

@@ -45,6 +45,7 @@ import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.PdfResponse;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.certificate.modules.support.api.exception.ExternalServiceCallException;
 import se.inera.certificate.modules.support.api.exception.ModuleConverterException;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
@@ -57,12 +58,14 @@ import se.inera.certificate.modules.ts_diabetes.pdf.PdfGenerator;
 import se.inera.certificate.modules.ts_diabetes.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.ts_diabetes.util.TSDiabetesCertificateMetaTypeConverter;
 import se.inera.certificate.modules.ts_diabetes.validator.Validator;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponseType;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesType;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesResponderInterface;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesResponseType;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
+import se.inera.intygstjanster.ts.services.v1.ResultCodeType;
 import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -195,9 +198,6 @@ public class ModuleService implements ModuleApi {
             throw new ModuleException("No LogicalAddress found in call to sendCertificateToRecipient!");
         }
 
-        // NOTE: We don't need to check for recipientId
-
-
         try {
             Utlatande utlatande = objectMapper.readValue(internalModel.getInternalModel(), Utlatande.class);
             TSDiabetesIntyg request = InternalToTransportConverter.convert(utlatande);
@@ -209,10 +209,17 @@ public class ModuleService implements ModuleApi {
         }
     }
 
-    private void sendCertificateToRecipient(TSDiabetesIntyg request, String logicalAddress, String recipientId) {
+    private void sendCertificateToRecipient(TSDiabetesIntyg request, String logicalAddress, String recipientId) throws ExternalServiceCallException {
         RegisterTSDiabetesType parameters = new RegisterTSDiabetesType();
         parameters.setIntyg(request);
         RegisterTSDiabetesResponseType response = diabetesRegisterClient.registerTSDiabetes(logicalAddress, parameters);
+        
+        if (response.getResultat().getResultCode() != ResultCodeType.OK) {
+            String message = response.getResultat().getResultCode() == ResultCodeType.INFO
+                    ? response.getResultat().getResultText()
+                    : response.getResultat().getErrorId() + " : " + response.getResultat().getResultText();
+            throw new ExternalServiceCallException(message);
+        }        
     }
 
     @Override
@@ -246,7 +253,7 @@ public class ModuleService implements ModuleApi {
         try {
             Utlatande utlatande = TransportToInternalConverter.convert(diabetesResponseType.getIntyg());
             String internalModel = objectMapper.writeValueAsString(utlatande);
-            CertificateMetaData metaData = TSDiabetesCertificateMetaTypeConverter.toCertificateMetaData(diabetesResponseType.getMeta());
+            CertificateMetaData metaData = TSDiabetesCertificateMetaTypeConverter.toCertificateMetaData(diabetesResponseType.getMeta(), diabetesResponseType.getIntyg());
             return new CertificateResponse(internalModel, utlatande, metaData, revoked);
         } catch (Exception e) {
             throw new ModuleException(e);
