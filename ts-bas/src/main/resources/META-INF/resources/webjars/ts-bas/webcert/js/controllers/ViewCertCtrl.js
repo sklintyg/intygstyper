@@ -152,4 +152,6 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
                     document.pdfForm.submit();
                 }
             };
+
+			$scope.$on('loadCertificate', loadCertificate);
         }]);

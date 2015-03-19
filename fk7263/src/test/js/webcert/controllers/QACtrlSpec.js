@@ -68,12 +68,10 @@ describe('QACtrl', function() {
             });
 
             // kick off the window change event
-            var revoked = false;
-            var statuses = [
-                {'type': 'RECEIVED', 'target': 'MI', 'timestamp': '2012-12-23T21:00:00.000'},
-                {'type': 'SENT', 'target': 'FK', 'timestamp': '2012-12-23T21:00:00.000'}
-            ];
-            $rootScope.$broadcast('fk7263.ViewCertCtrl.load', revoked, statuses, testCert);
+            $rootScope.$broadcast('fk7263.ViewCertCtrl.load', testCert, {
+                isSent: true,
+                isRevoked: false
+            });
 
             // ------ act
             // promises are resolved/dispatched only on next $digest cycle
@@ -105,7 +103,7 @@ describe('QACtrl', function() {
         });
     });
 
-    describe('#question and answers', function() {
+    describe('#send question', function() {
         it('should toggle the state of the new question form when toggleQuestionForm is called', function() {
 
             spyOn($scope, 'initQuestionForm');
@@ -133,103 +131,6 @@ describe('QACtrl', function() {
 
             expect(fragaSvarService.saveNewQuestion).toHaveBeenCalled();
         });
-
-        it('should sendAnswer when "svara" is clicked', function() {
-
-            var fragaSvar = {
-                internReferens: 'intyg-1',
-                svarsText: 'Att svara eller inte svara. Det är frågan.'
-            };
-
-            $scope.sendAnswer(fragaSvar);
-
-            expect(fragaSvarService.saveAnswer).toHaveBeenCalled();
-        });
-    });
-
-    describe('#vidarebefordra', function() {
-        it('should setVidarebefordradState when forward state is changed with onVidarebefordrad', function() {
-
-            var question = {
-                chosenTopic: {
-                    value: 'KONTAKT'
-                },
-                frageText: 'Att fråga eller inte fråga. Det är frågan.'
-            };
-
-            $scope.onVidareBefordradChange(question);
-
-            expect(fragaSvarCommonService.setVidareBefordradState).toHaveBeenCalled();
-        });
-    });
-
-    describe('#dismissProxy', function() {
-       it('should dismiss a message for a question', function() {
-
-           var qaAnswered = {status: 'ANSWERED'};
-           $scope.qaList = [qaAnswered];
-           expect($scope.qaList.length).toBe(1);
-           $scope.dismissProxy(qaAnswered);
-           expect($scope.qaList.length).toBe(0);
-       });
-    });
-
-    describe('#hasUnhandledQas', function() {
-        it('has no UnhandledQas', function() {
-
-            $scope.qaList = [];
-            expect($scope.hasUnhandledQas()).toBeFalsy();
-
-        });
-
-        it('has UnhandledQas', function() {
-            // ----- arrange
-            // in arrange we setup our spies with expected return values
-            var qaAnswered = {status: 'ANSWERED'};
-            $scope.qaList = [qaAnswered];
-            fragaSvarCommonService.isUnhandled.and.returnValue(true);
-            fragaSvarCommonService.fromFk.and.returnValue(true);
-
-            // ----- act
-            var hasUnhandled = $scope.hasUnhandledQas();
-
-            // ----- assert
-            expect(fragaSvarCommonService.isUnhandled).toHaveBeenCalledWith(qaAnswered);
-            expect(fragaSvarCommonService.fromFk).toHaveBeenCalledWith(qaAnswered);
-
-
-            expect(hasUnhandled).toBeTruthy();
-
-        });
-
-    });
-
-    describe('#updateAnsweredAsHandled', function() {
-        it('has no UnhandledQas so shouldnt update qas', function() {
-            // ----- arrange
-            var qaList = [];
-
-            // ----- act
-            $scope.updateAnsweredAsHandled(deferred, qaList);
-
-            // ----- assert
-            expect(fragaSvarService.closeAllAsHandled).not.toHaveBeenCalled();
-        });
-
-        it('has UnhandledQas so should update qas', function() {
-            // ----- arrange
-            var qaAnswered = {};
-            var qaList = [qaAnswered];
-            fragaSvarCommonService.isUnhandled.and.returnValue(true);
-            fragaSvarCommonService.fromFk.and.returnValue(true);
-
-            // ----- act
-            $scope.updateAnsweredAsHandled(deferred, qaList);
-
-            // ----- assert
-            expect(fragaSvarService.closeAllAsHandled).toHaveBeenCalled();
-        });
-
     });
 
 });

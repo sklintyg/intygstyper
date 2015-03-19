@@ -2,80 +2,10 @@
   <div wc-spinner label="fk7263.info.loadingcertificate" show-spinner="!widgetState.doneLoading"
        show-content="widgetState.doneLoading">
 
-    <div wc-print-header title-id="fk7263.label.certtitle" print-message-id="print.label.{{widgetState.printStatus}}"
-         intygs-id="cert.id"></div>
-
-    <!-- error message -->
-    <div id="cert-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey"
-         class="alert alert-danger alert-column print-hide">
-
-      <p>
-        <span message key="fk7263.{{widgetState.activeErrorMessageKey}}"></span>
-      </p>
-
-      <div
-          ng-if="intygBackup.showBackupInfo && intygBackup.intyg != undefined && intygBackup.intyg.intygsId != undefined">
-        <p><strong>Intygsinformation</strong></p>
-        <ul>
-          <li>Patient: {{intygBackup.intyg.patientNamn}} ({{intygBackup.intyg.patientId.patientIdExtension}})</li>
-          <li>Signerat: {{intygBackup.intyg.signeringsDatum | date:'short'}}</li>
-          <li>ID: {{intygBackup.intyg.intygsId}}</li>
-        </ul>
-      </div>
+    <div wc-intyg-header intygstyp="fk7263">
     </div>
-    <div ng-show="!widgetState.activeErrorMessageKey" id="intyg-vy-laddad">
 
-      <div class="print-hide">
-        <div class="form-group buttonbar">
-          <label class="control-label">{{cert.grundData.patient.fullstandigtNamn}} - {{cert.grundData.patient.personId}}</label>
-
-          <form id="view-as-pdf" action="{{pdfUrl}}" method="get" target="_blank" name="pdfForm">
-            <p class="btn-row">
-              <button id="sendBtn" class="btn btn-info" ng-if="!certProperties.isSent && !certProperties.isRevoked && !isQaOnly"
-                      wc-feature-active feature="skickaIntyg" intygstyp="fk7263"
-                      wc-check-vardenhet vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}"
-                      ng-click="send(cert)">Skicka till Försäkringskassan
-              </button>
-              <button id="downloadprint" type="submit" value="submit" class="btn btn-info" ng-click="print(cert)">Skriv
-                ut
-              </button>
-              <button id="copyBtn" class="btn btn-info" ng-if="!certProperties.isRevoked && !isQaOnly" ng-click="copy(cert)"
-                      wc-feature-active feature="kopieraIntyg" intygstyp="fk7263"
-                      title="Kopiera intyg innebär att en kopia skapas av det befintliga intyget och med samma information.
-I de fall patienten har ändrat namn eller adress så uppdateras den informationen.
-Uppgifterna i intygsutkastet går att ändra innan det signeras.
-Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
-                Kopiera
-              </button>
-              <button id="makuleraBtn" class="btn btn-inverse" ng-if="!certProperties.isRevoked && !isQaOnly && user.lakare" ng-click="makulera(cert)"
-                      wc-feature-active feature="makuleraIntyg" intygstyp="fk7263"
-                      wc-check-vardenhet vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}"
-                      title="Makulera intyg innebär att intyget återtas. Vid behov kan intyget ersättas med ett nytt.">
-                Makulera
-              </button>
-            </p>
-          </form>
-        </div>
-
-        <div id="cert-inline-error" ng-show="widgetState.inlineErrorMessageKey" class="alert alert-danger alert-column print-hide">
-            <span message key="{{widgetState.inlineErrorMessageKey}}"></span>
-        </div>
-
-        <div wc-new-person-id-message></div>
-
-        <div class="alert alert-info alert-column" ng-if="!certProperties.isRevoked">
-          <strong>Status:</strong>
-          <span ng-if="certProperties.isSent" id="certificate-is-sent-to-recipient-message-text">Intyget är signerat och mottaget av Försäkringskassans system.</span>
-          <span ng-if="!certProperties.isSent" id="certificate-is-sent-to-it-message-text">
-            Intyget är signerat. Intyget är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se. Intyget går även att nå via Försäkringskassans e-tjänst för ansökan om sjukpenning.
-            Om patienten inte har möjlighet att skicka intyget elektroniskt till Försäkringskassan kan du skicka intyget direkt till Försäkringskassan åt patienten. Observera att patientens samtycke då krävs.
-          </span>
-        </div>
-        <div ng-if="certProperties.isRevoked" id="certificate-is-revoked-message-text" class="alert alert-warning"
-             style="margin-right: 20px; max-width: 530px;">Intyget är makulerat
-        </div>
-      </div>
-
+    <div ng-show="!widgetState.activeErrorMessageKey">
       <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : certProperties.isRevoked}">
         <div class="row">
           <div class="col-md-12">
@@ -125,8 +55,8 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
               </div>
 
               <div wc-field field-number="4b" field-label="fk7263.label.intyg-baserat-pa" id="field4b"
-                   filled="{{cert.undersokningAvPatienten!=null || telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null}}">
-                <ul class="padded-list">
+                   filled="{{cert.undersokningAvPatienten!=null || cert.telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null}}">
+                <ul class="padded-list" id="baseratPaList">
                   <li ng-show="cert.undersokningAvPatienten!=null"><span message
                                                                          key="fk7263.vardkontakt.undersokning"></span><span id="undersokningAvPatienten">{{cert.undersokningAvPatienten
                     | date:'longDate' }}</span>
@@ -141,7 +71,7 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
 
                   <li ng-show="cert.annanReferens!=null">
                     <!-- Annat -->
-                    <span message key="fk7263.referens.annat"></span> {{cert.annanReferens | date:'longDate'}}:
+                    <span message key="fk7263.referens.annat"></span> <span id="annanReferens">{{cert.annanReferens | date:'longDate'}}</span>:
                     <div id="annanReferensBeskrivning" class="multiline">{{cert.annanReferensBeskrivning}}</div>
                   </li>
                 </ul>

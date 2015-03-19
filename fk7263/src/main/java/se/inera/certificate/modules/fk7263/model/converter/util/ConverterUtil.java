@@ -37,6 +37,7 @@ public class ConverterUtil {
         certificateHolder.setId(utlatande.getId());
         certificateHolder.setCareUnitId(utlatande.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
         certificateHolder.setCareUnitName(utlatande.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
+        certificateHolder.setCareGiverId(utlatande.getGrundData().getSkapadAv().getVardenhet().getVardgivare().getVardgivarid());
         certificateHolder.setSigningDoctorName(utlatande.getGrundData().getSkapadAv().getFullstandigtNamn());
         certificateHolder.setCivicRegistrationNumber(utlatande.getGrundData().getPatient().getPersonId());
         certificateHolder.setSignedDate(utlatande.getGrundData().getSigneringsdatum());
@@ -44,7 +45,7 @@ public class ConverterUtil {
         certificateHolder.setValidFromDate(utlatande.getGiltighet().getFrom().toString());
         certificateHolder.setValidToDate(utlatande.getGiltighet().getTom().toString());
         certificateHolder.setAdditionalInfo(utlatande.getGiltighet().getFrom().toString() + " - " + utlatande.getGiltighet().getTom().toString());
-        certificateHolder.setDocument(toJsonString(utlatande));
+        certificateHolder.setDocument(document);
         return certificateHolder;
     }
 

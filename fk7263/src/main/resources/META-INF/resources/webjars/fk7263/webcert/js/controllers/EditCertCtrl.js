@@ -582,12 +582,20 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 // Remove defaults not applicable when smittskydd is active
                 if (newVal === true) {
                     $scope.form.prognos = undefined;
-                    $scope.form.rehab = undefined;
-
-                    // turn off resor till och from jobbet
-                    // Fält 11. Ressätt till arbete
-                    $scope.cert.ressattTillArbeteAktuellt = false;
                     $scope.form.ressattTillArbeteAktuellt = undefined;
+                    $scope.form.rehab = undefined;
+                } else {
+                    if(!$scope.form.prognos || $scope.form.prognos.length == 0){
+                        $scope.form.prognos = 'YES';
+                    }
+
+                    if(!$scope.form.ressattTillArbeteAktuellt || $scope.form.ressattTillArbeteAktuellt.length == 0){
+                        $scope.form.ressattTillArbeteAktuellt = 'NEJ';
+                    }
+
+                    if(!$scope.form.rehab || $scope.form.rehab.length == 0){
+                        $scope.form.rehab = 'NEJ';
+                    }
 
                 }
             });
@@ -631,6 +639,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         return [];
                     });
             };
+
             $scope.getDiagnoseCodes = function(codeSystem, val) {
                 return diagnosService.searchByCode(codeSystem, val)
                     .then(function(response) {
@@ -717,6 +726,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
                 $scope.certForm.$dirty = true;
                 $scope.certForm.$pristine = false;
+
             };
             $scope.onDiagnoseCode2Select = function($item) {
                 $scope.cert.diagnosBeskrivning2 = $item.beskrivning;

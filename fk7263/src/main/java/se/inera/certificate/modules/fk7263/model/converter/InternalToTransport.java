@@ -43,14 +43,13 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 public final class InternalToTransport {
 
     private static final String SAMSJUKLIGHET_FORELIGGER = "Samsjuklighet föreligger";
-    private static final String FK7263 = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
-    private static final String PERS_ID_ROOT = "1.2.752.129.2.1.3.1";
-    private static final String HSA_ID_ROOT = "1.2.752.129.2.1.4.1";
-    private static final String ARBETSPLATSKOD_ROOT = "1.2.752.29.4.71";
 
-    public static final int FORMOGA_3_4 = 75;
-    public static final int FORMOGA_1_2 = 50;
-    public static final int FORMOGA_1_4 = 25;
+    private static final String FK7263 = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
+
+    /* OIDs */
+    private static final String ARBETSPLATSKOD_ROOT = "1.2.752.29.4.71";
+    private static final String HSA_ID_ROOT = "1.2.752.129.2.1.4.1";
+    private static final String PERS_ID_ROOT = "1.2.752.129.2.1.3.1";
 
     private InternalToTransport() {
     }
