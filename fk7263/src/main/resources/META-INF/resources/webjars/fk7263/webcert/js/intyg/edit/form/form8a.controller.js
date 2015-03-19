@@ -14,10 +14,10 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8aCtrl',
                 if(viewState.common.viewState.doneLoading) {
                     // Remove defaults not applicable when smittskydd is active
                     if (newVal === true) {
-                        $scope.cert.nuvarandeArbete = false;
-                        $scope.cert.nuvarandeArbetsuppgifter = undefined;
-                        $scope.cert.arbetsloshet = false;
-                        $scope.cert.foraldrarledighet = false;
+                        $scope.model.nuvarandeArbete = false;
+                        $scope.model.nuvarandeArbetsuppgifter = undefined;
+                        $scope.model.arbetsloshet = false;
+                        $scope.model.foraldrarledighet = false;
                     }
                 }
             });

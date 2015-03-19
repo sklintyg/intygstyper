@@ -4,4 +4,8 @@ angular.module('fk7263').controller('fk7263.EditCert.Form6bCtrl',
             'use strict';
             $scope.model = model;
             $scope.viewState = viewState;
+
+            $scope.inputLimits = {
+                atgardInomSjukvarden: 66,
+                annanAtgard: 66 }
         }]);
