@@ -1,3 +1,4 @@
+<div ng-form="form4b">
 <div id="intygetbaseraspa" wc-field field-label="fk7263.label.intyg-baserat-pa" field-number="4b"
                        field-help-text="fk7263.helptext.intyg-baserat-pa" ng-hide="viewState.avstangningSmittskydd()"
                        ng-animate="'fade'">
@@ -15,7 +16,7 @@
                                                                          id="basedOnExamination"
                                                                          name="informationBasedOn.examination"
                                                                          class="checkbox-inline"
-                                                                         ng-model="model.undersokningAvPatienten"
+                                                                         ng-model="basedOnState.check.undersokningAvPatienten"
                                                                          ng-change="toggleBaseradPaDate('undersokningAvPatienten')">
       Min undersökning av patienten</label>
     <span wc-date-picker-field target-model="model.undersokningAvPatienten"
@@ -27,7 +28,7 @@
     <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
                                                                          id="basedOnPhoneContact"
                                                                          name="informationBasedOn.phoneContact"
-                                                                         ng-model="model.telefonkontaktMedPatienten"
+                                                                         ng-model="basedOnState.check.telefonkontaktMedPatienten"
                                                                          ng-change="toggleBaseradPaDate('telefonkontaktMedPatienten')">
       Min telefonkontakt med patienten</label>
     <span wc-date-picker-field target-model="model.telefonkontaktMedPatienten"
@@ -39,7 +40,7 @@
     <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
                                                                          id="basedOnJournal"
                                                                          name="informationBasedOn.journal"
-                                                                         ng-model="model.journaluppgifter"
+                                                                         ng-model="basedOnState.check.journaluppgifter"
                                                                          ng-change="toggleBaseradPaDate('journaluppgifter')">
       Journaluppgifter</label>
     <span wc-date-picker-field target-model="model.journaluppgifter"
@@ -51,7 +52,7 @@
     <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
                                                                          id="basedOnOther"
                                                                          name="informationBasedOn.other"
-                                                                         ng-model="model.annanReferens"
+                                                                         ng-model="basedOnState.check.annanReferens"
                                                                          ng-change="toggleBaseradPaDate('annanReferens')">
       Annat<span wc-enable-tooltip field-help-text="fk7263.helptext.intyg-baserat-pa.annat"></span>
     </label>
@@ -69,4 +70,5 @@
       blanketten.
     </div>
   </div>
+</div>
 </div>

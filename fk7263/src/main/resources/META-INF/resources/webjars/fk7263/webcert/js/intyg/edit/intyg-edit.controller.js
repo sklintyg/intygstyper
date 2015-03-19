@@ -60,16 +60,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 cert : { kommentar : ''}
             }
 
-            // Fält 4b. Based on handling
-            $scope.basedOnState = {
-                check: {
-                    undersokningAvPatienten: false,
-                    telefonkontaktMedPatienten: false,
-                    journaluppgifter: false,
-                    annanReferens: false
-                }
-            };
-
             // 8b. Arbetsförmåga date management
             $scope.field8b = {
                 nedsattMed25 : null,
@@ -109,47 +99,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * @param $scope
              */
             function registerDateParsers(_$scope) {
-                registerDateParsersFor4b(_$scope);
                 registerDateParsersFor8b(_$scope);
             }
-
-
-            // 4b ---------------------------------------------
-
-            function registerDateParsersFor4b(_$scope) {
-                // Register parse function for 4b date pickers
-                var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter',
-                    'annanReferens'];
-                addParser(_$scope.certForm, baserasPaTypes, _$scope.onChangeBaserasPaDate );
-                addDateToISOParser(_$scope.certForm, baserasPaTypes);
-            }
-
-            function addParser(model, attributes, fn){
-                var modelProperty;
-                angular.forEach(attributes, function(type) {
-                    modelProperty = this[type + 'Date'];
-                    if (modelProperty) {
-                        modelProperty.$parsers.push(function(viewValue) {
-                            fn(type);
-                            return viewValue;
-                        });
-                    }
-                }, model);
-            }
-
-            function addDateToISOParser(model, attributes){
-                angular.forEach(attributes, function(type) {
-                    var modelProperty = this[type + 'Date'];
-                    if (modelProperty) {
-                        modelProperty.$parsers.push(function(viewValue) {
-                            viewValue = dateUtils.convertDateToISOString(viewValue);
-                            return viewValue;
-                        });
-                    }
-                }, model);
-            }
-
-            // 4b ---------------------------------------------
 
             function registerDateParsersFor8b(_$scope) {
                 if(_dateRangeGroups === undefined){
@@ -188,6 +139,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.form.diagnosKodverk = 'ICD_10_SE';
                 }
 
+                /**
                 // Fält 4b. AnnanReferensBeskrivning
                 $scope.basedOnState.check.undersokningAvPatienten = $scope.cert.undersokningAvPatienten !== undefined;
                 $scope.basedOnState.check.telefonkontaktMedPatienten =
@@ -198,7 +150,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.basedOnState.check.annanReferens = true;
                 } else {
                     $scope.basedOnState.check.annanReferens = false;
-                }
+                } **/
 
                 if ($scope.cert.nedsattMed25Beskrivning !== undefined) {
                     $scope.form.ovrigt.nedsattMed25Beskrivning = $scope.cert.nedsattMed25Beskrivning;
@@ -278,6 +230,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 // Fält 1. Smittskydd. Vid sparning: ta bort data på alla fält före 8b som döljs när smittskydd är icheckat.
                 if ($scope.cert.avstangningSmittskydd) {
 
+                    /**
                     // 4b. Baserat på
                     $scope.cert.undersokningAvPatienten = undefined;
                     $scope.cert.telefonkontaktMedPatienten = undefined;
@@ -289,6 +242,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.basedOnState.check.telefonkontaktMedPatienten = false;
                     $scope.basedOnState.check.journaluppgifter = false;
                     $scope.basedOnState.check.annanReferens = false;
+                    **/
 
                     // 2. Diagnos
                     $scope.cert.diagnosKodverk1 = undefined;
@@ -331,12 +285,14 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
                 } else {
 
+                    /**
                     // Fält 4b. datum
                     var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter',
                         'annanReferens'];
                     angular.forEach(baserasPaTypes, function(type) {
                         this[type] = dateUtils.convertDateToISOString($scope.certForm[type + 'Date'].$viewValue);
                     }, $scope.cert);
+                    **/
 
                     // Fält 2. diagnos
                     /* this is now done directly in form2Controller
@@ -345,12 +301,13 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.cert.diagnosKodsystem3 = $scope.form.diagnosKodverk;
                     */
 
+                    /**
                     // Fält 4b. AnnanReferensBeskrivning
                     if ($scope.basedOnState.check.annanReferens) {
                         $scope.cert.annanReferensBeskrivning = $scope.form.ovrigt.annanReferensBeskrivning;
                     } else {
                         $scope.cert.annanReferensBeskrivning = null;
-                    }
+                    } **/
 
                     // Fält 8a.
                     if ($scope.cert.nuvarandeArbete && $scope.form.nuvarandeArbetsuppgifter) {
@@ -461,36 +418,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             /*************************************************************************
              * Ng-change and watches updating behaviour in form (try to get rid of these or at least make them consistent)
              *************************************************************************/
-
-            /**
-             * 4b. Toggle dates in the Based On date pickers when checkboxes are interacted with
-             * @param modelName
-             */
-            $scope.toggleBaseradPaDate = function(modelName) {
-
-                // Set todays date when a baserat pa field is checked
-                if ($scope.basedOnState.check[modelName]) {
-                    if (!$scope.cert[modelName] || $scope.cert[modelName] === '') {
-                        $scope.cert[modelName] = $filter('date')($scope.today, 'yyyy-MM-dd');
-                    }
-                } else {
-
-                    // Clear date if check is unchecked
-                    $scope.cert[modelName] = '';
-                }
-            };
-
-            /**
-             * 4b. Update checkboxes when datepickers are interacted with
-             * @param baserasPaType
-             */
-            $scope.onChangeBaserasPaDate = function(baserasPaType) {
-                if (utils.isValidString($scope.certForm[baserasPaType + 'Date'].$viewValue)) {
-                    $scope.basedOnState.check[baserasPaType] = true;
-                } else {
-                    $scope.basedOnState.check[baserasPaType] = false;
-                }
-            };
 
 
             /****************************************************************************
