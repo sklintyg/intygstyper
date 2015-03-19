@@ -4,6 +4,8 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
 
         this.common = CertViewState;
 
+        this.avstangningSmittskyddVal = intygModel.avstangningSmittskydd;
+
         this.avstangningSmittskydd = function(){
             return intygModel.avstangningSmittskydd;
         }

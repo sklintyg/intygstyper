@@ -238,6 +238,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         break;
                     }
                 }
+
+                /** handle in the 6a711 controller
                 // Fält 7. Rehab radio conversions
                 if ($scope.cert.rehabilitering !== undefined) {
                     switch ($scope.cert.rehabilitering) {
@@ -251,13 +253,14 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         $scope.form.rehab = 'GAREJ';
                         break;
                     }
-                }
+                } **/
 
                 // Fält 6a.
                 if ($scope.cert.rekommendationOvrigt !== undefined) {
                     $scope.form.rekommendationOvrigt = $scope.cert.rekommendationOvrigt;
                 }
 
+                /** now covered in the 6a711 controller
                 // Fält 11. Ressätt till arbete
                 $scope.form.ressattTillArbeteAktuellt = undefined;
                 if ($scope.cert.ressattTillArbeteAktuellt) {
@@ -265,7 +268,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
                 if ($scope.cert.ressattTillArbeteEjAktuellt) {
                     $scope.form.ressattTillArbeteAktuellt = 'NEJ';
-                }
+                } **/
             }
 
             /**
@@ -318,11 +321,13 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.cert.annanAtgard = undefined;
 
                     // 6a, 7, 11
+                    /** now in the controller
                     $scope.cert.rekommendationKontaktArbetsformedlingen = false;
                     $scope.cert.rekommendationKontaktForetagshalsovarden = false;
                     $scope.form.rehab = undefined;
                     $scope.cert.rekommendationOvrigtCheck = false;
                     $scope.cert.rekommendationOvrigt = undefined;
+                    **/
 
                 } else {
 
@@ -362,6 +367,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     }
 
                     // Fält 7. Rehab radio conversions
+                    /** now handled in controller
                     switch ($scope.form.rehab) {
                     case 'JA':
                         $scope.cert.rehabilitering = 'rehabiliteringAktuell';
@@ -372,7 +378,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     case 'GAREJ':
                         $scope.cert.rehabilitering = 'rehabiliteringGarInteAttBedoma';
                         break;
-                    }
+                    } **/
 
                 }
 
@@ -435,6 +441,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     break;
                 }
 
+                /** now covered in the 6a711 controller
                 // Fält 11. Ressätt till arbete
                 $scope.cert.ressattTillArbeteAktuellt = false;
                 $scope.cert.ressattTillArbeteEjAktuellt = false;
@@ -444,7 +451,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 } else {
                     $scope.cert.ressattTillArbeteAktuellt = false;
                     $scope.cert.ressattTillArbeteEjAktuellt = true;
-                }
+                } **/
 
             }
 
