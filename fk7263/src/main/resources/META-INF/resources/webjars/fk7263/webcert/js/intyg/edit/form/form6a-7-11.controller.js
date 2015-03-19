@@ -40,8 +40,13 @@ angular.module('fk7263').controller('fk7263.EditCert.Form6a711Ctrl',
                 }
             }
 
-            setRehabGroup();
-            setTravelGroup();
+            // once we've doneLoading we can set the radion buttons to the model state.
+            $scope.$watch('viewState.common.viewState.doneLoading', function(newVal) {
+                if(newVal) {
+                    setRehabGroup();
+                    setTravelGroup();
+                }
+            });
 
             $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal) {
                 // only do this once the page is loaded and changes come from the gui!
@@ -67,13 +72,13 @@ angular.module('fk7263').controller('fk7263.EditCert.Form6a711Ctrl',
 
             $scope.onRehabChange = function(){
                 switch ($scope.radioGroups.rehab) {
-                case 'JA':
+                case rehabStates.JA:
                     model.rehabilitering = 'rehabiliteringAktuell';
                     break;
-                case 'NEJ':
+                case rehabStates.NEJ:
                     model.rehabilitering = 'rehabiliteringEjAktuell';
                     break;
-                case 'GAREJ':
+                case rehabStates.GAREJ:
                     model.rehabilitering = 'rehabiliteringGarInteAttBedoma';
                     break;
                 default :

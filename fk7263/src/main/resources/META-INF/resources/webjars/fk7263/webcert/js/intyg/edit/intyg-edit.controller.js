@@ -90,8 +90,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             // Text input limits for different fields
             $scope.inputLimits = {
                 aktivitetsbegransning: 1100,
-                arbetsformagaPrognos: 600,
-                ovrigt: 360 // = combined field 13 (and dependencies that end up in field 13) limit
+                arbetsformagaPrognos: 600
             };
 
             /***************************************************************************
@@ -216,6 +215,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.form.nuvarandeArbetsuppgifter = $scope.cert.nuvarandeArbetsuppgifter;
                 }
 
+                /** handled in form10 controller
                 // Fält 10. Går ej att bedöma and update backend model when view changes.
                 if ($scope.cert.prognosBedomning !== undefined) {
                     switch ($scope.cert.prognosBedomning) {
@@ -235,6 +235,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         break;
                     }
                 }
+                 **/
 
                 /** handle in the 6a711 controller
                 // Fält 7. Rehab radio conversions
@@ -421,6 +422,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     }
                 }, $scope.cert);
 
+                /** handled in form10 controller
+
                 // Fält 10. Går ej att bedöma and update backend model when view changes.
                 $scope.cert.arbetsformagaPrognosGarInteAttBedomaBeskrivning = null;
                 switch ($scope.form.prognos) {
@@ -439,6 +442,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         $scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
                     break;
                 }
+                 **/
 
                 /** now covered in the 6a711 controller
                 // Fält 11. Ressätt till arbete
@@ -487,77 +491,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.basedOnState.check[baserasPaType] = false;
                 }
             };
-
-            /**
-             * Truncate intyg field to length of inputLimit
-             * @param field
-             */
-            $scope.limitFieldLength = function(field) {
-                $scope.cert[field] = $scope.cert[field].substr(0, $scope.inputLimits[field]);
-            };
-
-
-            /**
-             * Limit length of field dependent on field 13 in the external model
-             * @param field
-             */
-            $scope.limitOtherField = function(field) {
-                function limitOvrigtLength(val) {
-                    var totalOvrigtLength = $scope.getTotalOvrigtLength();
-                    if (totalOvrigtLength > $scope.inputLimits.ovrigt) {
-                        // Remove characters over limit from current field
-                        return val.substr(0, val.length - (totalOvrigtLength - $scope.inputLimits.ovrigt));
-                    }
-                    return val;
-                }
-
-                if ($scope.form.ovrigt[field]) {
-                    $scope.form.ovrigt[field] = limitOvrigtLength($scope.form.ovrigt[field]);
-                } else if ($scope.cert[field]) {
-                    $scope.cert[field] = limitOvrigtLength($scope.cert[field]);
-                }
-            };
-
-            /**
-             * Calculate total length of all fields ending up in Övrigt in the external model
-             * @returns {*}
-             */
-            $scope.getTotalOvrigtLength = function() {
-
-                var totalOvrigtLength = helper.getLengthOrZero($scope.cert.kommentar);
-
-                if ($scope.form.ovrigt !== undefined) {
-                    totalOvrigtLength += helper.getLengthOrZero($scope.form.ovrigt.annanReferensBeskrivning) +
-                    helper.getLengthOrZero($scope.form.ovrigt.nedsattMed25Beskrivning) +
-                    helper.getLengthOrZero($scope.form.ovrigt.nedsattMed50Beskrivning) +
-                    helper.getLengthOrZero($scope.form.ovrigt.nedsattMed75Beskrivning) +
-                    helper.getLengthOrZero($scope.form.ovrigt.arbetsformagaPrognosGarInteAttBedomaBeskrivning);
-                }
-
-                return totalOvrigtLength;
-            };
-
-            $scope.$watch('cert.avstangningSmittskydd', function(newVal) {
-
-                // Remove defaults not applicable when smittskydd is active
-                if (newVal === true) {
-                    $scope.form.prognos = undefined;
-                    $scope.form.ressattTillArbeteAktuellt = undefined;
-                    $scope.form.rehab = undefined;
-                } else {
-                    if(!$scope.form.prognos || $scope.form.prognos.length == 0){
-                        $scope.form.prognos = 'YES';
-                    }
-
-                    if(!$scope.form.ressattTillArbeteAktuellt || $scope.form.ressattTillArbeteAktuellt.length == 0){
-                        $scope.form.ressattTillArbeteAktuellt = 'NEJ';
-                    }
-
-                    if(!$scope.form.rehab || $scope.form.rehab.length == 0){
-                        $scope.form.rehab = 'NEJ';
-                    }
-                }
-            });
 
 
             /****************************************************************************

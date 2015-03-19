@@ -322,7 +322,7 @@
                           <div data-ng-show="cert.funktionsnedsattning.funktionsnedsattning">
                             <p><span message key="ts-bas.label.funktionsnedsattning.beskrivning"></span></p>
                             <textarea id="funktionsnedsattning" class="form-control" name="funktionsnedsattning"
-                                      rows='5' wc-maxlength ng-trim="false" maxlength="{{inputLimits.funktionsnedsattning}}"
+                                      rows='5' wc-maxlength ng-trim="false" maxlength="{{viewState.inputLimits.funktionsnedsattning}}"
                                       ng-model="cert.funktionsnedsattning.beskrivning"></textarea>
                           </div>
                         </td>
@@ -380,7 +380,7 @@
                           <div ng-show="cert.hjartKarl.riskfaktorerStroke">
                             <p><span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning"></span></p>
                             <textarea class="form-control" ng-model="cert.hjartKarl.beskrivningRiskfaktorer"
-                                      wc-maxlength ng-trim="false" maxlength="{{inputLimits.beskrivningRiskfaktorer}}"
+                                      wc-maxlength ng-trim="false" maxlength="{{viewState.inputLimits.beskrivningRiskfaktorer}}"
                                       id="beskrivningRiskfaktorer" rows="4"></textarea>
                           </div>
                         </td>
@@ -509,7 +509,7 @@
                                      key="ts-bas.label.medvetandestorning.medvetandestorning-ange-datum-orsak"></span>
                             </p>
                             <textarea class="form-control" rows="4" data-ng-model="cert.medvetandestorning.beskrivning"
-                                      id="beskrivningMedvetandestorning" wc-maxlength ng-trim="false" maxlength="{{inputLimits.medvetandestorning}}"></textarea>
+                                      id="beskrivningMedvetandestorning" wc-maxlength ng-trim="false" maxlength="{{viewState.inputLimits.medvetandestorning}}"></textarea>
                           </div>
                         </td>
                       </tr>
@@ -657,7 +657,7 @@
                           <div data-ng-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk == true">
                             <p><span message key="ts-bas.label.narkotika-lakemedel.ange-lakemedel-dos"></span></p>
                             <textarea class="form-control" data-ng-model="cert.narkotikaLakemedel.lakemedelOchDos"
-                                      id="beskrivningNarkotikalakemedel" wc-maxlength ng-trim="false" maxlength="{{inputLimits.lakemedelOchDos}}" rows="3"></textarea>
+                                      id="beskrivningNarkotikalakemedel" wc-maxlength ng-trim="false" maxlength="{{viewState.inputLimits.lakemedelOchDos}}" rows="3"></textarea>
                           </div>
                         </td>
                       </tr>
@@ -761,7 +761,7 @@
                                                                             class="form-control" type="text"
                                                                             data-ng-model="cert.sjukhusvard.tidpunkt"
                                                                             wc-maxlength ng-trim="false"
-                                                                            maxlength="{{inputLimits.sjukhusvardtidpunkt}}">
+                                                                            maxlength="{{viewState.inputLimits.sjukhusvardtidpunkt}}">
                               </td>
                             </tr>
                             <tr>
@@ -771,7 +771,7 @@
                                                                             class="form-control" type="text"
                                                                             data-ng-model="cert.sjukhusvard.vardinrattning"
                                                                             wc-maxlength ng-trim="false"
-                                                                            maxlength="{{inputLimits.sjukhusvardvardinrattning}}">
+                                                                            maxlength="{{viewState.inputLimits.sjukhusvardvardinrattning}}">
                               </td>
                             </tr>
                             <tr>
@@ -780,7 +780,7 @@
                                                                             class="form-control" type="text"
                                                                             data-ng-model="cert.sjukhusvard.anledning"
                                                                             wc-maxlength ng-trim="false"
-                                                                            maxlength="{{inputLimits.sjukhusvardanledning}}">
+                                                                            maxlength="{{viewState.inputLimits.sjukhusvardanledning}}">
                               </td>
                             </tr>
                           </table>
@@ -818,7 +818,7 @@
                           <div data-ng-show="cert.medicinering.stadigvarandeMedicinering">
                             <p><span message key="ts-bas.label.medicinering.beskrivning"></span></p>
                             <textarea class="form-control" data-ng-model="cert.medicinering.beskrivning" wc-maxlength ng-trim="false"
-                                      id="beskrivningMedicinering" maxlength="{{inputLimits.medicinering}}" rows="4"></textarea>
+                                      id="beskrivningMedicinering" maxlength="{{viewState.inputLimits.medicinering}}" rows="4"></textarea>
                           </div>
                         </td>
                       </tr>
@@ -828,7 +828,7 @@
                   <div wc-field field-label="ts-bas.label.ovrigkommentar">
                     <p><span message key="ts-bas.label.kommentar-relevant-trafiksakerhet"></span></p>
                     <textarea id="kommentar" class="form-control" name="kommentar" rows='10' ng-model="cert.kommentar"
-                              wc-maxlength ng-trim="false" maxlength="{{inputLimits.kommentar}}"></textarea>
+                              wc-maxlength ng-trim="false" maxlength="{{viewState.inputLimits.kommentar}}"></textarea>
                     <!-- ng-change="inputlimit for IE"-->
                   </div>
 
@@ -876,7 +876,7 @@
                     <p><span message key="ts-bas.label.bedomning-info-undersokas-med-specialkompetens"></span></p>
                     <textarea name="specialist" class="form-control" rows='3'
                               id="specialist" ng-model="cert.bedomning.lakareSpecialKompetens" wc-maxlength ng-trim="false"
-                              maxlength="{{inputLimits.lakareSpecialKompetens}}"></textarea>
+                              maxlength="{{viewState.inputLimits.lakareSpecialKompetens}}"></textarea>
                   </div>
 
                   <div class="body-row clearfix" id="vardenhetForm">

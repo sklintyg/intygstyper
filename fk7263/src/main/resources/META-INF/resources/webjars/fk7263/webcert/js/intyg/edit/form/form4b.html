@@ -61,9 +61,9 @@
     <span>Ange vad:</span><br>
     <textarea id="informationBasedOnOtherText" name="informationBasedOn.otherText" rows='2'
               class='form-control otherInformation' ng-model="model.annanReferensBeskrivning"
-              ng-change="limitOtherField('annanReferensBeskrivning')"></textarea>
+              ng-change="viewState.limitOtherField('annanReferensBeskrivning')"></textarea>
     <div class="counter">
-      Tecken kvar: {{inputLimits.ovrigt - getTotalOvrigtLength()}}
+      Tecken kvar: {{viewState.inputLimits.ovrigt - viewState.getTotalOvrigtLength()}}
     </div>
     <div class="info-transfer">Informationen överförs till "Övriga upplysningar" vid PDF-utskrift av
       blanketten.

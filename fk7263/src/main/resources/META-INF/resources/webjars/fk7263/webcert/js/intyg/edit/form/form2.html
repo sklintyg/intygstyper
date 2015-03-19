@@ -43,7 +43,7 @@
              typeahead="d.value as d.label for d in searchDiagnoseByDescription(model.diagnosKodsystem1, $viewValue) | filter:$viewValue "
              typeahead-on-select="onDiagnoseDescription1Select($item)"
              typeahead-wait-ms="100" ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning1')">
-      <span class="counter">Tecken kvar: {{inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
+      <span class="counter">Tecken kvar: {{viewState.inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
     </div>
   </div>
   <div class="row bottom-padding-tiny">
@@ -70,7 +70,7 @@
                typeahead="d.value as d.label for d in searchDiagnoseByDescription(model.diagnosKodsystem1, $viewValue) | filter:$viewValue "
                typeahead-on-select="onDiagnoseDescription2Select($item)"
                typeahead-wait-ms="100" ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning2')">
-        <span class="counter">Tecken kvar: {{inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
+        <span class="counter">Tecken kvar: {{viewState.inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
       </div>
     </div>
   </div>
@@ -90,7 +90,7 @@
                typeahead-on-select="onDiagnoseDescription3Select($item)"
                typeahead-wait-ms="100"
                ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning3')">
-        <span class="counter">Tecken kvar: {{inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
+        <span class="counter">Tecken kvar: {{viewState.inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
       </div>
     </div>
   </div>
@@ -103,7 +103,7 @@
                       <textarea id="diagnoseClarification" class="form-control" name="diagnose.clarification" rows='5'
                                 ng-model="model.diagnosBeskrivning" ng-trim="false"
                                 ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning')"></textarea>
-    <span class="counter">Tecken kvar: {{inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
+    <span class="counter">Tecken kvar: {{viewState.inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
   </div>
 
   <div class="form-group form-inline">
