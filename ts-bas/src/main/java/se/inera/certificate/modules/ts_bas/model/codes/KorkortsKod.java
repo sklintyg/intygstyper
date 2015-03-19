@@ -56,6 +56,15 @@ public enum KorkortsKod {
         this.description = desc;
     }
 
+    public static boolean isPersontransport(String value) {
+        for (KorkortsKod k: PERSONTRANSPORT) {
+            if (value.equals(k.name())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public String getCode() {
         return code;
     }

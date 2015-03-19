@@ -17,7 +17,7 @@
 
   <bean class="se.inera.certificate.modules.ts_bas.model.converter.TransportToInternal" />
 
-  <bean class="se.inera.certificate.modules.ts_bas.validator.Validator" />
+  <bean class="se.inera.certificate.modules.ts_bas.validator.TsBasValidator" />
 
   <bean class="se.inera.certificate.modules.ts_bas.model.converter.InternalToTransport" />
 

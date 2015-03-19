@@ -20,9 +20,16 @@ package se.inera.certificate.modules.ts_bas.rest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,6 +37,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
+import se.inera.certificate.modules.support.api.dto.CertificateResponse;
 import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
@@ -43,6 +51,18 @@ import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.utils.ResourceConverterUtils;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
+import se.inera.certificate.modules.ts_bas.utils.ScenarioNotFoundException;
+import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
+import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
+import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
+import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponderInterface;
+import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponseType;
+import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
+import se.inera.intygstjanster.ts.services.utils.ResultTypeUtil;
+import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
+import se.inera.intygstjanster.ts.services.v1.IntygMeta;
+import se.inera.intygstjanster.ts.services.v1.ResultatTyp;
+import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -55,15 +75,30 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ModuleApiTest {
 
-    /** An HTTP client proxy wired to the test HTTP server. */
-    @Autowired
-    private se.inera.certificate.modules.support.api.ModuleApi moduleApi;
-
     @Autowired
     @Qualifier("tsBasObjectMapper")
     private ObjectMapper mapper;
 
-    
+    private RegisterTSBasResponderInterface registerTSBasResponderInterface;
+    private RegisterTSBasResponseType registerResponse;
+
+    private GetTSBasResponderInterface getTSBasResponderInterface;
+    private GetTSBasResponseType getResponse;
+
+    /** An HTTP client proxy wired to the test HTTP server. */
+    @Autowired
+    private TsBasModuleApi moduleApi;
+
+    @Before
+    public void setUpMocks() {
+        registerTSBasResponderInterface = Mockito.mock(RegisterTSBasResponderInterface.class);
+        getTSBasResponderInterface = Mockito.mock(GetTSBasResponderInterface.class);
+        moduleApi.setRegisterTSBasResponderClient(registerTSBasResponderInterface);
+        moduleApi.setGetTSBasResponderClient(getTSBasResponderInterface);
+        registerResponse = new RegisterTSBasResponseType();
+        getResponse = new GetTSBasResponseType();
+    }
+
     @Test
     public void testPdf() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
@@ -90,6 +125,63 @@ public class ModuleApiTest {
         InternalModelResponse response = moduleApi.createNewInternal(holder);
 
         assertNotNull(response.getInternalModel());
+    }
+
+    @Test
+    public void testRegisterCertificate() throws JsonProcessingException, ScenarioNotFoundException {
+        registerResponse.setResultat(ResultTypeUtil.okResult());
+        Mockito.when(registerTSBasResponderInterface.registerTSBas(Mockito.eq("OK"), Mockito.any(RegisterTSBasType.class)))
+                .thenReturn(registerResponse);
+
+        String logicalAddress = "OK";
+        List<String> failResults = new ArrayList<>();
+        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
+            InternalModelHolder internalModel = createInternalHolder(scenario.asInternalModel());
+            try {
+                moduleApi.registerCertificate(internalModel, logicalAddress);
+            } catch (ModuleException me) {
+                failResults.add(me.getMessage());
+            }
+        }
+        assertTrue(failResults.isEmpty());
+    }
+
+    @Test
+    public void testRegisterCertificateFailed() throws JsonProcessingException, ScenarioNotFoundException {
+        registerResponse.setResultat(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, "failed"));
+        Mockito.when(registerTSBasResponderInterface.registerTSBas(Mockito.eq("FAIL"), Mockito.any(RegisterTSBasType.class)))
+                .thenReturn(registerResponse);
+
+        String logicalAddress = "FAIL";
+        String failResult = "";
+        Scenario scenario = ScenarioFinder.getInternalScenario("valid-maximal");
+        InternalModelHolder internalModel = createInternalHolder(scenario.asInternalModel());
+        try {
+            moduleApi.registerCertificate(internalModel, logicalAddress);
+        } catch (ModuleException me) {
+            failResult = me.getMessage();
+        }
+        assertTrue(failResult.contains("APPLICATION_ERROR"));
+    }
+
+    @Test
+    public void testGetCertificate() throws ModuleException, ScenarioNotFoundException {
+        GetTSBasResponseType result = new GetTSBasResponseType();
+        result.setIntyg(ScenarioFinder.getTransportScenario("valid-maximal").asTransportModel());
+        result.setMeta(createMeta());
+        result.setResultat(ResultTypeUtil.okResult());
+        Mockito.when(getTSBasResponderInterface.getTSBas(Mockito.eq("TS"), Mockito.any(GetTSBasType.class)))
+            .thenReturn(result);
+
+        CertificateResponse internal = moduleApi.getCertificate("cert-id", "TS");
+        assertNotNull(internal);
+    }
+
+    private IntygMeta createMeta() throws ScenarioNotFoundException {
+        IntygMeta meta = new IntygMeta();
+        meta.setAdditionalInfo("C");
+        meta.setAvailable("true");
+        return meta;
     }
 
     private CreateNewDraftHolder createNewDraftHolder() {

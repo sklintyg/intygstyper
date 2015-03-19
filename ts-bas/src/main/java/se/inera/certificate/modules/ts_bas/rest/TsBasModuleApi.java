@@ -55,7 +55,7 @@ import se.inera.certificate.modules.ts_bas.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGenerator;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGeneratorException;
-import se.inera.certificate.modules.ts_bas.validator.Validator;
+import se.inera.certificate.modules.ts_bas.validator.TsBasValidator;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
@@ -81,7 +81,7 @@ public class TsBasModuleApi implements ModuleApi {
     private RegisterTSBasResponderInterface registerTSBasResponderInterface;
 
     @Autowired
-    private Validator validator;
+    private TsBasValidator validator;
 
     @Autowired
     private PdfGenerator pdfGenerator;
@@ -279,5 +279,14 @@ public class TsBasModuleApi implements ModuleApi {
         } catch (IOException e) {
             throw new ModuleSystemException("Failed to serialize internal model", e);
         }
+    }
+
+    // Only used for testing
+    protected void setRegisterTSBasResponderClient(RegisterTSBasResponderInterface registerTSBasResponderInterface) {
+        this.registerTSBasResponderInterface = registerTSBasResponderInterface;
+    }
+
+    protected void setGetTSBasResponderClient(GetTSBasResponderInterface getTSBasResponderInterface) {
+        this.getTSBasResponderInterface = getTSBasResponderInterface;
     }
 }

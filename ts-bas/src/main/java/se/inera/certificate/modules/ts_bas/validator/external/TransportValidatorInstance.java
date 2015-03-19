@@ -50,26 +50,22 @@ public class TransportValidatorInstance {
         ID_VALIDATOR.setStrictSeparatorCheck(false);
     }
 
-    TransportValidatorInstance(List<String> validationErrors, ValidationContext context) {
-        this.validationErrors = validationErrors;
-        this.context = context;
-    }
-
     public List<String> validate(TSBasIntyg utlatande) {
         context = new ValidationContext(utlatande);
 
         validateUtlatande(utlatande);
         validatePatient(utlatande.getGrundData().getPatient());
         validateHosPersonal(utlatande.getGrundData().getSkapadAv());
-        validateVardkontakter(utlatande.getIdentitetStyrkt());
+        validateIdentitetStyrkt(utlatande.getIdentitetStyrkt());
 
         // Do context related validation
         if (context.isPersontransportContext()) {
-            // TODO Put context based stuff here
+            validatePersontransportRelatedElements(utlatande);
         }
 
         return validationErrors;
     }
+
 
     public List<String> getValidationErrors() {
         return validationErrors;
@@ -169,14 +165,15 @@ public class TransportValidatorInstance {
         assertNotEmpty(vardgivare.getVardgivarnamn(), prefix + ".vardgivare.namn");
     }
 
-    /**
-     * Validate a list of Vardkontakter.
-     *
-     * @param vardkontakter
-     *            List of {@link Vardkontakt}
-     */
-    private void validateVardkontakter(IdentitetStyrkt identitetStyrkt) {
-        // assertKodInEnum(identitetStyrkt.getIdkontroll(), IdKontrollKod.class, "vardkontakt.idkontroll");
+    private void validateIdentitetStyrkt(IdentitetStyrkt identitetStyrkt) {
+        // TODO verify the validity of identitetStyrkt
+    }
+
+    private void validatePersontransportRelatedElements(TSBasIntyg utlatande) {
+        assertNotNull(utlatande.getRorelseorganensFunktioner().isHarOtillrackligRorelseformagaPassagerare(), 
+                "rorelseorganensFunktioner.HarOtillrackligRorelseformagaPassagerare");
+        assertNotNull(utlatande.getHorselBalanssinne().isHarSvartUppfattaSamtal4Meter(), 
+                "horselBalanssinne.HarOtillrackligRorelseformagaPassagerare");
     }
 
     protected void validationError(String error) {

@@ -21,7 +21,7 @@ import se.inera.certificate.modules.ts_bas.model.converter.TransportToInternal;
 import se.inera.certificate.modules.ts_bas.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.rest.TsBasModuleApi;
-import se.inera.certificate.modules.ts_bas.validator.Validator;
+import se.inera.certificate.modules.ts_bas.validator.TsBasValidator;
 import se.inera.certificate.validate.CertificateValidationException;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.ObjectFactory;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponderInterface;
@@ -35,7 +35,7 @@ import com.google.common.base.Throwables;
 public class RegisterTSBasResponderImpl implements RegisterTSBasResponderInterface {
 
     @Autowired
-    Validator validator;
+    TsBasValidator validator;
 
     @Autowired
     @Qualifier("tsBasModelConverterUtil")
@@ -107,6 +107,9 @@ public class RegisterTSBasResponderImpl implements RegisterTSBasResponderInterfa
     }
 
     private void validateTransport(RegisterTSBasType registerTsBas) throws CertificateValidationException {
+        if (!validator.isSchemaValid(registerTsBas.getIntyg())) {
+            throw new CertificateValidationException("Schema validation of intyg: " + registerTsBas.getIntyg().getIntygsId() + " failed");
+        }
         List<String> validationErrors = validator.validateTransport(registerTsBas.getIntyg());
         if (!validationErrors.isEmpty()) {
             throw new CertificateValidationException(validationErrors);

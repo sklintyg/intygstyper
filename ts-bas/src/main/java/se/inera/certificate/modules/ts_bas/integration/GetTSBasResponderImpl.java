@@ -55,7 +55,7 @@ public class GetTSBasResponderImpl implements GetTSBasResponderInterface{
         }
         
         CertificateHolder certificate = null;
-        
+
         try {
             certificate = moduleApi.getModuleContainer().getCertificate(certificateId, personNummer, false);
             if (personNummer != null && !certificate.getCivicRegistrationNumber().equals(personNummer)) {

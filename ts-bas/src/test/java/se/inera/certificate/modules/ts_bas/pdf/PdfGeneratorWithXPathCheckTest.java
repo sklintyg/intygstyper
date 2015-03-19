@@ -49,6 +49,7 @@ public class PdfGeneratorWithXPathCheckTest {
      * @throws Exception
      *             if an error uccurred.
      */
+    // TODO activate this when XSLtransformation is finished!
     @Test
     @Ignore
     public void testGeneratePdfAndValidateFieldsWithXPath() throws Exception {

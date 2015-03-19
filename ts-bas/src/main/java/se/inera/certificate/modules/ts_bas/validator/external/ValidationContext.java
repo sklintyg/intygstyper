@@ -14,7 +14,7 @@ public class ValidationContext {
 
     public boolean isPersontransportContext() {
         for (KorkortsbehorighetTsBas intygAvser : utlatande.getIntygAvser().getKorkortstyp()) {
-            if (intygAvser != null && KorkortsKod.PERSONTRANSPORT.contains(intygAvser)) {
+            if (intygAvser != null && KorkortsKod.isPersontransport(intygAvser.value().value())) {
                 return true;
             }
         }
