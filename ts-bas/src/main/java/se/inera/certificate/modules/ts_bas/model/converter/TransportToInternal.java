@@ -133,7 +133,7 @@ public class TransportToInternal {
     }
 
     private static void buildIdentitetStyrkt(IdentitetStyrkt source) {
-        internal.getVardkontakt().setIdkontroll(mapToInternalIdKontroll(source.getIdkontroll().get(0).name()));
+        internal.getVardkontakt().setIdkontroll(mapToInternalIdKontroll(source.getIdkontroll().name()));
         // TODO What is this used for?
         internal.getVardkontakt().setTyp(VARDKONTAKT_TYP);
     }

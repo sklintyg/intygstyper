@@ -200,7 +200,7 @@ public class InternalToTransport {
 
     private static IdentitetStyrkt buildIdentitetStyrkt(se.inera.certificate.modules.ts_bas.model.internal.Vardkontakt source) {
         IdentitetStyrkt identitetStyrkt = new IdentitetStyrkt();
-        identitetStyrkt.getIdkontroll().add(IdentifieringsVarden.valueOf(IdKontrollKod.valueOf(source.getIdkontroll()).getCode()));
+        identitetStyrkt.setIdkontroll(IdentifieringsVarden.valueOf(IdKontrollKod.valueOf(source.getIdkontroll()).getCode()));
         return identitetStyrkt;
     }
 
