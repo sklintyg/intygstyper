@@ -311,10 +311,12 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.cert.aktivitetsbegransning = undefined;
 
                     // 8a
+                    /**
                     $scope.cert.nuvarandeArbete = false;
                     $scope.cert.nuvarandeArbetsuppgifter = undefined;
                     $scope.cert.arbetsloshet = false;
                     $scope.cert.foraldrarledighet = false;
+                     **/
 
                     // 6b åtgärder
                     $scope.cert.atgardInomSjukvarden = undefined;
