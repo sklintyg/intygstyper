@@ -66,7 +66,7 @@ public class TransportToInternalConverter {
         Vardkontakt result = new Vardkontakt();
         //TODO: Vart kommer denna ifrån?
         result.setTyp(VARDKONTAKT_TYP);
-        result.setIdkontroll(IdKontrollKod.fromCode(identitetStyrkt.getIdkontroll().get(0).value()).name());
+        result.setIdkontroll(IdKontrollKod.fromCode(identitetStyrkt.getIdkontroll().value()).name());
         return result;
     }
 

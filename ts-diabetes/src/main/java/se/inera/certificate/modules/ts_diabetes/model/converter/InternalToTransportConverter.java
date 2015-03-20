@@ -74,7 +74,7 @@ public class InternalToTransportConverter {
 
 	private static IdentitetStyrkt readIdentitetStyrkt(Vardkontakt vardkontakt) {
 	    IdentitetStyrkt result = new IdentitetStyrkt();
-        result.getIdkontroll().add(IdentifieringsVarden.fromValue(IdKontrollKod.valueOf(vardkontakt.getIdkontroll()).getCode()));
+        result.setIdkontroll(IdentifieringsVarden.fromValue(IdKontrollKod.valueOf(vardkontakt.getIdkontroll()).getCode()));
 	    return result;
     }
 
