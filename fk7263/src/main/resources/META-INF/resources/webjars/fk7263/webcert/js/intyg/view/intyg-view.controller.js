@@ -1,6 +1,6 @@
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore', 'common.CertificateService',
-        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate', 'common.User',
+        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate', 'common.UserModel',
         function($log, $rootScope, $stateParams, $scope, $cookieStore, CertificateService, ManageCertView,
             messageService, ManageCertificate, UserModel) {
             'use strict';
