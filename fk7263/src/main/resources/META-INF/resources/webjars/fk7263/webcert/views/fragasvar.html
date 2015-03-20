@@ -79,10 +79,10 @@
         </div>
       </div>
 
-      <div class="webcert-col-section" ng-show="(qaList | filter:openIssuesFilter).length > 0" id="unhandledQACol">
+      <div class="webcert-col-section qa-list-section" ng-show="(qaList | filter:openIssuesFilter).length > 0" id="unhandledQACol">
 
         <h2 class="col-head">Ej hanterade frågor och svar</h2>
-        <div ng-repeat="qa in qaList | filter:openIssuesFilter | orderBy:'senasteHandelseDatum':true">
+        <div ng-repeat="qa in qaList | filter:openIssuesFilter | orderBy:'senasteHandelseDatum':true" class="qa-item">
 
           <div qa-panel panel-id="unhandled" qa="qa" qa-list="qaList" cert="cert" cert-properties="certProperties"></div>
 
@@ -94,10 +94,10 @@
 
     <!-- ------------------------- HANTERADE FRÅGOR --------------------------------------------- -->
 
-    <div class="webcert-col-section" ng-show="(qaList | filter:closedIssuesFilter).length > 0">
+    <div class="webcert-col-section qa-list-section" ng-show="(qaList | filter:closedIssuesFilter).length > 0">
 
       <h2 class="col-head">Hanterade frågor och svar</h2>
-      <div ng-repeat="qa in qaList | filter:closedIssuesFilter | orderBy:'senasteHandelseDatum':true">
+      <div ng-repeat="qa in qaList | filter:closedIssuesFilter | orderBy:'senasteHandelseDatum':true" class="qa-item">
 
         <div qa-panel panel-id="handled" type="handled" qa="qa" qa-list="qaList" cert="cert" cert-properties="certProperties"></div>
 

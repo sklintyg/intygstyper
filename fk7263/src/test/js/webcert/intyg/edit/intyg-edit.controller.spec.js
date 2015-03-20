@@ -22,6 +22,7 @@ describe('EditCertCtrl', function() {
         _manageCertView = jasmine.createSpyObj('common.ManageCertView', [ 'save',  'discard', 'signera', 'printDraft', 'load' ]);
         $provide.value('common.ManageCertView',_manageCertView);
         $provide.value('common.User', {});
+        $provide.value('common.UserModel', {});
         $provide.value('common.wcFocus', {});
         $provide.value('common.intygNotifyService', {});
         $provide.value('common.diagnosService', {});

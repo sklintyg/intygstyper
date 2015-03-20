@@ -27,6 +27,7 @@ describe('QACtrl', function() {
         $provide.value('common.ManageCertView', { isSentToTarget: function() {} });
         $provide.value('common.statService', {});
         $provide.value('common.User', {});
+        $provide.value('common.UserModel', {});
         fragaSvarService = jasmine.createSpyObj('fk7263.fragaSvarService',
             [ 'getQAForCertificate', 'closeAsHandled', 'closeAllAsHandled', 'saveNewQuestion', 'saveAnswer']);
         $provide.value('fk7263.fragaSvarService', fragaSvarService);
@@ -68,12 +69,10 @@ describe('QACtrl', function() {
             });
 
             // kick off the window change event
-            var revoked = false;
-            var statuses = [
-                {'type': 'RECEIVED', 'target': 'MI', 'timestamp': '2012-12-23T21:00:00.000'},
-                {'type': 'SENT', 'target': 'FK', 'timestamp': '2012-12-23T21:00:00.000'}
-            ];
-            $rootScope.$broadcast('fk7263.ViewCertCtrl.load', revoked, statuses, testCert);
+            $rootScope.$broadcast('fk7263.ViewCertCtrl.load', testCert, {
+                isSent: true,
+                isRevoked: false
+            });
 
             // ------ act
             // promises are resolved/dispatched only on next $digest cycle

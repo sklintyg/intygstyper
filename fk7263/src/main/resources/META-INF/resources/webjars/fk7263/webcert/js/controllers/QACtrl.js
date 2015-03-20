@@ -3,7 +3,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
         'fk7263.fragaSvarService', 'common.fragaSvarCommonService', 'common.ManageCertView', 'common.statService',
         'common.User',
         function($log, $rootScope, $stateParams, $scope, $timeout, $window, $filter, dialogService, fragaSvarService,
-            fragaSvarCommonService, ManageCertView, statService, User) {
+            fragaSvarCommonService, ManageCertView, statService, UserModel) {
             'use strict';
 
             // init state
@@ -51,20 +51,23 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 isRevoked: false
             };
 
-            var unbindFastEvent = $rootScope.$on('fk7263.ViewCertCtrl.load', function(event, revoked, statuses, cert) {
+            var unbindFastEvent = $rootScope.$on('fk7263.ViewCertCtrl.load', function(event, cert, certProperties) {
                 $scope.cert = cert;
                 $scope.certProperties.isLoaded = true;
-                $scope.certProperties.isSent = ManageCertView.isSentToTarget(statuses, 'FK');
-                $scope.certProperties.isRevoked = revoked;
+                $scope.certProperties.isSent = certProperties.isSent;
+                $scope.certProperties.isRevoked = certProperties.isRevoked;
             });
             $scope.$on('$destroy', unbindFastEvent);
 
             $scope.openIssuesFilter = function(qa) {
-                return qa.status !== 'CLOSED';
+                return (qa.proxyMessage === undefined && qa.status !== 'CLOSED') ||
+                    (qa.proxyMessage !== undefined && qa.messageStatus !== 'CLOSED' && qa.messageStatus !== 'HIDDEN');
+
             };
 
             $scope.closedIssuesFilter = function(qa) {
-                return qa.status === 'CLOSED';
+                return (qa.proxyMessage === undefined && qa.status === 'CLOSED') ||
+                    (qa.proxyMessage !== undefined && qa.messageStatus === 'CLOSED');
             };
 
             $scope.toggleQuestionForm = function() {

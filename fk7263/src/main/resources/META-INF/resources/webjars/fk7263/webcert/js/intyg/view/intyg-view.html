@@ -54,8 +54,8 @@
               </div>
 
               <div wc-field field-number="4b" field-label="fk7263.label.intyg-baserat-pa" id="field4b"
-                   filled="{{cert.undersokningAvPatienten!=null || telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null}}">
-                <ul class="padded-list">
+                   filled="{{cert.undersokningAvPatienten!=null || cert.telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null}}">
+                <ul class="padded-list" id="baseratPaList">
                   <li ng-show="cert.undersokningAvPatienten!=null"><span message
                                                                          key="fk7263.vardkontakt.undersokning"></span><span id="undersokningAvPatienten">{{cert.undersokningAvPatienten
                     | date:'longDate' }}</span>
@@ -70,7 +70,7 @@
 
                   <li ng-show="cert.annanReferens!=null">
                     <!-- Annat -->
-                    <span message key="fk7263.referens.annat"></span> {{cert.annanReferens | date:'longDate'}}:
+                    <span message key="fk7263.referens.annat"></span> <span id="annanReferens">{{cert.annanReferens | date:'longDate'}}</span>:
                     <div id="annanReferensBeskrivning" class="multiline">{{cert.annanReferensBeskrivning}}</div>
                   </li>
                 </ul>

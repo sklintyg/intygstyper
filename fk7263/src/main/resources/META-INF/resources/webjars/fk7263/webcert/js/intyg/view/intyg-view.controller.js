@@ -2,7 +2,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore', 'common.CertificateService',
         'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate', 'common.User',
         function($log, $rootScope, $stateParams, $scope, $cookieStore, CertificateService, ManageCertView,
-            messageService, ManageCertificate, User) {
+            messageService, ManageCertificate, UserModel) {
             'use strict';
 
             var intygType = 'fk7263';
@@ -13,7 +13,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             }
 
             // Page setup
-            $scope.user = { lakare: User.userContext.lakare };
+            $scope.user = { lakare: UserModel.userContext.lakare };
 
             $scope.cert = {};
             $scope.cert.filledAlways = true;
@@ -39,9 +39,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                     $scope.widgetState.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
-                        $rootScope.$emit('fk7263.ViewCertCtrl.load', result.revoked, result.statuses, result.contents);
-                        $rootScope.$broadcast('intyg.loaded', $scope.cert);
-
+                        
                         $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.statuses, 'FK');
                         $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.statuses);
                         if ($scope.certProperties.isRevoked) {
@@ -51,6 +49,9 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                         }
 
                         $scope.pdfUrl = '/moduleapi/intyg/'+ intygType +'/' + $scope.cert.id + '/pdf';
+
+                        $rootScope.$emit('fk7263.ViewCertCtrl.load', $scope.cert, $scope.certProperties);
+                        $rootScope.$broadcast('intyg.loaded', $scope.cert);
 
                     } else {
                         if ($routeParams.signed) {
