@@ -1,9 +1,9 @@
 angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
     [ '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', 'common.CertificateService',
-        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate','common.User',
+        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate','common.UserModel',
         'common.IntygCopyRequestModel',
         function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView,
-            messageService, ManageCertificate, User, IntygCopyRequestModel) {
+            messageService, ManageCertificate, UserModel, IntygCopyRequestModel) {
             'use strict';
 
             /*********************************************************************
@@ -12,7 +12,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             
             var intygType = 'ts-bas';
 
-            $scope.user = { lakare: User.userContext.lakare };
+            $scope.user = { lakare: UserModel.userContext.lakare };
             $scope.cert = {};
             $scope.widgetState = {
                 doneLoading: false,
