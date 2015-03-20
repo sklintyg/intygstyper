@@ -2,26 +2,24 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
         'common.CertViewState', 'common.CertificateService', 'common.ManageCertView', 'common.User', 'common.wcFocus',
         'common.intygNotifyService', 'fk7263.diagnosService', 'common.DateUtilsService', 'common.UtilsService',
-        'fk7263.EditCertCtrl.DateRangeGroupsService',
         'fk7263.Domain.IntygModel','fk7263.EditCertCtrl.ViewStateService',
         'fk7263.EditCertCtrl.Helper',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q, CertViewState,
-            CertificateService, ManageCertView, User, wcFocus, intygNotifyService, diagnosService, dateUtils, utils, DateRangeGroupsService, intygModel,
+            CertificateService, ManageCertView, User, wcFocus, intygNotifyService, diagnosService, dateUtils, utils, intygModel,
             viewState, helper) {
             'use strict';
 
             /**************************************************************************
              * Private vars
              */
-            var _dateRangeGroups;
+
 
             /**********************************************************************************
              * Default state
              **********************************************************************************/
             $scope.viewState = viewState;
 
-            // the below state needs to be moved to models
-                // Page states
+            // Page states
             $scope.user = User;
             $scope.today = new Date();
             $scope.today.setHours(0, 0, 0, 0); // reset time to increase comparison accuracy (using new Date() also sets time)
@@ -34,6 +32,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.messages = [];
             $scope.isComplete = false;
             $scope.isSigned = false;
+
             $scope.certMeta = {
                 intygId: null,
                 intygType: 'fk7263',
@@ -60,28 +59,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 cert : { kommentar : ''}
             }
 
-            // 8b. Arbetsförmåga date management
-            $scope.field8b = {
-                nedsattMed25 : null,
-                nedsattMed50 : null,
-                nedsattMed75 : null,
-                nedsattMed100 : null,
-                onChangeWorkStateCheck : function(nedsattModelName) {
-                    if(_dateRangeGroups){
-                        _dateRangeGroups.onChangeWorkStateCheck(nedsattModelName);
-                    }
-                }
-            };
 
-            $scope.datesOutOfRange = false;
-            $scope.datesPeriodTooLong = false;
-            $scope.totalCertDays = false;
 
-            // Text input limits for different fields
-            $scope.inputLimits = {
-                aktivitetsbegransning: 1100,
-                arbetsformagaPrognos: 600
-            };
 
             /***************************************************************************
              * Model property watches
@@ -94,27 +73,13 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
             // -- start registerDateParsers
 
-            /**
-             * Register date parsers
-             * @param $scope
-             */
-            function registerDateParsers(_$scope) {
-                registerDateParsersFor8b(_$scope);
-            }
-
-            function registerDateParsersFor8b(_$scope) {
-                if(_dateRangeGroups === undefined){
-                    _dateRangeGroups = DateRangeGroupsService.build(_$scope);
-                }
-                _dateRangeGroups.validateDatesWithCert(_$scope.cert);
-            }
 
             /**
              * Convert internal model to form temporary data bindings
              * @param $scope
              */
             function convertCertToForm($scope) {
-
+                /**
                 // check if all info is available from HSA. If not, display the info message that someone needs to update it
                 if (!$scope.cert.grundData || !$scope.cert.grundData.skapadAv ||
                     !$scope.cert.grundData.skapadAv.vardenhet ||
@@ -129,15 +94,16 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     CertViewState.viewState.hsaInfoMissing = true;
                 } else {
                     CertViewState.viewState.hsaInfoMissing = false;
-                }
+                }**/
 
+                /**
                 // Fält 2. diagnos
                 if ($scope.cert.diagnosKodsystem1) {
                     $scope.form.diagnosKodverk = $scope.cert.diagnosKodsystem1;
                 }
                 else {
                     $scope.form.diagnosKodverk = 'ICD_10_SE';
-                }
+                }**/
 
                 /**
                 // Fält 4b. AnnanReferensBeskrivning
@@ -205,10 +171,11 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     }
                 } **/
 
+                /**
                 // Fält 6a.
                 if ($scope.cert.rekommendationOvrigt !== undefined) {
                     $scope.form.rekommendationOvrigt = $scope.cert.rekommendationOvrigt;
-                }
+                }**/
 
                 /** now covered in the 6a711 controller
                 // Fält 11. Ressätt till arbete
@@ -244,6 +211,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.basedOnState.check.annanReferens = false;
                     **/
 
+                    /**
                     // 2. Diagnos
                     $scope.cert.diagnosKodverk1 = undefined;
                     $scope.cert.diagnosKodverk2 = undefined;
@@ -256,11 +224,14 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.cert.diagnosBeskrivning3 = undefined;
                     $scope.cert.diagnosBeskrivning = undefined;
                     $scope.cert.samsjuklighet = false;
+                    **/
 
+                    /**
                     // 3,4,5
                     $scope.cert.sjukdomsforlopp = undefined;
                     $scope.cert.funktionsnedsattning = undefined;
                     $scope.cert.aktivitetsbegransning = undefined;
+                    **/
 
                     // 8a
                     /**
@@ -270,9 +241,11 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     $scope.cert.foraldrarledighet = false;
                      **/
 
+                    /**
                     // 6b åtgärder
                     $scope.cert.atgardInomSjukvarden = undefined;
                     $scope.cert.annanAtgard = undefined;
+                    **/
 
                     // 6a, 7, 11
                     /** now in the controller
@@ -309,6 +282,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         $scope.cert.annanReferensBeskrivning = null;
                     } **/
 
+                    /**
                     // Fält 8a.
                     if ($scope.cert.nuvarandeArbete && $scope.form.nuvarandeArbetsuppgifter) {
                         $scope.cert.nuvarandeArbetsuppgifter = $scope.form.nuvarandeArbetsuppgifter;
@@ -322,6 +296,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     } else {
                         $scope.cert.rekommendationOvrigt = null;
                     }
+                     **/
 
                     // Fält 7. Rehab radio conversions
                     /** now handled in controller
@@ -339,6 +314,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
                 }
 
+                /**
                 // Fält 8b.
                 var nedsattMedList = ['nedsattMed25', 'nedsattMed50', 'nedsattMed75', 'nedsattMed100'];
                 angular.forEach(nedsattMedList, function(nedsattMed) {
@@ -378,7 +354,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         this[nedsattMed + 'Beskrivning'] = null;
                     }
                 }, $scope.cert);
-
+                **/
                 /** handled in form10 controller
 
                 // Fält 10. Går ej att bedöma and update backend model when view changes.
@@ -465,9 +441,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 CertViewState.viewState.isSigned = draftModel.status === 'SIGNED';
                 CertViewState.viewState.intyg.isComplete = $scope.isSigned || draftModel.status === 'DRAFT_COMPLETE';
 
+                // this is now done in each controller by listening on the doneLoading change
                 convertCertToForm($scope);
-                registerDateParsers($scope);
-                _dateRangeGroups.validateDatesWithCert($scope.cert);
 
                 $timeout(function() {
                     wcFocus('firstInput');

@@ -130,12 +130,12 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
             this.kommentar=	content.kommentar;
             this.kontaktMedFk=	content.kontaktMedFk;
             this.namnfortydligandeOchAdress=	content.namnfortydligandeOchAdress;
-            this.nedsattMed100=	content.nedsattMed100;
-            this.nedsattMed25=	content.nedsattMed25;
+            this.nedsattMed100=	this.getNedsatt(content.nedsattMed100);
+            this.nedsattMed25=	this.getNedsatt(content.nedsattMed25);
             this.nedsattMed25Beskrivning=	content.nedsattMed25Beskrivning;
-            this.nedsattMed50=	content.nedsattMed50;
+            this.nedsattMed50=	this.getNedsatt(content.nedsattMed50);
             this.nedsattMed50Beskrivning=	content.nedsattMed50Beskrivning;
-            this.nedsattMed75=	content.nedsattMed75;
+            this.nedsattMed75=	this.getNedsatt(content.nedsattMed75);
             this.nedsattMed75Beskrivning=	content.nedsattMed75Beskrivning;
             this.nuvarandeArbete=	content.nuvarandeArbete;
             this.nuvarandeArbetsuppgifter=	content.nuvarandeArbetsuppgifter;
@@ -159,8 +159,12 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
             this.rehab = content.rehab;
         }
 
-        IntygModel.prototype.fromForm = function(){
-
+        IntygModel.prototype.getNedsatt = function(nedsatt){
+            if(!nedsatt || (!nedsatt.from && !nedsatt.tom)){
+                return undefined;
+            } else {
+                return nedsatt;
+            }
         }
 
         IntygModel.build = function() {

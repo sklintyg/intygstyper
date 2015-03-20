@@ -9,8 +9,8 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             // Public properties, assigned to the instance ('this')
 
             this._$scope = _$scope;
-            this.certFormModel = _$scope.certForm;
-            this.certModel = _$scope.cert;
+            this.certFormModel = _$scope.form8b;
+            this.certModel = _$scope.model;
             this.groupName = groupName;
             this.fromName = groupName + 'from';
             this.tomName = groupName + 'tom';
@@ -139,14 +139,22 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             if(!this.certModel[this.groupName]){
                 this.certModel[this.groupName] = {from:null, tom:null};
             }
-            this.certModel[this.groupName].from = val;
+            if(val === undefined){
+                this.certModel[this.groupName] = undefined;
+            } else {
+                this.certModel[this.groupName].from = val;
+            }
         }
 
         DateRangeGroupModel.prototype.setCertTom = function(val) {
             if(!this.certModel[this.groupName]){
                 this.certModel[this.groupName] = {from:null, tom:null};
             }
-            this.certModel[this.groupName].tom = val;
+            if(val === undefined){
+                this.certModel[this.groupName] = undefined;
+            } else {
+                this.certModel[this.groupName].tom = val;
+            }
         };
 
         DateRangeGroupModel.prototype.momentStrictFrom = function() {

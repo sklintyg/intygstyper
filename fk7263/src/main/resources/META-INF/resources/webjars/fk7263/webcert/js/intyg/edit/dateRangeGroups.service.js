@@ -27,7 +27,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
 
             this._$scope = _$scope;
 
-            this.certModel = _$scope.cert;
+            this.certModel = _$scope.model;
 
             this.today = new Date();
             this.today.setHours(0, 0, 0, 0);
@@ -43,6 +43,9 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
 
             function nedsattFormatter(dateRangeGroups, modelValue) {
                 if (modelValue) {
+                    // convert date to iso
+                    modelValue = dateUtils.convertDateToISOString(modelValue);
+
                     dateRangeGroups.validateDates();
                     dateRangeGroups.onArbetsformagaDatesUpdated();
                 }
@@ -58,9 +61,6 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
                 if (from) {
 
                     // add formatters
-                    /*if (from.$formatters.length > 0) {
-                        from.$formatters.shift();
-                    }*/
                     from.$parsers.push(function(modelValue) {
                         return nedsattFormatter(self, modelValue);
                     });
@@ -70,9 +70,6 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
                 if (from) {
 
                     // add formatters
-                    /*if (tom.$formatters.length > 0) {
-                        tom.$formatters.shift();
-                    }*/
                     tom.$parsers.push(function(modelValue) {
                         return nedsattFormatter(self, modelValue);
                     });

@@ -6,7 +6,36 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
             $scope.model = model;
             $scope.viewState = viewState;
 
-            $scope.inputLimits = { diagnosBeskrivning :220 };
+            var diagnosKodverkStates = {ICD_10_SE:'ICD_10_SE',KSH_97_P:'KSH_97_P'}
+
+            $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal) {
+                // only do this once the page is loaded and changes come from the gui!
+                if(viewState.common.viewState.doneLoading) {
+                    // Remove defaults not applicable when smittskydd is active
+                    if (newVal === true) {
+                        // 2. Diagnos
+                        $scope.model.diagnosKodverk1 = undefined;
+                        $scope.model.diagnosKodverk2 = undefined;
+                        $scope.model.diagnosKodverk3 = undefined;
+                        $scope.model.diagnosKod = undefined;
+                        $scope.model.diagnosKod2 = undefined;
+                        $scope.model.diagnosKod3 = undefined;
+                        $scope.model.diagnosBeskrivning1 = undefined;
+                        $scope.model.diagnosBeskrivning2 = undefined;
+                        $scope.model.diagnosBeskrivning3 = undefined;
+                        $scope.model.diagnosBeskrivning = undefined;
+                        $scope.model.samsjuklighet = false;
+                    }
+                }
+            });
+
+            $scope.$watch('viewState.common.viewState.doneLoading', function(newVal) {
+                if (newVal) {
+                    if (!$scope.model.diagnosKodsystem1) {
+                        $scope.model.diagnosKodverk = diagnosKodverkStates.ICD_10_SE;
+                    }
+                }
+            });
 
             /**
              *  Remove choices related to diagnoskoder when the choice changes to make sure
