@@ -1,11 +1,11 @@
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
-        'common.CertViewState', 'common.CertificateService', 'common.ManageCertView', 'common.User', 'common.wcFocus',
+        'common.CertViewState', 'common.CertificateService', 'common.ManageCertView', 'common.UserModel', 'common.wcFocus',
         'common.intygNotifyService', 'fk7263.diagnosService', 'common.DateUtilsService', 'common.UtilsService',
         'fk7263.Domain.IntygModel','fk7263.EditCertCtrl.ViewStateService',
         'fk7263.EditCertCtrl.Helper',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q, CertViewState,
-            CertificateService, ManageCertView, User, wcFocus, intygNotifyService, diagnosService, dateUtils, utils, intygModel,
+            CertificateService, ManageCertView, UserModel, wcFocus, intygNotifyService, diagnosService, dateUtils, utils, intygModel,
             viewState, helper) {
             'use strict';
 
@@ -20,7 +20,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.viewState = viewState;
 
             // Page states
-            $scope.user = User;
+            $scope.user = UserModel;
             $scope.today = new Date();
             $scope.today.setHours(0, 0, 0, 0); // reset time to increase comparison accuracy (using new Date() also sets time)
             $scope.focusFirstInput = false;
