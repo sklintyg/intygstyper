@@ -239,6 +239,7 @@
                                class='diagnose-code col-xs-11 form-control' ng-model="cert.diagnosKod"
                                typeahead="d.value as d.label for d in getDiagnoseCodes(form.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
                                typeahead-min-length="3" typeahead-on-select="onDiagnoseCode1Select($item)"
+                               typeahead-template-url="/web/webjars/fk7263/webcert/views/diagnoseTemplate.html"
                                wc-to-uppercase
                             >
                       </div>
@@ -249,6 +250,7 @@
                                ng-model="cert.diagnosBeskrivning1"
                                typeahead="d.value as d.label for d in searchDiagnoseByDescription(form.diagnosKodverk, $viewValue) | filter:$viewValue "
                                typeahead-on-select="onDiagnoseDescription1Select($item)"
+                               typeahead-template-url="/web/webjars/fk7263/webcert/views/diagnoseTemplate.html"
                                typeahead-wait-ms="100" ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning1')">
                         <span class="counter">Tecken kvar: {{inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
                       </div>
@@ -262,6 +264,7 @@
                                    ng-model="cert.diagnosKod2" class="col-xs-11 form-control"
                                    typeahead="d.value as d.label for d in getDiagnoseCodes(form.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
                                    typeahead-min-length="3" typeahead-on-select="onDiagnoseCode2Select($item)"
+                                   typeahead-template-url="/web/webjars/fk7263/webcert/views/diagnoseTemplate.html"
                                    ng-change="limitDiagnosBeskrivningField('diagnosKod2')"
                                    wc-to-uppercase>
                           </div>
@@ -277,6 +280,7 @@
                                  ng-model="cert.diagnosBeskrivning2" class="block col-xs-12 form-control maxwidth"
                                  typeahead="d.value as d.label for d in searchDiagnoseByDescription(form.diagnosKodverk, $viewValue) | filter:$viewValue "
                                  typeahead-on-select="onDiagnoseDescription2Select($item)"
+                                 typeahead-template-url="/web/webjars/fk7263/webcert/views/diagnoseTemplate.html"
                                  typeahead-wait-ms="100" ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning2')">
                           <span class="counter">Tecken kvar: {{inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
                         </div>
@@ -288,6 +292,7 @@
                                ng-model="cert.diagnosKod3" class="col-xs-11 form-control"
                                typeahead="d.value as d.label for d in getDiagnoseCodes(form.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
                                typeahead-min-length="3" typeahead-on-select="onDiagnoseCode3Select($item)"
+                               typeahead-template-url="/web/webjars/fk7263/webcert/views/diagnoseTemplate.html"
                                ng-change="limitDiagnosBeskrivningField('diagnosKod3')"
                                wc-to-uppercase>
                       </div>
@@ -297,6 +302,7 @@
                                  ng-model="cert.diagnosBeskrivning3" class="block col-xs-12 form-control maxwidth"
                                  typeahead="d.value as d.label for d in searchDiagnoseByDescription(form.diagnosKodverk, $viewValue) | filter:$viewValue "
                                  typeahead-on-select="onDiagnoseDescription3Select($item)"
+                                 typeahead-template-url="/web/webjars/fk7263/webcert/views/diagnoseTemplate.html"
                                  typeahead-wait-ms="100"
                                  ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning3')">
                           <span class="counter">Tecken kvar: {{inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
