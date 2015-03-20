@@ -27,6 +27,7 @@ describe('QACtrl', function() {
         $provide.value('common.ManageCertView', { isSentToTarget: function() {} });
         $provide.value('common.statService', {});
         $provide.value('common.User', {});
+        $provide.value('common.UserModel', {});
         fragaSvarService = jasmine.createSpyObj('fk7263.fragaSvarService',
             [ 'getQAForCertificate', 'closeAsHandled', 'closeAllAsHandled', 'saveNewQuestion', 'saveAnswer']);
         $provide.value('fk7263.fragaSvarService', fragaSvarService);

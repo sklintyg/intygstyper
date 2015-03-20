@@ -1,9 +1,9 @@
 angular.module('fk7263').controller('fk7263.QACtrl',
     [ '$log', '$rootScope', '$routeParams', '$scope', '$timeout', '$window', '$filter', 'common.dialogService',
         'fk7263.fragaSvarService', 'common.fragaSvarCommonService', 'common.ManageCertView', 'common.statService',
-        'common.User',
+        'common.UserModel',
         function($log, $rootScope, $routeParams, $scope, $timeout, $window, $filter, dialogService, fragaSvarService,
-            fragaSvarCommonService, ManageCertView, statService, User) {
+            fragaSvarCommonService, ManageCertView, statService, UserModel) {
             'use strict';
 
             // init state
@@ -23,7 +23,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                     // answerable
                     qa.answerDisabled = true;
                     qa.answerDisabledReason = undefined; // Påminnelser kan inte besvaras men det behöver vi inte säga
-                } else if (qa.amne === 'KOMPLETTERING_AV_LAKARINTYG' && !User.userContext.lakare) {
+                } else if (qa.amne === 'KOMPLETTERING_AV_LAKARINTYG' && !UserModel.userContext.lakare) {
                     // RE-005, RE-006
                     qa.answerDisabled = true;
                     qa.answerDisabledReason = 'Kompletteringar kan endast besvaras av läkare.';
