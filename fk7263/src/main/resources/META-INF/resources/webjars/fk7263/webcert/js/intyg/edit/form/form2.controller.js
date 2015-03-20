@@ -31,12 +31,18 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
 
             $scope.$watch('viewState.common.viewState.doneLoading', function(newVal) {
                 if (newVal) {
-                    if (!$scope.model.diagnosKodsystem1) {
-                        $scope.model.diagnosKodverk = diagnosKodverkStates.ICD_10_SE;
+                    if (!$scope.model.diagnosKodverk) {
+                        setAllDiagnosKodverk( diagnosKodverkStates.ICD_10_SE );
                     }
                 }
             });
 
+            function setAllDiagnosKodverk(val){
+                $scope.model.diagnosKodverk = val;
+                $scope.model.diagnosKodsystem1 = val;
+                $scope.model.diagnosKodsystem2 = val;
+                $scope.model.diagnosKodsystem3 = val;
+            };
             /**
              *  Remove choices related to diagnoskoder when the choice changes to make sure
              */
@@ -48,9 +54,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.model.diagnosKod3 = '';
                 $scope.model.diagnosBeskrivning3 = '';
 
-                $scope.model.diagnosKodsystem1 = $scope.model.diagnosKodsystem1
-                $scope.model.diagnosKodsystem2 = $scope.model.diagnosKodsystem1
-                $scope.model.diagnosKodsystem3 = $scope.model.diagnosKodsystem1
+                setAllDiagnosKodverk( $scope.model.diagnosKodverk );
             };
 
             $scope.getDiagnoseCodes = function(codeSystem, val) {
@@ -160,7 +164,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
              */
             $scope.limitDiagnosBeskrivningField = function(field) {
                 if ($scope.model[field]) {
-                    $scope.model[field] = helper.limitLength( $scope.inputLimits.diagnosBeskrivning,
+                    $scope.model[field] = helper.limitLength( $scope.viewState.inputLimits.diagnosBeskrivning,
                         $scope.getTotalDiagnosBeskrivningLength(), $scope.model[field]);
                 }
             };
