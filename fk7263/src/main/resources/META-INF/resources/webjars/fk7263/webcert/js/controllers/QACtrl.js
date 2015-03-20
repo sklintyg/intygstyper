@@ -1,9 +1,9 @@
 angular.module('fk7263').controller('fk7263.QACtrl',
     [ '$log', '$rootScope', '$routeParams', '$scope', '$timeout', '$window', '$filter', 'common.dialogService',
         'fk7263.fragaSvarService', 'common.fragaSvarCommonService', 'common.ManageCertView', 'common.statService',
-        'common.User',
+        'common.UserModel',
         function($log, $rootScope, $routeParams, $scope, $timeout, $window, $filter, dialogService, fragaSvarService,
-            fragaSvarCommonService, ManageCertView, statService, User) {
+            fragaSvarCommonService, ManageCertView, statService, UserModel) {
             'use strict';
 
             // init state

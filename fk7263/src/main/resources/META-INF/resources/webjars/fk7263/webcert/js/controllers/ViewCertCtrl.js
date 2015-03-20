@@ -1,8 +1,8 @@
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
     [ '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', 'common.CertificateService',
-        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate', 'common.User',
+        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate', 'common.UserModel',
         function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView,
-            messageService, ManageCertificate, User) {
+            messageService, ManageCertificate, UserModel) {
             'use strict';
 
             var intygType = 'fk7263';
@@ -13,7 +13,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             }
 
             // Page setup
-            $scope.user = { lakare: User.userContext.lakare };
+            $scope.user = { lakare: UserModel.userContext.lakare };
 
             $scope.cert = {};
             $scope.cert.filledAlways = true;
