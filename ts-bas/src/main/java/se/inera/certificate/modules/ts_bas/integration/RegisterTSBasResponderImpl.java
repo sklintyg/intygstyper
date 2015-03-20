@@ -107,9 +107,6 @@ public class RegisterTSBasResponderImpl implements RegisterTSBasResponderInterfa
     }
 
     private void validateTransport(RegisterTSBasType registerTsBas) throws CertificateValidationException {
-        if (!validator.isSchemaValid(registerTsBas.getIntyg())) {
-            throw new CertificateValidationException("Schema validation of intyg: " + registerTsBas.getIntyg().getIntygsId() + " failed");
-        }
         List<String> validationErrors = validator.validateTransport(registerTsBas.getIntyg());
         if (!validationErrors.isEmpty()) {
             throw new CertificateValidationException(validationErrors);

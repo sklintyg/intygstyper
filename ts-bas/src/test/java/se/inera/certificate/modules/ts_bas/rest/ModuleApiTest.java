@@ -28,7 +28,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -61,8 +60,6 @@ import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSB
 import se.inera.intygstjanster.ts.services.utils.ResultTypeUtil;
 import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
 import se.inera.intygstjanster.ts.services.v1.IntygMeta;
-import se.inera.intygstjanster.ts.services.v1.ResultatTyp;
-import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -83,7 +80,6 @@ public class ModuleApiTest {
     private RegisterTSBasResponseType registerResponse;
 
     private GetTSBasResponderInterface getTSBasResponderInterface;
-    private GetTSBasResponseType getResponse;
 
     /** An HTTP client proxy wired to the test HTTP server. */
     @Autowired
@@ -96,7 +92,6 @@ public class ModuleApiTest {
         moduleApi.setRegisterTSBasResponderClient(registerTSBasResponderInterface);
         moduleApi.setGetTSBasResponderClient(getTSBasResponderInterface);
         registerResponse = new RegisterTSBasResponseType();
-        getResponse = new GetTSBasResponseType();
     }
 
     @Test

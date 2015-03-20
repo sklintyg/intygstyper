@@ -2,15 +2,11 @@ package se.inera.certificate.modules.ts_bas.model.converter.util;
 
 import static org.junit.Assert.assertNotNull;
 
-import java.io.IOException;
-
-import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 

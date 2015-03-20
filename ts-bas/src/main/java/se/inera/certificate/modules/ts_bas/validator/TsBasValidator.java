@@ -18,48 +18,15 @@
  */
 package se.inera.certificate.modules.ts_bas.validator;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.util.List;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.namespace.QName;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.Validator;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.validator.external.TransportValidatorInstance;
 import se.inera.certificate.modules.ts_bas.validator.internal.InternalValidatorInstance;
-import se.inera.certificate.xml.SchemaValidatorBuilder;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 public class TsBasValidator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TsBasValidator.class);
-
-    private static final String COMMON_UTLATANDE_SCHEMA = "/intygstjanster-services/core-components/se_intygstjanster_services_1.0.xsd";
-
-    private static final String COMMON_UTLATANDE_TYPES_SCHEMA = "/intygstjanster-services/core-components/se_intygstjanster_services_types_1.0.xsd";
-
-    private static final String COMMON_UTLATANDE_ISO_SCHEMA = "/clinicalprocess-healthcond-certificate/core-components/iso_dt_subset_1.0.xsd";
-
-    private static Schema commonSchema;
-
-    private static void initCommonSchema() throws Exception {
-        SchemaValidatorBuilder schemaValidatorBuilder = new SchemaValidatorBuilder();
-        Source rootSource = schemaValidatorBuilder.registerResource(COMMON_UTLATANDE_SCHEMA);
-        schemaValidatorBuilder.registerResource(COMMON_UTLATANDE_ISO_SCHEMA);
-        schemaValidatorBuilder.registerResource(COMMON_UTLATANDE_TYPES_SCHEMA);
-
-        commonSchema = schemaValidatorBuilder.build(rootSource);
-    }
-
     /**
      * Validates an internal Utlatande.
      *
@@ -81,31 +48,5 @@ public class TsBasValidator {
     public List<String> validateTransport(TSBasIntyg intyg) {
         TransportValidatorInstance instance = new TransportValidatorInstance();
         return instance.validate(intyg);
-    }
-    
-    /**
-     * Perform schema validation of the transport format.
-     * 
-     * @param TSBasIntyg
-     * @return true if model is valid, false otherwise.
-     * @throws Exception if schema init failed
-     */
-    public boolean isSchemaValid(TSBasIntyg intyg) {
-        try {
-            initCommonSchema();
-            Validator schemaValidator = commonSchema.newValidator(); 
-
-            ByteArrayOutputStream output = new ByteArrayOutputStream();
-
-            JAXBElement<TSBasIntyg> jaxbElement = new JAXBElement<TSBasIntyg>(new QName("ns3:basIntyg"), TSBasIntyg.class, intyg);
-            JAXBContext context = JAXBContext.newInstance(TSBasIntyg.class);
-            context.createMarshaller().marshal(jaxbElement, output);
-
-            schemaValidator.validate(new StreamSource(new ByteArrayInputStream(output.toByteArray())));
-        } catch (Exception e) {
-            LOGGER.error("Schemavalidation in TS-bas failed with msg: " + e.getMessage());
-            return false;
-        }
-        return true;
     }
 }

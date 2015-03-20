@@ -1,6 +1,5 @@
 package se.inera.certificate.modules.ts_bas.model.validator;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -9,9 +8,6 @@ import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
-import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.certificate.modules.support.api.dto.ValidationStatus;
-import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioNotFoundException;
@@ -35,8 +31,6 @@ public class TransportValidatorTest {
             assertTrue(
                     "Error in scenario " + scenario.getName() + "\n"
                             + StringUtils.join(validationResponse, ", "), validationResponse.isEmpty());
-            assertTrue("Error in scenario " + scenario.getName() + "\n", validator.isSchemaValid(utlatande));
-
         }
     }
 
