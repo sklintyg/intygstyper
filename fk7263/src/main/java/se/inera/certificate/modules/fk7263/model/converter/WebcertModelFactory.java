@@ -86,7 +86,9 @@ public class WebcertModelFactory {
         if (copyData.hasNewPersonnummer()) {
             populateWithNewPersonnummer(template, copyData.getNewPersonnummer());
         }
-
+        
+        resetDataInCopy(template);
+        
         return template;
     }
 
@@ -118,6 +120,10 @@ public class WebcertModelFactory {
         }
 
         utlatande.getGrundData().setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(hoSPersonal));
+    }
+
+    private void resetDataInCopy(Utlatande utlatande) {
+        utlatande.getGrundData().setSigneringsdatum(null);
     }
 
     public void updateSkapadAv(Utlatande utlatande, HoSPersonal hosPerson, LocalDateTime signeringsdatum) {
