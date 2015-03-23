@@ -2,10 +2,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
         'common.CertificateService', 'common.ManageCertView', 'common.UserModel', 'common.wcFocus',
         'common.intygNotifyService', 'fk7263.diagnosService', 'common.DateUtilsService', 'common.UtilsService',
-        'fk7263.Domain.IntygModel','fk7263.EditCertCtrl.ViewStateService', 'fk7263.EditCertCtrl.Helper',
+        'fk7263.Domain.IntygModel','fk7263.EditCertCtrl.ViewStateService',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
             CertificateService, ManageCertView, UserModel, wcFocus, intygNotifyService, diagnosService, dateUtils, utils, intygModel,
-            viewState, helper) {
+            viewState) {
             'use strict';
 
             /**************************************************************************
@@ -57,7 +57,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
             $scope.stash = {
                 cert : { kommentar : ''}
-            }
+            };
 
 
             /****************************************************************************
