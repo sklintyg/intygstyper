@@ -9,25 +9,27 @@ angular.module('fk7263').factory(
          * Constructor, with class name
          */
         function VardenhetModel() {
-            this.enhetsid;
-            this.enhetsnamn;
-            this.postadress;
-            this.postnummer;
-            this.postort;
-            this.telefonnummer;
-            this.epost;
+            this.enhetsid = undefined;
+            this.enhetsnamn = undefined;
+            this.postadress = undefined;
+            this.postnummer = undefined;
+            this.postort = undefined;
+            this.telefonnummer = undefined;
+            this.epost = undefined;
             this.vardgivare = {
                 vardgivarid: null,
                 vardgivarnamn: null
             };
-            this.arbetsplatsKod;
+            this.arbetsplatsKod = undefined;
         }
 
 
         VardenhetModel.prototype.update = function(vardenhet) {
             // refresh the model data
 
-            if(vardenhet === undefined) return;
+            if(vardenhet === undefined) {
+                return;
+            }
             this.enhetsid = vardenhet.enhetsid;
             this.enhetsnamn = vardenhet.enhetsnamn;
             this.postadress = vardenhet.postadress;
@@ -40,7 +42,7 @@ angular.module('fk7263').factory(
                 vardgivarnamn: vardenhet.vardgivare.vardgivarnamn
             };
             this.arbetsplatsKod = vardenhet.arbetsplatsKod;
-        }
+        };
 
         VardenhetModel.build = function() {
             return new VardenhetModel();

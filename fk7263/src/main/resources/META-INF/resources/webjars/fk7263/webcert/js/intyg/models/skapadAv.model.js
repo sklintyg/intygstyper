@@ -9,16 +9,17 @@ angular.module('fk7263').factory('fk7263.Domain.SkapadAvModel',
              * Constructor, with class name
              */
             function SkapadAv() {
-                this.personId;
-                this.fullstandigtNamn;
-                this.forskrivarKod;
+                this.personId = undefined;
+                this.fullstandigtNamn = undefined;
+                this.forskrivarKod = undefined;
                 this.vardenhet = vardenhetModel;
-            };
-
+            }
 
             SkapadAv.prototype.update = function(skapadAv) {
                 // refresh the model data
-                if(skapadAv === undefined) return;
+                if(skapadAv === undefined){
+                    return;
+                }
                 this.personId = skapadAv.personId;
                 this.fullstandigtNamn = skapadAv.fullstandigtNamn;
                 this.forskrivarKod = skapadAv.forskrivarkod;
