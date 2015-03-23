@@ -61,6 +61,7 @@ public class InternalToTransportConverter {
 		//TODO: temp, force type
 		result.setIntygsTyp("TSTRK1031 (U06, V06)");
 		result.setSeparatOgonLakarintygKommerSkickas(utlatande.getSyn().getSeparatOgonlakarintyg());
+		result.setOvrigKommentar(utlatande.getKommentar());
 		
 		if(result.isSeparatOgonLakarintygKommerSkickas() == null || result.isSeparatOgonLakarintygKommerSkickas() == false){
 		    result.setSynfunktion(readSynfunktionDiabetes(utlatande.getSyn()));
