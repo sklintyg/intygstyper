@@ -11,7 +11,7 @@ describe('ts-bas.EditCertCtrl', function() {
         User = {};
         wcFocus = {};
         $provide.value('common.ManageCertView', ManageCertView);
-        $provide.value('common.User', User);
+        $provide.value('common.UserModel', User);
         $provide.value('common.wcFocus', wcFocus);
         $provide.value('common.intygNotifyService', intygNotifyService);
     }));
