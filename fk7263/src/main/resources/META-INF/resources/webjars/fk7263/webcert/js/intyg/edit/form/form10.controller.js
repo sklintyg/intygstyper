@@ -5,12 +5,11 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
             $scope.model = model;
             $scope.viewState = viewState;
 
-            $scope.radioGroups = {
-                prognos: 'JA'
-            };
-
             var prognosStates = {NO: 'NO', YES: 'YES', PARTLY: 'PARTLY', UNKNOWN: 'UNKNOWN'};
 
+            $scope.radioGroups = {
+                prognos: prognosStates.YES
+            };
 
             function setPrognosGroup() {
                 switch (model.prognosBedomning) {
@@ -27,7 +26,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
                     $scope.radioGroups.prognos = prognosStates.UNKNOWN;
                     break;
                 default :
-                    $scope.radioGroups.prognos = undefined;
+                    $scope.radioGroups.prognos = prognosStates.YES;
                 }
             }
 

@@ -91,20 +91,21 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
                 //intygModel.update(cert);
 
+                $scope.certMeta.intygId = intygModel.id;
+                $scope.certMeta.vidarebefordrad = draftModel.vidarebefordrad;
+
                 // check that the certs status is not signed
-                if($scope.isSigned){
+                if(draftModel.isSigned()){
                     // just change straight to the intyg
                     $location.url('/intyg/' + $scope.certMeta.intygType + '/' + $scope.certMeta.intygId);
                 }
 
                 // Decorate intygspecific default data
                 $scope.cert = intygModel;
-                //$scope.cert = data.content;
-                $scope.certMeta.intygId = intygModel.id;
-                $scope.certMeta.vidarebefordrad = draftModel.vidarebefordrad;
-                viewState.common.isSigned = draftModel.status === 'SIGNED';
-                viewState.common.intyg.isComplete = $scope.isSigned || draftModel.status === 'DRAFT_COMPLETE';
 
+                viewState.common.isSigned = draftModel.isSigned();
+                viewState.common.intyg.isComplete = draftModel.isSigned() || draftModel.isDraftComplete();
+                
                 $timeout(function() {
                     wcFocus('firstInput');
                     $rootScope.$broadcast('intyg.loaded', $scope.cert);

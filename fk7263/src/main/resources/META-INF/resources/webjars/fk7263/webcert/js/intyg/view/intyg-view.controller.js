@@ -54,7 +54,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                         $rootScope.$broadcast('intyg.loaded', $scope.cert);
 
                     } else {
-                        if ($routeParams.signed) {
+                        if ($stateParams.signed) {
                             $scope.widgetState.activeErrorMessageKey = 'common.error.signed_but_not_ready';
                         } else {
                             $scope.widgetState.activeErrorMessageKey = 'fk7263.error.could_not_load_cert';
@@ -66,7 +66,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                     if (error.errorCode === 'DATA_NOT_FOUND') {
                         $scope.widgetState.activeErrorMessageKey = 'fk7263.error.data_not_found';
                     } else {
-                        if ($routeParams.signed) {
+                        if ($stateParams.signed) {
                             $scope.widgetState.activeErrorMessageKey = 'common.error.signed_but_not_ready';
                         } else {
                             $scope.widgetState.activeErrorMessageKey = 'fk7263.error.could_not_load_cert';
