@@ -62,15 +62,17 @@ public class GetTSBasResponderImpl implements GetTSBasResponderInterface{
                 response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "nationalIdentityNumber mismatch"));
                 return response;
             }
-            if (certificate.isRevoked()) {
-                LOGGER.info("Certificate {} has been revoked", certificateId);
-                response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.REVOKED, String.format("Certificate '%s' has been revoked", certificateId)));
-            } else if (certificate.isDeletedByCareGiver()) {
+            if (certificate.isDeletedByCareGiver()) {
                 response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, String.format("Certificate '%s' has been deleted by care giver", certificateId)));
             } else {
                 response.setMeta(createCertificateMetaType(certificate));
                 attachCertificateDocument(certificate, response);
-                response.setResultat(ResultTypeUtil.okResult());
+                if (certificate.isRevoked()) {
+                    LOGGER.info("Certificate {} has been revoked", certificateId);
+                    response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.REVOKED, String.format("Certificate '%s' has been revoked", certificateId)));
+                } else {
+                    response.setResultat(ResultTypeUtil.okResult());
+                }
             }
         } catch (InvalidCertificateException | MissingConsentException e) {
             response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, e.getMessage()));
