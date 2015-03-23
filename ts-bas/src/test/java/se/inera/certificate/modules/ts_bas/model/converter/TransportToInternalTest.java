@@ -30,6 +30,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.utils.ModelAssert;
+import se.inera.certificate.modules.ts_bas.utils.Scenario;
+import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 /**
@@ -46,12 +48,14 @@ public class TransportToInternalTest {
 
     @Test
     public void testTransportToInternal() throws Exception {
-        File resource = new ClassPathResource("InternalToTransport/ts-bas-max.xml").getFile();
-        TSBasIntyg transportFormat = JAXB.unmarshal(resource, TSBasIntyg.class);
+        for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
+            TSBasIntyg utlatande = scenario.asTransportModel();
 
-        Utlatande actual = TransportToInternal.convert(transportFormat);
-        Utlatande expected = objectMapper.readValue(new ClassPathResource("InternalToTransport/ts-bas-max.json").getInputStream(), Utlatande.class);
+            Utlatande actual = TransportToInternal.convert(utlatande);
 
-        ModelAssert.assertEquals("Error", expected, actual);
+            Utlatande expected = scenario.asInternalModel();
+
+            ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
+        }
     }
 }

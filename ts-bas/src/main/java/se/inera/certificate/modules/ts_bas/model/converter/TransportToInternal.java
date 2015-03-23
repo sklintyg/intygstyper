@@ -207,24 +207,38 @@ public class TransportToInternal {
 
     private static Synskarpevarden buildBinokulart(SynfunktionBas source) {
         Synskarpevarden binokulart = new Synskarpevarden();
-        binokulart.setMedKorrektion(source.getSynskarpaMedKorrektion().getBinokulart());
         binokulart.setUtanKorrektion(source.getSynskarpaUtanKorrektion().getBinokulart());
+        if (source.getSynskarpaMedKorrektion() != null && source.getSynskarpaMedKorrektion().getBinokulart() != null) {
+            binokulart.setMedKorrektion(source.getSynskarpaMedKorrektion().getBinokulart());
+        }
         return binokulart;
     }
 
     private static Synskarpevarden buildHoger(SynfunktionBas source) {
         Synskarpevarden hoger = new Synskarpevarden();
-        hoger.setMedKorrektion(source.getSynskarpaMedKorrektion().getHogerOga());
         hoger.setUtanKorrektion(source.getSynskarpaUtanKorrektion().getHogerOga());
-        hoger.setKontaktlins(source.getSynskarpaMedKorrektion().isHarKontaktlinsHogerOga());
+        if (source.getSynskarpaMedKorrektion() != null) {
+            if (source.getSynskarpaMedKorrektion().getHogerOga() != null) {
+                hoger.setMedKorrektion(source.getSynskarpaMedKorrektion().getHogerOga());
+            }
+            if (source.getSynskarpaMedKorrektion().isHarKontaktlinsHogerOga() != null) {
+                hoger.setKontaktlins(source.getSynskarpaMedKorrektion().isHarKontaktlinsHogerOga());
+            }
+        }
         return hoger;
     }
 
     private static Synskarpevarden buildVanster(SynfunktionBas source) {
         Synskarpevarden vanster = new Synskarpevarden();
-        vanster.setMedKorrektion(source.getSynskarpaMedKorrektion().getVansterOga());
         vanster.setUtanKorrektion(source.getSynskarpaUtanKorrektion().getVansterOga());
-        vanster.setKontaktlins(source.getSynskarpaMedKorrektion().isHarKontaktlinsVansterOga());
+        if (source.getSynskarpaMedKorrektion() != null) {
+            if (source.getSynskarpaMedKorrektion().getVansterOga() != null) {
+                vanster.setMedKorrektion(source.getSynskarpaMedKorrektion().getVansterOga());
+            }
+            if (source.getSynskarpaMedKorrektion().isHarKontaktlinsVansterOga() != null) {
+                vanster.setKontaktlins(source.getSynskarpaMedKorrektion().isHarKontaktlinsVansterOga());
+            }
+        }
         return vanster;
     }
 
@@ -246,8 +260,12 @@ public class TransportToInternal {
         HoSPersonal hosPersonal = new HoSPersonal();
         hosPersonal.setFullstandigtNamn(source.getFullstandigtNamn());
         hosPersonal.setPersonId(source.getPersonId().getExtension());
-        hosPersonal.getBefattningar().add(source.getBefattningar());
-        hosPersonal.getSpecialiteter().add(source.getSpecialiteter());
+        if (source.getBefattningar() != null) {
+            hosPersonal.getBefattningar().add(source.getBefattningar());
+        }
+        if (source.getSpecialiteter() != null) {
+            hosPersonal.getSpecialiteter().add(source.getSpecialiteter());
+        }
         hosPersonal.setVardenhet(convertVardenhet(source.getVardenhet()));
         return hosPersonal;
     }

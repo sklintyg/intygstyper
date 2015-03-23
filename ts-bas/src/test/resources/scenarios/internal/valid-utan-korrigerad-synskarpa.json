@@ -19,6 +19,7 @@
                     "vardgivarnamn": "Vårdgivarnamn"
                 }
             }
+            
         },
         "patient": {
             "personId": "19121212-1212",
@@ -48,19 +49,17 @@
         ]
     },
     "syn" : {
-        "synfaltsdefekter" :  false,
+        "synfaltsdefekter" :  true,
         "nattblindhet" : false,
         "progressivOgonsjukdom" : false,
         "diplopi" : false,
         "nystagmus" : false,
         "hogerOga" : {
-        	"utanKorrektion" : 0.0,
-        	"kontaktlins" : false
+        	"utanKorrektion" : 0.0
         },
         
         "vansterOga" : {
-        	"utanKorrektion" : 0.0,
-        	"kontaktlins" : false
+        	"utanKorrektion" : 0.0
         },
 
         "binokulart" : {

@@ -41,14 +41,6 @@ public class InternalToTransportTest {
 
     @Test
     public void testConvertUtlatandeFromInternalToExternal() throws Exception {
-//        Utlatande intUtlatande = objectMapper.readValue(
-//                new ClassPathResource("InternalToTransport/ts-bas-max.json").getInputStream(), Utlatande.class);
-//        TSBasIntyg actual = InternalToTransport.convert(intUtlatande);
-//        File resource = new ClassPathResource("InternalToTransport/ts-bas-max.xml").getFile();
-//
-//        TSBasIntyg expected = JAXB.unmarshal(resource, TSBasIntyg.class); 
-//
-//        ModelAssert.assertEquals("Error", expected, actual);
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
             Utlatande intUtlatande = scenario.asInternalModel();
 
