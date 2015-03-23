@@ -109,7 +109,7 @@ public class GetTSBasResponderImpl implements GetTSBasResponderInterface{
         status.setTarget(source.getTarget());
         status.setTimestamp(source.getTimestamp().toString());
         status.setType(mapToStatus(source.getState()));
-        return null;
+        return status;
     }
 
     private Status mapToStatus(CertificateState state) {
