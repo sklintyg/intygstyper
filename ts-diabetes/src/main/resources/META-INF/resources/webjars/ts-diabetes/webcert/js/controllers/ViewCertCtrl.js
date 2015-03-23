@@ -9,7 +9,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
              * Page state
              *********************************************************************/
 
-            $scope.user = { lakare: User.userContext.lakare };
+            $scope.user = { lakare: User.getUserContext().lakare };
             $scope.cert = {};
             $scope.widgetState = {
                 doneLoading: false,
