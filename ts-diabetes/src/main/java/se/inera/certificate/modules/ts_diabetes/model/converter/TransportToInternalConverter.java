@@ -59,6 +59,7 @@ public class TransportToInternalConverter {
         readBedomning(result.getBedomning(), transport.getBedomning());
         readIntygAvser(result.getIntygAvser(), transport.getIntygAvser());
         result.setVardkontakt(readVardkontakt(transport.getIdentitetStyrkt()));
+        result.setKommentar(transport.getOvrigKommentar());
         return result;
     }
 
