@@ -169,6 +169,18 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
             }
         };
 
+        IntygModel.prototype.prepare = function(nedsatt){
+            if(this.aktivitetsbegransning && this.aktivitetsbegransning.length === 0){
+                this.aktivitetsbegransning = undefined;
+            }
+            if(this.samsjuklighet && this.samsjuklighet.length === 0){
+                this.samsjuklighet = undefined;
+            }
+            if(this.funktionsnedsattning && this.funktionsnedsattning.length === 0){
+                this.funktionsnedsattning = undefined;
+            }
+        };
+
         IntygModel.build = function() {
             return new IntygModel();
         };

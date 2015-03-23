@@ -17,9 +17,10 @@
                                                                          name="informationBasedOn.examination"
                                                                          class="checkbox-inline"
                                                                          ng-model="basedOnState.check.undersokningAvPatienten"
-                                                                         ng-change="toggleBaseradPaDate('undersokningAvPatienten')">
+                                                                         ng-change="toggleBaseradPaDate('undersokningAvPatienten')"
+        value="true">
       Min undersökning av patienten</label>
-    <span wc-date-picker-field target-model="model.undersokningAvPatienten"
+    <span wc-date-picker-field target-model="dates.undersokningAvPatienten"
           dom-id="undersokningAvPatientenDate"></span>
   </div>
 
@@ -31,7 +32,7 @@
                                                                          ng-model="basedOnState.check.telefonkontaktMedPatienten"
                                                                          ng-change="toggleBaseradPaDate('telefonkontaktMedPatienten')">
       Min telefonkontakt med patienten</label>
-    <span wc-date-picker-field target-model="model.telefonkontaktMedPatienten"
+    <span wc-date-picker-field target-model="dates.telefonkontaktMedPatienten"
           dom-id="telefonkontaktMedPatientenDate"></span>
   </div>
 
@@ -43,7 +44,7 @@
                                                                          ng-model="basedOnState.check.journaluppgifter"
                                                                          ng-change="toggleBaseradPaDate('journaluppgifter')">
       Journaluppgifter</label>
-    <span wc-date-picker-field target-model="model.journaluppgifter"
+    <span wc-date-picker-field target-model="dates.journaluppgifter"
           dom-id="journaluppgifterDate"></span>
   </div>
 
@@ -56,7 +57,7 @@
                                                                          ng-change="toggleBaseradPaDate('annanReferens')">
       Annat<span wc-enable-tooltip field-help-text="fk7263.helptext.intyg-baserat-pa.annat"></span>
     </label>
-    <span wc-date-picker-field target-model="model.annanReferens" dom-id="annanReferensDate"></span>
+    <span wc-date-picker-field target-model="dates.annanReferens" dom-id="annanReferensDate"></span>
   </div>
   <div class="otherText indent" ng-if="basedOnState.check.annanReferens">
     <span>Ange vad:</span><br>

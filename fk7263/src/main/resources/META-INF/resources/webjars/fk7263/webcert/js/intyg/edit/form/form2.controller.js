@@ -42,17 +42,18 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.model.diagnosKodsystem1 = val;
                 $scope.model.diagnosKodsystem2 = val;
                 $scope.model.diagnosKodsystem3 = val;
-            };
+            }
+
             /**
              *  Remove choices related to diagnoskoder when the choice changes to make sure
              */
             $scope.onChangeKodverk = function() {
-                $scope.model.diagnosKod = '';
-                $scope.model.diagnosBeskrivning1 = '';
-                $scope.model.diagnosKod2 = '';
-                $scope.model.diagnosBeskrivning2 = '';
-                $scope.model.diagnosKod3 = '';
-                $scope.model.diagnosBeskrivning3 = '';
+                $scope.model.diagnosKod = undefined;
+                $scope.model.diagnosBeskrivning1 = undefined;
+                $scope.model.diagnosKod2 = undefined;
+                $scope.model.diagnosBeskrivning2 = undefined;
+                $scope.model.diagnosKod3 = undefined;
+                $scope.model.diagnosBeskrivning3 = undefined;
 
                 setAllDiagnosKodverk( $scope.model.diagnosKodverk );
             };

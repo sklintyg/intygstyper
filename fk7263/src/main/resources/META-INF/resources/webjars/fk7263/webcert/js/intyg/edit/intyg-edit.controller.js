@@ -125,6 +125,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 // Mark form as saved, will be marked as not saved if saving fails.
                 // Mark form as saved, will be marked as not saved if saving fails.
                 $scope.certForm.$setPristine();
+                $scope.cert.prepare();
 
                 var intygSaveRequest = {
                     intygsId      : $scope.certMeta.intygId,
@@ -136,7 +137,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 intygSaveRequest.saveComplete.promise.then(function(result) {
 
                     // save success
-                    viewState.common.intyg.isComplete = result.isComplete;
                     viewState.common.validationMessages = result.validationMessages;
                     viewState.common.validationMessagesGrouped = result.validationMessagesGrouped;
                     viewState.common.error.saveErrorMessageKey = null;
