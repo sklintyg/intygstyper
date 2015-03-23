@@ -1,10 +1,9 @@
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
-        'common.CertViewState', 'common.CertificateService', 'common.ManageCertView', 'common.UserModel', 'common.wcFocus',
+        'common.CertificateService', 'common.ManageCertView', 'common.UserModel', 'common.wcFocus',
         'common.intygNotifyService', 'fk7263.diagnosService', 'common.DateUtilsService', 'common.UtilsService',
-        'fk7263.Domain.IntygModel','fk7263.EditCertCtrl.ViewStateService',
-        'fk7263.EditCertCtrl.Helper',
-        function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q, CertViewState,
+        'fk7263.Domain.IntygModel','fk7263.EditCertCtrl.ViewStateService', 'fk7263.EditCertCtrl.Helper',
+        function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
             CertificateService, ManageCertView, UserModel, wcFocus, intygNotifyService, diagnosService, dateUtils, utils, intygModel,
             viewState, helper) {
             'use strict';
@@ -24,7 +23,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.today = new Date();
             $scope.today.setHours(0, 0, 0, 0); // reset time to increase comparison accuracy (using new Date() also sets time)
             $scope.focusFirstInput = false;
-            $scope.viewState = CertViewState.viewState;
 
             // Intyg state
             $scope.cert = {};
@@ -70,11 +68,11 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Handle vidarebefordra dialog
              */
             $scope.openMailDialog = function() {
-                intygNotifyService.forwardIntyg($scope.certMeta, CertViewState.viewState);
+                intygNotifyService.forwardIntyg($scope.certMeta);
             };
 
             $scope.onVidarebefordradChange = function() {
-                intygNotifyService.onForwardedChange($scope.certMeta, CertViewState.viewState);
+                intygNotifyService.onForwardedChange($scope.certMeta);
             };
 
             /**
@@ -104,25 +102,26 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 //$scope.cert = data.content;
                 $scope.certMeta.intygId = intygModel.id;
                 $scope.certMeta.vidarebefordrad = draftModel.vidarebefordrad;
-                CertViewState.viewState.isSigned = draftModel.status === 'SIGNED';
-                CertViewState.viewState.intyg.isComplete = $scope.isSigned || draftModel.status === 'DRAFT_COMPLETE';
+                viewState.common.isSigned = draftModel.status === 'SIGNED';
+                viewState.common.intyg.isComplete = $scope.isSigned || draftModel.status === 'DRAFT_COMPLETE';
 
                 $timeout(function() {
                     wcFocus('firstInput');
                     $rootScope.$broadcast('intyg.loaded', $scope.cert);
-                    CertViewState.viewState.doneLoading = true;
+                    viewState.common.doneLoading = true;
                 }, 10);
             });
 
             $rootScope.$on('intyg.deleted', function() {
-                CertViewState.viewState.deleted = true;
-                CertViewState.viewState.activeErrorMessageKey = 'error';
+                viewState.common.deleted = true;
+                viewState.common.activeErrorMessageKey = 'error';
                 $scope.cert = undefined;
             });
 
             $rootScope.$on('saveRequest', function($event, deferred) {
 
 
+                // Mark form as saved, will be marked as not saved if saving fails.
                 // Mark form as saved, will be marked as not saved if saving fails.
                 $scope.certForm.$setPristine();
 
@@ -136,15 +135,15 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 intygSaveRequest.saveComplete.promise.then(function(result) {
 
                     // save success
-                    viewState.isComplete = result.isComplete;
-                    viewState.common.viewState.validationMessages = result.validationMessages;
-                    viewState.common.viewState.validationMessagesGrouped = result.validationMessagesGrouped;
-                    viewState.common.viewState.saveErrorMessageKey = null;
+                    viewState.common.intyg.isComplete = result.isComplete;
+                    viewState.common.validationMessages = result.validationMessages;
+                    viewState.common.validationMessagesGrouped = result.validationMessagesGrouped;
+                    viewState.common.error.saveErrorMessageKey = null;
 
                 }, function(result) {
                     // save failed
                     $scope.certForm.$setDirty();
-                    viewState.common.viewState.saveErrorMessageKey = result.errorMessageKey;
+                    viewState.common.error.saveErrorMessageKey = result.errorMessageKey;
                 });
 
                 deferred.resolve(intygSaveRequest);

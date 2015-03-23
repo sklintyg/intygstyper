@@ -6,26 +6,26 @@
       <div ui-view="header"></div>
 
       <!-- Integration deleted message -->
-      <div id="integration-deleted" ng-if="viewState.deleted">
+      <div id="integration-deleted" ng-if="viewState.common.deleted">
         <div class="alert alert-info banner-margin">
           Utkastet är raderat och borttaget från Webcert.
         </div>
       </div>
 
       <!-- FK 7263 -->
-      <div class="edit-form" ng-class="{'collapsed' : viewState.collapsedHeader}">
+      <div class="edit-form" ng-class="{'collapsed' : viewState.common.collapsedHeader}">
 
         <form name="certForm" novalidate autocomplete="off" wc-auto-save="save(true)">
-          <div ng-hide="viewState.activeErrorMessageKey || viewState.deleted">
+          <div ng-hide="viewState.common.error.activeErrorMessageKey || viewState.common.deleted">
 
-            <div wc-spinner label="info.loadingdata" show-spinner="!viewState.doneLoading"
-                 show-content="viewState.doneLoading">
+            <div wc-spinner label="info.loadingdata" show-spinner="!viewState.common.doneLoading"
+                 show-content="viewState.common.doneLoading">
 
-              <div class="alert alert-danger" ng-show="viewState.showComplete && !viewState.intyg.isComplete"
+              <div class="alert alert-danger" ng-show="viewState.common.showComplete && !viewState.common.intyg.isComplete"
                    style="margin-right: 20px">
                 <h3><span message key="draft.saknar-uppgifter"></span></h3>
                 <ul>
-                  <li ng-repeat="message in validationMessages">
+                  <li ng-repeat="message in viewState.common.validationMessages">
                     <span message key="{{message.message}}"></span></li>
                 </ul>
               </div>
@@ -112,15 +112,15 @@
                     <div class="body-row">
                       <label for="mark-as-vidarebefordrad">
                         <input id="mark-as-vidarebefordrad" type="checkbox"
-                               ng-disabled="viewState.vidarebefordraInProgress" ng-model="certMeta.vidarebefordrad"
+                               ng-disabled="viewState.common.vidarebefordraInProgress" ng-model="certMeta.vidarebefordrad"
                                ng-change="onVidarebefordradChange()" /> Vidarebefordrad
-                      </label> <span ng-if="viewState.vidarebefordraInProgress"> <img
+                      </label> <span ng-if="viewState.common.vidarebefordraInProgress"> <img
                         src="/img/ajax-loader-kit-16x16.gif"></span>
                     </div>
                   </div>
                 </div>
 
-                <button id="signera-utkast-button" class="btn btn-success" ng-disabled="!viewState.intyg.isComplete || certForm.$dirty || signingWithSITHSInProgress"
+                <button id="signera-utkast-button" class="btn btn-success" ng-disabled="!viewState.common.intyg.isComplete || certForm.$dirty || signingWithSITHSInProgress"
                         ng-click="sign()" ng-show="user.userContext.lakare"><img ng-show="signingWithSITHSInProgress" ng-src="/img/ajax-loader-small-green.gif"/> <span message key="common.sign"></span>
                 </button>
 
@@ -129,7 +129,7 @@
             </div>
           </div>
 
-          <wc-disable-key-down wc-disable-key-down-elements=":text,:checkbox,:radio" wc-disable-key-down-done-loading="viewState.doneLoading" />
+          <wc-disable-key-down wc-disable-key-down-elements=":text,:checkbox,:radio" wc-disable-key-down-done-loading="viewState.common.doneLoading" />
 
         </form>
       </div>

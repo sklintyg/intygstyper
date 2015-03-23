@@ -33,7 +33,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
             $scope.totalCertDays = false;
 
 
-            $scope.$watch('viewState.common.viewState.doneLoading', function(newVal) {
+            $scope.$watch('viewState.common.doneLoading', function(newVal) {
                 if (newVal) {
                     registerDateParsersFor8b($scope);
                     _dateRangeGroups.validateDatesWithCert($scope.cert);

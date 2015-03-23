@@ -16,7 +16,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
             };
 
             // once we've doneLoading we can set the radion buttons to the model state.
-            $scope.$watch('viewState.common.viewState.doneLoading', function(newVal) {
+            $scope.$watch('viewState.common.doneLoading', function(newVal) {
                 if (newVal) {
                     registerDateParsersFor4b($scope);
                     setBaserasPa();
@@ -26,7 +26,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
 
             $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal) {
                 // only do this once the page is loaded and changes come from the gui!
-                if(viewState.common.viewState.doneLoading && newVal) {
+                if(viewState.common.doneLoading && newVal) {
                     clearState();
                 }
             });

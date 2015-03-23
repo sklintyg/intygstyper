@@ -10,7 +10,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
 
             $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal) {
                 // only do this once the page is loaded and changes come from the gui!
-                if(viewState.common.viewState.doneLoading) {
+                if(viewState.common.doneLoading) {
                     // Remove defaults not applicable when smittskydd is active
                     if (newVal === true) {
                         // 2. Diagnos
@@ -29,7 +29,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 }
             });
 
-            $scope.$watch('viewState.common.viewState.doneLoading', function(newVal) {
+            $scope.$watch('viewState.common.doneLoading', function(newVal) {
                 if (newVal) {
                     if (!$scope.model.diagnosKodverk) {
                         setAllDiagnosKodverk( diagnosKodverkStates.ICD_10_SE );

@@ -1,9 +1,9 @@
 angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
-    ['$log', 'fk7263.Domain.IntygModel', 'common.CertViewState', 'fk7263.EditCertCtrl.Helper',
-        function($log, intygModel, CertViewState, helper) {
+    ['$log', 'fk7263.Domain.IntygModel', 'common.IntygEditViewStateService', 'fk7263.EditCertCtrl.Helper',
+        function($log, intygModel, CommonViewState, helper) {
             'use strict';
 
-            this.common = CertViewState;
+            this.common = CommonViewState;
 
             this.avstangningSmittskyddVal = intygModel.avstangningSmittskydd;
             this.avstangningSmittskydd = function() {
