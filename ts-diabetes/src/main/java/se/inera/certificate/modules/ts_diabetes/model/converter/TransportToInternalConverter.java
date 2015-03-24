@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormat;
 
 import se.inera.certificate.model.common.internal.GrundData;
 import se.inera.certificate.model.common.internal.HoSPersonal;
@@ -89,6 +88,7 @@ public class TransportToInternalConverter {
     }
 
     private static void readSyn(Syn syn, SynfunktionDiabetes synfunktion) {
+        syn.setSeparatOgonlakarintyg(synfunktion.isFinnsSeparatOgonlakarintyg());
         syn.setBinokulart(readBinokulart(synfunktion));
         syn.setDiplopi(synfunktion.isHarDiplopi());
         syn.setHoger(readHoger(synfunktion));

@@ -51,13 +51,10 @@ public class WebcertModelFactory {
         if (template == null) {
             LOG.trace("Creating draft with id {}", newDraftData.getCertificateId());
             template = new Utlatande();
-
         } else {
             LOG.trace("Creating copy with id {} from {}", newDraftData.getCertificateId(), template.getId());
         }
-
         template.setId(newDraftData.getCertificateId());
-
         // This is where we set the concrete tsUtgava and tsVersion of the intyg that is created.
         template.setTyp(UtlatandeKod.getCurrentVersion().name());
 
@@ -86,14 +83,38 @@ public class WebcertModelFactory {
         utlatande.getGrundData().setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(skapadAv));
     }
 
-	public Utlatande createCopy(CreateDraftCopyHolder draftCertificateHolder,
-			Utlatande internal) throws ConverterException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Utlatande createCopy(CreateDraftCopyHolder copyData, Utlatande template) throws ConverterException {
+        LOG.trace("Creating copy with id {} from {}", copyData.getCertificateId(), template.getId());
 
-	public void updateSkapadAv(Utlatande utlatande, HoSPersonal hosPerson,
-			LocalDateTime signingDate) {
+        populateWithId(template, copyData.getCertificateId());
+        populateWithSkapadAv(template, copyData.getSkapadAv());
+
+        if (copyData.hasPatient()) {
+            populateWithPatientInfo(template, copyData.getPatient());
+        }
+
+        if (copyData.hasNewPersonnummer()) {
+            populateWithNewPersonnummer(template, copyData.getNewPersonnummer());
+        }
+
+        return template;
+    }
+
+    private void populateWithNewPersonnummer(Utlatande template, String newPersonnummer) {
+        template.getGrundData().getPatient().setPersonId(newPersonnummer);
+    }
+
+    private void populateWithId(Utlatande utlatande, String utlatandeId) throws ConverterException {
+
+        if (utlatandeId == null) {
+            throw new ConverterException("No certificateID found");
+        }
+
+        utlatande.setId(utlatandeId);
+    }
+
+    public void updateSkapadAv(Utlatande utlatande, HoSPersonal hosPerson,
+            LocalDateTime signingDate) {
         utlatande.getGrundData().getSkapadAv().setPersonId(hosPerson.getHsaId());
         utlatande.getGrundData().getSkapadAv().setFullstandigtNamn(hosPerson.getNamn());
         utlatande.getGrundData().getSkapadAv().setForskrivarKod(hosPerson.getForskrivarkod());
@@ -102,6 +123,6 @@ public class WebcertModelFactory {
         if (hosPerson.getBefattning() != null) {
             utlatande.getGrundData().getSkapadAv().getBefattningar().add(hosPerson.getBefattning());
         }
-		
-	}
+
+    }
 }
