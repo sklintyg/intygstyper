@@ -1,4 +1,5 @@
 package se.inera.certificate.modules.ts_diabetes.integration;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,47 +30,55 @@ import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterface {
 
-public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterface{
-    
     private static final Logger LOGGER = LoggerFactory.getLogger(GetTSDiabetesResponderImpl.class);
 
     @Autowired
     private ModuleService moduleService;
-    
+
     @Autowired
     @Qualifier("ts-diabetes-objectMapper")
     private ObjectMapper objectMapper;
-    
+
     @Override
     public GetTSDiabetesResponseType getTSDiabetes(String logicalAddress, GetTSDiabetesType parameters) {
         GetTSDiabetesResponseType response = new GetTSDiabetesResponseType();
-        
-        if(isEmpty(parameters.getIntygsId())){
+        CertificateHolder certificate = null;
+
+        String certificateId = parameters.getIntygsId();
+        String personNummer = parameters.getPersonId() != null ? parameters.getPersonId().getExtension() : null;
+
+        if (certificateId == null || certificateId.length() == 0) {
             LOGGER.info(LogMarkers.VALIDATION, "Tried to get certificate with non-existing certificateId '.");
-            response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "Validation error: missing certificateId"));
-        } /*else if(parameters.getPersonId() == null || isEmpty(parameters.getPersonId().getExtension())){
-            LOGGER.info(LogMarkers.VALIDATION, "Tried to get certificate with non-existing nationalIdentityNumber '.");
-            response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "Validation error: missing nationalIdentityNumber"));
-        }*/ else {
-            try {
-                CertificateHolder certificate = moduleService.getModuleContainer().getCertificate(parameters.getIntygsId(), null, false);
-                
-                if(certificate.isRevoked()){
+            response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, "non-existing certificateId"));
+            return response;
+        }
+
+        try {
+            certificate = moduleService.getModuleContainer().getCertificate(certificateId, personNummer, false);
+            if (personNummer != null && !certificate.getCivicRegistrationNumber().equals(personNummer)) {
+                LOGGER.info(LogMarkers.VALIDATION, "Tried to get certificate with non-existing nationalIdentityNumber '.");
+                response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "Validation error: missing nationalIdentityNumber"));
+                return response;
+            }
+            if (certificate.isDeletedByCareGiver()) {
+                response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR,
+                        String.format("Certificate '%s' has been deleted by care giver", certificateId)));
+            } else {
+                Utlatande utlatande = objectMapper.readValue(certificate.getDocument(), Utlatande.class);
+                TSDiabetesIntyg tsDiabetesIntyg = InternalToTransportConverter.convert(utlatande);
+                response.setIntyg(tsDiabetesIntyg);
+                response.setMeta(createMetaData(certificate));
+                if (certificate.isRevoked()) {
                     response.setResultat(ResultTypeUtil.infoResult(String.format("Certificate '%s' has been revoked", parameters.getIntygsId())));
                 } else {
-                    Utlatande utlatande = objectMapper.readValue(certificate.getDocument(), Utlatande.class);
-                    TSDiabetesIntyg tsDiabetesIntyg = InternalToTransportConverter.convert(utlatande);
-                    
-                    response.setIntyg(tsDiabetesIntyg);
-                    response.setMeta(createMetaData(certificate));
                     response.setResultat(ResultTypeUtil.okResult());
                 }
-            } catch (InvalidCertificateException | IOException e) {
-                response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.TECHNICAL_ERROR, e.getMessage()));
             }
+        } catch (InvalidCertificateException | IOException e) {
+            response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.TECHNICAL_ERROR, e.getMessage()));
         }
-        
         return response;
     }
 
@@ -88,18 +97,19 @@ public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterfa
         }
         return statuses;
     }
-    
+
     private IntygStatus convert(CertificateStateHolder source) {
         IntygStatus status = new IntygStatus();
         status.setTarget(source.getTarget());
         status.setTimestamp(source.getTimestamp().toString());
         status.setType(mapToStatus(source.getState()));
-        return null;
-    }    
+        return status;
+    }
+
     private boolean isEmpty(String intygsId) {
         return intygsId == null || intygsId.isEmpty();
     }
-    
+
     private Status mapToStatus(CertificateState state) {
         return Status.valueOf(state.name());
     }
