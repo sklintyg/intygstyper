@@ -1,9 +1,9 @@
 angular.module('fk7263').controller('fk7263.QACtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', '$timeout', '$window', '$filter', 'common.dialogService',
         'fk7263.fragaSvarService', 'common.fragaSvarCommonService', 'common.ManageCertView', 'common.statService',
-        'common.User',
+        'common.UserModel', 'fk7263.QACtrl.Helper',
         function($log, $rootScope, $stateParams, $scope, $timeout, $window, $filter, dialogService, fragaSvarService,
-            fragaSvarCommonService, ManageCertView, statService, UserModel) {
+            fragaSvarCommonService, ManageCertView, statService, UserModel, qaHelper) {
             'use strict';
 
             // init state
@@ -153,7 +153,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
 
             // listeners - interscope communication
             var unbindmarkAnsweredAsHandledEvent = $scope.$on('markAnsweredAsHandledEvent', function($event, deferred, unhandledQas) {
-                $scope.updateAnsweredAsHandled(deferred, unhandledQas);
+                qaHelper.updateAnsweredAsHandled(deferred, unhandledQas);
             });
 
             $scope.$on('$destroy', unbindmarkAnsweredAsHandledEvent);
