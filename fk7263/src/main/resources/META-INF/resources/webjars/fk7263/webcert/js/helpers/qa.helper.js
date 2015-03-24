@@ -33,17 +33,20 @@ angular.module('fk7263').service('fk7263.QACtrl.Helper',
             });
         }
 
-        this.updateAnsweredAsHandled = function(deferred, unhandledQas){
+        this.updateAnsweredAsHandled = function(deferred, unhandledQas, fromHandledDialog){
             if(unhandledQas === undefined || unhandledQas.length === 0 ){
                 return;
             }
-
             fragaSvarService.closeAllAsHandled(unhandledQas,
                 function(qas){
                     if(qas) {
                         angular.forEach(qas, function(qa) { //unused parameter , key
                             fragaSvarCommonService.decorateSingleItem(qa);
-                            addListMessage(qas, qa, 'fk7263.fragasvar.marked.as.hanterad'); // TODOOOOOOOO TEST !!!!!!!!!!
+                            if(fromHandledDialog) {
+                                qa.proxyMessage = 'fk7263.fragasvar.marked.as.hanterad';
+                            } else {
+                                addListMessage(qas, qa, 'fk7263.fragasvar.marked.as.hanterad'); // TODOOOOOOOO TEST !!!!!!!!!!
+                            }
                         });
                         statService.refreshStat();
                     }

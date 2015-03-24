@@ -153,7 +153,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
 
             // listeners - interscope communication
             var unbindmarkAnsweredAsHandledEvent = $scope.$on('markAnsweredAsHandledEvent', function($event, deferred, unhandledQas) {
-                qaHelper.updateAnsweredAsHandled(deferred, unhandledQas);
+                qaHelper.updateAnsweredAsHandled(deferred, unhandledQas, true);
             });
 
             $scope.$on('$destroy', unbindmarkAnsweredAsHandledEvent);
