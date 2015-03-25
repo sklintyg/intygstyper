@@ -78,6 +78,7 @@ public class TsBasModuleApi implements ModuleApi {
     private GetTSBasResponderInterface getTSBasResponderInterface;
 
     @Autowired(required = false)
+    @Qualifier("registerTSBasClient")
     private RegisterTSBasResponderInterface registerTSBasResponderInterface;
 
     @Autowired
@@ -192,13 +193,11 @@ public class TsBasModuleApi implements ModuleApi {
 
     @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
-        // TODO Auto-generated method stub
 
     }
 

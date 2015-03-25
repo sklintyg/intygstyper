@@ -36,6 +36,11 @@
     </dependency>
 
     <dependency>
+      <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
+      <artifactId>clinicalprocess-healthcond-certificate-interactions</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
       <artifactId>se-intygstjanster-ts-services-core</artifactId>
     </dependency>
@@ -77,6 +82,11 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
     </dependency>
 
     <!-- Test dependencies -->

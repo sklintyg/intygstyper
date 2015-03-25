@@ -113,7 +113,7 @@ public class TransportToInternal {
     private static void buildDiabetes(DiabetesTypBas source) {
         internal.getDiabetes().setHarDiabetes(source.isHarDiabetes());
         if (source.isHarDiabetes()) {
-            internal.getDiabetes().setDiabetesTyp(source.getDiabetesTyp().get(0).name().equals("TYP_1") ? "DIABETES_TYP_1" : "DIABETES_TYP_2");
+            internal.getDiabetes().setDiabetesTyp(source.getDiabetesTyp().name().equals("TYP_1") ? "DIABETES_TYP_1" : "DIABETES_TYP_2");
             internal.getDiabetes().setInsulin(source.isHarBehandlingInsulin());
             internal.getDiabetes().setKost(source.isHarBehandlingKost());
             internal.getDiabetes().setTabletter(source.isHarBehandlingTabletter());
@@ -261,10 +261,10 @@ public class TransportToInternal {
         hosPersonal.setFullstandigtNamn(source.getFullstandigtNamn());
         hosPersonal.setPersonId(source.getPersonId().getExtension());
         if (source.getBefattningar() != null) {
-            hosPersonal.getBefattningar().add(source.getBefattningar());
+            hosPersonal.getBefattningar().addAll(source.getBefattningar());
         }
         if (source.getSpecialiteter() != null) {
-            hosPersonal.getSpecialiteter().add(source.getSpecialiteter());
+            hosPersonal.getSpecialiteter().addAll(source.getSpecialiteter());
         }
         hosPersonal.setVardenhet(convertVardenhet(source.getVardenhet()));
         return hosPersonal;

@@ -175,9 +175,9 @@ public class InternalToTransport {
         diabetes.setHarBehandlingKost(source.getKost());
         diabetes.setHarBehandlingTabletter(source.getTabletter());
         if (source.getDiabetesTyp().equals("DIABETES_TYP_1")) {
-            diabetes.getDiabetesTyp().add(DiabetesTypVarden.fromValue("TYP1"));
+            diabetes.setDiabetesTyp(DiabetesTypVarden.fromValue("TYP1"));
         } else if (source.getDiabetesTyp().equals("DIABETES_TYP_2")) {
-            diabetes.getDiabetesTyp().add(DiabetesTypVarden.fromValue("TYP2"));
+            diabetes.setDiabetesTyp(DiabetesTypVarden.fromValue("TYP2"));
         }
         return diabetes;
     }
@@ -330,12 +330,12 @@ public class InternalToTransport {
         // TODO Find out how this actually looks in Befattningar
         skapadAv.setAtLakare(source.getBefattningar().contains("AT-läkare"));
         if (!source.getBefattningar().isEmpty()) {
-            skapadAv.setBefattningar(StringUtils.join(source.getBefattningar(), ", "));
+            skapadAv.getBefattningar().addAll(source.getBefattningar());
         }
         skapadAv.setFullstandigtNamn(source.getFullstandigtNamn());
         skapadAv.setPersonId(buildII(Constants.HSA_ID_OID, source.getPersonId()));
         skapadAv.setVardenhet(buildVardenhet(source.getVardenhet()));
-        skapadAv.setSpecialiteter(StringUtils.join(source.getSpecialiteter(), ", "));
+        skapadAv.getSpecialiteter().addAll(source.getSpecialiteter());
         return skapadAv;
     }
 

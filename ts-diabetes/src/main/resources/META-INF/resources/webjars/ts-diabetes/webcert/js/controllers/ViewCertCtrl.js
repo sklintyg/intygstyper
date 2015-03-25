@@ -55,7 +55,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
             }
 
             function loadCertificate() {
-                CertificateService.getCertificate($routeParams.certificateId, 'ts-diabetes', function(result) {
+                CertificateService.getCertificate($routeParams.certificateId, intygType, function(result) {
                     $scope.widgetState.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
@@ -93,7 +93,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
 
             ManageCertificate.initSend($scope);
             $scope.send = function(cert) {
-                cert.intygType = 'ts-bas';
+                cert.intygType = intygType;
                 ManageCertificate.send($scope, cert, 'TS', 'ts-diabetes.label.send', function() {
                         loadCertificate();
                     });

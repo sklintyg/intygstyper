@@ -18,7 +18,7 @@
         </cxf:features>
     </cxf:bus>
     <!-- ws clients -->
-    <jaxws:client id="registerTSBasReponderInterface"
+    <jaxws:client id="registerTSBasClient"
         serviceClass="se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponderInterface"
         address="${intygstjanst.registertsbas.endpoint.url}">
     </jaxws:client>

@@ -27,7 +27,6 @@ import javax.xml.bind.JAXBContext;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -58,7 +57,6 @@ import se.inera.certificate.modules.ts_diabetes.pdf.PdfGenerator;
 import se.inera.certificate.modules.ts_diabetes.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.ts_diabetes.util.TSDiabetesCertificateMetaTypeConverter;
 import se.inera.certificate.modules.ts_diabetes.validator.Validator;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponseType;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesType;
@@ -178,42 +176,60 @@ public class ModuleService implements ModuleApi {
 
     @Override
     public void registerCertificate(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
-        sendCertificateToRecipient(internalModel, logicalAddress);
+        RegisterTSDiabetesType request = new RegisterTSDiabetesType();
+        try {
+            Utlatande internal = objectMapper.readValue(internalModel.getInternalModel(), Utlatande.class);
+            request.setIntyg(InternalToTransportConverter.convert(internal));
+        } catch (IOException e) {
+            LOG.error("Failed to convert to transport format during registerTSBas", e);
+            throw new ExternalServiceCallException("Failed to convert to transport format during registerTSBas", e);
+        }
+
+        RegisterTSDiabetesResponseType response=
+                diabetesRegisterClient.registerTSDiabetes(logicalAddress, request);
+
+        // check whether call was successful or not
+        if (response.getResultat().getResultCode() != ResultCodeType.OK) {
+            String message = response.getResultat().getResultCode() == ResultCodeType.INFO
+                    ? response.getResultat().getResultText()
+                    : response.getResultat().getErrorId() + " : " + response.getResultat().getResultText();
+            throw new ExternalServiceCallException(message);
+        }
     }
 
     @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
-        sendCertificateToRecipient(internalModel, logicalAddress, null);
+//        sendCertificateToRecipient(internalModel, logicalAddress, null);
     }
 
     @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
-        // Check that we got any data at all
-        if (internalModel == null ) {
-            throw new ModuleException("No InternalModelHolder found in call to sendCertificateToRecipient!");
-        }
-
-        // Check that we got any data at all
-        if (logicalAddress == null || logicalAddress.length() == 0) {
-            throw new ModuleException("No LogicalAddress found in call to sendCertificateToRecipient!");
-        }
-
-        try {
-            Utlatande utlatande = objectMapper.readValue(internalModel.getInternalModel(), Utlatande.class);
-            TSDiabetesIntyg request = InternalToTransportConverter.convert(utlatande);
-            
-            sendCertificateToRecipient(request, logicalAddress, recipientId);
-
-        } catch (IOException e) {
-            throw new ModuleException(e);
-        }
+//        // Check that we got any data at all
+//        if (internalModel == null ) {
+//            throw new ModuleException("No InternalModelHolder found in call to sendCertificateToRecipient!");
+//        }
+//
+//        // Check that we got any data at all
+//        if (logicalAddress == null || logicalAddress.length() == 0) {
+//            throw new ModuleException("No LogicalAddress found in call to sendCertificateToRecipient!");
+//        }
+//
+//        try {
+//            Utlatande utlatande = objectMapper.readValue(internalModel.getInternalModel(), Utlatande.class);
+//            TSDiabetesIntyg request = InternalToTransportConverter.convert(utlatande);
+//            
+//            sendCertificateToRecipient(request, logicalAddress, recipientId);
+//
+//        } catch (IOException e) {
+//            throw new ModuleException(e);
+//        }
     }
 
     private void sendCertificateToRecipient(TSDiabetesIntyg request, String logicalAddress, String recipientId) throws ExternalServiceCallException {
         RegisterTSDiabetesType parameters = new RegisterTSDiabetesType();
         parameters.setIntyg(request);
         RegisterTSDiabetesResponseType response = diabetesRegisterClient.registerTSDiabetes(logicalAddress, parameters);
-        
+
         if (response.getResultat().getResultCode() != ResultCodeType.OK) {
             String message = response.getResultat().getResultCode() == ResultCodeType.INFO
                     ? response.getResultat().getResultText()

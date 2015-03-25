@@ -49,4 +49,9 @@
         </jaxws:schemaLocations>
     </jaxws:endpoint>
 
+  <!-- ws clients -->
+  <jaxws:client id="registerTSBasClient"
+                  serviceClass="se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateResponderInterface"
+                  address="${registercertificatev1.endpoint.url}">
+  </jaxws:client>
 </beans>
