@@ -89,7 +89,8 @@ module.exports = function(config) {
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-phantomjs-launcher',
-            'karma-mocha-reporter'
+            'karma-mocha-reporter',
+            'karma-ng-html2js-preprocessor'
         ],
 
         reporters: [ 'progress' ]
