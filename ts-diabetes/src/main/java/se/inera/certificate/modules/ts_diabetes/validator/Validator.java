@@ -18,25 +18,10 @@
  */
 package se.inera.certificate.modules.ts_diabetes.validator;
 
-import java.util.List;
-
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.certificate.modules.ts_diabetes.model.external.Utlatande;
-import se.inera.certificate.modules.ts_diabetes.validator.external.ExternalValidatorInstance;
 import se.inera.certificate.modules.ts_diabetes.validator.internal.InternalValidatorInstance;
 
 public class Validator {
-    /**
-     * Validates an external Utlatande.
-     *
-     * @param utlatande
-     *            se.inera.certificate.modules.ts_diabetes.model.external.Utlatande
-     * @return List of validation errors, or an empty string if validated correctly
-     */
-    public List<String> validateExternal(Utlatande utlatande) {
-        ExternalValidatorInstance instance = new ExternalValidatorInstance();
-        return instance.validate(utlatande);
-    }
 
     /**
      * Validates an external Utlatande.

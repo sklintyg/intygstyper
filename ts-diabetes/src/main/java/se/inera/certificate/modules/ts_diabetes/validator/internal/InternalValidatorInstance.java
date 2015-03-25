@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.dto.ValidationMessage;
+import se.inera.certificate.modules.support.api.dto.ValidationMessageType;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Diabetes;
 import se.inera.certificate.model.common.internal.HoSPersonal;
@@ -57,12 +58,12 @@ public class InternalValidatorInstance {
             context = new ValidationContext(utlatande);
             validateBedomning(utlatande.getBedomning());
             validateDiabetes(utlatande.getDiabetes());
-            validateHoSPersonal(utlatande.getIntygMetadata().getSkapadAv());
+            validateHoSPersonal(utlatande.getGrundData().getSkapadAv());
             validateIntygAvser(utlatande.getIntygAvser());
             validateIdentitetStyrkt(utlatande.getVardkontakt());
             validateSyn(utlatande.getSyn());
             validateHypoglykemi(utlatande.getHypoglykemier());
-            validatePatient(utlatande.getIntygMetadata().getPatient());
+            validatePatient(utlatande.getGrundData().getPatient());
         }
 
         ValidateDraftResponse response = new ValidateDraftResponse(getValidationStatus(), validationMessages);
@@ -356,7 +357,9 @@ public class InternalValidatorInstance {
      * @param msg   a String with an error code for the front end implementation
      */
     private void addValidationError(String field, String msg) {
-        validationMessages.add(new ValidationMessage(field, msg));
+        // TODO This might not be a viable approach anymore, we might have to handle validation messages inline in the
+        // code so MessageType can be set properly
+        validationMessages.add(new ValidationMessage(field, ValidationMessageType.OTHER, msg));
         LOG.debug(field + " " + msg);
     }
 

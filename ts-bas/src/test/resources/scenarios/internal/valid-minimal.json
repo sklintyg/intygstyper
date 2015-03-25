@@ -19,7 +19,8 @@
                     "vardgivarnamn": "Vårdgivarnamn"
                 }
             },
-            "befattningar": []
+            "befattningar" : []
+
         },
         "patient": {
             "personId": "19121212-1212",

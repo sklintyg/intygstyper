@@ -18,15 +18,15 @@
  */
 package se.inera.certificate.modules.ts_diabetes.model.internal;
 
-import se.inera.certificate.model.common.internal.IntygMetadata;
+import se.inera.certificate.model.common.internal.GrundData;
 
-public class Utlatande {
+public class Utlatande extends se.inera.certificate.model.common.internal.Utlatande {
 
     private String id;
 
     private String typ;
 
-    private IntygMetadata intygMetadata = new IntygMetadata();
+    private GrundData grundData = new GrundData();
 
     private String kommentar;
 
@@ -46,12 +46,15 @@ public class Utlatande {
 
     public void setId(String id) { this.id = id; }
 
-    public IntygMetadata getIntygMetadata() { return intygMetadata; }
+    public GrundData getGrundData() {
+		return grundData;
+	}
 
-    public void setIntygMetadata(IntygMetadata intygMetadata) {
-        this.intygMetadata = intygMetadata;
-    }
-    public String getTyp() {
+	public void setGrundData(GrundData grundData) {
+		this.grundData = grundData;
+	}
+
+	public String getTyp() {
         return typ;
     }
 

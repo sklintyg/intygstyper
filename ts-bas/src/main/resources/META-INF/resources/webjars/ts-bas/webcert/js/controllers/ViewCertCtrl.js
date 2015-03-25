@@ -1,15 +1,18 @@
 angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
     [ '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', 'common.CertificateService',
         'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate','common.User',
+        'common.IntygCopyRequestModel',
         function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView,
-            messageService, ManageCertificate, User) {
+            messageService, ManageCertificate, User, IntygCopyRequestModel) {
             'use strict';
 
             /*********************************************************************
              * Page state
              *********************************************************************/
+            
+            var intygType = 'ts-bas';
 
-            $scope.user = { lakare: User.userContext.lakare };
+            $scope.user = { lakare: User.getUserContext().lakare };
             $scope.cert = {};
             $scope.widgetState = {
                 doneLoading: false,
@@ -60,7 +63,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             }
 
             function loadCertificate() {
-                CertificateService.getCertificate($routeParams.certificateId, 'ts-bas', function(result) {
+                CertificateService.getCertificate($routeParams.certificateId, intygType, function(result) {
                     $scope.widgetState.doneLoading = true;
                     if (result !== null) {
                         $scope.cert = result.contents;
@@ -71,9 +74,9 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
                         $scope.view.intygAvser = createKorkortstypListString($scope.cert.intygAvser.korkortstyp);
                         $scope.view.bedomning = createKorkortstypListString($scope.cert.bedomning.korkortstyp);
 
-                        $rootScope.$emit('ts-bas.ViewCertCtrl.load', result.metaData);
-                        $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.metaData.statuses, 'TS');
-                        $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.metaData.statuses);
+                        $rootScope.$emit('ts-bas.ViewCertCtrl.load', result);
+                        $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.statuses, 'TS');
+                        $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.statuses);
                         if($scope.certProperties.isRevoked) {
                             $scope.widgetState.printStatus = 'revoked';
                         } else {
@@ -98,5 +101,57 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             }
             loadCertificate();
 
-            $scope.$on('loadCertificate', loadCertificate);
+            /*********************************************************************
+             * Exposed scope interaction functions
+             *********************************************************************/
+
+            ManageCertificate.initSend($scope);
+            $scope.send = function(cert) {
+                cert.intygType = 'ts-bas';
+                ManageCertificate.send($scope, cert, 'TS', 'ts-bas.label.send', function() {
+                        loadCertificate();
+                    });
+            };
+
+            ManageCertificate.initMakulera($scope);
+            $scope.makulera = function(cert) {
+                var confirmationMessage = messageService.getProperty('ts-bas.label.makulera.confirmation', {
+                    namn: cert.grundData.patient.fullstandigtNamn, personnummer: cert.grundData.patient.personId });
+
+                cert.intygType = 'ts-bas';
+                ManageCertificate.makulera($scope, cert, confirmationMessage, function() {
+                    loadCertificate();
+                });
+            };
+
+            ManageCertificate.initCopyDialog($scope);
+            $scope.copy = function(cert) {
+
+                if (cert === undefined || cert.grundData === undefined) {
+                    $log.debug('cert or cert.grundData is undefined. Aborting copy.');
+                    return;
+                }
+
+                var isOtherCareUnit = User.getValdVardenhet() !== cert.grundData.skapadAv.vardenhet.enhetsid;
+
+                ManageCertificate.copy($scope,
+                    IntygCopyRequestModel.build({
+                        intygId: cert.id,
+                        intygType: intygType,
+                        patientPersonnummer: cert.grundData.patient.personId,
+                        nyttPatientPersonnummer: $routeParams.patientId
+                    }),
+                    isOtherCareUnit);
+            };
+
+            $scope.print = function(cert) {
+
+                if ($scope.certProperties.isRevoked) {
+                    ManageCertView.printDraft(cert.id, intygType);
+                } else {
+                    document.pdfForm.submit();
+                }
+            };
+
+			$scope.$on('loadCertificate', loadCertificate);
         }]);

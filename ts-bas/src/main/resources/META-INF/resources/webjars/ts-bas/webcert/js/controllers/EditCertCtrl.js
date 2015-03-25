@@ -1,6 +1,6 @@
 angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
-    [ '$anchorScroll', '$location', '$scope', '$window', 'common.ManageCertView', 'common.User', 'common.wcFocus', 'common.intygNotifyService',
-        function($anchorScroll, $location, $scope, $window, ManageCertView, User, wcFocus, intygNotifyService) {
+    [ '$anchorScroll', '$location', '$scope', '$window', 'common.ManageCertView', 'common.UserModel', 'common.wcFocus', 'common.intygNotifyService',
+        function($anchorScroll, $location, $scope, $window, ManageCertView, UserModel, wcFocus, intygNotifyService) {
             'use strict';
 
             /**********************************************************************************
@@ -8,7 +8,7 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
              **********************************************************************************/
 
             // init state
-            $scope.user = User;
+            $scope.user = UserModel;
             $scope.focusFirstInput = true;
             $scope.widgetState = {
                 doneLoading: false,

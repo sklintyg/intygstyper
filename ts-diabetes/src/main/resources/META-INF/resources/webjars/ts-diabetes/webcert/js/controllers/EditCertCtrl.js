@@ -1,7 +1,7 @@
 angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
-    ['$anchorScroll', '$location', '$log', '$scope', '$window', 'common.ManageCertView', 'common.User',
+    ['$anchorScroll', '$location', '$log', '$scope', '$window', 'common.ManageCertView', 'common.UserModel',
         'common.wcFocus', 'common.intygNotifyService',
-        function($anchorScroll, $location, $log, $scope, $window, ManageCertView, User, wcFocus, intygNotifyService) {
+        function($anchorScroll, $location, $log, $scope, $window, ManageCertView, UserModel, wcFocus, intygNotifyService) {
             'use strict';
 
             /**********************************************************************************
@@ -9,7 +9,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
              **********************************************************************************/
 
                 // Page state
-            $scope.user = User;
+            $scope.user = UserModel;
             $scope.focusFirstInput = true;
             $scope.widgetState = {
                 doneLoading: false,

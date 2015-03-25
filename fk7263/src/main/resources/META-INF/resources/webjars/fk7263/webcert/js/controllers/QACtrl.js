@@ -151,13 +151,6 @@ angular.module('fk7263').controller('fk7263.QACtrl',
             };
             $scope.initQuestionForm();
 
-            // listeners - interscope communication
-            var unbindmarkAnsweredAsHandledEvent = $scope.$on('markAnsweredAsHandledEvent', function($event, deferred, unhandledQas) {
-                $scope.updateAnsweredAsHandled(deferred, unhandledQas);
-            });
-
-            $scope.$on('$destroy', unbindmarkAnsweredAsHandledEvent);
-
             var unbindHasUnhandledQasEvent = $scope.$on('hasUnhandledQasEvent', function($event, deferred) {
                 deferred.resolve(fragaSvarCommonService.getUnhandledQas($scope.qaList));
             });

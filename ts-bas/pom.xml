@@ -29,11 +29,25 @@
       <groupId>se.inera.intyg.common</groupId>
       <artifactId>integration-util</artifactId>
     </dependency>
-
     <!-- Schemas -->
     <dependency>
       <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
       <artifactId>clinicalprocess-healthcond-certificate-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
+      <artifactId>clinicalprocess-healthcond-certificate-interactions</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
+      <artifactId>se-intygstjanster-ts-services-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
+      <artifactId>se-intygstjanster-ts-services-interactions</artifactId>
     </dependency>
 
     <dependency>
@@ -68,6 +82,11 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
     </dependency>
 
     <!-- Test dependencies -->
@@ -160,28 +179,6 @@
             <goals>
               <goal>test-jar</goal>
             </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-xjc-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>xsdtojava</goal>
-            </goals>
-            <phase>generate-sources</phase>
-            <configuration>
-              <xsdOptions>
-                <xsdOption>
-                  <xsd>src/main/resources/schemas/ts-bas_model.xsd</xsd>
-                  <extension>true</extension>
-                  <bindingFile>${basedir}/src/main/resources/schemas/binding.xjb</bindingFile>
-                </xsdOption>
-              </xsdOptions>
-            </configuration>
           </execution>
         </executions>
       </plugin>
