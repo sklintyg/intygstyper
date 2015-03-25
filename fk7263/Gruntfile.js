@@ -106,7 +106,8 @@ module.exports = function(grunt) {
         ngtemplates: {
             options: {
                 // This should be the name of your apps angular module
-                module: 'fk7263',
+                module: 'fk7263'
+                // doesn't work with our fantastically complicated html files ... let uglify do the compression
                 //htmlmin: {
                 //    collapseBooleanAttributes:      false,
                 //    collapseWhitespace:             false,
@@ -128,37 +129,12 @@ module.exports = function(grunt) {
                     }
                 }
             }
-        },
-
-        html2js: {
-
-            webcert: {
-                src: [SRC_DIR +'**/*.html'],
-                dest: SRC_DIR +'/webjars/fk7263/webcert/js/templates.js',
-                options: {
-                    module : 'fk7263',
-                    rename: function(url) {
-                        return url.replace('main/resources/META-INF/resources', '/web');
-                    },
-                    singleModule : true,
-                    htmlmin: {
-                        collapseBooleanAttributes: true,
-                        collapseWhitespace: true,
-                        removeAttributeQuotes: true,
-                        removeComments: true,
-                        removeEmptyAttributes: true,
-                        removeRedundantAttributes: true,
-                        removeScriptTypeAttributes: true,
-                        removeStyleLinkTypeAttributes: true
-                    }
-                }
-            }
         }
 
 
     });
 
-    grunt.registerTask('default', [ 'html2js', 'concat', 'ngAnnotate', 'uglify' ]);
+    grunt.registerTask('default', [ 'ngtemplates', 'concat', 'ngAnnotate', 'uglify' ]);
     grunt.registerTask('lint-minaintyg', [ 'jshint:minaintyg', 'csslint:minaintyg' ]);
     grunt.registerTask('lint-webcert', [ 'jshint:webcert', 'csslint:webcert' ]);
     grunt.registerTask('lint', [ 'jshint', 'csslint' ]);
