@@ -8,6 +8,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-ng-annotate');
+    grunt.loadNpmTasks('grunt-angular-templates');
+    grunt.loadNpmTasks('grunt-html2js');
 
     var SRC_DIR = 'src/main/resources/META-INF/resources/';
     var TEST_DIR = 'src/test/js/';
@@ -99,10 +101,64 @@ module.exports = function(grunt) {
                 src: DEST_DIR + 'webjars/fk7263/webcert/js/module.min.js',
                 dest: DEST_DIR + 'webjars/fk7263/webcert/js/module.min.js'
             }
+        },
+
+        ngtemplates: {
+            options: {
+                // This should be the name of your apps angular module
+                module: 'fk7263',
+                //htmlmin: {
+                //    collapseBooleanAttributes:      false,
+                //    collapseWhitespace:             false,
+                //    removeAttributeQuotes:          false,
+                //    removeComments:                 false, // Only if you don't use comment directives!
+                //    removeEmptyAttributes:          false,
+                //    removeRedundantAttributes:      false,
+                //    removeScriptTypeAttributes:     false,
+                //    removeStyleLinkTypeAttributes:  false
+                //}
+            },
+            fk7263: {
+                cwd: SRC_DIR +'/webjars/fk7263/webcert',
+                src: ['**/*.html'],
+                dest: SRC_DIR +'/webjars/fk7263/webcert/js/templates.js',
+                options:{
+                    url: function(url) {
+                        return '/web/webjars/fk7263/webcert/' + url;
+                    }
+                }
+            }
+        },
+
+        html2js: {
+
+            webcert: {
+                src: [SRC_DIR +'**/*.html'],
+                dest: SRC_DIR +'/webjars/fk7263/webcert/js/templates.js',
+                options: {
+                    module : 'fk7263',
+                    rename: function(url) {
+                        return url.replace('main/resources/META-INF/resources', '/web');
+                    },
+                    singleModule : true,
+                    htmlmin: {
+                        collapseBooleanAttributes: true,
+                        collapseWhitespace: true,
+                        removeAttributeQuotes: true,
+                        removeComments: true,
+                        removeEmptyAttributes: true,
+                        removeRedundantAttributes: true,
+                        removeScriptTypeAttributes: true,
+                        removeStyleLinkTypeAttributes: true
+                    }
+                }
+            }
         }
+
+
     });
 
-    grunt.registerTask('default', [ 'concat', 'ngAnnotate', 'uglify' ]);
+    grunt.registerTask('default', [ 'html2js', 'concat', 'ngAnnotate', 'uglify' ]);
     grunt.registerTask('lint-minaintyg', [ 'jshint:minaintyg', 'csslint:minaintyg' ]);
     grunt.registerTask('lint-webcert', [ 'jshint:webcert', 'csslint:webcert' ]);
     grunt.registerTask('lint', [ 'jshint', 'csslint' ]);
