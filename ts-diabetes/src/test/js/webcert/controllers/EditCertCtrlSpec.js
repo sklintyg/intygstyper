@@ -2,16 +2,16 @@ describe('ts-diabetes.EditCertCtrl', function() {
     'use strict';
 
     var ManageCertView;
-    var User;
+    var UserModel;
     var wcFocus;
     var intygNotifyService;
 
     beforeEach(angular.mock.module('ts-diabetes', function($provide) {
         ManageCertView = jasmine.createSpyObj('common.ManageCertView', [ 'load' ]);
-        User = {};
+        UserModel = {};
         wcFocus = {};
         $provide.value('common.ManageCertView', ManageCertView);
-        $provide.value('common.User', User);
+        $provide.value('common.UserModel', UserModel);
         $provide.value('common.wcFocus', wcFocus);
         $provide.value('common.intygNotifyService', intygNotifyService);
     }));
