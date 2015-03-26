@@ -21,12 +21,12 @@ import se.inera.certificate.validate.CertificateValidationException;
  * @author par.wenaker
  */
 @Transactional
-@WebServiceProvider(targetNamespace = "urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:1", serviceName = "RegisterCertificateResponderService", wsdlLocation = "schemas/v3/RegisterMedicalCertificateInteraction/RegisterMedicalCertificateInteraction_3.1_rivtabp20.wsdl")
+@WebServiceProvider(targetNamespace = "urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:1::rivtabp21", serviceName = "RegisterCertificateResponderService", wsdlLocation = "schemas/v1/RegisterCertificateInteraction/RegisterCertificateInteraction_1.0_rivtabp21.wsdl")
 public class RegisterCertificateResponderStub implements RegisterCertificateResponderInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterCertificateResponderStub.class);
     
-    @Autowired
+    @Autowired(required = false)
     private TSCertificateStore tsCertificatesStore;
 
     protected void validateTransport(RegisterCertificateType registerCertificate) throws CertificateValidationException {
@@ -44,7 +44,7 @@ public class RegisterCertificateResponderStub implements RegisterCertificateResp
         props.put("Personnummer", utlatande.getPatient().getPersonId().getExtension());
         props.put("Makulerad", "NEJ");
 
-        LOGGER.info("STUB Received request");
+        LOGGER.info("TS-STUB Received request");
         tsCertificatesStore.addCertificate(id, props);
         response.setResult(ResultTypeUtil.okResult());
         return response;
