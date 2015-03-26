@@ -1,42 +1,23 @@
 package se.inera.certificate.modules.ts_bas.validator.external;
 
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.common.codes.CodeConverter;
-import se.inera.certificate.modules.ts_bas.model.codes.IntygAvserKod;
-import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
-import se.inera.certificate.modules.ts_bas.model.external.Observation;
-import se.inera.certificate.modules.ts_bas.model.external.Utlatande;
+import se.inera.certificate.modules.ts_bas.model.codes.KorkortsKod;
+import se.inera.intygstjanster.ts.services.v1.KorkortsbehorighetTsBas;
+import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 public class ValidationContext {
 
-    private static final Object KOD_HAR_DIABETES = CodeConverter.toKod(ObservationsKod.HAR_DIABETES);
+    private final TSBasIntyg utlatande;
 
-    private final Utlatande utlatande;
-
-    public ValidationContext(Utlatande utlatande) {
+    public ValidationContext(TSBasIntyg utlatande) {
         this.utlatande = utlatande;
     }
 
-    public boolean isDiabetesContext() {
-        for (Observation observation : utlatande.getObservationer()) {
-            Kod observationskod = observation.getObservationskod();
-            if (observationskod != null && observationskod.equals(KOD_HAR_DIABETES)) {
-                if (observation.getForekomst() != null) {
-                    return observation.getForekomst();
-                }
-            }
-        }
-        return false;
-    }
-
     public boolean isPersontransportContext() {
-        for (Kod intygAvser : utlatande.getIntygAvser()) {
-            IntygAvserKod intygAvserEnum = CodeConverter.fromCode(intygAvser, IntygAvserKod.class);
-            if (intygAvserEnum != null && IntygAvserKod.PERSONTRANSPORT.contains(intygAvserEnum)) {
+        for (KorkortsbehorighetTsBas intygAvser : utlatande.getIntygAvser().getKorkortstyp()) {
+            if (intygAvser != null && KorkortsKod.isPersontransport(intygAvser.value().value())) {
                 return true;
             }
         }
-
         return false;
     }
 }

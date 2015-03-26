@@ -3,11 +3,8 @@ package se.inera.certificate.modules.ts_diabetes.model.codes;
 import static se.inera.certificate.modules.ts_diabetes.model.codes.Kodverk.ICD_10;
 import static se.inera.certificate.modules.ts_diabetes.model.codes.Kodverk.OBSERVATIONER;
 import static se.inera.certificate.modules.ts_diabetes.model.codes.Kodverk.SNOMED_CT;
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.common.codes.CodeConverter;
-import se.inera.certificate.model.common.codes.CodeSystem;
 
-public enum ObservationsKod implements CodeSystem {
+public enum ObservationsKod  {
 
     /** Diplopi (H53.2). */
     DIPLOPI("H53.2", "Diplopi", ICD_10),
@@ -83,7 +80,6 @@ public enum ObservationsKod implements CodeSystem {
     /**
      * {@inheritDoc}
      */
-    @Override
     public String getCode() {
         return code;
     }
@@ -91,7 +87,6 @@ public enum ObservationsKod implements CodeSystem {
     /**
      * {@inheritDoc}
      */
-    @Override
     public String getDescription() {
         return description;
     }
@@ -99,7 +94,6 @@ public enum ObservationsKod implements CodeSystem {
     /**
      * {@inheritDoc}
      */
-    @Override
     public String getCodeSystem() {
         return codeSystem;
     }
@@ -107,7 +101,6 @@ public enum ObservationsKod implements CodeSystem {
     /**
      * {@inheritDoc}
      */
-    @Override
     public String getCodeSystemName() {
         return codeSystemName;
     }
@@ -115,7 +108,6 @@ public enum ObservationsKod implements CodeSystem {
     /**
      * {@inheritDoc}
      */
-    @Override
     public String getCodeSystemVersion() {
         return codeSystemVersion;
     }
@@ -123,10 +115,6 @@ public enum ObservationsKod implements CodeSystem {
     /**
      * {@inheritDoc}
      */
-    @Override
-    public boolean matches(Kod kod) {
-        return CodeConverter.matches(this, kod);
-    }
 
     public boolean matches(String code) {
         return this.code.equals(code);

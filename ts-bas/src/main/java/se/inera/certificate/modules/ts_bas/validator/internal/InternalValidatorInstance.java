@@ -10,8 +10,9 @@ import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.dto.ValidationMessage;
+import se.inera.certificate.modules.support.api.dto.ValidationMessageType;
 import se.inera.certificate.modules.support.api.dto.ValidationStatus;
-import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
+import se.inera.certificate.modules.ts_bas.model.codes.DiabetesKod;
 import se.inera.certificate.modules.ts_bas.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_bas.model.internal.Diabetes;
 import se.inera.certificate.modules.ts_bas.model.internal.Funktionsnedsattning;
@@ -56,7 +57,8 @@ public class InternalValidatorInstance {
      * Validates an internal draft of an {@link Utlatande} (this means the object being validated is not necessarily
      * complete).
      *
-     * @param utlatande an internal {@link Utlatande}
+     * @param utlatande
+     *            an internal {@link Utlatande}
      * @return a {@link ValidateDraftResponseHolder} with a status and a list of validationErrors
      */
     public ValidateDraftResponse validate(Utlatande utlatande) {
@@ -74,7 +76,7 @@ public class InternalValidatorInstance {
             validateHjartKarl(utlatande.getHjartKarl());
             validateHorselBalans(utlatande.getHorselBalans());
 
-            validateHoSPersonal(utlatande.getIntygMetadata().getSkapadAv());
+            validateHoSPersonal(utlatande.getGrundData().getSkapadAv());
 
             validateIntygAvser(utlatande.getIntygAvser());
             validateIdentitetStyrkt(utlatande.getVardkontakt());
@@ -90,7 +92,7 @@ public class InternalValidatorInstance {
             validateSomnVakenhet(utlatande.getSomnVakenhet());
             validatePsykiskt(utlatande.getPsykiskt());
             validateUtvecklingsstorning(utlatande.getUtvecklingsstorning());
-            validatePatient(utlatande.getIntygMetadata().getPatient());
+            validatePatient(utlatande.getGrundData().getPatient());
         }
 
         ValidateDraftResponse response = new ValidateDraftResponse(getValidationStatus(), validationMessages);
@@ -225,7 +227,7 @@ public class InternalValidatorInstance {
             if (diabetes.getDiabetesTyp() == null) {
                 addValidationError("diabetes.diabetesTyp", "ts-bas.validation.diabetes.diabetesTyp.missing");
 
-            } else if (diabetes.getDiabetesTyp().equals(ObservationsKod.DIABETES_TYP_2.name())) {
+            } else if (diabetes.getDiabetesTyp().equals(DiabetesKod.DIABETES_TYP_2.name())) {
                 if (diabetes.getInsulin() == null && diabetes.getKost() == null && diabetes.getTabletter() == null) {
                     addValidationError("diabetes.diabetesTyp", "ts-bas.validation.diabetes.diabetesTyp.must-choose-one");
                 }
@@ -252,7 +254,8 @@ public class InternalValidatorInstance {
 
         if (context.isPersontransportContext()) {
             if (funktionsnedsattning.getOtillrackligRorelseformaga() == null) {
-                addValidationError("funktionsnedsattning.otillrackligRorelseformaga", "ts-bas.validation.funktionsnedsattning.otillrackligrorelseformaga.missing");
+                addValidationError("funktionsnedsattning.otillrackligRorelseformaga",
+                        "ts-bas.validation.funktionsnedsattning.otillrackligrorelseformaga.missing");
             }
         }
     }
@@ -495,9 +498,12 @@ public class InternalValidatorInstance {
     /**
      * Check for null or empty String, if so add a validation error for field with errorCode.
      *
-     * @param beskrivning the String to check
-     * @param field       the target field in the model
-     * @param errorCode   the errorCode to log in validation errors
+     * @param beskrivning
+     *            the String to check
+     * @param field
+     *            the target field in the model
+     * @param errorCode
+     *            the errorCode to log in validation errors
      */
     private AssertionResult assertDescriptionNotEmpty(String beskrivning, String field, String errorCode) {
         if (beskrivning == null || beskrivning.isEmpty()) {
@@ -511,8 +517,7 @@ public class InternalValidatorInstance {
     /**
      * Check if there are validation errors.
      *
-     * @return {@link ValidationStatus.VALID} if there are no errors, and {@link ValidationStatus.INVALID}
-     * otherwise
+     * @return {@link ValidationStatus.VALID} if there are no errors, and {@link ValidationStatus.INVALID} otherwise
      */
     private ValidationStatus getValidationStatus() {
         return (validationMessages.isEmpty()) ? ValidationStatus.VALID : ValidationStatus.INVALID;
@@ -521,11 +526,15 @@ public class InternalValidatorInstance {
     /**
      * Create a ValidationMessage and add it to the {@link ValidateDraftResponseHolder}.
      *
-     * @param field a String with the name of the field
-     * @param msg   a String with an error code for the front end implementation
+     * @param field
+     *            a String with the name of the field
+     * @param msg
+     *            a String with an error code for the front end implementation
      */
     private void addValidationError(String field, String msg) {
-        validationMessages.add(new ValidationMessage(field, msg));
+        // TODO This might not be a viable approach anymore, we might have to handle validation messages inline in the
+        // code so MessageType can be set properly
+        validationMessages.add(new ValidationMessage(field, ValidationMessageType.OTHER, msg));
         LOG.debug(field + " " + msg);
     }
 

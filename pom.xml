@@ -21,27 +21,28 @@
 
     <!-- Common -->
     <common.version>0-SNAPSHOT</common.version>
-    <common.version.range>(,2.1.0]</common.version.range>
+    <common.version.range>(,2.2.0]</common.version.range>
 
     <!-- Schemas -->
     <clinicalprocess-healthcond-certificate.version>0-SNAPSHOT</clinicalprocess-healthcond-certificate.version>
-    <clinicalprocess-healthcond-certificate.version.range>
-      (,1.0.0]
-    </clinicalprocess-healthcond-certificate.version.range>
+    <clinicalprocess-healthcond-certificate.version.range>(,1.1.0]</clinicalprocess-healthcond-certificate.version.range>
 
     <insuranceprocess-healthreporting.version>0-SNAPSHOT</insuranceprocess-healthreporting.version>
     <insuranceprocess-healthreporting.version.range>(,1.0.0]</insuranceprocess-healthreporting.version.range>
+    
+    <se-intygstjanster-ts-services.version>0-SNAPSHOT</se-intygstjanster-ts-services.version>
+    <se-intygstjanster-ts-services.version.range>(,1.0.0]</se-intygstjanster-ts-services.version.range>
 
     <!-- Netcare -->
-    <mvkintegration.version>1.2.2</mvkintegration.version>
+    <mvkintegration.version>1.2.3</mvkintegration.version>
 
   </properties>
 
   <modules>
     <module>fk7263</module>
     <!--<module>rli</module> -->
-    <!--<module>ts-bas</module> -->
-    <!--<module>ts-diabetes</module> -->
+    <module>ts-bas</module>
+    <module>ts-diabetes</module>
     <module>tools/archetype</module>
   </modules>
 
@@ -95,6 +96,18 @@
         <artifactId>insuranceprocess-healthreporting-interactions</artifactId>
         <version>${insuranceprocess-healthreporting.version}</version>
       </dependency>
+
+  	<dependency>
+  		<groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
+  		<artifactId>se-intygstjanster-ts-services-core</artifactId>
+  		<version>${se-intygstjanster-ts-services.version}</version>
+  	</dependency>
+  	
+    <dependency>
+  		<groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
+  		<artifactId>se-intygstjanster-ts-services-interactions</artifactId>
+  		<version>${se-intygstjanster-ts-services.version}</version>
+  	</dependency>	
 
       <!-- Netcare dependencies -->
       <dependency>
@@ -194,7 +207,7 @@
         <artifactId>versions-maven-plugin</artifactId>
         <configuration>
           <includeProperties>
-            common.version, clinicalprocess-healthcond-certificate.version, insuranceprocess-healthreporting.version
+            common.version, clinicalprocess-healthcond-certificate.version, insuranceprocess-healthreporting.version, se-intygstjanster-ts-services.version
           </includeProperties>
           <properties>
             <property>
@@ -208,6 +221,10 @@
             <property>
               <name>insuranceprocess-healthreporting.version</name>
               <version>${insuranceprocess-healthreporting.version.range}</version>
+            </property>
+            <property>
+              <name>se-intygstjanster-ts-services.version</name>
+              <version>${se-intygstjanster-ts-services.version.range}</version>
             </property>
           </properties>
         </configuration>

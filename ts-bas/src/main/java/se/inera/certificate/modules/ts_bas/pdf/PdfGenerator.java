@@ -27,8 +27,8 @@ import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.ts_bas.model.codes.BefattningKod;
+import se.inera.certificate.modules.ts_bas.model.codes.DiabetesKod;
 import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
-import se.inera.certificate.modules.ts_bas.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_bas.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_bas.model.internal.BedomningKorkortstyp;
 import se.inera.certificate.modules.ts_bas.model.internal.Diabetes;
@@ -192,8 +192,8 @@ public class PdfGenerator {
     }
 
     public String generatePdfFilename(Utlatande utlatande) {
-        String personId = utlatande.getIntygMetadata().getPatient().getPersonId();
-        String certificateSignatureDate = utlatande.getIntygMetadata().getSigneringsdatum().toString(DATEFORMAT_FOR_FILENAMES);
+        String personId = utlatande.getGrundData().getPatient().getPersonId();
+        String certificateSignatureDate = utlatande.getGrundData().getSigneringsdatum().toString(DATEFORMAT_FOR_FILENAMES);
 
         return String.format("lakarutlatande_%s_-%s.pdf", personId, certificateSignatureDate);
     }
@@ -228,7 +228,7 @@ public class PdfGenerator {
      * @throws IOException
      */
     private void populatePdfFields(Utlatande utlatande, AcroFields fields, ApplicationOrigin applicationOrigin) throws IOException, DocumentException {
-        populatePatientInfo(utlatande.getIntygMetadata().getPatient(), fields);
+        populatePatientInfo(utlatande.getGrundData().getPatient(), fields);
         populateIntygAvser(utlatande.getIntygAvser(), fields);
         populateIdkontroll(utlatande.getVardkontakt(), fields);
         populateSynFields(utlatande.getSyn(), fields);
@@ -321,9 +321,9 @@ public class PdfGenerator {
     private void populateDiabetes(Diabetes diabetes, AcroFields fields) throws IOException, DocumentException {
         HAR_DIABETES.setField(fields, diabetes.getHarDiabetes());
         if (diabetes.getDiabetesTyp() != null) {
-            if (diabetes.getDiabetesTyp().equals(ObservationsKod.DIABETES_TYP_1.name())) {
+            if (diabetes.getDiabetesTyp().equals(DiabetesKod.DIABETES_TYP_1.name())) {
                 DIABETES_TYP_1.setField(fields, true);
-            } else if (diabetes.getDiabetesTyp().equals(ObservationsKod.DIABETES_TYP_2.name())) {
+            } else if (diabetes.getDiabetesTyp().equals(DiabetesKod.DIABETES_TYP_2.name())) {
                 DIABETES_TYP_2.setField(fields, true);
             }
         }
@@ -400,15 +400,15 @@ public class PdfGenerator {
     }
 
     private void populateAvslut(Utlatande utlatande, AcroFields fields, ApplicationOrigin applicationOrigin) throws IOException, DocumentException {
-        INTYGSDATUM.setField(fields, utlatande.getIntygMetadata().getSigneringsdatum().toString("yyMMdd"));
-        Vardenhet vardenhet = utlatande.getIntygMetadata().getSkapadAv().getVardenhet();
+        INTYGSDATUM.setField(fields, utlatande.getGrundData().getSigneringsdatum().toString("yyMMdd"));
+        Vardenhet vardenhet = utlatande.getGrundData().getSkapadAv().getVardenhet();
         VARDINRATTNINGENS_NAMN.setField(fields, vardenhet.getEnhetsnamn());
         String adressOrt = String.format("%s, %s, %s", vardenhet.getPostort(), vardenhet.getPostadress(), vardenhet.getPostnummer());
         ADRESS_OCH_ORT.setField(fields, adressOrt);
         TELEFON.setField(fields, vardenhet.getTelefonnummer());
-        NAMNFORTYDLIGANDE.setField(fields, utlatande.getIntygMetadata().getSkapadAv().getFullstandigtNamn());
+        NAMNFORTYDLIGANDE.setField(fields, utlatande.getGrundData().getSkapadAv().getFullstandigtNamn());
 
-        List<String> specialiteter = utlatande.getIntygMetadata().getSkapadAv().getSpecialiteter();
+        List<String> specialiteter = utlatande.getGrundData().getSkapadAv().getSpecialiteter();
         if (specialiteter.size() > 0) {
             SPECIALISTKOMPETENS_CHECK.setField(fields, true);
             // TODO If 'Specialist i allmänmedicin' chose that one.
@@ -416,7 +416,7 @@ public class PdfGenerator {
             SPECIALISTKOMPETENS_BESKRVNING.setField(fields, "implement");
         }
 
-        List<String> befattningar = utlatande.getIntygMetadata().getSkapadAv().getBefattningar();
+        List<String> befattningar = utlatande.getGrundData().getSkapadAv().getBefattningar();
         ST_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.ST_LAKARE.name()));
         AT_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.LAKARE_EJ_LEG_AT.name()));
 

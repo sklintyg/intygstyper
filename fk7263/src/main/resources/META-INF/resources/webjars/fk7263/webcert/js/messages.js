@@ -33,6 +33,7 @@ var fk7263Messages = {
         'fk7263.label.diagnoskodverk.ksh_97_p': 'KSH97-P (Primärvård)',
         'fk7263.label.ytterligarediagnoser': 'Ytterligare diagnoser',
         'fk7263.label.diagnosfortydligande': 'Förtydligande av diagnos/diagnoser',
+        'fk7263.label.diagnoses.more_results': 'Fler träffar finns, förfina sökningen.',
         'fk7263.label.samsjuklighet': 'Samsjuklighet föreligger',
         'fk7263.label.aktuellt-sjukdomsforlopp': 'Aktuellt sjukdomsförlopp',
         'fk7263.label.funktionsnedsattningar': 'Funktionsnedsättning - observationer, undersökningsfynd och utredningsresultat',

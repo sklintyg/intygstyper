@@ -32,15 +32,15 @@ import se.inera.certificate.modules.support.api.dto.ValidationStatus;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
-import se.inera.certificate.modules.ts_bas.validator.Validator;
+import se.inera.certificate.modules.ts_bas.validator.TsBasValidator;
 
 public class InternalValidatorTest {
 
-    private Validator validator;
+    private TsBasValidator validator;
 
     @Before
     public void setUp() throws Exception {
-        validator = new Validator();
+        validator = new TsBasValidator();
     }
 
     @Test

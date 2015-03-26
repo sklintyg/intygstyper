@@ -106,7 +106,7 @@ angular.module('fk7263').directive('qaPanel',
                                 if(qas) {
                                     angular.forEach(qas, function(qa) { //unused parameter , key
                                         fragaSvarCommonService.decorateSingleItem(qa);
-                                        addListMessage(qas, qa, 'fk7263.fragasvar.marked.as.hanterad'); // TODOOOOOOOO TEST !!!!!!!!!!
+                                        //addListMessage(qas, qa, 'fk7263.fragasvar.marked.as.hanterad'); // TODOOOOOOOO TEST !!!!!!!!!!
                                     });
                                     statService.refreshStat();
                                 }
@@ -214,6 +214,12 @@ angular.module('fk7263').directive('qaPanel',
                             }
                         }
                     };
+
+                    // listeners - interscope communication
+                    var unbindmarkAnsweredAsHandledEvent = $scope.$on('markAnsweredAsHandledEvent', function($event, deferred, unhandledQas) {
+                        $scope.updateAnsweredAsHandled(deferred, unhandledQas);
+                    });
+                    $scope.$on('$destroy', unbindmarkAnsweredAsHandledEvent);
 
                 }
             };

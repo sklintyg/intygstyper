@@ -18,14 +18,10 @@
  */
 package se.inera.certificate.modules.ts_bas.model.codes;
 
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.common.codes.CodeConverter;
-import se.inera.certificate.model.common.codes.CodeSystem;
-
 /**
  * Represents all the codes used by this module to define HoSPersonal.
  */
-public enum MetodKod implements CodeSystem {
+public enum MetodKod {
 
     /** Donders konfrontationsmetod (används vid synfältsprövning). */
     DONDERS_KONFRONTATIONSMETOD("MET1", "Donders konfrontationsmetod");
@@ -45,51 +41,23 @@ public enum MetodKod implements CodeSystem {
         this.description = desc;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getCode() {
         return this.code;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getDescription() {
         return this.description;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getCodeSystem() {
         return codeSystem;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getCodeSystemName() {
         return codeSystemName;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getCodeSystemVersion() {
         return codeSystemVersion;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean matches(Kod kod) {
-        return CodeConverter.matches(this, kod);
     }
 }

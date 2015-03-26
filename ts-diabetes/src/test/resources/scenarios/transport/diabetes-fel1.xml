@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TSDiabetesIntyg xmlns:ns2="urn:local:se:intygstjanster:services:types:1" xmlns="urn:local:se:intygstjanster:services:1">
+  <intygsId>233a6482-36c4-4177-89fd-959e2692eec9</intygsId>
+  <intygsTyp>TSTRK1031 (U06, V06)</intygsTyp>
+  <version>02</version>
+  <utgava>06</utgava>
+  <grundData>
+    <skapadAv>
+      <personId>
+        <ns2:root>1.2.752.129.2.1.4.1</ns2:root>
+        <ns2:extension>IFV1239877878-1049</ns2:extension>
+      </personId>
+      <fullstandigtNamn>Jan Nilsson</fullstandigtNamn>
+      <vardenhet>
+        <enhetsId>
+          <ns2:root>1.2.752.129.2.1.4.1</ns2:root>
+          <ns2:extension>IFV1239877878-1042</ns2:extension>
+        </enhetsId>
+        <enhetsnamn>WebCert-Enhet1</enhetsnamn>
+        <postadress>Storgatan 1</postadress>
+        <postnummer>12345</postnummer>
+        <postort>Småmåla</postort>
+        <telefonnummer>0101234567890</telefonnummer>
+        <vardgivare>
+          <vardgivarid>
+            <ns2:root>1.2.752.129.2.1.4.1</ns2:root>
+            <ns2:extension>IFV1239877878-1041</ns2:extension>
+          </vardgivarid>
+          <vardgivarnamn>WebCert-Vårdgivare1</vardgivarnamn>
+        </vardgivare>
+      </vardenhet>
+    </skapadAv>
+    <patient>
+      <personId>
+        <ns2:root>1.2.752.129.2.1.3.1</ns2:root>
+        <ns2:extension>19121212-1212</ns2:extension>
+      </personId>
+      <fullstandigtNamn>Tolvan Tolvansson</fullstandigtNamn>
+      <fornamn>Tolvan</fornamn>
+      <efternamn>Tolvansson</efternamn>
+      <postadress>Svensson, Storgatan 1, PL 1234</postadress>
+      <postnummer>12345</postnummer>
+      <postort>Småmåla</postort>
+    </patient>
+  </grundData>
+  <intygAvser>
+    <korkortstyp>A1</korkortstyp>
+  </intygAvser>
+  <identitetStyrkt>
+    <idkontroll>IDK1</idkontroll>
+  </identitetStyrkt>
+  <diabetes>
+    <debutArDiabetes>1995</debutArDiabetes>
+    <diabetesTyp>TYP1</diabetesTyp>
+    <harBehandlingKost>true</harBehandlingKost>
+    <annanBehandlingBeskrivning>asdasd</annanBehandlingBeskrivning>
+  </diabetes>
+  <hypoglykemier>
+    <harKunskapOmAtgarder>true</harKunskapOmAtgarder>
+    <harTeckenNedsattHjarnfunktion>false</harTeckenNedsattHjarnfunktion>
+    <saknarFormagaKannaVarningstecken>false</saknarFormagaKannaVarningstecken>
+    <harAllvarligForekomst>false</harAllvarligForekomst>
+    <allvarligForekomstBeskrivning/>
+    <harAllvarligForekomstTrafiken>false</harAllvarligForekomstTrafiken>
+    <allvarligForekomstTrafikBeskrivning/>
+    <genomforEgenkontrollBlodsocker>false</genomforEgenkontrollBlodsocker>
+    <harAllvarligForekomstVakenTid>false</harAllvarligForekomstVakenTid>
+  </hypoglykemier>
+  <separatOgonLakarintygKommerSkickas>false</separatOgonLakarintygKommerSkickas>
+  <synfunktion>
+    <harSynfaltsdefekt>false</harSynfaltsdefekt>
+    <synskarpaUtanKorrektion>
+      <hogerOga>1.0</hogerOga>
+      <vansterOga>1.0</vansterOga>
+      <binokulart>1.0</binokulart>
+    </synskarpaUtanKorrektion>
+    <synskarpaMedKorrektion>
+      <hogerOga>1.0</hogerOga>
+      <vansterOga>1.0</vansterOga>
+      <binokulart>1.0</binokulart>
+    </synskarpaMedKorrektion>
+    <harDiplopi>false</harDiplopi>
+    <finnsSynfaltsprovning>false</finnsSynfaltsprovning>
+    <synfaltsprovningUtanAnmarkning>false</synfaltsprovningUtanAnmarkning>
+    <finnsProvningOgatsRorlighet>false</finnsProvningOgatsRorlighet>
+    <finnsSeparatOgonlakarintyg>false</finnsSeparatOgonlakarintyg>
+  </synfunktion>
+  <bedomning>
+    <korkortstyp>TRAKTOR</korkortstyp>
+    <lamplighetInnehaBehorighetSpecial>false</lamplighetInnehaBehorighetSpecial>
+    <behovAvLakareSpecialistKompetens>asdasd</behovAvLakareSpecialistKompetens>
+  </bedomning>
+</TSDiabetesIntyg>
