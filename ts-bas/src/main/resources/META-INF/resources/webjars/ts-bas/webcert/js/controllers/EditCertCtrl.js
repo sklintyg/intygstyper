@@ -270,7 +270,7 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
              **************************************************************************/
 
             // Get the certificate draft from the server.
-            ManageCertView.load($scope, $scope.certMeta.intygType, function(cert) {
+            ManageCertView.load($scope.certMeta.intygType, function(cert) {
                 // Decorate intygspecific default data
                 $scope.cert = cert;
                 convertCertToForm($scope);

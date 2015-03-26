@@ -213,7 +213,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
              **************************************************************************/
 
                 // Get the certificate draft from the server.
-            ManageCertView.load($scope, $scope.certMeta.intygType, function(cert) {
+            ManageCertView.load($scope.certMeta.intygType, function(cert) {
                 // Decorate intygspecific default data
                 $scope.cert = cert;
                 convertCertToForm($scope);
