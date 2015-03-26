@@ -36,6 +36,14 @@
         <constructor-arg value="transform/se-intygstjanster-ts-services/register-ts-diabetes-transform.xslt"/>
       </bean>
     </jaxws:outFaultInterceptors>
+            <jaxws:properties>
+            <entry key="schema-validation-enabled" value="true" />
+        </jaxws:properties>
+        <jaxws:schemaLocations>
+            <jaxws:schemaLocation>classpath:/intygstjanster-services/core-components/se_intygstjanster_services_1.0.xsd</jaxws:schemaLocation>
+            <jaxws:schemaLocation>classpath:/intygstjanster-services/core-components/se_intygstjanster_services_types_1.0.xsd</jaxws:schemaLocation>
+            <jaxws:schemaLocation>classpath:/interactions/RegisterTSDiabetesInteraction/RegisterTSDiabetesResponder_1.0.xsd</jaxws:schemaLocation>
+        </jaxws:schemaLocations>
   </jaxws:endpoint>
 
 </beans>
