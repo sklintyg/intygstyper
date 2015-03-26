@@ -1,21 +1,20 @@
 angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
-    [ '$anchorScroll', '$location', '$scope', '$window', 'common.ManageCertView', 'common.UserModel', 'common.wcFocus', 'common.intygNotifyService',
-        function($anchorScroll, $location, $scope, $window, ManageCertView, UserModel, wcFocus, intygNotifyService) {
+    [ '$anchorScroll', '$location', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel', 'common.wcFocus',
+      'common.intygNotifyService', 'common.IntygEditViewStateService',
+        function($anchorScroll, $location, $scope, $timeout, $window, ManageCertView, UserModel, wcFocus, intygNotifyService, viewState) {
             'use strict';
 
             /**********************************************************************************
              * Default state
              **********************************************************************************/
 
+            viewState.intyg.typ = 'ts-bas';
+
             // init state
             $scope.user = UserModel;
             $scope.focusFirstInput = true;
-            $scope.widgetState = {
-                doneLoading: false,
-                hasError: false,
-                showComplete: false,
-                collapsedHeader: false,
-                hasInfoMissing: false
+            $scope.viewState = {
+                common : viewState
             };
 
             // intyg state
@@ -76,9 +75,9 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
                     $scope.cert.grundData.skapadAv.vardenhet.postnummer === '' ||
                     $scope.cert.grundData.skapadAv.vardenhet.postort === '' ||
                     $scope.cert.grundData.skapadAv.vardenhet.telefonnummer === '') {
-                    $scope.widgetState.hasInfoMissing = true;
+                    $scope.viewState.hasInfoMissing = true;
                 } else {
-                    $scope.widgetState.hasInfoMissing = false;
+                    $scope.viewState.hasInfoMissing = false;
                 }
             }
 
@@ -258,11 +257,11 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
              * @param cert
              */
             $scope.openMailDialog = function() {
-                intygNotifyService.forwardIntyg($scope.certMeta, $scope.widgetState);
+                intygNotifyService.forwardIntyg($scope.certMeta, $scope.viewState);
             };
 
             $scope.onVidarebefordradChange = function() {
-                intygNotifyService.onForwardedChange($scope.certMeta, $scope.widgetState);
+                intygNotifyService.onForwardedChange($scope.certMeta, $scope.viewState);
             };
 
             /**************************************************************************
@@ -274,7 +273,11 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
                 // Decorate intygspecific default data
                 $scope.cert = cert;
                 convertCertToForm($scope);
-                wcFocus('firstInput');
+
+                $timeout(function() {
+                    wcFocus('firstInput');
+                    viewState.doneLoading = true;
+                }, 10);
             });
 
             $scope.$on('beginSave', function($event, deferred) {
