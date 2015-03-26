@@ -139,7 +139,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
                         intygId: cert.id,
                         intygType: intygType,
                         patientPersonnummer: cert.grundData.patient.personId,
-                        nyttPatientPersonnummer: $routeParams.patientId
+                        nyttPatientPersonnummer: $stateParams.patientId
                     }),
                     isOtherCareUnit);
             };

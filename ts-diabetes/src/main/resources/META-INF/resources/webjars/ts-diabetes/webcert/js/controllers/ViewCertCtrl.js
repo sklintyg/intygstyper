@@ -125,7 +125,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                         intygId: cert.id,
                         intygType: intygType,
                         patientPersonnummer: cert.grundData.patient.personId,
-                        nyttPatientPersonnummer: $routeParams.patientId
+                        nyttPatientPersonnummer: $stateParams.patientId
                     }),
                     isOtherCareUnit);
             };
