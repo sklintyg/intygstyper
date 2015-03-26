@@ -40,7 +40,7 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
                     {label: 'Pass ****', id: 'PASS'}
                 ],
                 'korkortd': false,
-                'behorighet': true,
+                'behorighet': 'BEDOMNING',
                 'anyTrue': false
             };
 
@@ -236,14 +236,23 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
                 $scope.specialiteter = result;
             }, true);
 
-            $scope.$watch('form.behorighet', function (uppfyllerKravForBehorighet) {
-                if ($scope.cert.bedomning) {
-                    $scope.cert.bedomning.kanInteTaStallning = !uppfyllerKravForBehorighet;
-                    if (!uppfyllerKravForBehorighet) {
-                        angular.forEach($scope.cert.bedomning.korkortstyp, function (korkortstyp) {
-                            korkortstyp.selected = false;
-                        });
-                    }
+            $scope.$watch('form.behorighet', function (behorighet) {
+                if (!$scope.cert.bedomning) {
+                    $scope.cert.bedomning = {
+                        korkortstyp: {},
+                        kanInteTaStallning: false
+                    };
+                }
+
+                if (behorighet === 'KANINTETASTALLNING') {
+                    $scope.cert.bedomning.kanInteTaStallning = true;
+                    angular.forEach($scope.cert.bedomning.korkortstyp, function (korkortstyp) {
+                        korkortstyp.selected = false;
+                    });
+                } else if(behorighet === 'BEDOMNING') {
+                    $scope.cert.bedomning.kanInteTaStallning = false;
+                } else {
+                    $scope.cert.bedomning.kanInteTaStallning = undefined;
                 }
             });
 
