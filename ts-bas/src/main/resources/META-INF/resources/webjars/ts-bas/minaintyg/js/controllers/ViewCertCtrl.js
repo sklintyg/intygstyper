@@ -127,7 +127,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             $scope.openArchiveDialog = function(cert) {
                 $scope.certToArchive = cert;
                 $scope.dialog.focus = true;
-                archiveDialog = dialogService.showDialog($scope, {
+                archiveDialog = dialogService.showDialog({
                     dialogId: 'archive-confirmation-dialog',
                     titleId: 'inbox.archivemodal.header',
                     bodyTextId: 'inbox.archivemodal.text',
