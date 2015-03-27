@@ -1,7 +1,7 @@
 angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
-    ['$anchorScroll', '$location', '$log', '$scope', '$window', 'common.ManageCertView', 'common.UserModel',
+    ['$anchorScroll', '$location', '$log', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel',
         'common.wcFocus', 'common.intygNotifyService', 'common.IntygEditViewStateService',
-        function($anchorScroll, $location, $log, $scope, $window, ManageCertView, UserModel, wcFocus, intygNotifyService, viewState) {
+        function($anchorScroll, $location, $log, $scope, $timeout, $window, ManageCertView, UserModel, wcFocus, intygNotifyService, viewState) {
             'use strict';
 
             /**********************************************************************************
@@ -10,15 +10,11 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
 
             viewState.intyg.typ = 'ts-diabetes';
 
-                // Page state
+            // Page state
             $scope.user = UserModel;
             $scope.focusFirstInput = true;
-            $scope.widgetState = {
-                doneLoading: false,
-                hasError: false,
-                showComplete: false,
-                collapsedHeader: false,
-                hsaInfoMissing: false
+            $scope.viewState = {
+                common : viewState
             };
 
             // Intyg state
@@ -64,9 +60,9 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                     $scope.cert.grundData.skapadAv.vardenhet.postnummer === '' ||
                     $scope.cert.grundData.skapadAv.vardenhet.postort === '' ||
                     $scope.cert.grundData.skapadAv.vardenhet.telefonnummer === '') {
-                    $scope.widgetState.hasInfoMissing = true;
+                    $scope.viewState.hasInfoMissing = true;
                 } else {
-                    $scope.widgetState.hasInfoMissing = false;
+                    $scope.viewState.hasInfoMissing = false;
                 }
             }
 
@@ -203,11 +199,11 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
              * @param cert
              */
             $scope.openMailDialog = function() {
-                intygNotifyService.forwardIntyg($scope.certMeta, $scope.widgetState);
+                intygNotifyService.forwardIntyg($scope.certMeta, $scope.viewState);
             };
 
             $scope.onVidarebefordradChange = function() {
-                intygNotifyService.onForwardedChange($scope.certMeta, $scope.widgetState);
+                intygNotifyService.onForwardedChange($scope.certMeta, $scope.viewState);
             };
 
             /**************************************************************************
@@ -219,7 +215,11 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 // Decorate intygspecific default data
                 $scope.cert = cert;
                 convertCertToForm($scope);
-                wcFocus('firstInput');
+
+                $timeout(function() {
+                    wcFocus('firstInput');
+                    viewState.doneLoading = true;
+                }, 10);
             });
 
             $scope.$on('convertFormToCert', convertFormToCert);

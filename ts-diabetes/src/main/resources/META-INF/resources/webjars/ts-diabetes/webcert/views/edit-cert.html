@@ -24,18 +24,18 @@
   <div class="row">
     <div class="col-md-12 webcert-col webcert-col-single">
 
-      <div wc-intyg-edit-header></div>
+      <div ui-view="header"></div>
 
       <!-- TS-DIABETES -->
-      <div class="edit-form" ng-class="{'collapsed' : widgetState.collapsedHeader}">
+      <div class="edit-form" ng-class="{'collapsed' : viewState.common.collapsedHeader}">
 
         <form name="certForm" novalidate autocomplete="off">
-          <div ng-hide="widgetState.activeErrorMessageKey">
+          <div ng-hide="viewState.common.error.activeErrorMessageKey">
 
-            <div wc-spinner label="info.loadingdata" show-spinner="!widgetState.doneLoading"
-                 show-content="widgetState.doneLoading">
+            <div wc-spinner label="info.loadingdata" show-spinner="!viewState.common.doneLoading"
+                 show-content="viewState.common.doneLoading">
 
-              <div class="alert alert-danger" ng-show="widgetState.showComplete && !isComplete"
+              <div class="alert alert-danger" ng-show="viewState.common.showComplete && !viewState.common.intyg.isComplete"
                    style="margin-right: 20px">
                 <h3><span message key="draft.saknar-uppgifter"></span></h3>
                 <ul>
@@ -491,7 +491,7 @@
                         ({{cert.grundData.skapadAv.vardenhet.enhetsid}}),
                         {{cert.grundData.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</label>
 
-                      <div class="alert alert-info" ng-show="widgetState.hasInfoMissing">
+                      <div class="alert alert-info" ng-show="viewState.common.hasInfoMissing">
                         Information om vårdenheten saknas i HSA-katalogen. Be den på vårdenheten som är ansvarig för
                         frågor om HSA att uppdatera informationen.
                       </div>
@@ -566,14 +566,14 @@
 
                       <label for="mark-as-vidarebefordrad" class="checkbox-inline">
                         <input id="mark-as-vidarebefordrad" type="checkbox"
-                               ng-disabled="widgetState.vidarebefordraInProgress"
+                               ng-disabled="viewState.common.vidarebefordraInProgress"
                                ng-model="certMeta.vidarebefordrad"
                                ng-change="onVidarebefordradChange()" /> Vidarebefordrad
-                      </label> <span ng-if="widgetState.vidarebefordraInProgress"> <img src="/img/ajax-loader-kit-16x16.gif"></span>
+                      </label> <span ng-if="viewState.common.vidarebefordraInProgress"> <img src="/img/ajax-loader-kit-16x16.gif"></span>
                     </div>
 
                     <button id="signera-utkast-button" class="btn btn-success"
-                            ng-disabled="!isComplete || certForm.$dirty" ng-click="sign()"
+                            ng-disabled="!viewState.common.intyg.isComplete || certForm.$dirty" ng-click="sign()"
                             ng-show="user.userContext.lakare"><span message key="common.sign"></span>
                     </button>
                   </div>
