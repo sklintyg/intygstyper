@@ -7,8 +7,8 @@
  */
 angular.module('fk7263').directive('qaPanel',
     [ '$window', '$log', '$timeout', 'common.User', 'common.fragaSvarCommonService', 'fk7263.fragaSvarService',
-        'common.statService', 'common.dialogService',
-        function($window, $log, $timeout, User, fragaSvarCommonService, fragaSvarService, statService, dialogService) {
+        'common.statService', 'common.dialogService','fk7263.QACtrl.Helper',
+        function($window, $log, $timeout, User, fragaSvarCommonService, fragaSvarService, statService, dialogService, qaHelper) {
             'use strict';
 
             return {

@@ -1,22 +1,20 @@
 angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
-    ['$anchorScroll', '$location', '$log', '$scope', '$window', 'common.ManageCertView', 'common.UserModel',
-        'common.wcFocus', 'common.intygNotifyService',
-        function($anchorScroll, $location, $log, $scope, $window, ManageCertView, UserModel, wcFocus, intygNotifyService) {
+    ['$anchorScroll', '$location', '$log', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel',
+        'common.wcFocus', 'common.intygNotifyService', 'common.IntygEditViewStateService',
+        function($anchorScroll, $location, $log, $q, $rootScope, $scope, $timeout, $window, ManageCertView, UserModel, wcFocus, intygNotifyService, viewState) {
             'use strict';
 
             /**********************************************************************************
              * Default state
              **********************************************************************************/
 
-                // Page state
+            viewState.intyg.typ = 'ts-diabetes';
+
+            // Page state
             $scope.user = UserModel;
             $scope.focusFirstInput = true;
-            $scope.widgetState = {
-                doneLoading: false,
-                hasError: false,
-                showComplete: false,
-                collapsedHeader: false,
-                hsaInfoMissing: false
+            $scope.viewState = {
+                common : viewState
             };
 
             // Intyg state
@@ -62,9 +60,9 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                     $scope.cert.grundData.skapadAv.vardenhet.postnummer === '' ||
                     $scope.cert.grundData.skapadAv.vardenhet.postort === '' ||
                     $scope.cert.grundData.skapadAv.vardenhet.telefonnummer === '') {
-                    $scope.widgetState.hasInfoMissing = true;
+                    $scope.viewState.hasInfoMissing = true;
                 } else {
-                    $scope.widgetState.hasInfoMissing = false;
+                    $scope.viewState.hasInfoMissing = false;
                 }
             }
 
@@ -195,63 +193,21 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
              * Exposed interaction
              ******************************************************************************************/
 
-            $scope.toggleHeader = function() {
-                $scope.widgetState.collapsedHeader = !$scope.widgetState.collapsedHeader;
-            };
-
-            $scope.toggleShowComplete = function() {
-                $scope.widgetState.showComplete = !$scope.widgetState.showComplete;
-                if ($scope.widgetState.showComplete) {
-                    $scope.save();
-                    var old = $location.hash();
-                    $location.hash('top');
-                    $anchorScroll();
-                    // reset to old to keep any additional routing logic from kicking in
-                    $location.hash(old);
-                }
-            };
-
-            /**
-             * Action to save the certificate draft to the server.
-             */
-            $scope.save = function() {
-                $scope.hasSavedThisSession = true;
-                convertFormToCert();
-                ManageCertView.save($scope, $scope.certMeta.intygType);
-            };
-
-            /**
-             * Action to discard the certificate draft and return to WebCert again.
-             */
-            $scope.discard = function() {
-                ManageCertView.discard($scope, $scope.certMeta.intygType);
-            };
-
-            /**
-             * Action to sign the certificate draft and return to Webcert again.
-             */
-            $scope.sign = function() {
-                ManageCertView.signera($scope, $scope.certMeta.intygType);
-            };
-
-            /**
-             * Print draft
-             */
-            $scope.print = function() {
-                ManageCertView.printDraft($scope.cert.id, $scope.certMeta.intygType);
-            };
-
             /**
              * Handle vidarebefordra dialog
              *
              * @param cert
              */
             $scope.openMailDialog = function() {
-                intygNotifyService.forwardIntyg($scope.certMeta, $scope.widgetState);
+                intygNotifyService.forwardIntyg($scope.certMeta, $scope.viewState);
             };
 
             $scope.onVidarebefordradChange = function() {
-                intygNotifyService.onForwardedChange($scope.certMeta, $scope.widgetState);
+                intygNotifyService.onForwardedChange($scope.certMeta, $scope.viewState);
+            };
+
+            $scope.sign = function() {
+                ManageCertView.signera($scope.certMeta.intygType);
             };
 
             /**************************************************************************
@@ -259,10 +215,48 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
              **************************************************************************/
 
                 // Get the certificate draft from the server.
-            ManageCertView.load($scope, $scope.certMeta.intygType, function(cert) {
+            ManageCertView.load($scope.certMeta.intygType, function(cert) {
                 // Decorate intygspecific default data
-                $scope.cert = cert;
+                $scope.cert = cert.content;
+                $scope.certMeta.intygId = cert.content.id;
                 convertCertToForm($scope);
-                wcFocus('firstInput');
+
+                viewState.isSigned = cert.status === 'SIGNED';
+                viewState.intyg.isComplete = cert.status === 'SIGNED' || cert.status === 'DRAFT_COMPLETE';
+
+                $timeout(function() {
+                    wcFocus('firstInput');
+                    viewState.doneLoading = true;
+                }, 10);
             });
+
+            $rootScope.$on('saveRequest', function($event, deferred) {
+                // Mark form as saved, will be marked as not saved if saving fails.
+                $scope.certForm.$setPristine();
+//                $scope.cert.prepare();
+
+                var intygSaveRequest = {
+                    intygsId      : $scope.certMeta.intygId,
+                    intygsTyp     : $scope.certMeta.intygType,
+                    cert          : $scope.cert,
+                    saveComplete  : $q.defer()
+                };
+
+                intygSaveRequest.saveComplete.promise.then(function(result) {
+
+                    // save success
+                    viewState.validationMessages = result.validationMessages;
+                    viewState.validationMessagesGrouped = result.validationMessagesGrouped;
+                    viewState.error.saveErrorMessageKey = null;
+
+                }, function(result) {
+                    // save failed
+                    $scope.certForm.$setDirty();
+                    viewState.error.saveErrorMessageKey = result.errorMessageKey;
+                });
+
+                deferred.resolve(intygSaveRequest);
+            });
+
+
         }]);

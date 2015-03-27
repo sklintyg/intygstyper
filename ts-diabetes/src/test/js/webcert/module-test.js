@@ -1,1 +1,1 @@
-angular.module('ts-diabetes', [ 'ui.bootstrap', 'ngCookies', 'ngRoute', 'ngSanitize' ]);
+angular.module('ts-diabetes', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize' ]);

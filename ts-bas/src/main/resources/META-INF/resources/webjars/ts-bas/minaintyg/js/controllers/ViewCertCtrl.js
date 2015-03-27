@@ -1,7 +1,7 @@
 angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
-    [ '$location', '$log', '$rootScope', '$routeParams', '$scope', 'minaintyg.listCertService',
+    [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'minaintyg.listCertService',
         'common.certificateService', 'common.dialogService',
-        function($location, $log, $rootScope, $routeParams, $scope, listCertService, certificateService,
+        function($location, $log, $rootScope, $stateParams, $scope, listCertService, certificateService,
             dialogService) {
             'use strict';
 
@@ -127,7 +127,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             $scope.openArchiveDialog = function(cert) {
                 $scope.certToArchive = cert;
                 $scope.dialog.focus = true;
-                archiveDialog = dialogService.showDialog($scope, {
+                archiveDialog = dialogService.showDialog({
                     dialogId: 'archive-confirmation-dialog',
                     titleId: 'inbox.archivemodal.header',
                     bodyTextId: 'inbox.archivemodal.text',
@@ -142,7 +142,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             };
 
             // expose calculated static link for pdf download
-            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $routeParams.certificateId + '/pdf';
+            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $stateParams.certificateId + '/pdf';
 
             // Decide if helptext related to field 1.a) - 1.c)
             $scope.achelptext = false;
@@ -171,7 +171,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
                 return false;
             };
 
-            certificateService.getCertificate($routeParams.certificateId, function(result) {
+            certificateService.getCertificate($stateParams.certificateId, function(result) {
                 $scope.doneLoading = true;
                 if (result !== null) {
                     $scope.cert = result.utlatande;

@@ -1,9 +1,9 @@
 angular.module('fk7263').controller('fk7263.QACtrl',
-    [ '$log', '$rootScope', '$routeParams', '$scope', '$timeout', '$window', '$filter', 'common.dialogService',
+    [ '$log', '$rootScope', '$stateParams', '$scope', '$timeout', '$window', '$filter', 'common.dialogService',
         'fk7263.fragaSvarService', 'common.fragaSvarCommonService', 'common.ManageCertView', 'common.statService',
-        'common.UserModel',
-        function($log, $rootScope, $routeParams, $scope, $timeout, $window, $filter, dialogService, fragaSvarService,
-            fragaSvarCommonService, ManageCertView, statService, UserModel) {
+        'common.UserModel', 'fk7263.QACtrl.Helper',
+        function($log, $rootScope, $stateParams, $scope, $timeout, $window, $filter, dialogService, fragaSvarService,
+            fragaSvarCommonService, ManageCertView, statService, UserModel, qaHelper) {
             'use strict';
 
             // init state
@@ -26,7 +26,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
             };
 
             // Request loading of QA's for this certificate
-            fragaSvarService.getQAForCertificate($routeParams.certificateId, 'fk7263', function(result) {
+            fragaSvarService.getQAForCertificate($stateParams.certificateId, 'fk7263', function(result) {
                 $log.debug('getQAForCertificate:success data:' + result);
                 $scope.widgetState.doneLoading = true;
                 $scope.widgetState.activeErrorMessageKey = null;
@@ -85,7 +85,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 $log.debug('sendQuestion:' + newQuestion);
                 newQuestion.updateInProgress = true; // trigger local spinner
 
-                fragaSvarService.saveNewQuestion($routeParams.certificateId, 'fk7263', newQuestion,
+                fragaSvarService.saveNewQuestion($stateParams.certificateId, 'fk7263', newQuestion,
                     function(result) {
                         $log.debug('Got saveNewQuestion result:' + result);
                         newQuestion.updateInProgress = false;
@@ -150,6 +150,13 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 $scope.newQuestion.chosenTopic = $scope.newQuestion.topics[0]; // 'Välj ämne' is default
             };
             $scope.initQuestionForm();
+
+            // listeners - interscope communication
+            var unbindmarkAnsweredAsHandledEvent = $scope.$on('markAnsweredAsHandledEvent', function($event, deferred, unhandledQas) {
+                qaHelper.updateAnsweredAsHandled(deferred, unhandledQas, true);
+            });
+
+            $scope.$on('$destroy', unbindmarkAnsweredAsHandledEvent);
 
             var unbindHasUnhandledQasEvent = $scope.$on('hasUnhandledQasEvent', function($event, deferred) {
                 deferred.resolve(fragaSvarCommonService.getUnhandledQas($scope.qaList));

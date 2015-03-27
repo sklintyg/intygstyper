@@ -1,8 +1,8 @@
 define([], function() {
     'use strict';
 
-    return ['$scope', '$filter', '$location', 'ts-diabetes.certificateService', '$http', '$routeParams', '$log',
-        function($scope, $filter, $location, certService, http, $routeParams, $log) {
+    return ['$scope', '$filter', '$location', 'ts-diabetes.certificateService', '$http', '$stateParams', '$log',
+        function($scope, $filter, $location, certService, http, $stateParams, $log) {
 
             $scope.cert = {};
             $scope.doneLoading = false;
@@ -22,9 +22,9 @@ define([], function() {
                 dialogFade: true
             };
 
-            $log.debug('Loading certificate ' + $routeParams.certificateId);
+            $log.debug('Loading certificate ' + $stateParams.certificateId);
 
-            certService.getCertificate($routeParams.certificateId, function(result) {
+            certService.getCertificate($stateParams.certificateId, function(result) {
                 $scope.doneLoading = true;
                 if (result !== null) {
                     $scope.cert = result;

@@ -13,3 +13,4 @@ rebel.xml
 *.iml
 fk7263/activemq-data/localhost/KahaDB/db.data
 fk7263/activemq-data/localhost/KahaDB/db.redo
+**/src/main/resources/**/js/templates.js
