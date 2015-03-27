@@ -30,6 +30,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateResponderInterface;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateResponseType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateType;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.support.ApplicationOrigin;
@@ -93,6 +96,10 @@ public class ModuleService implements ModuleApi {
     @Autowired
     @Qualifier("ts-diabetes-objectMapper")
     private ObjectMapper objectMapper;
+    
+    @Autowired(required = false) 
+    @Qualifier("sendTsDiabetesClient")
+    private RegisterCertificateResponderInterface sendTsDiabetesClient;    
 
     @Autowired(required=false)
     @Qualifier("diabetesGetClient")
@@ -199,30 +206,26 @@ public class ModuleService implements ModuleApi {
 
     @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
-//        sendCertificateToRecipient(internalModel, logicalAddress, null);
+        sendCertificateToRecipient(internalModel, logicalAddress, null);
     }
 
     @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
-//        // Check that we got any data at all
-//        if (internalModel == null ) {
-//            throw new ModuleException("No InternalModelHolder found in call to sendCertificateToRecipient!");
-//        }
-//
-//        // Check that we got any data at all
-//        if (logicalAddress == null || logicalAddress.length() == 0) {
-//            throw new ModuleException("No LogicalAddress found in call to sendCertificateToRecipient!");
-//        }
-//
-//        try {
-//            Utlatande utlatande = objectMapper.readValue(internalModel.getInternalModel(), Utlatande.class);
-//            TSDiabetesIntyg request = InternalToTransportConverter.convert(utlatande);
-//            
-//            sendCertificateToRecipient(request, logicalAddress, recipientId);
-//
-//        } catch (IOException e) {
-//            throw new ModuleException(e);
-//        }
+        RegisterCertificateType parameters = new RegisterCertificateType();
+        
+        se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande placeholderUtlatande = new se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande();
+        // TODO swith to XSL-transformer when done.
+        //se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande placeholderUtlatande = buildPlaceHolderCertificate(internalModel);
+        parameters.setUtlatande(placeholderUtlatande);
+
+        RegisterCertificateResponseType response = sendTsDiabetesClient.registerCertificate(logicalAddress, parameters);
+
+        if (response.getResult().getResultCode() !=  se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.OK) {
+            String message = response.getResult().getResultCode() == se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.INFO
+                    ? response.getResult().getResultText()
+                    : response.getResult().getErrorId() + " : " + response.getResult().getResultText();
+            throw new ExternalServiceCallException(message);
+        }
     }
 
     private void sendCertificateToRecipient(TSDiabetesIntyg request, String logicalAddress, String recipientId) throws ExternalServiceCallException {

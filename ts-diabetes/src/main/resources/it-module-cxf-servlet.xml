@@ -18,6 +18,8 @@
       <cxf:logging/>
     </cxf:features>
   </cxf:bus>
+  
+  <import resource="ts-diabetes-ws-stub.xml"/>
 
   <!-- ws endpoints -->
   <jaxws:endpoint address="/get-ts-diabetes/v1.0"
@@ -45,5 +47,11 @@
             <jaxws:schemaLocation>classpath:/interactions/RegisterTSDiabetesInteraction/RegisterTSDiabetesResponder_1.0.xsd</jaxws:schemaLocation>
         </jaxws:schemaLocations>
   </jaxws:endpoint>
+  
+  <!-- ws clients -->
+  <jaxws:client id="sendTsDiabetesClient"
+                  serviceClass="se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateResponderInterface"
+                  address="${registercertificatev1.endpoint.url}">
+  </jaxws:client>  
 
 </beans>
