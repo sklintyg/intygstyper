@@ -14,6 +14,7 @@ describe('ts-bas.EditCertCtrl', function() {
         $provide.value('common.UserModel', User);
         $provide.value('common.wcFocus', wcFocus);
         $provide.value('common.intygNotifyService', intygNotifyService);
+        $provide.value('common.IntygEditViewStateService',{intyg:{}});
     }));
 
     var $scope, ctrl;
