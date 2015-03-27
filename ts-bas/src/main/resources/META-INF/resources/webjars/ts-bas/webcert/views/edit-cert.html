@@ -30,7 +30,7 @@
       <div class="edit-form" ng-class="{'collapsed' : viewState.common.collapsedHeader}">
 
         <form name="certForm" novalidate autocomplete="off">
-          <div ng-hide="viewState.common.activeErrorMessageKey">
+          <div ng-hide="viewState.common.error.activeErrorMessageKey">
 
             <div wc-spinner label="info.loadingdata" show-spinner="!viewState.common.doneLoading"
                  show-content="viewState.common.doneLoading">
