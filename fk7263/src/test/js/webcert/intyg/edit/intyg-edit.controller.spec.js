@@ -17,6 +17,7 @@ describe('EditCertCtrl', function() {
             isFeatureActive: jasmine.createSpy('isFeatureActive')
         };
         $provide.value('common.CertificateService',{});
+        $provide.value('common.IntygEditViewStateService',{});
 
         _manageCertView = jasmine.createSpyObj('common.ManageCertView', [ 'save',  'discard', 'signera', 'printDraft', 'load' ]);
         $provide.value('common.ManageCertView',_manageCertView);
@@ -27,7 +28,7 @@ describe('EditCertCtrl', function() {
         $provide.value('fk7263.Domain.PatientModel', {});
         $provide.value('fk7263.Domain.SkapadAvModel', {});
         $provide.value('fk7263.Domain.VardenhetModel', {});
-        $provide.value('fk7263.EditCertCtrl.ViewStateService', {common:{intyg:{}}});
+        $provide.value('fk7263.EditCertCtrl.ViewStateService', {common:{intyg:{typ:''}}});
         $provide.value('common.wcFocus', {});
         $provide.value('common.intygNotifyService', {});
         $provide.value('common.diagnosService', {});
