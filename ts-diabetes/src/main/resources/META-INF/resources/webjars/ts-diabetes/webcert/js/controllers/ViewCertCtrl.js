@@ -91,26 +91,23 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
              * Exposed scope interaction functions
              *********************************************************************/
 
-            ManageCertificate.initSend($scope);
             $scope.send = function(cert) {
                 cert.intygType = intygType;
-                ManageCertificate.send($scope, cert, 'TS', 'ts-diabetes.label.send', function() {
+                ManageCertificate.send( cert, 'TS', 'ts-diabetes.label.send', function() {
                         loadCertificate();
                     });
             };
 
-            ManageCertificate.initMakulera($scope);
             $scope.makulera = function(cert) {
                 var confirmationMessage = messageService.getProperty('ts-diabetes.label.makulera.confirmation', {
                     namn: cert.grundData.patient.fullstandigtNamn, personnummer: cert.grundData.patient.personId });
 
                 cert.intygType = 'ts-diabetes';
-                ManageCertificate.makulera($scope, cert, confirmationMessage, function() {
+                ManageCertificate.makulera(cert, confirmationMessage, function() {
                     loadCertificate();
                 });
             };
 
-            ManageCertificate.initCopyDialog($scope);
             $scope.copy = function(cert) {
 
                 if (cert === undefined || cert.grundData === undefined) {

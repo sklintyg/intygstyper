@@ -1,12 +1,14 @@
 angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
     ['$anchorScroll', '$location', '$log', '$scope', '$window', 'common.ManageCertView', 'common.UserModel',
-        'common.wcFocus', 'common.intygNotifyService',
-        function($anchorScroll, $location, $log, $scope, $window, ManageCertView, UserModel, wcFocus, intygNotifyService) {
+        'common.wcFocus', 'common.intygNotifyService', 'common.IntygEditViewStateService',
+        function($anchorScroll, $location, $log, $scope, $window, ManageCertView, UserModel, wcFocus, intygNotifyService, viewState) {
             'use strict';
 
             /**********************************************************************************
              * Default state
              **********************************************************************************/
+
+            viewState.intyg.typ = 'ts-diabetes';
 
                 // Page state
             $scope.user = UserModel;

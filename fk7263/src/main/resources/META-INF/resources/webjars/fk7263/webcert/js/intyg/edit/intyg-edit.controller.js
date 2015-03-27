@@ -18,6 +18,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              **********************************************************************************/
             $scope.viewState = viewState;
 
+            viewState.common.intyg.typ = 'fk7263';
+
             // Page states
             $scope.user = UserModel;
             $scope.today = new Date();
