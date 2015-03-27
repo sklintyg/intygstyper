@@ -217,9 +217,12 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 // Get the certificate draft from the server.
             ManageCertView.load($scope.certMeta.intygType, function(cert) {
                 // Decorate intygspecific default data
-                $scope.cert = cert;
-                $scope.certMeta.intygId = cert.id;
+                $scope.cert = cert.content;
+                $scope.certMeta.intygId = cert.content.id;
                 convertCertToForm($scope);
+
+                viewState.isSigned = cert.status === 'SIGNED';
+                viewState.intyg.isComplete = cert.status === 'SIGNED' || cert.status === 'DRAFT_COMPLETE';
 
                 $timeout(function() {
                     wcFocus('firstInput');

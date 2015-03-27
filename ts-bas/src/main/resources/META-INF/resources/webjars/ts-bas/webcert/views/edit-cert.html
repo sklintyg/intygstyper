@@ -35,7 +35,7 @@
             <div wc-spinner label="info.loadingdata" show-spinner="!viewState.common.doneLoading"
                  show-content="viewState.common.doneLoading">
 
-              <div class="alert alert-danger" ng-show="viewState.common.showComplete && !isComplete"
+              <div class="alert alert-danger" ng-show="viewState.common.showComplete && !viewState.common.intyg.isComplete"
                    style="margin-right: 20px">
                 <h3><span message key="draft.saknar-uppgifter"></span></h3>
                 <ul>
@@ -984,7 +984,7 @@
                       </label> <span ng-if="viewState.common.vidarebefordraInProgress"> <img src="/img/ajax-loader-kit-16x16.gif"></span>
                     </div>
 
-                    <button id="signera-utkast-button" class="btn btn-success" ng-disabled="!isComplete || certForm.$dirty"
+                    <button id="signera-utkast-button" class="btn btn-success" ng-disabled="!viewState.common.intyg.isComplete || certForm.$dirty"
                             ng-click="sign()" ng-show="user.userContext.lakare"><span message key="common.sign"></span>
                     </button>
                   </div>
