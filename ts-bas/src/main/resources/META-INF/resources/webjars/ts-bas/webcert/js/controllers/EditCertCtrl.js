@@ -1,7 +1,7 @@
 angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
-    [ '$anchorScroll', '$location', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel', 'common.wcFocus',
+    [ '$anchorScroll', '$location', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel', 'common.wcFocus',
       'common.intygNotifyService', 'common.IntygEditViewStateService',
-        function($anchorScroll, $location, $scope, $timeout, $window, ManageCertView, UserModel, wcFocus, intygNotifyService, viewState) {
+        function($anchorScroll, $location, $q, $rootScope, $scope, $timeout, $window, ManageCertView, UserModel, wcFocus, intygNotifyService, viewState) {
             'use strict';
 
             /**********************************************************************************
@@ -264,6 +264,10 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
                 intygNotifyService.onForwardedChange($scope.certMeta, $scope.viewState);
             };
 
+            $scope.sign = function() {
+                ManageCertView.signera($scope.certMeta.intygType);
+            };
+
             /**************************************************************************
              * Load certificate and setup form
              **************************************************************************/
@@ -272,6 +276,7 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
             ManageCertView.load($scope.certMeta.intygType, function(cert) {
                 // Decorate intygspecific default data
                 $scope.cert = cert;
+                $scope.certMeta.intygId = cert.id;
                 convertCertToForm($scope);
 
                 $timeout(function() {
@@ -280,9 +285,32 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
                 }, 10);
             });
 
-            $scope.$on('beginSave', function($event, deferred) {
+            $rootScope.$on('saveRequest', function($event, deferred) {
+                // Mark form as saved, will be marked as not saved if saving fails.
                 $scope.certForm.$setPristine();
-                deferred.resolve(convertFormToCert());
+//                $scope.cert.prepare();
+
+                var intygSaveRequest = {
+                    intygsId      : $scope.certMeta.intygId,
+                    intygsTyp     : $scope.certMeta.intygType,
+                    cert          : $scope.cert,
+                    saveComplete  : $q.defer()
+                };
+
+                intygSaveRequest.saveComplete.promise.then(function(result) {
+
+                    // save success
+                    viewState.validationMessages = result.validationMessages;
+                    viewState.validationMessagesGrouped = result.validationMessagesGrouped;
+                    viewState.error.saveErrorMessageKey = null;
+
+                }, function(result) {
+                    // save failed
+                    $scope.certForm.$setDirty();
+                    viewState.error.saveErrorMessageKey = result.errorMessageKey;
+                });
+
+                deferred.resolve(intygSaveRequest);
             });
 
         }]);
