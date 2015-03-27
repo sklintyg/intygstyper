@@ -1,4 +1,8 @@
 /* global module */
+function config(name) {
+    return require('./tasks/' + name);
+}
+
 module.exports = function(grunt) {
     'use strict';
 
@@ -24,6 +28,7 @@ module.exports = function(grunt) {
         return file.replace(/\/web\//g, SRC_DIR);
     });
     webcert = [SRC_DIR + 'webjars/fk7263/webcert/js/module.js'].concat(webcert);
+
 
     grunt.initConfig({
 
@@ -103,33 +108,7 @@ module.exports = function(grunt) {
             }
         },
 
-        ngtemplates: {
-            options: {
-                // This should be the name of your apps angular module
-                module: 'fk7263'
-                // doesn't work with our fantastically complicated html files ... let uglify do the compression
-                //htmlmin: {
-                //    collapseBooleanAttributes:      false,
-                //    collapseWhitespace:             false,
-                //    removeAttributeQuotes:          false,
-                //    removeComments:                 false, // Only if you don't use comment directives!
-                //    removeEmptyAttributes:          false,
-                //    removeRedundantAttributes:      false,
-                //    removeScriptTypeAttributes:     false,
-                //    removeStyleLinkTypeAttributes:  false
-                //}
-            },
-            fk7263: {
-                cwd: SRC_DIR +'/webjars/fk7263/webcert',
-                src: ['**/*.html'],
-                dest: SRC_DIR +'/webjars/fk7263/webcert/js/templates.js',
-                options:{
-                    url: function(url) {
-                        return '/web/webjars/fk7263/webcert/' + url;
-                    }
-                }
-            }
-        }
+        ngtemplates: config('ngtemplates')
 
 
     });
