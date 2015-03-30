@@ -1,14 +1,14 @@
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
-    [ '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', 'common.CertificateService',
+    [ '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore', 'common.CertificateService',
         'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate', 'common.UserModel',
-        function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView,
+        function($log, $rootScope, $stateParams, $scope, $cookieStore, CertificateService, ManageCertView,
             messageService, ManageCertificate, UserModel) {
             'use strict';
 
             var intygType = 'fk7263';
 
             // Check if the user used the special qa-link to get here.
-            if ($routeParams.qaOnly) {
+            if ($stateParams.qaOnly) {
                 $scope.isQaOnly = true;
             }
 
@@ -34,12 +34,12 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
              * Private
              */
             function loadCertificate() {
-                $log.debug('Loading certificate ' + $routeParams.certificateId);
-                CertificateService.getCertificate($routeParams.certificateId, intygType, function(result) {
+                $log.debug('Loading certificate ' + $stateParams.certificateId);
+                CertificateService.getCertificate($stateParams.certificateId, intygType, function(result) {
                     $scope.widgetState.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
-
+                        
                         $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.statuses, 'FK');
                         $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.statuses);
                         if ($scope.certProperties.isRevoked) {
@@ -54,7 +54,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                         $rootScope.$broadcast('intyg.loaded', $scope.cert);
 
                     } else {
-                        if ($routeParams.signed) {
+                        if ($stateParams.signed) {
                             $scope.widgetState.activeErrorMessageKey = 'common.error.signed_but_not_ready';
                         } else {
                             $scope.widgetState.activeErrorMessageKey = 'fk7263.error.could_not_load_cert';
@@ -66,7 +66,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                     if (error.errorCode === 'DATA_NOT_FOUND') {
                         $scope.widgetState.activeErrorMessageKey = 'fk7263.error.data_not_found';
                     } else {
-                        if ($routeParams.signed) {
+                        if ($stateParams.signed) {
                             $scope.widgetState.activeErrorMessageKey = 'common.error.signed_but_not_ready';
                         } else {
                             $scope.widgetState.activeErrorMessageKey = 'fk7263.error.could_not_load_cert';

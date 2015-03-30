@@ -1,7 +1,7 @@
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
-    [ '$location', '$log', '$rootScope', '$routeParams', '$scope', 'minaintyg.listCertService',
+    [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'minaintyg.listCertService',
         'common.certificateService', 'common.dialogService', 'common.messageService',
-        function($location, $log, $rootScope, $routeParams, $scope, listCertService, certificateService, dialogService,
+        function($location, $log, $rootScope, $stateParams, $scope, listCertService, certificateService, dialogService,
             messageService) {
             'use strict';
 
@@ -52,7 +52,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             $scope.openArchiveDialog = function(cert) {
                 $scope.certToArchive = cert;
                 $scope.dialog.focus = true;
-                archiveDialog = dialogService.showDialog($scope, {
+                archiveDialog = dialogService.showDialog({
                     dialogId: 'archive-confirmation-dialog',
                     titleId: 'inbox.archivemodal.header',
                     bodyTextId: 'inbox.archivemodal.text',
@@ -93,13 +93,13 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             };
 
             $scope.backToViewCertificate = function() {
-                $location.path('/fk7263/view/' + $routeParams.certificateId);
+                $location.path('/fk7263/view/' + $stateParams.certificateId);
             };
 
             // expose calculated static link for pdf download
-            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $routeParams.certificateId + '/pdf';
+            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $stateParams.certificateId + '/pdf';
 
-            certificateService.getCertificate($routeParams.certificateId, function(result) {
+            certificateService.getCertificate($stateParams.certificateId, function(result) {
                 $scope.doneLoading = true;
                 if (result !== null) {
                     $scope.cert = result.utlatande;

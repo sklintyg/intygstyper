@@ -1,8 +1,8 @@
 angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
-    [ '$log', '$rootScope', '$routeParams', '$scope', '$cookieStore', 'common.CertificateService',
+    [ '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore', 'common.CertificateService',
         'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate','common.User',
         'common.IntygCopyRequestModel',
-        function($log, $rootScope, $routeParams, $scope, $cookieStore, CertificateService, ManageCertView,
+        function($log, $rootScope, $stateParams, $scope, $cookieStore, CertificateService, ManageCertView,
             messageService, ManageCertificate, User, IntygCopyRequestModel) {
             'use strict';
 
@@ -27,7 +27,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             };
 
             // expose calculated static link for pdf download
-            $scope.downloadAsPdfLink = '/moduleapi/intyg/ts-bas/' + $routeParams.certificateId + '/pdf';
+            $scope.downloadAsPdfLink = '/moduleapi/intyg/ts-bas/' + $stateParams.certificateId + '/pdf';
 
             // Decide if helptext related to field 1.a) - 1.c)
             $scope.achelptext = false;
@@ -63,7 +63,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             }
 
             function loadCertificate() {
-                CertificateService.getCertificate($routeParams.certificateId, intygType, function(result) {
+                CertificateService.getCertificate($stateParams.certificateId, intygType, function(result) {
                     $scope.widgetState.doneLoading = true;
                     if (result !== null) {
                         $scope.cert = result.contents;
@@ -105,26 +105,23 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
              * Exposed scope interaction functions
              *********************************************************************/
 
-            ManageCertificate.initSend($scope);
             $scope.send = function(cert) {
                 cert.intygType = 'ts-bas';
-                ManageCertificate.send($scope, cert, 'TS', 'ts-bas.label.send', function() {
+                ManageCertificate.send( cert, 'TS', 'ts-bas.label.send', function() {
                         loadCertificate();
                     });
             };
 
-            ManageCertificate.initMakulera($scope);
             $scope.makulera = function(cert) {
                 var confirmationMessage = messageService.getProperty('ts-bas.label.makulera.confirmation', {
                     namn: cert.grundData.patient.fullstandigtNamn, personnummer: cert.grundData.patient.personId });
 
                 cert.intygType = 'ts-bas';
-                ManageCertificate.makulera($scope, cert, confirmationMessage, function() {
+                ManageCertificate.makulera( cert, confirmationMessage, function() {
                     loadCertificate();
                 });
             };
 
-            ManageCertificate.initCopyDialog($scope);
             $scope.copy = function(cert) {
 
                 if (cert === undefined || cert.grundData === undefined) {
@@ -139,7 +136,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
                         intygId: cert.id,
                         intygType: intygType,
                         patientPersonnummer: cert.grundData.patient.personId,
-                        nyttPatientPersonnummer: $routeParams.patientId
+                        nyttPatientPersonnummer: $stateParams.patientId
                     }),
                     isOtherCareUnit);
             };

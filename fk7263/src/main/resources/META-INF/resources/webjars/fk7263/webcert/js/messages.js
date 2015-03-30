@@ -69,6 +69,9 @@ var fk7263Messages = {
         'fk7263.label.vardenhet.adress': 'Vårdenhetens kontaktuppgifter',
         'fk7263.label.makulera.confirmation': 'Läkarintyg FK 7263 utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
         'fk7263.label.valjkodverk': 'Välj kodverk:',
+        'fk7263.label.spara-utkast': 'Spara',
+        'fk7263.label.ta-bort-utkast': 'Ta bort utkast',
+        'fk7263.label.skriv-ut-utkast': 'Skriv ut',
         'fk7263.label.status.sent': 'Intyget är signerat och mottaget av Försäkringskassans system.',
         'fk7263.label.status.signed': 'Intyget är signerat. Intyget är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se. Intyget går även att nå via Försäkringskassans e-tjänst för ansökan om sjukpenning. Om patienten inte har möjlighet att skicka intyget elektroniskt till Försäkringskassan kan du skicka intyget direkt till Försäkringskassan åt patienten. Observera att patientens samtycke då krävs.',
 

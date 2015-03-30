@@ -31,23 +31,27 @@ define([
         var module = angular
             .module(moduleName, [miServices, controllers, miCertificateService, filters]);
 
-        module.config(['$routeProvider', function($routeProvider) {
-            $routeProvider.
-                when('/rli/view/:certificateId', {
+        module.config(['$stateProvider', function($stateProvider) {
+            $stateProvider.
+                state('rli.view', {
+                    url : '/rli/view/:certificateId',
                     templateUrl: '/web/webjars/rli/intyg/views/view-cert.html',
                     controller: 'rli.ViewCertCtrl',
                     title: 'Läkarintyg Transportstyrelsen Bas'
                 }).
-                when('/rli/recipients', {
+                state('rli.recipients', {
+                    url : '/rli/recipients',
                     templateUrl: '/web/webjars/rli/intyg/views/recipients.html',
                     controller: 'rli.SendCertWizardCtrl'
                 }).
-                when('/rli/summary', {
+                state('rli.summary', {
+                    url :'/rli/summary',
                     templateUrl: '/web/webjars/rli/intyg/views/send-summary.html',
                     controller: 'rli.SendCertWizardCtrl',
                     title: 'Kontrollera och skicka intyget'
                 }).
-                when('/rli/sent', {
+                state('rli.sent', {
+                    url :'/rli/sent',
                     templateUrl: '/web/webjars/rli/intyg/views/sent-cert.html',
                     controller: 'rli.SendCertWizardCtrl',
                     title: 'Intyget skickat till mottagare'

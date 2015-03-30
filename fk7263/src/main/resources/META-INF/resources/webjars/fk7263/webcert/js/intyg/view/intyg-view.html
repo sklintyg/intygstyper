@@ -2,8 +2,7 @@
   <div wc-spinner label="fk7263.info.loadingcertificate" show-spinner="!widgetState.doneLoading"
        show-content="widgetState.doneLoading">
 
-    <div wc-intyg-header intygstyp="fk7263">
-    </div>
+    <div ui-view="header"></div>
 
     <div ng-show="!widgetState.activeErrorMessageKey">
       <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : certProperties.isRevoked}">

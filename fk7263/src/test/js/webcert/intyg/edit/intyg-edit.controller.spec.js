@@ -22,6 +22,12 @@ describe('EditCertCtrl', function() {
         $provide.value('common.ManageCertView',_manageCertView);
         $provide.value('common.User', {});
         $provide.value('common.UserModel', {});
+        $provide.value('fk7263.Domain.DraftModel', {});
+        $provide.value('fk7263.Domain.IntygModel', {});
+        $provide.value('fk7263.Domain.PatientModel', {});
+        $provide.value('fk7263.Domain.SkapadAvModel', {});
+        $provide.value('fk7263.Domain.VardenhetModel', {});
+        $provide.value('fk7263.EditCertCtrl.ViewStateService', {common:{intyg:{}}});
         $provide.value('common.wcFocus', {});
         $provide.value('common.intygNotifyService', {});
         $provide.value('common.diagnosService', {});

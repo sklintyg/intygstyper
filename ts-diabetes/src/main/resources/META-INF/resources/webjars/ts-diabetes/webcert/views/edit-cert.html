@@ -24,92 +24,22 @@
   <div class="row">
     <div class="col-md-12 webcert-col webcert-col-single">
 
-      <div wc-print-header title-id="ts-diabetes.label.certtitle" print-message-id="print.label.draft" intygs-id="cert.id"></div>
-      <div class="print-show">
-        <label class="control-label">{{cert.grundData.patient.fullstandigtNamn}} - {{cert.grundData.patient.personId}}</label>
-      </div>
-
-      <div class="header-fix-top print-hide">
-        <div class="header-wrapper" ng-hide="widgetState.collapsedHeader"> <!-- ng-animate="'menucollapse'" -->
-          <div id="wcHeader" wc-header default-active="index"></div>
-        </div>
-
-        <div ng-hide="widgetState.activeErrorMessageKey">
-          <div wc-spinner label="info.loadingdata" show-spinner="!widgetState.doneLoading"
-               show-content="widgetState.doneLoading">
-
-            <div class="header-fix-panel">
-              <div class="header-fix-top-expand">
-                <div class="header-fix-top-expand-wrapper">
-                  <button class="btn btn-link" ng-click="toggleHeader()"><span
-                      ng-if="widgetState.collapsedHeader">Visa</span><span
-                      ng-if="!widgetState.collapsedHeader">Dölj</span> meny
-                  </button>
-                </div>
-              </div>
-              <a wc-feature-not-active feature="franJournalsystem" class="backlink-icon" href="/web/dashboard#/create/choose-cert-type/index"
-                 title="Tillbaka till Skriv intyg"></a>
-
-              <h1 style="display: inline-block; margin-right: 20px;"><span message key="ts-diabetes.label.certtitle"></span>
-              </h1>
-
-              <div class="inline-block">
-                <label class="control-label">{{cert.grundData.patient.fullstandigtNamn}} - {{cert.grundData.patient.personId}}</label>
-              </div>
-              <div class="form-group buttonbar">
-                <button id="spara-utkast" class="btn btn-info" ng-click="save()" ng-if="!isSigned">Spara</button>
-                <button id="ta-bort-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned"
-                        ng-click="discard()"><i class="glyphicon glyphicon-trash"></i>
-                </button>
-                <button id="skriv-ut-utkast" class="btn btn-default btn-secondary" ng-if="!isSigned" ng-click="print()">
-                  Skriv ut
-                </button>
-                <button class="btn btn-default btn-secondary" ng-if="!widgetState.showComplete" ng-disabled="isComplete"
-                        ng-click="toggleShowComplete()" title="Visar vilka obligatoriska fält i utkastet som inte är ifyllda. Alla obligatoriska fält måste vara ifyllda för att utkastet ska kunna signeras.">Visa vad som saknas
-                </button>
-                <button class="btn btn-default btn-secondary" ng-if="widgetState.showComplete" ng-disabled="isComplete"
-                        ng-click="toggleShowComplete()" title="Visar vilka obligatoriska fält i utkastet som inte är ifyllda. Alla obligatoriska fält måste vara ifyllda för att utkastet ska kunna signeras.">Dölj vad som saknas
-                </button>
-              </div>
-              <!-- Just in case -->
-              <div id="certificate-is-sent-to-it-message-text" ng-show="isSigned"><span message key="draft.status.signed"></span>
-              </div>
-              <!-- complete -->
-              <div ng-show="certForm.$pristine && isComplete && !isSigned"><span id="intyget-sparat-meddelande" message key="draft.status.draft_complete"></span>
-              </div>
-              <!-- incomplete -->
-              <div ng-show="certForm.$pristine && !isComplete"><span message key="draft.status.draft_incomplete"></span>
-              </div>
-              <!-- form changed -->
-              <div ng-show="certForm.$dirty"><span message key="draft.status.changed"></span></div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- top end -->
-
-      <!-- Total fail error messages -->
-      <div class="cert-error-panel" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey">
-        <div class="alert alert-danger">
-          <span message key="{{widgetState.activeErrorMessageKey}}"></span>
-        </div>
-      </div>
+      <div ui-view="header"></div>
 
       <!-- TS-DIABETES -->
-      <div class="edit-form" ng-class="{'collapsed' : widgetState.collapsedHeader}">
+      <div class="edit-form" ng-class="{'collapsed' : viewState.common.collapsedHeader}">
 
-        <form name="certForm" novalidate autocomplete="off">
-          <div ng-hide="widgetState.activeErrorMessageKey">
+        <form name="certForm" novalidate autocomplete="off" wc-auto-save="save(true)">
+          <div ng-hide="viewState.common.error.activeErrorMessageKey">
 
-            <div wc-spinner label="info.loadingdata" show-spinner="!widgetState.doneLoading"
-                 show-content="widgetState.doneLoading">
+            <div wc-spinner label="info.loadingdata" show-spinner="!viewState.common.doneLoading"
+                 show-content="viewState.common.doneLoading">
 
-              <div class="alert alert-danger" ng-show="widgetState.showComplete && !isComplete"
+              <div class="alert alert-danger" ng-show="viewState.common.showComplete && !viewState.common.intyg.isComplete"
                    style="margin-right: 20px">
                 <h3><span message key="draft.saknar-uppgifter"></span></h3>
                 <ul>
-                  <li ng-repeat="message in validationMessages"><span message key="{{message.message}}"></span></li>
+                  <li ng-repeat="message in viewState.common.validationMessages"><span message key="{{message.message}}"></span></li>
                 </ul>
               </div>
 
@@ -117,9 +47,9 @@
                 <div class="col-md-12 cert-body">
 
                   <div wc-field field-label="ts-bas.label.patientadress" id="patientForm">
-                    <div class="alert alert-danger" ng-if="validationMessagesGrouped.patient">
+                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.patient">
                       <ul>
-                        <li ng-repeat="message in validationMessagesGrouped.patient"><span message
+                        <li ng-repeat="message in viewState.common.validationMessagesGrouped.patient"><span message
                                                                                            key="{{message.message}}"></span>
                         </li>
                       </ul>
@@ -154,9 +84,9 @@
 
                   <div wc-field field-label="ts-diabetes.label.intygavser"
                        field-help-text="ts-diabetes.helptext.intyget-avser" id="intygetAvserForm">
-                    <div class="alert alert-danger" ng-if="validationMessagesGrouped.intygavser">
+                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.intygavser">
                       <ul>
-                        <li ng-repeat="message in validationMessagesGrouped.intygavser"><span message
+                        <li ng-repeat="message in viewState.common.validationMessagesGrouped.intygavser"><span message
                                                                                               key="{{message.message}}"></span>
                         </li>
                       </ul>
@@ -170,9 +100,9 @@
                   </div>
 
                   <div wc-field field-label="ts-diabetes.label.identitet" id="identitetForm">
-                    <div class="alert alert-danger" ng-if="validationMessagesGrouped.identitet">
+                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.identitet">
                       <ul>
-                        <li ng-repeat="message in validationMessagesGrouped.identitet"><span message
+                        <li ng-repeat="message in viewState.common.validationMessagesGrouped.identitet"><span message
                                                                                              key="{{message.message}}"></span>
                         </li>
                       </ul>
@@ -196,9 +126,9 @@
 
                   <!-- 1. Allmänt -->
                   <div wc-field field-label="ts-diabetes.label.allmant" class="print-pagebreak-after" id="allmantForm">
-                    <div class="alert alert-danger" ng-if="validationMessagesGrouped.diabetes">
+                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.diabetes">
                       <ul>
-                        <li ng-repeat="message in validationMessagesGrouped.diabetes"><span message
+                        <li ng-repeat="message in viewState.common.validationMessagesGrouped.diabetes"><span message
                                                                                             key="{{message.message}}"></span>
                         </li>
                       </ul>
@@ -255,9 +185,9 @@
 
                   <!-- 2. Hypoglykemier (lågt blodsocker)-->
                   <div wc-field field-label="ts-diabetes.label.hypoglykemier" id="hypoglykemierForm">
-                    <div class="alert alert-danger" ng-if="validationMessagesGrouped.hypoglykemier">
+                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.hypoglykemier">
                       <ul>
-                        <li ng-repeat="message in validationMessagesGrouped.hypoglykemier"><span message
+                        <li ng-repeat="message in viewState.common.validationMessagesGrouped.hypoglykemier"><span message
                                                                                                  key="{{message.message}}"></span>
                         </li>
                       </ul>
@@ -364,11 +294,11 @@
                        name="synForm" id="synForm">
 
                     <table class="table table-form">
-                      <tr ng-if="validationMessagesGrouped.syn">
+                      <tr ng-if="viewState.common.validationMessagesGrouped.syn">
                         <td colspan="3">
                           <div class="alert alert-danger">
                             <ul>
-                              <li ng-repeat="message in validationMessagesGrouped.syn"><span message
+                              <li ng-repeat="message in viewState.common.validationMessagesGrouped.syn"><span message
                                                                                              key="{{message.message}}"></span>
                               </li>
                             </ul>
@@ -477,9 +407,9 @@
 
                   <!-- 4. Bedömning -->
                   <div wc-field field-label="ts-diabetes.label.bedomning" field-help-text="ts-diabetes.helptext.intyget-avser" id="bedomningForm">
-                    <div class="alert alert-danger" ng-if="validationMessagesGrouped.bedomning">
+                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.bedomning">
                       <ul>
-                        <li ng-repeat="message in validationMessagesGrouped.bedomning"><span message
+                        <li ng-repeat="message in viewState.common.validationMessagesGrouped.bedomning"><span message
                                                                                              key="{{message.message}}"></span>
                         </li>
                       </ul>
@@ -550,9 +480,9 @@
                     </h3>
 
                     <div class="text">
-                      <div class="alert alert-danger" ng-if="validationMessagesGrouped.vardenhet">
+                      <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.vardenhet">
                         <ul>
-                          <li ng-repeat="message in validationMessagesGrouped.vardenhet"><span message
+                          <li ng-repeat="message in viewState.common.validationMessagesGrouped.vardenhet"><span message
                                                                                                key="{{message.message}}"></span>
                           </li>
                         </ul>
@@ -561,7 +491,7 @@
                         ({{cert.grundData.skapadAv.vardenhet.enhetsid}}),
                         {{cert.grundData.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</label>
 
-                      <div class="alert alert-info" ng-show="widgetState.hasInfoMissing">
+                      <div class="alert alert-info" ng-show="viewState.common.hasInfoMissing">
                         Information om vårdenheten saknas i HSA-katalogen. Be den på vårdenheten som är ansvarig för
                         frågor om HSA att uppdatera informationen.
                       </div>
@@ -636,14 +566,14 @@
 
                       <label for="mark-as-vidarebefordrad" class="checkbox-inline">
                         <input id="mark-as-vidarebefordrad" type="checkbox"
-                               ng-disabled="widgetState.vidarebefordraInProgress"
+                               ng-disabled="viewState.common.vidarebefordraInProgress"
                                ng-model="certMeta.vidarebefordrad"
                                ng-change="onVidarebefordradChange()" /> Vidarebefordrad
-                      </label> <span ng-if="widgetState.vidarebefordraInProgress"> <img src="/img/ajax-loader-kit-16x16.gif"></span>
+                      </label> <span ng-if="viewState.common.vidarebefordraInProgress"> <img src="/img/ajax-loader-kit-16x16.gif"></span>
                     </div>
 
                     <button id="signera-utkast-button" class="btn btn-success"
-                            ng-disabled="!isComplete || certForm.$dirty" ng-click="sign()"
+                            ng-disabled="!viewState.common.intyg.isComplete || certForm.$dirty" ng-click="sign()"
                             ng-show="user.userContext.lakare"><span message key="common.sign"></span>
                     </button>
                   </div>
