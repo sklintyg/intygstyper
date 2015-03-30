@@ -1,3 +1,4 @@
+<div ng-form="form10">
 <div wc-field field-label="fk7263.label.prognos" field-number="10"
      field-help-text="fk7263.helptext.arbetsformaga.prognos" id="prognosForm">
 
@@ -12,31 +13,33 @@
   <a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod"
      target="_blank" title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
     försäkringsmedicinska beslutstöd</a>
+
   <div class="form-group">
-    <label class="radio-inline"><input type="radio" name="capacityForWorkForecast" value="YES"
+    <label class="radio-inline"><input type="radio" name="capacityForWork.forecast" value="YES"
                                        ng-model="radioGroups.prognos" ng-change="onPrognosChange()"> Ja</label>
   </div>
 
   <div class="form-group">
-    <label class="radio-inline"><input type="radio" id="capacityForWork2"
-                                       name="capacityForWorkForecast" value="PARTLY"
+    <label class="radio-inline"><input type="radio" name="capacityForWork.forecast" id="capacityForWork2"
+                                        value="PARTLY"
                                        ng-model="radioGroups.prognos" ng-change="onPrognosChange()"> Ja, delvis</label>
   </div>
 
   <div class="form-group">
-    <label class="radio-inline"><input type="radio" id="capacityForWork3"
-                                       name="capacityForWorkForecast" value="NO"
+    <label class="radio-inline"><input type="radio" name="capacityForWork.forecast" id="capacityForWork3"
+                                        value="NO"
                                        ng-model="radioGroups.prognos" ng-change="onPrognosChange()"> Nej</label>
   </div>
 
   <div class="form-group">
-    <label class="radio-inline"><input type="radio" id="capacityForWork4"
-                                       name="capacityForWorkForecast" value="UNKNOWN"
+    <label class="radio-inline"><input type="radio" name="capacityForWork.forecast" id="capacityForWork4"
+                                        value="UNKNOWN"
                                        ng-model="radioGroups.prognos" ng-change="onPrognosChange()"> Går ej att bedöma</label>
     <div class="indent form-inline" ng-show="showInteAttBedoma()">
       Förtydligande: <input type="text"
+                            name="capacityForWork.forecastText"
                             ng-model="model.arbetsformagaPrognosGarInteAttBedomaBeskrivning"
-                            id="capacityForWorkForecastText" name="capacityForWork.forecastText"
+                            id="capacityForWorkForecastText"
                             value="" class='form-control otherInformation'
                             ng-change="viewState.limitOtherField('arbetsformagaPrognosGarInteAttBedomaBeskrivning')"> <span
         id="prognosis-counter">Tecken kvar:
@@ -46,4 +49,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>
