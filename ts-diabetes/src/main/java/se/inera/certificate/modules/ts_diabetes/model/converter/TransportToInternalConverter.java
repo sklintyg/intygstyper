@@ -54,6 +54,7 @@ public class TransportToInternalConverter {
         result.setGrundData(readGrundData(transport.getGrundData()));
         readDiabetes(result.getDiabetes(), transport.getDiabetes());
         readHypoglykemier(result.getHypoglykemier(), transport.getHypoglykemier());
+        result.getSyn().setSeparatOgonlakarintyg(transport.isSeparatOgonLakarintygKommerSkickas());
         readSyn(result.getSyn(), transport.getSynfunktion());
         readBedomning(result.getBedomning(), transport.getBedomning());
         readIntygAvser(result.getIntygAvser(), transport.getIntygAvser());
@@ -88,14 +89,17 @@ public class TransportToInternalConverter {
     }
 
     private static void readSyn(Syn syn, SynfunktionDiabetes synfunktion) {
-        syn.setSeparatOgonlakarintyg(synfunktion.isFinnsSeparatOgonlakarintyg());
-        syn.setBinokulart(readBinokulart(synfunktion));
-        syn.setDiplopi(synfunktion.isHarDiplopi());
-        syn.setHoger(readHoger(synfunktion));
-        syn.setVanster(readVanster(synfunktion));
-        syn.setSynfaltsprovning(synfunktion.isFinnsSynfaltsprovning());
-        syn.setProvningOgatsRorlighet(synfunktion.isFinnsProvningOgatsRorlighet());
-        syn.setSynfaltsprovningUtanAnmarkning(synfunktion.isSynfaltsprovningUtanAnmarkning());
+        
+        if(synfunktion != null){
+            //syn.setSeparatOgonlakarintyg(synfunktion.isFinnsSeparatOgonlakarintyg());
+            syn.setBinokulart(readBinokulart(synfunktion));
+            syn.setDiplopi(synfunktion.isHarDiplopi());
+            syn.setHoger(readHoger(synfunktion));
+            syn.setVanster(readVanster(synfunktion));
+            syn.setSynfaltsprovning(synfunktion.isFinnsSynfaltsprovning());
+            syn.setProvningOgatsRorlighet(synfunktion.isFinnsProvningOgatsRorlighet());
+            syn.setSynfaltsprovningUtanAnmarkning(synfunktion.isSynfaltsprovningUtanAnmarkning());
+        }
     }
 
     private static Synskarpevarden readVanster(SynfunktionDiabetes synfunktion) {

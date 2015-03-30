@@ -1,0 +1,194 @@
+{
+    "bedomning": {
+        "korkortstyp": [
+            {
+                "selected": false,
+                "type": "AM"
+            },
+            {
+                "selected": true,
+                "type": "A1"
+            },
+            {
+                "selected": false,
+                "type": "A2"
+            },
+            {
+                "selected": false,
+                "type": "A"
+            },
+            {
+                "selected": false,
+                "type": "B"
+            },
+            {
+                "selected": false,
+                "type": "BE"
+            },
+            {
+                "selected": false,
+                "type": "TRAKTOR"
+            },
+            {
+                "selected": false,
+                "type": "C1"
+            },
+            {
+                "selected": false,
+                "type": "C1E"
+            },
+            {
+                "selected": false,
+                "type": "C"
+            },
+            {
+                "selected": false,
+                "type": "CE"
+            },
+            {
+                "selected": false,
+                "type": "D1"
+            },
+            {
+                "selected": false,
+                "type": "D1E"
+            },
+            {
+                "selected": false,
+                "type": "D"
+            },
+            {
+                "selected": false,
+                "type": "DE"
+            },
+            {
+                "selected": false,
+                "type": "TAXI"
+            }
+        ],
+        "lakareSpecialKompetens": "efsdfs",
+        "lamplighetInnehaBehorighet": true
+    },
+    "diabetes": {
+        "diabetestyp": "DIABETES_TYP_2",
+        "observationsperiod": "2000",
+        "tabletter": true
+    },
+    "grundData": {
+        "patient": {
+            "efternamn": "Tolvansson",
+            "fornamn": "Tolvan",
+            "fullstandigtNamn": "Tolvan Tolvansson",
+            "personId": "19121212-1212",
+            "postadress": "Svensson, Storgatan 1, PL 1234",
+            "postnummer": "12345",
+            "postort": "Sm\u00e5m\u00e5la",
+            "samordningsNummer": false
+        },
+        "skapadAv": {
+            "fullstandigtNamn": "Jan Nilsson",
+            "personId": "IFV1239877878-1049",
+            "vardenhet": {
+                "enhetsid": "IFV1239877878-1042",
+                "enhetsnamn": "WebCert-Enhet1",
+                "postadress": "Storgatan 1",
+                "postnummer": "12345",
+                "postort": "Sm\u00e5m\u00e5la",
+                "telefonnummer": "0101234567890",
+                "vardgivare": {
+                    "vardgivarid": "IFV1239877878-1041",
+                    "vardgivarnamn": "WebCert-V\u00e5rdgivare1"
+                }
+            }
+        }
+    },
+    "hypoglykemier": {
+        "allvarligForekomst": true,
+        "allvarligForekomstBeskrivning": "fhgfgh",
+        "allvarligForekomstTrafikBeskrivning": "ttytuy",
+        "allvarligForekomstTrafiken": true,
+        "allvarligForekomstVakenTid": true,
+        "allvarligForekomstVakenTidObservationstid": "2001-02-20T23:00:00.000Z",
+        "egenkontrollBlodsocker": true,
+        "kunskapOmAtgarder": true,
+        "saknarFormagaKannaVarningstecken": true,
+        "teckenNedsattHjarnfunktion": true
+    },
+    "id": "ea547b19-05b4-48bb-b917-49f6355d362c",
+    "intygAvser": {
+        "korkortstyp": [
+            {
+                "selected": false,
+                "type": "AM"
+            },
+            {
+                "selected": false,
+                "type": "A1"
+            },
+            {
+                "selected": true,
+                "type": "A2"
+            },
+            {
+                "selected": false,
+                "type": "A"
+            },
+            {
+                "selected": false,
+                "type": "B"
+            },
+            {
+                "selected": false,
+                "type": "BE"
+            },
+            {
+                "selected": false,
+                "type": "TRAKTOR"
+            },
+            {
+                "selected": false,
+                "type": "C1"
+            },
+            {
+                "selected": false,
+                "type": "C1E"
+            },
+            {
+                "selected": false,
+                "type": "C"
+            },
+            {
+                "selected": false,
+                "type": "CE"
+            },
+            {
+                "selected": false,
+                "type": "D1"
+            },
+            {
+                "selected": false,
+                "type": "D1E"
+            },
+            {
+                "selected": true,
+                "type": "D"
+            },
+            {
+                "selected": false,
+                "type": "DE"
+            },
+            {
+                "selected": false,
+                "type": "TAXI"
+            }
+        ]
+    },
+    "kommentar": "rgdsf",
+    "syn": {
+        "separatOgonlakarintyg": true
+    },
+    "typ": "TS_DIABETES_U06_V02",
+    "vardkontakt": {
+        "idkontroll": "KORKORT"
+    }
+}
