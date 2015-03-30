@@ -29,7 +29,7 @@
       <!-- TS-DIABETES -->
       <div class="edit-form" ng-class="{'collapsed' : viewState.common.collapsedHeader}">
 
-        <form name="certForm" novalidate autocomplete="off">
+        <form name="certForm" novalidate autocomplete="off" wc-auto-save="save(true)">
           <div ng-hide="viewState.common.error.activeErrorMessageKey">
 
             <div wc-spinner label="info.loadingdata" show-spinner="!viewState.common.doneLoading"
