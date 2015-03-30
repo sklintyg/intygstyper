@@ -92,11 +92,7 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
             String issuedBy =  registerMedicalCertificate.getLakarutlatande().getSkapadAvHosPersonal().getEnhet().getEnhetsId().getExtension();
             LOGGER.warn(LogMarkers.VALIDATION, "Validation warning for intyg " + certificateId + " issued by " + issuedBy + ": Certificate already exists - ignored.");
 
-        } catch (CertificateValidationException e) {
-            response.setResult(ResultOfCallUtil.failResult(e.getMessage()));
-            LOGGER.error(LogMarkers.VALIDATION, e.getMessage());
-
-        } catch (ConverterException e) {
+        } catch (CertificateValidationException|ConverterException e) {
             response.setResult(ResultOfCallUtil.failResult(e.getMessage()));
             LOGGER.error(LogMarkers.VALIDATION, e.getMessage());
 

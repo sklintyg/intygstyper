@@ -198,11 +198,6 @@ public class ModuleService implements ModuleApi {
     }
 
     @Override
-    public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
-//        sendCertificateToRecipient(internalModel, logicalAddress, null);
-    }
-
-    @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
 //        // Check that we got any data at all
 //        if (internalModel == null ) {
