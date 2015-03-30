@@ -7,5 +7,6 @@ angular.module('fk7263').controller('fk7263.EditCert.Form1Ctrl',
 
             $scope.onSmittskyddChange = function(){
                 viewState.avstangningSmittskyddValue = model.avstangningSmittskydd;
-            }
+            };
+
         }]);
