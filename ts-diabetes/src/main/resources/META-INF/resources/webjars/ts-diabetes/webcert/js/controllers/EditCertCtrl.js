@@ -75,6 +75,12 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 // otherwise leave it as an invalid Date so backend sends back a validation error
                 $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid =
                     $scope.certForm.allvarligForekomstVakenTidObservationstid.$viewValue;
+
+                if(!$scope.cert.hypoglykemier.teckenNedsattHjarnfunktion) {
+                    $scope.cert.hypoglykemier.saknarFormagaKannaVarningstecken = undefined;
+                    $scope.cert.hypoglykemier.allvarligForekomst = undefined;
+                    $scope.cert.hypoglykemier.allvarligForekomstTrafiken = undefined;
+                }
             }
 
             /******************************************************************************************
@@ -112,9 +118,9 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
             $scope.$watch('cert.hypoglykemier.teckenNedsattHjarnfunktion',
                 function(forekommerTeckenNedsattHjarnfunktion) {
                     if (!forekommerTeckenNedsattHjarnfunktion && $scope.cert.hypoglykemier) {
-                        $scope.cert.hypoglykemier.saknarFormagaKannaVarningstecken = null;
-                        $scope.cert.hypoglykemier.allvarligForekomst = null;
-                        $scope.cert.hypoglykemier.allvarligForekomstTrafiken = null;
+                        $scope.cert.hypoglykemier.saknarFormagaKannaVarningstecken = undefined;
+                        $scope.cert.hypoglykemier.allvarligForekomst = undefined;
+                        $scope.cert.hypoglykemier.allvarligForekomstTrafiken = undefined;
                     }
                 }, true);
             $scope.$watch('cert.hypoglykemier.allvarligForekomst', function(haftAllvarligForekomst) {
@@ -234,6 +240,8 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 // Mark form as saved, will be marked as not saved if saving fails.
                 $scope.certForm.$setPristine();
 //                $scope.cert.prepare();
+
+                convertFormToCert();// Move into prepare later
 
                 var intygSaveRequest = {
                     intygsId      : $scope.certMeta.intygId,

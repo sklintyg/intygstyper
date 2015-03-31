@@ -36,9 +36,6 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.status.sent': 'Intyget är signerat och mottaget av Transportstyrelsens system.',
         'ts-diabetes.label.status.signed': 'Intyget är signerat och är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se. Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.',
 
-        'ts-diabetes.label.status.sent': 'Intyget är signerat och mottaget av Transportstyrelsens system.',
-        'ts-diabetes.label.status.signed': 'Intyget är signerat och är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se. Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.',
-
         // Identitet styrkt genom
         'ts-diabetes.label.identitet.id_kort': 'ID-kort',
         'ts-diabetes.label.identitet.foretag_eller_tjanstekort': 'Företagskort eller tjänstekort.',
@@ -51,8 +48,8 @@ var tsDiabetesMessages = {
         'ts-diabetes.helptext.identitet-styrkt-genom.forsakran-enl18kap4': '*** Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2): Identiteten får fastställas genom att en förälder, annan vårdnadshavare, make, maka eller sambo, registrerad partner eller myndigt barn skriftligen försäkrar att lämnade uppgifter om sökandens identitet är riktiga. Den som lämnar en sådan försäkran ska vara närvarande vid identitetskontrollen och kunna styrka sin egen identitet.',
         'ts-diabetes.helptext.identitet-styrkt-genom.pass': '**** Svenskt EU-pass, annat EU-pass utfärdade från och med den 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 2006.',
 
-
         // Visa ts-diabetes
+        'ts-diabetes.label.patientadress': 'Patientens adressuppgifter',
 
         'ts-diabetes.label.syn': '3. Synintyg',
         'ts-diabetes.label.ovrigkommentar': 'Övriga upplysningar och kommentarer',
