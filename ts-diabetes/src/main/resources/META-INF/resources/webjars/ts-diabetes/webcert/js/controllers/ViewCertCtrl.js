@@ -9,7 +9,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
              * Page state
              *********************************************************************/
 
-            var intygType = "ts-diabetes";
+            var intygType = 'ts-diabetes';
             $scope.user = { lakare: User.getUserContext().lakare };
             $scope.cert = {};
             $scope.widgetState = {
