@@ -33,7 +33,7 @@ angular.module('fk7263').factory('fk7263.diagnosService',
             var data = {
                 codeSystem: codeSystem,
                 codeFragment: codeFragment.toUpperCase(),
-                nbrOfResults: 10
+                nbrOfResults: 18
             };
             return $http.post(restPath, data);
         }
@@ -47,7 +47,7 @@ angular.module('fk7263').factory('fk7263.diagnosService',
             var data = {
                 codeSystem: codeSystem,
                 descriptionSearchString: searchString,
-                nbrOfResults: 10
+                nbrOfResults: 18
             };
             return $http.post(restPath, data);
         }
