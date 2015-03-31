@@ -175,9 +175,9 @@ describe('ts-diabetes.EditCertCtrl', function() {
         $scope.cert.hypoglykemier.teckenNedsattHjarnfunktion = false;
         $scope.$digest();
 
-        expect($scope.cert.hypoglykemier.saknarFormagaKannaVarningstecken).toBeNull();
-        expect($scope.cert.hypoglykemier.allvarligForekomst).toBeNull();
-        expect($scope.cert.hypoglykemier.allvarligForekomstTrafiken).toBeNull();
+        expect($scope.cert.hypoglykemier.saknarFormagaKannaVarningstecken).toBeUndefined();
+        expect($scope.cert.hypoglykemier.allvarligForekomst).toBeUndefined();
+        expect($scope.cert.hypoglykemier.allvarligForekomstTrafiken).toBeUndefined();
     });
 
     it('should reset hidden fields when "allvarligForekomst" is set to false', function() {
