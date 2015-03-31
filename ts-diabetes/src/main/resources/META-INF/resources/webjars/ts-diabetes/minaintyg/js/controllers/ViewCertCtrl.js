@@ -122,7 +122,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
             $scope.openArchiveDialog = function(cert) {
                 $scope.certToArchive = cert;
                 $scope.dialog.focus = true;
-                archiveDialog = dialogService.showDialog({
+                archiveDialog = dialogService.showDialog($scope, {
                     dialogId: 'archive-confirmation-dialog',
                     titleId: 'inbox.archivemodal.header',
                     bodyTextId: 'inbox.archivemodal.text',

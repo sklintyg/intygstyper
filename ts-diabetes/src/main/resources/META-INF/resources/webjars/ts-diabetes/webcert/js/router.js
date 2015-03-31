@@ -1,7 +1,7 @@
 /**
  * Created by stephenwhite on 05/03/15.
  */
-angular.module('ts-diabetes.router', ['ui.router']).config(function($stateProvider) {
+angular.module('ts-diabetes', ['ui.router']).config(function($stateProvider) {
     'use strict';
     $stateProvider.
         state('ts-diabetes-edit', {
