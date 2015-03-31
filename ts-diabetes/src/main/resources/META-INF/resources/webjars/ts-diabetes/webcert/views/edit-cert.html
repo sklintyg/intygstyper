@@ -92,7 +92,7 @@
                       </ul>
                     </div>
                     <div class="form-group clearfix">
-                      <label class="checkbox checkbox-columns col-md-2"
+                      <label class="checkbox checkbox-columns col-xs-2"
                              ng-repeat="typ in cert.intygAvser.korkortstyp track by $index"><input
                           id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox" ng-model="typ.selected">
                         <span message key="ts-diabetes.label.korkort.{{typ.type}}"></span></label>
@@ -433,7 +433,7 @@
                                                         ng-model="form.behorighet"> Någon av följande
                               behörigheter</label>
                             <div class="form-group clearfix indent" data-ng-show="form.behorighet">
-                              <label class="checkbox checkbox-columns col-md-2"
+                              <label class="checkbox checkbox-columns col-xs-2"
                                      ng-repeat="typ in cert.bedomning.korkortstyp track by $index"><input
                                   id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox"
                                   ng-model="typ.selected"> <span message
