@@ -4,12 +4,6 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
             'use strict';
             $scope.model = model;
 
-            // this is set by ng-form
-            $scope.attic = {
-                arbetsformagaPrognosGarInteAttBedomaBeskrivning: '',
-                prognosBedomning: ''
-            };
-
             $scope.viewState = viewState;
 
             var prognosStates = {NO: 'NO', YES: 'YES', PARTLY: 'PARTLY', UNKNOWN: 'UNKNOWN'};
@@ -30,10 +24,11 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
                 if (viewState.common.doneLoading) {
                     // Remove defaults not applicable when smittskydd is active
                     if (newVal === true) {
-                        clearModel();
+                        model.atticUpdateForm10();
+                        model.clearForm10();
                     } else {
-                        if($scope.attic.prognosBedomning){
-                            restoreFromAttic();
+                        if(model.atticHasForm10()){
+                            model.atticRestoreForm10();
                         } else if (!$scope.radioGroups.prognos || $scope.radioGroups.prognos.length === 0) {
                             model.prognosBedomning = 'arbetsformagaPrognosJa';
                         }
@@ -80,27 +75,11 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
                 default :
                     model.prognosBedomning = undefined;
                 }
-                updateAttic();
+                model.atticUpdateForm10();
             };
 
             $scope.showInteAttBedoma = function() {
                 return $scope.radioGroups.prognos === prognosStates.UNKNOWN;
             };
-
-            // utils ---------------------------------------------------------------------------------------------------
-            function clearModel(){
-                model.prognosBedomning = undefined;
-                model.arbetsformagaPrognosGarInteAttBedomaBeskrivning = undefined;
-            }
-
-            function updateAttic(){
-                $scope.attic.prognosBedomning = model.prognosBedomning;
-                $scope.attic.arbetsformagaPrognosGarInteAttBedomaBeskrivning = model.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
-            }
-
-            function restoreFromAttic(){
-                model.prognosBedomning = $scope.attic.prognosBedomning;
-                model.arbetsformagaPrognosGarInteAttBedomaBeskrivning = $scope.attic.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
-            }
 
         }]);
