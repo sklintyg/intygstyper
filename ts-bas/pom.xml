@@ -89,6 +89,11 @@
       <artifactId>spring-tx</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>net.sf.saxon</groupId>
+      <artifactId>Saxon-HE</artifactId>
+    </dependency>
+
     <!-- Test dependencies -->
     <dependency>
       <groupId>commons-io</groupId>

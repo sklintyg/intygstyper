@@ -78,6 +78,12 @@
         <version>${common.version}</version>
       </dependency>
 
+      <dependency>
+        <groupId>net.sf.saxon</groupId>
+        <artifactId>Saxon-HE</artifactId>
+        <version>9.6.0-4</version>
+      </dependency>
+
       <!-- Schemas -->
       <dependency>
         <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
