@@ -3,6 +3,13 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
         function($log, model, $scope, viewState) {
             'use strict';
             $scope.model = model;
+
+            // this is set by ng-form
+            $scope.attic = {
+                arbetsformagaPrognosGarInteAttBedomaBeskrivning: '',
+                prognosBedomning: ''
+            };
+
             $scope.viewState = viewState;
 
             var prognosStates = {NO: 'NO', YES: 'YES', PARTLY: 'PARTLY', UNKNOWN: 'UNKNOWN'};
@@ -11,7 +18,33 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
                 prognos: prognosStates.YES
             };
 
-            function setPrognosGroup() {
+            // lifecyle listeners --------------------------------------------------------------------------------------
+
+            // once we've doneLoading we can set the radion buttons to the model state.
+            $scope.$on('fk7263.loaded', function() {
+                setPrognosGroupFromModel();
+            });
+
+            $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal) {
+                // only do this once the page is loaded and changes come from the gui!
+                if (viewState.common.doneLoading) {
+                    // Remove defaults not applicable when smittskydd is active
+                    if (newVal === true) {
+                        clearModel();
+                    } else {
+                        if($scope.attic.prognosBedomning){
+                            restoreFromAttic();
+                        } else if (!$scope.radioGroups.prognos || $scope.radioGroups.prognos.length === 0) {
+                            model.prognosBedomning = 'arbetsformagaPrognosJa';
+                        }
+                    }
+                    setPrognosGroupFromModel();
+                }
+            });
+
+            // view/scope methods --------------------------------------------------------------------------------------
+
+            function setPrognosGroupFromModel() {
                 switch (model.prognosBedomning) {
                 case 'arbetsformagaPrognosJa':
                     $scope.radioGroups.prognos = prognosStates.YES;
@@ -26,39 +59,9 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
                     $scope.radioGroups.prognos = prognosStates.UNKNOWN;
                     break;
                 default :
-                    $scope.radioGroups.prognos = prognosStates.YES;
+                    $scope.radioGroups.prognos = undefined;
                 }
             }
-
-            // once we've doneLoading we can set the radion buttons to the model state.
-            $scope.$watch('viewState.common.doneLoading', function(newVal) {
-                if (newVal) {
-                    setPrognosGroup();
-                }
-            });
-
-            $scope.showInteAttBedoma = function() {
-                return $scope.radioGroups.prognos == prognosStates.UNKNOWN;
-            }
-
-            $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal) {
-                // only do this once the page is loaded and changes come from the gui!
-                if (viewState.common.doneLoading) {
-                    // Remove defaults not applicable when smittskydd is active
-                    if (newVal === true) {
-                        $scope.radioGroups.prognos = undefined;
-                    } else {
-
-                        if (!$scope.radioGroups.prognos || $scope.radioGroups.prognos.length == 0) {
-                            $scope.radioGroups.prognos = prognosStates.YES;
-                        }
-
-                    }
-                    // set the model values
-                    $scope.onPrognosChange();
-                }
-            });
-
 
             $scope.onPrognosChange = function() {
                 switch ($scope.radioGroups.prognos) {
@@ -77,6 +80,27 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
                 default :
                     model.prognosBedomning = undefined;
                 }
+                updateAttic();
             };
+
+            $scope.showInteAttBedoma = function() {
+                return $scope.radioGroups.prognos === prognosStates.UNKNOWN;
+            };
+
+            // utils ---------------------------------------------------------------------------------------------------
+            function clearModel(){
+                model.prognosBedomning = undefined;
+                model.arbetsformagaPrognosGarInteAttBedomaBeskrivning = undefined;
+            }
+
+            function updateAttic(){
+                $scope.attic.prognosBedomning = model.prognosBedomning;
+                $scope.attic.arbetsformagaPrognosGarInteAttBedomaBeskrivning = model.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
+            }
+
+            function restoreFromAttic(){
+                model.prognosBedomning = $scope.attic.prognosBedomning;
+                model.arbetsformagaPrognosGarInteAttBedomaBeskrivning = $scope.attic.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
+            }
 
         }]);

@@ -4,6 +4,7 @@ import static se.inera.certificate.common.enumerations.Recipients.FK;
 import static se.inera.certificate.common.util.StringUtil.isNullOrEmpty;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.annotations.VisibleForTesting;
 import iso.v21090.dt.v1.CD;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
@@ -99,7 +100,7 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     private ModuleContainerApi moduleContainer;
 
-    // This method seem to be here just for test purpose. Isn't used in real code
+    @VisibleForTesting
     public void setRegisterMedicalCertificateClient(RegisterMedicalCertificateResponderInterface registerMedicalCertificateClient) {
         this.registerMedicalCertificateClient = registerMedicalCertificateClient;
     }
@@ -171,14 +172,6 @@ public class Fk7263ModuleApi implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
-        sendCertificateToRecipient(internalModel, logicalAddress, null);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
 
         // Check that we got any data at all
@@ -231,7 +224,7 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Override
     public void registerCertificate(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
-        sendCertificateToRecipient(internalModel, logicalAddress);
+        sendCertificateToRecipient(internalModel, logicalAddress, null);
     }
 
     @Override
@@ -290,14 +283,14 @@ public class Fk7263ModuleApi implements ModuleApi {
 
         if (!inSmittskydd) {
             // Check that we got a medicinsktTillstand element
-            if (isNull(lakarutlatande.getMedicinsktTillstand())) {
+            if (lakarutlatande.getMedicinsktTillstand() == null) {
                 throw new ModuleException("No medicinsktTillstand element found in request data. Cannot set codeSystemName to 'ICD-10'!");
             }
 
             MedicinsktTillstandType medicinsktTillstand = lakarutlatande.getMedicinsktTillstand();
 
             // Check that we got a tillstandskod element
-            if (isNull(medicinsktTillstand.getTillstandskod())) {
+            if (medicinsktTillstand.getTillstandskod() == null) {
                 throw new ModuleException("No tillstandskod element found in request data. Cannot set codeSystemName to 'ICD-10'!");
             }
 
@@ -341,8 +334,8 @@ public class Fk7263ModuleApi implements ModuleApi {
         try {
             if (aktiviteter != null) {
                 for (int i = 0; i < aktiviteter.size(); i++) {
-                    AktivitetType listAktivitet = (AktivitetType) aktiviteter.get(i);
-                    if (!isNull(listAktivitet.getAktivitetskod()) && listAktivitet.getAktivitetskod().compareTo(aktivitetskod) == 0) {
+                    AktivitetType listAktivitet = aktiviteter.get(i);
+                    if (listAktivitet.getAktivitetskod() != null && listAktivitet.getAktivitetskod().compareTo(aktivitetskod) == 0) {
                         foundAktivitet = listAktivitet;
                         break;
                     }
@@ -353,10 +346,6 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
 
         return foundAktivitet;
-    }
-
-    private boolean isNull(Object obj) {
-        return obj == null;
     }
 
     private void sendCertificateToRecipient(RegisterMedicalCertificateType request, final String logicalAddress, final String recipientId) throws ModuleException {

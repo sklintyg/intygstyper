@@ -164,7 +164,7 @@ public class Fk7263ModuleApiTest {
                 any(AttributedURIType.class), any(RegisterMedicalCertificateType.class))).thenReturn(response);
 
         // Then
-        fk7263ModuleApi.sendCertificateToRecipient(internalModel, "logicalAddress");
+        fk7263ModuleApi.sendCertificateToRecipient(internalModel, "logicalAddress", null);
 
         // Verify
         verify(registerMedicalCertificateClient).registerMedicalCertificate(eq(address), Mockito.any(RegisterMedicalCertificateType.class));

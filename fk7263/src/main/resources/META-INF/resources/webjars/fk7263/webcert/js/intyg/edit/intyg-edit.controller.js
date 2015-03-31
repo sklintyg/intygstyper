@@ -111,6 +111,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 $timeout(function() {
                     wcFocus('firstInput');
                     $rootScope.$broadcast('intyg.loaded', $scope.cert);
+                    $rootScope.$broadcast('fk7263.loaded', intygModel);
                     viewState.common.doneLoading = true;
                 }, 10);
             });
@@ -123,6 +124,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
             $rootScope.$on('saveRequest', function($event, deferred) {
 
+
+                $rootScope.$broadcast('fk7263.beforeSave', intygModel);
 
                 // Mark form as saved, will be marked as not saved if saving fails.
                 // Mark form as saved, will be marked as not saved if saving fails.
@@ -142,6 +145,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     viewState.common.validationMessages = result.validationMessages;
                     viewState.common.validationMessagesGrouped = result.validationMessagesGrouped;
                     viewState.common.error.saveErrorMessageKey = null;
+
+                    $rootScope.$broadcast('fk7263.afterSave', intygModel);
 
                 }, function(result) {
                     // save failed

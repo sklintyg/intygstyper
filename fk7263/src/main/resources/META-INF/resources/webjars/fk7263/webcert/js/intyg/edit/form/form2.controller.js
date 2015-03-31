@@ -62,13 +62,17 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 return diagnosService.searchByCode(codeSystem, val)
                     .then(function(response) {
                         if (response && response.data && response.data.resultat === 'OK') {
-                            return response.data.diagnoser.map(function(item) {
+                            var result = response.data.diagnoser.map(function(item) {
                                 return {
                                     value: item.kod,
                                     beskrivning: item.beskrivning,
                                     label: item.kod + ' | ' + item.beskrivning
                                 };
                             });
+                            if (result.length > 0) {
+                                result[0].moreResults = response.data.moreResults;
+                            }
+                            return result;
                         }
                         else {
                             return [];
@@ -90,13 +94,17 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 return diagnosService.searchByDescription(codeSystem, val)
                     .then(function(response) {
                         if (response && response.data && response.data.resultat === 'OK') {
-                            return response.data.diagnoser.map(function(item) {
+                            var result = response.data.diagnoser.map(function(item) {
                                 return {
                                     value: item.kod,
                                     beskrivning: item.beskrivning,
                                     label: item.kod + ' | ' + item.beskrivning
                                 };
                             });
+                            if (result.length > 0) {
+                                result[0].moreResults = response.data.moreResults;
+                            }
+                            return result;
                         }
                         else {
                             return [];
