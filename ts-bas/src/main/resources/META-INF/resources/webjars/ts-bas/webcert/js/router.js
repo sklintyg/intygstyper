@@ -1,7 +1,7 @@
 /**
  * Created by stephenwhite on 05/03/15.
  */
-angular.module('ts-bas', ['ui.router']).config(function($stateProvider) {
+angular.module('ts-bas').config(function($stateProvider) {
     'use strict';
     $stateProvider.
         state('ts-bas-edit', {
