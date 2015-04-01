@@ -2,16 +2,14 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
     ['fk7263.Domain.GrundDataModel', 'common.domain.DraftModel', function(grundData, draftModel) {
         'use strict';
 
-        var _intygModel, attic;
+        // private
+        var _intygModel, _attic;
+
 
         /**
          * Constructor, with class name
          */
-        function IntygModel(attic) {
-
-            if (attic) {
-                this.attic = attic;
-            }
+        function IntygModel() {
 
             // field 1
             this.avstangningSmittskydd = undefined;
@@ -188,8 +186,8 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
         // attic functions
         // form 2
         IntygModel.prototype.atticHasForm2 = function() {
-            if (this.attic) {
-                if (this.attic.diagnosKod || this.attic.diagnosKod2 || this.attic.diagnosKod3) {
+            if (_attic) {
+                if (_attic.diagnosKod || _attic.diagnosKod2 || _attic.diagnosKod3) {
                     return true;
                 }
             }
@@ -197,34 +195,34 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
         };
 
         IntygModel.prototype.atticUpdateForm2 = function() {
-            if (this.attic) {
-                this.attic.diagnosBeskrivning = this.diagnosBeskrivning;
-                this.attic.diagnosBeskrivning1 = this.diagnosBeskrivning1;
-                this.attic.diagnosBeskrivning2 = this.diagnosBeskrivning2;
-                this.attic.diagnosBeskrivning3 = this.diagnosBeskrivning3;
-                this.attic.diagnosKod = this.diagnosKod;
-                this.attic.diagnosKod2 = this.diagnosKod2;
-                this.attic.diagnosKod3 = this.diagnosKod3;
-                this.attic.diagnosKodsystem1 = this.diagnosKodsystem1;
-                this.attic.diagnosKodsystem2 = this.diagnosKodsystem2;
-                this.attic.diagnosKodsystem3 = this.diagnosKodsystem3;
-                this.attic.samsjuklighet = this.samsjuklighet;
+            if (_attic) {
+                _attic.diagnosBeskrivning = this.diagnosBeskrivning;
+                _attic.diagnosBeskrivning1 = this.diagnosBeskrivning1;
+                _attic.diagnosBeskrivning2 = this.diagnosBeskrivning2;
+                _attic.diagnosBeskrivning3 = this.diagnosBeskrivning3;
+                _attic.diagnosKod = this.diagnosKod;
+                _attic.diagnosKod2 = this.diagnosKod2;
+                _attic.diagnosKod3 = this.diagnosKod3;
+                _attic.diagnosKodsystem1 = this.diagnosKodsystem1;
+                _attic.diagnosKodsystem2 = this.diagnosKodsystem2;
+                _attic.diagnosKodsystem3 = this.diagnosKodsystem3;
+                _attic.samsjuklighet = this.samsjuklighet;
             }
         };
 
         IntygModel.prototype.atticRestoreForm2 = function() {
-            if (this.attic) {
-                this.diagnosBeskrivning = this.attic.diagnosBeskrivning;
-                this.diagnosBeskrivning1 = this.attic.diagnosBeskrivning1;
-                this.diagnosBeskrivning2 = this.attic.diagnosBeskrivning2;
-                this.diagnosBeskrivning3 = this.attic.diagnosBeskrivning3;
-                this.diagnosKod = this.attic.diagnosKod;
-                this.diagnosKod2 = this.attic.diagnosKod2;
-                this.diagnosKod3 = this.attic.diagnosKod3;
-                this.diagnosKodsystem1 = this.attic.diagnosKodsystem1;
-                this.diagnosKodsystem2 = this.attic.diagnosKodsystem2;
-                this.diagnosKodsystem3 = this.attic.diagnosKodsystem3;
-                this.samsjuklighet = this.attic.samsjuklighet;
+            if (_attic) {
+                this.diagnosBeskrivning = _attic.diagnosBeskrivning;
+                this.diagnosBeskrivning1 = _attic.diagnosBeskrivning1;
+                this.diagnosBeskrivning2 = _attic.diagnosBeskrivning2;
+                this.diagnosBeskrivning3 = _attic.diagnosBeskrivning3;
+                this.diagnosKod = _attic.diagnosKod;
+                this.diagnosKod2 = _attic.diagnosKod2;
+                this.diagnosKod3 = _attic.diagnosKod3;
+                this.diagnosKodsystem1 = _attic.diagnosKodsystem1;
+                this.diagnosKodsystem2 = _attic.diagnosKodsystem2;
+                this.diagnosKodsystem3 = _attic.diagnosKodsystem3;
+                this.samsjuklighet = _attic.samsjuklighet;
             }
         };
 
@@ -239,13 +237,13 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
             this.diagnosKodsystem1 = undefined;
             this.diagnosKodsystem2 = undefined;
             this.diagnosKodsystem3 = undefined;
-            this.samsjuklighet = undefined;
+            this.samsjuklighet = false;
         };
 
         // form3
         IntygModel.prototype.atticHasForm3 = function() {
-            if (this.attic) {
-                if (this.attic.sjukdomsforlopp) {
+            if (_attic) {
+                if (_attic.sjukdomsforlopp) {
                     return true;
                 }
             }
@@ -253,14 +251,14 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
         };
 
         IntygModel.prototype.atticUpdateForm3 = function() {
-            if (this.attic) {
-                this.attic.sjukdomsforlopp = this.sjukdomsforlopp;
+            if (_attic) {
+                _attic.sjukdomsforlopp = this.sjukdomsforlopp;
             }
         };
 
         IntygModel.prototype.atticRestoreForm3 = function() {
-            if (this.attic) {
-                this.sjukdomsforlopp = this.attic.sjukdomsforlopp;
+            if (_attic) {
+                this.sjukdomsforlopp = _attic.sjukdomsforlopp;
             }
         };
 
@@ -270,8 +268,8 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
 
         // form4
         IntygModel.prototype.atticHasForm4 = function() {
-            if (this.attic) {
-                if (this.attic.funktionsnedsattning) {
+            if (_attic) {
+                if (_attic.funktionsnedsattning) {
                     return true;
                 }
             }
@@ -279,14 +277,14 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
         };
 
         IntygModel.prototype.atticUpdateForm4 = function() {
-            if (this.attic) {
-                this.attic.funktionsnedsattning = this.funktionsnedsattning;
+            if (_attic) {
+                _attic.funktionsnedsattning = this.funktionsnedsattning;
             }
         };
 
         IntygModel.prototype.atticRestoreForm4 = function() {
-            if (this.attic) {
-                this.funktionsnedsattning = this.attic.funktionsnedsattning;
+            if (_attic) {
+                this.funktionsnedsattning = _attic.funktionsnedsattning;
             }
         };
 
@@ -296,8 +294,8 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
 
         // form4b
         IntygModel.prototype.atticHasForm4b = function() {
-            if (this.attic) {
-                if (this.attic.annanReferens || this.attic.journaluppgifter || this.attic.journaluppgifter || this.attic.undersokningAvPatienten) {
+            if (_attic) {
+                if (_attic.annanReferens || _attic.journaluppgifter || _attic.journaluppgifter || _attic.undersokningAvPatienten) {
                     return true;
                 }
             }
@@ -305,22 +303,22 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
         };
 
         IntygModel.prototype.atticUpdateForm4b = function() {
-            if (this.attic) {
-                 this.attic.annanReferens = this.annanReferens;
-                 this.attic.annanReferensBeskrivning = this.annanReferensBeskrivning;
-                 this.attic.journaluppgifter = this.journaluppgifter;
-                 this.attic.telefonkontaktMedPatienten = this.telefonkontaktMedPatienten;
-                 this.attic.undersokningAvPatienten = this.undersokningAvPatienten;
+            if (_attic) {
+                 _attic.annanReferens = this.annanReferens;
+                 _attic.annanReferensBeskrivning = this.annanReferensBeskrivning;
+                 _attic.journaluppgifter = this.journaluppgifter;
+                 _attic.telefonkontaktMedPatienten = this.telefonkontaktMedPatienten;
+                 _attic.undersokningAvPatienten = this.undersokningAvPatienten;
             }
         };
 
         IntygModel.prototype.atticRestoreForm4b = function() {
-            if (this.attic) {
-                this.annanReferens = this.attic.annanReferens;
-                this.annanReferensBeskrivning = this.attic.annanReferensBeskrivning;
-                this.journaluppgifter = this.attic.journaluppgifter;
-                this.telefonkontaktMedPatienten = this.attic.telefonkontaktMedPatienten;
-                this.undersokningAvPatienten = this.attic.undersokningAvPatienten;
+            if (_attic) {
+                this.annanReferens = _attic.annanReferens;
+                this.annanReferensBeskrivning = _attic.annanReferensBeskrivning;
+                this.journaluppgifter = _attic.journaluppgifter;
+                this.telefonkontaktMedPatienten = _attic.telefonkontaktMedPatienten;
+                this.undersokningAvPatienten = _attic.undersokningAvPatienten;
             }
         };
 
@@ -334,8 +332,8 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
 
         // form5
         IntygModel.prototype.atticHasForm5 = function() {
-            if (this.attic) {
-                if ( this.attic.aktivitetsbegransning ) {
+            if (_attic) {
+                if ( _attic.aktivitetsbegransning ) {
                     return true;
                 }
             }
@@ -343,14 +341,14 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
         };
 
         IntygModel.prototype.atticUpdateForm5 = function() {
-            if (this.attic) {
-                this.attic.aktivitetsbegransning = this.aktivitetsbegransning;
+            if (_attic) {
+                _attic.aktivitetsbegransning = this.aktivitetsbegransning;
             }
         };
 
         IntygModel.prototype.atticRestoreForm5 = function() {
-            if (this.attic) {
-                this.aktivitetsbegransning = this.attic.aktivitetsbegransning;
+            if (_attic) {
+                this.aktivitetsbegransning = _attic.aktivitetsbegransning;
             }
         };
 
@@ -360,11 +358,11 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
 
         // form6a
         IntygModel.prototype.atticHasForm6a = function() {
-            if (this.attic) {
-                if ( this.attic.rekommendationKontaktArbetsformedlingen ||
-                    this.attic.rekommendationKontaktForetagshalsovarden ||
-                    this.attic.rekommendationOvrigt ||
-                    this.attic.rekommendationOvrigtCheck) {
+            if (_attic) {
+                if ( _attic.rekommendationKontaktArbetsformedlingen ||
+                    _attic.rekommendationKontaktForetagshalsovarden ||
+                    _attic.rekommendationOvrigt ||
+                    _attic.rekommendationOvrigtCheck) {
                     return true;
                 }
             }
@@ -372,20 +370,20 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
         };
 
         IntygModel.prototype.atticUpdateForm6a = function() {
-            if (this.attic) {
-                this.attic.rekommendationKontaktArbetsformedlingen = this.rekommendationKontaktArbetsformedlingen;
-                this.attic.rekommendationKontaktForetagshalsovarden = this.rekommendationKontaktForetagshalsovarden;
-                this.attic.rekommendationOvrigt = this.rekommendationOvrigt;
-                this.attic.rekommendationOvrigtCheck = this.rekommendationOvrigtCheck;
+            if (_attic) {
+                _attic.rekommendationKontaktArbetsformedlingen = this.rekommendationKontaktArbetsformedlingen;
+                _attic.rekommendationKontaktForetagshalsovarden = this.rekommendationKontaktForetagshalsovarden;
+                _attic.rekommendationOvrigt = this.rekommendationOvrigt;
+                _attic.rekommendationOvrigtCheck = this.rekommendationOvrigtCheck;
             }
         };
 
         IntygModel.prototype.atticRestoreForm6a = function() {
-            if (this.attic) {
-                this.rekommendationKontaktArbetsformedlingen = this.attic.rekommendationKontaktArbetsformedlingen;
-                this.rekommendationKontaktForetagshalsovarden = this.attic.rekommendationKontaktForetagshalsovarden;
-                this.rekommendationOvrigt = this.attic.rekommendationOvrigt;
-                this.rekommendationOvrigtCheck = this.attic.rekommendationOvrigtCheck;
+            if (_attic) {
+                this.rekommendationKontaktArbetsformedlingen = _attic.rekommendationKontaktArbetsformedlingen;
+                this.rekommendationKontaktForetagshalsovarden = _attic.rekommendationKontaktForetagshalsovarden;
+                this.rekommendationOvrigt = _attic.rekommendationOvrigt;
+                this.rekommendationOvrigtCheck = _attic.rekommendationOvrigtCheck;
             }
         };
 
@@ -398,8 +396,8 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
 
         // form6b
         IntygModel.prototype.atticHasForm6b = function() {
-            if (this.attic) {
-                if ( this.attic.atgardInomSjukvarden || this.attic.annanAtgard ) {
+            if (_attic) {
+                if ( _attic.atgardInomSjukvarden || _attic.annanAtgard ) {
                     return true;
                 }
             }
@@ -407,16 +405,16 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
         };
 
         IntygModel.prototype.atticUpdateForm6b = function() {
-            if (this.attic) {
-                this.attic.atgardInomSjukvarden = this.atgardInomSjukvarden;
-                this.attic.annanAtgard = this.annanAtgard;
+            if (_attic) {
+                _attic.atgardInomSjukvarden = this.atgardInomSjukvarden;
+                _attic.annanAtgard = this.annanAtgard;
             }
         };
 
         IntygModel.prototype.atticRestoreForm6b = function() {
-            if (this.attic) {
-                this.atgardInomSjukvarden = this.attic.atgardInomSjukvarden;
-                this.annanAtgard = this.attic.annanAtgard;
+            if (_attic) {
+                this.atgardInomSjukvarden = _attic.atgardInomSjukvarden;
+                this.annanAtgard = _attic.annanAtgard;
             }
         };
 
@@ -427,8 +425,8 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
 
         // form7
         IntygModel.prototype.atticHasForm7 = function() {
-            if (this.attic) {
-                if ( this.attic.ressattTillArbeteAktuellt || this.attic.ressattTillArbeteEjAktuellt ) {
+            if (_attic) {
+                if ( _attic.ressattTillArbeteAktuellt || _attic.ressattTillArbeteEjAktuellt ) {
                     return true;
                 }
             }
@@ -436,16 +434,16 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
         };
 
         IntygModel.prototype.atticUpdateForm7 = function() {
-            if (this.attic) {
-                this.attic.ressattTillArbeteAktuellt = this.ressattTillArbeteAktuellt;
-                this.attic.ressattTillArbeteEjAktuellt = this.ressattTillArbeteEjAktuellt;
+            if (_attic) {
+                _attic.ressattTillArbeteAktuellt = this.ressattTillArbeteAktuellt;
+                _attic.ressattTillArbeteEjAktuellt = this.ressattTillArbeteEjAktuellt;
             }
         };
 
         IntygModel.prototype.atticRestoreForm7 = function() {
-            if (this.attic) {
-                this.ressattTillArbeteAktuellt = this.attic.ressattTillArbeteAktuellt;
-                this.ressattTillArbeteEjAktuellt = this.attic.ressattTillArbeteEjAktuellt;
+            if (_attic) {
+                this.ressattTillArbeteAktuellt = _attic.ressattTillArbeteAktuellt;
+                this.ressattTillArbeteEjAktuellt = _attic.ressattTillArbeteEjAktuellt;
             }
         };
 
@@ -456,8 +454,8 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
 
         // form8a
         IntygModel.prototype.atticHasForm8a = function() {
-            if (this.attic) {
-                if ( this.attic.arbetsloshet || this.attic.foraldrarledighet || this.attic.nuvarandeArbete || this.attic.nuvarandeArbetsuppgifter) {
+            if (_attic) {
+                if ( _attic.arbetsloshet || _attic.foraldrarledighet || _attic.nuvarandeArbete || _attic.nuvarandeArbetsuppgifter) {
                     return true;
                 }
             }
@@ -465,20 +463,20 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
         };
 
         IntygModel.prototype.atticUpdateForm8a = function() {
-            if (this.attic) {
-                 this.attic.arbetsloshet = this.arbetsloshet;
-                 this.attic.foraldrarledighet = this.foraldrarledighet;
-                 this.attic.nuvarandeArbete = this.nuvarandeArbete;
-                 this.attic.nuvarandeArbetsuppgifter = this.nuvarandeArbetsuppgifter;
+            if (_attic) {
+                 _attic.arbetsloshet = this.arbetsloshet;
+                 _attic.foraldrarledighet = this.foraldrarledighet;
+                 _attic.nuvarandeArbete = this.nuvarandeArbete;
+                 _attic.nuvarandeArbetsuppgifter = this.nuvarandeArbetsuppgifter;
             }
         };
 
         IntygModel.prototype.atticRestoreForm8a = function() {
-            if (this.attic) {
-                this.arbetsloshet = this.attic.arbetsloshet;
-                this.foraldrarledighet = this.attic.foraldrarledighet;
-                this.nuvarandeArbete = this.attic.nuvarandeArbete;
-                this.nuvarandeArbetsuppgifter = this.attic.nuvarandeArbetsuppgifter;
+            if (_attic) {
+                this.arbetsloshet = _attic.arbetsloshet;
+                this.foraldrarledighet = _attic.foraldrarledighet;
+                this.nuvarandeArbete = _attic.nuvarandeArbete;
+                this.nuvarandeArbetsuppgifter = _attic.nuvarandeArbetsuppgifter;
             }
         };
 
@@ -491,8 +489,8 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
 
         // form10
         IntygModel.prototype.atticHasForm10 = function() {
-            if (this.attic) {
-                if (this.attic.prognosBedomning) {
+            if (_attic) {
+                if (_attic.prognosBedomning) {
                     return true;
                 }
             }
@@ -500,18 +498,18 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
         };
 
         IntygModel.prototype.atticUpdateForm10 = function() {
-            if (this.attic) {
-                this.attic.prognosBedomning = this.prognosBedomning;
-                this.attic.arbetsformagaPrognosGarInteAttBedomaBeskrivning =
+            if (_attic) {
+                _attic.prognosBedomning = this.prognosBedomning;
+                _attic.arbetsformagaPrognosGarInteAttBedomaBeskrivning =
                     this.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
             }
         };
 
         IntygModel.prototype.atticRestoreForm10 = function() {
-            if (this.attic) {
-                this.prognosBedomning = this.attic.prognosBedomning;
+            if (_attic) {
+                this.prognosBedomning = _attic.prognosBedomning;
                 this.arbetsformagaPrognosGarInteAttBedomaBeskrivning =
-                    this.attic.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
+                    _attic.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
             }
         };
 
@@ -522,8 +520,8 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
 
         // form11
         IntygModel.prototype.atticHasForm11 = function() {
-            if (this.attic) {
-                if ( this.attic.rehab ) {
+            if (_attic) {
+                if ( _attic.rehab ) {
                     return true;
                 }
             }
@@ -531,14 +529,14 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
         };
 
         IntygModel.prototype.atticUpdateForm11 = function() {
-            if (this.attic) {
-                this.attic.rehab = this.rehab;
+            if (_attic) {
+                _attic.rehab = this.rehab;
             }
         };
 
         IntygModel.prototype.atticRestoreForm11 = function() {
-            if (this.attic) {
-                this.rehab = this.attic.rehab;
+            if (_attic) {
+                this.rehab = _attic.rehab;
             }
         };
 
@@ -546,12 +544,8 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
             this.rehab = undefined;
         };
 
-
-        IntygModel.build = function() {
-            return new IntygModel(new IntygModel());
-        };
-
-        _intygModel = IntygModel.build();
+        _intygModel = new IntygModel();
+        _attic = new IntygModel();
 
         draftModel.content = _intygModel;
 

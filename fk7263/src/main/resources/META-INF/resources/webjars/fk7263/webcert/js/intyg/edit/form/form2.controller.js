@@ -5,6 +5,9 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
             'use strict';
             $scope.model = model;
             $scope.viewState = viewState;
+            $scope.viewModel = {
+                diagnosKodverk : ''
+            };
 
             var diagnosKodverkStates = {ICD_10_SE:'ICD_10_SE',KSH_97_P:'KSH_97_P'}
 
@@ -14,31 +17,26 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                     // Remove defaults not applicable when smittskydd is active
                     if (newVal === true) {
                         // 2. Diagnos
-                        $scope.model.diagnosKodverk1 = undefined;
-                        $scope.model.diagnosKodverk2 = undefined;
-                        $scope.model.diagnosKodverk3 = undefined;
-                        $scope.model.diagnosKod = undefined;
-                        $scope.model.diagnosKod2 = undefined;
-                        $scope.model.diagnosKod3 = undefined;
-                        $scope.model.diagnosBeskrivning1 = undefined;
-                        $scope.model.diagnosBeskrivning2 = undefined;
-                        $scope.model.diagnosBeskrivning3 = undefined;
-                        $scope.model.diagnosBeskrivning = undefined;
-                        $scope.model.samsjuklighet = false;
+                        model.atticUpdateForm2();
+                        model.clearForm2();
+                    } else if(model.atticHasForm2()){
+                        model.atticRestoreForm2();
                     }
                 }
             });
 
             $scope.$watch('viewState.common.doneLoading', function(newVal) {
                 if (newVal) {
-                    if (!$scope.model.diagnosKodverk) {
+                    if (!$scope.model.diagnosKodsystem1) {
                         setAllDiagnosKodverk( diagnosKodverkStates.ICD_10_SE );
+                    } else {
+                        setAllDiagnosKodverk( $scope.model.diagnosKodsystem1 );
                     }
                 }
             });
 
             function setAllDiagnosKodverk(val){
-                $scope.model.diagnosKodverk = val;
+                $scope.viewModel.diagnosKodverk = val;
                 $scope.model.diagnosKodsystem1 = val;
                 $scope.model.diagnosKodsystem2 = val;
                 $scope.model.diagnosKodsystem3 = val;
@@ -55,7 +53,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.model.diagnosKod3 = undefined;
                 $scope.model.diagnosBeskrivning3 = undefined;
 
-                setAllDiagnosKodverk( $scope.model.diagnosKodverk );
+                setAllDiagnosKodverk( $scope.viewModel.diagnosKodverk );
             };
 
             $scope.getDiagnoseCodes = function(codeSystem, val) {
@@ -125,19 +123,21 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
                 $scope.form2.$dirty = true;
                 $scope.form2.$pristine = false;
-
+                model.atticUpdateForm2();
             };
             $scope.onDiagnoseCode2Select = function($item) {
                 $scope.model.diagnosBeskrivning2 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
                 $scope.form2.$dirty = true;
                 $scope.form2.$pristine = false;
+                model.atticUpdateForm2();
             };
             $scope.onDiagnoseCode3Select = function($item) {
                 $scope.model.diagnosBeskrivning3 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
                 $scope.form2.$dirty = true;
                 $scope.form2.$pristine = false;
+                model.atticUpdateForm2();
             };
 
             /**
@@ -149,6 +149,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
                 $scope.form2.$dirty = true;
                 $scope.form2.$pristine = false;
+                model.atticUpdateForm2();
             };
             $scope.onDiagnoseDescription2Select = function($item) {
                 $scope.model.diagnosKod2 = $item.value;
@@ -156,6 +157,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
                 $scope.form2.$dirty = true;
                 $scope.form2.$pristine = false;
+                model.atticUpdateForm2();
             };
             $scope.onDiagnoseDescription3Select = function($item) {
                 $scope.model.diagnosKod3 = $item.value;
@@ -163,6 +165,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
                 $scope.form2.$dirty = true;
                 $scope.form2.$pristine = false;
+                model.atticUpdateForm2();
             };
 
 
