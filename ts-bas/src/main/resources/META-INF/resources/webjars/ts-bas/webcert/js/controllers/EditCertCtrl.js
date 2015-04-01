@@ -297,7 +297,7 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
                 }, 10);
             });
 
-            $rootScope.$on('saveRequest', function($event, deferred) {
+            $scope.$on('saveRequest', function($event, deferred) {
                 // Mark form as saved, will be marked as not saved if saving fails.
                 $scope.certForm.$setPristine();
 //                $scope.cert.prepare();
