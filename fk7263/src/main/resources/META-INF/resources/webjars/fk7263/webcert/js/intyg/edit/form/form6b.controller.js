@@ -11,8 +11,10 @@ angular.module('fk7263').controller('fk7263.EditCert.Form6bCtrl',
                     // Remove defaults not applicable when smittskydd is active
                     if (newVal === true) {
                         // 6b
-                        $scope.model.atgardInomSjukvarden = undefined;
-                        $scope.model.annanAtgard = undefined;
+                        model.atticUpdateForm6b();
+                        model.clearForm6b();
+                    } else if(model.atticHasForm6b()){
+                        model.atticRestoreForm6b();
                     }
                 }
             });
