@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.validator.external;
+package se.inera.certificate.modules.ts_bas.validator.transport;
 
 import se.inera.certificate.modules.ts_bas.model.codes.KorkortsKod;
 import se.inera.intygstjanster.ts.services.v1.KorkortsbehorighetTsBas;
