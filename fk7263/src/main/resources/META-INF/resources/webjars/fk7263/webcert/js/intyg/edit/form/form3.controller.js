@@ -11,7 +11,10 @@ angular.module('fk7263').controller('fk7263.EditCert.Form3Ctrl',
                     // Remove defaults not applicable when smittskydd is active
                     if (newVal === true) {
                         // 3
-                        $scope.model.sjukdomsforlopp = undefined;
+                        model.atticUpdateForm3();
+                        model.clearForm3();
+                    } else {
+                        model.atticRestoreForm3();
                     }
                 }
             });
