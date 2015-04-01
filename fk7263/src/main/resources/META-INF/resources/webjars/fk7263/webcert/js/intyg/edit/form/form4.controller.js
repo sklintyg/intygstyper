@@ -10,8 +10,11 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4Ctrl',
                 if(viewState.common.doneLoading) {
                     // Remove defaults not applicable when smittskydd is active
                     if (newVal === true) {
-                        // 4
-                        $scope.model.funktionsnedsattning = undefined;
+                        // 3
+                        model.atticUpdateForm4();
+                        model.clearForm4();
+                    } else {
+                        model.atticRestoreForm4();
                     }
                 }
             });
