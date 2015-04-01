@@ -10,8 +10,11 @@ angular.module('fk7263').controller('fk7263.EditCert.Form5Ctrl',
                 if(viewState.common.doneLoading) {
                     // Remove defaults not applicable when smittskydd is active
                     if (newVal === true) {
-                        // 3
-                        $scope.model.aktivitetsbegransning = undefined;
+                        // 5. funktionsnedsättning
+                        model.atticUpdateForm5();
+                        model.clearForm5();
+                    } else if(model.atticHasForm5()){
+                        model.atticRestoreForm5();
                     }
                 }
             });
