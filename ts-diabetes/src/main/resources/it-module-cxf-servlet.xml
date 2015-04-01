@@ -19,8 +19,6 @@
     </cxf:features>
   </cxf:bus>
   
-  <import resource="ts-diabetes-ws-stub.xml"/>
-
   <!-- ws endpoints -->
   <jaxws:endpoint address="/get-ts-diabetes/v1.0"
                   implementor="se.inera.certificate.modules.ts_diabetes.integration.GetTSDiabetesResponderImpl">
