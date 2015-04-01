@@ -33,6 +33,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateResponseType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.ArbetsplatsKod;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.HsaId;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.PersonId;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.TypAvUtlatande;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.UtlatandeId;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Enhet;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.HosPersonal;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Patient;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Vardgivare;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.support.ApplicationOrigin;
@@ -60,6 +69,7 @@ import se.inera.certificate.modules.ts_diabetes.pdf.PdfGenerator;
 import se.inera.certificate.modules.ts_diabetes.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.ts_diabetes.util.TSDiabetesCertificateMetaTypeConverter;
 import se.inera.certificate.modules.ts_diabetes.validator.Validator;
+import se.inera.certificate.schema.Constants;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponseType;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesType;
@@ -207,10 +217,9 @@ public class ModuleService implements ModuleApi {
     @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
         RegisterCertificateType parameters = new RegisterCertificateType();
-        
-        se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande placeholderUtlatande = new se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande();
+
         // TODO swith to XSL-transformer when done.
-        //se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande placeholderUtlatande = buildPlaceHolderCertificate(internalModel);
+        se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande placeholderUtlatande = buildPlaceHolderCertificate(internalModel);
         parameters.setUtlatande(placeholderUtlatande);
 
         RegisterCertificateResponseType response = sendTsDiabetesClient.registerCertificate(logicalAddress, parameters);
@@ -221,6 +230,76 @@ public class ModuleService implements ModuleApi {
                     : response.getResult().getErrorId() + " : " + response.getResult().getResultText();
             throw new ExternalServiceCallException(message);
         }
+    }
+
+    // TODO remove this method when XSL-transformer is ready.
+    private se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande buildPlaceHolderCertificate(InternalModelHolder internalModel)
+            throws ModuleException {
+        se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande placeholderUtlatande = new se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande();
+        try {
+            Utlatande internal = objectMapper.readValue(internalModel.getInternalModel(), Utlatande.class);
+        UtlatandeId id = new UtlatandeId();
+        id.setExtension(internal.getId());
+        id.setRoot("root");
+
+        Patient patient = new Patient();
+        PersonId personId = new PersonId();
+        personId.setExtension(internal.getGrundData().getPatient().getPersonId());
+        personId.setRoot(Constants.PERSON_ID_OID);
+        patient.setPersonId(personId);
+        patient.setEfternamn(internal.getGrundData().getPatient().getEfternamn());
+        patient.setPostadress(internal.getGrundData().getPatient().getPostadress());
+        patient.setPostort(internal.getGrundData().getPatient().getPostort());
+        patient.setPostnummer(internal.getGrundData().getPatient().getPostnummer());
+
+        Vardgivare vardgivare = new Vardgivare();
+        HsaId hsaId = new HsaId();
+        hsaId.setExtension(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
+        hsaId.setRoot(Constants.HSA_ID_OID);
+        vardgivare.setVardgivareId(hsaId);
+        vardgivare.setVardgivarnamn(internal.getGrundData().getSkapadAv().getVardenhet().getVardgivare().getVardgivarnamn());
+
+        Enhet enhet = new Enhet();
+        ArbetsplatsKod ak = new ArbetsplatsKod();
+        ak.setExtension(internal.getGrundData().getSkapadAv().getVardenhet().getArbetsplatsKod());
+        ak.setRoot("root");
+        enhet.setArbetsplatskod(ak);
+        HsaId enId = new HsaId();
+        enId.setExtension(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
+        enId.setRoot(Constants.HSA_ID_OID);
+        enhet.setEnhetsId(enId);
+        enhet.setEnhetsnamn(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
+        enhet.setPostadress(internal.getGrundData().getSkapadAv().getVardenhet().getPostadress());
+        enhet.setPostort(internal.getGrundData().getSkapadAv().getVardenhet().getPostort());
+        enhet.setPostnummer(internal.getGrundData().getSkapadAv().getVardenhet().getPostnummer());
+        enhet.setEnhetsnamn(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
+        enhet.setVardgivare(vardgivare);
+
+        HosPersonal hosPerson = new HosPersonal();
+        hosPerson.setEnhet(enhet);
+        hosPerson.setForskrivarkod("1245");
+        hosPerson.setFullstandigtNamn(internal.getGrundData().getSkapadAv().getFullstandigtNamn());
+        HsaId personalId = new HsaId();
+        personalId.setExtension(internal.getGrundData().getSkapadAv().getPersonId());
+        personalId.setRoot(Constants.HSA_ID_OID);
+        hosPerson.setPersonalId(personalId);
+
+        TypAvUtlatande typ = new TypAvUtlatande();
+        typ.setCode(internal.getTyp());
+        typ.setCodeSystem("codesystem");
+        typ.setCodeSystemName("name");
+        typ.setCodeSystemVersion("version");
+        typ.setDisplayName("meh");
+
+        placeholderUtlatande.setUtlatandeId(id);
+        placeholderUtlatande.setPatient(patient);
+        placeholderUtlatande.setSkapadAv(hosPerson);
+        placeholderUtlatande.setSigneringsdatum(internal.getGrundData().getSigneringsdatum());
+        placeholderUtlatande.setTypAvUtlatande(typ);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return placeholderUtlatande;
     }
 
     private void sendCertificateToRecipient(TSDiabetesIntyg request, String logicalAddress, String recipientId) throws ExternalServiceCallException {

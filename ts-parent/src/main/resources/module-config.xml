@@ -11,7 +11,10 @@
         http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd"
         profile="dev,test,local">
 
-  <!-- Simulates TS recieving -->
-  <jaxws:endpoint address="/register-certificate-stub" implementor="se.inera.certificate.modules.ts_bas.integration.stub.RegisterCertificateResponderStub" />
+    <!-- Beans -->
+    <bean class="se.inera.certificate.modules.ts_parent.integration.stub.TSCertificateStore" />
+
+    <!-- Simulates TS recieving -->
+    <jaxws:endpoint address="/register-certificate-stub" implementor="se.inera.certificate.modules.ts_parent.integration.stub.RegisterCertificateResponderStub" />
 
 </beans>

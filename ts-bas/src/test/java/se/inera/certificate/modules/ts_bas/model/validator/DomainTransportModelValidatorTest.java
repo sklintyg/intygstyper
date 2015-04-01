@@ -4,6 +4,7 @@ import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -13,8 +14,10 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.core.io.ClassPathResource;
 
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
@@ -62,7 +65,6 @@ public class DomainTransportModelValidatorTest {
         try {
             ByteArrayOutputStream output = new ByteArrayOutputStream();
             //JAXB.marshal(scenario.asTransportModel(), output);
-
             JAXBElement<TSBasIntyg> jaxbElement = new JAXBElement<TSBasIntyg>(new QName("ns3:basIntyg"), TSBasIntyg.class, scenario.asTransportModel());
             JAXBContext context = JAXBContext.newInstance(TSBasIntyg.class);
             context.createMarshaller().marshal(jaxbElement, output);

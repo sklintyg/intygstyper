@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>se.inera.intyg.intygstyper</groupId>
+        <artifactId>intygstyper</artifactId>
+        <version>0-SNAPSHOT</version>
+    </parent>
+    <artifactId>ts-parent</artifactId>
+
+    <dependencies>
+        <!--  Spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+
+        <!-- Schemas -->
+        <dependency>
+            <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
+            <artifactId>clinicalprocess-healthcond-certificate-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
+            <artifactId>clinicalprocess-healthcond-certificate-interactions</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
+            <artifactId>se-intygstjanster-ts-services-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
+            <artifactId>se-intygstjanster-ts-services-interactions</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>test-jar</id>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
