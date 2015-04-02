@@ -30,25 +30,24 @@ public class TSBasTransformerTest {
         for (String xmlFile : testFiles) {
             String xmlContents = Resources.toString(getResource("scenarios/transport/" + xmlFile), Charsets.UTF_8);
 
-            if (!validateAgainstXSD(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))),
-                    "intygstjanster-services/core-components/se_intygstjanster_services_1.0.xsd")) {
+            if (!validateAgainstXSD(xmlContents, "intygstjanster-services/core-components/se_intygstjanster_services_1.0.xsd")) {
                 fail();
             }
 
             String result = transformer.transform(xmlContents);
 
-            if (!validateAgainstXSD(new StreamSource(new ByteArrayInputStream(result.getBytes(Charsets.UTF_8))),
-                    "specializations/TS-Bas/ts-bas_model.xsd")) {
+            if (!validateAgainstXSD(result, "specializations/TS-Bas/ts-bas_model.xsd")) {
                 fail();
             }
         }
     }
 
-    private static boolean validateAgainstXSD(StreamSource xml, String xsdPath) {
+    private static boolean validateAgainstXSD(String xml, String xsdPath) {
+        StreamSource xmlSource = new StreamSource(new ByteArrayInputStream(xml.getBytes(Charsets.UTF_8)));
         try {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             Schema schema = factory.newSchema(Thread.currentThread().getContextClassLoader().getResource(xsdPath));
-            schema.newValidator().validate(xml);
+            schema.newValidator().validate(xmlSource);
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();

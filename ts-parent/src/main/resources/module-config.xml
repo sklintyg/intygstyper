@@ -13,8 +13,8 @@
     <bean class="se.inera.certificate.modules.ts_parent.integration.stub.TSCertificateStore" />
 
     <!-- Simulates TS recieving -->
-    <jaxws:endpoint address="/register-certificate-stub"
-        implementor="se.inera.certificate.modules.ts_parent.integration.stub.RegisterCertificateResponderStub" />
+    <!-- jaxws:endpoint address="/register-certificate-stub"
+        implementor="se.inera.certificate.modules.ts_parent.integration.stub.RegisterCertificateResponderStub" /-->
 
     <beans profile="testability-api">
         <jaxrs:server address="/ts-certificate-stub">

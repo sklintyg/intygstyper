@@ -49,9 +49,12 @@
         </jaxws:schemaLocations>
     </jaxws:endpoint>
 
-  <!-- ws clients -->
-  <jaxws:client id="sendTsBasClient"
-                  serviceClass="se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateResponderInterface"
-                  address="${registercertificatev1.endpoint.url}">
-  </jaxws:client>
+  <bean id="tsBasXslTransformer" class="se.inera.certificate.modules.ts_bas.transformation.XslTransformer">
+    <constructor-arg value="xsl/transform-ts-bas.xsl"/>
+  </bean>
+
+  <bean id="tsBasSendCertificateClient" class="se.inera.certificate.modules.ts_bas.integration.SendTSBasClient">
+    <constructor-arg value="${registercertificatev1.endpoint.url}"/>
+  </bean>
+
 </beans>

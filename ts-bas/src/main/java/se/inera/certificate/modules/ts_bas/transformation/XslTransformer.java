@@ -33,7 +33,7 @@ public class XslTransformer {
         initializeDocumentBuilder();
     }
 
-    public String transform(String incomingXML) throws TransformerException, IOException, ParserConfigurationException, SAXException {
+    public String transform(String incomingXML) {
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
             StreamResult transformedXml = new StreamResult(outputStream);
             Transformer transformer = templates.newTransformer();
@@ -41,6 +41,8 @@ public class XslTransformer {
             transformer.transform(new DOMSource(getDocument(incomingXML)), transformedXml);
 
             return outputStream.toString(StandardCharsets.UTF_8.name());
+        } catch (Exception e) {
+            throw Throwables.propagate(e);
         }
     }
 

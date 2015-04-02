@@ -22,20 +22,16 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
 
+import javax.xml.soap.SOAPMessage;
+
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateResponderInterface;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateResponseType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.ArbetsplatsKod;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.HsaId;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.PersonId;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.TypAvUtlatande;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.UtlatandeId;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.*;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Enhet;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.HosPersonal;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Patient;
@@ -45,20 +41,13 @@ import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.ModuleContainerApi;
-import se.inera.certificate.modules.support.api.dto.CertificateMetaData;
-import se.inera.certificate.modules.support.api.dto.CertificateResponse;
-import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
-import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.certificate.modules.support.api.dto.HoSPersonal;
-import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
-import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
-import se.inera.certificate.modules.support.api.dto.PdfResponse;
-import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.certificate.modules.support.api.dto.*;
 import se.inera.certificate.modules.support.api.exception.ExternalServiceCallException;
 import se.inera.certificate.modules.support.api.exception.ModuleConverterException;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.modules.support.api.notification.NotificationMessage;
+import se.inera.certificate.modules.ts_bas.integration.SendTSBasClient;
 import se.inera.certificate.modules.ts_bas.model.converter.InternalToTransport;
 import se.inera.certificate.modules.ts_bas.model.converter.TransportToInternal;
 import se.inera.certificate.modules.ts_bas.model.converter.TsBasMetaDataConverter;
@@ -67,6 +56,7 @@ import se.inera.certificate.modules.ts_bas.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGenerator;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGeneratorException;
+import se.inera.certificate.modules.ts_bas.transformation.XslTransformer;
 import se.inera.certificate.modules.ts_bas.validator.TsBasValidator;
 import se.inera.certificate.schema.Constants;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
@@ -94,9 +84,9 @@ public class TsBasModuleApi implements ModuleApi {
     @Qualifier("registerTSBasClient")
     private RegisterTSBasResponderInterface registerTSBasResponderInterface;
 
-    @Autowired(required = false) 
-    @Qualifier("sendTsBasClient")
-    private RegisterCertificateResponderInterface sendTsBasClient;
+    @Autowired(required = false)
+    @Qualifier("tsBasSendCertificateClient")
+    private SendTSBasClient sendTsBasClient;
 
     @Autowired
     private TsBasValidator validator;
@@ -115,6 +105,9 @@ public class TsBasModuleApi implements ModuleApi {
     @Qualifier("tsBasModelConverterUtil")
     private ConverterUtil converterUtil;
 
+    @Autowired(required = false)
+    @Qualifier("tsBasXslTransformer")
+    private XslTransformer xslTransformer;
 
     private ModuleContainerApi moduleContainer;
 
@@ -210,20 +203,18 @@ public class TsBasModuleApi implements ModuleApi {
 
     @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
-        RegisterCertificateType parameters = new RegisterCertificateType();
+        String transformedPayload = xslTransformer.transform(internalModel.getXmlModel());
         
-        // TODO swith to XSL-transformer when done.
-        se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande placeholderUtlatande = buildPlaceHolderCertificate(internalModel);
-        parameters.setUtlatande(placeholderUtlatande);
+        SOAPMessage response = sendTsBasClient.registerCertificate(transformedPayload);
 
-        RegisterCertificateResponseType response = sendTsBasClient.registerCertificate(logicalAddress, parameters);
+        // TODO handle response
 
-        if (response.getResult().getResultCode() !=  se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.OK) {
-            String message = response.getResult().getResultCode() == se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.INFO
-                    ? response.getResult().getResultText()
-                    : response.getResult().getErrorId() + " : " + response.getResult().getResultText();
-            throw new ExternalServiceCallException(message);
-        }
+//        if (response.getResult().getResultCode() !=  se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.OK) {
+//            String message = response.getResult().getResultCode() == se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.INFO
+//                    ? response.getResult().getResultText()
+//                    : response.getResult().getErrorId() + " : " + response.getResult().getResultText();
+//            throw new ExternalServiceCallException(message);
+//        }
     }
 
     // TODO remove this method when XSL-transformer is ready.
