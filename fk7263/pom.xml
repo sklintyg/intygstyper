@@ -23,7 +23,7 @@
     </dependency>
     <dependency>
       <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
-      <artifactId>clinicalprocess-healthcond-certificate-interactions</artifactId>
+      <artifactId>clinicalprocess_healthcond_certificate</artifactId>
     </dependency>
     <dependency>
       <groupId>se.inera.intyg.common</groupId>
@@ -39,11 +39,6 @@
     </dependency>
 
     <!-- Schemas -->
-    <dependency>
-      <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
-      <artifactId>clinicalprocess-healthcond-certificate-core</artifactId>
-    </dependency>
-
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
