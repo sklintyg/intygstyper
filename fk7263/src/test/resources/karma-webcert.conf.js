@@ -41,6 +41,7 @@ module.exports = function(config) {
                 WEBJAR_DIR + 'angularjs/angular-sanitize.js',
                 WEBJAR_DIR + 'angular-ui-bootstrap/ui-bootstrap-tpls.js',
                 WEBJAR_DIR + 'momentjs/moment.js',
+                WEBJAR_DIR + 'common/webcert/module.min.js',
 
 
             // Load these first
@@ -63,7 +64,7 @@ module.exports = function(config) {
 
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_DEBUG,
+        logLevel: config.LOG_WARN,
 
         // enable / disable watching file and executing tests whenever any file changes
         autoWatch: true,
