@@ -30,7 +30,7 @@ public class DomainTransportModelValidatorTest {
 
     private static final String COMMON_UTLATANDE_TYPES_SCHEMA = "/intygstjanster-services/core-components/se_intygstjanster_services_types_1.0.xsd";
 
-    private static final String COMMON_UTLATANDE_ISO_SCHEMA = "/clinicalprocess-healthcond-certificate/core-components/iso_dt_subset_1.0.xsd";
+    private static final String COMMON_UTLATANDE_ISO_SCHEMA = "/insuranceprocess-healthreporting/core-components/iso_dt_subset_1.0.xsd";
 
     private static Schema commonSchema;
 

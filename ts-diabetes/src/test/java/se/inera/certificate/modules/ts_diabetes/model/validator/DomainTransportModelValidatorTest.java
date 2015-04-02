@@ -20,11 +20,11 @@ import se.inera.certificate.xml.SchemaValidatorBuilder;
 
 public class DomainTransportModelValidatorTest {
 
-	private static final String COMMON_UTLATANDE_SCHEMA = "/clinicalprocess-healthcond-certificate/core-components/clinicalprocess_healthcond_certificate_1.0.xsd";
+    private static final String COMMON_UTLATANDE_SCHEMA = "/intygstjanster-services/core-components/se_intygstjanster_services_1.0.xsd";
 
-    private static final String COMMON_UTLATANDE_TYPES_SCHEMA = "/clinicalprocess-healthcond-certificate/core-components/clinicalprocess_healthcond_certificate_types_1.0.xsd";
+    private static final String COMMON_UTLATANDE_TYPES_SCHEMA = "/intygstjanster-services/core-components/se_intygstjanster_services_types_1.0.xsd";
 
-    private static final String COMMON_UTLATANDE_ISO_SCHEMA = "/clinicalprocess-healthcond-certificate/core-components/iso_dt_subset_1.0.xsd";
+    private static final String COMMON_UTLATANDE_ISO_SCHEMA = "/insuranceprocess-healthreporting/core-components/iso_dt_subset_1.0.xsd";
 
     private static Schema commonSchema;
 
