@@ -276,6 +276,13 @@
                   <type>jar</type>
                   <overWrite>true</overWrite>
                 </artifactItem>
+                <artifactItem>
+                  <groupId>se.inera.intyg.common</groupId>
+                  <artifactId>common-web</artifactId>
+                  <version>${common.version}</version>
+                  <type>jar</type>
+                  <overWrite>true</overWrite>
+                </artifactItem>
               </artifactItems>
               <outputDirectory>${project.build.directory}/webjardependenciestemp</outputDirectory>
             </configuration>
