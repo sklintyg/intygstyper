@@ -8,9 +8,8 @@ describe('fk7263.EditCertCtrl.Form1Ctrl', function() {
     var viewState;
 
     // Load the webcert module and mock away everything that is not necessary.
-    beforeEach(angular.mock.module('common'));
 
-    beforeEach(angular.mock.module('fk7263', function($provide) {
+    beforeEach(angular.mock.module('common', 'fk7263', function($provide) {
 
         //$provide.value('fk7263.Domain.DraftModel', __draftModel__);
         //$provide.value('fk7263.Domain.IntygModel', {});
@@ -62,19 +61,31 @@ describe('fk7263.EditCertCtrl.Form1Ctrl', function() {
 
     });
 
-    describe('#testScopeFunctions', function() {
+    describe('#avstangningSmittskydd should change on view state when model changes', function() {
         it('some scope function', function(){
             // ----- arrange
             // in arrange we setup our spies with expected return values
-
+            model.avstangningSmittskydd = false;
 
             // ----- act
             // call the function
-
+            $scope.onSmittskyddChange();
             // ----- assert
             // expects
 
-            expect(true).toBe(true);
+            expect(viewState.avstangningSmittskyddValue).toBe(false);
+
+            // ----- arrange
+            // in arrange we setup our spies with expected return values
+            model.avstangningSmittskydd = true;
+
+            // ----- act
+            // call the function
+            $scope.onSmittskyddChange();
+            // ----- assert
+            // expects
+
+            expect(viewState.avstangningSmittskyddValue).toBe(true);
         });
 
     });
