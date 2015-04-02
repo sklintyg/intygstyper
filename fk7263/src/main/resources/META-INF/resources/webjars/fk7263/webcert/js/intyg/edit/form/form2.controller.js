@@ -1,7 +1,7 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
-    ['$log', 'fk7263.Domain.IntygModel', '$scope', 'fk7263.EditCertCtrl.ViewStateService', 'fk7263.diagnosService',
+    ['$scope', '$log', 'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService', 'fk7263.diagnosService',
         'fk7263.EditCertCtrl.Helper',
-        function($log, model, $scope, viewState, diagnosService, helper) {
+        function($scope, $log, model, viewState, diagnosService, helper) {
             'use strict';
             $scope.model = model;
             $scope.viewState = viewState;

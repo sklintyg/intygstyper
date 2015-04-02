@@ -1,7 +1,7 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
-    ['$log', 'fk7263.Domain.IntygModel', '$scope', 'fk7263.EditCertCtrl.ViewStateService',
+    ['$scope', '$log', 'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService',
         'fk7263.EditCertCtrl.DateRangeGroupsService',
-        function($log, model, $scope, viewState, DateRangeGroupsService) {
+        function($scope, $log, model, viewState, DateRangeGroupsService) {
             'use strict';
             // private vars
             var _dateRangeGroups;
