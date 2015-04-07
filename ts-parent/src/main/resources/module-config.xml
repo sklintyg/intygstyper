@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context" xmlns:sec="http://cxf.apache.org/configuration/security"
-    xmlns:http="http://cxf.apache.org/transports/http/configuration" xmlns:cxf="http://cxf.apache.org/core" xmlns:jaxws="http://cxf.apache.org/jaxws"
-    xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+    xmlns:http="http://cxf.apache.org/transports/http/configuration" xmlns:cxf="http://cxf.apache.org/core" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+    xmlns:jaxws="http://cxf.apache.org/jaxws"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
 		http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
@@ -11,8 +11,12 @@
 
     <beans profile="dev,test,local">
         <bean class="se.inera.certificate.modules.ts_parent.integration.stub.TSCertificateStore" />
+
+        <jaxws:endpoint address="/register-certificate-stub"
+            implementor="se.inera.certificate.modules.ts_parent.integration.stub.RegisterCertificateResponderStub" />
     </beans>
-    <!-- Beans -->
+
+
     <beans profile="dev,testability-api">
         <jaxrs:server address="/ts-certificate-stub">
             <jaxrs:serviceBeans>
