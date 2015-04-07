@@ -567,6 +567,10 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
             this.rehab = undefined;
         };
 
+        IntygModel.prototype.attic = function(){
+            return _attic;
+        };
+
         _intygModel = new IntygModel();
         _attic = new IntygModel();
 

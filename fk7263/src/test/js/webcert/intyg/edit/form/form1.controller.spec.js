@@ -11,6 +11,7 @@ describe('fk7263.EditCertCtrl.Form1Ctrl', function() {
 
     beforeEach(angular.mock.module('common', 'fk7263', function($provide) {
 
+        // the below are now included in common
         //$provide.value('fk7263.Domain.DraftModel', __draftModel__);
         //$provide.value('fk7263.Domain.IntygModel', {});
         //$provide.value('fk7263.Domain.PatientModel', {});
@@ -38,28 +39,6 @@ describe('fk7263.EditCertCtrl.Form1Ctrl', function() {
             $controller('fk7263.EditCert.Form1Ctrl' , { $scope: $scope, $log : $log, model : model, viewState : viewState });
 
         }]));
-
-    describe('#testEvents', function() {
-        it('on some event', function(){
-
-            // ----- arrange
-            // spies, mocks
-
-            // kick off the window change event
-            //$rootScope.$broadcast('fk7263.ViewCertCtrl.load');
-
-            // ------ act
-            // promises are resolved/dispatched only on next $digest cycle
-            $rootScope.$apply();
-
-            // ------ assert
-            // dialog should be opened
-            // expects
-
-            expect(true).toBe(true);
-        });
-
-    });
 
     describe('#avstangningSmittskydd should change on view state when model changes', function() {
         it('some scope function', function(){
