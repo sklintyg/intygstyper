@@ -106,10 +106,6 @@ public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterfa
         return status;
     }
 
-    private boolean isEmpty(String intygsId) {
-        return intygsId == null || intygsId.isEmpty();
-    }
-
     private Status mapToStatus(CertificateState state) {
         return Status.valueOf(state.name());
     }

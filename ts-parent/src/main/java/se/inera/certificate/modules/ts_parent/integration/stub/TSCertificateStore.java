@@ -1,12 +1,9 @@
-package se.inera.certificate.modules.ts_bas.integration.stub;
+package se.inera.certificate.modules.ts_parent.integration.stub;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class TSCertificateStore {
 
     private ConcurrentHashMap<String, Map<String, String>> certificates = new ConcurrentHashMap<String, Map<String, String>>();

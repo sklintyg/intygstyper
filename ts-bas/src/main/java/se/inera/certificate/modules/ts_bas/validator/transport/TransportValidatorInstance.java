@@ -16,22 +16,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.ts_bas.validator.external;
+package se.inera.certificate.modules.ts_bas.validator.transport;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.HosPersonal;
 import se.inera.certificate.schema.Constants;
 import se.inera.certificate.validate.PersonnummerValidator;
 import se.inera.intygstjanster.ts.services.types.v1.II;
-import se.inera.intygstjanster.ts.services.v1.IdentitetStyrkt;
-import se.inera.intygstjanster.ts.services.v1.Patient;
-import se.inera.intygstjanster.ts.services.v1.SkapadAv;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
-import se.inera.intygstjanster.ts.services.v1.Vardenhet;
-import se.inera.intygstjanster.ts.services.v1.Vardgivare;
+import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
@@ -51,12 +46,7 @@ public class TransportValidatorInstance {
 
     public List<String> validate(TSBasIntyg utlatande) {
         context = new ValidationContext(utlatande);
-
-        validateUtlatande(utlatande);
-        validatePatient(utlatande.getGrundData().getPatient());
-        validateHosPersonal(utlatande.getGrundData().getSkapadAv());
-        validateIdentitetStyrkt(utlatande.getIdentitetStyrkt());
-
+        validateIds(utlatande);
         // Do context related validation
         if (context.isPersontransportContext()) {
             validatePersontransportRelatedElements(utlatande);
@@ -74,98 +64,33 @@ public class TransportValidatorInstance {
         return context;
     }
 
-    /**
-     * Validates that required attributes connected with the actual class Utlatande are present.
-     */
-    private void validateUtlatande(TSBasIntyg utlatande) {
-        assertNotNull(utlatande.getIntygsId(), "id");
-        assertNotNull(utlatande.getIntygsTyp(), "utlatandetyp");
-        assertNotNull(utlatande.getGrundData().getSigneringsTidstampel(), "signeringsdatum");
-    }
-
-    /**
-     * Make sure Utlatande contains 1 Patient.
-     */
-    private void validatePatient(Patient patient) {
-        if (assertNotNull(patient, "patient").failed()) {
-            return;
+    private void validateIds(TSBasIntyg utlatande) {
+        // PersonId
+        if (utlatande.getGrundData().getPatient() != null) {
+            String id = utlatande.getGrundData().getPatient().getPersonId().getRoot();
+            if(!id.equals(Constants.PERSON_ID_OID) && !id.equals(Constants.SAMORDNING_ID_OID)) {
+                validationErrors.add(String.format("Root for patient.personnummer should be %s or %s but was %s",
+                        Constants.PERSON_ID_OID, Constants.SAMORDNING_ID_OID, id));
+            }
         }
-        assertValidPersonId(patient.getPersonId(), "patient.id");
-        assertNotEmpty(patient.getFornamn(), "patient.fornamn");
-        assertNotEmpty(patient.getEfternamn(), "patient.efternamn");
-        assertNotEmpty(patient.getPostadress(), "patient.postadress");
-        assertNotEmpty(patient.getPostnummer(), "patient.postnummer");
-        assertNotEmpty(patient.getPostort(), "patient.postort");
-    }
-
-    /**
-     * Validate HosPersonal, includes validating the HsaId, making sure a name is supplied and that a valid Vardenhet is
-     * present.
-     *
-     * @param skapadAv
-     *            {@link HosPersonal}
-     */
-    private void validateHosPersonal(SkapadAv skapadAv) {
-        if (assertNotNull(skapadAv, "skapadAv").failed()) {
-            return;
+        // Läkares HSAId
+        if (utlatande.getGrundData().getSkapadAv() != null) {
+            checkId(utlatande.getGrundData().getSkapadAv().getPersonId().getRoot(), Constants.HSA_ID_OID, "SkapadAv.hsaId");
         }
-
-        assertValidHsaId(skapadAv.getPersonId(), "skapadAv.id");
-
-        assertNotEmpty(skapadAv.getFullstandigtNamn(), "skapadAv.fullstandigtNamn");
-        // for (Kod befattning : skapadAv.getBefattning()) {
-        // assertKodInEnum(befattning, BefattningKod.class, "skapadAv.befattning");
-        // }
-        // for (String specialitet : skapadAv.getSpecialiteter()) {
-        // assertKodInEnum(specialitet, SpecialitetKod.class, "skapadAv.specialitet");
-        // }
-
-        validateVardenhet(skapadAv.getVardenhet(), "skapadAv");
-    }
-
-    /**
-     * Validates Vardenhet contains required information.
-     *
-     * @param vardenhet
-     *            {@link Vardenhet}
-     * @param prefix
-     *            {@link String} indicates where this instance of vardenhet is used in the model (i.e
-     *            skapadAv.vardenhet...)
-     */
-    private void validateVardenhet(Vardenhet vardenhet, String prefix) {
-        if (assertNotNull(vardenhet, prefix + ".vardenhet").failed()) {
-            return;
+        // Vardenhet
+        if (utlatande.getGrundData().getSkapadAv().getVardenhet() != null) {
+            checkId(utlatande.getGrundData().getSkapadAv().getVardenhet().getEnhetsId().getRoot(), Constants.HSA_ID_OID, "vardenhet.enhetsId");
         }
-
-        assertValidHsaId(vardenhet.getEnhetsId(), prefix + ".vardenhet.id");
-        assertNotEmpty(vardenhet.getEnhetsnamn(), prefix + ".vardenhet.namn");
-        assertNotEmpty(vardenhet.getPostadress(), prefix + ".vardenhet.portadress");
-        assertNotEmpty(vardenhet.getPostort(), prefix + ".vardenhet.postort");
-        assertNotEmpty(vardenhet.getPostnummer(), prefix + ".vardenhet.postnummer");
-        assertNotEmpty(vardenhet.getTelefonnummer(), prefix + ".vardenhet.telefonnummer");
-
-        validateVardgivare(vardenhet.getVardgivare(), prefix + ".vardgivare");
-    }
-
-    /**
-     * Validate vardgivare.
-     *
-     * @param vardgivare
-     *            {@link Vardgivare}
-     * @param prefix
-     *            {@link String} prefix, where in the model this instance is used
-     */
-    private void validateVardgivare(Vardgivare vardgivare, String prefix) {
-        if (assertNotNull(vardgivare, prefix + ".vardgivare").failed()) {
-            return;
+        // vardgivare
+        if (utlatande.getGrundData().getSkapadAv().getVardenhet().getVardgivare() != null) {
+            checkId(utlatande.getGrundData().getSkapadAv().getVardenhet().getVardgivare().getVardgivarid().getRoot(), Constants.HSA_ID_OID,
+                    "vardgivarId");
         }
-
-        assertValidHsaId(vardgivare.getVardgivarid(), prefix + ".vardgivare.id");
-        assertNotEmpty(vardgivare.getVardgivarnamn(), prefix + ".vardgivare.namn");
     }
-
-    private void validateIdentitetStyrkt(IdentitetStyrkt identitetStyrkt) {
-        // TODO verify the validity of identitetStyrkt
+    private void checkId(String id, String expected, String field) {
+        if (!id.equals(expected)) {
+            validationErrors.add(String.format("Root for %s should be %s but was %s", field, expected, id));
+        }
     }
 
     private void validatePersontransportRelatedElements(TSBasIntyg utlatande) {

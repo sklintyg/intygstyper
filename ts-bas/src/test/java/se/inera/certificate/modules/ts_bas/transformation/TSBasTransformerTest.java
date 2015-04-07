@@ -38,7 +38,7 @@ public class TSBasTransformerTest {
             String result = transformer.transform(xmlContents);
 
             if (!validateAgainstXSD(new StreamSource(new ByteArrayInputStream(result.getBytes(Charsets.UTF_8))),
-                    "clinicalprocess-healthcond-certificate/specializations/TS-Bas/ts-bas_model.xsd")) {
+                    "specializations/TS-Bas/ts-bas_model.xsd")) {
                 fail();
             }
         }

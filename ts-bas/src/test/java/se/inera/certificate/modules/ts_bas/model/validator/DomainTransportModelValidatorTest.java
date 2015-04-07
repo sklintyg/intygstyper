@@ -27,7 +27,7 @@ public class DomainTransportModelValidatorTest {
 
     private static final String COMMON_UTLATANDE_TYPES_SCHEMA = "/intygstjanster-services/core-components/se_intygstjanster_services_types_1.0.xsd";
 
-    private static final String COMMON_UTLATANDE_ISO_SCHEMA = "/clinicalprocess-healthcond-certificate/core-components/iso_dt_subset_1.0.xsd";
+    private static final String COMMON_UTLATANDE_ISO_SCHEMA = "/insuranceprocess-healthreporting/core-components/iso_dt_subset_1.0.xsd";
 
     private static Schema commonSchema;
 
@@ -52,7 +52,7 @@ public class DomainTransportModelValidatorTest {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("invalid-*")) {
             try {
                 validateUtlatande(scenario);
-                fail("Expected schema validation error");
+                fail("Expected schema validation error in " + scenario.getName());
             } catch (Exception ignore) {
             }
         }
@@ -61,8 +61,6 @@ public class DomainTransportModelValidatorTest {
     private void validateUtlatande(Scenario scenario) {
         try {
             ByteArrayOutputStream output = new ByteArrayOutputStream();
-            //JAXB.marshal(scenario.asTransportModel(), output);
-
             JAXBElement<TSBasIntyg> jaxbElement = new JAXBElement<TSBasIntyg>(new QName("ns3:basIntyg"), TSBasIntyg.class, scenario.asTransportModel());
             JAXBContext context = JAXBContext.newInstance(TSBasIntyg.class);
             context.createMarshaller().marshal(jaxbElement, output);

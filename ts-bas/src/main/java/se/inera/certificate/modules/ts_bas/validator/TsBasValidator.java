@@ -22,8 +22,8 @@ import java.util.List;
 
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_bas.validator.external.TransportValidatorInstance;
 import se.inera.certificate.modules.ts_bas.validator.internal.InternalValidatorInstance;
+import se.inera.certificate.modules.ts_bas.validator.transport.TransportValidatorInstance;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 public class TsBasValidator {

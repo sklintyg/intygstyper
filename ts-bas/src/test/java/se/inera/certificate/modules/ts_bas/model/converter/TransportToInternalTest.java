@@ -18,16 +18,8 @@
  */
 package se.inera.certificate.modules.ts_bas.model.converter;
 
-import java.io.File;
-
-import javax.xml.bind.JAXB;
-
 import org.junit.Test;
-import org.springframework.core.io.ClassPathResource;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.utils.ModelAssert;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
@@ -43,8 +35,6 @@ import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
  */
 
 public class TransportToInternalTest {
-
-    ObjectMapper objectMapper = new CustomObjectMapper();
 
     @Test
     public void testTransportToInternal() throws Exception {

@@ -116,13 +116,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }, 10);
             });
 
-            $rootScope.$on('intyg.deleted', function() {
-                viewState.common.deleted = true;
-                viewState.common.activeErrorMessageKey = 'error';
-                $scope.cert = undefined;
-            });
-
-            $rootScope.$on('saveRequest', function($event, deferred) {
+            $scope.$on('saveRequest', function($event, deferred) {
 
 
                 $rootScope.$broadcast('fk7263.beforeSave', intygModel);

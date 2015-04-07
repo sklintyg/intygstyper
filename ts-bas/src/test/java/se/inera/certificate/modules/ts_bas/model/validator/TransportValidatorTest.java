@@ -36,7 +36,7 @@ public class TransportValidatorTest {
 
     @Test
     public void testValidateWithErrors() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getTransportScenarios("invalid-*")) {
+        for (Scenario scenario : ScenarioFinder.getTransportScenarios("programmatic-invalid-*")) {
 
             TSBasIntyg utlatande = scenario.asTransportModel();
             List<String> validationResponse = validator.validateTransport(utlatande);

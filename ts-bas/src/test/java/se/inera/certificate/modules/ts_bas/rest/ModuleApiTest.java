@@ -102,7 +102,7 @@ public class ModuleApiTest {
     }
 
     @Test
-    public void copyCreatesBlank() throws Exception {
+    public void copyContainsOriginalData() throws Exception {
         Scenario scenario = ScenarioFinder.getInternalScenario("valid-maximal");
         InternalModelHolder internalHolder = createInternalHolder(scenario.asInternalModel());
 
@@ -149,14 +149,14 @@ public class ModuleApiTest {
 
         String logicalAddress = "FAIL";
         String failResult = "";
-        Scenario scenario = ScenarioFinder.getInternalScenario("valid-maximal");
+        Scenario scenario = ScenarioFinder.getInternalScenario("invalid-missing-identitet");
         InternalModelHolder internalModel = createInternalHolder(scenario.asInternalModel());
         try {
             moduleApi.registerCertificate(internalModel, logicalAddress);
         } catch (ModuleException me) {
             failResult = me.getMessage();
         }
-        assertTrue(failResult.contains("APPLICATION_ERROR"));
+        assertTrue(!failResult.isEmpty());
     }
 
     @Test

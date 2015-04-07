@@ -198,7 +198,10 @@ public class InternalToTransport {
         return horselBalans;
     }
 
-    private static IdentitetStyrkt buildIdentitetStyrkt(se.inera.certificate.modules.ts_bas.model.internal.Vardkontakt source) {
+    private static IdentitetStyrkt buildIdentitetStyrkt(se.inera.certificate.modules.ts_bas.model.internal.Vardkontakt source) throws ConverterException {
+        if (source.getIdkontroll() == null) {
+            throw new ConverterException("Idkontroll was null");
+        }
         IdentitetStyrkt identitetStyrkt = new IdentitetStyrkt();
         identitetStyrkt.setIdkontroll(IdentifieringsVarden.valueOf(IdKontrollKod.valueOf(source.getIdkontroll()).getCode()));
         return identitetStyrkt;
