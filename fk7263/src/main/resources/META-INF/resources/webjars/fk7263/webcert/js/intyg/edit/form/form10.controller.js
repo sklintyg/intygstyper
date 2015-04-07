@@ -16,6 +16,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
 
             // once we've doneLoading we can set the radion buttons to the model state.
             $scope.$on('fk7263.loaded', function() {
+                radioGroupNotSelectedCheck();
                 setPrognosGroupFromModel();
             });
 
@@ -32,8 +33,6 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
                     } else {
                         if(model.atticHasForm10()){
                             model.atticRestoreForm10();
-                        } else if (!$scope.radioGroups.prognos || $scope.radioGroups.prognos.length === 0) {
-                            model.prognosBedomning = 'arbetsformagaPrognosJa';
                         }
                     }
                     setPrognosGroupFromModel();
@@ -41,6 +40,12 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
             });
 
             // view/scope methods --------------------------------------------------------------------------------------
+
+            function radioGroupNotSelectedCheck(){
+                if (model.prognosBedomning === undefined) {
+                    model.prognosBedomning = 'arbetsformagaPrognosJa';
+                }
+            }
 
             function setPrognosGroupFromModel() {
                 switch (model.prognosBedomning) {
