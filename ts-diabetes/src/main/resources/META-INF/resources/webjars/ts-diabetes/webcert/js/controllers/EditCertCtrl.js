@@ -19,10 +19,6 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
 
             // Intyg state
             $scope.cert = {};
-            $scope.messages = [];
-            $scope.isComplete = false;
-            $scope.isSigned = false;
-            $scope.hasSavedThisSession = false;
             $scope.certMeta = {
                 intygId: null,
                 intygType: 'ts-diabetes',

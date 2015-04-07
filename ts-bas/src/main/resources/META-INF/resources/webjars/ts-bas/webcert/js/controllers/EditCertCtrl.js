@@ -19,10 +19,6 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
 
             // intyg state
             $scope.cert = {};
-            $scope.hasSavedThisSession = false;
-            $scope.messages = [];
-            $scope.isComplete = false;
-            $scope.isSigned = false;
             $scope.certMeta = {
                 intygId: null,
                 intygType: 'ts-bas',

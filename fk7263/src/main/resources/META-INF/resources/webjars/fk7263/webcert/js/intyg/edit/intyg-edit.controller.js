@@ -28,11 +28,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
             // Intyg state
             $scope.cert = {};
-            $scope.hasSavedThisSession = false;
-            $scope.messages = [];
-            $scope.isComplete = false;
-            $scope.isSigned = false;
-
             $scope.certMeta = {
                 intygId: null,
                 intygType: 'fk7263',
