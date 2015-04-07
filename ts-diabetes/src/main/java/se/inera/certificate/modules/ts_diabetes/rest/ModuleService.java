@@ -77,7 +77,6 @@ import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.Regist
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesResponseType;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 import se.inera.intygstjanster.ts.services.v1.ResultCodeType;
-import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -106,16 +105,16 @@ public class ModuleService implements ModuleApi {
     @Autowired
     @Qualifier("ts-diabetes-objectMapper")
     private ObjectMapper objectMapper;
-    
-    @Autowired(required = false) 
-    @Qualifier("sendTsDiabetesClient")
-    private RegisterCertificateResponderInterface sendTsDiabetesClient;    
 
-    @Autowired(required=false)
+    @Autowired(required = false)
+    @Qualifier("sendTsDiabetesClient")
+    private RegisterCertificateResponderInterface sendTsDiabetesClient;
+
+    @Autowired(required = false)
     @Qualifier("diabetesGetClient")
     private GetTSDiabetesResponderInterface diabetesGetClient;
 
-    @Autowired(required=false)
+    @Autowired(required = false)
     @Qualifier("diabetesRegisterClient")
     private RegisterTSDiabetesResponderInterface diabetesRegisterClient;
 
@@ -202,7 +201,7 @@ public class ModuleService implements ModuleApi {
             throw new ExternalServiceCallException("Failed to convert to transport format during registerTSBas", e);
         }
 
-        RegisterTSDiabetesResponseType response=
+        RegisterTSDiabetesResponseType response =
                 diabetesRegisterClient.registerTSDiabetes(logicalAddress, request);
 
         // check whether call was successful or not
@@ -224,7 +223,7 @@ public class ModuleService implements ModuleApi {
 
         RegisterCertificateResponseType response = sendTsDiabetesClient.registerCertificate(logicalAddress, parameters);
 
-        if (response.getResult().getResultCode() !=  se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.OK) {
+        if (response.getResult().getResultCode() != se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.OK) {
             String message = response.getResult().getResultCode() == se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.INFO
                     ? response.getResult().getResultText()
                     : response.getResult().getErrorId() + " : " + response.getResult().getResultText();
@@ -238,81 +237,68 @@ public class ModuleService implements ModuleApi {
         se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande placeholderUtlatande = new se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande();
         try {
             Utlatande internal = objectMapper.readValue(internalModel.getInternalModel(), Utlatande.class);
-        UtlatandeId id = new UtlatandeId();
-        id.setExtension(internal.getId());
-        id.setRoot("root");
+            UtlatandeId id = new UtlatandeId();
+            id.setExtension(internal.getId());
+            id.setRoot("root");
 
-        Patient patient = new Patient();
-        PersonId personId = new PersonId();
-        personId.setExtension(internal.getGrundData().getPatient().getPersonId());
-        personId.setRoot(Constants.PERSON_ID_OID);
-        patient.setPersonId(personId);
-        patient.setEfternamn(internal.getGrundData().getPatient().getEfternamn());
-        patient.setPostadress(internal.getGrundData().getPatient().getPostadress());
-        patient.setPostort(internal.getGrundData().getPatient().getPostort());
-        patient.setPostnummer(internal.getGrundData().getPatient().getPostnummer());
+            Patient patient = new Patient();
+            PersonId personId = new PersonId();
+            personId.setExtension(internal.getGrundData().getPatient().getPersonId());
+            personId.setRoot(Constants.PERSON_ID_OID);
+            patient.setPersonId(personId);
+            patient.setEfternamn(internal.getGrundData().getPatient().getEfternamn());
+            patient.setPostadress(internal.getGrundData().getPatient().getPostadress());
+            patient.setPostort(internal.getGrundData().getPatient().getPostort());
+            patient.setPostnummer(internal.getGrundData().getPatient().getPostnummer());
 
-        Vardgivare vardgivare = new Vardgivare();
-        HsaId hsaId = new HsaId();
-        hsaId.setExtension(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
-        hsaId.setRoot(Constants.HSA_ID_OID);
-        vardgivare.setVardgivareId(hsaId);
-        vardgivare.setVardgivarnamn(internal.getGrundData().getSkapadAv().getVardenhet().getVardgivare().getVardgivarnamn());
+            Vardgivare vardgivare = new Vardgivare();
+            HsaId hsaId = new HsaId();
+            hsaId.setExtension(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
+            hsaId.setRoot(Constants.HSA_ID_OID);
+            vardgivare.setVardgivareId(hsaId);
+            vardgivare.setVardgivarnamn(internal.getGrundData().getSkapadAv().getVardenhet().getVardgivare().getVardgivarnamn());
 
-        Enhet enhet = new Enhet();
-        ArbetsplatsKod ak = new ArbetsplatsKod();
-        ak.setExtension(internal.getGrundData().getSkapadAv().getVardenhet().getArbetsplatsKod());
-        ak.setRoot("root");
-        enhet.setArbetsplatskod(ak);
-        HsaId enId = new HsaId();
-        enId.setExtension(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
-        enId.setRoot(Constants.HSA_ID_OID);
-        enhet.setEnhetsId(enId);
-        enhet.setEnhetsnamn(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
-        enhet.setPostadress(internal.getGrundData().getSkapadAv().getVardenhet().getPostadress());
-        enhet.setPostort(internal.getGrundData().getSkapadAv().getVardenhet().getPostort());
-        enhet.setPostnummer(internal.getGrundData().getSkapadAv().getVardenhet().getPostnummer());
-        enhet.setEnhetsnamn(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
-        enhet.setVardgivare(vardgivare);
+            Enhet enhet = new Enhet();
+            ArbetsplatsKod ak = new ArbetsplatsKod();
+            ak.setExtension(internal.getGrundData().getSkapadAv().getVardenhet().getArbetsplatsKod());
+            ak.setRoot("root");
+            enhet.setArbetsplatskod(ak);
+            HsaId enId = new HsaId();
+            enId.setExtension(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
+            enId.setRoot(Constants.HSA_ID_OID);
+            enhet.setEnhetsId(enId);
+            enhet.setEnhetsnamn(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
+            enhet.setPostadress(internal.getGrundData().getSkapadAv().getVardenhet().getPostadress());
+            enhet.setPostort(internal.getGrundData().getSkapadAv().getVardenhet().getPostort());
+            enhet.setPostnummer(internal.getGrundData().getSkapadAv().getVardenhet().getPostnummer());
+            enhet.setEnhetsnamn(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
+            enhet.setVardgivare(vardgivare);
 
-        HosPersonal hosPerson = new HosPersonal();
-        hosPerson.setEnhet(enhet);
-        hosPerson.setForskrivarkod("1245");
-        hosPerson.setFullstandigtNamn(internal.getGrundData().getSkapadAv().getFullstandigtNamn());
-        HsaId personalId = new HsaId();
-        personalId.setExtension(internal.getGrundData().getSkapadAv().getPersonId());
-        personalId.setRoot(Constants.HSA_ID_OID);
-        hosPerson.setPersonalId(personalId);
+            HosPersonal hosPerson = new HosPersonal();
+            hosPerson.setEnhet(enhet);
+            hosPerson.setForskrivarkod("1245");
+            hosPerson.setFullstandigtNamn(internal.getGrundData().getSkapadAv().getFullstandigtNamn());
+            HsaId personalId = new HsaId();
+            personalId.setExtension(internal.getGrundData().getSkapadAv().getPersonId());
+            personalId.setRoot(Constants.HSA_ID_OID);
+            hosPerson.setPersonalId(personalId);
 
-        TypAvUtlatande typ = new TypAvUtlatande();
-        typ.setCode(internal.getTyp());
-        typ.setCodeSystem("codesystem");
-        typ.setCodeSystemName("name");
-        typ.setCodeSystemVersion("version");
-        typ.setDisplayName("meh");
+            TypAvUtlatande typ = new TypAvUtlatande();
+            typ.setCode(internal.getTyp());
+            typ.setCodeSystem("codesystem");
+            typ.setCodeSystemName("name");
+            typ.setCodeSystemVersion("version");
+            typ.setDisplayName("meh");
 
-        placeholderUtlatande.setUtlatandeId(id);
-        placeholderUtlatande.setPatient(patient);
-        placeholderUtlatande.setSkapadAv(hosPerson);
-        placeholderUtlatande.setSigneringsdatum(internal.getGrundData().getSigneringsdatum());
-        placeholderUtlatande.setTypAvUtlatande(typ);
+            placeholderUtlatande.setUtlatandeId(id);
+            placeholderUtlatande.setPatient(patient);
+            placeholderUtlatande.setSkapadAv(hosPerson);
+            placeholderUtlatande.setSigneringsdatum(internal.getGrundData().getSigneringsdatum());
+            placeholderUtlatande.setTypAvUtlatande(typ);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return placeholderUtlatande;
-    }
-
-    private void sendCertificateToRecipient(TSDiabetesIntyg request, String logicalAddress, String recipientId) throws ExternalServiceCallException {
-        RegisterTSDiabetesType parameters = new RegisterTSDiabetesType();
-        parameters.setIntyg(request);
-        RegisterTSDiabetesResponseType response = diabetesRegisterClient.registerTSDiabetes(logicalAddress, parameters);
-
-        if (response.getResultat().getResultCode() != ResultCodeType.OK) {
-            String message = response.getResultat().getResultCode() == ResultCodeType.INFO
-                    ? response.getResultat().getResultText()
-                    : response.getResultat().getErrorId() + " : " + response.getResultat().getResultText();
-            throw new ExternalServiceCallException(message);
-        }        
     }
 
     @Override
@@ -346,7 +332,8 @@ public class ModuleService implements ModuleApi {
         try {
             Utlatande utlatande = TransportToInternalConverter.convert(diabetesResponseType.getIntyg());
             String internalModel = objectMapper.writeValueAsString(utlatande);
-            CertificateMetaData metaData = TSDiabetesCertificateMetaTypeConverter.toCertificateMetaData(diabetesResponseType.getMeta(), diabetesResponseType.getIntyg());
+            CertificateMetaData metaData = TSDiabetesCertificateMetaTypeConverter.toCertificateMetaData(diabetesResponseType.getMeta(),
+                    diabetesResponseType.getIntyg());
             return new CertificateResponse(internalModel, utlatande, metaData, revoked);
         } catch (Exception e) {
             throw new ModuleException(e);
