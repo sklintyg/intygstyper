@@ -61,7 +61,6 @@ public class DomainTransportModelValidatorTest {
     private void validateUtlatande(Scenario scenario) {
         try {
             ByteArrayOutputStream output = new ByteArrayOutputStream();
-            //JAXB.marshal(scenario.asTransportModel(), output);
             JAXBElement<TSBasIntyg> jaxbElement = new JAXBElement<TSBasIntyg>(new QName("ns3:basIntyg"), TSBasIntyg.class, scenario.asTransportModel());
             JAXBContext context = JAXBContext.newInstance(TSBasIntyg.class);
             context.createMarshaller().marshal(jaxbElement, output);

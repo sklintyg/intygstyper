@@ -20,14 +20,11 @@ package se.inera.certificate.modules.ts_bas.model.converter;
 
 import org.junit.Test;
 
-import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.utils.ModelAssert;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Unit test for InternalToExternalConverter.
@@ -36,8 +33,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  */
 public class InternalToTransportTest {
-
-    ObjectMapper objectMapper = new CustomObjectMapper();
 
     @Test
     public void testConvertUtlatandeFromInternalToExternal() throws Exception {

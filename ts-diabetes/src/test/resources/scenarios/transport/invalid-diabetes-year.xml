@@ -67,12 +67,12 @@
         <ns1:idkontroll>IDK1</ns1:idkontroll>
     </ns1:identitetStyrkt>
     <ns1:diabetes>
-        <ns1:debutArDiabetes>2012</ns1:debutArDiabetes>
+        <ns1:debutArDiabetes>2012-12-12</ns1:debutArDiabetes>
         <ns1:diabetesTyp>TYP2</ns1:diabetesTyp>
         <ns1:harBehandlingKost>true</ns1:harBehandlingKost>
         <ns1:harBehandlingTabletter>true</ns1:harBehandlingTabletter>
         <ns1:harBehandlingInsulin>true</ns1:harBehandlingInsulin>
-        <ns1:insulinBehandlingSedanAr>2012</ns1:insulinBehandlingSedanAr>
+        <ns1:insulinBehandlingSedanAr>2012-12-12</ns1:insulinBehandlingSedanAr>
         <ns1:annanBehandlingBeskrivning>Hypnos</ns1:annanBehandlingBeskrivning>
     </ns1:diabetes>
     <ns1:hypoglykemier>

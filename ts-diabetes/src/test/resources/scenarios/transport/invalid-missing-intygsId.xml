@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ns1:TSDiabetesIntyg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="urn:local:se:intygstjanster:services:1"
     xmlns:ns2="urn:local:se:intygstjanster:services:types:1">
-    <ns1:intygsId>987654321</ns1:intygsId>
     <ns1:intygsTyp>TSTRK1031 (U06, V06)</ns1:intygsTyp>
     <ns1:version>02</ns1:version>
     <ns1:utgava>06</ns1:utgava>

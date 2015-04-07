@@ -20,15 +20,8 @@ package se.inera.certificate.modules.ts_diabetes.rest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
-import static se.inera.certificate.modules.support.api.dto.TransportModelVersion.UTLATANDE_V1;
-
-import java.io.StringWriter;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-
-import junit.framework.Assert;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,22 +32,20 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
+import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.Patient;
-import se.inera.certificate.modules.support.api.dto.TransportModelHolder;
 import se.inera.certificate.modules.support.api.dto.Vardenhet;
 import se.inera.certificate.modules.support.api.dto.Vardgivare;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
-import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvserKategori;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.utils.ResourceConverterUtils;
 import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
 import se.inera.certificate.modules.ts_diabetes.utils.ScenarioFinder;
-import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -81,77 +72,6 @@ public class ModuleApiTest {
     private CustomObjectMapper objectMapper;
 
     @Test
-    public void testValidate() throws Exception {
-        /*for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            moduleApi.validate(createExternalHolder(scenario.asExternalModel()));
-        }*/
-    }
-
-    @Test
-    public void testValidateWithErrors() throws Exception {
-//        for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {
-//            try {
-//                moduleApi.validate(createExternalHolder(scenario.asExternalModel()));
-//                Assert.fail("Expected ModuleValidationException, running scenario " + scenario.getName());
-//
-//            } catch (ModuleValidationException e) {
-//                Assert.assertFalse("Error in scenario " + scenario.getName(), e.getValidationEntries().isEmpty());
-//            }
-//        }
-    }
-
-    @Test
-    public void testPdf() throws Exception {
-//        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-//            moduleApi.pdf(createExternalHolder(scenario.asExternalModel()), ApplicationOrigin.MINA_INTYG);
-//
-//        }
-    }
-
-    @Test
-    public void testConvertExternalToInternal() throws Exception {
-//        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-//            moduleApi.convertExternalToInternal(createExternalHolder(scenario.asExternalModel()));
-//        }
-    }
-
-    @Test
-    public void testConvertInternalToExternal() throws Exception {
-//        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
-//            moduleApi.convertInternalToExternal(createInternalHolder(scenario.asInternalModel()));
-//        }
-    }
-
-    @Test
-    public void testRegisterCertificateRoundtrip() throws Exception {
-//        se.inera.certificate.modules.ts_diabetes.model.external.Utlatande extUtlatande;
-//        Utlatande intUtlatande;
-//        for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
-//            extUtlatande = (se.inera.certificate.modules.ts_diabetes.model.external.Utlatande) moduleApi
-//                    .unmarshall(createTransportHolder(scenario.asTransportModel())).getExternalModel();
-//            
-//            moduleApi.validate(createExternalHolder(extUtlatande));
-//            String intUtlatandeString = moduleApi.convertExternalToInternal(createExternalHolder(extUtlatande)).getInternalModel();
-//            intUtlatande = mapper.readValue(intUtlatandeString, Utlatande.class);
-//            
-//            Utlatande expected = scenario.asInternalModel();
-//            assertLenientEquals("Error in scenario " + scenario.getName(), expected, intUtlatande);
-//        }
-    }
-
-    @Test
-    public void copyContainsOriginalData() throws Exception {
-//        Scenario scenario = ScenarioFinder.getExternalScenario("valid-syn");
-//        ExternalModelHolder internalHolder = createExternalHolder(scenario.asExternalModel());
-//
-//        InternalModelResponse holder = moduleApi.createNewInternalFromTemplate(createNewDraftHolder(), internalHolder);
-//
-//        assertNotNull(holder);
-//        Utlatande utlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
-//        assertEquals(true, utlatande.getIntygAvser().getKorkortstyp().contains(IntygAvserKategori.A1));
-    }
-
-    @Test
     public void createNewInternal() throws ModuleException {
         CreateNewDraftHolder holder = createNewDraftHolder();
 
@@ -160,6 +80,27 @@ public class ModuleApiTest {
         assertNotNull(response.getInternalModel());
     }
 
+    @Test
+    public void testPdf() throws Exception {
+        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
+            moduleApi.pdf(createInternalHolder(scenario.asInternalModel()), null, ApplicationOrigin.MINA_INTYG);
+
+        }
+    }
+
+    @Test
+    public void copyContainsOriginalData() throws Exception {
+        Scenario scenario = ScenarioFinder.getTransportScenario("valid-minimal");
+        InternalModelHolder internalHolder = createInternalHolder(scenario.asInternalModel());
+
+        InternalModelResponse holder = moduleApi.createNewInternalFromTemplate(createNewDraftCopyHolder(), internalHolder);
+
+        assertNotNull(holder);
+        Utlatande utlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
+        assertEquals(true, utlatande.getIntygAvser().getKorkortstyp().contains(IntygAvserKategori.A1));
+    }
+
+    // Private helpers
     private CreateNewDraftHolder createNewDraftHolder() {
         Vardgivare vardgivare = new Vardgivare("hsaId0", "vardgivare");
         Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
@@ -168,13 +109,12 @@ public class ModuleApiTest {
         return new CreateNewDraftHolder("Id1", hosPersonal, patient);
     }
 
-    private TransportModelHolder createTransportHolder(
-            TSDiabetesIntyg transportModel) throws JAXBException {
-        StringWriter writer = new StringWriter();
-        jaxbContext.createMarshaller().marshal(transportModel, writer);
-        return new TransportModelHolder(writer.toString());
+    private CreateDraftCopyHolder createNewDraftCopyHolder() {
+        Vardgivare vardgivare = new Vardgivare("hsaId0", "vardgivare");
+        Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
+        HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", null, vardenhet);
+        return new CreateDraftCopyHolder("Id1", hosPersonal);
     }
-
 
     private InternalModelHolder createInternalHolder(Utlatande internalModel) throws JsonProcessingException {
         return new InternalModelHolder(mapper.writeValueAsString(internalModel));

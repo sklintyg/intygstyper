@@ -26,6 +26,7 @@ import se.inera.certificate.schema.Constants;
 import se.inera.certificate.validate.PersonnummerValidator;
 import se.inera.intygstjanster.ts.services.types.v1.II;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
+import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
@@ -45,6 +46,7 @@ public class TransportValidatorInstance {
 
     public List<String> validate(TSBasIntyg utlatande) {
         context = new ValidationContext(utlatande);
+        validateIds(utlatande);
         // Do context related validation
         if (context.isPersontransportContext()) {
             validatePersontransportRelatedElements(utlatande);
@@ -60,6 +62,35 @@ public class TransportValidatorInstance {
 
     public ValidationContext getContext() {
         return context;
+    }
+
+    private void validateIds(TSBasIntyg utlatande) {
+        // PersonId
+        if (utlatande.getGrundData().getPatient() != null) {
+            String id = utlatande.getGrundData().getPatient().getPersonId().getRoot();
+            if(!id.equals(Constants.PERSON_ID_OID) && !id.equals(Constants.SAMORDNING_ID_OID)) {
+                validationErrors.add(String.format("Root for patient.personnummer should be %s or %s but was %s",
+                        Constants.PERSON_ID_OID, Constants.SAMORDNING_ID_OID, id));
+            }
+        }
+        // Läkares HSAId
+        if (utlatande.getGrundData().getSkapadAv() != null) {
+            checkId(utlatande.getGrundData().getSkapadAv().getPersonId().getRoot(), Constants.HSA_ID_OID, "SkapadAv.hsaId");
+        }
+        // Vardenhet
+        if (utlatande.getGrundData().getSkapadAv().getVardenhet() != null) {
+            checkId(utlatande.getGrundData().getSkapadAv().getVardenhet().getEnhetsId().getRoot(), Constants.HSA_ID_OID, "vardenhet.enhetsId");
+        }
+        // vardgivare
+        if (utlatande.getGrundData().getSkapadAv().getVardenhet().getVardgivare() != null) {
+            checkId(utlatande.getGrundData().getSkapadAv().getVardenhet().getVardgivare().getVardgivarid().getRoot(), Constants.HSA_ID_OID,
+                    "vardgivarId");
+        }
+    }
+    private void checkId(String id, String expected, String field) {
+        if (!id.equals(expected)) {
+            validationErrors.add(String.format("Root for %s should be %s but was %s", field, expected, id));
+        }
     }
 
     private void validatePersontransportRelatedElements(TSBasIntyg utlatande) {
