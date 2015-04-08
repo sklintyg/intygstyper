@@ -58,13 +58,6 @@
   <hypoglykemier>
     <harKunskapOmAtgarder>true</harKunskapOmAtgarder>
     <harTeckenNedsattHjarnfunktion>false</harTeckenNedsattHjarnfunktion>
-    <saknarFormagaKannaVarningstecken>false</saknarFormagaKannaVarningstecken>
-    <harAllvarligForekomst>false</harAllvarligForekomst>
-    <allvarligForekomstBeskrivning/>
-    <harAllvarligForekomstTrafiken>false</harAllvarligForekomstTrafiken>
-    <allvarligForekomstTrafikBeskrivning/>
-    <genomforEgenkontrollBlodsocker>false</genomforEgenkontrollBlodsocker>
-    <harAllvarligForekomstVakenTid>false</harAllvarligForekomstVakenTid>
   </hypoglykemier>
   <separatOgonLakarintygKommerSkickas>false</separatOgonLakarintygKommerSkickas>
   <synfunktion>

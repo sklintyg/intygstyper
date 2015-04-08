@@ -104,15 +104,7 @@
         }
     },
     "hypoglykemier": {
-        "allvarligForekomst": null,
-        "allvarligForekomstBeskrivning": "",
-        "allvarligForekomstTrafikBeskrivning": "",
-        "allvarligForekomstTrafiken": null,
-        "allvarligForekomstVakenTid": null,
-        "allvarligForekomstVakenTidObservationstid": "",
-        "egenkontrollBlodsocker": null,
         "kunskapOmAtgarder": true,
-        "saknarFormagaKannaVarningstecken": null,
         "teckenNedsattHjarnfunktion": false
     },
     "id": "233a6482-36c4-4177-89fd-959e2692eec9",
