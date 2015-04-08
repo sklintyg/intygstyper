@@ -29,26 +29,29 @@ angular.module('fk7263').controller('fk7263.EditCert.Form6a711Ctrl',
                     } else {
                         model.atticRestoreForm6a711();
                         updateFormFromModel();
-                        //if (!$scope.radioGroups.ressattTillArbete || $scope.radioGroups.ressattTillArbete.length == 0) {
-                        //    $scope.radioGroups.ressattTillArbete = travelStates.NEJ;
-                        //}
-                        //if (!$scope.radioGroups.rehab || $scope.radioGroups.rehab.length == 0) {
-                        //    $scope.radioGroups.rehab = rehabStates.NEJ;
-                        //}
                     }
 
                 }
             });
 
+            // once we've doneLoading we can set the radion buttons to the model state.
+            $scope.$watch('viewState.common.doneLoading', function(newVal) {
+                if(newVal) {
+                    updateFormFromModel();
+                }
+            });
+
             function updateFormFromModel(){
+                if(!model.rehabilitering){
+                    model.rehabilitering = 'rehabiliteringEjAktuell';
+                }
+
+                if(!model.ressattTillArbeteAktuellt && !model.ressattTillArbeteEjAktuellt){
+                    model.ressattTillArbeteAktuellt = false;
+                    model.ressattTillArbeteEjAktuellt = true;
+                }
                 setRehabGroupFromModel();
                 setTravelGroupFromModel();
-            }
-
-            function updateModelFromForm(){
-                // set the model values
-                $scope.onRehabChange();
-                $scope.onTravelChange();
             }
 
             function setRehabGroupFromModel(){
@@ -76,13 +79,6 @@ angular.module('fk7263').controller('fk7263.EditCert.Form6a711Ctrl',
                     $scope.radioGroups.ressattTillArbete = travelStates.NEJ;
                 }
             }
-
-            // once we've doneLoading we can set the radion buttons to the model state.
-            $scope.$watch('viewState.common.doneLoading', function(newVal) {
-                if(newVal) {
-                    updateFormFromModel();
-                }
-            });
 
             $scope.onRehabChange = function(){
                 switch ($scope.radioGroups.rehab) {
