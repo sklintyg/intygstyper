@@ -1,7 +1,7 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
-    ['$log', 'fk7263.Domain.IntygModel', '$scope', 'fk7263.EditCertCtrl.ViewStateService', 'common.UtilsService',
+    ['$scope', '$log', 'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService', 'common.UtilsService',
         'common.DateUtilsService',
-        function($log, model, $scope, viewState, utils, dateUtils) {
+        function($scope, $log, model, viewState, utils, dateUtils) {
             'use strict';
             $scope.model = model;
             $scope.viewState = viewState;
@@ -24,31 +24,36 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
             }
 
             // once we've doneLoading we can set the radion buttons to the model state.
-            $scope.$watch('viewState.common.doneLoading', function(newVal) {
-
+            $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
+                if(newVal === oldVal){
+                    return;
+                }
                 if (newVal) {
                     registerDateParsersFor4b($scope);
                     setBaserasPa();
                     // I really hate this but needs to be done because the datepicker doesn't accept non dates!!
                     transferModelToForm();
-
                 }
             });
 
-            $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal) {
+            $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal, oldVal) {
+                if(newVal === oldVal){
+                    return;
+                }
                 // only do this once the page is loaded and changes come from the gui!
                 if (viewState.common.doneLoading && newVal) {
-                    clearState();
+                    model.atticUpdateForm4b();
+                    model.clearForm4b();
+                    clearViewState();
+                } else {
+                    model.atticRestoreForm4b();
+                    transferModelToForm();
+                    setBaserasPa();
                 }
             });
 
 
-            function clearState() {
-                $scope.model.undersokningAvPatienten = undefined;
-                $scope.model.telefonkontaktMedPatienten = undefined;
-                $scope.model.journaluppgifter = undefined;
-                $scope.model.annanReferens = undefined;
-                $scope.model.annanReferensBeskrivning = undefined;
+            function clearViewState() {
                 $scope.basedOnState.check.undersokningAvPatienten = false;
                 $scope.basedOnState.check.telefonkontaktMedPatienten = false;
                 $scope.basedOnState.check.journaluppgifter = false;

@@ -45,7 +45,9 @@
                                                                     field-help-text="fk7263.helptext.rekommendationer.foretagshalsovarden"></span>
       </div>
       <div class="form-group form-inline">
-        <label class="checkbox"><input type="checkbox" id="rekommendationOvrigt" name="recommendationsToFk.other"
+        <label class="checkbox"><input type="checkbox" id="rekommendationOvrigt"
+                                       name="recommendationsToFk.other"
+                                       ng-change="onOvrigtChange()"
                                        ng-model="model.rekommendationOvrigtCheck"> Övrigt (ange
           vad)</label><span wc-enable-tooltip field-help-text="fk7263.helptext.rekommendationer.ovrigt"></span>
         <div class="indent" ng-if="model.rekommendationOvrigtCheck">
