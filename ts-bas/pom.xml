@@ -12,7 +12,7 @@
 
   <artifactId>ts-bas</artifactId>
 
-  <name>Intygstyper (TS Läkarintyg)</name>
+  <name>Intygstyper (TS Läkarintyg, bas)</name>
 
   <dependencies>
 
