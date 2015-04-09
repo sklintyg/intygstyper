@@ -459,10 +459,10 @@
       </xsl:for-each>
 
         <p2:utgava>
-          <xsl:value-of select="//ns1:utgava"/>
+          <xsl:value-of select="ns1:utgava"/>
         </p2:utgava>
         <p2:version>
-          <xsl:value-of select="//ns1:version"/>
+          <xsl:value-of select="ns1:version"/>
         </p2:version>
 
     </reg:utlatande>

@@ -30,6 +30,13 @@
       <artifactId>integration-util</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>se.inera.intyg.intygstyper</groupId>
+      <artifactId>ts-parent</artifactId>
+      <version>0-SNAPSHOT</version>
+    </dependency>
+
+    
     <!-- Schemas -->
     <dependency>
       <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>

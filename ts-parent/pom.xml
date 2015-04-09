@@ -20,6 +20,11 @@
             <artifactId>cxf-rt-frontend-jaxrs</artifactId>
         </dependency>
 
+        <dependency>
+          <groupId>net.sf.saxon</groupId>
+          <artifactId>Saxon-HE</artifactId>
+        </dependency>
+
         <!-- Schemas -->
         <dependency>
             <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>

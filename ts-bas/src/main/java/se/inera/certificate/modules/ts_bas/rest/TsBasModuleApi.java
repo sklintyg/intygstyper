@@ -206,7 +206,6 @@ public class TsBasModuleApi implements ModuleApi {
         String transformedPayload = xslTransformer.transform(internalModel.getXmlModel());
         
         SOAPMessage response = sendTsBasClient.registerCertificate(transformedPayload);
-
         // TODO handle response
 
 //        if (response.getResult().getResultCode() !=  se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.OK) {
@@ -215,72 +214,6 @@ public class TsBasModuleApi implements ModuleApi {
 //                    : response.getResult().getErrorId() + " : " + response.getResult().getResultText();
 //            throw new ExternalServiceCallException(message);
 //        }
-    }
-
-    // TODO remove this method when XSL-transformer is ready.
-    private se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande buildPlaceHolderCertificate(InternalModelHolder internalModel)
-            throws ModuleException {
-        se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande placeholderUtlatande = new se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande();
-        Utlatande internal = converterUtil.fromJsonString(internalModel.getInternalModel());
-        UtlatandeId id = new UtlatandeId();
-        id.setExtension(internal.getId());
-        id.setRoot("root");
-
-        Patient patient = new Patient();
-        PersonId personId = new PersonId();
-        personId.setExtension(internal.getGrundData().getPatient().getPersonId());
-        personId.setRoot(Constants.PERSON_ID_OID);
-        patient.setPersonId(personId);
-        patient.setEfternamn(internal.getGrundData().getPatient().getEfternamn());
-        patient.setPostadress(internal.getGrundData().getPatient().getPostadress());
-        patient.setPostort(internal.getGrundData().getPatient().getPostort());
-        patient.setPostnummer(internal.getGrundData().getPatient().getPostnummer());
-
-        Vardgivare vardgivare = new Vardgivare();
-        HsaId hsaId = new HsaId();
-        hsaId.setExtension(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
-        hsaId.setRoot(Constants.HSA_ID_OID);
-        vardgivare.setVardgivareId(hsaId);
-        vardgivare.setVardgivarnamn(internal.getGrundData().getSkapadAv().getVardenhet().getVardgivare().getVardgivarnamn());
-
-        Enhet enhet = new Enhet();
-        ArbetsplatsKod ak = new ArbetsplatsKod();
-        ak.setExtension(internal.getGrundData().getSkapadAv().getVardenhet().getArbetsplatsKod());
-        ak.setRoot("root");
-        enhet.setArbetsplatskod(ak);
-        HsaId enId = new HsaId();
-        enId.setExtension(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
-        enId.setRoot(Constants.HSA_ID_OID);
-        enhet.setEnhetsId(enId);
-        enhet.setEnhetsnamn(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
-        enhet.setPostadress(internal.getGrundData().getSkapadAv().getVardenhet().getPostadress());
-        enhet.setPostort(internal.getGrundData().getSkapadAv().getVardenhet().getPostort());
-        enhet.setPostnummer(internal.getGrundData().getSkapadAv().getVardenhet().getPostnummer());
-        enhet.setEnhetsnamn(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
-        enhet.setVardgivare(vardgivare);
-
-        HosPersonal hosPerson = new HosPersonal();
-        hosPerson.setEnhet(enhet);
-        hosPerson.setForskrivarkod("1245");
-        hosPerson.setFullstandigtNamn(internal.getGrundData().getSkapadAv().getFullstandigtNamn());
-        HsaId personalId = new HsaId();
-        personalId.setExtension(internal.getGrundData().getSkapadAv().getPersonId());
-        personalId.setRoot(Constants.HSA_ID_OID);
-        hosPerson.setPersonalId(personalId);
-
-        TypAvUtlatande typ = new TypAvUtlatande();
-        typ.setCode(internal.getTyp());
-        typ.setCodeSystem("codesystem");
-        typ.setCodeSystemName("name");
-        typ.setCodeSystemVersion("version");
-        typ.setDisplayName("meh");
-
-        placeholderUtlatande.setUtlatandeId(id);
-        placeholderUtlatande.setPatient(patient);
-        placeholderUtlatande.setSkapadAv(hosPerson);
-        placeholderUtlatande.setSigneringsdatum(internal.getGrundData().getSigneringsdatum());
-        placeholderUtlatande.setTypAvUtlatande(typ);
-        return placeholderUtlatande;
     }
 
     @Override
