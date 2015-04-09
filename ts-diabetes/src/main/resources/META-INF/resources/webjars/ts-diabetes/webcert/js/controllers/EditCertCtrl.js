@@ -25,6 +25,8 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 vidarebefordrad: false
             };
 
+            $scope.tomorrowDate = moment().subtract(1, 'days').format('YYYY-MM-DD');
+
             // form model (extends intyg model where necessary)
             $scope.form = {
                 'identity': [
