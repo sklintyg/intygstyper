@@ -1,63 +1,92 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>se.inera.intyg.intygstyper</groupId>
-        <artifactId>intygstyper</artifactId>
-        <version>0-SNAPSHOT</version>
-    </parent>
 
-    <artifactId>ts-parent</artifactId>
+  <modelVersion>4.0.0</modelVersion>
 
-    <name>Intygstyper (TA Läkarintyg Parent Project)</name>
+  <parent>
+    <groupId>se.inera.intyg.intygstyper</groupId>
+    <artifactId>intygstyper</artifactId>
+    <version>0-SNAPSHOT</version>
+  </parent>
 
-    <dependencies>
-        <!--  Spring -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-        </dependency>
+  <artifactId>ts-parent</artifactId>
 
-        <!-- Common -->
-        <dependency>
-            <groupId>se.inera.intyg.common</groupId>
-            <artifactId>common-schemas</artifactId>
-        </dependency>
+  <name>Intygstyper (TS Läkarintyg)</name>
 
-        <!-- Schemas -->
-        <dependency>
-            <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
-            <artifactId>clinicalprocess-healthcond-certificate</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
-            <artifactId>se-intygstjanster-ts-services-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
-            <artifactId>se-intygstjanster-ts-services-interactions</artifactId>
-        </dependency>
-    </dependencies>
+  <dependencies>
+    <!--  Spring -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+    </dependency>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>test-jar</id>
-                        <goals>
-                            <goal>test-jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+    </dependency>
+
+    <!-- Common -->
+    <dependency>
+      <groupId>se.inera.intyg.common</groupId>
+      <artifactId>common-schemas</artifactId>
+    </dependency>
+
+    <!-- Schemas -->
+    <dependency>
+      <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
+      <artifactId>clinicalprocess-healthcond-certificate</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
+      <artifactId>se-intygstjanster-ts-services-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
+      <artifactId>se-intygstjanster-ts-services-interactions</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>test-jar</id>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-build-tools</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>se.inera.intyg.common</groupId>
+                  <artifactId>common-build-tools</artifactId>
+                </artifactItem>
+              </artifactItems>
+              <outputDirectory>${project.build.directory}/build-tools</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>
