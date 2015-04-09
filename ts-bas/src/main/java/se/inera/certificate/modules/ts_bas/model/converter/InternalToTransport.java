@@ -45,7 +45,7 @@ import se.inera.certificate.modules.ts_bas.model.internal.Medicinering;
 import se.inera.certificate.modules.ts_bas.model.internal.NarkotikaLakemedel;
 import se.inera.certificate.modules.ts_bas.model.internal.Syn;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
-import se.inera.certificate.schema.Constants;
+import se.inera.intyg.common.schemas.Constants;
 import se.inera.intygstjanster.ts.services.types.v1.II;
 import se.inera.intygstjanster.ts.services.v1.AlkoholNarkotikaLakemedel;
 import se.inera.intygstjanster.ts.services.v1.BedomningTypBas;
@@ -79,10 +79,12 @@ import se.inera.intygstjanster.ts.services.v1.Vardgivare;
  * @author erik
  *
  */
-public class InternalToTransport {
+public final class InternalToTransport {
 
     private static final String SIGNERINGS_TIDSTAMPEL_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     private static final Logger LOG = LoggerFactory.getLogger(InternalToTransport.class);
+
+    private InternalToTransport() { }
 
     /**
      * Takes an internal Utlatande and converts it to the external model.
@@ -290,7 +292,7 @@ public class InternalToTransport {
         if (binokulart != null) {
             synMedKorrektion.setBinokulart(binokulart);
         }
-        if (kontaktlinsHoger != null) { 
+        if (kontaktlinsHoger != null) {
             synMedKorrektion.setHarKontaktlinsHogerOga(kontaktlinsHoger);
         }
         if (kontaktlinsVanster != null) {
