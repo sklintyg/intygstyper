@@ -154,6 +154,7 @@ describe('ts-diabetes.EditCertCtrl', function() {
         getCheckboxForKorkortstyp('C1').selected = true;
         $scope.cert.hypoglykemier.egenkontrollBlodsocker = true;
         $scope.cert.hypoglykemier.allvarligForekomstVakenTid = true;
+        $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = '2014-10-10';
         $scope.cert.bedomning.lamplighetInnehaBehorighet = true;
         $scope.$digest();
 
@@ -162,7 +163,19 @@ describe('ts-diabetes.EditCertCtrl', function() {
 
         expect($scope.cert.hypoglykemier.egenkontrollBlodsocker).toBeUndefined();
         expect($scope.cert.hypoglykemier.allvarligForekomstVakenTid).toBeUndefined();
+        expect($scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid).toBe('');
         expect($scope.cert.bedomning.lamplighetInnehaBehorighet).toBeUndefined();
+    });
+
+    it('should reset hidden fields when "diabetes.insulin" is set to false', function() {
+        $scope.cert.diabetes.insulin = true;
+        $scope.cert.diabetes.insulinBehandlingsperiod = '2014-10-10';
+        $scope.$digest();
+
+        $scope.cert.diabetes.insulin = false;
+        $scope.$digest();
+
+        expect($scope.cert.diabetes.insulinBehandlingsperiod).toBeNull();
     });
 
     it('should reset hidden fields when "teckenNedsattHjarnfunktion" is set to false', function() {
@@ -199,7 +212,7 @@ describe('ts-diabetes.EditCertCtrl', function() {
         $scope.cert.hypoglykemier.allvarligForekomstTrafiken = false;
         $scope.$digest();
 
-        expect($scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid).toBe('');
+        expect($scope.cert.hypoglykemier.allvarligForekomstTrafikBeskrivning).toBe('');
     });
 
     it('should reset hidden fields when "allvarligForekomstVakenTid" is set to false', function() {
@@ -230,15 +243,21 @@ describe('ts-diabetes.EditCertCtrl', function() {
         expect($scope.cert.syn.diplopi).toBeUndefined();
     });
 
-    it('should reset hidden fields when "allvarligForekomstVakenTid" is set to false', function() {
-        $scope.cert.hypoglykemier.allvarligForekomstVakenTid = true;
-        $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = 'Hello';
+    it('should reset hidden fields when "form.behorighet" is set to false', function() {
+        $scope.form.behorighet = true;
+        angular.forEach($scope.cert.bedomning.korkortstyp, function(korkortstyp) {
+            korkortstyp.selected = true;
+        });
+        $scope.$digest();
+        expect($scope.cert.bedomning.kanInteTaStallning).toBeFalsy();
+
+        $scope.form.behorighet = false;
         $scope.$digest();
 
-        $scope.cert.hypoglykemier.allvarligForekomstVakenTid = false;
-        $scope.$digest();
-
-        expect($scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid).toBe('');
+        expect($scope.cert.bedomning.kanInteTaStallning).toBeTruthy();
+        angular.forEach($scope.cert.bedomning.korkortstyp, function(korkortstyp) {
+            expect(korkortstyp.selected).toBeFalsy();
+        });
     });
 
     // Helper methods
