@@ -171,7 +171,7 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
             }
         };
 
-        IntygModel.prototype.prepare = function(nedsatt) {
+        IntygModel.prototype.prepare = function() {
             if (this.aktivitetsbegransning && this.aktivitetsbegransning.length === 0) {
                 this.aktivitetsbegransning = undefined;
             }

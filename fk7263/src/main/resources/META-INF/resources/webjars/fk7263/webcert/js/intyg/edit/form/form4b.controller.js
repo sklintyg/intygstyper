@@ -21,7 +21,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
                 telefonkontaktMedPatienten: null,
                 journaluppgifter: null,
                 annanReferens: null
-            }
+            };
 
             // once we've doneLoading we can set the radion buttons to the model state.
             $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {

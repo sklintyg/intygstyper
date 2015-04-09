@@ -17,10 +17,12 @@ angular.module('fk7263').factory('fk7263.Domain.GrundDataModel',
 
         GrundDataModel.prototype.update = function (grundData) {
             // refresh the model data
-            if(grundData === undefined) return;
+            if(grundData === undefined) {
+                return;
+            }
             this.skapadAv.update(grundData.skapadAv);
             this.patient.update(grundData.patient);
-        }
+        };
 
         GrundDataModel.build = function() {
             return new GrundDataModel();

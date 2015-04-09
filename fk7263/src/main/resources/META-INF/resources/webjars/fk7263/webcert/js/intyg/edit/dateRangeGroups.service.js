@@ -1,5 +1,6 @@
 angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
-    ['common.DateUtilsService', 'common.UtilsService','fk7263.EditCertCtrl.DateRangeGroupModel', '$log', '$filter', function( dateUtils, utils, DateRangeGroupModel, $log, $filter) {
+    ['common.DateUtilsService', 'common.UtilsService','fk7263.EditCertCtrl.DateRangeGroupModel', '$log', '$filter',
+        function( dateUtils, utils, DateRangeGroupModel, $log, $filter) {
         'use strict';
 
         /**
@@ -35,7 +36,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
             // add the parser and formatter...
             this.addNedsattFormatters();
 
-        };
+        }
 
         DateRangeGroupsService.prototype.addNedsattFormatters = function addNedsattFormatters(){
 
@@ -76,7 +77,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
                 }
 
             }, self);
-        }
+        };
 
         DateRangeGroupsService.prototype.validateDatesWithCert = function validateDatesWithCert(cert) {
             this.setCert(cert);
@@ -120,7 +121,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
                 // do the validity check
                 dateRangeGroup.setDateValidity();
             });
-        }
+        };
 
         /**
          * Validate 8b date periods so they don't overlap or wrap in any way
@@ -142,7 +143,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
                     }
                 });
             });
-        }
+        };
 
         /**
          * 8b: Called when checks or dates for Arbetsförmåga are changed. Update dependency controls here
@@ -258,7 +259,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
         // static build ************************************************************************************************
         DateRangeGroupsService.build = function(_$scope){
             return new DateRangeGroupsService(_$scope);
-        }
+        };
 
         /**
          * Return the constructor function DateRangeGroupModel

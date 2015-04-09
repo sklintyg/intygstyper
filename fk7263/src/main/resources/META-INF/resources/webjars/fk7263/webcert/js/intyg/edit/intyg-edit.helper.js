@@ -1,5 +1,5 @@
 angular.module('fk7263').service('fk7263.EditCertCtrl.Helper',
-    ['$log', function( $log ) {
+    [ function( ) {
         'use strict';
 
         this.limitLength = function limitLength(limit, totalLength, val) {
@@ -16,6 +16,6 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.Helper',
             } else {
                 return value.length;
             }
-        }
+        };
 
     }]);

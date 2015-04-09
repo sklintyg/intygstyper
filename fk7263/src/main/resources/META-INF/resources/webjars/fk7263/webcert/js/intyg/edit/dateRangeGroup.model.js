@@ -1,5 +1,5 @@
 angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
-    ['common.DateUtilsService', 'common.UtilsService', '$log', function( dateUtils, utils, $log) {
+    ['common.DateUtilsService', 'common.UtilsService', function( dateUtils, utils) {
         'use strict';
 
         /**
@@ -79,7 +79,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
         };
 
         DateRangeGroupModel.prototype.equals = function(otherGroup) {
-            if(otherGroup && otherGroup.groupName == this.groupName){
+            if(otherGroup && otherGroup.groupName === this.groupName){
                 return true;
             } else {
                 return false;
@@ -127,11 +127,11 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             }
         };
 
-        DateRangeGroupModel.prototype.certFrom = function(val) {
+        DateRangeGroupModel.prototype.certFrom = function() {
             return this.certModel[this.groupName] ? this.certModel[this.groupName].from : null;
-        }
+        };
 
-        DateRangeGroupModel.prototype.certTom = function(val) {
+        DateRangeGroupModel.prototype.certTom = function() {
             return this.certModel[this.groupName] ? this.certModel[this.groupName].tom : null;
         };
 
@@ -144,7 +144,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             } else {
                 this.certModel[this.groupName].from = val;
             }
-        }
+        };
 
         DateRangeGroupModel.prototype.setCertTom = function(val) {
             if(!this.certModel[this.groupName]){
@@ -181,12 +181,10 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
 
         DateRangeGroupModel.prototype.markDateRangeValidity = function(dateRangeGroup) {
 
-            if(this.isSame(dateRangeGroup)
-                || (!this.hasValidDates() || !dateRangeGroup.hasValidDates())){
+            if(this.isSame(dateRangeGroup) || (!this.hasValidDates() || !dateRangeGroup.hasValidDates())){
                 return;
             }
 
-            $log.log("markDateRangeValidity : " + this.groupName + "," + dateRangeGroup.groupName);
             var fromThis = this.momentFrom(),
                 tomThis = this.momentTom(),
                 fromThat = dateRangeGroup.momentFrom(),
@@ -197,28 +195,26 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             if( dateUtils.isBeforeOrEqual(fromThat, fromThis) && dateUtils.isAfterOrEqual(tomThat, tomThis) ){
                 this.setDateInvalidState(true);
                 dateRangeGroup.setDateInvalidState(true);
-                $log.log("1. f2 b f1 and t2 a t1");
             }
             //          |       |
             //      |       |
-            if(dateUtils.isBeforeOrEqual(fromThat,fromThis) && (dateUtils.isAfterOrEqual(tomThat, fromThis) && dateUtils.isBeforeOrEqual(tomThat, tomThis) ) ) {
+            if(dateUtils.isBeforeOrEqual(fromThat,fromThis) &&
+                (dateUtils.isAfterOrEqual(tomThat, fromThis) && dateUtils.isBeforeOrEqual(tomThat, tomThis) ) ) {
                 this.setDateInvalidState(true);
                 dateRangeGroup.setDateInvalidState(true);
-                $log.log("2. f2 b f1 and (t2 a f1 and t2 b t1)");
             }
             //          |       |
             //             |  |
             if (dateUtils.isAfterOrEqual(fromThat, fromThis) && dateUtils.isBeforeOrEqual(tomThat, tomThis)) {
                 this.setDateInvalidState(true);
                 dateRangeGroup.setDateInvalidState(true);
-                $log.log("3. f2 a f1 and t2 b f1");
             }
             //          |       |
             //              |       |
-            if (dateUtils.isAfterOrEqual(fromThat, fromThis) && dateUtils.isBeforeOrEqual(fromThat, tomThis) && (dateUtils.isAfterOrEqual(tomThat, tomThis) )){
+            if (dateUtils.isAfterOrEqual(fromThat, fromThis) &&
+                dateUtils.isBeforeOrEqual(fromThat, tomThis) && (dateUtils.isAfterOrEqual(tomThat, tomThis) )){
                 this.setDateInvalidState(true);
                 dateRangeGroup.setDateInvalidState(true);
-                $log.log("4. f2 a f1 and f2 b t1");
             }
 
         };
@@ -246,11 +242,11 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
 
         DateRangeGroupModel.prototype.isFromSame = function(from){
             return this.momentFrom().isSame(from, 'day');
-        }
+        };
 
         DateRangeGroupModel.prototype.isTomSame = function(tom){
             return this.momentTom().isSame(tom, 'day');
-        }
+        };
 
         DateRangeGroupModel.prototype.setDateValidity = function() {
             if (this.isValid()) {
@@ -308,7 +304,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             if (this.nedsattFormTom) {
                 this.nedsattFormTom.$setValidity(this.tomName, value);
             }
-        }
+        };
 
         DateRangeGroupModel.build = function(_$scope, groupName, id) {
             return new DateRangeGroupModel(_$scope, groupName, id);
