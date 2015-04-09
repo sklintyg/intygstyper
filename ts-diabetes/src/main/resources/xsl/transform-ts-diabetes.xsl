@@ -5,6 +5,7 @@
     xmlns:ns3="urn:local:se:intygstjanster:services:types:1"
     xmlns:p="urn:riv:clinicalprocess:healthcond:certificate:1"
     xmlns:p2="urn:riv:clinicalprocess:healthcond:certificate:ts-diabetes:1"
+    xmlns:p3="urn:riv:clinicalprocess:healthcond:certificate:types:1"
     xmlns:reg="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:1">
 
   <xsl:output method="xml" indent="yes"/>
@@ -94,7 +95,7 @@
           </xsl:attribute>
         </p:observationskod>
         <p:observationsperiod>
-          <p:from><xsl:value-of select="ns1:diabetes/ns1:debutArDiabetes"/></p:from>
+          <p3:from><xsl:value-of select="ns1:diabetes/ns1:debutArDiabetes"/></p3:from>
         </p:observationsperiod>
         <p:forekomst>true</p:forekomst>
       </p:observation>
@@ -121,7 +122,7 @@
           <p:observationskod code="170747006" codeSystem="1.2.752.116.2.1.1.1"
             codeSystemName="SNOMED-CT" />
           <p:observationsperiod>
-            <p:from><xsl:value-of select="ns1:diabetes/ns1:insulinBehandlingSedanAr"/></p:from>
+            <p3:from><xsl:value-of select="ns1:diabetes/ns1:insulinBehandlingSedanAr"/></p3:from>
           </p:observationsperiod>
           <p:forekomst>true</p:forekomst>
         </p:observation>
