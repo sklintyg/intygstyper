@@ -356,6 +356,29 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
             this.aktivitetsbegransning = undefined;
         };
 
+        // form6a711
+        IntygModel.prototype.atticUpdateForm6a711 = function() {
+            if (_attic) {
+                this.atticUpdateForm6a();
+                this.atticUpdateForm7();
+                this.atticUpdateForm11();
+            }
+        };
+
+        IntygModel.prototype.atticRestoreForm6a711 = function() {
+            if (_attic) {
+                this.atticRestoreForm6a();
+                this.atticRestoreForm7();
+                this.atticRestoreForm11();
+            }
+        };
+
+        IntygModel.prototype.clearForm6a711 = function() {
+            this.clearForm6a();
+            this.clearForm7();
+            this.clearForm11();
+        };
+
         // form6a
         IntygModel.prototype.atticHasForm6a = function() {
             if (_attic) {
@@ -542,6 +565,10 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
 
         IntygModel.prototype.clearForm11 = function() {
             this.rehab = undefined;
+        };
+
+        IntygModel.prototype.attic = function(){
+            return _attic;
         };
 
         _intygModel = new IntygModel();

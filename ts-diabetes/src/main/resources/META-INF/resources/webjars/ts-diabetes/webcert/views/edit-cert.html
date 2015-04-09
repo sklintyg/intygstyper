@@ -47,7 +47,7 @@
                 <div class="col-md-12 cert-body">
 
                   <div wc-field field-label="ts-bas.label.patientadress" id="patientForm">
-                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.patient">
+                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.patient" id="validationMessages_patient">
                       <ul>
                         <li ng-repeat="message in viewState.common.validationMessagesGrouped.patient"><span message
                                                                                            key="{{message.message}}"></span>
@@ -84,7 +84,7 @@
 
                   <div wc-field field-label="ts-diabetes.label.intygavser"
                        field-help-text="ts-diabetes.helptext.intyget-avser" id="intygetAvserForm">
-                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.intygavser">
+                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.intygavser" id="validationMessages_intygavser">
                       <ul>
                         <li ng-repeat="message in viewState.common.validationMessagesGrouped.intygavser"><span message
                                                                                               key="{{message.message}}"></span>
@@ -100,7 +100,7 @@
                   </div>
 
                   <div wc-field field-label="ts-diabetes.label.identitet" id="identitetForm">
-                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.identitet">
+                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.identitet" id="validationMessages_identitet">
                       <ul>
                         <li ng-repeat="message in viewState.common.validationMessagesGrouped.identitet"><span message
                                                                                              key="{{message.message}}"></span>
@@ -126,7 +126,7 @@
 
                   <!-- 1. Allmänt -->
                   <div wc-field field-label="ts-diabetes.label.allmant" class="print-pagebreak-after" id="allmantForm">
-                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.diabetes">
+                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.diabetes" id="validationMessages_diabetes">
                       <ul>
                         <li ng-repeat="message in viewState.common.validationMessagesGrouped.diabetes"><span message
                                                                                             key="{{message.message}}"></span>
@@ -185,7 +185,7 @@
 
                   <!-- 2. Hypoglykemier (lågt blodsocker)-->
                   <div wc-field field-label="ts-diabetes.label.hypoglykemier" id="hypoglykemierForm">
-                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.hypoglykemier">
+                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.hypoglykemier" id="validationMessages_hypoglykemier">
                       <ul>
                         <li ng-repeat="message in viewState.common.validationMessagesGrouped.hypoglykemier"><span message
                                                                                                  key="{{message.message}}"></span>
@@ -254,7 +254,7 @@
                             <input id="allvarligForekomstTrafikBeskrivning" class="form-control input-full"
                                    name="allvarligForekomstTrafikBeskrivning" type="text"
                                    ng-model="cert.hypoglykemier.allvarligForekomstTrafikBeskrivning" wc-maxlength
-                                   ng-trim="false" maxlength="40" />
+                                   ng-trim="false" maxlength="35" />
                           </div>
                         </td>
                       </tr>
@@ -264,6 +264,7 @@
                         <td><h5 class="inline-heading">För innehav av behörigheterna C1, C1E, C, CE, D1, D1E, D, DE och
                           taxiförarlegitimation ska även fråga f-g besvaras</h5></td>
                       </tr>
+                      <!-- 2f -->
                       <tr data-ng-show="form.korkortd">
                         <td><input id="hypofy" name="hypof" type="radio" ng-value="true"
                                    ng-model="cert.hypoglykemier.egenkontrollBlodsocker"></td>
@@ -271,6 +272,8 @@
                                    ng-model="cert.hypoglykemier.egenkontrollBlodsocker"></td>
                         <td><span message key="ts-diabetes.label.hypoglykemier.egenkontroll-blodsocker"></span></td>
                       </tr>
+
+                      <!-- 2g -->
                       <tr data-ng-show="form.korkortd">
                         <td><input id="hypogy" name="hypog" type="radio" ng-value="true"
                                    ng-model="cert.hypoglykemier.allvarligForekomstVakenTid"></td>
@@ -294,7 +297,7 @@
                        name="synForm" id="synForm">
 
                     <table class="table table-form">
-                      <tr ng-if="viewState.common.validationMessagesGrouped.syn">
+                      <tr ng-if="viewState.common.validationMessagesGrouped.syn" id="validationMessages_syn">
                         <td colspan="3">
                           <div class="alert alert-danger">
                             <ul>
@@ -407,7 +410,7 @@
 
                   <!-- 4. Bedömning -->
                   <div wc-field field-label="ts-diabetes.label.bedomning" field-help-text="ts-diabetes.helptext.intyget-avser" id="bedomningForm">
-                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.bedomning">
+                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.bedomning" id="validationMessages_bedomning">
                       <ul>
                         <li ng-repeat="message in viewState.common.validationMessagesGrouped.bedomning"><span message
                                                                                              key="{{message.message}}"></span>
@@ -480,7 +483,7 @@
                     </h3>
 
                     <div class="text">
-                      <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.vardenhet">
+                      <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.vardenhet" id="validationMessages_vardenhet">
                         <ul>
                           <li ng-repeat="message in viewState.common.validationMessagesGrouped.vardenhet"><span message
                                                                                                key="{{message.message}}"></span>

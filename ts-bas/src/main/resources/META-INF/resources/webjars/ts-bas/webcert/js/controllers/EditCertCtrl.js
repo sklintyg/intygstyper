@@ -51,9 +51,9 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
                 'medicinering': 180,
                 'kommentar': 500,
                 'lakareSpecialKompetens': 130,
-                'sjukhusvardtidpunkt': 49,
-                'sjukhusvardvardinrattning': 45,
-                'sjukhusvardanledning': 63
+                'sjukhusvardtidpunkt': 40,
+                'sjukhusvardvardinrattning': 40,
+                'sjukhusvardanledning': 50
             };
 
             /***************************************************************************

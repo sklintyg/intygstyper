@@ -100,9 +100,9 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                     }
                     $scope.form.korkortd = visaKorkortd;
                     if (!visaKorkortd) {
-                        $scope.cert.hypoglykemier.egenkontrollBlodsocker = null;
-                        $scope.cert.hypoglykemier.allvarligForekomstVakenTid = null;
-                        $scope.cert.bedomning.lamplighetInnehaBehorighet = null;
+                        $scope.cert.hypoglykemier.egenkontrollBlodsocker = undefined;
+                        $scope.cert.hypoglykemier.allvarligForekomstVakenTid = undefined;
+                        $scope.cert.bedomning.lamplighetInnehaBehorighet = undefined;
                     }
                 }
             }, true);

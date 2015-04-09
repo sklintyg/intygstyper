@@ -48,7 +48,7 @@
                 <div class="col-md-12 cert-body">
 
                   <div wc-field field-label="ts-bas.label.patientadress" id="patientForm">
-                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.patient">
+                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.patient" id="validationMessages_patient">
                       <ul>
                         <li ng-repeat="message in viewState.common.validationMessagesGrouped.patient"><span message
                                                                                            key="{{message.message}}"></span>
@@ -84,7 +84,7 @@
                   </div>
 
                   <div wc-field field-label="ts-bas.label.intygavser" field-help-text="ts-bas.helptext.intyg-avser" id="intygetAvserForm">
-                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.intygavser">
+                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.intygavser" id="validationMessages_intygavser">
                       <ul>
                         <li ng-repeat="message in viewState.common.validationMessagesGrouped.intygavser"><span message
                                                                                               key="{{message.message}}"></span>
@@ -107,7 +107,7 @@
                   </div>
 
                   <div wc-field field-label="ts-bas.label.identitet" id="identitetForm">
-                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.identitet">
+                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.identitet"id="validationMessages_identitet">
                       <ul>
                         <li ng-repeat="message in viewState.common.validationMessagesGrouped.identitet"><span message
                                                                                              key="{{message.message}}"></span>
@@ -137,7 +137,7 @@
                        name="synForm" id="synForm">
 
                     <table class="table table-form">
-                      <tr ng-if="viewState.common.validationMessagesGrouped.syn">
+                      <tr ng-if="viewState.common.validationMessagesGrouped.syn" id="validationMessages_syn">
                         <td colspan="3">
                           <div class="alert alert-danger">
                             <ul>
@@ -260,7 +260,7 @@
                   <div wc-field field-label="ts-bas.label.horselbalans" id="horselBalansForm">
 
                     <table class="table table-form">
-                      <tr ng-if="viewState.common.validationMessagesGrouped.horselbalans">
+                      <tr ng-if="viewState.common.validationMessagesGrouped.horselbalans" id="validationMessages_horselbalans">
                         <td colspan="3">
                           <div class="alert alert-danger">
                             <ul>
@@ -296,7 +296,7 @@
                   <!-- 3 -->
                   <div wc-field field-label="ts-bas.label.funktionsnedsattning" id="funktionsnedsattningForm">
                     <table class="table table-form">
-                      <tr ng-if="viewState.common.validationMessagesGrouped.funktionsnedsattning">
+                      <tr ng-if="viewState.common.validationMessagesGrouped.funktionsnedsattning" id="validationMessages_funktionsnedsattning">
                         <td colspan="3">
                           <div class="alert alert-danger">
                             <ul>
@@ -340,7 +340,7 @@
 
                   <div wc-field field-label="ts-bas.label.hjartkarl" id="hjartkartForm">
                     <table class="table table-form">
-                      <tr ng-if="viewState.common.validationMessagesGrouped.hjartkarl">
+                      <tr ng-if="viewState.common.validationMessagesGrouped.hjartkarl" id="validationMessages_hjartkarl">
                         <td colspan="3">
                           <div class="alert alert-danger">
                             <ul>
@@ -390,7 +390,7 @@
 
                   <div wc-field field-label="ts-bas.label.diabetes" id="diabetesForm">
                     <table class="table table-form">
-                      <tr ng-if="viewState.common.validationMessagesGrouped.diabetes">
+                      <tr ng-if="viewState.common.validationMessagesGrouped.diabetes" id="validationMessages_diabetes">
                         <td colspan="3">
                           <div class="alert alert-danger">
                             <ul>
@@ -450,7 +450,7 @@
 
                   <div wc-field field-label="ts-bas.label.neurologi" id="neurologiForm">
                     <table class="table table-form">
-                      <tr ng-if="viewState.common.validationMessagesGrouped.neurologi">
+                      <tr ng-if="viewState.common.validationMessagesGrouped.neurologi" id="validationMessages_neurologi">
                         <td colspan="3">
                           <div class="alert alert-danger">
                             <ul>
@@ -480,7 +480,7 @@
 
                   <div wc-field field-label="ts-bas.label.medvetandestorning" id="medvetandestorningForm">
                     <table class="table table-form">
-                      <tr ng-if="viewState.common.validationMessagesGrouped.medvetandestorning">
+                      <tr ng-if="viewState.common.validationMessagesGrouped.medvetandestorning" id="validationMessages_medvetandestorning">
                         <td colspan="3">
                           <div class="alert alert-danger">
                             <ul>
@@ -518,7 +518,7 @@
 
                   <div wc-field field-label="ts-bas.label.njurar" id="njurarForm">
                     <table class="table table-form">
-                      <tr ng-if="viewState.common.validationMessagesGrouped.njurar">
+                      <tr ng-if="viewState.common.validationMessagesGrouped.njurar" id="validationMessages_njurar">
                         <td colspan="3">
                           <div class="alert alert-danger">
                             <ul>
@@ -546,7 +546,7 @@
 
                   <div wc-field field-label="ts-bas.label.kognitivt" id="kognitivtForm">
                     <table class="table table-form">
-                      <tr ng-if="viewState.common.validationMessagesGrouped.kognitivt">
+                      <tr ng-if="viewState.common.validationMessagesGrouped.kognitivt" id="validationMessages_kognitivt">
                         <td colspan="3">
                           <div class="alert alert-danger">
                             <ul>
@@ -574,7 +574,7 @@
 
                   <div wc-field field-label="ts-bas.label.somn-vakenhet" id="somnvakenhetForm">
                     <table class="table table-form">
-                      <tr ng-if="viewState.common.validationMessagesGrouped.somnvakenhet">
+                      <tr ng-if="viewState.common.validationMessagesGrouped.somnvakenhet" id="validationMessages_somnvakenhet">
                         <td colspan="3">
                           <div class="alert alert-danger">
                             <ul>
@@ -602,7 +602,7 @@
 
                   <div wc-field field-label="ts-bas.label.narkotika-lakemedel" id="narkotikaLakemedelForm">
                     <table class="table table-form">
-                      <tr ng-if="viewState.common.validationMessagesGrouped.narkotikalakemedel">
+                      <tr ng-if="viewState.common.validationMessagesGrouped.narkotikalakemedel" id="validationMessages_narkotikalakemedel">
                         <td colspan="3">
                           <div class="alert alert-danger">
                             <ul>
@@ -666,7 +666,7 @@
 
                   <div wc-field field-label="ts-bas.label.psykiskt" id="psykisktForm">
                     <table class="table table-form">
-                      <tr ng-if="viewState.common.validationMessagesGrouped.psykiskt">
+                      <tr ng-if="viewState.common.validationMessagesGrouped.psykiskt" id="validationMessages_psykiskt">
                         <td colspan="3">
                           <div class="alert alert-danger">
                             <ul>
@@ -694,7 +694,7 @@
 
                   <div wc-field field-label="ts-bas.label.utvecklingsstorning" id="utvecklingsstorningForm">
                     <table class="table table-form">
-                      <tr ng-if="viewState.common.validationMessagesGrouped.utvecklingsstorning">
+                      <tr ng-if="viewState.common.validationMessagesGrouped.utvecklingsstorning" id="validationMessages_utvecklingsstorning">
                         <td colspan="3">
                           <div class="alert alert-danger">
                             <ul>
@@ -730,7 +730,7 @@
 
                   <div wc-field field-label="ts-bas.label.sjukhusvard" id="sjukhusvardForm">
                     <table class="table table-form">
-                      <tr ng-if="viewState.common.validationMessagesGrouped.sjukhusvard">
+                      <tr ng-if="viewState.common.validationMessagesGrouped.sjukhusvard" id="validationMessages_sjukhusvard">
                         <td colspan="3">
                           <div class="alert alert-danger">
                             <ul>
@@ -791,7 +791,7 @@
 
                   <div wc-field field-label="ts-bas.label.medicinering" id="medicineringForm">
                     <table class="table table-form">
-                      <tr ng-if="viewState.common.validationMessagesGrouped.medicinering">
+                      <tr ng-if="viewState.common.validationMessagesGrouped.medicinering" id="validationMessages_medicinering">
                         <td colspan="3">
                           <div class="alert alert-danger">
                             <ul>
@@ -834,7 +834,7 @@
 
                   <div wc-field field-label="ts-bas.label.bedomning" class="print-pagebreak-after"
                        field-help-text="ts-bas.helptext.intyg-avser" id="bedomningForm">
-                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.bedomning">
+                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.bedomning" id="validationMessages_bedomning">
                       <ul>
                         <li ng-repeat="message in viewState.common.validationMessagesGrouped.bedomning"><span message
                                                                                              key="{{message.message}}"></span>
@@ -885,7 +885,7 @@
                     </h3>
 
                     <div class="text">
-                      <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.vardenhet">
+                      <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.vardenhet"id="validationMessages_vardenhet">
                         <ul>
                           <li ng-repeat="message in viewState.common.validationMessagesGrouped.vardenhet"><span message
                                                                                                key="{{message.message}}"></span>
