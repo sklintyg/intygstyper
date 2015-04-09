@@ -13,7 +13,7 @@ import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvserKategor
 import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
-import se.inera.certificate.schema.Constants;
+import se.inera.intyg.common.schemas.Constants;
 import se.inera.intygstjanster.ts.services.types.v1.II;
 import se.inera.intygstjanster.ts.services.v1.BedomningTypDiabetes;
 import se.inera.intygstjanster.ts.services.v1.Diabetes;

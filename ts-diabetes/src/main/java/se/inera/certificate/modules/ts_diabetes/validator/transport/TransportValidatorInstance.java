@@ -3,7 +3,7 @@ package se.inera.certificate.modules.ts_diabetes.validator.transport;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.inera.certificate.schema.Constants;
+import se.inera.intyg.common.schemas.Constants;
 import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 public class TransportValidatorInstance {
