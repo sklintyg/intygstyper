@@ -14,6 +14,7 @@ import javax.xml.validation.Schema;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import se.inera.certificate.modules.ts_parent.transformation.XslTransformer;
 import se.inera.certificate.xml.SchemaValidatorBuilder;
 
 import com.google.common.base.Charsets;

@@ -30,24 +30,25 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.*;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Enhet;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.HosPersonal;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Patient;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Vardgivare;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.ModuleContainerApi;
-import se.inera.certificate.modules.support.api.dto.*;
+import se.inera.certificate.modules.support.api.dto.CertificateMetaData;
+import se.inera.certificate.modules.support.api.dto.CertificateResponse;
+import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
+import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.certificate.modules.support.api.dto.HoSPersonal;
+import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
+import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
+import se.inera.certificate.modules.support.api.dto.PdfResponse;
+import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.exception.ExternalServiceCallException;
 import se.inera.certificate.modules.support.api.exception.ModuleConverterException;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.modules.support.api.notification.NotificationMessage;
-import se.inera.certificate.modules.ts_bas.integration.SendTSBasClient;
 import se.inera.certificate.modules.ts_bas.model.converter.InternalToTransport;
 import se.inera.certificate.modules.ts_bas.model.converter.TransportToInternal;
 import se.inera.certificate.modules.ts_bas.model.converter.TsBasMetaDataConverter;
@@ -56,9 +57,10 @@ import se.inera.certificate.modules.ts_bas.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGenerator;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGeneratorException;
-import se.inera.certificate.modules.ts_bas.transformation.XslTransformer;
 import se.inera.certificate.modules.ts_bas.validator.TsBasValidator;
 import se.inera.intyg.common.schemas.Constants;
+import se.inera.certificate.modules.ts_parent.integration.SendTSClient;
+import se.inera.certificate.modules.ts_parent.transformation.XslTransformer;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
@@ -86,7 +88,7 @@ public class TsBasModuleApi implements ModuleApi {
 
     @Autowired(required = false)
     @Qualifier("tsBasSendCertificateClient")
-    private SendTSBasClient sendTsBasClient;
+    private SendTSClient sendTsBasClient;
 
     @Autowired
     private TsBasValidator validator;

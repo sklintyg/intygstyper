@@ -49,11 +49,11 @@
         </jaxws:schemaLocations>
     </jaxws:endpoint>
 
-  <bean id="tsBasXslTransformer" class="se.inera.certificate.modules.ts_bas.transformation.XslTransformer">
+  <bean id="tsBasXslTransformer" class="se.inera.certificate.modules.ts_parent.transformation.XslTransformer">
     <constructor-arg value="xsl/transform-ts-bas.xsl"/>
   </bean>
 
-  <bean id="tsBasSendCertificateClient" class="se.inera.certificate.modules.ts_bas.integration.SendTSBasClient">
+  <bean id="tsBasSendCertificateClient" class="se.inera.certificate.modules.ts_parent.integration.SendTSClient">
     <constructor-arg value="${registercertificatev1.endpoint.url}"/>
   </bean>
 

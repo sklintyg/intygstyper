@@ -12,20 +12,20 @@
     <name>Intygstyper (TA Läkarintyg Parent Project)</name>
 
     <dependencies>
-        <!--  Spring -->
+        <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
         </dependency>
-        
+
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxrs</artifactId>
         </dependency>
 
         <dependency>
-          <groupId>net.sf.saxon</groupId>
-          <artifactId>Saxon-HE</artifactId>
+            <groupId>net.sf.saxon</groupId>
+            <artifactId>Saxon-HE</artifactId>
         </dependency>
         <!-- Common -->
         <dependency>
@@ -46,6 +46,24 @@
             <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
             <artifactId>se-intygstjanster-ts-services-interactions</artifactId>
         </dependency>
+        
+        <dependency>
+            <groupId>se.inera.intyg.common</groupId>
+            <artifactId>common-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>se.inera.intyg.common</groupId>
+            <artifactId>common-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>se.inera.intyg.common</groupId>
+            <artifactId>integration-util</artifactId>
+        </dependency>        
+        <dependency>
+            <groupId>se.inera.intyg.common</groupId>
+            <artifactId>common-schemas</artifactId>
+        </dependency>
+        
     </dependencies>
 
     <build>
