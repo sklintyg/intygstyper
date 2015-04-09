@@ -22,26 +22,24 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import se.inera.certificate.schema.Constants;
 import se.inera.certificate.validate.PersonnummerValidator;
+import se.inera.intyg.common.schemas.Constants;
 import se.inera.intygstjanster.ts.services.types.v1.II;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
-import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 public class TransportValidatorInstance {
 
-    private static PersonnummerValidator ID_VALIDATOR;
-
     private final List<String> validationErrors;
 
+    private PersonnummerValidator validator;
     private ValidationContext context;
 
     public TransportValidatorInstance() {
         validationErrors = new ArrayList<>();
-        ID_VALIDATOR = new PersonnummerValidator();
-        ID_VALIDATOR.setStrictSeparatorCheck(false);
+        validator = new PersonnummerValidator();
+        validator.setStrictSeparatorCheck(false);
     }
 
     public List<String> validate(TSBasIntyg utlatande) {
@@ -87,6 +85,7 @@ public class TransportValidatorInstance {
                     "vardgivarId");
         }
     }
+
     private void checkId(String id, String expected, String field) {
         if (!id.equals(expected)) {
             validationErrors.add(String.format("Root for %s should be %s but was %s", field, expected, id));
@@ -177,7 +176,7 @@ public class TransportValidatorInstance {
             if (!id.getRoot().equals("1.2.752.129.2.1.3.1") && !id.getRoot().equals("1.2.752.129.2.1.3.3")) {
                 validationError(element + " should be a personnummer or samordningsnummer");
             }
-            validationErrors.addAll(ID_VALIDATOR.validateExtension(id.getExtension()));
+            validationErrors.addAll(validator.validateExtension(id.getExtension()));
         }
     }
 

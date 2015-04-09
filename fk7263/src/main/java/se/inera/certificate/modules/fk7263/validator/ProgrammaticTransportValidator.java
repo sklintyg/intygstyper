@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.common.enumerations.Diagnoskodverk;
 import se.inera.certificate.modules.fk7263.support.Fk7263EntryPoint;
-import se.inera.certificate.schema.Constants;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
@@ -27,7 +26,8 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
-import se.inera.ifv.insuranceprocess.healthreporting.validate.PatientValidator;
+import se.inera.intyg.common.schemas.Constants;
+import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.validator.PatientValidator;
 
 /**
  * Validates presence and validity of formal external model properties such as OID's. Preferably this validation should

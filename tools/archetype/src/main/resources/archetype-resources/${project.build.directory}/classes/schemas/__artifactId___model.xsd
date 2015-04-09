@@ -1,0 +1,117 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escaped = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2013 Inera AB (http://www.inera.se)
+
+    This file is part of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules).
+
+    Inera Certificate Modules is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    Inera Certificate Modules is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="urn:riv:clinicalprocess:healthcond:certificate:1"
+           xmlns:iso="urn:iso:21090:dt:1"
+           xmlns:ext="riv:clinicalprocess:healthcond:certificate:${artifactId}:1"
+           targetNamespace="urn:riv:clinicalprocess:healthcond:certificate:1"
+           elementFormDefault="qualified" attributeFormDefault="unqualified"
+           version="1.0">
+
+  <xs:import namespace="urn:iso:21090:dt:1" schemaLocation="core_components/iso_dt_subset_1.0.xsd"/>
+  <xs:import namespace="urn:riv:clinicalprocess:healthcond:certificate:${artifactId}:1" schemaLocation="${artifactId}_model_extension.xsd"/>
+
+  <xs:include schemaLocation="core_components/clinicalprocess_healthcond_types_0.9.xsd"/>
+
+  <xs:element name="utlatande" type="utlatandeType"/>
+
+  <xs:complexType name="utlatandeType">
+    <xs:sequence>
+      <xs:element name="utlatande-id" type="utlatandeId"/>
+      <xs:element name="typAvUtlatande" type="utlatandeTyp"/>
+      <xs:element name="kommentar" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="signeringsdatum" type="dateTime"/>
+      <xs:element name="skickatdatum" type="dateTime" minOccurs="0"/>
+
+      <xs:element name="patient" type="patientType"/>
+      <xs:element name="skapadAv" type="hosPersonalType"/>
+
+      <!-- TODO: Add more elements here -->
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="patientType">
+    <xs:sequence>
+      <xs:element name="person-id" type="personId"/>
+      <xs:element name="fornamn" type="xs:string" maxOccurs="unbounded"/>
+      <xs:element name="efternamn" type="xs:string"/>
+      <xs:element name="postadress" type="xs:string"/>
+      <xs:element name="postnummer" type="xs:string"/>
+      <xs:element name="postort" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="hosPersonalType">
+    <xs:sequence>
+      <xs:element name="personal-id" type="iso:II">
+        <xs:annotation>
+          <xs:documentation>HSA-id, o.i.d för HSA-id är 1.2.752.129.2.1.4.1</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="fullstandigtNamn" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Förnamn + efternamn sammanslaget.
+            Är tomt om personen har en skyddad identitet.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="enhet" type="enhetType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="enhetType">
+    <xs:sequence>
+      <xs:element name="enhets-id" type="hsaId">
+        <xs:annotation>
+          <xs:documentation>HSA-id, o.i.d för HSA-id är 1.2.752.129.2.1.4.1</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="arbetsplatskod" type="arbetsplatsKod" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>o.i.d för arbetsplatskod är 1.2.752.29.4.71</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="enhetsnamn" type="xs:string"/>
+      <xs:element name="postadress" type="xs:string" minOccurs="0"/>
+      <xs:element name="postnummer" type="xs:string" minOccurs="0"/>
+      <xs:element name="postort" type="xs:string" minOccurs="0"/>
+      <xs:element name="telefonnummer" type="xs:string" minOccurs="0"/>
+      <xs:element name="epost" type="xs:string" minOccurs="0"/>
+      <xs:element name="vardgivare" type="vardgivareType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="vardgivareType">
+    <xs:sequence>
+      <xs:element name="vardgivare-id" type="hsaId">
+        <xs:annotation>
+          <xs:documentation>HSA-id, o.i.d för HSA-id är 1.2.752.129.2.1.4.1</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="vardgivarnamn" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

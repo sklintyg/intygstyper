@@ -18,14 +18,18 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
-	xmlns:cxf="http://cxf.apache.org/core" xmlns:util="http://www.springframework.org/schema/util"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+<div id="backnav" class="row-fluid">
+  <a class="" href="#start"><message key="button.goback" /></a>
+</div>
+<h1>
+  <message key="view.label.errorpagetitle" />
+</h1>
 
-	<import resource="fk7263-beans.xml" />
-	<import resource="fk7263-model-config.xml" />
-  <import resource="it-module-cxf-servlet.xml" />
-	
-</beans>
+<div class="row-fluid">
+
+  <div id="errorMessage" class="alert alert-error">
+    <message key="error.generic" />
+  </div>
+
+
+</div>

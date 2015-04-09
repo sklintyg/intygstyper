@@ -1,3 +1,7 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escaped = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
     Copyright (C) 2013 Inera AB (http://www.inera.se)
@@ -18,14 +22,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
-	xmlns:cxf="http://cxf.apache.org/core" xmlns:util="http://www.springframework.org/schema/util"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="urn:riv:clinicalprocess:healthcond:certificate:${artifactId}:1"
+           xmlns:iso="urn:iso:21090:dt:1" targetNamespace="urn:riv:clinicalprocess:healthcond:certificate:${artifactId}:1"
+           elementFormDefault="qualified" attributeFormDefault="unqualified"
+           version="1.0">
 
-	<import resource="fk7263-beans.xml" />
-	<import resource="fk7263-model-config.xml" />
-  <import resource="it-module-cxf-servlet.xml" />
-	
-</beans>
+  <xs:import namespace="urn:iso:21090:dt:1" schemaLocation="core_components/iso_dt_subset_1.0.xsd"/>
+
+  <!-- TODO: Add extesions here -->
+
+</xs:schema>
