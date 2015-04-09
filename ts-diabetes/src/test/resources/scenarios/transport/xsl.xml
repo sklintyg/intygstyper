@@ -79,19 +79,14 @@
     </diabetes>
     <hypoglykemier>
         <harKunskapOmAtgarder>true</harKunskapOmAtgarder>
-        <harTeckenNedsattHjarnfunktion>true
-        </harTeckenNedsattHjarnfunktion>
-        <saknarFormagaKannaVarningstecken>true
-        </saknarFormagaKannaVarningstecken>
+        <harTeckenNedsattHjarnfunktion>true</harTeckenNedsattHjarnfunktion>
+        <saknarFormagaKannaVarningstecken>true</saknarFormagaKannaVarningstecken>
         <harAllvarligForekomst>true</harAllvarligForekomst>
         <allvarligForekomstBeskrivning>Beskrivning</allvarligForekomstBeskrivning>
-        <harAllvarligForekomstTrafiken>true
-        </harAllvarligForekomstTrafiken>
+        <harAllvarligForekomstTrafiken>true</harAllvarligForekomstTrafiken>
         <allvarligForekomstTrafikBeskrivning>Beskrivning</allvarligForekomstTrafikBeskrivning>
-        <genomforEgenkontrollBlodsocker>true
-        </genomforEgenkontrollBlodsocker>
-        <harAllvarligForekomstVakenTid>true
-        </harAllvarligForekomstVakenTid>
+        <genomforEgenkontrollBlodsocker>true</genomforEgenkontrollBlodsocker>
+        <harAllvarligForekomstVakenTid>true</harAllvarligForekomstVakenTid>
         <allvarligForekomstVakenTidAr>2012-12-12</allvarligForekomstVakenTidAr>
     </hypoglykemier>
     <separatOgonLakarintygKommerSkickas>false</separatOgonLakarintygKommerSkickas>

@@ -28,7 +28,7 @@ public class TSDiabetesTransformerTest {
 
     private static final String COMMON_REGISTER_SCHEMA = "/interactions/RegisterTSDiabetesInteraction/RegisterTSDiabetesResponder_1.0.xsd";
 
-    private static final String CLINICAL_TS_BAS_SCHEMA = "specializations/TS-Diabetes/ts-diabetes_model.xsd";
+    private static final String CLINICAL_TS_DIABETES_SCHEMA = "specializations/TS-Diabetes/ts-diabetes_model.xsd";
 
     private static final String CLINICAL_CORE_SCHEMA = "core_components/clinicalprocess_healthcond_certificate_1.0.xsd";
 
@@ -57,7 +57,7 @@ public class TSDiabetesTransformerTest {
         Source rootSource = schemaValidatorBuilder.registerResource(CLINIAL_REGISTER_SCHEMA);
         schemaValidatorBuilder.registerResource(CLINICAL_CORE_SCHEMA);
         schemaValidatorBuilder.registerResource(CLINICAL_TYPES_SCHEMA);
-        schemaValidatorBuilder.registerResource(CLINICAL_TS_BAS_SCHEMA);
+        schemaValidatorBuilder.registerResource(CLINICAL_TS_DIABETES_SCHEMA);
         schemaValidatorBuilder.registerResource(CLINIAL_ISO_SCHEMA);
         clinicalSchema = schemaValidatorBuilder.build(rootSource);
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
     xmlns:ns1="urn:local:se:intygstjanster:services:1"
-    xmlns:ns2="urn:local:se:intygstjanster:services:RegisterTSBasResponder:1"
+    xmlns:ns2="urn:local:se:intygstjanster:services:RegisterTSDiabetesResponder:1"
     xmlns:ns3="urn:local:se:intygstjanster:services:types:1"
     xmlns:p="urn:riv:clinicalprocess:healthcond:certificate:1"
     xmlns:p2="urn:riv:clinicalprocess:healthcond:certificate:ts-diabetes:1"
@@ -13,7 +13,7 @@
 
   <xsl:template match="ns1:diabetesIntyg | ns2:intyg">
   <reg:RegisterCertificate>
-    <p:utlatande>
+    <reg:utlatande>
 
       <xsl:call-template name="utlatandeHeader"/>
 
@@ -44,9 +44,6 @@
           <xsl:call-template name="ogatsRorlighetAktivitet"/>
       </xsl:if>
 
-      <xsl:call-template name="synfaltsObservation"/>
-
-      <xsl:call-template name="ogatsRorlighetObservation" />
     <!-- AKTIVITETER end -->
 
     <!-- REKOMMENDATIONER begin -->
@@ -86,167 +83,221 @@
 
     <!-- OBSERVATIONER begin -->
 
-      <!-- Diabetes typ1 -->
+      <!-- Diabetes typ1 or typ2 -->
       <p:observation>
-        <p:observationskod code="E10" codeSystem="1.2.752.116.1.1.1.1.3"
-          codeSystemName="ICD-10" />
+        <p:observationskod codeSystem="1.2.752.116.1.1.1.1.3" codeSystemName="ICD-10">
+          <xsl:attribute name="code">
+            <xsl:choose> 
+              <xsl:when test="ns1:diabetes/ns1:diabetesTyp = 'TYP1'">E10</xsl:when>
+              <xsl:otherwise>E11</xsl:otherwise>
+            </xsl:choose>
+          </xsl:attribute>
+        </p:observationskod>
         <p:observationsperiod>
-          <p:from>2012</p:from>
-        </p:observationsperiod>
-        <p:forekomst>true</p:forekomst>
-      </p:observation>
-
-      <!-- Diabetes typ2 -->
-      <p:observation>
-        <p:observationskod code="E11" codeSystem="1.2.752.116.1.1.1.1.3"
-          codeSystemName="ICD-10" />
-        <p:observationsperiod>
-          <p:from>2012</p:from>
+          <p:from><xsl:value-of select="ns1:diabetes/ns1:debutArDiabetes"/></p:from>
         </p:observationsperiod>
         <p:forekomst>true</p:forekomst>
       </p:observation>
 
       <!-- Behandlingar -->
-      <p:observation>
-        <p:observationskod code="170746002" codeSystem="1.2.752.116.2.1.1.1"
-          codeSystemName="SNOMED-CT" />
-        <p:forekomst>true</p:forekomst>
-      </p:observation>
+      <xsl:if test="ns1:diabetes/ns1:harBehandlingTabletter = 'true'">
+        <p:observation>
+          <p:observationskod code="170746002" codeSystem="1.2.752.116.2.1.1.1"
+            codeSystemName="SNOMED-CT" />
+          <p:forekomst>true</p:forekomst>
+        </p:observation>
+      </xsl:if>
 
-      <p:observation>
-        <p:observationskod code="170745003" codeSystem="1.2.752.116.2.1.1.1"
-          codeSystemName="SNOMED-CT" />
-        <p:forekomst>true</p:forekomst>
-      </p:observation>
+      <xsl:if test="ns1:diabetes/ns1:harBehandlingKost = 'true'">
+        <p:observation>
+          <p:observationskod code="170745003" codeSystem="1.2.752.116.2.1.1.1"
+            codeSystemName="SNOMED-CT" />
+          <p:forekomst>true</p:forekomst>
+        </p:observation>
+      </xsl:if>
 
-      <p:observation>
-        <p:observationskod code="170747006" codeSystem="1.2.752.116.2.1.1.1"
-          codeSystemName="SNOMED-CT" />
-        <p:observationsperiod>
-          <p:from>2012</p:from>
-        </p:observationsperiod>
-        <p:forekomst>true</p:forekomst>
-      </p:observation>
+      <xsl:if test="ns1:diabetes/ns1:harBehandlingInsulin = 'true'">
+        <p:observation>
+          <p:observationskod code="170747006" codeSystem="1.2.752.116.2.1.1.1"
+            codeSystemName="SNOMED-CT" />
+          <p:observationsperiod>
+            <p:from><xsl:value-of select="ns1:diabetes/ns1:insulinBehandlingSedanAr"/></p:from>
+          </p:observationsperiod>
+          <p:forekomst>true</p:forekomst>
+        </p:observation>
+      </xsl:if>
 
-      <p:observation>
-        <p:observationskod code="OBS10" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
-          codeSystemName="kv_observationer_intyg" />
-        <p:beskrivning>Hypnos</p:beskrivning>
-        <p:forekomst>true</p:forekomst>
-      </p:observation>
+      <xsl:if test="ns1:diabetes/ns1:annanBehandlingBeskrivning">
+        <p:observation>
+          <p:observationskod code="OBS10" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
+            codeSystemName="kv_observationer_intyg" />
+          <p:beskrivning>
+            <xsl:value-of select="ns1:diabetes/ns1:annanBehandlingBeskrivning"/>
+          </p:beskrivning>
+          <p:forekomst>true</p:forekomst>
+        </p:observation>
+      </xsl:if>
 
       <!-- Hypoglykemi -->
+      <!-- Har kunskap om åtgärder -->
       <p:observation>
         <p:observationskod code="OBS19" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
           codeSystemName="kv_observationer_intyg" />
-        <p:forekomst>true</p:forekomst>
+        <p:forekomst>
+          <xsl:value-of select="ns1:hypoglykemier/ns1:harKunskapOmAtgarder"/>
+        </p:forekomst>
       </p:observation>
 
+      <!-- Tecken på nedsatt hjärnfunktion -->
       <p:observation>
         <p:observationskod code="OBS20" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
           codeSystemName="kv_observationer_intyg" />
-        <p:forekomst>true</p:forekomst>
-      </p:observation>
-      <p:observation>
-        <p:observationskod code="OBS21" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
-          codeSystemName="kv_observationer_intyg" />
-        <p:forekomst>true</p:forekomst>
+        <p:forekomst>
+          <xsl:value-of select="ns1:hypoglykemier/ns1:harTeckenNedsattHjarnfunktion"/>
+        </p:forekomst>
       </p:observation>
 
-      <p:observation>
-        <p:observationskod code="OBS22" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
-          codeSystemName="kv_observationer_intyg" />
-        <p:beskrivning>Beskrivning</p:beskrivning>
-        <p:forekomst>true</p:forekomst>
-      </p:observation>
+      <!-- if  harTeckenNedsattHjarnfunktion = 'true' -->
+      <xsl:if test="ns1:hypoglykemier/ns1:harTeckenNedsattHjarnfunktion = 'true'">
+        <p:observation>
+          <p:observationskod code="OBS21" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
+            codeSystemName="kv_observationer_intyg" />
+          <p:forekomst>
+            <xsl:value-of select="ns1:hypoglykemier/ns1:saknarFormagaKannaVarningstecken"/>
+          </p:forekomst>
+        </p:observation>
 
-      <p:observation>
-        <p:observationskod code="OBS23" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
-          codeSystemName="kv_observationer_intyg" />
-        <p:beskrivning>Beskrivning</p:beskrivning>
-        <p:forekomst>true</p:forekomst>
-      </p:observation>
+        <p:observation>
+          <p:observationskod code="OBS22" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
+            codeSystemName="kv_observationer_intyg" />
+          <p:beskrivning>
+            <xsl:value-of select="ns1:hypoglykemier/ns1:allvarligForekomstBeskrivning"/>
+          </p:beskrivning>
+          <p:forekomst>
+            <xsl:value-of select="ns1:hypoglykemier/ns1:harAllvarligForekomst"/>
+          </p:forekomst>
+        </p:observation>
 
-      <p:observation>
-        <p:observationskod code="OBS24" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
-          codeSystemName="kv_observationer_intyg" />
-        <p:observationstid>2012-12-12</p:observationstid>
-        <p:forekomst>true</p:forekomst>
-      </p:observation>
+        <p:observation>
+          <p:observationskod code="OBS23" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
+            codeSystemName="kv_observationer_intyg" />
+          <p:beskrivning>
+            <xsl:value-of select="ns1:hypoglykemier/ns1:allvarligForekomstTrafikBeskrivning"/>
+          </p:beskrivning>
+          <p:forekomst>
+            <xsl:value-of select="ns1:hypoglykemier/ns1:harAllvarligForekomstTrafiken"/>
+          </p:forekomst>
+        </p:observation>
+      </xsl:if>
+      <!-- end if -->
+
+      <xsl:if test="ns1:hypoglykemier/ns1:harAllvarligForekomstVakenTid = 'true'">
+        <p:observation>
+          <p:observationskod code="OBS24" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
+            codeSystemName="kv_observationer_intyg" />
+          <p:observationstid>
+            <xsl:value-of select="ns1:hypoglykemier/ns1:allvarligForekomstVakenTidAr"/>
+          </p:observationstid>
+          <p:forekomst>true</p:forekomst>
+        </p:observation>
+      </xsl:if>
 
       <!-- Syn -->
-      <p:observation>
-        <p:observations-id root="1.2.752.129.2.1.2.1"
-          extension="3" />
-        <p:observationskod code="OBS25" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
-          codeSystemName="kv_observationer_intyg" />
-        <p:forekomst>true</p:forekomst>
-      </p:observation>
 
-      <!-- Utan korrektion -->
-      <!-- Höger öga -->
-      <p:observation>
-        <p:observationskod code="420050001" codeSystem="1.2.752.116.2.1.1.1"
-          codeSystemName="SNOMED-CT" />
-        <p:varde value="0.0" />
-        <p2:lateralitet code="24028007" codeSystem="1.2.752.116.2.1.1.1"
-          codeSystemName="SNOMED-CT" />
-      </p:observation>
+      <xsl:call-template name="synfaltsObservation"/>
 
-      <!-- Vänster öga -->
-      <p:observation>
-        <p:observationskod code="420050001" codeSystem="1.2.752.116.2.1.1.1"
-          codeSystemName="SNOMED-CT" />
-        <p:varde value="0.0" />
-        <p2:lateralitet code="7771000" codeSystem="1.2.752.116.2.1.1.1"
-          codeSystemName="SNOMED-CT" />
-      </p:observation>
+      <xsl:call-template name="ogatsRorlighetObservation" />
 
-      <!-- Binokulärt -->
-      <p:observation>
-        <p:observationskod code="420050001" codeSystem="1.2.752.116.2.1.1.1"
-          codeSystemName="SNOMED-CT" />
-        <p:varde value="0.0" />
-        <p2:lateralitet code="51440002" codeSystem="1.2.752.116.2.1.1.1"
-          codeSystemName="SNOMED-CT" />
-      </p:observation>
+      <xsl:if test="ns1:synfunktion/ns1:finnsSeparatOgonlakarintyg = 'false'">
+        <p:observation>
+          <p:observations-id root="1.2.752.129.2.1.2.1"
+            extension="3" />
+          <p:observationskod code="OBS25" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
+            codeSystemName="kv_observationer_intyg" />
+          <p:forekomst>
+            <xsl:value-of select="ns1:synfunktion/ns1:synfaltsprovningUtanAnmarkning"/>
+          </p:forekomst>
+        </p:observation>
 
-      <!-- Med korrektion -->
-      <!-- Höger öga -->
-      <p:observation>
-        <p:observationskod code="397535007" codeSystem="1.2.752.116.2.1.1.1"
-          codeSystemName="SNOMED-CT" />
-        <p:varde value="0.0" />
-        <p2:lateralitet code="24028007" codeSystem="1.2.752.116.2.1.1.1"
-          codeSystemName="SNOMED-CT" />
-      </p:observation>
+        <!-- Utan korrektion -->
+        <!-- Höger öga -->
+        <p:observation>
+          <p:observationskod code="420050001" codeSystem="1.2.752.116.2.1.1.1"
+            codeSystemName="SNOMED-CT" />
+          <p:varde>
+            <xsl:attribute name="value" select="ns1:synfunktion/ns1:synskarpaUtanKorrektion/ns1:hogerOga"/>
+          </p:varde>
+          <p2:lateralitet code="24028007" codeSystem="1.2.752.116.2.1.1.1"
+            codeSystemName="SNOMED-CT" />
+        </p:observation>
 
-      <!-- Vänster öga -->
-      <p:observation>
-        <p:observationskod code="397535007" codeSystem="1.2.752.116.2.1.1.1"
-          codeSystemName="SNOMED-CT" />
-        <p:varde value="0.0" />
-        <p2:lateralitet code="7771000" codeSystem="1.2.752.116.2.1.1.1"
-          codeSystemName="SNOMED-CT" />
-      </p:observation>
+        <!-- Vänster öga -->
+        <p:observation>
+          <p:observationskod code="420050001" codeSystem="1.2.752.116.2.1.1.1"
+            codeSystemName="SNOMED-CT" />
+          <p:varde>
+            <xsl:attribute name="value" select="ns1:synfunktion/ns1:synskarpaUtanKorrektion/ns1:vansterOga"/>
+          </p:varde>
+          <p2:lateralitet code="7771000" codeSystem="1.2.752.116.2.1.1.1"
+            codeSystemName="SNOMED-CT" />
+        </p:observation>
 
-      <!-- Binokulärt -->
-      <p:observation>
-        <p:observationskod code="397535007" codeSystem="1.2.752.116.2.1.1.1"
-          codeSystemName="SNOMED-CT" />
-        <p:varde value="0.0" />
-        <p2:lateralitet code="51440002" codeSystem="1.2.752.116.2.1.1.1"
-          codeSystemName="SNOMED-CT" />
-      </p:observation>
+        <!-- Binokulärt -->
+        <p:observation>
+          <p:observationskod code="420050001" codeSystem="1.2.752.116.2.1.1.1"
+            codeSystemName="SNOMED-CT" />
+          <p:varde>
+            <xsl:attribute name="value" select="ns1:synfunktion/ns1:synskarpaUtanKorrektion/ns1:binokulart"/>
+          </p:varde>
+          <p2:lateralitet code="51440002" codeSystem="1.2.752.116.2.1.1.1"
+            codeSystemName="SNOMED-CT" />
+        </p:observation>
 
-      <!-- Dubbelseende -->
-      <p:observation>
-        <p:observations-id root="1.2.752.129.2.1.2.1"
-          extension="4" />
-        <p:observationskod code="H53.2" codeSystem="1.2.752.116.1.1.1.1.3"
-          codeSystemName="ICD-10" />
-        <p:forekomst>true</p:forekomst>
-      </p:observation>
+        <!-- Med korrektion -->
+        <!-- Höger öga -->
+        <p:observation>
+           <p:observationskod code="397535007" codeSystem="1.2.752.116.2.1.1.1"
+             codeSystemName="SNOMED-CT" />
+          <p:varde>
+            <xsl:attribute name="value" select="ns1:synfunktion/ns1:synskarpaMedKorrektion/ns1:hogerOga"/>
+          </p:varde>
+          <p2:lateralitet code="24028007" codeSystem="1.2.752.116.2.1.1.1"
+             codeSystemName="SNOMED-CT" />
+        </p:observation>
+
+        <!-- Vänster öga -->
+        <p:observation>
+         <p:observationskod code="397535007" codeSystem="1.2.752.116.2.1.1.1"
+           codeSystemName="SNOMED-CT" />
+          <p:varde>
+            <xsl:attribute name="value" select="ns1:synfunktion/ns1:synskarpaMedKorrektion/ns1:vansterOga"/>
+          </p:varde>
+         <p2:lateralitet code="7771000" codeSystem="1.2.752.116.2.1.1.1"
+           codeSystemName="SNOMED-CT" />
+        </p:observation>
+
+        <!-- Binokulärt -->
+        <p:observation>
+         <p:observationskod code="397535007" codeSystem="1.2.752.116.2.1.1.1"
+            codeSystemName="SNOMED-CT" />
+          <p:varde>
+            <xsl:attribute name="value" select="ns1:synfunktion/ns1:synskarpaMedKorrektion/ns1:binokulart"/>
+          </p:varde>
+          <p2:lateralitet code="51440002" codeSystem="1.2.752.116.2.1.1.1"
+            codeSystemName="SNOMED-CT" />
+        </p:observation>
+
+        <!-- Dubbelseende -->
+        <p:observation>
+          <p:observations-id root="1.2.752.129.2.1.2.1"
+            extension="4" />
+          <p:observationskod code="H53.2" codeSystem="1.2.752.116.1.1.1.1.3"
+            codeSystemName="ICD-10" />
+          <p:forekomst>
+            <xsl:value-of select="ns1:synfunktion/ns1:harDiplopi"/>
+          </p:forekomst>
+        </p:observation>
+      </xsl:if>
     <!-- OBSERVATIONER end -->
 
     <!-- OBSERVATIONAKTIVITETRELATION begin-->
@@ -279,7 +330,7 @@
             <p2:bilagetyp code="BIL1" codeSystem="80595600-7477-4a6c-baeb-d2439e86b8bc" codeSystemName="kv_bilaga" />
             <p2:forekomst>
               <xsl:value-of select="ns1:synfunktion/ns1:finnsSeparatOgonlakarintyg"/>
-            </p:forekomst>
+            </p2:forekomst>
         </p2:bilaga>
       
 
@@ -290,7 +341,7 @@
         <xsl:value-of select="ns1:version"/>
       </p2:version>
 
-    </p:utlatande>
+    </reg:utlatande>
   </reg:RegisterCertificate>
   </xsl:template>
 
