@@ -8,7 +8,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static se.inera.certificate.common.enumerations.Recipients.FK;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.io.StringWriter;
+
 import org.apache.commons.io.FileUtils;
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
@@ -20,6 +22,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.w3.wsaddressing10.AttributedURIType;
+
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.fk7263.model.converter.InternalToTransport;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
@@ -37,10 +40,9 @@ import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
-import se.inera.ifv.insuranceprocess.healthreporting.utils.ResultOfCallUtil;
+import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.utils.ResultOfCallUtil;
 
-import java.io.IOException;
-import java.io.StringWriter;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author andreaskaltenbach

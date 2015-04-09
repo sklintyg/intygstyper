@@ -44,6 +44,17 @@ angular.module('fk7263').factory(
             this.arbetsplatsKod = vardenhet.arbetsplatsKod;
         };
 
+        VardenhetModel.prototype.isMissingInfo = function(){
+            return this.postadress === undefined ||
+                this.postnummer === undefined ||
+                this.postort === undefined ||
+                this.telefonnummer === undefined ||
+                this.postadress === '' ||
+                this.postnummer === '' ||
+                this.postort === '' ||
+                this.telefonnummer === '';
+        };
+
         VardenhetModel.build = function() {
             return new VardenhetModel();
         };

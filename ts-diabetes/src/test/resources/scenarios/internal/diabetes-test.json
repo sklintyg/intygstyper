@@ -55,11 +55,11 @@
     },
     "diabetes" : {
         "diabetestyp" : "DIABETES_TYP_2",
-        "observationsperiod" : "2012-01-01",
+        "observationsperiod" : "2012",
         "endastKost" : true,
         "tabletter" : true,
         "insulin" : true,
-        "insulinBehandlingsperiod" : "2012-01-01",
+        "insulinBehandlingsperiod" : "2012",
         "annanBehandlingBeskrivning" : "Hypnos"
     },
     "hypoglykemier" : {

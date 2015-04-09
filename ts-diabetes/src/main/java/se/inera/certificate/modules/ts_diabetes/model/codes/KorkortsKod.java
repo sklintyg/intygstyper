@@ -59,9 +59,6 @@ public enum KorkortsKod {
     public static final EnumSet<KorkortsKod> HOGRE_KORKORTSBEHORIGHET = EnumSet.of(C1, C1E, C, CE, D1, D1E, D, DE,
             TAXI);
 
-    /** Körkortsbehörigheter som innefattar persontransport. */
-    public static final EnumSet<KorkortsKod> PERSONTRANSPORT = EnumSet.of(D1, D1E, D, DE, TAXI);
-
     private static String codeSystemName = "kv_intyget_avser";
 
     private static String codeSystem = "24c41b8d-258a-46bf-a08a-b90738b28770";
@@ -77,8 +74,8 @@ public enum KorkortsKod {
         this.description = desc;
     }
 
-    public static boolean isPersontransport(String value) {
-        for (KorkortsKod k: PERSONTRANSPORT) {
+    public static boolean isHogreBehorighet(String value) {
+        for (KorkortsKod k: HOGRE_KORKORTSBEHORIGHET) {
             if (value.equals(k.name())) {
                 return true;
             }

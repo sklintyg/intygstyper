@@ -61,6 +61,7 @@ import se.inera.certificate.modules.ts_diabetes.util.TSDiabetesCertificateMetaTy
 import se.inera.certificate.modules.ts_diabetes.validator.Validator;
 import se.inera.certificate.modules.ts_parent.integration.SendTSClient;
 import se.inera.certificate.modules.ts_parent.transformation.XslTransformer;
+import se.inera.intyg.common.schemas.Constants;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponseType;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesType;
@@ -68,7 +69,6 @@ import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.Regist
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesResponseType;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 import se.inera.intygstjanster.ts.services.v1.ResultCodeType;
-import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -97,16 +97,16 @@ public class ModuleService implements ModuleApi {
     @Autowired
     @Qualifier("ts-diabetes-objectMapper")
     private ObjectMapper objectMapper;
-    
-    @Autowired(required = false) 
+
+    @Autowired(required = false)
     @Qualifier("sendTsDiabetesClient")
     private SendTSClient sendTsDiabetesClient;
 
-    @Autowired(required=false)
+    @Autowired(required = false)
     @Qualifier("diabetesGetClient")
     private GetTSDiabetesResponderInterface diabetesGetClient;
 
-    @Autowired(required=false)
+    @Autowired(required = false)
     @Qualifier("diabetesRegisterClient")
     private RegisterTSDiabetesResponderInterface diabetesRegisterClient;
 
@@ -197,7 +197,7 @@ public class ModuleService implements ModuleApi {
             throw new ExternalServiceCallException("Failed to convert to transport format during registerTSBas", e);
         }
 
-        RegisterTSDiabetesResponseType response=
+        RegisterTSDiabetesResponseType response =
                 diabetesRegisterClient.registerTSDiabetes(logicalAddress, request);
 
         // check whether call was successful or not
@@ -220,19 +220,6 @@ public class ModuleService implements ModuleApi {
 //                    : response.getResult().getErrorId() + " : " + response.getResult().getResultText();
 //            throw new ExternalServiceCallException(message);
 //        }
-    }
-
-    private void sendCertificateToRecipient(TSDiabetesIntyg request, String logicalAddress, String recipientId) throws ExternalServiceCallException {
-        RegisterTSDiabetesType parameters = new RegisterTSDiabetesType();
-        parameters.setIntyg(request);
-        RegisterTSDiabetesResponseType response = diabetesRegisterClient.registerTSDiabetes(logicalAddress, parameters);
-
-        if (response.getResultat().getResultCode() != ResultCodeType.OK) {
-            String message = response.getResultat().getResultCode() == ResultCodeType.INFO
-                    ? response.getResultat().getResultText()
-                    : response.getResultat().getErrorId() + " : " + response.getResultat().getResultText();
-            throw new ExternalServiceCallException(message);
-        }        
     }
 
     @Override
@@ -266,7 +253,8 @@ public class ModuleService implements ModuleApi {
         try {
             Utlatande utlatande = TransportToInternalConverter.convert(diabetesResponseType.getIntyg());
             String internalModel = objectMapper.writeValueAsString(utlatande);
-            CertificateMetaData metaData = TSDiabetesCertificateMetaTypeConverter.toCertificateMetaData(diabetesResponseType.getMeta(), diabetesResponseType.getIntyg());
+            CertificateMetaData metaData = TSDiabetesCertificateMetaTypeConverter.toCertificateMetaData(diabetesResponseType.getMeta(),
+                    diabetesResponseType.getIntyg());
             return new CertificateResponse(internalModel, utlatande, metaData, revoked);
         } catch (Exception e) {
             throw new ModuleException(e);

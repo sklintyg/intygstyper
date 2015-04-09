@@ -19,10 +19,6 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
 
             // intyg state
             $scope.cert = {};
-            $scope.hasSavedThisSession = false;
-            $scope.messages = [];
-            $scope.isComplete = false;
-            $scope.isSigned = false;
             $scope.certMeta = {
                 intygId: null,
                 intygType: 'ts-bas',
@@ -55,9 +51,9 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
                 'medicinering': 180,
                 'kommentar': 500,
                 'lakareSpecialKompetens': 130,
-                'sjukhusvardtidpunkt': 49,
-                'sjukhusvardvardinrattning': 45,
-                'sjukhusvardanledning': 63
+                'sjukhusvardtidpunkt': 40,
+                'sjukhusvardvardinrattning': 40,
+                'sjukhusvardanledning': 50
             };
 
             /***************************************************************************

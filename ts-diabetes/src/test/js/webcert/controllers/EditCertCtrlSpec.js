@@ -160,9 +160,9 @@ describe('ts-diabetes.EditCertCtrl', function() {
         getCheckboxForKorkortstyp('C1').selected = false;
         $scope.$digest();
 
-        expect($scope.cert.hypoglykemier.egenkontrollBlodsocker).toBeNull();
-        expect($scope.cert.hypoglykemier.allvarligForekomstVakenTid).toBeNull();
-        expect($scope.cert.bedomning.lamplighetInnehaBehorighet).toBeNull();
+        expect($scope.cert.hypoglykemier.egenkontrollBlodsocker).toBeUndefined();
+        expect($scope.cert.hypoglykemier.allvarligForekomstVakenTid).toBeUndefined();
+        expect($scope.cert.bedomning.lamplighetInnehaBehorighet).toBeUndefined();
     });
 
     it('should reset hidden fields when "teckenNedsattHjarnfunktion" is set to false', function() {

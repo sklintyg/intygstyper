@@ -12,9 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateResponseType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande;
 import se.inera.certificate.validate.CertificateValidationException;
+import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil;
+
 
 @WebServiceProvider(targetNamespace = "urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:1:rivtabp21", serviceName = "RegisterCertificateResponderService", wsdlLocation = "schemas/v1/RegisterCertificateInteraction/RegisterCertificateInteraction_1.0_rivtabp21.wsdl")
 public class RegisterCertificateResponderStub implements RegisterCertificateResponderInterface {

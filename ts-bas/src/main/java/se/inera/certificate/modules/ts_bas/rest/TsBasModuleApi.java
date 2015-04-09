@@ -58,7 +58,7 @@ import se.inera.certificate.modules.ts_bas.pdf.PdfGenerator;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.ts_bas.transformation.XslTransformer;
 import se.inera.certificate.modules.ts_bas.validator.TsBasValidator;
-import se.inera.certificate.schema.Constants;
+import se.inera.intyg.common.schemas.Constants;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;

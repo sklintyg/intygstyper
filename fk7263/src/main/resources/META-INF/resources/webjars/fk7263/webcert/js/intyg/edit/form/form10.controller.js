@@ -1,6 +1,6 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
-    ['$log', 'fk7263.Domain.IntygModel', '$scope', 'fk7263.EditCertCtrl.ViewStateService',
-        function($log, model, $scope, viewState) {
+    ['$scope', '$log', 'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService',
+        function($scope, $log, model, viewState) {
             'use strict';
             $scope.model = model;
 
@@ -16,10 +16,14 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
 
             // once we've doneLoading we can set the radion buttons to the model state.
             $scope.$on('fk7263.loaded', function() {
+                radioGroupNotSelectedCheck();
                 setPrognosGroupFromModel();
             });
 
-            $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal) {
+            $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal, oldVal) {
+                if(newVal === oldVal){
+                    return;
+                }
                 // only do this once the page is loaded and changes come from the gui!
                 if (viewState.common.doneLoading) {
                     // Remove defaults not applicable when smittskydd is active
@@ -29,8 +33,6 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
                     } else {
                         if(model.atticHasForm10()){
                             model.atticRestoreForm10();
-                        } else if (!$scope.radioGroups.prognos || $scope.radioGroups.prognos.length === 0) {
-                            model.prognosBedomning = 'arbetsformagaPrognosJa';
                         }
                     }
                     setPrognosGroupFromModel();
@@ -38,6 +40,12 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
             });
 
             // view/scope methods --------------------------------------------------------------------------------------
+
+            function radioGroupNotSelectedCheck(){
+                if (model.prognosBedomning === undefined) {
+                    model.prognosBedomning = 'arbetsformagaPrognosJa';
+                }
+            }
 
             function setPrognosGroupFromModel() {
                 switch (model.prognosBedomning) {

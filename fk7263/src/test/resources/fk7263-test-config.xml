@@ -26,6 +26,6 @@
 
 	<import resource="fk7263-beans.xml" />
 	<import resource="fk7263-model-config.xml" />
-    <import resource="it-module-cxf-servlet.xml" />
+  <import resource="it-module-cxf-servlet.xml" />
 	
 </beans>

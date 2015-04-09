@@ -92,7 +92,7 @@ var tsBasMessages = {
 
         'ts-bas.label.narkotika-lakemedel.tecken-missbruk': 'a) Finns journaluppgifter, anamnestiska uppgifter, resultat av laboratorieprover eller andra tecken på missbruk eller beroende av alkohol, narkotika eller läkemedel?',
         'ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats': 'b) Har patienten vid något tillfälle varit föremål för vårdinsatser för missbruk eller beroende av alkohol, narkotika eller läkemedel?',
-        'ts-bas.label.narkotika-lakemedel.behov-provtagning': 'Behövs det provtagning avseende aktuellt bruk av akohol eller narkotika?',
+        'ts-bas.label.narkotika-lakemedel.behov-provtagning': 'Behövs det provtagning avseende aktuellt bruk av alkohol eller narkotika?',
         'ts-bas.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk': 'c) Pågår regelbundet läkarordinerat bruk av läkemedel som kan innebära en trafiksäkerhetsrisk?',
         'ts-bas.label.narkotika-lakemedel.beskrivning': 'Om frågan besvaras med ja, ange läkemedel och ordinerad dos:',
 

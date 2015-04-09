@@ -13,7 +13,7 @@ import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvserKategor
 import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
-import se.inera.certificate.schema.Constants;
+import se.inera.intyg.common.schemas.Constants;
 import se.inera.intygstjanster.ts.services.types.v1.II;
 import se.inera.intygstjanster.ts.services.v1.BedomningTypDiabetes;
 import se.inera.intygstjanster.ts.services.v1.Diabetes;
@@ -123,21 +123,33 @@ public class InternalToTransportConverter {
 
     private static Hypoglykemier readHypoglykemier(se.inera.certificate.modules.ts_diabetes.model.internal.Hypoglykemier hypoglykemier) {
         Hypoglykemier result = new Hypoglykemier();
-        result.setAllvarligForekomstBeskrivning(hypoglykemier.getAllvarligForekomstBeskrivning());
-        result.setAllvarligForekomstTrafikBeskrivning(hypoglykemier.getAllvarligForekomstTrafikBeskrivning());
-        result.setAllvarligForekomstVakenTidAr(hypoglykemier.getAllvarligForekomstVakenTidObservationstid() != null ? hypoglykemier
-                .getAllvarligForekomstVakenTidObservationstid().getDate() : null);
-        result.setGenomforEgenkontrollBlodsocker(hypoglykemier.getEgenkontrollBlodsocker() != null && hypoglykemier.getEgenkontrollBlodsocker());
-        result.setHarAllvarligForekomst(hypoglykemier.getAllvarligForekomst() != null && hypoglykemier.getAllvarligForekomst());
-        result.setHarAllvarligForekomstTrafiken(hypoglykemier.getAllvarligForekomstTrafiken() != null
-                && hypoglykemier.getAllvarligForekomstTrafiken());
-        result.setHarAllvarligForekomstVakenTid(hypoglykemier.getAllvarligForekomstVakenTid() != null
-                && hypoglykemier.getAllvarligForekomstVakenTid());
         result.setHarKunskapOmAtgarder(hypoglykemier.getKunskapOmAtgarder() != null && hypoglykemier.getKunskapOmAtgarder());
         result.setHarTeckenNedsattHjarnfunktion(hypoglykemier.getTeckenNedsattHjarnfunktion() != null
                 && hypoglykemier.getTeckenNedsattHjarnfunktion());
-        result.setSaknarFormagaKannaVarningstecken(hypoglykemier.getSaknarFormagaKannaVarningstecken() != null
-                && hypoglykemier.getSaknarFormagaKannaVarningstecken());
+
+        if (hypoglykemier.getSaknarFormagaKannaVarningstecken() != null) {
+            result.setSaknarFormagaKannaVarningstecken(hypoglykemier.getSaknarFormagaKannaVarningstecken());
+        }
+
+        if (hypoglykemier.getAllvarligForekomst() != null) {
+            result.setHarAllvarligForekomst(hypoglykemier.getAllvarligForekomst());
+            result.setAllvarligForekomstBeskrivning(hypoglykemier.getAllvarligForekomstBeskrivning());
+        }
+
+        if (hypoglykemier.getAllvarligForekomstTrafiken() != null) {
+            result.setHarAllvarligForekomstTrafiken(hypoglykemier.getAllvarligForekomstTrafiken());
+            result.setAllvarligForekomstTrafikBeskrivning(hypoglykemier.getAllvarligForekomstTrafikBeskrivning());
+        }
+
+        if (hypoglykemier.getEgenkontrollBlodsocker() != null) {
+            result.setGenomforEgenkontrollBlodsocker(hypoglykemier.getEgenkontrollBlodsocker());
+        }
+       
+        if (hypoglykemier.getAllvarligForekomstVakenTid() != null) {
+            result.setHarAllvarligForekomstVakenTid(hypoglykemier.getAllvarligForekomstVakenTid());
+            result.setAllvarligForekomstVakenTidAr(hypoglykemier.getAllvarligForekomstVakenTidObservationstid() != null ? hypoglykemier
+                .getAllvarligForekomstVakenTidObservationstid().getDate() : null);
+        }
         return result;
     }
 
@@ -225,7 +237,9 @@ public class InternalToTransportConverter {
         BedomningTypDiabetes result = new BedomningTypDiabetes();
         result.setBehovAvLakareSpecialistKompetens(bedomning.getLakareSpecialKompetens());
         result.setKanInteTaStallning(bedomning.getKanInteTaStallning());
-        result.setLamplighetInnehaBehorighetSpecial(bedomning.getLamplighetInnehaBehorighet() != null && bedomning.getLamplighetInnehaBehorighet());
+        if (bedomning.getLamplighetInnehaBehorighet() != null) {
+            result.setLamplighetInnehaBehorighetSpecial(bedomning.getLamplighetInnehaBehorighet());
+        }
         result.setOvrigKommentar(bedomning.getKommentarer());
 
         for (BedomningKorkortstyp typ : bedomning.getKorkortstyp()) {

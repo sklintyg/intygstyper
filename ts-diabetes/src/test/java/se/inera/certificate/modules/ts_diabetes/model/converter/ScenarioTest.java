@@ -1,7 +1,5 @@
 package se.inera.certificate.modules.ts_diabetes.model.converter;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
 
 import org.junit.Before;

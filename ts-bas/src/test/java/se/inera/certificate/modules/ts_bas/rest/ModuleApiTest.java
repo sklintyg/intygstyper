@@ -102,7 +102,7 @@ public class ModuleApiTest {
     }
 
     @Test
-    public void copyCreatesBlank() throws Exception {
+    public void copyContainsOriginalData() throws Exception {
         Scenario scenario = ScenarioFinder.getInternalScenario("valid-maximal");
         InternalModelHolder internalHolder = createInternalHolder(scenario.asInternalModel());
 

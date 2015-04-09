@@ -8,7 +8,7 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
             this.avstangningSmittskyddVal = intygModel.avstangningSmittskydd;
             this.avstangningSmittskydd = function() {
                 return intygModel.avstangningSmittskydd;
-            }
+            };
 
             this.inputLimits = {
                 arbetsformagaPrognos: 600,
@@ -29,8 +29,13 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
             this.getTotalOvrigtLength = function() {
 
                 var totalOvrigtLength = 0;
-                if(intygModel.kommentar || intygModel.annanReferensBeskrivning || intygModel.nedsattMed25Beskrivning || intygModel.nedsattMed50Beskrivning || intygModel.nedsattMed75Beskrivning
-                || intygModel.arbetsformagaPrognosGarInteAttBedomaBeskrivning) {
+                var hasNedsatt = intygModel.kommentar ||
+                    intygModel.annanReferensBeskrivning ||
+                    intygModel.nedsattMed25Beskrivning ||
+                    intygModel.nedsattMed50Beskrivning ||
+                    intygModel.nedsattMed75Beskrivning ||
+                    intygModel.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
+                if(hasNedsatt) {
                     totalOvrigtLength += helper.getLengthOrZero(intygModel.kommentar) +
                     helper.getLengthOrZero(intygModel.annanReferensBeskrivning) +
                     helper.getLengthOrZero(intygModel.nedsattMed25Beskrivning) +
@@ -58,6 +63,6 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
                     return val.substr(0, val.length - (totalOvrigtLength - this.inputLimits.ovrigt));
                 }
                 return val;
-            }
+            };
 
         }]);
