@@ -83,6 +83,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
                     }
                 });
             }
+
             /*********************************************************************
              * Exposed scope interaction functions
              *********************************************************************/

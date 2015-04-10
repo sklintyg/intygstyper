@@ -99,56 +99,15 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
                     }
                 });
             }
-            loadCertificate();
 
             /*********************************************************************
              * Exposed scope interaction functions
              *********************************************************************/
 
-            $scope.send = function(cert) {
-                cert.intygType = 'ts-bas';
-                ManageCertificate.send( cert, 'TS', 'ts-bas.label.send', function() {
-                        loadCertificate();
-                    });
-            };
-
-            $scope.makulera = function(cert) {
-                var confirmationMessage = messageService.getProperty('ts-bas.label.makulera.confirmation', {
-                    namn: cert.grundData.patient.fullstandigtNamn, personnummer: cert.grundData.patient.personId });
-
-                cert.intygType = 'ts-bas';
-                ManageCertificate.makulera( cert, confirmationMessage, function() {
-                    loadCertificate();
-                });
-            };
-
-            $scope.copy = function(cert) {
-
-                if (cert === undefined || cert.grundData === undefined) {
-                    $log.debug('cert or cert.grundData is undefined. Aborting copy.');
-                    return;
-                }
-
-                var isOtherCareUnit = User.getValdVardenhet() !== cert.grundData.skapadAv.vardenhet.enhetsid;
-
-                ManageCertificate.copy($scope,
-                    IntygCopyRequestModel.build({
-                        intygId: cert.id,
-                        intygType: intygType,
-                        patientPersonnummer: cert.grundData.patient.personId,
-                        nyttPatientPersonnummer: $stateParams.patientId
-                    }),
-                    isOtherCareUnit);
-            };
-
-            $scope.print = function(cert) {
-
-                if ($scope.certProperties.isRevoked) {
-                    ManageCertView.printDraft(cert.id, intygType);
-                } else {
-                    document.pdfForm.submit();
-                }
-            };
+            /*********************************************************************
+             * Page load
+             *********************************************************************/
+            loadCertificate();
 
 			$scope.$on('loadCertificate', loadCertificate);
         }]);
