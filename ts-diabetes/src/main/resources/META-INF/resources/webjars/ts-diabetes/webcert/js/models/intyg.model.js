@@ -1,5 +1,5 @@
 angular.module('ts-diabetes').factory('ts-diabetes.Domain.IntygModel',
-    ['common.Domain.GrundDataModel', 'common.domain.DraftModel', function(grundData, draftModel) {
+    ['common.Domain.GrundDataModel', 'common.Domain.DraftModel', function(grundData, draftModel) {
         'use strict';
 
         // private
