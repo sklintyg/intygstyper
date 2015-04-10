@@ -197,15 +197,26 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              * @param cert
              */
             $scope.openMailDialog = function() {
-                intygNotifyService.forwardIntyg($scope.certMeta);
+
+                var utkastNotifyRequest = {
+                    intygId : intygModel.id,
+                    intygType: viewState.common.intyg.typ,
+                    vidarebefordrad: draftModel.vidarebefordrad
+                };
+                intygNotifyService.forwardIntyg(utkastNotifyRequest);
             };
 
             $scope.onVidarebefordradChange = function() {
-                intygNotifyService.onForwardedChange($scope.certMeta);
+                var utkastNotifyRequest = {
+                    intygId : intygModel.id,
+                    intygType: viewState.common.intyg.typ,
+                    vidarebefordrad: draftModel.vidarebefordrad
+                };
+                intygNotifyService.onForwardedChange(utkastNotifyRequest);
             };
 
             $scope.sign = function() {
-                ManageCertView.signera($scope.certMeta.intygType);
+                ManageCertView.signera(viewState.common.intyg.typ);
             };
 
             /**************************************************************************
@@ -213,10 +224,9 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              **************************************************************************/
 
                 // Get the certificate draft from the server.
-            ManageCertView.load($scope.certMeta.intygType, function(cert) {
+            ManageCertView.load(viewState.common.intyg.typ, function(cert) {
                 // Decorate intygspecific default data
                 $scope.cert = cert.content;
-                $scope.certMeta.intygId = cert.content.id;
                 convertCertToForm($scope);
 
                 viewState.common.isSigned = cert.status === 'SIGNED';
@@ -236,8 +246,8 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                 convertFormToCert();// Move into prepare later
 
                 var intygSaveRequest = {
-                    intygsId      : $scope.certMeta.intygId,
-                    intygsTyp     : $scope.certMeta.intygType,
+                    intygsId : intygModel.id,
+                    intygsTyp : viewState.common.intyg.typ,
                     cert          : $scope.cert,
                     saveComplete  : $q.defer()
                 };
