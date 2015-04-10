@@ -5,9 +5,7 @@ angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
 
             this.common = CommonViewState;
 
-            // Input limit handling
-            this.focusFirstInput = true;
-            this.testerror = false;
+            // STATIC CONSTANT: Input limits on text fields
             this.inputLimits = {
                 'funktionsnedsattning': 180,
                 'beskrivningRiskfaktorer': 180,
@@ -20,5 +18,14 @@ angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
                 'sjukhusvardvardinrattning': 40,
                 'sjukhusvardanledning': 50
             };
+
+            this.reset = function() {
+                this.focusFirstInput = true;
+                this.testerror = false;
+
+                CommonViewState.reset();
+            };
+
+            this.reset();
 
         }]);
