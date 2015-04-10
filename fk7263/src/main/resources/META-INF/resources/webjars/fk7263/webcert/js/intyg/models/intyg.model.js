@@ -1,5 +1,5 @@
 angular.module('fk7263').factory('fk7263.Domain.IntygModel',
-    ['fk7263.Domain.GrundDataModel', 'common.domain.DraftModel', function(grundData, draftModel) {
+    ['common.Domain.GrundDataModel', 'common.domain.DraftModel', function(grundData, draftModel) {
         'use strict';
 
         // private
