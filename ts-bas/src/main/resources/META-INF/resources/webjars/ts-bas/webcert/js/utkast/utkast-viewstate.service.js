@@ -1,5 +1,5 @@
 angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
-    ['$log', 'ts-bas.Domain.IntygModel', 'common.IntygEditViewStateService',
+    ['$log', 'ts-bas.Domain.IntygModel', 'common.UtkastViewStateService',
         function($log, intygModel, CommonViewState) {
             'use strict';
 

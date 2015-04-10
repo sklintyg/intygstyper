@@ -5,5 +5,5 @@
     "/web/webjars/ts-diabetes/webcert/js/utkast/utkast-viewstate.service.js",
     "/web/webjars/ts-diabetes/webcert/js/intyg/intyg.controller.js",
     "/web/webjars/ts-diabetes/webcert/js/intyg/intyg-viewstate.service.js",
-    "/web/webjars/ts-diabetes/webcert/js/models/intyg.model.js"
+    "/web/webjars/ts-diabetes/webcert/js/utkast/utkast.model.js"
 ]

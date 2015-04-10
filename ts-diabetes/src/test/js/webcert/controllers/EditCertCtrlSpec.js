@@ -16,7 +16,7 @@ describe('ts-diabetes.EditCertCtrl', function() {
         $provide.value('common.UserModel', UserModel);
         $provide.value('common.wcFocus', wcFocus);
         $provide.value('common.intygNotifyService', intygNotifyService);
-        $provide.value('common.IntygEditViewStateService',{intyg:{}});
+        $provide.value('common.UtkastViewStateService',{intyg:{}});
     }));
 
     var $scope, ctrl;

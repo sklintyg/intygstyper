@@ -17,7 +17,7 @@ describe('EditCertCtrl', function() {
             isFeatureActive: jasmine.createSpy('isFeatureActive')
         };
         $provide.value('common.CertificateService',{});
-        $provide.value('common.IntygEditViewStateService',{});
+        $provide.value('common.UtkastViewStateService',{});
 
         _manageCertView = jasmine.createSpyObj('common.ManageCertView', [ 'save',  'discard', 'signera', 'printDraft', 'load' ]);
         $provide.value('common.ManageCertView',_manageCertView);

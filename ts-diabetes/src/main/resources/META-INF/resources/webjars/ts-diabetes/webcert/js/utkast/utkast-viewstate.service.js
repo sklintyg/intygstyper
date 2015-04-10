@@ -1,5 +1,5 @@
 angular.module('ts-diabetes').service('ts-diabetes.UtkastController.ViewStateService',
-    ['$log', 'common.IntygEditViewStateService',
+    ['$log', 'common.UtkastViewStateService',
         function($log, CommonViewState) {
             'use strict';
 

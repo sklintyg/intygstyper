@@ -12,8 +12,8 @@ angular.module('ts-diabetes').config(function($stateProvider) {
                     controller: 'ts-diabetes.UtkastController'
                 },
                 'header@ts-diabetes-edit': {
-                    templateUrl: '/web/webjars/common/webcert/intyg/edit/intyg-edit-header/intyg-edit-header.html',
-                    controller: 'common.IntygEditHeader'
+                    templateUrl: '/web/webjars/common/webcert/utkast/utkast-header/utkast-header.html',
+                    controller: 'common.UtkastHeader'
                 }
             }
         });
