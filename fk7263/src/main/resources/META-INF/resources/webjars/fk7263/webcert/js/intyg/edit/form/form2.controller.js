@@ -27,6 +27,9 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                     } else {
                         if(model.isInAttic(model.properties.form2)){
                             model.restoreFromAttic(model.properties.form2);
+                            if(!model.diagnosKodsystem1){
+                                setAllDiagnosKodverk( diagnosKodverkStates.ICD_10_SE );
+                            }
                         }
                     }
                 }
