@@ -1,8 +1,8 @@
 angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
     ['$anchorScroll', '$location', '$log', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel',
-        'common.wcFocus', 'common.intygNotifyService', 'ts-diabetes.Domain.IntygModel', 'ts-diabetes.UtkastController.ViewStateService',
+        'common.wcFocus', 'common.intygNotifyService', 'ts-diabetes.Domain.IntygModel', 'common.Domain.DraftModel', 'ts-diabetes.UtkastController.ViewStateService',
         function($anchorScroll, $location, $log, $q, $rootScope, $scope, $timeout, $window, ManageCertView, UserModel,
-                 wcFocus, intygNotifyService, intygModel, viewState) {
+                 wcFocus, intygNotifyService, intygModel, draftModel, viewState) {
             'use strict';
 
             /**********************************************************************************
@@ -13,18 +13,13 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
 
             // Page state
             $scope.user = UserModel;
-            $scope.focusFirstInput = true;
+            $scope.focusFirstInput = true; // TODO: to common viewstate
+            $scope.tomorrowDate = moment().subtract(1, 'days').format('YYYY-MM-DD'); // TODO: to viewstate
             $scope.viewState = viewState;
 
             // Intyg state
             $scope.cert = intygModel;
-            $scope.certMeta = {
-                intygId: null,
-                intygType: 'ts-diabetes',
-                vidarebefordrad: false
-            };
-
-            $scope.tomorrowDate = moment().subtract(1, 'days').format('YYYY-MM-DD');
+            $scope.notifieringVidarebefordrad = draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
 
             // form model (extends intyg model where necessary)
             $scope.form = {
@@ -46,20 +41,20 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              * Private support functions
              ******************************************************************************************/
 
-            function convertCertToForm($scope) {
+            function convertCertToForm() {
 
                 // check if all info is available from HSA. If not, display the info message that someone needs to update it
-                if ($scope.cert.grundData.skapadAv.vardenhet.postadress === undefined ||
-                    $scope.cert.grundData.skapadAv.vardenhet.postnummer === undefined ||
-                    $scope.cert.grundData.skapadAv.vardenhet.postort === undefined ||
-                    $scope.cert.grundData.skapadAv.vardenhet.telefonnummer === undefined ||
-                    $scope.cert.grundData.skapadAv.vardenhet.postadress === '' ||
-                    $scope.cert.grundData.skapadAv.vardenhet.postnummer === '' ||
-                    $scope.cert.grundData.skapadAv.vardenhet.postort === '' ||
-                    $scope.cert.grundData.skapadAv.vardenhet.telefonnummer === '') {
-                    $scope.viewState.common.hasInfoMissing = true;
+                if (intygModel.grundData.skapadAv.vardenhet.postadress === undefined ||
+                    intygModel.grundData.skapadAv.vardenhet.postnummer === undefined ||
+                    intygModel.grundData.skapadAv.vardenhet.postort === undefined ||
+                    intygModel.grundData.skapadAv.vardenhet.telefonnummer === undefined ||
+                    intygModel.grundData.skapadAv.vardenhet.postadress === '' ||
+                    intygModel.grundData.skapadAv.vardenhet.postnummer === '' ||
+                    intygModel.grundData.skapadAv.vardenhet.postort === '' ||
+                    intygModel.grundData.skapadAv.vardenhet.telefonnummer === '') {
+                    viewState.common.hsaInfoMissing = true;
                 } else {
-                    $scope.viewState.common.hasInfoMissing = false;
+                    viewState.common.hsaInfoMissing = false;
                 }
             }
 
@@ -70,13 +65,13 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
 
                 // 2g. if entered date is valid, convert it to string so backend validation is happy.
                 // otherwise leave it as an invalid Date so backend sends back a validation error
-                $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid =
-                    $scope.certForm.allvarligForekomstVakenTidObservationstid.$viewValue;
+                intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid =
+                    intygModel.allvarligForekomstVakenTidObservationstid.$viewValue;
 
-                if(!$scope.cert.hypoglykemier.teckenNedsattHjarnfunktion) {
-                    $scope.cert.hypoglykemier.saknarFormagaKannaVarningstecken = undefined;
-                    $scope.cert.hypoglykemier.allvarligForekomst = undefined;
-                    $scope.cert.hypoglykemier.allvarligForekomstTrafiken = undefined;
+                if(!intygModel.hypoglykemier.teckenNedsattHjarnfunktion) {
+                    intygModel.hypoglykemier.saknarFormagaKannaVarningstecken = undefined;
+                    intygModel.hypoglykemier.allvarligForekomst = undefined;
+                    intygModel.hypoglykemier.allvarligForekomstTrafiken = undefined;
                 }
             }
 
