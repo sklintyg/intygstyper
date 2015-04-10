@@ -17,7 +17,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Default state
              **********************************************************************************/
             $scope.viewState = viewState;
-
             viewState.common.intyg.typ = 'fk7263';
 
             // Page states

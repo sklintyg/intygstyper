@@ -1,16 +1,16 @@
-<div class="weak-hidden" ng-class="{show: widgetState.showTemplate}" ng-controller="ts-diabetes.ViewCertCtrl">
-  <div wc-spinner label="info.loadingcertificate" show-spinner="!widgetState.doneLoading"
-       show-content="widgetState.doneLoading">
+<div class="weak-hidden" ng-class="{show: viewState.common.showTemplate}" ng-controller="ts-diabetes.IntygController">
+  <div wc-spinner label="info.loadingcertificate" show-spinner="!viewState.common.doneLoading"
+       show-content="viewState.common.doneLoading">
 
     <div wc-print-header title-id="ts-diabetes.label.certtitle"
-         print-message-id="print.label.{{widgetState.printStatus}}" intygs-id="cert.id"></div>
+         print-message-id="print.label.{{viewState.common.printStatus}}" intygs-id="cert.id"></div>
 
     <!-- error message -->
-    <div id="cert-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey"
+    <div id="cert-load-error" ng-show="viewState.common.doneLoading && viewState.common.activeErrorMessageKey"
          class="alert alert-danger alert-column">
-      <span message key="{{widgetState.activeErrorMessageKey}}"></span>
+      <span message key="{{viewState.common.activeErrorMessageKey}}"></span>
     </div>
-    <div ng-show="!widgetState.activeErrorMessageKey" id="intyg-vy-laddad">
+    <div ng-show="!viewState.common.activeErrorMessageKey" id="intyg-vy-laddad">
 
       <div class="print-hide">
         <div class="form-group buttonbar">
@@ -42,8 +42,8 @@ Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">
           </form>
         </div>
 
-        <div id="cert-inline-error" ng-show="widgetState.inlineErrorMessageKey" class="alert alert-danger alert-column print-hide">
-          <span message key="{{widgetState.inlineErrorMessageKey}}"></span>
+        <div id="cert-inline-error" ng-show="viewState.common.inlineErrorMessageKey" class="alert alert-danger alert-column print-hide">
+          <span message key="{{viewState.common.inlineErrorMessageKey}}"></span>
         </div>
 
         <div class="alert alert-info alert-column" ng-if="!certProperties.isRevoked">

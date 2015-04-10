@@ -1,24 +1,23 @@
-angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
+angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
     ['$anchorScroll', '$location', '$log', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel',
-        'common.wcFocus', 'common.intygNotifyService', 'common.IntygEditViewStateService',
-        function($anchorScroll, $location, $log, $q, $rootScope, $scope, $timeout, $window, ManageCertView, UserModel, wcFocus, intygNotifyService, viewState) {
+        'common.wcFocus', 'common.intygNotifyService', 'ts-diabetes.Domain.IntygModel', 'ts-diabetes.UtkastController.ViewStateService',
+        function($anchorScroll, $location, $log, $q, $rootScope, $scope, $timeout, $window, ManageCertView, UserModel,
+                 wcFocus, intygNotifyService, intygModel, viewState) {
             'use strict';
 
             /**********************************************************************************
              * Default state
              **********************************************************************************/
 
-            viewState.intyg.typ = 'ts-diabetes';
+            viewState.common.intyg.typ = 'ts-diabetes';
 
             // Page state
             $scope.user = UserModel;
             $scope.focusFirstInput = true;
-            $scope.viewState = {
-                common : viewState
-            };
+            $scope.viewState = viewState;
 
             // Intyg state
-            $scope.cert = {};
+            $scope.cert = intygModel;
             $scope.certMeta = {
                 intygId: null,
                 intygType: 'ts-diabetes',
@@ -58,9 +57,9 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                     $scope.cert.grundData.skapadAv.vardenhet.postnummer === '' ||
                     $scope.cert.grundData.skapadAv.vardenhet.postort === '' ||
                     $scope.cert.grundData.skapadAv.vardenhet.telefonnummer === '') {
-                    $scope.viewState.hasInfoMissing = true;
+                    $scope.viewState.common.hasInfoMissing = true;
                 } else {
-                    $scope.viewState.hasInfoMissing = false;
+                    $scope.viewState.common.hasInfoMissing = false;
                 }
             }
 
@@ -203,11 +202,11 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
              * @param cert
              */
             $scope.openMailDialog = function() {
-                intygNotifyService.forwardIntyg($scope.certMeta, $scope.viewState);
+                intygNotifyService.forwardIntyg($scope.certMeta);
             };
 
             $scope.onVidarebefordradChange = function() {
-                intygNotifyService.onForwardedChange($scope.certMeta, $scope.viewState);
+                intygNotifyService.onForwardedChange($scope.certMeta);
             };
 
             $scope.sign = function() {
@@ -225,12 +224,12 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 $scope.certMeta.intygId = cert.content.id;
                 convertCertToForm($scope);
 
-                viewState.isSigned = cert.status === 'SIGNED';
-                viewState.intyg.isComplete = cert.status === 'SIGNED' || cert.status === 'DRAFT_COMPLETE';
+                viewState.common.isSigned = cert.status === 'SIGNED';
+                viewState.common.intyg.isComplete = cert.status === 'SIGNED' || cert.status === 'DRAFT_COMPLETE';
 
                 $timeout(function() {
                     wcFocus('firstInput');
-                    viewState.doneLoading = true;
+                    viewState.common.doneLoading = true;
                 }, 10);
             });
 
@@ -251,14 +250,14 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 intygSaveRequest.saveComplete.promise.then(function(result) {
 
                     // save success
-                    viewState.validationMessages = result.validationMessages;
-                    viewState.validationMessagesGrouped = result.validationMessagesGrouped;
-                    viewState.error.saveErrorMessageKey = null;
+                    viewState.common.validationMessages = result.validationMessages;
+                    viewState.common.validationMessagesGrouped = result.validationMessagesGrouped;
+                    viewState.common.error.saveErrorMessageKey = null;
 
                 }, function(result) {
                     // save failed
                     $scope.certForm.$setDirty();
-                    viewState.error.saveErrorMessageKey = result.errorMessageKey;
+                    viewState.common.error.saveErrorMessageKey = result.errorMessageKey;
                 });
 
                 deferred.resolve(intygSaveRequest);

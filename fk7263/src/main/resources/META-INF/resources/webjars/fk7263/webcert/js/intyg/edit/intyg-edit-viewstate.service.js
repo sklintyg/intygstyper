@@ -22,6 +22,10 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
                 ovrigt: 360 // = combined field 13 (and dependencies that end up in field 13) limit
             };
 
+            this.reset = function() {
+                CommonViewState.reset();
+            }
+
             /**
              * Calculate total length of all fields ending up in Övrigt in the external model
              * @returns {*}
