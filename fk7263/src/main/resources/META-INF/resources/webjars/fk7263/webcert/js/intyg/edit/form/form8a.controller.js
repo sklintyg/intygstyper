@@ -1,7 +1,8 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form8aCtrl',
-    ['$scope', '$log', 'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService',
-        function($scope, $log, model, viewState) {
+    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
+        function($scope, $log, viewState) {
             'use strict';
+            var model = viewState.intygModel;
             $scope.model = model;
             $scope.viewState = viewState;
 
@@ -12,11 +13,10 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8aCtrl',
                 // only do this once the page is loaded and changes come from the gui!
                 if(viewState.common.doneLoading) {
                     if (newVal === true) {
-                        // 2. Diagnos
-                        model.atticUpdateForm8a();
-                        model.clearForm8a();
-                    } else if(model.atticHasForm8a()){
-                        model.atticRestoreForm8a();
+                        model.updateToAttic(model.properties.form8a);
+                        model.clear(model.properties.form8a);
+                    } else if(model.isInAttic(model.properties.form8a)){
+                        model.restoreFromAttic(model.properties.form8a);
                     }
                 }
             });

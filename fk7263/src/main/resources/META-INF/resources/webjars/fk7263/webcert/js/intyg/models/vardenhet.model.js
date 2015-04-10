@@ -1,5 +1,5 @@
 angular.module('fk7263').factory(
-    'fk7263.Domain.VardenhetModel',
+    'fk7263.domain.VardenhetModel',
     [ function() {
         'use strict';
 

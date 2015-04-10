@@ -1,6 +1,6 @@
-angular.module('fk7263').factory('fk7263.Domain.GrundDataModel',
-    [ 'fk7263.Domain.SkapadAvModel',
-        'fk7263.Domain.PatientModel',  function(skapadAvModel, patientModel) {
+angular.module('fk7263').factory('fk7263.domain.GrundDataModel',
+    [ 'fk7263.domain.SkapadAvModel',
+        'fk7263.domain.PatientModel',  function(skapadAvModel, patientModel) {
         'use strict';
 
         var _grundData;

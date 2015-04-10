@@ -1,7 +1,8 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
-    ['$scope', '$log', 'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService',
-        function($scope, $log, model, viewState) {
+    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
+        function($scope, $log, viewState) {
             'use strict';
+            var model = viewState.intygModel;
             $scope.model = model;
 
             $scope.viewState = viewState;
@@ -28,11 +29,11 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
                 if (viewState.common.doneLoading) {
                     // Remove defaults not applicable when smittskydd is active
                     if (newVal === true) {
-                        model.atticUpdateForm10();
-                        model.clearForm10();
+                        model.updateToAttic(model.properties.form10);
+                        model.clear(model.properties.form10);
                     } else {
-                        if(model.atticHasForm10()){
-                            model.atticRestoreForm10();
+                        if(model.isInAttic(model.properties.form10)){
+                            model.restoreFromAttic(model.properties.form10);
                         }
                     }
                     setPrognosGroupFromModel();
@@ -83,7 +84,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
                 default :
                     model.prognosBedomning = undefined;
                 }
-                model.atticUpdateForm10();
+                model.updateToAttic(model.properties.form10)
             };
 
             $scope.showInteAttBedoma = function() {
