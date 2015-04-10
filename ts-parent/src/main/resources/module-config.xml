@@ -16,13 +16,6 @@
             implementor="se.inera.certificate.modules.ts_parent.integration.stub.RegisterCertificateResponderStub" />
     </beans>
 
-<<<<<<< HEAD
-    <!-- Simulates TS recieving -->
-    <!-- jaxws:endpoint address="/register-certificate-stub"
-        implementor="se.inera.certificate.modules.ts_parent.integration.stub.RegisterCertificateResponderStub" /-->
-=======
->>>>>>> develop
-
     <beans profile="dev,testability-api">
         <jaxrs:server address="/ts-certificate-stub">
             <jaxrs:serviceBeans>
