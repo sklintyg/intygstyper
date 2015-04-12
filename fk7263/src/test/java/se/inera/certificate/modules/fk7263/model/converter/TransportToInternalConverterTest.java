@@ -502,7 +502,7 @@ public class TransportToInternalConverterTest {
 
     /**
      * Tests scenario 16, arbetsloshet but with redundant <arbetsuppgift /> present.
-     * This case caused bug INTYG-1414.
+     * This case caused bug INTYG-1413.
      *
      * @throws JAXBException
      * @throws IOException
