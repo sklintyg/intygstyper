@@ -1,5 +1,6 @@
 <lakarutlatande xmlns:ns1="urn:riv:insuranceprocess:healthreporting:mu7263:3"
 	xmlns:ns2="urn:riv:insuranceprocess:healthreporting:2" xmlns="urn:riv:insuranceprocess:healthreporting:mu7263:3">
+
 	<lakarutlatande-id>6ea04fd0-5fef-4809-823b-efeddf8a4d55</lakarutlatande-id>
 	<typAvUtlatande>Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring</typAvUtlatande>
 
@@ -63,6 +64,10 @@
 		<aktivitetskod>Kontakt_med_Forsakringskassan_ar_aktuell</aktivitetskod>
 	</aktivitet>
 
+	<aktivitet>
+		<aktivitetskod>Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt</aktivitetskod>
+	</aktivitet>
+
 	<funktionstillstand>
 			<beskrivning>Kraftigt nedsatt rörlighet i överarmen pga skadan.
 Böj- och sträckförmågan är mycket dålig.
@@ -76,19 +81,19 @@ Skadan förvärras vid för tidigt påtvingad belastning.
 Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning.</beskrivning>
 		<typAvFunktionstillstand>Aktivitet</typAvFunktionstillstand>
 		<arbetsformaga>
-				<motivering>Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.</motivering>
+			<motivering>Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.</motivering>
 			<prognosangivelse>Det_gar_inte_att_bedomma</prognosangivelse>
-			<arbetsuppgift>
-				<typAvArbetsuppgift>Dirigent Dirigerar en för större orkester på deltid</typAvArbetsuppgift>
-			</arbetsuppgift>
+			<arbetsuppgift />
 			<arbetsformagaNedsattning>
 				<varaktighetFrom>2013-03-17</varaktighetFrom>
 				<varaktighetTom>2013-04-07</varaktighetTom>
 				<nedsattningsgrad>Helt_nedsatt</nedsattningsgrad>
 			</arbetsformagaNedsattning>
             <sysselsattning>
-                <typAvSysselsattning>Nuvarande_arbete</typAvSysselsattning>
+                <typAvSysselsattning>Arbetsloshet</typAvSysselsattning>
             </sysselsattning>
 		</arbetsformaga>
 	</funktionstillstand>
+
+
 </lakarutlatande>

@@ -76,13 +76,14 @@ public final class TransportToInternal {
 
                 populateWithArbetsformaga(utlatande, funktionstillstand);
 
-                if (funktionstillstand.getArbetsformaga().getArbetsuppgift() != null) {
-                    utlatande.setNuvarandeArbetsuppgifter(funktionstillstand.getArbetsformaga().getArbetsuppgift().getTypAvArbetsuppgift());
-                    utlatande.setNuvarandeArbete(true);
-                }
                 if (funktionstillstand.getArbetsformaga().getSysselsattning() != null) {
                     populateWithSysselsattning(utlatande, funktionstillstand.getArbetsformaga().getSysselsattning());
                 }
+
+                if (utlatande.isNuvarandeArbete() && funktionstillstand.getArbetsformaga().getArbetsuppgift() != null) {
+                    utlatande.setNuvarandeArbetsuppgifter(funktionstillstand.getArbetsformaga().getArbetsuppgift().getTypAvArbetsuppgift());
+                }
+                
                 populateWithPrognos(utlatande, funktionstillstand.getArbetsformaga());
             }
 
