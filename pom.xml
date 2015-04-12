@@ -23,15 +23,26 @@
     <common.version>0-SNAPSHOT</common.version>
     <common.version.range>(,2.2.0]</common.version.range>
 
-    <!-- Schemas -->
-    <clinicalprocess-healthcond-certificate.version>0-SNAPSHOT</clinicalprocess-healthcond-certificate.version>
-    <clinicalprocess-healthcond-certificate.version.range>(,1.1.0]</clinicalprocess-healthcond-certificate.version.range>
+    <!-- RIVTA Schemas -->
+    <rivta-clinicalprocess.version>0-SNAPSHOT</rivta-clinicalprocess.version>
+    <rivta-clinicalprocess.version.range>(,1.1.0]</rivta-clinicalprocess.version.range>
 
-    <insuranceprocess-healthreporting.version>0-SNAPSHOT</insuranceprocess-healthreporting.version>
-    <insuranceprocess-healthreporting.version.range>(,1.0.0]</insuranceprocess-healthreporting.version.range>
-    
-    <se-intygstjanster-ts-services.version>0-SNAPSHOT</se-intygstjanster-ts-services.version>
-    <se-intygstjanster-ts-services.version.range>(,1.0.0]</se-intygstjanster-ts-services.version.range>
+    <rivta-insuranceprocess.version>0-SNAPSHOT</rivta-insuranceprocess.version>
+    <rivta-insuranceprocess.version.range>(,1.1.0]</rivta-insuranceprocess.version.range>
+
+    <!-- Intyg Schemas -->
+    <intyg-clinicalprocess.version>0-SNAPSHOT</intyg-clinicalprocess.version>
+    <intyg-clinicalprocess.version.range>(,1.1.0]</intyg-clinicalprocess.version.range>
+
+    <intyg-insuranceprocess.version>0-SNAPSHOT</intyg-insuranceprocess.version>
+    <intyg-insuranceprocess.version.range>(,1.1.0]</intyg-insuranceprocess.version.range>
+
+    <intyg-transportstyrelsen.version>0-SNAPSHOT</intyg-transportstyrelsen.version>
+    <intyg-transportstyrelsen.version.range>(,1.0.0]</intyg-transportstyrelsen.version.range>
+
+    <!-- Modules -->
+    <ts-parent.version>0-SNAPSHOT</ts-parent.version>
+    <ts-parent.version.range>(,1.0.0]</ts-parent.version.range>
 
     <!-- Netcare -->
     <mvkintegration.version>1.2.3</mvkintegration.version>
@@ -60,7 +71,6 @@
         <artifactId>common-support</artifactId>
         <version>${common.version}</version>
       </dependency>
-
       <dependency>
         <groupId>se.inera.intyg.common</groupId>
         <artifactId>common-web</artifactId>
@@ -82,26 +92,38 @@
         <version>${common.version}</version>
       </dependency>
 
-      <!-- Schemas -->
+      <!-- RIVTA Schemas -->
       <dependency>
-        <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
-        <artifactId>clinicalprocess-healthcond-certificate</artifactId>
-        <version>${clinicalprocess-healthcond-certificate.version}</version>
+        <groupId>se.riv.clinicalprocess.healthcond.certificate</groupId>
+        <artifactId>clinicalprocess-healthcond-certificate-schemas</artifactId>
+        <version>${rivta-clinicalprocess.version}</version>
       </dependency>
       <dependency>
-        <groupId>se.inera.intyg.schemas.insuranceprocess.healthreporting.v1</groupId>
-        <artifactId>insuranceprocess-healthreporting-interactions</artifactId>
-        <version>${insuranceprocess-healthreporting.version}</version>
+        <groupId>se.riv.insuranceprocess.healthreporting</groupId>
+        <artifactId>insuranceprocess-healthreporting-schemas</artifactId>
+        <version>${rivta-insuranceprocess.version}</version>
       </dependency>
       <dependency>
-        <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
-        <artifactId>se-intygstjanster-ts-services-core</artifactId>
-        <version>${se-intygstjanster-ts-services.version}</version>
+        <groupId>se.inera.intyg.transportstyrelsen</groupId>
+        <artifactId>intygstjansten-transportstyrelsen-schemas</artifactId>
+        <version>${intyg-transportstyrelsen.version}</version>
+      </dependency>
+
+      <!-- Intyg Schemas -->
+      <dependency>
+        <groupId>se.inera.intyg.clinicalprocess.healthcond.certificate</groupId>
+        <artifactId>clinicalprocess-healthcond-certificate-schemas</artifactId>
+        <version>${intyg-clinicalprocess.version}</version>
       </dependency>
       <dependency>
-        <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
-        <artifactId>se-intygstjanster-ts-services-interactions</artifactId>
-        <version>${se-intygstjanster-ts-services.version}</version>
+        <groupId>se.inera.intyg.insuranceprocess.healthreporting</groupId>
+        <artifactId>insuranceprocess-healthreporting-schemas</artifactId>
+        <version>${intyg-insuranceprocess.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>se.inera.intyg.transportstyrelsen</groupId>
+        <artifactId>transportstyrelsen-schemas</artifactId>
+        <version>${intyg-transportstyrelsen.version}</version>
       </dependency>
 
       <!-- Netcare dependencies -->
@@ -118,6 +140,7 @@
         <version>9.6.0-4</version>
       </dependency>
 
+      <!-- Spring -->
       <dependency>
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-config</artifactId>
@@ -209,7 +232,12 @@
         <artifactId>versions-maven-plugin</artifactId>
         <configuration>
           <includeProperties>
-            common.version, clinicalprocess-healthcond-certificate.version, insuranceprocess-healthreporting.version, se-intygstjanster-ts-services.version
+            common.version,
+            clinicalprocess-healthcond-certificate.version,
+            rivta-insuranceprocess.version,
+            intyg-clinicalprocess.version,
+            intyg-insuranceprocess.version,
+            intyg-transportstyrelsen.version
           </includeProperties>
           <properties>
             <property>
@@ -217,18 +245,31 @@
               <version>${common.version.range}</version>
             </property>
             <property>
-              <name>clinicalprocess-healthcond-certificate.version</name>
-              <version>${clinicalprocess-healthcond-certificate.version.range}</version>
+              <name>rivta-clinicalprocess.version</name>
+              <version>${rivta-clinicalprocess.version.range}</version>
             </property>
             <property>
-              <name>insuranceprocess-healthreporting.version</name>
-              <version>${insuranceprocess-healthreporting.version.range}</version>
+              <name>rivta-insuranceprocess.version</name>
+              <version>${rivta-insuranceprocess.version.range}</version>
             </property>
             <property>
-              <name>se-intygstjanster-ts-services.version</name>
-              <version>${se-intygstjanster-ts-services.version.range}</version>
+              <name>intyg-clinicalprocess.version</name>
+              <version>${intyg-clinicalprocess.version.range}</version>
+            </property>
+            <property>
+              <name>intyg-insuranceprocess.version</name>
+              <version>${intyg-insuranceprocess.version.range}</version>
+            </property>
+            <property>
+              <name>intyg-transportstyrelsen.version</name>
+              <version>${intyg-transportstyrelsen.version.range}</version>
             </property>
           </properties>
+          <property>
+            <name>ts-parent.version</name>
+            <version>${ts-parent.version.range}</version>
+          </property>
+
         </configuration>
       </plugin>
       <plugin>

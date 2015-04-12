@@ -10,20 +10,45 @@
     <version>0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ts-diabetes</artifactId>
+  <artifactId>ts-bas</artifactId>
 
-  <name>Intygstyper (TS Läkarintyg, diabetes)</name>
+  <name>Intygstyper (TS Läkarintyg, bas)</name>
 
   <dependencies>
 
-    <!-- Module -->
+    <!-- Common -->
     <dependency>
-      <groupId>se.inera.intyg.intygstyper</groupId>
-      <artifactId>ts-parent</artifactId>
-      <version>${ts-parent.version}</version>
+      <groupId>se.inera.intyg.common</groupId>
+      <artifactId>common-support</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>se.inera.intyg.common</groupId>
+      <artifactId>common-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>se.inera.intyg.common</groupId>
+      <artifactId>integration-util</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>se.inera.intyg.common</groupId>
+      <artifactId>common-schemas</artifactId>
     </dependency>
 
-    <!-- Others -->
+    <!-- Schemas -->
+    <dependency>
+      <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
+      <artifactId>clinicalprocess-healthcond-certificate</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
+      <artifactId>se-intygstjanster-ts-services-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
+      <artifactId>se-intygstjanster-ts-services-interactions</artifactId>
+    </dependency>
+
+
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
@@ -58,6 +83,16 @@
       <artifactId>spring-context</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>net.sf.saxon</groupId>
+      <artifactId>Saxon-HE</artifactId>
+    </dependency>
+
     <!-- Test dependencies -->
     <dependency>
       <groupId>commons-io</groupId>
@@ -84,15 +119,10 @@
       <artifactId>spring-test</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>xmlunit</groupId>
-      <artifactId>xmlunit</artifactId>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
   <build>
-    <finalName>ts-diabetes</finalName>
+    <finalName>ts-bas</finalName>
     <plugins>
       <plugin>
         <groupId>com.github.eirslett</groupId>
@@ -133,7 +163,7 @@
             </configuration>
           </execution>
           <execution>
-            <id>javascript webcert tests</id>
+            <id>javascript tests</id>
             <goals>
               <goal>karma</goal>
             </goals>
@@ -191,4 +221,5 @@
       </plugin>
     </plugins>
   </build>
+
 </project>

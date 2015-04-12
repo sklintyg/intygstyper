@@ -12,18 +12,17 @@
 
     <artifactId>ts-bas</artifactId>
 
-    <name>Intygstyper (TS Läkarintyg, bas)</name>
+    <name>Intygstyper (TS Läkarintyg)</name>
 
     <dependencies>
 
-        <!-- Module -->
+        <!-- Common -->
         <dependency>
-          <groupId>se.inera.intyg.intygstyper</groupId>
-          <artifactId>ts-parent</artifactId>
-          <version>${ts-parent.version}</version>
-       </dependency>
+            <groupId>se.inera.intyg.intygstyper</groupId>
+            <artifactId>ts-parent</artifactId>
+            <version>0-SNAPSHOT</version>
+        </dependency>
 
-        <!-- Others -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>

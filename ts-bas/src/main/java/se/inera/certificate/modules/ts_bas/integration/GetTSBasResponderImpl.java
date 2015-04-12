@@ -21,7 +21,7 @@ import se.inera.certificate.modules.ts_bas.rest.TsBasModuleApi;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
-import se.inera.intygstjanster.ts.services.utils.ResultTypeUtil;
+import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
 import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
 import se.inera.intygstjanster.ts.services.v1.IntygMeta;
 import se.inera.intygstjanster.ts.services.v1.IntygStatus;

@@ -75,7 +75,7 @@ import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponderInterface;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponseType;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
-import se.inera.intygstjanster.ts.services.utils.ResultTypeUtil;
+import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
 import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
 import se.inera.intygstjanster.ts.services.v1.IntygMeta;
 

@@ -2,8 +2,12 @@ package se.inera.certificate.modules.ts_bas.model.validator;
 
 import static org.junit.Assert.fail;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import se.inera.certificate.modules.ts_bas.utils.Scenario;
+import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
+import se.inera.certificate.xml.SchemaValidatorBuilder;
+import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -12,22 +16,16 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import se.inera.certificate.modules.ts_bas.utils.Scenario;
-import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
-import se.inera.certificate.xml.SchemaValidatorBuilder;
-import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 public class DomainTransportModelValidatorTest {
 
-	private static final String COMMON_UTLATANDE_SCHEMA = "/intygstjanster-services/core-components/se_intygstjanster_services_1.0.xsd";
+	private static final String COMMON_UTLATANDE_SCHEMA = "/schemas/core_components/se_intygstjanster_services_1.0.xsd";
 
-    private static final String COMMON_UTLATANDE_TYPES_SCHEMA = "/intygstjanster-services/core-components/se_intygstjanster_services_types_1.0.xsd";
+    private static final String COMMON_UTLATANDE_TYPES_SCHEMA = "/schemas/core_components/se_intygstjanster_services_types_1.0.xsd";
 
-    private static final String COMMON_UTLATANDE_ISO_SCHEMA = "/insuranceprocess-healthreporting/core-components/iso_dt_subset_1.0.xsd";
+    private static final String COMMON_UTLATANDE_ISO_SCHEMA = "/schemas/core_components/iso_dt_subset_1.0.xsd";
 
     private static Schema commonSchema;
 

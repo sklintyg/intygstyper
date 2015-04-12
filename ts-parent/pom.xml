@@ -3,7 +3,9 @@
     xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>se.inera.intyg.intygstyper</groupId>
         <artifactId>intygstyper</artifactId>
@@ -12,7 +14,7 @@
 
     <artifactId>ts-parent</artifactId>
 
-    <name>Intygstyper (TA Läkarintyg Parent Project)</name>
+    <name>Intygstyper (TA Läkarintyg, Parent)</name>
 
     <dependencies>
         <!-- Spring -->
@@ -21,35 +23,21 @@
             <artifactId>spring-tx</artifactId>
         </dependency>
 
+        <!-- XML -->
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxrs</artifactId>
         </dependency>
-
         <dependency>
             <groupId>net.sf.saxon</groupId>
             <artifactId>Saxon-HE</artifactId>
         </dependency>
+
         <!-- Common -->
         <dependency>
             <groupId>se.inera.intyg.common</groupId>
             <artifactId>common-schemas</artifactId>
         </dependency>
-
-        <!-- Schemas -->
-        <dependency>
-            <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
-            <artifactId>clinicalprocess-healthcond-certificate</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
-            <artifactId>se-intygstjanster-ts-services-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
-            <artifactId>se-intygstjanster-ts-services-interactions</artifactId>
-        </dependency>
-        
         <dependency>
             <groupId>se.inera.intyg.common</groupId>
             <artifactId>common-support</artifactId>
@@ -62,15 +50,25 @@
             <groupId>se.inera.intyg.common</groupId>
             <artifactId>integration-util</artifactId>
         </dependency>        
-        <dependency>
-            <groupId>se.inera.intyg.common</groupId>
-            <artifactId>common-schemas</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
+
+	    <!-- RIVTA Schemas -->
+    	<dependency>
+      		<groupId>se.riv.clinicalprocess.healthcond.certificate</groupId>
+      		<artifactId>clinicalprocess-healthcond-certificate-schemas</artifactId>
+	    </dependency>
+
+    	<!-- Intyg Schemas -->
+	    <dependency>
+    	  <groupId>se.inera.intyg.transportstyrelsen</groupId>
+	      <artifactId>transportstyrelsen-schemas</artifactId>
+    	</dependency>
+
+      <!-- Test dependencies -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <scope>test</scope>
+      </dependency>
     </dependencies>
 
     <build>

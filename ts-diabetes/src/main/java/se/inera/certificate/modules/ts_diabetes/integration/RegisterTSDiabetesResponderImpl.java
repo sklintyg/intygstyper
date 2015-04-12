@@ -26,7 +26,7 @@ import se.inera.certificate.validate.CertificateValidationException;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesResponderInterface;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesResponseType;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
-import se.inera.intygstjanster.ts.services.utils.ResultTypeUtil;
+import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
 import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

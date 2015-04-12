@@ -21,7 +21,7 @@ import se.inera.certificate.modules.ts_diabetes.rest.ModuleService;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponseType;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesType;
-import se.inera.intygstjanster.ts.services.utils.ResultTypeUtil;
+import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
 import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
 import se.inera.intygstjanster.ts.services.v1.IntygMeta;
 import se.inera.intygstjanster.ts.services.v1.IntygStatus;
