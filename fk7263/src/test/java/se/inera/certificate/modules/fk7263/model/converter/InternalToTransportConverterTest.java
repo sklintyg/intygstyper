@@ -52,6 +52,32 @@ public class InternalToTransportConverterTest {
     }
 
     @Test
+    public void testConversionUtanFalt5() throws JAXBException, IOException, SAXException, ConverterException {
+
+        ObjectMapper objectMapper = new CustomObjectMapper();
+        Utlatande internalFormat = objectMapper.readValue(
+                new ClassPathResource("InternalToTransportConverterTest/fk7263-utan-falt5.json").getInputStream(), Utlatande.class);
+
+        RegisterMedicalCertificateType registerMedicalCertificate = InternalToTransport.getJaxbObject(internalFormat);
+
+        JAXBContext jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class, LakarutlatandeType.class);
+        StringWriter stringWriter = new StringWriter();
+        Marshaller marshaller = jaxbContext.createMarshaller();
+        marshaller.marshal(wrapJaxb(registerMedicalCertificate), stringWriter);
+
+        // read expected XML and compare with resulting RegisterMedicalCertificateType
+        String expectation = FileUtils.readFileToString(new ClassPathResource("InternalToTransportConverterTest/fk7263-utan-falt5.xml")
+                .getFile());
+
+        XMLUnit.setIgnoreWhitespace(true);
+        XMLUnit.setIgnoreAttributeOrder(true);
+        Diff diff = XMLUnit.compareXML(expectation, stringWriter.toString());
+        diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
+        diff.overrideElementQualifier(new ElementNameAndTextQualifier());
+        Assert.assertTrue(diff.toString(), diff.similar());
+    }
+    
+   @Test
     public void testConversionMaximal() throws JAXBException, IOException, SAXException, ConverterException {
 
         ObjectMapper objectMapper = new CustomObjectMapper();

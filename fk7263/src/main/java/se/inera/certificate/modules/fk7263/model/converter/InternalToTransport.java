@@ -89,22 +89,12 @@ public final class InternalToTransport {
                     .add(toFunktionstillstand(source.getFunktionsnedsattning(), TypAvFunktionstillstand.KROPPSFUNKTION));
         }
 
-        if (!isNullOrEmpty(source.getAktivitetsbegransning())) {
+        // add arbetsformaga to aktivitetsbegransing
+        FunktionstillstandType aktivitetsbegransing = toFunktionstillstand(source.getAktivitetsbegransning(), TypAvFunktionstillstand.AKTIVITET);
+        aktivitetsbegransing.setArbetsformaga(toArbetsformaga(source));
 
-            // add arbetsformaga to aktivitetsbegransing
-            FunktionstillstandType aktivitetsbegransing = toFunktionstillstand(source.getAktivitetsbegransning(), TypAvFunktionstillstand.AKTIVITET);
-            aktivitetsbegransing.setArbetsformaga(toArbetsformaga(source));
+        register.getLakarutlatande().getFunktionstillstand().add(aktivitetsbegransing);
 
-            register.getLakarutlatande().getFunktionstillstand().add(aktivitetsbegransing);
-
-        } else if (source.isAvstangningSmittskydd()) {
-            // If no ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET is found,
-            // create FunktionstillstandType and populate it with Arbetsformaga to not loose information
-            FunktionstillstandType aktivitetsbegransing = new FunktionstillstandType();
-            aktivitetsbegransing.setTypAvFunktionstillstand(TypAvFunktionstillstand.AKTIVITET);
-            aktivitetsbegransing.setArbetsformaga(toArbetsformaga(source));
-            register.getLakarutlatande().getFunktionstillstand().add(aktivitetsbegransing);
-        }
         return register;
     }
 
