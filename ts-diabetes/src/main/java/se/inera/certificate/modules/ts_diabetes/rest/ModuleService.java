@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateType;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.support.ApplicationOrigin;
@@ -61,7 +60,6 @@ import se.inera.certificate.modules.ts_diabetes.util.TSDiabetesCertificateMetaTy
 import se.inera.certificate.modules.ts_diabetes.validator.Validator;
 import se.inera.certificate.modules.ts_parent.integration.SendTSClient;
 import se.inera.certificate.modules.ts_parent.transformation.XslTransformer;
-import se.inera.intyg.common.schemas.Constants;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponseType;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesType;

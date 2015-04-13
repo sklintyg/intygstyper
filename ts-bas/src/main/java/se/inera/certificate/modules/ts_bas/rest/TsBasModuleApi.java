@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
 
+import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 
 import org.joda.time.LocalDateTime;
@@ -208,6 +209,12 @@ public class TsBasModuleApi implements ModuleApi {
         String transformedPayload = xslTransformer.transform(internalModel.getXmlModel());
         
         SOAPMessage response = sendTsBasClient.registerCertificate(transformedPayload);
+        try {
+            LOG.debug("Got response {}", response.getSOAPBody().toString());
+        } catch (SOAPException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         // TODO handle response
 
 //        if (response.getResult().getResultCode() !=  se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.OK) {
