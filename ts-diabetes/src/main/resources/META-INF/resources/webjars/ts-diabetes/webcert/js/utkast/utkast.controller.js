@@ -19,7 +19,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
             $scope.viewState = viewState;
 
             // Intyg state
-            $scope.cert = intygModel;
+            $scope.cert = viewState.intygModel; // keep cert as a shortcut to viewState.intyModel?
             $scope.notifieringVidarebefordrad = draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
 
             // form model (extends intyg model where necessary)
@@ -45,14 +45,14 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
             function convertCertToForm() {
 
                 // check if all info is available from HSA. If not, display the info message that someone needs to update it
-                if (intygModel.grundData.skapadAv.vardenhet.postadress === undefined ||
-                    intygModel.grundData.skapadAv.vardenhet.postnummer === undefined ||
-                    intygModel.grundData.skapadAv.vardenhet.postort === undefined ||
-                    intygModel.grundData.skapadAv.vardenhet.telefonnummer === undefined ||
-                    intygModel.grundData.skapadAv.vardenhet.postadress === '' ||
-                    intygModel.grundData.skapadAv.vardenhet.postnummer === '' ||
-                    intygModel.grundData.skapadAv.vardenhet.postort === '' ||
-                    intygModel.grundData.skapadAv.vardenhet.telefonnummer === '') {
+                if (viewState.intygModel.grundData.skapadAv.vardenhet.postadress === undefined ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postnummer === undefined ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postort === undefined ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer === undefined ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postadress === '' ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postnummer === '' ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postort === '' ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer === '') {
                     viewState.common.hsaInfoMissing = true;
                 } else {
                     viewState.common.hsaInfoMissing = false;
@@ -63,17 +63,17 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              * Convert form data to internal model
              */
             function convertFormToCert() {
-
+/*
                 // 2g. if entered date is valid, convert it to string so backend validation is happy.
                 // otherwise leave it as an invalid Date so backend sends back a validation error
-                intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid =
-                    intygModel.allvarligForekomstVakenTidObservationstid.$viewValue;
+                viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid =
+                    viewState.intygModel.allvarligForekomstVakenTidObservationstid.$viewValue;
 
-                if(!intygModel.hypoglykemier.teckenNedsattHjarnfunktion) {
-                    intygModel.hypoglykemier.saknarFormagaKannaVarningstecken = undefined;
-                    intygModel.hypoglykemier.allvarligForekomst = undefined;
-                    intygModel.hypoglykemier.allvarligForekomstTrafiken = undefined;
-                }
+                if(!viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion) {
+                    viewState.intygModel.hypoglykemier.saknarFormagaKannaVarningstecken = undefined;
+                    viewState.intygModel.hypoglykemier.allvarligForekomst = undefined;
+                    viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken = undefined;
+                }*/
             }
 
             /******************************************************************************************
@@ -225,13 +225,12 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              **************************************************************************/
 
                 // Get the certificate draft from the server.
-            ManageCertView.load(viewState.common.intyg.typ, function(cert) {
+            ManageCertView.load(viewState.common.intyg.typ, function(intygModel) {
                 // Decorate intygspecific default data
-                $scope.cert = cert.content;
                 convertCertToForm($scope);
 
-                viewState.common.isSigned = cert.status === 'SIGNED';
-                viewState.common.intyg.isComplete = cert.status === 'SIGNED' || cert.status === 'DRAFT_COMPLETE';
+                viewState.common.isSigned = intygModel.draftModel.isSigned();
+                viewState.common.intyg.isComplete = intygModel.draftModel.isSigned() || intygModel.draftModel.isDraftComplete();
 
                 $timeout(function() {
                     wcFocus('firstInput');
@@ -247,9 +246,9 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                 convertFormToCert();// Move into prepare later
 
                 var intygSaveRequest = {
-                    intygsId : intygModel.id,
+                    intygsId : viewState.intygModel.id,
                     intygsTyp : viewState.common.intyg.typ,
-                    cert          : $scope.cert,
+                    cert          : viewState.intygModel.toSendModel(),
                     saveComplete  : $q.defer()
                 };
 
