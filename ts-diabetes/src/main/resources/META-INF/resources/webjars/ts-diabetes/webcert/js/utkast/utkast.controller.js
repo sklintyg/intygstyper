@@ -2,7 +2,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
     ['$anchorScroll', '$location', '$log', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel',
         'common.wcFocus', 'common.intygNotifyService', 'ts-diabetes.Domain.IntygModel', 'common.Domain.DraftModel', 'ts-diabetes.UtkastController.ViewStateService',
         function($anchorScroll, $location, $log, $q, $rootScope, $scope, $timeout, $window, ManageCertView, UserModel,
-                 wcFocus, intygNotifyService, intygModel, draftModel, viewState) {
+                 wcFocus, intygNotifyService, IntygModel, draftModel, viewState) {
             'use strict';
 
             /**********************************************************************************
@@ -10,6 +10,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              **********************************************************************************/
 
             viewState.common.intyg.typ = 'ts-diabetes';
+            viewState.intygModel = new IntygModel();
 
             // Page state
             $scope.user = UserModel;
@@ -236,7 +237,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                     wcFocus('firstInput');
                     viewState.common.doneLoading = true;
                 }, 10);
-            });
+            }, viewState.intygModel);
 
             $scope.$on('saveRequest', function($event, deferred) {
                 // Mark form as saved, will be marked as not saved if saving fails.

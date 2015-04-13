@@ -5,7 +5,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
         'fk7263.Domain.IntygModel', 'common.Domain.DraftModel', 'fk7263.EditCertCtrl.ViewStateService',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
             CertificateService, ManageCertView, UserModel, wcFocus, intygNotifyService, diagnosService,
-            dateUtils, utils, intygModel, draftModel, viewState) {
+            dateUtils, utils, IntygModel, draftModel, viewState) {
             'use strict';
 
             /**********************************************************************************
@@ -89,7 +89,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              **************************************************************************/
 
                 // Get the certificate draft from the server.
-            ManageCertView.load(viewState.common.intyg.typ, function(draftModel) {
+            ManageCertView.load(viewState.common.intyg.typ, function(intygModel) {
 
 
                 // check that the certs status is not signed
@@ -119,7 +119,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 $scope.certForm.$setPristine();
 
                 var intygSaveRequest = {
-                    intygsId      : intygModel.id,
+                    intygsId      : viewState.intygModel.id,
                     intygsTyp     : viewState.common.intyg.typ,
                     cert          : viewState.intygModel.toSendModel(),
                     saveComplete  : $q.defer()

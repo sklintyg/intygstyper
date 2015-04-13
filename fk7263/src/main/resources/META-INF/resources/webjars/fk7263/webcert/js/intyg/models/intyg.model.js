@@ -1,4 +1,4 @@
-angular.module('fk7263').factory('fk7263.domain.IntygModel',
+angular.module('fk7263').factory('fk7263.Domain.IntygModel',
     ['common.Domain.GrundDataModel', 'common.Domain.DraftModel', 'common.domain.ModelAttr',
         'common.domain.BaseAtticModel',
         function(grundData, DraftModel, ModelAttr, BaseAtticModel) {

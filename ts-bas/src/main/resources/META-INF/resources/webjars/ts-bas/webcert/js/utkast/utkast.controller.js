@@ -4,14 +4,14 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
         'common.intygNotifyService', 'ts-bas.Domain.IntygModel', 'common.Domain.DraftModel',
         'ts-bas.UtkastController.ViewStateService',
         function($anchorScroll, $location, $q, $rootScope, $scope, $timeout, $window,
-            ManageCertView, UserModel, wcFocus, intygNotifyService, intygModel, draftModel, viewState) {
+            ManageCertView, UserModel, wcFocus, intygNotifyService, IntygModel, draftModel, viewState) {
             'use strict';
 
             /**********************************************************************************
              * Default state
              **********************************************************************************/
-
             viewState.common.intyg.typ = 'ts-bas';
+            viewState.intygModel = new IntygModel();
             $scope.user = UserModel;
             $scope.viewState = viewState;
             $scope.notifieringVidarebefordrad = draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
@@ -288,7 +288,7 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
                     //wcFocus('firstInput'); // needed? we have two focus operations now. which one is used?
                     viewState.common.doneLoading = true;
                 }, 10);
-            });
+            }, viewState.intygModel);
 
             $scope.$on('saveRequest', function($event, deferred) {
                 // Mark form as saved, will be marked as not saved if saving fails.
