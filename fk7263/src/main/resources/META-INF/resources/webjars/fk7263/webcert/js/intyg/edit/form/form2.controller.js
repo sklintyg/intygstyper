@@ -200,12 +200,13 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
              * @returns {*}
              */
             $scope.getTotalDiagnosBeskrivningLength = function() {
-                var totalLength = helper.getLengthOrZero($scope.model.diagnosBeskrivning) +
-                    helper.getLengthOrZero($scope.model.diagnosKod2) +
-                    helper.getLengthOrZero($scope.model.diagnosKod3) +
-                    helper.getLengthOrZero($scope.model.diagnosBeskrivning1) +
-                    helper.getLengthOrZero($scope.model.diagnosBeskrivning2) +
-                    helper.getLengthOrZero($scope.model.diagnosBeskrivning3);
+                var totalLength;
+                totalLength = helper.getLengthOrZero($scope.model.diagnosBeskrivning) +
+                helper.getLengthOrZero($scope.model.diagnosKod2) +
+                helper.getLengthOrZero($scope.model.diagnosKod3) +
+                helper.getLengthOrZero($scope.model.diagnosBeskrivning1) +
+                helper.getLengthOrZero($scope.model.diagnosBeskrivning2) +
+                helper.getLengthOrZero($scope.model.diagnosBeskrivning3);
                 return totalLength;
             };
 

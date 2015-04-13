@@ -2,8 +2,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form15Ctrl',
     ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
         function($scope, $log, viewState) {
             'use strict';
-            var model = viewState.intygModel;
-            $scope.model = model;
+            $scope.model = viewState.intygModel;
             $scope.viewState = viewState;
 
             $scope.$watch('viewState.common.doneLoading', function ( newVal, oldVal ) {
@@ -15,11 +14,8 @@ angular.module('fk7263').controller('fk7263.EditCert.Form15Ctrl',
                     !$scope.model.grundData.skapadAv.vardenhet;
 
                     // check if all info is available from HSA. If not, display the info message that someone needs to update it
-                    if (doesntHaveVardenhet || $scope.model.grundData.skapadAv.vardenhet.isMissingInfo()) {
-                        $scope.viewState.common.hsaInfoMissing = true;
-                    } else {
-                        $scope.viewState.common.hsaInfoMissing = false;
-                    }
+                $scope.viewState.common.hsaInfoMissing =
+                    doesntHaveVardenhet || $scope.model.grundData.skapadAv.vardenhet.isMissingInfo();
 
             });
         }]);
