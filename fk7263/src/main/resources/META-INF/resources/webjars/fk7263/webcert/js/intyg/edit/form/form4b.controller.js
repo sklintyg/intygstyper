@@ -1,9 +1,11 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
-    ['$scope', '$log', 'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService', 'common.UtilsService',
+    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'common.UtilsService',
         'common.DateUtilsService',
-        function($scope, $log, model, viewState, utils, dateUtils) {
+        function($scope, $log, viewState, utils, dateUtils) {
             'use strict';
+            var model = viewState.intygModel;
             $scope.model = model;
+
             $scope.viewState = viewState;
 
             // Fält 4b. Based on handling
@@ -42,11 +44,11 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
                 }
                 // only do this once the page is loaded and changes come from the gui!
                 if (viewState.common.doneLoading && newVal) {
-                    model.atticUpdateForm4b();
-                    model.clearForm4b();
+                    model.updateToAttic(model.properties.form4b);
+                    model.clear(model.properties.form4b);
                     clearViewState();
                 } else {
-                    model.atticRestoreForm4b();
+                    model.restoreFromAttic(model.properties.form4b);
                     transferModelToForm();
                     setBaserasPa();
                 }

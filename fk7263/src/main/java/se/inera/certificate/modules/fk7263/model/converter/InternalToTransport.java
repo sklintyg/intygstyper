@@ -221,6 +221,8 @@ public final class InternalToTransport {
             }
         }
 
+        arbetsformagaType.getSysselsattning().addAll(convertSysselsattnings(source));
+
         if (source.isNuvarandeArbete()) {
             // attach arbetsuppgift if available
             if (!isNullOrEmpty(source.getNuvarandeArbetsuppgifter())) {
@@ -229,7 +231,6 @@ public final class InternalToTransport {
                 arbetsformagaType.setArbetsuppgift(arbetsuppgift);
             }
 
-            arbetsformagaType.getSysselsattning().addAll(convertSysselsattnings(source));
         }
         if (source.getNedsattMed25() != null) {
             ArbetsformagaNedsattningType nedsattningType = new ArbetsformagaNedsattningType();

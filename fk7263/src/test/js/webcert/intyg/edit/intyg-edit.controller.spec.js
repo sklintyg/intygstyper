@@ -8,6 +8,10 @@ describe('EditCertCtrl', function() {
     var $rootScope;
     var _manageCertView;
 
+    beforeEach(angular.mock.module('common', function($provide) {
+
+    }));
+
     // Load the webcert module and mock away everything that is not necessary.
     beforeEach(angular.mock.module('fk7263', function($provide) {
         featureService = {
@@ -23,11 +27,6 @@ describe('EditCertCtrl', function() {
         $provide.value('common.ManageCertView',_manageCertView);
         $provide.value('common.User', {});
         $provide.value('common.UserModel', {});
-        $provide.value('fk7263.Domain.DraftModel', {});
-        $provide.value('fk7263.Domain.IntygModel', {});
-        $provide.value('fk7263.Domain.PatientModel', {});
-        $provide.value('fk7263.Domain.SkapadAvModel', {});
-        $provide.value('fk7263.Domain.VardenhetModel', {});
         $provide.value('fk7263.EditCertCtrl.ViewStateService', {common:{intyg:{typ:''}}});
         $provide.value('common.wcFocus', {});
         $provide.value('common.intygNotifyService', {});

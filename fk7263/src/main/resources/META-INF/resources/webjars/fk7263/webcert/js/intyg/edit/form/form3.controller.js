@@ -1,7 +1,8 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form3Ctrl',
-    ['$scope', '$log', 'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService',
-        function($scope, $log, model, viewState) {
+    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
+        function($scope, $log, viewState) {
             'use strict';
+            var model = viewState.intygModel;
             $scope.model = model;
             $scope.viewState = viewState;
 
@@ -13,11 +14,10 @@ angular.module('fk7263').controller('fk7263.EditCert.Form3Ctrl',
                 if(viewState.common.doneLoading) {
                     // Remove defaults not applicable when smittskydd is active
                     if (newVal === true) {
-                        // 3
-                        model.atticUpdateForm3();
-                        model.clearForm3();
+                        model.updateToAttic(model.properties.form3);
+                        model.clear(model.properties.form3);
                     } else {
-                        model.atticRestoreForm3();
+                        model.restoreFromAttic(model.properties.form3);
                     }
                 }
             });

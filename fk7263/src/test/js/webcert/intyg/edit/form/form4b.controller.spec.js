@@ -12,11 +12,11 @@ describe('fk7263.EditCertCtrl.Form4bCtrl', function() {
     beforeEach(angular.mock.module('common', 'fk7263', function($provide) {
 
         // the below are now included in common
-        //$provide.value('fk7263.Domain.DraftModel', __draftModel__);
-        //$provide.value('fk7263.Domain.IntygModel', {});
-        //$provide.value('fk7263.Domain.PatientModel', {});
-        //$provide.value('fk7263.Domain.SkapadAvModel', {});
-        //$provide.value('fk7263.Domain.VardenhetModel', {});
+        //$provide.value('fk7263.domain.DraftModel', __draftModel__);
+        //$provide.value('fk7263.domain.IntygModel', {});
+        //$provide.value('fk7263.domain.PatientModel', {});
+        //$provide.value('fk7263.domain.SkapadAvModel', {});
+        //$provide.value('fk7263.domain.VardenhetModel', {});
 
     }));
 
@@ -27,14 +27,16 @@ describe('fk7263.EditCertCtrl.Form4bCtrl', function() {
         '$rootScope',
         '$httpBackend',
         '$log',
-        'fk7263.Domain.IntygModel',
+        'fk7263.domain.IntygModel',
         'fk7263.EditCertCtrl.ViewStateService',
         function( $controller, _$rootScope_, _$httpBackend_, _$log_, _model_, _viewState_) {
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
             $log = _$log_;
-            model = _model_;
+            var IntygModel = _model_;
+            model = new IntygModel();
             viewState = _viewState_;
+            viewState.intygModel = model;
 
             $controller('fk7263.EditCert.Form4bCtrl' , { $scope: $scope, $log : $log, model : model, viewState : viewState });
 
@@ -42,53 +44,12 @@ describe('fk7263.EditCertCtrl.Form4bCtrl', function() {
 
     describe('#change in avstangningSmittskydd should trigger an update in the attic', function() {
         beforeEach(function(){
-            spyOn(model, 'atticUpdateForm4b').and.callThrough();
-            spyOn(model, 'clearForm4b').and.callThrough();
-            spyOn(model, 'atticHasForm4b').and.returnValue(true);
-            spyOn(model, 'atticRestoreForm4b').and.callThrough();
 
             model.annanReferens = 'annanReferens';
             model.annanReferensBeskrivning = 'annanReferensBeskrivning';
             model.journaluppgifter = 'journaluppgifter';
             model.telefonkontaktMedPatienten = 'telefonkontaktMedPatienten';
             model.undersokningAvPatienten = 'undersokningAvPatienten';
-
-        });
-
-        it('when avstangningSmittskydd is true', function(){
-            // ----- arrange
-            // in arrange we setup our spies with expected return values
-            viewState.common.doneLoading = true;
-            viewState.avstangningSmittskyddValue = false;
-
-            // ----- act
-            $scope.$digest(); // register false on avstangningSmittskydd
-
-            viewState.avstangningSmittskyddValue = true;  // this should trigger the watch event
-            $scope.$digest();
-
-            // ----- assert
-            // expects
-            expect(model.atticUpdateForm4b).toHaveBeenCalled();
-            expect(model.clearForm4b).toHaveBeenCalled();
-
-        });
-
-        it('when avstangningSmittskydd is false', function(){
-            // ----- arrange
-            // in arrange we setup our spies with expected return values
-            viewState.common.doneLoading = true;
-            viewState.avstangningSmittskyddValue = true;
-
-            // ----- act
-            $scope.$digest(); // register false on avstangningSmittskydd
-
-            viewState.avstangningSmittskyddValue = false;  // this should trigger the watch event
-            $scope.$digest();
-
-            // ----- assert
-            // expects
-            expect(model.atticRestoreForm4b).toHaveBeenCalled();
 
         });
 

@@ -12,11 +12,11 @@ describe('fk7263.EditCertCtrl.Form1Ctrl', function() {
     beforeEach(angular.mock.module('common', 'fk7263', function($provide) {
 
         // the below are now included in common
-        //$provide.value('fk7263.Domain.DraftModel', __draftModel__);
-        //$provide.value('fk7263.Domain.IntygModel', {});
-        //$provide.value('fk7263.Domain.PatientModel', {});
-        //$provide.value('fk7263.Domain.SkapadAvModel', {});
-        //$provide.value('fk7263.Domain.VardenhetModel', {});
+        //$provide.value('fk7263.domain.DraftModel', __draftModel__);
+        //$provide.value('fk7263.domain.IntygModel', {});
+        //$provide.value('fk7263.domain.PatientModel', {});
+        //$provide.value('fk7263.domain.SkapadAvModel', {});
+        //$provide.value('fk7263.domain.VardenhetModel', {});
 
     }));
 
@@ -27,14 +27,16 @@ describe('fk7263.EditCertCtrl.Form1Ctrl', function() {
         '$rootScope',
         '$httpBackend',
         '$log',
-        'fk7263.Domain.IntygModel',
+        'fk7263.domain.IntygModel',
         'fk7263.EditCertCtrl.ViewStateService',
         function( $controller, _$rootScope_, _$httpBackend_, _$log_, _model_, _viewState_) {
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
             $log = _$log_;
-            model = _model_;
+            var IntygModel = _model_;
+            model = new IntygModel();
             viewState = _viewState_;
+            viewState.intygModel = model;
 
             $controller('fk7263.EditCert.Form1Ctrl' , { $scope: $scope, $log : $log, model : model, viewState : viewState });
 

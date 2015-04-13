@@ -1,9 +1,11 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
-    ['$scope', '$log', 'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService', 'fk7263.diagnosService',
+    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'fk7263.diagnosService',
         'fk7263.EditCertCtrl.Helper',
-        function($scope, $log, model, viewState, diagnosService, helper) {
+        function($scope, $log, viewState, diagnosService, helper) {
             'use strict';
+            var model = viewState.intygModel;
             $scope.model = model;
+
             $scope.viewState = viewState;
             $scope.viewModel = {
                 diagnosKodverk : ''
@@ -20,11 +22,15 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 if(viewState.common.doneLoading) {
                     // Remove defaults not applicable when smittskydd is active
                     if (newVal === true) {
-                        // 2. Diagnos
-                        model.atticUpdateForm2();
-                        model.clearForm2();
-                    } else if(model.atticHasForm2()){
-                        model.atticRestoreForm2();
+                        model.updateToAttic(model.properties.form2);
+                        model.clear(model.properties.form2);
+                    } else {
+                        if(model.isInAttic(model.properties.form2)){
+                            model.restoreFromAttic(model.properties.form2);
+                            if(!model.diagnosKodsystem1){
+                                setAllDiagnosKodverk( diagnosKodverkStates.ICD_10_SE );
+                            }
+                        }
                     }
                 }
             });
@@ -130,21 +136,21 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
                 $scope.form2.$dirty = true;
                 $scope.form2.$pristine = false;
-                model.atticUpdateForm2();
+                model.updateToAttic(model.properties.form2);
             };
             $scope.onDiagnoseCode2Select = function($item) {
                 $scope.model.diagnosBeskrivning2 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
                 $scope.form2.$dirty = true;
                 $scope.form2.$pristine = false;
-                model.atticUpdateForm2();
+                model.updateToAttic(model.properties.form2);
             };
             $scope.onDiagnoseCode3Select = function($item) {
                 $scope.model.diagnosBeskrivning3 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
                 $scope.form2.$dirty = true;
                 $scope.form2.$pristine = false;
-                model.atticUpdateForm2();
+                model.updateToAttic(model.properties.form2);
             };
 
             /**
@@ -156,7 +162,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
                 $scope.form2.$dirty = true;
                 $scope.form2.$pristine = false;
-                model.atticUpdateForm2();
+                model.updateToAttic(model.properties.form2);
             };
             $scope.onDiagnoseDescription2Select = function($item) {
                 $scope.model.diagnosKod2 = $item.value;
@@ -164,7 +170,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
                 $scope.form2.$dirty = true;
                 $scope.form2.$pristine = false;
-                model.atticUpdateForm2();
+                model.updateToAttic(model.properties.form2);
             };
             $scope.onDiagnoseDescription3Select = function($item) {
                 $scope.model.diagnosKod3 = $item.value;
@@ -172,7 +178,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
                 $scope.form2.$dirty = true;
                 $scope.form2.$pristine = false;
-                model.atticUpdateForm2();
+                model.updateToAttic(model.properties.form2);
             };
 
 

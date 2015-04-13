@@ -453,4 +453,74 @@ public class TransportToInternalConverterTest {
 
         JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
     }
+
+    /**
+     * Tests scenario 14, arbetsloshet.
+     *
+     * @throws JAXBException
+     * @throws IOException
+     * @throws JSONException
+     * @throws ConverterException 
+     */
+    @Test
+    public void testScenario14() throws JAXBException, IOException, JSONException, ConverterException {
+        JAXBElement<LakarutlatandeType> utlatandeElement = readUtlatandeTypeFromFile(RESOURCE_ROOT
+                + "legacy/scenario14.xml");
+        Utlatande internalModel = TransportToInternal
+                .convert(utlatandeElement.getValue());
+
+        // serialize utlatande to JSON and compare with expected JSON
+        JsonNode tree = objectMapper.valueToTree(internalModel);
+        JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+                RESOURCE_ROOT + "legacy/scenario14.json").getInputStream());
+
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
+    }
+
+    /**
+     * Tests scenario 15, foraldraledighet.
+     *
+     * @throws JAXBException
+     * @throws IOException
+     * @throws JSONException
+     * @throws ConverterException 
+     */
+    @Test
+    public void testScenario15() throws JAXBException, IOException, JSONException, ConverterException {
+        JAXBElement<LakarutlatandeType> utlatandeElement = readUtlatandeTypeFromFile(RESOURCE_ROOT
+                + "legacy/scenario15.xml");
+        Utlatande internalModel = TransportToInternal
+                .convert(utlatandeElement.getValue());
+
+        // serialize utlatande to JSON and compare with expected JSON
+        JsonNode tree = objectMapper.valueToTree(internalModel);
+        JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+                RESOURCE_ROOT + "legacy/scenario15.json").getInputStream());
+
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
+    }
+
+    /**
+     * Tests scenario 16, arbetsloshet but with redundant <arbetsuppgift /> present.
+     * This case caused bug INTYG-1413.
+     *
+     * @throws JAXBException
+     * @throws IOException
+     * @throws JSONException
+     * @throws ConverterException 
+     */
+    @Test
+    public void testScenario16() throws JAXBException, IOException, JSONException, ConverterException {
+        JAXBElement<LakarutlatandeType> utlatandeElement = readUtlatandeTypeFromFile(RESOURCE_ROOT
+                + "legacy/scenario16.xml");
+        Utlatande internalModel = TransportToInternal
+                .convert(utlatandeElement.getValue());
+
+        // serialize utlatande to JSON and compare with expected JSON
+        JsonNode tree = objectMapper.valueToTree(internalModel);
+        JsonNode expectedTree = objectMapper.readTree(new ClassPathResource(
+                RESOURCE_ROOT + "legacy/scenario16.json").getInputStream());
+
+        JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
+    }
 }
