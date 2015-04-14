@@ -166,6 +166,31 @@ public class InternalToTransportConverterTest {
     }
 
     @Test
+    public void testConversionOrimligtDatum() throws JAXBException, IOException, SAXException, ConverterException {
+
+
+        ObjectMapper objectMapper = new CustomObjectMapper();
+        Utlatande externalFormat = objectMapper.readValue(
+                new ClassPathResource("InternalToTransportConverterTest/minimalt-fk7263-internal-orimligt-datum.json").getInputStream(), Utlatande.class);
+
+        RegisterMedicalCertificateType registerMedicalCertificateType = InternalToTransport.getJaxbObject(externalFormat);
+
+        JAXBContext jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class, LakarutlatandeType.class);
+        StringWriter stringWriter = new StringWriter();
+        Marshaller marshaller = jaxbContext.createMarshaller();
+        marshaller.marshal(wrapJaxb(registerMedicalCertificateType), stringWriter);
+
+        // read expected XML and compare with resulting RegisterMedicalCertificateType
+        String expectation = FileUtils.readFileToString(new ClassPathResource("InternalToTransportConverterTest/minimalt-fk7263-transport-orimligt-datum.xml")
+                .getFile());
+
+        XMLUnit.setIgnoreWhitespace(true);
+        Diff diff = new Diff(expectation, stringWriter.toString());
+        diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
+        Assert.assertTrue(diff.toString(), diff.similar());
+    }
+
+    @Test
     public void testConversionMinimalSmiL() throws JAXBException, IOException, SAXException, ConverterException {
 
         ObjectMapper objectMapper = new CustomObjectMapper();
