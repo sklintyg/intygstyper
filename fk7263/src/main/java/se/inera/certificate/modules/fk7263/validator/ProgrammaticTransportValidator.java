@@ -480,7 +480,6 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
             boolean inArbetsformagaAterstallasHelt = false;
             boolean inArbetsformagaAterstallasDelvis = false;
             boolean inArbetsformagaEjAterstallas = false;
-            boolean inArbetsformagaGarEjAttBedomma = false;
     
             if (inAktivitetFunktion.getArbetsformaga().getPrognosangivelse() != null) {
                 inArbetsformagaAterstallasHelt = inAktivitetFunktion.getArbetsformaga().getPrognosangivelse()
