@@ -7,9 +7,11 @@ import iso.v21090.dt.v1.II;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.xml.bind.JAXB;
 
+import org.joda.time.LocalDate;
 import org.junit.Test;
 
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
@@ -17,6 +19,9 @@ import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.BedomtTillstandType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.FunktionstillstandType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Prognosangivelse;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ReferensType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Referenstyp;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvFunktionstillstand;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvSysselsattning;
@@ -230,6 +235,34 @@ public class ProgrammaticTransportValidatorTest {
     }
 
     @Test
+    public void testTomKommentarVidReferensAnnat() throws Exception {
+        LakarutlatandeType utlatande = getValidUtlatande();
+        ReferensType annat = new ReferensType();
+        annat.setReferenstyp(Referenstyp.ANNAT);
+        annat.setDatum(LocalDate.now());
+        utlatande.getReferens().clear();
+        utlatande.getReferens().add(annat);
+        utlatande.setKommentar("");
+
+        assertEquals(1, new ProgrammaticTransportValidator(utlatande).validate().size());
+    }
+
+    @Test
+    public void testTomKommentarVidPrognosGarEjAttBedomma() throws Exception {
+        LakarutlatandeType utlatande = getValidUtlatande();
+        ReferensType journalUppgifter = new ReferensType();
+        journalUppgifter.setReferenstyp(Referenstyp.JOURNALUPPGIFTER);
+        journalUppgifter.setDatum(LocalDate.now());
+        utlatande.getReferens().clear();
+        utlatande.getReferens().add(journalUppgifter);
+        FunktionstillstandType inAktivitetFunktion = findFunktionsTillstandType(utlatande.getFunktionstillstand(), TypAvFunktionstillstand.AKTIVITET);
+        inAktivitetFunktion.getArbetsformaga().setPrognosangivelse(Prognosangivelse.DET_GAR_INTE_ATT_BEDOMMA);
+        utlatande.setKommentar("");
+
+        assertEquals(1, new ProgrammaticTransportValidator(utlatande).validate().size());
+    }
+
+    @Test
     public void testTomSysselsattningSmittskydd() throws Exception {
         LakarutlatandeType utlatande = getValidUtlatande();
         AktivitetType smittskydd = new AktivitetType();
@@ -278,5 +311,4 @@ public class ProgrammaticTransportValidatorTest {
 
         assertEquals(0, new ProgrammaticTransportValidator(getValidUtlatande()).validate().size());
     }
-
 }
