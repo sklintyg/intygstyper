@@ -2,15 +2,21 @@ package se.inera.certificate.modules.fk7263.rest;
 
 import static se.inera.certificate.common.enumerations.Recipients.FK;
 import static se.inera.certificate.common.util.StringUtil.isNullOrEmpty;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import iso.v21090.dt.v1.CD;
+
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.List;
+
+import javax.xml.ws.soap.SOAPFaultException;
+
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.w3.wsaddressing10.AttributedURIType;
+
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareRequestType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponseType;
@@ -53,9 +59,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificater
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.List;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author andreaskaltenbach, marced
@@ -369,15 +373,19 @@ public class Fk7263ModuleApi implements ModuleApi {
         AttributedURIType address = new AttributedURIType();
         address.setValue(logicalAddress);
 
-        RegisterMedicalCertificateResponseType response =
-                registerMedicalCertificateClient.registerMedicalCertificate(address, request);
+        try {
+            RegisterMedicalCertificateResponseType response =
+                    registerMedicalCertificateClient.registerMedicalCertificate(address, request);
 
-        // check whether call was successful or not
-        if (response.getResult().getResultCode() != ResultCodeEnum.OK) {
-            String message = response.getResult().getResultCode() == ResultCodeEnum.INFO
-                    ? response.getResult().getInfoText()
-                    : response.getResult().getErrorId() + " : " + response.getResult().getErrorText();
-            throw new ExternalServiceCallException(message);
+            // check whether call was successful or not
+            if (response.getResult().getResultCode() != ResultCodeEnum.OK) {
+                String message = response.getResult().getResultCode() == ResultCodeEnum.INFO
+                        ? response.getResult().getInfoText()
+                        : response.getResult().getErrorId() + " : " + response.getResult().getErrorText();
+                throw new ExternalServiceCallException(message);
+            }
+        } catch (SOAPFaultException e) {
+            throw new ExternalServiceCallException(e);
         }
 
     }
