@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
 
+import javax.xml.ws.soap.SOAPFaultException;
+
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -360,15 +362,19 @@ public class Fk7263ModuleApi implements ModuleApi {
         AttributedURIType address = new AttributedURIType();
         address.setValue(logicalAddress);
 
-        RegisterMedicalCertificateResponseType response =
-                registerMedicalCertificateClient.registerMedicalCertificate(address, request);
+        try {
+            RegisterMedicalCertificateResponseType response =
+                    registerMedicalCertificateClient.registerMedicalCertificate(address, request);
 
-        // check whether call was successful or not
-        if (response.getResult().getResultCode() != ResultCodeEnum.OK) {
-            String message = response.getResult().getResultCode() == ResultCodeEnum.INFO
-                    ? response.getResult().getInfoText()
-                    : response.getResult().getErrorId() + " : " + response.getResult().getErrorText();
-            throw new ExternalServiceCallException(message);
+            // check whether call was successful or not
+            if (response.getResult().getResultCode() != ResultCodeEnum.OK) {
+                String message = response.getResult().getResultCode() == ResultCodeEnum.INFO
+                        ? response.getResult().getInfoText()
+                        : response.getResult().getErrorId() + " : " + response.getResult().getErrorText();
+                throw new ExternalServiceCallException(message);
+            }
+        } catch (SOAPFaultException e) {
+            throw new ExternalServiceCallException(e);
         }
 
     }
