@@ -42,7 +42,7 @@ public class ProgrammaticTransportValidatorTest {
     public void testMissingUtlatandeTyp() throws Exception {
         LakarutlatandeType utlatande = getValidUtlatande();
         utlatande.setTypAvUtlatande(null);
-        assertEquals(1, new ProgrammaticTransportValidator(utlatande).validate().size());
+        assertEquals(0, new ProgrammaticTransportValidator(utlatande).validate().size());
     }
 
     @Test
