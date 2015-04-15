@@ -233,7 +233,7 @@ public class PdfGenerator {
     private boolean isCertificateSentToFK(List<Status> statuses) {
         if (statuses != null) {
             for (Status status : statuses) {
-                if (status.getTarget().equals(Recipients.FK.toString()) && status.getType() == CertificateState.SENT) {
+                if (status != null && status.getTarget().equals(Recipients.FK.toString()) && status.getType() == CertificateState.SENT) {
                     return true;
                 }
             }
