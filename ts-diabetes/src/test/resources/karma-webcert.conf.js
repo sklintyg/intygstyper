@@ -26,6 +26,7 @@ module.exports = function(config) {
                 WEBJAR_DIR + 'angularjs/angular-sanitize.js',
                 WEBJAR_DIR + 'angular-ui-bootstrap/ui-bootstrap-tpls.js',
                 WEBJAR_DIR + 'momentjs/moment.js',
+                WEBJAR_DIR + 'common/webcert/module.min.js',
 
 
             // Load these first
@@ -33,7 +34,7 @@ module.exports = function(config) {
                 TEST_DIR + 'module-test.js',
 
             { pattern: SRC_DIR + '**/*' },
-            { pattern: TEST_DIR + '**/*Spec.js' }
+            { pattern: TEST_DIR + '**/*.spec.js' }
         ],
 
         exclude: [ SRC_DIR + 'module.js' ],

@@ -1,17 +1,17 @@
-describe('ts-diabetes.EditCertCtrl', function() {
+describe('ts-diabetes.UtkastController', function() {
     'use strict';
 
     var ManageCertView;
     var UserModel;
     var wcFocus;
     var intygNotifyService;
+    var ModelAttr;
+    var IntygModel;
 
-    beforeEach(angular.mock.module('ts-diabetes', function($provide) {
+    beforeEach(angular.mock.module('common', 'ts-diabetes', function($provide) {
         ManageCertView = jasmine.createSpyObj('common.ManageCertView', [ 'load' ]);
         UserModel = {};
         wcFocus = {};
-        $provide.value('common.domain.DraftModel', {});
-        $provide.value('common.Domain.GrundDataModel', {});
         $provide.value('common.ManageCertView', ManageCertView);
         $provide.value('common.UserModel', UserModel);
         $provide.value('common.wcFocus', wcFocus);
@@ -19,11 +19,19 @@ describe('ts-diabetes.EditCertCtrl', function() {
         $provide.value('common.UtkastViewStateService',{intyg:{}});
     }));
 
+    beforeEach(angular.mock.inject([
+        'common.domain.ModelAttr',
+        'ts-diabetes.Domain.IntygModel',
+        function( _modelAttr_, _IntygModel_) {
+            ModelAttr = _modelAttr_;
+            IntygModel = _IntygModel_;
+        }]));
+
     var $scope, ctrl;
 
     beforeEach(angular.mock.inject(function($controller, $rootScope) {
         $scope = $rootScope.$new();
-        ctrl = $controller('ts-diabetes.EditCertCtrl', { $scope: $scope });
+        ctrl = $controller('ts-diabetes.UtkastController', { $scope: $scope });
         $scope.cert = {
             id: '8eab08a6-e25a-44c1-8cf4-634df3b6459a',
             typ: 'TS_DIABETES_U06_V02',

@@ -27,7 +27,7 @@ describe('fk7263.EditCertCtrl.Form5Ctrl', function() {
         '$rootScope',
         '$httpBackend',
         '$log',
-        'fk7263.domain.IntygModel',
+        'fk7263.Domain.IntygModel',
         'fk7263.EditCertCtrl.ViewStateService',
         function( $controller, _$rootScope_, _$httpBackend_, _$log_, _model_, _viewState_) {
             $rootScope = _$rootScope_;
