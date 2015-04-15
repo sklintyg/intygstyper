@@ -19,10 +19,7 @@ import org.w3.wsaddressing10.AttributedURIType;
 
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
-import se.inera.certificate.modules.fk7263.model.converter.InternalToNotification;
-import se.inera.certificate.modules.fk7263.model.converter.InternalToTransport;
-import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
-import se.inera.certificate.modules.fk7263.model.converter.WebcertModelFactory;
+import se.inera.certificate.modules.fk7263.model.converter.*;
 import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.model.util.ModelCompareUtil;
@@ -411,8 +408,13 @@ public class Fk7263ModuleApi implements ModuleApi {
             throws ModuleException {
 
         try {
-            return objectMapper.readValue(internalModel.getInternalModel(),
+            se.inera.certificate.modules.fk7263.model.internal.Utlatande utlatande = objectMapper.readValue(internalModel.getInternalModel(),
                     se.inera.certificate.modules.fk7263.model.internal.Utlatande.class);
+
+            // Explicitly populate the giltighet interval since it is information derived from
+            // the arbetsformaga but needs to be serialized into the Utkast model.
+            utlatande.setGiltighet(ArbetsformagaToGiltighet.getGiltighetFromUtlatande(utlatande));
+            return utlatande;
 
         } catch (IOException e) {
             throw new ModuleSystemException("Failed to deserialize internal model", e);
