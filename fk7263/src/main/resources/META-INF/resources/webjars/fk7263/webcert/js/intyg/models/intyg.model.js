@@ -14,9 +14,9 @@ angular.module('fk7263').factory('fk7263.domain.IntygModel',
                 }
             };
 
-            var IntygModel = BaseAtticModel.extend({
-                init: function() {
-                    this._super('IntygModel', {
+            var IntygModel = BaseAtticModel._extend({
+                init: function init() {
+                    init._super.call(this, 'IntygModel', {
 
                         form1: [new ModelAttr('avstangningSmittskydd', {defaultValue: false})],
 
@@ -88,11 +88,11 @@ angular.module('fk7263').factory('fk7263.domain.IntygModel',
                     this.draftModel = new DraftModel(this);
                 },
 
-                update: function(content, parent) {
+                update: function update(content, parent) {
                     if (parent) {
                         parent.content = this;
                     }
-                    this._super(content);
+                    update._super.call(this, content);
                 },
 
                 atticUpdateForm6a711 : function(){
