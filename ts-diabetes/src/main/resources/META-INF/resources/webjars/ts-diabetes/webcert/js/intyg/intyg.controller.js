@@ -1,9 +1,9 @@
 angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
     [ '$location', '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore', 'common.CertificateService',
-        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate','common.User','common.IntygCopyRequestModel',
+        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate','common.UserModel','common.IntygCopyRequestModel',
         'ts-diabetes.IntygController.ViewStateService',
         function($location, $log, $rootScope, $stateParams, $scope, $cookieStore, CertificateService, ManageCertView,
-            messageService, ManageCertificate, User, IntygCopyRequestModel, ViewState) {
+            messageService, ManageCertificate, UserModel, IntygCopyRequestModel, ViewState) {
             'use strict';
 
             /*********************************************************************
@@ -11,7 +11,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
              *********************************************************************/
 
             var intygType = 'ts-diabetes';
-            $scope.user = { lakare: User.getUserContext().lakare };
+            $scope.user = UserModel.userContext;
             $scope.cert = {};
             $scope.viewState = ViewState;
 
@@ -74,7 +74,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
                         ViewState.common.activeErrorMessageKey = 'common.error.data_not_found';
                     }
                 }, function(error) {
-                    CommonViewState.doneLoading = true;
+                    ViewState.common.doneLoading = true;
                     $log.debug('got error' + error.message);
                     if (error.errorCode === 'DATA_NOT_FOUND') {
                         ViewState.common.activeErrorMessageKey = 'common.error.data_not_found';
