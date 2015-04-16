@@ -1,8 +1,8 @@
 angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
     ['$anchorScroll', '$location', '$log', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel',
-        'common.wcFocus', 'common.intygNotifyService', 'ts-diabetes.Domain.IntygModel', 'common.Domain.DraftModel', 'ts-diabetes.UtkastController.ViewStateService',
+        'common.intygNotifyService', 'ts-diabetes.Domain.IntygModel', 'common.Domain.DraftModel', 'ts-diabetes.UtkastController.ViewStateService',
         function($anchorScroll, $location, $log, $q, $rootScope, $scope, $timeout, $window, ManageCertView, UserModel,
-                 wcFocus, intygNotifyService, IntygModel, draftModel, viewState) {
+                 intygNotifyService, IntygModel, draftModel, viewState) {
             'use strict';
 
             /**********************************************************************************
@@ -200,7 +200,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
             $scope.openMailDialog = function() {
 
                 var utkastNotifyRequest = {
-                    intygId : intygModel.id,
+                    intygId : viewState.intygModel.id,
                     intygType: viewState.common.intyg.typ,
                     vidarebefordrad: draftModel.vidarebefordrad
                 };
@@ -209,7 +209,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
 
             $scope.onVidarebefordradChange = function() {
                 var utkastNotifyRequest = {
-                    intygId : intygModel.id,
+                    intygId : viewState.intygModel.id,
                     intygType: viewState.common.intyg.typ,
                     vidarebefordrad: draftModel.vidarebefordrad
                 };
@@ -224,19 +224,8 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              * Load certificate and setup form
              **************************************************************************/
 
-                // Get the certificate draft from the server.
-            ManageCertView.load(viewState.common.intyg.typ, function(intygModel) {
-                // Decorate intygspecific default data
-                convertCertToForm($scope);
-
-                viewState.common.isSigned = intygModel.draftModel.isSigned();
-                viewState.common.intyg.isComplete = intygModel.draftModel.isSigned() || intygModel.draftModel.isDraftComplete();
-
-                $timeout(function() {
-                    wcFocus('firstInput');
-                    viewState.common.doneLoading = true;
-                }, 10);
-            }, viewState.intygModel);
+            // Get the certificate draft from the server.
+            ManageCertView.load(viewState.common.intyg.typ, viewState.intygModel);
 
             $scope.$on('saveRequest', function($event, deferred) {
                 // Mark form as saved, will be marked as not saved if saving fails.

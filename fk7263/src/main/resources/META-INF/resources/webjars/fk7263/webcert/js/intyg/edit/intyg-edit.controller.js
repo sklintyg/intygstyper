@@ -1,10 +1,10 @@
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
-        'common.CertificateService', 'common.ManageCertView', 'common.UserModel', 'common.wcFocus',
+        'common.CertificateService', 'common.ManageCertView', 'common.UserModel',
         'common.intygNotifyService', 'fk7263.diagnosService', 'common.DateUtilsService', 'common.UtilsService',
         'fk7263.Domain.IntygModel', 'common.Domain.DraftModel', 'fk7263.EditCertCtrl.ViewStateService',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
-            CertificateService, ManageCertView, UserModel, wcFocus, intygNotifyService, diagnosService,
+            CertificateService, ManageCertView, UserModel, intygNotifyService, diagnosService,
             dateUtils, utils, IntygModel, draftModel, viewState) {
             'use strict';
 
@@ -88,28 +88,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Load certificate and setup form / Constructor ...
              **************************************************************************/
 
-                // Get the certificate draft from the server.
-            ManageCertView.load(viewState.common.intyg.typ, function(intygModel) {
-
-
-                // check that the certs status is not signed
-                if(intygModel.draftModel.isSigned()){
-                    // just change straight to the intyg
-                    $location.url('/intyg/' + viewState.common.intyg.typ + '/' + intygModel.id);
-                }
-
-                $scope.cert = intygModel;
-
-                viewState.common.isSigned = intygModel.draftModel.isSigned();
-                viewState.common.intyg.isComplete = intygModel.draftModel.isSigned() || intygModel.draftModel.isDraftComplete();
-                
-                $timeout(function() {
-                    wcFocus('firstInput');
-                    $rootScope.$broadcast('intyg.loaded', intygModel);
-                    $rootScope.$broadcast('fk7263.loaded', intygModel);
-                    viewState.common.doneLoading = true;
-                }, 10);
-            }, viewState.intygModel );
+            // Get the certificate draft from the server.
+            ManageCertView.load(viewState.common.intyg.typ, viewState.intygModel);
 
             $scope.$on('saveRequest', function($event, deferred) {
 
