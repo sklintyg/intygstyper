@@ -17,6 +17,10 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 showTemplate: true
             };
 
+            $scope.dismissSentMessage = function() {
+                $scope.widgetState.sentMessage = false;
+            };
+
             var decorateWithGUIParameters = function(list) {
                 // answerDisabled
                 // answerButtonToolTip
@@ -84,6 +88,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
             $scope.sendQuestion = function (newQuestion) {
                 $log.debug('sendQuestion:' + newQuestion);
                 newQuestion.updateInProgress = true; // trigger local spinner
+                $scope.widgetState.sentMessage = false;
 
                 fragaSvarService.saveNewQuestion($stateParams.certificateId, 'fk7263', newQuestion,
                     function(result) {
