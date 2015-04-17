@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
     xmlns:ns1="urn:local:se:intygstjanster:services:1"
+    xmlns:ns2="urn:local:se:intygstjanster:services:RegisterTSBasResponder:1"
     xmlns:ns3="urn:local:se:intygstjanster:services:types:1"
     xmlns:p="urn:riv:clinicalprocess:healthcond:certificate:1"
-    xmlns:p2="urn:riv:clinicalprocess:healthcond:certificate:ts-bas:1">
+    xmlns:p2="urn:riv:clinicalprocess:healthcond:certificate:ts-bas:1"
+    xmlns:reg="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:1">
 
   <xsl:output method="xml" indent="yes"/>
-
   <xsl:include href="xsl/transform-ts-common.xsl"/>
 
-  <xsl:template match="ns1:basIntyg">
-    <p:utlatande>
+  <xsl:template match="ns1:basIntyg | ns2:intyg">
+  <reg:RegisterCertificate>
+    <reg:utlatande>
 
-      <xsl:call-template name="utlatandeHeader"/>
+       <xsl:call-template name="utlatandeHeader"/>
 
       <xsl:apply-templates select="ns1:grundData"/>
 
@@ -463,7 +465,8 @@
           <xsl:value-of select="ns1:version"/>
         </p2:version>
 
-    </p:utlatande>
+    </reg:utlatande>
+  </reg:RegisterCertificate>
   </xsl:template>
 
   <xsl:template match="ns1:grundData">

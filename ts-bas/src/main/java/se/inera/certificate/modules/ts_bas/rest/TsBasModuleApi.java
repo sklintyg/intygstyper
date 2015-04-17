@@ -22,24 +22,19 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.namespace.QName;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPMessage;
+
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateResponderInterface;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateResponseType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.ArbetsplatsKod;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.HsaId;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.PersonId;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.TypAvUtlatande;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.UtlatandeId;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Enhet;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.HosPersonal;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Patient;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Vardgivare;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.support.ApplicationOrigin;
@@ -68,7 +63,8 @@ import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGenerator;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.ts_bas.validator.TsBasValidator;
-import se.inera.intyg.common.schemas.Constants;
+import se.inera.certificate.modules.ts_parent.integration.SendTSClient;
+import se.inera.certificate.modules.ts_parent.transformation.XslTransformer;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
@@ -76,6 +72,7 @@ import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSB
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponseType;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 import se.inera.intygstjanster.ts.services.v1.ResultCodeType;
+import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -95,8 +92,8 @@ public class TsBasModuleApi implements ModuleApi {
     private RegisterTSBasResponderInterface registerTSBasResponderInterface;
 
     @Autowired(required = false)
-    @Qualifier("sendTsBasClient")
-    private RegisterCertificateResponderInterface sendTsBasClient;
+    @Qualifier("tsBasSendCertificateClient")
+    private SendTSClient sendTsBasClient;
 
     @Autowired
     private TsBasValidator validator;
@@ -115,6 +112,9 @@ public class TsBasModuleApi implements ModuleApi {
     @Qualifier("tsBasModelConverterUtil")
     private ConverterUtil converterUtil;
 
+    @Autowired(required = false)
+    @Qualifier("tsBasXslTransformer")
+    private XslTransformer xslTransformer;
 
     private ModuleContainerApi moduleContainer;
 
@@ -210,86 +210,23 @@ public class TsBasModuleApi implements ModuleApi {
 
     @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
-        RegisterCertificateType parameters = new RegisterCertificateType();
+        String transformedPayload = xslTransformer.transform(internalModel.getXmlModel());
         
-        // TODO swith to XSL-transformer when done.
-        se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande placeholderUtlatande = buildPlaceHolderCertificate(internalModel);
-        parameters.setUtlatande(placeholderUtlatande);
-
-        RegisterCertificateResponseType response = sendTsBasClient.registerCertificate(logicalAddress, parameters);
-
-        if (response.getResult().getResultCode() !=  se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.OK) {
-            String message = response.getResult().getResultCode() == se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.INFO
-                    ? response.getResult().getResultText()
-                    : response.getResult().getErrorId() + " : " + response.getResult().getResultText();
-            throw new ExternalServiceCallException(message);
+        SOAPMessage response = sendTsBasClient.registerCertificate(transformedPayload);
+        try {
+            LOG.debug("Got response with header: {}", response.getSOAPBody());
+        } catch (SOAPException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-    }
+        // TODO handle response
 
-    // TODO remove this method when XSL-transformer is ready.
-    private se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande buildPlaceHolderCertificate(InternalModelHolder internalModel)
-            throws ModuleException {
-        se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande placeholderUtlatande = new se.inera.certificate.clinicalprocess.healthcond.certificate.v1.Utlatande();
-        Utlatande internal = converterUtil.fromJsonString(internalModel.getInternalModel());
-        UtlatandeId id = new UtlatandeId();
-        id.setExtension(internal.getId());
-        id.setRoot("root");
-
-        Patient patient = new Patient();
-        PersonId personId = new PersonId();
-        personId.setExtension(internal.getGrundData().getPatient().getPersonId());
-        personId.setRoot(Constants.PERSON_ID_OID);
-        patient.setPersonId(personId);
-        patient.setEfternamn(internal.getGrundData().getPatient().getEfternamn());
-        patient.setPostadress(internal.getGrundData().getPatient().getPostadress());
-        patient.setPostort(internal.getGrundData().getPatient().getPostort());
-        patient.setPostnummer(internal.getGrundData().getPatient().getPostnummer());
-
-        Vardgivare vardgivare = new Vardgivare();
-        HsaId hsaId = new HsaId();
-        hsaId.setExtension(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
-        hsaId.setRoot(Constants.HSA_ID_OID);
-        vardgivare.setVardgivareId(hsaId);
-        vardgivare.setVardgivarnamn(internal.getGrundData().getSkapadAv().getVardenhet().getVardgivare().getVardgivarnamn());
-
-        Enhet enhet = new Enhet();
-        ArbetsplatsKod ak = new ArbetsplatsKod();
-        ak.setExtension(internal.getGrundData().getSkapadAv().getVardenhet().getArbetsplatsKod());
-        ak.setRoot("root");
-        enhet.setArbetsplatskod(ak);
-        HsaId enId = new HsaId();
-        enId.setExtension(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
-        enId.setRoot(Constants.HSA_ID_OID);
-        enhet.setEnhetsId(enId);
-        enhet.setEnhetsnamn(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
-        enhet.setPostadress(internal.getGrundData().getSkapadAv().getVardenhet().getPostadress());
-        enhet.setPostort(internal.getGrundData().getSkapadAv().getVardenhet().getPostort());
-        enhet.setPostnummer(internal.getGrundData().getSkapadAv().getVardenhet().getPostnummer());
-        enhet.setEnhetsnamn(internal.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
-        enhet.setVardgivare(vardgivare);
-
-        HosPersonal hosPerson = new HosPersonal();
-        hosPerson.setEnhet(enhet);
-        hosPerson.setForskrivarkod("1245");
-        hosPerson.setFullstandigtNamn(internal.getGrundData().getSkapadAv().getFullstandigtNamn());
-        HsaId personalId = new HsaId();
-        personalId.setExtension(internal.getGrundData().getSkapadAv().getPersonId());
-        personalId.setRoot(Constants.HSA_ID_OID);
-        hosPerson.setPersonalId(personalId);
-
-        TypAvUtlatande typ = new TypAvUtlatande();
-        typ.setCode(internal.getTyp());
-        typ.setCodeSystem("codesystem");
-        typ.setCodeSystemName("name");
-        typ.setCodeSystemVersion("version");
-        typ.setDisplayName("meh");
-
-        placeholderUtlatande.setUtlatandeId(id);
-        placeholderUtlatande.setPatient(patient);
-        placeholderUtlatande.setSkapadAv(hosPerson);
-        placeholderUtlatande.setSigneringsdatum(internal.getGrundData().getSigneringsdatum());
-        placeholderUtlatande.setTypAvUtlatande(typ);
-        return placeholderUtlatande;
+//        if (response.getResult().getResultCode() !=  se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.OK) {
+//            String message = response.getResult().getResultCode() == se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.INFO
+//                    ? response.getResult().getResultText()
+//                    : response.getResult().getErrorId() + " : " + response.getResult().getResultText();
+//            throw new ExternalServiceCallException(message);
+//        }
     }
 
     @Override
@@ -319,6 +256,7 @@ public class TsBasModuleApi implements ModuleApi {
 
     @Override
     public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
+        // TODO: do something here
         return true;
         //throw new UnsupportedOperationException("Unsupported for this module");
     }
@@ -326,6 +264,26 @@ public class TsBasModuleApi implements ModuleApi {
     @Override
     public Object createNotification(NotificationMessage notificationMessage) throws ModuleException {
         throw new UnsupportedOperationException("Unsupported for this module");
+    }
+
+    @Override
+    public String marshall(String jsonString) throws ModuleException {
+        String xmlString = null;
+        try {
+            Utlatande internal = objectMapper.readValue(jsonString, Utlatande.class);
+            TSBasIntyg external = InternalToTransport.convert(internal);
+            StringWriter writer = new StringWriter();
+
+            JAXBElement<TSBasIntyg> jaxbElement = new JAXBElement<TSBasIntyg>(new QName("ns3:basIntyg"), TSBasIntyg.class, external);
+            JAXBContext context = JAXBContext.newInstance(TSBasIntyg.class);
+            context.createMarshaller().marshal(jaxbElement, writer);
+            xmlString = writer.toString();
+
+        } catch (ConverterException | JAXBException | IOException e) {
+            LOG.error("Error occured while marshalling: {}", e.getStackTrace().toString());
+            throw new ModuleException(e);
+        }
+        return xmlString;
     }
 
     // - - - - - Private scope - - - - - //

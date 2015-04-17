@@ -46,10 +46,12 @@
         </jaxws:schemaLocations>
   </jaxws:endpoint>
   
-  <!-- ws clients -->
-  <jaxws:client id="sendTsDiabetesClient"
-                  serviceClass="se.inera.certificate.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateResponderInterface"
-                  address="${registercertificatev1.endpoint.url}">
-  </jaxws:client>  
+  <bean id="tsDiabetesXslTransformer" class="se.inera.certificate.modules.ts_parent.transformation.XslTransformer">
+    <constructor-arg value="xsl/transform-ts-diabetes.xsl"/>
+  </bean>
+
+  <bean id="sendTsDiabetesClient" class="se.inera.certificate.modules.ts_parent.integration.SendTSClient">
+    <constructor-arg value="${registercertificatev1.endpoint.url}"/>
+  </bean>
 
 </beans>

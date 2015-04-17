@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.transformation;
+package se.inera.certificate.modules.ts_diabetes.transformation;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.fail;
@@ -20,15 +20,15 @@ import se.inera.certificate.xml.SchemaValidatorBuilder;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
-public class TSBasTransformerTest {
+public class TSDiabetesTransformerTest {
 
     private static final String COMMON_UTLATANDE_SCHEMA = "/intygstjanster-services/core-components/se_intygstjanster_services_1.0.xsd";
 
     private static final String COMMON_UTLATANDE_TYPES_SCHEMA = "/intygstjanster-services/core-components/se_intygstjanster_services_types_1.0.xsd";
 
-    private static final String COMMON_REGISTER_SCHEMA = "/interactions/RegisterTSBasInteraction/RegisterTSBasResponder_1.0.xsd";
+    private static final String COMMON_REGISTER_SCHEMA = "/interactions/RegisterTSDiabetesInteraction/RegisterTSDiabetesResponder_1.0.xsd";
 
-    private static final String CLINICAL_TS_BAS_SCHEMA = "specializations/TS-Bas/ts-bas_model.xsd";
+    private static final String CLINICAL_TS_DIABETES_SCHEMA = "specializations/TS-Diabetes/ts-diabetes_model.xsd";
 
     private static final String CLINICAL_CORE_SCHEMA = "core_components/clinicalprocess_healthcond_certificate_1.0.xsd";
 
@@ -57,18 +57,16 @@ public class TSBasTransformerTest {
         Source rootSource = schemaValidatorBuilder.registerResource(CLINIAL_REGISTER_SCHEMA);
         schemaValidatorBuilder.registerResource(CLINICAL_CORE_SCHEMA);
         schemaValidatorBuilder.registerResource(CLINICAL_TYPES_SCHEMA);
-        schemaValidatorBuilder.registerResource(CLINICAL_TS_BAS_SCHEMA);
+        schemaValidatorBuilder.registerResource(CLINICAL_TS_DIABETES_SCHEMA);
         schemaValidatorBuilder.registerResource(CLINIAL_ISO_SCHEMA);
         clinicalSchema = schemaValidatorBuilder.build(rootSource);
     }
 
     @Test
     public void testTransformation() throws Exception {
-        List<String> testFiles = asList("xsl2.xml", "xsl.xml", "ts-bas-max.xml", "valid-diabetes-typ2-kost.xml",
-                "valid-korrigerad-synskarpa.xml", "valid-maximal.xml", "valid-minimal.xml",
-                "valid-persontransport.xml", "valid-sjukhusvard.xml", "valid-utan-korrigerad-synskarpa.xml");
+        List<String> testFiles = asList("xsl.xml");
 
-        XslTransformer transformer = new XslTransformer("xsl/transform-ts-bas.xsl");
+        XslTransformer transformer = new XslTransformer("xsl/transform-ts-diabetes.xsl");
 
         for (String xmlFile : testFiles) {
             String xmlContents = Resources.toString(getResource("scenarios/transport/" + xmlFile), Charsets.UTF_8);
