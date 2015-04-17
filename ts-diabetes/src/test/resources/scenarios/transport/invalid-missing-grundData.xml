@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ns1:TSDiabetesIntyg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="urn:local:se:intygstjanster:services:1"
+<ns1:diabetesIntyg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="urn:local:se:intygstjanster:services:1"
     xmlns:ns2="urn:local:se:intygstjanster:services:types:1">
     <ns1:intygsId>9876543210</ns1:intygsId>
     <ns1:intygsTyp>TSTRK1031 (U06, V06)</ns1:intygsTyp>
@@ -28,4 +28,4 @@
     <ns1:bedomning>
         <ns1:korkortstyp>A1</ns1:korkortstyp>
     </ns1:bedomning>
-</ns1:TSDiabetesIntyg>
+</ns1:diabetesIntyg>

@@ -22,18 +22,36 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
+import org.custommonkey.xmlunit.Diff;
+import org.custommonkey.xmlunit.Difference;
+import org.custommonkey.xmlunit.DifferenceConstants;
+import org.custommonkey.xmlunit.DifferenceListener;
+import org.custommonkey.xmlunit.ElementNameAndTextQualifier;
+import org.custommonkey.xmlunit.ElementQualifier;
+import org.custommonkey.xmlunit.XMLUnit;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
+import org.xml.sax.SAXException;
 
+import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.dto.CertificateResponse;
@@ -84,6 +102,10 @@ public class ModuleApiTest {
     /** An HTTP client proxy wired to the test HTTP server. */
     @Autowired
     private TsBasModuleApi moduleApi;
+
+
+    @Autowired
+    private CustomObjectMapper objectMapper;
 
     @Before
     public void setUpMocks() {
@@ -170,6 +192,48 @@ public class ModuleApiTest {
 
         CertificateResponse internal = moduleApi.getCertificate("cert-id", "TS");
         assertNotNull(internal);
+    }
+
+    @Test
+    public void testMarshall() throws ScenarioNotFoundException, ModuleException, IOException, SAXException {
+        Utlatande internal = ScenarioFinder.getInternalScenario("valid-maximal").asInternalModel();
+        StringWriter writer = new StringWriter();
+        try {
+            objectMapper.writeValue(writer, internal);
+        } catch (IOException e) {
+            throw new ModuleException("Failed to serialize internal model", e);
+        }
+        String xml = writer.toString();
+        String actual = moduleApi.marshall(xml);
+        String expected = FileUtils.readFileToString(new ClassPathResource("scenarios/transport/valid-maximal.xml").getFile());
+
+        XMLUnit.setIgnoreWhitespace(true);
+        XMLUnit.setIgnoreAttributeOrder(true);
+        Diff diff = XMLUnit.compareXML(expected, actual);
+        diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
+        diff.overrideElementQualifier(new ElementNameAndTextQualifier());
+        Assert.assertTrue(diff.toString(), diff.similar());
+    }
+
+    private class NamespacePrefixNameIgnoringListener implements DifferenceListener {
+        public int differenceFound(Difference difference) {
+            if (DifferenceConstants.NAMESPACE_PREFIX_ID == difference.getId()) {
+                // differences in namespace prefix IDs are ok (eg. 'ns1' vs 'ns2'), as long as the namespace URI is the
+                // same
+                return RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
+            } else if (DifferenceConstants.ELEMENT_TAG_NAME_ID == difference.getId()) {
+                if (difference.toString().contains("'intyg'")) {
+                    return RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
+                } else {
+                    return RETURN_ACCEPT_DIFFERENCE;
+                }
+            } else {
+                return RETURN_ACCEPT_DIFFERENCE;
+            }
+        }
+
+        public void skippedComparison(Node control, Node test) {
+        }
     }
 
     private IntygMeta createMeta() throws ScenarioNotFoundException {

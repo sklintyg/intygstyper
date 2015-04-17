@@ -22,6 +22,10 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 
@@ -59,7 +63,6 @@ import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGenerator;
 import se.inera.certificate.modules.ts_bas.pdf.PdfGeneratorException;
 import se.inera.certificate.modules.ts_bas.validator.TsBasValidator;
-import se.inera.intyg.common.schemas.Constants;
 import se.inera.certificate.modules.ts_parent.integration.SendTSClient;
 import se.inera.certificate.modules.ts_parent.transformation.XslTransformer;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
@@ -69,6 +72,7 @@ import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSB
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponseType;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 import se.inera.intygstjanster.ts.services.v1.ResultCodeType;
+import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -210,7 +214,7 @@ public class TsBasModuleApi implements ModuleApi {
         
         SOAPMessage response = sendTsBasClient.registerCertificate(transformedPayload);
         try {
-            LOG.debug("Got response {}", response.getSOAPBody().toString());
+            LOG.debug("Got response with header: {}", response.getSOAPBody());
         } catch (SOAPException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -252,6 +256,7 @@ public class TsBasModuleApi implements ModuleApi {
 
     @Override
     public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
+        // TODO: do something here
         return true;
         //throw new UnsupportedOperationException("Unsupported for this module");
     }
@@ -259,6 +264,26 @@ public class TsBasModuleApi implements ModuleApi {
     @Override
     public Object createNotification(NotificationMessage notificationMessage) throws ModuleException {
         throw new UnsupportedOperationException("Unsupported for this module");
+    }
+
+    @Override
+    public String marshall(String jsonString) throws ModuleException {
+        String xmlString = null;
+        try {
+            Utlatande internal = objectMapper.readValue(jsonString, Utlatande.class);
+            TSBasIntyg external = InternalToTransport.convert(internal);
+            StringWriter writer = new StringWriter();
+
+            JAXBElement<TSBasIntyg> jaxbElement = new JAXBElement<TSBasIntyg>(new QName("ns3:basIntyg"), TSBasIntyg.class, external);
+            JAXBContext context = JAXBContext.newInstance(TSBasIntyg.class);
+            context.createMarshaller().marshal(jaxbElement, writer);
+            xmlString = writer.toString();
+
+        } catch (ConverterException | JAXBException | IOException e) {
+            LOG.error("Error occured while marshalling: {}", e.getStackTrace().toString());
+            throw new ModuleException(e);
+        }
+        return xmlString;
     }
 
     // - - - - - Private scope - - - - - //

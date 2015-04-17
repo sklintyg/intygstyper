@@ -2,10 +2,13 @@ package se.inera.certificate.modules.fk7263.rest;
 
 import static se.inera.certificate.common.enumerations.Recipients.FK;
 import static se.inera.certificate.common.util.StringUtil.isNullOrEmpty;
+import iso.v21090.dt.v1.CD;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
+
+import javax.xml.bind.JAXB;
 
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
@@ -58,7 +61,6 @@ import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.conv
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.annotations.VisibleForTesting;
-import iso.v21090.dt.v1.CD;
 
 /**
  * @author andreaskaltenbach, marced
@@ -315,6 +317,23 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
 
         return request;
+    }
+
+    @Override
+    public String marshall(String jsonString) throws ModuleException {
+        String xmlString = null;
+        try {
+            Utlatande internal = objectMapper.readValue(jsonString, Utlatande.class);
+            RegisterMedicalCertificateType external = InternalToTransport.getJaxbObject(internal);
+            StringWriter writer = new StringWriter();
+            JAXB.marshal(external, writer);
+            xmlString = writer.toString();
+
+        } catch (IOException | ConverterException e) {
+            LOG.error("Error occured while marshalling: {}", e.getStackTrace().toString());
+            throw new ModuleException(e);
+        }
+        return xmlString;
     }
 
     // - - - - - Private scope - - - - - //

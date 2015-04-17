@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ns1:TSDiabetesIntyg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="urn:local:se:intygstjanster:services:1"
+<ns1:diabetesIntyg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="urn:local:se:intygstjanster:services:1"
     xmlns:ns2="urn:local:se:intygstjanster:services:types:1">
     <ns1:intygsId>987654321</ns1:intygsId>
     <ns1:intygsTyp>TSTRK1031 (U06, V06)</ns1:intygsTyp>
@@ -64,7 +64,7 @@
         <ns1:korkortstyp>TAXI</ns1:korkortstyp>
     </ns1:intygAvser>
     <ns1:identitetStyrkt>
-        <ns1:idkontroll>IDK1</ns1:idkontroll>
+        <ns1:idkontroll>IDK6</ns1:idkontroll>
     </ns1:identitetStyrkt>
     <ns1:diabetes>
         <ns1:debutArDiabetes>2012</ns1:debutArDiabetes>
@@ -111,6 +111,7 @@
         <ns1:finnsProvningOgatsRorlighet>true</ns1:finnsProvningOgatsRorlighet>
         <ns1:finnsSeparatOgonlakarintyg>false</ns1:finnsSeparatOgonlakarintyg>
     </ns1:synfunktion>
+    <ns1:ovrigKommentar>Kommentarer av det viktiga slaget</ns1:ovrigKommentar>
     <ns1:bedomning>
         <ns1:korkortstyp>AM</ns1:korkortstyp>
         <ns1:korkortstyp>A1</ns1:korkortstyp>
@@ -131,4 +132,4 @@
         <ns1:lamplighetInnehaBehorighetSpecial>true</ns1:lamplighetInnehaBehorighetSpecial>
         <ns1:behovAvLakareSpecialistKompetens>Kronologisk bastuberedning</ns1:behovAvLakareSpecialistKompetens>
     </ns1:bedomning>
-</ns1:TSDiabetesIntyg>
+</ns1:diabetesIntyg>

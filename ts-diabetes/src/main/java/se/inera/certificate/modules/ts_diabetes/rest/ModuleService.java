@@ -23,6 +23,9 @@ import java.io.StringWriter;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPMessage;
 
 import org.joda.time.LocalDateTime;
@@ -67,6 +70,8 @@ import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.Regist
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesResponseType;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 import se.inera.intygstjanster.ts.services.v1.ResultCodeType;
+import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
+import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -245,6 +250,26 @@ public class ModuleService implements ModuleApi {
         default:
             throw new ModuleException("getMedicalCertificateForCare WS call: ERROR :" + diabetesResponseType.getResultat().getResultText());
         }
+    }
+
+    @Override
+    public String marshall(String jsonString) throws ModuleException {
+        String xmlString = null;
+        try {
+            Utlatande internal = objectMapper.readValue(jsonString, Utlatande.class);
+            TSDiabetesIntyg external = InternalToTransportConverter.convert(internal);
+            StringWriter writer = new StringWriter();
+
+            JAXBElement<TSDiabetesIntyg> jaxbElement = new JAXBElement<TSDiabetesIntyg>(new QName("ns3:diabetesIntyg"), TSDiabetesIntyg.class, external);
+            JAXBContext context = JAXBContext.newInstance(TSBasIntyg.class);
+            context.createMarshaller().marshal(jaxbElement, writer);
+            xmlString = writer.toString();
+
+        } catch (JAXBException | IOException e) {
+            LOG.error("Error occured while marshalling: {}", e.getStackTrace().toString());
+            throw new ModuleException(e);
+        }
+        return xmlString;
     }
 
     private CertificateResponse convert(GetTSDiabetesResponseType diabetesResponseType, boolean revoked) throws ModuleException {
