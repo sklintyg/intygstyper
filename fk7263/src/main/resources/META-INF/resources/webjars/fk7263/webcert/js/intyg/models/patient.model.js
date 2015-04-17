@@ -1,4 +1,4 @@
-angular.module('fk7263').factory('fk7263.Domain.PatientModel',
+angular.module('fk7263').factory('fk7263.domain.PatientModel',
     [function() {
         'use strict';
 

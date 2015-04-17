@@ -1,5 +1,5 @@
-angular.module('fk7263').factory('fk7263.Domain.SkapadAvModel',
-    ['fk7263.Domain.VardenhetModel',
+angular.module('fk7263').factory('fk7263.domain.SkapadAvModel',
+    ['fk7263.domain.VardenhetModel',
         function(vardenhetModel) {
             'use strict';
 

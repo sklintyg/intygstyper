@@ -89,22 +89,12 @@ public final class InternalToTransport {
                     .add(toFunktionstillstand(source.getFunktionsnedsattning(), TypAvFunktionstillstand.KROPPSFUNKTION));
         }
 
-        if (!isNullOrEmpty(source.getAktivitetsbegransning())) {
+        // add arbetsformaga to aktivitetsbegransing
+        FunktionstillstandType aktivitetsbegransing = toFunktionstillstand(source.getAktivitetsbegransning(), TypAvFunktionstillstand.AKTIVITET);
+        aktivitetsbegransing.setArbetsformaga(toArbetsformaga(source));
 
-            // add arbetsformaga to aktivitetsbegransing
-            FunktionstillstandType aktivitetsbegransing = toFunktionstillstand(source.getAktivitetsbegransning(), TypAvFunktionstillstand.AKTIVITET);
-            aktivitetsbegransing.setArbetsformaga(toArbetsformaga(source));
+        register.getLakarutlatande().getFunktionstillstand().add(aktivitetsbegransing);
 
-            register.getLakarutlatande().getFunktionstillstand().add(aktivitetsbegransing);
-
-        } else if (source.isAvstangningSmittskydd()) {
-            // If no ObservationsKoder.AKTIVITETER_OCH_DELAKTIGHET is found,
-            // create FunktionstillstandType and populate it with Arbetsformaga to not loose information
-            FunktionstillstandType aktivitetsbegransing = new FunktionstillstandType();
-            aktivitetsbegransing.setTypAvFunktionstillstand(TypAvFunktionstillstand.AKTIVITET);
-            aktivitetsbegransing.setArbetsformaga(toArbetsformaga(source));
-            register.getLakarutlatande().getFunktionstillstand().add(aktivitetsbegransing);
-        }
         return register;
     }
 
@@ -221,6 +211,8 @@ public final class InternalToTransport {
             }
         }
 
+        arbetsformagaType.getSysselsattning().addAll(convertSysselsattnings(source));
+
         if (source.isNuvarandeArbete()) {
             // attach arbetsuppgift if available
             if (!isNullOrEmpty(source.getNuvarandeArbetsuppgifter())) {
@@ -229,42 +221,33 @@ public final class InternalToTransport {
                 arbetsformagaType.setArbetsuppgift(arbetsuppgift);
             }
 
-            arbetsformagaType.getSysselsattning().addAll(convertSysselsattnings(source));
         }
         if (source.getNedsattMed25() != null) {
             ArbetsformagaNedsattningType nedsattningType = new ArbetsformagaNedsattningType();
             nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_1_4);
-            if (source.getNedsattMed25().isValid()) {
-                nedsattningType.setVaraktighetFrom(source.getNedsattMed25().fromAsLocalDate());
-                nedsattningType.setVaraktighetTom(source.getNedsattMed25().tomAsLocalDate());
-            }
+            nedsattningType.setVaraktighetFrom(source.getNedsattMed25().fromAsLocalDate());
+            nedsattningType.setVaraktighetTom(source.getNedsattMed25().tomAsLocalDate());
             arbetsformagaType.getArbetsformagaNedsattning().add(nedsattningType);
         }
         if (source.getNedsattMed50() != null) {
             ArbetsformagaNedsattningType nedsattningType = new ArbetsformagaNedsattningType();
             nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_1_2);
-            if (source.getNedsattMed50().isValid()) {
-                nedsattningType.setVaraktighetFrom(source.getNedsattMed50().fromAsLocalDate());
-                nedsattningType.setVaraktighetTom(source.getNedsattMed50().tomAsLocalDate());
-            }
+            nedsattningType.setVaraktighetFrom(source.getNedsattMed50().fromAsLocalDate());
+            nedsattningType.setVaraktighetTom(source.getNedsattMed50().tomAsLocalDate());
             arbetsformagaType.getArbetsformagaNedsattning().add(nedsattningType);
         }
         if (source.getNedsattMed75() != null) {
             ArbetsformagaNedsattningType nedsattningType = new ArbetsformagaNedsattningType();
             nedsattningType.setNedsattningsgrad(Nedsattningsgrad.NEDSATT_MED_3_4);
-            if (source.getNedsattMed75().isValid()) {
-                nedsattningType.setVaraktighetFrom(source.getNedsattMed75().fromAsLocalDate());
-                nedsattningType.setVaraktighetTom(source.getNedsattMed75().tomAsLocalDate());
-            }
+            nedsattningType.setVaraktighetFrom(source.getNedsattMed75().fromAsLocalDate());
+            nedsattningType.setVaraktighetTom(source.getNedsattMed75().tomAsLocalDate());
             arbetsformagaType.getArbetsformagaNedsattning().add(nedsattningType);
         }
         if (source.getNedsattMed100() != null) {
             ArbetsformagaNedsattningType nedsattningType = new ArbetsformagaNedsattningType();
             nedsattningType.setNedsattningsgrad(Nedsattningsgrad.HELT_NEDSATT);
-            if (source.getNedsattMed100().isValid()) {
-                nedsattningType.setVaraktighetFrom(source.getNedsattMed100().fromAsLocalDate());
-                nedsattningType.setVaraktighetTom(source.getNedsattMed100().tomAsLocalDate());
-            }
+            nedsattningType.setVaraktighetFrom(source.getNedsattMed100().fromAsLocalDate());
+            nedsattningType.setVaraktighetTom(source.getNedsattMed100().tomAsLocalDate());
             arbetsformagaType.getArbetsformagaNedsattning().add(nedsattningType);
         }
 

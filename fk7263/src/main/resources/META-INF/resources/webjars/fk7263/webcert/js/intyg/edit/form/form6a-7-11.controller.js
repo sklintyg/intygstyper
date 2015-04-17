@@ -1,7 +1,8 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form6a711Ctrl',
-    ['$scope', '$log', 'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService',
-        function($scope, $log, model, viewState) {
+    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
+        function($scope, $log, viewState) {
             'use strict';
+            var model = viewState.intygModel;
             $scope.model = model;
             $scope.viewState = viewState;
 
@@ -115,10 +116,10 @@ angular.module('fk7263').controller('fk7263.EditCert.Form6a711Ctrl',
 
             $scope.onOvrigtChange = function(){
                 if(!model.rekommendationOvrigtCheck){
-                    model.atticUpdateForm6a();
+                    model.updateToAttic(model.properties.form6a);
                     model.rekommendationOvrigt = undefined;
                 } else {
-                    model.atticRestoreForm6a();
+                    model.updateToAttic(model.properties.form6a);
                     model.rekommendationOvrigtCheck = true;
                 }
             };

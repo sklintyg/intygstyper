@@ -1,13 +1,15 @@
 angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
-    ['$log', 'fk7263.Domain.IntygModel', 'common.IntygEditViewStateService', 'fk7263.EditCertCtrl.Helper',
-        function($log, intygModel, CommonViewState, helper) {
+    ['$log', 'common.IntygEditViewStateService', 'fk7263.EditCertCtrl.Helper',
+        function($log, CommonViewState, helper) {
             'use strict';
 
             this.common = CommonViewState;
 
-            this.avstangningSmittskyddVal = intygModel.avstangningSmittskydd;
+            this.intygModel = {};
+
+            this.avstangningSmittskyddVal = this.intygModel.avstangningSmittskydd;
             this.avstangningSmittskydd = function() {
-                return intygModel.avstangningSmittskydd;
+                return this.intygModel.avstangningSmittskydd;
             };
 
             this.inputLimits = {
@@ -29,19 +31,19 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
             this.getTotalOvrigtLength = function() {
 
                 var totalOvrigtLength = 0;
-                var hasNedsatt = intygModel.kommentar ||
-                    intygModel.annanReferensBeskrivning ||
-                    intygModel.nedsattMed25Beskrivning ||
-                    intygModel.nedsattMed50Beskrivning ||
-                    intygModel.nedsattMed75Beskrivning ||
-                    intygModel.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
+                var hasNedsatt = this.intygModel.kommentar ||
+                    this.intygModel.annanReferensBeskrivning ||
+                    this.intygModel.nedsattMed25Beskrivning ||
+                    this.intygModel.nedsattMed50Beskrivning ||
+                    this.intygModel.nedsattMed75Beskrivning ||
+                    this.intygModel.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
                 if(hasNedsatt) {
-                    totalOvrigtLength += helper.getLengthOrZero(intygModel.kommentar) +
-                    helper.getLengthOrZero(intygModel.annanReferensBeskrivning) +
-                    helper.getLengthOrZero(intygModel.nedsattMed25Beskrivning) +
-                    helper.getLengthOrZero(intygModel.nedsattMed50Beskrivning) +
-                    helper.getLengthOrZero(intygModel.nedsattMed75Beskrivning) +
-                    helper.getLengthOrZero(intygModel.arbetsformagaPrognosGarInteAttBedomaBeskrivning);
+                    totalOvrigtLength += helper.getLengthOrZero(this.intygModel.kommentar) +
+                    helper.getLengthOrZero(this.intygModel.annanReferensBeskrivning) +
+                    helper.getLengthOrZero(this.intygModel.nedsattMed25Beskrivning) +
+                    helper.getLengthOrZero(this.intygModel.nedsattMed50Beskrivning) +
+                    helper.getLengthOrZero(this.intygModel.nedsattMed75Beskrivning) +
+                    helper.getLengthOrZero(this.intygModel.arbetsformagaPrognosGarInteAttBedomaBeskrivning);
                 }
                 return totalOvrigtLength;
             };
@@ -51,8 +53,8 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
              * @param field
              */
             this.limitOtherField = function(field) {
-                if (intygModel[field]) {
-                    intygModel[field] = this.limitOvrigtLength(intygModel[field]);
+                if (this.intygModel[field]) {
+                    this.intygModel[field] = this.limitOvrigtLength(this.intygModel[field]);
                 }
             };
 

@@ -60,6 +60,10 @@ Patienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast lä
 					<varaktighetTom>2013-04-07</varaktighetTom>
 					<nedsattningsgrad>Helt_nedsatt</nedsattningsgrad>
 				</arbetsformagaNedsattning>
+
+    			<sysselsattning>
+    				<typAvSysselsattning>Nuvarande_arbete</typAvSysselsattning>
+    			</sysselsattning>
 			</arbetsformaga>
 		</funktionstillstand>
 	</lakarutlatande>

@@ -1,13 +1,13 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
-    ['$scope', '$log', 'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService',
+    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
         'fk7263.EditCertCtrl.DateRangeGroupsService',
-        function($scope, $log, model, viewState, DateRangeGroupsService) {
+        function($scope, $log, viewState, DateRangeGroupsService) {
             'use strict';
             // private vars
             var _dateRangeGroups;
 
             // scope
-            $scope.model = model;
+            $scope.model = viewState.intygModel;
             $scope.viewState = viewState;
 
             // 8b. Arbetsförmåga date management
