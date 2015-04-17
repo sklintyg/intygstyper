@@ -44,11 +44,11 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
                 }
                 // only do this once the page is loaded and changes come from the gui!
                 if (viewState.common.doneLoading && newVal) {
-                    model.updateToAttic(model.properties.form4b);
-                    model.clear(model.properties.form4b);
+                    model.updateToAttic('form4b');
+                    model.clear('form4b');
                     clearViewState();
                 } else {
-                    model.restoreFromAttic(model.properties.form4b);
+                    model.restoreFromAttic('form4b');
                     transferModelToForm();
                     setBaserasPa();
                 }
@@ -63,26 +63,10 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
             }
 
             function setBaserasPa() {
-                if (model.undersokningAvPatienten) {
-                    $scope.basedOnState.check.undersokningAvPatienten = true;
-                } else {
-                    $scope.basedOnState.check.undersokningAvPatienten = false;
-                }
-                if (model.telefonkontaktMedPatienten) {
-                    $scope.basedOnState.check.telefonkontaktMedPatienten = true;
-                } else {
-                    $scope.basedOnState.check.telefonkontaktMedPatienten = false;
-                }
-                if (model.journaluppgifter) {
-                    $scope.basedOnState.check.journaluppgifter = true;
-                } else {
-                    $scope.basedOnState.check.journaluppgifter = false;
-                }
-                if (model.annanReferens) {
-                    $scope.basedOnState.check.annanReferens = true;
-                } else {
-                    $scope.basedOnState.check.annanReferens = false;
-                }
+                $scope.basedOnState.check.undersokningAvPatienten = model.undersokningAvPatienten !== undefined;
+                $scope.basedOnState.check.telefonkontaktMedPatienten = model.telefonkontaktMedPatienten !== undefined;
+                $scope.basedOnState.check.journaluppgifter = model.journaluppgifter !== undefined;
+                $scope.basedOnState.check.annanReferens = model.annanReferens !== undefined;
             }
 
             function transferModelToForm() {
@@ -117,11 +101,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
              * @param baserasPaType
              */
             $scope.onChangeBaserasPaDate = function(baserasPaType, $viewValue) {
-                if (utils.isValidString($viewValue)) {
-                    $scope.basedOnState.check[baserasPaType] = true;
-                } else {
-                    $scope.basedOnState.check[baserasPaType] = false;
-                }
+                $scope.basedOnState.check[baserasPaType] = utils.isValidString($viewValue);
             };
 
             function registerDateParsersFor4b(_$scope) {

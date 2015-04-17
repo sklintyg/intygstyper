@@ -7,8 +7,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
             var _dateRangeGroups;
 
             // scope
-            var model = viewState.intygModel;
-            $scope.model = model;
+            $scope.model = viewState.intygModel;
             $scope.viewState = viewState;
 
             // 8b. Arbetsförmåga date management

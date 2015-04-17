@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
 
+import javax.xml.ws.soap.SOAPFaultException;
+
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,7 @@ import org.w3.wsaddressing10.AttributedURIType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareRequestType;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponderInterface;
 import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponseType;
+import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.converter.InternalToNotification;
@@ -211,16 +214,18 @@ public class Fk7263ModuleApi implements ModuleApi {
             case OK:
                 return convert(response, false);
             case ERROR:
-                switch (response.getResult().getErrorId()) {
+                ErrorIdType errorId = response.getResult().getErrorId();
+                String resultText = response.getResult().getResultText();
+                switch (errorId) {
                 case REVOKED:
                     return convert(response, true);
-                case VALIDATION_ERROR:
-                    throw new ModuleException("getMedicalCertificateForCare WS call: VALIDATION_ERROR :" + response.getResult().getResultText());
                 default:
-                    throw new ModuleException("getMedicalCertificateForCare WS call: ERROR :" + response.getResult().getResultText());
+                    LOG.error("Error of type {} occured when retrieving certificate '{}': {}", errorId, certificateId, resultText);
+                    throw new ModuleException("Error of type " + errorId + " occured when retrieving certificate " + certificateId + ", " + resultText);
                 }
             default:
-                throw new ModuleException("getMedicalCertificateForCare WS call: ERROR :" + response.getResult().getResultText());
+                LOG.error("An unidentified error occured when retrieving certificate '{}': {}", certificateId, response.getResult().getResultText());
+                throw new ModuleException("An unidentified error occured when retrieving certificate " + certificateId + ", " + response.getResult().getResultText());
         }
     }
 
@@ -360,15 +365,19 @@ public class Fk7263ModuleApi implements ModuleApi {
         AttributedURIType address = new AttributedURIType();
         address.setValue(logicalAddress);
 
-        RegisterMedicalCertificateResponseType response =
-                registerMedicalCertificateClient.registerMedicalCertificate(address, request);
+        try {
+            RegisterMedicalCertificateResponseType response =
+                    registerMedicalCertificateClient.registerMedicalCertificate(address, request);
 
-        // check whether call was successful or not
-        if (response.getResult().getResultCode() != ResultCodeEnum.OK) {
-            String message = response.getResult().getResultCode() == ResultCodeEnum.INFO
-                    ? response.getResult().getInfoText()
-                    : response.getResult().getErrorId() + " : " + response.getResult().getErrorText();
-            throw new ExternalServiceCallException(message);
+            // check whether call was successful or not
+            if (response.getResult().getResultCode() != ResultCodeEnum.OK) {
+                String message = response.getResult().getResultCode() == ResultCodeEnum.INFO
+                        ? response.getResult().getInfoText()
+                        : response.getResult().getErrorId() + " : " + response.getResult().getErrorText();
+                throw new ExternalServiceCallException(message);
+            }
+        } catch (SOAPFaultException e) {
+            throw new ExternalServiceCallException(e);
         }
 
     }

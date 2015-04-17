@@ -41,14 +41,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
 
                 viewValue = dateUtils.convertDateToISOString(viewValue);
 
-                if (!dateRangeGroup.isValid()) {
-                    // uncheck check since both dates are undefined or empty
-                    dateRangeGroup.workState = false;
-
-                } else {
-                    // One of the dates is valid
-                    dateRangeGroup.workState = true; // Check nedsatt checkbox
-                }
+                dateRangeGroup.workState = dateRangeGroup.isValid();
 
                 return viewValue;
             }
@@ -79,11 +72,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
         };
 
         DateRangeGroupModel.prototype.equals = function(otherGroup) {
-            if(otherGroup && otherGroup.groupName === this.groupName){
-                return true;
-            } else {
-                return false;
-            }
+            return !otherGroup ? false : otherGroup.groupName === this.groupName;
         };
 
 

@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.common.enumerations.Diagnoskodverk;
-import se.inera.certificate.modules.fk7263.support.Fk7263EntryPoint;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
@@ -109,14 +108,6 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
     }
 
     private void validateUtlatande() {
-
-        String typ = utlatande.getTypAvUtlatande();
-
-        if (typ == null || !Fk7263EntryPoint.MODULE_DESCRIPTION.equals(typ)) {
-            addValidationError("Head: Invalid utlatandetyp - must be "
-                    + Fk7263EntryPoint.MODULE_DESCRIPTION);
-        }
-
         String id = utlatande.getLakarutlatandeId();
         if (id == null || StringUtils.isEmpty(id)) {
             addValidationError("Head: Utlatande Id is mandatory!");
@@ -489,7 +480,6 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
             boolean inArbetsformagaAterstallasHelt = false;
             boolean inArbetsformagaAterstallasDelvis = false;
             boolean inArbetsformagaEjAterstallas = false;
-            boolean inArbetsformagaGarEjAttBedomma = false;
     
             if (inAktivitetFunktion.getArbetsformaga().getPrognosangivelse() != null) {
                 inArbetsformagaAterstallasHelt = inAktivitetFunktion.getArbetsformaga().getPrognosangivelse()

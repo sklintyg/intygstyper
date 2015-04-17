@@ -84,7 +84,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
                 default :
                     model.prognosBedomning = undefined;
                 }
-                model.updateToAttic(model.properties.form10)
+                model.updateToAttic(model.properties.form10);
             };
 
             $scope.showInteAttBedoma = function() {
