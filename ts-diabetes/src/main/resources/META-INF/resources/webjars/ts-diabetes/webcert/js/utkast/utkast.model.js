@@ -4,27 +4,17 @@ angular.module('ts-diabetes').factory('ts-diabetes.Domain.IntygModel',
     function(grundData, DraftModel, ModelAttr, BaseAtticModel) {
         'use strict';
 
-        // --- Transform functions
-        var synTransform = function(syn) {
-            if (!syn || (!syn.utanKorrektion && !syn.medKorrektion && !syn.kontaktlins)) {
-                return undefined;
-            } else {
-                return syn;
-            }
-        };
-
-        var korkortstypTransform = function(korkortstyp) {
-            if (!korkortstyp) {
-                return undefined;
-            } else {
-                return korkortstyp;
-            }
-        };
-
         var TsDiabetesModel = BaseAtticModel._extend({
             init: function init() {
                 init._super.call(this, 'IntygModel', {
-                    vardkontakt: ['typ', 'idkontroll'],
+                    id: undefined,
+                    typ: undefined,
+                    kommentar:undefined,
+                    grundData: grundData,
+                    vardkontakt: {
+                        typ: undefined,
+                        idkontroll: undefined
+                    },
                     intygAvser: {
                         korkortstyp: new ModelAttr('korkortstyp', {defaultValue:[
                             {'type': 'AM', 'selected': false},
@@ -69,21 +59,44 @@ angular.module('ts-diabetes').factory('ts-diabetes.Domain.IntygModel',
                     syn: {
                         separatOgonlakarintyg: undefined,
                         synfaltsprovningUtanAnmarkning: undefined,
-                        hoger:new ModelAttr('hoger', {fromTransform: synTransform}),
-                        vanster:new ModelAttr('vanster', {fromTransform: synTransform}),
-                        binokulart:new ModelAttr('binokulart', {fromTransform: synTransform}),
+                        hoger : {
+                            utanKorrektion : undefined,
+                            medKorrektion : undefined
+                        },
+                        vanster : {
+                            utanKorrektion : undefined,
+                            medKorrektion : undefined
+                        },
+                        binokulart : {
+                            utanKorrektion : undefined,
+                            medKorrektion : undefined
+                        },
                         diplopi: undefined,
                         synfaltsprovning: undefined,
                         provningOgatsRorlighet: undefined},
                     bedomning: {
-                        korkortstyp: new ModelAttr('korkortstyp', {fromTransform: korkortstypTransform}),
+                        korkortstyp: new ModelAttr('korkortstyp',
+                            {defaultValue:[
+                                { type: 'AM', selected: false },
+                                { type: 'A1', selected: false },
+                                { type: 'A2', selected: false },
+                                { type: 'A', selected: false },
+                                { type: 'B', selected: false },
+                                { type: 'BE', selected: false },
+                                { type: 'TRAKTOR', selected: false },
+                                { type: 'C1', selected: false },
+                                { type: 'C1E', selected: false },
+                                { type: 'C', selected: false },
+                                { type: 'CE', selected: false },
+                                { type: 'D1', selected: false },
+                                { type: 'D1E', selected: false },
+                                { type: 'D', selected: false },
+                                { type: 'DE', selected: false },
+                                { type: 'TAXI', selected: false }
+                            ]}),
                         lakareSpecialKompetens: undefined,
                         lamplighetInnehaBehorighet: undefined
-                    },
-
-                    kommentar:undefined,
-                        id:undefined,
-                        grundData: new ModelAttr('grundData', {defaultValue: grundData})
+                    }
                 });
                 this.draftModel = new DraftModel(this);
             },
