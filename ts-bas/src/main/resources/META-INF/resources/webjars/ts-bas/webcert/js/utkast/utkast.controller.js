@@ -1,20 +1,22 @@
 angular.module('ts-bas').controller('ts-bas.UtkastController',
     [ '$anchorScroll', '$location', '$q', '$rootScope', '$scope', '$timeout', '$window',
         'common.ManageCertView', 'common.UserModel',
-        'common.intygNotifyService', 'ts-bas.Domain.IntygModel', 'common.Domain.DraftModel',
+        'common.intygNotifyService', 'ts-bas.Domain.IntygModel',
         'ts-bas.UtkastController.ViewStateService',
         function($anchorScroll, $location, $q, $rootScope, $scope, $timeout, $window,
-            ManageCertView, UserModel, intygNotifyService, IntygModel, draftModel, viewState) {
+            ManageCertView, UserModel, intygNotifyService, IntygModel, viewState) {
             'use strict';
 
             /**********************************************************************************
              * Default state
              **********************************************************************************/
+
             viewState.common.intyg.typ = 'ts-bas';
-            viewState.intygModel = new IntygModel();
+            viewState.draftModel = IntygModel._members.build();
+            viewState.intygModel = viewState.draftModel.content;
             $scope.user = UserModel;
             $scope.viewState = viewState;
-            $scope.notifieringVidarebefordrad = draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
+            $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
             $scope.cert = viewState.intygModel; // Set default intyg state from model
 
             // form model (extends intyg model where necessary)
@@ -39,17 +41,17 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
             function updateHSAInfoMessage() {
 
                 // check if all info is available from HSA. If not, display the info message that someone needs to update it
-                if (intygModel.grundData.skapadAv.vardenhet.postadress === undefined ||
-                    intygModel.grundData.skapadAv.vardenhet.postnummer === undefined ||
-                    intygModel.grundData.skapadAv.vardenhet.postort === undefined ||
-                    intygModel.grundData.skapadAv.vardenhet.telefonnummer === undefined ||
-                    intygModel.grundData.skapadAv.vardenhet.postadress === '' ||
-                    intygModel.grundData.skapadAv.vardenhet.postnummer === '' ||
-                    intygModel.grundData.skapadAv.vardenhet.postort === '' ||
-                    intygModel.grundData.skapadAv.vardenhet.telefonnummer === '') {
-                    viewState.common.hsaInfoMissing = true;
+                if (viewState.intygModel.grundData.skapadAv.vardenhet.postadress === undefined ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postnummer === undefined ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postort === undefined ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer === undefined ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postadress === '' ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postnummer === '' ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postort === '' ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer === '') {
+                    viewState.intygModel.common.hsaInfoMissing = true;
                 } else {
-                    viewState.common.hsaInfoMissing = false;
+                    viewState.intygModel.common.hsaInfoMissing = false;
                 }
             }
 
@@ -240,9 +242,9 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
             $scope.openMailDialog = function() {
 
                 var certMeta = {
-                    intygId: intygModel.id,
+                    intygId: viewState.intygModel.id,
                     intygType: viewState.common.intyg.typ,
-                    vidarebefordrad: draftModel.vidarebefordrad
+                    vidarebefordrad: viewState.draftModel.vidarebefordrad
                 };
 
                 intygNotifyService.forwardIntyg(certMeta);
@@ -250,9 +252,9 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
 
             $scope.onVidarebefordradChange = function() {
                 var certMeta = {
-                    intygId: intygModel.id,
+                    intygId: viewState.intygModel.id,
                     intygType: viewState.common.intyg.typ,
-                    vidarebefordrad: draftModel.vidarebefordrad
+                    vidarebefordrad: viewState.draftModel.vidarebefordrad
                 };
                 intygNotifyService.onForwardedChange(certMeta);
             };
@@ -266,7 +268,7 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
              **************************************************************************/
 
             // Get the certificate draft from the server.
-            ManageCertView.load(viewState.common.intyg.typ, viewState.intygModel);
+            ManageCertView.load(viewState.common.intyg.typ, viewState.draftModel);
 
             $scope.$on('saveRequest', function($event, deferred) {
                 // Mark form as saved, will be marked as not saved if saving fails.
@@ -274,9 +276,9 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
 //                $scope.cert.prepare();
 
                 var intygSaveRequest = {
-                    intygsId      : intygModel.id,
+                    intygsId      : viewState.intygModel.id,
                     intygsTyp     : viewState.common.intyg.typ,
-                    cert          : $scope.cert,
+                    cert          : viewState.intygModel.toSendModel(),
                     saveComplete  : $q.defer()
                 };
 

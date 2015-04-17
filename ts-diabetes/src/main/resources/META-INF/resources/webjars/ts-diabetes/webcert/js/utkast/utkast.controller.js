@@ -1,8 +1,8 @@
 angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
     ['$anchorScroll', '$location', '$log', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel',
-        'common.intygNotifyService', 'ts-diabetes.Domain.IntygModel', 'common.Domain.DraftModel', 'ts-diabetes.UtkastController.ViewStateService',
+        'common.intygNotifyService', 'ts-diabetes.Domain.IntygModel', 'ts-diabetes.UtkastController.ViewStateService',
         function($anchorScroll, $location, $log, $q, $rootScope, $scope, $timeout, $window, ManageCertView, UserModel,
-                 intygNotifyService, IntygModel, draftModel, viewState) {
+                 intygNotifyService, IntygModel, viewState) {
             'use strict';
 
             /**********************************************************************************
@@ -10,7 +10,8 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              **********************************************************************************/
 
             viewState.common.intyg.typ = 'ts-diabetes';
-            viewState.intygModel = new IntygModel();
+            viewState.draftModel = IntygModel._members.build();
+            viewState.intygModel = viewState.draftModel.content;
 
             // Page state
             $scope.user = UserModel;
@@ -20,7 +21,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
 
             // Intyg state
             $scope.cert = viewState.intygModel; // keep cert as a shortcut to viewState.intyModel?
-            $scope.notifieringVidarebefordrad = draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
+            $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
 
             // form model (extends intyg model where necessary)
             $scope.form = {
@@ -105,7 +106,11 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
             }, true);
             $scope.$watch('cert.diabetes.insulin', function(behandlasMedInsulin) {
                 if (!behandlasMedInsulin && $scope.cert.diabetes) {
+                    $scope.cert.updateToAttic('diabetes.insulinBehandlingsperiod');
                     $scope.cert.diabetes.insulinBehandlingsperiod = null;
+
+                } else {
+                    $scope.cert.restoreFromAttic('diabetes.insulinBehandlingsperiod');
                 }
             }, true);
             $scope.$watch('cert.hypoglykemier.teckenNedsattHjarnfunktion',
@@ -202,7 +207,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                 var utkastNotifyRequest = {
                     intygId : viewState.intygModel.id,
                     intygType: viewState.common.intyg.typ,
-                    vidarebefordrad: draftModel.vidarebefordrad
+                    vidarebefordrad: viewState.draftModel.vidarebefordrad
                 };
                 intygNotifyService.forwardIntyg(utkastNotifyRequest);
             };
@@ -211,7 +216,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                 var utkastNotifyRequest = {
                     intygId : viewState.intygModel.id,
                     intygType: viewState.common.intyg.typ,
-                    vidarebefordrad: draftModel.vidarebefordrad
+                    vidarebefordrad: viewState.draftModel.vidarebefordrad
                 };
                 intygNotifyService.onForwardedChange(utkastNotifyRequest);
             };
@@ -225,7 +230,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              **************************************************************************/
 
             // Get the certificate draft from the server.
-            ManageCertView.load(viewState.common.intyg.typ, viewState.intygModel);
+            ManageCertView.load(viewState.common.intyg.typ, viewState.draftModel);
 
             $scope.$on('saveRequest', function($event, deferred) {
                 // Mark form as saved, will be marked as not saved if saving fails.

@@ -2,17 +2,18 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
         'common.CertificateService', 'common.ManageCertView', 'common.UserModel',
         'common.intygNotifyService', 'fk7263.diagnosService', 'common.DateUtilsService', 'common.UtilsService',
-        'fk7263.Domain.IntygModel', 'common.Domain.DraftModel', 'fk7263.EditCertCtrl.ViewStateService',
+        'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
             CertificateService, ManageCertView, UserModel, intygNotifyService, diagnosService,
-            dateUtils, utils, IntygModel, draftModel, viewState) {
+            dateUtils, utils, IntygModel, viewState) {
             'use strict';
 
             /**********************************************************************************
              * Default state
              **********************************************************************************/
             // create a new intyg model
-            viewState.intygModel = new IntygModel();
+            viewState.draftModel = IntygModel._members.build();
+            viewState.intygModel = viewState.draftModel.content;
             $scope.viewState = viewState;
             viewState.common.intyg.typ = 'fk7263';
 
@@ -25,7 +26,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
             // Intyg state
             $scope.cert = {};
-            $scope.notifieringVidarebefordrad = draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
+            $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
 
 
             // TODO : see if the below can be removed
@@ -62,7 +63,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 var utkastNotifyRequest = {
                     intygId : intygModel.id,
                     intygType: viewState.common.intyg.typ,
-                    vidarebefordrad: draftModel.vidarebefordrad
+                    vidarebefordrad: viewState.draftModel.vidarebefordrad
                 };
                 intygNotifyService.forwardIntyg(utkastNotifyRequest);
             };
@@ -72,7 +73,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 var utkastNotifyRequest = {
                     intygId : intygModel.id,
                     intygType: viewState.common.intyg.typ,
-                    vidarebefordrad: draftModel.vidarebefordrad
+                    vidarebefordrad: viewState.draftModel.vidarebefordrad
                 };
                 intygNotifyService.onForwardedChange(utkastNotifyRequest);
             };
@@ -89,7 +90,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              **************************************************************************/
 
             // Get the certificate draft from the server.
-            ManageCertView.load(viewState.common.intyg.typ, viewState.intygModel);
+            ManageCertView.load(viewState.common.intyg.typ, viewState.draftModel);
 
             $scope.$on('saveRequest', function($event, deferred) {
 

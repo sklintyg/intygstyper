@@ -21,62 +21,87 @@ angular.module('ts-diabetes').factory('ts-diabetes.Domain.IntygModel',
             }
         };
 
-        var IntygModel = BaseAtticModel.extend({
-            init: function() {
-                this._super('IntygModel', {
+        var TsDiabetesModel = BaseAtticModel._extend({
+            init: function init() {
+                init._super.call(this, 'IntygModel', {
                     vardkontakt: ['typ', 'idkontroll'],
-                    intygAvser: [
-                        new ModelAttr('korkortstyp', {fromTransform: korkortstypTransform})
-                    ],
-                    diabetes: [
-                        'diabetestyp',
-                        'observationsperiod',
-                        'endastKost',
-                        'tabletter',
-                        'insulin',
-                        'insulinBehandlingsperiod',
-                        'annanBehandlingBeskrivning'],
-                    hypoglykemier: [
-                        'kunskapOmAtgarder',
-                        'teckenNedsattHjarnfunktion',
-                        'saknarFormagaKannaVarningstecken',
-                        'allvarligForekomst',
-                        'allvarligForekomstBeskrivning',
-                        'allvarligForekomstTrafiken',
-                        'allvarligForekomstTrafikBeskrivning',
-                        'allvarligForekomstVakenTid',
-                        'allvarligForekomstVakenTidObservationstid',
-                        'egenkontrollBlodsocker'],
-                    syn: [
-                        'separatOgonlakarintyg',
-                        'synfaltsprovningUtanAnmarkning',
-                        new ModelAttr('hoger', {fromTransform: synTransform}),
-                        new ModelAttr('vanster', {fromTransform: synTransform}),
-                        new ModelAttr('binokulart', {fromTransform: synTransform}),
-                        'diplopi',
-                        'synfaltsprovning',
-                        'provningOgatsRorlighet'],
-                    bedomning: [
-                        new ModelAttr('korkortstyp', {fromTransform: korkortstypTransform}),
-                        'lakareSpecialKompetens',
-                        'lamplighetInnehaBehorighet'
-                    ],
+                    intygAvser: {
+                        korkortstyp: new ModelAttr('korkortstyp', {defaultValue:[
+                            {'type': 'AM', 'selected': false},
+                            {'type': 'A1', 'selected': false},
+                            {'type': 'A2', 'selected': false},
+                            {'type': 'A', 'selected': false},
+                            {'type': 'B', 'selected': false},
+                            {'type': 'BE', 'selected': false},
+                            {'type': 'TRAKTOR', 'selected': false},
+                            {'type': 'C1', 'selected': false},
+                            {'type': 'C1E', 'selected': false},
+                            {'type': 'C', 'selected': false},
+                            {'type': 'CE', 'selected': false},
+                            {'type': 'D1', 'selected': false},
+                            {'type': 'D1E', 'selected': false},
+                            {'type': 'D', 'selected': false},
+                            {'type': 'DE', 'selected': false},
+                            {'type': 'TAXI', 'selected': false}
+                        ]})
+                    },
+                    diabetes: {
+                        diabetestyp : undefined,
+                        observationsperiod: undefined,
+                        endastKost: undefined,
+                        tabletter: undefined,
+                        insulin: undefined,
+                        insulinBehandlingsperiod: undefined,
+                        annanBehandlingBeskrivning: undefined
+                    },
+                    hypoglykemier: {
+                        kunskapOmAtgarder: undefined,
+                        teckenNedsattHjarnfunktion: undefined,
+                        saknarFormagaKannaVarningstecken: undefined,
+                        allvarligForekomst: undefined,
+                        allvarligForekomstBeskrivning: undefined,
+                        allvarligForekomstTrafiken: undefined,
+                        allvarligForekomstTrafikBeskrivning: undefined,
+                        allvarligForekomstVakenTid: undefined,
+                        allvarligForekomstVakenTidObservationstid: undefined,
+                        egenkontrollBlodsocker: undefined
+                    },
+                    syn: {
+                        separatOgonlakarintyg: undefined,
+                        synfaltsprovningUtanAnmarkning: undefined,
+                        hoger:new ModelAttr('hoger', {fromTransform: synTransform}),
+                        vanster:new ModelAttr('vanster', {fromTransform: synTransform}),
+                        binokulart:new ModelAttr('binokulart', {fromTransform: synTransform}),
+                        diplopi: undefined,
+                        synfaltsprovning: undefined,
+                        provningOgatsRorlighet: undefined},
+                    bedomning: {
+                        korkortstyp: new ModelAttr('korkortstyp', {fromTransform: korkortstypTransform}),
+                        lakareSpecialKompetens: undefined,
+                        lamplighetInnehaBehorighet: undefined
+                    },
 
-                    misc: ['kommentar', 'id', new ModelAttr('grundData', {defaultValue: grundData})]
+                    kommentar:undefined,
+                        id:undefined,
+                        grundData: new ModelAttr('grundData', {defaultValue: grundData})
                 });
                 this.draftModel = new DraftModel(this);
             },
 
-            update: function(content, parent) {
+            update: function update(content, parent) {
                 if (parent) {
                     parent.content = this;
                 }
-                this._super(content);
+                update._super.call(this, content);
+            }
+        }, {
+            build : function(){
+                return new DraftModel(new TsDiabetesModel());
             }
         });
 
         /**
          * Return the constructor function IntygModel
          */
-        return IntygModel;
+        return TsDiabetesModel;
     }]);

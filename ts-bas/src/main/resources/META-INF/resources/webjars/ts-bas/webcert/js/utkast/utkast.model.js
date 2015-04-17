@@ -7,10 +7,9 @@ angular.module('ts-bas').factory('ts-bas.Domain.IntygModel',
         /**
          * Constructor, with class name
          */
-        var IntygModel = BaseAtticModel.extend({
-            init: function() {
-
-                this._super('IntygModel', {
+        var TsBasModel = BaseAtticModel._extend({
+            init: function init() {
+                init._super.call(this, 'TsBasModel', {
                     id: undefined,
                     typ: undefined, // NOT intygtyp, this is TS-intyg type.
                     kommentar: undefined,
@@ -20,18 +19,19 @@ angular.module('ts-bas').factory('ts-bas.Domain.IntygModel',
                         idkontroll: undefined
                     },
                     intygAvser: {
-                        'korkortstyp': [
-                            {'type': 'C1', 'selected': false},
-                            {'type': 'C1E', 'selected': false},
-                            {'type': 'C', 'selected': false},
-                            {'type': 'CE', 'selected': false},
-                            {'type': 'D1', 'selected': false},
-                            {'type': 'D1E', 'selected': false},
-                            {'type': 'D', 'selected': false},
-                            {'type': 'DE', 'selected': false},
-                            {'type': 'TAXI', 'selected': false},
-                            {'type': 'ANNAT', 'selected': false}
-                        ]
+                        'korkortstyp': new ModelAttr('korkortstyp',
+                            {defaultValue:[
+                                {'type': 'C1', 'selected': false},
+                                {'type': 'C1E', 'selected': false},
+                                {'type': 'C', 'selected': false},
+                                {'type': 'CE', 'selected': false},
+                                {'type': 'D1', 'selected': false},
+                                {'type': 'D1E', 'selected': false},
+                                {'type': 'D', 'selected': false},
+                                {'type': 'DE', 'selected': false},
+                                {'type': 'TAXI', 'selected': false},
+                                {'type': 'ANNAT', 'selected': false}
+                        ]})
                     },
                     syn: {
                         'synfaltsdefekter': undefined,
@@ -118,7 +118,8 @@ angular.module('ts-bas').factory('ts-bas.Domain.IntygModel',
                         'beskrivning': undefined
                     },
                     bedomning: {
-                        'korkortstyp': [
+                        'korkortstyp': new ModelAttr('korkortstyp',
+                            {defaultValue:[
                             {'type': 'C1', 'selected': false},
                             {'type': 'C1E', 'selected': false},
                             {'type': 'C', 'selected': false},
@@ -129,23 +130,26 @@ angular.module('ts-bas').factory('ts-bas.Domain.IntygModel',
                             {'type': 'DE', 'selected': false},
                             {'type': 'TAXI', 'selected': false},
                             {'type': 'ANNAT', 'selected': false}
-                        ],
+                        ]}),
                         'kanInteTaStallning': undefined,
                         'lakareSpecialKompetens': undefined
                     }
                 });
-                this.draftModel = new DraftModel(this);
             },
-            update: function(content, parent) {
+            update: function update(content, parent) {
                 if (parent) {
                     parent.content = this;
                 }
-                this._super(content);
+                update._super.call(this, content);
+            }
+        }, {
+            build : function(){
+                return new DraftModel(new TsBasModel());
             }
         });
 
         /**
          * Return the constructor function IntygModel
          */
-        return IntygModel;
+        return TsBasModel;
     }]);
