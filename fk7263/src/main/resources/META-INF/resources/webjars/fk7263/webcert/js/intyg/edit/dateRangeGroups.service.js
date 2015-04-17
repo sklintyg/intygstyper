@@ -62,7 +62,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
                 if (from) {
 
                     // add formatters
-                    from.$parsers.push(function(modelValue) {
+                    from.$formatters.push(function(modelValue) {
                         return nedsattFormatter(self, modelValue);
                     });
 
@@ -71,7 +71,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
                 if (from) {
 
                     // add formatters
-                    tom.$parsers.push(function(modelValue) {
+                    tom.$formatters.push(function(modelValue) {
                         return nedsattFormatter(self, modelValue);
                     });
                 }

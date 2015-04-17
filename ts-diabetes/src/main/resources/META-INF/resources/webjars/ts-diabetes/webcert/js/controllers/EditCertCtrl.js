@@ -1,7 +1,8 @@
 angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
     ['$anchorScroll', '$location', '$log', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel',
-        'common.wcFocus', 'common.intygNotifyService', 'common.IntygEditViewStateService',
-        function($anchorScroll, $location, $log, $q, $rootScope, $scope, $timeout, $window, ManageCertView, UserModel, wcFocus, intygNotifyService, viewState) {
+        'common.wcFocus', 'common.intygNotifyService', 'common.IntygEditViewStateService', 'common.DateUtilsService',
+        function($anchorScroll, $location, $log, $q, $rootScope, $scope, $timeout, $window,
+            ManageCertView, UserModel, wcFocus, intygNotifyService, viewState, dateUtils) {
             'use strict';
 
             /**********************************************************************************
@@ -25,7 +26,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 vidarebefordrad: false
             };
 
-            $scope.tomorrowDate = moment().subtract(1, 'days').format('YYYY-MM-DD');
+            $scope.tomorrowDate = moment().format('YYYY-MM-DD');
 
             // form model (extends intyg model where necessary)
             $scope.form = {
@@ -224,6 +225,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 $scope.cert = cert.content;
                 $scope.certMeta.intygId = cert.content.id;
                 convertCertToForm($scope);
+                dateUtils.addDateParserFormatter($scope.certForm.allvarligForekomstVakenTidObservationstid);
 
                 viewState.isSigned = cert.status === 'SIGNED';
                 viewState.intyg.isComplete = cert.status === 'SIGNED' || cert.status === 'DRAFT_COMPLETE';
