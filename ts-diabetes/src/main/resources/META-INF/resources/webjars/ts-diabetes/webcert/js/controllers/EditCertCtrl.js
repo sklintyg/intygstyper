@@ -1,7 +1,7 @@
 angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
-    ['$anchorScroll', '$location', '$log', '$q', '$rootScope', '$scope', '$timeout', '$window', '$filter', 'common.ManageCertView', 'common.UserModel',
+    ['$anchorScroll', '$location', '$log', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel',
         'common.wcFocus', 'common.intygNotifyService', 'common.IntygEditViewStateService', 'common.DateUtilsService',
-        function($anchorScroll, $location, $log, $q, $rootScope, $scope, $timeout, $window, $filter,
+        function($anchorScroll, $location, $log, $q, $rootScope, $scope, $timeout, $window,
             ManageCertView, UserModel, wcFocus, intygNotifyService, viewState, dateUtils) {
             'use strict';
 
@@ -225,39 +225,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 $scope.cert = cert.content;
                 $scope.certMeta.intygId = cert.content.id;
                 convertCertToForm($scope);
-
-                if ($scope.certForm.allvarligForekomstVakenTidObservationstid.$parsers.length > 1) {
-                    $scope.certForm.allvarligForekomstVakenTidObservationstid.$parsers.shift();
-                }
-
-                $scope.certForm.allvarligForekomstVakenTidObservationstid.$parsers.unshift(function (viewValue) {
-
-                    viewValue = dateUtils.convertDateToISOString(viewValue);
-
-                    var transformedInput;
-                    if(dateUtils.isDate(viewValue)){
-                        transformedInput = $filter('date')(viewValue, 'yyyy-MM-dd', 'GMT+0100');
-                    }
-
-                    if (transformedInput !== viewValue) {
-                        $scope.certForm.allvarligForekomstVakenTidObservationstid.$setViewValue(transformedInput);
-                        $scope.certForm.allvarligForekomstVakenTidObservationstid.$render();
-                    }
-
-                    return transformedInput;
-                });
-
-                if ($scope.certForm.allvarligForekomstVakenTidObservationstid.$formatters.length > 0) {
-                    $scope.certForm.allvarligForekomstVakenTidObservationstid.$formatters.shift();
-                }
-
-                $scope.certForm.allvarligForekomstVakenTidObservationstid.$formatters.unshift(function (modelValue) {
-                    if (modelValue) {
-                        // convert date to iso
-                        modelValue = dateUtils.convertDateToISOString(modelValue);
-                    }
-                    return modelValue;
-                });
+                dateUtils.addDateParserFormatter($scope.certForm.allvarligForekomstVakenTidObservationstid);
 
                 viewState.isSigned = cert.status === 'SIGNED';
                 viewState.intyg.isComplete = cert.status === 'SIGNED' || cert.status === 'DRAFT_COMPLETE';
