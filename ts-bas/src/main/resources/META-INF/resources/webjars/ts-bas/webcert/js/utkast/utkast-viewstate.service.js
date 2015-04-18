@@ -1,9 +1,22 @@
 angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
-    ['$log', 'ts-bas.Domain.IntygModel', 'common.UtkastViewStateService',
-        function($log, intygModel, CommonViewState) {
+    ['$log', 'common.UtkastViewStateService',
+        function($log, CommonViewState) {
             'use strict';
 
             this.common = CommonViewState;
+
+            this.intygModel = undefined;
+            this.draftModel = undefined;
+
+            this.clearModel = function(){
+                this.intygModel = undefined;
+                this.draftModel = undefined;
+            }
+
+            this.setDraftModel = function(draftModel){
+                this.draftModel = draftModel;
+                this.intygModel = draftModel.content;
+            };
 
             // STATIC CONSTANT: Input limits on text fields
             this.inputLimits = {

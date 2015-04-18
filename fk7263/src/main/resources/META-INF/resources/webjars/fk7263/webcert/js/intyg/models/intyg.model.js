@@ -1,7 +1,7 @@
 angular.module('fk7263').factory('fk7263.Domain.IntygModel',
     ['common.Domain.GrundDataModel', 'common.Domain.DraftModel', 'common.domain.ModelAttr',
         'common.domain.BaseAtticModel',
-        function(grundData, DraftModel, ModelAttr, BaseAtticModel) {
+        function(GrundData, DraftModel, ModelAttr, BaseAtticModel) {
             'use strict';
 
 
@@ -13,9 +13,9 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
                     return nedsatt;
                 }
             };
-
             var Fk7263Model = BaseAtticModel._extend({
                 init: function init() {
+                    var grundData = GrundData.build();
                     init._super.call(this, 'Fk7263Model', {
 
                         form1: [new ModelAttr('avstangningSmittskydd', {defaultValue: false})],

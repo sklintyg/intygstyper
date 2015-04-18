@@ -12,8 +12,9 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
              **********************************************************************************/
 
             viewState.common.intyg.typ = 'ts-bas';
-            viewState.draftModel = IntygModel._members.build();
-            viewState.intygModel = viewState.draftModel.content;
+
+            viewState.setDraftModel(IntygModel._members.build());
+
             $scope.user = UserModel;
             $scope.viewState = viewState;
             $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?

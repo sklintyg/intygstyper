@@ -1,7 +1,7 @@
 angular.module('ts-diabetes').factory('ts-diabetes.Domain.IntygModel',
     ['common.Domain.GrundDataModel', 'common.Domain.DraftModel', 'common.domain.ModelAttr',
      'common.domain.BaseAtticModel',
-    function(grundData, DraftModel, ModelAttr, BaseAtticModel) {
+    function(GrundData, DraftModel, ModelAttr, BaseAtticModel) {
         'use strict';
 
         // --- Transform functions
@@ -23,6 +23,7 @@ angular.module('ts-diabetes').factory('ts-diabetes.Domain.IntygModel',
 
         var TsDiabetesModel = BaseAtticModel._extend({
             init: function init() {
+                var grundData = GrundData.build();
                 init._super.call(this, 'IntygModel', {
                     id: undefined,
                     typ: undefined,
@@ -113,11 +114,7 @@ angular.module('ts-diabetes').factory('ts-diabetes.Domain.IntygModel',
                             ]}),
                         lakareSpecialKompetens: undefined,
                         lamplighetInnehaBehorighet: undefined
-                    },
-
-                    kommentar:undefined,
-                        id:undefined,
-                        grundData: new ModelAttr('grundData', {defaultValue: grundData})
+                    }
                 });
                 this.draftModel = new DraftModel(this);
             },

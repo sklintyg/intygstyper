@@ -5,9 +5,20 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
 
             this.common = CommonViewState;
 
-            this.intygModel = {};
+            this.intygModel = undefined;
+            this.draftModel = undefined;
 
-            this.avstangningSmittskyddVal = this.intygModel.avstangningSmittskydd;
+            this.clearModel = function(){
+                this.intygModel = undefined;
+                this.draftModel = undefined;
+            }
+
+            this.setDraftModel = function(draftModel){
+                this.draftModel = draftModel;
+                this.intygModel = draftModel.content;
+                this.avstangningSmittskyddVal = this.intygModel.avstangningSmittskydd;
+            };
+
             this.avstangningSmittskydd = function() {
                 return this.intygModel.avstangningSmittskydd;
             };
@@ -26,6 +37,13 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
 
             this.reset = function() {
                 CommonViewState.reset();
+            }
+
+            this.clearModel = function(){
+                CommonViewState.intygModel = undefined;
+                CommonViewState.draftModel = undefined;
+                this.intygModel = undefined;
+                this.draftModel = undefined;
             }
 
             /**

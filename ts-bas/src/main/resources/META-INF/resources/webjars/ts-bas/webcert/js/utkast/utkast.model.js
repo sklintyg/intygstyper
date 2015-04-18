@@ -1,7 +1,7 @@
 angular.module('ts-bas').factory('ts-bas.Domain.IntygModel',
     ['common.Domain.GrundDataModel', 'common.Domain.DraftModel', 'common.domain.ModelAttr',
         'common.domain.BaseAtticModel',
-        function(grundData, DraftModel, ModelAttr, BaseAtticModel) {
+        function(GrundData, DraftModel, ModelAttr, BaseAtticModel) {
         'use strict';
 
         /**
@@ -9,6 +9,7 @@ angular.module('ts-bas').factory('ts-bas.Domain.IntygModel',
          */
         var TsBasModel = BaseAtticModel._extend({
             init: function init() {
+                var grundData = GrundData.build();
                 init._super.call(this, 'TsBasModel', {
                     id: undefined,
                     typ: undefined, // NOT intygtyp, this is TS-intyg type.

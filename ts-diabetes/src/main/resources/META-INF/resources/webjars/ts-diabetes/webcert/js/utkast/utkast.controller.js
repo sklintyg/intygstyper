@@ -10,8 +10,8 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              **********************************************************************************/
 
             viewState.common.intyg.typ = 'ts-diabetes';
-            viewState.draftModel = IntygModel._members.build();
-            viewState.intygModel = viewState.draftModel.content;
+
+            viewState.setDraftModel(IntygModel._members.build());
 
             // Page state
             $scope.user = UserModel;

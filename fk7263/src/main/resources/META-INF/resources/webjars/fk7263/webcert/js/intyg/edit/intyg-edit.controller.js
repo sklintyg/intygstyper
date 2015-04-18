@@ -12,8 +12,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Default state
              **********************************************************************************/
             // create a new intyg model
-            viewState.draftModel = IntygModel._members.build();
-            viewState.intygModel = viewState.draftModel.content;
+            viewState.setDraftModel(IntygModel._members.build());
             $scope.viewState = viewState;
             viewState.common.intyg.typ = 'fk7263';
 
@@ -25,7 +24,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.focusFirstInput = false; // TODO: to common viewstate
 
             // Intyg state
-            $scope.cert = {};
+            $scope.cert = viewState.intygModel;
             $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
 
 
@@ -123,5 +122,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
                 deferred.resolve(intygSaveRequest);
             });
+
 
         }]);
