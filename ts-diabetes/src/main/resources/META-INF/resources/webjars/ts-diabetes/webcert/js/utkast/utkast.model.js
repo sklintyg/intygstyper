@@ -4,6 +4,23 @@ angular.module('ts-diabetes').factory('ts-diabetes.Domain.IntygModel',
     function(grundData, DraftModel, ModelAttr, BaseAtticModel) {
         'use strict';
 
+        // --- Transform functions
+        var synTransform = function(syn) {
+            if (!syn || (!syn.utanKorrektion && !syn.medKorrektion && !syn.kontaktlins)) {
+                return undefined;
+            } else {
+                return syn;
+            }
+        };
+
+        var korkortstypTransform = function(korkortstyp) {
+            if (!korkortstyp) {
+                return undefined;
+            } else {
+                return korkortstyp;
+            }
+        };
+
         var TsDiabetesModel = BaseAtticModel._extend({
             init: function init() {
                 init._super.call(this, 'IntygModel', {
@@ -96,7 +113,11 @@ angular.module('ts-diabetes').factory('ts-diabetes.Domain.IntygModel',
                             ]}),
                         lakareSpecialKompetens: undefined,
                         lamplighetInnehaBehorighet: undefined
-                    }
+                    },
+
+                    kommentar:undefined,
+                        id:undefined,
+                        grundData: new ModelAttr('grundData', {defaultValue: grundData})
                 });
                 this.draftModel = new DraftModel(this);
             },
