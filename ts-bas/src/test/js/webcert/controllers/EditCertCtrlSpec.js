@@ -5,8 +5,10 @@ describe('ts-bas.EditCertCtrl', function() {
     var User;
     var wcFocus;
     var intygNotifyService;
+    var IntygModel;
 
-    beforeEach(angular.mock.module('ts-bas', function($provide) {
+
+    beforeEach(angular.mock.module('common','ts-bas', function($provide) {
         ManageCertView = jasmine.createSpyObj('common.ManageCertView', [ 'load' ]);
         User = {};
         wcFocus = {};
@@ -19,8 +21,12 @@ describe('ts-bas.EditCertCtrl', function() {
 
     var $scope, ctrl;
 
-    beforeEach(angular.mock.inject(function($controller, $rootScope) {
+    beforeEach(angular.mock.inject(['$controller',
+        '$rootScope',
+        'ts-bas.Domain.IntygModel',
+        function($controller, $rootScope, _model_) {
         $scope = $rootScope.$new();
+
         ctrl = $controller('ts-bas.EditCertCtrl', { $scope: $scope });
         $scope.cert = {
             id: '9e5340af-015f-4942-b2ec-d9e512d09abd',
@@ -97,7 +103,7 @@ describe('ts-bas.EditCertCtrl', function() {
         };
 
         $scope.$digest();
-    }));
+    }]));
 
     it('should show extra fields when some "korkortstyp"-options are selected', function() {
         getCheckboxForKorkortstyp('D1').selected = true;
