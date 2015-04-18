@@ -1,11 +1,11 @@
-describe('ts-bas.EditCertCtrl', function() {
+describe('ts-bas.UtkastController', function() {
     'use strict';
 
     var ManageCertView;
     var User;
     var wcFocus;
     var intygNotifyService;
-    var IntygModel;
+    var viewState;
 
 
     beforeEach(angular.mock.module('common','ts-bas', function($provide) {
@@ -16,19 +16,20 @@ describe('ts-bas.EditCertCtrl', function() {
         $provide.value('common.UserModel', User);
         $provide.value('common.wcFocus', wcFocus);
         $provide.value('common.intygNotifyService', intygNotifyService);
-        $provide.value('common.UtkastViewStateService',{intyg:{}});
     }));
 
     var $scope, ctrl;
 
-    beforeEach(angular.mock.inject(['$controller',
+    beforeEach(angular.mock.inject([
+        '$controller',
         '$rootScope',
-        'ts-bas.Domain.IntygModel',
-        function($controller, $rootScope, _model_) {
+        'ts-bas.UtkastController.ViewStateService',
+        function($controller, $rootScope, _viewState_) {
         $scope = $rootScope.$new();
+        viewState = _viewState_;
 
-        ctrl = $controller('ts-bas.EditCertCtrl', { $scope: $scope });
-        $scope.cert = {
+        ctrl = $controller('ts-bas.UtkastController', { $scope: $scope });
+        var cert = {
             id: '9e5340af-015f-4942-b2ec-d9e512d09abd',
             typ: 'TS_BAS_U06_V06',
             skapadAv: {
@@ -101,6 +102,8 @@ describe('ts-bas.EditCertCtrl', function() {
                 ]
             }
         };
+        spyOn(viewState, 'setDraftModel');
+        spyOn(viewState, 'intygModel').and.returnValue(cert);
 
         $scope.$digest();
     }]));

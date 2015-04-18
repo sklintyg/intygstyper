@@ -64,17 +64,19 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              * Convert form data to internal model
              */
             function convertFormToCert() {
-/*
+
                 // 2g. if entered date is valid, convert it to string so backend validation is happy.
                 // otherwise leave it as an invalid Date so backend sends back a validation error
-                viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid =
-                    viewState.intygModel.allvarligForekomstVakenTidObservationstid.$viewValue;
+                if($scope.certForm && $scope.certForm.allvarligForekomstVakenTidObservationstid){
+                    viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid =
+                        $scope.certForm.allvarligForekomstVakenTidObservationstid.$viewValue;
+                }
 
                 if(!viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion) {
                     viewState.intygModel.hypoglykemier.saknarFormagaKannaVarningstecken = undefined;
                     viewState.intygModel.hypoglykemier.allvarligForekomst = undefined;
                     viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken = undefined;
-                }*/
+                }
             }
 
             /******************************************************************************************
@@ -98,9 +100,12 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                     }
                     $scope.form.korkortd = visaKorkortd;
                     if (!visaKorkortd) {
+                        //$scope.cert.updateToAttic('hypoglykemier.egenkontrollBlodsocker');
                         $scope.cert.hypoglykemier.egenkontrollBlodsocker = undefined;
                         $scope.cert.hypoglykemier.allvarligForekomstVakenTid = undefined;
                         $scope.cert.bedomning.lamplighetInnehaBehorighet = undefined;
+                    } else {
+                        //$scope.cert.restoreFromAttic('hypoglykemier.egenkontrollBlodsocker');
                     }
                 }
             }, true);
@@ -123,19 +128,32 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                 }, true);
             $scope.$watch('cert.hypoglykemier.allvarligForekomst', function(haftAllvarligForekomst) {
                 if (!haftAllvarligForekomst && $scope.cert.hypoglykemier) {
-                    $scope.cert.hypoglykemier.allvarligForekomstBeskrivning = '';
+                    $scope.cert.hypoglykemier.allvarligForekomstBeskrivning = undefined;
                 }
             }, true);
             $scope.$watch('cert.hypoglykemier.allvarligForekomstTrafiken', function(haftAllvarligForekomstTrafiken) {
                 if (!haftAllvarligForekomstTrafiken && $scope.cert.hypoglykemier) {
-                    $scope.cert.hypoglykemier.allvarligForekomstTrafikBeskrivning = '';
+                    $scope.cert.hypoglykemier.allvarligForekomstTrafikBeskrivning = undefined;
                 }
             }, true);
+
+            // hypoglykemier.allvarligForekomstVakenTidObservationstid
+            var addDateParser = function(form){
+                if(form && form.allvarligForekomstVakenTidObservationstid){
+                    var formElement = form.allvarligForekomstVakenTidObservationstid;
+                    formElement.$parsers.push(function(viewValue) {
+                        $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = formElement.$viewValue;
+                        return viewValue;
+                    });
+                }
+            };
             $scope.$watch('cert.hypoglykemier.allvarligForekomstVakenTid', function(haftAllvarligForekomstVakenTid) {
                 if (!haftAllvarligForekomstVakenTid && $scope.cert.hypoglykemier) {
-                    $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = '';
+                    $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = undefined;
                 }
             }, true);
+            // ---
+
             $scope.$watch('cert.syn.separatOgonlakarintyg', function(separatOgonlakarintyg) {
                 if (separatOgonlakarintyg && $scope.cert.syn) {
                     $scope.cert.syn.synfaltsprovningUtanAnmarkning = undefined;
@@ -237,7 +255,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                 $scope.certForm.$setPristine();
 //                $scope.cert.prepare();
 
-                convertFormToCert();// Move into prepare later
+                //convertFormToCert();// Move into prepare later
 
                 var intygSaveRequest = {
                     intygsId : viewState.intygModel.id,
@@ -261,6 +279,13 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
 
                 deferred.resolve(intygSaveRequest);
             });
+
+            $scope.$watch('viewState.common.doneLoading', function(doneLoading){
+                if(doneLoading === true){
+                    addDateParser($scope.certForm);
+                }
+            });
+
 
 
         }]);

@@ -15,6 +15,7 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
             };
             var Fk7263Model = BaseAtticModel._extend({
                 init: function init() {
+                    console.log('--- init fk gd' + GrundData);
                     var grundData = GrundData.build();
                     init._super.call(this, 'Fk7263Model', {
 
@@ -109,6 +110,7 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
                 }
             }, {
                 build : function(){
+                    console.log('----- build *****' + DraftModel + ',' + Fk7263Model._members);
                     return new DraftModel(new Fk7263Model());
                 }
             });
