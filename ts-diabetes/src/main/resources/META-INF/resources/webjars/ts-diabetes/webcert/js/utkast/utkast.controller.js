@@ -102,12 +102,12 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                     }
                     $scope.form.korkortd = visaKorkortd;
                     if (!visaKorkortd) {
-                        //$scope.cert.updateToAttic('hypoglykemier.egenkontrollBlodsocker');
+                        $scope.cert.updateToAttic('hypoglykemier.egenkontrollBlodsocker');
                         $scope.cert.hypoglykemier.egenkontrollBlodsocker = undefined;
                         $scope.cert.hypoglykemier.allvarligForekomstVakenTid = undefined;
                         $scope.cert.bedomning.lamplighetInnehaBehorighet = undefined;
                     } else {
-                        //$scope.cert.restoreFromAttic('hypoglykemier.egenkontrollBlodsocker');
+                        $scope.cert.restoreFromAttic('hypoglykemier.egenkontrollBlodsocker');
                     }
                 }
             }, true);

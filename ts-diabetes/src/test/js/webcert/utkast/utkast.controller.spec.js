@@ -192,6 +192,7 @@ describe('ts-diabetes.UtkastController', function() {
         // When reenabled the previously selected values should be remembered
         getCheckboxForKorkortstyp('C1').selected = true;
         $scope.$digest();
+        // this one works in the live but not here.. look on monday.
         //expect($scope.cert.hypoglykemier.egenkontrollBlodsocker).toBe(true);
         //expect($scope.cert.hypoglykemier.allvarligForekomstVakenTid).toBe(true);
         //expect($scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid).toBe('2014-10-10');
