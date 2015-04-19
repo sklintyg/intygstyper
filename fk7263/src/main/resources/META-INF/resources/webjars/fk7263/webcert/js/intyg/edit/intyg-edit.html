@@ -101,10 +101,10 @@
                     </p>
                     <div class="form-group">
                       <button id="vidarebefordraEjHanterad" class="btn"
-                              ng-class="{'btn-info': !certMeta.vidarebefordrad, 'btn-default btn-secondary' : certMeta.vidarebefordrad}"
+                              ng-class="{'btn-info': !notifieringVidarebefordrad, 'btn-default btn-secondary' : notifieringVidarebefordrad}"
                               title="Skicka mejl med en länk till utkastet för att informera den läkare som ska signera det."
                               ng-click="openMailDialog()">
-                        <img ng-if="!certMeta.vidarebefordrad" src="/img/mail.png"> <img ng-if="certMeta.vidarebefordrad"
+                        <img ng-if="!notifieringVidarebefordrad" src="/img/mail.png"> <img ng-if="notifieringVidarebefordrad"
                                                                                          src="/img/mail_dark.png">
                       </button>
                     </div>
@@ -112,7 +112,7 @@
                     <div class="body-row">
                       <label for="mark-as-vidarebefordrad">
                         <input id="mark-as-vidarebefordrad" type="checkbox"
-                               ng-disabled="viewState.common.vidarebefordraInProgress" ng-model="certMeta.vidarebefordrad"
+                               ng-disabled="viewState.common.vidarebefordraInProgress" ng-model="notifieringVidarebefordrad"
                                ng-change="onVidarebefordradChange()" /> Vidarebefordrad
                       </label> <span ng-if="viewState.common.vidarebefordraInProgress"> <img
                         src="/img/ajax-loader-kit-16x16.gif"></span>

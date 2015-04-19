@@ -14,11 +14,8 @@ angular.module('fk7263').config(function($stateProvider) {
                 },
                 
                 'header@fk7263-edit' : {
-                    templateUrl: '/web/webjars/common/webcert/intyg/edit/intyg-edit-header/intyg-edit-header.html',
-                    controller: 'common.IntygEditHeader',
-                    data : {
-                        intygsTyp : 'fk7263'
-                    }
+                    templateUrl: '/web/webjars/common/webcert/utkast/utkast-header/utkast-header.html',
+                    controller: 'common.UtkastHeader'
                 },
             
                 'form1@fk7263-edit' : {

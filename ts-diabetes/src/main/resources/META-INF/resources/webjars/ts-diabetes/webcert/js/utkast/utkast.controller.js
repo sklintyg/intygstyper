@@ -1,30 +1,27 @@
-angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
+angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
     ['$anchorScroll', '$location', '$log', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel',
-        'common.wcFocus', 'common.intygNotifyService', 'common.IntygEditViewStateService', 'common.DateUtilsService',
-        function($anchorScroll, $location, $log, $q, $rootScope, $scope, $timeout, $window,
-            ManageCertView, UserModel, wcFocus, intygNotifyService, viewState, dateUtils) {
+        'common.intygNotifyService', 'ts-diabetes.Domain.IntygModel', 'ts-diabetes.UtkastController.ViewStateService', 'common.DateUtilsService',
+        function($anchorScroll, $location, $log, $q, $rootScope, $scope, $timeout, $window, ManageCertView, UserModel,
+                 intygNotifyService, IntygModel, viewState, dateUtils) {
             'use strict';
 
             /**********************************************************************************
              * Default state
              **********************************************************************************/
 
-            viewState.intyg.typ = 'ts-diabetes';
+            viewState.common.intyg.typ = 'ts-diabetes';
+
+            viewState.setDraftModel(IntygModel._members.build());
 
             // Page state
             $scope.user = UserModel;
-            $scope.focusFirstInput = true;
-            $scope.viewState = {
-                common : viewState
-            };
+            $scope.focusFirstInput = true; // TODO: to common viewstate
+            $scope.tomorrowDate = moment().subtract(1, 'days').format('YYYY-MM-DD'); // TODO: to viewstate
+            $scope.viewState = viewState;
 
             // Intyg state
-            $scope.cert = {};
-            $scope.certMeta = {
-                intygId: null,
-                intygType: 'ts-diabetes',
-                vidarebefordrad: false
-            };
+            $scope.cert = viewState.intygModel; // keep cert as a shortcut to viewState.intyModel?
+            $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
 
             $scope.tomorrowDate = moment().format('YYYY-MM-DD');
 
@@ -51,17 +48,17 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
             function convertCertToForm($scope) {
 
                 // check if all info is available from HSA. If not, display the info message that someone needs to update it
-                if ($scope.cert.grundData.skapadAv.vardenhet.postadress === undefined ||
-                    $scope.cert.grundData.skapadAv.vardenhet.postnummer === undefined ||
-                    $scope.cert.grundData.skapadAv.vardenhet.postort === undefined ||
-                    $scope.cert.grundData.skapadAv.vardenhet.telefonnummer === undefined ||
-                    $scope.cert.grundData.skapadAv.vardenhet.postadress === '' ||
-                    $scope.cert.grundData.skapadAv.vardenhet.postnummer === '' ||
-                    $scope.cert.grundData.skapadAv.vardenhet.postort === '' ||
-                    $scope.cert.grundData.skapadAv.vardenhet.telefonnummer === '') {
-                    $scope.viewState.hasInfoMissing = true;
+                if (viewState.intygModel.grundData.skapadAv.vardenhet.postadress === undefined ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postnummer === undefined ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postort === undefined ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer === undefined ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postadress === '' ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postnummer === '' ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postort === '' ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer === '') {
+                    viewState.common.hsaInfoMissing = true;
                 } else {
-                    $scope.viewState.hasInfoMissing = false;
+                    viewState.common.hsaInfoMissing = false;
                 }
             }
 
@@ -72,13 +69,15 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
 
                 // 2g. if entered date is valid, convert it to string so backend validation is happy.
                 // otherwise leave it as an invalid Date so backend sends back a validation error
-                $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid =
-                    $scope.certForm.allvarligForekomstVakenTidObservationstid.$viewValue;
+                if($scope.certForm && $scope.certForm.allvarligForekomstVakenTidObservationstid){
+                    viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid =
+                        $scope.certForm.allvarligForekomstVakenTidObservationstid.$viewValue;
+                }
 
-                if(!$scope.cert.hypoglykemier.teckenNedsattHjarnfunktion) {
-                    $scope.cert.hypoglykemier.saknarFormagaKannaVarningstecken = undefined;
-                    $scope.cert.hypoglykemier.allvarligForekomst = undefined;
-                    $scope.cert.hypoglykemier.allvarligForekomstTrafiken = undefined;
+                if(!viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion) {
+                    viewState.intygModel.hypoglykemier.saknarFormagaKannaVarningstecken = undefined;
+                    viewState.intygModel.hypoglykemier.allvarligForekomst = undefined;
+                    viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken = undefined;
                 }
             }
 
@@ -103,15 +102,22 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                     }
                     $scope.form.korkortd = visaKorkortd;
                     if (!visaKorkortd) {
+                        $scope.cert.updateToAttic('hypoglykemier.egenkontrollBlodsocker');
                         $scope.cert.hypoglykemier.egenkontrollBlodsocker = undefined;
                         $scope.cert.hypoglykemier.allvarligForekomstVakenTid = undefined;
                         $scope.cert.bedomning.lamplighetInnehaBehorighet = undefined;
+                    } else {
+                        $scope.cert.restoreFromAttic('hypoglykemier.egenkontrollBlodsocker');
                     }
                 }
             }, true);
             $scope.$watch('cert.diabetes.insulin', function(behandlasMedInsulin) {
                 if (!behandlasMedInsulin && $scope.cert.diabetes) {
+                    $scope.cert.updateToAttic('diabetes.insulinBehandlingsperiod');
                     $scope.cert.diabetes.insulinBehandlingsperiod = null;
+
+                } else {
+                    $scope.cert.restoreFromAttic('diabetes.insulinBehandlingsperiod');
                 }
             }, true);
             $scope.$watch('cert.hypoglykemier.teckenNedsattHjarnfunktion',
@@ -124,19 +130,32 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 }, true);
             $scope.$watch('cert.hypoglykemier.allvarligForekomst', function(haftAllvarligForekomst) {
                 if (!haftAllvarligForekomst && $scope.cert.hypoglykemier) {
-                    $scope.cert.hypoglykemier.allvarligForekomstBeskrivning = '';
+                    $scope.cert.hypoglykemier.allvarligForekomstBeskrivning = undefined;
                 }
             }, true);
             $scope.$watch('cert.hypoglykemier.allvarligForekomstTrafiken', function(haftAllvarligForekomstTrafiken) {
                 if (!haftAllvarligForekomstTrafiken && $scope.cert.hypoglykemier) {
-                    $scope.cert.hypoglykemier.allvarligForekomstTrafikBeskrivning = '';
+                    $scope.cert.hypoglykemier.allvarligForekomstTrafikBeskrivning = undefined;
                 }
             }, true);
+
+            // hypoglykemier.allvarligForekomstVakenTidObservationstid
+            var addDateParser = function(form){
+                if(form && form.allvarligForekomstVakenTidObservationstid){
+                    var formElement = form.allvarligForekomstVakenTidObservationstid;
+                    formElement.$parsers.push(function(viewValue) {
+                        $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = formElement.$viewValue;
+                        return viewValue;
+                    });
+                }
+            };
             $scope.$watch('cert.hypoglykemier.allvarligForekomstVakenTid', function(haftAllvarligForekomstVakenTid) {
                 if (!haftAllvarligForekomstVakenTid && $scope.cert.hypoglykemier) {
-                    $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = '';
+                    $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = undefined;
                 }
             }, true);
+            // ---
+
             $scope.$watch('cert.syn.separatOgonlakarintyg', function(separatOgonlakarintyg) {
                 if (separatOgonlakarintyg && $scope.cert.syn) {
                     $scope.cert.syn.synfaltsprovningUtanAnmarkning = undefined;
@@ -204,67 +223,72 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
              * @param cert
              */
             $scope.openMailDialog = function() {
-                intygNotifyService.forwardIntyg($scope.certMeta, $scope.viewState);
+
+                var utkastNotifyRequest = {
+                    intygId : viewState.intygModel.id,
+                    intygType: viewState.common.intyg.typ,
+                    vidarebefordrad: viewState.draftModel.vidarebefordrad
+                };
+                intygNotifyService.forwardIntyg(utkastNotifyRequest);
             };
 
             $scope.onVidarebefordradChange = function() {
-                intygNotifyService.onForwardedChange($scope.certMeta, $scope.viewState);
+                var utkastNotifyRequest = {
+                    intygId : viewState.intygModel.id,
+                    intygType: viewState.common.intyg.typ,
+                    vidarebefordrad: viewState.draftModel.vidarebefordrad
+                };
+                intygNotifyService.onForwardedChange(utkastNotifyRequest);
             };
 
             $scope.sign = function() {
-                ManageCertView.signera($scope.certMeta.intygType);
+                ManageCertView.signera(viewState.common.intyg.typ);
             };
 
             /**************************************************************************
              * Load certificate and setup form
              **************************************************************************/
 
-                // Get the certificate draft from the server.
-            ManageCertView.load($scope.certMeta.intygType, function(cert) {
-                // Decorate intygspecific default data
-                $scope.cert = cert.content;
-                $scope.certMeta.intygId = cert.content.id;
-                convertCertToForm($scope);
-                dateUtils.addDateParserFormatter($scope.certForm.allvarligForekomstVakenTidObservationstid);
+            // Get the certificate draft from the server.
+            ManageCertView.load(viewState.common.intyg.typ, viewState.draftModel);
 
-                viewState.isSigned = cert.status === 'SIGNED';
-                viewState.intyg.isComplete = cert.status === 'SIGNED' || cert.status === 'DRAFT_COMPLETE';
-
-                $timeout(function() {
-                    wcFocus('firstInput');
-                    viewState.doneLoading = true;
-                }, 10);
-            });
 
             $scope.$on('saveRequest', function($event, deferred) {
                 // Mark form as saved, will be marked as not saved if saving fails.
                 $scope.certForm.$setPristine();
 //                $scope.cert.prepare();
 
-                convertFormToCert();// Move into prepare later
+                //convertFormToCert();// Move into prepare later
 
                 var intygSaveRequest = {
-                    intygsId      : $scope.certMeta.intygId,
-                    intygsTyp     : $scope.certMeta.intygType,
-                    cert          : $scope.cert,
+                    intygsId : viewState.intygModel.id,
+                    intygsTyp : viewState.common.intyg.typ,
+                    cert          : viewState.intygModel.toSendModel(),
                     saveComplete  : $q.defer()
                 };
 
                 intygSaveRequest.saveComplete.promise.then(function(result) {
 
                     // save success
-                    viewState.validationMessages = result.validationMessages;
-                    viewState.validationMessagesGrouped = result.validationMessagesGrouped;
-                    viewState.error.saveErrorMessageKey = null;
+                    viewState.common.validationMessages = result.validationMessages;
+                    viewState.common.validationMessagesGrouped = result.validationMessagesGrouped;
+                    viewState.common.error.saveErrorMessageKey = null;
 
                 }, function(result) {
                     // save failed
                     $scope.certForm.$setDirty();
-                    viewState.error.saveErrorMessageKey = result.errorMessageKey;
+                    viewState.common.error.saveErrorMessageKey = result.errorMessageKey;
                 });
 
                 deferred.resolve(intygSaveRequest);
             });
+
+            $scope.$watch('viewState.common.doneLoading', function(doneLoading){
+                if(doneLoading === true){
+                    addDateParser($scope.certForm);
+                }
+            });
+
 
 
         }]);

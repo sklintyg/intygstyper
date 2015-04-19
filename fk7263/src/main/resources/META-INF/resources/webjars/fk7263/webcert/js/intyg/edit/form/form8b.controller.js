@@ -44,6 +44,6 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                 if(_dateRangeGroups === undefined){
                     _dateRangeGroups = DateRangeGroupsService.build(_$scope);
                 }
-                _dateRangeGroups.validateDatesWithCert(_$scope.cert);
+                _dateRangeGroups.validateDatesWithCert(_$scope.model);
             }
         }]);

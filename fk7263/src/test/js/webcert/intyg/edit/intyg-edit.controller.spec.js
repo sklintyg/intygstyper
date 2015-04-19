@@ -7,6 +7,8 @@ describe('EditCertCtrl', function() {
     var $q;
     var $rootScope;
     var _manageCertView;
+    var viewState;
+    var intygModel;
 
     beforeEach(angular.mock.module('common', function($provide) {
 
@@ -21,13 +23,11 @@ describe('EditCertCtrl', function() {
             isFeatureActive: jasmine.createSpy('isFeatureActive')
         };
         $provide.value('common.CertificateService',{});
-        $provide.value('common.IntygEditViewStateService',{});
 
         _manageCertView = jasmine.createSpyObj('common.ManageCertView', [ 'save',  'discard', 'signera', 'printDraft', 'load' ]);
         $provide.value('common.ManageCertView',_manageCertView);
         $provide.value('common.User', {});
         $provide.value('common.UserModel', {});
-        $provide.value('fk7263.EditCertCtrl.ViewStateService', {common:{intyg:{typ:''}}});
         $provide.value('common.wcFocus', {});
         $provide.value('common.intygNotifyService', {});
         $provide.value('common.diagnosService', {});
@@ -41,7 +41,8 @@ describe('EditCertCtrl', function() {
         function( $controller, _$rootScope_, _$q_, _$httpBackend_) {
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
-            $controller('fk7263.EditCertCtrl' , { $scope: $scope });
+
+            $controller('fk7263.EditCertCtrl' , { $scope: $scope, viewState:viewState });
             $q = _$q_;
             $httpBackend = _$httpBackend_;
 

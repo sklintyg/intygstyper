@@ -1,12 +1,14 @@
-describe('ts-bas.EditCertCtrl', function() {
+describe('ts-bas.UtkastController', function() {
     'use strict';
 
     var ManageCertView;
     var User;
     var wcFocus;
     var intygNotifyService;
+    var viewState;
 
-    beforeEach(angular.mock.module('ts-bas', function($provide) {
+
+    beforeEach(angular.mock.module('common','ts-bas', function($provide) {
         ManageCertView = jasmine.createSpyObj('common.ManageCertView', [ 'load' ]);
         User = {};
         wcFocus = {};
@@ -14,15 +16,20 @@ describe('ts-bas.EditCertCtrl', function() {
         $provide.value('common.UserModel', User);
         $provide.value('common.wcFocus', wcFocus);
         $provide.value('common.intygNotifyService', intygNotifyService);
-        $provide.value('common.IntygEditViewStateService',{intyg:{}});
     }));
 
     var $scope, ctrl;
 
-    beforeEach(angular.mock.inject(function($controller, $rootScope) {
+    beforeEach(angular.mock.inject([
+        '$controller',
+        '$rootScope',
+        'ts-bas.UtkastController.ViewStateService',
+        function($controller, $rootScope, _viewState_) {
         $scope = $rootScope.$new();
-        ctrl = $controller('ts-bas.EditCertCtrl', { $scope: $scope });
-        $scope.cert = {
+        viewState = _viewState_;
+
+        ctrl = $controller('ts-bas.UtkastController', { $scope: $scope });
+        var cert = {
             id: '9e5340af-015f-4942-b2ec-d9e512d09abd',
             typ: 'TS_BAS_U06_V06',
             skapadAv: {
@@ -95,9 +102,11 @@ describe('ts-bas.EditCertCtrl', function() {
                 ]
             }
         };
+        spyOn(viewState, 'setDraftModel');
+        spyOn(viewState, 'intygModel').and.returnValue(cert);
 
         $scope.$digest();
-    }));
+    }]));
 
     it('should show extra fields when some "korkortstyp"-options are selected', function() {
         getCheckboxForKorkortstyp('D1').selected = true;

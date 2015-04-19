@@ -1,59 +1,10 @@
-<div class="weak-hidden" ng-class="{show: widgetState.showTemplate}" ng-controller="ts-bas.ViewCertCtrl">
-  <div wc-spinner label="info.loadingcertificate" show-spinner="!widgetState.doneLoading"
-       show-content="widgetState.doneLoading">
+<div class="weak-hidden" ng-class="{show: viewState.common.showTemplate}" ng-controller="ts-bas.IntygController">
+  <div wc-spinner label="info.loadingcertificate" show-spinner="!viewState.common.doneLoading"
+       show-content="viewState.common.doneLoading">
 
-    <div wc-print-header title-id="ts-bas.label.certtitle" print-message-id="print.label.{{widgetState.printStatus}}" intygs-id="cert.id"></div>
+    <div ui-view="header"></div>
 
-    <!-- error message -->
-    <div id="cert-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey"
-         class="alert alert-danger alert-column">
-      <span message key="{{widgetState.activeErrorMessageKey}}"></span>
-    </div>
-    <div ng-show="!widgetState.activeErrorMessageKey" id="intyg-vy-laddad">
-
-      <div class="print-hide">
-        <div class="form-group buttonbar">
-          <label class="control-label">{{cert.grundData.patient.fullstandigtNamn}} - {{cert.grundData.patient.personId}}</label>
-
-          <form id="view-as-pdf" action="{{pdfUrl}}" method="get" target="_blank" name="pdfForm">
-            <p class="btn-row">
-              <button id="sendBtn" class="btn btn-info" ng-if="!certProperties.isSent && !certProperties.isRevoked"
-                      wc-feature-active feature="skickaIntyg" intygstyp="ts-bas"
-                      ng-click="send(cert)">Skicka till Transportstyrelsen</button>
-              <button id="downloadprint" type="submit" value="submit" class="btn btn-info"
-                      ng-click="print(cert)">Skriv ut
-              </button>
-              <button id="copyBtn" class="btn btn-info" ng-if="!certProperties.isRevoked" ng-click="copy(cert)"
-                      wc-feature-active feature="kopieraIntyg" intygstyp="ts-bas"
-                      title="Kopiera intyg innebär att en kopia skapas av det befintliga intyget och med samma information.
-I de fall patienten har ändrat namn eller adress så uppdateras den informationen.
-Uppgifterna i intygsutkastet går att ändra innan det signeras.
-Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.">Kopiera</button>
-              <button id="makuleraBtn" class="btn btn-inverse" ng-if="!certProperties.isRevoked && user.lakare" ng-click="makulera(cert)"
-                      wc-feature-active feature="makuleraIntyg" intygstyp="ts-bas"
-                      title="Makulera intyg innebär att intyget återtas. Vid behov kan intyget ersättas med ett nytt.">Makulera</button>
-            </p>
-          </form>
-        </div>
-
-        <div id="cert-inline-error" ng-show="widgetState.inlineErrorMessageKey" class="alert alert-danger alert-column print-hide">
-          <span message key="{{widgetState.inlineErrorMessageKey}}"></span>
-        </div>
-
-        <div class="alert alert-info alert-column" ng-if="!certProperties.isRevoked">
-          <strong>Status:</strong>
-          <span ng-if="certProperties.isSent" id="certificate-is-sent-to-recipient-message-text">Intyget är signerat och mottaget av Transportstyrelsens system.</span>
-          <span ng-if="!certProperties.isSent" id="certificate-is-sent-to-it-message-text">
-            Intyget är signerat och är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se.
-            Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till
-            Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.
-          </span>
-        </div>
-        <div ng-if="certProperties.isRevoked" id="certificate-is-revoked-message-text" class="alert alert-warning"
-             style="margin-right: 20px; max-width: 530px;">Intyget är makulerat
-        </div>
-      </div>
-
+    <div ng-show="!viewState.common.activeErrorMessageKey">
       <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : certProperties.isRevoked}">
         <div class="row">
           <div class="col-md-12">

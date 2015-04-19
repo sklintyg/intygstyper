@@ -1,7 +1,7 @@
-angular.module('fk7263').factory('fk7263.domain.IntygModel',
-    ['fk7263.domain.GrundDataModel', 'common.domain.DraftModel', 'common.domain.ModelAttr',
+angular.module('fk7263').factory('fk7263.Domain.IntygModel',
+    ['common.Domain.GrundDataModel', 'common.Domain.DraftModel', 'common.domain.ModelAttr',
         'common.domain.BaseAtticModel',
-        function(grundData, DraftModel, ModelAttr, BaseAtticModel) {
+        function(GrundData, DraftModel, ModelAttr, BaseAtticModel) {
             'use strict';
 
 
@@ -13,10 +13,11 @@ angular.module('fk7263').factory('fk7263.domain.IntygModel',
                     return nedsatt;
                 }
             };
-
-            var IntygModel = BaseAtticModel._extend({
+            var Fk7263Model = BaseAtticModel._extend({
                 init: function init() {
-                    init._super.call(this, 'IntygModel', {
+                    console.log('--- init fk gd' + GrundData);
+                    var grundData = GrundData.build();
+                    init._super.call(this, 'Fk7263Model', {
 
                         form1: [new ModelAttr('avstangningSmittskydd', {defaultValue: false})],
 
@@ -85,7 +86,7 @@ angular.module('fk7263').factory('fk7263.domain.IntygModel',
                                 new ModelAttr('grundData', {defaultValue: grundData})]
 
                     });
-                    this.draftModel = new DraftModel(this);
+
                 },
 
                 update: function update(content, parent) {
@@ -107,11 +108,16 @@ angular.module('fk7263').factory('fk7263.domain.IntygModel',
                     var props = this.properties.form6a.concat(this.properties.form7.concat(this.properties.form11));
                     this.restoreFromAttic(props);
                 }
+            }, {
+                build : function(){
+                    console.log('----- build *****' + DraftModel + ',' + Fk7263Model._members);
+                    return new DraftModel(new Fk7263Model());
+                }
             });
 
             /**
              * Return the constructor function IntygModel
              */
-            return IntygModel;
+            return Fk7263Model;
 
         }]);

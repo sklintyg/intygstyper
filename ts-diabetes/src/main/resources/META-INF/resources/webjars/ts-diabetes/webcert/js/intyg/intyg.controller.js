@@ -1,8 +1,9 @@
-angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
+angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
     [ '$location', '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore', 'common.CertificateService',
-        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate','common.User','common.IntygCopyRequestModel',
+        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate','common.UserModel','common.IntygCopyRequestModel',
+        'ts-diabetes.IntygController.ViewStateService',
         function($location, $log, $rootScope, $stateParams, $scope, $cookieStore, CertificateService, ManageCertView,
-            messageService, ManageCertificate, User, IntygCopyRequestModel) {
+            messageService, ManageCertificate, UserModel, IntygCopyRequestModel, ViewState) {
             'use strict';
 
             /*********************************************************************
@@ -10,14 +11,9 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
              *********************************************************************/
 
             var intygType = 'ts-diabetes';
-            $scope.user = { lakare: User.getUserContext().lakare };
+            $scope.user = UserModel.userContext;
             $scope.cert = {};
-            $scope.widgetState = {
-                doneLoading: false,
-                activeErrorMessageKey: null,
-                showTemplate: true,
-                printStatus: 'notloaded'
-            };
+            $scope.viewState = ViewState;
 
             $scope.view = {
                 intygAvser: '',
@@ -56,7 +52,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
 
             function loadCertificate() {
                 CertificateService.getCertificate($stateParams.certificateId, intygType, function(result) {
-                    $scope.widgetState.doneLoading = true;
+                    ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
 
@@ -67,74 +63,30 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                         $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.statuses, 'TS');
                         $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.statuses);
                         if($scope.certProperties.isRevoked) {
-                            $scope.widgetState.printStatus = 'revoked';
+                            ViewState.common.printStatus = 'revoked';
                         } else {
-                            $scope.widgetState.printStatus = 'signed';
+                            ViewState.common.printStatus = 'signed';
                         }
 
                         $scope.pdfUrl = '/moduleapi/intyg/ts-diabetes/' + $scope.cert.id + '/pdf';
 
                     } else {
-                        $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
+                        ViewState.common.activeErrorMessageKey = 'common.error.data_not_found';
                     }
                 }, function(error) {
-                    $scope.widgetState.doneLoading = true;
+                    ViewState.common.doneLoading = true;
                     $log.debug('got error' + error.message);
                     if (error.errorCode === 'DATA_NOT_FOUND') {
-                        $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
+                        ViewState.common.activeErrorMessageKey = 'common.error.data_not_found';
                     } else {
-                        $scope.widgetState.activeErrorMessageKey = 'common.error.data_not_found';
+                        ViewState.common.activeErrorMessageKey = 'common.error.data_not_found';
                     }
                 });
             }
+
             /*********************************************************************
              * Exposed scope interaction functions
              *********************************************************************/
-
-            $scope.send = function(cert) {
-                cert.intygType = intygType;
-                ManageCertificate.send( cert, 'TS', 'ts-diabetes.label.send', function() {
-                        loadCertificate();
-                    });
-            };
-
-            $scope.makulera = function(cert) {
-                var confirmationMessage = messageService.getProperty('ts-diabetes.label.makulera.confirmation', {
-                    namn: cert.grundData.patient.fullstandigtNamn, personnummer: cert.grundData.patient.personId });
-
-                cert.intygType = 'ts-diabetes';
-                ManageCertificate.makulera(cert, confirmationMessage, function() {
-                    loadCertificate();
-                });
-            };
-
-            $scope.copy = function(cert) {
-
-                if (cert === undefined || cert.grundData === undefined) {
-                    $log.debug('cert or cert.grundData is undefined. Aborting copy.');
-                    return;
-                }
-
-                var isOtherCareUnit = User.getValdVardenhet() !== cert.grundData.skapadAv.vardenhet.enhetsid;
-
-                ManageCertificate.copy($scope,
-                    IntygCopyRequestModel.build({
-                        intygId: cert.id,
-                        intygType: intygType,
-                        patientPersonnummer: cert.grundData.patient.personId,
-                        nyttPatientPersonnummer: $stateParams.patientId
-                    }),
-                    isOtherCareUnit);
-            };
-
-            $scope.print = function(cert) {
-
-                if ($scope.certProperties.isRevoked) {
-                    ManageCertView.printDraft(cert.id, intygType);
-                } else {
-                    document.pdfForm.submit();
-                }
-            };
 
             /*********************************************************************
              * Page load

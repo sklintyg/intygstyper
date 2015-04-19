@@ -14,7 +14,7 @@ describe('fk7263.domain.IntygModel', function() {
 
     beforeEach(angular.mock.inject([
         'common.domain.ModelAttr',
-        'fk7263.domain.IntygModel',
+        'fk7263.Domain.IntygModel',
         function( _modelAttr_, _IntygModel_) {
             ModelAttr = _modelAttr_;
             IntygModel = _IntygModel_;

@@ -1,29 +1,24 @@
-angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
-    [ '$anchorScroll', '$location', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel', 'common.wcFocus',
-      'common.intygNotifyService', 'common.IntygEditViewStateService',
-        function($anchorScroll, $location, $q, $rootScope, $scope, $timeout, $window, ManageCertView, UserModel, wcFocus, intygNotifyService, viewState) {
+angular.module('ts-bas').controller('ts-bas.UtkastController',
+    [ '$anchorScroll', '$location', '$q', '$rootScope', '$scope', '$timeout', '$window',
+        'common.ManageCertView', 'common.UserModel',
+        'common.intygNotifyService', 'ts-bas.Domain.IntygModel',
+        'ts-bas.UtkastController.ViewStateService',
+        function($anchorScroll, $location, $q, $rootScope, $scope, $timeout, $window,
+            ManageCertView, UserModel, intygNotifyService, IntygModel, viewState) {
             'use strict';
 
             /**********************************************************************************
              * Default state
              **********************************************************************************/
 
-            viewState.intyg.typ = 'ts-bas';
+            viewState.common.intyg.typ = 'ts-bas';
 
-            // init state
+            viewState.setDraftModel(IntygModel._members.build());
+
             $scope.user = UserModel;
-            $scope.focusFirstInput = true;
-            $scope.viewState = {
-                common : viewState
-            };
-
-            // intyg state
-            $scope.cert = {};
-            $scope.certMeta = {
-                intygId: null,
-                intygType: 'ts-bas',
-                vidarebefordrad: false
-            };
+            $scope.viewState = viewState;
+            $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
+            $scope.cert = viewState.intygModel; // Set default intyg state from model
 
             // form model (extends intyg model where necessary)
             $scope.form = {
@@ -40,40 +35,24 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
                 'anyTrue': false
             };
 
-            $scope.testerror = false;
-
-            // Input limit handling
-            $scope.inputLimits = {
-                'funktionsnedsattning': 180,
-                'beskrivningRiskfaktorer': 180,
-                'medvetandestorning': 180,
-                'lakemedelOchDos': 180,
-                'medicinering': 180,
-                'kommentar': 500,
-                'lakareSpecialKompetens': 130,
-                'sjukhusvardtidpunkt': 40,
-                'sjukhusvardvardinrattning': 40,
-                'sjukhusvardanledning': 50
-            };
-
             /***************************************************************************
              * Private controller support functions
              ***************************************************************************/
 
-            function convertCertToForm($scope) {
+            function updateHSAInfoMessage() {
 
                 // check if all info is available from HSA. If not, display the info message that someone needs to update it
-                if ($scope.cert.grundData.skapadAv.vardenhet.postadress === undefined ||
-                    $scope.cert.grundData.skapadAv.vardenhet.postnummer === undefined ||
-                    $scope.cert.grundData.skapadAv.vardenhet.postort === undefined ||
-                    $scope.cert.grundData.skapadAv.vardenhet.telefonnummer === undefined ||
-                    $scope.cert.grundData.skapadAv.vardenhet.postadress === '' ||
-                    $scope.cert.grundData.skapadAv.vardenhet.postnummer === '' ||
-                    $scope.cert.grundData.skapadAv.vardenhet.postort === '' ||
-                    $scope.cert.grundData.skapadAv.vardenhet.telefonnummer === '') {
-                    $scope.viewState.hasInfoMissing = true;
+                if (viewState.intygModel.grundData.skapadAv.vardenhet.postadress === undefined ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postnummer === undefined ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postort === undefined ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer === undefined ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postadress === '' ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postnummer === '' ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.postort === '' ||
+                    viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer === '') {
+                    viewState.intygModel.common.hsaInfoMissing = true;
                 } else {
-                    $scope.viewState.hasInfoMissing = false;
+                    viewState.intygModel.common.hsaInfoMissing = false;
                 }
             }
 
@@ -262,15 +241,27 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
              * @param cert
              */
             $scope.openMailDialog = function() {
-                intygNotifyService.forwardIntyg($scope.certMeta, $scope.viewState);
+
+                var certMeta = {
+                    intygId: viewState.intygModel.id,
+                    intygType: viewState.common.intyg.typ,
+                    vidarebefordrad: viewState.draftModel.vidarebefordrad
+                };
+
+                intygNotifyService.forwardIntyg(certMeta);
             };
 
             $scope.onVidarebefordradChange = function() {
-                intygNotifyService.onForwardedChange($scope.certMeta, $scope.viewState);
+                var certMeta = {
+                    intygId: viewState.intygModel.id,
+                    intygType: viewState.common.intyg.typ,
+                    vidarebefordrad: viewState.draftModel.vidarebefordrad
+                };
+                intygNotifyService.onForwardedChange(certMeta);
             };
 
             $scope.sign = function() {
-                ManageCertView.signera($scope.certMeta.intygType);
+                ManageCertView.signera(viewState.common.intyg.typ);
             };
 
             /**************************************************************************
@@ -278,20 +269,7 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
              **************************************************************************/
 
             // Get the certificate draft from the server.
-            ManageCertView.load($scope.certMeta.intygType, function(cert) {
-                // Decorate intygspecific default data
-                $scope.cert = cert.content;
-                $scope.certMeta.intygId = cert.content.id;
-                convertCertToForm($scope);
-
-                viewState.isSigned = cert.status === 'SIGNED';
-                viewState.intyg.isComplete = cert.status === 'SIGNED' || cert.status === 'DRAFT_COMPLETE';
-
-                $timeout(function() {
-                    wcFocus('firstInput');
-                    viewState.doneLoading = true;
-                }, 10);
-            });
+            ManageCertView.load(viewState.common.intyg.typ, viewState.draftModel);
 
             $scope.$on('saveRequest', function($event, deferred) {
                 // Mark form as saved, will be marked as not saved if saving fails.
@@ -299,23 +277,23 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
 //                $scope.cert.prepare();
 
                 var intygSaveRequest = {
-                    intygsId      : $scope.certMeta.intygId,
-                    intygsTyp     : $scope.certMeta.intygType,
-                    cert          : $scope.cert,
+                    intygsId      : viewState.intygModel.id,
+                    intygsTyp     : viewState.common.intyg.typ,
+                    cert          : viewState.intygModel.toSendModel(),
                     saveComplete  : $q.defer()
                 };
 
                 intygSaveRequest.saveComplete.promise.then(function(result) {
 
                     // save success
-                    viewState.validationMessages = result.validationMessages;
-                    viewState.validationMessagesGrouped = result.validationMessagesGrouped;
-                    viewState.error.saveErrorMessageKey = null;
+                    viewState.common.validationMessages = result.validationMessages;
+                    viewState.common.validationMessagesGrouped = result.validationMessagesGrouped;
+                    viewState.common.error.saveErrorMessageKey = null;
 
                 }, function(result) {
                     // save failed
                     $scope.certForm.$setDirty();
-                    viewState.error.saveErrorMessageKey = result.errorMessageKey;
+                    viewState.common.error.saveErrorMessageKey = result.errorMessageKey;
                 });
 
                 deferred.resolve(intygSaveRequest);

@@ -11,13 +11,6 @@ describe('fk7263.EditCertCtrl.Form2Ctrl', function() {
 
     beforeEach(angular.mock.module('common', 'fk7263', function($provide) {
 
-        // the below are now included in common
-        //$provide.value('fk7263.domain.DraftModel', __draftModel__);
-        //$provide.value('fk7263.domain.IntygModel', {});
-        //$provide.value('fk7263.domain.PatientModel', {});
-        //$provide.value('fk7263.domain.SkapadAvModel', {});
-        //$provide.value('fk7263.domain.VardenhetModel', {});
-
     }));
 
     // Get references to the object we want to test from the context.
@@ -27,7 +20,7 @@ describe('fk7263.EditCertCtrl.Form2Ctrl', function() {
         '$rootScope',
         '$httpBackend',
         '$log',
-        'fk7263.domain.IntygModel',
+        'fk7263.Domain.IntygModel',
         'fk7263.EditCertCtrl.ViewStateService',
         function( $controller, _$rootScope_, _$httpBackend_, _$log_, _model_, _viewState_) {
             $rootScope = _$rootScope_;

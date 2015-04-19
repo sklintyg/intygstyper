@@ -8,15 +8,12 @@ angular.module('ts-diabetes').config(function($stateProvider) {
             url: '/ts-diabetes/edit/:certificateId',
             views : {
                 '': {
-                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/edit-cert.html',
-                    controller: 'ts-diabetes.EditCertCtrl'
+                    templateUrl: '/web/webjars/ts-diabetes/webcert/js/utkast/utkast.html',
+                    controller: 'ts-diabetes.UtkastController'
                 },
                 'header@ts-diabetes-edit': {
-                    templateUrl: '/web/webjars/common/webcert/intyg/edit/intyg-edit-header/intyg-edit-header.html',
-                    controller: 'common.IntygEditHeader',
-                    data: {
-                        intygsTyp: 'ts-diabetes'
-                    }
+                    templateUrl: '/web/webjars/common/webcert/utkast/utkast-header/utkast-header.html',
+                    controller: 'common.UtkastHeader'
                 }
             }
         });

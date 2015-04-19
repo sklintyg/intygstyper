@@ -1,40 +1,32 @@
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
-        'common.CertificateService', 'common.ManageCertView', 'common.UserModel', 'common.wcFocus',
+        'common.CertificateService', 'common.ManageCertView', 'common.UserModel',
         'common.intygNotifyService', 'fk7263.diagnosService', 'common.DateUtilsService', 'common.UtilsService',
-        'fk7263.domain.IntygModel','fk7263.EditCertCtrl.ViewStateService',
+        'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
-            CertificateService, ManageCertView, UserModel, wcFocus, intygNotifyService, diagnosService, dateUtils, utils, IntygModel,
-            viewState) {
+            CertificateService, ManageCertView, UserModel, intygNotifyService, diagnosService,
+            dateUtils, utils, IntygModel, viewState) {
             'use strict';
-
-            /**************************************************************************
-             * Private vars
-             */
-
 
             /**********************************************************************************
              * Default state
              **********************************************************************************/
             // create a new intyg model
-            viewState.intygModel = new IntygModel();
+            console.log('--------- viewState : ' + JSON.stringify(viewState) );
+            viewState.setDraftModel(IntygModel._members.build());
             $scope.viewState = viewState;
-
             viewState.common.intyg.typ = 'fk7263';
 
             // Page states
             $scope.user = UserModel;
-            $scope.today = new Date();
+
+            $scope.today = new Date(); // TODO: to viewstate
             $scope.today.setHours(0, 0, 0, 0); // reset time to increase comparison accuracy (using new Date() also sets time)
-            $scope.focusFirstInput = false;
+            $scope.focusFirstInput = false; // TODO: to common viewstate
 
             // Intyg state
-            $scope.cert = {};
-            $scope.certMeta = {
-                intygId: null,
-                intygType: 'fk7263',
-                vidarebefordrad: false
-            };
+            $scope.cert = viewState.intygModel;
+            $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
 
 
             // TODO : see if the below can be removed
@@ -67,50 +59,38 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Handle vidarebefordra dialog
              */
             $scope.openMailDialog = function() {
-                intygNotifyService.forwardIntyg($scope.certMeta);
+
+                var utkastNotifyRequest = {
+                    intygId : intygModel.id,
+                    intygType: viewState.common.intyg.typ,
+                    vidarebefordrad: viewState.draftModel.vidarebefordrad
+                };
+                intygNotifyService.forwardIntyg(utkastNotifyRequest);
             };
 
             $scope.onVidarebefordradChange = function() {
-                intygNotifyService.onForwardedChange($scope.certMeta);
+
+                var utkastNotifyRequest = {
+                    intygId : intygModel.id,
+                    intygType: viewState.common.intyg.typ,
+                    vidarebefordrad: viewState.draftModel.vidarebefordrad
+                };
+                intygNotifyService.onForwardedChange(utkastNotifyRequest);
             };
 
             /**
              * Action to sign the certificate draft and return to Webcert again.
              */
             $scope.sign = function() {
-                ManageCertView.signera($scope.certMeta.intygType);
+                ManageCertView.signera(viewState.common.intyg.typ);
             };
 
             /**************************************************************************
              * Load certificate and setup form / Constructor ...
              **************************************************************************/
 
-                // Get the certificate draft from the server.
-            ManageCertView.load( $scope.certMeta.intygType, function(intygModel) {
-
-                //intygModel.update(cert);
-
-                $scope.certMeta.intygId = intygModel.id;
-                $scope.certMeta.vidarebefordrad = intygModel.draftModel.vidarebefordrad;
-
-                // check that the certs status is not signed
-                if(intygModel.draftModel.isSigned()){
-                    // just change straight to the intyg
-                    $location.url('/intyg/' + $scope.certMeta.intygType + '/' + $scope.certMeta.intygId);
-                }
-
-                $scope.cert = intygModel;
-
-                viewState.common.isSigned = intygModel.draftModel.isSigned();
-                viewState.common.intyg.isComplete = intygModel.draftModel.isSigned() || intygModel.draftModel.isDraftComplete();
-                
-                $timeout(function() {
-                    wcFocus('firstInput');
-                    $rootScope.$broadcast('intyg.loaded', intygModel);
-                    $rootScope.$broadcast('fk7263.loaded', intygModel);
-                    viewState.common.doneLoading = true;
-                }, 10);
-            }, viewState.intygModel );
+            // Get the certificate draft from the server.
+            ManageCertView.load(viewState.common.intyg.typ, viewState.draftModel);
 
             $scope.$on('saveRequest', function($event, deferred) {
 
@@ -120,8 +100,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 $scope.certForm.$setPristine();
 
                 var intygSaveRequest = {
-                    intygsId      : $scope.certMeta.intygId,
-                    intygsTyp     : $scope.certMeta.intygType,
+                    intygsId      : viewState.intygModel.id,
+                    intygsTyp     : viewState.common.intyg.typ,
                     cert          : viewState.intygModel.toSendModel(),
                     saveComplete  : $q.defer()
                 };
@@ -143,5 +123,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
                 deferred.resolve(intygSaveRequest);
             });
+
 
         }]);

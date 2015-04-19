@@ -1,13 +1,24 @@
 angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
-    ['$log', 'common.IntygEditViewStateService', 'fk7263.EditCertCtrl.Helper',
+    ['$log', 'common.UtkastViewStateService', 'fk7263.EditCertCtrl.Helper',
         function($log, CommonViewState, helper) {
             'use strict';
 
             this.common = CommonViewState;
 
-            this.intygModel = {};
+            this.intygModel = undefined;
+            this.draftModel = undefined;
 
-            this.avstangningSmittskyddVal = this.intygModel.avstangningSmittskydd;
+            this.clearModel = function(){
+                this.intygModel = undefined;
+                this.draftModel = undefined;
+            }
+
+            this.setDraftModel = function(draftModel){
+                this.draftModel = draftModel;
+                this.intygModel = draftModel.content;
+                this.avstangningSmittskyddVal = this.intygModel.avstangningSmittskydd;
+            };
+
             this.avstangningSmittskydd = function() {
                 return this.intygModel.avstangningSmittskydd;
             };
@@ -23,6 +34,17 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
                 diagnosBeskrivning :220,
                 ovrigt: 360 // = combined field 13 (and dependencies that end up in field 13) limit
             };
+
+            this.reset = function() {
+                CommonViewState.reset();
+            }
+
+            this.clearModel = function(){
+                CommonViewState.intygModel = undefined;
+                CommonViewState.draftModel = undefined;
+                this.intygModel = undefined;
+                this.draftModel = undefined;
+            }
 
             /**
              * Calculate total length of all fields ending up in Övrigt in the external model
