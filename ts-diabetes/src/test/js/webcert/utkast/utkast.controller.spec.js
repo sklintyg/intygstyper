@@ -18,6 +18,7 @@ describe('ts-diabetes.UtkastController', function() {
         $provide.value('common.wcFocus', wcFocus);
         $provide.value('common.intygNotifyService', intygNotifyService);
         $provide.value('common.UtkastViewStateService',{intyg:{}});
+        $provide.value('common.DateUtilsService', {});
     }));
 
     beforeEach(angular.mock.inject([

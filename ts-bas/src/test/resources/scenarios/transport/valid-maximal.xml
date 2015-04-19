@@ -70,16 +70,16 @@
     <ns1:harDiplopi>true</ns1:harDiplopi>
     <ns1:harNystagmus>true</ns1:harNystagmus>
     <ns1:synskarpaUtanKorrektion>
-      <ns1:hogerOga>0</ns1:hogerOga>
-      <ns1:vansterOga>0</ns1:vansterOga>
-      <ns1:binokulart>0</ns1:binokulart>
+      <ns1:hogerOga>0.0</ns1:hogerOga>
+      <ns1:vansterOga>0.0</ns1:vansterOga>
+      <ns1:binokulart>0.0</ns1:binokulart>
     </ns1:synskarpaUtanKorrektion>
     <ns1:synskarpaMedKorrektion>
-      <ns1:hogerOga>0</ns1:hogerOga>
+      <ns1:hogerOga>0.0</ns1:hogerOga>
       <ns1:harKontaktlinsHogerOga>true</ns1:harKontaktlinsHogerOga>
-      <ns1:vansterOga>0</ns1:vansterOga>
+      <ns1:vansterOga>0.0</ns1:vansterOga>
       <ns1:harKontaktlinsVansterOga>true</ns1:harKontaktlinsVansterOga>
-      <ns1:binokulart>0</ns1:binokulart>
+      <ns1:binokulart>0.0</ns1:binokulart>
     </ns1:synskarpaMedKorrektion>
     <ns1:harGlasStyrkaOver8Dioptrier>true</ns1:harGlasStyrkaOver8Dioptrier>
   </ns1:synfunktion>

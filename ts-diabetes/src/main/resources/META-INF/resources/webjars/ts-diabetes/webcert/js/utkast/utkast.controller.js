@@ -1,7 +1,7 @@
 angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
     ['$anchorScroll', '$location', '$log', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel',
-        'common.intygNotifyService', 'ts-diabetes.Domain.IntygModel', 'ts-diabetes.UtkastController.ViewStateService',
-        function($anchorScroll, $location, $log, $q, $rootScope, $scope, $timeout, $window, ManageCertView, UserModel,
+        'common.intygNotifyService', 'ts-diabetes.Domain.IntygModel', 'ts-diabetes.UtkastController.ViewStateService', 'common.DateUtilsService',
+        function($anchorScroll, $location, $log, $q, $rootScope, $scope, $timeout, $window, ManageCertView, UserModel, dateUtils
                  intygNotifyService, IntygModel, viewState) {
             'use strict';
 
@@ -23,6 +23,8 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
             $scope.cert = viewState.intygModel; // keep cert as a shortcut to viewState.intyModel?
             $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
 
+            $scope.tomorrowDate = moment().format('YYYY-MM-DD');
+
             // form model (extends intyg model where necessary)
             $scope.form = {
                 'identity': [
@@ -43,7 +45,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              * Private support functions
              ******************************************************************************************/
 
-            function convertCertToForm() {
+            function convertCertToForm($scope) {
 
                 // check if all info is available from HSA. If not, display the info message that someone needs to update it
                 if (viewState.intygModel.grundData.skapadAv.vardenhet.postadress === undefined ||
@@ -249,6 +251,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
 
             // Get the certificate draft from the server.
             ManageCertView.load(viewState.common.intyg.typ, viewState.draftModel);
+
 
             $scope.$on('saveRequest', function($event, deferred) {
                 // Mark form as saved, will be marked as not saved if saving fails.

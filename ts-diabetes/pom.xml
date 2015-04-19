@@ -18,32 +18,13 @@
 
     <!-- Common -->
     <dependency>
-      <groupId>se.inera.intyg.common</groupId>
-      <artifactId>common-support</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>se.inera.intyg.common</groupId>
-      <artifactId>common-web</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>se.inera.intyg.common</groupId>
-      <artifactId>integration-util</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>se.inera.intyg.common</groupId>
-      <artifactId>common-schemas</artifactId>
+      <groupId>se.inera.intyg.intygstyper</groupId>
+      <artifactId>ts-parent</artifactId>
+      <version>0-SNAPSHOT</version>
     </dependency>
 
-    <!-- Schemas -->
-    <dependency>
-      <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
-      <artifactId>clinicalprocess-healthcond-certificate</artifactId>
-    </dependency>
     
-    <dependency>
-    	<groupId>se.inera.intyg.schemas.intygstjanster.ts.services.v1</groupId>
-    	<artifactId>se-intygstjanster-ts-services-interactions</artifactId>
-    </dependency>    
+    <!-- Schemas -->  
 
     <dependency>
       <groupId>ch.qos.logback</groupId>

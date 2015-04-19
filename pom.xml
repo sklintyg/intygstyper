@@ -60,6 +60,7 @@
         <artifactId>common-support</artifactId>
         <version>${common.version}</version>
       </dependency>
+
       <dependency>
         <groupId>se.inera.intyg.common</groupId>
         <artifactId>common-web</artifactId>

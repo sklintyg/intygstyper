@@ -58,8 +58,7 @@ public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterfa
         try {
             certificate = moduleService.getModuleContainer().getCertificate(certificateId, personNummer, false);
             if (personNummer != null && !certificate.getCivicRegistrationNumber().equals(personNummer)) {
-                LOGGER.info(LogMarkers.VALIDATION, "Tried to get certificate with non-existing nationalIdentityNumber '.");
-                response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "Validation error: missing nationalIdentityNumber"));
+                response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "nationalIdentityNumber mismatch"));
                 return response;
             }
             if (certificate.isDeletedByCareGiver()) {

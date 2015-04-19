@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<TSDiabetesIntyg xmlns:ns2="urn:local:se:intygstjanster:services:types:1" xmlns="urn:local:se:intygstjanster:services:1">
+<diabetesIntyg xmlns:ns2="urn:local:se:intygstjanster:services:types:1" xmlns="urn:local:se:intygstjanster:services:1">
   <intygsId>ea547b19-05b4-48bb-b917-49f6355d362c</intygsId>
   <intygsTyp>TSTRK1031 (U06, V06)</intygsTyp>
   <version>02</version>
@@ -74,4 +74,4 @@
     <lamplighetInnehaBehorighetSpecial>true</lamplighetInnehaBehorighetSpecial>
     <behovAvLakareSpecialistKompetens>efsdfs</behovAvLakareSpecialistKompetens>
   </bedomning>
-</TSDiabetesIntyg>
+</diabetesIntyg>

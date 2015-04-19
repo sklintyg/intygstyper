@@ -10,27 +10,27 @@
   received a copy of the GNU Affero General Public License along with this 
   program. If not, see <http://www.gnu.org/licenses/>. -->
 <beans xmlns="http://www.springframework.org/schema/beans"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <bean class="se.inera.certificate.modules.ts_bas.rest.TsBasModuleApi" />
+  <bean class="se.inera.certificate.modules.ts_bas.rest.TsBasModuleApi"/>
 
-  <bean class="se.inera.certificate.modules.ts_bas.model.converter.TransportToInternal" />
+  <bean class="se.inera.certificate.modules.ts_bas.model.converter.TransportToInternal"/>
 
-  <bean class="se.inera.certificate.modules.ts_bas.validator.TsBasValidator" />
+  <bean class="se.inera.certificate.modules.ts_bas.validator.TsBasValidator"/>
 
-  <bean class="se.inera.certificate.modules.ts_bas.model.converter.InternalToTransport" />
+  <bean class="se.inera.certificate.modules.ts_bas.model.converter.InternalToTransport"/>
 
   <bean class="se.inera.certificate.modules.ts_bas.pdf.PdfGenerator">
-    <constructor-arg value="true" />
+    <constructor-arg value="true"/>
   </bean>
 
-  <bean id="tsBasObjectMapper" class="se.inera.certificate.integration.json.CustomObjectMapper" />
+  <bean id="tsBasObjectMapper" class="se.inera.certificate.integration.json.CustomObjectMapper"/>
 
-  <bean id="tsBasModelConverterUtil" class="se.inera.certificate.modules.ts_bas.model.converter.util.ConverterUtil" />
+  <bean id="tsBasModelConverterUtil" class="se.inera.certificate.modules.ts_bas.model.converter.util.ConverterUtil"/>
 
-  <bean class="se.inera.certificate.modules.ts_bas.model.converter.WebcertModelFactory" />
+  <bean class="se.inera.certificate.modules.ts_bas.model.converter.WebcertModelFactory"/>
 
-  <bean id="tsBasEntryPoint" class="se.inera.certificate.modules.ts_bas.support.TsBasEntryPoint" />
+  <bean id="tsBasEntryPoint" class="se.inera.certificate.modules.ts_bas.support.TsBasEntryPoint"/>
 
 </beans>
