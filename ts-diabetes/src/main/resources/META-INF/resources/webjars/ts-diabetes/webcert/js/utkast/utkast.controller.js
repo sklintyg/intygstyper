@@ -1,8 +1,8 @@
 angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
     ['$anchorScroll', '$location', '$log', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel',
         'common.intygNotifyService', 'ts-diabetes.Domain.IntygModel', 'ts-diabetes.UtkastController.ViewStateService', 'common.DateUtilsService',
-        function($anchorScroll, $location, $log, $q, $rootScope, $scope, $timeout, $window, ManageCertView, UserModel, dateUtils
-                 intygNotifyService, IntygModel, viewState) {
+        function($anchorScroll, $location, $log, $q, $rootScope, $scope, $timeout, $window, ManageCertView, UserModel,
+                 intygNotifyService, IntygModel, viewState, dateUtils) {
             'use strict';
 
             /**********************************************************************************
