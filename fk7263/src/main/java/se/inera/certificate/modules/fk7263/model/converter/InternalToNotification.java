@@ -1,40 +1,41 @@
     package se.inera.certificate.modules.fk7263.model.converter;
 
-import java.util.List;
+    import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+    import org.apache.commons.lang3.StringUtils;
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
+    import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.certificate.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.Arbetsformaga;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.CertificateStatusUpdateForCareType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.Enhet;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.FragorOchSvar;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.Handelse;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.HosPersonal;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.Patient;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.UtlatandeType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.DatumPeriod;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.Diagnos;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.Handelsekod;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.HandelsekodKodRestriktion;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.HsaId;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.PQ;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.PersonId;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.TypAvUtlatande;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.types.v1.UtlatandeId;
-import se.inera.certificate.common.enumerations.Diagnoskodverk;
-import se.inera.certificate.model.InternalLocalDateInterval;
-import se.inera.certificate.model.common.internal.HoSPersonal;
-import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
-import se.inera.certificate.modules.service.WebcertModuleService;
-import se.inera.certificate.modules.support.api.exception.ModuleException;
-import se.inera.certificate.modules.support.api.notification.HandelseType;
-import se.inera.certificate.modules.support.api.notification.NotificationMessage;
+    import se.inera.certificate.common.enumerations.Diagnoskodverk;
+    import se.inera.certificate.model.InternalLocalDateInterval;
+    import se.inera.certificate.model.common.internal.HoSPersonal;
+    import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
+    import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
+    import se.inera.certificate.modules.service.WebcertModuleService;
+    import se.inera.certificate.modules.support.api.exception.ModuleException;
+    import se.inera.certificate.modules.support.api.notification.HandelseType;
+    import se.inera.certificate.modules.support.api.notification.NotificationMessage;
+    import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.Arbetsformaga;
+    import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.CertificateStatusUpdateForCareType;
+    import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.Enhet;
+    import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.FragorOchSvar;
+    import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.Handelse;
+    import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.HosPersonal;
+    import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.Patient;
+    import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.UtlatandeType;
+    import se.riv.clinicalprocess.healthcond.certificate.types.v1.DatumPeriod;
+    import se.riv.clinicalprocess.healthcond.certificate.types.v1.Diagnos;
+    import se.riv.clinicalprocess.healthcond.certificate.types.v1.Handelsekod;
+    import se.riv.clinicalprocess.healthcond.certificate.types.v1.HandelsekodKodRestriktion;
+    import se.riv.clinicalprocess.healthcond.certificate.types.v1.HsaId;
+    import se.riv.clinicalprocess.healthcond.certificate.types.v1.PQ;
+    import se.riv.clinicalprocess.healthcond.certificate.types.v1.PersonId;
+    import se.riv.clinicalprocess.healthcond.certificate.types.v1.TypAvUtlatande;
+    import se.riv.clinicalprocess.healthcond.certificate.types.v1.UtlatandeId;
 
-public class InternalToNotification {
+
+    public class InternalToNotification {
 
     private static final Logger LOG = LoggerFactory.getLogger(InternalToNotification.class);
 

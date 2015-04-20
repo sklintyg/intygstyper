@@ -211,7 +211,7 @@ public class TsBasModuleApi implements ModuleApi {
     @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
         String transformedPayload = xslTransformer.transform(internalModel.getXmlModel());
-        
+
         SOAPMessage response = sendTsBasClient.registerCertificate(transformedPayload);
         try {
             LOG.debug("Got response with header: {}", response.getSOAPBody());
@@ -242,12 +242,12 @@ public class TsBasModuleApi implements ModuleApi {
                 return convert(response, false);
             case ERROR:
                 switch (response.getResultat().getErrorId()) {
-                case REVOKED:
-                    return convert(response, true);
-                case VALIDATION_ERROR:
-                    throw new ModuleException("getTSBas WS call: VALIDATION_ERROR :" + response.getResultat().getResultText());
-                default:
-                    throw new ModuleException("getTSBas WS call: ERROR :" + response.getResultat().getResultText());
+                    case REVOKED:
+                        return convert(response, true);
+                    case VALIDATION_ERROR:
+                        throw new ModuleException("getTSBas WS call: VALIDATION_ERROR :" + response.getResultat().getResultText());
+                    default:
+                        throw new ModuleException("getTSBas WS call: ERROR :" + response.getResultat().getResultText());
                 }
             default:
                 throw new ModuleException("getTSBas WS call: ERROR :" + response.getResultat().getResultText());
@@ -291,7 +291,7 @@ public class TsBasModuleApi implements ModuleApi {
         try {
             Utlatande utlatande = TransportToInternal.convert(response.getIntyg());
             String internalModel = objectMapper.writeValueAsString(utlatande);
-            
+
             CertificateMetaData metaData = TsBasMetaDataConverter.toCertificateMetaData(response.getMeta(), response.getIntyg());
             return new CertificateResponse(internalModel, utlatande, metaData, revoked);
         } catch (Exception e) {

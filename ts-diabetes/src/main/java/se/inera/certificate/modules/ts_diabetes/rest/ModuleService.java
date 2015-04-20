@@ -1,21 +1,3 @@
-/**
- * Copyright (C) 2013 Inera AB (http://www.inera.se)
- *
- * This file is part of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules).
- *
- * Inera Certificate Modules is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * Inera Certificate Modules is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package se.inera.certificate.modules.ts_diabetes.rest;
 
 import java.io.IOException;
@@ -215,7 +197,7 @@ public class ModuleService implements ModuleApi {
     @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
         String transformedPayload = xslTransformer.transform(internalModel.getXmlModel());
-        
+
         SOAPMessage response = sendTsDiabetesClient.registerCertificate(transformedPayload);
 //        if (response.getResult().getResultCode() !=  se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.OK) {
 //            String message = response.getResult().getResultCode() == se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.INFO
@@ -234,21 +216,21 @@ public class ModuleService implements ModuleApi {
         GetTSDiabetesResponseType diabetesResponseType = diabetesGetClient.getTSDiabetes(logicalAddress, type);
 
         switch (diabetesResponseType.getResultat().getResultCode()) {
-        case INFO:
-        case OK:
-            return convert(diabetesResponseType, false);
-        case ERROR:
-            switch (diabetesResponseType.getResultat().getErrorId()) {
-            case REVOKED:
-                return convert(diabetesResponseType, true);
-            case VALIDATION_ERROR:
-                throw new ModuleException("getMedicalCertificateForCare WS call: VALIDATION_ERROR :"
-                        + diabetesResponseType.getResultat().getResultText());
+            case INFO:
+            case OK:
+                return convert(diabetesResponseType, false);
+            case ERROR:
+                switch (diabetesResponseType.getResultat().getErrorId()) {
+                    case REVOKED:
+                        return convert(diabetesResponseType, true);
+                    case VALIDATION_ERROR:
+                        throw new ModuleException("getMedicalCertificateForCare WS call: VALIDATION_ERROR :"
+                                + diabetesResponseType.getResultat().getResultText());
+                    default:
+                        throw new ModuleException("getMedicalCertificateForCare WS call: ERROR :" + diabetesResponseType.getResultat().getResultText());
+                }
             default:
                 throw new ModuleException("getMedicalCertificateForCare WS call: ERROR :" + diabetesResponseType.getResultat().getResultText());
-            }
-        default:
-            throw new ModuleException("getMedicalCertificateForCare WS call: ERROR :" + diabetesResponseType.getResultat().getResultText());
         }
     }
 

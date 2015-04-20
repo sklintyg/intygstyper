@@ -48,7 +48,7 @@ import se.inera.certificate.modules.support.api.dto.Vardenhet;
 import se.inera.certificate.modules.support.api.dto.Vardgivare;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
-import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.rivtabp20.v3.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.utils.ResultOfCallUtil;
@@ -117,7 +117,7 @@ public class Fk7263ModuleApiTest {
 
         Patient patient = new Patient("Kalle", null, "Kula", "19121212-1212", null, null, null);
         CreateDraftCopyHolder copyHolder = createDraftCopyHolder(patient);
-        
+
         InternalModelResponse holder = fk7263ModuleApi.createNewInternalFromTemplate(copyHolder, createInternalHolder(utlatande));
 
         assertNotNull(holder);
@@ -126,24 +126,24 @@ public class Fk7263ModuleApiTest {
         assertEquals("Kalle", creatededUtlatande.getGrundData().getPatient().getFornamn());
         assertEquals("Kula", creatededUtlatande.getGrundData().getPatient().getEfternamn());
     }
-    
+
     @Test
     public void copyContainsOriginalPersondetails() throws IOException, ModuleException {
         Utlatande utlatande = getUtlatandeFromFile();
 
         // create copyholder without Patient in it
         CreateDraftCopyHolder copyHolder = createDraftCopyHolder(null);
-        
+
         InternalModelResponse holder = fk7263ModuleApi.createNewInternalFromTemplate(copyHolder, createInternalHolder(utlatande));
 
         assertNotNull(holder);
         Utlatande creatededUtlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
         assertEquals("Test Testorsson", creatededUtlatande.getGrundData().getPatient().getEfternamn());
     }
-    
+
     @Test
     public void copyContainsNewPersonnummer() throws IOException, ModuleException {
-        
+
         String newSSN = "19121212-1414";
 
         Utlatande utlatande = getUtlatandeFromFile();
@@ -151,7 +151,7 @@ public class Fk7263ModuleApiTest {
         Patient patient = new Patient("Kalle", null, "Kula", "19121212-1212", null, null, null);
         CreateDraftCopyHolder copyHolder = createDraftCopyHolder(patient);
         copyHolder.setNewPersonnummer(newSSN);
-        
+
         InternalModelResponse holder = fk7263ModuleApi.createNewInternalFromTemplate(copyHolder, createInternalHolder(utlatande));
         assertNotNull(holder);
 

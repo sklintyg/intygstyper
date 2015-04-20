@@ -21,11 +21,11 @@ import java.io.ByteArrayOutputStream;
 
 public class DomainTransportModelValidatorTest {
 
-	private static final String COMMON_UTLATANDE_SCHEMA = "/schemas/core_components/se_intygstjanster_services_1.0.xsd";
+	private static final String COMMON_UTLATANDE_SCHEMA = "/core_components/se_intygstjanster_services_1.0.xsd";
 
-    private static final String COMMON_UTLATANDE_TYPES_SCHEMA = "/schemas/core_components/se_intygstjanster_services_types_1.0.xsd";
+    private static final String COMMON_UTLATANDE_TYPES_SCHEMA = "/core_components/se_intygstjanster_services_types_1.0.xsd";
 
-    private static final String COMMON_UTLATANDE_ISO_SCHEMA = "/schemas/core_components/iso_dt_subset_1.0.xsd";
+    //private static final String COMMON_UTLATANDE_ISO_SCHEMA = "/schemas/core_components/iso_dt_subset_1.0.xsd";
 
     private static Schema commonSchema;
 
@@ -33,7 +33,7 @@ public class DomainTransportModelValidatorTest {
     public static void initCommonSchema() throws Exception {
         SchemaValidatorBuilder schemaValidatorBuilder = new SchemaValidatorBuilder();
         Source rootSource = schemaValidatorBuilder.registerResource(COMMON_UTLATANDE_SCHEMA);
-        schemaValidatorBuilder.registerResource(COMMON_UTLATANDE_ISO_SCHEMA);
+        //schemaValidatorBuilder.registerResource(COMMON_UTLATANDE_ISO_SCHEMA);
         schemaValidatorBuilder.registerResource(COMMON_UTLATANDE_TYPES_SCHEMA);
 
         commonSchema = schemaValidatorBuilder.build(rootSource);
