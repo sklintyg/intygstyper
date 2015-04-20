@@ -17,7 +17,7 @@ describe('ts-diabetes.UtkastController', function() {
         $provide.value('common.UserModel', UserModel);
         $provide.value('common.wcFocus', wcFocus);
         $provide.value('common.intygNotifyService', intygNotifyService);
-        $provide.value('common.UtkastViewStateService',{intyg:{}});
+        $provide.value('common.UtkastViewStateService',{intyg:{}, reset: function() {}});
         $provide.value('common.DateUtilsService', {});
     }));
 

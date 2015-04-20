@@ -149,7 +149,7 @@ describe('ts-diabetes.IntygController', function() {
     }));
 
     it('Should assemble intygavser and bedomning where selected=true and add comma as separator', function() {
-        expect($scope.view.intygAvser).toBe('A, D, DE, TAXI');
-        expect($scope.view.bedomning).toBe('B, BE, TRAKTOR, C, CE');
+        expect($scope.viewState.intygAvser).toBe('A, D, DE, TAXI');
+        expect($scope.viewState.bedomning).toBe('B, BE, TRAKTOR, C, CE');
     });
 });
