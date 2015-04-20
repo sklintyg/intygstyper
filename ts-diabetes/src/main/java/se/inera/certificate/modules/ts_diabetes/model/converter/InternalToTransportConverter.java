@@ -57,7 +57,6 @@ public class InternalToTransportConverter {
         result.setIdentitetStyrkt(readIdentitetStyrkt(utlatande.getVardkontakt()));
         result.setIntygAvser(readIntygAvser(utlatande.getIntygAvser()));
         result.setIntygsId(utlatande.getId());
-        // TODO: temp, force type
         result.setIntygsTyp("TSTRK1031 (U06, V06)");
         result.setSeparatOgonLakarintygKommerSkickas(utlatande.getSyn().getSeparatOgonlakarintyg());
         result.setOvrigKommentar(utlatande.getKommentar());
@@ -65,9 +64,7 @@ public class InternalToTransportConverter {
         if (result.isSeparatOgonLakarintygKommerSkickas() == null || result.isSeparatOgonLakarintygKommerSkickas() == false) {
             result.setSynfunktion(readSynfunktionDiabetes(utlatande.getSyn()));
         }
-        // TODO: temp, force utgåva
         result.setUtgava("06");
-        // TODO: temp, force version
         result.setVersion("02");
         return result;
     }

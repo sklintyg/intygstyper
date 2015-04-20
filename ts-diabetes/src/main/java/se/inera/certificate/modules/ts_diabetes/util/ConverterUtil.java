@@ -44,10 +44,6 @@ public class ConverterUtil {
         certificateHolder.setCivicRegistrationNumber(utlatande.getGrundData().getPatient().getPersonId());
         certificateHolder.setSignedDate(utlatande.getGrundData().getSigneringsdatum());
         certificateHolder.setType(TsDiabetesEntryPoint.MODULE_ID);
-        //TODO:
-        //certificateHolder.setValidFromDate(utlatande.getGiltighet().getFrom().toString());
-        //certificateHolder.setValidToDate(utlatande.getGiltighet().getTom().toString());
-        //certificateHolder.setAdditionalInfo(utlatande.getGiltighet().getFrom().toString() + " - " + utlatande.getGiltighet().getTom().toString());
         certificateHolder.setDocument(toJsonString(utlatande));
         return certificateHolder;
     }
