@@ -40,8 +40,8 @@
             <entry key="schema-validation-enabled" value="true" />
         </jaxws:properties>
         <jaxws:schemaLocations>
-            <jaxws:schemaLocation>classpath:/intygstjanster-services/core-components/se_intygstjanster_services_1.0.xsd</jaxws:schemaLocation>
-            <jaxws:schemaLocation>classpath:/intygstjanster-services/core-components/se_intygstjanster_services_types_1.0.xsd</jaxws:schemaLocation>
+            <jaxws:schemaLocation>classpath:/core_components/se_intygstjanster_services_1.0.xsd</jaxws:schemaLocation>
+            <jaxws:schemaLocation>classpath:/core_components/se_intygstjanster_services_types_1.0.xsd</jaxws:schemaLocation>
             <jaxws:schemaLocation>classpath:/interactions/RegisterTSDiabetesInteraction/RegisterTSDiabetesResponder_1.0.xsd</jaxws:schemaLocation>
         </jaxws:schemaLocations>
   </jaxws:endpoint>
