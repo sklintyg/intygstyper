@@ -233,7 +233,7 @@
         <configuration>
           <includeProperties>
             common.version,
-            clinicalprocess-healthcond-certificate.version,
+            rivta-clinicalprocess.version,
             rivta-insuranceprocess.version,
             intyg-clinicalprocess.version,
             intyg-insuranceprocess.version,
