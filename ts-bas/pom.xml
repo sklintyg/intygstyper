@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>se.inera.intyg.intygstyper</groupId>
@@ -16,29 +16,18 @@
 
   <dependencies>
 
-    <!-- Common -->
-    <dependency>
-      <groupId>se.inera.intyg.common</groupId>
-      <artifactId>common-support</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>se.inera.intyg.common</groupId>
-      <artifactId>common-web</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>se.inera.intyg.common</groupId>
-      <artifactId>integration-util</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>se.inera.intyg.common</groupId>
-      <artifactId>common-schemas</artifactId>
-    </dependency>
+        <!-- Module -->
+        <dependency>
+          <groupId>se.inera.intyg.intygstyper</groupId>
+          <artifactId>ts-parent</artifactId>
+          <version>${ts-parent.version}</version>
+       </dependency>
 
-    <!-- RIVTA Schemas -->
-    <dependency>
-      <groupId>se.riv.clinicalprocess.healthcond.certificate</groupId>
-      <artifactId>clinicalprocess-healthcond-certificate-schemas</artifactId>
-    </dependency>
+        <!-- Others -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
 
     <!-- Intyg Schemas -->
     <dependency>

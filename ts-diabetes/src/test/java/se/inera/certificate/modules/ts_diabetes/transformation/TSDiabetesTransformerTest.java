@@ -3,38 +3,33 @@ package se.inera.certificate.modules.ts_diabetes.transformation;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.fail;
 
-import java.io.ByteArrayInputStream;
-import java.net.URL;
-import java.util.List;
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import se.inera.certificate.modules.ts_parent.transformation.XslTransformer;
+import se.inera.certificate.xml.SchemaValidatorBuilder;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import se.inera.certificate.modules.ts_parent.transformation.XslTransformer;
-import se.inera.certificate.xml.SchemaValidatorBuilder;
-
-import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
+import java.io.ByteArrayInputStream;
+import java.net.URL;
+import java.util.List;
 
 public class TSDiabetesTransformerTest {
 
-    private static final String COMMON_UTLATANDE_SCHEMA = "/intygstjanster-services/core-components/se_intygstjanster_services_1.0.xsd";
+    private static final String COMMON_UTLATANDE_SCHEMA = "core_components/se_intygstjanster_services_1.0.xsd";
 
-    private static final String COMMON_UTLATANDE_TYPES_SCHEMA = "/intygstjanster-services/core-components/se_intygstjanster_services_types_1.0.xsd";
+    private static final String COMMON_UTLATANDE_TYPES_SCHEMA = "core_components/se_intygstjanster_services_types_1.0.xsd";
 
-    private static final String COMMON_REGISTER_SCHEMA = "/interactions/RegisterTSDiabetesInteraction/RegisterTSDiabetesResponder_1.0.xsd";
+    private static final String COMMON_REGISTER_SCHEMA = "interactions/RegisterTSDiabetesInteraction/RegisterTSDiabetesResponder_1.0.xsd";
 
     private static final String CLINICAL_TS_DIABETES_SCHEMA = "specializations/TS-Diabetes/ts-diabetes_model.xsd";
 
     private static final String CLINICAL_CORE_SCHEMA = "core_components/clinicalprocess_healthcond_certificate_1.0.xsd";
 
     private static final String CLINICAL_TYPES_SCHEMA = "core_components/clinicalprocess_healthcond_certificate_types_1.0.xsd";
-
-    private static final String CLINIAL_ISO_SCHEMA = "/insuranceprocess-healthreporting/core-components/iso_dt_subset_1.0.xsd";
 
     private static final String CLINIAL_REGISTER_SCHEMA = "interactions/RegisterCertificateInteraction/RegisterCertificateResponder_1.0.xsd";
 
@@ -58,7 +53,6 @@ public class TSDiabetesTransformerTest {
         schemaValidatorBuilder.registerResource(CLINICAL_CORE_SCHEMA);
         schemaValidatorBuilder.registerResource(CLINICAL_TYPES_SCHEMA);
         schemaValidatorBuilder.registerResource(CLINICAL_TS_DIABETES_SCHEMA);
-        schemaValidatorBuilder.registerResource(CLINIAL_ISO_SCHEMA);
         clinicalSchema = schemaValidatorBuilder.build(rootSource);
     }
 

@@ -14,14 +14,15 @@
 
   <artifactId>ts-parent</artifactId>
 
-  <name>Intygstyper (TA Läkarintyg, parent)</name>
-
-  <dependencies>
-    <!-- Spring -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-tx</artifactId>
-    </dependency>
+        <!-- XML -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.saxon</groupId>
+            <artifactId>Saxon-HE</artifactId>
+        </dependency>
 
     <!-- XML -->
     <dependency>
