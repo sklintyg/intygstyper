@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.converter.util.ConverterException;
-import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_bas.model.codes.KorkortsKod;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.internal.Bedomning;
@@ -71,7 +70,7 @@ import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 import se.inera.intygstjanster.ts.services.v1.Utvecklingsstorning;
 import se.inera.intygstjanster.ts.services.v1.Vardenhet;
 import se.inera.intygstjanster.ts.services.v1.Vardgivare;
-
+import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
 /**
  * Convert from {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande} to the external {@link TSBasIntyg}
  * model.

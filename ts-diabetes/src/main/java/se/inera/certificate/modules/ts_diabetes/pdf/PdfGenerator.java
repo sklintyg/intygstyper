@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import se.inera.certificate.modules.support.ApplicationOrigin;
-import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
@@ -37,6 +36,7 @@ import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
+import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;

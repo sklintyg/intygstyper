@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import se.inera.certificate.model.common.internal.HoSPersonal;
-import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvser;
@@ -33,6 +32,7 @@ import se.inera.intygstjanster.ts.services.v1.SynskarpaUtanKorrektion;
 import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 import se.inera.intygstjanster.ts.services.v1.Vardenhet;
 import se.inera.intygstjanster.ts.services.v1.Vardgivare;
+import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 
 public class InternalToTransportConverter {
 

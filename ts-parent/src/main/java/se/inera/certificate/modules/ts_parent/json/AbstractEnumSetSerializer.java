@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_diabetes.json;
+package se.inera.certificate.modules.ts_parent.json;
 
 import java.io.IOException;
 import java.util.EnumSet;

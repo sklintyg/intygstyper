@@ -18,7 +18,8 @@
  */
 package se.inera.certificate.modules.ts_diabetes.model.codes;
 
-import static se.inera.certificate.modules.ts_diabetes.model.codes.Kodverk.ID_KONTROLL;
+import se.inera.certificate.modules.ts_parent.codes.Kodverk;
+import static se.inera.certificate.modules.ts_parent.codes.Kodverk.ID_KONTROLL;
 
 /**
  * Represents the code used by this module to define id-kontroll, Needs to be updated when proper codes are delivered..

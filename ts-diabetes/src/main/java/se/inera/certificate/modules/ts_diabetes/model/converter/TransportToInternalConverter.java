@@ -11,7 +11,6 @@ import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.common.internal.Vardgivare;
-import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Diabetes;
@@ -31,6 +30,7 @@ import se.inera.intygstjanster.ts.services.v1.KorkortsbehorighetTsDiabetes;
 import se.inera.intygstjanster.ts.services.v1.SkapadAv;
 import se.inera.intygstjanster.ts.services.v1.SynfunktionDiabetes;
 import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
+import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 
 public class TransportToInternalConverter {
     private static final String VARDKONTAKT_TYP = "5880005";

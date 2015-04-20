@@ -18,7 +18,8 @@
  */
 package se.inera.certificate.modules.ts_bas.model.codes;
 
-import static se.inera.certificate.modules.ts_bas.model.codes.Kodverk.ID_KONTROLL;
+import se.inera.certificate.modules.ts_parent.codes.Kodverk;
+import static se.inera.certificate.modules.ts_parent.codes.Kodverk.ID_KONTROLL;
 
 /**
  * Represents the code used by this module to define id-kontroll,
