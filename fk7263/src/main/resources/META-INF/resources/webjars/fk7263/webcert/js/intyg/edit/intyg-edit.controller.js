@@ -11,11 +11,9 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             /**********************************************************************************
              * Default state
              **********************************************************************************/
-            // create a new intyg model
-            console.log('--------- viewState : ' + JSON.stringify(viewState) );
-            viewState.setDraftModel(IntygModel._members.build());
+            // create a new intyg model and reset all viewStates
+            viewState.reset();
             $scope.viewState = viewState;
-            viewState.common.intyg.typ = 'fk7263';
 
             // Page states
             $scope.user = UserModel;

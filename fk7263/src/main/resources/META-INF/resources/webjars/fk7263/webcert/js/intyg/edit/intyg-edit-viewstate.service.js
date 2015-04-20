@@ -1,17 +1,12 @@
 angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
-    ['$log', 'common.UtkastViewStateService', 'fk7263.EditCertCtrl.Helper',
-        function($log, CommonViewState, helper) {
+    ['$log', 'common.UtkastViewStateService', 'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.Helper',
+        function($log, CommonViewState, IntygModel, helper) {
             'use strict';
 
             this.common = CommonViewState;
 
             this.intygModel = undefined;
             this.draftModel = undefined;
-
-            this.clearModel = function(){
-                this.intygModel = undefined;
-                this.draftModel = undefined;
-            }
 
             this.setDraftModel = function(draftModel){
                 this.draftModel = draftModel;
@@ -37,14 +32,16 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
 
             this.reset = function() {
                 CommonViewState.reset();
-            }
+                CommonViewState.intyg.typ = 'fk7263';
+                this.setDraftModel(IntygModel._members.build());
+            };
 
             this.clearModel = function(){
                 CommonViewState.intygModel = undefined;
                 CommonViewState.draftModel = undefined;
                 this.intygModel = undefined;
                 this.draftModel = undefined;
-            }
+            };
 
             /**
              * Calculate total length of all fields ending up in Övrigt in the external model
@@ -89,4 +86,5 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
                 return val;
             };
 
+            this.reset();
         }]);

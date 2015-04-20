@@ -9,20 +9,17 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              * Default state
              **********************************************************************************/
 
-            viewState.common.intyg.typ = 'ts-diabetes';
-
-            viewState.setDraftModel(IntygModel._members.build());
+            viewState.reset();
+            $scope.viewState = viewState;
+            $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
+            $scope.cert = viewState.intygModel; // keep cert as a shortcut to viewState.intyModel?
 
             // Page state
             $scope.user = UserModel;
             $scope.focusFirstInput = true; // TODO: to common viewstate
             $scope.tomorrowDate = moment().subtract(1, 'days').format('YYYY-MM-DD'); // TODO: to viewstate
-            $scope.viewState = viewState;
 
             // Intyg state
-            $scope.cert = viewState.intygModel; // keep cert as a shortcut to viewState.intyModel?
-            $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
-
             $scope.tomorrowDate = moment().format('YYYY-MM-DD');
 
             // form model (extends intyg model where necessary)

@@ -11,14 +11,12 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
              * Default state
              **********************************************************************************/
 
-            viewState.common.intyg.typ = 'ts-bas';
-
-            viewState.setDraftModel(IntygModel._members.build());
-
-            $scope.user = UserModel;
+            viewState.reset();
             $scope.viewState = viewState;
             $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
             $scope.cert = viewState.intygModel; // Set default intyg state from model
+
+            $scope.user = UserModel;
 
             // form model (extends intyg model where necessary)
             $scope.form = {

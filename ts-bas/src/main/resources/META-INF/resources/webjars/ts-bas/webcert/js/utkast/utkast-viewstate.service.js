@@ -1,6 +1,6 @@
 angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
-    ['$log', 'common.UtkastViewStateService',
-        function($log, CommonViewState) {
+    ['$log', 'ts-bas.Domain.IntygModel', 'common.UtkastViewStateService',
+        function($log, IntygModel, CommonViewState) {
             'use strict';
 
             this.common = CommonViewState;
@@ -9,10 +9,12 @@ angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
             this.draftModel = undefined;
 
             this.clearModel = function(){
+                CommonViewState.intygModel = undefined;
+                CommonViewState.draftModel = undefined;
                 this.intygModel = undefined;
                 this.draftModel = undefined;
-            }
-
+            };
+            
             this.setDraftModel = function(draftModel){
                 this.draftModel = draftModel;
                 this.intygModel = draftModel.content;
@@ -37,6 +39,8 @@ angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
                 this.testerror = false;
 
                 CommonViewState.reset();
+                CommonViewState.intyg.typ = 'ts-bas';
+                this.setDraftModel(IntygModel._members.build());
             };
 
             this.reset();
