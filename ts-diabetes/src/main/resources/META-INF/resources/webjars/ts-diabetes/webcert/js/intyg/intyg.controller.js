@@ -10,20 +10,11 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
              * Page state
              *********************************************************************/
 
-            var intygType = 'ts-diabetes';
-            $scope.user = UserModel.userContext;
-            $scope.cert = {};
+            ViewState.reset();
             $scope.viewState = ViewState;
 
-            $scope.view = {
-                intygAvser: '',
-                bedomning: ''
-            };
-
-            $scope.certProperties = {
-                isSent: false,
-                isRevoked: false
-            };
+            $scope.user = UserModel.userContext;
+            $scope.cert = {};
 
             /*********************************************************************
              * Private support functions
@@ -51,18 +42,18 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
             }
 
             function loadCertificate() {
-                CertificateService.getCertificate($stateParams.certificateId, intygType, function(result) {
+                CertificateService.getCertificate($stateParams.certificateId, ViewState.common.intyg.typ, function(result) {
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
 
-                        $scope.view.intygAvser = createKorkortstypListString($scope.cert.intygAvser.korkortstyp);
-                        $scope.view.bedomning = createKorkortstypListString($scope.cert.bedomning.korkortstyp);
+                        ViewState.intygAvser = createKorkortstypListString($scope.cert.intygAvser.korkortstyp);
+                        ViewState.bedomning = createKorkortstypListString($scope.cert.bedomning.korkortstyp);
 
                         $rootScope.$emit('ts-diabetes.ViewCertCtrl.load', result);
-                        $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.statuses, 'TS');
-                        $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.statuses);
-                        if($scope.certProperties.isRevoked) {
+                        ViewState.common.intyg.isSent = ManageCertView.isSentToTarget(result.statuses, 'TS');
+                        ViewState.common.intyg.isRevoked = ManageCertView.isRevoked(result.statuses);
+                        if(ViewState.common.intyg.isRevoked) {
                             ViewState.common.printStatus = 'revoked';
                         } else {
                             ViewState.common.printStatus = 'signed';

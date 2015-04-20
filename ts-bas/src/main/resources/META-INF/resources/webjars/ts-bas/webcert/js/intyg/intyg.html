@@ -5,7 +5,7 @@
     <div ui-view="header"></div>
 
     <div ng-show="!viewState.common.activeErrorMessageKey">
-      <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : certProperties.isRevoked}">
+      <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : viewState.common.intyg.isRevoked}">
         <div class="row">
           <div class="col-md-12">
             <div class="cert-body">
@@ -17,7 +17,7 @@
 
               <!-- Intyget avser -->
               <div wc-field field-label="ts-bas.label.intygavser" filled="true">
-                <span class="cert-answer" id="intygAvser">{{view.intygAvser}}</span>
+                <span class="cert-answer" id="intygAvser">{{viewState.intygAvser}}</span>
               </div>
 
               <!-- Identitet -->
@@ -351,7 +351,7 @@
                   <span message key="ts-bas.label.bedomning-info-alt-1"></span>
 
                   <p>
-                    <span class="cert-answer" id="bedomning">{{view.bedomning}}</span>
+                    <span class="cert-answer" id="bedomning">{{viewState.bedomning}}</span>
                   </p>
                 </div>
 

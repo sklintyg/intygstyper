@@ -24,6 +24,7 @@
   "/web/webjars/fk7263/webcert/js/intyg/edit/form/form15.controller.js",
   "/web/webjars/fk7263/webcert/js/intyg/models/intyg.model.js",
   "/web/webjars/fk7263/webcert/js/intyg/view/intyg-view.controller.js",
+  "/web/webjars/fk7263/webcert/js/intyg/view/intyg-viewstate.service.js",
   "/web/webjars/fk7263/webcert/js/directives/qaPanel.js",
   "/web/webjars/fk7263/webcert/js/controllers/QACtrl.js",
   "/web/webjars/fk7263/webcert/js/helpers/qa.helper.js",

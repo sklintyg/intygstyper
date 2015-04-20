@@ -1,11 +1,11 @@
-<div class="weak-hidden" ng-class="{show: widgetState.showTemplate}" ng-controller="fk7263.ViewCertCtrl">
-  <div wc-spinner label="fk7263.info.loadingcertificate" show-spinner="!widgetState.doneLoading"
-       show-content="widgetState.doneLoading">
+<div class="weak-hidden" ng-class="{show: viewState.common.showTemplate}" ng-controller="fk7263.ViewCertCtrl">
+  <div wc-spinner label="fk7263.info.loadingcertificate" show-spinner="!viewState.common.doneLoading"
+       show-content="viewState.common.doneLoading">
 
     <div ui-view="header"></div>
 
-    <div ng-show="!widgetState.activeErrorMessageKey">
-      <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : certProperties.isRevoked}">
+    <div ng-show="!viewState.common.activeErrorMessageKey">
+      <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : $scope.viewState.common.intyg.isRevoked}">
         <div class="row">
           <div class="col-md-12">
             <div class="cert-body">

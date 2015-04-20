@@ -1,11 +1,13 @@
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore', 'common.CertificateService',
         'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate', 'common.UserModel',
+        'fk7263.IntygController.ViewStateService',
         function($log, $rootScope, $stateParams, $scope, $cookieStore, CertificateService, ManageCertView,
-            messageService, ManageCertificate, UserModel) {
+            messageService, ManageCertificate, UserModel, ViewState) {
             'use strict';
 
-            var intygType = 'fk7263';
+            ViewState.reset();
+            $scope.viewState = ViewState;
 
             // Check if the user used the special qa-link to get here.
             if ($stateParams.qaOnly) {
@@ -17,59 +19,47 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
 
             $scope.cert = {};
             $scope.cert.filledAlways = true;
-            $scope.widgetState = {
-                doneLoading: false,
-                activeErrorMessageKey: null,
-                showTemplate: true,
-                printStatus: 'notloaded',
-                newPatientId: false
-            };
-
-            $scope.certProperties = {
-                isSent: false,
-                isRevoked: false
-            };
 
             /**
              * Private
              */
             function loadCertificate() {
                 $log.debug('Loading certificate ' + $stateParams.certificateId);
-                CertificateService.getCertificate($stateParams.certificateId, intygType, function(result) {
-                    $scope.widgetState.doneLoading = true;
+                CertificateService.getCertificate($stateParams.certificateId, ViewState.common.intyg.typ, function(result) {
+                    ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
-                        
-                        $scope.certProperties.isSent = ManageCertView.isSentToTarget(result.statuses, 'FK');
-                        $scope.certProperties.isRevoked = ManageCertView.isRevoked(result.statuses);
-                        if ($scope.certProperties.isRevoked) {
-                            $scope.widgetState.printStatus = 'revoked';
+
+                        ViewState.common.intyg.isSent = ManageCertView.isSentToTarget(result.statuses, 'FK');
+                        ViewState.common.intyg.isRevoked = ManageCertView.isRevoked(result.statuses);
+                        if (ViewState.common.intyg.isRevoked) {
+                            ViewState.common.intyg.printStatus = 'revoked';
                         } else {
-                            $scope.widgetState.printStatus = 'signed';
+                            ViewState.common.intyg.printStatus = 'signed';
                         }
 
-                        $scope.pdfUrl = '/moduleapi/intyg/'+ intygType +'/' + $scope.cert.id + '/pdf';
+                        $scope.pdfUrl = '/moduleapi/intyg/'+ ViewState.common.intyg.typ +'/' + $scope.cert.id + '/pdf';
 
-                        $rootScope.$emit('fk7263.ViewCertCtrl.load', $scope.cert, $scope.certProperties);
+                        $rootScope.$emit('fk7263.ViewCertCtrl.load', $scope.cert, ViewState.common.intyg);
                         $rootScope.$broadcast('intyg.loaded', $scope.cert);
 
                     } else {
                         if ($stateParams.signed) {
-                            $scope.widgetState.activeErrorMessageKey = 'common.error.signed_but_not_ready';
+                            ViewState.common.activeErrorMessageKey = 'common.error.signed_but_not_ready';
                         } else {
-                            $scope.widgetState.activeErrorMessageKey = 'fk7263.error.could_not_load_cert';
+                            ViewState.common.activeErrorMessageKey = 'fk7263.error.could_not_load_cert';
                         }
                     }
                     $scope.intygBackup.showBackupInfo = false;
                 }, function(error) {
-                    $scope.widgetState.doneLoading = true;
+                    ViewState.common.doneLoading = true;
                     if (error.errorCode === 'DATA_NOT_FOUND') {
-                        $scope.widgetState.activeErrorMessageKey = 'fk7263.error.data_not_found';
+                        ViewState.common.activeErrorMessageKey = 'fk7263.error.data_not_found';
                     } else {
                         if ($stateParams.signed) {
-                            $scope.widgetState.activeErrorMessageKey = 'common.error.signed_but_not_ready';
+                            ViewState.common.activeErrorMessageKey = 'common.error.signed_but_not_ready';
                         } else {
-                            $scope.widgetState.activeErrorMessageKey = 'fk7263.error.could_not_load_cert';
+                            ViewState.common.activeErrorMessageKey = 'fk7263.error.could_not_load_cert';
                         }
                     }
                     $log.debug('Got error while loading cert');

@@ -1,4 +1,4 @@
-angular.module('ts-bas').service('ts-bas.IntygController.ViewStateService',
+angular.module('fk7263').service('fk7263.IntygController.ViewStateService',
     ['$log', 'common.IntygViewStateService',
         function($log, CommonViewState) {
             'use strict';
@@ -7,8 +7,8 @@ angular.module('ts-bas').service('ts-bas.IntygController.ViewStateService',
 
             this.reset = function() {
                 this.common.reset();
-                this.common.defaultRecipient = 'TS';
-                this.common.intyg.typ = 'ts-bas';
+                this.common.defaultRecipient = 'FK';
+                this.common.intyg.typ = 'fk7263';
             };
 
             this.reset();

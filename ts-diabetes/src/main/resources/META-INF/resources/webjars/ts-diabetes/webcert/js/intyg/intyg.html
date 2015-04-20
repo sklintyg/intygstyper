@@ -4,8 +4,8 @@
 
     <div ui-view="header"></div>
 
-    <div ng-show="!widgetState.activeErrorMessageKey">
-      <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : certProperties.isRevoked}">
+    <div ng-show="!viewState.common.activeErrorMessageKey">
+      <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : viewState.common.intyg.isRevoked}">
         <div class="row">
           <div class="col-md-12">
             <div class="cert-body">
@@ -17,7 +17,7 @@
 
               <!-- Intyget avser -->
               <div wc-field field-label="ts-diabetes.label.intygavser" filled="true">
-                <span class="cert-answer" id="intygAvser">{{view.intygAvser}}</span>
+                <span class="cert-answer" id="intygAvser">{{viewState.intygAvser}}</span>
               </div>
 
               <!-- Identiteten är styrkt genom -->
@@ -186,7 +186,7 @@
                 <div ng-show="!cert.bedomning.kanInteTaStallning">
                   <span message key="ts-diabetes.label.bedomning-info-alt-1"></span>
                   <p>
-                    <span id="bedomning"><span class="cert-answer">{{view.bedomning}}</span></span>
+                    <span id="bedomning"><span class="cert-answer">{{viewState.bedomning}}</span></span>
                   </p>
                 </div>
                 <div ng-show="cert.bedomning.kanInteTaStallning">
