@@ -60,12 +60,16 @@
   </xsl:variable>
 
   <xsl:template name="utlatandeHeader">
+    <xsl:param name="displayName"/>
     <p:utlatande-id>
       <xsl:attribute name="root">1.2.752.129.2.1.2.1</xsl:attribute>
       <xsl:attribute name="extension" select="ns1:intygsId"/>
     </p:utlatande-id>
-    <p:typAvUtlatande code="ts-bas" codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b"
-        codeSystemName="kv_utlåtandetyp_intyg" displayName="ts-bas"/>
+    <p:typAvUtlatande codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b"
+        codeSystemName="kv_utlåtandetyp_intyg">
+      <xsl:attribute name="code" select="$displayName"/>
+      <xsl:attribute name="displayName" select="$displayName"/>
+    </p:typAvUtlatande>
     <xsl:if test="ns1:ovrigKommentar">
       <p:kommentar>
         <xsl:value-of select="ns1:ovrigKommentar"/>

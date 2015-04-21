@@ -16,7 +16,9 @@
   <reg:RegisterCertificate>
     <reg:utlatande>
 
-      <xsl:call-template name="utlatandeHeader"/>
+      <xsl:call-template name="utlatandeHeader">
+        <xsl:with-param name="displayName" select="'ts-diabetes'"/>
+      </xsl:call-template>
 
       <xsl:apply-templates select="ns1:grundData"/>
 
