@@ -273,7 +273,7 @@
 
         <!-- Dubbelseende -->
         <xsl:call-template name="ogatsRorlighetObservation" />
-      </xsl:if>        <!-- OBSERVATIONER end -->
+       <!-- OBSERVATIONER end -->
 
         <!-- OBSERVATIONAKTIVITETRELATION begin-->
         <p2:observationAktivitetRelation>
@@ -291,6 +291,7 @@
             <xsl:attribute name="extension" select="$ogats-rorlighet-aktivitets-id"/>
           </p2:aktivitetsid>
         </p2:observationAktivitetRelation>
+      </xsl:if>
         <!-- OBSERVATIONAKTIVITETRELATION end -->
 
         <xsl:for-each select="ns1:intygAvser/ns1:korkortstyp">
@@ -299,32 +300,6 @@
           </p2:intygAvser>
         </xsl:for-each>
 
-    <!-- OBSERVATIONAKTIVITETRELATION begin-->
-      <p2:observationAktivitetRelation>
-        <p2:observationsid root="1.2.752.129.2.1.2.1">
-          <xsl:attribute name="extension" select="$synfaltsprovning-observations-id"/>
-        </p2:observationsid>
-        <p2:aktivitetsid root="1.2.752.129.2.1.2.1">
-          <xsl:attribute name="extension" select="$synfaltsprovning-aktivitets-id"/>
-        </p2:aktivitetsid>
-      </p2:observationAktivitetRelation>
-
-      <p2:observationAktivitetRelation>
-        <p2:observationsid root="1.2.752.129.2.1.2.1">
-          <xsl:attribute name="extension" select="$ogats-rorlighet-observations-id"/>
-        </p2:observationsid>
-        <p2:aktivitetsid root="1.2.752.129.2.1.2.1">
-          <xsl:attribute name="extension" select="$ogats-rorlighet-aktivitets-id"/>
-        </p2:aktivitetsid>
-      </p2:observationAktivitetRelation>
-    <!-- OBSERVATIONAKTIVITETRELATION end -->
-
-      <xsl:for-each select="ns1:intygAvser/ns1:korkortstyp">
-        <p2:intygAvser codeSystem="24c41b8d-258a-46bf-a08a-b90738b28770" codeSystemName="kv_intyget_avser">
-          <xsl:attribute name="code" select="$intygAvser/mapping[@key = current()]/@value"/>
-        </p2:intygAvser>
-      </xsl:for-each>
-      
         <p2:bilaga>
             <p2:bilagetyp code="BIL1" codeSystem="80595600-7477-4a6c-baeb-d2439e86b8bc" codeSystemName="kv_bilaga" />
             <p:forekomst>
