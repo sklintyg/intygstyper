@@ -16,18 +16,18 @@
 
   <dependencies>
 
-        <!-- Module -->
-        <dependency>
-          <groupId>se.inera.intyg.intygstyper</groupId>
-          <artifactId>ts-parent</artifactId>
-          <version>${ts-parent.version}</version>
-       </dependency>
+    <!-- Module -->
+    <dependency>
+      <groupId>se.inera.intyg.intygstyper</groupId>
+      <artifactId>ts-parent</artifactId>
+      <version>${ts-parent.version}</version>
+   </dependency>
 
-        <!-- Others -->
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
+    <!-- Others -->
+    <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+    </dependency>
 
     <!-- Intyg Schemas -->
     <dependency>
@@ -104,6 +104,11 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>xmlunit</groupId>
+      <artifactId>xmlunit</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
