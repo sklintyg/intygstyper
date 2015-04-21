@@ -46,19 +46,19 @@
     <mapping key="TRAKTOR" value="VAR18"/>
   </xsl:variable>
 
-  <xsl:variable name="synfaltsprovning-aktivitets-id">
-    <xsl:value-of select="'1'"/>
-  </xsl:variable>
-  <xsl:variable name="synfaltsprovning-observations-id">
-    <xsl:value-of select="'3'"/>
-  </xsl:variable>
+  <xsl:variable name="synfaltsprovning-aktivitets-id" select="'1'"/>
+  <xsl:variable name="synfaltsprovning-observations-id" select="'3'"/>
 
-  <xsl:variable name="ogats-rorlighet-aktivitets-id">
-    <xsl:value-of select="'2'"/>
-  </xsl:variable>
-  <xsl:variable name="ogats-rorlighet-observations-id">
-    <xsl:value-of select="'4'"/>
-  </xsl:variable>
+  <xsl:variable name="ogats-rorlighet-aktivitets-id" select="'2'"/>
+  <xsl:variable name="ogats-rorlighet-observations-id" select="'4'"/>
+
+  <xsl:variable name="id_kv_metod" select="'b0c078c6-512a-42a5-ab42-a3380f369ac3'"/>
+  <xsl:variable name="id_kv_aktiviteter_intyg" select="'8040b4d1-67dc-42e1-a938-de5374e9526a'"/>
+  <xsl:variable name="id_kv_observationer_intyg" select="'335d4bed-7e1d-4f81-ae7d-b39b266ef1a3'"/>
+  <xsl:variable name="id_kv_rekommendation_intyg" select="'5a931b99-bda8-4f1e-8a6d-6f8a3f40a459'"/>
+  <xsl:variable name="id_kv_intyget_avser" select="'24c41b8d-258a-46bf-a08a-b90738b28770'"/>
+  <xsl:variable name="id_snomed-ct" select="'1.2.752.116.2.1.1.1'"/>
+  <xsl:variable name="id_icd-10" select="'1.2.752.116.1.1.1.1.1'"/>
 
   <xsl:template name="utlatandeHeader">
     <xsl:param name="displayName"/>
@@ -67,10 +67,7 @@
       <xsl:attribute name="extension" select="ns1:intygsId"/>
     </p:utlatande-id>
     <p:typAvUtlatande codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b"
-        codeSystemName="kv_utlåtandetyp_intyg">
-      <xsl:attribute name="code" select="$displayName"/>
-      <xsl:attribute name="displayName" select="$displayName"/>
-    </p:typAvUtlatande>
+        codeSystemName="kv_utlåtandetyp_intyg" code="{$displayName}" displayName="{$displayName}"/>
     <xsl:if test="ns1:ovrigKommentar">
       <p:kommentar>
         <xsl:value-of select="ns1:ovrigKommentar"/>
