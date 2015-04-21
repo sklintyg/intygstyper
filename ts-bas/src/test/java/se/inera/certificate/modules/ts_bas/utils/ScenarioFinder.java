@@ -9,7 +9,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 
-import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
+import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 
 /**
  * Finds and creates scenarios based on scenario files placed in src/test/resources.
@@ -136,7 +136,7 @@ public final class ScenarioFinder {
          * {@inheritDoc}
          */
         @Override
-        public TSBasIntyg asTransportModel() throws ScenarioNotFoundException {
+        public RegisterTSBasType asTransportModel() throws ScenarioNotFoundException {
             try {
                 return ResourceConverterUtils.toTransport(getTransportModelFor(scenarioFile));
             } catch (IOException e) {

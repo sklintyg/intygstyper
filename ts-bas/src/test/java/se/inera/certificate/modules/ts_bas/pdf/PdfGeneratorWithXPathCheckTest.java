@@ -63,7 +63,7 @@ public class PdfGeneratorWithXPathCheckTest {
             AcroFields fields = pdfReader.getAcroFields();
 
             // Create an xPath evaluator that operates on the transport model.
-            XPathEvaluator xPath = createXPathEvaluator(scenario.asTransportModel());
+            XPathEvaluator xPath = createXPathEvaluator(scenario.asTransportModel().getIntyg());
 
             // Assert that all defined mappings match
             for (TransportToPDFMapping mapping : TransportToPDFMapping.values()) {

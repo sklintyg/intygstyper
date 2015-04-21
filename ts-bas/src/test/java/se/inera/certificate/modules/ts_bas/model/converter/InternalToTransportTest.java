@@ -39,9 +39,9 @@ public class InternalToTransportTest {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
             Utlatande intUtlatande = scenario.asInternalModel();
 
-            TSBasIntyg actual = InternalToTransport.convert(intUtlatande);
+            TSBasIntyg actual = InternalToTransport.convert(intUtlatande).getIntyg();
 
-            TSBasIntyg expected = scenario.asTransportModel();
+            TSBasIntyg expected = scenario.asTransportModel().getIntyg();
 
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }

@@ -45,6 +45,7 @@ import se.inera.certificate.modules.ts_bas.model.internal.NarkotikaLakemedel;
 import se.inera.certificate.modules.ts_bas.model.internal.Syn;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.intyg.common.schemas.Constants;
+import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 import se.inera.intygstjanster.ts.services.types.v1.II;
 import se.inera.intygstjanster.ts.services.v1.AlkoholNarkotikaLakemedel;
 import se.inera.intygstjanster.ts.services.v1.BedomningTypBas;
@@ -96,14 +97,14 @@ public final class InternalToTransport {
      *
      * @throws se.inera.certificate.model.converter.util.ConverterException
      */
-    public static TSBasIntyg convert(Utlatande source)
+    public static RegisterTSBasType convert(Utlatande source)
             throws ConverterException {
         LOG.trace("Converting internal model to transport");
 
         if (source == null) {
             throw new ConverterException("Source utlatande was null, cannot convert");
         }
-
+        RegisterTSBasType registerTSBas = new RegisterTSBasType();
         TSBasIntyg utlatande = new TSBasIntyg();
 
         utlatande.setIntygsId(source.getId());
@@ -137,7 +138,8 @@ public final class InternalToTransport {
         utlatande.setSjukhusvard(buildSjukhusvard(source.getSjukhusvard()));
         utlatande.setSynfunktion(buildSynfunktionBas(source.getSyn()));
         utlatande.setUtvecklingsstorning(buildUtvecklingsstorning(source.getUtvecklingsstorning()));
-        return utlatande;
+        registerTSBas.setIntyg(utlatande);
+        return registerTSBas;
     }
 
     private static AlkoholNarkotikaLakemedel buildAlkoholNarkotikaLakemedel(NarkotikaLakemedel source) {

@@ -10,7 +10,7 @@
   <xsl:output method="xml" indent="yes"/>
   <xsl:include href="xsl/transform-ts-common.xsl"/>
 
-  <xsl:template match="ns1:basIntyg | ns2:intyg">
+  <xsl:template match="ns2:intyg">
   <reg:RegisterCertificate>
     <reg:utlatande>
 

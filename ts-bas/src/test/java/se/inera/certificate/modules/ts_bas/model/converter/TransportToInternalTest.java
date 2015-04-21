@@ -39,7 +39,7 @@ public class TransportToInternalTest {
     @Test
     public void testTransportToInternal() throws Exception {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
-            TSBasIntyg utlatande = scenario.asTransportModel();
+            TSBasIntyg utlatande = scenario.asTransportModel().getIntyg();
 
             Utlatande actual = TransportToInternal.convert(utlatande);
 
