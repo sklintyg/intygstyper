@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import se.inera.certificate.model.common.internal.HoSPersonal;
+import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvser;
@@ -13,6 +14,7 @@ import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
 import se.inera.intyg.common.schemas.Constants;
+import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 import se.inera.intygstjanster.ts.services.types.v1.II;
 import se.inera.intygstjanster.ts.services.v1.BedomningTypDiabetes;
 import se.inera.intygstjanster.ts.services.v1.Diabetes;
@@ -32,7 +34,6 @@ import se.inera.intygstjanster.ts.services.v1.SynskarpaUtanKorrektion;
 import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 import se.inera.intygstjanster.ts.services.v1.Vardenhet;
 import se.inera.intygstjanster.ts.services.v1.Vardgivare;
-import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 
 public class InternalToTransportConverter {
 
@@ -47,7 +48,8 @@ public class InternalToTransportConverter {
         typVardenMap = Collections.unmodifiableMap(tempMap);
     }
 
-    public static TSDiabetesIntyg convert(Utlatande utlatande) {
+    public static RegisterTSDiabetesType convert(Utlatande utlatande) {
+        RegisterTSDiabetesType registerTsDiabetes = new RegisterTSDiabetesType();
         TSDiabetesIntyg result = new TSDiabetesIntyg();
 
         result.setBedomning(readBedomning(utlatande.getBedomning()));
@@ -65,7 +67,8 @@ public class InternalToTransportConverter {
         }
         result.setUtgava("06");
         result.setVersion("02");
-        return result;
+        registerTsDiabetes.setIntyg(result);
+        return registerTsDiabetes;
     }
 
     private static IdentitetStyrkt readIdentitetStyrkt(Vardkontakt vardkontakt) {

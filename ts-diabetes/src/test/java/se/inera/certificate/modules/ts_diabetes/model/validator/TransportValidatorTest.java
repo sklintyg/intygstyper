@@ -25,7 +25,7 @@ public class TransportValidatorTest {
     @Test
     public void testValidate() throws ScenarioNotFoundException {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
-            TSDiabetesIntyg utlatande = scenario.asTransportModel();
+            TSDiabetesIntyg utlatande = scenario.asTransportModel().getIntyg();
             List<String> validationResponse = validator.validateTransport(utlatande);
 
             assertTrue(
@@ -38,7 +38,7 @@ public class TransportValidatorTest {
     public void testValidateWithErrors() throws Exception {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("programmatic-invalid-*")) {
 
-            TSDiabetesIntyg utlatande = scenario.asTransportModel();
+            TSDiabetesIntyg utlatande = scenario.asTransportModel().getIntyg();
             List<String> validationResponse = validator.validateTransport(utlatande);
 
             assertTrue("Expected validation error in test " + scenario.getName(), !validationResponse.isEmpty());

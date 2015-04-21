@@ -28,8 +28,8 @@ public class ScenarioTest {
         for (Scenario internalScenario : internalScenarios) {
             Scenario transportScenario = getScenarioByName(internalScenario.getName(), transportScenarios);
             
-            TSDiabetesIntyg expected = transportScenario.asTransportModel();
-            TSDiabetesIntyg actual = InternalToTransportConverter.convert(internalScenario.asInternalModel());
+            TSDiabetesIntyg expected = transportScenario.asTransportModel().getIntyg();
+            TSDiabetesIntyg actual = InternalToTransportConverter.convert(internalScenario.asInternalModel()).getIntyg();
             
             ReflectionAssert.assertLenientEquals(expected, actual);
         }
@@ -41,7 +41,7 @@ public class ScenarioTest {
             Scenario internalScenario = getScenarioByName(scenario.getName(), internalScenarios);
             
             Utlatande expected = internalScenario.asInternalModel();
-            Utlatande actual = TransportToInternalConverter.convert(scenario.asTransportModel());
+            Utlatande actual = TransportToInternalConverter.convert(scenario.asTransportModel().getIntyg());
             
             ReflectionAssert.assertLenientEquals(expected, actual);
         }

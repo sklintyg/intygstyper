@@ -6,7 +6,7 @@ import java.io.IOException;
 import javax.xml.bind.JAXB;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
+import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -14,8 +14,8 @@ public class ResourceConverterUtils {
 
     private static final ObjectMapper OBJECT_MAPPER = new CustomObjectMapper();
 
-    public static TSDiabetesIntyg toTransport(File resource) throws IOException {
-        return JAXB.unmarshal(resource, TSDiabetesIntyg.class);
+    public static RegisterTSDiabetesType toTransport(File resource) throws IOException {
+        return JAXB.unmarshal(resource, RegisterTSDiabetesType.class);
     }
 
 

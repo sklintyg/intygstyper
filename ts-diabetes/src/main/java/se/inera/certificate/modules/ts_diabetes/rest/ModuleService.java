@@ -52,7 +52,6 @@ import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.Regist
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesResponseType;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 import se.inera.intygstjanster.ts.services.v1.ResultCodeType;
-import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -176,7 +175,7 @@ public class ModuleService implements ModuleApi {
         RegisterTSDiabetesType request = new RegisterTSDiabetesType();
         try {
             Utlatande internal = objectMapper.readValue(internalModel.getInternalModel(), Utlatande.class);
-            request.setIntyg(InternalToTransportConverter.convert(internal));
+            request = InternalToTransportConverter.convert(internal);
         } catch (IOException e) {
             LOG.error("Failed to convert to transport format during registerTSBas", e);
             throw new ExternalServiceCallException("Failed to convert to transport format during registerTSBas", e);
@@ -239,11 +238,11 @@ public class ModuleService implements ModuleApi {
         String xmlString = null;
         try {
             Utlatande internal = objectMapper.readValue(jsonString, Utlatande.class);
-            TSDiabetesIntyg external = InternalToTransportConverter.convert(internal);
+            RegisterTSDiabetesType external = InternalToTransportConverter.convert(internal);
             StringWriter writer = new StringWriter();
 
-            JAXBElement<TSDiabetesIntyg> jaxbElement = new JAXBElement<TSDiabetesIntyg>(new QName("ns3:diabetesIntyg"), TSDiabetesIntyg.class, external);
-            JAXBContext context = JAXBContext.newInstance(TSBasIntyg.class);
+            JAXBElement<RegisterTSDiabetesType> jaxbElement = new JAXBElement<RegisterTSDiabetesType>(new QName("ns3:RegisterTSDiabetes"), RegisterTSDiabetesType.class, external);
+            JAXBContext context = JAXBContext.newInstance(RegisterTSDiabetesType.class);
             context.createMarshaller().marshal(jaxbElement, writer);
             xmlString = writer.toString();
 

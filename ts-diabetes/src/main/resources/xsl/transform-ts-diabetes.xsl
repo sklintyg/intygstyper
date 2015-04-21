@@ -12,7 +12,7 @@
 
   <xsl:include href="xsl/transform-ts-common.xsl"/>
 
-  <xsl:template match="ns1:diabetesIntyg | ns2:intyg">
+  <xsl:template match="ns2:intyg">
     <reg:RegisterCertificate>
       <reg:utlatande>
 

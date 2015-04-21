@@ -66,7 +66,7 @@ public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterfa
                         String.format("Certificate '%s' has been deleted by care giver", certificateId)));
             } else {
                 Utlatande utlatande = objectMapper.readValue(certificate.getDocument(), Utlatande.class);
-                TSDiabetesIntyg tsDiabetesIntyg = InternalToTransportConverter.convert(utlatande);
+                TSDiabetesIntyg tsDiabetesIntyg = InternalToTransportConverter.convert(utlatande).getIntyg();
                 response.setIntyg(tsDiabetesIntyg);
                 response.setMeta(createMetaData(certificate));
                 if (certificate.isRevoked()) {
