@@ -5,6 +5,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.empty': '',
         'ts-diabetes.label.certtitle': 'Transportstyrelsens läkarintyg, diabetes',
         'ts-diabetes.label.send': 'Skicka intyg till Transportstyrelsen',
+        'ts-diabetes.label.send.body': 'PLACEHOLDER',
         'ts-diabetes.label.intygavser': 'Intyget avser',
         'ts-diabetes.label.identitet': 'Identiteten är styrkt genom',
         'ts-diabetes.label.allmant': '1. Allmänt',
