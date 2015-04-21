@@ -76,9 +76,9 @@ angular.module('ts-bas').factory('ts-bas.Domain.IntygModel',
                     diabetes: {
                         'harDiabetes': undefined,
                         'diabetesTyp': undefined,
-                        'tabletter' : undefined,
-                        'insulin' : undefined,
-                        'kost': undefined
+                        'tabletter' : false,
+                        'insulin' : false,
+                        'kost': false
                     },
                     neurologi: {
                         'neurologiskSjukdom': undefined
