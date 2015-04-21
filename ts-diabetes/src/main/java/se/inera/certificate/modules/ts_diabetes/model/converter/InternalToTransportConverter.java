@@ -60,8 +60,7 @@ public class InternalToTransportConverter {
         result.setIntygsTyp("TSTRK1031 (U06, V06)");
         result.setSeparatOgonLakarintygKommerSkickas(utlatande.getSyn().getSeparatOgonlakarintyg());
         result.setOvrigKommentar(utlatande.getKommentar());
-
-        if (result.isSeparatOgonLakarintygKommerSkickas() == null || result.isSeparatOgonLakarintygKommerSkickas() == false) {
+        if (utlatande.getSyn().getSeparatOgonlakarintyg() != null && !utlatande.getSyn().getSeparatOgonlakarintyg()) {
             result.setSynfunktion(readSynfunktionDiabetes(utlatande.getSyn()));
         }
         result.setUtgava("06");
@@ -78,15 +77,10 @@ public class InternalToTransportConverter {
     private static SynfunktionDiabetes readSynfunktionDiabetes(Syn syn) {
         SynfunktionDiabetes result = new SynfunktionDiabetes();
         result.setHarDiplopi(syn.getDiplopi() != null && syn.getDiplopi());
-        result.setFinnsSeparatOgonlakarintyg(syn.getSeparatOgonlakarintyg() != null && syn.getSeparatOgonlakarintyg());
-
-        if (!result.isFinnsSeparatOgonlakarintyg()) {
-            result.setSynskarpaMedKorrektion(readMedKorrektion(syn));
-            result.setSynskarpaUtanKorrektion(readUtanKorrektion(syn));
-            result.setFinnsSynfaltsprovning(syn.getSynfaltsprovning() != null && syn.getSynfaltsprovning());
-            result.setSynfaltsprovningUtanAnmarkning(syn.getSynfaltsprovningUtanAnmarkning() != null && syn.getSynfaltsprovningUtanAnmarkning());
-        }
-
+        result.setSynskarpaMedKorrektion(readMedKorrektion(syn));
+        result.setSynskarpaUtanKorrektion(readUtanKorrektion(syn));
+        result.setFinnsSynfaltsprovning(syn.getSynfaltsprovning() != null && syn.getSynfaltsprovning());
+        result.setSynfaltsprovningUtanAnmarkning(syn.getSynfaltsprovningUtanAnmarkning() != null && syn.getSynfaltsprovningUtanAnmarkning());
         result.setFinnsProvningOgatsRorlighet(syn.getProvningOgatsRorlighet() != null && syn.getProvningOgatsRorlighet());
         return result;
     }
@@ -141,11 +135,11 @@ public class InternalToTransportConverter {
         if (hypoglykemier.getEgenkontrollBlodsocker() != null) {
             result.setGenomforEgenkontrollBlodsocker(hypoglykemier.getEgenkontrollBlodsocker());
         }
-       
+
         if (hypoglykemier.getAllvarligForekomstVakenTid() != null) {
             result.setHarAllvarligForekomstVakenTid(hypoglykemier.getAllvarligForekomstVakenTid());
             result.setAllvarligForekomstVakenTidAr(hypoglykemier.getAllvarligForekomstVakenTidObservationstid() != null ? hypoglykemier
-                .getAllvarligForekomstVakenTidObservationstid().getDate() : null);
+                    .getAllvarligForekomstVakenTidObservationstid().getDate() : null);
         }
         return result;
     }

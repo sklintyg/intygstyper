@@ -109,7 +109,6 @@
         <ns1:finnsSynfaltsprovning>true</ns1:finnsSynfaltsprovning>
         <ns1:synfaltsprovningUtanAnmarkning>true</ns1:synfaltsprovningUtanAnmarkning>
         <ns1:finnsProvningOgatsRorlighet>true</ns1:finnsProvningOgatsRorlighet>
-        <ns1:finnsSeparatOgonlakarintyg>false</ns1:finnsSeparatOgonlakarintyg>
     </ns1:synfunktion>
     <ns1:ovrigKommentar>Kommentarer av det viktiga slaget</ns1:ovrigKommentar>
     <ns1:bedomning>

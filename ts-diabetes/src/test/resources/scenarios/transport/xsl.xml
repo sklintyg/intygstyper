@@ -106,7 +106,6 @@
         <finnsSynfaltsprovning>true</finnsSynfaltsprovning>
         <synfaltsprovningUtanAnmarkning>true</synfaltsprovningUtanAnmarkning>
         <finnsProvningOgatsRorlighet>true</finnsProvningOgatsRorlighet>
-        <finnsSeparatOgonlakarintyg>false</finnsSeparatOgonlakarintyg>
     </synfunktion>
     <bedomning>
         <korkortstyp>AM</korkortstyp>

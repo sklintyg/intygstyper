@@ -35,7 +35,7 @@
           </p:aktivitet>
         </xsl:if>
 
-        <xsl:if test="ns1:synfunktion/ns1:finnsSeparatOgonlakarintyg = 'false'">
+      <xsl:if test="ns1:separatOgonLakarintygKommerSkickas = 'false' or ns1:separatOgonLakarintygKommerSkickas = '0'">
           <!-- Synfältsprövning (Donders konfrontationsmetod) -->
           <p:aktivitet>
             <p:aktivitets-id root="1.2.752.129.2.1.2.1">
@@ -47,82 +47,64 @@
 
           <!-- Prövning av ögats rörlighet -->
           <xsl:call-template name="ogatsRorlighetAktivitet"/>
-        </xsl:if>
+      </xsl:if>
 
-        <!-- AKTIVITETER end -->
+    <!-- AKTIVITETER end -->
 
-        <!-- REKOMMENDATIONER begin --><!-- Patienten uppfyller kraven.. -->
-        <p:rekommendation>
-          <p:rekommendationskod code="REK8"
-              codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg"/>
-          <xsl:for-each select="ns1:bedomning/ns1:korkortstyp">
-            <p2:varde codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg">
-              <xsl:attribute name="code" select="$korkortsTyp/mapping[@key = current()]/@value"/>
-            </p2:varde>
+    <!-- REKOMMENDATIONER begin -->
+      <!-- Patienten uppfyller kraven.. -->
+      <p:rekommendation>
+        <p:rekommendationskod code="REK8"
+          codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
+        <xsl:choose>
+          <xsl:when test="ns1:bedomning/ns1:kanInteTaStallning = 'true'">
+            <p2:varde code="VAR11" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:for-each select="ns1:bedomning/ns1:korkortstyp">
+              <p2:varde codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg">
+                <xsl:attribute name="code" select="$korkortsTyp/mapping[@key = current()]/@value"/>
+              </p2:varde>
           </xsl:for-each>
-        </p:rekommendation>
+          </xsl:otherwise>
+        </xsl:choose>
+      </p:rekommendation>
 
-        <!-- Specialistkompetens inom.. -->
-        <xsl:if test="ns1:bedomning/ns1:behovAvLakareSpecialistKompetens">
-          <p:rekommendation>
-            <p:rekommendationskod code="REK9"
-                codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg"/>
-            <p:beskrivning>
-              <xsl:value-of select="ns1:bedomning/ns1:behovAvLakareSpecialistKompetens"/>
-            </p:beskrivning>
-          </p:rekommendation>
-        </xsl:if>
+    <!-- OBSERVATIONER begin -->
+      <!-- Diabetes typ1 or typ2 -->
+      <p:observation>
+        <p:observationskod codeSystem="1.2.752.116.1.1.1.1.3" codeSystemName="ICD-10">
+          <xsl:attribute name="code">
+            <xsl:choose> 
+              <xsl:when test="ns1:diabetes/ns1:diabetesTyp = 'TYP1'">E10</xsl:when>
+              <xsl:otherwise>E11</xsl:otherwise>
+            </xsl:choose>
+          </xsl:attribute>
+        </p:observationskod>
+        <p:observationsperiod>
+          <p3:from><xsl:value-of select="ns1:diabetes/ns1:debutArDiabetes"/></p3:from>
+        </p:observationsperiod>
+        <p:forekomst>true</p:forekomst>
+      </p:observation>
 
-        <!-- Lämplighet att inneha... -->
-        <xsl:if test="ns1:bedomning/ns1:lamplighetInnehaBehorighetSpecial">
-          <p:rekommendation>
-            <p:rekommendationskod code="REK10"
-                codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg"/>
-            <p2:varde>
-              <xsl:value-of select="ns1:bedomning/ns1:lamplighetInnehaBehorighetSpecial"/>
-            </p2:varde>
-          </p:rekommendation>
-        </xsl:if>
-        <!-- REKOMMENDATIONER end -->
-
-        <!-- OBSERVATIONER begin -->
-
-        <!-- Diabetes typ1 or typ2 -->
+      <!-- Behandlingar -->
+      <xsl:if test="ns1:diabetes/ns1:harBehandlingTabletter = 'true' or ns1:diabetes/ns1:harBehandlingTabletter = '1'">
         <p:observation>
-          <p:observationskod codeSystem="1.2.752.116.1.1.1.1.3" codeSystemName="ICD-10">
-            <xsl:attribute name="code">
-              <xsl:choose>
-                <xsl:when test="ns1:diabetes/ns1:diabetesTyp = 'TYP1'">E10</xsl:when>
-                <xsl:otherwise>E11</xsl:otherwise>
-              </xsl:choose>
-            </xsl:attribute>
-          </p:observationskod>
-          <p:observationsperiod>
-            <p3:from>
-              <xsl:value-of select="ns1:diabetes/ns1:debutArDiabetes"/>
-            </p3:from>
-          </p:observationsperiod>
+          <p:observationskod code="170746002" codeSystem="1.2.752.116.2.1.1.1"
+            codeSystemName="SNOMED-CT" />
           <p:forekomst>true</p:forekomst>
         </p:observation>
+      </xsl:if>
 
-        <!-- Behandlingar -->
-        <xsl:if test="ns1:diabetes/ns1:harBehandlingTabletter = 'true'">
-          <p:observation>
-            <p:observationskod code="170746002" codeSystem="1.2.752.116.2.1.1.1"
-                codeSystemName="SNOMED-CT"/>
-            <p:forekomst>true</p:forekomst>
-          </p:observation>
-        </xsl:if>
+      <xsl:if test="ns1:diabetes/ns1:harBehandlingKost = 'true' or ns1:diabetes/ns1:harBehandlingKost = '1'">
+        <p:observation>
+          <p:observationskod code="170745003" codeSystem="1.2.752.116.2.1.1.1"
+            codeSystemName="SNOMED-CT" />
+          <p:forekomst>true</p:forekomst>
+        </p:observation>
+      </xsl:if>
 
-        <xsl:if test="ns1:diabetes/ns1:harBehandlingKost = 'true'">
-          <p:observation>
-            <p:observationskod code="170745003" codeSystem="1.2.752.116.2.1.1.1"
-                codeSystemName="SNOMED-CT"/>
-            <p:forekomst>true</p:forekomst>
-          </p:observation>
-        </xsl:if>
-
-        <xsl:if test="ns1:diabetes/ns1:harBehandlingInsulin = 'true'">
+      <xsl:if test="ns1:diabetes/ns1:harBehandlingInsulin = 'true' or ns1:diabetes/ns1:harBehandlingInsulin = '1'">
           <p:observation>
             <p:observationskod code="170747006" codeSystem="1.2.752.116.2.1.1.1"
                 codeSystemName="SNOMED-CT"/>
@@ -133,7 +115,7 @@
             </p:observationsperiod>
             <p:forekomst>true</p:forekomst>
           </p:observation>
-        </xsl:if>
+      </xsl:if>
 
         <xsl:if test="ns1:diabetes/ns1:annanBehandlingBeskrivning">
           <p:observation>
@@ -146,10 +128,41 @@
           </p:observation>
         </xsl:if>
 
-        <!-- Hypoglykemi --><!-- Har kunskap om åtgärder -->
+      <!-- Hypoglykemi -->
+      <!-- Har kunskap om åtgärder -->
+      <p:observation>
+        <p:observationskod code="OBS19" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
+          codeSystemName="kv_observationer_intyg" />
+        <p:forekomst>
+          <xsl:value-of select="ns1:hypoglykemier/ns1:harKunskapOmAtgarder"/>
+        </p:forekomst>
+      </p:observation>
+
+      <!-- Tecken på nedsatt hjärnfunktion -->
+      <p:observation>
+        <p:observationskod code="OBS20" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
+          codeSystemName="kv_observationer_intyg" />
+        <p:forekomst>
+          <xsl:value-of select="ns1:hypoglykemier/ns1:harTeckenNedsattHjarnfunktion"/>
+        </p:forekomst>
+      </p:observation>
+
+      <!-- if  harTeckenNedsattHjarnfunktion = 'true' -->
+      <xsl:if test="ns1:hypoglykemier/ns1:harTeckenNedsattHjarnfunktion = 'true' or ns1:hypoglykemier/ns1:harTeckenNedsattHjarnfunktion = '1'">
         <p:observation>
-          <p:observationskod code="OBS19" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
-              codeSystemName="kv_observationer_intyg"/>
+          <p:observationskod code="OBS21" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
+            codeSystemName="kv_observationer_intyg" />
+          <p:forekomst>
+            <xsl:value-of select="ns1:hypoglykemier/ns1:saknarFormagaKannaVarningstecken"/>
+          </p:forekomst>
+        </p:observation>
+
+        <p:observation>
+          <p:observationskod code="OBS22" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
+            codeSystemName="kv_observationer_intyg" />
+          <p:beskrivning>
+            <xsl:value-of select="ns1:hypoglykemier/ns1:allvarligForekomstBeskrivning"/>
+          </p:beskrivning>
           <p:forekomst>
             <xsl:value-of select="ns1:hypoglykemier/ns1:harKunskapOmAtgarder"/>
           </p:forekomst>
@@ -157,66 +170,32 @@
 
         <!-- Tecken på nedsatt hjärnfunktion -->
         <p:observation>
-          <p:observationskod code="OBS20" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
-              codeSystemName="kv_observationer_intyg"/>
+          <p:observationskod code="OBS23" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
+            codeSystemName="kv_observationer_intyg" />
+          <p:beskrivning>
+            <xsl:value-of select="ns1:hypoglykemier/ns1:allvarligForekomstTrafikBeskrivning"/>
+          </p:beskrivning>
           <p:forekomst>
-            <xsl:value-of select="ns1:hypoglykemier/ns1:harTeckenNedsattHjarnfunktion"/>
+            <xsl:value-of select="ns1:hypoglykemier/ns1:harAllvarligForekomstTrafiken"/>
+          </p:forekomst>
+        </p:observation>
+      </xsl:if>
+      <!-- end if -->
+
+        <p:observation>
+          <p:observationskod code="OBS24" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
+            codeSystemName="kv_observationer_intyg" />
+          <p:observationstid>
+            <xsl:value-of select="ns1:hypoglykemier/ns1:allvarligForekomstVakenTidAr"/>
+          </p:observationstid>
+          <p:forekomst>
+            <xsl:value-of select="ns1:hypoglykemier/ns1:harAllvarligForekomstVakenTid"/>
           </p:forekomst>
         </p:observation>
 
-        <!-- if  harTeckenNedsattHjarnfunktion = 'true' -->
-        <xsl:if test="ns1:hypoglykemier/ns1:harTeckenNedsattHjarnfunktion = 'true'">
-          <p:observation>
-            <p:observationskod code="OBS21" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
-                codeSystemName="kv_observationer_intyg"/>
-            <p:forekomst>
-              <xsl:value-of select="ns1:hypoglykemier/ns1:saknarFormagaKannaVarningstecken"/>
-            </p:forekomst>
-          </p:observation>
-
-          <p:observation>
-            <p:observationskod code="OBS22" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
-                codeSystemName="kv_observationer_intyg"/>
-            <p:beskrivning>
-              <xsl:value-of select="ns1:hypoglykemier/ns1:allvarligForekomstBeskrivning"/>
-            </p:beskrivning>
-            <p:forekomst>
-              <xsl:value-of select="ns1:hypoglykemier/ns1:harAllvarligForekomst"/>
-            </p:forekomst>
-          </p:observation>
-
-          <p:observation>
-            <p:observationskod code="OBS23" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
-                codeSystemName="kv_observationer_intyg"/>
-            <p:beskrivning>
-              <xsl:value-of select="ns1:hypoglykemier/ns1:allvarligForekomstTrafikBeskrivning"/>
-            </p:beskrivning>
-            <p:forekomst>
-              <xsl:value-of select="ns1:hypoglykemier/ns1:harAllvarligForekomstTrafiken"/>
-            </p:forekomst>
-          </p:observation>
-        </xsl:if>
-        <!-- end if -->
-
-        <xsl:if test="ns1:hypoglykemier/ns1:harAllvarligForekomstVakenTid = 'true'">
-          <p:observation>
-            <p:observationskod code="OBS24" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
-                codeSystemName="kv_observationer_intyg"/>
-            <p:observationstid>
-              <xsl:value-of select="ns1:hypoglykemier/ns1:allvarligForekomstVakenTidAr"/>
-            </p:observationstid>
-            <p:forekomst>true</p:forekomst>
-          </p:observation>
-        </xsl:if>
-
-        <!-- Syn -->
-
-        <xsl:call-template name="synfaltsObservation"/>
-
-        <xsl:call-template name="ogatsRorlighetObservation"/>
-
-        <xsl:if test="ns1:synfunktion/ns1:finnsSeparatOgonlakarintyg = 'false'">
-          <p:observation>
+      <!-- Syn -->
+      <xsl:if test="ns1:separatOgonLakarintygKommerSkickas = 'false' or ns1:separatOgonLakarintygKommerSkickas = '0'">
+        <p:observation>
             <p:observations-id root="1.2.752.129.2.1.2.1"
                 extension="3"/>
             <p:observationskod code="OBS25" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
@@ -292,24 +271,13 @@
                 codeSystemName="SNOMED-CT"/>
           </p:observation>
 
-          <!-- Dubbelseende -->
-          <p:observation>
-            <p:observations-id root="1.2.752.129.2.1.2.1"
-                extension="4"/>
-            <p:observationskod code="H53.2" codeSystem="1.2.752.116.1.1.1.1.3"
-                codeSystemName="ICD-10"/>
-            <p:forekomst>
-              <xsl:value-of select="ns1:synfunktion/ns1:harDiplopi"/>
-            </p:forekomst>
-          </p:observation>
-        </xsl:if>
-        <!-- OBSERVATIONER end -->
+        <!-- Dubbelseende -->
+        <xsl:call-template name="ogatsRorlighetObservation" />
+      </xsl:if>        <!-- OBSERVATIONER end -->
 
         <!-- OBSERVATIONAKTIVITETRELATION begin-->
         <p2:observationAktivitetRelation>
-          <p2:observationsid root="1.2.752.129.2.1.2.1">
-            <xsl:attribute name="extension" select="$synfaltsprovning-observations-id"/>
-          </p2:observationsid>
+          <p2:observationsid root="1.2.752.129.2.1.2.1" extension="3" />
           <p2:aktivitetsid root="1.2.752.129.2.1.2.1">
             <xsl:attribute name="extension" select="$synfaltsprovning-aktivitets-id"/>
           </p2:aktivitetsid>
@@ -331,11 +299,37 @@
           </p2:intygAvser>
         </xsl:for-each>
 
+    <!-- OBSERVATIONAKTIVITETRELATION begin-->
+      <p2:observationAktivitetRelation>
+        <p2:observationsid root="1.2.752.129.2.1.2.1">
+          <xsl:attribute name="extension" select="$synfaltsprovning-observations-id"/>
+        </p2:observationsid>
+        <p2:aktivitetsid root="1.2.752.129.2.1.2.1">
+          <xsl:attribute name="extension" select="$synfaltsprovning-aktivitets-id"/>
+        </p2:aktivitetsid>
+      </p2:observationAktivitetRelation>
+
+      <p2:observationAktivitetRelation>
+        <p2:observationsid root="1.2.752.129.2.1.2.1">
+          <xsl:attribute name="extension" select="$ogats-rorlighet-observations-id"/>
+        </p2:observationsid>
+        <p2:aktivitetsid root="1.2.752.129.2.1.2.1">
+          <xsl:attribute name="extension" select="$ogats-rorlighet-aktivitets-id"/>
+        </p2:aktivitetsid>
+      </p2:observationAktivitetRelation>
+    <!-- OBSERVATIONAKTIVITETRELATION end -->
+
+      <xsl:for-each select="ns1:intygAvser/ns1:korkortstyp">
+        <p2:intygAvser codeSystem="24c41b8d-258a-46bf-a08a-b90738b28770" codeSystemName="kv_intyget_avser">
+          <xsl:attribute name="code" select="$intygAvser/mapping[@key = current()]/@value"/>
+        </p2:intygAvser>
+      </xsl:for-each>
+      
         <p2:bilaga>
-          <p2:bilagetyp code="BIL1" codeSystem="80595600-7477-4a6c-baeb-d2439e86b8bc" codeSystemName="kv_bilaga"/>
-          <p2:forekomst>
-            <xsl:value-of select="ns1:synfunktion/ns1:finnsSeparatOgonlakarintyg"/>
-          </p2:forekomst>
+            <p2:bilagetyp code="BIL1" codeSystem="80595600-7477-4a6c-baeb-d2439e86b8bc" codeSystemName="kv_bilaga" />
+            <p:forekomst>
+              <xsl:value-of select="ns1:separatOgonLakarintygKommerSkickas"/>
+            </p:forekomst>
         </p2:bilaga>
 
         <p2:utgava>

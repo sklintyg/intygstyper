@@ -58,7 +58,7 @@ public class TSDiabetesTransformerTest {
 
     @Test
     public void testTransformation() throws Exception {
-        List<String> testFiles = asList("xsl.xml");
+        List<String> testFiles = asList("xsl.xml", "xsl-kan-inte-ta-stallning.xml");
 
         XslTransformer transformer = new XslTransformer("xsl/transform-ts-diabetes.xsl");
 
