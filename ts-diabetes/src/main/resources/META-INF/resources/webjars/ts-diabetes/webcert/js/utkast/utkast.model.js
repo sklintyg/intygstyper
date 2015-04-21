@@ -56,9 +56,9 @@ angular.module('ts-diabetes').factory('ts-diabetes.Domain.IntygModel',
                     diabetes: {
                         diabetestyp : undefined,
                         observationsperiod: undefined,
-                        endastKost: undefined,
-                        tabletter: undefined,
-                        insulin: undefined,
+                        endastKost: false,
+                        tabletter: false,
+                        insulin: false,
                         insulinBehandlingsperiod: undefined,
                         annanBehandlingBeskrivning: undefined
                     },
