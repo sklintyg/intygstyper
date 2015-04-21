@@ -174,13 +174,22 @@ describe('ts-diabetes.UtkastController', function() {
     });
 
     it('should reset hidden fields when some "korkortstyp"-options are deselected', function() {
+
+        // first check the korkort - restore attic
         getCheckboxForKorkortstyp('C1').selected = true;
+        $scope.$digest();
+
+        // set some values
         $scope.cert.hypoglykemier.egenkontrollBlodsocker = true;
+        // this is watched so we should call digest
         $scope.cert.hypoglykemier.allvarligForekomstVakenTid = true;
+        $scope.$digest();
+
         $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = '2014-10-10';
         $scope.cert.bedomning.lamplighetInnehaBehorighet = true;
         $scope.$digest();
 
+        // set korkort to false, - update attic
         getCheckboxForKorkortstyp('C1').selected = false;
         $scope.$digest();
 
@@ -189,21 +198,22 @@ describe('ts-diabetes.UtkastController', function() {
         expect($scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid).toBe(undefined);
         expect($scope.cert.bedomning.lamplighetInnehaBehorighet).toBeUndefined();
 
-        // When reenabled the previously selected values should be remembered
+        // re-enable korkot - restore attic, previous values should be visible
         getCheckboxForKorkortstyp('C1').selected = true;
         $scope.$digest();
+
         // this one works in the live but not here.. look on monday.
-        //expect($scope.cert.hypoglykemier.egenkontrollBlodsocker).toBe(true);
-        //expect($scope.cert.hypoglykemier.allvarligForekomstVakenTid).toBe(true);
-        //expect($scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid).toBe('2014-10-10');
-        //expect($scope.cert.bedomning.lamplighetInnehaBehorighet).toBe(true);
+        expect($scope.cert.hypoglykemier.egenkontrollBlodsocker).toBe(true);
+        expect($scope.cert.hypoglykemier.allvarligForekomstVakenTid).toBe(true);
+        expect($scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid).toBe('2014-10-10');
+        expect($scope.cert.bedomning.lamplighetInnehaBehorighet).toBe(true);
     });
 
     it('should reset hidden fields when "diabetes.insulin" is set to false', function() {
         $scope.cert.diabetes.insulin = true;
-        $scope.cert.diabetes.insulinBehandlingsperiod = '2014-10-10';
         $scope.$digest();
 
+        $scope.cert.diabetes.insulinBehandlingsperiod = '2014-10-10';
         $scope.cert.diabetes.insulin = false;
         $scope.$digest();
 
@@ -212,7 +222,7 @@ describe('ts-diabetes.UtkastController', function() {
         // When reenabled the previously selected values should be remembered
         $scope.cert.diabetes.insulin = true;
         $scope.$digest();
-        //expect($scope.cert.diabetes.insulinBehandlingsperiod).toBe('2014-10-10');
+        expect($scope.cert.diabetes.insulinBehandlingsperiod).toBe('2014-10-10');
     });
 
     it('should reset hidden fields when "diabetes.insulin" is set to false', function() {
@@ -228,10 +238,11 @@ describe('ts-diabetes.UtkastController', function() {
 
     it('should reset hidden fields when "teckenNedsattHjarnfunktion" is set to false', function() {
         $scope.cert.hypoglykemier.teckenNedsattHjarnfunktion = true;
+        $scope.$digest();
+
         $scope.cert.hypoglykemier.saknarFormagaKannaVarningstecken = true;
         $scope.cert.hypoglykemier.allvarligForekomst = true;
         $scope.cert.hypoglykemier.allvarligForekomstTrafiken = true;
-        $scope.$digest();
 
         $scope.cert.hypoglykemier.teckenNedsattHjarnfunktion = false;
         $scope.$digest();
@@ -243,16 +254,16 @@ describe('ts-diabetes.UtkastController', function() {
         // When reenabled the previously selected values should be remembered
         $scope.cert.hypoglykemier.teckenNedsattHjarnfunktion = true;
         $scope.$digest();
-        //expect($scope.cert.hypoglykemier.saknarFormagaKannaVarningstecken).toBe(true);
-        //expect($scope.cert.hypoglykemier.allvarligForekomst).toBe(true);
-        //expect($scope.cert.hypoglykemier.allvarligForekomstTrafiken).toBe(true);
+        expect($scope.cert.hypoglykemier.saknarFormagaKannaVarningstecken).toBe(true);
+        expect($scope.cert.hypoglykemier.allvarligForekomst).toBe(true);
+        expect($scope.cert.hypoglykemier.allvarligForekomstTrafiken).toBe(true);
     });
 
     it('should reset hidden fields when "allvarligForekomst" is set to false', function() {
         $scope.cert.hypoglykemier.allvarligForekomst = true;
-        $scope.cert.hypoglykemier.allvarligForekomstBeskrivning = 'Hello';
         $scope.$digest();
 
+        $scope.cert.hypoglykemier.allvarligForekomstBeskrivning = 'Hello';
         $scope.cert.hypoglykemier.allvarligForekomst = false;
         $scope.$digest();
 
@@ -261,14 +272,14 @@ describe('ts-diabetes.UtkastController', function() {
         // When reenabled the previously selected values should be remembered
         $scope.cert.hypoglykemier.allvarligForekomst = true;
         $scope.$digest();
-        //expect($scope.cert.hypoglykemier.allvarligForekomstBeskrivning).toBe('Hello');
+        expect($scope.cert.hypoglykemier.allvarligForekomstBeskrivning).toBe('Hello');
     });
 
     it('should reset hidden fields when "allvarligForekomstTrafiken" is set to false', function() {
         $scope.cert.hypoglykemier.allvarligForekomstTrafiken = true;
-        $scope.cert.hypoglykemier.allvarligForekomstTrafikBeskrivning = 'Hello';
         $scope.$digest();
 
+        $scope.cert.hypoglykemier.allvarligForekomstTrafikBeskrivning = 'Hello';
         $scope.cert.hypoglykemier.allvarligForekomstTrafiken = false;
         $scope.$digest();
 
@@ -277,14 +288,14 @@ describe('ts-diabetes.UtkastController', function() {
         // When reenabled the previously selected values should be remembered
         $scope.cert.hypoglykemier.allvarligForekomstTrafiken = true;
         $scope.$digest();
-        //expect($scope.cert.hypoglykemier.allvarligForekomstTrafikBeskrivning).toBe('Hello');
+        expect($scope.cert.hypoglykemier.allvarligForekomstTrafikBeskrivning).toBe('Hello');
     });
 
     it('should reset hidden fields when "allvarligForekomstVakenTid" is set to false', function() {
         $scope.cert.hypoglykemier.allvarligForekomstVakenTid = true;
-        $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = 'Hello';
         $scope.$digest();
 
+        $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = 'Hello';
         $scope.cert.hypoglykemier.allvarligForekomstVakenTid = false;
         $scope.$digest();
 
@@ -293,45 +304,65 @@ describe('ts-diabetes.UtkastController', function() {
         // When reenabled the previously selected values should be remembered
         $scope.cert.hypoglykemier.allvarligForekomstVakenTid = true;
         $scope.$digest();
-        //expect($scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid).toBe('Hello');
+        expect($scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid).toBe('Hello');
     });
 
     it('should reset hidden fields when "separatOgonlakarintyg" is set to true', function() {
-        $scope.cert.syn.separatOgonlakarintyg = false;
-        $scope.cert.syn.hoger = { utanKorrektion: '2.0', medKorrektion: '2.0' };
-        $scope.cert.syn.vanster = { utanKorrektion: '2.0', medKorrektion: '2.0' };
-        $scope.cert.syn.binokulart = { utanKorrektion: '2.0', medKorrektion: '2.0' };
-        $scope.cert.syn.diplopi = false;
-        $scope.$digest();
 
         $scope.cert.syn.separatOgonlakarintyg = true;
         $scope.$digest();
 
-        //expect($scope.cert.syn.hoger.utanKorrektion).toBeUndefined();
-        //expect($scope.cert.syn.hoger.medKorrektion).toBeUndefined();
-        //expect($scope.cert.syn.vanster.utanKorrektion).toBeUndefined();
-        //expect($scope.cert.syn.vanster.medKorrektion).toBeUndefined();
-        //expect($scope.cert.syn.binokulart.utanKorrektion).toBeUndefined();
-        //expect($scope.cert.syn.binokulart.medKorrektion).toBeUndefined();
-        //expect($scope.cert.syn.diplopi).toBeUndefined();
+        $scope.cert.syn.separatOgonlakarintyg = false;
+        $scope.$digest();
+
+        $scope.cert.syn.hoger.utanKorrektion = '2.0'
+        $scope.cert.syn.hoger.utanKorrektion.medKorrektion= '2.0';
+        $scope.cert.syn.vanster.utanKorrektion = '2.0';
+        $scope.cert.syn.vanster.medKorrektion = '2.0';
+        $scope.cert.syn.binokulart.utanKorrektion = '2.0';
+        $scope.cert.syn.binokulart.medKorrektion = '2.0';
+        $scope.cert.syn.diplopi = false;
+
+        $scope.cert.syn.separatOgonlakarintyg = true;
+        $scope.$digest();
+
+        expect($scope.cert.syn.hoger.utanKorrektion).toBeUndefined();
+        expect($scope.cert.syn.hoger.medKorrektion).toBeUndefined();
+        expect($scope.cert.syn.vanster.utanKorrektion).toBeUndefined();
+        expect($scope.cert.syn.vanster.medKorrektion).toBeUndefined();
+        expect($scope.cert.syn.binokulart.utanKorrektion).toBeUndefined();
+        expect($scope.cert.syn.binokulart.medKorrektion).toBeUndefined();
+        expect($scope.cert.syn.diplopi).toBeUndefined();
 
         // When reenabled the previously selected values should be remembered
         $scope.cert.syn.separatOgonlakarintyg = false;
         $scope.$digest();
-        //expect($scope.cert.syn.hoger).toBe({ utanKorrektion: '2.0', medKorrektion: '2.0' });
-        //expect($scope.cert.syn.vanster).toBe({ utanKorrektion: '2.0', medKorrektion: '2.0' });
-        //expect($scope.cert.syn.binokulart).toBe({ utanKorrektion: '2.0', medKorrektion: '2.0' });
-        //expect($scope.cert.syn.diplopi).toBe(false);
+        expect($scope.cert.syn.hoger.utanKorrektion).toBe('2.0');
+        expect($scope.cert.syn.hoger.utanKorrektion).toBe('2.0');
+        expect($scope.cert.syn.vanster.utanKorrektion).toBe('2.0');
+        expect($scope.cert.syn.vanster.medKorrektion).toBe('2.0');
+        expect($scope.cert.syn.binokulart.utanKorrektion).toBe('2.0');
+        expect($scope.cert.syn.binokulart.medKorrektion).toBe('2.0');
+        expect($scope.cert.syn.diplopi).toBe(false);
     });
 
     it('should reset hidden fields when "form.behorighet" is set to false', function() {
+        //console.log('*** 1 behoriget false');
+        // because the default value is true we need to set it to false to start
+        // the test process ..
+        //$scope.form.behorighet = false;
+        //$scope.$digest();
+
+        //console.log('*** 2 behoriget true');
         $scope.form.behorighet = true;
-        angular.forEach($scope.cert.bedomning.korkortstyp, function(korkortstyp) {
-            korkortstyp.selected = true;
-        });
         $scope.$digest();
         expect($scope.cert.bedomning.kanInteTaStallning).toBeFalsy();
 
+        angular.forEach($scope.cert.bedomning.korkortstyp, function(korkortstyp) {
+            korkortstyp.selected = true;
+        });
+
+        //console.log('*** 3 behoriget false');
         $scope.form.behorighet = false;
         $scope.$digest();
 
@@ -340,14 +371,15 @@ describe('ts-diabetes.UtkastController', function() {
             expect(korkortstyp.selected).toBeFalsy();
         });
 
-        // When reenabled the previously selected values should be remembered
+        //// When reenabled the previously selected values should be remembered
+        //console.log('*** 4. behoriget true');
         $scope.form.behorighet = true;
         $scope.$digest();
 
-        //expect($scope.cert.bedomning.kanInteTaStallning).toBeFalsy();
-        //angular.forEach($scope.cert.bedomning.korkortstyp, function(korkortstyp) {
-        //    expect(korkortstyp.selected).toBeThruthy();
-        //});
+        expect($scope.cert.bedomning.kanInteTaStallning).toBeFalsy();
+        angular.forEach($scope.cert.bedomning.korkortstyp, function(korkortstyp) {
+            expect(korkortstyp.selected).toBeTruthy();
+        });
     });
 
     // Helper methods
