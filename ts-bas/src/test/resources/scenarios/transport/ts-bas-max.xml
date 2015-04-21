@@ -98,6 +98,8 @@
   <alkoholNarkotikaLakemedel>
     <harTeckenMissbruk>false</harTeckenMissbruk>
     <harVardinsats>false</harVardinsats>
+    <harLakarordineratLakemedelsbruk>true</harLakarordineratLakemedelsbruk>
+    <lakarordineratLakemedelOchDos>Läkemedel och dos</lakarordineratLakemedelOchDos>
   </alkoholNarkotikaLakemedel>
   <harPsykiskStorning>false</harPsykiskStorning>
   <utvecklingsstorning>

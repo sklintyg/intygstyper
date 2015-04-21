@@ -290,7 +290,7 @@
           </p:forekomst>
         </p:observation>
 
-        <xsl:if test="not(ns1:diabetes/ns1:harDiabetes = 'true' or ns1:diabetes/ns1:harDiabetes = '1')">
+        <xsl:if test="ns1:diabetes/ns1:harDiabetes = 'true' or ns1:diabetes/ns1:harDiabetes = '1'">
           <xsl:choose>
 
             <xsl:when test="ns1:diabetes/ns1:diabetesTyp = 'TYP1'">
@@ -309,7 +309,7 @@
               </p:observation>
 
               <!-- Kostbehandling -->
-              <xsl:if test="not(ns1:diabetes/ns1:harBehandlingKost = 'true' or ns1:diabetes/ns1:harBehandlingKost = '1')">
+              <xsl:if test="ns1:diabetes/ns1:harBehandlingKost = 'true' or ns1:diabetes/ns1:harBehandlingKost = '1'">
                 <p:observation>
                   <p:observationskod code="OBS9" codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3" codeSystemName="kv_observationer_intyg"/>
                   <p:forekomst>true</p:forekomst>
@@ -317,7 +317,7 @@
               </xsl:if>
 
               <!-- Tabettbehandling -->
-              <xsl:if test="not(ns1:diabetes/ns1:harBehandlingTabletter = 'true' or ns1:diabetes/ns1:harBehandlingTabletter = '1')">
+              <xsl:if test="ns1:diabetes/ns1:harBehandlingTabletter = 'true' or ns1:diabetes/ns1:harBehandlingTabletter = '1'">
                 <p:observation>
                   <p:observationskod code="170746002" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
                   <p:forekomst>true</p:forekomst>
@@ -325,7 +325,7 @@
               </xsl:if>
 
               <!-- Insulinbehandling -->
-              <xsl:if test="not(ns1:diabetes/ns1:harBehandlingInsulin = 'true' or ns1:diabetes/ns1:harBehandlingInsulin = '1')">
+              <xsl:if test="ns1:diabetes/ns1:harBehandlingInsulin = 'true' or ns1:diabetes/ns1:harBehandlingInsulin = '1'">
                 <p:observation>
                   <p:observationskod code="170747006" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
                   <p:forekomst>true</p:forekomst>
@@ -398,7 +398,7 @@
             </p:beskrivning>
           </xsl:if>
           <p:forekomst>
-            <xsl:value-of select="ns1:alkoholNarkotikaLakemedel/ns1:harVardinsats"/>
+            <xsl:value-of select="ns1:alkoholNarkotikaLakemedel/ns1:harLakarordineratLakemedelsbruk"/>
           </p:forekomst>
         </p:observation>
 
