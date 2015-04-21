@@ -250,42 +250,37 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
             ManageCertView.load(viewState.common.intyg.type, viewState.draftModel);
 
 
-            $scope.$on('saveRequest', function($event, deferred) {
-                // Mark form as saved, will be marked as not saved if saving fails.
+            $scope.$on('saveRequest', function($event, saveDefered) {
                 $scope.certForm.$setPristine();
-//                $scope.cert.prepare();
-
-                //convertFormToCert();// Move into prepare later
-
-                var intygSaveRequest = {
-                    intygsId : viewState.intygModel.id,
-                    intygsTyp : viewState.common.intyg.type,
-                    cert          : viewState.intygModel.toSendModel(),
-                    saveComplete  : $q.defer()
+                var intygState = {
+                    viewState     : viewState,
+                    formFail : function(){
+                        $scope.certForm.$setDirty();
+                    }
                 };
-
-                intygSaveRequest.saveComplete.promise.then(function(result) {
-
-                    // save success
-                    viewState.common.validationMessages = result.validationMessages;
-                    viewState.common.validationMessagesGrouped = result.validationMessagesGrouped;
-                    viewState.common.error.saveErrorMessageKey = null;
-
-                }, function(result) {
-                    // save failed
-                    $scope.certForm.$setDirty();
-                    viewState.common.error.saveErrorMessageKey = result.errorMessageKey;
-                });
-
-                deferred.resolve(intygSaveRequest);
+                saveDefered.resolve(intygState);
             });
 
-            $scope.$watch('viewState.common.doneLoading', function(doneLoading){
-                if(doneLoading === true){
-                    addDateParser($scope.certForm);
+            $scope.$on('$destroy', function() {
+                if(!$scope.certForm.$dirty){
+                    $scope.destroyList();
                 }
             });
 
+            $scope.destroyList = function(){
+                viewState.clearModel();
+            };
+
+            $scope.$on('intyg.loaded', function(){
+                if($scope.certForm && $scope.certForm.allvarligForekomstVakenTidObservationstid){
+                    var formElement = $scope.certForm.allvarligForekomstVakenTidObservationstid;
+                    //dateUtils.addDateParserFormatter(formElement);
+                    formElement.$parsers.push(function(viewValue) {
+                        $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = formElement.$viewValue;
+                        return viewValue;
+                    });
+                }
+            });
 
 
         }]);
