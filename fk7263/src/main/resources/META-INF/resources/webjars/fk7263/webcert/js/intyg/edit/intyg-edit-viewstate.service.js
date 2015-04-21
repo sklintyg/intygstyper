@@ -32,7 +32,7 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
 
             this.reset = function() {
                 CommonViewState.reset();
-                CommonViewState.intyg.typ = 'fk7263';
+                CommonViewState.intyg.type = 'fk7263';
                 this.setDraftModel(IntygModel._members.build());
             };
 

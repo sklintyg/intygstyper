@@ -242,7 +242,7 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
 
                 var certMeta = {
                     intygId: viewState.intygModel.id,
-                    intygType: viewState.common.intyg.typ,
+                    intygType: viewState.common.intyg.type,
                     vidarebefordrad: viewState.draftModel.vidarebefordrad
                 };
 
@@ -252,14 +252,14 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
             $scope.onVidarebefordradChange = function() {
                 var certMeta = {
                     intygId: viewState.intygModel.id,
-                    intygType: viewState.common.intyg.typ,
+                    intygType: viewState.common.intyg.type,
                     vidarebefordrad: viewState.draftModel.vidarebefordrad
                 };
                 intygNotifyService.onForwardedChange(certMeta);
             };
 
             $scope.sign = function() {
-                ManageCertView.signera(viewState.common.intyg.typ);
+                ManageCertView.signera(viewState.common.intyg.type);
             };
 
             /**************************************************************************
@@ -267,7 +267,7 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
              **************************************************************************/
 
             // Get the certificate draft from the server.
-            ManageCertView.load(viewState.common.intyg.typ, viewState.draftModel);
+            ManageCertView.load(viewState.common.intyg.type, viewState.draftModel);
 
             $scope.$on('saveRequest', function($event, deferred) {
                 // Mark form as saved, will be marked as not saved if saving fails.
@@ -276,7 +276,7 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
 
                 var intygSaveRequest = {
                     intygsId      : viewState.intygModel.id,
-                    intygsTyp     : viewState.common.intyg.typ,
+                    intygsTyp     : viewState.common.intyg.type,
                     cert          : viewState.intygModel.toSendModel(),
                     saveComplete  : $q.defer()
                 };

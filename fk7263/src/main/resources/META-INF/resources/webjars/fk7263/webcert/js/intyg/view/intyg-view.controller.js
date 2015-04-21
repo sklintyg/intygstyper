@@ -25,7 +25,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
              */
             function loadCertificate() {
                 $log.debug('Loading certificate ' + $stateParams.certificateId);
-                CertificateService.getCertificate($stateParams.certificateId, ViewState.common.intyg.typ, function(result) {
+                CertificateService.getCertificate($stateParams.certificateId, ViewState.common.intyg.type, function(result) {
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
@@ -38,7 +38,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                             ViewState.common.intyg.printStatus = 'signed';
                         }
 
-                        $scope.pdfUrl = '/moduleapi/intyg/'+ ViewState.common.intyg.typ +'/' + $scope.cert.id + '/pdf';
+                        $scope.pdfUrl = '/moduleapi/intyg/'+ ViewState.common.intyg.type +'/' + $scope.cert.id + '/pdf';
 
                         $rootScope.$emit('fk7263.ViewCertCtrl.load', $scope.cert, ViewState.common.intyg);
                         $rootScope.$broadcast('intyg.loaded', $scope.cert);

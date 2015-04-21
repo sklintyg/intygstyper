@@ -42,7 +42,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
             }
 
             function loadCertificate() {
-                CertificateService.getCertificate($stateParams.certificateId, ViewState.common.intyg.typ, function(result) {
+                CertificateService.getCertificate($stateParams.certificateId, ViewState.common.intyg.type, function(result) {
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;

@@ -8,7 +8,7 @@ angular.module('ts-bas').service('ts-bas.IntygController.ViewStateService',
             this.reset = function() {
                 this.common.reset();
                 this.common.defaultRecipient = 'TS';
-                this.common.intyg.typ = 'ts-bas';
+                this.common.intyg.type = 'ts-bas';
             };
 
             this.reset();

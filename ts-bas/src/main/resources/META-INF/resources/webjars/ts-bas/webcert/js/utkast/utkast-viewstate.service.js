@@ -39,7 +39,7 @@ angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
                 this.testerror = false;
 
                 CommonViewState.reset();
-                CommonViewState.intyg.typ = 'ts-bas';
+                CommonViewState.intyg.type = 'ts-bas';
                 this.setDraftModel(IntygModel._members.build());
             };
 

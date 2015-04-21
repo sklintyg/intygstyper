@@ -8,7 +8,7 @@ angular.module('fk7263').service('fk7263.IntygController.ViewStateService',
             this.reset = function() {
                 this.common.reset();
                 this.common.defaultRecipient = 'FK';
-                this.common.intyg.typ = 'fk7263';
+                this.common.intyg.type = 'fk7263';
             };
 
             this.reset();

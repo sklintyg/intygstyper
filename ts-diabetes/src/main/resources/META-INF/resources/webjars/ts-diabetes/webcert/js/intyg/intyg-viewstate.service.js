@@ -8,7 +8,7 @@ angular.module('ts-diabetes').service('ts-diabetes.IntygController.ViewStateServ
             this.reset = function() {
                 this.common.reset();
                 this.common.defaultRecipient = 'TS';
-                this.common.intyg.typ = 'ts-diabetes';
+                this.common.intyg.type = 'ts-diabetes';
 
                 this.intygAvser = ''; // holds built list of selected körkortstyper for intyg avser
                 this.bedomning = ''; // holds built list of selected körkortstyper for bedomning
