@@ -40,10 +40,19 @@ import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 
 public class PdfGenerator {
+
+    // Constants for printing ID and origin in left margin
+    private static final int MARGIN_TEXT_START_X = 46;
+    private static final int MARGIN_TEXT_START_Y = 137;
+    private static final int MARGIN_TEXT_FONTSIZE = 7;
+    private static final String MINA_INTYG_MARGIN_TEXT = "Intyget är utskrivet från Mina Intyg.";
+    private static final String WEBCERT_MARGIN_TEXT = "Intyget är utskrivet från Webcert.";
 
     private static final StringField INVANARE_ADRESS_FALT1 = new StringField("Falt__1");
     private static final StringField INVANARE_ADRESS_FALT2 = new StringField("Falt__2");
@@ -152,9 +161,6 @@ public class PdfGenerator {
 
     private static final StringField SPECIALISTKOMPETENS_BESKRVNING = new StringField("Falt_102");
 
-    private static final StringField UTLATANDE_ID = new StringField("Cert-id");
-    private static final StringField UTSKRIVET_FRAN = new StringField("Cert-printed-from");
-
     private static final String DATEFORMAT_FOR_FILENAMES = "yyMMdd";
 
     private final boolean formFlattening;
@@ -170,15 +176,27 @@ public class PdfGenerator {
         return String.format("lakarutlatande_%s_-%s.pdf", personId, certificateSignatureDate);
     }
 
-    public byte[] generatePDF(Utlatande utlatande, ApplicationOrigin applicaionOrigin) throws PdfGeneratorException {
+    public byte[] generatePDF(Utlatande utlatande, ApplicationOrigin applicationOrigin) throws PdfGeneratorException {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-            PdfReader pdfReader = new PdfReader("pdf/TSTRK1031U06V02.pdf");
+            PdfReader pdfReader = new PdfReader("pdf/TSTRK1031-utan streck.pdf");
             PdfStamper pdfStamper = new PdfStamper(pdfReader, outputStream);
             pdfStamper.setFormFlattening(formFlattening);
             AcroFields fields = pdfStamper.getAcroFields();
-            populatePdfFields(utlatande, fields, applicaionOrigin);
+            populatePdfFields(utlatande, fields);
+
+            // Decorate PDF depending on the origin of the pdf-call
+            switch (applicationOrigin) {
+                case MINA_INTYG:
+                    createLeftMarginText(pdfStamper, pdfReader.getNumberOfPages(), utlatande.getId(), MINA_INTYG_MARGIN_TEXT);
+                    break;
+                case WEBCERT:
+                    createLeftMarginText(pdfStamper, pdfReader.getNumberOfPages(), utlatande.getId(), WEBCERT_MARGIN_TEXT);
+                    break;
+                default:
+                    break;
+            }
 
             pdfStamper.close();
 
@@ -186,6 +204,22 @@ public class PdfGenerator {
 
         } catch (Exception e) {
             throw new PdfGeneratorException(e);
+        }
+    }
+
+    private void createLeftMarginText(PdfStamper pdfStamper, int numberOfPages, String id, String text) throws DocumentException, IOException {
+        PdfContentByte addOverlay;
+        BaseFont bf = BaseFont.createFont();
+        // Do text
+        for (int i = 1; i <= numberOfPages; i++) {
+            addOverlay = pdfStamper.getOverContent(i);
+            addOverlay.saveState();
+            addOverlay.beginText();
+            addOverlay.setFontAndSize(bf, MARGIN_TEXT_FONTSIZE);
+            addOverlay.setTextMatrix(0, 1, -1, 0, MARGIN_TEXT_START_X, MARGIN_TEXT_START_Y);
+            addOverlay.showText(String.format("Intygs-ID: %s. %s", id, text));
+            addOverlay.endText();
+            addOverlay.restoreState();
         }
     }
 
@@ -198,7 +232,7 @@ public class PdfGenerator {
      * @throws DocumentException
      * @throws IOException
      */
-    private void populatePdfFields(Utlatande utlatande, AcroFields fields, ApplicationOrigin applicaionOrigin) throws IOException, DocumentException {
+    private void populatePdfFields(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
         populatePatientInfo(utlatande.getGrundData().getPatient(), fields);
         populateIntygAvser(utlatande.getIntygAvser(), fields);
         populateIdkontroll(utlatande.getVardkontakt(), fields);
@@ -207,7 +241,7 @@ public class PdfGenerator {
         populateSynintyg(utlatande.getSyn(), fields);
         populateBedomning(utlatande.getBedomning(), fields);
         populateOvrigt(utlatande.getKommentar(), fields);
-        populateAvslut(utlatande, fields, applicaionOrigin);
+        populateAvslut(utlatande, fields);
     }
 
     private void populatePatientInfo(Patient patient, AcroFields fields) throws IOException, DocumentException {
@@ -309,7 +343,7 @@ public class PdfGenerator {
         OVRIG_BESKRIVNING.setField(fields, kommentar);
     }
 
-    private void populateAvslut(Utlatande utlatande, AcroFields fields, ApplicationOrigin applicationOrigin) throws IOException, DocumentException {
+    private void populateAvslut(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
         INTYGSDATUM.setField(fields, utlatande.getGrundData().getSigneringsdatum().toString("yyMMdd"));
         Vardenhet vardenhet = utlatande.getGrundData().getSkapadAv().getVardenhet();
         VARDINRATTNINGENS_NAMN.setField(fields, vardenhet.getEnhetsnamn());
@@ -324,18 +358,6 @@ public class PdfGenerator {
             // TODO Build text for 'beskrivning'
             SPECIALISTKOMPETENS_BESKRVNING.setField(fields, "implement");
         }
-        UTLATANDE_ID.setField(fields, utlatande.getId());
-        switch (applicationOrigin) {
-        case MINA_INTYG:
-            UTSKRIVET_FRAN.setField(fields, "Mina Intyg");
-            break;
-        case WEBCERT:
-            UTSKRIVET_FRAN.setField(fields, "Webcert");
-            break;
-        default:
-            break;
-        }
-
     }
 
     private static final class CheckField {
