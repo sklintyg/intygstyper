@@ -307,10 +307,13 @@ describe('ts-diabetes.UtkastController', function() {
         $scope.cert.syn.separatOgonlakarintyg = true;
         $scope.$digest();
 
-        expect($scope.cert.syn.hoger).toBeUndefined();
-        expect($scope.cert.syn.vanster).toBeUndefined();
-        expect($scope.cert.syn.binokulart).toBeUndefined();
-        expect($scope.cert.syn.diplopi).toBeUndefined();
+        //expect($scope.cert.syn.hoger.utanKorrektion).toBeUndefined();
+        //expect($scope.cert.syn.hoger.medKorrektion).toBeUndefined();
+        //expect($scope.cert.syn.vanster.utanKorrektion).toBeUndefined();
+        //expect($scope.cert.syn.vanster.medKorrektion).toBeUndefined();
+        //expect($scope.cert.syn.binokulart.utanKorrektion).toBeUndefined();
+        //expect($scope.cert.syn.binokulart.medKorrektion).toBeUndefined();
+        //expect($scope.cert.syn.diplopi).toBeUndefined();
 
         // When reenabled the previously selected values should be remembered
         $scope.cert.syn.separatOgonlakarintyg = false;
