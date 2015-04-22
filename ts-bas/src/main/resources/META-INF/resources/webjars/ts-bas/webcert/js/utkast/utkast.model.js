@@ -43,13 +43,13 @@ angular.module('ts-bas').factory('ts-bas.Domain.IntygModel',
                         'hogerOga': {
                             'utanKorrektion': undefined,
                             'medKorrektion': undefined,
-                            'kontaktlins': undefined
+                            'kontaktlins': false
                         },
 
                         'vansterOga': {
                             'utanKorrektion': undefined,
                             'medKorrektion': undefined,
-                            'kontaktlins': undefined
+                            'kontaktlins': false
                         },
 
                         'binokulart': {
