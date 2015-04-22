@@ -27,16 +27,6 @@
         <artifactId>Saxon-HE</artifactId>
     </dependency>
 
-    <!-- XML -->
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>net.sf.saxon</groupId>
-      <artifactId>Saxon-HE</artifactId>
-    </dependency>
-
     <!-- Common -->
     <dependency>
       <groupId>se.inera.intyg.common</groupId>
@@ -89,6 +79,7 @@
           </execution>
         </executions>
       </plugin>
+
     </plugins>
   </build>
 </project>
