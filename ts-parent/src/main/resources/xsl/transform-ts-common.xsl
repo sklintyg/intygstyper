@@ -168,6 +168,20 @@
     </p:vardkontakt>
   </xsl:template>
 
+  <xsl:template name="ogatsSynfaltAktivitet">
+    <xsl:param name="ns-namespace"/>
+    <xsl:param name="ns-prefix"/>
+    <p:aktivitet>
+      <p:aktivitets-id root="1.2.752.129.2.1.2.1" extension="{$aktivitets-id1}"/>
+      <p:aktivitetskod code="86944008" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
+      <xsl:element name="{$ns-prefix}:metod" namespace="{$ns-namespace}">
+        <xsl:attribute name="code" select="'MET1'"/>
+        <xsl:attribute name="codeSystem" select="$id_kv_metod"/>
+        <xsl:attribute name="codeSystemName" select="'kv_metod'"/>
+      </xsl:element>
+    </p:aktivitet>
+  </xsl:template>
+
   <xsl:template name="ogatsRorlighetAktivitet">
     <p:aktivitet>
       <p:aktivitets-id root="1.2.752.129.2.1.2.1" extension="{$aktivitets-id2}"/>
@@ -183,6 +197,92 @@
         <xsl:value-of select="ns1:synfunktion/ns1:harDiplopi"/>
       </p:forekomst>
     </p:observation>
+  </xsl:template>
+
+  <xsl:template name="synfunktionObservation">
+    <xsl:param name="ns-namespace"/>
+    <xsl:param name="ns-prefix"/>
+
+    <!-- Utan korrektion -->
+    <!-- Höger öga -->
+    <p:observation>
+      <p:observationskod code="420050001" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
+      <p:varde>
+        <xsl:attribute name="value" select="ns1:synfunktion/ns1:synskarpaUtanKorrektion/ns1:hogerOga"/>
+      </p:varde>
+      <xsl:element name="{$ns-prefix}:lateralitet" namespace="{$ns-namespace}">
+        <xsl:attribute name="code" select="'24028007'"/>
+        <xsl:attribute name="codeSystem" select="$id_snomed-ct"/>
+        <xsl:attribute name="codeSystemName" select="'SNOMED-CT'"/>
+      </xsl:element>
+    </p:observation>
+
+    <!-- Vänster öga -->
+    <p:observation>
+      <p:observationskod code="420050001" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
+      <p:varde>
+        <xsl:attribute name="value" select="ns1:synfunktion/ns1:synskarpaUtanKorrektion/ns1:vansterOga"/>
+      </p:varde>
+      <xsl:element name="{$ns-prefix}:lateralitet" namespace="{$ns-namespace}">
+        <xsl:attribute name="code" select="'7771000'"/>
+        <xsl:attribute name="codeSystem" select="$id_snomed-ct"/>
+        <xsl:attribute name="codeSystemName" select="'SNOMED-CT'"/>
+      </xsl:element>
+    </p:observation>
+
+    <!-- Binokulärt -->
+    <p:observation>
+      <p:observationskod code="420050001" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
+      <p:varde>
+        <xsl:attribute name="value" select="ns1:synfunktion/ns1:synskarpaUtanKorrektion/ns1:binokulart"/>
+      </p:varde>
+      <xsl:element name="{$ns-prefix}:lateralitet" namespace="{$ns-namespace}">
+        <xsl:attribute name="code" select="'51440002'"/>
+        <xsl:attribute name="codeSystem" select="$id_snomed-ct"/>
+        <xsl:attribute name="codeSystemName" select="'SNOMED-CT'"/>
+      </xsl:element>
+    </p:observation>
+
+    <!-- Med korrektion -->
+    <!-- Höger öga -->
+    <p:observation>
+      <p:observationskod code="397535007" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
+      <p:varde>
+        <xsl:attribute name="value" select="ns1:synfunktion/ns1:synskarpaMedKorrektion/ns1:hogerOga"/>
+      </p:varde>
+      <xsl:element name="{$ns-prefix}:lateralitet" namespace="{$ns-namespace}">
+        <xsl:attribute name="code" select="'24028007'"/>
+        <xsl:attribute name="codeSystem" select="$id_snomed-ct"/>
+        <xsl:attribute name="codeSystemName" select="'SNOMED-CT'"/>
+      </xsl:element>
+    </p:observation>
+
+    <!-- Vänster öga -->
+    <p:observation>
+      <p:observationskod code="397535007" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
+      <p:varde>
+        <xsl:attribute name="value" select="ns1:synfunktion/ns1:synskarpaMedKorrektion/ns1:vansterOga"/>
+      </p:varde>
+      <xsl:element name="{$ns-prefix}:lateralitet" namespace="{$ns-namespace}">
+        <xsl:attribute name="code" select="'7771000'"/>
+        <xsl:attribute name="codeSystem" select="$id_snomed-ct"/>
+        <xsl:attribute name="codeSystemName" select="'SNOMED-CT'"/>
+      </xsl:element>
+    </p:observation>
+
+    <!-- Binokulärt -->
+    <p:observation>
+      <p:observationskod code="397535007" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
+      <p:varde>
+        <xsl:attribute name="value" select="ns1:synfunktion/ns1:synskarpaMedKorrektion/ns1:binokulart"/>
+      </p:varde>
+      <xsl:element name="{$ns-prefix}:lateralitet" namespace="{$ns-namespace}">
+        <xsl:attribute name="code" select="'51440002'"/>
+        <xsl:attribute name="codeSystem" select="$id_snomed-ct"/>
+        <xsl:attribute name="codeSystemName" select="'SNOMED-CT'"/>
+      </xsl:element>
+    </p:observation>
+
   </xsl:template>
 
 </xsl:stylesheet>
