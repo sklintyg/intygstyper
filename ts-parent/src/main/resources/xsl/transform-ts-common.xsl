@@ -63,8 +63,7 @@
 
   <xsl:template name="utlatandeHeader">
     <xsl:param name="displayName"/>
-    <p:utlatande-id>
-      <xsl:attribute name="root">1.2.752.129.2.1.2.1</xsl:attribute>
+    <p:utlatande-id root="1.2.752.129.2.1.2.1">
       <xsl:attribute name="extension" select="ns1:intygsId"/>
     </p:utlatande-id>
     <p:typAvUtlatande codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b"
@@ -83,8 +82,7 @@
       <xsl:value-of select="ns1:grundData/ns1:signeringsTidstampel"/>
     </p:signeringsdatum>
     <p:patient>
-      <p:person-id>
-        <xsl:attribute name="root">1.2.752.129.2.1.3.1</xsl:attribute>
+      <p:person-id root="1.2.752.129.2.1.3.1">
         <xsl:attribute name="extension">
           <xsl:value-of select="ns1:grundData/ns1:patient/ns1:personId/ns3:extension"/>
         </xsl:attribute>
@@ -106,8 +104,7 @@
       </p:postort>
     </p:patient>
     <p:skapadAv>
-      <p:personal-id>
-        <xsl:attribute name="root">1.2.752.129.2.1.4.1</xsl:attribute>
+      <p:personal-id root="1.2.752.129.2.1.4.1">
         <xsl:attribute name="extension">
           <xsl:value-of select="ns1:grundData/ns1:skapadAv/ns1:personId/ns3:extension"/>
         </xsl:attribute>
@@ -121,8 +118,7 @@
         </p:befattning>
       </xsl:for-each>
       <p:enhet>
-        <p:enhets-id>
-          <xsl:attribute name="root">1.2.752.129.2.1.4.1</xsl:attribute>
+        <p:enhets-id root="1.2.752.129.2.1.4.1">
           <xsl:attribute name="extension">
             <xsl:value-of select="ns1:grundData/ns1:skapadAv/ns1:vardenhet/ns1:enhetsId/ns3:extension"/>
           </xsl:attribute>
@@ -143,8 +139,7 @@
           <xsl:value-of select="ns1:grundData/ns1:skapadAv/ns1:vardenhet/ns1:telefonnummer"/>
         </p:telefonnummer>
         <p:vardgivare>
-          <p:vardgivare-id>
-            <xsl:attribute name="root">1.2.752.129.2.1.4.1</xsl:attribute>
+          <p:vardgivare-id root="1.2.752.129.2.1.4.1">
             <xsl:attribute name="extension">
               <xsl:value-of select="ns1:grundData/ns1:skapadAv/ns1:vardenhet/ns1:vardgivare/ns1:vardgivarid/ns3:extension"/>
             </xsl:attribute>
@@ -167,10 +162,8 @@
   <xsl:template name="vardKontakt">
     <p:vardkontakt>
       <p:vardkontakttyp code="5880005" codeSystem="1.2.752.116.2.1.1.1" codeSystemName="SNOMED-CT"/>
-      <p:idKontroll>
+      <p:idKontroll codeSystem="e7cc8f30-a353-4c42-b17a-a189b6876647" codeSystemName="kv_id_kontroll">
         <xsl:attribute name="code" select="ns1:identitetStyrkt/ns1:idkontroll"/>
-        <xsl:attribute name="codeSystem">e7cc8f30-a353-4c42-b17a-a189b6876647</xsl:attribute>
-        <xsl:attribute name="codeSystemName">kv_id_kontroll</xsl:attribute>
       </p:idKontroll>
     </p:vardkontakt>
   </xsl:template>
