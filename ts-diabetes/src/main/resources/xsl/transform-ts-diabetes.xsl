@@ -49,7 +49,7 @@
           <xsl:call-template name="ogatsRorlighetAktivitet"/>
         </xsl:if>
 
-        <!-- Patienten uppfyller kraven.. -->
+        <!-- Patienten uppfyller kraven -->
         <p:rekommendation>
           <p:rekommendationskod code="REK8" codeSystem="{$id_kv_rekommendation_intyg}" codeSystemName="kv_rekommendation_intyg"/>
           <xsl:choose>
@@ -120,7 +120,8 @@
           </p:observation>
         </xsl:if>
 
-        <!-- Hypoglykemi --><!-- Har kunskap om åtgärder -->
+        <!-- Hypoglykemi -->
+        <!-- Har kunskap om åtgärder -->
         <p:observation>
           <p:observationskod code="OBS19" codeSystem="{$id_kv_observationer_intyg}"
               codeSystemName="kv_observationer_intyg"/>
@@ -138,7 +139,6 @@
           </p:forekomst>
         </p:observation>
 
-        <!-- if  harTeckenNedsattHjarnfunktion = 'true' -->
         <xsl:if test="ns1:hypoglykemier/ns1:harTeckenNedsattHjarnfunktion = 'true' or ns1:hypoglykemier/ns1:harTeckenNedsattHjarnfunktion = '1'">
           <p:observation>
             <p:observationskod code="OBS21" codeSystem="{$id_kv_observationer_intyg}"
@@ -171,7 +171,6 @@
             </p:forekomst>
           </p:observation>
         </xsl:if>
-        <!-- end if -->
 
         <p:observation>
           <p:observationskod code="OBS24" codeSystem="{$id_kv_observationer_intyg}"
