@@ -27,7 +27,7 @@
 
         <!-- Synfältsprövning (Donders konfrontationsmetod) -->
         <p:aktivitet>
-          <p:aktivitets-id root="1.2.752.129.2.1.2.1" extension="${synfaltsprovning-aktivitets-id}"/>
+          <p:aktivitets-id root="1.2.752.129.2.1.2.1" extension="${aktivitets-id1}"/>
           <p:aktivitetskod code="86944008" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
           <p2:metod code="MET1" codeSystem="{$id_kv_metod}" codeSystemName="kv_metod"/>
         </p:aktivitet>
@@ -110,7 +110,7 @@
 
         <!-- Synfältsprövning -->
         <p:observation>
-          <p:observations-id root="1.2.752.129.2.1.2.1" extension="{$synfaltsprovning-observations-id}"/>
+          <p:observations-id root="1.2.752.129.2.1.2.1" extension="{$observations-id1}"/>
           <p:observationskod code="H53.4" codeSystem="1.2.752.116.1.1.1.1.1" codeSystemName="ICD-10"/>
           <p:forekomst>
             <xsl:value-of select="ns1:synfunktion/ns1:harSynfaltsdefekt"/>
@@ -448,13 +448,13 @@
         </p:observation>
 
         <p2:observationAktivitetRelation>
-          <p2:observationsid root="1.2.752.129.2.1.2.1" extension=">{$synfaltsprovning-observations-id}"/>
-          <p2:aktivitetsid root="1.2.752.129.2.1.2.1" extension="{$synfaltsprovning-aktivitets-id}"/>
+          <p2:observationsid root="1.2.752.129.2.1.2.1" extension="{$observations-id1}"/>
+          <p2:aktivitetsid root="1.2.752.129.2.1.2.1" extension="{$aktivitets-id1}"/>
         </p2:observationAktivitetRelation>
 
         <p2:observationAktivitetRelation>
-          <p2:observationsid root="1.2.752.129.2.1.2.1" extension="{$ogats-rorlighet-observations-id}"/>
-          <p2:aktivitetsid root="1.2.752.129.2.1.2.1" extension="{$ogats-rorlighet-aktivitets-id}"/>
+          <p2:observationsid root="1.2.752.129.2.1.2.1" extension="{$observations-id2}"/>
+          <p2:aktivitetsid root="1.2.752.129.2.1.2.1" extension="{$aktivitets-id2}"/>
         </p2:observationAktivitetRelation>
 
         <xsl:for-each select="ns1:intygAvser/ns1:korkortstyp">

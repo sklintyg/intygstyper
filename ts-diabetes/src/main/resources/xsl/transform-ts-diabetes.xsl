@@ -37,9 +37,7 @@
       <xsl:if test="ns1:separatOgonLakarintygKommerSkickas = 'false' or ns1:separatOgonLakarintygKommerSkickas = '0'">
           <!-- Synfältsprövning (Donders konfrontationsmetod) -->
           <p:aktivitet>
-            <p:aktivitets-id root="1.2.752.129.2.1.2.1">
-              <xsl:attribute name="extension" select="$synfaltsprovning-aktivitets-id"/>
-            </p:aktivitets-id>
+            <p:aktivitets-id root="1.2.752.129.2.1.2.1" extension="{$aktivitets-id1}"/>
             <p:aktivitetskod code="86944008" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
               <p2:metod code="MET1" codeSystem="{$id_kv_metod}" codeSystemName="kv_metod"/>
           </p:aktivitet>
@@ -61,10 +59,8 @@
           </xsl:when>
           <xsl:otherwise>
             <xsl:for-each select="ns1:bedomning/ns1:korkortstyp">
-              <p2:varde codeSystem="{$id_kv_korkortsbehorighet}" codeSystemName="kv_körkortsbehörighet">
-                <xsl:attribute name="code" select="$korkortsTyp/mapping[@key = current()]/@value"/>
-              </p2:varde>
-          </xsl:for-each>
+              <p2:varde codeSystem="{$id_kv_korkortsbehorighet}" codeSystemName="kv_körkortsbehörighet" code="{$korkortsTyp/mapping[@key = current()]/@value}"/>
+            </xsl:for-each>
           </xsl:otherwise>
         </xsl:choose>
       </p:rekommendation>
@@ -147,7 +143,7 @@
       </p:observation>
 
       <!-- if  harTeckenNedsattHjarnfunktion = 'true' -->
-      <xsl:if test="ns1:hypoglykemier/ns1:harTeckenNedsattHjarnfunktion = 'true' or ns1:hypoglykemier/ns1:harTeckenNedsattHjarnfunktion = '1'">
+        <xsl:if test="ns1:hypoglykemier/ns1:harTeckenNedsattHjarnfunktion = 'true' or ns1:hypoglykemier/ns1:harTeckenNedsattHjarnfunktion = '1'">
         <p:observation>
           <p:observationskod code="OBS21" codeSystem="{$id_kv_observationer_intyg}"
             codeSystemName="kv_observationer_intyg" />
@@ -195,8 +191,7 @@
       <!-- Syn -->
       <xsl:if test="ns1:separatOgonLakarintygKommerSkickas = 'false' or ns1:separatOgonLakarintygKommerSkickas = '0'">
         <p:observation>
-            <p:observations-id root="1.2.752.129.2.1.2.1"
-                extension="3"/>
+            <p:observations-id root="1.2.752.129.2.1.2.1" extension="{$observations-id1}"/>
             <p:observationskod code="OBS25" codeSystem="{$id_kv_observationer_intyg}"
                 codeSystemName="kv_observationer_intyg"/>
             <p:forekomst>
@@ -276,27 +271,19 @@
 
         <!-- OBSERVATIONAKTIVITETRELATION begin-->
         <p2:observationAktivitetRelation>
-          <p2:observationsid root="1.2.752.129.2.1.2.1" extension="3" />
-          <p2:aktivitetsid root="1.2.752.129.2.1.2.1">
-            <xsl:attribute name="extension" select="$synfaltsprovning-aktivitets-id"/>
-          </p2:aktivitetsid>
+          <p2:observationsid root="1.2.752.129.2.1.2.1" extension="{$observations-id1}" />
+          <p2:aktivitetsid root="1.2.752.129.2.1.2.1" extension="{$aktivitets-id1}"/>
         </p2:observationAktivitetRelation>
 
         <p2:observationAktivitetRelation>
-          <p2:observationsid root="1.2.752.129.2.1.2.1">
-            <xsl:attribute name="extension" select="$ogats-rorlighet-observations-id"/>
-          </p2:observationsid>
-          <p2:aktivitetsid root="1.2.752.129.2.1.2.1">
-            <xsl:attribute name="extension" select="$ogats-rorlighet-aktivitets-id"/>
-          </p2:aktivitetsid>
+          <p2:observationsid root="1.2.752.129.2.1.2.1" extension="{$observations-id2}"/>
+          <p2:aktivitetsid root="1.2.752.129.2.1.2.1" extension="{$aktivitets-id2}"/>
         </p2:observationAktivitetRelation>
       </xsl:if>
         <!-- OBSERVATIONAKTIVITETRELATION end -->
 
         <xsl:for-each select="ns1:intygAvser/ns1:korkortstyp">
-          <p2:intygAvser codeSystem="{$id_kv_intyget_avser}" codeSystemName="kv_intyget_avser">
-            <xsl:attribute name="code" select="$intygAvser/mapping[@key = current()]/@value"/>
-          </p2:intygAvser>
+          <p2:intygAvser codeSystem="{$id_kv_intyget_avser}" codeSystemName="kv_intyget_avser" code="{$intygAvser/mapping[@key = current()]/@value}"/>
         </xsl:for-each>
 
         <p2:bilaga>

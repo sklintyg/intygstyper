@@ -46,11 +46,11 @@
     <mapping key="TRAKTOR" value="VAR18"/>
   </xsl:variable>
 
-  <xsl:variable name="synfaltsprovning-aktivitets-id" select="'1'"/>
-  <xsl:variable name="synfaltsprovning-observations-id" select="'3'"/>
+  <xsl:variable name="aktivitets-id1" select="'1'"/>
+  <xsl:variable name="observations-id1" select="'3'"/>
 
-  <xsl:variable name="ogats-rorlighet-aktivitets-id" select="'2'"/>
-  <xsl:variable name="ogats-rorlighet-observations-id" select="'4'"/>
+  <xsl:variable name="aktivitets-id2" select="'2'"/>
+  <xsl:variable name="observations-id2" select="'4'"/>
 
   <xsl:variable name="id_kv_metod" select="'b0c078c6-512a-42a5-ab42-a3380f369ac3'"/>
   <xsl:variable name="id_kv_aktiviteter_intyg" select="'8040b4d1-67dc-42e1-a938-de5374e9526a'"/>
@@ -170,14 +170,14 @@
 
   <xsl:template name="ogatsRorlighetAktivitet">
     <p:aktivitet>
-      <p:aktivitets-id root="1.2.752.129.2.1.2.1" extension="{$ogats-rorlighet-aktivitets-id}"/>
+      <p:aktivitets-id root="1.2.752.129.2.1.2.1" extension="{$aktivitets-id2}"/>
       <p:aktivitetskod code="AKT18" codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a" codeSystemName="kv_aktiviteter_intyg"/>
     </p:aktivitet>
   </xsl:template>
 
   <xsl:template name="ogatsRorlighetObservation">
     <p:observation>
-      <p:observations-id root="1.2.752.129.2.1.2.1" extension="{$ogats-rorlighet-observations-id}"/>
+      <p:observations-id root="1.2.752.129.2.1.2.1" extension="{$observations-id2}"/>
       <p:observationskod code="H53.2" codeSystem="1.2.752.116.1.1.1.1.1" codeSystemName="ICD-10"/>
       <p:forekomst>
         <xsl:value-of select="ns1:synfunktion/ns1:harDiplopi"/>
