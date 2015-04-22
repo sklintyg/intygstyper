@@ -55,6 +55,8 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                     ViewState.common.doneLoading = true;
                     if (error.errorCode === 'DATA_NOT_FOUND') {
                         ViewState.common.activeErrorMessageKey = 'fk7263.error.data_not_found';
+                    } else if (error.errorCode === 'AUTHORIZATION_PROBLEM') {
+                        ViewState.common.activeErrorMessageKey = 'common.error.authorization_problem';
                     } else {
                         if ($stateParams.signed) {
                             ViewState.common.activeErrorMessageKey = 'common.error.signed_but_not_ready';
