@@ -57,6 +57,7 @@
   <xsl:variable name="id_kv_observationer_intyg" select="'335d4bed-7e1d-4f81-ae7d-b39b266ef1a3'"/>
   <xsl:variable name="id_kv_rekommendation_intyg" select="'5a931b99-bda8-4f1e-8a6d-6f8a3f40a459'"/>
   <xsl:variable name="id_kv_intyget_avser" select="'24c41b8d-258a-46bf-a08a-b90738b28770'"/>
+  <xsl:variable name="id_kv_korkortsbehorighet" select="'e889fa20-1dee-4f79-8b37-03853e75a9f8'"/>
   <xsl:variable name="id_snomed-ct" select="'1.2.752.116.2.1.1.1'"/>
   <xsl:variable name="id_icd-10" select="'1.2.752.116.1.1.1.1.1'"/>
 
@@ -176,30 +177,14 @@
 
   <xsl:template name="ogatsRorlighetAktivitet">
     <p:aktivitet>
-      <p:aktivitets-id root="1.2.752.129.2.1.2.1">
-        <xsl:attribute name="extension" select="$ogats-rorlighet-aktivitets-id"/>
-      </p:aktivitets-id>
+      <p:aktivitets-id root="1.2.752.129.2.1.2.1" extension="{$ogats-rorlighet-aktivitets-id}"/>
       <p:aktivitetskod code="AKT18" codeSystem="8040b4d1-67dc-42e1-a938-de5374e9526a" codeSystemName="kv_aktiviteter_intyg"/>
     </p:aktivitet>
   </xsl:template>
 
-  <xsl:template name="synfaltsObservation">
-    <p:observation>
-      <p:observations-id root="1.2.752.129.2.1.2.1">
-        <xsl:attribute name="extension" select="$synfaltsprovning-observations-id"/>
-      </p:observations-id>
-      <p:observationskod code="H53.4" codeSystem="1.2.752.116.1.1.1.1.1" codeSystemName="ICD-10"/>
-      <p:forekomst>
-        <xsl:value-of select="ns1:synfunktion/ns1:harSynfaltsdefekt"/>
-      </p:forekomst>
-    </p:observation>
-  </xsl:template>
-
   <xsl:template name="ogatsRorlighetObservation">
     <p:observation>
-      <p:observations-id root="1.2.752.129.2.1.2.1">
-        <xsl:attribute name="extension" select="$ogats-rorlighet-observations-id"/>
-      </p:observations-id>
+      <p:observations-id root="1.2.752.129.2.1.2.1" extension="{$ogats-rorlighet-observations-id}"/>
       <p:observationskod code="H53.2" codeSystem="1.2.752.116.1.1.1.1.1" codeSystemName="ICD-10"/>
       <p:forekomst>
         <xsl:value-of select="ns1:synfunktion/ns1:harDiplopi"/>

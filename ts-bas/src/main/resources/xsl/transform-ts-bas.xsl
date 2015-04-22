@@ -85,14 +85,19 @@
           </p:aktivitet>
         </xsl:if>
 
-        <xsl:if test="not(ns1:bedomning/ns1:kanInteTaStallning = 'true' or ns1:bedomning/ns1:kanInteTaStallning = '1')">
-          <p:rekommendation>
-            <p:rekommendationskod code="REK8" codeSystem="{$id_kv_rekommendation_intyg}" codeSystemName="kv_rekommendation_intyg"/>
-            <xsl:for-each select="ns1:bedomning/ns1:korkortstyp">
-              <p2:varde codeSystem="e889fa20-1dee-4f79-8b37-03853e75a9f8" codeSystemName="kv_värde" code="{$korkortsTyp/mapping[@key = current()]/@value}"/>
-            </xsl:for-each>
-          </p:rekommendation>
-        </xsl:if>
+        <p:rekommendation>
+          <p:rekommendationskod code="REK8" codeSystem="{$id_kv_rekommendation_intyg}" codeSystemName="kv_rekommendation_intyg" />
+          <xsl:choose>
+            <xsl:when test="ns1:bedomning/ns1:kanInteTaStallning = 'true' or ns1:bedomning/ns1:kanInteTaStallning = '1'">
+              <p2:varde code="VAR11" codeSystem="{$id_kv_korkortsbehorighet}" codeSystemName="kv_körkortsbehörighet"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:for-each select="ns1:bedomning/ns1:korkortstyp">
+                  <p2:varde codeSystem="{$id_kv_korkortsbehorighet}" codeSystemName="kv_körkortsbehörighet" code="{$korkortsTyp/mapping[@key = current()]/@value}"/>
+              </xsl:for-each>
+            </xsl:otherwise>
+          </xsl:choose>
+        </p:rekommendation>
 
         <xsl:if test="ns1:bedomning/ns1:behovAvLakareSpecialistKompetens">
           <p:rekommendation>
@@ -103,7 +108,14 @@
           </p:rekommendation>
         </xsl:if>
 
-        <xsl:call-template name="synfaltsObservation"/>
+        <!-- Synfältsprövning -->
+        <p:observation>
+          <p:observations-id root="1.2.752.129.2.1.2.1" extension="{$synfaltsprovning-observations-id}"/>
+          <p:observationskod code="H53.4" codeSystem="1.2.752.116.1.1.1.1.1" codeSystemName="ICD-10"/>
+          <p:forekomst>
+            <xsl:value-of select="ns1:synfunktion/ns1:harSynfaltsdefekt"/>
+          </p:forekomst>
+        </p:observation>
 
         <!-- Begränsning av seende vid nedsatt belysning -->
         <p:observation>
