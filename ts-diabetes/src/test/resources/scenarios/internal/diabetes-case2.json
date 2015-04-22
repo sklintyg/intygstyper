@@ -187,7 +187,7 @@
     "syn": {
         "separatOgonlakarintyg": true
     },
-    "typ": "TS_DIABETES_U06_V02",
+    "typ": "ts-diabetes",
     "vardkontakt": {
         "idkontroll": "KORKORT"
     }

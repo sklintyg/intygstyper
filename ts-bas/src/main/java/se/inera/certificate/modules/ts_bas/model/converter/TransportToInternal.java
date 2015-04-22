@@ -64,7 +64,7 @@ public class TransportToInternal {
         internal.setGrundData(convertGrundData(source.getGrundData()));
         internal.setId(source.getIntygsId());
         internal.setKommentar(source.getOvrigKommentar());
-        internal.setTyp(UtlatandeKod.getCurrentVersion().name());
+        internal.setTyp(UtlatandeKod.getCurrentVersion().getCode());
 
         internal.getPsykiskt().setPsykiskSjukdom(source.isHarPsykiskStorning());
         internal.getKognitivt().setSviktandeKognitivFunktion(source.isHarKognitivStorning());

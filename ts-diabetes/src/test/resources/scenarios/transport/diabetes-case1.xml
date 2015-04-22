@@ -4,7 +4,7 @@
     xmlns:ns3="urn:local:se:intygstjanster:services:RegisterTSDiabetesResponder:1">
     <ns3:intyg>
   <intygsId>233a6482-36c4-4177-89fd-959e2692eec9</intygsId>
-  <intygsTyp>TSTRK1031 (U06, V06)</intygsTyp>
+  <intygsTyp>ts-diabetes</intygsTyp>
   <version>02</version>
   <utgava>06</utgava>
   <grundData>
