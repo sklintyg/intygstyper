@@ -124,7 +124,7 @@
             </goals>
           </execution>
           <execution>
-            <id>javascript minaintyg tests</id>
+            <id>javascript ts-diabetes tests</id>
             <goals>
               <goal>karma</goal>
             </goals>

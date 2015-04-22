@@ -134,7 +134,7 @@
             </goals>
           </execution>
           <execution>
-            <id>javascript minaintyg tests</id>
+            <id>javascript ts-bas tests</id>
             <goals>
               <goal>karma</goal>
             </goals>
